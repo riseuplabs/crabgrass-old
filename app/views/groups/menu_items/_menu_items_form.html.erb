@@ -1,7 +1,8 @@
-<div class='menu_items_form'>
-  <div id="menu_items_list_container">
-    <%= render :partial => 'menu_items_list' %>
+<div id='menu_items_form'>
+    <ol id="menu_items_list">
+      <%= render :partial => 'menu_item', :collection => @menu_items %>
+      <%= render :partial => 'new', :locals => {:menu_item => MenuItem.new}%>
+    </ol>
     <% spinner_id = "menu_items_ids_" + rand(10000).to_s %>
     <%= handle_update_menu_item_order_javascript('menu_items_list', spinner_id) %>
-  </div>
 </div>
