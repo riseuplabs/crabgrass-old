@@ -98,9 +98,6 @@ class ChatController < ApplicationController
       user_leaves_channel(ex_user.user, @channel)
       ex_user.destroy
     end
-
-    @channel_user.record_user_action
-
     render :partial => 'chat/userlist', :layout => false
   end
 
