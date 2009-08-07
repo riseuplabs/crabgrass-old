@@ -1133,3 +1133,10 @@ recently_active_groups: "Recently Active Groups"
 network_aettings: "Network Settings"
 administer_site: "Administer Site"
 edit_appearance: "Edit Appearance"
+
+##
+## MODERATION
+##
+flag_appropriate: "flag as appropriate"
+flag_inappropriate: "flag as inappropriate"
+confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'yes' *only if* you think this is offensive, rude or unkind. A moderator will look at the it soon."
