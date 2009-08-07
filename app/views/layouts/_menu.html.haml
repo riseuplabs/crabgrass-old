@@ -13,7 +13,7 @@
         = menu_networks
       - if current_site.chat?
         = menu_chat
-      - if may_admin? # this is for any of the admin and moderator permissions
+      - if may_admin_site?
         = menu_admin
     - else
       = menu_home
