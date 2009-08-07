@@ -6,7 +6,6 @@ module Admin::SuperPermission
       # their actual identity.
       session[:user] = session[:admin]
       session[:admin] = nil
-      redirect_to '/admin'
       true
     else
       logged_in? && current_user.superadmin?

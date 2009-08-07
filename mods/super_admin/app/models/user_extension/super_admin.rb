@@ -24,11 +24,9 @@ module UserExtension::SuperAdmin
   end
 
   module InstanceMethods
-    # Returns true if self is a super admin. If self is the current_user
-    # then no arguments are required. However, to test superadmin? on any
-    # other user requires a site argument.
-    def superadmin?(site=nil)
-      site ||= self.current_site
+    # Returns true if self is a super admin on site. Defaults to the
+    # current site.
+    def superadmin?(site=Site.current)
       if site
         self.group_ids.include?(site.super_admin_group_id)
       else
