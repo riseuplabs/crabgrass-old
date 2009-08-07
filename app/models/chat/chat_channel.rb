@@ -22,7 +22,7 @@ class ChatChannel < ActiveRecord::Base
 
   def latest_messages(time = nil)
     time ||= 1.day.ago.to_s(:db)
-    messages.find(:all, :conditions => ["created_at < ?", time], :order => 'created_at DESC').reverse
+    messages.find(:all, :conditions => ["created_at > ?", time], :order => 'created_at DESC').reverse
   end
 
   def users_just_left
