@@ -31,6 +31,7 @@ div.page_list {zoom: 1;}
   display: block; /* resets display */
 }
 
+/* fixes columns for drop down boxes in ie6/7 */
 span.topnav a {
   position: relative;
 }
@@ -82,9 +83,16 @@ div.rightcol {
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+/* fix for stacking problem between drop down boxes and people/groups/networks tabs */
 li.menu {
   z-index: 100;
 }
 ul.tabset.top li {
   z-index: 1;
+}
+
+/* for hover over entity boxes on sidebar of dashboard */
+ul.icon_boxes li:hover span {
+  display: block;
+  width: 10em;
 }
