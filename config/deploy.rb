@@ -13,7 +13,7 @@ set :repository, "gitosis@labs.riseup.net:unicef.git"
 set :branch, "youthportal"
 
 deploy_host = "bunting.riseup.net"
-staging_host = "bunting_staging.riseup.net"
+staging_host = "bunting.staging.riseup.net"
 
 staging = ENV['TARGET'] != 'production'
 
