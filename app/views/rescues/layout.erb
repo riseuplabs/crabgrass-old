@@ -86,21 +86,21 @@
     }
 
     function toggleBugreport(e) {
-       bugreport = document.getElementById("bugreport");
-       bugreport.style.display = "block";
+       bugReport = document.getElementById('bugreport');
+       bugReport.style.display = "block";
     }
 
     function toggleDetails(e) {
-      content = document.getElementById("content");
+      contentDiv = document.getElementById("content");
       detailsLink = document.getElementById("details");
-      if (content.style.display == "block") {
+      if (contentDiv.style.display == "block") {
         //detailsLink.value = "Show Details";
-	detailsLink.innerHTML = "Show Details";
-        content.style.display = "none";
+          detailsLink.innerHTML = "Show Details";
+        contentDiv.style.display = "none";
       }else {
         //detailsLink.value = "Hide Details";
         detailsLink.innerHTML = "Hide Details";
-        content.style.display = "block";
+        contentDiv.style.display = "block";
       }
     }
     addEvent(window, 'load', init, false);
