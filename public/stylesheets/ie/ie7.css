@@ -70,3 +70,10 @@ div.rightcol {
   display: none;
 }
 
+li.menu {
+  z-index: 100;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
+
