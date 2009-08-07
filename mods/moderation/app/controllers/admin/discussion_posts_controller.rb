@@ -4,7 +4,9 @@ class Admin::DiscussionPostsController < Admin::PostsController
   def fetch_posts(options)
     conditions = (options.delete(:conditions) || [])
     conditions[0] = "#{conditions[0] ? conditions[0]+' AND' : ''} discussions.commentable_type IS NULL"
-    @posts = Post.paginate(options.merge(:page => params[:page], :joins => :discussion, :conditions => conditions))
+    joins = [:discussion]
+    joins << options.delete(:joins) if options[:joins]
+    @posts = Post.paginate(options.merge(:page => params[:page], :joins => joins, :conditions => conditions))
     @admin_active_tab = 'page_post_moderation'
   end
 end

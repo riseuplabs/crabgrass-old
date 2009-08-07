@@ -49,6 +49,7 @@ div.rightcol {
   width: 16em;
   top: 2.4em;
   padding-bottom: 0;
+  overflow: hidden;
 }
 #menu_me div.menu_items{
   width: 14em;
@@ -81,3 +82,9 @@ div.rightcol {
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+li.menu {
+  z-index: 100;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
