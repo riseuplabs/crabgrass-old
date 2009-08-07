@@ -81,3 +81,12 @@ div.rightcol {
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+div#header {
+  z-index: 50000;
+}
+div#wrapper {
+  z-index: 1;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
