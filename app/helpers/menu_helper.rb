@@ -17,6 +17,18 @@ module MenuHelper
     )
   end
 
+  def navbar_menu(id, label, url, options={})
+    menu_heading = content_tag(:span,
+      link_to_active(label, url, options[:active]),
+      :class => 'navbar'
+    )
+    content_tag(:li,
+      [menu_heading, options[:menu_items]].combine("\n"),
+      :class => ['menu', (options[:active] && 'active')].combine,
+      :id => id
+    )
+  end
+
   def menu_items(partial, locals={})
     render :partial => 'layouts/menu/'+partial, :locals => locals
   end

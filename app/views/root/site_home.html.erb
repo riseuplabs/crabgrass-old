@@ -100,6 +100,11 @@ form.mini_search table {
   </td>
 </tr>
 </table>
+Links
+<ul>
+  <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
+</ul>
+&nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
 <% end %>
 <% if params[:welcome_box] && logged_in? -%>
   <div id='welcome_box'>
