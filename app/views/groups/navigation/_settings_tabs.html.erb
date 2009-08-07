@@ -24,7 +24,7 @@
   end
   if may_edit_menu?
     f.tab do |t|
-      t.label 'Navigation bar'[:menu_items]
+      t.label 'Navigation Bar'[:menu_items]
       t.url groups_menu_items_url(:action => :index)
       t.selected controller?('groups/menu_items') && action?(:index)
     end
