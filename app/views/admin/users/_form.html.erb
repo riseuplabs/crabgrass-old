@@ -11,7 +11,7 @@
   <td><%= f.text_field :email %></td>
 </tr>
 <tr>
-  <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p></td>
+  <td><%= f.label :language %></td><td><%= f.select 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></td>
 </tr>
 <tr>
   <td><%= f.label :password %></td>
