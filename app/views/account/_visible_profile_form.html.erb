@@ -15,7 +15,7 @@
     <p>
       <%= profile_location.label :country_name, "Country"[:location_country] %><br/>
       <%= required_field_mark %>
-      <%= profile_location.text_field :country_name %>
+      <%= profile_location.country_select :country_name, nil, {}, {:index => nil} %>
     </p>
 
     <p>
