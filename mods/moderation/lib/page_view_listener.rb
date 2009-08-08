@@ -9,7 +9,7 @@ class PageViewListener < Crabgrass::Hook::ViewListener
     if rating.nil? or rating.rating != YUCKY_RATING
       link = link_to('flag as inappropriate'[:flag_inappropriate],
         {:controller => 'yucky', :page_id => context[:page].id, :action => 'add'},
-        :confirm => 'Are you sure this page is inappropriate? Click \'yes\' *only if* you think this is offensive, rude or unkind. A moderator will look at the post soon.'[:confirm_inappropriate_page])
+        :confirm => "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at the post soon."[:confirm_inappropriate_page])
       page_sidebar_list(content_tag(:li, link, :class => 'small_icon sad_plus_16'))
     elsif rating.rating == YUCKY_RATING
       link = link_to 'flag as appropriate'[:flag_appropriate],
