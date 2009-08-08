@@ -1,17 +1,8 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 require 'groups/requests_controller'
 
-# Re-raise errors caught by the controller.
-class Groups::RequestsController; def rescue_action(e) raise e end; end
-
-class Groups::RequestsControllerTest < Test::Unit::TestCase
+class Groups::RequestsControllerTest < ActionController::TestCase
   fixtures :users, :memberships, :groups, :profiles, :federatings
-
-  def setup
-    @controller = Groups::RequestsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_cant_create_invite
     login_as :green
