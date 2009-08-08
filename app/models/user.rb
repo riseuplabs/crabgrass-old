@@ -130,6 +130,10 @@ class User < ActiveRecord::Base
     read_attribute(:time_zone) || Time.zone_default
   end
 
+  def may_see_topnav?
+    !self.unverified? and !self.missing_profile_info?
+  end
+
   ##
   ## PROFILE
   ##

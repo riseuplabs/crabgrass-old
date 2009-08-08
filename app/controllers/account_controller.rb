@@ -8,6 +8,7 @@ class AccountController < ApplicationController
   before_filter :find_or_build_profiles, :only => [:signup, :missing_info]
 
   skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify_email]
+  skip_before_filter :redirect_missing_info_user, :only => [:login, :logout, :signup, :missing_info]
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
