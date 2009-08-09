@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   include PathFinder::Options                   # for Page.find_by_path options
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
+  include ControllerExtension::RescueErrors
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -28,7 +29,6 @@ class ApplicationController < ActionController::Base
   before_filter :essential_initialization
   around_filter :set_language
   before_filter :set_timezone, :pre_clean
-  around_filter :rescue_authentication_errors
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
   before_render :context_if_appropriate
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     filter_chain.prepend_filter_to_chain(filters, :before, &block)
     filter_chain.prepend_filter_to_chain([:essential_initialization], :before, &block)
   end
-  
+
   protected
 
   ##
@@ -239,41 +239,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # shows a generic not found page
-  def render_not_found
-    @skip_context = true
-    render :template => 'common/not_found', :status => :not_found
-  end
-
-  # shows a generic permission denied page
-  def render_permission_denied
-    @skip_context = true
-    render :template => 'common/permission_denied'
-  end
-
-  def render_error(exception=nil)
-    if exception
-      if exception.try(:options).try[:redirect]
-        flash_message :exception => exception
-        redirect_to exception.options[:redirect]
-        return
-      else
-        flash_message_now :exception => exception
-      end
-    end
-    @skip_context = true
-    render :template => 'common/error', :status => exception.try(:status)
-  end
-
   private
-
-  def rescue_authentication_errors
-    yield
-  rescue ActionController::InvalidAuthenticityToken
-    render :template => 'account/csrf_error'
-  rescue PermissionDenied
-    access_denied
-  end
 
   ## handy way to get back where we came from
   def store_back_url(url=nil)
@@ -286,18 +252,6 @@ class ApplicationController < ActionController::Base
     redirect_to url
   end
 
-
-  # override the standard rails rescues_path in order to be able to specify
-  # our own templates.
-  helper_method :rescues_path
-  def rescues_path(template_name)
-    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"
-    if File.exists?(file)
-      return file
-    else
-      return super(template_name)
-    end
-  end
 
   # TODO: move to new permission system as soon as it is ready
   helper_method :may_signup?
