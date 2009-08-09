@@ -1,29 +1,67 @@
+<%
+   def get_referer
+    return '/' unless raw = request.env["HTTP_REFERER"]
+    server = request.host_with_port
+    prot = request.protocol
+    if raw.starts_with?("#{prot}#{server}/")
+      raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
+    else
+      '/'
+    end
+  end
+
+  main_bg = '#222'
+  main_fg = '#999'
+  left_bar_bg = 'white'
+  left_bar_size = 360
+  heading_fg = '#add8e6'
+%>
+
 <html>
 <head>
-  <title>Action Controller: Exception caught</title>
+  <title><%= "System Error"[:exception_title] %></title>
   <style>
-    body {
-      background-color: #fff;
-      color: #333;
-      padding: 1em;
+
+    html {
+      background-color: <%= main_bg %>;
+      color: <%= main_fg %>;
+      padding: 0; margin: 0;
     }
-    div#wrapper {
-      background: #fafafa;
-      border: 4px solid #000;
+    body {
+      padding: 0; margin: 0;
+    }
+    .left {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      xpadding: 10px;
+      xbackground: <%= left_bar_bg %>;
+    }
+    .right {
+      margin-left: <%= left_bar_size %>px;
+      padding-right: 20px;
+    }
+    div#image {
+      background: url('/images/ui/repair.png') no-repeat 0 0;
+      height: 506px;
+      width: 321px;
     }
     div#header {
-      color: #fff;
-      background: #159;
-      padding: 10px;
     }
     div#header h1 {
+      font-size: 2.5em;
+      color: <%= heading_fg %>;
+    }
+    .description {
       font-size: 1.5em;
     }
     div#content {
-      padding: 20px;
+      font-size: 0.9em;
+    }
+    div#content h1, div#content h2 {
+      font-size: 1em;
     }
     div#bugreport {
-      padding: 20px;
     }
     #links {
       display: none;
@@ -40,20 +78,18 @@
       background: #fff;
       text-decoration: underline;
     }
+    textarea {
+      border: 1px solid black;
+    }
     body, p, ol, ul, td {
       font-family: verdana, arial, helvetica, sans-serif;
-      font-size:   13px;
-      line-height: 18px;
     }
     pre {
-      background-color: #eee;
+      background-color: #fff;
       padding: 10px;
-      font-size: 11px;
+      overflow-x: scroll;
+      color: #333;
     }
-    #traces a {
-      color: #000;
-    }
-
   </style>
 
   <script type="text/javascript">
@@ -71,6 +107,9 @@
       bugreportDiv.style.display = "none";
       addEvent(detailsToggle, 'click', toggleDetails, false);
       addEvent(bugreportLink, 'click', toggleBugreport, false);
+      <% if RAILS_ENV == 'development' %>
+      toggleDetails();
+      <% end %>
     }
 
     function addEvent(elm, evType, fn, useCapture) {
@@ -108,24 +147,28 @@
 
 </head>
 <body>
-  <div id='wrapper'>
+  <div class="left"><div id='image'></div></div>
+  <div class="right">
     <div id='header'>
-      <h1>You have encountered a crabgrass error!</h1>
-      <div id='links'>
-        <a href="/me/dashboard">Go Back</a> | <a href="#" id='bugreport_link'>Submit Bugreport</a> | <a href="#" id="details">Show Details</a> 
-      </div>
+      <h1><%= "Oops! We experienced an error."[:exception_headline] %></h1>
+      <p class="description"><%= "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."[:exception_description] %>
+      <p id="links">
+        <a href="<%= get_referer %>"><%= "Go Back"[:exception_back_link]%></a> |
+        <a href="#" id='bugreport_link'><%= "Submit Bug Report"[:exception_bug_report_link]%></a> |
+        <a href="#" id="details"><%= "Details"[:details_link]%></a>
+      </p>
     </div>
     <div id='bugreport'>
        <% form_tag('/bugreport/submit') do %>
-         Please add a description of how you got to this page, and any additional comments:<br>
-         <%= text_area_tag(:comments, nil, :size => "50x5") %>
+         <p><%= "Please add a description of how you got to this page, and any additional comments"[:exception_bug_report_description] %></p>
+         <%= text_area_tag(:comments, nil, :size => "60x8") %>
          <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
          <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
          <%= hidden_field_tag('error_action', request.parameters['action']) %>
          <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
          <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
          <br>
-         <%= submit_tag("Submit Bug Report") %>
+         <p><%= submit_tag("Submit Bug Report"[:exception_bug_report_link]) %></p>
        <% end %>
     </div>
     <div id='content'>

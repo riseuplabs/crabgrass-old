@@ -2,6 +2,10 @@ class StatsController < ApplicationController
 
   javascript :flotr
 
+  def error
+    raise 'error'
+  end
+
   def index
     redirect_to url_for(:action => 'week')
   end
