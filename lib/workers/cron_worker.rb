@@ -45,5 +45,10 @@ class CronWorker < BackgrounDRb::MetaWorker
     Code.cleanup_expired
   end
 
+  # remove stale users from chat rooms.
+  # this should be called every minute.
+  def clean_chat_channels_users
+    ChatChannel.cleanup!
+  end
 end
 

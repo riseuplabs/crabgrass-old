@@ -30,7 +30,7 @@ class ErrorNotFound < ErrorMessage
 end
 
 # a list of errors with a title. oooh lala!
-class ErrorMessages < Exception
+class ErrorMessages < ErrorMessage
   attr_accessor :title, :errors
   def initialize(title,*errors)
     self.title = title

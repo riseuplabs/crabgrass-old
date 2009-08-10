@@ -116,31 +116,6 @@ module FlashMessageHelper
     end
   end
 
-  #
-  # Used in controllers to render an error template base on an exception.
-  #
-  # for example:
-  #
-  #   def show
-  #     ...
-  #   rescue Exception => exc
-  #     render_error(exc)
-  #   end
-  #
-  # If flash_message_now(exc) has not yet been called, then this method will
-  # call it.
-  #
-  def render_error(exc=nil)
-    unless flash[:type] == 'error'
-      flash_message_now :exception => exc
-    end
-    if exc and exc.is_a? ErrorNotFound
-      render :template => 'common/error', :status => 404
-    else
-      render :template => 'common/error'
-    end
-  end
-
   def raise_error(message)
     raise ErrorMessage.new(message)
   end

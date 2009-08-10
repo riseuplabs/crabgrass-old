@@ -70,23 +70,21 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  protected
+
   def assert_no_access(message="")
     # Currently this assertion crashes for no_site and it gives a
     # irritating error message.
     # this should be prohibided by permissions if we have no site instead.
     get :new
-    assert_response :redirect, message
-    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
+    assert_permission_denied
     init_custom_appearance
     get :edit, :id => @current_site.custom_appearance.id
-    assert_response :redirect, message
-    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
+    assert_permission_denied
     post :update, :id => @current_site.custom_appearance.id
-    assert_response :redirect, message
-    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
+    assert_permission_denied
     get :available, :id => @current_site.custom_appearance.id
-    assert_response :redirect, message
-    assert_redirected_to({:controller => 'account', :action => 'login'}, message)
+    assert_permission_denied
   end
 
   def init_custom_appearance()

@@ -51,11 +51,12 @@ complete = "eval(request.responseText)"
 <% end %>
 </p>
 
-<p>
-<%= link_to "This channel archive"[:chat_archive], {:action => :archive, :id => @channel.name} %>
-</p>
-
 <%= call_hook :chat_channel_actions %>
+
+<%=
+link = link_to "view the chat room archive"[:chat_archive], {:action => :archive, :id => @channel.name}
+content_tag(:p, link, :class => 'small_icon book_open_16')
+%>
 
 <%= # update the user list
 wait_time = 4
@@ -64,7 +65,6 @@ periodically_call_remote(:url => { :controller => 'chat',
 				   :id => @channel},
 			 :frequency => wait_time,
 			 :update => 'userlist')
-
 %>
 
 <%= # poll server every wait_time seconds for new messages

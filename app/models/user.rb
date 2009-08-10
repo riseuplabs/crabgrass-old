@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include UserExtension::Groups     # user <--> groups
   include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags
+  include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
 
   ##

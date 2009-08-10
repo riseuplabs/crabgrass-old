@@ -1,27 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-#require 'group_controller'
-#showlog
-# Re-raise errors caught by the controller.
-#class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < Test::Unit::TestCase
-#  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages,
-#            :group_participations, :user_participations, :tasks, :page_terms, :sites,
-#            :federatings
-
-  include UrlHelper
-
-  def setup
-#    @controller = GroupController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
-  def teardown
-   disable_site_testing
-  end
 
 =begin
+
+this is kept around only because there might be some tests which have not yet been converted to groups/*
+
+
   def test_show_when_logged_in
     login_as :red
 

@@ -62,14 +62,6 @@ module ModalboxHelper
     'Modalbox.updatePosition();'
   end
 
-  # loads the localized string into modalbox
-  def modal_default_strings
-#    document.observe("dom:loaded", function() {
-#      // initially hide all containers for tab content
-#      $$('div.tabcontent').invoke('hide');
-#    });
-  end
-
   def modalbox_function(contents, options)
     "Modalbox.show('%s', %s)" % [contents, options_for_modalbox_function(options)]
   end
