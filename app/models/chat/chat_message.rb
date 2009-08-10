@@ -25,7 +25,7 @@ class ChatMessage < ActiveRecord::Base
 
   # returns an array with the days that had messages for a given channel on a given month
   def self.days(channel, year, month)
-    begin_date = Time.zone.local(year, month)
+    begin_date = Time.utc(year, month)
     end_date = begin_date.advance(:months => 1)
     sql = "SELECT DAY(messages.created_at) AS day FROM messages "
     sql += "WHERE messages.channel_id = '#{channel.id}' "
@@ -36,7 +36,7 @@ class ChatMessage < ActiveRecord::Base
   end
 
   def self.for_day(channel, year, month, day)
-    begin_date = Time.zone.local(year, month, day)
+    begin_date = Time.utc(year, month, day)
     end_date = begin_date.advance(:days => 1)
     conditions = "channel_id = '#{channel.id}' AND created_at >= '#{begin_date.to_s(:db)}' AND created_at < '#{end_date.to_s(:db)}'"
     ChatMessage.find(:all, :conditions => conditions, :order => "created_at ASC")

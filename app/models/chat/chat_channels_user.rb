@@ -34,7 +34,7 @@ class ChatChannelsUser < ActiveRecord::Base
       state = -2
     end
 
-    self.last_seen = Time.zone.now
+    self.last_seen = Time.now.utc
     self.status = state
     self.save
   end

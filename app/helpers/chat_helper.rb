@@ -11,7 +11,7 @@ module ChatHelper
   end
 
   def set_time_and_name_script
-    %(time_and_name = '#{message_time_and_name(Time.now, @user.name)}';)
+    %(time_and_name = '#{message_time_and_name(Time.zone.now, @user.name)}';)
   end
 
   def scroll_conversation_script
