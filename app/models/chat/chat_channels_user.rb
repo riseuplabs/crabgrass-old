@@ -12,6 +12,10 @@ class ChatChannelsUser < ActiveRecord::Base
     channel.messages.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", user.id])
   end
 
+  def my_latest_message
+    channel.messages.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", user.id])
+end
+
   def record_user_action(action = nil)
     # tell the database that is user is still in the channel, decrement is_typing
     state = self.status ? self.status : Integer(0)

@@ -53,15 +53,13 @@ class ChatController < ApplicationController
       case command
       when 'me'
         user_action_in_channel(@user, @channel, arguments)
-        @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
       else
         return false
       end
     else
       user_say_in_channel(@user, @channel, message)
-      @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
     end
-
+    @message = @channel_user.my_latest_message
     @channel_user.record_user_action :just_finished_typing
 
     render :layout => false
