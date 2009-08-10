@@ -21,11 +21,7 @@ class ChatController < ApplicationController
       @groups = current_user.all_groups
       channel_users = {}
       @groups.each do |group|
-        if group.chat_channel
-          channel_users[group] = group.chat_channel.active_channel_users.size
-        else
-          channel_users[group] = 0
-        end
+        channel_users[group] = group.chat_channel ? group.chat_channel.users.size : 0
       end
       @group_array = channel_users.sort {|a,b| a[1] <=> b[1]}
       @group_array.reverse!
@@ -94,10 +90,6 @@ class ChatController < ApplicationController
   end
 
   def user_list
-    @channel.users_just_left.each do |ex_user|
-      user_leaves_channel(ex_user.user, @channel)
-      ex_user.destroy
-    end
     render :partial => 'chat/userlist', :layout => false
   end
 

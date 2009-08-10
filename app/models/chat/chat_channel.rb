@@ -9,16 +9,16 @@ class ChatChannel < ActiveRecord::Base
 
   has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all
 
+  def self.cleanup!
+    users_just_left = ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 1 MINUTE)", Time.now.utc.to_s(:db)])
+    users_just_left.each do |ex_user|
+      ChatMessage.new(:channel => ex_user.channel, :sender => ex_user.user, :content => :left_the_chatroom.t, :level => 'sys').save
+      ex_user.destroy
+    end
+  end
+
   def latest_messages(time = nil)
     time ||= 1.day.ago.to_s(:db)
     messages.find(:all, :conditions => ["created_at > ?", time], :order => 'created_at DESC').reverse
-  end
-
-  def users_just_left
-    ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 30 SECOND) AND channel_id = ?", Time.now.utc.to_s(:db), self.id])
-  end
-
-  def active_channel_users
-    @active_channel_users = ChatChannelsUser.find_by_sql(["SELECT * FROM channels_users cu WHERE cu.last_seen >= ? AND cu.channel_id = ?", 30.seconds.ago.to_s(:db), self.id])
   end
 end
