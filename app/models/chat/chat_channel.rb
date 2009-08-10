@@ -16,7 +16,7 @@ class ChatChannel < ActiveRecord::Base
   def self.cleanup!
     users_just_left = ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 1 MINUTE)", Time.now.utc.to_s(:db)])
     users_just_left.each do |ex_user|
-      ChatMessage.new(:channel => ex_user.channel, :sender => ex_user.user, :content => :left_the_chatroom.t, :level => 'sys').save
+      ChatMessage.create(:channel => ex_user.channel, :sender => ex_user.user, :content => :left_the_chatroom.t, :level => 'sys')
       ex_user.destroy
     end
   end

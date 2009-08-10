@@ -150,19 +150,19 @@ class ChatController < ApplicationController
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)
     #say = say.gsub(":)", "<img src='../images/emoticons/smiley.png' \/>")
-    ChatMessage.new(:channel => channel, :content => say, :sender => user).save
+    ChatMessage.create(:channel => channel, :content => say, :sender => user)
   end
 
   def user_action_in_channel(user, channel, say)
-    ChatMessage.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
+    ChatMessage.create(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action')
   end
 
   def user_joins_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys')
   end
 
   def user_leaves_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys')
   end
 
   def sanitize(say)
