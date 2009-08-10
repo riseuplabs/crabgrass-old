@@ -2,8 +2,8 @@
 
 <p>To keep the site safe for everyone, we are asking for a little more information about all our users. We will only ask once, but filling out the information is required. Don't worry, we haven't changed the privacy policy and still carefully protect all our users' information.</p>
 
-<p>Many thanks!<br/>
-{site_name} team.</p>][:missing_info_introduction_text, {:user_name => @user.display_name, :site_name => current_site.name}] %></p>
+<p>Thanks,<br/>
+The {site_name} team.</p>][:missing_info_introduction_text, {:user_name => @user.display_name, :site_name => current_site.name}] %></p>
 
 <div class="missing_info">
   <% form_for(:user, current_user, :html => {:id => 'signup_form'}) do |user| -%>
