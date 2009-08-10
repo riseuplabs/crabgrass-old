@@ -7,7 +7,11 @@ class ChatChannel < ActiveRecord::Base
 
   has_many :users, :order => 'login asc', :through => :channels_users
 
-  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all
+  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all do
+    def since(last_seen_id)
+      find(:all, :conditions => ['id > ?', last_seen_id])
+    end
+  end
 
   def self.cleanup!
     users_just_left = ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 1 MINUTE)", Time.now.utc.to_s(:db)])
