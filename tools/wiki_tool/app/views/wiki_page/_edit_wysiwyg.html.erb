@@ -5,7 +5,7 @@
 <% content_for :script do -%>
   bkLib.onDomLoaded(function() {
     new nicEditor({
-      buttonList : ['bold','italic','underline','strikeThrough','subscript','superscript','ol','ul','indent','outdent','fontFormat','link','unlink','image','removeformat','html'],
+      buttonList : ['bold','italic','underline','strikeThrough', 'ol','ul','indent','outdent','fontFormat','link','unlink','image','removeformat','html'],
       iconsPath : '<%= javascript_path "as_needed/nicedit/nicEditorIcons.gif" %>'
     }).panelInstance('wysiwyg_<%= wiki_body_id(@wiki) %>');
   });
