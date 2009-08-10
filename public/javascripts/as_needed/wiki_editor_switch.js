@@ -10,9 +10,7 @@ function updateEditor(response, editor, id) {
     content = getBackNewLines(response.responseJSON.wysiwyg);
     nicEditors.findEditor("wysiwyg_" + id).setContent(content);
     
-    /* fix a bug in nicEdit which don't re-size it weel if it is instantiated inside a hidden div */
-    $$("#wysiwyg_container > div").invoke('setStyle', {width: '100%'});
-    $$("div.nicEdit-main")[0].setStyle({width: 'auto'});
+    editor = nicEditors.findEditor("wysiwyg_" + id);
   }
 
   if(response.responseJSON.greencloth) {
