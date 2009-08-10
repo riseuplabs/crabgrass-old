@@ -11,7 +11,7 @@ module ChatHelper
   end
 
   def set_time_and_name_script
-    %(time_and_name = '#{message_time_and_name(Time.now, @user.name)}';)
+    %(time_and_name = '#{message_time_and_name(Time.zone.now, @user.name)}';)
   end
 
   def scroll_conversation_script
@@ -32,7 +32,7 @@ module ChatHelper
 
   def num_active_in_channel(group_id)
     channel = ChatChannel.find_by_group_id(group_id)
-    channel ? "(#{channel.active_channel_users.length})" : "(0)"
+    channel ? "(#{channel.users.length})" : "(0)"
   end
 
 end
