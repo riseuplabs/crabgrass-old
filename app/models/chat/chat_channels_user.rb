@@ -8,7 +8,11 @@ class ChatChannelsUser < ActiveRecord::Base
     return (self.status? and self.status > 0)
   end
 
- def record_user_action(action = nil)
+  def join_message
+    channel.messages.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", user.id])
+  end
+
+  def record_user_action(action = nil)
     # tell the database that is user is still in the channel, decrement is_typing
     state = self.status ? self.status : Integer(0)
 

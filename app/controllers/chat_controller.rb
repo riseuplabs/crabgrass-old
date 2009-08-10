@@ -31,12 +31,10 @@ class ChatController < ApplicationController
   # http request front door
   # everything else is xhr request.
   def channel
-    #unless @channel.users.include?(@user)
-      user_joins_channel(@user, @channel)
-    #end
+    user_joins_channel(@user, @channel)
     @channel_user.record_user_action :not_typing
-    @messages = @channel.latest_messages
-    session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
+    @messages = [@channel_user.join_message]
+    session[:last_retrieved_message_id] = @messages.last.id
     @html_title = Time.zone.now.strftime('%Y.%m.%d')
   end
 
@@ -80,7 +78,6 @@ class ChatController < ApplicationController
     return false unless request.xhr?
 
     # get latest messages, update id of last seen message
-    session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
 

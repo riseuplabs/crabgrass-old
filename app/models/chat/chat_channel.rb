@@ -20,9 +20,4 @@ class ChatChannel < ActiveRecord::Base
       ex_user.destroy
     end
   end
-
-  def latest_messages(time = nil)
-    time ||= 1.day.ago.to_s(:db)
-    messages.find(:all, :conditions => ["created_at > ?", time], :order => 'created_at DESC').reverse
-  end
 end
