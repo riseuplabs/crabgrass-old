@@ -12,6 +12,12 @@ redgreen (optional but recommended, redgreen colorizes test output)
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
+== Important Rules When Writing Tests
+
+(1) NEVER destroy a page that has been loaded from fixtures. This will mess up subsequent tests. Why? Because page_terms table cannot use transactions and so doesn't get rolled back.
+
+(2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
+
 == Integration Tests
 
 Run 'rake db:fixtures:load RAILS_ENV=test' before running integration tests. Otherwise they will not work. Instead of fixtures, integration tests expect the whole database to be ready.
@@ -28,7 +34,7 @@ more information. To run the tests for these special plugins:
   rake test:tools:all
   rake test:mods:all
 
-You can replace 'all' with 'units' or 'functionals'. 
+You can replace 'all' with 'units' or 'functionals'.
 
 To run the test for a particular tool or mod:
 
@@ -37,7 +43,7 @@ To run the test for a particular tool or mod:
 
 == Tests and Sites
 
-When running tests, the request host is 'test.host'. There is a site with this domain setup in the fixtures. Normally, it is not enabled. 
+When running tests, the request host is 'test.host'. There is a site with this domain setup in the fixtures. Normally, it is not enabled.
 
 To run a test case with some site set, use enable_site_testing(site_fixture) in the setup method and disable_site_testing in teardown.
 

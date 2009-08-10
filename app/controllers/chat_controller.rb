@@ -21,11 +21,7 @@ class ChatController < ApplicationController
       @groups = current_user.all_groups
       channel_users = {}
       @groups.each do |group|
-        if group.chat_channel
-          channel_users[group] = group.chat_channel.active_channel_users.size
-        else
-          channel_users[group] = 0
-        end
+        channel_users[group] = group.chat_channel ? group.chat_channel.users.size : 0
       end
       @group_array = channel_users.sort {|a,b| a[1] <=> b[1]}
       @group_array.reverse!
@@ -35,13 +31,11 @@ class ChatController < ApplicationController
   # http request front door
   # everything else is xhr request.
   def channel
-    #unless @channel.users.include?(@user)
-      user_joins_channel(@user, @channel)
-    #end
+    user_joins_channel(@user, @channel)
     @channel_user.record_user_action :not_typing
-    @messages = @channel.latest_messages
-    session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
-    @html_title = Time.now.strftime('%Y.%m.%d')
+    @messages = [@channel_user.join_message]
+    session[:last_retrieved_message_id] = @messages.last.id
+    @html_title = Time.zone.now.strftime('%Y.%m.%d')
   end
 
   # Post a user's message to a channel
@@ -58,16 +52,13 @@ class ChatController < ApplicationController
       logger.info(command)
       case command
       when 'me'
-        user_action_in_channel(@user, @channel, arguments)
-        @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+        @message = user_action_in_channel(@user, @channel, arguments)
       else
         return false
       end
     else
-      user_say_in_channel(@user, @channel, message)
-      @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+      @message = user_say_in_channel(@user, @channel, message)
     end
-
     @channel_user.record_user_action :just_finished_typing
 
     render :layout => false
@@ -84,7 +75,6 @@ class ChatController < ApplicationController
     return false unless request.xhr?
 
     # get latest messages, update id of last seen message
-    session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
 
@@ -94,10 +84,6 @@ class ChatController < ApplicationController
   end
 
   def user_list
-    @channel.users_just_left.each do |ex_user|
-      user_leaves_channel(ex_user.user, @channel)
-      ex_user.destroy
-    end
     render :partial => 'chat/userlist', :layout => false
   end
 
@@ -163,19 +149,19 @@ class ChatController < ApplicationController
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)
     #say = say.gsub(":)", "<img src='../images/emoticons/smiley.png' \/>")
-    ChatMessage.new(:channel => channel, :content => say, :sender => user).save
+    ChatMessage.create(:channel => channel, :content => say, :sender => user)
   end
 
   def user_action_in_channel(user, channel, say)
-    ChatMessage.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
+    ChatMessage.create(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action')
   end
 
   def user_joins_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys')
   end
 
   def user_leaves_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys')
   end
 
   def sanitize(say)

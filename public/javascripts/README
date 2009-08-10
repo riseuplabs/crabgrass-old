@@ -1,0 +1,40 @@
+There are three kinds of javascript files:
+
+  main: loaded for every request
+  extra: a bundle of fancy effects, like drag and drop.
+  as_needed: these are loaded on a per controller basis, using the 'javascript' method.
+
+The as_needed and extra scripts are loaded like so:
+
+  class MyController < ApplicationController
+    javascript :tasks, :wiki
+    javascript :extra, :action => :index
+  end
+
+The main and extra script files are defined by these constants:
+
+  MAIN_JS = ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']
+
+  EXTRA_JS = ['dragdrop', 'builder', 'slider']
+
+These are defined in layout_helper.rb and in lib/tasks/minify.rb. The order determines what order
+the files are loaded in. In the future, it would be good to have these constants defined in one place.
+
+If you modify any of these files, make sure to run this command:
+
+  rake minify
+
+This will generate main.js.gz and extra.js.gz. These are minified and compressed combinations of all
+the javascript files defined by MAIN_JS and EXTRA_JS.
+
+In order to use these file correctly, you should configure apache like so:
+
+  AddEncoding gzip .gz
+  RewriteCond %{HTTP:Accept-encoding} gzip
+  RewriteCond %{HTTP_USER_AGENT} !Safari
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.*)$ $1.gz [QSA,L]
+
+More details can be found in the minify.rb file. In order to run minify, you must have java installed.
+
+

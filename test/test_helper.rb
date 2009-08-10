@@ -97,16 +97,20 @@ class Test::Unit::TestCase
 
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
-  def assert_permission_denied
-    assert_equal 'error', flash[:type], 'missing "permission denied" message'
-    assert_equal 'Permission Denied', flash[:title], 'missing "permission denied" message'
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+  def assert_permission_denied(message='missing "permission denied" message')
+    if flash[:type]
+      assert_equal 'error', flash[:type], message
+      assert_equal 'Permission Denied', flash[:title], message
+      assert_response :redirect
+      assert_redirected_to :controller => :account, :action => :login
+    else
+      assert_select "div.title_box h1", "Permission Denied", message
+    end
   end
 
-  def assert_login_required
-    assert_equal 'info', flash[:type], 'missing "login required" message'
-    assert_equal 'Login Required', flash[:title], 'missing "login required" message'
+  def assert_login_required(message='missing "login required" message')
+    assert_equal 'info', flash[:type], message
+    assert_equal 'Login Required', flash[:title], message
     assert_response :redirect
     assert_redirected_to :controller => :account, :action => :login
   end

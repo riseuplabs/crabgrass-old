@@ -14,6 +14,7 @@
     <td colspan="2"><h2 class="first"><%= 'Recipients'[:recipients] %></h2></td>
   </tr>
 
+% if @page.contributors.any?
   <tr>
     <td class="check"><%= check_box :ignored, :notify_contributors, :onClick => "$('notify_contributor_area').toggle();" + resize_modal %></td>
     <td><%= label :ignored, :notify_contributors, '<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page.'[:notify_contribution] %></td>
@@ -26,6 +27,7 @@
       </div>
     </td>
   </tr>
+% end
 
   <tr class='gap'>
     <td class="check"><%= check_box :ignored, :notify_current_access, { :onClick => "$('notify_current_access_area').toggle();" + resize_modal }%></td>

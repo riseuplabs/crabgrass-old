@@ -78,8 +78,6 @@ module AuthenticatedSystem
       self.current_user ||= User.authenticate(username, passwd) || UnauthenticatedUser.new if username && passwd
       User.current = current_user
       logged_in? && authorized? ? true : access_denied
-    rescue ErrorMessage => exc
-      render_error(exc)
     end
 
     # Redirect as appropriate when an access request fails.
@@ -91,28 +89,7 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      respond_to do |format|
-        # rails defaults to first format if params[:format] is not set
-        format.html do
-          flash_auth_error(:later)
-          redirect_to :controller => '/account', :action => 'login',
-            :redirect => request.request_uri
-        end
-        format.js do
-          flash_auth_error(:now)
-          render :update do |page|
-            page.replace_html 'message', display_messages
-            page << 'window.location.hash = "message"'
-          end
-        end
-        format.xml do
-          headers["Status"]           = "Unauthorized"
-          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => "Could not authenticate you", :status => '401 Unauthorized'
-        end
-      end
-
-      false
+      raise PermissionDenied
     end
 
     # Store the URI of the current request in the session.
@@ -156,21 +133,6 @@ module AuthenticatedSystem
     auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
     auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
     return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
-  end
-
-
-  def flash_auth_error(mode)
-    if mode == :now
-      flsh = flash.now
-    else
-      flsh = flash
-    end
-
-    if logged_in?
-      add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
-    else
-      add_flash_message(flsh, :title => 'Login Required'[:login_required], :success => 'Please login to perform that action.'[:login_required_description])
-    end
   end
 
 end
