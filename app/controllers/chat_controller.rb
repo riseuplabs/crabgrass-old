@@ -52,14 +52,13 @@ class ChatController < ApplicationController
       logger.info(command)
       case command
       when 'me'
-        user_action_in_channel(@user, @channel, arguments)
+        @message = user_action_in_channel(@user, @channel, arguments)
       else
         return false
       end
     else
-      user_say_in_channel(@user, @channel, message)
+      @message = user_say_in_channel(@user, @channel, message)
     end
-    @message = @channel_user.my_latest_message
     @channel_user.record_user_action :just_finished_typing
 
     render :layout => false
