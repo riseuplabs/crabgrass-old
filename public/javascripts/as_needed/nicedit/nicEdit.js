@@ -985,7 +985,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				}	
 			}
 		}
-		new bkElement('input').setAttributes({'type' : 'submit'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
+		new bkElement('input').setAttributes({'type' : 'submit', 'value' : 'OK'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
 		this.form.onsubmit = bkLib.cancelEvent;	
 	},
 	
