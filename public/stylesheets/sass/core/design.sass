@@ -260,9 +260,9 @@ div#top_menu
       text-transform: capitalize
 
   // the navigation bar
-  ul
+  ul.navbar
     margin: 0
-    padding: 0
+    padding-bottom: 0.25em
     list-style: none
     width: auto
 
@@ -292,17 +292,17 @@ div#top_menu
       display: block
       font-weight: 400
       border-right: none
-      border-left: 1px solid #D4E3F5
-      border-top: 1px solid #D4E3F5
-      border-bottom: 1px solid #89BBEC
-      background: #FBFDFF
+      background-color: #FBFDFF
+      border-color: #D4E3F5 #D4E3F5 #89BBEC #D4E3F5
+      border-style: solid none solid solid
+      border-width: 1px
       font-weight: bold
       //!navbar_border_color
       color= #4978BC
       padding= !menu_item_padding
       text-transform: capitalize
       &:hover
-        background: #F6FAFF
+        background-color: #F6FAFF
 
 //
 // INFO_BOX
