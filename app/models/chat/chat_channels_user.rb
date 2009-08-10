@@ -1,6 +1,7 @@
 class ChatChannelsUser < ActiveRecord::Base
   set_table_name 'channels_users'
 
+  belongs_to :chat_channel
   belongs_to :channel, :class_name => 'ChatChannel', :foreign_key => 'channel_id'
   belongs_to :user
 
