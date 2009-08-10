@@ -1195,7 +1195,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			'' : {type : 'title', txt : 'Add/Edit Link'},
 			'href' : {type : 'text', txt : 'URL', value : 'http://', style : {width: '150px'}},
 			'title' : {type : 'text', txt : 'Title'},
-			'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
+			//'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
 		},this.ln);
 	},
 	
