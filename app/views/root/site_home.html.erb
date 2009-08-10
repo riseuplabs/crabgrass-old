@@ -85,6 +85,15 @@ form.mini_search table {
 }
 <% end %>
 
+<% content_for :html_head do %>
+  <!--[if lt IE 7.]> 
+    <%= javascript_tag("
+      onHashChanged = showTabByHash;
+      defaultHash = defaultHash || 'featured';
+    ") %>
+  <![endif]--> 
+<% end %>
+
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
@@ -100,8 +109,7 @@ form.mini_search table {
   </td>
 </tr>
 </table>
-Links
-<ul>
+<ul class="navbar">
   <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
 </ul>
 &nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
