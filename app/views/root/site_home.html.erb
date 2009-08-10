@@ -85,6 +85,15 @@ form.mini_search table {
 }
 <% end %>
 
+<% content_for :html_head do %>
+  <!--[if lt IE 7.]> 
+    <%= javascript_tag("
+      onHashChanged = showTabByHash;
+      defaultHash = defaultHash || 'featured';
+    ") %>
+  <![endif]--> 
+<% end %>
+
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
