@@ -20,7 +20,6 @@ div.popup_arrow {right: -16px} /* move popup nub slightly */
 
 /* page list */
 div.page_scroll {
-  width: 99.9%;
   zoom: 1;
 }
 div.page_list {zoom: 1;}
