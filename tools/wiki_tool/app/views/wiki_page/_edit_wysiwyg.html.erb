@@ -6,15 +6,16 @@
   bkLib.onDomLoaded(function() {
     new nicEditor({
       buttonList : ['bold','italic','underline','strikeThrough', 'ol','ul','indent','outdent','fontFormat','link','unlink','image','removeformat','html'],
-      iconsPath : '<%= javascript_path "as_needed/nicedit/nicEditorIcons.gif" %>'
-    }).panelInstance('wysiwyg_<%= wiki_body_id(@wiki) %>');
+      iconsPath : '<%= javascript_path "as_needed/nicedit/nicEditorIcons.gif" %>',
+      onImgButtonClick : function() {<%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>}
+    }).panelInstance('<%= wiki_editor_id(@wiki) %>');
   });
 <% end -%>
 
 <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
   <%= hidden_field 'wiki', 'version' %>
   <div id="wysiwyg_container">
-    <textarea name="wiki[body_wysiwyg]" style="width:100%; height:435px" id="wysiwyg_<%= wiki_body_id(@wiki) %>"></textarea>
+    <textarea name="wiki[body_wysiwyg]" style="width:100%; height:435px" id="<%= wiki_editor_id(@wiki) %>"></textarea>
   </div>
   <div>
    <% if locked_for_me? -%>

@@ -5,7 +5,6 @@ document.observe('dom:loaded', function() {
 <% end -%>
 <% @show_posts = false -%>
 <% locked_error_message -%>
-<div id='<%= image_popup_id(@wiki) %>' class='image_popup' style='display:none'></div>
 <div class='formbox'>
   <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
    <%= hidden_field 'wiki', 'version' %>

@@ -1,34 +1,36 @@
 //
 // Wysiwyg / GreenCloth Wiki Editors
 //
-function updateEditor(response, editor, id) {
+
+function updateEditor(response, tab, id) {
   if(response.status != 200)
     return false;
 
-  /* Update editors as needed */
-  if(response.responseJSON.wysiwyg) {
+  var content  = "";
+  var editor   = nicEditors.findEditor("wiki_editor-" + id);
+  var textarea = $("wiki_body-" + id);
+  var preview  = $("wiki_preview-" + id);
+
+  if (response.responseJSON.wysiwyg) {
     content = getBackNewLines(response.responseJSON.wysiwyg);
-    nicEditors.findEditor("wysiwyg_" + id).setContent(content);
+    editor.setContent(content);
+  }
+  if (response.responseJSON.greencloth) {
+    content = getBackNewLines(response.responseJSON.greencloth);
+    textarea.setValue(content);
+  }
+  if (response.responseJSON.preview) {
+    content = getBackNewLines(response.responseJSON.preview);
+    preview.update(content);
   }
 
-  if(response.responseJSON.greencloth) {
-    content = getBackNewLines(response.responseJSON.greencloth);
-    $(id).setValue(content);
-  }  
-
-  if(response.responseJSON.preview) {
-    content = getBackNewLines(response.responseJSON.preview);
-    $("preview_" + id).innerHTML = content;
-  }  
-
-  /* Switch to correspondant tab */
-  if(editor == 'greencloth') {
+  if (tab == 'greencloth') {
     showTab($('link-tab-greencloth'), $('tab-edit-greencloth'));
-  } 
-  else if(editor == 'wysiwyg') {
+  }
+  else if (tab == 'wysiwyg') {
     showTab($('link-tab-wysiwyg'), $('tab-edit-wysiwyg'));
   }
-  else if(editor == 'preview') {
+  else if (tab == 'preview') {
     showTab($('link-tab-preview'), $('tab-edit-preview'));
   }
 }
@@ -38,7 +40,7 @@ function getBackNewLines(str) {
 }
 
 function getActiveTabLink() {
-  return $$('li.tab a.active')[0];
+  return $$('ul.simple_tabset a.active')[0];
 }
 
 function isTabSelected(link) {
@@ -48,15 +50,38 @@ function isTabSelected(link) {
     return false;
 }
 
-function getCurrentEditorContents(wiki_body_id) {
-  var tab = getActiveTabLink(); 
+function getCurrentEditorContents(wiki_id) {
+  var tab = getActiveTabLink();
 
   switch(tab.id) {
     case 'link-tab-wysiwyg':
-      return "wiki[body_wysiwyg]=" + nicEditors.findEditor("wysiwyg_" + wiki_body_id).getContent();
+      return $H({'wiki[body_wysiwyg]': nicEditors.findEditor("wiki_editor-" + wiki_id).getContent()}).toQueryString();
       break;
     case 'link-tab-greencloth':
-      return Form.Element.serialize(wiki_body_id);
+      return $('wiki_body-'+wiki_id).serialize();
       break;
   }
 }
+
+
+//
+// A generic nicedit button that calls a js function.
+//
+
+var nicFunctionButton = nicEditorButton.extend({
+  mouseClick : function() {
+    this.ne.options[this.options.function]();
+  }
+});
+
+//
+// nicEdit plugin for crabgrass image popup
+//
+
+var nicCgImageOptions = {
+  buttons: {
+    image: {name: 'Add Image', type: 'nicFunctionButton', function: 'onImgButtonClick'}
+  }
+};
+nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
+

@@ -1,0 +1,58 @@
+<% render :partial => 'tabs' %>
+
+<%
+  active_tab = 'plain' # perhaps this can be stored in user settings
+  #wiki_id = wiki_body_id(@wiki)
+%>
+<%= Formy.tabs(:style => :simple) do |f|
+  f.tab do |t|
+    t.id       "link-tab-greencloth"
+    t.selected active_tab == 'plain'
+    t.label    "Plain Editor"[:wiki_plain_editor]
+    t.function remote_function(:url       => page_xurl(@page, :action => 'update_editors'),
+                               :method    => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with      => "getCurrentEditorContents('%s')" % @wiki.id,
+                               :loading   => "showTab('link-tab-greencloth', 'tab-edit-loading')",
+                               :complete  => "updateEditor(request, 'greencloth', '%s')" % @wiki.id)
+  end
+  f.tab do |t|
+    t.id       "link-tab-wysiwyg"
+    t.selected active_tab == 'visual'
+    t.label    "Visual Editor"[:wiki_visual_editor]
+    t.function remote_function(:url       => page_xurl(@page, :action => 'update_editors'),
+                               :method    => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with      => "getCurrentEditorContents('%s')" % @wiki.id,
+                               :loading   => "showTab('link-tab-wysiwyg', 'tab-edit-loading')",
+                               :complete  => "updateEditor(request, 'wysiwyg', '%s')" % @wiki.id)
+  end
+  f.tab do |t|
+    t.id       "link-tab-preview"
+    t.label    "Preview"[:preview]
+    t.class    "page_url"
+    t.function remote_function(:url       => page_xurl(@page, :action => 'update_editors'),
+                               :method    => :post,
+                               :condition => "isTabSelected(this) == false",
+                               :with      => "getCurrentEditorContents('%s')" % @wiki.id,
+                               :loading   => "showTab('link-tab-preview', 'tab-edit-loading')",
+                               :complete  => "updateEditor(request, 'preview', '%s')" % @wiki.id)
+  end
+end %>
+
+<div id="tab-edit-greencloth" class="tab_content">
+  <%= render :partial => "edit_greencloth" %>
+</div>
+
+<div id="tab-edit-wysiwyg" class="tab_content" style="display:none">
+  <%= render :partial => "edit_wysiwyg" %>
+</div>
+
+<div id="tab-edit-preview" class="tab_content" style="display:none">
+  <div id="wiki_preview-<%= @wiki.id %>"></div>
+</div>
+
+<div id="tab-edit-loading" class="tab_content" style="display:none">
+  <%= big_spinner %>
+</div>
+
