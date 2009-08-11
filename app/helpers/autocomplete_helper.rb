@@ -10,6 +10,7 @@ module AutocompleteHelper
         maxHeight:400,
         width:300,
         onSelect: #{options[:onselect]},
+        message: '#{options[:message]}',
         rowRenderer: #{render_entity_row_function},
         selectValue: #{extract_value_from_entity_row_function}
       }, #{autocomplete_id_number});
