@@ -1006,6 +1006,10 @@ wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
 wiki_section_edit: "Edit This Section"
 wiki_revert_version: "Revert To Version {version}"
 
+wiki_plain_editor: "Plain Editor"
+wiki_visual_editor: "Visual Editor"
+preview: "Preview"
+
 ##
 ## WALL
 ##

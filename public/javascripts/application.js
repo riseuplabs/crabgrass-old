@@ -68,17 +68,32 @@ function activeRadioValue(name) {
 }
 
 function insertImage(wikiId) {
+  var editor = nicEditors.findEditor('wiki_editor-' + wikiId);
+  var textarea = $('wiki_body-' + wikiId);
+
   try {
     var assetId = activeRadioValue('image');
     var link = $('link_to_image').checked;
     var size = activeRadioValue('image_size');
     var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
     var url = thumbnails[size];
-    var insertText = '\n!' + url + '!';
-    if (link)
-      insertText += ':' + thumbnails['full'];
-    insertText += '\n';
-    insertAtCursor(wikiId, insertText);
+    if (editor && isTabVisible(editor.elm)) {
+      if (link) {
+// it is complicated
+// http://codingforums.com/showthread.php?t=66832
+//        editor.nicCommand('createLink','xxx');
+//        var atag = editor.elm.select('a')[0];
+//        atag.setAttributes({href:thumbnails['full'], title:url});
+      } else {
+        editor.nicCommand('insertImage', url);
+      }
+    } else if (textarea && isTabVisible(textarea)) {
+      var insertText = '\n!' + url + '!';
+      if (link)
+        insertText += ':' + thumbnails['full'];
+      insertText += '\n';
+      insertAtCursor(textarea, insertText);
+    }
   } catch(e) {}
 }
 
@@ -171,11 +186,11 @@ function evalAttributeOnce(element, attribute) {
 }
 
 function showTab(tabLink, tabContent, hash) {
+  tabLink = $(tabLink);
+  tabContent = $(tabContent);
   tabset = tabLink.parentNode.parentNode
-  $$('ul.tabset a').each( function(elem) {
-    if (tabset == elem.parentNode.parentNode) {elem.removeClassName('active');}
-  })
-  $$('.tab_content').each( function(elem) {elem.hide();})
+  tabset.select('a').invoke('removeClassName', 'active');
+  $$('.tab_content').invoke('hide');
   tabLink.addClassName('active');
   tabContent.show();
   evalAttributeOnce(tabContent, 'onclick');
@@ -193,6 +208,11 @@ function showTabByHash() {
     tabLink = $(hash + '_link');
     showTab(tabLink, tabContent)
   }
+}
+
+// returns true if the element is in a tab content area that is visible.
+function isTabVisible(elem) {
+  return $(elem).ancestors().find(function(e){return e.hasClassName('tab_content') && e.visible();})
 }
 
 //
@@ -287,4 +307,3 @@ function loginDialog(txt,options) {
   form = form.interpolate(txt);
   Modalbox.show(form, {title:txt.login, width:350});
 }
-
