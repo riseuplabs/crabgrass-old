@@ -20,11 +20,11 @@ module MenuHelper
   def navbar_menu(id, label, url, options={})
     menu_heading = content_tag(:span,
       link_to_active(label, url, options[:active]),
-      :class => 'navbar'
+      :class => 'navbar_item'
     )
     content_tag(:li,
       [menu_heading, options[:menu_items]].combine("\n"),
-      :class => ['menu', (options[:active] && 'active')].combine,
+      :class => 'navbar_menu',
       :id => id
     )
   end

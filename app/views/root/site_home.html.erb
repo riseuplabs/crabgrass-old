@@ -84,15 +84,18 @@ form.mini_search table {
   margin-right: 1em;
 }
 <% end %>
+<% content_for :script do -%>
+     <%= "onHashChanged = showTabByHash;" %>
+<% end -%>
 
-<% if @show_featured %>
-<% content_for :html_head do %>
-    <script type="text/javascript"> 
-      onHashChanged = showTabByHash;
-      defaultHash = defaultHash || 'featured';
+<% default_hash = @show_featured ? 'featured' : 'recent-pages' -%>
+<% content_for :html_head do -%>
+  <!--[if IE]>
+    <script type="text/javascript">
+      defaultHash = defaultHash || '<%= default_hash %>';
     </script>
-<% end %>
-<% end %>
+  <![endif]--> 
+<% end -%>
 
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
@@ -158,12 +161,6 @@ form.mini_search table {
     t.show_tab 'most_stars_panel'
   end
 end %>
-
-<% content_for :tail do %>
- <%# this activates the correct tab based on the window.location.hash.
-     onHashChanged() is called whenever location.hash changes. %>
- <%= javascript_tag("onHashChanged = showTabByHash") %>
-<% end %>
 
 <div class="page_scroll rigid">
 
