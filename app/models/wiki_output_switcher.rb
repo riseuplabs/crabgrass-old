@@ -8,8 +8,9 @@ class WikiOutputSwitcher
 
     @response = {}
     if @params[:body]
-      @response[:wysiwyg] = GreenCloth.new(@params[:body]).to_html
-      @response[:preview] = @response[:wysiwyg] 
+      html = GreenCloth.new(@params[:body]).to_html
+      @response[:wysiwyg] = UglifyHtml.new(html).make_ugly
+      @response[:preview] = html
     elsif @params[:body_wysiwyg]
       @response[:greencloth] = Undress(@params[:body_wysiwyg]).to_greencloth
       @response[:preview] = GreenCloth.new(@response[:greencloth]).to_html 
