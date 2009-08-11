@@ -222,11 +222,25 @@ Autocomplete.prototype = {
   },
 
   filterResponse: function(response) {
-    var re = new RegExp('[\\s\+>]' + this.currentValue.match(/\w+/g).join('|\\s\+>'), 'gi');
     var suggest=[];
     var dat=[];
+    /* Building an array of regular expressions.
+     * Each of them has to be matched by the response.
+     * They all represent one search term.
+     * They are prefixed by [\s\+>^] because we are
+     * looking for words outsite the tags.
+     */
+    var terms = this.currentValue.match(/\w+/g);
+    var reg_exp_ar = [];
+    terms.each( function(term, i) {
+      reg_exp_ar.push(new RegExp('[\\s\\+>^_-]' + term, 'i'));
+    });
     response.suggestions.each( function(value, i) {
-      if (value.match(re)) {
+      var tests_left = reg_exp_ar.length
+      while (value.match(reg_exp_ar[tests_left-1])) {
+        tests_left--;
+      }
+      if (tests_left == 0) {
         suggest.push(value);
         dat.push(response.data[i]);
       }
