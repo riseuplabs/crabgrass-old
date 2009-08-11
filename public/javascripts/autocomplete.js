@@ -24,6 +24,7 @@ var Autocomplete = function(el, options, id){
   this.instanceId = null;
   this.onChangeInterval = null;
   this.ignoreValueChange = false;
+  this.messageDisplayed = false;
   this.serviceUrl = options.serviceUrl;
   this.options = {
     autoSubmit:false,
@@ -31,7 +32,8 @@ var Autocomplete = function(el, options, id){
     maxHeight:300,
     deferRequestBy:0,
     width:0,
-    container:null
+    container:null,
+    message:""
   };
   if(options){ Object.extend(this.options, options); }
   if(Autocomplete.isDomLoaded){
@@ -87,9 +89,15 @@ Autocomplete.prototype = {
     Event.observe(this.el, window.opera ? 'keypress':'keydown', this.onKeyPress.bind(this));
     Event.observe(this.el, 'keyup', this.onKeyUp.bind(this));
     Event.observe(this.el, 'blur', this.enableKillerFn.bind(this));
+    Event.observe(this.el, 'click', this.clearMessage.bind(this));
     /* If we have preloaded data we might want to display it on focus.*/ 
     Event.observe(this.el, 'focus', this.fixPosition.bind(this));
     this.container.setStyle({ maxHeight: this.options.maxHeight + 'px' });
+    if (this.options.message != "") {
+      this.el.setStyle({ color: '#808080' });
+      this.el.value = this.options.message;
+      this.messageDisplayed=true;
+    }
     this.instanceId = Autocomplete.instances.push(this) - 1;
     /* I think we should trigger a preloading request from here */
     this.requestSuggestions("");
@@ -154,6 +162,7 @@ Autocomplete.prototype = {
       case Event.KEY_DOWN:
         return;
     }
+    this.clearMessage;
     clearInterval(this.onChangeInterval);
     if (this.currentValue !== this.el.value) {
       if (this.options.deferRequestBy > 0) {
@@ -186,6 +195,17 @@ Autocomplete.prototype = {
       this.suggest();
     }
   },
+
+  clearMessage: function() {
+    if (this.messageDisplayed) {
+      this.el.setStyle({ color: '#000000' });
+      var start = this.options.message.length;
+      var end = this.el.value.length;
+      this.el.value = this.el.value.substring(start,end);
+      this.messageDisplayed=false;
+    }
+  },
+
 
   getSuggestions: function() {
     var cr = this.cachedResponse[this.currentValue];
