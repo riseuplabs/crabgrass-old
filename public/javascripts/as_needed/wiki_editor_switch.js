@@ -9,8 +9,6 @@ function updateEditor(response, editor, id) {
   if(response.responseJSON.wysiwyg) {
     content = getBackNewLines(response.responseJSON.wysiwyg);
     nicEditors.findEditor("wysiwyg_" + id).setContent(content);
-    
-    editor = nicEditors.findEditor("wysiwyg_" + id);
   }
 
   if(response.responseJSON.greencloth) {
