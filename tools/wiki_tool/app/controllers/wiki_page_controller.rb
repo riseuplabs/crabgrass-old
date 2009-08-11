@@ -3,7 +3,7 @@ class WikiPageController < BasePageController
   include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  javascript 'wiki_edit', 'wiki_editor_switch'
   helper :wiki # for wiki toolbar stuff
   permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
@@ -50,13 +50,26 @@ class WikiPageController < BasePageController
       lock
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
-      # update
+      # update from greencloth editor || wysiwyg || preview
+      params[:wiki][:body] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth if params[:wiki][:body_wysiwyg]
+      params[:wiki][:body] = params[:wiki][:body_preview] if params[:wiki][:body_preview]
       save
     elsif request.get?
       lock
     end
   rescue WikiLockException => exc
     # do nothing
+  end
+
+  # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
+  # also handles the preview presentation for both
+  def update_editors
+    return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
+  
+    output_switcher = WikiOutputSwitcher.new(params[:wiki])
+    respond_to do |format|
+      format.json  { render :json => output_switcher.to_json }
+    end
   end
 
   def cancel

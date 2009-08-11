@@ -345,14 +345,23 @@ module Formy
 
     def open
       super
-      puts "<div style='height:1%'>" # this is to force hasLayout in ie
-      puts "<ul class='tabset #{@options['class']}'>"
+      if @options[:style] == :simple
+        puts "<ul class='simple_tabset #{@options['class']}'>"
+      else
+        puts "<div style='height:1%'>" # this is to force hasLayout in ie
+        puts "<ul class='tabset #{@options['class']}'>"
+      end
     end
 
     def close
-      @elements.each {|e| raw_puts e}
-      puts "<li></li></ul>"
-      puts "</div>"
+      if @options[:style] == :simple
+        raw_puts @elements.join('<li> | </li>')
+        puts "</ul>"
+      else
+        @elements.each {|e| raw_puts e}
+        puts "<li></li></ul>"
+        puts "</div>"
+      end
       super
     end
 

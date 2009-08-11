@@ -465,5 +465,3 @@ Modalbox.Methods = {
 };
 
 Object.extend(Modalbox, Modalbox.Methods);
-
-if(Modalbox.overrideAlert) window.alert = Modalbox.alert;

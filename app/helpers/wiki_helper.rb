@@ -22,6 +22,10 @@ module WikiHelper
     'wiki_body-%s' % wiki.id
   end
 
+  def wiki_editor_id(wiki)
+    'wiki_editor-%s' % wiki.id
+  end
+
   def wiki_toolbar_id(wiki)
     'markdown_toolbar-%s' % wiki.id
   end
@@ -92,7 +96,7 @@ module WikiHelper
   end
 
   def insert_image_function(wiki)
-    "insertImage('%s');" % wiki_body_id(wiki)
+    "insertImage('%s');" % wiki.id
   end
 
   def create_wiki_toolbar(wiki)
