@@ -60,7 +60,7 @@ class MessageWallActivity < Activity
   end
 
   def style
-    url = '/avatars/%s/%s.jpg?%s' % [author.avatar_id||0, 'tiny', author.updated_at.to_i]
+    url = '/avatars/%s/%s.jpg?%s' % [author.try.avatar_id||0, 'tiny', author.try.updated_at.to_i]
     "background-image: url(#{url});"
   end
 
