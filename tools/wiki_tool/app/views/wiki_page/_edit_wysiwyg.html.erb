@@ -5,7 +5,7 @@
 <% content_for :script do -%>
   bkLib.onDomLoaded(function() {
     new nicEditor({
-      buttonList : ['bold','italic','underline','strikeThrough', 'ol','ul','indent','outdent','fontFormat','link','unlink','image','removeformat','html'],
+      buttonList : ['bold','italic','underline','strikethrough', 'ol','ul','indent','outdent','fontFormat','link','unlink','image','removeformat','html'],
       iconsPath : '<%= javascript_path "as_needed/nicedit/nicEditorIcons.gif" %>',
       onImgButtonClick : function() {<%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>}
     }).panelInstance('<%= wiki_editor_id(@wiki) %>');
