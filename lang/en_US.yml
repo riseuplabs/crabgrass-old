@@ -206,9 +206,6 @@ login_button: "Log in"
 login: "Login"
 signup_title: "Create Your Account"
 signup_email: "Your Email"
-csrf_error_message: |
-  Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again:
-
 forgot_password_text: |
   If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
 reset_password_text: |
@@ -924,6 +921,15 @@ alert_permission_denied: "Permission Denied"
 alert_permission_denied_details: "Sorry. You do not have the ability to perform that action."
 alert_error: "Error"
 
+exception_title: "System Error"
+exception_headline: "Oops! We experienced an error."
+exception_description: "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."
+exception_back_link: "Go Back"
+exception_bug_report_link: "Submit Bug Report"
+exception_bug_report_description: "Please add a description of how you got to this page, and any additional comments"
+
+csrf_error_message: "Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again."
+
 ##
 ## RANKED VOTE
 ##
@@ -1046,8 +1052,9 @@ email_link_expires: "This link will expire in {days} days."
 ##
 ## PEOPLE (i.e., PeopleController)
 ##
-last_seen: last seen
-all: All
+
+last_seen: "last seen"
+all: "All"
 
 directory_of_people: Directory of People
 no_contacts_msg: You have no friends.
@@ -1137,3 +1144,12 @@ recently_active_groups: "Recently Active Groups"
 network_aettings: "Network Settings"
 administer_site: "Administer Site"
 edit_appearance: "Edit Appearance"
+
+##
+## MODERATION
+##
+
+flag_appropriate: "flag as appropriate"
+flag_inappropriate: "flag as inappropriate"
+confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at the it soon."
+

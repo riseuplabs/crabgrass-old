@@ -58,6 +58,8 @@ class Admin::UsersController < Admin::BaseController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  rescue Exception => exc
+    render :action => 'new'
   end
 
   # PUT /users/1

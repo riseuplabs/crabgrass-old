@@ -60,5 +60,9 @@ class Admin::PostsController < Admin::BaseController
   def set_active_tab
     @active_tab = :moderation
   end
+
+  def authorized?
+    may_moderate?
+  end
 end
 

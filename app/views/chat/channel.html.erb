@@ -2,7 +2,7 @@
 remote_url = {:controller => 'chat', :action => 'say', :id => @channel}
 
 loading_command = %(
-  msg = '<div class="message" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
+  msg = '<div class="message tmp" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
   $('entryfield').value = ''; 
   $('entryfield').focus;
   new Insertion.Bottom('stage', msg);

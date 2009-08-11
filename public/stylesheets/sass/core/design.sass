@@ -259,6 +259,51 @@ div#top_menu
     a
       text-transform: capitalize
 
+  // the navigation bar
+  ul
+    margin: 0
+    padding: 0
+    list-style: none
+    width: auto
+
+  li.menu
+    float: left
+    margin: 0
+    position: relative
+    &:last-child span.navbar a
+      border-right: 1px solid #89BBEC
+      -webkit-border-top-right-radius: 4px
+      -webkit-border-bottom-right-radius: 4px
+      -moz-border-radius-topright: 4px
+      -moz-border-radius-bottomright: 4px
+    &:first-child span.navbar a
+      -webkit-border-top-left-radius: 4px
+      -webkit-border-bottom-left-radius: 4px
+      -moz-border-radius-topleft: 4px
+      -moz-border-radius-bottomleft: 4px
+    //&:hover
+    //  background= !menu_item_active_fg_color
+    //  color= !menu_item_active_background
+
+  // the menu names
+  li.menu span.navbar
+    border: 0
+    a
+      display: block
+      font-weight: 400
+      border-right: none
+      border-left: 1px solid #D4E3F5
+      border-top: 1px solid #D4E3F5
+      border-bottom: 1px solid #89BBEC
+      background: #FBFDFF
+      font-weight: bold
+      //!navbar_border_color
+      color= #4978BC
+      padding= !menu_item_padding
+      text-transform: capitalize
+      &:hover
+        background: #F6FAFF
+
 //
 // INFO_BOX
 //
