@@ -50,8 +50,9 @@ class WikiPageController < BasePageController
       lock
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
-      # update
+      # update from greencloth editor || wysiwyg || preview
       params[:wiki][:body] = Undress(params[:wiki][:body_wysiwyg]).to_greencloth if params[:wiki][:body_wysiwyg]
+      params[:wiki][:body] = params[:wiki][:body_preview] if params[:wiki][:body_preview]
       save
     elsif request.get?
       lock

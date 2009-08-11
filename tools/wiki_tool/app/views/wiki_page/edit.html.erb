@@ -49,7 +49,7 @@ end %>
 </div>
 
 <div id="tab-edit-preview" class="tab_content" style="display:none">
-  <div id="wiki_preview-<%= @wiki.id %>"></div>
+  <%= render :partial => "edit_preview" %>
 </div>
 
 <div id="tab-edit-loading" class="tab_content" style="display:none">
