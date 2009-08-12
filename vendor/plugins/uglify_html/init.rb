@@ -1,0 +1,1 @@
+require 'uglify_html'

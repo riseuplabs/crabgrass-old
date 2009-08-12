@@ -65,7 +65,7 @@ class WikiPageController < BasePageController
   # also handles the preview presentation for both
   def update_editors
     return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
-  
+
     output_switcher = WikiOutputSwitcher.new(params[:wiki])
     respond_to do |format|
       format.json  { render :json => output_switcher.to_json }
