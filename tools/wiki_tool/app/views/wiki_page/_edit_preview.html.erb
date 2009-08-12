@@ -1,4 +1,4 @@
-<div id="wiki_preview-<%= @wiki.id %>"></div>
+<div class="wiki" id="wiki_preview-<%= @wiki.id %>"></div>
 
 <% form_tag(page_xurl(@page, :action => 'edit'), :onsubmit => "$('greencloth_previewed_content').setValue($('#{wiki_body_id(@wiki)}').getValue())") do -%>
   <%= hidden_field 'wiki', 'version' %>
