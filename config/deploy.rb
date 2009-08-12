@@ -39,6 +39,7 @@ set :copy_strategy, :checkout
 set :copy_exclude, [".git"]
 
 set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)
+set :git_enable_submodules, 1
 set :keep_releases, 3
 
 ssh_options[:paranoid] = false
