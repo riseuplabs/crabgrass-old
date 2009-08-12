@@ -1,4 +1,6 @@
-<% @title_box = content_tag :h1, 'Chat Archive'[:chat_archive_headline] %>
+<%
+ymd = "#{@year}-#{@month}-#{@day}" if @day
+ @title_box = content_tag :h1, 'Chat Archive'[:chat_archive_headline] + " - #{ymd}"  %>
 
 <% if !@months.empty? and !@messages -%>
 <blockquote>

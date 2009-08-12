@@ -1,8 +1,5 @@
-<div>
-  <table>
-      <%- @messages.each do |m| -%>
-        <tr><td><%= m %></td></tr>
-      <%- end -%>
-  </table>
+<div id="conversation_archive">
+  <% for message in @messages -%>
+    <%= message_content(message) %>
+  <% end -%>
 </div>
-
