@@ -11,6 +11,7 @@ module AutocompleteHelper
         width:300,
         onSelect: #{options[:onselect]},
         message: '#{options[:message]}',
+        preloadedOnTop: true,
         rowRenderer: #{render_entity_row_function},
         selectValue: #{extract_value_from_entity_row_function}
       }, #{autocomplete_id_number});

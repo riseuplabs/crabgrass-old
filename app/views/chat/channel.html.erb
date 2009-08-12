@@ -47,7 +47,7 @@ complete = "eval(request.responseText)"
 
 <p>
 <% form_tag(:action => :leave_channel, :id => @channel) do %>
-  <input type='submit' value='<%= "Leave channel"[:leave_channel] %>' />
+  <input type='submit' value='<%= "Leave channel"[:leave_channel]%>' onclick='stop_ajax()' />
 <% end %>
 </p>
 
@@ -64,7 +64,8 @@ periodically_call_remote(:url => { :controller => 'chat',
 			      	   :action => 'user_list',
 				   :id => @channel},
 			 :frequency => wait_time,
-			 :update => 'userlist')
+			 :update => 'userlist',
+                         :condition => 'stop_ajax_calls == false')
 %>
 
 <%= # poll server every wait_time seconds for new messages
@@ -73,7 +74,8 @@ periodically_call_remote :url => { :controller => 'chat',
                                    :action => 'poll_channel_for_updates',
                                    :id => @channel},
                          :frequency => wait_time,
-                         :complete => "eval(request.responseText)"
+                         :complete => "eval(request.responseText)",
+                         :condition => 'stop_ajax_calls == false'
 #                         :update => 'userlist'
 %>
 
@@ -83,5 +85,11 @@ observe_field(:entryfield,
               :frequency => wait_time,
               :url => { :controller => 'chat',
                         :action => 'user_is_typing',
-                        :id => @channel })
+                        :id => @channel },
+              :condition => 'stop_ajax_calls == false')
 %>
+
+<%= javascript_tag '
+var stop_ajax_calls = false;
+function stop_ajax(){stop_ajax_calls = true;}
+'%>
