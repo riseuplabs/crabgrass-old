@@ -33,7 +33,8 @@ var Autocomplete = function(el, options, id){
     deferRequestBy:0,
     width:0,
     container:null,
-    message:""
+    message:"",
+    preloadedOnTop:false
   };
   if(options){ Object.extend(this.options, options); }
   if(Autocomplete.isDomLoaded){
@@ -157,12 +158,12 @@ Autocomplete.prototype = {
   },
 
   onKeyUp: function(e) {
+    this.clearMessage();
     switch (e.keyCode) {
       case Event.KEY_UP:
       case Event.KEY_DOWN:
         return;
     }
-    this.clearMessage;
     clearInterval(this.onChangeInterval);
     if (this.currentValue !== this.el.value) {
       if (this.options.deferRequestBy > 0) {
@@ -201,7 +202,13 @@ Autocomplete.prototype = {
       this.el.setStyle({ color: '#000000' });
       var start = this.options.message.length;
       var end = this.el.value.length;
-      this.el.value = this.el.value.substring(start,end);
+      var typed = this.el.value.substring(start,end);
+      if (typed) {
+        this.el.value = typed
+      }
+      else {
+        this.el.value = ""
+      }
       this.messageDisplayed=false;
     }
   },
@@ -252,19 +259,21 @@ Autocomplete.prototype = {
      */
     var terms = this.currentValue.match(/\w+/g);
     var reg_exp_ar = [];
-    terms.each( function(term, i) {
-      reg_exp_ar.push(new RegExp('[\\s\\+>^_-]' + term, 'i'));
-    });
-    response.suggestions.each( function(value, i) {
-      var tests_left = reg_exp_ar.length
-      while (value.match(reg_exp_ar[tests_left-1])) {
-        tests_left--;
-      }
-      if (tests_left == 0) {
-        suggest.push(value);
-        dat.push(response.data[i]);
-      }
-    }.bind(this));
+    if (terms) {
+      terms.each( function(term, i) {
+        reg_exp_ar.push(new RegExp('[\\s\\+>_-]' + term + '|^' + term, 'i'));
+      });
+      response.suggestions.each( function(value, i) {
+        var tests_left = reg_exp_ar.length
+        while (value.match(reg_exp_ar[tests_left-1])) {
+          tests_left--;
+        }
+        if (tests_left == 0) {
+          suggest.push(value);
+          dat.push(response.data[i]);
+        }
+      }.bind(this));
+}
     var ret = {
       data:dat,
       query:this.currentValue,
@@ -347,7 +356,7 @@ Autocomplete.prototype = {
       this.updateSuggestions(this.filterResponse(response));
       this.suggest();
     }
-    if (this.suggestions.length === 0) { this.badQueries.push(response.query);}
+    if (this.suggestions.length === 0 && response.query.length >= this.minChars) { this.badQueries.push(response.query);}
   },
 
   /* this will update the Suggestions with the given response.
@@ -356,7 +365,7 @@ Autocomplete.prototype = {
   updateSuggestions: function(response) {
     this.suggestions=[]
     this.data=[]
-    if (this.cachedResponse[""]) {
+    if (this.cachedResponse[""] && this.options.preloadedOnTop) {
       var filtered = this.filterResponse(this.cachedResponse[""]);
       this.appendSuggestions(filtered); /*adding preloaded suggestions*/
     }
