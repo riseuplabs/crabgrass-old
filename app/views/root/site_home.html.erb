@@ -84,17 +84,10 @@ form.mini_search table {
   margin-right: 1em;
 }
 <% end %>
+<% default_hash = @show_featured ? 'featured' : 'recent-pages' -%>
 <% content_for :script do -%>
      <%= "onHashChanged = showTabByHash;" %>
-<% end -%>
-
-<% default_hash = @show_featured ? 'featured' : 'recent-pages' -%>
-<% content_for :html_head do -%>
-  <!--[if IE]>
-    <script type="text/javascript">
-      defaultHash = defaultHash || '<%= default_hash %>';
-    </script>
-  <![endif]--> 
+     <%= "defaultHash = defaultHash || '#{default_hash}';" %>
 <% end -%>
 
 <% @right_column = capture do %>

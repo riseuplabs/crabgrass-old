@@ -47,5 +47,16 @@ class UserSetting < ActiveRecord::Base
   # when you first login, where do you go?
   LANDING = {:dashboard => 0, :site_home => 1}.freeze
 
+  # which editor to use by default.
+  EDITOR = {:greencloth => 0, :html => 1, 0 => :greencloth, 1 => :html}.freeze
+
+  def preferred_editor_sym
+    EDITOR[preferred_editor]
+  end
+
+  def preferred_editor_sym=(value)
+    self.preferred_editor = EDITOR[value.to_sym]
+  end
+
 end
 
