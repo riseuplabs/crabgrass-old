@@ -24,7 +24,7 @@ module MenuHelper
     )
     content_tag(:li,
       [menu_heading, options[:menu_items]].combine("\n"),
-      :class => 'navbar_menu',
+      :class => ['navbar_menu', (options[:active] && 'active')].combine,
       :id => id
     )
   end

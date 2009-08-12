@@ -190,7 +190,7 @@ function showTab(tabLink, tabContent, hash) {
   tabContent = $(tabContent);
   tabset = tabLink.parentNode.parentNode
   tabset.select('a').invoke('removeClassName', 'active');
-  $$('.tab_content').invoke('hide');
+  $$('.tab_content').invoke('hide'); 
   tabLink.addClassName('active');
   tabContent.show();
   evalAttributeOnce(tabContent, 'onclick');
