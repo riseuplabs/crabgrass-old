@@ -2,33 +2,28 @@
 // Wysiwyg / GreenCloth Wiki Editors
 //
 
+// updates the editor data from json returned by ajax request.
 function updateEditor(response, tab, id) {
   if(response.status != 200)
     return false;
 
-  var content  = "";
   var editor   = nicEditors.findEditor("wiki_editor-" + id);
   var textarea = $("wiki_body-" + id);
   var preview  = $("wiki_preview-" + id);
 
-  if (response.responseJSON.wysiwyg) {
-    content = getBackNewLines(response.responseJSON.wysiwyg);
-    editor.setContent(content);
-  }
-  if (response.responseJSON.greencloth) {
-    content = getBackNewLines(response.responseJSON.greencloth);
-    textarea.setValue(content);
-  }
-  if (response.responseJSON.preview) {
-    content = getBackNewLines(response.responseJSON.preview);
-    preview.update(content);
+  if (response.responseJSON.body_preview)
+    preview.update(getBackNewLines(response.responseJSON.body_preview));
+  else {
+    preview.update("");
+    editor.setContent( getBackNewLines(response.responseJSON.body_html) || "" );
+    textarea.setValue( getBackNewLines(response.responseJSON.body)      || "" );
   }
 
   if (tab == 'greencloth') {
     showTab($('link-tab-greencloth'), $('tab-edit-greencloth'));
   }
-  else if (tab == 'wysiwyg') {
-    showTab($('link-tab-wysiwyg'), $('tab-edit-wysiwyg'));
+  else if (tab == 'html') {
+    showTab($('link-tab-html'), $('tab-edit-html'));
   }
   else if (tab == 'preview') {
     showTab($('link-tab-preview'), $('tab-edit-preview'));
@@ -36,52 +31,75 @@ function updateEditor(response, tab, id) {
 }
 
 function getBackNewLines(str) {
-  return str.replace(/__NEW_LINE__/g, '\n').replace(/__TAB_CHAR__/g, '\t');
+  if (str)
+    return str.replace(/__NEW_LINE__/g, '\n').replace(/__TAB_CHAR__/g, '\t');
 }
 
-function getActiveTabLink() {
-  return $$('ul.simple_tabset a.active')[0];
+//function getActiveTabLink() {
+//  return $$('ul.simple_tabset a.active')[0];
+//}
+
+function isTabSelected(link) {return $(link).hasClassName('active')}
+
+function encodedEditorData(wiki_id) {
+  var textarea = $('wiki_body-'+wiki_id);
+  var visual_editor = nicEditors.findEditor("wiki_editor-" + wiki_id)
+  if (textarea.getValue())
+    return textarea.serialize();
+  if (visual_editor.getContent())
+    return $H({'wiki[body_html]': visual_editor.getContent()}).toQueryString();
 }
 
-function isTabSelected(link) {
-  if(link.id == getActiveTabLink().id)
-    return true;
-  else
+function editorData(editor, wiki_id) {
+  var data = "";
+  if (editor == 'greencloth')
+    data = $('wiki_body-'+wiki_id).getValue();
+  else if (editor == 'html') {
+    data = nicEditors.findEditor("wiki_editor-" + wiki_id).getContent();
+    if (data == "<br>")
+      data = "";
+  }
+  return data;
+}
+
+// requires: :wiki_id, :tab_id, :area_id, :editor, :url, :token
+function selectWikiEditorTab(url, options) {
+  if (isTabSelected(options.tab_id))
     return false;
+  else if (editorData(options.editor, options.wiki_id))
+    showTab(options.tab_id, options.area_id);
+  else {
+    new Ajax.Request(url, {
+      asynchronous:true, evalScripts:true, method:'post',
+      onComplete:function(request){updateEditor(request, options.editor, options.wiki_id)},
+      onLoading:function(request){showTab(options.tab_id, 'tab-edit-loading')},
+      parameters:encodedEditorData(options.wiki_id) +
+        '&authenticity_token=' +
+        encodeURIComponent(options.token)
+    });
+  }
+  return true;
 }
 
-function getCurrentEditorContents(wiki_id) {
-  var tab = getActiveTabLink();
 
-  switch(tab.id) {
-    case 'link-tab-wysiwyg':
-      return $H({'wiki[body_wysiwyg]': nicEditors.findEditor("wiki_editor-" + wiki_id).getContent()}).toQueryString();
-      break;
-    case 'link-tab-greencloth':
-      return $('wiki_body-'+wiki_id).serialize();
-      break;
-  }
+if (typeof(nicEditors) != 'undefined') {
+  //
+  // A generic nicedit button that calls a js function.
+  //
+  var nicFunctionButton = nicEditorButton.extend({
+    mouseClick : function() {
+      this.ne.options[this.options.function]();
+    }
+  });
+
+  //
+  // nicEdit plugin for crabgrass image popup
+  //
+  var nicCgImageOptions = {
+    buttons: {
+      image: {name: 'Add Image', type: 'nicFunctionButton', function: 'onImgButtonClick'}
+    }
+  };
+  nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
 }
-
-
-//
-// A generic nicedit button that calls a js function.
-//
-
-var nicFunctionButton = nicEditorButton.extend({
-  mouseClick : function() {
-    this.ne.options[this.options.function]();
-  }
-});
-
-//
-// nicEdit plugin for crabgrass image popup
-//
-
-var nicCgImageOptions = {
-  buttons: {
-    image: {name: 'Add Image', type: 'nicFunctionButton', function: 'onImgButtonClick'}
-  }
-};
-nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
 

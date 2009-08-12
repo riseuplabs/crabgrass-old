@@ -15,7 +15,7 @@
 <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
   <%= hidden_field 'wiki', 'version' %>
   <div id="wysiwyg_container">
-    <textarea name="wiki[body_wysiwyg]" style="width:100%; height:435px" id="<%= wiki_editor_id(@wiki) %>"></textarea>
+    <%= text_area_tag 'wiki[body_html]', (ugly_html(@wiki.body_html) if load_content), :rows => 30, :cols => 80, :id => wiki_editor_id(@wiki) %>
   </div>
   <div>
    <% if locked_for_me? -%>
