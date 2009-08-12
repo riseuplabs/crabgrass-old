@@ -655,7 +655,7 @@ var nicEditorPanel = bkClass.extend({
 		this.panelButtons = new Array();
 		this.buttonList = bkExtend([],this.ne.options.buttonList);
 
-		this.panelContain = new bkElement('DIV').setStyle({overflow : 'hidden', width : '100%', border : '1px solid #cccccc', backgroundColor : '#efefef'}).addClass('panelContain');
+		this.panelContain = new bkElement('DIV').setStyle({overflow : 'hidden', border : '1px solid #cccccc', backgroundColor : '#efefef'}).addClass('panelContain');
 		this.panelElm = new bkElement('DIV').setStyle({margin : '2px', marginTop : '0px', zoom : 1, overflow : 'hidden'}).addClass('panel').appendTo(this.panelContain);
 		this.panelContain.appendTo(e);
 
