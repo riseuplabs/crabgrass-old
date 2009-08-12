@@ -143,4 +143,9 @@ module WikiHelper
     error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locked_by}
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
   end
+
+  def ugly_html(html)
+    UglifyHtml.new( html || "" ).make_ugly
+  end
+
 end
