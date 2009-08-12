@@ -1155,5 +1155,6 @@ edit_appearance: "Edit Appearance"
 
 flag_appropriate: "flag as appropriate"
 flag_inappropriate: "flag as inappropriate"
-confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at the it soon."
-
+confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
+chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
