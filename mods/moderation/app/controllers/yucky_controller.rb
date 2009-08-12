@@ -30,7 +30,6 @@ class YuckyController < ApplicationController
     page.save
     @rateable = page
     add
-    redirect_to referer
   end
 
   # removes any yucky marks from the rateable
