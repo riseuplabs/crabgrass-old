@@ -1,0 +1,6 @@
+[submodule "lib/undress"]
+	path = lib/undress
+	url = git://github.com/zevarito/undress.git
+[submodule "lib/uglify_html"]
+	path = lib/uglify_html
+	url = git://github.com/zevarito/uglify_html.git
