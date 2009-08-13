@@ -1,0 +1,20 @@
+<h2>Chat Messages Moderation</h2>
+
+<div id="moderation_navigation">
+  <div style="display:inline;'">
+    <%= "All Chat Messages:"%>&nbsp;
+    <%= link_to_active( 'all', { :controller => 'admin/chat_messages', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
+  </div>
+  <div style="display:inline; margin-left:2em;'">
+    <%= "Flagged Messages:"%>&nbsp;&nbsp;
+    <%= tab_link('new')%>&nbsp;
+    <%= tab_link('vetted')%>&nbsp;
+    <%= tab_link('deleted')%>
+  </div>
+</div>
+<div id="messages-listing">
+  <%= render :partial => 'listing' if @messages.any? %>
+  <%= '<em>There are no messages for this view</em>' unless @messages.any?%>
+</div>
+
+
