@@ -566,13 +566,8 @@ var c=this.options.message.length;var a=this.el.value.length;var b=this.el.value
 if(c&&Object.isArray(c.suggestions)){this.updateSuggestions(c);return}if(this.isBadQuery(this.currentValue)){return}var a=this.currentValue.length-1;var b=this.cachedResponse[this.currentValue.substring(0,a)];
 while(a-->=this.options.minChars&&!b){b=this.cachedResponse[this.currentValue.substring(0,a)]}if(b&&Object.isArray(b.suggestions)){if(b.suggestions.length<20){this.cachedResponse[this.currentValue]=this.filterResponse(b);
 this.updateSuggestions(this.cachedResponse[this.currentValue])}else{this.updateSuggestions(this.filterResponse(b));this.requestSuggestions(this.currentValue)}if(this.suggestions.length===0&&this.currentValue.length>=this.options.minChars){this.badQueries.push(this.currentValue)
-<<<<<<< HEAD:public/javascripts/main.js
-}}else{this.requestSuggestions(this.currentValue);this.updateSuggestions("")}},filterResponse:function(a){var g=[];var f=[];var d=this.currentValue.match(/\w+/g);var c=[];if(d){d.each(function(j,h){c.push(new RegExp("[\\s\\+>_-]"+j+"|^"+j,"i"))
-});a.suggestions.each(function(k,h){var j=c.length;while(k.match(c[j-1])){j--}if(j==0){g.push(k);f.push(a.data[h])}}.bind(this))}var b={data:f,query:this.currentValue,suggestions:g};return b},isBadQuery:function(b){var a=this.badQueries.length;
-=======
 }}else{this.requestSuggestions(this.currentValue);this.updateSuggestions("")}},filterResponse:function(a){var f=[];var e=[];var d=this.currentValue.match(/\w+/g);var c=[];if(d){d.each(function(h,g){c.push(new RegExp("[\\s\\+>_-]"+h+"|^"+h,"i"))
 });a.suggestions.each(function(j,g){var h=c.length;while(j.match(c[h-1])){h--}if(h==0){f.push(j);e.push(a.data[g])}}.bind(this))}var b={data:e,query:this.currentValue,suggestions:f};return b},isBadQuery:function(b){var a=this.badQueries.length;
->>>>>>> 9e8a4f0... updated minified js:public/javascripts/main.js
 while(a--){if(b.indexOf(this.badQueries[a])===0){return true}}return false},hide:function(){this.enabled=false;this.selectedIndex=-1;this.container.hide()},suggest:function(){var a=[];if(this.suggestions.length===0){this.hide();
 return}this.suggestions.each(function(c,b){a.push(this.displaySuggestion(c,b,this.data[b]))}.bind(this));this.enabled=true;this.fixPosition();this.container.update(a.join("")).show()},displaySuggestion:function(e,a,d){var c=[];
 var b=new RegExp("\\b"+this.currentValue.match(/\w+/g).join("|\\b"),"gi");c.push((this.selectedIndex===a?'<div class="selected"':"<div"),' onclick="Autocomplete.instances[',this.instanceId,"].select(",a,');"',' onmouseover="Autocomplete.instances[',this.instanceId,"].activate(",a,');">',this.renderRow(e,b,d),"</div>");
