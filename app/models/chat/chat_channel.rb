@@ -7,7 +7,7 @@ class ChatChannel < ActiveRecord::Base
 
   has_many :users, :order => 'login asc', :through => :channels_users
 
-  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all do
+  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all, :conditions => 'deleted_at IS NULL' do
     def since(last_seen_id)
       find(:all, :conditions => ['id > ?', last_seen_id])
     end
