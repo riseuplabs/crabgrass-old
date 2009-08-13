@@ -182,7 +182,7 @@ function absolutePositionParams(obj) {
 function evalAttributeOnce(element, attribute) {
   if (element.readAttribute(attribute)) {
     eval(element.readAttribute(attribute));
-    element.writeAttribute(attribute, null);
+    element.writeAttribute(attribute, "");
   }
 }
 
