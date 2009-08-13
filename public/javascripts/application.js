@@ -42,13 +42,13 @@ function toggle_all_checkboxes(checkbox, selector) {
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 // value is optional.
 function submit_form(form_element, name, value) {
-  e = form_element;
-  form = null;
+  var e = form_element;
+  var form = null;
   do {
     if(e.tagName == 'FORM'){form = e; break}
   } while(e = e.parentNode)
   if (form) {
-    input = document.createElement("input");
+    var input = document.createElement("input");
     input.name = name;
     input.type = "hidden";
     input.value = value;
@@ -105,7 +105,7 @@ function insertAtCursor(textarea, text) {
   var element = $(textarea);
   if (document.selection) {
     //IE support
-    sel = document.selection.createRange();
+    var sel = document.selection.createRange();
     sel.text = text;
   } else if (element.selectionStart || element.selectionStart == '0') {
     //Mozilla/Firefox/Netscape 7+ support
@@ -158,7 +158,8 @@ function eventTarget(event) {
 // this should be replaced with element.cumulativeOffset()
 //
 function absolutePosition(obj) {
-  var curleft = curtop = 0;
+  var curleft = 0;
+  var curtop = 0;
   if (obj.offsetParent) {
     do {
       curleft += obj.offsetLeft;
@@ -168,8 +169,8 @@ function absolutePosition(obj) {
   return [curleft,curtop];
 }
 function absolutePositionParams(obj) {
-  obj_dims = absolutePosition(obj);
-  page_dims = document.viewport.getDimensions();
+  var obj_dims = absolutePosition(obj);
+  var page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
 
@@ -188,9 +189,9 @@ function evalAttributeOnce(element, attribute) {
 function showTab(tabLink, tabContent, hash) {
   tabLink = $(tabLink);
   tabContent = $(tabContent);
-  tabset = tabLink.parentNode.parentNode
+  var tabset = tabLink.ancestors().find(function(e){return e.hasClassName('tabset')})
   tabset.select('a').invoke('removeClassName', 'active');
-  $$('.tab_content').invoke('hide'); 
+  $$('.tab_content').invoke('hide');
   tabLink.addClassName('active');
   tabContent.show();
   evalAttributeOnce(tabContent, 'onclick');
@@ -202,11 +203,10 @@ function showTab(tabLink, tabContent, hash) {
 var defaultHash = null;
 
 function showTabByHash() {
-  if (hash = (window.location.hash || defaultHash)) {
+  var hash = window.location.hash || defaultHash;
+  if (hash) {
     hash = hash.replace(/^#/, '').replace(/-/g, '_');
-    tabContent = $(hash + '_panel');
-    tabLink = $(hash + '_link');
-    showTab(tabLink, tabContent)
+    showTab(hash+'_link', hash+'_panel')
   }
 }
 
@@ -221,8 +221,6 @@ function isTabVisible(elem) {
 
 var DropMenu = Class.create({
   initialize: function(menu_id) {
-//    this.show_timeout = null;
-//    this.hide_timeout = null;
     this.timeout = null;
     if(!$(menu_id)) return;
     this.trigger = $(menu_id);
