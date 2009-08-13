@@ -340,24 +340,26 @@ module Formy
     sub_element Tabset::Tab
 
     def initialize(options={})
-      super( {'class' => 'top'}.merge(options) )
+      super( {:type => :top}.merge(options) )
     end
 
     def open
       super
-      if @options[:style] == :simple
-        puts "<ul class='simple_tabset #{@options['class']}'>"
-      else
+      if @options[:type] == :simple
+        puts "<ul class='tabset simple #{@options['class']}'>"
+      elsif @options[:type] == :top
         puts "<div style='height:1%'>" # this is to force hasLayout in ie
-        puts "<ul class='tabset #{@options['class']}'>"
+        puts "<ul class='tabset top #{@options['class']}'>"
+      else
+        raise 'no such tabset type'
       end
     end
 
     def close
-      if @options[:style] == :simple
+      if @options[:type] == :simple
         raw_puts @elements.join('<li> | </li>')
         puts "</ul>"
-      else
+      elsif @options[:type] == :top
         @elements.each {|e| raw_puts e}
         puts "<li></li></ul>"
         puts "</div>"

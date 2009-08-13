@@ -189,14 +189,16 @@ function evalAttributeOnce(element, attribute) {
 function showTab(tabLink, tabContent, hash) {
   tabLink = $(tabLink);
   tabContent = $(tabContent);
-  var tabset = tabLink.ancestors().find(function(e){return e.hasClassName('tabset')})
-  tabset.select('a').invoke('removeClassName', 'active');
-  $$('.tab_content').invoke('hide');
-  tabLink.addClassName('active');
-  tabContent.show();
-  evalAttributeOnce(tabContent, 'onclick');
-  tabLink.blur();
-  if (hash) {window.location.hash = hash}
+  var tabset = tabLink.ancestors().find(function(e){return e.hasClassName('tabset')});
+  if (tabset) {
+    tabset.select('a').invoke('removeClassName', 'active');
+    $$('.tab_content').invoke('hide');
+    tabLink.addClassName('active');
+    tabContent.show();
+    evalAttributeOnce(tabContent, 'onclick');
+    tabLink.blur();
+    if (hash) {window.location.hash = hash}
+  }
   return false;
 }
 
