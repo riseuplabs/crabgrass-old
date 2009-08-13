@@ -21,7 +21,8 @@ class AccountController; def rescue_action(e) raise e end; end
 
 class PageFinderTest < Test::Unit::TestCase
   fixtures :groups, :users, :memberships, :pages, :sites,
-   :user_participations, :group_participations, :taggings, :tags
+   :user_participations, :group_participations, :'acts_as_taggable_on/taggings',
+   :tags
 
   def setup
     @controller = AccountController.new # it doesn't matter which controller, really.

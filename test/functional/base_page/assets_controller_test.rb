@@ -8,7 +8,8 @@ class BasePage::AssetsControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
-           :taggings, :tags
+           :'acts_as_taggable_on/taggings',
+           :tags
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"

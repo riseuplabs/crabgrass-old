@@ -8,7 +8,8 @@ class BasePage::TitleControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
-           :taggings, :tags
+           :'acts_as_taggable_on/taggings',
+           :tags
 
   def setup
     @controller = BasePage::TitleController.new

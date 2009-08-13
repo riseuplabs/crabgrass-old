@@ -11,7 +11,8 @@ class PageFinderSphinxTest < ActionController::TestCase
   # it doesn't matter which controller, really.
   tests AccountController
   fixtures :groups, :users, :memberships, :pages, :page_terms,
-   :user_participations, :group_participations, :taggings, :tags
+   :user_participations, :group_participations, :'acts_as_taggable_on/taggings',
+   :tags
 
   ##############################################
   ### Tests for various search parameters
