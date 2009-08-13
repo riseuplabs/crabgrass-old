@@ -120,8 +120,9 @@ ActionController::Routing::Routes.draw do |map|
   ##
   ## CHAT
   ##
-  map.connect 'chat/:action/:id', :controller => 'chat'
-  map.connect 'chat/:action/:id/*path', :controller => 'chat', :action => 'archive'
+  map.chat 'chat/:action/:id', :controller => 'chat'
+  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
+#  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
   ##
   ## DEFAULT ROUTE
   ##

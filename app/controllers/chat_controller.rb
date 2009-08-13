@@ -32,9 +32,9 @@ class ChatController < ApplicationController
   # everything else is xhr request.
   def channel
     user_joins_channel(@user, @channel)
-    @channel_user.record_user_action :not_typing
     @messages = [@channel_user.join_message]
     session[:last_retrieved_message_id] = @messages.last.id
+    @channel_user.record_user_action :not_typing
     @html_title = Time.zone.now.strftime('%Y.%m.%d')
   end
 
@@ -94,31 +94,21 @@ class ChatController < ApplicationController
   end
 
   def archive
-    @path = params[:path] || []
-    @parsed = parse_filter_path(params[:path])
-    @months = ChatMessage.months(@channel)
+    @months = @channel.messages.months
     unless @months.empty?
-      @current_year  = (Date.today).year
+      @current_year  = Time.zone.now.year
       @start_year    = @months[0]['year'] || @current_year.to_s
-      @current_month = (Date.today).month
-
-      # normalize path
-      unless @parsed.keyword?('date')
-        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
-      end
-      @parsed = parse_filter_path(@path)
-      date = @parsed.keyword?('date')[1]
-      date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
-      @year = year = $1
-      @month = month = $2
-      @day = day = $3
-      unless day.empty?
-        @messages = []
-        ChatMessage.for_day(@channel, year, month, day).each do |m|
-          @messages << "#{m.sender_name}: #{m.content}"
-        end
+      @current_month = Time.zone.now.month
+      @date = params[:date] ? params[:date] : "%s-%s" % [@months.last['year'], @months.last['month']]
+      @date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
+      @year = $1
+      @month = $2
+      @day = $3
+      unless @day.empty?
+        @messages = @channel.messages.for_day(@year, @month, @day)
+        @html_title = Time.zone.local(@year, @month, @day).strftime('%Y.%m.%d')
       else
-        @days = ChatMessage.days(@channel, year, month)
+        @days = @channel.messages.days(@year, @month)
       end
     end
   end
