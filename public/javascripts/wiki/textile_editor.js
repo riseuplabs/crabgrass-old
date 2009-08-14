@@ -1,3 +1,8 @@
+/*
+ * wiki editing javascript
+ * stolen and modified from http://livepipe.net/control/textarea
+ */
+
 /**
  * @author Ryan Johnson <http://saucytiger.com/>
  * @copyright 2008 PersonalGrid Corporation <http://personalgrid.com/>
@@ -9,7 +14,7 @@
 
 if(typeof(Control) == 'undefined')
 	Control = {};
-	
+
 var $proc = function(proc){
 	return typeof(proc) == 'function' ? proc : function(){return proc};
 };
@@ -156,17 +161,17 @@ Object.extend(Event, (function() {
 			Event.extend(event);
 			handler.call(element, event);
 		};
-		
+
 		//begin extension
 		if(!(Prototype.Browser.IE) && ['mouseenter','mouseleave'].include(eventName)){
-			wrapper = wrapper.wrap(function(proceed,event) {	
+			wrapper = wrapper.wrap(function(proceed,event) {
 				var rel = event.relatedTarget;
-				var cur = event.currentTarget;			 
+				var cur = event.currentTarget;
 				if(rel && rel.nodeType == Node.TEXT_NODE)
-					rel = rel.parentNode;	  
-				if(rel && rel != cur && !rel.descendantOf(cur))	  
-					return proceed(event);   
-			});	 
+					rel = rel.parentNode;
+				if(rel && rel != cur && !rel.descendantOf(cur))
+					return proceed(event);
+			});
 		}
 		//end extension
 
@@ -317,7 +322,7 @@ var IframeShim = Class.create({
 		this.element = new Element('iframe',{
 			style: 'position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);display:none',
 			src: 'javascript:void(0);',
-			frameborder: 0 
+			frameborder: 0
 		});
 		$(document.body).insert(this.element);
 	},
@@ -354,3 +359,227 @@ var IframeShim = Class.create({
 		return this;
 	}
 });
+
+/**
+ * @author Ryan Johnson <http://saucytiger.com/>
+ * @copyright 2008 PersonalGrid Corporation <http://personalgrid.com/>
+ * @package LivePipe UI
+ * @license MIT
+ * @url http://livepipe.net/control/textarea
+ * @require prototype.js, livepipe.js
+ */
+
+if(typeof(Prototype) == "undefined")
+	throw "Control.TextArea requires Prototype to be loaded.";
+if(typeof(Object.Event) == "undefined")
+	throw "Control.TextArea requires Object.Event to be loaded.";
+
+Control.TextArea = Class.create({
+	initialize: function(textarea){
+		this.onChangeTimeout = false;
+		this.element = $(textarea);
+		$(this.element).observe('keyup',this.doOnChange.bindAsEventListener(this));
+		$(this.element).observe('paste',this.doOnChange.bindAsEventListener(this));
+		$(this.element).observe('input',this.doOnChange.bindAsEventListener(this));
+		if(!!document.selection){
+			$(this.element).observe('mouseup',this.saveRange.bindAsEventListener(this));
+			$(this.element).observe('keyup',this.saveRange.bindAsEventListener(this));
+		}
+	},
+	doOnChange: function(event){
+		if(this.onChangeTimeout)
+			window.clearTimeout(this.onChangeTimeout);
+		this.onChangeTimeout = window.setTimeout(function(){
+			this.notify('change',this.getValue());
+		}.bind(this),Control.TextArea.onChangeTimeoutLength);
+	},
+	saveRange: function(){
+		this.range = document.selection.createRange();
+	},
+	getValue: function(){
+		return this.element.value;
+	},
+	getSelection: function(){
+		if(!!document.selection)
+			return document.selection.createRange().text;
+		else if(!!this.element.setSelectionRange)
+			return this.element.value.substring(this.element.selectionStart,this.element.selectionEnd);
+		else
+			return false;
+	},
+	replaceSelection: function(text){
+		var scroll_top = this.element.scrollTop;
+		if(!!document.selection){
+			this.element.focus();
+			var range = (this.range) ? this.range : document.selection.createRange();
+			range.text = text;
+			range.select();
+		}else if(!!this.element.setSelectionRange){
+			var selection_start = this.element.selectionStart;
+			this.element.value = this.element.value.substring(0,selection_start) + text + this.element.value.substring(this.element.selectionEnd);
+			this.element.setSelectionRange(selection_start + text.length,selection_start + text.length);
+		}
+		this.doOnChange();
+		this.element.focus();
+		this.element.scrollTop = scroll_top;
+	},
+	wrapSelection: function(before,after){
+		this.replaceSelection(before + this.getSelection() + after);
+	},
+	insertBeforeSelection: function(text){
+		this.replaceSelection(text + this.getSelection());
+	},
+	insertAfterSelection: function(text){
+		this.replaceSelection(this.getSelection() + text);
+	},
+	collectFromEachSelectedLine: function(callback,before,after){
+		this.replaceSelection((before || '') + $A(this.getSelection().split("\n")).collect(callback).join("\n") + (after || ''));
+	},
+	insertBeforeEachSelectedLine: function(text,before,after){
+		this.collectFromEachSelectedLine(function(line){
+		},before,after);
+	}
+});
+Object.extend(Control.TextArea,{
+	onChangeTimeoutLength: 500
+});
+Object.Event.extend(Control.TextArea);
+
+Control.TextArea.ToolBar = Class.create(	{
+	initialize: function(textarea,toolbar){
+		this.textarea = textarea;
+		if(toolbar)
+			this.container = $(toolbar);
+		else{
+			this.container = $(document.createElement('ul'));
+			this.textarea.element.parentNode.insertBefore(this.container,this.textarea.element);
+		}
+	},
+	attachButton: function(node,callback){
+		node.onclick = function(){return false;}
+		$(node).observe('click',callback.bindAsEventListener(this.textarea));
+	},
+	addButton: function(link_text,callback,attrs){
+		var li = document.createElement('li');
+		var a = document.createElement('a');
+		a.href = '#';
+    a.title = link_text; // crabgrass addition
+    // crabgrass addition
+    if(attrs['class']) {
+      a.addClassName(attrs['class']);
+      attrs['class'] = null;
+    }
+		this.attachButton(a,callback);
+		li.appendChild(a);
+		Object.extend(a,attrs || {});
+		if(link_text){
+			var span = document.createElement('span');
+			span.innerHTML = link_text;
+			a.appendChild(span);
+		}
+		this.container.appendChild(li);
+	}
+});
+
+// --- ACTUAL CUSTOM CODE BEGINS HERE ---
+
+// add the toolbar controlling wiki body
+// each id used by the toolbar has a prefix, so that multiple toolbars
+// can be used on the same page
+function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
+{
+  //setup
+  var textarea = new Control.TextArea(wiki_body_id);
+  var toolbar = new Control.TextArea.ToolBar(textarea);
+
+  toolbar.container.addClassName('markdown_toolbar'); //for css styles
+  toolbar.container.id = toolbar_id; //for css styles
+
+  //buttons
+  toolbar.addButton('Emphasis',function(){
+          this.wrapSelection('_','_');
+  },{
+          'class': 'markdown_italics_button',
+          id: 'markdown_italics_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Strong emphasis',function(){
+          this.wrapSelection('*','*');
+  },{
+          'class': 'markdown_bold_button',
+          id: 'markdown_bold_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Link',function(){
+          var selection = this.getSelection();
+          var response = prompt('Enter Link Target','');
+          if(response == null)
+                  return;
+          this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
+  },{
+          'class': 'markdown_link_button',
+          id: 'markdown_link_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Image',function(){
+          // img_button_clicked();
+          image_popup_func();
+  },{
+          'class': 'markdown_image_button',
+          id: 'markdown_image_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Heading',function(){
+          var selection = this.getSelection();
+          if(selection == '')
+                  selection = 'Heading';
+          this.replaceSelection("\nh1. " + selection + "\n");
+  },{
+          'class': 'markdown_heading_button',
+          id: 'markdown_heading_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Unordered List',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\*{2,}/) ? line.replace(/^\*/,'') : line.replace(/^\*\s/,'')) : (line.match(/\*+\s/) ? '*' : '* ') + line;
+          });
+  },{
+          'class': 'markdown_unordered_list_button',
+          id: 'markdown_unordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Ordered List',function(event){
+          var i = 0;
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\#{2,}/) ? line.replace(/^\#/,'') : line.replace(/^\#\s/,'')) : (line.match(/\#+\s/) ? '#' : '# ') + line;
+          });
+  },{
+          'class': 'markdown_ordered_list_button',
+          id: 'markdown_ordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Block Quote',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? line.replace(/^\> /,'') : '> ' + line;
+          });
+  },{
+          'class': 'markdown_quote_button',
+          id: 'markdown_quote_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Code Block',function(event){
+          this.wrapSelection('<code>', '</code>');
+  },{
+          'class': 'markdown_code_button',
+          id: 'markdown_code_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Help',quickRedReference,{
+          'class': 'markdown_help_button',
+          id: 'markdown_help_button-' + button_id_suffix
+  });
+}
+
+//document.observe('dom:loaded', function() {
+  //
+//});

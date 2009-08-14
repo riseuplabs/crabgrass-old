@@ -3,7 +3,7 @@ class WikiPageController < BasePageController
   include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit', 'wiki_editor_switch'
+  javascript :wiki, :action => :edit
 
   helper :wiki # for wiki toolbar stuff
   permissions 'wiki_page'
@@ -52,8 +52,8 @@ class WikiPageController < BasePageController
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
       # update from greencloth editor || wysiwyg || preview
-      params[:wiki][:body] = Undress(params[:wiki][:body_html]).to_greencloth if params[:wiki][:body_html]
-      params[:wiki][:body] = params[:wiki][:body_preview] if params[:wiki][:body_preview]
+      params[:wiki][:body] = html_to_greencloth(params[:wiki][:body_html]) if params[:wiki][:body_html].any?
+      #params[:wiki][:body] = params[:wiki][:body_preview] if params[:wiki][:body_preview].any
       save
     elsif request.get?
       lock

@@ -3,20 +3,6 @@ document.observe('dom:loaded', function() {
   <%= create_wiki_toolbar(@wiki) %>
 });
 <% end -%>
-<% @show_posts = false -%>
-<% locked_error_message -%>
-<div class='formbox'>
-  <% form_tag(page_xurl(@page, :action => 'edit')) do -%>
-   <%= hidden_field 'wiki', 'version' %>
-   <div class='fieldset'><%= text_area_tag 'wiki[body]', (@wiki.body if load_content), :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
-   <%= formatting_reference_link %>
-   <div>
-     <% if locked_for_me? -%>
-       <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
-     <% else -%>
-       <%= submit_tag 'Save'[:save_button], :name => 'save' %>
-     <% end -%>
-     <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
-   </div>
-  <% end -%>
-</div>
+
+<div class='fieldset'><%= text_area_tag 'wiki[body]', (@wiki.body if load_content), :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
+<%= formatting_reference_link %>

@@ -2,7 +2,7 @@ class WikiPageVersionController < BasePageController
   include ControllerExtension::WikiRenderer
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  #javascript 'wiki_edit'
   helper :wiki, :wiki_page
   permissions :wiki_page_version
 

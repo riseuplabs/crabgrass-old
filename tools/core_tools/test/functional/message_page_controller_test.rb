@@ -22,8 +22,8 @@ class MessagePageControllerTest < ActionController::TestCase
     end
 
     p = Page.find(:all)[-1] # most recently created page (?)
-    assert p.users.include?(User.find_by_login 'red'), "MessagePage should be shared with red."
-    assert p.users.include?(User.find_by_login 'orange'), "MessagePage should be shared with orange."
+    assert p.users.include?(User.find_by_login('red')), "MessagePage should be shared with red."
+    assert p.users.include?(User.find_by_login('orange')), "MessagePage should be shared with orange."
     assert !p.user_participations.map(&:inbox).include?(false), "MessagePage should be sent to inbox."
 
     get :show, :page_id => p.id

@@ -5,9 +5,11 @@ module ChatHelper
   end
 
   def message_content(message)
-    %(<div class="message #{message.level}" id="message-#{message.id}">
+     hook_text = call_hook :chat_message_actions, :message => message
+    %(<div class="message #{message.level} shy_parent" id="message-#{message.id}">
+      <a name="#{message.id}"></a>
       #{message_time_and_name(message.created_at, message.sender_name)}
-      <span class="content">#{message.content}</span></div>)
+      <span class="content">#{message.content}</span> #{hook_text}</div>)
   end
 
   def set_time_and_name_script

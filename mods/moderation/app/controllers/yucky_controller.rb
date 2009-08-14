@@ -13,23 +13,8 @@ class YuckyController < ApplicationController
     case @rateable_type
       when :post; add_post
       when :page; add_page
+      when :chat_message; add_chat_message
     end
-  end
-
-  def add_chat
-    group = Group.find params[:id]
-    page = WikiPage.new
-    page.title = "Chat moderation. Group: #{group.name}. Time: #{Time.zone.now}"
-    page.owner = current_user
-    body = "#{current_user.login} marked chat for group [#{group.name}->/chat/archive/#{group.name}] as inappropriate on #{Time.zone.now}"
-    data = Wiki.new do |w|
-      w.user =  current_user
-      w.body = body
-    end
-    page.data = data
-    page.save
-    @rateable = page
-    add
   end
 
   # removes any yucky marks from the rateable
@@ -41,6 +26,7 @@ class YuckyController < ApplicationController
     case @rateable_type
       when :post; remove_post
       when :page; remove_page
+      when :chat_message; remove_chat_message
     end
   end
 
@@ -63,6 +49,18 @@ class YuckyController < ApplicationController
     end
   end
 
+  def add_chat_message
+    summary = @rateable.content
+    date = @rateable.created_at
+    url = "/chat/archive/"
+    url += @rateable.channel.name
+    url += "/date/#{date.year}-#{date.month}-#{date.day}##{@rateable.id}"
+    send_moderation_notice(url, summary)
+    render :update do |page|
+      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+    end
+  end
+
   def remove_page
     redirect_to referer
   end
@@ -73,6 +71,11 @@ class YuckyController < ApplicationController
     end
   end
 
+  def remove_chat_message
+    render :update do |page|
+      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+    end
+  end
 
    # Notify the admins that content has been marked as innapropriate
   def send_moderation_notice(url, summary)
@@ -84,14 +87,7 @@ class YuckyController < ApplicationController
   end
 
   def authorized?
-    # when flagging a chat channel @rateable is created by the add_chat action
-    # so it doesn't exist at this point
-    if @rateable
-    # you can't flag your own content as (in)appropriate!
-      @rateable.created_by != current_user
-    else
-      true
-    end
+    @rateable.created_by != current_user
   end
 
   prepend_before_filter :fetch_rateable
@@ -102,6 +98,9 @@ class YuckyController < ApplicationController
     elsif params[:post_id]
       @rateable = Post.find(params[:post_id])
       @rateable_type = :post
+    elsif params[:chat_message_id]
+      @rateable = ChatMessage.find(params[:chat_message_id])
+      @rateable_type = :chat_message
     end
   end
 
