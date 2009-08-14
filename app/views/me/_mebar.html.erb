@@ -4,8 +4,6 @@
   skip_ids = false if skip_ids.nil?
 -%>
 
-<% cache(menu_cache_key(:submenu=>submenu)) do %>
-
 <%= create_page_link(nil) unless inline_create_page %>
 
 <ul class='side_list'>
@@ -93,4 +91,3 @@
 
 </ul>
 
-<% end %>
