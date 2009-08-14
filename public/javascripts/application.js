@@ -25,11 +25,19 @@ function setClassVisibility(selector, visibility) {
 // FORM UTILITY
 //
 
-// toggle the visibility of another element based on if
-// a checkbox is checked or not.
-function checkbox_toggle_visibility(checkbox, element_id) {
-  if (checkbox.checked) {$(element_id).show();}
-  else {$(element_id).hide();}
+// Toggle the visibility of another element based on if a checkbox is checked or
+// not. Additionally, sets the focus to the first input or textarea that is visible.
+function checkboxToggle(checkbox, element) {
+  if (checkbox.checked) {
+    $(element).show();
+    var focusElm = $(element).select('input[type=text]), textarea').first();
+    var isVisible = focusElm.visible() && !focusElm.ancestors().find(function(e){return !e.visible()});
+    if (focusElm && isVisible) {
+      focusElm.focus();
+    }
+  } else {
+    $(element).hide();
+  }
 }
 
 // toggle all checkboxes of a particular css selected, based on the
@@ -189,14 +197,16 @@ function evalAttributeOnce(element, attribute) {
 function showTab(tabLink, tabContent, hash) {
   tabLink = $(tabLink);
   tabContent = $(tabContent);
-  var tabset = tabLink.ancestors().find(function(e){return e.hasClassName('tabset')})
-  tabset.select('a').invoke('removeClassName', 'active');
-  $$('.tab_content').invoke('hide');
-  tabLink.addClassName('active');
-  tabContent.show();
-  evalAttributeOnce(tabContent, 'onclick');
-  tabLink.blur();
-  if (hash) {window.location.hash = hash}
+  var tabset = tabLink.up('.tabset');
+  if (tabset) {
+    tabset.select('a').invoke('removeClassName', 'active');
+    $$('.tab_content').invoke('hide');
+    tabLink.addClassName('active');
+    tabContent.show();
+    evalAttributeOnce(tabContent, 'onclick');
+    tabLink.blur();
+    if (hash) {window.location.hash = hash}
+  }
   return false;
 }
 

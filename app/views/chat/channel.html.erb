@@ -11,10 +11,6 @@ loading_command = %(
 complete = "eval(request.responseText)"
 %>
 
-<% content_for :style do %>
-  @import url(/stylesheets/chat.css);
-<% end %>
-
 <div id="userlist">
   <%= render :partial => 'chat/userlist' %>
 </div>
@@ -50,8 +46,6 @@ complete = "eval(request.responseText)"
   <input type='submit' value='<%= "Leave channel"[:leave_channel]%>' onclick='stop_ajax()' />
 <% end %>
 </p>
-
-<%= call_hook :chat_channel_actions %>
 
 <%=
 link = link_to "view the chat room archive"[:chat_archive], {:action => :archive, :id => @channel.name}

@@ -126,44 +126,63 @@ module LayoutHelper
   # However, autocomplete uses very little of the controls.js code, which in turn
   # should not need the effects.js at all. So, with a little effort, effects and
   # controls could be moved to extra.
-  MAIN_JS = ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']
+  MAIN_JS = {:main => ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']}
 
   # extra js that we might sometimes need
-  EXTRA_JS = ['dragdrop', 'builder', 'slider']
+  EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
 
-  # includes the correct javascript tags for the current request.
-  # if the special symbol :extra has been specified as a required js file,
-  # then this expands to all the EXTRA_JS files.
-  def optional_javascript_tag
+  # needed whenever we want controls for editing a wiki
+  WIKI_JS = {:wiki => ['wiki/textile_editor', 'wiki/nicEdit', 'wiki/wiki_tabs']}
+
+  JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
+
+  JS_BUNDLE_LOAD_ORDER = JS_BUNDLES.collect{|b|b.keys.first}
+
+  # eg: {:main => [...], :extra => [...]}
+  JS_BUNDLES_COMBINED = JS_BUNDLES.inject({}){|a,b|a.merge(b)}
+
+  # eg: {'dragdrop' => :extra, 'modalbox' => :main, ...}
+  JS_BUNDLE_MAP = Hash[*JS_BUNDLES_COMBINED.collect{|k,v|v.collect{|u|[u,k]}}.flatten]
+
+  # Includes the correct javascript tags for the current request.
+  # See ApplicationController#javascript for details.
+  #
+  # In brief: the correct javascript is loaded for a particular controller and a
+  # particular action. Some javascripts are defined in bundles. A bundle gets
+  # activated if called by name (ie :extra) or if a file in the bundle is
+  # included (ie 'dragdrop')
+  def javascript_include_tags
     scripts = controller.class.javascript || {}
-    js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
-    return unless js_files.any?
-    extra = js_files.delete(:extra)
-    cache = false
+    files = [:main, scripts[:all], scripts[params[:action].to_sym]].flatten.compact
+    return unless files.any?
 
-    args = js_files.collect do |jsfile|
-      if MAIN_JS.include? jsfile
-        nil # main js already is included
-      elsif EXTRA_JS.include? jsfile and !extra
-        jsfile
+    bundles = {}
+    as_needed = {}
+    includes = []
+
+    files.each do |file|
+      if JS_BUNDLE_MAP[file.to_s]                    # if a file in a bundle is specified
+        bundles[JS_BUNDLE_MAP[file.to_s]] = true     # include the whole bundle
+      elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
+        bundles[file.to_sym] = true                  # include the whole bundle
       else
-        "as_needed/#{jsfile}"
+        as_needed["as_needed/#{file}"] = true        # otherwise, include one file.
       end
-    end.compact.uniq
-
-    if extra
-      args += EXTRA_JS
-      args << {:cache => 'extra'}
     end
-    javascript_include_tag(*args)
+
+    bundles = JS_BUNDLE_LOAD_ORDER & bundles.keys    # sort the bundles
+    bundles.each do |bundle|
+      args = JS_BUNDLES_COMBINED[bundle] + [{:cache => bundle.to_s}]  # ie ['dragdrop', 'builder', {:cache => 'extra'}]
+      includes << javascript_include_tag(*args)
+    end
+    if as_needed.any?
+      includes << javascript_include_tag(*as_needed.keys)
+    end
+    return includes
   end
 
   def crabgrass_javascripts
-    lines = []
-    lines << javascript_include_tag(MAIN_JS, :cache => 'main')
-    lines << optional_javascript_tag
-
-
+    lines = javascript_include_tags
     lines << '<script type="text/javascript">'
     lines << @content_for_script
     lines << localize_modalbox_strings
@@ -173,11 +192,13 @@ module LayoutHelper
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
-      # run firebug lite in dev mode for ie6
-      if RAILS_ENV=='development'
-        lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
-      end
     lines << '<![endif]-->'
+    # run firebug lite in dev mode for ie
+    if RAILS_ENV == 'development'
+      lines << '<!--[if IE]>'
+      lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
+      lines << '<![endif]-->'
+    end
     lines.join("\n")
   end
 

@@ -1,9 +1,9 @@
-<% render :partial => 'tabs' %>
-
 <%
+  render :partial => 'tabs'
   active_tab = current_user.setting.preferred_editor_sym
+  @show_posts = false
 %>
-<%= Formy.tabs(:style => :simple) do |f|
+<%= Formy.tabs(:type => :simple) do |f|
   f.tab do |t|
     t.id       "link-tab-greencloth"
     t.selected active_tab == :greencloth
@@ -53,6 +53,10 @@
   end
 end %>
 
+<% form_tag(page_xurl(@page, :action => 'edit'), :id => wiki_form_id(@wiki)) do -%>
+<%= hidden_field 'wiki', 'version' %>
+<% locked_error_message -%>
+
 <div id="tab-edit-greencloth" class="tab_content" style="<%= 'display:none' if active_tab != :greencloth %>">
   <%= render :partial => "edit_greencloth", :locals => {:load_content => active_tab == :greencloth} %>
 </div>
@@ -62,10 +66,20 @@ end %>
 </div>
 
 <div id="tab-edit-preview" class="tab_content" style="display:none">
-  <%= render :partial => "edit_preview" %>
+  <div class="wiki" id="<%= wiki_preview_id @wiki %>"></div>
 </div>
 
 <div id="tab-edit-loading" class="tab_content" style="display:none">
   <%= big_spinner %>
 </div>
 
+<div class="buttons">
+ <% if locked_for_me? -%>
+   <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+ <% else -%>
+   <%= submit_tag 'Save'[:save_button], :name => 'save' %>
+ <% end -%>
+ <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+</div>
+
+<% end %>

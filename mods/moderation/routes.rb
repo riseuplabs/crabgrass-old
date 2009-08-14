@@ -13,4 +13,5 @@ map.namespace :admin do |admin|
   admin.resources :pages
   admin.resources :wall_posts
   admin.resources :discussion_posts
+  admin.resources :chat_messages
 end
