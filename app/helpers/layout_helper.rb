@@ -192,11 +192,13 @@ module LayoutHelper
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
-      # run firebug lite in dev mode for ie6
-      if RAILS_ENV=='development'
-        lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
-      end
     lines << '<![endif]-->'
+    # run firebug lite in dev mode for ie
+    if RAILS_ENV == 'development'
+      lines << '<!--[if IE]>'
+      lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
+      lines << '<![endif]-->'
+    end
     lines.join("\n")
   end
 
