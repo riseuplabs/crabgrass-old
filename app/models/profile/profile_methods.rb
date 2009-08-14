@@ -25,7 +25,7 @@ module ProfileMethods
   # returns the first profile that matches one of the access symbols in *arg
   # in this order of precedence: foe, friend, peer, fof, stranger.
   def find_by_access(*args)
-    return find_by_no_access if args.empty?
+    return nil if args.empty?
 
     args.map!{|i| if i==:member; :friend; else; i; end}
 
@@ -58,7 +58,7 @@ module ProfileMethods
   end
 
   def hidden
-    @hidden_profile ||= (find_by_access || create_or_build)
+    @hidden_profile ||= (find_by_no_access || create_or_build)
   end
 
   def create_or_build(args={})
