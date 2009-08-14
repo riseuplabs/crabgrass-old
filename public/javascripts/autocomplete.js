@@ -91,7 +91,7 @@ Autocomplete.prototype = {
     Event.observe(this.el, 'keyup', this.onKeyUp.bind(this));
     Event.observe(this.el, 'blur', this.enableKillerFn.bind(this));
     Event.observe(this.el, 'click', this.clearMessage.bind(this));
-    /* If we have preloaded data we might want to display it on focus.*/ 
+    /* If we have preloaded data we might want to display it on focus.*/
     Event.observe(this.el, 'focus', this.fixPosition.bind(this));
     this.container.setStyle({ maxHeight: this.options.maxHeight + 'px' });
     if (this.options.message != "") {
@@ -191,7 +191,7 @@ Autocomplete.prototype = {
       /* display preloaded suggestions if there are any. */
       this.updateSuggestions("");
       this.suggest();
-    } else { 
+    } else {
       this.getSuggestions();
       this.suggest();
     }
@@ -239,7 +239,7 @@ Autocomplete.prototype = {
         this.updateSuggestions(this.filterResponse(cr1));
         this.requestSuggestions(this.currentValue);
       }
-      if (this.suggestions.length === 0 && this.currentValue.length >= this.options.minChars) { 
+      if (this.suggestions.length === 0 && this.currentValue.length >= this.options.minChars) {
         this.badQueries.push(this.currentValue);
       }
     } else {
@@ -248,38 +248,35 @@ Autocomplete.prototype = {
     }
   },
 
+  // This function filters the response results using the current search terms.
+  // For a response result to be included in the results, it must match all the
+  // search terms.
+  //
+  // This is accomplished by converting each search term into a regular expression.
+  // Each regexp is prefixed by [\s\+>^] because we are looking for words outside
+  // any possible the html tags.
   filterResponse: function(response) {
-    var suggest=[];
-    var dat=[];
-    /* Building an array of regular expressions.
-     * Each of them has to be matched by the response.
-     * They all represent one search term.
-     * They are prefixed by [\s\+>^] because we are
-     * looking for words outsite the tags.
-     */
+    var suggest =[];
+    var data = [];
     var terms = this.currentValue.match(/\w+/g);
-    var reg_exp_ar = [];
     if (terms) {
+      // build array of search term regexps
+      var regexps = [];
       terms.each( function(term, i) {
-        reg_exp_ar.push(new RegExp('[\\s\\+>_-]' + term + '|^' + term, 'i'));
+        regexps.push(new RegExp('[\\s\\+>_-]' + term + '|^' + term, 'i'));
       });
+      // match this against each response suggestion
       response.suggestions.each( function(value, i) {
-        var tests_left = reg_exp_ar.length
-        while (value.match(reg_exp_ar[tests_left-1])) {
-          tests_left--;
-        }
-        if (tests_left == 0) {
+        var all_matched = regexps.all( function(regexp) {
+          return value.match(regexp);
+        });
+        if (all_matched) {
           suggest.push(value);
-          dat.push(response.data[i]);
+          data.push(response.data[i]);
         }
-      }.bind(this));
-}
-    var ret = {
-      data:dat,
-      query:this.currentValue,
-      suggestions:suggest 
-    };
-    return ret;
+      });
+    }
+    return {data:data, query:this.currentValue, suggestions:suggest};
   },
 
   isBadQuery: function(q) {

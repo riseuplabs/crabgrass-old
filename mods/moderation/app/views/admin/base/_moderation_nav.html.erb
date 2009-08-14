@@ -9,4 +9,7 @@
   <li class="<%= 'active' if @admin_active_tab == 'wall_post_moderation' %>">
     <%= link_to 'wall post moderation', admin_wall_posts_path %>
   </li>
+  <li class="<%= 'active' if @admin_active_tab == 'chat_messages_moderation' %>">
+    <%= link_to 'chat messages moderation', admin_chat_messages_path %>
+  </li>
 </ul>

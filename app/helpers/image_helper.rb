@@ -160,7 +160,7 @@ module ImageHelper
   end
 
   def link_to_toggle(label, id)
-    function = "$('#{id}').toggle(); eventTarget(event).toggleClassName('right_16').toggleClassName('sort_down_16')"
+    function = "linkToggle(eventTarget(event), '#{id}')"
     link_to_function_with_icon label, function, :icon => 'right'
   end
 

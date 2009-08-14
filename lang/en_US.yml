@@ -110,6 +110,8 @@ recipients: "Recipients"
 destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
 confirmation: "Are you sure?"
 
+entity_autocomplete_tip: "Enter Group or User Name..."
+
 ##
 ## MEDIA
 ##

@@ -142,6 +142,7 @@ module ControllerExtension::WikiRenderer
 
 
   def update_editor_data(params={})
+    params[:wiki] ||= {}
     hsh = if params[:editor] == 'preview'
       if params[:wiki][:body].any?
         {:body_preview => render_preview_from_text(params[:wiki][:body], @page.owner_name)}
@@ -156,6 +157,10 @@ module ControllerExtension::WikiRenderer
       {:body_html => render_ugly_html_from_text(params[:wiki][:body], @page.owner_name)}
     end
     return hsh.to_json
+  end
+
+  def html_to_greencloth(html)
+    Undress(html).to_greencloth
   end
 
   private

@@ -17,6 +17,11 @@ To get a copy of the most recent code:
   cd ~/development
   git clone git://labs.riseup.net/crabgrass.git
 
+Some libs are included as git submodule, please grab those like this:
+
+  cd ~/development/crabgrass
+  git submodule update --init
+  
 See https://labs.riseup.net/code/projects/show/crabgrass for information on releases.
 
 = Install optional packages

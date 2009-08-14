@@ -87,8 +87,8 @@ if (typeof(nicEditors) != 'undefined') {
   // A generic nicedit button that calls a js function.
   //
   var nicFunctionButton = nicEditorButton.extend({
-    mouseClick : function() {
-      this.ne.options[this.options.function]();
+    mouseClick: function() {
+      this.ne.options[this.options.onclick]();
     }
   });
 
@@ -97,7 +97,7 @@ if (typeof(nicEditors) != 'undefined') {
   //
   var nicCgImageOptions = {
     buttons: {
-      image: {name: 'Add Image', type: 'nicFunctionButton', function: 'onImgButtonClick'}
+      image: {name: 'Add Image', type: 'nicFunctionButton', onclick: 'onImgButtonClick'}
     }
   };
   nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
