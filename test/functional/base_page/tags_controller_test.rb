@@ -8,8 +8,7 @@ class BasePage::TagsControllerTest < Test::Unit::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
-           :'acts_as_taggable_on/taggings',
-           :tags
+           :taggings, :tags
 
   def setup
     @controller = BasePage::TagsController.new
