@@ -1,9 +1,10 @@
 <%
   render :partial => 'tabs'
-  active_tab = current_user.setting.preferred_editor_sym
+  # active_tab = current_user.setting.preferred_editor_sym
+  active_tab = :greencloth
   @show_posts = false
 %>
-<%= Formy.tabs(:type => :simple) do |f|
+<%# Formy.tabs(:type => :simple) do |f|
   f.tab do |t|
     t.id       "link-tab-greencloth"
     t.selected active_tab == :greencloth
