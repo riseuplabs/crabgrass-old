@@ -54,8 +54,11 @@ class YuckyController < ApplicationController
     date = @rateable.created_at
     url = "/chat/archive/"
     url += @rateable.channel.name
-    url += "/date/#{date.year}-#{date.month}-#{date.day}##{rateable.id}"
+    url += "/date/#{date.year}-#{date.month}-#{date.day}##{@rateable.id}"
     send_moderation_notice(url, summary)
+    render :update do |page|
+      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+    end
   end
 
   def remove_page
@@ -69,7 +72,9 @@ class YuckyController < ApplicationController
   end
 
   def remove_chat_message
-    redirect_to referer
+    render :update do |page|
+      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+    end
   end
 
    # Notify the admins that content has been marked as innapropriate

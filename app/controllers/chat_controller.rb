@@ -131,7 +131,7 @@ class ChatController < ApplicationController
     @channel_user = ChatChannelsUser.find(:first,
                                           :conditions => {:channel_id => @channel,
                                                           :user_id => @user})
-    @channel_user = ChatChannelsUser.create({:channel => @channel, :user => @user}) if  (!@channel_user and @user.is_a? User)
+    @channel_user = ChatChannelsUser.create({:channel => @channel, :user => @user}) if  (!@channel_user and @user.is_a? User and action_name != 'archive')
     true
   end
 
