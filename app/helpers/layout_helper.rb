@@ -194,7 +194,7 @@ module LayoutHelper
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
     lines << '<![endif]-->'
     # run firebug lite in dev mode for ie
-    if RAILS_ENV == 'development'
+    if false and RAILS_ENV == 'development'
       lines << '<!--[if IE]>'
       lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
       lines << '<![endif]-->'

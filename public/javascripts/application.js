@@ -40,6 +40,17 @@ function checkboxToggle(checkbox, element) {
   }
 }
 
+// Toggle the visibility of another element using a link with an
+// expanding/contracting arrow.
+function linkToggle(link, element) {
+  if (link) {
+    link = Element.extend(link);
+    link.toggleClassName('right_16');
+    link.toggleClassName('sort_down_16');
+    $(element).toggle();
+  }
+}
+
 // toggle all checkboxes of a particular css selected, based on the
 // checked status of the checkbox passed in.
 function toggle_all_checkboxes(checkbox, selector) {
@@ -154,7 +165,7 @@ function enterPressed(event) {
 }
 
 function eventTarget(event) {
-  event = event || window.event; // IE doesn't pass event as argument.
+  event = event || window.event;            // IE doesn't pass event as argument.
   return(event.target || event.srcElement); // IE doesn't use .target
 }
 
