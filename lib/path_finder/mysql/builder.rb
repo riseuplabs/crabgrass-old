@@ -160,11 +160,17 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :select => @select,
     }
 
-    if opts[:having]
-      find_opts[:group] = sql_for_group(order)
-      find_opts[:having] = sql_for_having(order)
-    else
-      find_opts[:group] = "#{sql_for_group(order)} HAVING #{ sql_for_having(order)}"
+    find_opts[:group] = sql_for_group(order)
+
+    having = sql_for_having(order)
+    # either append HAVING clause to GROUP BY string
+    # or set a new :having key
+    unless having.blank?
+      if opts[:having]
+        find_opts[:having] = having
+      elsif !having.blank?
+        find_opts[:group] << " HAVING #{having} "
+      end
     end
 
     return find_opts
