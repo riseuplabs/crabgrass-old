@@ -239,7 +239,7 @@ See also doc/SPHINX"
 
     # Run the block
     yield
-
+  ensure
     # restore
     if updated_site_attributes
       Site.current.attributes = unmodified_site_attributes
