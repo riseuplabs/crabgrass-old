@@ -33,7 +33,9 @@ class ChatController < ApplicationController
   def channel
     user_joins_channel(@user, @channel)
     @messages = [@channel_user.join_message]
-    session[:last_retrieved_message_id] = @messages.last.id
+    message_id = @messages.last.id
+    session[:first_retrieved_message_id] = message_id
+    session[:last_retrieved_message_id] = message_id
     @channel_user.record_user_action :not_typing
     @html_title = Time.zone.now.strftime('%Y.%m.%d')
   end
@@ -77,6 +79,9 @@ class ChatController < ApplicationController
     # get latest messages, update id of last seen message
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
+
+    # deleted messages
+    @deleted_messages = ChatMessage.all(:conditions => ["id > ? AND channel_id = ? AND deleted_at IS NOT NULL", session[:first_retrieved_message_id], @channel.id])
 
     @channel_user.record_user_action :not_typing
 
@@ -163,8 +168,7 @@ class ChatController < ApplicationController
 # in a paragraph block (<p> stuff </p>), and things will
 # look funny if we don't strip that off
     say  = GreenCloth.new(say).to_html
-    say.gsub!(/^<p>/, '')
-    say.gsub!(/<\/p>$/, '')
+    say.gsub! /\A<p>(.+)<\/p>\Z/m, '\1'
     return say
   end
 

@@ -7,6 +7,12 @@ for message in @messages %>
   }
 <% end %>
 
+<% 
+# remove messages that have been deleted
+for message in @deleted_messages %>
+    $('message-<%= message.id%>').hide();
+<% end %>
+
 <%= scroll_conversation_script if @messages.length > 0 %>
 
 <%= set_time_and_name_script %>
