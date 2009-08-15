@@ -99,7 +99,8 @@ module FlashMessageHelper
   end
 
   # display flash messages with appropriate styling
-  def display_messages()
+  # for now, the size is always small.
+  def display_messages(size='small')
     return "" if flash[:hide]
     @display_message ||= begin
       if flash[:type].empty?
