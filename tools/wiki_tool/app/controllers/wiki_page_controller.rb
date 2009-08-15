@@ -26,6 +26,7 @@ class WikiPageController < BasePageController
     if logged_in? and heading = @wiki.currently_editing_section(current_user)
       # if the user has a particular section locked, then show it to them.
       if heading == :all
+        flash_message :info => "You have this wiki locked. If you want to stop editing, click the cancel button."[:view_while_locked_error]
         redirect_to page_url(@page,:action=>'edit')
       else
         @wiki.body_html = body_html_with_form(heading)
