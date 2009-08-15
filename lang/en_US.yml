@@ -36,6 +36,7 @@ to: "To"
 viewed: "Viewed"
 people: "People"
 delete: "Delete"
+remove: "Remove"
 share: "Share"
 contributed: "Contributed"
 groups: "Groups"
@@ -431,7 +432,6 @@ profile_public_description: |
 profile_private_description: This profile is private and is only visible to your friends.
 profile_last_login: "Last Login"
 profile_member_since: "Member Since"
-remove: remove
 Home: Home
 Work: Work
 School: School
