@@ -20,7 +20,7 @@
       r.label "Language"[:language]
       r.label_for 'group_language'
       r.input select('group', 'language', Language.find(:all).to_select(:name, :code), {:include_blank => true})
-      r.info 'The main language of this %s.'[:group_language] % @group.group_type.downcase
+      r.info 'The main language of this {group_type}.'[:group_language, @group.group_type.downcase]
     end
     f.row do |r|
       r.label "Icon"[:icon]
