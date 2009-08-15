@@ -4,7 +4,7 @@
 <div class="menu_items" style="display: none" onclick="<%= remote_function(:url => me_params(:action => :recent_pages)) %>">
   <div class="leftcol menu_me">
     <% cache(menu_cache_key(:submenu=>'me_sidebar')) do %>
-      <%= render :partial => 'me/mebar', :locals => { :skip_ids => true, :inline_create_page => true, :submenu => 'me_drop'}  %>
+      <%= render :partial => 'me/mebar', :locals => {:menu_mode => true}  %>
     <% end %>
   </div>
   <div class="rightcol">
