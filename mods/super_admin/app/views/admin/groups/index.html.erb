@@ -1,13 +1,14 @@
-<h2>Edit groups</h2>
+<% @title_box = '<h1>Edit Groups</h1>' %>
 
 <i>Total number of groups:</i> <%= @groups.count %><br /><br />
 
 <%= alphabetical_filter(:controller => 'admin/groups') %>
 
-<table cellspacing="0">
+<table class="pretty">
   <tr>
     <th>Name</th>
     <th>Created at</th>
+    <th>&nbsp;</th>
   </tr>
 
   <% if @groups.any? -%>
