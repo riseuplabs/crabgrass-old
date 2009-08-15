@@ -1,4 +1,5 @@
-<h2>Profile settings</h2>
+<% @title_box = '<h1>Profile settings</h1>' %>
+
 <span>You can choose which fields can be filled out in a profile and which profile tabs are active. Default is set to allow all.</span>
 <% form_for current_site, :url => { :action => :update } do |f| %>
 <%= f.error_messages %>

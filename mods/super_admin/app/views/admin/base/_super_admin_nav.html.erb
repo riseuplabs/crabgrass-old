@@ -1,15 +1,15 @@
-<h4>Superadmin</h4>
-<ul class="admin_nav">
-  <li class="<%= 'active' if @admin_active_tab == 'users_new'%>">
-    <%= link_to 'create users', new_admin_user_path %>
+<h2 class="alert">Super Admin Powers</h2>
+<ul class="side_list">
+  <li class="small_icon user_add_16">
+    <%= link_to_active 'Create User', new_admin_user_path, controller?('admin/users') && action?(:new) %>
   </li>
-  <li class="<%= 'active' if @admin_active_tab == 'users_index'%>">
-    <%= link_to 'edit users', users_path %>
+  <li class="small_icon user_16">
+    <%= link_to_active 'Edit Users', users_path, controller?('admin/users') && !action?(:new) %>
   </li>
-  <li class="<%= 'active' if @admin_active_tab == 'groups_new'%>">
-    <%= link_to 'create groups', new_group_path %>
+  <li class="small_icon membership_add_16">
+    <%= link_to_active 'Create Groups', new_group_path, controller?('admin/groups') && action?(:new) %>
   </li>
-  <li class="<%= 'active' if @admin_active_tab == 'groups_index'%>">
-    <%= link_to 'edit groups', groups_path %>
+  <li class="small_icon group_contributions_16">
+    <%= link_to_active 'Edit Groups', groups_path, controller?('admin/groups') && !action?(:new) %>
   </li>
 </ul>

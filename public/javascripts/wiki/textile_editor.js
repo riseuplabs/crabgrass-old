@@ -466,7 +466,7 @@ Control.TextArea.ToolBar = Class.create(	{
     a.title = link_text; // crabgrass addition
     // crabgrass addition
     if(attrs['class']) {
-      a.addClassName(attrs['class']);
+      Element.extend(a).addClassName(attrs['class']);
       attrs['class'] = null;
     }
 		this.attachButton(a,callback);

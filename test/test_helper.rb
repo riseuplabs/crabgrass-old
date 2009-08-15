@@ -123,7 +123,7 @@ class Test::Unit::TestCase
   end
 
   def assert_success_message(title_regexp = nil, text_regexp = nil)
-    assert_equal 'info', flash[:type]
+    assert_equal 'success', flash[:type]
     if title_regexp
       assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp, flash[:text]]
     end

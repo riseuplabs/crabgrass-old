@@ -1,19 +1,18 @@
+<%= pagination_links(@pages) %>
+
 <table>
   <tr>
     <th>Title</th>
     <th>Type</th>
     <th>Created At</th>
     <th>Created By</th>
-    <th></th>
-    <th></th>
   </tr>
-  <tr><td colspan=4><%= will_paginate @pages %></td></tr>
   <% @pages.each do |page| %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
-      <td style=" width:300px"><%= link_to page.title, page_url(page) %></td>
-      <td style=" width:120px"><%=h page.type %></td>
-      <td style=" width:120px"><%=h page.created_at.strftime("%d %b, %Y ") %></td>
-      <td style=" width:120px"><%=h page.created_by_login %></td>
+      <td><%= link_to page.title, page_url(page) %></td>
+      <td><%=h page.type %></td>
+      <td><%=h page.created_at.strftime("%d %b, %Y ") %></td>
+      <td><%=h page.created_by_login %></td>
       <% params = {:id => page.id, :view => @current_view} %>
       <% if actions=actions_for(@current_view) %>
           <% actions.each do |action| %>
@@ -39,5 +38,6 @@
       <%end%>
     </tr>
   <% end %>
-  <tr><td><%= will_paginate @pages %></td></tr>
 </table>
+
+<%= pagination_links(@pages) %>
