@@ -35,15 +35,15 @@ module FlashMessageHelper
   #
   #   flash_message :title => 'hello', :text => 'have a nice day', :type => 'info'
   #   flash_message :title => 'wrong', :text => 'you messed up', :type => 'error'
-  #
+  #   flash_message :title => 'ok', :text => 'you did good', :type => 'success'
   #
   # Shortcuts:
   #
   #   flash_message :success => true
-  #      (same as :type => 'info', :title => 'Changes saved')
+  #      (same as :type => 'success', :title => 'Changes saved')
   #
   #   flash_message :success => 'yeah'
-  #      (same as :type => 'info', :text => 'yeah', :title => 'Changes Saved')
+  #      (same as :type => 'success', :text => 'yeah', :title => 'Changes Saved')
   #
   #   flash_message :error => true
   #      (same as :type => 'error', :title => 'Changes could not be saved')
@@ -55,7 +55,7 @@ module FlashMessageHelper
   #      (same as :success => true)
   #
   #   flash_message :info => 'hi'
-  #      (to be used in the future)
+  #      (same as :type => 'info', :title => 'hi')
   #
   #   flash_message :permission_denied
   #
@@ -79,6 +79,7 @@ module FlashMessageHelper
   end
 
   def flash_message_now(options)
+    flash.now[:title] = nil
     add_flash_message(flash.now, options)
   end
 
@@ -98,7 +99,7 @@ module FlashMessageHelper
   end
 
   # display flash messages with appropriate styling
-  def display_messages(size=:big)
+  def display_messages()
     return "" if flash[:hide]
     @display_message ||= begin
       if flash[:type].empty?
@@ -108,10 +109,10 @@ module FlashMessageHelper
           flash[:title] = nil
         elsif flash[:title].empty?
           flash[:title] = "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
-          flash[:title] = "Changes saved"[:alert_saved]                  if flash[:type] == 'info'
+          flash[:title] = "Changes saved"[:alert_saved]                  if flash[:type] == 'success'
         end
         notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
-        content_tag(:div, notice_contents, :class => size.to_s + '_notice')
+        content_tag(:div, notice_contents, :class => "small_notice #{flash[:type]}")
       end
     end
   end
@@ -184,7 +185,7 @@ module FlashMessageHelper
         end
       end
     elsif options[:success]
-      flsh[:type] = 'info'
+      flsh[:type] = 'success'
       if options[:success] === true
         # use defaults
       elsif options[:success].any?
@@ -198,9 +199,8 @@ module FlashMessageHelper
         end
       end
     elsif options[:info]
-      options[:title] = options[:info]
-      options[:success] = true
-      add_flash_message(flsh, options)
+      flsh[:type] = 'info'
+      flsh[:title] = options[:info]
     elsif options[:permission_denied]
       add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied])
     else
@@ -212,9 +212,13 @@ module FlashMessageHelper
   private
 
   def build_notice_area(type, title, text)
+    icon = case type
+      when 'error' then 'caution'
+      when 'success' then 'ok'
+      when 'info' then 'lightbulb'
+    end
     if title
-      heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
-      heading = content_tag(:div, heading, :class => 'heading')
+      heading = content_tag(:strong, title, :class => "small_icon #{icon}_16")
     else
       heading = ""
     end
@@ -223,7 +227,7 @@ module FlashMessageHelper
     else
       text = ""
     end
-    content_tag(:div, heading+text, :class => type)
+    heading+text
   end
 
   def exception_detailed_message(exception)

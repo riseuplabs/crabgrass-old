@@ -1,10 +1,7 @@
 <%-
-  submenu = 'me_sidebar' if submenu.nil?
   inline_create_page = false if inline_create_page.nil?
   skip_ids = false if skip_ids.nil?
 -%>
-
-<% cache(menu_cache_key(:submenu=>submenu)) do %>
 
 <%= create_page_link(nil) unless inline_create_page %>
 
@@ -93,4 +90,3 @@
 
 </ul>
 
-<% end %>
