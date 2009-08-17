@@ -8,17 +8,22 @@ class ChatChannelsUserTest < Test::Unit::TestCase
 
  
   def test_associations
-    assert check_associations(ChatChannel)
+    assert check_associations(ChatChannelsUser)
   end
 
   def test_channels_user_without_channel
-    channel = ChatChannelsUser.new :user => users(:blue)
-    assert_equal channel.save, false, 'should not save channels_user without a channel'
+    channels_user = ChatChannelsUser.new :user => users(:blue)
+    assert_equal channels_user.save, false, 'should not save channels_user without a channel'
   end
 
   def test_channels_user_without_user
-    channel = ChatChannelsUser.new :channel => channels(:rainbow)
-    assert_equal channel.save, false, 'should not save channels_user without an user'
+    channels_user = ChatChannelsUser.new :chat_channel => channels(:rainbow)
+    assert_equal channels_user.save, false, 'should not save channels_user without an user'
+  end
+
+  def test_channels_user_without_user_nor_channel
+    channels_user = ChatChannelsUser.new
+    assert_equal channels_user.save, false, 'should not save channels_user without an nor channel'
   end
 
 end
