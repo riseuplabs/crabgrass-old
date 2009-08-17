@@ -28,6 +28,12 @@ if stopx
 
   set :deploy_to, "/var/rails/#{application}"
 
+  task :stopx_link_to_shared do
+    run "rm -rf #{release_path}/config/crabgrass.production.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/crabgrass.production.yml #{release_path}/config/crabgrass.production.yml"
+  end
+  after  "deploy:symlink", "stopx_link_to_shared"
+
 else
 
   deploy_host = "bunting.riseup.net"
