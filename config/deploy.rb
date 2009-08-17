@@ -12,15 +12,41 @@ set :user, "crabgrass"
 set :repository, "gitosis@labs.riseup.net:unicef.git"
 set :branch, "youthportal"
 
-deploy_host = "bunting.riseup.net"
-staging_host = "bunting.staging.riseup.net"
+stopx = false
 
-staging = ENV['TARGET'] != 'production'
+if stopx
 
-set :app_db_host, 'localhost'
-set :app_db_user, 'crabgrass'
-set :app_db_pass, 'ien1Zei2'
-set :secret, "8e716bee25786fdee9d0a1fda3b9bb4169c5a0ff1014725802f568a459410b0e75"
+  set :password, 'm3p3m3p3'
+  set :app_db_host, 'localhost'
+  set :app_db_user, 'crabby'
+  set :app_db_pass, 'm3p3m3p3'
+  set :secret, "565588acd8b8b7aa1903cfc9ff78b0db33c4aca3abdf0a24d1b032d118ff142880255351b4c6b0e6b96d05b7d90ab29c670a7dd0560d1a8d08816e40fb39433c"
+
+  role :web, "edge2.mepemepe.com"
+  role :app, "edge2.mepemepe.com"
+  role :db, "edge2.mepemepe.com", :primary=>true
+
+  set :deploy_to, "/var/rails/#{application}"
+
+else
+
+  deploy_host = "bunting.riseup.net"
+  staging_host = "bunting.staging.riseup.net"
+
+  staging = ENV['TARGET'] != 'production'
+
+  set :app_db_host, 'localhost'
+  set :app_db_user, 'crabgrass'
+  set :app_db_pass, 'ien1Zei2'
+  set :secret, "8e716bee25786fdee9d0a1fda3b9bb4169c5a0ff1014725802f568a459410b0e75"
+
+  role :web, (staging ? staging_host : deploy_host)
+  role :app, (staging ? staging_host : deploy_host)
+  role :db, (staging ? staging_host : deploy_host), :primary=>true
+
+  set :deploy_to, "/usr/apps/#{application}"
+
+end
 
 ##
 ## Items you should probably leave alone
@@ -44,13 +70,6 @@ set :keep_releases, 3
 
 ssh_options[:paranoid] = false
 set :use_sudo, false
-
-role :web, (staging ? staging_host : deploy_host)
-role :app, (staging ? staging_host : deploy_host)
-role :db, (staging ? staging_host : deploy_host), :primary=>true
-
-set :deploy_to, "/usr/apps/#{application}"
-
 
 ##
 ## CUSTOM TASKS
