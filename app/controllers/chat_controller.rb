@@ -12,7 +12,7 @@ class ChatController < ApplicationController
   stylesheet 'groups'
   permissions 'chat'
   before_filter :login_required
-  prepend_before_filter :get_channel_and_user
+  prepend_before_filter :get_channel_and_user, :except => :index
   append_before_filter :breadcrumbs
 
   # show a list of available channels
