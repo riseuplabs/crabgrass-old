@@ -5,6 +5,8 @@ class ChatChannelsUser < ActiveRecord::Base
   belongs_to :channel, :class_name => 'ChatChannel', :foreign_key => 'channel_id'
   belongs_to :user
 
+  validates_presence_of :chat_channel, :user
+
   def typing?
     return (self.status? and self.status > 0)
   end

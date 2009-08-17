@@ -1,5 +1,5 @@
 class Admin::CustomAppearancesController < Admin::BaseController
-  stylesheet :custom_appearance, :admin
+  stylesheet :custom_appearance
   javascript :extra
 
   helper ColorPickerHelper, Admin::UsersHelper, Admin::GroupsHelper, Admin::EmailBlastsHelper, Admin::AnnouncementsHelper, Admin::PagesHelper, Admin::PostsHelper, 'custom_appearances', 'admin/custom_appearances'
@@ -22,7 +22,7 @@ class Admin::CustomAppearancesController < Admin::BaseController
   def edit
     @admin_active_tab = 'custom_appearances_edit'
     @active_tab = :admin
-    render :layout => 'admin'
+    #render :layout => 'admin'
   end
 
   # PUT custom_appearance_url

@@ -4,15 +4,16 @@ class Admin::BaseController < ApplicationController
   include FlashMessageHelper
   include AuthenticatedSystem
 
-  layout 'admin'
+  #layout 'admin'
 
-  stylesheet('admin')
+  #stylesheet('admin')
 
   helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, FlashMessageHelper, LinkHelper, ApplicationHelper, TimeHelper
 
 
   before_filter :login_required
   before_filter :set_active_tab
+  before_render :context_if_appropriate
 
   include Admin::GroupsHelper
   include Admin::UsersHelper
@@ -42,15 +43,22 @@ class Admin::BaseController < ApplicationController
 
   protected
 
-#  def authorized?
-#    if session[:admin]
-#      # if session[:admin] is set, then a superadmin user has assumed the identity
-#      # of a regular user and is now returning to the admin panel. So we restore
-#      # their actual identity.
-#      session[:user] = session[:admin]
-#      session[:admin] = nil
-#      redirect_to '/admin'
-#      true
-#    end
-#  end
+  def context
+    @left_column = render_to_string :partial => 'admin/base/navigation'
+  end
+
+  def context_if_appropriate
+    if !@skip_context and normal_request?
+      @skip_context = true
+      context()
+    end
+    true
+  end
+
+  def normal_request?
+    format = request.format.to_sym
+    response.redirected_to.nil? and
+    (format == :html or format == :all or format == :gif)
+  end
+
 end

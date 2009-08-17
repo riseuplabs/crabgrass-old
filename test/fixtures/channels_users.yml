@@ -1,0 +1,17 @@
+orange:
+  channel: rainbow
+  user: orange
+  last_seen: <%= 13.seconds.ago.to_s :db %>
+  status: 3 # user is typing
+
+purple:
+  channel: rainbow
+  user: purple
+  last_seen: <%= 27.seconds.ago.to_s :db %>
+  status: 0 # user is not typing
+
+red:
+  channel: rainbow
+  user: red
+  last_seen: <%= 2.seconds.ago.to_s :db %>
+  status: -2 # user just finished typing

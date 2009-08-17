@@ -7,12 +7,8 @@ class Admin::ChatMessagesController < Admin::BaseController
     view = params[:view] || 'all'
     @current_view = view
 
-    if params[:channel] && params[:channel].any?
-      @channel = ChatChannel.find(params[:channel])
-    end
-
     if view == 'all'
-      options = { :order => 'created_at DESC' }
+      options = { :conditions => ["created_at > ?", 1.days.ago.to_s(:db)], :order => 'created_at DESC' }
     elsif view == 'new'
       # all messages that have been flagged as inappropriate have not had any admin action yet.
       options = { :conditions => ['(vetted = ? AND rating = ? AND deleted_at IS NULL)', false, YUCKY_RATING], :joins => :ratings, :order => 'created_at DESC' }
@@ -23,7 +19,7 @@ class Admin::ChatMessagesController < Admin::BaseController
       # list the pages that are 'deleted' by being hidden from view.
       options = { :conditions => ['deleted_at IS NOT NULL'], :order => 'created_at DESC' }
     end
-    @messages = (@channel ? @channel.messages : ChatMessage).paginate(options.merge(:page => params[:page]))
+    @messages = ChatMessage.paginate(options.merge(:page => params[:page]))
   end
 
   # Approves a post by marking :vetted = true
