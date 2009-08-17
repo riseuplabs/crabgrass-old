@@ -1,8 +1,8 @@
-<h2>Editing group</h2>
+<% @title_box = '<h1>Edit Groups</h1>' %>
 
 <% form_for(@group) do |f| %>
   <%= f.error_messages %>
-  <table>  
+  <table>
     <%= render :partial => 'form', :locals => {:f => f} %>
     <tr>
       <td><%= f.submit "Update" %></td>

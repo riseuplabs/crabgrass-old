@@ -19,6 +19,8 @@ title: "Crabgrass Development"
 
 enabled_mods:
   - design_tester
+#  - super_admin
+#  - moderation
 #  - gibberize
 
 email:
@@ -35,7 +37,9 @@ sites:
 # bound to localhost:
   - name: site1
     admin_group: rainbow
+#    moderation_group: rainbow
 
 # bound to test.host
 #  - name: site2
 #    admin_group: superadmins
+

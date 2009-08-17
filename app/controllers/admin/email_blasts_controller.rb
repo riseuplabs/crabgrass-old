@@ -16,9 +16,9 @@ class Admin::EmailBlastsController < Admin::BaseController
 
   protected
 
-  def set_active_tab
-    @active = 'email_blasts'
-  end
+  #def set_active_tab
+  #  @active = 'email_blasts'
+  #end
 
   def build_recipient_list(receipients)
     recipient_list = [ ]

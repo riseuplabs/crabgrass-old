@@ -2,6 +2,7 @@ class ChatChannel < ActiveRecord::Base
   set_table_name 'channels'
 
   belongs_to :group
+  validates_presence_of :group
 
   has_many :channels_users, :dependent => :delete_all, :class_name => 'ChatChannelsUser', :foreign_key => 'channel_id'
 
@@ -13,17 +14,21 @@ class ChatChannel < ActiveRecord::Base
     end
     # returns an array of months that had messages for a particular channel
     def months
+      return unless self.first
       sql = "SELECT MONTH(messages.created_at) AS month, "
       sql += "YEAR(messages.created_at) AS year FROM messages "
+      sql += "WHERE channel_id = '#{self.first.channel_id}' AND #{conditions} "
       sql += "GROUP BY year, month ORDER BY year, month"
       ChatMessage.connection.select_all(sql)
     end
     # returns an array with the days that had messages for a channel on a month
     def days(year, month)
+      return unless self.first
       begin_date = Time.zone.local(year, month)
       end_date = begin_date.advance(:months => 1)
       sql = "SELECT DAY(messages.created_at) AS day FROM messages "
-      sql += "WHERE messages.created_at >= '#{begin_date.to_s(:db)}' "
+      sql += "WHERE channel_id = '#{self.first.channel_id}' AND #{conditions} "
+      sql += "AND messages.created_at >= '#{begin_date.to_s(:db)}' "
       sql += "AND messages.created_at < '#{end_date.to_s(:db)}' "
       sql += "GROUP BY day ORDER BY day"
       ChatMessage.connection.select_all(sql)
@@ -34,7 +39,7 @@ class ChatChannel < ActiveRecord::Base
       end_date = begin_date.advance(:days => 1)
       conditions = "created_at >= '#{begin_date.to_s(:db)}' "
       conditions += "AND created_at < '#{end_date.to_s(:db)}'"
-      ChatMessage.find(:all, :conditions => conditions, :order => "created_at ASC")
+      find(:all, :conditions => conditions)
     end
   end
 

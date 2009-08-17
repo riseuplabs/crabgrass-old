@@ -1,17 +1,22 @@
 <%-
-  submenu = 'me_sidebar' if submenu.nil?
-  inline_create_page = false if inline_create_page.nil?
-  skip_ids = false if skip_ids.nil?
--%>
+  # in menu mode, we do some things differently:
+  # (1) we display the create page link inline instead of in a bubble.
+  # (2) we skip the ids for the li tags, so they don't conflict with the mebar of the
+  #     non-menu me naviation
+  # (3) we do not highlight the active selection.
 
-<% cache(menu_cache_key(:submenu=>submenu)) do %>
+  menu_mode = false if menu_mode.nil?
+  inline_create_page = menu_mode
+  skip_ids = menu_mode
+  show_active = !menu_mode
+-%>
 
 <%= create_page_link(nil) unless inline_create_page %>
 
 <ul class='side_list'>
 
   <% if inline_create_page %>
-    <% active = controller?(:pages) && action?(:create) %>
+    <% active = show_active && controller?(:pages) && action?(:create) %>
     <li class='small_icon plus_16'><%= link_to_active(
       "Create Page"[:contribute_content_link],
       {:controller => '/pages', :action => 'create'},
@@ -19,35 +24,35 @@
     ) %></li>
   <% end %>
 
-  <% active = controller?('me/dashboard') %>
+  <% active = show_active && controller?('me/dashboard') %>
   <li class='small_icon house_16'><%= link_to_active(
     'Dashboard'[:me_dashboard_link],
     '/me/dashboard',
     active
   ) %></li>
 
-  <% active = controller?('me/inbox') %>
+  <% active = show_active && controller?('me/inbox') %>
   <li id="<%= 'inbox_line' unless skip_ids %>" class="small_icon inbox_16"><%= link_to_active(
      'Inbox'[:me_inbox_link],
     '/me/inbox',
     active
   ) %></li>
 
-  <% active = controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
+  <% active = show_active && controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
   <li class="small_icon page_message_16"><%= link_to_active(
     'Messages'[:messages],
     my_messages_path,
     active
   ) %></li>
 
-  <% active = controller?('me/tasks') %>
+  <% active = show_active && controller?('me/tasks') %>
   <li class="small_icon page_tasks_16"><%= link_to_active(
     'Tasks'[:me_tasks_link],
     '/me/tasks/pending',
     active
   ) %></li>
 
-  <% active = controller?('me/requests') %>
+  <% active = show_active && controller?('me/requests') %>
   <li id="<%= 'requests_line' unless skip_ids %>" class='small_icon info_16'><%= link_to_active(
     'Requests'[:requests],
     {:controller => '/me/requests', :action => 'to_me'},
@@ -77,14 +82,14 @@
     </li>
 -->
 
-    <% active = controller?('me/search') %>
+    <% active = show_active && controller?('me/search') %>
     <li class="small_icon magnifier_16"><%= link_to_active(
       'Search'[:me_search_link],
       '/me/search',
       active
     ) %></li>
 
-    <% active = controller?('me/trash') %>
+    <% active = show_active && controller?('me/trash') %>
     <li id="<%='trash_line' unless skip_ids %>" class="small_icon trash_16"><%= link_to_active(
       'Trash'[:trash],
       {:controller => '/me/trash'},
@@ -93,4 +98,3 @@
 
 </ul>
 
-<% end %>

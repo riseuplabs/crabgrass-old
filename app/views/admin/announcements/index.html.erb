@@ -1,7 +1,9 @@
-<h2>Edit Announcements</h2>
+<% @title_box = '<h1>Edit Announcements</h1>' %>
+
+<% @info_box = link_to_with_icon 'plus', 'Create Announcement', {:controller => '/announcement_page', :action => 'create', :id => 'announcement', :group => (current_site.network ? current_site.network.name : nil)} %>
 
 <div id="pages-listing">
-<table cellspacing="0">
+<table class="pretty">
   <tr>
     <th>Title</th>
     <th>Created At</th>

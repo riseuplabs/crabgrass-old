@@ -119,7 +119,7 @@ module ControllerExtension::RescueErrors
     if logged_in?
       add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
     else
-      add_flash_message(flsh, :title => 'Login Required'[:login_required], :success => 'Please login to perform that action.'[:login_required_description])
+      add_flash_message(flsh, :title => 'Login Required'[:login_required], :type => 'info', :text => 'Please login to perform that action.'[:login_required_description])
     end
   end
 

@@ -8,8 +8,8 @@ class BasePage::AssetsController < ApplicationController
   def show
     if params[:popup]
       render :partial => 'base_page/assets/popup'
-    else
-      render :nothing => true
+    else # close
+      render :template => 'base_page/reset_sidebar'
     end
   end
 

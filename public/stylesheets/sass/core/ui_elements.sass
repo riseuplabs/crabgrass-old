@@ -542,41 +542,63 @@ div
     + div.fieldWithErrors
       display: none
 
-.small_notice
-  background: #fcc
-  border: 1px solid red
-  h2
-    border: 0
-    font-size: 1em
-    color: black
+//
+// this is the alert box that shows up when you use flash_message(:error => 'ouch')
+//
 
-.big_notice
-  padding: 0 4em 1.5em 4em
-  h2
-    font-size: 1.2em
-    img
-      vertical-align: middle
-  p, li
-    color: black
-    margin-left: 2em
-  div.text
-    border-top: 1px solid #999
-    background-color: #fafafa
-    // some kind of bug:
-    padding: 0.01em
-  div.heading
-    background-color: #dfdfdf
-    // some kind of bug:
-    padding: 0.01em
-  div.error
-    border: 2px solid red
-    color: #900
-  div.info
-    border: 2px solid green
-    color: #090
-  div.update
-    border: 2px solid blue
-    color: #009
+.small_notice
+  padding: 0.5em
+  margin-bottom: 1em
+  .text
+    padding-left: 20px
+  p, ul
+    margin: 0.25em
+  &.error
+    border: 1px solid red
+    background: #fcc
+  &.success
+    border: 1px solid green
+    background: #cfc
+  &.info
+    border: 1px solid blue
+    background: #cdf
+
+//  h2
+//    border: 0
+//    font-size: 1em
+//    color: black
+
+//#message
+//  div.big_notice
+//    padding: 0 4em 1.5em 4em
+
+//.big_notice
+//  padding: 0 4em 1.5em 4em
+//  h2
+//    font-size: 1.2em
+//    img
+//      vertical-align: middle
+//  p, li
+//    color: black
+//    margin-left: 2em
+//  div.text
+//    border-top: 1px solid #999
+//    background-color: #fafafa
+//    // some kind of bug:
+//    padding: 0.01em
+//  div.heading
+//    background-color: #dfdfdf
+//    // some kind of bug:
+//    padding: 0.01em
+//  div.error
+//    border: 2px solid red
+//    color: #900
+//  div.info
+//    border: 2px solid green
+//    color: #090
+//  div.update
+//    border: 2px solid blue
+//    color: #009
 
 
 
