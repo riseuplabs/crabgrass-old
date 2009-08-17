@@ -1,10 +1,9 @@
 <%
   render :partial => 'tabs'
-  # active_tab = current_user.setting.preferred_editor_sym
-  active_tab = :greencloth
+  active_tab = current_user.setting.preferred_editor_sym
   @show_posts = false
 %>
-<%# Formy.tabs(:type => :simple) do |f|
+<%= Formy.tabs(:type => :simple) do |f|
   f.tab do |t|
     t.id       "link-tab-greencloth"
     t.selected active_tab == :greencloth
@@ -63,7 +62,7 @@ end %>
 </div>
 
 <div id="tab-edit-html" class="tab_content" style="<%= 'display:none' if active_tab != :html %>">
-  <%# render :partial => "edit_wysiwyg", :locals => {:load_content => active_tab == :html} %>
+  <%= render :partial => "edit_wysiwyg", :locals => {:load_content => active_tab == :html} %>
 </div>
 
 <div id="tab-edit-preview" class="tab_content" style="display:none">
