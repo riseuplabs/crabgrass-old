@@ -2,6 +2,7 @@ class ChatChannel < ActiveRecord::Base
   set_table_name 'channels'
 
   belongs_to :group
+  validates_presence_of :group
 
   has_many :channels_users, :dependent => :delete_all, :class_name => 'ChatChannelsUser', :foreign_key => 'channel_id'
 
