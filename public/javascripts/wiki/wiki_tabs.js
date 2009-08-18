@@ -7,7 +7,7 @@ function updateEditor(response, tab, id) {
   if(response.status != 200)
     return false;
 
-  var editor   = nicEditors.findEditor("wiki_editor-" + id);
+  var editor   = new HtmlEditor(id);
   var textarea = $("wiki_body-" + id);
   var preview  = $("wiki_preview-" + id);
 
@@ -24,6 +24,7 @@ function updateEditor(response, tab, id) {
   }
   else if (tab == 'html') {
     showTab($('link-tab-html'), $('tab-edit-html'));
+    editor.refresh();
   }
   else if (tab == 'preview') {
     showTab($('link-tab-preview'), $('tab-edit-preview'));
@@ -43,11 +44,11 @@ function isTabSelected(link) {return $(link).hasClassName('active')}
 
 function encodedEditorData(wiki_id) {
   var textarea = $('wiki_body-'+wiki_id);
-  var visual_editor = nicEditors.findEditor("wiki_editor-" + wiki_id)
+  var visual_editor = new HtmlEditor(wiki_id);
   if (textarea.getValue())
     return textarea.serialize();
-  if (visual_editor.getContent())
-    return $H({'wiki[body_html]': visual_editor.getContent()}).toQueryString();
+  if (visual_editor.content())
+    return $H({'wiki[body_html]': visual_editor.content()}).toQueryString();
 }
 
 function editorData(editor, wiki_id) {
@@ -55,7 +56,8 @@ function editorData(editor, wiki_id) {
   if (editor == 'greencloth')
     data = $('wiki_body-'+wiki_id).getValue();
   else if (editor == 'html') {
-    data = nicEditors.findEditor("wiki_editor-" + wiki_id).getContent();
+    editor = new HtmlEditor(wiki_id);
+    data = editor.content();
     if (data == "<br>")
       data = "";
   }
@@ -81,7 +83,7 @@ function selectWikiEditorTab(url, options) {
   return true;
 }
 
-
+/*
 if (typeof(nicEditors) != 'undefined') {
   //
   // A generic nicedit button that calls a js function.
@@ -102,4 +104,4 @@ if (typeof(nicEditors) != 'undefined') {
   };
   nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
 }
-
+*/

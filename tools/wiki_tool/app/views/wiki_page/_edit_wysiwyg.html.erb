@@ -1,29 +1,65 @@
-<% content_for :script do -%>
-  bkLib.onDomLoaded(function() {
-    var form = $('<%= wiki_form_id(@wiki) %>');
-    var editor = new nicEditor({
-      buttonList: ['bold','italic','underline','strikethrough', 'ol','ul',
-                   'indent','outdent','fontFormat','link','unlink','image',
-                   'removeformat','html'],
-      iconsPath: '<%= "/images/ui/nicEditorIcons.gif" %>',
-      onImgButtonClick: function() {
-        <%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>
-      }
-    });
-    editor.setPanel('<%= wiki_panel_id(@wiki) %>');
-    editor.addInstance('<%= wiki_editor_id(@wiki) %>');
-    <%# this is a hack to get around a bug in nicedit when instance is based on a textarea.
-      # instead, we set instance to be based on a div, but then we manually set copyElm to be our
-      # textarea, and we add the save callback. this makes it so when you submit the form, the textarea
-      # will get a copy of the contents of the editor div. %>
-    var instance = editor.nicInstances.first();
-    instance.copyElm = $('<%=wiki_body_html_id(@wiki)%>');
-    bkLib.addEvent(form, 'submit', instance.saveContent.closure(instance));
-  });
-<% end -%>
-  <div class="html_editor_wrapper">
-    <div id="<%= wiki_panel_id(@wiki) %>" class="html_editor_panel"></div>
-    <div id="<%= wiki_editor_id(@wiki) %>" class="html_editor_instance"><%= ugly_html(@wiki.body_html) if load_content %></div>
-    <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="display:none"></textarea>
-  </div>
+<%##
+  ## NOTES
+  ##
+  ## There are some plugins we would like to use, but they do not have language files,
+  ## and so xinha pops up a really annoying error message.
+  ##
+  ## For now, just disable all the plugins.
+  ##
+  ## The bootstrap vars _editor_url is in html_head because it needs to be defined
+  ## before the scripts are included.
+  ##%>
 
+<% content_for :html_head do -%>
+  <% javascript_tag do -%>
+    _editor_url  = "/javascripts/wiki/xinha/";
+    _editor_lang = "<%= html_editor_language_code %>";
+  <% end -%>
+<% end -%>
+
+<% content_for :script do -%>
+  <%# it sucks that we cannot do this in a better way, but defining a global var
+    # for insertImageFunction for now works. This will not work if we want to
+    # have multiple editors open on the same page. %>
+  insertImageFunction = function() {
+    <%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>;
+  }
+
+  xinha_init = function() {
+    xinha_editors = ["<%= wiki_body_html_id(@wiki)%>"];
+
+    xinha_plugins = [{plugin:"InsertImage", url:"/javascripts/wiki/insert_image.js"}];
+    if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
+
+    xinha_config = new Xinha.Config();
+
+    xinha_config.toolbar = [
+      ["formatblock", "bold", "italic", "removeformat"],
+      ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
+      ["separator", "selectall", "inserttable", "insertimage", "createlink"]
+    ];
+
+    xinha_config.formatblock = {
+      "&mdash; Paragraph &mdash;": "",
+      "Normal"     : "p",
+      "Heading 1"  : "h1",
+      "Heading 2"  : "h2",
+      "Heading 3"  : "h3",
+      "Heading 4"  : "h4",
+      "Preformatted" : "pre"
+    };
+
+    xinha_config.showLoading = false;
+
+    xinha_config.pageStyleSheets = ["/stylesheets/html_editor/editable_html.css"];
+
+    xinha_config.height = "450px"
+    xinha_editors = Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
+    Xinha.startEditors(xinha_editors);
+  };
+  Xinha.addOnloadHandler(xinha_init);
+<% end -%>
+
+<div class="html_editor_wrapper">
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= @wiki.body_html if load_content %></textarea>
+</div>

@@ -87,7 +87,7 @@ function activeRadioValue(name) {
 }
 
 function insertImage(wikiId) {
-  var editor = nicEditors.findEditor('wiki_editor-' + wikiId);
+  var editor = new HtmlEditor(wikiId);
   var textarea = $('wiki_body-' + wikiId);
 
   try {
@@ -96,16 +96,8 @@ function insertImage(wikiId) {
     var size = activeRadioValue('image_size');
     var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
     var url = thumbnails[size];
-    if (editor && isTabVisible(editor.elm)) {
-      if (link) {
-// it is complicated
-// http://codingforums.com/showthread.php?t=66832
-//        editor.nicCommand('createLink','xxx');
-//        var atag = editor.elm.select('a')[0];
-//        atag.setAttributes({href:thumbnails['full'], title:url});
-      } else {
-        editor.nicCommand('insertImage', url);
-      }
+    if (editor.valid() && isTabVisible(editor.area())) {
+      editor.insertImage(url, link)
     } else if (textarea && isTabVisible(textarea)) {
       var insertText = '\n!' + url + '!';
       if (link)
