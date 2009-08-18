@@ -50,6 +50,7 @@ class YuckyController < ApplicationController
   end
 
   def add_chat_message
+    @rateable.update_attribute(:deleted_at, Time.now) if current_user.moderator?
     summary = @rateable.content
     date = @rateable.created_at
     url = "/chat/archive/"
