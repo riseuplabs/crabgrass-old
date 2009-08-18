@@ -38,8 +38,9 @@
       xbackground: <%= left_bar_bg %>;
     }
     .right {
-      margin-left: <%= left_bar_size %>px;
-      padding-right: 20px;
+      /* margin-left: <%= left_bar_size %>px;
+      padding-right: 20px; */
+      padding: 20px;
     }
     div#image {
       background: url('/images/ui/repair.png') no-repeat 0 0;
@@ -147,7 +148,7 @@
 
 </head>
 <body>
-  <div class="left"><div id='image'></div></div>
+<!--  <div class="left"><div id='image'></div></div>-->
   <div class="right">
     <div id='header'>
       <h1><%= "Oops! We experienced an error."[:exception_headline] %></h1>
@@ -174,7 +175,7 @@
     <div id='content'>
       <%= @contents %>
     </div>
-  </div>
+ </div>
 </body>
 </html>
 
