@@ -1,20 +1,58 @@
+<%##
+  ## NOTES
+  ##
+  ## There are some plugins we would like to use, but they do not have language files,
+  ## and so xinha pops up a really annoying error message.
+  ##
+  ## For now, just disable all the plugins.
+  ##
+  ## The bootstrap vars _editor_url is in html_head because it needs to be defined
+  ## before the scripts are included.
+  ##%>
+
 <% content_for :html_head do -%>
   <% javascript_tag do -%>
-    _editor_url  = "/javascripts/wiki/xinha/"
-    _editor_lang = "en";
-    _editor_skin = "silva";
+    _editor_url  = "/javascripts/wiki/xinha/";
+    _editor_lang = "<%= html_editor_language_code %>";
   <% end -%>
 <% end -%>
 
 <% content_for :script do -%>
+  <%# it sucks that we cannot do this in a better way, but defining a global var
+    # for insertImageFunction for now works. This will not work if we want to
+    # have multiple editors open on the same page. %>
+  insertImageFunction = function() {
+    <%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>;
+  }
+
   xinha_init = function() {
     xinha_editors = ["<%= wiki_body_html_id(@wiki)%>"];
-    xinha_plugins = ["CharacterMap","ContextMenu","SmartReplace","Stylist","Linker","SuperClean","TableOperations"];
-    if(!Xinha.loadPlugins(xinha_plugins,xinha_init)) {
-      return;
-    }
+
+    xinha_plugins = [{plugin:"InsertImage", url:"/javascripts/wiki/insert_image.js"}];
+    if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
+
     xinha_config = new Xinha.Config();
-    xinha_config.pageStyleSheets = [_editor_url+"examples/full_example.css"];
+
+    xinha_config.toolbar = [
+      ["formatblock", "bold", "italic", "removeformat"],
+      ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
+      ["separator", "selectall", "inserttable", "insertimage", "createlink"]
+    ];
+
+    xinha_config.formatblock = {
+      "&mdash; Paragraph &mdash;": "",
+      "Normal"     : "p",
+      "Heading 1"  : "h1",
+      "Heading 2"  : "h2",
+      "Heading 3"  : "h3",
+      "Heading 4"  : "h4",
+      "Preformatted" : "pre"
+    };
+
+    xinha_config.showLoading = false;
+
+    xinha_config.pageStyleSheets = ["/stylesheets/html_editor/editable_html.css"];
+
     xinha_config.height = "450px"
     xinha_editors = Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
     Xinha.startEditors(xinha_editors);
@@ -23,5 +61,5 @@
 <% end -%>
 
 <div class="html_editor_wrapper">
-  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style=""></textarea>
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= @wiki.body_html if load_content %></textarea>
 </div>

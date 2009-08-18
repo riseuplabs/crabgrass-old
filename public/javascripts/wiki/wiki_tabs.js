@@ -7,7 +7,7 @@ function updateEditor(response, tab, id) {
   if(response.status != 200)
     return false;
 
-  var editor   = Xinha.getEditor("wiki_body_html-" + id);
+  var editor   = new HtmlEditor(id);
   var textarea = $("wiki_body-" + id);
   var preview  = $("wiki_preview-" + id);
 
@@ -15,7 +15,7 @@ function updateEditor(response, tab, id) {
     preview.update(getBackNewLines(response.responseJSON.body_preview));
   else {
     preview.update("");
-    editor.setEditorContent( getBackNewLines(response.responseJSON.body_html) || "" );
+    editor.setContent( getBackNewLines(response.responseJSON.body_html) || "" );
     textarea.setValue( getBackNewLines(response.responseJSON.body)      || "" );
   }
 
@@ -24,6 +24,7 @@ function updateEditor(response, tab, id) {
   }
   else if (tab == 'html') {
     showTab($('link-tab-html'), $('tab-edit-html'));
+    editor.refresh();
   }
   else if (tab == 'preview') {
     showTab($('link-tab-preview'), $('tab-edit-preview'));
@@ -43,11 +44,11 @@ function isTabSelected(link) {return $(link).hasClassName('active')}
 
 function encodedEditorData(wiki_id) {
   var textarea = $('wiki_body-'+wiki_id);
-  var visual_editor = Xinha.getEditor("wiki_body_html-" + wiki_id)
+  var visual_editor = new HtmlEditor(wiki_id);
   if (textarea.getValue())
     return textarea.serialize();
-  if (visual_editor.getEditorContent())
-    return $H({'wiki[body_html]': visual_editor.getEditorContent()}).toQueryString();
+  if (visual_editor.content())
+    return $H({'wiki[body_html]': visual_editor.content()}).toQueryString();
 }
 
 function editorData(editor, wiki_id) {
@@ -55,7 +56,8 @@ function editorData(editor, wiki_id) {
   if (editor == 'greencloth')
     data = $('wiki_body-'+wiki_id).getValue();
   else if (editor == 'html') {
-    data = Xinha.getEditor("wiki_body_html-" + wiki_id).getEditorContent();
+    editor = new HtmlEditor(wiki_id);
+    data = editor.content();
     if (data == "<br>")
       data = "";
   }

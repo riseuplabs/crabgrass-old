@@ -178,4 +178,13 @@ module WikiHelper
     UglifyHtml.new( html || "" ).make_ugly
   end
 
+  AVAILABLE_EDITOR_LANGS = %w(b5 ch cz da de ee el es eu fa fi fr gb he hu it ja lt lv nb nl pl pt_br ro ru sh si sr sv th vn).inject({}) {|h,l| h[l]=l; h}
+
+  def html_editor_language_code()
+    code = session[:language_code].to_s.downcase
+    short_code = code.sub(/_.*$/,'')
+    default = 'en'
+    AVAILABLE_EDITOR_LANGS[code] || AVAILABLE_EDITOR_LANGS[short_code] || default
+  end
+
 end
