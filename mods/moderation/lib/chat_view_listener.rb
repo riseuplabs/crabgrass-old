@@ -9,24 +9,32 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       if current_user.moderator?
         icon = 'trash_16'
         link_name = 'move message to trash'[:trash_message]
+        confirm = nil
       else
         icon = 'sad_plus_16'
         link_name = :flag_inappropriate.t
+        confirm = :confirm_inappropriate_page.t
       end
+      success = context[:params][:action] == "say" ? nil: "window.location.reload();"
       url = url_for(:controller => 'yucky',
                     :chat_message_id => context[:message].id,
                     :action => :add)
       link = link_to_remote(link_name,
                             :url => url,
-                            :confirm => :confirm_inappropriate_page.t)
+                            :confirm => confirm,
+                            :success => success)
       content_tag(:span, link, {:class => "small_icon #{icon} shy", :id => "flag-#{context[:message].id}"})
     elsif rating.rating == YUCKY_RATING
+      confirm = current_user.moderator? ? nil : :confirm_inappropriate_page.t
+      success = context[:params][:action] == "say" ? nil: "window.location.reload();"
       url = url_for(:controller => 'yucky',
                     :chat_message_id => context[:message].id,
                     :action => :remove)
+
       link = link_to_remote(:flag_appropriate.t,
                             :url => url,
-                            :confirm => :confirm_inappropriate_page.t)
+                            :confirm => confirm,
+                            :success => success)
       content_tag(:span, link, {:class => 'small_icon sad_minus_16 shy', :id => "flag-#{context[:message].id}"})
     end
   end
