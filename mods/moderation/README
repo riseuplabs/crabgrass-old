@@ -1,0 +1,33 @@
+== Moderation 
+
+This crabgrass mod allow for god-like moderators of all users
+and groups in a particular site. 
+
+== Usage
+
+edit config/routes.rb (this should be done for you already)
+
+  map.from_plugin :moderation  rescue NameError
+
+Specify which crabgrass group will have super admin power in crabgrass.*.yml:
+
+  sites:
+    - name: <<site1_name>>
+      admin_group: <<admin_group_name1>>
+      moderation_group: <<moderation_group_name1>>
+    - name: <<site2_name>>
+      admin_group: <<admin_group_name2>>
+      moderation_group: <<moderation_group_name2>>
+
+If you want the moderation capability of moderation, add the migration to crabgrass:
+
+  % script/generate plugin_migration
+  % rake db:migrate
+
+You will also need to enable the super_admin mod, see mods/super_admin/README
+
+restart rails and browse to: http://localhost:3000/admin
+
+== Testing
+
+
