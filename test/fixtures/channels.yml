@@ -1,14 +1,14 @@
 true_levellers:
   name: the-true-levellers
-  group: true_levellers
+  group_id: 1
   public: false
 
 animals:
   name: animals
-  group: animals
+  group_id: 2
   public: false
 
 rainbow:
   name: rainbow
-  group: rainbow
+  group_id: 3
   public: false
