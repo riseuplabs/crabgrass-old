@@ -179,7 +179,8 @@ module ControllerExtension::WikiRenderer
 
   def render_ugly_html_from_text(text, context_name='page')
     text ||= ""
-    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name) ).make_ugly
+    options = {:pass_through => ['strong', 'em']}
+    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name), options ).make_ugly
   end
   def render_preview_from_text(text, context_name='page')
     text ||= ""
