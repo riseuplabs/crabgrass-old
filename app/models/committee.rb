@@ -1,6 +1,6 @@
 class Committee < Group
   before_destroy :eliminate_councilship
-  
+
   def eliminate_councilship
     if g = Group.find(:first, :conditions => { :council_id => self.id })
       g.council_id = nil
@@ -9,10 +9,10 @@ class Committee < Group
   end
 
   # NAMING
-  # the name of a committee includes the name of the parent, 
+  # the name of a committee includes the name of the parent,
   # so the committee names are unique. however, for display purposes
   # we want to just display the committee name without the parent name.
-  
+
   # parent name + committee name
   def full_name
     read_attribute(:name)
@@ -21,7 +21,7 @@ class Committee < Group
   def short_name
     (read_attribute(:name)||'').sub(/^.*\+/,'')
   end
-  
+
   # what we show to the user
   def display_name
     if read_attribute(:full_name).any?
@@ -53,7 +53,7 @@ class Committee < Group
     end
   end
   alias_method :short_name=, :name=
-  
+
   def parent=(p)
     raise 'call group.add_committee! instead'
   end
@@ -71,18 +71,22 @@ class Committee < Group
     ok or raise PermissionDenied.new
   end
 
-  # DEPRECATED
-  # returns true if self is part of given network
-  def belongs_to_network?(network)
-    self.parent.networks.include?(network)
-  end
-  
   ##
   ## relationships to users
   ##
 
   def may_be_pestered_by!(user)
-    super and parent.profiles.visible_by(user).may_see_committees?
+    if user.member_of?(self)
+      true  # members may pester
+    elsif user.member_of?(self.parent)
+      true  # members of parents may pester
+    elsif profile.may_see? and parent.profile.may_see_committees?
+      true  # strangers may pester if they can see self, and parent thinks that is ok.
+            # TODO: i think it would be better for us to ensure that if the parent forbits
+            # seeing committee, that all the subcommittees just have may_see set to false.
+    else
+      false
+    end
   end
-  
+
 end

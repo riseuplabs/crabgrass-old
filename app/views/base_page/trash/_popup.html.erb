@@ -1,8 +1,7 @@
-<% popup('Delete Page'[:delete_page], :id => 'trash_popup', :width => '25em') do -%>
 <% form_remote_tag(
   :url => {:controller => '/base_page/trash', :action => 'update', :page_id => @page.id},
   :loading => show_spinner('popup')) do -%>
-  <blockquote>
+
     <ul class='plain'>
       <li>
         <label class="radio">
@@ -13,24 +12,25 @@
           </span>
         </label>
       </li>
-      <li>
-        <label class="radio">
-          <%= radio_button_tag 'type', 'shred_now', false, :class => 'radio' %>
-          <b><%= "Destroy Immediately"[:destroy_page_via_shred] %></b> <br/>
-          <span class="small">
-             <%= "This will permanently destroy the page. This action cannot be undone."[:destroy_page_via_shred_info] %>
-          </span>
-        </label>
-      </li>
+      <%- if may_destroy_page? %>
+        <li>
+          <label class="radio">
+            <%= radio_button_tag 'type', 'shred_now', false, :class => 'radio' %>
+            <b><%= "Destroy Immediately"[:destroy_page_via_shred] %></b> <br/>
+            <span class="small">
+              <%= "This will permanently destroy the page. This action cannot be undone."[:destroy_page_via_shred_info] %>
+            </span>
+          </label>
+        </li>
+      <%- end %>
       <%# trash_page_line %>
       <%# destroy_page_line %>
     </ul>
-  </blockquote>
+
   <div class="buttons">
     <%= spinner 'popup' %>
-    <%= submit_tag "Cancel"[:cancel_button], :name => 'cancel' %>
+    <%= close_modal_button(:cancel) %>
     <%= submit_tag "Delete"[:delete_button], :name => 'delete' %>
   </div>
-  <% end -%>
 <% end -%>
 

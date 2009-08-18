@@ -2,7 +2,12 @@ module AuthenticatedSystem
 
   # Accesses the current user from the session.
   def current_user
-    @current_user ||= (session[:user] && load_user(session[:user])) || UnauthenticatedUser.new
+    @current_user ||= begin
+      user = load_user(session[:user]) if session[:user]
+      user ||= UnauthenticatedUser.new
+      User.current = user if user.is_a?(User) # why not UnauthenticatedUser?
+      user
+    end
   end
 
   def load_user(id)
@@ -11,18 +16,18 @@ module AuthenticatedSystem
     user.current_site = current_site if user
     return user
   end
-  
+
   # Returns true or false if the user is logged in.
   # Preloads @current_user with the user model if they're logged in.
   def logged_in?
     current_user.is_a?(UserExtension::AuthenticatedUser)
   end
-  
+
   def logged_in_since
     session[:logged_in_since]
   end
 
-  protected 
+  protected
 
     def update_last_seen_at(user_id)
       # we are caching these and only writing every other minute.
@@ -30,14 +35,14 @@ module AuthenticatedSystem
       #User.update_all ['last_seen_at = ?', Time.now], ['id = ?', user_id]
       #current_user.last_seen_at = Time.now
     end
-    
+
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       session[:logged_in_since] = Time.now
       @current_user = new_user
     end
-    
+
     # Check if the user is authorized.
     #
     # Override this method in your controllers if you want to restrict access
@@ -74,7 +79,7 @@ module AuthenticatedSystem
       User.current = current_user
       logged_in? && authorized? ? true : access_denied
     end
-    
+
     # Redirect as appropriate when an access request fails.
     #
     # The default action is to redirect to the login screen.
@@ -84,44 +89,23 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      respond_to do |format|
-        # rails defaults to first format if params[:format] is not set
-        format.html do
-          flash_auth_error(:later)
-          redirect_to :controller => '/account', :action => 'login',
-            :redirect => request.request_uri
-        end
-        format.js do
-          flash_auth_error(:now)
-          render :update do |page|
-            page.replace_html 'message', display_messages
-            page << 'window.location.hash = "message"'
-          end
-        end
-        format.xml do
-          headers["Status"]           = "Unauthorized"
-          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => "Could not authenticate you", :status => '401 Unauthorized'
-        end
-      end
+      raise PermissionDenied
+    end
 
-      false
-    end  
-    
     # Store the URI of the current request in the session.
     #
     # We can return to this location by calling #redirect_back_or_default.
     def store_location
       session[:return_to] = (request.request_uri unless request.xhr?)
     end
-    
+
     # Redirect to the URI stored by the most recent store_location call or
     # to the passed default.
     def redirect_back_or_default(default)
       session[:return_to] ? redirect_to_url(session[:return_to]) : redirect_to(default)
       session[:return_to] = nil
     end
-    
+
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
@@ -148,22 +132,7 @@ module AuthenticatedSystem
   def get_auth_data
     auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
     auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
-    return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
-  end
-
-
-  def flash_auth_error(mode)
-    if mode == :now
-      flsh = flash.now
-    else
-      flsh = flash
-    end
-
-    if logged_in?
-      add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
-    else
-      add_flash_message(flsh, :title => 'Login Required'[:login_required], :success => 'Please login to perform that action.'[:login_required_description])
-    end
+    return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
   end
 
 end

@@ -1,0 +1,54 @@
+<% @title_box = '<h1>Basic settings</h1>' %>
+
+<% form_for current_site, :url => {:action => 'update'} do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <strong>Title:</strong>&nbsp;the title of the website:<br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <strong>Default Language:</strong>&nbsp;default language to use<br />
+    <%= f.select :default_language, Language.find(:all).to_select(:name, :code), { :include_blank => true }  %>
+  </p>
+  <p>
+    <strong>Email sender:</strong>&nbsp;email address that outgoing emails are sent from<br />
+    <%= f.text_field :email_sender %>
+  </p>
+
+  <p>
+    <strong>Translation Group:</strong>&nbsp;the name of a group that is allowed access to edit translation<br />
+    <%= f.text_field :translation_group %>
+  </p>
+
+
+  <span>
+    <%= f.check_box :tracking %><%= f.label :tracking, 'Tracking:' %>&nbsp;if checked, we track user visits, logins and page views
+  </span>
+  <br />
+  <span>
+    <%= f.check_box :chat %><%= f.label :chat, 'Chat:' %>&nbsp;if checked, chat is enabled
+  </span>
+  <br />
+  <span>
+    <%= f.check_box :show_exceptions %><%= f.label :show_exceptions, 'Show Exceptions:' %>&nbsp;if checked, exceptions are shown to the user
+  </span>
+  <br />
+  <span>
+    <%= f.check_box :enforce_ssl %><%= f.label :enforce_ssl, 'Enforce SSL:' %>&nbsp;if checked, cookies will only work over   TLS/SSL
+  </span>
+  <br />
+  <span>
+    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created (hold CTRL down while clicking to select multiple elements)
+    <ul style="list-style-type:none;">
+      <li><%= f.select :available_page_types, Conf.available_page_types,{}, :multiple => true %></li>
+    </ul>
+  </span>
+
+
+  <br />
+  <span>
+    <input type="hidden" name="current_view" value="<%=@active%>">
+    <%= submit_tag 'Save', :style => 'width:7em;' %>
+  </span>
+  <br /><br />
+<% end %>

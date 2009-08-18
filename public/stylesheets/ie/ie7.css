@@ -36,3 +36,51 @@ div.page_list {width: 100%;}
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+/* opacity fix */
+.shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
+.shy_parent:hover .shy { filter: alpha(opacity=100)}
+.shy:hover { filter: alpha(opacity=100)}
+
+/* fixes columns for drop down boxes in ie6/7 */
+span.topnav a {
+  position: relative;
+}
+.menu_items {
+  zoom: 1;
+  display: block;
+  width: 34em
+}
+div.leftcol {
+  width: 16em;
+  overflow: hidden;
+}
+div.rightcol {
+  position: absolute;
+  left: -.5em;
+  width: 16em;
+  top: 2.4em;
+  padding-bottom: 0;
+}
+#menu_me div.menu_items{
+  width: 14em;
+}
+#menu_me div.leftcol{
+  width: 12em;
+}
+#menu_me div.rightcol{
+  display: none;
+}
+
+/* stacking problem between drop down boxes and people/groups/networks tabs */
+li.menu {
+  z-index: 100;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
+
+/* for hover over entity boxes on sidebar of dashboard */
+ul.icon_boxes li:hover span {
+  display: block;
+  width: 10em;
+}

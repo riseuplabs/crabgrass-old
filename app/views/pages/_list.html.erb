@@ -1,17 +1,17 @@
 <%
 =begin
 
-This is the master partial to display any list of pages. 
+This is the master partial to display any list of pages.
 
 It slices, it dices! It has magical properties! In other words, it is flexible
-and can be used in every case where you need a table of pages. 
+and can be used in every case where you need a table of pages.
 
 local variables which may be passed in
 ------------------------------------
 
   * pages: an array of pages. the default is @pages variable.
 
-  * columns: what columns to display. default is 
+  * columns: what columns to display. default is
     [:icon, :title, :updated_by, :update_at, :posts]
     or @columns variable.
 
@@ -21,6 +21,8 @@ local variables which may be passed in
 
   * show_time_dividers: defaults to true if sorting by time.
 
+  * heading_partial: if set, this partial will be included before anything else.
+
 =end
 
 
@@ -28,10 +30,12 @@ pages   ||= @pages
 columns ||= (@columns || [:icon, :title, :updated_by, :updated_at, :contributors_count])
 colspan = columns.size
 heading = true if heading.nil?
-show_pagination_controls = true if pages.is_a? WillPaginate::Collection
-show_time_dividers = parsed_path.sort_by_time? if show_time_dividers.nil?
+show_pagination_controls = true if pages.respond_to?(:total_entries)
+pagination_options = {} if pagination_options.nil?
+show_time_dividers = @path.sort_by_time? if show_time_dividers.nil?
 any_results = pages.any?
 sortable = true if sortable.nil?
+heading_partial = false if heading_partial.nil?
 
 if show_time_dividers
   today, yesterday, week, later = divide_pages_by_recency(pages)
@@ -40,7 +44,8 @@ if show_time_dividers
 end
 
 -%>
-<%= pagination_links(pages) if any_results and show_pagination_controls %>
+<%= render(:partial => heading_partial) if heading_partial %>
+<%= pagination_links(pages, pagination_options) if any_results and show_pagination_controls %>
 <div class='page_list'>
   <table>
     <%- if !any_results -%>
@@ -112,5 +117,5 @@ end
     <% end -%>
   </table>
 </div>
-<%= pagination_links(pages) if any_results and show_pagination_controls %>
+<%= pagination_links(pages, pagination_options) if any_results and show_pagination_controls %>
 

@@ -38,7 +38,7 @@ module GroupsHelper
   def destroy_group_link
     # eventually, this should fire a request to destroy.
     if may_destroy_group?
-      link_to("Destroy {group_type}"[:destroy_group_link, @group.group_type], groups_url(:action => :destroy), {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase], :method => :post})
+      link_to_with_confirm("Destroy {group_type}"[:destroy_group_link, @group.group_type], {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, @group.group_type.downcase], :url => groups_url(:action => :destroy), :method => :post})
     end
   end
 
@@ -87,7 +87,7 @@ module GroupsHelper
   end
 
   def membership_count_link
-    link_if_may("{count} members"[:group_membership_count, {:count=>(@group.users.count).to_s}] + ARROW,
+    link_if_may("{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}] + ARROW,
                    '/groups/memberships', 'list', @group) or
     "{count} members"[:group_membership_count, {:count=>(@group.users.size).to_s}]
   end
@@ -105,7 +105,7 @@ module GroupsHelper
   ##
   ## LAYOUT
   ##
-  
+
   def show_section(name)
     @group.group_setting ||= GroupSetting.new
     default_template_data = {"section1" => "group_wiki", "section2" => "recent_pages"}

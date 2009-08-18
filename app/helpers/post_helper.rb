@@ -15,7 +15,7 @@ module PostHelper
   def edit_post_action(post)
     return unless may_edit_posts?(post)
     content_tag :div, :style=>'display: block', :class=>'post_action_icon' do
-      link_to_remote_icon('pencil', {:url => {:controller => 'posts', :action => 'edit', :id => post.id}})
+      link_to_remote_icon('pencil', {:url => {:controller => '/posts', :action => 'edit', :id => post.id}})
     end
   end
 

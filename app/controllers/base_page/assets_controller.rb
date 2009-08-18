@@ -6,7 +6,9 @@ class BasePage::AssetsController < ApplicationController
   permissions 'base_page'
 
   def show
-    if params[:close]
+    if params[:popup]
+      render :partial => 'base_page/assets/popup'
+    else # close
       render :template => 'base_page/reset_sidebar'
     end
   end
@@ -30,7 +32,7 @@ class BasePage::AssetsController < ApplicationController
     respond_to do |format|
       format.js {render :nothing => true }
       format.html do
-        flash_message(:success => "attachment deleted") 
+        flash_message(:success => "attachment deleted")
         redirect_to(page_url(@page))
       end
     end

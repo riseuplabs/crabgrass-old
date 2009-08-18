@@ -23,6 +23,7 @@ module Groups::FeaturesHelper
         serviceUrl:'#{autocomplete_service_url}',
         minChars:1,
         maxHeight:500,
+        message:'#{'Enter page title...'.t}',
         width:400,
         onSelect: #{autocomplete_item_selected_function(autocomplete_id)},
       }, '#{autocomplete_id}');

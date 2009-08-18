@@ -1,0 +1,24 @@
+yucky_rating_1:
+  id: 1
+  rating: -100
+  created_at: <%= Time.now %>
+  rateable_type: 'Page'
+  rateable_id: 1
+  user_id: 1
+
+yucky_rating_2:
+  id: 2
+  rating: -100
+  created_at: <%= Time.now %>
+  rateable_type: 'Page'
+  rateable_id: 2
+  user_id: 1
+
+yucky_rating_3:
+  id: 3
+  rating: -100
+  created_at: <%= Time.now %>
+  rateable_type: 'Page'
+  rateable_id: 3
+  user_id: 1
+

@@ -18,9 +18,11 @@ class GroupObserver < ActiveRecord::Observer
     if Site.current
       Site.current.add_group!(group)
     end
-  
-    if User.current and !group.is_a?(Network)
-      group.add_user!(User.current)
+
+    if User.current
+      if !group.is_a?(Network) or (group.is_a?(Network) and !User.current.may?(:admin, group))
+        group.add_user!(User.current)
+      end
     end
   end
 

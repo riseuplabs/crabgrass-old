@@ -11,11 +11,11 @@ class GroupsController < Groups::BaseController
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
-   helper 'task_list_page' # :only => ['tasks']
-   stylesheet 'tasks', :action => :tasks
-   javascript :extra, :action => :tasks
+    helper 'task_list_page' # :only => ['tasks']
+    stylesheet 'tasks', :action => :tasks
+    javascript :extra, :action => :tasks
   ## end task list cruft
-
+  
   include Groups::Search
 
   # called by dispatcher
@@ -73,9 +73,9 @@ class GroupsController < Groups::BaseController
       redirect_to me_url
     end
   end
-  
+
   protected
-  
+
   def fetch_group
     @group = Group.find_by_name params[:id] if params[:id]
     if @group
@@ -108,7 +108,7 @@ class GroupsController < Groups::BaseController
       end
     end
   end
-  
+
   # returns a private wiki if it exists, a public one otherwise
   # TODO: make this less ugly, move to models
   def private_or_public_wiki
@@ -123,11 +123,7 @@ class GroupsController < Groups::BaseController
   end
 
   def search_path
-    params[:path] ||= ""
-    params[:path] = params[:path].split('/')
-    params[:path] += ['descending', 'updated_at'] if params[:path].empty?
-    params[:path] += ['limit','20']
-    params[:path]
+    @path.default_sort('updated_at').merge!(:limit => 20)
   end
 
   def group_created_success
@@ -138,7 +134,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, parsed_path.collect{|segment| segment.join(' ')}.join(' > ')],
+        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, @path.title],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')

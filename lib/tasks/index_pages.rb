@@ -24,7 +24,7 @@ namespace :cg do
   #  a page_terms table with an entry for each page.  This rake task makes sure that
   #  each page has an up-to-date page_terms entry.
 
-  desc "update page_terms for each page."  
+  desc "update page_terms for each page."
   task :update_page_terms => :environment do
     val = ThinkingSphinx.deltas_enabled?
     ThinkingSphinx.deltas_enabled = false
@@ -57,9 +57,9 @@ namespace :cg do
 
   # A task for mysql tuning that cannot be done in schema.rb.
   # This should also be set in environment.rb:
-  # 
-  #     config.active_record.schema_format = :sql 
-  # 
+  #
+  #     config.active_record.schema_format = :sql
+  #
   # That way, the changes we make here are not lost in schema.rb,
   # instead they are captured in development_structure.sql.
 

@@ -4,21 +4,21 @@ Context
 -------------------
 
 Context is the general term for information on where we are and how we got here.
-This includes breadcrumbs and banner, although each work differently. 
+This includes breadcrumbs and banner, although each work differently.
 
-The banner is based on the context. For example, the context might be 'groups > 
-rainbow > my nice page'. 
+The banner is based on the context. For example, the context might be 'groups >
+rainbow > my nice page'.
 
-Sometimes the breadcrumbs are based on the context, and sometimes they are not. 
-Typically, breadcrumbs are based on the context for non-page controllers. For a 
-page controller (ie tool) the breadcrumbs are based on the breadcrumbs of the 
-referer (if it exists) or on the primary creator/owner of the page (otherwise). 
+Sometimes the breadcrumbs are based on the context, and sometimes they are not.
+Typically, breadcrumbs are based on the context for non-page controllers. For a
+page controller (ie tool) the breadcrumbs are based on the breadcrumbs of the
+referer (if it exists) or on the primary creator/owner of the page (otherwise).
 Breadcrumbs based on the referer let us show how we got to a page, and also show
-a canonical context for the page (via the banner). 
+a canonical context for the page (via the banner).
 
-The breadcrumbs of the referer are stored in the session. This might result in 
-bloated session data, but I think that a typical user will have a pretty finite 
-set of referers (ie places they loaded pages from). 
+The breadcrumbs of the referer are stored in the session. This might result in
+bloated session data, but I think that a typical user will have a pretty finite
+set of referers (ie places they loaded pages from).
 
 ##################################################################################
 
@@ -31,7 +31,7 @@ module ContextHelper
 
   ############################################################
   ## SETTING THE CONTEXT
-  
+
   # before filter that may be overridden by controllers
   def breadcrumbs; end
   def context; end
@@ -48,7 +48,7 @@ module ContextHelper
   ##  @breadcrumbs ||= []
   ##  @breadcrumbs << [text,url]
   ##end
-  
+
   def set_breadcrumbs(hash)
     @breadcrumbs = hash.to_a
   end
@@ -60,17 +60,17 @@ module ContextHelper
 
   ############################################################
   ## CONTEXT MACROS
-  
+
   # functions to do all the things necessary to set up the context
   # for a group, person, or page. these context functions are here
   # because various parts of the application might need to set a
-  # group, person, or page context. 
+  # group, person, or page context.
 
   def group_context(size='large', update_breadcrumbs=true)
     return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
-    add_context 'Groups'[:groups], groups_url(:action => nil)
+    add_context 'Groups'[:groups], group_directory_url
     if @group and !@group.new_record?
       if @group.committee? or @group.council?
         if @group.parent
@@ -87,7 +87,7 @@ module ContextHelper
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
-  
+
   def network_context(size='large', update_breadcrumbs=true)
     @active_tab = :networks
     if @group and !@group.new_record?
@@ -131,7 +131,7 @@ module ContextHelper
   end
 
   def page_context
-    if @page
+    if @page and !@page.new_record?
       if @group and @page.group_ids.include?(@group.id)
         group_context('small', false)
       elsif @page.owner_type == "Group"
@@ -155,7 +155,7 @@ module ContextHelper
         breadcrumbs_from_context(false)
       end
       # add_breadcrumb( @page.title, page_url(@page, :action => 'show') )
-    else    
+    else
       # there is no page, but for some reason we are still using a page
       # context. so, we just use what we are given.
       if @group or @group = Group.find_by_id(params[:group_id])
@@ -181,12 +181,12 @@ module ContextHelper
   ## HELPER FUNCTIONS
   ## not called anywhere except from here
 
-  private 	
+  private
 
   def breadcrumbs_by_referer
     session[:breadcrumbs_by_referer] ||= {}
   end
-  
+
   def referer_by_page_id
     session[:referer_by_page_id] ||= {}
   end
@@ -194,16 +194,16 @@ module ContextHelper
   def referer_crumb
     session[:breadcrumbs_by_referer][referer]
   end
-  
+
   def referer_or_last_crumb(page)
-    breadcrumbs_by_referer[referer] || 
+    breadcrumbs_by_referer[referer] ||
     breadcrumbs_by_referer[referer_by_page_id[page.id]]
   end
 
   def clear_referer(page)
     referer_by_page_id.delete(page.id)
   end
-  
+
   # sets the breadcrumbs to be the same as the context.
   # and saves them to the session.
   def breadcrumbs_from_context(update_session=true)
@@ -212,12 +212,12 @@ module ContextHelper
       breadcrumbs_by_referer[request.request_uri.sub(/\/$/,'')] = @breadcrumbs
     end
   end
-  
+
   # returns array of crumbs if the referrer has breadcrumbs saved in the session
   def referer_has_crumbs?(page)
     referer_or_last_crumb(page).any?
   end
-  
+
   # sets current breadcrumbs to a copy of the referer's crumbs
   # (it must be a copy so that stuff we add doesn't get saved in the session)
   def breadcrumbs_from_referer(page)
@@ -234,5 +234,5 @@ module ContextHelper
     refcrumbs = referer_or_last_crumb(page)
     return (refcrumbs.last.last if refcrumbs.any?)
   end
-  
+
 end

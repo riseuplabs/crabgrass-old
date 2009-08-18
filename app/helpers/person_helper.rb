@@ -12,7 +12,7 @@ module PersonHelper
 
   def message_link
     if may_create_private_message?(@user)
-      link = link_to "Send message"[:send_message_link], conversation_path(:id => @user)
+      link = link_to "Send message"[:send_message_link], my_private_message_path(@user)
       content_tag :li, link, :class => 'small_icon page_message_16'
     end
   end

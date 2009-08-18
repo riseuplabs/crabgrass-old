@@ -24,9 +24,9 @@ class Post < ActiveRecord::Base
   ##
 
   format_attribute :body
-  validates_presence_of :discussion, :user, :body  
+  validates_presence_of :discussion, :user, :body
   alias :created_by :user
-  
+
   attr_accessor :in_reply_to    # the post this post was in reply to.
                                 # it is tmp var used when post activities.
 
@@ -38,9 +38,9 @@ class Post < ActiveRecord::Base
   ##
 
   # build a new post in memory, setting up the associations which need to be in
-  # place, but don't save anything yet (however, if the page doesn't have a 
+  # place, but don't save anything yet (however, if the page doesn't have a
   # discussion record yet, then it is created and saved). Arg is a hash, with
-  # these required keys: :user, :page, and :body. Afterwards, you must save the 
+  # these required keys: :user, :page, and :body. Afterwards, you must save the
   # post, and the probably the page too, although it is not required.
   # In a non-page context, this method is not required: discussion.posts.build()
   # is sufficient.
@@ -52,10 +52,10 @@ class Post < ActiveRecord::Base
     page.posts_count_will_change!
     return post
   end
- 
-  # used for default group, if present, to set for any embedded links
-  def group_name
-    discussion.page.group_name if discussion.page
+
+  # used for default context, if present, to set for any embedded links
+  def owner_name
+    discussion.page.owner_name if discussion.page
   end
 
   # used for indexing
@@ -72,7 +72,20 @@ class Post < ActiveRecord::Base
       rating.rating == 1 and rating.user_id == user.id
     end
   end
-  
+
+  # this should be able to be handled in the subclasses, but sometimes
+  # when you create a new post, the subclass is not set yet.
+  def public?
+    ['Post', 'PublicPost', 'StatusPost'].include?(read_attribute(:type))
+  end
+  def private?
+    'PrivatePost' == read_attribute(:type)
+  end
+
+  def lite_html
+    GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
+  end
+
   protected
 
   def after_create

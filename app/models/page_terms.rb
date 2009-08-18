@@ -6,7 +6,7 @@ Some notes on PageTerms
 See PageExtension::Index for most the code dealing with PageTerms.
 
 PageTerms holds searching information for a page. Every Page has exactly one
-PageTerms object and vice-versa. 
+PageTerms object and vice-versa.
 
 PageTerms has three uses:
 
@@ -21,7 +21,7 @@ this stuff in one table than trying to do complex queries on a sphinx reindex.
 
 PageTerms is also used to filter by access restrictions in non-sphinx page
 queries. We could just use sphinx for all queries, but the problem with this is
-that there are many situations in which the sphinx index could be out of date. 
+that there are many situations in which the sphinx index could be out of date.
 
 The page_terms table is a MyISAM table that has a fulltext index on
 (access_ids, tag_ids). It must be MyISAM for fulltext index. It is important
@@ -56,7 +56,6 @@ class PageTerms < ActiveRecord::Base
       # denormalized names
       indexes :created_by_login, :sortable => true
       indexes :updated_by_login, :sortable => true
-      indexes :group_name,       :sortable => true
       indexes :owner_name,       :sortable => true
 
       ## attributes ##
@@ -69,11 +68,10 @@ class PageTerms < ActiveRecord::Base
       # ids
       has :created_by_id
       has :updated_by_id
-      has :group_id
 
       # flags and access
       has :resolved
-      has :stars
+      has :stars_count
       has :access_ids, :type => :multi # multi: indexes as an array of ints
       has :media, :type => :multi
 
@@ -99,10 +97,10 @@ class PageTerms < ActiveRecord::Base
     args.each do |object|
       if object.is_a? User
         hash[:user_ids] ||= []
-        hash[:user_ids] << object.id 
+        hash[:user_ids] << object.id
       elsif object.is_a? Group
         hash[:group_ids] ||= []
-        hash[:group_ids] << object.id 
+        hash[:group_ids] << object.id
       elsif object == :public
         hash[:public] = true
       end
@@ -126,7 +124,7 @@ class PageTerms < ActiveRecord::Base
         access_ids = Page.access_ids_for(:group_ids => group.group_and_committee_ids)
       elsif arg == :public
         access_ids = Page.access_ids_for(:public => true)
-      else 
+      else
         access_ids = nil
       end
       filter_str += " +(%s)" % access_ids.join(' ') if access_ids

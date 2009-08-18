@@ -1,0 +1,23 @@
+<% @title_box = '<h1>Sign Up</h1>' %>
+
+<% form_for current_site, :url => {:action => 'update'} do |f| %>
+<%= f.error_messages %>
+<span>
+  <b>Signup Mode:</b>
+</span>
+<br />
+<% Conf::SIGNUP_MODE.each_pair do |key, value| -%>
+  <span>
+    <label><%= f.radio_button :signup_mode, value, :checked => (current_site.signup_mode == value) %><%= key.to_s.t %></label>
+    <i><%= "#{key}_description".t %></i>
+  </span>
+  <br />
+<% end -%>
+<br />
+<span>
+  <%= f.check_box :require_user_email, :checked => (current_site.require_user_email or false)%><%= f.label :require_user_email, 'require_user_email' %>
+</span>
+<br /><br />
+<span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
+<br /><br />
+<% end %>

@@ -1,0 +1,39 @@
+<% if current_user.may?(:admin, current_site) -%>
+  <h2 class="alert">Site Administration</h2>
+  <ul class="side_list">
+    <li class="small_icon settings_16">
+      <%= link_to_active 'Basic Settings', admin_sites_path(:action => 'basic'), (@admin_active_tab == 'sites_basic') %>
+    </li>
+    <li class="small_icon profile_16">
+      <%= link_to_active 'Profile Settings', admin_sites_path(:action => 'profile'), (@admin_active_tab == 'sites_profile') %>
+    </li>
+    <li class="small_icon user_icon_16">
+      <%= link_to_active 'Sign Up Settings', admin_sites_path(:action => 'signup'), (@admin_active_tab == 'sites_signup') %>
+    </li>
+    <li class="small_icon color_wheel_16">
+      <%= link_to_active 'Appearance', admin_custom_appearances_path, (@admin_active_tab == 'custom_appearances_edit') %>
+    </li>
+    <li class="small_icon page_notice_16">
+      <%= link_to_active 'Announcements', announcements_path, (@admin_active_tab == 'announcements_index') %>
+    </li>
+    <li class="small_icon page_message_16">
+      <%= link_to_active 'Email Blasts', email_blasts_path, (@admin_active_tab == 'email_blasts_index') %>
+    </li>
+  </ul>
+
+  <!--
+  This is not actually working for me unless super admin is installed.
+  You can create a group, but then you don't have access to view it.
+  <h3>Populate Site</h3>
+  <ul class="side_list">
+    <li class="small_icon user_16">
+      <%= link_to_active 'Create Users', new_admin_user_path, (@admin_active_tab == 'users_new') %>
+    </li>
+    <li class="small_icon group_16">
+      <%= link_to_active 'Create Groups', new_admin_group_path, (@admin_active_tab == 'groups_new') %>
+    </li>
+  </ul>
+  -->
+<% end -%>
+
+<%= call_hook(:admin_nav) %>

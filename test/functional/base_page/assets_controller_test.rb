@@ -29,19 +29,13 @@ class BasePage::AssetsControllerTest < Test::Unit::TestCase
 
   def test_show_popup
     login_as :blue
-    get :show, :page_id => 1, :page => "640x480", :position => "60x20"
-    assert_response :success
-  end
-
-  def test_close
-    login_as :blue
-    get :show, :page_id => 1, :close => true
+    get :show, :page_id => 1, :popup => true
     assert_response :success
   end
 
   def test_create_and_destroy
     login_as :blue
-    
+
     assert_difference 'Page.find(1).assets.length' do
       post :create, :page_id => 1, :asset => {:uploaded_data => upload_data('photo.jpg')}
     end

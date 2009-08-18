@@ -1,11 +1,11 @@
 class MeController < Me::BaseController
- 
+
   def index
     redirect_to :controller => '/me/dashboard'
   end
-  
-  def edit   
-    if request.post? 
+
+  def edit
+    if request.post?
       if @user.update_attributes(params[:user])
         flash_message :success => 'Your profile was successfully updated.'
         redirect_to me_url(:action => 'edit')
@@ -22,14 +22,19 @@ class MeController < Me::BaseController
     @unread_count  = Page.count_by_path('unread',  options_for_inbox(:do => { :what => { :we =>  :want}}))
     render :layout => false
   end
-  
+
   def delete_avatar
     @user.kill_avatar
     render :text => avatar_for(@user,"x-large")
   end
 
+  def recent_pages
+    return false unless request.xhr?
+    @recent_pages_list = current_user.pages.recent_pages
+  end
+
   protected
-  
+
   def context
     super
     unless ['show','index'].include?(params[:action])
@@ -39,5 +44,5 @@ class MeController < Me::BaseController
       add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
     end
   end
-  
+
 end

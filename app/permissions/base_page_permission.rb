@@ -6,6 +6,10 @@ module BasePagePermission
 
   # if no other appropriate methods are defined, fallback to this one:
   def default_permission
+    may_admin_page?
+  end
+
+  def may_admin_page?(page = @page)
     current_user.may?(:admin, @page)
   end
 
@@ -14,9 +18,11 @@ module BasePagePermission
   end
 
   def may_create_page?(page = @page)
-    !page or current_user.may?(:admin, page)
+    !page or may_admin_page?
   end
 
+  # public pages are dealt with in login_or_public_page_required
+  # in the controller.
   def may_show_page?(page = @page)
     !page or current_user.may?(:view, page)
   end
@@ -67,18 +73,14 @@ module BasePagePermission
   ## TAGS
   ##
 
-  def may_update_tags?(page=@page)
-    current_user.may? :edit, page
-  end
+  alias_method :may_update_tags?, :may_edit_page?
   alias_method :may_show_tags?, :may_update_tags?
 
   ##
   ## ASSETS
   ##
 
-  def may_create_assets?(page=@page)
-    current_user.may?(:edit, page)
-  end
+  alias_method :may_create_assets?, :may_edit_page?
   alias_method :may_destroy_assets?, :may_create_assets?
   alias_method :may_show_assets?, :may_create_assets?
   alias_method :may_update_assets?, :may_create_assets?
@@ -86,33 +88,21 @@ module BasePagePermission
   ##
   ## SHARING
   ##
- 
-  def may_share_page?(page=@page)
-    current_user.may?(:admin, page)
-  end
 
-  def may_notify_page?(page=@page)
-    current_user.may?(:edit, page)
-  end
+  alias_method :may_share_page?, :may_admin_page?
+  alias_method :may_notify_page?, :may_edit_page?
 
   ##
   ## PARTICIPATION
   ##
- 
+
   alias_method :may_star_page?, :may_show_page?
   alias_method :may_watch_page?, :may_show_page?
-  
-  def may_public_page?(page=@page)
-    current_user.may? :admin, page
-  end
+  alias_method :may_public_page?, :may_admin_page?
+  alias_method :may_move_page?, :may_admin_page?
+  alias_method :may_share_page?, :may_admin_page?
 
-  def may_move_page?(page=@page)
-    current_user.may? :admin, page
-  end
-
-  def may_create_participation?(page=@page)
-    current_user.may? :admin, page
-  end
+  alias_method :may_create_participation?, :may_admin_page?
   alias_method :may_destroy_participation?, :may_create_participation?
   alias_method :may_show_participation?,    :may_show_page?
 
@@ -122,13 +112,25 @@ module BasePagePermission
     page.nil? or current_user.may? :admin, page
   end
 
+  def may_remove_participation?(part)
+    if part.is_a?(UserParticipation)
+      part.user_id and
+      part.user != @page.owner and
+      current_user.may_admin_page_without?(@page, part)
+      # may_create_participation? || current_user == page.user
+    elsif part.is_a?(GroupParticipation)
+      part.group_id and
+      part.group != @page.owner and
+      current_user.may_admin_page_without?(@page, part)
+      # may_create_participation? || current_user.admin_for_group_ids.include?(gpart.group_id)
+    else false
+    end
+  end
   ##
   ## TITLE
   ##
 
-  def may_update_title?(page=@page)
-    current_user.may? :edit, page
-  end
+  alias_method :may_update_title?, :may_edit_page?
   alias_method :may_edit_title?, :may_update_title?
 
 end

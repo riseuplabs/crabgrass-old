@@ -59,7 +59,7 @@ class RequestsControllerTest < Test::Unit::TestCase
     end
     assert_difference 'RequestToJoinUs.count', -1 do
       post :destroy, :id => request.id
-      assert_response :redirect    
+      assert_response :redirect
     end
   end
 
@@ -85,7 +85,7 @@ class RequestsControllerTest < Test::Unit::TestCase
 
     get :accept, :path => [req.code, 'root_at_localhost']
     assert_response :success
-    assert_error_message(/#{Regexp.escape(:invite_redeemed.t)}/)
+    assert_error_message(/#{Regexp.escape(:invite_error_redeemed.t)}/)
   end
 
   def test_redeem_error
@@ -105,11 +105,27 @@ class RequestsControllerTest < Test::Unit::TestCase
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
-    
+
     login_as :red
     get :redeem, :email => req.email, :code => req.code
     assert_response :success
-    assert_error_message(/#{Regexp.escape(:invite_redeemed.t)}/)
+    assert :invite_error_redeemed.t.any?
+    assert_error_message(/#{Regexp.escape(:invite_error_redeemed.t)}/)
+  end
+
+  def test_already_member_error
+    req = RequestToJoinUsViaEmail.create(
+      :created_by => users(:dolphin),
+      :email => 'root@localhost',
+      :requestable => groups(:animals),
+      :language => languages(:pt)
+    )
+
+    login_as :penguin
+    get :redeem, :email => req.email, :code => req.code
+    assert :invite_error_already_member.t.any?
+    assert_response :success
+    assert_error_message(/#{Regexp.escape(:invite_error_already_member.t)}/)
   end
 
 end

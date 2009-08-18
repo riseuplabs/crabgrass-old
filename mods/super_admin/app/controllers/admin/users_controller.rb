@@ -1,7 +1,9 @@
 class Admin::UsersController < Admin::BaseController
-  
+
   before_filter :fetch_user_by_login, :only => [ :show, :edit, :update, :destroy ]
-  
+
+  permissions 'admin/super'
+
   # GET /users
   # GET /users.xml
   def index
@@ -41,11 +43,11 @@ class Admin::UsersController < Admin::BaseController
   def create
     @user = User.new(params[:user])
     @user.save!
-    
+
     # save avatar
     avatar = Avatar.create(params[:image])
     @user.avatar = avatar
-    
+
     respond_to do |format|
       if @user.save
         flash[:notice] = 'User was successfully created.'
@@ -56,12 +58,14 @@ class Admin::UsersController < Admin::BaseController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  rescue Exception => exc
+    render :action => 'new'
   end
 
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    
+
     # save or update avatar
     if @user.avatar
       for size in %w(xsmall small medium large xlarge)
@@ -72,8 +76,8 @@ class Admin::UsersController < Admin::BaseController
     else
       avatar = Avatar.create(params[:image])
       @user.avatar = avatar
-    end    
-    
+    end
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = 'User was successfully updated.'

@@ -15,7 +15,7 @@ class RateManyPageControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    page_id = nil  
+    page_id = nil
     assert_difference 'RateManyPage.count' do
       post :create, :id => RateManyPage.param_id, :page => {:title => 'test title'}
       page_id = assigns(:page).id
@@ -25,7 +25,7 @@ class RateManyPageControllerTest < ActionController::TestCase
 
     get :show, :page_id => page_id
     assert_response :success
-    
+
     assert_difference 'page.data.possibles.count' do
       post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
     end
@@ -34,7 +34,7 @@ class RateManyPageControllerTest < ActionController::TestCase
     assert_difference 'page.data.possibles.count', -1 do
       post :destroy_possible, :page_id => page_id, :possible => assigns(:possible).id
     end
-    
+
     post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
     id = assigns(:possible).id
     post :vote_one, :page_id => page_id, :id => id, :value => "2"

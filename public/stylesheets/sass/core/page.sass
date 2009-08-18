@@ -17,7 +17,7 @@ div
   background: white
   table
     width: 100%
-    color: #979797
+    color: #888
     border-collapse: collapse
   td
     padding: 0.25em
@@ -30,6 +30,8 @@ div
       color: #F28367
       text-transform: capitalize
       font-weight: bold
+    &.excerpt b
+      color: black
   th
     text-transform: uppercase
     border-bottom: 1px solid #ccc
@@ -56,9 +58,14 @@ div
   max-height: 40em
   overflow: auto
   border-top: 1px solid #ccc
-  //border-bottom: 1px solid #ccc
   clear: left
   padding-top: none
+
+// the fixed height is necessary to prevent ugly flashes
+// when a different tab is selected.
+.page_scroll.rigid
+  height: 40em
+  border: none
 
 .filter_menu
   display: none
@@ -80,7 +87,7 @@ div
 table.share_page_recipient_add
   width: 100%
   div.scroll
-    overflow: auto 
+    overflow: auto
     height: 20em
     width: 13em
     padding: 0.5em
@@ -180,6 +187,12 @@ table.notify
   input.check
     float: left
     margin: 7px 0 0 -18px
+
+//
+// TAGS
+//
+
+#page_sidebar
   .tags
     overflow: hidden
   .tags a
@@ -192,10 +205,14 @@ table.notify
   .tags a:hover
     background-color: #eef
 
+.edit_tags p
+  float: left
+  width: 40%
+  margin: 0.25em
 
 //
 // POST
-// 
+//
 
 #posts
   background: #fff
@@ -215,7 +232,7 @@ table.notify
       margin-right: 40px
     div.fields
       font-size: 10px
-    
+
 table.posts
   width: 100%
   border-top: 1px solid #ccc
@@ -279,54 +296,52 @@ div.title_box
     font-size: 1.5em
     font-weight: normal
     line-height: 1.2em
-  .title_edit_link
-    display: none
-    float: right
-  &:hover .title_edit_link
-    display: block
 
 //
 // POPUP!
 //
 
-div.popup
-  border= !popup_border
-  background= !popup_bg
-  h1
-    background: #999
-    color: white
-    border-bottom: 1px solid #666
-    padding: 10px
-    margin: 0
-  .buttons
-    background: #ccc
-    border-top: 1px solid #999
-    text-align: right
-    padding: 10px
-  h2
-    color: #cc0000
-    font-size: 1.1em
-    line-height: 1em
-    &.first
-      margin-top: 0
-  blockquote
-    margin: 0
-    padding: 1em
+//div.popup
+//  background= !popup_bg
+//  h1
+//    background: #999
+//    color: white
+//    border-bottom: 1px solid #666
+//    padding: 10px
+//    margin: 0
+//    background: #ccc
+//    border-top: 1px solid #999
+//    padding: 10px
+//  h2
+//    color: #cc0000
+//   font-size: 1.1em
+//   line-height: 1em
+//    &.first
+//      margin-top: 0
+//  blockquote
+//    margin: 0
+//    //padding: 1em
 
-div.popup_arrow
-  height: 29px
-  width: 15px
-  background: url(/images/ui/wedge_right.png)
-  position: absolute
-  top: 30px
-  right: -15px
+//div.popup_arrow
+//  height: 29px
+//  width: 15px
+//  background: url(/images/ui/wedge_right.png)
+//  position: absolute
+//  top: 30px
+//  right: -15px
 
-div#popup_holder
-  position: absolute
-  z-index: 100
-  display: none
+//div#popup_holder
+//  position: absolute
+//  z-index: 100
+//  display: none
 
 // This is used by the delete page popup submenu.
 div.sub_menu
   width: 200px
 
+
+// permission tab in details popup
+
+div.tab_content_scroll
+  overflow: auto
+  height: 20em

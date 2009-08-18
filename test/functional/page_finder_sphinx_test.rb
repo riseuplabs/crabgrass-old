@@ -17,7 +17,7 @@ class PageFinderSphinxTest < ActionController::TestCase
   ### Tests for various search parameters
 
   def try_many_sphinx_searches(user)
-    searches = [ 
+    searches = [
       ['/pending', Proc.new {|p| p.resolved == false}  ],
       ['/type/discussion', Proc.new {|p| (p['type'] == "DiscussionPage" || p['type'] == "MessagePage")} ],
       ['/type/event',      Proc.new {|p| p['type'] == "EventPage"} ],
@@ -80,10 +80,10 @@ class PageFinderSphinxTest < ActionController::TestCase
 
   def test_sphinx_searches
     return unless sphinx_working?(:test_sphinx_searches)
-    
+
     login(:blue)
     user = users(:blue)
-    
+
     try_many_sphinx_searches user
 
 =begin
@@ -114,17 +114,17 @@ class PageFinderSphinxTest < ActionController::TestCase
 
   def test_sphinx_search_text_doc
     # return unless sphinx_working?(:test_sphinx_search_text_doc)
-    
+
     # TODO: write this test
   end
-  
+
   def test_sphinx_with_pagination
     return unless sphinx_working?(:test_sphinx_with_pagination)
 
     login(:blue)
     user = users(:blue)
-    
-    searches = [ 
+
+    searches = [
       ['/descending/updated_at/limit/10', Proc.new {
         Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}[0,10]
       }],
@@ -154,7 +154,7 @@ class PageFinderSphinxTest < ActionController::TestCase
     login_as user
     get :index
   end
-  
+
   def dont_login
     get :index
   end

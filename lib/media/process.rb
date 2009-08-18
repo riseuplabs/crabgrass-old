@@ -1,7 +1,7 @@
 module Media
   module Process
-    
-    # 
+
+    #
     # a note on processing: Chain#run() is not smart about figuring out what processors to run.
     # very simply, it runs the processor it can at a particular step and hopes that there will be
     # a processor down the road that it can pass on its output to.
@@ -13,7 +13,7 @@ module Media
     PRIORITY = [:open_office, :inkscape, :graphic_magick, :ffmpeg].freeze
 
     ## see `ffmpeg -formats`
- 
+
     CONTENT_TYPES_CONSUMED_BY = {
       :open_office => %w(
         text/plain text/html text/richtext application/rtf
@@ -78,7 +78,7 @@ module Media
       content_type = simple(content_type)
       PRIORITY.each do |processor|
         if CONTENT_TYPES_CONSUMED_BY[processor].include?(content_type)
-          processor = self.new_processor(processor) 
+          processor = self.new_processor(processor)
           if processor.available?
             return processor
           else

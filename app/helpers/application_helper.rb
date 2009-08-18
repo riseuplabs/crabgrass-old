@@ -15,6 +15,10 @@ module ApplicationHelper
     %(<option value=''>#{label}</option>)
   end
 
+  def format_text(str)
+    str.any? ? GreenCloth.new(str).to_html() : ''
+  end
+
   ##
   ## LINK HELPERS
   ##
@@ -39,8 +43,8 @@ module ApplicationHelper
       return str if str.any?
     end
   end
-  
-  ## coverts bytes into something more readable 
+
+  ## coverts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
@@ -51,13 +55,13 @@ module ApplicationHelper
       '%s B' % bytes
     end
   end
-   
+
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]
     @called_before[key]=true
   end
-  
+
   def logged_in_since
     session[:logged_in_since] || Time.now
   end
@@ -102,9 +106,9 @@ module ApplicationHelper
                                     }
   end
 
-  # 
+  #
   # Default pagination link options:
-  # 
+  #
   #   :class        => 'pagination',
   #   :previous_label   => '&laquo; Previous',
   #   :next_label   => 'Next &raquo;',
@@ -125,12 +129,12 @@ module ApplicationHelper
     end
     will_paginate(things, defaults.merge(options))
   end
-  
+
   def options_for_my_groups(selected=nil)
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
-  
-  def options_for_language(selected=nil)  
+
+  def options_for_language(selected=nil)
     selected ||= session[:language_code].to_s
     selected = selected.sub(/_\w\w$/, '') # remove locale
     options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
@@ -143,7 +147,7 @@ module ApplicationHelper
   end
 
   def expand_links(description)
-    description.gsub(/<span class="(.*?)">(.*?)<\/span>/) do |match|
+    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
         when "user": link_to_user($2)
         when "group": link_to_group($2)
@@ -159,12 +163,18 @@ module ApplicationHelper
 
     description = expand_links(description)
 
-    icon = activity.icon
     created_at = (friendly_date(activity.created_at) if activity.created_at)
+
     more_link = activity.link
-    more_link = content_tag(:span, more_link, :class => 'commands') if more_link
-    
-    content_tag :li, [description, more_link, created_at].compact.join(BULLET), :class => "small_icon #{icon}_16"
+    if more_link.is_a? Hash
+      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
+    end
+    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
+
+    css_class = "small_icon #{activity.icon}_16 shy_parent"
+    css_style = activity.style
+
+    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
   end
 
   def side_list_li(options)
@@ -198,6 +208,7 @@ module ApplicationHelper
     if links.first.is_a? Symbol
       char = links.shift
       return ' &bull; ' if char == :bullet
+      return ' ' if char == :none
       return ' | '
     else
       return ' | '

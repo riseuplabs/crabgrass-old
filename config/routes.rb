@@ -4,7 +4,7 @@
 # or a new root path route. This way, group and user handles will not be created for those
 # (group name or user login are used as the :context in the default route, so it can't collide
 # with any of our other routes).
-# 
+#
 
 ActionController::Routing::Routes.draw do |map|
 
@@ -18,6 +18,17 @@ ActionController::Routing::Routes.draw do |map|
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
   map.from_plugin :gibberize   rescue NameError
+  map.from_plugin :moderation  rescue NameError
+
+  map.namespace :admin do |admin|
+    admin.resources :announcements
+    admin.resources :email_blasts
+    admin.resources :users, :only => [:new, :create]
+    admin.resources :groups, :only => [:new, :create]
+    admin.resources :custom_appearances, :only => [:edit, :update]
+    admin.sites 'sites/:action', :controller => 'sites'
+    admin.root :controller  => 'base'
+  end
 
   ##
   ## ASSET
@@ -41,16 +52,28 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
+
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+  end
+
   map.connect 'me/:action/:id',             :controller => 'me'
 
   ##
   ## PEOPLE
   ##
-  
-  map.people  'people/:action/:id', :controller => 'people'
+
+  map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
+
+  map.with_options(:namespace => 'people/') do |people_space|
+    people_space.resources :people do |people|
+      people.resources :messages
+    end
+  end
+
   map.connect 'person/:action/:id/*path', :controller => 'person'
-  map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
-  map.resources :conversations
 
   ##
   ## EMAIL
@@ -72,10 +95,14 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.login 'account/login',   :controller => 'account',   :action => 'login'
-  map.resources :custom_appearances, :only => [:edit, :update]
+  #map.resources :custom_appearances, :only => [:edit, :update]
   map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
+  map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
+  map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
+  
+  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
   ## GROUP
@@ -91,6 +118,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##
+  ## CHAT
+  ##
+  map.chat 'chat/:action/:id', :controller => 'chat'
+  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
+#  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
+  ##
   ## DEFAULT ROUTE
   ##
 
@@ -100,7 +133,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
   ## DISPATCHER
   ##
-  
+
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
 
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil

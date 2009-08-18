@@ -96,20 +96,22 @@ class CommitteeTest < Test::Unit::TestCase
     user = users(:gerrard)
     other_user = users(:blue)
     c.add_user!(user)
+    c.add_user!(other_user)
     c.save
+    g.add_user!(other_user)
+    g.save
 
     assert user.may?(:admin, c)
 
     group_page = Page.create! :title => 'a group page',
       :public => false,
-      :user => other_user
-    group_page.add(g, :access => :admin)
+      :user => other_user,
+      :share_with => g, :access => :admin
     group_page.save
     committee_page = Page.create! :title => 'a committee page',
       :public => false,
-      :group => c,
-      :user => other_user
-    committee_page.add(c, :access => :admin)
+      :user => other_user,
+      :share_with => c, :access => :admin
     committee_page.save
 
     assert user.may?(:view, committee_page), "should be able to view committee page"

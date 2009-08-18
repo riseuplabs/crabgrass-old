@@ -17,12 +17,12 @@ module Groups::BasePermission
     logged_in? and current_user.may?(:admin, group)
   end
   alias_method :may_edit_group?, :may_update_group?
-  
+
   def may_destroy_group?(parent = @group)
     if parent.council != parent
       current_user.may?(:admin, parent)
     else # no explicit council
-      parent.users.size == 1 and 
+      parent.users.size == 1 and
         current_user.member_of?(parent)
     end
   end
@@ -33,7 +33,8 @@ module Groups::BasePermission
   alias_method :may_new_group?, :may_create_group?
 
   def may_create_council?(group = @group)
-    group.parent_id.nil? and current_user.may?(:admin, group)
+    group.parent_id.nil? and
+    current_user.may?(:admin, group)
   end
 
   def may_create_network?
@@ -66,9 +67,18 @@ module Groups::BasePermission
   end
 
   ##
+  ## GROUP MENU ITEMS
+  ##
+  def may_edit_menu?(group = @group)
+    group and
+    current_user.may?(:admin, group) and
+    group == Site.current.network
+  end
+
+  ##
   ## ORGANIZATIONAL PERMISSIONS
   ##
-  
+
   def may_show_subcommittees_of_group?(group = @group)
     return false if group.parent_id
     if logged_in?
@@ -90,7 +100,7 @@ module Groups::BasePermission
       group.profiles.public.may_see_members?
     end
   end
- 
+
   ##
   ## EXTRA
   ##

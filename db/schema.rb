@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090705050858) do
+ActiveRecord::Schema.define(:version => 20090813194055) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "access",       :limit => 1,  :default => 2
     t.integer  "related_id",   :limit => 11
     t.integer  "site_id",      :limit => 11
+    t.boolean  "flag"
   end
 
   add_index "activities", ["created_at"], :name => "created_at"
@@ -135,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   create_table "dailies", :force => true do |t|
     t.integer "page_id",    :limit => 11
     t.integer "views",      :limit => 11
-    t.integer "ratings",    :limit => 11
+    t.integer "stars",      :limit => 11
     t.integer "edits",      :limit => 11
     t.date    "created_at"
   end
@@ -242,7 +243,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   create_table "hourlies", :force => true do |t|
     t.integer  "page_id",    :limit => 11
     t.integer  "views",      :limit => 11
-    t.integer  "ratings",    :limit => 11
+    t.integer  "stars",      :limit => 11
     t.integer  "edits",      :limit => 11
     t.datetime "created_at"
   end
@@ -287,13 +288,23 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "user_id",      :limit => 11
     t.datetime "created_at"
     t.boolean  "admin",                      :default => false
-    t.datetime "visited_at"
+    t.datetime "visited_at",                 :default => '1000-01-01 00:00:00', :null => false
     t.integer  "total_visits", :limit => 11, :default => 0
     t.string   "join_method"
   end
 
   add_index "memberships", ["group_id", "user_id"], :name => "gu"
   add_index "memberships", ["user_id", "group_id"], :name => "ug"
+
+  create_table "menu_items", :force => true do |t|
+    t.string   "title"
+    t.string   "link"
+    t.integer  "position",   :limit => 11
+    t.integer  "group_id",   :limit => 11
+    t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
@@ -303,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "sender_id",   :limit => 11
     t.string   "sender_name"
     t.string   "level"
+    t.datetime "deleted_at"
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -324,17 +336,15 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "rating",             :limit => 11
     t.integer  "contributors_count", :limit => 11
     t.integer  "flow",               :limit => 11
-    t.string   "group_name"
     t.string   "created_by_login"
     t.string   "updated_by_login"
-    t.integer  "group_id",           :limit => 11
     t.integer  "created_by_id",      :limit => 11
     t.integer  "updated_by_id",      :limit => 11
     t.datetime "page_updated_at"
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
-    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0, :null => false
     t.string   "owner_name"
   end
@@ -367,12 +377,10 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "contributors_count", :limit => 11, :default => 0
     t.integer  "posts_count",        :limit => 11, :default => 0
     t.string   "name"
-    t.integer  "group_id",           :limit => 11
-    t.string   "group_name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "stars_count",        :limit => 11, :default => 0
     t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
@@ -386,10 +394,8 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "cover_id",           :limit => 11
   end
 
-  add_index "pages", ["name"], :name => "index_pages_on_name"
   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
   add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
-  add_index "pages", ["group_id"], :name => "index_page_group_id"
   add_index "pages", ["type"], :name => "index_pages_on_type"
   add_index "pages", ["flow"], :name => "index_pages_on_flow"
   add_index "pages", ["public"], :name => "index_pages_on_public"
@@ -397,6 +403,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+  add_index "pages", ["name", "owner_id"], :name => "index_pages_on_name"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer "profile_id",        :limit => 11
@@ -449,10 +456,10 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   create_table "profiles", :force => true do |t|
     t.integer  "entity_id",              :limit => 11
     t.string   "entity_type"
-    t.boolean  "stranger"
-    t.boolean  "peer"
-    t.boolean  "friend"
-    t.boolean  "foe"
+    t.boolean  "stranger",                             :default => false, :null => false
+    t.boolean  "peer",                                 :default => false, :null => false
+    t.boolean  "friend",                               :default => false, :null => false
+    t.boolean  "foe",                                  :default => false, :null => false
     t.string   "name_prefix"
     t.string   "first_name"
     t.string   "middle_name"
@@ -463,8 +470,8 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.string   "organization"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "birthday",               :limit => 8
-    t.boolean  "fof"
+    t.datetime "birthday"
+    t.boolean  "fof",                                  :default => false, :null => false
     t.text     "summary"
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
@@ -506,8 +513,9 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "contact_id",    :limit => 11
     t.string   "type",          :limit => 10
     t.integer  "discussion_id", :limit => 11
-    t.datetime "viewed_at"
+    t.datetime "visited_at",                  :default => '1000-01-01 00:00:00', :null => false
     t.integer  "unread_count",  :limit => 11, :default => 0
+    t.integer  "total_visits",  :limit => 11, :default => 0
   end
 
   add_index "relationships", ["contact_id", "user_id"], :name => "index_contacts"
@@ -700,13 +708,14 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   end
 
   create_table "trackings", :force => true do |t|
-    t.integer  "page_id",    :limit => 11
-    t.integer  "user_id",    :limit => 11
-    t.integer  "group_id",   :limit => 11
+    t.integer  "page_id",         :limit => 11
+    t.integer  "current_user_id", :limit => 11
+    t.integer  "group_id",        :limit => 11
     t.datetime "tracked_at"
     t.boolean  "views"
     t.boolean  "edits"
     t.boolean  "stars"
+    t.integer  "user_id",         :limit => 11
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"
@@ -762,6 +771,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.integer  "login_landing",              :limit => 11, :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "preferred_editor",           :limit => 11, :default => 0
   end
 
   add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"
@@ -789,6 +799,7 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
     t.binary   "tag_id_cache"
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
+    t.boolean  "unverified",                              :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
@@ -821,12 +832,12 @@ ActiveRecord::Schema.define(:version => 20090705050858) do
   end
 
   create_table "wiki_versions", :force => true do |t|
-    t.integer  "wiki_id",    :limit => 11
-    t.integer  "version",    :limit => 11
+    t.integer  "wiki_id",       :limit => 11
+    t.integer  "version",       :limit => 11
     t.text     "body"
     t.text     "body_html"
     t.datetime "updated_at"
-    t.integer  "user_id",    :limit => 11
+    t.integer  "user_id",       :limit => 11
     t.text     "raw_structure"
   end
 

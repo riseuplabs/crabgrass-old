@@ -6,7 +6,7 @@ class RelationshipsTest < Test::Unit::TestCase
   def test_add_contact
     a = users(:red)
     b = users(:green)
-    
+
     assert !a.contacts.include?(b), 'no contact yet'
     assert_difference 'Relationship.count', 2 do
       a.add_contact!(b)
@@ -36,7 +36,7 @@ class RelationshipsTest < Test::Unit::TestCase
   def test_destroy
     a = users(:red)
     b = users(:green)
-    
+
     a.add_contact!(b)
     a.reload; b.reload
     assert_difference 'Relationship.count', -2 do
@@ -48,7 +48,7 @@ class RelationshipsTest < Test::Unit::TestCase
   def test_remove_in_memory
     a = users(:red)
     b = users(:green)
-    
+
     a.add_contact!(b)
     a.remove_contact!(b)
     assert !a.contacts.include?(b), 'no contact now'
@@ -70,10 +70,10 @@ class RelationshipsTest < Test::Unit::TestCase
     a = users(:red)
     b = users(:green)
     c = users(:blue)
- 
+
     a.add_contact!(b)
     a.add_contact!(c, :friend)
-    
+
     assert !a.friends.include?(b)
     assert a.friends.include?(c)
     assert a.contacts.include?(b)
@@ -84,13 +84,13 @@ class RelationshipsTest < Test::Unit::TestCase
     a = users(:red)
     b = users(:green)
     a.add_contact!(b)
-    
+
     assert_no_difference 'Discussion.count' do
       a.relationships.with(b)
     end
 
-    discussion = nil    
-    assert_difference 'Discussion.count' do 
+    discussion = nil
+    assert_difference 'Discussion.count' do
       discussion = a.relationships.with(b).discussion
     end
 
@@ -113,7 +113,7 @@ class RelationshipsTest < Test::Unit::TestCase
     a = users(:red)
     b = users(:green)
     a.add_contact!(b)
-    
+
     discussion = a.relationships.with(b).discussion
     assert_equal discussion, a.discussions.first
     assert_equal discussion, b.discussions.first
@@ -121,7 +121,7 @@ class RelationshipsTest < Test::Unit::TestCase
 
   def test_associations
     assert check_associations(Relationship)
-  end  
+  end
 
 end
 

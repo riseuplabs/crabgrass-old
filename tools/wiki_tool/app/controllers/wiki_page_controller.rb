@@ -3,7 +3,8 @@ class WikiPageController < BasePageController
   include ControllerExtension::WikiImagePopup
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  javascript :wiki, :action => :edit
+
   helper :wiki # for wiki toolbar stuff
   permissions 'wiki_page'
   #verify :method => :post, :only => [:revert]
@@ -26,6 +27,7 @@ class WikiPageController < BasePageController
     if logged_in? and heading = @wiki.currently_editing_section(current_user)
       # if the user has a particular section locked, then show it to them.
       if heading == :all
+        flash_message :info => "You have this wiki locked. If you want to stop editing, click the cancel button."[:view_while_locked_error]
         redirect_to page_url(@page,:action=>'edit')
       else
         @wiki.body_html = body_html_with_form(heading)
@@ -51,13 +53,21 @@ class WikiPageController < BasePageController
       lock
       @wiki.body = params[:wiki][:body]
     elsif request.post? and params[:save]
-      # update
+      # update from greencloth editor || wysiwyg || preview
+      params[:wiki][:body] = html_to_greencloth(params[:wiki][:body_html]) if params[:wiki][:body_html].any?
+      #params[:wiki][:body] = params[:wiki][:body_preview] if params[:wiki][:body_preview].any
       save
     elsif request.get?
       lock
     end
   rescue WikiLockException => exc
     # do nothing
+  end
+
+  # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
+  def update_editors
+    return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
+    render :json => update_editor_data(:editor => params[:editor], :wiki => params[:wiki])
   end
 
   def cancel
@@ -137,8 +147,7 @@ class WikiPageController < BasePageController
   # called early in filter chain
   def fetch_data
     return true unless @page
-
-    @wiki = @page.data
+    @wiki = @page.wiki
   end
 
   def setup_wiki_rendering
@@ -189,9 +198,8 @@ class WikiPageController < BasePageController
   # and replaces the section with the form. This is pretty crude, and might not
   # work in all cases.
   def replace_section_with_form(html, heading_start, heading_end, form)
-    index_start = html.index /^<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
-    if heading_end
-      index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
+    index_start = html.index /<h[1-4](\s+class=["']first["'])?><a name="#{Regexp.escape(heading_start)}">/
+    if heading_end and index_end = html.index(/<h[1-4]><a name="#{Regexp.escape(heading_end)}">/)
       index_end -= 1
     else
       index_end = -1

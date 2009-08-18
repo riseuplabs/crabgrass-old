@@ -3,8 +3,8 @@ module PageExtension::Starring
     base.extend ClassMethods
     base.send(:include, InstanceMethods)
   end
-  
-  
+
+
   # Helps with getting and setting static content
   module ClassMethods
 
@@ -14,18 +14,18 @@ module PageExtension::Starring
     # use options[:order] to override default order DESC
     def find_by_stars options={}
       limit = options[:limit] || nil
-      order = options[:order] || "stars DESC"
+      order = options[:order] || "stars_count DESC"
       at_least = options[:at_least] || 0
-      find :all, :order => order, :limit => limit, :conditions => ["stars >= ?", at_least]
+      find :all, :order => order, :limit => limit, :conditions => ["stars_count >= ?", at_least]
     end
-    
+
     def update_all_stars
       self.find(:all).each do |page|
         correct_stars = page.get_stars
-        page.update_attribute(:stars, correct_stars) if correct_stars != page.stars
+        page.update_attribute(:stars_count, correct_stars) if correct_stars != page.stars
       end
     end
-    
+
   end
 
   module InstanceMethods
@@ -57,7 +57,7 @@ module UserParticipationExtension
     def update_stars
       if page
         new_stars_count = page.get_stars
-        page.update_attribute(:stars, page.get_stars) unless new_stars_count == page.stars
+        page.update_attribute(:stars_count, page.get_stars) unless new_stars_count == page.stars_count
       end
     end
 

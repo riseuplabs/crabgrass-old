@@ -1,27 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-#require 'group_controller'
-#showlog
-# Re-raise errors caught by the controller.
-#class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < Test::Unit::TestCase
-#  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages,
-#            :group_participations, :user_participations, :tasks, :page_terms, :sites,
-#            :federatings
-
-  include UrlHelper
-
-  def setup
-#    @controller = GroupController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
-
-  def teardown
-   disable_site_testing
-  end
 
 =begin
+
+this is kept around only because there might be some tests which have not yet been converted to groups/*
+
+
   def test_show_when_logged_in
     login_as :red
 
@@ -226,7 +211,7 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_response :success
     assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
   end
- 
+
   def test_tags
     login_as :blue
 
@@ -475,53 +460,53 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_select "tr.even"
 
   end
-  
+
   # tests for group & network home
   def test_edit_layout
     login_as :blue
     get :edit_layout, :id => groups(:rainbow).name
-    
+
     assert_response :success
-    
+
     @group = Group.find_by_name(groups(:rainbow).name)
     assert @group, 'group should exist'
     @network = Network.find_by_name('fau')
     assert @network
-    
+
     # test to change the default order for a group and a network
     [@group, @network].each do |group|
       # by default the groups first section should be the 'group_wiki'
       assert_equal group.layout('section1'), 'group_wiki'
-      
+
       # call the groups home, and check if it is in the default order
       get :show, :id => group.name
       assert_response :success
-      
+
       assert_select '.section' do |sections|
         assert_select sections.first, 'div#wiki-area'
       end
-      
+
       params = { :id => group.name,  :section1 => 'recent_pages', :section2 => 'group_wiki', :section4 => '' }
       params.merge!({:section3 => 'recent_group_pages'}) if group.network?
       post :edit_layout, params
       assert_redirected_to 'group/edit/'+group.name
-      
+
       # call the group home again, and make sure that the order changed
       get :show, :id => group.name
       assert_response :success
-      
+
       assert_select '.section' do |sections|
         assert_select sections.first, 'div.page_list'
       end
-      
+
       group.reload
-      
-      assert_equal group.layout('section1'), 'recent_pages'    
+
+      assert_equal group.layout('section1'), 'recent_pages'
     end
   end
 
 #  def test_xxx
-#    enable_site_testing do 
+#    enable_site_testing do
 #      assert true
 #      get :show, :id => 1
 #      debugger

@@ -25,19 +25,19 @@ namespace :test do
 
     desc "Run the plugin tests in mods/**/test (or specify with MOD=name)"
     task :all => [:units, :functionals, :integration]
-    
+
     desc "Run all plugin unit tests"
     Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
-    
+
     desc "Run all plugin functional tests"
     Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
-    
+
     desc "Integration test engines"
     Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/integration/**/*_test.rb"
@@ -57,7 +57,7 @@ namespace :test do
         Engines::Testing.setup_plugin_fixtures
       end
     end
-    
+
   end
 end
 
@@ -66,19 +66,19 @@ namespace :test do
 
     desc "Run the plugin tests in tools/**/test (or specify with TOOL=name)"
     task :all => [:units, :functionals, :integration]
-    
+
     desc "Run all plugin unit tests"
     Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
       t.pattern = "tools/#{ENV['TOOL'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
-    
+
     desc "Run all plugin functional tests"
     Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
       t.pattern = "tools/#{ENV['TOOL'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
-    
+
     desc "Integration test engines"
     Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
       t.pattern = "tools/#{ENV['TOOL'] || "**"}/test/integration/**/*_test.rb"
@@ -113,7 +113,7 @@ namespace :test do
       # FileList["mods/**/test/**/*_test.rb"]
       # find and add just the enabled  mods
       pwd = File.dirname(__FILE__)
-      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")    
+      conf = YAML.load_file(pwd + "/../../config/crabgrass.test.yml")
       (conf['enabled_mods']||[]).each {|m| list += FileList["mods/#{m}/test/**/*_test.rb"]} if conf
 
       return list

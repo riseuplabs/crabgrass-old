@@ -62,6 +62,10 @@ class Activity < ActiveRecord::Base
   end
 
   # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
   def description(view) end
 
   # to be defined by subclasses
@@ -71,7 +75,7 @@ class Activity < ActiveRecord::Base
   # why? because activities hold pointers to all kinds of objects. These can be
   # deleted at any time. So if there is an error, it is probably because we
   # tried to reference a deleted record.
-  # 
+  #
   # (normally, groups and users will not cause a problem, because most the time
   # we cache their name's at the time of the activity's creation)
   def safe_description(view=nil)
@@ -85,18 +89,18 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 
   ### I DON'T THINK THIS IS NEEDED
   ### you should be able to resolve this when the activity is created.
-  named_scope :only_visible_groups, 
+  named_scope :only_visible_groups,
     {:joins => "LEFT JOIN profiles ON
       object_type <=> 'Group' AND
-      profiles.entity_type <=> 'Group' AND 
+      profiles.entity_type <=> 'Group' AND
       profiles.entity_id <=> object_id AND
-      profiles.stranger = TRUE", 
+      profiles.stranger = TRUE",
     :conditions => "NOT profiles.may_see <=> FALSE",
     :select => "activities.*",
   }
@@ -212,10 +216,10 @@ class Activity < ActiveRecord::Base
 
   private
 
-  # often, stuff that we want to report activity on has already been 
+  # often, stuff that we want to report activity on has already been
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).if_not_nil.name || "unknown"[:unknown]
+    name = self.send("#{thing}_name") || self.send(thing).try.name || "unknown"[:unknown]
     '<span class="%s">%s</span>' % [type, name]
   end
 

@@ -2,7 +2,15 @@
 # insert new messages if any have been generated
 for message in @messages %>
   <% next if message.sender_id == @user.id %>
-  new Insertion.Bottom('stage', '<%= escape_javascript message_content(message) %>');
+  if (document.getElementById("message-<%=message.id%>") == null){
+     new Insertion.Bottom('stage', '<%= escape_javascript message_content(message) %>');
+  }
+<% end %>
+
+<% 
+# remove messages that have been deleted
+for message in @deleted_messages %>
+    $('message-<%= message.id%>').hide();
 <% end %>
 
 <%= scroll_conversation_script if @messages.length > 0 %>

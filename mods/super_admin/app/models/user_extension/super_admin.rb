@@ -22,13 +22,11 @@ module UserExtension::SuperAdmin
       end
     end
   end
-  
+
   module InstanceMethods
-    # Returns true if self is a super admin. If self is the current_user
-    # then no arguments are required. However, to test superadmin? on any
-    # other user requires a site argument.
-    def superadmin?(site=nil)
-      site ||= self.current_site
+    # Returns true if self is a super admin on site. Defaults to the
+    # current site.
+    def superadmin?(site=Site.current)
       if site
         self.group_ids.include?(site.super_admin_group_id)
       else
@@ -48,12 +46,12 @@ module UserExtension::SuperAdmin
     end
 
     def friend_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return friend_of_without_superadmin?(user)
     end
 
     def peer_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return peer_of_without_superadmin?(user)
     end
 

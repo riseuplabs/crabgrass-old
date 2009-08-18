@@ -2,6 +2,10 @@ class Groups::DirectoryController < Groups::BaseController
 
   before_filter :set_group_type
 
+  def index
+    logged_in? ? redirect_to(:action => 'my') : redirect_to(:action => 'search')
+  end
+
   def recent
     user = logged_in? ? current_user : nil
     @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
@@ -21,18 +25,18 @@ class Groups::DirectoryController < Groups::BaseController
   end
 
   def my
-    @groups = current_user.groups.only_type(@group_type).alphabetized('').paginate(:all, :page => params[:page])
+    @groups = current_user.primary_groups.alphabetized('').paginate(:all, :page => params[:page])
     @show_committees = true
     render_list
   end
-   
+
   def most_active
     @groups = Group.only_type(@group_type).most_visits.paginate(:all, :page => params[:page])
     render_list
   end
 
   protected
-  
+
   def render_list
     render :template => 'groups/directory/list'
   end

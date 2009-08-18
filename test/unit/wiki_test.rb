@@ -177,7 +177,6 @@ class WikiTest < Test::Unit::TestCase
       should_have_latest_body_html ''
       should_have_latest_raw_structure({})
 
-
       context "and then saved with new body by a different user" do
         setup do
           @wiki.body = 'oi'
@@ -186,6 +185,7 @@ class WikiTest < Test::Unit::TestCase
         end
 
         should_not_change("versions count") { @wiki.versions.size }
+
 
         should_have_latest_body 'oi'
         should_have_latest_body_html '<p>oi</p>'

@@ -25,7 +25,7 @@
     //margin-top: 1.5em
     color: #666
     border-bottom: 2px dotted #999
-    font-family= !body_text_font_family 
+    font-family= !body_text_font_family
     &:first-child, &.first
       margin-top: 0
   h2
@@ -117,9 +117,9 @@ div.formatting_reference
   float: right
 
 a.edit
-  display: none
+  display: inline
   margin-left: 6px
-  opacity: 0.5
+  opacity: 0
   //position: absolute
   // a hack to make .small_icon_button work as inline
   background-repeat: no-repeat
@@ -127,30 +127,69 @@ a.edit
   padding-left: 16px
   // end hack
 a.edit:hover
-  opacity: 1
+  opacity: 1 !important
 
-h1:hover a.edit, 
+h1:hover a.edit,
 h2:hover a.edit,
 h3:hover a.edit
-  display: inline
+  opacity: 0.6
+
+.html_editor_instance
+  padding: 4px
+  border-top: 1px solid #ddd
+  outline: 0
+  min-height: 10em
+  max-height: 30em
+  overflow-y: auto
+  cursor: text
+  &:focus
+    background-color: #ffe
+
+.html_editor_panel
+  border-bottom: 1px solid #666
+  border-top: 1px solid white
+
+.html_editor_wrapper
+  border: 1px solid #666
+
+.nicEdit-panelContain
+  border: 0 !important
+
+.nicEdit-selectContain
+  width: 120px !important
+
+.nicEdit-selectTxt
+  width: 90px !important
+
+.nicEdit-pane
+  h1
+    font-size: 1.55em
+  h2
+    font-size: 1.1em
+  h3
+    font-size: 1em
+  h4
+    font-size: 0.8em
+
 
 //
 // table of contents
 //
 
 a.anchor
-  display: none
+  opacity: 0
   margin-left: 6px
   text-decoration: none
   &:hover
-    color: #aaa !important
+    color: #666 !important
     text-decoration: none
 
-h1:hover a.anchor, 
+h1:hover a.anchor,
 h2:hover a.anchor,
 h3:hover a.anchor
-  display: inline
-  color: #ddd
+  opacity: 1
+  color: #aaa
+  background: white
 
 ul.toc
   display: table

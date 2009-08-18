@@ -1,6 +1,6 @@
 =begin
 
-Here in lies all the helpers for displaying icons, avatars, spinners, 
+Here in lies all the helpers for displaying icons, avatars, spinners,
 and various images.
 
 =end
@@ -13,7 +13,7 @@ module ImageHelper
   ## Some links have icons. Rather than use img tags, which can cause all
   ## kinds of trouble with the layout, crabgrass generally uses background
   ## images for the icon.
-  ## 
+  ##
 
   # for example icon_tag('pencil')
   def icon_tag(icon, size = 16)
@@ -23,7 +23,7 @@ module ImageHelper
 #  def pushable_icon_tag(icon, size = 16, id = nil)
 #    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
 #  end
-    
+
   ##
   ## AVATARS
   ##
@@ -39,29 +39,26 @@ module ImageHelper
       :class => (options[:class] || "avatar avatar_#{size}")
     )
   end
-  
+
   ## returns the url for the user's or group's avatar
   def avatar_url_for(viewable, size='medium')
     #avatar_url(:id => (viewable.avatar_id||0), :size => size)
     '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
   end
 
+  def avatar_style(viewable, size='medium')
+    "background-image: url(%s);" % avatar_url_for(viewable, size)
+  end
+
   ##
   ## PAGES
   ##
-  ## every page has an icon. 
+  ## every page has an icon.
   ##
 
   ## returns the img tag for the page's icon
   def page_icon(page)
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
-#    image_tag "pages/#{page.icon}", :size => "22x22"
-  end
-  
-  ## returns css style text to display the page's icon
-  def page_icon_style(icon)
-   # XXX
-   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 
   ##
@@ -69,7 +66,7 @@ module ImageHelper
   ##
   ## spinners are animated gifs that are used to show progress.
   ## see JavascriptHelper for showing and hiding spinners.
-  ## 
+  ##
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
@@ -88,7 +85,7 @@ module ImageHelper
     target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
   end
-  
+
   def spinner_icon_off(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
     "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
@@ -109,11 +106,11 @@ module ImageHelper
   #    return(event.target || event.srcElement); // IE doesn't use .target
   #  }
   #
-  # however, this can be used for non-ajax js.  
+  # however, this can be used for non-ajax js.
 
   ##
   ## LINKS WITH ICONS
-  ## 
+  ##
 
   # makes a cool link with an icon. if you click the link, some ajax
   # thing happens, and the icon is set to a spinner. The icon is
@@ -121,10 +118,14 @@ module ImageHelper
   def link_to_remote_with_icon(label, options, html_options={})
     icon = options.delete(:icon) || html_options.delete(:icon)
     id = html_options[:id] || 'link%s'%rand(1000000)
-    icon_options = {
-      :loading => spinner_icon_on(icon, id),
-      :complete => spinner_icon_off(icon, id)
-    }
+    if options[:confirm]
+      icon_options = {} # don't bother with spinner for confirm links
+    else
+      icon_options = {
+        :loading => [spinner_icon_on(icon, id), options[:loading]].combine(';'),
+        :complete => [spinner_icon_off(icon, id), options[:complete]].combine(';')
+      }
+    end
     html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
     html_options[:id] ||= id
     link_to_remote(
@@ -136,12 +137,14 @@ module ImageHelper
 
   def link_to_function_with_icon(label, function, options={})
     icon = options.delete(:icon)
-    class_options = {:class => "small_icon #{icon}_16"}
-    link_to_function(label, function, class_options.merge(options))
+    options[:class] = ['small_icon', "#{icon}_16", options[:class]].combine
+    link_to_function(label, function, options)
   end
 
   def link_to_remote_icon(icon, options={}, html_options={})
-    link_to_remote_with_icon('', options, html_options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16 #{html_options[:class]}"))
+    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
+    html_options[:icon] = icon
+    link_to_remote_with_icon('', options, html_options)
   end
 
   def link_to_function_icon(icon, function, options={})
@@ -152,8 +155,12 @@ module ImageHelper
     link_to label, url, options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
   end
 
+  def link_to_icon(icon, url, options={})
+    link_to_with_icon(icon, '', url, options)
+  end
+
   def link_to_toggle(label, id)
-    function = "$('#{id}').toggle(); eventTarget(event).toggleClassName('right_16').toggleClassName('sort_down_16')"
+    function = "linkToggle(eventTarget(event), '#{id}')"
     link_to_function_with_icon label, function, :icon => 'right'
   end
 
@@ -187,19 +194,21 @@ module ImageHelper
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
-  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
-  # 
+  # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
+  #
+  # thumbnail_name: one of :small, :medium, :large
+  #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
   #               optimally fit in the cropped space.
-  #  * :scale  -- the img is scaled, preserving proportions 
+  #  * :scale  -- the img is scaled, preserving proportions
   #  * :crop!  -- crop, even if there is no known height and width
   #
   # note: if called directly, thumbnail_img_tag does not actually do the
-  #       cropping. rather, it generate a correct img tag for use with 
+  #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]

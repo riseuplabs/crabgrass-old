@@ -32,12 +32,12 @@ class PageSharingTest < Test::Unit::TestCase
   def test_share_page_with_owner
     user = users(:kangaroo)
     group = groups(:animals)
-    
+
     page = Page.create(:title => 'fun fun', :user => user, :share_with => group, :access => :admin)
     assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
     assert group.may?(:admin, page), 'group be able to admin group'
 
-    assert_nothing_raised do 
+    assert_nothing_raised do
       user.share_page_with!(page, "animals", :message => 'hey you', :grant_access => :view)
     end
 
@@ -54,7 +54,7 @@ class PageSharingTest < Test::Unit::TestCase
     #user.share_page_with!(page, recipients, :access => :view)
 
     assert group.may?(:view, page), 'group must have view access'
-    assert !group.may?(:admin, page), 'group must not have admin access'   
+    assert !group.may?(:admin, page), 'group must not have admin access'
   end
 
   def test_share_inbox_rules
@@ -69,7 +69,7 @@ class PageSharingTest < Test::Unit::TestCase
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => group, :access => :view)
 
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
-    
+
     user.share_page_with!(page, other_user, :access => :admin, :send_notice => true)
     assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
@@ -96,8 +96,8 @@ class PageSharingTest < Test::Unit::TestCase
     end
 
     page.add(user, :access => :edit)
-    
-    # sadly, page.users is not updated yet.    
+
+    # sadly, page.users is not updated yet.
     assert !page.users.include?(user), 'it would be nice if we could do this'
 
     assert_nothing_raised do
@@ -105,11 +105,11 @@ class PageSharingTest < Test::Unit::TestCase
     end
     assert page.users.include?(user), 'page.users should be updated'
 
-    assert_raises PermissionDenied do 
+    assert_raises PermissionDenied do
       user.may!(:admin, page)
-    end 
+    end
   end
-  
+
   def test_page_update
     page = pages(:wiki)
     user = users(:blue)
@@ -133,7 +133,7 @@ class PageSharingTest < Test::Unit::TestCase
     user = users(:kangaroo)
     group = groups(:animals)
     user2 = users(:red)
- 
+
     page = Page.create(:title => 'x', :user => user, :access => :admin)
     user.share_page_with!(page, {:animals => {:access => "edit"}, :red => {:access => "edit"}}, {})
 
@@ -170,7 +170,7 @@ class PageSharingTest < Test::Unit::TestCase
      :share_with => {"rainbow"=>{"access"=>"admin"}, "red"=>{"access"=>"admin"}},
      :access => :view)
     assert rainbow.may?(:admin, page)
-    
+
     creator.share_page_with!(
       page,
       {"rainbow"=>{"send_notice"=>"1"}, "red"=>{"send_notice"=>"1"}},
@@ -198,11 +198,22 @@ class PageSharingTest < Test::Unit::TestCase
     end
   end
 
+  # share with a committee you are a member of, but you are not a member of the parent group.
+  def test_share_with_committee
+    owner = users(:penguin)
+    page = Page.create!(:title => 'title', :user => owner)
+    committee = groups(:cold)
+    assert owner.member_of?(committee)
+    assert_nothing_raised do
+      owner.share_page_with!(page, 'rainbow+the-cold-colors', {})
+    end
+  end
+
   protected
-  
+
   def create_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
     Page.create(defaults.merge(options))
   end
-  
+
 end

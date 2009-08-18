@@ -1,19 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'groups_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class GroupsController; def rescue_action(e) raise e end; end
 
-class GroupsControllerTest < Test::Unit::TestCase
+class GroupsControllerTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
             :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
   def setup
-    @controller = GroupsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     Conf.disable_site_testing
   end
 
@@ -23,37 +16,45 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
-=begin
-  def test_my
-    login_as :gerrard
-    get :my
-    assert_response :success
-    assert_not_nil assigns(:groups)
-  end
-
-  def test_directory
-    login_as :gerrard
-    get :directory
-    assert_response :success
-    assert_not_nil assigns(:groups)
-  end
-
-  def test_directory_letter
+  def test_discussions
     login_as :blue
-    get :directory, :letter => 'r'
+    get :discussions, :id => groups(:rainbow).to_param
     assert_response :success
-
-    assert_equal 1, assigns(:groups).size
-    assert_equal "rainbow", assigns(:groups)[0].name
   end
 
-  def test_index
+  def test_archive
+    login_as :blue
+    get :archive, :id => groups(:rainbow).to_param, :path => ['created']
+    assert_response :success
+  end
+
+  def test_create_group
+    get :new
+    assert_login_required
+
     login_as :gerrard
-    get :index
+    get :new
     assert_response :success
-    assert_not_nil assigns(:groups)
+
+    assert_no_difference 'Group.count' do
+      post :create, :group => {:name => ''}
+      assert_error_message
+    end
+
+    assert_no_difference 'Group.count' do
+      post :create, :group => {:name => 'animals'}
+      assert_error_message
+    end
+
+    assert_difference 'Group.count' do
+      post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!"}
+      assert_response :redirect
+      group = Group.find_by_name 'test-create-group'
+      assert_redirected_to url_for_group(group, :action => 'edit')
+    end
   end
 
+=begin
   def test_get_create
     login_as :gerrard
     get :create
@@ -62,17 +63,6 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_select "form#createform"
   end
 
-  def test_create_group
-    login_as :gerrard
-    assert_difference 'Group.count' do
-      post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!", :summary => "None."}
-      assert_response :redirect
-      group = Group.find_by_name 'test-create-group'
-      assert_redirected_to url_for_group(group, :action => 'show')
-      assert_equal assigns(:group).name, 'test-create-group'
-      assert_equal group.name, 'test-create-group'
-    end
-  end
 
 #  def test_create_group_with_council
 #    login_as :gerrard

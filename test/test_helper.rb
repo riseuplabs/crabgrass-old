@@ -38,7 +38,7 @@ module Tool; end
 
 
 #
-# put this at the top of your test, before the class def, to see 
+# put this at the top of your test, before the class def, to see
 # the logs printed to stdout. useful for tracking what sql is called when.
 # probably way too much information unless run with -n to limit the test.
 # ie: ruby test/unit/page_test.rb -n test_destroy
@@ -52,13 +52,15 @@ end
 # i can't get the tests to work unless we use this.
 class MockFile
   attr_reader :path
-	def initialize(path); @path = path; end
-	def size; 1; end
+  def initialize(path); @path = path; end
+  def size; 1; end
   def original_filename; @path.split('/').last; end
   def read; File.open(@path) { |f| f.read }; end
   def rewind; end
 end
 
+class ParamHash < HashWithIndifferentAccess
+end
 
 def mailer_options
   {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
@@ -92,7 +94,7 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
 
   include AuthenticatedTestHelper
-  
+
   # make sure the associations are at least defined properly
   def check_associations(m)
     @m = m.new
@@ -103,19 +105,23 @@ class Test::Unit::TestCase
     end
     true
   end
-  
+
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
-  def assert_permission_denied
-    assert_equal 'error', flash[:type]
-    assert_equal 'Permission Denied', flash[:title]
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+  def assert_permission_denied(message='missing "permission denied" message')
+    if flash[:type]
+      assert_equal 'error', flash[:type], message
+      assert_equal 'Permission Denied', flash[:title], message
+      assert_response :redirect
+      assert_redirected_to :controller => :account, :action => :login
+    else
+      assert_select "div.title_box h1", "Permission Denied", message
+    end
   end
 
-  def assert_login_required
-    assert_equal 'info', flash[:type]
-    assert_equal 'Login Required', flash[:title]
+  def assert_login_required(message='missing "login required" message')
+    assert_equal 'info', flash[:type], message
+    assert_equal 'Login Required', flash[:title], message
     assert_response :redirect
     assert_redirected_to :controller => :account, :action => :login
   end
@@ -124,6 +130,16 @@ class Test::Unit::TestCase
     assert_equal 'error', flash[:type]
     if regexp
       assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp, flash[:text]]
+    end
+  end
+
+  def assert_success_message(title_regexp = nil, text_regexp = nil)
+    assert_equal 'success', flash[:type]
+    if title_regexp
+      assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp, flash[:text]]
+    end
+    if text_regexp
+      assert flash[:text] =~ text_regexp, 'success message text did not match %s. it was %s.'%[text_regexp, flash[:text]]
     end
   end
 
@@ -157,7 +173,7 @@ class Test::Unit::TestCase
       post action, url
       assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
     end
-  end    
+  end
 
   def assert_login_not_required(method, url)
     if method == :get
@@ -167,7 +183,7 @@ class Test::Unit::TestCase
       post action, url
       assert_redirect_to {:controller => 'account', :action => 'login'}, "post %s must require a login" % url.inspect
     end
-  end    
+  end
 =end
 
   ##
@@ -205,19 +221,105 @@ See also doc/SPHINX"
   end
 
   def enable_site_testing(site_name=nil)
-    if block_given?
-      enable_site_testing(site_name)
-      yield
-      disable_site_testing
+    if site_name
+      Conf.enable_site_testing(sites(site_name))
+      Site.current = sites(site_name)
     else
-      if site_name
-        Conf.enable_site_testing(sites(site_name))
-        Site.current = sites(site_name) 
-      else
-        Conf.enable_site_testing()
-        Site.current = Site.new
+      Conf.enable_site_testing()
+      Site.current = Site.new
+    end
+    @controller.enable_current_site if @controller
+  end
+
+  # run the block with a site
+  def with_site(site_name, site_attributes = true)
+    return unless block_given?
+
+    old_enabled_site_ids = Conf.enabled_site_ids
+    old_site = Site.current
+
+    # set the site to the new one
+    enable_site_testing(site_name)
+    # override site options
+    unmodified_site_attributes = Site.current.attributes
+    if site_attributes.respond_to? :each
+      site_attributes.each {|attr, value| Site.current.send("#{attr}=", value)}
+      updated_site_attributes = true
+      Site.current.save!
+    end
+
+    # Run the block
+    yield
+  ensure
+    # restore
+    if updated_site_attributes
+      Site.current.attributes = unmodified_site_attributes
+      Site.current.save!
+    end
+    disable_site_testing
+    Conf.enabled_site_ids = old_enabled_site_ids
+    Site.current = old_site
+  end
+
+  # takes collections of sites and a block. runs all the tests defined in the block
+  # for each site.
+  # +sites+ is a hash, each key is a site name. values can be _true_, _false_ (don't test the site)
+  # or a hash of site attributes to override
+  #
+  # Example:
+  # with_site(:site1 => {:profiles => ['private']}, :site2 => true) {
+  #   def test_something;
+  #     assert_something
+  #   end
+  # }
+  def self.repeat_with_sites(sites = {})
+    return unless block_given?
+
+    # yield will define some new methods, some of which are tests
+    old_methods = self.instance_methods
+    yield
+    new_methods = self.instance_methods
+    # methods defined in the yielded block that start with 'test'
+    new_test_methods = (new_methods - old_methods).grep /^test/
+
+    new_test_methods.each do |test_method_name|
+      aliased_test_method_name = "do_#{test_method_name}".to_sym
+      test_method_name = test_method_name.to_sym
+
+      # alias do_test_something for test_something
+      self.class_eval "alias :#{aliased_test_method_name} :#{test_method_name}"
+      # delete test_something (so it's not get executed)
+      self.class_eval "undef :#{test_method_name}"
+
+      sites.keys.each do |site_name|
+        site_attributes = sites[site_name]
+        next unless site_attributes
+        site_name = "nil" if site_name.nil?
+        site_method_name = "#{test_method_name}_with_site_#{site_name}"
+
+        define_method site_method_name do
+          with_site(site_name, site_attributes) {send(aliased_test_method_name)}
+        end
       end
-      @controller.enable_current_site if @controller
+    end
+
+    # old_enabled_site_ids = Conf.enabled_site_ids
+    # old_site = Site.current
+    # # set the site to the new one
+    # enable_site_testing(site)
+    # yield
+    # # restore
+    # Conf.enabled_site_ids = old_enabled_site_ids
+    # Site.current = old_site
+  end
+
+  def enable_unlimited_site_testing(site_name=nil)
+    if block_given?
+      enable_site_testing(site_name, false) do
+        yield
+      end
+    else
+      enable_site_testing(site_name, false)
     end
   end
 

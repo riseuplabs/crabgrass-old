@@ -10,15 +10,21 @@ module PageExtension::Groups
       has_many :group_participations, :dependent => :destroy
       has_many :groups, :through => :group_participations
 
-      # the primary group will be equal to the owner if the owner is a group.
-      belongs_to :group                       # the primary group
       belongs_to :owner, :polymorphic => true # the page owner
 
       has_many :namespace_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})'
 
-      # override the ActiveRecord created method
-      remove_method :namespace_group_ids
-      remove_method :group_ids
+      remove_method :namespace_group_ids  # override the ActiveRecord
+      remove_method :group_ids            # created method so we can used cached copy.
+
+      attr_accessor :groups_changed       # set to true of group_participations has changed.
+    end
+  end
+
+  # returns the owner if the owner happens to be a group
+  def group
+    if owner and owner.is_a? Group
+      owner
     end
   end
 
@@ -29,7 +35,7 @@ module PageExtension::Groups
   def group_ids
     group_participations.collect{|gpart|gpart.group_id}
   end
-  
+
   # returns an array of group ids that compose this page's namespace
   # includes direct groups and all the relatives of the direct groups.
   def namespace_group_ids
@@ -41,7 +47,7 @@ module PageExtension::Groups
 
   # takes an array of group ids, return all the matching group participations
   # this is called a lot, since it is used to determine permission for the page
-  def participation_for_groups(group_ids) 
+  def participation_for_groups(group_ids)
     group_participations.collect do |gpart|
       gpart if group_ids.include? gpart.group_id
     end.compact
@@ -62,7 +68,7 @@ module PageExtension::Groups
   # - use option :all for all the accesslevels
   # --
   #   TODO
-  #   what is the purpose of this method? 
+  #   what is the purpose of this method?
   #
   #   i think it can be removed.
   #
@@ -76,9 +82,9 @@ module PageExtension::Groups
     group_participations.collect do |gpart|
       if access == :all
         gpart.group if ACCESS.include?(gpart.access)
-      else  
+      else
         gpart.group if gpart.access == ACCESS[access]
-      end  
+      end
     end.compact
   end
 
@@ -86,7 +92,7 @@ module PageExtension::Groups
     #
     # returns an array of the number of pages in each month for a particular group.
     # (based on what pages the current_user can see)
-    # 
+    #
     def month_counts(options)
       field = case options[:field]
         when 'created': 'created_at'
@@ -127,12 +133,6 @@ module PageExtension::Groups
         # only show public pages
         PageTerms.access_filter_for(group, :public)
       end
-    end
-   
-    # updates the denormalized copies of group name
-    def change_group_name(group_id, new_name)
-      Page.connection.execute("UPDATE pages SET `group_name` = #{connection.quote(new_name)} WHERE pages.group_id = #{connection.quote(group_id)}")
-      Page.connection.execute "UPDATE pages SET `owner_name` = #{connection.quote(new_name)} WHERE pages.owner_id = #{connection.quote(group_id)} AND pages.owner_type = 'Group'"
     end
 
   end

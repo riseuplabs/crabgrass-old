@@ -14,18 +14,18 @@ class UserTest < Test::Unit::TestCase
       u = create_user(:login => 'groups')
       assert u.errors.on(:login)
     end
-  
+
     g = Group.create :name => 'robot-overlord'
     assert_no_difference 'User.count' do
       u = create_user(:login => 'robot-overlord')
       assert u.errors.on(:login)
     end
   end
-  
+
   def test_associations
     assert check_associations(User)
   end
-  
+
   def test_alphabetized
     assert_equal User.all.size, User.alphabetized('').size
 
@@ -46,10 +46,28 @@ class UserTest < Test::Unit::TestCase
     assert_equal u.peers, User.peers_of(u)
   end
 
+  def test_removal_deletes_chat_channels_users
+    user = create_user
+    user_id = user.id
+
+    group1 = groups(:true_levellers)
+    group1.add_user! user
+    channel1 = ChatChannel.create(:name => group1.name, :group_id => group1.id)
+    ChatChannelsUser.create({:channel => channel1, :user => user})
+
+    group2 = groups(:rainbow)
+    group2.add_user! user
+    channel2 = ChatChannel.create(:name => group2.name, :group_id => group2.id)
+    ChatChannelsUser.create({:channel => channel2, :user => user})
+
+    user.destroy
+    assert ChatChannelsUser.find(:all, :conditions => {:user_id => user_id}).empty?
+  end
+
   protected
 
   def create_user(options = {})
     User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
   end
-  
+
 end

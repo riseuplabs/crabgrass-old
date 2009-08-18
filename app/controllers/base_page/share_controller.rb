@@ -1,10 +1,10 @@
 ##
 ## PAGE SHARING
-## 
+##
 #
 # Handles the sharing and notification of pages
 #
-# share this page with a notice message to any number of recipients. 
+# share this page with a notice message to any number of recipients.
 #
 # if the recipient is a user name, then the message and the page show up in
 # user's inbox, and optionally they are alerted via email.
@@ -12,10 +12,10 @@
 # if the recipient is an email address, an email is sent to the address with a
 # magic url that lets the recipient view the page by clicking on a link
 # and using their email as the password.
-# 
+#
 # the sending user must have admin access to send to recipients
 # who do not already have the ability to view the page.
-# 
+#
 # the recipient may be an entire group, in which case we grant access
 # to the group and send emails to each user in the group.
 #
@@ -24,35 +24,17 @@
 #
 class BasePage::ShareController < ApplicationController
 
-  before_filter :login_required, :except => [:auto_complete]
-  protect_from_forgery :except => [:auto_complete]
+  before_filter :login_required
   verify :xhr => true
 
-  helper 'base_page', 'base_page/share'
+  helper 'base_page', 'base_page/share', 'autocomplete'
   permissions 'base_page'
 
-  def auto_complete
-    # i am searching by display_name only under protest. this is going to
-    # make it s.l.o.w.
-    filter = "#{params[:query]}%"
-    recipients = Group.find(:all,
-      :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients += User.on(current_site).find(:all,
-      :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-      :limit => 20)
-    recipients = recipients.sort_by{|r|r.name}[0..19]
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
-  end
-  
   # display the share or notify popup via ajax
   def show
-  end  
-  
+    render :partial => 'base_page/share/' + params[:name] + '_popup'
+  end
+
   # there are three ways to submit the form:
   # (1) cancel button (params[:cancel]==true)
   # (2) add button or return in add field (params[:add]==true)
@@ -83,13 +65,14 @@ class BasePage::ShareController < ApplicationController
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-
+      # we save if we are in share or notify process
+      options[:notify] = params[:notify]
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message_now :success => @success_msg
       close_popup
     else
-      render :text => 'no button was pressed', :status => :error
+      close_popup
     end
   end
 
@@ -99,12 +82,12 @@ class BasePage::ShareController < ApplicationController
     params[:share] = params[:notify] # act as if share button was pressed if notify pressed.
     update
   end
-  
+
   protected
 
   ##
   ## UI METHODS FOR THE SHARE & NOTIFY FORMS
-  ## 
+  ##
 
   def close_popup
     render :template => 'base_page/reset_sidebar'
@@ -125,7 +108,7 @@ class BasePage::ShareController < ApplicationController
   def find_recipient(recipient_name)
     recipient_name.strip!
     return nil unless recipient_name.any?
-    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)        
+    recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
       flash_message_now(:error => 'no such name'[:no_such_name])
     elsif !recipient.may_be_pestered_by?(current_user)
@@ -161,12 +144,6 @@ class BasePage::ShareController < ApplicationController
         hsh[key] = true
       end
     end
-  end
-
-  # this should be in a helper somewhere, but i don't know how to generate 
-  # json response in the view. 
-  def display_on_two_lines(entity)
-    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
   end
 
 end

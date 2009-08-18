@@ -1,7 +1,7 @@
 # = PathFinder::Mysql::BuilderFilters
 # This contains all the filters for the different path elements.
 # It gets included from the Builder.
-#  
+#
 
 module PathFinder::Mysql::BuilderFilters
 
@@ -15,7 +15,7 @@ module PathFinder::Mysql::BuilderFilters
 
   # for your health, use this to convert local time to utc
   # the dates in @values should be utc, all other date variables
-  # should be local time. 
+  # should be local time.
   #++
   def to_utc(time)  # :nodoc:
     time = time.to_time if time.is_a? Date
@@ -25,7 +25,7 @@ module PathFinder::Mysql::BuilderFilters
   # def filter_starts
   #   @date_field = "starts_at"
   # end
-  # 
+  #
   # def filter_created
   #   @date_field = "created_at"
   # end
@@ -59,38 +59,38 @@ module PathFinder::Mysql::BuilderFilters
 #    @conditions << "pages.#{@date_field} <= ?"
 #    @values << date.to_s(:db)
   end
-  
+
   def filter_changed
     @conditions << 'pages.updated_at > pages.created_at'
   end
- 
+
   # def filter_upcoming
   #   @conditions << 'pages.starts_at > ?'
   #   @values << Time.now
   #   @order << 'pages.starts_at DESC' if @order
   # end
-  
+
   def filter_ago(near,far)
     near = near.to_i.days.ago
     far  = far.to_i.days.ago
     @conditions << 'pages.updated_at < ? and pages.updated_at > ? '
     @values << to_utc(near) << to_utc(far)
   end
-  
+
   def filter_created_after(date)
 #    year, month, day = date.split('-')
 #    date = to_utc Time.in_time_zone(year, month, day)
 #    @conditions << 'pages.created_at > ?'
 #    @values << date.to_s(:db)
   end
-  
+
   def filter_created_before(date)
 #    year, month, day = date.split('-')
 #    date = to_utc Time.in_time_zone(year, month, day)
 #    @conditions << 'pages.created_at < ?'
 #    @values << date.to_s(:db)
   end
- 
+
   #--
   # 2008      --> all pages from 2008-1-1 up to but not including 2009-1-1
   # 2008-12   --> all pages from 2008-12-1 up to but not including 2009-1-1
@@ -113,17 +113,17 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << "pages.`#{@date_field}` >= ? AND pages.`#{@date_field}` < ?"
     @values << to_utc(start_time) << to_utc(end_time)
   end
-  
+
   #--
   #### FULLTEXT FILTERS
   #++
-    
+
   def filter_person(id)
     @access_filter_clause << "+" + Page.access_ids_for(
       :user_ids  => [id]
     ).first
   end
-  
+
   def filter_group(id)
     @access_filter_clause << "+" + Page.access_ids_for(
       :group_ids  => [id]
@@ -147,6 +147,8 @@ module PathFinder::Mysql::BuilderFilters
   # media-image+file, media-image+gallery, file,
   # text+wiki, text, wiki
   def filter_type(arg)
+    return if arg == 'all'
+
     if arg =~ /[\+\ ]/
       page_group, page_type = arg.split(/[\+\ ]/)
     elsif Page.is_page_group?(arg)
@@ -159,6 +161,10 @@ module PathFinder::Mysql::BuilderFilters
       media_type = page_group.sub(/^media-/,'')
       @conditions << "pages.is_#{media_type} = ?" # only safe because of regexp in if
       @values << true
+    end
+
+    if page_type == 'announcement'
+      @flow = :announcement
     end
 
     if page_type
@@ -177,14 +183,14 @@ module PathFinder::Mysql::BuilderFilters
 
   def filter_created_by(id)
     @conditions << 'pages.created_by_id = ?'
-    @values << id 
+    @values << id
   end
 
   def filter_not_created_by(id)
     @conditions << 'pages.created_by_id != ?'
-    @values << id 
+    @values << id
   end
-    
+
   def filter_name(name)
     @conditions << 'pages.name = ?'
     @values << name
@@ -197,26 +203,30 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'pages.title LIKE ?'
     @values << "%#{text}%"
   end
-  
+
   def filter_stars(star_count)
-    @conditions << 'pages.stars >= ?'
+    @conditions << 'pages.stars_count >= ?'
     @values << star_count
   end
 
   def filter_starred
-    @conditions << 'pages.stars > 0'
+    @conditions << 'pages.stars_count > 0'
+  end
+
+  def filter_contributed
+    @conditions << 'pages.contributors_count > 0'
   end
 
   #--
   #### sorting  ####
   #++
-  
+
   def filter_ascending(sortkey)
     sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
     @order << "pages.%s ASC" % sortkey
   end
-  
+
   def filter_descending(sortkey)
     sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
@@ -225,13 +235,16 @@ module PathFinder::Mysql::BuilderFilters
 
   def filter_most(what, num, unit)
     unit=unit.downcase.pluralize
+    name= what=="edits" ? "contributors" : what
     num.gsub!(/[^\d]+/, ' ')
     if unit=="days"
-      @conditions << "dailies.created_at > NOW() - INTERVAL %s DAY" % num
-      @order << ["SUM(dailies.#{what}) DESC"]
+      @conditions << "dailies.created_at > UTC_TIMESTAMP() - INTERVAL %s DAY" % num
+      @order << "SUM(dailies.#{what}) DESC"
+      @select = "pages.*, SUM(dailies.#{what}) AS #{name}_count"
     elsif unit=="hours"
-      @conditions << "hourlies.created_at > NOW() - INTERVAL %s HOUR" % num
-      @order << ["SUM(hourlies.#{what}) DESC"]
+      @conditions << "hourlies.created_at > UTC_TIMESTAMP() - INTERVAL %s HOUR" % num
+      @order << "SUM(hourlies.#{what}) DESC"
+      @select = "pages.*, SUM(hourlies.#{what}) AS #{name}_count"
     else
       return
     end
@@ -246,25 +259,25 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   def filter_most_stars(num, unit)
-    filter_most("rated", num, unit)
+    filter_most("stars", num, unit)
   end
 
   #--
   #### BOOLEAN ####
   #++
-  
+
   def filter_or
     @or_clauses << @conditions
     @conditions = []
   end
-  
+
   #--
   ### LIMIT ###
   #++
 
   def filter_limit(limit)
     offset = 0
-    if limit.instance_of? String 
+    if limit.instance_of? String
       limit, offset = limit.split('-')
     end
     @limit = limit.to_i if limit
@@ -286,7 +299,7 @@ module PathFinder::Mysql::BuilderFilters
     @order << "group_participations.featured_position ASC"
   end
 
-  def filter_contributed(user_id)
+  def filter_contributed_by(user_id)
     @conditions << 'user_participations.user_id = ? AND user_participations.changed_at IS NOT NULL'
     @values << [user_id.to_i]
     @order << "user_participations.changed_at DESC" if @order
@@ -304,8 +317,8 @@ module PathFinder::Mysql::BuilderFilters
     @order = ["user_participations.changed_at DESC"]
   end
 
-#turning RDoc comments back on. 
-#++ 
+#turning RDoc comments back on.
+#++
 end
 
 

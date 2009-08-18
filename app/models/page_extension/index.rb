@@ -23,7 +23,7 @@ module PageExtension::Index
     # this transformation is neccessary for sphinx (so that group ids
     # and user ids are in the same attribute) and for mysql fulltext
     # (where terms must be at least 4 characters long).
-    # 
+    #
     # When stored in sphinx, these are converted to numbers. When stored
     # in mysql, these are stored as strings.
     #
@@ -51,13 +51,13 @@ module PageExtension::Index
 
     # converts a tag list array into a tag list array suitable for searching a
     # fulltext index.
-    # 
+    #
     # The rules:
-    #  
+    #
     #  * The tag must be CGI url escaped so that special characters are not in the
     #    fulltext index. The fulltext matching does not work on characters like
     #    !@#$%^&()=*.
-    #  * space, '+', and '.' are not allowed, we replace with '_'. (The + 
+    #  * space, '+', and '.' are not allowed, we replace with '_'. (The +
     #    character is not allowed since this is how CGI.escape encodes spaces).
     #  * The character % is not allowed, so we replace it with 'QQ'. This is not
     #    ideal, but it seems sufficiently unlikely that someone will tag something
@@ -90,12 +90,12 @@ module PageExtension::Index
           ThinkingSphinx.deltas_enabled = previous_deltas_enabled
         end
       end
-    end 
+    end
 
-  end 
-    
-  module InstanceMethods    
-  
+  end
+
+  module InstanceMethods
+
     def update_page_terms_in_background
       if false # backgroundrb_running?
         ## ^^^ I have disabled background updating of page terms for two reasons:
@@ -103,7 +103,7 @@ module PageExtension::Index
         ## (2) the delta index is fast enough without running in the background.
         begin
           # first, immediately update access, because that needs to always be up to date.
-          Page.with_deltas_disabled do 
+          Page.with_deltas_disabled do
             terms = (self.page_terms || self.create_page_terms)
             PageTerms.update_all("access_ids = '%s'" % self.access_ids, 'id = %i' % terms.id)
           end
@@ -117,14 +117,14 @@ module PageExtension::Index
         update_page_terms
       end
     end
-  
+
     def update_page_terms
       terms = (self.page_terms ||= self.build_page_terms)
 
       # attributes
-      %w[updated_at created_at created_by_id updated_by_id group_id
-      created_by_login updated_by_login group_name owner_name resolved 
-      flow contributors_count stars].each do |field|
+      %w[updated_at created_at created_by_id updated_by_id
+      created_by_login updated_by_login owner_name resolved
+      flow contributors_count stars_count].each do |field|
         terms.send("#{field}=",self.send(field))
       end
 
@@ -141,18 +141,18 @@ module PageExtension::Index
 
       # access control
       terms.access_ids = self.access_ids()
-   
+
       # additional hook for subclasses
       custom_page_terms(terms)
-      
+
       if !self.new_record? and terms.changed?
         terms.save!
       end
     end
-    
+
     # :nodoc:
     def access_ids
-      update_site_id # call manually, since we might be in a callback before 
+      update_site_id # call manually, since we might be in a callback before
                      # the one that sets site_id
       Page.access_ids_for(
         :public => public?,
@@ -184,7 +184,7 @@ module PageExtension::Index
     end
 
     # Returns text that should be weighted low.
-    # Defaults to all the comments, but can be overriden by the page subclass.    
+    # Defaults to all the comments, but can be overriden by the page subclass.
     def comment_terms
       discussion ? discussion.posts * "\n" : ""
     end

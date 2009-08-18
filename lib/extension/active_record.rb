@@ -1,10 +1,10 @@
 #serialize_to and initialized_by were moved to lib/social_user.rb
 
 ActiveRecord::Base.class_eval do
-  
+
   # used to automatically apply greencloth to a field and store it in another field.
   # for example:
-  # 
+  #
   #    format_attribute :description
   #
   # Will save an html copy in description_html. This other column must exist
@@ -23,8 +23,8 @@ ActiveRecord::Base.class_eval do
     define_method(:format_body) {
       if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
-        if respond_to?('group_name')
-          self.body_html = GreenCloth.new(body,group_name, flags[:options]).to_html
+        if respond_to?('owner_name')
+          self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
         else
           self.body_html = GreenCloth.new(body, 'page', flags[:options]).to_html
         end
@@ -44,12 +44,15 @@ ActiveRecord::Base.class_eval do
   def dom_id
     [self.class.name.downcase.pluralize.dasherize, id] * '-'
   end
-  
+
   # make sanitize_sql public so we can use it ourselves
-  def self.public_sanitize_sql(condition)
+  def self.quote_sql(condition)
     sanitize_sql(condition)
   end
-  
+  def quote_sql(condition)
+    self.class.quote_sql(condition)
+  end
+
   # class_attribute()
   #
   # Used by Page in order to allow subclasses (ie Tools) to define themselves
@@ -84,7 +87,7 @@ ActiveRecord::Base.class_eval do
   end
 
   # see http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
-  # only works because rails is not thread safe. 
+  # only works because rails is not thread safe.
   # but a thread safe version could be written.
   def without_timestamps
     self.class.record_timestamps = false
@@ -94,7 +97,7 @@ ActiveRecord::Base.class_eval do
 
 end
 
-# 
+#
 # What is going on here!?
 # Crabgrass requires MyISAM for certain tables and the ability to add fulltext
 # indexes. Additionally, since we are tied to mysql, we might as well be able
@@ -103,7 +106,7 @@ end
 # These are not possible in the normal schema.rb file, so this little hack
 # will insert the correct raw MySQL specific SQL commands into schema.rb
 # in the following cases:
-# 
+#
 #  * if the index name matches /fulltext/, then the index is created as a
 #    fulltext index and table is converted to be MyISAM.
 #  * if the index name ends with a number, we assume this is the length of

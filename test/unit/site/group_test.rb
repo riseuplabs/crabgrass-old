@@ -25,6 +25,6 @@ class GroupTest < Test::Unit::TestCase
     groups = Group.find(:all, :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter])
     assert_equal groups(:animals), groups.first
   end
-  
+
 end
 

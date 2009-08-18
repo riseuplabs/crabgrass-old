@@ -16,7 +16,7 @@ class UserTest < Test::Unit::TestCase
 
   # Our Observer should create a UserRoster and GroupRoster pair
   # for a new contacts when contacts are created.
-  def test_create_user_roster_and_group_roster 
+  def test_create_user_roster_and_group_roster
     @user_one.add_contact!(@user_two)
     assert UserRoster.find(:first, :conditions => @conditions), "UserRoster should exist"
     assert GroupRoster.find(:first, :conditions => @conditions), "GroupRoster should exist"

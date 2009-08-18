@@ -7,14 +7,20 @@ class DiscussionPageControllerTest < ActionController::TestCase
     @request.host = "localhost"
   end
 
+  def test_show
+    page = DiscussionPage.find :first, :conditions => {:public => true}
+    get :show, :page_id => page.id
+    assert_response :success
+  end
+
   def test_create_and_show
     login_as :orange
-    
+
     assert_no_difference 'Page.count' do
       get :create, :id => DiscussionPage.param_id
       assert_response :success
     end
-  
+
     assert_difference 'DiscussionPage.count' do
       post :create, :id => DiscussionPage.param_id, :page => { :title => 'test discussion', :tag_list => 'humma, yumma' }
     end

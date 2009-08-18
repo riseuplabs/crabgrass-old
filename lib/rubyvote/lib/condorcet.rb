@@ -32,13 +32,13 @@
 ## the CloneproofSSDVote classes but should not be used directly.
 
 class CondorcetVote < ElectionVote
-  
+
   def initialize(votes=nil)
     unless defined?(@candidates)
       @candidates = Array.new
       votes.each do |vote_row|
         vote_row = vote_row.flatten if vote_row.class == Array
-        vote_row.each do |vote| 
+        vote_row.each do |vote|
           @candidates << vote unless @candidates.include?(vote)
         end
       end
@@ -62,7 +62,7 @@ class CondorcetVote < ElectionVote
       losers.each do |place|
         place = [place] unless place.class == Array
         place.each do |loser|
-          
+
           winners = [winners] unless winners.class == Array
           next if winners.include?(loser)
           winners.each do |winner|
@@ -113,7 +113,7 @@ end
 
 class CondorcetResult < ElectionResult
   attr_reader :matrix
-  
+
   def initialize(voteobj=nil)
     unless voteobj and voteobj.kind_of?( CondorcetVote )
       raise ArgumentError, "You must pass a CondorcetVote array.", caller
@@ -121,11 +121,11 @@ class CondorcetResult < ElectionResult
     super(voteobj)
     @matrix = voteobj.votes
   end
-  
+
   def victories_and_ties
     victories_ties = {}
     candidates = @matrix.keys.sort
-    
+
     candidates.each do |candidate|
       candidates.each do |challenger|
         next if candidate == challenger
@@ -136,8 +136,8 @@ class CondorcetResult < ElectionResult
         end
       end
     end
-    
-    return victories_ties    
+
+    return victories_ties
   end
 
   def ranked_candidates
@@ -147,13 +147,13 @@ class CondorcetResult < ElectionResult
 
     @ranked_candidates
   end
-        
+
   protected
   def defeats(candidates=nil, votes=nil)
     candidates ||= @election.candidates || []
     # we're assumign that if there are candidates, there must be at
     # least one vote for them
-    votes ||= @election.votes 
+    votes ||= @election.votes
 
     defeats = Array.new
     candidates.each do |candidate|
@@ -167,7 +167,7 @@ class CondorcetResult < ElectionResult
 
     defeats
   end
-  
+
   def build_ranked_candidates
     # build a lis of ranked candidates by dropping the winner and
     # cursing
@@ -177,9 +177,9 @@ class CondorcetResult < ElectionResult
     resultobj = self.dup
     candidates = self.election.candidates
 
-    until candidates.empty? 
+    until candidates.empty?
       ranked_candidates << resultobj.winners
-      
+
       new_voteobj = resultobj.election.dup
       candidates = new_voteobj.candidates
       new_voteobj.candidates.delete_if {|x| resultobj.winners.include?(x)}
@@ -198,7 +198,7 @@ class PureCondorcetResult < CondorcetResult
   end
 
   protected
-  
+
   def condorcet
     votes = @election.votes
     candidates = @election.candidates
@@ -268,11 +268,11 @@ class CloneproofSSDResult < CondorcetResult
         candidates.each do |cand2|
           unless cand1 == cand2
             candidates.each do |cand3|
-              if not cand2 == cand3 and 
-                  not cand1 == cand3 and 
+              if not cand2 == cand3 and
+                  not cand1 == cand3 and
                   defeats_hash[[cand2, cand1]] and
                   defeats_hash[[cand1, cand3]] and
-                  not defeats_hash[[cand2, cand3]] 
+                  not defeats_hash[[cand2, cand3]]
                 transitive_defeats << [cand2, cand3]
                 defeats_hash[[cand2, cand3]] = 1
               end
@@ -292,7 +292,7 @@ class CloneproofSSDResult < CondorcetResult
 
       # look through the schwartz set now for defeats
       defeats = self.defeats(candidates, votes)
-      
+
       # it's a tie or there's only one option
       break if defeats.length == 0
 
@@ -307,20 +307,20 @@ class CloneproofSSDResult < CondorcetResult
           false
         end
       end
-      
+
       defeats.sort! do |pair1, pair2|
-        if is_weaker_defeat?( pair1, pair2 ) 
+        if is_weaker_defeat?( pair1, pair2 )
           +1
-        elsif is_weaker_defeat?( pair2, pair1 ) 
+        elsif is_weaker_defeat?( pair2, pair1 )
           -1
         else
           0
         end
       end
- 
+
       votes[defeats[0][0]][defeats[0][1]] = 0
       votes[defeats[0][1]][defeats[0][0]] = 0
-      
+
     end
 
     return candidates

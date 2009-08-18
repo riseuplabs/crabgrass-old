@@ -6,16 +6,16 @@ require 'positional'
 # add rank calculation functions to BordaResult class
 # should this go in its own function?
 class BordaResult
+
   def rank(possible)
     @ranks ||= calculate_ranks
-	  return @ranks[possible]  		
+    return @ranks[possible]
   end
-  
-  
-  private 
+
+  private
 
   def calculate_ranks
-  	ranks = {}
+  ranks = {}
     rank = 0
     previous_points = -1
     ranked_candidates.each do |candidate|
@@ -24,24 +24,26 @@ class BordaResult
       previous_points = points[candidate]
     end
     return ranks
-  	
   end
 
 end
 
 class RankedVotePageController < BasePageController
   before_filter :fetch_poll
-  before_filter :find_possibles, :only => [:show, :edit] 
+  before_filter :find_possibles, :only => [:show, :edit]
   stylesheet 'vote'
   permissions 'ranked_vote_page'
   javascript :extra, 'page'
-     
+
   def show
     redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
 
-    array_of_votes, @who_voted_for = build_vote_arrays    
+    array_of_votes, @who_voted_for = build_vote_arrays
     @result = BordaVote.new( array_of_votes ).result
     @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
+  end
+
+  def edit
   end
 
   # ajax or post
@@ -55,7 +57,7 @@ class RankedVotePageController < BasePageController
       @poll.possibles.delete(@possible)
       flash_message_now :object => @possible unless @possible.valid?
       flash_message_now :object => @poll unless @poll.valid?
-      if request.post? 
+      if request.post?
         render :action => 'show'
       else
         render :text => 'error', :status => 500
@@ -63,7 +65,7 @@ class RankedVotePageController < BasePageController
       return
     end
   end
-    
+
   # ajax only, returns nothing
   # for this to work, there must be a <ul id='sort_list_xxx'> element
   # and it must be declared sortable like this:
@@ -83,25 +85,25 @@ class RankedVotePageController < BasePageController
       find_possibles
     end
   end
-  
+
   def update_possible
     return unless request.xhr?
     @possible = @poll.possibles.find(params[:id])
     params[:possible].delete('name')
     @possible.update_attributes(params[:possible])
   end
-    
+
   def edit_possible
     return unless request.xhr?
     @possible = @poll.possibles.find(params[:id])
   end
 
-  def destroy_possible    
+  def destroy_possible
     possible = @poll.possibles.find(params[:id])
     possible.destroy
     render :nothing => true
   end
-  
+
   def confirm
     # right now, this is just an illusion, but perhaps we should make the vote
     # only get saved after confirmation. people like the confirmation, rather
@@ -110,10 +112,10 @@ class RankedVotePageController < BasePageController
   end
 
   def print
-    array_of_votes, @who_voted_for = build_vote_arrays    
+    array_of_votes, @who_voted_for = build_vote_arrays
     @result = BordaVote.new( array_of_votes ).result
     @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
-    
+
     render :layout => "printer-friendly"
   end
   protected
@@ -126,22 +128,22 @@ class RankedVotePageController < BasePageController
     who_voted_for = {}  # what users picked this possible as their first
     hash = {}           # tmp hash
     array_of_votes = [] # returned array for rubyvote
-    
+
     ## first, build hash of votes
     ## the key is the user's id and the element is an array of all their votes
     ## where each vote is [possible_name, vote_value].
     ## eg. { 5 => [["A",0],["B",1]], 22 => [["A",1],["B",0]]
-    possibles = @poll.possibles.find(:all, :include => {:votes => :user})  
+    possibles = @poll.possibles.find(:all, :include => {:votes => :user})
     # (perhaps this should be changed if we start caching User.find(id)
     #possibles = @poll.possibles.find(:all, :include => :votes)
-    
+
     possibles.each do |possible|
       possible.votes.each do |vote|
         hash[vote.user.name] ||= []
         hash[vote.user.name] << [possible.id, vote.value]
-      end  
+      end
     end
-       
+
     ## second, build array_of_votes.
     ## each element is an array of a user's
     ## votes, sorted in order of their preference
@@ -156,8 +158,8 @@ class RankedVotePageController < BasePageController
 
     return array_of_votes, who_voted_for
   end
-  
-  
+
+
   def fetch_poll
     @poll = @page.data if @page
     true
@@ -167,12 +169,12 @@ class RankedVotePageController < BasePageController
     @possibles_voted = []
     @possibles_unvoted = []
 
-    @poll.possibles.each do |pos| 
-      if pos.vote_by_user(current_user)		
-        @possibles_voted << pos	
+    @poll.possibles.each do |pos|
+      if pos.vote_by_user(current_user)
+        @possibles_voted << pos
       else
-        @possibles_unvoted << pos 
-      end 
+        @possibles_unvoted << pos
+      end
     end
 
     @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }

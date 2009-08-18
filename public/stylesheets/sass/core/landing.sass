@@ -119,12 +119,12 @@ div
   //  margin-left: 1.8em
   //ul li
   //  font-size: 11px
-  table td
-    &.left
-      width: 40%
-      border-right: 1px dotted #ccc
-    &.profile-wall
-      width: 40%
+  //table td
+  //  &.left
+  //    width: 40%
+  //    border-right: 1px dotted #ccc
+  //  &.profile-wall
+  //    width: 40%
 
 .box1
   border: 1px solid #E1E1E1
@@ -153,36 +153,28 @@ div
   margin: 0 1em 1em 0em
 
 //
-// STATUS
-// 
-
-.set_status
-  width: 100%
-  td
-    vertical-align: middle
-    padding: 0.5em
-
-.title_box table
-  width: 100%
-  td.left
-    width: 1%
-    white-space: nowrap
-  td.right
-    padding-left: 4em
-    width: 99%
-    text-align: right
-
-//
 // ACTIVITIES
 //
 
 .activities li
-  color: #666
-  margin-bottom: 0.75em
+  color: #333
+  margin-bottom: 1em
   padding-left: 24px
-  span.commands a
-    text-transform: lowercase
+  span.commands
+    white-space: nowrap
+    a
+      text-transform: lowercase
+      font-size: 80%
+  // prevent a status message from having an image that is too big.
   img
     max-width: 200px
     max-height: 200px
+  &.small_icon
+    background-position: 0 2px
+  label.date
+    font-style: italic
+    color: #999
+  br
+    display: none
+
 

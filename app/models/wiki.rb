@@ -41,10 +41,11 @@ class Wiki < ActiveRecord::Base
   # a wiki can be used in multiple places: pages or profiles
   has_many :pages, :as => :data
   has_one :profile
+
   has_one :section_locks, :class_name => "WikiLock", :dependent => :destroy
 
   serialize :raw_structure, Hash
-  
+
   # need more control than composed of
   attr_reader :structure
   # composed_of :structure, :class_name => "WikiExtension::WikiStructure",
@@ -53,10 +54,12 @@ class Wiki < ActiveRecord::Base
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
+
   acts_as_versioned :if => :create_new_version? do
     def self.included(base)
       base.belongs_to :user
     end
+
   end
 
   # only save a new version if the body has changed
@@ -67,7 +70,6 @@ class Wiki < ActiveRecord::Base
 
     return versions.empty? || (body_updated && !recently_edited_by_same_user)
   end
-
 
   # returns first version since +time+
   def first_version_since(time)
@@ -138,6 +140,7 @@ class Wiki < ActiveRecord::Base
     read_attribute(:raw_structure) || write_attribute(:raw_structure, {})
   end
 
+<<<<<<< HEAD:app/models/wiki.rb
   def structure
     @structure ||= WikiExtension::WikiStructure.new(raw_structure)
   end
@@ -196,6 +199,7 @@ class Wiki < ActiveRecord::Base
     Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE data_type='Wiki' and group_id = #{group.id.to_i})")
     # for wiki's owned by groups
     Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = #{group.id.to_i})")
+
   end
 
   ##

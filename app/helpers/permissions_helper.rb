@@ -23,7 +23,7 @@ module PermissionsHelper
 
   # i don't think there should be a default permission globally, because
   # then you will never get an error when you call a permission that doesn't
-  # exist. 
+  # exist.
   #def default_permission(*args)
   #  false
   #end
@@ -67,15 +67,15 @@ module PermissionsHelper
   PERMISSION_METHOD_RE = /^may_([_a-zA-Z]\w*)\?$/
 
   # Call may?() if the missing method is in the form of a permission test (may_x?)
-  # and call super() otherwise. 
-  # 
+  # and call super() otherwise.
+  #
   # There are two exceptions to this rule:
   #
   # (1) We do not call super() if we are a controller. Instead, we mimic the behavior
   # of ActionController:Base#perform_action. I don't know why, but calling super()
-  # in the case causes problems. 
+  # in the case causes problems.
   #
-  # (2) We do not call super() if the superclass does not have method_missing 
+  # (2) We do not call super() if the superclass does not have method_missing
   # defined, since this will cause an error.
   #
   def method_missing(method_id, *args)
@@ -90,6 +90,8 @@ module PermissionsHelper
       end
     elsif self.is_a? ActionController::Base
       if template_exists?(method_id) && template_public?(method_id)
+        # TODO: template_exists?() always returns false for tools.
+        # for now, this means that tools must explictly define every action.
         nil # ActionController::Base will render the template
       else
         raise NameError, "No method #{method_id}", caller
@@ -100,11 +102,11 @@ module PermissionsHelper
       raise NameError, "No method #{method_id}", caller
     end
   end
-  
+
   private
 
   # searches for an appropriate permission definition for +controller+.
-  # 
+  #
   # permissions are generally in the form may_{action}_{controller}?
   #
   # Both the plural and the singular are checked (ie GroupsController#edit will
@@ -113,7 +115,7 @@ module PermissionsHelper
   #
   # For the 'controller' part, many different possibilities are tried,
   # in the following order:
-  # 
+  #
   # 1) the controller name:
   #    asset_controller -> asset
   # 2) the name of the controller's parent namespace:
@@ -128,7 +130,7 @@ module PermissionsHelper
   # Note: 'base_xxx' is always converted into 'xxx'
   #
   # Alternately, if controller is a string:
-  # 
+  #
   # 1) the string
   #    'groups' -> groups
   # 2) the postfix
@@ -137,7 +139,7 @@ module PermissionsHelper
   #    'groups/memberships' -> 'groups'
   #
   # Alternately, if controller is a symbol:
-  # 
+  #
   # 1) the symbol
   #
   # Lastly, if the action consists of two words (ie 'eat_soup'), the

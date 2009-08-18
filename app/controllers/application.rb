@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
-  include AuthenticatedSystem	
+  include AuthenticatedSystem
   include PageHelper      # various page helpers needed everywhere
   include UrlHelper       # for user and group urls/links
   include TimeHelper      # for displaying local and readable times
-  include ErrorHelper     # for displaying errors and messages to the user
+  include FlashMessageHelper     # for displaying errors and messages to the user
   include ContextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   include PathFinder::Options                   # for Page.find_by_path options
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
-  
+  include ControllerExtension::RescueErrors
+
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
 
@@ -28,8 +29,8 @@ class ApplicationController < ActionController::Base
   before_filter :essential_initialization
   around_filter :set_language
   before_filter :set_timezone, :pre_clean
-  around_filter :rescue_authentication_errors
   before_filter :header_hack_for_ie6
+  before_filter :redirect_unverified_user
   before_render :context_if_appropriate
 
   session :session_secure => Conf.enforce_ssl
@@ -50,12 +51,13 @@ class ApplicationController < ActionController::Base
 
   ##
   ## CALLBACK FILTERS
-  ## 
+  ##
 
   def essential_initialization
     current_site
+    @path = parse_filter_path(params[:path])
   end
-  
+
   def header_hack_for_ie6
     #
     # the default http header cache-control in rails is:
@@ -66,6 +68,12 @@ class ApplicationController < ActionController::Base
     # (where the date specified is right now)
     #
     expires_in Time.now if request.user_agent =~ /MSIE 6\.0/
+  end
+
+  def redirect_unverified_user
+    if logged_in? and current_user.unverified?
+      redirect_to account_url(:action => 'unverified')
+    end
   end
 
   # an around filter responsible for setting the current language.
@@ -140,6 +148,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_appearance
 
+  # create a filter ParsedPath
+  def parse_filter_path(path)
+    if path.is_a?(PathFinder::ParsedPath)
+      path
+    elsif path.instance_of?(Array) and path.size == 1 and path[0].is_a?(Hash)
+      PathFinder::ParsedPath.new(path[0])
+    else
+      PathFinder::ParsedPath.new(path)
+    end
+  end
+  helper_method :parse_filter_path
+
   #
   # returns a hash of options to be given to the mailers. These can be
   # overridden, but these defaults are pretty good. See models/mailer.rb.
@@ -148,18 +168,18 @@ class ApplicationController < ActionController::Base
     from_address = current_site.email_sender.sub('$current_host',request.host)
     from_name    = current_site.email_sender_name.sub('$user_name', current_user.display_name).sub('$site_title', current_site.title)
     opts = {:site => current_site, :current_user => current_user, :host => request.host,
-     :protocol => request.protocol, :page => @page, :from_address => from_address, 
+     :protocol => request.protocol, :page => @page, :from_address => from_address,
      :from_name => from_name}
     opts[:port] = request.port_string.sub(':','') if request.port_string.any?
     return opts
   end
 
-  # rather than include every stylesheet in every request, some stylesheets are 
+  # rather than include every stylesheet in every request, some stylesheets are
   # only included "as needed". A controller can set a custom stylesheet
   # using 'stylesheet' in the class definition:
   #
   # for example:
-  #   
+  #
   #   stylesheet 'gallery', 'images'
   #   stylesheet 'page_creation', :action => :create
   #
@@ -171,13 +191,13 @@ class ApplicationController < ActionController::Base
       sheets  = read_inheritable_attribute("stylesheet") || {}
       index   = options[:action] || :all
       sheets[index] ||= []
-      sheets[index] << css_files       
+      sheets[index] << css_files
       write_inheritable_attribute "stylesheet", sheets
     else
       read_inheritable_attribute "stylesheet"
     end
   end
-   
+
   # let controllers require extra javascript
   # for example:
   #
@@ -189,19 +209,19 @@ class ApplicationController < ActionController::Base
       scripts  = read_inheritable_attribute("javascript") || {}
       index   = options[:action] || :all
       scripts[index] ||= []
-      scripts[index] << js_files       
+      scripts[index] << js_files
       write_inheritable_attribute "javascript", scripts
     else
       read_inheritable_attribute "javascript"
     end
   end
-  
-  # some helpers we include in controllers. this allows us to 
+
+  # some helpers we include in controllers. this allows us to
   # grab the controller that will work in a view context and a
   # controller context.
   def controller
     self
-  end 
+  end
 
   # note: this method is not automatically called. if you want to enable HTTP
   # authentication for some action(s), you must put a prepend_before_filter in
@@ -218,17 +238,9 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   private
-  
-  def rescue_authentication_errors
-    yield
-  rescue ActionController::InvalidAuthenticityToken
-    render :template => 'account/csrf_error'
-  rescue PermissionDenied
-    access_denied
-  end
- 
+
   ## handy way to get back where we came from
   def store_back_url(url=nil)
     url ||= referer
@@ -240,18 +252,6 @@ class ApplicationController < ActionController::Base
     redirect_to url
   end
 
-
-  # override the standard rails rescues_path in order to be able to specify
-  # our own templates.
-  helper_method :rescues_path
-  def rescues_path(template_name)
-    file = "#{RAILS_ROOT}/app/views/rescues/#{template_name}.erb"   
-    if File.exists?(file)
-      return file
-    else
-      return super(template_name)
-    end
-  end
 
   # TODO: move to new permission system as soon as it is ready
   helper_method :may_signup?
@@ -265,9 +265,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Returns true if the current request is of type html and we have not 
+  # Returns true if the current request is of type html and we have not
   # redirected. However, IE 6 totally sucks, and sends the wrong request
-  # which sometimes appears as :gif. 
+  # which sometimes appears as :gif.
   def normal_request?
     format = request.format.to_sym
     response.redirected_to.nil? and

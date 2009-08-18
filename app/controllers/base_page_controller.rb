@@ -10,9 +10,8 @@ class BasePageController < ApplicationController
   layout :choose_layout
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  javascript 'effects', 'controls', 'autocomplete' # require for sharing autocomplete
   permissions 'base_page', 'posts'
-  helper 'groups'
+  helper 'groups', 'autocomplete'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -105,16 +104,16 @@ class BasePageController < ApplicationController
   def update_view_count
     return true unless @page and @page.id
     action = track_action_from_params
-    if current_site.tracking and action
-      Tracking.insert_delayed(:page => @page,
-                              :group => @group,
-                              :user => current_user,
-                              :action => action)
-    elsif action
-      Tracking.insert_delayed(:page => @page,
-                              :action => action)
-    end
-    return true
+    return true unless action
+
+    group = current_site.tracking? && @group
+    group ||= current_site.tracking? && @page.owner.is_a?(Group) && @page.owner
+    user  = current_site.tracking? && @page.owner.is_a?(User) && @page.owner
+    Tracking.insert_delayed(
+      :page => @page, :current_user => current_user, :action => action,
+      :group => group, :user => user
+    )
+    true
   end
 
   def setup_default_view
@@ -178,18 +177,15 @@ class BasePageController < ApplicationController
 
   def context
     if action?(:create)
-      if @group = Group.find_by_name(params[:group])
-        page_context
-      else
-        @user = current_user
-        me_context
-      end
+      @group = Group.find_by_name(params[:group])
+      @user = current_user
+      page_context
 
       context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
-      @title_box = '<div id="title" class="page_title">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
+      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
       if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
         @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
       end

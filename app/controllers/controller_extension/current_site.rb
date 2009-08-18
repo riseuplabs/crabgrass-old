@@ -1,7 +1,7 @@
 module ControllerExtension::CurrentSite
 
   def self.included(base)
-    base.class_eval do 
+    base.class_eval do
       # make current_site available to the views
       helper_method :current_site
     end
@@ -9,14 +9,14 @@ module ControllerExtension::CurrentSite
 
   public
 
-  # returns the (cache) of the current site. 
+  # returns the (cache) of the current site.
   def current_site
     if !@current_site_disabled
       @current_site ||= begin
         host = request.host.sub(/^staging\./, '')
         site = Site.for_domain(host).find(:first)
         site ||= Site.default
-        site ||= Site.new(:domain => host) 
+        site ||= Site.new(:domain => host)
         Site.current = site
         # ^^ not so nice, but required for now. used by i18n and
         # by acts_as_site_limited

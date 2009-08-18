@@ -34,14 +34,14 @@ class NetworkTest < Test::Unit::TestCase
 
     assert network.groups.include?(group1)
     assert network.groups.include?(group2)
-   
+
     assert network.groups(true).include?(group1)
     assert network.groups(true).include?(group2)
-    
+
     assert_equal version+2, network.reload.version
 
     user = users(:red)
-    
+
     assert !user.direct_member_of?(network)
     assert user.member_of?(network), "user should be a member of the network (all group ids = #{user.all_group_id_cache.inspect})"
 
@@ -73,7 +73,7 @@ class NetworkTest < Test::Unit::TestCase
 
     assert !network.groups.include?(group)
     assert !network.groups(true).include?(group)
-    
+
     user = User.find(user.id)
     assert !user.member_of?(network), "user should NOT be a member of the network (all group ids = #{user.all_group_id_cache.inspect})"
   end
@@ -93,9 +93,9 @@ class NetworkTest < Test::Unit::TestCase
     assert user.member_of?(child_network)
     assert !user.direct_member_of?(child_network)
     assert committee.parent, parent_network
-    
+
     parent_network.add_group!(child_network)
-    
+
     assert user.reload.member_of?(parent_network)
     assert user.member_of?(committee)
   end
@@ -104,5 +104,5 @@ class NetworkTest < Test::Unit::TestCase
     assert check_associations(Network)
     assert check_associations(Federating)
   end
-  
+
 end

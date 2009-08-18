@@ -11,7 +11,7 @@ module LayoutHelper
       ""
     end
   end
-  
+
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
@@ -27,7 +27,7 @@ module LayoutHelper
       [current_site.title]
     ).compact.join(' - ')
   end
-      
+
   ##
   ## STYLESHEET
   ##
@@ -42,7 +42,7 @@ module LayoutHelper
   end
 
   # custom stylesheet
-  # rather than include every stylesheet in every request, some stylesheets are 
+  # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
@@ -92,7 +92,7 @@ module LayoutHelper
     else
       ['/favicon.ico', '/favicon.png']
     end
-      
+
     %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
   <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
@@ -110,44 +110,82 @@ module LayoutHelper
   end
 
   def language_direction
-    @language_direction ||= if LANGUAGES[session[:language_code]].safe_send(:rtl)
+    @language_direction ||= if LANGUAGES[session[:language_code]].try.rtl
       "rtl"
     else
       "ltr"
     end
   end
-  
+
   ##
   ## JAVASCRIPT
   ##
 
-  # includes the correct javascript tags for the current request.
-  # if the special symbol :extra has been specified as a required js file,
-  # then this expands to all the scriptalicous files.
-  def optional_javascript_tag
+  # Core js that we always need.
+  # Currently, effects.js and controls.js are required for autocomplete.js.
+  # However, autocomplete uses very little of the controls.js code, which in turn
+  # should not need the effects.js at all. So, with a little effort, effects and
+  # controls could be moved to extra.
+  MAIN_JS = {:main => ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']}
+
+  # extra js that we might sometimes need
+  EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
+
+  # needed whenever we want controls for editing a wiki
+  WIKI_JS = {:wiki => ['wiki/textile_editor', 'wiki/wiki_tabs']}
+
+  JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
+
+  JS_BUNDLE_LOAD_ORDER = JS_BUNDLES.collect{|b|b.keys.first}
+
+  # eg: {:main => [...], :extra => [...]}
+  JS_BUNDLES_COMBINED = JS_BUNDLES.inject({}){|a,b|a.merge(b)}
+
+  # eg: {'dragdrop' => :extra, 'modalbox' => :main, ...}
+  JS_BUNDLE_MAP = Hash[*JS_BUNDLES_COMBINED.collect{|k,v|v.collect{|u|[u,k]}}.flatten]
+
+  # Includes the correct javascript tags for the current request.
+  # See ApplicationController#javascript for details.
+  #
+  # In brief: the correct javascript is loaded for a particular controller and a
+  # particular action. Some javascripts are defined in bundles. A bundle gets
+  # activated if called by name (ie :extra) or if a file in the bundle is
+  # included (ie 'dragdrop')
+  def javascript_include_tags
     scripts = controller.class.javascript || {}
-    js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
-    return unless js_files.any?
-    extra = js_files.delete(:extra)
-    js_files = js_files.collect do |jsfile|
-      if ['effects', 'dragdrop', 'controls', 'builder', 'slider'].include? jsfile
-        jsfile
+    files = [:main, scripts[:all], scripts[params[:action].to_sym]].flatten.compact
+    return unless files.any?
+
+    bundles = {}
+    as_needed = {}
+    includes = []
+
+    files.each do |file|
+      if JS_BUNDLE_MAP[file.to_s]                    # if a file in a bundle is specified
+        bundles[JS_BUNDLE_MAP[file.to_s]] = true     # include the whole bundle
+      elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
+        bundles[file.to_sym] = true                  # include the whole bundle
       else
-        "as_needed/#{jsfile}"
+        as_needed["as_needed/#{file}"] = true        # otherwise, include one file.
       end
     end
-    if extra
-      js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
+
+    bundles = JS_BUNDLE_LOAD_ORDER & bundles.keys    # sort the bundles
+    bundles.each do |bundle|
+      args = JS_BUNDLES_COMBINED[bundle] + [{:cache => bundle.to_s}]  # ie ['dragdrop', 'builder', {:cache => 'extra'}]
+      includes << javascript_include_tag(*args)
     end
-    javascript_include_tag(*js_files)
+    if as_needed.any?
+      includes << javascript_include_tag(*as_needed.keys)
+    end
+    return includes
   end
-  
+
   def crabgrass_javascripts
-    lines = []
-    lines << javascript_include_tag('prototype', 'application', :cache => true)
-    lines << optional_javascript_tag
+    lines = javascript_include_tags
     lines << '<script type="text/javascript">'
     lines << @content_for_script
+    lines << localize_modalbox_strings
     lines << '</script>'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
@@ -155,9 +193,15 @@ module LayoutHelper
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
     lines << '<![endif]-->'
+    # run firebug lite in dev mode for ie
+    if false and RAILS_ENV == 'development'
+      lines << '<!--[if IE]>'
+      lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
+      lines << '<![endif]-->'
+    end
     lines.join("\n")
   end
-  
+
   ##
   ## BANNER
   ##
@@ -165,7 +209,7 @@ module LayoutHelper
   # banner stuff
   def banner_style
     "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
-  end  
+  end
   def banner_background
     @banner_style.background_color if @banner_style
   end
@@ -241,7 +285,7 @@ module LayoutHelper
   def dialog_page(options = {}, &block)
     block_to_partial('common/dialog_page', options, &block)
   end
-  
+
 
   ##
   ## CUSTOMIZED STUFF
@@ -253,7 +297,7 @@ module LayoutHelper
     if appearance and appearance.masthead_asset
       # use an image
       content_tag :div, :id => 'site_logo_wrapper' do
-        content_tag :a, :href => '/', :alt => current_site.title do 
+        content_tag :a, :href => '/', :alt => current_site.title do
           image_tag(appearance.masthead_asset.url, :id => 'site_logo')
         end
       end

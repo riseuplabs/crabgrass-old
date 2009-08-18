@@ -13,24 +13,25 @@ class AddOwnerToPages < ActiveRecord::Migration
     add_column :page_terms, :owner_name, :string
     add_index :pages, 'owner_name', :name => 'owner_name_4'
 
-    ActiveRecord::Base.record_timestamps = false
-    Page.reset_column_information
+    conn = Page.connection
 
-    Page.find(:all).each do |page|
-      unless page.owner
-        begin
-          owner = page.group || page.created_by
-          if owner
-            page.owner = owner
-            page.save!
-            page.update_page_terms
-          else
-            puts "\n\nWARNING: could not figure out who should be the owner of page id %s:\n\n%s\n\n" % [page.id,page.inspect]
-          end
-        rescue Exception => exc
-          puts "\n\nERROR: Could not update the owner of page id %s: %s\n\n%s\n\n" % [page.id, exc.to_s, page.inspect]
-        end
+    pages = conn.select_all('select * from pages')
+    pages.each do |page|
+      if page['group_id']
+        owner_id = page['group_id']
+        owner_type = 'Group'
+        owner_name = conn.select_value("select name from groups where id = #{owner_id}")
+      elsif page['created_by_id']
+        owner_id = page['created_by_id']
+        owner_type = 'User'
+        owner_name = conn.select_value("select login from users where id = #{owner_id}")
+      else
+        puts "could not determine owner for page (id: #{page['id']}, title: #{page['title']})"
+        next
       end
+
+      Page.connection.execute("UPDATE pages SET owner_id = #{owner_id}, owner_type = '#{owner_type}' WHERE id = #{page['id']}")
+      putc '.'; STDOUT.flush
     end
 
   end

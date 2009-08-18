@@ -24,17 +24,18 @@
         :color #aaa
 
       .sender
-        :color #5b0
-        :font-weight bold
+        :color #aaa
+        :font-weight normal
 
       .content
-        :color #5b0
-        :font-weight bold
+        :color #aaa
 
     &.action .content
       :color #66f
       :font-weight bold
 
+    &.tmp
+      :font-style italic
 
 #userlist
   :float right
@@ -77,3 +78,33 @@ div.group_entry
     :padding 0 1em 1em 0
 
 
+#conversation_archive
+  :font-size 11px
+  :line-height 14px
+  :background #fff
+
+  .message
+    .time
+      :color #aaa
+
+    .sender
+      :color #66f
+      :font-weight bold
+
+    .content
+      :color #333
+
+    &.sys
+      .time
+        :color #aaa
+
+      .sender
+        :color #aaa
+        :font-weight normal
+
+      .content
+        :color #aaa
+
+    &.action .content
+      :color #66f
+      :font-weight bold
