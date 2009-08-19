@@ -804,8 +804,8 @@ participant_help: "<b>Participant</b> access will grant the ability to edit and 
 viewer_help: "<b>Viewer</b> access makes this page visible, and nothing more."
 wiki_body_help: "Optional. Enter here the initial body text for the page."
 upload_image_help: "Optional. Select an initial image file to upload to this page."
+upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."
 upload_file_help: "Required. Select a file to upload to this page."
-
 
 ##
 ## PAGE TYPES
