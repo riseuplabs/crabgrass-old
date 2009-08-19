@@ -14,9 +14,9 @@ class WikiController < ApplicationController
   permissions 'wiki'
 
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
+  include ControllerExtension::WikiPopup
 
-  before_filter :login_required, :except => [:show, :image_popup_show, :image_popup_upload]
+  before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload]
   before_filter :fetch_wiki
 
   # show the rendered wiki

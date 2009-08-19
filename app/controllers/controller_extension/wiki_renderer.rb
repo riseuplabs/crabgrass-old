@@ -2,11 +2,17 @@ module ControllerExtension::WikiRenderer
 
   include ControllerExtension::ContextParser
 
+  def self.included(base)
+    base.class_eval do
+      helper_method :greencloth_to_editable_html
+    end
+  end
+
   protected
 
-  def render_wiki_html(body, context_name)
+  def render_wiki_html(body, context_name, options = [:outline])
     context_name ||= 'page'
-    greencloth = GreenCloth.new(body, context_name, [:outline])
+    greencloth = GreenCloth.new(body, context_name, options)
 
     greencloth.to_html do |link_data|
       if link_data[:auto]
@@ -165,22 +171,32 @@ module ControllerExtension::WikiRenderer
     Undress(html).to_greencloth
   end
 
+  def greencloth_to_editable_html(greencloth, context_name='page')
+    text ||= ""
+    options = {:pass_through => ['strong', 'em']}
+    UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
+  end
+
   private
 
   def render_text_from_ugly_html(html, context_name='page')
     html ||= ""
     encode_line_endings Undress(html).to_greencloth
   end
+
+  def render_ugly_html_from_text(text, context_name='page')
+    text ||= ""
+    options = {:pass_through => ['strong', 'b', 'em', 'i', 'u', 'strike', 'del']}
+    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
+  end
+
+
   def render_preview_from_ugly_html(html, context_name='page')
     html ||= ""
     body = Undress(html).to_greencloth
     encode_line_endings render_wiki_html(body, context_name)
   end
 
-  def render_ugly_html_from_text(text, context_name='page')
-    text ||= ""
-    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name) ).make_ugly
-  end
   def render_preview_from_text(text, context_name='page')
     text ||= ""
     encode_line_endings render_wiki_html(text, context_name)

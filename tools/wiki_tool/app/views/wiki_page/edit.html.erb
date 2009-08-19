@@ -73,13 +73,9 @@ end %>
   <%= big_spinner %>
 </div>
 
-<div class="buttons">
- <% if locked_for_me? -%>
-   <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
- <% else -%>
-   <%= submit_tag 'Save'[:save_button], :name => 'save' %>
- <% end -%>
- <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+<div class="wiki_buttons">
+ <% if locked_for_me? -%><%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+ <% else -%><%= submit_tag 'Save'[:save_button], :name => 'save' %><% end %><%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
 </div>
 
 <% end %>
