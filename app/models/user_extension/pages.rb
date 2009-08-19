@@ -21,8 +21,8 @@ module UserExtension::Pages
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
-        def recent_pages
-          find(:all, :order => 'changed_at DESC', :limit => 15)
+        def recent_pages(options={})
+          find(:all, {:order => 'user_participations.changed_at DESC', :limit => 15}.merge(options))
         end
       end
 

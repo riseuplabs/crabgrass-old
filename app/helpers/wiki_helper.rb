@@ -53,8 +53,12 @@ module WikiHelper
   end
 
   ##
-  ## IMAGE POPUP
+  ## WIKI EDITING POPUPS
   ##
+
+  ## the actions for these popups are defined in ControllerExtension::WikiPopup
+  ## because they may be in the wiki_controller or the wiki_page_controller. I am not
+  ## sure why we do it that way, but that is how it is.
 
   def popup_image_list(wiki)
     style = "height:64px;width:64px"
@@ -99,6 +103,18 @@ module WikiHelper
     else
       url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
     end
+  end
+
+  def link_popup_show_url(wiki)
+    if @page and @page.data and @page.data == wiki
+      page_xurl(@page, :action => 'link_popup_show', :wiki_id => wiki.id)
+    else
+      url_for(wiki_action('link_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
+    end
+  end
+
+  def update_link_function(wiki,action)
+    "updateLink('%s','%s');" % [wiki.id,action]
   end
 
   ##
@@ -176,6 +192,15 @@ module WikiHelper
   # for the wysiwyg html editor.
   def ugly_html(html)
     UglifyHtml.new( html || "" ).make_ugly
+  end
+
+  AVAILABLE_EDITOR_LANGS = %w(b5 ch cz da de ee el es eu fa fi fr gb he hu it ja lt lv nb nl pl pt_br ro ru sh si sr sv th vn).inject({}) {|h,l| h[l]=l; h}
+
+  def html_editor_language_code()
+    code = session[:language_code].to_s.downcase
+    short_code = code.sub(/_.*$/,'')
+    default = 'en'
+    AVAILABLE_EDITOR_LANGS[code] || AVAILABLE_EDITOR_LANGS[short_code] || default
   end
 
 end

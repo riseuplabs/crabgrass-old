@@ -2,15 +2,15 @@
 name: empty outline
 in: |-
   [[toc]]
-out: "<p></p>"
+out: ""
 ---
 name: fruity outline
 in: |-
   [[toc]]
 
   h1. Fruits
-  
-  h2. Tasty Apples  
+
+  h2. Tasty Apples
 
   h3. Green
 
@@ -19,12 +19,12 @@ in: |-
   h2. Pears
 
   h1. Vegetables
-  
+
   h2. Turnips
-  
+
   h2. Green Beans
 out: |-
-  <p><ul class="toc">
+  <ul class="toc">
   <li class="toc1"><a href="#fruits"><span>1</span> Fruits</a></li>
   <ul>
   <li class="toc2"><a href="#tasty-apples"><span>1.1</span> Tasty Apples</a></li>
@@ -39,7 +39,7 @@ out: |-
   <li class="toc2"><a href="#turnips"><span>2.1</span> Turnips</a></li>
   <li class="toc2"><a href="#green-beans"><span>2.2</span> Green Beans</a></li>
   </ul>
-  </ul></p>
+  </ul>
   <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
   <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
   <h3><a name="green"></a>Green<a class="anchor" href="#green">&para;</a></h3>
@@ -52,17 +52,17 @@ out: |-
 name: test with \r\n
 in: "[[toc]]\r\n\r\nh1. Bats\r\n\r\nh1. Squirrels\r\n"
 out: |-
-  <p><ul class="toc">
+  <ul class="toc">
   <li class="toc1"><a href="#bats"><span>1</span> Bats</a></li>
   <li class="toc1"><a href="#squirrels"><span>2</span> Squirrels</a></li>
-  </ul></p>
+  </ul>
   <h1 class="first"><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
   <h1><a name="squirrels"></a>Squirrels<a class="anchor" href="#squirrels">&para;</a></h1>
 ---
 name: test name collisions
 in: |-
   h1. Corvidae
-  
+
   h2. Crow
 
   h2. Raven
@@ -72,15 +72,15 @@ in: |-
   h1. Chess Pieces
 
   h2. Queen
-  
+
   h2. Rook
-  
+
   h1. Card Games
-  
+
   h2. Hearts
 
   h2. Rook
-  
+
 out: |-
   <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
   <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
@@ -117,11 +117,11 @@ out: |-
 name: double trouble
 in: |-
   h1. Title
-  
+
   h3. Under first
-  
+
   h1. Title
-  
+
   h3. Under second
 out: |-
   <h1 class="first"><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
@@ -131,25 +131,25 @@ out: |-
 ---
 name: setext trees
 in: |-
-  Evergreens 
+  Evergreens
   ==========
-  
+
   h3. Cedar
-  
+
   h3. Redwood
-  
+
   h3. Fir
-  
+
   Deciduous
   =========
-  
+
   h3. Maple
-  
+
   Oaks
   ----
-  
+
   h3. White Oak
-  
+
   h3. Red Oak
 out: |-
   <h1 class="first"><a name="evergreens"></a>Evergreens<a class="anchor" href="#evergreens">&para;</a></h1>
