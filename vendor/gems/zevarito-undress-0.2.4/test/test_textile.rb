@@ -141,6 +141,13 @@ module Undress
         test "converts blockquotes" do
           assert_renders_textile "bq. foo bar\n", "<blockquote><div>foo bar</div></blockquote>"
         end
+
+        test "a p inside a blockquote" do
+          html = "<blockquote>  <p>this text<br />becomes not blockquoted in round trip.</p>  </blockquote>"
+          greencloth = "bq. this text\nbecomes not blockquoted in round trip.\n"
+          assert_renders_textile greencloth, html
+        end
+        
       end
 
       context "headers" do

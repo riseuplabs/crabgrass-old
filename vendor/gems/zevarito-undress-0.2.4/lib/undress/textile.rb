@@ -42,7 +42,7 @@ module Undress
     rule_for(:acronym) {|e| e.has_attribute?("title") ? "#{content_of(e)}(#{e["title"]})" : content_of(e) }
 
     # text formatting and layout
-    rule_for(:p)          {|e| "\n\n#{content_of(e)}\n\n" }
+    rule_for(:p)          {|e| e.parent && e.parent.name == "blockquote" ? "#{content_of(e)}\n\n" : "\n\n#{content_of(e)}\n\n" }
     rule_for(:br)         {|e| "\n" }
     rule_for(:blockquote) {|e| "\n\nbq. #{content_of(e)}\n\n" }
     rule_for(:pre)        {|e|
