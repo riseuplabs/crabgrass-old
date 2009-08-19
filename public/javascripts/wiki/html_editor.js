@@ -17,6 +17,11 @@ var HtmlEditor = Class.create({
     return this.editor;
   },
 
+  // called in case the editor needs a nudge when its panel is made visible.
+  refresh: function() {
+    this.editor.sizeEditor();
+  },
+
   // returns the content area where the html lives in the dom.
   area: function() {
     return this.editor._iframe;
@@ -27,14 +32,30 @@ var HtmlEditor = Class.create({
     return this.editor.getEditorContent();
   },
 
+  // get the currently selected HTML
+  selectedContent: function() {
+    return this.editor.getSelectedHTML();
+  },
+
+  // returns the currently selected <a> element, if there are any.
+  selectedAnchor: function() {
+    var sel  = this.editor.getSelection();
+    var rng  = this.editor.createRange(sel);
+    var a    = this.editor.activeElement(sel);
+    if (a != null && a.tagName.toLowerCase() == 'a') {
+      return a;
+    } else {
+      a = this.editor._getFirstAncestor(sel, 'a');
+      if (a != null) {
+        return a;
+      }
+    }
+    return null;
+  },
+
   // update the html content being edited
   setContent: function(content) {
     this.editor.setEditorContent(content);
-  },
-
-  // called in case the editor needs a nudge when its panel is made visible.
-  refresh: function() {
-    this.editor.sizeEditor();
   },
 
   // run execCommand on the html area.
@@ -49,12 +70,36 @@ var HtmlEditor = Class.create({
     this.editor.insertHTML(html);
   },
 
+  // inserts an new image tag
   insertImage: function(url, link) {
     if (link) {
       this.insert('<a href="#{link}"><img src="#{url}" /></a>'.interpolate({url:url,link:link}));
     } else {
       this.insert('<img src="#{url}" />'.interpolate({url:url}));
     }
+  },
+
+  // inserts a new anchor tag or updates an existing anchor tag (if one is selected)
+  insertAnchor: function(label, href) {
+    var anchor = this.selectedAnchor();
+    if (anchor) {
+      anchor.href = href;
+      anchor.innerHTML = label;
+    } else if (label) {
+      this.insert('<a href="#{href}">#{label}</a>'.interpolate({href:href,label:label}));
+    }
+  },
+
+  // removes an anchor tag from the selection.
+  clearAnchor: function() {
+    var a = this.selectedAnchor();
+    var p = a.parentNode;
+    while(a.hasChildNodes()) {
+      p.insertBefore(a.removeChild(a.childNodes[0]), a);
+    }
+    p.removeChild(a);
+    this.editor.updateToolbar();
   }
+
 });
 

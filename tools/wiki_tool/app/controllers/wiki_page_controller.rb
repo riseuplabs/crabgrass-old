@@ -1,6 +1,6 @@
 class WikiPageController < BasePageController
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
+  include ControllerExtension::WikiPopup
 
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit

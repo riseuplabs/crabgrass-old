@@ -1,4 +1,4 @@
-module ControllerExtension::WikiImagePopup
+module ControllerExtension::WikiPopup
   # xhr only
   def image_popup_show
     @images = image_popup_visible_images
@@ -13,7 +13,7 @@ module ControllerExtension::WikiImagePopup
   # response goes to an iframe, so requires responds_to_parent
   def image_popup_upload
     asset = Asset.build params[:asset]
-    
+
     # create a page for this asset
     # this will only be used for group wikis
     unless @page
@@ -39,4 +39,9 @@ module ControllerExtension::WikiImagePopup
       end
     end
   end
+
+  def link_popup_show
+    render :partial => 'wiki/link_popup', :locals => {:wiki => @wiki}
+  end
+
 end
