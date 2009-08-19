@@ -61,5 +61,5 @@
 <% end -%>
 
 <div class="html_editor_wrapper">
-  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= @wiki.body_html if load_content %></textarea>
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= greencloth_to_editable_html(@wiki.body, @page.owner_name || 'page') if load_content %></textarea>
 </div>
