@@ -6,7 +6,7 @@ module ChatHelper
 
   def message_content(message)
      hook_text = call_hook :chat_message_actions, :message => message
-    %(<div class="message #{message.level} shy_parent" id="message-#{message.id}">
+    %(<div class="message #{message.level} shy_parent" id="#{dom_id message}">
       <a name="#{message.id}"></a>
       #{message_time_and_name(message.created_at, message.sender_name)}
       <span class="content">#{message.content}</span> #{hook_text}</div>)

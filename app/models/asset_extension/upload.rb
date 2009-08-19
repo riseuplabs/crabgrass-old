@@ -49,7 +49,7 @@ module AssetExtension
         zipfile.entries.each do |entry|
           begin
             entry.extract(tmp_filename = File.join(tmp_dir, entry.name))
-            asset = make! :uploaded_data => FileData.new(tmp_filename)
+            asset = make :uploaded_data => FileData.new(tmp_filename)
             assets << asset
           rescue => exc
             logger.fatal("Error while extracting asset from ZIP Archive: #{exc.message}")

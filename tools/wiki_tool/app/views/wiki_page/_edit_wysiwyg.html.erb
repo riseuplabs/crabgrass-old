@@ -1,13 +1,13 @@
 <%##
-  ## NOTES
-  ##
-  ## There are some plugins we would like to use, but they do not have language files,
-  ## and so xinha pops up a really annoying error message.
-  ##
-  ## For now, just disable all the plugins.
-  ##
-  ## The bootstrap vars _editor_url is in html_head because it needs to be defined
-  ## before the scripts are included.
+  # NOTES
+  #
+  # There are some plugins that might be nice, but they do not have language files,
+  # which causes xinha to pop up a really annoying error message when you are not using english.
+  #
+  # For now, just disable all the plugins that come with xinha.
+  #
+  # The bootstrap vars _editor_url is in html_head because it needs to be defined
+  # before the scripts are included.
   ##%>
 
 <% content_for :html_head do -%>
@@ -24,20 +24,26 @@
   insertImageFunction = function() {
     <%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>;
   }
+  createLinkFunction = function() {
+    <%= modalbox_function(link_popup_show_url(@wiki), :title => 'Add Link'[:add_link]) %>;
+  }
 
   xinha_init = function() {
     xinha_editors = ["<%= wiki_body_html_id(@wiki)%>"];
 
-    xinha_plugins = [{plugin:"InsertImage", url:"/javascripts/wiki/insert_image.js"}];
-    if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
-
     xinha_config = new Xinha.Config();
 
     xinha_config.toolbar = [
-      ["formatblock", "bold", "italic", "removeformat"],
+      ["formatblock", "bold", "italic", "strikethrough", "removeformat"],
       ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
-      ["separator", "selectall", "inserttable", "insertimage", "createlink"]
+      ["separator", "selectall", "insertimage", "createlink"]
     ];
+
+    xinha_plugins = [
+      {plugin:"InsertImage", url:"/javascripts/wiki/insert_image.js"},
+      {plugin:"CreateLink", url:"/javascripts/wiki/create_link.js"},
+    ];
+    if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
 
     xinha_config.formatblock = {
       "&mdash; Paragraph &mdash;": "",
@@ -61,5 +67,5 @@
 <% end -%>
 
 <div class="html_editor_wrapper">
-  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= @wiki.body_html if load_content %></textarea>
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width:100%" rows="30" cols="80"><%= greencloth_to_editable_html(@wiki.body, @page.owner_name || 'page') if load_content %></textarea>
 </div>

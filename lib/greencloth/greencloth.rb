@@ -1,16 +1,35 @@
 =begin
 
+example usage
+---------------------------------------
+
+greencloth = GreenCloth.new(body, context_name, [:outline])
+greencloth.to_html
+
+Greencloth.new takes three argument:
+
+(1) the raw greencloth markup text
+(2) the context name for resolving links
+(3) an array of greencloth options. useful options include:
+    :outline -- turn on the generation of outline data and markup
+    :lite_mode -- disable blocks, only allow some markup.
+
 passing a block to to_html()
 -----------------------------
+
+Greencloth.to_html can take a block. The block is passed data regarding every link
+that it encounteres while processing links.
+
+You can use this to do custom rendering of links. For example:
 
   html = GreenCloth.new(test_text,'mygroup').to_html() do |link_data|
     process_link(link_data)
   end
 
-  process_link should return either nil or an <a> tag. If nil, then
-  the greencloth default is used.
+process_link should return either nil or an <a> tag. If nil, then the greencloth
+default is used.
 
-  link_date is a hash that might include: url, label, context_name, page_name
+link_date is a hash that might include: url, label, context_name, page_name
 
 custom GreenCloth filters, without messing up <code> blocks
 ------------------------------------------------------------
@@ -465,26 +484,41 @@ class GreenCloth < RedCloth::TextileDoc
   OFFTAG_RE = /\}#{OFFTAG_PREFIX}#([\d]+)\{/  # matches }offtag#55{ -> $1 == 55
                                               # why }{ instead of {}? so offtags will work with tables.
 
+  MACROTAG_PREFIX = 'macrotag'
+  MACROTAG_RE = /<p>\}#{MACROTAG_PREFIX}#([\d]+)\{<\/p>/
+
   # text: the text to offtag
   # original: the original raw text before transformation. we keep it in case
   #           we need to undo the offtagging for a particular block.
   # symbol: if set, when extracting this offtag, we use a callback instead of the text.
-  def offtag_it(text, original='', symbol=nil)
+  def offtag_it(text, original='')
     @count ||= 0
     @offtags ||= []
     @count += 1
-    @offtags << [text, original, symbol]
+    @offtags << [text, original]
     '}offtag#%s{' % @count
   end
+
+  def macrotag_it(symbol, original='')
+    @count ||= 0
+    @offtags ||= []
+    @count += 1
+    @offtags << [symbol, original='']
+    "\n}macrotag#%s{\n" % @count
+  end
+
   def extract_offtags(html)
     html.gsub!(OFFTAG_RE) do |m|
       offtag = self.offtags[$1.to_i-1]
-      if offtag[2]
-        # there is a dynamic symbol for this offtag
-        method = 'symbol_'+offtag[2]
-        self.send(method) if self.respond_to?(method)
+      offtag[0] # replace offtag with the corresponding entry
+    end
+    html.gsub!(MACROTAG_RE) do |m|
+      macrotag = self.offtags[$1.to_i-1]
+      method = 'symbol_'+macrotag[0]
+      if self.respond_to?(method)
+        self.send(method)
       else
-        offtag[0] # replace offtag with the corresponding entry
+        "<p>#{macrotag[1]}</p>"
       end
     end
     html
@@ -673,7 +707,6 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-
   ##
   ## DYNAMIC SYMBOLS
   ##
@@ -685,7 +718,7 @@ class GreenCloth < RedCloth::TextileDoc
   def dynamic_symbols(text)
     text.gsub!(DYNAMIC_SYMBOLS_RE) do |line|
       symbol = $1
-      "\n" + offtag_it('ignored', line, symbol) + "\n"
+      macrotag_it(symbol, line)
     end
   end
 
