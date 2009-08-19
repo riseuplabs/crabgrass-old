@@ -114,7 +114,15 @@ ins
 //
 
 div.formatting_reference
+  margin-top: 0.5em
   float: right
+
+div.wiki_buttons
+  margin-top: 0.5em
+  input
+    font-size: 1.25em
+    padding: 0.1em 0.5em
+    margin-right: 0.5em
 
 a.edit
   display: inline
@@ -140,10 +148,19 @@ h3:hover a.edit
 .htmlarea
   border: 0 !important
 
+.htmlarea .toolbar
+  border-right: 0
+  border-bottom: 1px solid #999
+
 .htmlarea iframe
   width: 100% !important
+  border: 0 !important
+  border-top: 1px solid #ddd !important
   &:focus
     background-color: #ffe
+
+.htmlarea .statusBar
+  border-left: 0 !important
 
 //.html_editor_instance
 //  padding: 4px
