@@ -58,7 +58,8 @@ class YuckyController < ApplicationController
     url += "/date/#{date.year}-#{date.month}-#{date.day}##{@rateable.id}"
     send_moderation_notice(url, summary)
     render :update do |page|
-      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+      @message = @rateable
+      page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
 
@@ -74,7 +75,8 @@ class YuckyController < ApplicationController
 
   def remove_chat_message
     render :update do |page|
-      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+      @message = @rateable
+      page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
 
