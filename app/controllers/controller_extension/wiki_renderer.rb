@@ -184,6 +184,13 @@ module ControllerExtension::WikiRenderer
     encode_line_endings Undress(html).to_greencloth
   end
 
+  def render_ugly_html_from_text(text, context_name='page')
+    text ||= ""
+    options = {:pass_through => ['strong', 'b', 'em', 'i', 'u', 'strike', 'del']}
+    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
+  end
+
+
   def render_preview_from_ugly_html(html, context_name='page')
     html ||= ""
     body = Undress(html).to_greencloth
@@ -193,12 +200,6 @@ module ControllerExtension::WikiRenderer
   def render_preview_from_text(text, context_name='page')
     text ||= ""
     encode_line_endings render_wiki_html(text, context_name)
-  end
-
-  def render_ugly_html_from_text(text, context_name='page')
-    text ||= ""
-    options = {:pass_through => ['strong', 'em']}
-    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
   end
 
   # why is this necessary?
