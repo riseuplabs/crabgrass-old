@@ -7,6 +7,20 @@ module Undress
     end
 
     context "Converting HTML to textile" do
+      context "some troubles with empty tags" do
+        test "with pre" do
+          html = "<pre></pre>"
+          textile = "<pre></pre>"
+          assert_renders_textile textile, html
+        end
+
+        test "with p" do
+          html = "<p></p>"
+          textile = ""
+          assert_renders_textile textile, html
+        end
+      end
+
       test "converts nested tags" do
         assert_renders_textile "h2. _this is *very* important_\n", "<h2><em>this is <strong>very</strong> important</em></h2>"
       end
