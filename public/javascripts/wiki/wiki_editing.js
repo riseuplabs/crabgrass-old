@@ -25,6 +25,7 @@ function insertImage(wikiId) {
     var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
     var url = thumbnails[size];
     if (editor.valid() && isTabVisible(editor.area())) {
+      editor.restoreSelection();
       editor.insertImage(url, link)
     } else if (textarea && isTabVisible(textarea)) {
       var insertText = '\n!' + url + '!';
@@ -38,6 +39,7 @@ function insertImage(wikiId) {
 
 function updateLink(wikiId,action) {
   var editor = new HtmlEditor(wikiId);
+  editor.restoreSelection();
   if (action == 'create' || action == 'update') {
     editor.insertAnchor($('link_label').value, $('link_url').value);
   } else if (action == 'clear') {
@@ -91,6 +93,7 @@ function updateEditor(response, tab, id) {
 
   if (tab == 'greencloth') {
     showTab($('link-tab-greencloth'), $('tab-edit-greencloth'));
+    textarea.focus();
   }
   else if (tab == 'html') {
     showTab($('link-tab-html'), $('tab-edit-html'));
