@@ -21,6 +21,7 @@ class WikiLock < ActiveRecord::Base
   end
 
   def all_sections
+    require 'ruby-debug';debugger;1-1
     wiki.all_sections
   end
 

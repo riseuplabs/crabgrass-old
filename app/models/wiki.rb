@@ -59,7 +59,6 @@ class Wiki < ActiveRecord::Base
     def self.included(base)
       base.belongs_to :user
     end
-
   end
 
   # only save a new version if the body has changed
@@ -140,7 +139,6 @@ class Wiki < ActiveRecord::Base
     read_attribute(:raw_structure) || write_attribute(:raw_structure, {})
   end
 
-<<<<<<< HEAD:app/models/wiki.rb
   def structure
     @structure ||= WikiExtension::WikiStructure.new(raw_structure)
   end
@@ -152,7 +150,6 @@ class Wiki < ActiveRecord::Base
 
   # renders body_html and calculates structure if needed
   def update_body_html_and_structure
-    # require 'ruby-debug';debugger;1-1
     return unless needs_rendering?
     write_attribute(:body_html, render_body_html)
     write_attribute(:raw_structure, render_raw_structure)
@@ -268,7 +265,8 @@ class Wiki < ActiveRecord::Base
   end
 
   def render_raw_structure
-    GreenCloth.new(body.to_s).to_structure
+    require 'ruby-debug';debugger;1-1
+    GreenCloth.new(body.to_s).document_structure
   end
 
   private
