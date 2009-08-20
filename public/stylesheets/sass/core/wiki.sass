@@ -142,6 +142,11 @@ h2:hover a.edit,
 h3:hover a.edit
   opacity: 0.6
 
+//
+// WYSIWYG EDITOR
+// Take care when changing this css, it is hard to get it to look ok in all browsers.
+//
+
 .html_editor_wrapper
   border: 1px solid #666
 
@@ -151,6 +156,12 @@ h3:hover a.edit
 .htmlarea .toolbar
   border-right: 0
   border-bottom: 1px solid #999
+  background: #eee
+  .button
+    background: #eee
+    border-color: #eee
+    &:hover
+      background: white
 
 .htmlarea iframe
   width: 100% !important
@@ -161,6 +172,10 @@ h3:hover a.edit
 
 .htmlarea .statusBar
   border-left: 0 !important
+  background: #eee
+
+.statusBarWidgetContainer
+  display: none
 
 //.html_editor_instance
 //  padding: 4px
