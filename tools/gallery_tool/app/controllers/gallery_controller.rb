@@ -229,6 +229,21 @@ class GalleryController < BasePageController
     end
   end
 
+  def upload_zip
+    if request.get?
+      redirect_to page_url(@page)
+    elsif request.post? && params[:zipfile]
+      @assets, @failures = Asset.make_from_zip(params[:zipfile])
+      @assets.each do |asset|
+        @page.add_image!(asset, current_user)
+      end
+      redirect_to page_url(@page)
+    else
+      render :update do |page|
+        page.replace_html 'target_for_upload', :partial => 'upload_zip'
+      end
+    end
+  end
 
   def remove
     asset = Asset.find(params[:id])
@@ -263,14 +278,33 @@ class GalleryController < BasePageController
     @assets ||= []
     params[:assets].each do |file|
       next if file.size == 0 # happens if no file was selected
-      asset = Asset.make(:uploaded_data => file) do |asset|
-        asset.parent_page = @page
-      end
-      @assets << asset
-      @page.add_image!(asset, current_user)
+      build_asset_data(@assets, file)
     end
+    if params[:asset][:zipfile] and params[:asset][:zipfile].size != 0
+      build_zip_file_data(@assets, params[:asset][:zipfile])
+    end
+
     # gallery page has no 'data' field
     return nil
+  end
+
+  def build_asset_data(assets, file)
+    asset = Asset.make(:uploaded_data => file) do |asset|
+      asset.parent_page = @page
+    end
+    @assets << asset
+    @page.add_image!(asset, current_user)
+    asset.save!
+  end
+
+  def build_zip_file_data(assets, file)
+    zip_assets, failures = Asset.make_from_zip(file)
+    zip_assets.each do |asset|
+      asset.parent_page = @page
+      @assets << asset
+      @page.add_image!(asset, current_user)
+      asset.save!
+    end
   end
 
   def destroy_page_data

@@ -4,7 +4,7 @@ class ChatMessage < ActiveRecord::Base
   belongs_to :channel, :class_name => 'ChatChannel', :foreign_key => 'channel_id'
   belongs_to :sender, :class_name => 'User', :foreign_key => 'sender_id'
 
-  validates_associated :channel, :sender
+  validates_presence_of  :channel, :sender
 
   def before_create
     if sender

@@ -375,14 +375,15 @@ module UserExtension::Pages
   # destroy the particular participation object
   def may_admin_page_without?(page, participation)
     method = participation.class.name.underscore.pluralize # user_participations or group_participations
-    original = page.send(method).clone
+    # work with a new, untained page object
+    # no changes to it should be saved!
+    page = Page.find(page.id)
     page.send(method).delete_if {|part| part.id == participation.id}
     begin
       result = page.has_access!(:admin, self)
     rescue PermissionDenied
       result = false
     end
-    page.send(method).replace(original)
     result
   end
 

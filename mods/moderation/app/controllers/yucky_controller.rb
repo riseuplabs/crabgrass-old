@@ -50,6 +50,7 @@ class YuckyController < ApplicationController
   end
 
   def add_chat_message
+    @rateable.update_attribute(:deleted_at, Time.now) if current_user.moderator?
     summary = @rateable.content
     date = @rateable.created_at
     url = "/chat/archive/"
@@ -57,7 +58,8 @@ class YuckyController < ApplicationController
     url += "/date/#{date.year}-#{date.month}-#{date.day}##{@rateable.id}"
     send_moderation_notice(url, summary)
     render :update do |page|
-      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+      @message = @rateable
+      page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
 
@@ -73,7 +75,8 @@ class YuckyController < ApplicationController
 
   def remove_chat_message
     render :update do |page|
-      page.replace_html "message-#{@rateable.id}", :partial => 'chat/message', :object => @message = @rateable
+      @message = @rateable
+      page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
 
