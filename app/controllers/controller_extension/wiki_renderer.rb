@@ -146,6 +146,7 @@ module ControllerExtension::WikiRenderer
   #
   #
 
+  protected
 
   def update_editor_data(params={})
     params[:wiki] ||= {}

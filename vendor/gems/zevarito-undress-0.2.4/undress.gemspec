@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.files = %w[
 .gitignore
 LICENSE
+CHANGELOG
 README.rdoc
 Rakefile
 undress.gemspec
@@ -39,5 +40,6 @@ test/test_helper.rb
 test/test_grammar.rb
 test/test_textile.rb
 test/test_greencloth.rb
+test/test_hpricot_ext.rb
 ]
 end

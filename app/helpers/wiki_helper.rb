@@ -117,6 +117,29 @@ module WikiHelper
     "updateLink('%s','%s');" % [wiki.id,action]
   end
 
+  #
+  # these functions are used by the toolbar plugins to show the modalbox popups.
+  #
+  # it sucks that we cannot do this in a better way, but defining a global var
+  # for insertImageFunction for now works. This will not work if we want to
+  # have multiple editors open on the same page.
+  #
+  def define_insert_image_function(wiki)
+    %(insertImageFunction = function() {
+      var editor = new HtmlEditor(#{wiki.id});
+      editor.saveSelection();
+      #{modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image])};
+    })
+  end
+
+  def define_create_link_function(wiki)
+    %(createLinkFunction = function() {
+      var editor = new HtmlEditor(#{wiki.id});
+      editor.saveSelection();
+      #{modalbox_function(link_popup_show_url(@wiki), :title => 'Add Link'[:add_link])};
+    })
+  end
+
   ##
   ## VERSIONING
   ##

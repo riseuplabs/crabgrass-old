@@ -17,6 +17,20 @@ class Undress::GreenClothTest < Test::Unit::TestCase
     end
   end
 
+  context "some troubles with empty tags" do
+    test "with pre" do
+      html = "<pre></pre>"
+      greencloth = "<pre></pre>"
+      assert_renders_greencloth greencloth, html 
+    end
+
+    test "with p" do
+      html = "<p></p>"
+      greencloth = ""
+      assert_renders_greencloth greencloth, html 
+    end
+  end
+
   # TODO:
   # this is ok to ensure invalid html -> to greencloth but xhtmlize! must have
   # tests on test_undress or something too

@@ -38,7 +38,7 @@ module Undress
 
     # text formatting
     rule_for(:pre) {|e|
-      if e.children.all? {|n| n.text? && n.content =~ /^\s+$/ || n.elem? && n.name == "code" }
+      if e.children && e.children.all? {|n| n.text? && n.content =~ /^\s+$/ || n.elem? && n.name == "code" }
         "\n\n<pre><code>#{content_of(e % "code")}</code></pre>"
       else
         "\n\n<pre>#{content_of(e)}</pre>"
