@@ -1,0 +1,53 @@
+<%
+  recipient = Site.current.network
+  old_participation = @page.try.participation_for_group(recipient)
+  disabled = !old_participation.nil?
+  in_list = @recipients.try.include?(recipient)
+  check_box_options = {:disabled => disabled, :checked => in_list || disabled}
+  access = old_participation.try.access
+  access ||= may_select_access_participation? ?
+    "$('recipient[access]').value" :
+    %{'#{default_access}'}
+  spinner_id = "add_site"
+
+  add_action = {
+    :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
+    :with => %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
+    :loading => spinner_icon_on('spacer', spinner_id),
+    :complete => spinner_icon_off('spacer', spinner_id)
+    }
+  id = "share_recipient_%s" % recipient.name
+  remove_function = "$('%s').remove()" % id
+  toggle_function = "if ($('#{id}') == null)
+    { #{remote_function(add_action)} } else
+    { #{remove_function} }"
+  unless disabled
+    check_box_options[:onclick]= toggle_function
+  end
+
+  other_select = "$('recipients[#{recipient.name.gsub(/\+/,"%2b")}][access]')"
+  this_select = "$('share_with_everyone_access')"
+  sync_function = "#{other_select}.value = #{this_select}.value"
+
+%>
+<div id='share_with_everyone_div'
+<table>
+<tr class="everyone" >
+  <td> <%= check_box_tag 'share_with_everyone', 'share_with_everyone', check_box_options[:checked],
+  check_box_options %> </td>
+  <td style="width:100%">
+     All Users on the <%= Site.name %> Site
+  </td>
+  <td>
+    <%- if may_select_access_participation? -%>
+      <%= select_page_access 'share_with_everyone_access', {:blank => false, :selected => access, :disabled => disabled, :onchange => sync_function} %>
+    <%- else -%>
+      <%= hidden_field 'recipients['+recipient.name.gsub(/\+/,"%2b")+']', :access, :value => access %>
+    <%- end -%>
+  </td>
+  <td>
+    <%= link_to_icon('spacer', '', :id => spinner_id, :class => 'small_icon_button') %>
+  </td>
+</tr>
+</table>
+</div>

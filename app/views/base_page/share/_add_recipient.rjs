@@ -11,6 +11,9 @@ if flash[:type] == 'error'
 else
   page.replace_html 'share_error_message', ''
 
+  if may_share_with_everyone? and @recipients.include?(Site.current.network)
+    page.replace_html 'share_with_everyone_div', :partial => 'share_with_everyone'
+  end
   # update the ui by adding the recipients
   @recipients.each do |recipient|
     page.insert_html(:top, 'share_page_recipient_table',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
