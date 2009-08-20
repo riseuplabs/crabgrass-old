@@ -81,7 +81,7 @@ $KCODE = 'u'    # \ set utf8 as the default
 require 'jcode' # / encoding
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
-require 'greencloth_outline'
+require 'greencloth_structure'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -291,7 +291,7 @@ end
 ##
 
 class GreenCloth < RedCloth::TextileDoc
-  include GreenclothOutline
+  include GreenclothStructure
 
   attr_accessor :original
   attr_accessor :offtags

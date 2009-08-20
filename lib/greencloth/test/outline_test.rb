@@ -19,7 +19,6 @@ class TestHeadings < Test::Unit::TestCase
 
   def test_successive_heading
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
-
     assert_equal 'vegetables', greencloth.heading_tree.successor('fruits').name
     assert_equal 'pears', greencloth.heading_tree.successor('tasty-apples').name
     assert_equal 'vegetables', greencloth.heading_tree.successor('pears').name

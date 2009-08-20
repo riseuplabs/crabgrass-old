@@ -6,7 +6,7 @@
 
 require File.dirname(__FILE__) + '/green_tree'
 
-module GreenclothOutline
+module GreenclothStructure
 
   # given a namized heading name (ie what is used for the anchor)
   # return all the containing text until the next heading of equal or higher level.
