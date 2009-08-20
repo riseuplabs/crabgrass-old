@@ -146,6 +146,7 @@ module ControllerExtension::WikiRenderer
   #
   #
 
+  protected
 
   def update_editor_data(params={})
     params[:wiki] ||= {}
@@ -171,7 +172,7 @@ module ControllerExtension::WikiRenderer
     Undress(html).to_greencloth
   end
 
-  def greencloth_to_editable_html(greencloth, context_name='page')
+  def greencloth_to_editable_html(text, context_name='page')
     text ||= ""
     options = {:pass_through => ['strong', 'em']}
     UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly

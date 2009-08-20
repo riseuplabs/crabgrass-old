@@ -20,6 +20,8 @@ var HtmlEditor = Class.create({
   // called in case the editor needs a nudge when its panel is made visible.
   refresh: function() {
     this.editor.sizeEditor();
+    this.editor.activateEditor();
+    this.editor.focusEditor();
   },
 
   // returns the content area where the html lives in the dom.
@@ -39,18 +41,39 @@ var HtmlEditor = Class.create({
 
   // returns the currently selected <a> element, if there are any.
   selectedAnchor: function() {
+    var ret  = null;
     var sel  = this.editor.getSelection();
     var rng  = this.editor.createRange(sel);
     var a    = this.editor.activeElement(sel);
     if (a != null && a.tagName.toLowerCase() == 'a') {
-      return a;
+      ret = a;
     } else {
       a = this.editor._getFirstAncestor(sel, 'a');
       if (a != null) {
-        return a;
+        ret = a;
       }
     }
-    return null;
+    if (ret) {
+      ret.setAttribute('href', this.relativeHref(ret.getAttribute('href')));
+      return ret;
+    } else {
+      return null;
+    }
+  },
+
+  // returns a relative href. This is needed because IE this returns a horrible mess.
+  relativeHref: function(href) {
+    // return this.editor.fixRelativeLinks(this.selectedAnchor().getAttribute('href'));
+    var serverBase = location.href.replace(/(https?:\/\/[^\/]*)\/.*/, '$1') + '/';
+    return href.replace(serverBase, '');
+  },
+
+  saveSelection: function() {
+    current_editor_range = this.editor.saveSelection();
+  },
+
+  restoreSelection: function() {
+    this.editor.restoreSelection(current_editor_range);
   },
 
   // update the html content being edited
