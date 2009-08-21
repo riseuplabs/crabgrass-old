@@ -9,8 +9,8 @@ in: |-
   [[toc]]
 
   h1. Fruits
-  
-  h2. Tasty Apples  
+
+  h2. Tasty Apples
 
   h3. Green
 
@@ -19,9 +19,9 @@ in: |-
   h2. Pears
 
   h1. Vegetables
-  
+
   h2. Turnips
-  
+
   h2. Green Beans
 out: |-
   <p><ul class="toc">
@@ -62,7 +62,7 @@ out: |-
 name: test name collisions
 in: |-
   h1. Corvidae
-  
+
   h2. Crow
 
   h2. Raven
@@ -72,15 +72,15 @@ in: |-
   h1. Chess Pieces
 
   h2. Queen
-  
+
   h2. Rook
-  
+
   h1. Card Games
-  
+
   h2. Hearts
 
   h2. Rook
-  
+
 out: |-
   <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
   <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
@@ -117,11 +117,11 @@ out: |-
 name: double trouble
 in: |-
   h1. Title
-  
+
   h3. Under first
-  
+
   h1. Title
-  
+
   h3. Under second
 out: |-
   <h1 class="first"><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
@@ -131,25 +131,25 @@ out: |-
 ---
 name: setext trees
 in: |-
-  Evergreens 
+  Evergreens
   ==========
-  
+
   h3. Cedar
-  
+
   h3. Redwood
-  
+
   h3. Fir
-  
+
   Deciduous
   =========
-  
+
   h3. Maple
-  
+
   Oaks
   ----
-  
+
   h3. White Oak
-  
+
   h3. Red Oak
 out: |-
   <h1 class="first"><a name="evergreens"></a>Evergreens<a class="anchor" href="#evergreens">&para;</a></h1>
@@ -189,6 +189,53 @@ in: |-
 out: |-
   <h1 class="first"><a name="i-eat-food"></a>i eat &#8216;food&#8217;<a class="anchor" href="#i-eat-food">&para;</a></h1>
   <h1><a name="it-is-yŭmmy"></a>it is yŭmmy<a class="anchor" href="#it-is-yŭmmy">&para;</a></h1>
+---
+name: badly organized fruits
+in: |-
+  h1. Fruits
 
+  h3. Green Apples
 
+  h2. Tasty Apples
 
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Turnips
+
+  h2. Green Beans
+out: |-
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h3><a name="green-apples"></a>Green Apples<a class="anchor" href="#green-apples">&para;</a></h3>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="turnips"></a>Turnips<a class="anchor" href="#turnips">&para;</a></h2>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: untitled leading section
+in: |-
+
+  welcome to our great list of fruits and vegetables
+
+  h1. Fruits
+
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Green Beans
+out: |-
+  <p>welcome to our great list of fruits and vegetables</p>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: plain old text
+in: |-
+  curiouser and curiouser
+
+out: |-
+  <p>curiouser and curiouser</p>

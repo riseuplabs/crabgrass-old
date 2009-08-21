@@ -348,7 +348,12 @@ class GreenCloth < RedCloth::TextileDoc
   end
 
   # populates @headings, and then restores the string to its original form.
-  def extract_headings()
+  def extract_headings
+    # initialize to empty, in case we find no headings, we will still have
+    # non-nil collections
+    @headings = []
+    @heading_names = {}
+
     self.extend(GreenClothFormatterHTML)
     original = self.dup
     apply_rules([:normalize_heading_blocks])
