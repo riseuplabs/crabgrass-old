@@ -4,12 +4,18 @@
 # The variables defined there are available as Config.varname
 #
 class Conf
+
   ##
   ## CONSTANTS
   ##
 
   SIGNUP_MODE = Hash.new(0).merge({
     :default => 0, :closed => 1, :invite_only => 2, :verify_email => 3
+  }).freeze
+
+  TEXT_EDITOR = Hash.new(0).merge({
+    :greencloth_only => 0,        :html_only => 1,
+    :greencloth_preferred => 2,   :html_preferred => 3
   }).freeze
 
   ##
@@ -59,6 +65,7 @@ class Conf
   cattr_accessor :secret
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
+  cattr_accessor :text_editor
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -111,6 +118,7 @@ class Conf
     self.sites         = []
     self.secret        = nil
     self.ensure_page_owner = true
+    self.text_editor   = TEXT_EDITOR[:greencloth_only]
   end
 
   def self.load(filename)
@@ -126,13 +134,18 @@ class Conf
       end
     end
 
-    # allow string (ie 'invite_only') in conf file.
-    if self.signup_mode.is_a? String
-      unless SIGNUP_MODE.has_key? self.signup_mode.to_sym
-        raise Exception.new('signup_mode of "%s" is not recognized' % self.signup_mode)
+    ## convert strings in config to numeric constants.
+    ['SIGNUP_MODE', 'TEXT_EDITOR'].each do |const_string|
+      const = ("Conf::"+const_string).constantize
+      attr = const_string.downcase
+      if self.send(attr).is_a? String
+        unless const.has_key? self.send(attr).to_sym
+          raise Exception.new('%s of "%s" is not recognized' % [attr, self.send(attr)])
+        end
+        self.send(attr+'=', const[self.send(attr).to_sym])
       end
-      self.signup_mode = SIGNUP_MODE[self.signup_mode.to_sym]
     end
+
     true
   end
 
@@ -178,6 +191,23 @@ class Conf
   # unless only some are enabled.
   def self.tool_enabled?(tool_name)
     self.enabled_tools.empty? or self.enabled_tools.include?(tool_name) or ENV['TOOL'] == tool_name
+  end
+
+  ##
+  ## CONVENIENCE METHODS
+  ##
+
+  def self.allow_greencloth_editor?
+    self.text_editor != TEXT_EDITOR[:html_only]
+  end
+
+  def self.allow_html_editor?
+    self.text_editor != TEXT_EDITOR[:greencloth_only]
+  end
+
+  def self.text_editor_sym
+    @@text_editor_symbols ||= TEXT_EDITOR.invert
+    @@text_editor_symbols[self.text_editor]
   end
 
 end

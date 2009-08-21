@@ -262,6 +262,28 @@ module Undress
           assert_renders_textile "Trademarked(tm)", "Trademarked&#8482;"
         end
       end
+
+      context "handling nodes with attributes" do
+        test "converts 'lang' to [_]" do
+          assert_renders_textile "*[es]hola*", "<strong lang='es'>hola</strong>"
+        end
+
+        test "converts 'class' to (_)" do
+          assert_renders_textile "*(foo)hola*", "<strong class='foo'>hola</strong>"
+        end
+
+        test "converts 'id' to (#_)" do
+          assert_renders_textile "*(#bar)hola*", "<strong id='bar'>hola</strong>"
+        end
+
+        test "converts both 'class' and 'id' to (_#_)" do
+          assert_renders_textile "*(foo#bar)hola*", "<strong id='bar' class='foo'>hola</strong>"
+        end
+
+        test "converts 'style' into {_}" do
+          assert_renders_textile "*{color:blue;}hola*", "<strong style='color:blue;'>hola</strong>"
+        end
+      end
     end
   end
 end

@@ -40,13 +40,10 @@ module Undress
     # We try to fix those elements which aren't write as xhtml standard but more
     # important we can't parse it ok without correct it before.
     def xhtmlize!
-      (@doc/"ul|ol").each do |list|
-        fixup_list(list) if list.parent != "li" && list.parent.name !~ /ul|ol/
-      end
-
-      (@doc/"p|span").each do |e|
-        fixup_span_with_styles(e)
-      end
+      (@doc/"ul|ol").each {|list| fixup_list(list) if list.parent != "li" && list.parent.name !~ /ul|ol/}
+      (@doc/"p|span").each {|e| fixup_span_with_styles(e)}
+      (@doc/"strike").each {|e| e.change_tag! "del"}
+      (@doc/"u").each {|e| e.change_tag! "ins"}
     end
 
     # Delete tabs, newlines and more than 2 spaces from inside elements

@@ -61,6 +61,21 @@ module Undress
       pre_processing_rules[selector] = handler
     end
 
+    # Set a list of attributes you wish to whitelist
+    #
+    # Any attribute not in this list at the moment of parsing will be ignored by the
+    # parser. The method Grammar#attributes(node) will return a hash of the filtered
+    # attributes. Read its documentation for more details.
+    #
+    #     whitelist_attributes :id, :class, :lang
+    def self.whitelist_attributes(*attrs)
+      @whitelisted_attributes = attrs
+    end
+
+    def self.whitelisted_attributes #:nodoc:
+      @whitelisted_attributes || []
+    end
+
     def self.post_processing_rules #:nodoc:
       @post_processing_rules ||= {}
     end
@@ -75,10 +90,12 @@ module Undress
 
     attr_reader :pre_processing_rules #:nodoc:
     attr_reader :post_processing_rules #:nodoc:
+    attr_reader :whitelisted_attributes #:nodoc:
 
     def initialize #:nodoc:
       @pre_processing_rules = self.class.pre_processing_rules.dup
       @post_processing_rules = self.class.post_processing_rules.dup
+      @whitelisted_attributes = self.class.whitelisted_attributes.dup
     end
 
     # Process a DOM node, converting it to your markup language according to
@@ -137,6 +154,29 @@ module Undress
         return false if n.content       !~ /^\s/
       end
       true
+    end
+
+    # Hash of attributes, according to the white list. By default, no attributes
+    # are whitelisted, so you must set which ones to whitelist on each grammar.
+    #
+    # Supposing you set <tt>:id</tt> and <tt>:class</tt> as your
+    # <tt>whitelisted_attributes</tt>, and you have a node representing this
+    # HTML:
+    #
+    #     <p lang="en" class="greeting">Hello World</p>
+    #
+    # Then the method would return:
+    #
+    #     { :class => "greeting" }
+    #
+    # You can override this method in each grammar and call +super+ if you
+    # will represent your attributes consistently across all nodes (for
+    # example, +Textile+ always shows class an id inside parenthesis.)
+    def attributes(node)
+      node.attributes.inject({}) do |attrs,(key,value)|
+        attrs[key.to_sym] = value if whitelisted_attributes.include?(key.to_sym)
+        attrs
+      end
     end
 
     def method_missing(tag, node, *args) #:nodoc:
