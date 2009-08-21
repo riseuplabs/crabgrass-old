@@ -21,6 +21,25 @@ class GreenTree < Array
       }
   end
 
+  def self.from_hash(hash, greencloth)
+    root_node = GreenTree.new(nil, hash[:name], hash[:heading_level], nil, greencloth)
+    root_node.start_index = hash[:start_index]
+    root_node.end_index = hash[:end_index]
+
+    subtree_from_hash(root_node, hash[:children])
+    root_node
+  end
+
+  def self.subtree_from_hash(parent_node, child_hashes)
+    child_hashes.each do |hash|
+      child_node = parent_node.add_child(nil, hash[:name], hash[:heading_level])
+      child_node.start_index = hash[:start_index]
+      child_node.end_index = hash[:end_index]
+
+      subtree_from_hash(child_node, hash[:children])
+    end
+  end
+
   def initialize(text = nil, name = nil, heading_level = nil, parent = nil, greencloth = nil)
     tree = super()
     tree.text = text
