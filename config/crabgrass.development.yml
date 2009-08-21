@@ -26,6 +26,8 @@ email:
 
 ensure_page_owner: false
 
+text_editor: greencloth_only
+
 ##
 ## SITES
 ##

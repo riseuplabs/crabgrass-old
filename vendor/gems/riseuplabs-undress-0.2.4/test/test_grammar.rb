@@ -21,6 +21,10 @@ module Undress
       rule_for(:a) {|e| "" }
     end
 
+    class WithAttributes < Parent
+      whitelist_attributes :id, :class
+    end
+
     def parse_with(grammar, html)
       grammar.process!(Hpricot(html))
     end
@@ -49,6 +53,22 @@ module Undress
       test "mutate the DOM before parsing the tags" do
         output = parse_with WithPreProcessingRules, "<p class='foo'>Blah</p><p>O hai</p>"
         assert_equal "<this was a div>Cuack</this was a div><this is a paragraph>O hai</this is a paragraph>", output
+      end
+    end
+
+    context "handles attributes" do
+      def attributes_for_tag(html)
+        WithAttributes.new.attributes(Hpricot(html).children.first)
+      end
+
+      test "whitelisted attributes are picked up in the attributes hash" do
+        attributes = attributes_for_tag("<p class='foo bar' id='baz'>Cuack</p>")
+        assert_equal({ :class => "foo bar", :id => "baz" }, attributes)
+      end
+
+      test "attributes that are not in the whitelist are ignored" do
+        attributes = attributes_for_tag("<p lang='es' id='saludo'>Hola</p>")
+        assert_equal({ :id => "saludo" }, attributes)
       end
     end
   end

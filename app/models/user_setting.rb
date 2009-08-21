@@ -58,5 +58,14 @@ class UserSetting < ActiveRecord::Base
     self.preferred_editor = EDITOR[value.to_sym]
   end
 
+  def preferred_editor
+    read_attribute('preferred_editor') || case Conf.text_editor_sym
+      when :greencloth_only then 0
+      when :html_only then 1
+      when :greencloth_preferred then 0
+      when :html_preferred then 1
+    end
+  end
+
 end
 

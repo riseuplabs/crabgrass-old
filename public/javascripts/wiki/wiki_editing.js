@@ -5,6 +5,12 @@
 //
 
 //
+// XINHA BOOTSTRAP
+//
+
+_editor_url = "/javascripts/wiki/xinha/";
+
+//
 // WIKI EDITING POPUPS
 //
 

@@ -1012,6 +1012,7 @@ wiki_revert_version: "Revert To Version {version}"
 
 wiki_plain_editor: "Plain Editor"
 wiki_visual_editor: "Visual Editor"
+wiki_editor: "Editor"
 preview: "Preview"
 
 ##

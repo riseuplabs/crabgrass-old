@@ -5,6 +5,14 @@ class UglifyHtmlTest < Test::Unit::TestCase
     assert_equal uglify, UglifyHtml.new(html, options).make_ugly
   end
 
+  context "allow change only tag names for certain elements" do
+    test "convert <ins> to <u> and not convert <u> to <span> later" do
+      html = "<p>some text <ins>underlined</ins></p>"
+      uglify = "<p>some text <u>underlined</u></p>"
+      assert_renders_uglify uglify, html, {:rename_tag => {"ins" => "u"}} 
+    end
+  end
+    
   context "let pass through certain elements" do
     test "pass strong tags, pass em tags" do
       html = "<p>some <strong>bold</strong> text inside a paragraph</p>"
@@ -38,6 +46,12 @@ class UglifyHtmlTest < Test::Unit::TestCase
     test "it should convert a <del> tag" do
       html = "<p>some <del>deleted</del> text inside a paragraph</p>"
       uglify = "<p>some <span style=\"text-decoration:line-through\">deleted</span> text inside a paragraph</p>"
+      assert_renders_uglify uglify, html 
+    end
+    
+    test "it should convert a <strike> tag" do
+      html = "<p>some <strike>striked</strike> text inside a paragraph</p>"
+      uglify = "<p>some <span style=\"text-decoration:line-through\">striked</span> text inside a paragraph</p>"
       assert_renders_uglify uglify, html 
     end
   end

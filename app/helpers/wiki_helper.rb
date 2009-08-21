@@ -120,11 +120,7 @@ module WikiHelper
   #
   # these functions are used by the toolbar plugins to show the modalbox popups.
   #
-  # it sucks that we cannot do this in a better way, but defining a global var
-  # for insertImageFunction for now works. This will not work if we want to
-  # have multiple editors open on the same page.
-  #
-  def define_insert_image_function(wiki)
+  def insert_image_function(wiki)
     %(insertImageFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();
@@ -132,7 +128,7 @@ module WikiHelper
     })
   end
 
-  def define_create_link_function(wiki)
+  def create_link_function(wiki)
     %(createLinkFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();
@@ -194,6 +190,43 @@ module WikiHelper
       :url => wiki_action('edit', :wiki_id => wiki_id),
       :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
     )
+  end
+
+  ##
+  ## WIKI EDITORS
+  ##
+
+  def preferred_editor_tab
+    @active_editor_tab ||= begin
+      active_tab = current_user.setting.preferred_editor_sym
+      if active_tab == :greencloth and !Conf.allow_greencloth_editor?
+        active_tab = :html
+      elsif active_tab == :html and !Conf.allow_html_editor?
+        active_tab = :greencloth
+      end
+      active_tab
+    end
+  end
+
+  # why is this logic so complex? different installs want really different things.
+  def wiki_editor_tab_label(type)
+    if type == :plain
+      if Conf.allow_html_editor?
+        if Conf.text_editor_sym == :html_preferred
+          "Advanced Editor"[:wiki_advanced_editor]
+        else
+          "Plain Editor"[:wiki_plain_editor]
+        end
+      else
+        "Editor"[:wiki_editor]
+      end
+    else
+      if Conf.text_editor_sym == :html_preferred || !Conf.allow_greencloth_editor?
+        "Editor"[:wiki_editor]
+      else
+        "Visual Editor"[:wiki_visual_editor]
+      end
+    end
   end
 
   def create_wiki_toolbar(wiki)
