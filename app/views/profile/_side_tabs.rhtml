@@ -1,7 +1,7 @@
 <% @entity ||= @group || @user -%>
 <% @public ||= @entity.profiles.public -%>
 <% @private ||= @entity.profiles.private -%>
-<%= Formy.tabs('class' => 'left') do |f|
+<%= Formy.tabs(:class => 'left') do |f|
   f.tab do |t|
     t.label 'Settings'.t
     t.icon 'actions/settings.png'

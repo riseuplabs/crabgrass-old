@@ -1,44 +1,29 @@
-<%##
-  # NOTES
-  #
-  # There are some plugins that might be nice, but they do not have language files,
-  # which causes xinha to pop up a really annoying error message when you are not using english.
-  #
-  # For now, just disable all the plugins that come with xinha.
-  #
-  # The bootstrap vars _editor_url is in html_head because it needs to be defined
-  # before the scripts are included.
-  ##%>
+<%############################
 
-<% content_for :html_head do -%>
-  <% javascript_tag do -%>
-    _editor_url  = "/javascripts/wiki/xinha/";
-    _editor_lang = "<%= html_editor_language_code %>";
-  <% end -%>
-<% end -%>
+NOTES
 
-<% content_for :script do -%>
-  <%= define_insert_image_function @wiki %>
-  <%= define_create_link_function @wiki %>
+There are some plugins that might be nice, but they do not have language files,
+which causes xinha to pop up a really annoying error message when you are not using english.
 
-  xinha_init = function() {
-    xinha_editors = ["<%= wiki_body_html_id(@wiki)%>"];
+For now, just disable all the plugins that come with xinha.
 
-    xinha_config = new Xinha.Config();
+TODO
 
-    xinha_config.toolbar = [
-      ["formatblock", "bold", "italic", "underline", "strikethrough", "removeformat"],
-      ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
-      ["separator", "inserttable", "separator", "selectall", "insertimage", "createlink"]
-    ];
+* We should figure out how to disable xinha's tmp cache of the html content.
+  This can cause havok with the tabs, because both tabs are loaded with data.
 
-    xinha_plugins = [
-      {plugin:"InsertImage", url:"/javascripts/wiki/insert_image.js"},
-      {plugin:"CreateLink", url:"/javascripts/wiki/create_link.js"},
-    ];
-    if(!Xinha.loadPlugins(xinha_plugins, xinha_init)) return;
+CODE ATTIC
 
-    xinha_config.formatblock = {
+It would be nice to use these eventually:
+
+    "strikethrough", "removeformat", "selectall"
+
+    config.registerButton("cg-toggleadvanced", "Show/Hide Advanced Options", [_editor_url + "iconsets/Tango/ed_buttons_main.png",2,8], false, function(e) {
+      $$('.toolbarRow')[1].toggle();
+      e.sizeEditor();
+    });
+
+    config.formatblock = {
       "&mdash; Paragraph &mdash;": "",
       "Normal"     : "p",
       "Heading 1"  : "h1",
@@ -48,18 +33,51 @@
       "Preformatted" : "pre"
     };
 
-    xinha_config.showLoading = false;
-    xinha_config.autofocus = true;
 
-    xinha_config.pageStyleSheets = ["/stylesheets/html_editor/editable_html.css"];
+#############################%>
 
-    xinha_config.height = "450px"
-    xinha_editors = Xinha.makeEditors(xinha_editors,xinha_config,xinha_plugins);
-    Xinha.startEditors(xinha_editors);
+<% content_for :html_head do -%>
+  <% javascript_tag do -%>
+    _editor_lang = "<%= html_editor_language_code %>";
+  <% end -%>
+<% end -%>
+
+<% content_for :script do -%>
+  xinha_init = function() {
+    var editors = ["<%= wiki_body_html_id(@wiki)%>"];
+
+    var config = new Xinha.Config();
+
+    config.registerButton("cg-insertimage", "Insert/Modify Image", [_editor_url + "images/ed_buttons_main.png",6,3], false, <%=insert_image_function(@wiki)%>);
+
+    config.registerButton("cg-createlink", "Insert Web Link", [_editor_url + "images/ed_buttons_main.png",6,1], false, <%=create_link_function(@wiki)%>);
+
+    config.toolbar = [
+      ["formatblock", "bold", "italic", "underline", "strikethrough", "removeformat"],
+      ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
+      ["separator", "inserttable", "separator", "cg-insertimage", "cg-createlink"]
+    ];
+
+    config.formatblock = {
+      "&mdash; Paragraph &mdash;": "",
+      "Normal"     : "p",
+      "Heading 2"  : "h2",
+      "Heading 3"  : "h3"
+    };
+
+    config.showLoading = false;
+    config.autofocus = true;
+    config.flowToolbars = false;
+    config.pageStyleSheets = ["/stylesheets/html_editor/editable_html.css"];
+    config.height = "450px";
+
+    editors = Xinha.makeEditors(editors, config);
+    Xinha.startEditors(editors);
   };
   Xinha.addOnloadHandler(xinha_init);
 <% end -%>
-
 <div class="html_editor_wrapper" style="height: 454px">
-  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width: 100%; height: 447px"><%= greencloth_to_editable_html(@wiki.body, @page.owner_name || 'page') if load_content %></textarea>
+  <%# all hell breaks loose if textarea doesn't have an element style of width:100%.
+    # However, the hardcoded height is just laziness %>
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width: 100%; height: 447px"></textarea>
 </div>
