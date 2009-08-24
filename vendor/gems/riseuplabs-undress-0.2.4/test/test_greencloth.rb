@@ -5,6 +5,10 @@ class Undress::GreenClothTest < Test::Unit::TestCase
     assert_equal greencloth, Undress(html).to_greencloth
   end
 
+  def assert_not_renders_greencloth(greencloth, html)
+    assert_not_equal greencloth, Undress(html).to_greencloth
+  end
+
   context "parsing badly indented documents" do
     test "badly indent doc" do
       html = "<ul>
@@ -310,6 +314,12 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
   # links
   context "Converting html links to greencloth" do
+    test "simple link test" do
+      html = "<a href='url'>text</a>"
+      greencloth = "[text]"
+      assert_not_renders_greencloth greencloth,html
+    end
+
     test "convert a link to a wiki page inside a paragraph" do
       html = "<p>this is a <a href='/page/plain-link'>plain link</a> in some text</p>"
       greencloth = "this is a [plain link] in some text\n"
