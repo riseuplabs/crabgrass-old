@@ -30,17 +30,17 @@
   sync_function = "#{other_select}.value = #{this_select}.value"
 
 %>
-<div id='share_with_everyone_div'
+<div id='share_with_everyone_div'>
 <table>
 <tr class="everyone" >
-  <td> <%= check_box_tag 'share_with_everyone', 'share_with_everyone', check_box_options[:checked],
-  check_box_options %> </td>
-  <td style="width:100%">
-     All Users on the <%= Site.name %> Site
-  </td>
-  <td>
-    <%- if may_select_access_participation? -%>
-      <%= select_page_access 'share_with_everyone_access', {:blank => false, :selected => access, :disabled => disabled, :onchange => sync_function} %>
+<td> <%= check_box_tag 'share_with_everyone', 'share_with_everyone', check_box_options[:checked],
+check_box_options %> </td>
+<td style="width:100%">
+   All Users on the <%= Site.name %> Site
+</td>
+<td>
+  <%- if may_select_access_participation? -%>
+    <%= select_page_access 'share_with_everyone_access', {:blank => false, :selected => access, :disabled => disabled, :onchange => sync_function} %>
     <%- else -%>
       <%= hidden_field 'recipients['+recipient.name.gsub(/\+/,"%2b")+']', :access, :value => access %>
     <%- end -%>

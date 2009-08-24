@@ -1,42 +1,41 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'base_page/share_controller'
 
-# Re-raise errors caught by the controller.
-class BasePage::ShareController; def rescue_action(e) raise e end; end
-
-class BasePage::ShareControllerTest < Test::Unit::TestCase
+class BasePage::ShareControllerTest < ActionController::TestCase
   fixtures :users, :groups,
           :memberships, :user_participations, :group_participations,
-          :pages, :profiles
+          :pages, :profiles,
+          :sites
 
   #@@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   #@@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
-  def setup
-    @controller = BasePage::ShareController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    #FileUtils.mkdir_p(@@private)
-    #FileUtils.mkdir_p(@@public)
-  end
-
-  def teardown
-    #FileUtils.rm_rf(@@private)
-    #FileUtils.rm_rf(@@public)
-  end
 
   # tests that the share popup loads
   def test_show_share_popup
     login_as :blue
-    xhr :post, :show_popup, :name => 'share', :page_id => 1, :page => "640x480", :position => "60x20"
+    xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
     assert_response :success
+    assert_raises Test::Unit::AssertionFailedError do
+      assert_select 'input#share_with_everyone'
+    end
+  end
+
+  # tests that the share popup loads
+  def test_show_share_with_everyone
+    with_site :unlimited do
+      login_as :blue
+      xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
+      assert_response :success
+      assert_select 'input#share_with_everyone'
+    end
   end
 
   # tests thate the notify popup loads
   def test_show_notify_popup
     login_as :blue
-    xhr :post, :show_popup, :name => 'notify', :page_id => 1, :page => "640x480", :position => "60x20"
+    xhr :post, :show, :name => 'notify', :page_id => 1, :popup => true
     assert_response :success
+    assert_select 'div' # just so we check html syntax
   end
 
 
