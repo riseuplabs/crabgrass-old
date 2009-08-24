@@ -338,13 +338,10 @@ class GreenCloth < RedCloth::TextileDoc
   end
 
   def to_structure
-    {:document => {
-      :parent => nil,
-      :children => [],
-      :start_index => 0,
-      :end_index => length,
-      :header_end_index => 0}
-    }
+    # force extract headings being run
+    # prevents formatter mangled HTML from being used to find headings
+    extract_headings
+    self.green_tree.to_hash
   end
 
   # populates @headings, and then restores the string to its original form.

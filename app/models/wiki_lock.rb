@@ -21,29 +21,15 @@ class WikiLock < ActiveRecord::Base
   end
 
   def all_sections
-    require 'ruby-debug';debugger;1-1
     wiki.all_sections
   end
 
   def lock!(section, user)
-    raise WikiLockError, "can't lock a nonexistant section" unless all_sections.include? section
-
-    if locks[section] and locks[section][:by] != user.id
-      raise WikiLockError, "can't lock an already locked section"
-    end
-
     locks[section] = {:by => user.id, :expires_at => Time.now.utc + LOCKING_PERIOD}
     update_attributes!({:locks => locks})
   end
 
   def unlock!(section, user, opts = {})
-    raise WikiLockError, "can't unlock a nonexistant section" unless all_sections.include? section
-
-    # don't let people unlock this unless :break option is given
-    if locks[section] and locks[section][:by] != user.id and !opts[:break]
-      raise WikiLockError, "can't unlock a section this user hasn't locked"
-    end
-
     if section == :document
       # wipe away everything. safer in case of stray locks
       locks.clear

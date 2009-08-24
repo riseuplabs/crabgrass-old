@@ -25,7 +25,6 @@ module GreenclothStructure
     @green_tree ||= convert_to_tree(@headings)
   end
 
-
   protected
 
   # called by the formatter whenever it encounters h1..h4 tags

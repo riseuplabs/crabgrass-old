@@ -74,6 +74,8 @@ class GreenTree < Array
     return self.last
   end
 
+  # returns a list of siblings for this node (including itself)
+  # in their original order
   def siblings
     # this node has no siblings since it's a root node
     return [] if self.parent.nil?
@@ -81,11 +83,30 @@ class GreenTree < Array
     return self.parent.children
   end
 
+  # the sibling after this node
   def next_sibling
     # find self node among siblings
     self_index = siblings.index(self)
     # this will return the next sibling, or nil if we have no next siblings
     return siblings[self_index + 1] if self_index
+  end
+
+  # all children and parents for this node
+  def genealogy
+    ancestors + descendants
+  end
+
+  # parent and parents parent for this node (excluding itself)
+  def ancestors
+    return [] if parent.nil?
+    [parent] + parent.ancestors
+  end
+
+  # children and childrens children for this node (including itself)
+  def descendants
+    all = [self]
+    children.each { |child|  all += child.descendants }
+    all.compact
   end
 
   # returns the node after this one
@@ -122,7 +143,7 @@ class GreenTree < Array
     names = []
     names << self.name
     children.each do |child|
-      names.concat child.heading_names
+      names.concat child.section_names
     end
     names.compact
   end

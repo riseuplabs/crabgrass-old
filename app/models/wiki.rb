@@ -48,12 +48,17 @@ class Wiki < ActiveRecord::Base
 
   # need more control than composed of
   attr_reader :structure
-  # composed_of :structure, :class_name => "WikiExtension::WikiStructure",
-  #               :mapping => %w(raw_structure raw_structure)
 
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
+  # section locks should never be nil
+  alias_method :existing_section_locks, :section_locks
+  def section_locks(force_reload = false)
+    # current section_locks or create a new one if it doesn't exist
+    # will save the wiki (if wiki is a new_record?) and will create a new WikiLock
+    existing_section_locks(force_reload) || build_section_locks(:wiki => self)
+  end
 
   acts_as_versioned :if => :create_new_version? do
     def self.included(base)
@@ -62,9 +67,8 @@ class Wiki < ActiveRecord::Base
   end
 
   # only save a new version if the body has changed
-  # and was not previously nil
   def create_new_version? #:nodoc:
-    body_updated = body_changed? #and body_was.any?
+    body_updated = body_changed?
     recently_edited_by_same_user = !user_id_changed? and (updated_at and (updated_at > 30.minutes.ago))
 
     return versions.empty? || (body_updated && !recently_edited_by_same_user)
@@ -140,7 +144,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def structure
-    @structure ||= WikiExtension::WikiStructure.new(raw_structure)
+    @structure ||= WikiExtension::WikiStructure.new(raw_structure, body.to_s)
   end
 
   # sets the block used for rendering the body to html
@@ -219,22 +223,6 @@ class Wiki < ActiveRecord::Base
 
   protected
 
-  # hide the section_locks association from the world
-  # because we're creating a new WikiLocks object if there isn't one
-  # even worse, if the self is unsaved then creating section_locks will save self
-  # meaning that "w = Wiki.new; w.section_locks" would have the same effect as
-  # w = Wiki.new; w.section_locks = WikiLocks.new; w.save! w.section_locks.save!
-  # since it is not very polite to save a wiki without warning we hide section_locks
-  #
-  # the users of Wiki must "do: w = Wiki.new; w.lock!"
-  # this is polite, since the `!` (bang) on lock! warns the user something irreversible will happen
-  alias_method :existing_section_locks, :section_locks
-  def section_locks
-    # current section_locks or create a new one if it doesn't exist
-    # will save the wiki (if wiki is a new_record?) and will create a new WikiLock
-    existing_section_locks || create_section_locks(:wiki => self)
-  end
-
   # # used when wiki is rendered for deciding the prefix for some link urls
   def link_context
     if page and page.owner_name
@@ -265,8 +253,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def render_raw_structure
-    require 'ruby-debug';debugger;1-1
-    GreenCloth.new(body.to_s).document_structure
+    GreenCloth.new(body.to_s).to_structure
   end
 
   private

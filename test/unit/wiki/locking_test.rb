@@ -116,7 +116,7 @@ module Wiki::LockingTest
             end
 
             should "not raise WikiLockError when trying to break the lock for 'section-two'" do
-              assert_nothing_raised {@wiki.unlock! section_heading, @user, :break => true}
+              assert_nothing_raised {@wiki.unlock! 'section-two', @user, :break => true}
             end
           end
         end
@@ -125,7 +125,7 @@ module Wiki::LockingTest
           setup {@wiki.lock! :document, @blue}
 
           context "and then 'blue' unlocks the whole document" do
-            setup {@wiki.lock! :document, @blue}
+            setup {@wiki.unlock! :document, @blue}
 
             should "appear the same to 'blue' and to a different user" do
               assert_same_elements @wiki.sections_open_for(@blue), @wiki.sections_open_for(@red)
