@@ -9,8 +9,8 @@ class WikiTest < Test::Unit::TestCase
   fixtures :users, :wikis
 
   def setup
-    @blue = users(:blue)
-    @red = users(:red)
+    @user = users(:blue)
+    @different_user = users(:red)
   end
 
   def self.raw_structure_for_n_byte_body(n)
@@ -53,10 +53,10 @@ class WikiTest < Test::Unit::TestCase
     end
   end
 
-  # include Wiki::LockingTest
-  # include Wiki::RenderingTest
+  include Wiki::LockingTest
+  include Wiki::RenderingTest
   include Wiki::VersioningTest
-  # include Wiki::SavingTest
+  include Wiki::SavingTest
 
   should "Wiki have good associations" do
     assert(check_associations(Wiki))

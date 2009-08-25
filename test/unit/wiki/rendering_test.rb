@@ -84,8 +84,7 @@ module Wiki::RenderingTest
 
           should "save regenerated raw_structure" do
             assert_equal WikiTest.raw_structure_for_n_byte_body(6), Wiki.find(@wiki.id).read_attribute(:raw_structure)
-            # wiki versions doesn't serialize raw_structure
-            assert_equal WikiTest.raw_structure_for_n_byte_body(6).to_yaml, Wiki.find(@wiki.id).versions.last.read_attribute(:raw_structure)
+            assert_equal WikiTest.raw_structure_for_n_byte_body(6), Wiki.find(@wiki.id).versions.last.read_attribute(:raw_structure)
           end
 
           should "regenerate body html" do

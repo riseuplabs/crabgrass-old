@@ -6,8 +6,6 @@ module Wiki::VersioningTest
       context "A new Wiki" do
         setup do
           @wiki = Wiki.new
-          @user = users(:blue)
-          @different_user = users(:red)
         end
 
         context "before saving" do
@@ -71,7 +69,7 @@ module Wiki::VersioningTest
 
             should_have_latest_body initial_body
             should_have_latest_body_html ''
-            should_have_latest_raw_structure({})
+            should_have_latest_raw_structure(WikiTest.raw_structure_for_n_byte_body(0))
 
             context "and then saved with new body by a different user" do
               setup do

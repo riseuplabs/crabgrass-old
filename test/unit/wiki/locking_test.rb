@@ -10,7 +10,7 @@ module Wiki::LockingTest
 
         context "after locking" do
           setup do
-            assert_nothing_raised {@wiki.lock!(:document, @blue) }
+            assert_nothing_raised {@wiki.lock!(:document, @user) }
           end
 
           should_change("the number of saved wikis", :by => 1) { Wiki.count }
@@ -21,7 +21,7 @@ module Wiki::LockingTest
           end
 
           should "get a valid wiki lock object created" do
-            assert_equal @blue.id, WikiLock.find_by_wiki_id(@wiki.id).locks[:document][:by]
+            assert_equal @user.id, WikiLock.find_by_wiki_id(@wiki.id).locks[:document][:by]
           end
         end
       end
@@ -30,35 +30,38 @@ module Wiki::LockingTest
 
         setup do
           @wiki = wikis(:multi_section)
+
+          @user = users(:blue)
+          @different_user = users(:red)
         end
+
         should "raise WikiLockError when locking a non-existant section" do
-          assert_raises(WikiLockError) {@wiki.lock! 'bad-nonexistant-section-header', @blue}
+          assert_raises(WikiLockError) {@wiki.lock! 'bad-nonexistant-section-header', @user}
         end
 
         should "raise WikiLockError when unlocking a non-existant section" do
-          assert_raises(WikiLockError) {@wiki.unlock! 'bad-nonexistant-section-header', @blue}
+          assert_raises(WikiLockError) {@wiki.unlock! 'bad-nonexistant-section-header', @user}
         end
 
-        context "when user 'blue' locks 'section-two'" do
-          setup { @wiki.lock! 'section-two', @blue }
+        context "when a user locks 'section-two'" do
+          setup { @wiki.lock! 'section-two', @user }
 
 
           context "and that user unlocks 'section-two'" do
-            setup { @wiki.unlock! 'section-two', @blue }
+            setup { @wiki.unlock! 'section-two', @user }
 
             should "appear the same to that user and to a different user" do
-              assert_same_elements @wiki.sections_open_for(@blue), @wiki.sections_open_for(@red)
-              assert_same_elements @wiki.sections_locked_for(@blue), @wiki.sections_locked_for(@red)
+              assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user)
+              assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user)
             end
 
             should "appear to a different user that all sections can be edited and none are locked" do
-              assert_same_elements @wiki.sections_open_for(@red), @wiki.all_sections
-              assert @wiki.sections_locked_for(@red).empty?
+              assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections
+              assert @wiki.sections_locked_for(@different_user).empty?
             end
           end
 
           context "for that user" do
-            setup {@user = @blue}
             test_open_sections = [:document, 'top-oversection',
               'section-two', 'subsection-for-section-two', 'section-one', 'second-oversection']
 
@@ -80,7 +83,7 @@ module Wiki::LockingTest
           end
 
           context "for a different user" do
-            setup {@user = @red}
+            setup {@user = @different_user}
 
             test_closed_sections = [:document, 'top-oversection', 'section-two', 'subsection-for-section-two']
 
@@ -121,74 +124,73 @@ module Wiki::LockingTest
           end
         end
 
-        context "when a user 'blue' locks the whole document" do
-          setup {@wiki.lock! :document, @blue}
+        context "when a user locks the whole document" do
+          setup {@wiki.lock! :document, @user}
 
-          context "and then 'blue' unlocks the whole document" do
-            setup {@wiki.unlock! :document, @blue}
+          context "and then that user unlocks the whole document" do
+            setup {@wiki.unlock! :document, @user}
 
-            should "appear the same to 'blue' and to a different user" do
-              assert_same_elements @wiki.sections_open_for(@blue), @wiki.sections_open_for(@red)
-              assert_same_elements @wiki.sections_locked_for(@blue), @wiki.sections_locked_for(@red)
+            should "appear the same to that user and to a different user" do
+              assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user)
+              assert_same_elements @wiki.sections_locked_for(@user), @wiki.sections_locked_for(@different_user)
             end
 
             should "appear to a different user that all sections can be edited and none are locked" do
-              assert_same_elements @wiki.sections_open_for(@red), @wiki.all_sections
-              assert @wiki.sections_locked_for(@red).empty?
+              assert_same_elements @wiki.sections_open_for(@different_user), @wiki.all_sections
+              assert @wiki.sections_locked_for(@different_user).empty?
             end
           end
 
-          should "appear to 'blue' that all sections can be edited and none are locked" do
-            assert_same_elements @wiki.sections_open_for(@blue), @wiki.all_sections
-            assert @wiki.sections_locked_for(@blue).empty?
+          should "appear to that user that all sections can be edited and none are locked" do
+            assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections
+            assert @wiki.sections_locked_for(@user).empty?
           end
 
           should "appear to a different user that no sections can be edited and all are locked" do
-            assert @wiki.sections_open_for(@red).empty?
-            assert_same_elements @wiki.sections_locked_for(@red), @wiki.all_sections
+            assert @wiki.sections_open_for(@different_user).empty?
+            assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections
           end
 
           should "raise an exception (and keep the same state) when a different user tries to lock the document" do
-            assert_raises(WikiLockError) {@wiki.lock! :document, @red}
+            assert_raises(WikiLockError) {@wiki.lock! :document, @different_user}
 
-            assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@blue)
-            assert @wiki.sections_open_for(@red).empty?
-            assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@red)
+            assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user)
+            assert @wiki.sections_open_for(@different_user).empty?
+            assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user)
           end
 
           should "raise an exception (and keep the same state) when a different user tries to lock a section" do
-            assert_raises(WikiLockError) {@wiki.lock! 'section-one', @red}
+            assert_raises(WikiLockError) {@wiki.lock! 'section-one', @different_user}
 
-            assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@blue)
-            assert @wiki.sections_open_for(@red).empty?
-            # require 'ruby-debug';debugger;1-1
-            assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@red)
+            assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user)
+            assert @wiki.sections_open_for(@different_user).empty?
+            assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user)
           end
 
           context "and that user locks a 'section-one'" do
-            setup {@wiki.lock! 'section-one', @blue}
+            setup {@wiki.lock! 'section-one', @user}
 
             should "appear to that user that all sections can be edited and none are locked" do
-              assert_same_elements @wiki.sections_open_for(@blue), @wiki.all_sections
-              assert @wiki.sections_locked_for(@blue).empty?
+              assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections
+              assert @wiki.sections_locked_for(@user).empty?
             end
 
             should "appear to a different user that no sections can be edited and all are locked" do
-              assert @wiki.sections_open_for(@red).empty?
-              assert_same_elements @wiki.sections_locked_for(@red), @wiki.all_sections
+              assert @wiki.sections_open_for(@different_user).empty?
+              assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections
             end
 
             context "and then unlocks 'section-one'" do
-              setup {@wiki.lock! 'section-one', @blue}
+              setup {@wiki.lock! 'section-one', @user}
 
               should "appear to that user that all sections can be edited and none are locked" do
-                assert_same_elements @wiki.sections_open_for(@blue), @wiki.all_sections
-                assert @wiki.sections_locked_for(@blue).empty?
+                assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections
+                assert @wiki.sections_locked_for(@user).empty?
               end
 
               should "appear to a different user that no sections can be edited and all are locked" do
-                assert @wiki.sections_open_for(@red).empty?
-                assert_same_elements @wiki.sections_locked_for(@red), @wiki.all_sections
+                assert @wiki.sections_open_for(@different_user).empty?
+                assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections
               end
             end
           end

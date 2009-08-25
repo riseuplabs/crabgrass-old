@@ -338,7 +338,6 @@ class GreenCloth < RedCloth::TextileDoc
   end
 
   def to_structure
-    return {} if self.blank?
     # force extract headings being run
     # prevents formatter mangled HTML from being used to find headings
     extract_headings
