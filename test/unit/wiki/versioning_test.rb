@@ -4,7 +4,11 @@ module Wiki::VersioningTest
   def self.included(base)
     base.instance_eval do
       context "A new Wiki" do
-        setup {@wiki = Wiki.new }
+        setup do
+          @wiki = Wiki.new
+          @user = users(:blue)
+          @different_user = users(:red)
+        end
 
         context "before saving" do
           should "have no versions" do
@@ -12,37 +16,33 @@ module Wiki::VersioningTest
           end
         end
 
-        context "saved with a body by user 'blue'" do
+        # test chat changing body updates versions only when
+        # a new user does it
+        context "saved with a body by a user" do
           setup do
-            @wiki.body = 'hi'
-            @wiki.user = users(:blue)
-            assert_nothing_raised { @wiki.save! }
+            @wiki.update_attributes!(:body => 'hi', :user => @user)
           end
 
           should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
 
           context "and then saved with the same body by different user" do
             setup do
-              @wiki.user = users(:red)
-              assert_nothing_raised { @wiki.save! }
+              @wiki.update_attributes!(:user => @different_user)
             end
 
             should_not_change("versions count") { @wiki.versions.size }
-            should_have_latest_body('hi')
-            should_have_latest_body_html '<p>hi<p>'
           end
 
           context "and saved with a new body by a different user" do
             setup do
-              @wiki.body = 'hi there'
-              @wiki.user = users(:red)
-              assert_nothing_raised { @wiki.save! }
+              @wiki.update_attributes!(:body => 'hi there', :user => @different_user)
             end
 
             should_change("versions count", :from => 1, :to => 2) { @wiki.versions.size }
 
             should_have_latest_body 'hi there'
-            should_have_latest_body_html '<p>hi there<p>'
+            should_have_latest_body_html '<p>hi there</p>'
+            should_have_latest_raw_structure(WikiTest.raw_structure_for_n_byte_body(8))
           end
 
           context "and saved with a new body by the same user" do
@@ -55,86 +55,70 @@ module Wiki::VersioningTest
             should_not_change("versions count") { @wiki.versions.size }
 
             should_have_latest_body 'hey you'
-            should_have_latest_body_html '<p>hey you<p>'
+            should_have_latest_body_html '<p>hey you</p>'
+            should_have_latest_raw_structure(raw_structure_for_n_byte_body(7))
           end
         end
 
-        context "saved with '' (empty string) body by user 'blue'" do
-          setup do
-            @wiki.body = ''
-            @wiki.user = users(:blue)
-            assert_nothing_raised { @wiki.save! }
-          end
-
-          should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
-
-          should_have_latest_body ''
-          should_have_latest_body_html ''
-          should_have_latest_raw_structure({})
-
-          context "and then saved with new body by a different user" do
+        ### wiki should not create new versions on top of a blank version
+        ['', nil].each do |initial_body|
+          context "saved with #{initial_body.inspect} body by a user" do
             setup do
-              @wiki.body = 'oi'
-              @wiki.user = users(:red)
-              assert_nothing_raised { @wiki.save! }
+              @wiki.update_attributes!(:body => initial_body, :user => @user)
             end
 
-            should_not_change("versions count") { @wiki.versions.size }
+            should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
 
-            should_have_latest_body 'oi'
-            should_have_latest_body_html '<p>oi</p>'
+            should_have_latest_body initial_body
+            should_have_latest_body_html ''
+            should_have_latest_raw_structure({})
 
-            should_have_latest_raw_structure({:document => {
-              :parent => nil,
-              :children => [],
-              :start_index => 0,
-              :end_index => 1,
-              :header_end_index => 0}})
-          end
+            context "and then saved with new body by a different user" do
+              setup do
+                @wiki.update_attributes!(:body => 'oi', :user => @user)
+              end
 
-        end
-
-        context "saved with nil body by user 'blue'" do
-          setup do
-            @wiki.body = nil
-            @wiki.user = users(:blue)
-            assert_nothing_raised { @wiki.save! }
-          end
-
-          should_change("versions count", :from => 0, :to => 1) { @wiki.versions.size }
-
-          should_have_latest_body nil
-          should_have_latest_body_html ''
-          should_have_latest_raw_structure({})
-
-          context "and then saved with new body by a different user" do
-            setup do
-              @wiki.body = 'oi'
-              @wiki.user = users(:red)
-              assert_nothing_raised { @wiki.save! }
+              should_not_change("versions count") { @wiki.versions.size }
+              should_have_latest_body 'oi'
             end
 
-            should_not_change("versions count") { @wiki.versions.size }
+            context "and then saved with new body by the same user" do
+              setup do
+                @wiki.update_attributes!(:body => 'oi', :user => @user)
+              end
 
-
-            should_have_latest_body 'oi'
-            should_have_latest_body_html '<p>oi</p>'
-
-            should_have_latest_raw_structure({:document => {
-              :parent => nil,
-              :children => [],
-              :start_index => 0,
-              :end_index => 1,
-              :header_end_index => 0}})
+              should_not_change("versions count") { @wiki.versions.size }
+              should_have_latest_body 'oi'
+            end
           end
         end
+
+        context "saved with 'oi', '' (blank body) and 'vey' bodies by alternating users" do
+          setup do
+            @wiki.update_attributes!(:body => 'oi', :user => @user)
+            @wiki.update_attributes!(:body => '', :user => @different_user)
+            @wiki.update_attributes!(:body => 'vey', :user => @user)
+          end
+
+          should_change("versions count", :from => 0, :to => 2) { @wiki.versions.size }
+
+          should "have only 'oi' and 'vey' versions" do
+            assert_equal ['oi', 'vey'], @wiki.versions.collect(&:body)
+          end
+
+          should "have the right user for its versions" do
+            assert_equal [@user, @user], @wiki.versions.collect(&:user)
+          end
+        end
+
+
 
         context "with four versions" do
           setup do
-            @wiki = Wiki.create! :body => '1111', :user => users(:blue)
-            @wiki.update_document!(users(:red), 1, '2222')
-            @wiki.update_document!(users(:green), 2, '3333')
-            @wiki.update_document!(users(:blue), 3, '4444')
+            @wiki = Wiki.create! :body => '1111', :user => @user
+            @wiki.update_document!(@different_user, 1, '2222')
+            @wiki.update_document!(@user, 2, '3333')
+            @wiki.update_document!(@different_user, 3, '4444')
           end
           should_change("versions count", :from => 0, :to => 4) { @wiki.versions.size }
 

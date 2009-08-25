@@ -21,6 +21,10 @@ module WikiExtension
       find(section).sub_markup(section_body)
     end
 
+    def get_body(section)
+      find(section).markup
+    end
+
     protected
 
     def find(section)

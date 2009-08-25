@@ -13,6 +13,15 @@ class WikiTest < Test::Unit::TestCase
     @red = users(:red)
   end
 
+  def self.raw_structure_for_n_byte_body(n)
+    {
+      :name => nil,
+      :children => [],
+      :start_index => 0,
+      :end_index => n - 1,
+      :heading_level => 0
+    }
+  end
 
   def self.should_have_latest_body body
     should "have the latest body" do
@@ -44,9 +53,9 @@ class WikiTest < Test::Unit::TestCase
     end
   end
 
-  include Wiki::LockingTest
+  # include Wiki::LockingTest
   # include Wiki::RenderingTest
-  # include Wiki::VersioningTest
+  include Wiki::VersioningTest
   # include Wiki::SavingTest
 
   should "Wiki have good associations" do

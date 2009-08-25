@@ -52,6 +52,7 @@ class Wiki < ActiveRecord::Base
   before_save :update_body_html_and_structure
   before_save :update_latest_version_record
 
+
   # section locks should never be nil
   alias_method :existing_section_locks, :section_locks
   def section_locks(force_reload = false)
@@ -63,15 +64,27 @@ class Wiki < ActiveRecord::Base
   acts_as_versioned :if => :create_new_version? do
     def self.included(base)
       base.belongs_to :user
+      base.serialize :raw_structure, Hash
     end
   end
+  # versions are so tightly coupled that wiki.versions should always be up to date
+  # this must be declared after acts_as_versioned, since AAV declares its own after_save
+  # callback that create versions
+  after_save :reload_versions
 
   # only save a new version if the body has changed
   def create_new_version? #:nodoc:
     body_updated = body_changed?
-    recently_edited_by_same_user = !user_id_changed? and (updated_at and (updated_at > 30.minutes.ago))
+    recently_edited_by_same_user = !user_id_changed? && (updated_at and (updated_at > 30.minutes.ago))
 
-    return versions.empty? || (body_updated && !recently_edited_by_same_user)
+    latest_version_has_blank_body = self.versions.last && self.versions.last.body.blank?
+
+    # always create a new version if we have no versions at all
+    # don't create a new version if
+    #   * a new version would be on top of an old blank version (we don't want to store blank versions)
+    #   * the same user is making several edits in sequence
+    #   * the body hasn't changed
+    return (versions.empty? or (body_updated and !recently_edited_by_same_user and !latest_version_has_blank_body))
   end
 
   # returns first version since +time+
@@ -87,7 +100,6 @@ class Wiki < ActiveRecord::Base
     self.body = version.body
     self.user = user
     save!
-    smart_save!(:body => version.body, :user => user)
   end
 
   # reverts and deletes all versions after the reverted version.
@@ -96,20 +108,24 @@ class Wiki < ActiveRecord::Base
     destroy_versions_after(version_number)
   end
 
+  # calls update_section! with :document section
   def update_document!(user, current_version, text)
     update_section!(:document, user, current_version, text)
   end
 
+  # similar to update_attributes!, but only for text
+  # this method will perform unlocking and will check version numbers
+  # it will skip version_checking if current_version is nil (useful for section editing)
   def update_section!(section, user, current_version, text)
-    if self.version > current_version
+    if current_version and self.version > current_version
       raise ErrorMessage.new("can't save your data, someone else has saved new changes first.")
     end
 
     if sections_locked_for(user).include? section
-      raise ErrorMessage.new("Can't save '#{section}' since someone has locked it.")
+      raise WikiLockError.new("Can't save '#{section}' since someone has locked it.")
     end
 
-    set_body_from_section(section, text)
+    set_body_for_section(section, text)
     unlock!(section, user)
 
     self.user = user
@@ -184,6 +200,11 @@ class Wiki < ActiveRecord::Base
               :raw_structure => read_attribute(:raw_structure),
               :user => user,
               :updated_at => Time.now)
+  end
+
+  # reload the association
+  def reload_versions
+    self.versions(true)
   end
 
   ##

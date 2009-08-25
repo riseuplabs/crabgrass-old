@@ -5,36 +5,51 @@ module Wiki::SavingTest
       context "A new Wiki locked by an user" do
         setup do
           @wiki = Wiki.create :body => 'watermelon'
-          @wiki.lock :document, users(:blue)
+          @wiki.lock! :document, users(:blue)
         end
 
-        should "fail to save with no user set" do
-          assert_raises(ActiveRecord::RecordInvalid) { @wiki.save! }
+        should "update document for that user" do
+          assert_nothing_raised {@wiki.update_document!(users(:blue), 1, 'cantelope')}
+          assert_equal 'cantelope', @wiki.reload.body
         end
 
-        should "fail to save if version is set too old" do
-          w.update_attributes! :body => 'catelope', :version => -1, :user => users(:blue)
+        should "fail update document when the version is too old" do
+          assert_raises(ErrorMessage) {@wiki.update_document!(users(:blue), 0, 'cantelope')}
+          assert_equal 'watermelon', @wiki.reload.body
         end
 
-        should "fail to save when user is set to non locking user" do
-          assert_raises(WikiLockException) do
-            w.update_attributes! :body => 'catelope', :user => users(:red)
-          end
+        should "update document when the version is too new" do
+          assert_nothing_raised {@wiki.update_document!(users(:blue), 3, 'cantelope')}
+          assert_equal 'cantelope', @wiki.reload.body
         end
 
-        should "save when that user is set as wiki owner" do
-          assert_nothing_raised do
-            w.update_attributes! :body => 'catelope', :user => users(:blue)
-          end
+        should "update document when the version is nil" do
+          assert_nothing_raised {@wiki.update_document!(users(:blue), nil, 'cantelope')}
+          assert_equal 'cantelope', @wiki.reload.body
         end
 
-        should "save when version is set correctly" do
-          assert_nothing_raised do
-            w.update_attributes! :body => 'catelope', :user => users(:blue), :version => 0
-          end
+        should "fail to update document for a different user" do
+          assert_raises(WikiLockError) {@wiki.update_document!(users(:green), 1, 'cantelope')}
+          assert_equal 'watermelon', @wiki.reload.body
         end
       end
 
+      context "A new multisection Wiki locked by an user" do
+        setup do
+          @wiki = Wiki.create :body => "h1. watermelon\n\nh2. seedless"
+          @wiki.lock! :document, users(:blue)
+        end
+
+        should "update a section for that user" do
+          assert_nothing_raised {@wiki.update_section!('watermelon', users(:blue), 1, 'h1. cantelope')}
+          assert_equal "h1. cantelope", @wiki.reload.body
+        end
+
+        should "fail to update a section for a different user" do
+          assert_raises(WikiLockError) {@wiki.update_section!('watermelon', users(:red), 1, 'h1. cantelope')}
+          assert_equal "h1. watermelon\n\nh2. seedless", @wiki.reload.body
+        end
+      end
     end
   end
 end

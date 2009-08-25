@@ -3,17 +3,6 @@ require File.dirname(__FILE__) + '/../../test_helper'
 module Wiki::RenderingTest
   def self.included(base)
     base.instance_eval do
-
-      def raw_structure_for_n_byte_body(n)
-        {:document => {
-          :parent => nil,
-          :children => [],
-          :start_index => 0,
-          :end_index => n,
-          :header_end_index => 0}
-        }
-      end
-
       context "A new Wiki" do
          setup {@wiki = Wiki.new :body => "a"}
 
@@ -37,7 +26,7 @@ module Wiki::RenderingTest
          end
 
          should "have saved the correct raw_structure" do
-           assert_equal  raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
+           assert_equal  WikiTest.raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
          end
 
         context "after updating the body without saving" do
@@ -48,7 +37,7 @@ module Wiki::RenderingTest
           end
 
           should "have the correct raw_structure" do
-             assert_equal  raw_structure_for_n_byte_body(2), @wiki.raw_structure
+             assert_equal  WikiTest.raw_structure_for_n_byte_body(2), @wiki.raw_structure
           end
 
           should "not get saved when reading body_html" do
@@ -62,7 +51,7 @@ module Wiki::RenderingTest
             @wiki.raw_structure
 
             assert_equal "a", Wiki.find(@wiki.id).read_attribute(:body)
-            assert_equal raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
+            assert_equal WikiTest.raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
           end
         end
       end
@@ -78,7 +67,7 @@ module Wiki::RenderingTest
         end
 
         should "render raw_structure for that body" do
-          assert_equal raw_structure_for_n_byte_body(6), @wiki.raw_structure
+          assert_equal WikiTest.raw_structure_for_n_byte_body(6), @wiki.raw_structure
         end
 
         context "after clearing body_html and raw_structure and saving" do
@@ -94,9 +83,9 @@ module Wiki::RenderingTest
           end
 
           should "save regenerated raw_structure" do
-            assert_equal raw_structure_for_n_byte_body(6), Wiki.find(@wiki.id).read_attribute(:raw_structure)
+            assert_equal WikiTest.raw_structure_for_n_byte_body(6), Wiki.find(@wiki.id).read_attribute(:raw_structure)
             # wiki versions doesn't serialize raw_structure
-            assert_equal raw_structure_for_n_byte_body(6).to_yaml, Wiki.find(@wiki.id).versions.last.read_attribute(:raw_structure)
+            assert_equal WikiTest.raw_structure_for_n_byte_body(6).to_yaml, Wiki.find(@wiki.id).versions.last.read_attribute(:raw_structure)
           end
 
           should "regenerate body html" do
@@ -104,7 +93,7 @@ module Wiki::RenderingTest
           end
 
           should "regenerate raw_structure" do
-            assert_equal raw_structure_for_n_byte_body(6), @wiki.raw_structure
+            assert_equal WikiTest.raw_structure_for_n_byte_body(6), @wiki.raw_structure
           end
 
         end
