@@ -40,6 +40,10 @@ module Wiki::SavingTest
           @wiki.lock! :document, users(:blue)
         end
 
+        should "be able to get section markup" do
+          assert_equal "h2. seedless", @wiki.get_body_for_section('seedless')
+        end
+
         should "update a section for that user" do
           assert_nothing_raised {@wiki.update_section!('watermelon', users(:blue), 1, 'h1. cantelope')}
           assert_equal "h1. cantelope", @wiki.reload.body
