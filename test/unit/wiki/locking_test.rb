@@ -47,6 +47,14 @@ module Wiki::LockingTest
           setup { @wiki.lock! 'section-two', @user }
 
 
+          should "return 'section-two' from section_edited_by" do
+            assert_equal 'section-two', @wiki.section_edited_by(@user)
+          end
+
+          should "be nil from section_edited_by for a section_edited_by user" do
+            assert_nil @wiki.section_edited_by(@different_user)
+          end
+
           context "and that user unlocks 'section-two'" do
             setup { @wiki.unlock! 'section-two', @user }
 
@@ -71,8 +79,8 @@ module Wiki::LockingTest
                   assert !@wiki.sections_locked_for(@user).include?(section_heading)
                 end
 
-                should "raise no errors when locking #{section_heading.inspect} section" do
-                  assert_nothing_raised {@wiki.lock! section_heading, @user}
+                should "raise WikiLockError when locking #{section_heading.inspect} section" do
+                  assert_raises(WikiLockError) {@wiki.lock! section_heading, @user}
                 end
 
                 should "raise no errors when unlocking #{section_heading.inspect} section" do
@@ -110,10 +118,7 @@ module Wiki::LockingTest
               assert !@wiki.sections_locked_for(@user).include?('second-oversection')
             end
 
-            should "raise no errors when locking and unlocking neighboring section" do
-              assert_nothing_raised {@wiki.lock! 'section-one', @user }
-              assert_nothing_raised {@wiki.lock! 'second-oversection', @user }
-
+            should "raise no errors when unlocking neighboring section" do
               assert_nothing_raised {@wiki.unlock! 'section-one', @user }
               assert_nothing_raised {@wiki.unlock! 'second-oversection', @user }
             end
@@ -167,31 +172,9 @@ module Wiki::LockingTest
             assert_same_elements @wiki.all_sections, @wiki.sections_locked_for(@different_user)
           end
 
-          context "and that user locks a 'section-one'" do
-            setup {@wiki.lock! 'section-one', @user}
-
-            should "appear to that user that all sections can be edited and none are locked" do
-              assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections
-              assert @wiki.sections_locked_for(@user).empty?
-            end
-
-            should "appear to a different user that no sections can be edited and all are locked" do
-              assert @wiki.sections_open_for(@different_user).empty?
-              assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections
-            end
-
-            context "and then unlocks 'section-one'" do
-              setup {@wiki.lock! 'section-one', @user}
-
-              should "appear to that user that all sections can be edited and none are locked" do
-                assert_same_elements @wiki.sections_open_for(@user), @wiki.all_sections
-                assert @wiki.sections_locked_for(@user).empty?
-              end
-
-              should "appear to a different user that no sections can be edited and all are locked" do
-                assert @wiki.sections_open_for(@different_user).empty?
-                assert_same_elements @wiki.sections_locked_for(@different_user), @wiki.all_sections
-              end
+          should "raise a WikiLockError if that user tries to lock another section" do
+            assert_raises(WikiLockError) do
+              @wiki.lock! 'section-one', @user
             end
           end
         end

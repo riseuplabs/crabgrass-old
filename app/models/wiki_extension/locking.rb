@@ -2,7 +2,13 @@ module WikiExtension
   module Locking
 
     def lock!(section, user)
-      raise WikiLockError, "can't lock a nonexistant section" unless section_exists? section
+      unless section_exists? section
+        raise WikiLockError, "can't lock a nonexistant section"[:cant_lock_nonexistant_section]
+      end
+
+      if section_edited_by?(user)
+        raise WikiLockError, "you already have a section locked. Can't lock another."[:cant_lock_another_section]
+      end
 
       if may_modify_lock?(section, user)
         section_locks.lock!(section, user)
@@ -13,7 +19,9 @@ module WikiExtension
 
     # opts can be :force => true :: won't throw a WikiLockException if user doesn't own the lock
     def unlock!(section, user, opts = {})
-      raise WikiLockError, "can't unlock a nonexistant section" unless section_exists? section
+      unless section_exists? section
+        raise WikiLockError, "can't unlock a nonexistant section"[:cant_unlock_nonexistant_section]
+      end
 
       # don't let other people unlock this unless :break option is given
       if may_modify_lock?(section, user) or opts[:break]
@@ -42,6 +50,13 @@ module WikiExtension
     def sections_open_for(user)
       all_sections - sections_locked_for(user)
     end
+
+    # a section that +user+ is currently editing or _nil_
+    def section_edited_by(user)
+      section_locks.section_locked_by(user)
+    end
+
+    alias section_edited_by? section_edited_by
 
     protected
 

@@ -57,6 +57,12 @@ class WikiLock < ActiveRecord::Base
     all_sections - sections_open_for(user)
   end
 
+  # returns the first section locked by user, or nil
+  def section_locked_by(user)
+    section, lock = locks.find {|section, lock| lock[:by] == user.id}
+    section
+  end
+
 
   protected
   # this should be called every time WikiLocks is loaded from db
