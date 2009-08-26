@@ -198,6 +198,19 @@ class PageSharingTest < Test::Unit::TestCase
     end
   end
 
+  def test_only_send_notify_message_to_the_recipient
+    creator = users(:blue)
+    users = [users(:dolphin), users(:penguin), users(:iguana)]
+    additional_user = users(:kangaroo)
+
+    page = Page.create!(:title => 'title', :user => creator, :share_with => users, :access => 'admin')
+
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 1, 'should only send to 1 user') do
+      creator.share_page_with!(page, additional_user, :send_notice => true, :send_message => 'hi')
+      page.save!
+    end
+  end
+
   # share with a committee you are a member of, but you are not a member of the parent group.
   def test_share_with_committee
     owner = users(:penguin)

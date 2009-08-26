@@ -1,12 +1,19 @@
-<%# 
-  # This partial displays the list of recipients that is generated when you 
-  # are in the process of adding recipients to a page. 
-  # 
+<%#
+  # This partial displays the list of recipients that is generated when you
+  # are in the process of adding recipients to a page.
+  #
   # arguments:
   # empty_box -- boolean. If true, then hide the current participants
   #
+  # NOTE: for now, I have made empty_box always true. Why? Imagine this scenario:
+  # (1) a page has x & y users. (2) you go to share with user z. (3) you click the
+  # box to send user z a message. (4) you click share.
+  # This message will now be sent to users x, y, and z, even though you only wanted
+  # it to go to user z.
+  # So, for now, disable showing current participants.
+  #
   # %>
-<% empty_box = false if empty_box.nil? %>
+<% empty_box = true %>
 <table><tbody class="autocomplete_results_table" id="share_page_recipient_table">
 <% if !empty_box %>
   <% if @page && @page.recipients.any? -%>
@@ -14,7 +21,7 @@
     <%= render :partial => 'base_page/share/recipient',
         :locals => {:recipient => recipient, :access => access.to_s, :unsaved => false} %>
     <% end -%>
-  <% end -%> 
+  <% end -%>
 <% end %>
 </tbody></table>
 
