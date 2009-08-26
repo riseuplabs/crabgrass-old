@@ -56,12 +56,20 @@
     </ul>
   <% end -%>
 
-  <% if @page.user_participations.any? -%>
+% if (uparts = @page.sorted_user_participations(:limit => 6)).any?
+%   if uparts.length >= 6
+%     @more = true
+%     uparts.pop
+%   end
     <h3><%= "People"[:people] %></h3>
     <ul class='side_list names'>
-      <% @page.sorted_user_participations.each do |user_part| %>
+%     uparts.each do |user_part|
         <li><%= link_to_user_participation(user_part) %></li>
-      <% end -%>
+%     end
+%     if @more
+        <%= details_line('more') %>
+%     end
     </ul>
-  <% end -%>
+%  end
 </div>
+

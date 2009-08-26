@@ -58,20 +58,21 @@ module PageExtension::Users
   end
 
   # A list of the user participations, with the following properties:
-  # * sorted first by access level
-  # * sorted second by username
-  # * limited to users who have access OR attribute set
-  def sorted_user_participations(attribute=:changed_at)
-    self.users # make sure all users are fetched
-    user_participations.select {|upart|
-      upart.access or (attribute and upart.send(attribute))
-    }.sort {|a,b|
-      if a.access == b.access
-        a.user.login <=> b.user.login
-      else
-        (a.access||100) <=> (b.access||100)
-      end
-    }
+  # * sorted first by access level, second by changed_at, third by login.
+  # * limited to users who have access OR changed_at
+  # This uses a limited query, otherwise it takes forever on pages with many participants.
+  def sorted_user_participations(options={})
+    options.reverse_merge!(
+      :order=>'access ASC, changed_at DESC, users.login ASC',
+      :limit => (options[:page] ? nil : 31),
+      :include => :user,
+      :conditions => 'access IS NOT NULL OR changed_at IS NOT NULL'
+    )
+    if options[:page]
+      self.user_participations.paginate(:all, options);
+    else
+      self.user_participations.find(:all, options);
+    end
   end
 
   # used for sphinx index
