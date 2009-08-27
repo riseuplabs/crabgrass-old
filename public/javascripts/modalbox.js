@@ -182,7 +182,11 @@ Modalbox.Methods = {
 	confirm: function(message, options) {
 		options = $H(this.strings).merge(options).merge({'message':message})
 		if (options.get('action')) {
-			var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			if (options.get('method') == "delete") {
+				var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="POST"><input type="hidden" value="#{method}" name="_method"/><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			} else {
+				var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			}
 		} else if (options.get('ok_function')) {
 			var html = '<div class="MB_confirm"><p>#{message}</p><form><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.back()" value="#{cancel}" /><input type="button" onclick="#{ok_function}" value="#{ok}" /></form></div>';
 		}
