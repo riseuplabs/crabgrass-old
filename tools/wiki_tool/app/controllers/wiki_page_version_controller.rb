@@ -53,9 +53,10 @@ class WikiPageVersionController < BasePageController
   def revert
     version = @wiki.versions.find_by_version params[:id]
     raise ErrorMessage.new('version not found') unless version
-    @wiki.body = version.body
-    @wiki.lock(Time.zone.now, current_user)
-    render :template => 'wiki_page/edit'
+    @wiki.revert_to_version(version.version, current_user)
+    # blow away all locks
+    @wiki.unlock!(:document, current_user, :break => true)
+    redirect_to page_url(@page, :action => 'show')
   rescue Exception => exc
     flash_message_now :exception => exc
   end
@@ -75,7 +76,7 @@ class WikiPageVersionController < BasePageController
   # before filter
   def setup_view
     @show_attach = true
-    unless @wiki.nil? or @wiki.editable_by?(current_user)
+    unless @wiki.nil? or @wiki.document_open_for?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
     end
   end
