@@ -12,7 +12,6 @@ class WikiPageVersionController < BasePageController
 
   def show
     @version = @wiki.versions.find_by_version(params[:id])
-    @version.render_html{|body| render_wiki_html(body, @page.owner_name)} if @version
   end
 
   def next
@@ -40,9 +39,6 @@ class WikiPageVersionController < BasePageController
     @new = @wiki.versions.find_by_version(new_id)
 
     if @old and @new
-      @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-      @new.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
       @old_markup = @old.body_html || ''
       @new_markup = @new.body_html || ''
       @difftext = HTMLDiff.diff( @old_markup , @new_markup)
