@@ -132,8 +132,40 @@ module Wiki::LockingTest
         context "when a user locks the whole document" do
           setup {@wiki.lock! :document, @user}
 
+          should "appear that this user is a locker_of document" do
+            assert_equal @user, @wiki.locker_of(:document)
+          end
+
+          should "appear that this user is a locker_of a subsection" do
+            assert_equal @user, @wiki.locker_of('section-one')
+          end
+
+          should "appear to the same user that document is open for editing" do
+            assert @wiki.document_open_for?(@user)
+          end
+
+          should "appear to the same user that a document subsection is open for editing" do
+            assert @wiki.section_open_for?('section-one', @user)
+          end
+
+          should "appear to a different user that document is locked for editing" do
+            assert @wiki.document_locked_for?(@different_user)
+          end
+
+          should "appear to a different user that a document subsection is locked for editing" do
+            assert @wiki.section_locked_for?('section-one', @different_user)
+          end
+
           context "and then that user unlocks the whole document" do
             setup {@wiki.unlock! :document, @user}
+
+            should "appear that no user is a locker_of document" do
+               assert_nil @wiki.locker_of(:document)
+             end
+
+             should "appear that no user is a locker_of a subsection" do
+               assert_nil @wiki.locker_of('section-one')
+             end
 
             should "appear the same to that user and to a different user" do
               assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user)

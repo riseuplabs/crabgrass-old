@@ -18,10 +18,10 @@ class WikiController < ApplicationController
 
   before_filter :login_required, :except => [:show, :image_popup_show, :image_popup_upload]
   before_filter :fetch_wiki
+  before_filter :setup_wiki_rendering
 
   # show the rendered wiki
   def show
-    @wiki.render_html{|body| render_wiki_html(body, @group.name)}
   end
 
   # show the entire edit form
@@ -60,7 +60,6 @@ class WikiController < ApplicationController
       @wiki.smart_save!(:body => params[:body],
         :user => current_user, :version => params[:version])
         unlock_for_current_user
-      @wiki.render_html{|body| render_wiki_html(body, @group.name)}
     rescue Exception => exc
       @message = exc.to_s
       return render(:action => 'error')
@@ -123,6 +122,11 @@ class WikiController < ApplicationController
       @wiki = @public if params[:wiki_id] == @public.id.to_s
       @wiki = @private if params[:wiki_id] == @private.id.to_s
     end
+  end
+
+  def setup_wiki_rendering
+    return unless @wiki
+    @wiki.render_body_html_proc {|body| render_wiki_html(body, @group.name)}
   end
 
   # which images should be displayed in the image upload popup

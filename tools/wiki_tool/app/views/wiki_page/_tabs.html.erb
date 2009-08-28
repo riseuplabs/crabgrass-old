@@ -8,18 +8,23 @@
     t.class 'page_url'
   end
   if logged_in? and current_user.may?(:edit, @page)
-    if !locked_for_me?
-      f.tab do |t|
+    f.tab do |t|
+      if !locked_for_me?
         t.label "Edit"[:edit]
-        t.url page_url(@page,:action=>'edit')
-        t.selected action?(:edit)
-        t.class 'page_url'
+        t.url page_url(@page,:action => 'edit')
+      else
+        t.label "Break Lock"[:break_lock]
+        t.url page_url(@page,:action => 'edit', :break_lock => true)
       end
-    else
-      f.tab do |t|
-        t.link link_to('Break Lock'[:break_lock], page_xurl(@page,:action=>'break_lock'), :method => :post, :class => 'page_url')
-      end
+      t.selected action?(:edit)
+      t.class 'page_url'
     end
+      # f.tab do |t|
+      #   t.link link_to('Break Lock'[:break_lock], page_url(@page, :action => 'edit', :break_lock => true), :class => 'page_url')
+      #   t.url page_url(@page,:action=>'edit')
+      #   t.selected action?(:edit)
+      #   t.class 'page_url'
+      # end
   end
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|

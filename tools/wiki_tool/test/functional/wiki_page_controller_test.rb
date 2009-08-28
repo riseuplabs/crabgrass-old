@@ -61,10 +61,10 @@ class WikiPageControllerTest < ActionController::TestCase
       assert_not_nil assigns(:page)
       assert_not_nil assigns(:page).data
 
-      assert_redirected_to @controller.page_url(assigns(:page), :action => 'show')
+      assert_redirected_to @controller.page_url(assigns(:page), :action => 'show'), "create action should redirect to show"
       get :show, :page_id => assigns(:page).id
 
-      assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit')
+      assert_redirected_to @controller.page_url(assigns(:page), :action => 'edit'), "showing empty wiki should redirect to edit"
     end
   end
 

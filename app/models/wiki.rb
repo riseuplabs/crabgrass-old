@@ -117,7 +117,7 @@ class Wiki < ActiveRecord::Base
   # this method will perform unlocking and will check version numbers
   # it will skip version_checking if current_version is nil (useful for section editing)
   def update_section!(section, user, current_version, text)
-    if current_version and self.version > current_version
+    if current_version and self.version > current_version.to_i
       raise ErrorMessage.new("can't save your data, someone else has saved new changes first.")
     end
 
@@ -142,6 +142,10 @@ class Wiki < ActiveRecord::Base
       write_attribute(:body_html, nil)
       write_attribute(:raw_structure, nil)
     end
+  end
+
+  def clear_html
+    write_attribute(:body_html, nil)
   end
 
   # will render if not up to date
@@ -221,7 +225,6 @@ class Wiki < ActiveRecord::Base
     Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE data_type='Wiki' and group_id = #{group.id.to_i})")
     # for wiki's owned by groups
     Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = #{group.id.to_i})")
-
   end
 
   ##

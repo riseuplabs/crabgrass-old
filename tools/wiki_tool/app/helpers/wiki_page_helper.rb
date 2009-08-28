@@ -10,7 +10,7 @@ module WikiPageHelper
 
   def locked_error_message
     if locked_for_me?
-      user_id = @wiki.locked_by_id
+      user_id = @wiki.locker_of(:document).id
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
       msgs = [
@@ -30,9 +30,9 @@ module WikiPageHelper
    )
   end
 
-  def locked_for_me?(section = :all)
+  def locked_for_me?(section = :document)
     if @wiki and logged_in?
-      !@wiki.editable_by?(current_user, section)
+      @wiki.section_locked_for?(section, current_user)
     else
       false
     end
@@ -51,6 +51,7 @@ module WikiPageHelper
 
     javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
   end
+
 
 end
 

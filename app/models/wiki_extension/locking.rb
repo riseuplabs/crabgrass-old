@@ -51,6 +51,32 @@ module WikiExtension
       all_sections - sections_locked_for(user)
     end
 
+    def section_open_for?(section, user)
+      sections_open_for(user).include?(section)
+    end
+
+    def section_locked_for?(section, user)
+      sections_locked_for(user).include?(section)
+    end
+
+    def document_open_for?(user)
+      section_open_for?(:document, user)
+    end
+
+    def document_locked_for?(user)
+      section_locked_for?(:document, user)
+    end
+
+    # returns which user is responsible for locking a section
+    def locker_of(section)
+      section_locks.locks.each do |section_name, lock|
+        # we found the user, if their locked section has in its genealogy
+        # the section we're looking for
+        return User.find_by_id(lock[:by]) if structure.genealogy_for_section(section_name).include?(section)
+      end
+      nil
+    end
+
     # a section that +user+ is currently editing or _nil_
     def section_edited_by(user)
       section_locks.section_locked_by(user)

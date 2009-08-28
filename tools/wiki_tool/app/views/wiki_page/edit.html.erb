@@ -53,7 +53,7 @@
   end
 end %>
 
-<% form_tag(page_xurl(@page, :action => 'edit'), :id => wiki_form_id(@wiki)) do -%>
+<% form_tag(page_xurl(@page, :action => 'update'), :id => wiki_form_id(@wiki)) do -%>
 <%= hidden_field 'wiki', 'version' %>
 <% locked_error_message -%>
 
@@ -79,7 +79,9 @@ end %>
  <% else -%>
    <%= submit_tag 'Save'[:save_button], :name => 'save' %>
  <% end -%>
- <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+ <% unless @wiki_is_blank %>
+   <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+ <% end %>
 </div>
 
 <% end %>

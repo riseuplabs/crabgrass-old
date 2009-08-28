@@ -1,10 +1,9 @@
 module ControllerExtension::WikiRenderer
-
   include ControllerExtension::ContextParser
 
   protected
 
-  def render_wiki_markup_to_html(body, context_name = 'page')
+  def render_wiki_html(body, context_name = 'page')
     # context_name ||= 'page'
     greencloth = GreenCloth.new(body, context_name, [:outline])
 
@@ -96,8 +95,6 @@ module ControllerExtension::WikiRenderer
   #      => {:body_preview => '<strong>bold</strong>'}
   #
   #
-
-
   def update_editor_data(params={})
     params[:wiki] ||= {}
     hsh = if params[:editor] == 'preview'
