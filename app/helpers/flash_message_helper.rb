@@ -220,12 +220,7 @@ module FlashMessageHelper
       when 'info' then 'lightbulb'
     end
     if title
-<<<<<<< HEAD:app/helpers/error_helper.rb
-      heading = content_tag(:h2, title, :class => "big_icon #{type}_48")
-      heading = content_tag(:div, heading, :class => 'heading')
-=======
       heading = content_tag(:strong, title, :class => "small_icon #{icon}_16")
->>>>>>> candidate:app/helpers/flash_message_helper.rb
     else
       heading = ""
     end
