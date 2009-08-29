@@ -1,6 +1,88 @@
 module BasePage::ShareHelper
 
+  def page_access_options
+    [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
+  end
 
+  def display_access(participation)
+    if participation
+      access = participation.access_sym.to_s
+      option = page_access_options.find{|option| option[1] == access}
+      option[0]
+    end
+  end
+
+  def select_page_access(name, options={})
+    selected = options[:selected]
+
+    options = {:blank => true, :expand => false}.merge(options)
+    select_options = page_access_options
+    if options.delete(:blank)
+      select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
+      selected ||= ''
+    else
+      selected ||= default_access
+    end
+    if options.delete(:expand)
+      options[:size] = select_options.size
+    end
+    select_tag name, options_for_select(select_options, selected), options
+  end
+
+  ##
+  ## STUFF FOR SHARE WITH EVERYONE
+  ##
+
+  def check_box_options
+    recipient = Site.current.network
+    old_participation = @page.try.participation_for_group(recipient)
+    disabled = !old_participation.nil?
+    in_list = @recipients.try.include?(recipient)
+    access = old_participation.try.access
+    spinner_id = "add_site"
+
+    id = "share_recipient_%s" % recipient.name
+    add_function = remote_function(add_action(recipient, access, id))
+    remove_function = "$('%s').remove()" % id
+    toggle_function = "if ($('#{id}') == null)
+      { #{add_function} } else
+      { #{remove_function} }"
+    # disabling form elements does not work with ie6.
+    # so we just keep them enabled.
+    # unless disabled
+    { :onclick => toggle_function,
+      :checked => in_list || disabled }
+    #,:disabled => disabled }
+  end
+
+
+  def access_options
+    recipient = Site.current.network
+    old_participation = @page.try.participation_for_group(recipient)
+    access = old_participation.try.access
+    access ||= may_select_access_participation? ?
+      "$('recipient[access]').value" :
+      %{'#{default_access}'}
+    other_select = "$('recipients[#{recipient.name.gsub(/\+/,"%2b")}][access]')"
+    this_select = "$('share_with_everyone_access')"
+    sync_function = "#{other_select}.value = #{this_select}.value"
+
+    {:blank => false, :selected => access, :onchange => sync_function} # :disabled => disabled
+  end
+
+  protected
+
+  def add_action(recipient, access, spinner_id)
+    access ||= may_select_access_participation? ?
+      "$('recipient[access]').value" :
+      %{'#{default_access}'}
+    {
+      :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
+      :with => %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
+      :loading => spinner_icon_on('spacer', spinner_id),
+      :complete => spinner_icon_off('spacer', spinner_id)
+      }
+  end
 
 
 end

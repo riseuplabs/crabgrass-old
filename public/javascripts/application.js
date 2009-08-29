@@ -1,3 +1,23 @@
+
+//
+// CRABGRASS HELPERS
+//
+
+// shows the 'notice' message (ie errors and success)
+// if there is a popup currently open, then the messages shows up there.
+// set msg to "" in order to hide it.
+function showNoticeMessage(msg) {
+  Autocomplete.hideAll();
+  if ($('modal_message')) {
+    $('modal_message').update(msg);
+  } else if ($('message')) {
+    $('message').update(msg);
+    if (msg)
+      window.location.hash = "message";
+  }
+}
+
+// opens the greencloth editing reference.
 function quickRedReference() {
   window.open(
     "/static/greencloth",

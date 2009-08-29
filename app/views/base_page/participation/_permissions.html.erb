@@ -6,32 +6,35 @@
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
-    <%- if @page.group_participations.any? -%>
+%   if @page.group_participations.any?
       <tr class='<%=cycle "odd","even"%>'>
         <td colspan='4'><i><%= "groups"[:groups] %></i></td>
       </tr>
-    <%- end -%>
-    <%- @page.group_participations.each do |gpart| -%>
+%   end
+%   @page.group_participations.each do |gpart|
       <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(gpart) %>'>
         <td>&nbsp;&nbsp;<%= link_to_group(gpart.group_id) %></td>
         <td><%= access_sym_to_str gpart.access_sym %></td>
         <td><%= link_to_remove_group_participation(gpart) %></td>
         <td style='width:20px'><%=spinner(dom_id(gpart))%></td>
       </tr>
-    <%- end -%>
-    <%- if @page.users_with_access.any? -%>
+%   end
+%   if (uparts = @page.sorted_user_participations(:page => params[:page])).any?
       <tr class='<%=cycle "odd","even"%>'>
         <td colspan='4'><i><%= "users"[:users] %></i></td>
       </tr>
-    <%- end -%>
-    <%- @page.sorted_user_participations.each do |upart| -%>
+%   end
+%   uparts.each do |upart|
       <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(upart) %>'>
         <td>&nbsp;&nbsp;<%= link_to_user(upart.user_id) %></td>
         <td><%= access_sym_to_str upart.access_sym %></td>
         <td><%= link_to_remove_user_participation(upart) %></td>
         <td style='width:20px'><%=spinner(dom_id(upart))%></td>
       </tr>
-    <%- end -%>
+%   end
+%   if uparts.total_entries > uparts.per_page
+      <tr><td colspan="4"><%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'permissions'}) %></td></tr>
+%   end
   </table>
 </div>
 

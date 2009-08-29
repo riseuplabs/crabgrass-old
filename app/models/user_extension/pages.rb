@@ -157,7 +157,7 @@ module UserExtension::Pages
     raise PermissionDenied.new unless self.may?(:edit, page)
     now = Time.now
 
-    unless page.contributors.include?(self)
+    unless page.contributor?(self)
       page.contributors_count += 1
     end
 
@@ -187,11 +187,24 @@ module UserExtension::Pages
   ## PAGE SHARING
   ##
 
+  public
+
+  # share_page_with(page, recipients, options)
+  #
+  # This is the only method that should ever be used when a user is sharing a page
+  # with people/groups or sending a notification to people/groups.
+  #
+  # An exception is thrown if there are any permissions problems.
+  #
   # valid recipients:
   #
   #  array form: ['green','blue','animals']
   #  hash form: {'green' => {:access => :admin}}
+  #             or {'green' => true}
   #  object form: [#<User id: 4, login: "blue">]
+  #
+  # There are also special recipient names that start with ":", such as :contributors.
+  # See models/page_extension/create.rb parse_recipients!() for details.
   #
   # valid options:
   #        :access -- sets access level directly. one of nil, :admin, :edit, or
@@ -219,19 +232,24 @@ module UserExtension::Pages
     return true unless recipients
     return share_page_with_hash!(page, recipients, options) if recipients.is_a?(Hash)
 
-    users, groups, emails = Page.parse_recipients!(recipients)
+    users, groups, emails, specials = Page.parse_recipients!(recipients)
     users_to_email = []
+
+    ## special recipients
+    specials.each do |special|
+      handle_special_recipient(special, page, users, groups)
+    end
 
     ## add users to page
     users.each do |user|
-      if self.share_page_with_user!(page, user, options)
+      if share_page_with_user!(page, user, options)
         users_to_email << user if user.wants_notification_email?
       end
     end
 
     ## add groups to page
     groups.each do |group|
-      users_to_pester = self.share_page_with_group!(page, group, options)
+      users_to_pester = share_page_with_group!(page, group, options)
       users_to_pester.each do |user|
         users_to_email << user if user.wants_notification_email?
       end
@@ -244,12 +262,15 @@ module UserExtension::Pages
 
     ## send notification emails
     if options[:send_notice] and options[:mailer_options] and options[:send_email]
+      users_to_email.uniq!
       users_to_email.each do |user|
         #logger.info '----------------- emailing %s' % user.email
         Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
       end
     end
   end
+
+  private
 
   # just like share_page_with, but don't do any actual sharing, just
   # raise an exception of there are any problems with sharing.
@@ -276,8 +297,7 @@ module UserExtension::Pages
   def share_page_with_user!(page, user, options={})
     may_share!(page,user,options)
     attrs = {}
-    # if send_notice option is selected, and no user participation exists yet
-    if options[:send_notice] && (!page.users.include?(user) || options[:notify])
+    if options[:send_notice]
       attrs[:inbox] = true
       if options[:send_message].any?
         attrs[:notice] = {:user_login => self.login, :message => options[:send_message], :time => Time.now}
@@ -297,7 +317,6 @@ module UserExtension::Pages
     upart = page.add(user, attrs)
     upart.save! unless page.changed?
   end
-
 
   def share_page_with_group!(page, group, options={})
     may_share!(page,group,options)
@@ -331,12 +350,13 @@ module UserExtension::Pages
   end
 
   # takes recipients in hash form, like so {:blue => {:access => :admin}}.
-  # and then calls share_page_with! with the oppropriate options
+  # and then calls share_page_with! with the appropriate options
   # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
   # must be HashWithIndifferentAccess. You have been warned.
   def share_page_with_hash!(page, recipient_hash, global_options=HashWithIndifferentAccess.new)
     recipient_hash.each do |recipient,local_options|
-      self.share_page_with!(page, recipient, global_options.merge(local_options))
+      options = local_options.is_a?(Hash) ? global_options.merge(local_options) : global_options
+      self.share_page_with!(page, recipient, options)
     end
   end
 
@@ -370,6 +390,24 @@ module UserExtension::Pages
       end
     end
   end
+
+  #
+  # this is something of a hack, but much better than the hack it replaced.
+  # in general, we have a big performance problem when trying to share/notify
+  # a page with hundreds of people.
+  #
+  def handle_special_recipient(recipient, page, users, groups)
+    if recipient == ':participants'
+      groups.concat page.groups
+      users.concat page.users
+    elsif recipient == ':contributors'
+      users.concat page.users.contributed
+    elsif recipient == ':all'
+      # todo
+    end
+  end
+
+  public
 
   # return true if the user may still admin a page even if we
   # destroy the particular participation object

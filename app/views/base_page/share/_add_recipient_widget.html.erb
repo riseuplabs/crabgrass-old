@@ -1,5 +1,7 @@
 <%
   empty_box = false if empty_box.nil?
+  action = 'update' if action.nil?
+
   add_button_id = 'add_recipient_button'
 
   access = may_select_access_participation? ?
@@ -9,7 +11,7 @@
   # the remote action that is triggered when the 'add' button is pressed (or
   # the popup item is selected).
   add_action = {
-    :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
+    :url => {:controller => 'base_page/share', :action => action, :page_id => @page.id, :add => true},
     :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access}},
     :loading => spinner_icon_on('plus', add_button_id),
     :complete => spinner_icon_off('plus', add_button_id)
@@ -89,6 +91,10 @@
     </td>
   </tr>
 </table>
+<!--
+this does not make sense in the context of the notify page.
+<h2 class="first"><%= 'This Page will be shared with:'[:share_page_recipients_list] %></h2>
+-->
 <div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
   <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>
 </div>

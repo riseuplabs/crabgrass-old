@@ -223,3 +223,16 @@ class Symbol
     true
   end
 end
+
+class TrueClass
+  def any?
+    true
+  end
+end
+
+class FalseClass
+  def any?
+    false
+  end
+end
+

@@ -3,6 +3,10 @@ class GroupsController < Groups::BaseController
   stylesheet 'groups'
   permissions 'groups/memberships', 'groups/requests'
 
+  # needed by for group wiki editing
+  javascript :wiki, :only => :show
+  stylesheet :wiki_edit
+
   helper 'groups', 'wiki'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
@@ -15,7 +19,7 @@ class GroupsController < Groups::BaseController
     stylesheet 'tasks', :action => :tasks
     javascript :extra, :action => :tasks
   ## end task list cruft
-  
+
   include Groups::Search
 
   # called by dispatcher

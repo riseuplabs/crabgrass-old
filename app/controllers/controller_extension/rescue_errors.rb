@@ -67,8 +67,7 @@ module ControllerExtension::RescueErrors
       format.js do
         flash_auth_error(:now)
         render :update do |page|
-          page.replace_html 'message', display_messages
-          page << 'window.location.hash = "message"'
+          page.call('showNoticeMessage', display_messages)
         end
       end
       format.xml do
@@ -100,8 +99,7 @@ module ControllerExtension::RescueErrors
           flash_message_now :exception => exception
         end
         render :update do |page|
-          page.replace_html 'message', display_messages
-          page << 'window.location.hash = "message"'
+          page.call('showNoticeMessage', display_messages)
         end
       end
     end

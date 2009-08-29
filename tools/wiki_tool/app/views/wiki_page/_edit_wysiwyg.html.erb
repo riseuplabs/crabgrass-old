@@ -48,14 +48,14 @@ It would be nice to use these eventually:
 
     var config = new Xinha.Config();
 
-    config.registerButton("cg-insertimage", "Insert/Modify Image", [_editor_url + "images/ed_buttons_main.png",6,3], false, <%=insert_image_function(@wiki)%>);
+    config.registerButton("cg-insertimage", "Insert/Modify Image", [_editor_url + "images/ed_buttons_main.png",6,3], false, <%=toolbar_insert_image_function(@wiki)%>);
 
-    config.registerButton("cg-createlink", "Insert Web Link", [_editor_url + "images/ed_buttons_main.png",6,1], false, <%=create_link_function(@wiki)%>);
+    config.registerButton("cg-createlink", "Insert Web Link", [_editor_url + "images/ed_buttons_main.png",6,1], false, <%=toobar_create_link_function(@wiki)%>);
 
     config.toolbar = [
-      ["formatblock", "bold", "italic"],
+      ["formatblock", "bold", "italic", "underline", "strikethrough", "removeformat"],
       ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
-      ["separator", "cg-insertimage", "cg-createlink"]
+      ["separator", "inserttable", "separator", "cg-insertimage", "cg-createlink"]
     ];
 
     config.formatblock = {
