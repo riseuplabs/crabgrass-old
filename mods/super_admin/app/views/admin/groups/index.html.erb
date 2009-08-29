@@ -1,11 +1,14 @@
-<h2>Listing groups</h2>
+<% @title_box = '<h1>Edit Groups</h1>' %>
+
+<i>Total number of groups:</i> <%= @groups.count %><br /><br />
 
 <%= alphabetical_filter(:controller => 'admin/groups') %>
 
-<table cellspacing="0">
+<table class="pretty">
   <tr>
     <th>Name</th>
     <th>Created at</th>
+    <th>&nbsp;</th>
   </tr>
 
   <% if @groups.any? -%>
@@ -17,7 +20,7 @@
           <span class="actions">
             <%= link_to 'Show', group %>
             <%= link_to 'Edit', edit_group_path(group) %>
-            <%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to 'Destroy', group, :confirm => "Are you sure you want to delete group '#{group.name}'?", :method => :delete %>
           </span>
         </td>
       </tr>

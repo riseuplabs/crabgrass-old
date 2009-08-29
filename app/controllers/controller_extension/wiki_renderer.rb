@@ -114,5 +114,85 @@ module ControllerExtension::WikiRenderer
       content_tag :a, label, :href => url, :class => 'dead_link'
     end
   end
+
+
+  ##
+  ## WIKI UN-RENDERING
+  ##
+
+  #
+  # update_editor_data
+  #
+  # accepts options :editor and :wiki and returns a json object suitable for
+  # sending to the client to update the current wiki editor.
+  #
+  # note that the conversion is tricky: the body_html that it produces is not clean html, but
+  # ugly html that can be fed into a wysiwyg editor.
+  #
+  #
+  # for example:
+  #
+  #    update_editor_data(:editor => 'html', :wiki => {:body => '*bold*'})
+  #      => {:body_html => '<b>bold</b>'}
+  #
+  #    update_editor_data(:editor => 'preview', :wiki => {:body => '*bold*'})
+  #      => {:body_preview => '<strong>bold</strong>'}
+  #
+  #
+
+
+  def update_editor_data(params={})
+    params[:wiki] ||= {}
+    hsh = if params[:editor] == 'preview'
+      if params[:wiki][:body].any?
+        {:body_preview => render_preview_from_text(params[:wiki][:body], @page.owner_name)}
+      elsif params[:wiki][:body_html].any?
+        {:body_preview => render_preview_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
+      else
+        {:body_preview => ""}
+      end
+    elsif params[:editor] == 'greencloth'
+      current_user.update_setting(:preferred_editor_sym => :greencloth)
+      {:body => render_text_from_ugly_html(params[:wiki][:body_html], @page.owner_name)}
+    elsif params[:editor] == 'html'
+      current_user.update_setting(:preferred_editor_sym => :html)
+      {:body_html => render_ugly_html_from_text(params[:wiki][:body], @page.owner_name)}
+    end
+    return hsh.to_json
+  end
+
+  def html_to_greencloth(html)
+    Undress(html).to_greencloth
+  end
+
+  private
+
+  def render_text_from_ugly_html(html, context_name='page')
+    html ||= ""
+    encode_line_endings Undress(html).to_greencloth
+  end
+  def render_preview_from_ugly_html(html, context_name='page')
+    html ||= ""
+    body = Undress(html).to_greencloth
+    encode_line_endings render_wiki_html(body, context_name)
+  end
+
+  def render_ugly_html_from_text(text, context_name='page')
+    text ||= ""
+    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name) ).make_ugly
+  end
+  def render_preview_from_text(text, context_name='page')
+    text ||= ""
+    encode_line_endings render_wiki_html(text, context_name)
+  end
+
+  # why is this necessary?
+  def encode_line_endings(str)
+    str.gsub!("\n", "__NEW_LINE__")
+    str.gsub!("\t", "__TAB_CHAR__")
+    str
+  end
+
+
 end
 

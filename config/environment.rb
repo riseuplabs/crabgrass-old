@@ -41,6 +41,7 @@ require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extension/engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 require "#{RAILS_ROOT}/lib/zip/zip.rb"
+require "#{RAILS_ROOT}/lib/extension/zip.rb"
 
 # path in which zipped galleries (for download) will be stored.
 GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
@@ -97,11 +98,14 @@ Rails::Initializer.run do |config|
   # the absolutely required gems
   #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
-
   #config.frameworks += [ :action_web_service]
   #config.action_web_service = Rails::OrderedOptions.new
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
+
+  # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
+  # for information on how trim_mode works.
+  config.action_view.erb_trim_mode = '%-'
 
   # See Rails::Configuration for more options
 

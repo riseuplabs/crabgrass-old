@@ -1,0 +1,29 @@
+<% content_for :script do -%>
+  bkLib.onDomLoaded(function() {
+    var form = $('<%= wiki_form_id(@wiki) %>');
+    var editor = new nicEditor({
+      buttonList: ['bold','italic','underline','strikethrough', 'ol','ul',
+                   'indent','outdent','fontFormat','link','unlink','image',
+                   'removeformat','html'],
+      iconsPath: '<%= "/images/ui/nicEditorIcons.gif" %>',
+      onImgButtonClick: function() {
+        <%= modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image]) %>
+      }
+    });
+    editor.setPanel('<%= wiki_panel_id(@wiki) %>');
+    editor.addInstance('<%= wiki_editor_id(@wiki) %>');
+    <%# this is a hack to get around a bug in nicedit when instance is based on a textarea.
+      # instead, we set instance to be based on a div, but then we manually set copyElm to be our
+      # textarea, and we add the save callback. this makes it so when you submit the form, the textarea
+      # will get a copy of the contents of the editor div. %>
+    var instance = editor.nicInstances.first();
+    instance.copyElm = $('<%=wiki_body_html_id(@wiki)%>');
+    bkLib.addEvent(form, 'submit', instance.saveContent.closure(instance));
+  });
+<% end -%>
+  <div class="html_editor_wrapper">
+    <div id="<%= wiki_panel_id(@wiki) %>" class="html_editor_panel"></div>
+    <div id="<%= wiki_editor_id(@wiki) %>" class="html_editor_instance"><%= ugly_html(@wiki.body_html) if load_content %></div>
+    <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="display:none"></textarea>
+  </div>
+

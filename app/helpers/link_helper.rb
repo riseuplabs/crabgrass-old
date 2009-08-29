@@ -109,7 +109,7 @@ label}</a></span>)
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
   def link_to_active(link_label, url_hash, active=nil)
-    active = url_active?(url_hash) || active  # yes this is weird, but we want url_active? to always get called.
+    active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
     link_to(link_label,url_hash, :class => selected_class)
   end
@@ -152,6 +152,10 @@ label}</a></span>)
       false
     elsif a == b
       true
+    elsif a.is_a?(Array) or b.is_a?(Array)
+      a = a.to_a.sort
+      b = b.to_a.sort
+      b == a
     elsif a.sub(/^\//, '') == b.sub(/^\//, '')
       true # a controller of '/groups' should match 'groups'
     else

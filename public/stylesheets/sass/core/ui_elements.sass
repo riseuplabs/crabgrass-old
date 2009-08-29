@@ -1,6 +1,6 @@
 //
 // UI ELEMENTS
-// 
+//
 
 
 .handle
@@ -31,12 +31,14 @@ ul.floatlist li
 
 //
 // LINKS
-// 
+//
 
 a
   text-decoration: none
   color= !link_color
-  outline: none
+  // i think setting outline none for all links is a very very bad idea.
+  // it makes it so you cannot see when you have tabbed to a link
+  // outline: none
   &:visited
     color= !link_visited_color
   &:active
@@ -93,7 +95,7 @@ a[name]
 
 //
 // SIDE LIST
-// 
+//
 
 ul.side_list
   padding: 0
@@ -123,7 +125,7 @@ ul.side_list
 
 //
 // TABS
-// 
+//
 
 .tab_area
   background-color: white
@@ -131,41 +133,45 @@ ul.side_list
   clear: left
 
 ul.tabset
-  &.top
-    margin: 0
-    padding: 0
-    clear: left
+  padding: 0
+  list-style: none
+  li
+    display: inline
+
+ul.tabset.top
+  margin: 0
+  clear: left
+  float: left
+  width: 100%
+  height: 1%
+  background: url(/images/grey9.png) repeat-x bottom
+  a:hover
+    text-decoration: underline
+  a
+    display: block
     float: left
-    width: 100%
-    height: 1%
-    list-style: none
-    background: url(/images/grey9.png) repeat-x bottom
-    li
-      display: inline
-    a:hover
-      text-decoration: underline
-    a
-      display: block
-      float: left
-      text-align: center
-      text-decoration: none
-      position: relative
-      left: 1em
-      line-height: 1.3em
-      padding: 0.5em 1em
-      // i don't understand why this is needed:
-      cursor: pointer
-      &.small_icon
-        padding-left: 28px
-        margin-left: 0.5em
-        background-position: 8px 50%
-      &.active
-        background-color: white
-        border: 1px solid #999
-        border-bottom: 0
+    text-align: center
+    text-decoration: none
+    position: relative
+    left: 1em
+    line-height: 1.3em
+    padding: 0.5em 1em
+    // i don't understand why this is needed:
+    cursor: pointer
+    &.small_icon
+      padding-left: 28px
+      margin-left: 0.5em
+      background-position: 8px 50%
+    &.active
+      background-color: white
+      border: 1px solid #999
+      border-bottom: 0
 
 .sub_tabs a
   font-size: 0.85em
+
+ul.tabset.simple
+  margin-top: 0
 
 //
 // FORM ELEMENTS
@@ -202,6 +208,11 @@ input.checkbox, input.radio
   position: relative
   top: 2px
   margin-left: -1.6em
+
+// in firefox, checkboxes and radio buttons look better this way
+input[type=radio], input[type=checkbox]
+  vertical-align: text-top
+
 
 //
 // ROUNDY CORNERS
@@ -243,7 +254,7 @@ input.checkbox, input.radio
   visibility: hidden
 
 .clear
-  clear: both 
+  clear: both
 
 hr
   &.clear
@@ -294,7 +305,7 @@ span.break
 
 h1
   &.dim
-    color= !dim_heading_color 
+    color= !dim_heading_color
     margin: 0
   &.bright
     color: #5B97CB
@@ -394,7 +405,7 @@ table.pretty
 table.plain
   border-collapse: collapse
   width: 100%
-  td 
+  td
     padding: 0.5em
     &.label
       text-align: right
@@ -470,7 +481,7 @@ table.plain
   position: absolute
   top: 7px
   left: 6px
-  z-index: 200
+  z-index= !z_autocomplete
 
 .autocomplete
   width: 300px
@@ -531,41 +542,63 @@ div
     + div.fieldWithErrors
       display: none
 
-.small_notice
-  background: #fcc
-  border: 1px solid red
-  h2
-    border: 0
-    font-size: 1em
-    color: black
+//
+// this is the alert box that shows up when you use flash_message(:error => 'ouch')
+//
 
-.big_notice
-  padding: 0 4em 1.5em 4em
-  h2
-    font-size: 1.2em
-    img
-      vertical-align: middle
-  p, li
-    color: black
-    margin-left: 2em
-  div.text
-    border-top: 1px solid #999
-    background-color: #fafafa
-    // some kind of bug:
-    padding: 0.01em
-  div.heading
-    background-color: #dfdfdf
-    // some kind of bug:
-    padding: 0.01em
-  div.error
-    border: 2px solid red
-    color: #900
-  div.info
-    border: 2px solid green
-    color: #090
-  div.update
-    border: 2px solid blue
-    color: #009
+.small_notice
+  padding: 0.5em
+  margin-bottom: 1em
+  .text
+    padding-left: 20px
+  p, ul
+    margin: 0.25em
+  &.error
+    border: 1px solid red
+    background: #fcc
+  &.success
+    border: 1px solid green
+    background: #cfc
+  &.info
+    border: 1px solid blue
+    background: #cdf
+
+//  h2
+//    border: 0
+//    font-size: 1em
+//    color: black
+
+//#message
+//  div.big_notice
+//    padding: 0 4em 1.5em 4em
+
+//.big_notice
+//  padding: 0 4em 1.5em 4em
+//  h2
+//    font-size: 1.2em
+//    img
+//      vertical-align: middle
+//  p, li
+//    color: black
+//    margin-left: 2em
+//  div.text
+//    border-top: 1px solid #999
+//    background-color: #fafafa
+//    // some kind of bug:
+//    padding: 0.01em
+//  div.heading
+//    background-color: #dfdfdf
+//    // some kind of bug:
+//    padding: 0.01em
+//  div.error
+//    border: 2px solid red
+//    color: #900
+//  div.info
+//    border: 2px solid green
+//    color: #090
+//  div.update
+//    border: 2px solid blue
+//    color: #009
 
 
 
@@ -621,7 +654,7 @@ table.form
   input[type=text], textarea
     font-size: 1em
     width: 100%
-  
+
 
 .form_buttons
   padding-top: 1em
@@ -646,7 +679,7 @@ form.minisearch
   fieldset
     float: right
     padding= !banner_search_padding
-    border= !banner_search_border 
+    border= !banner_search_border
     background-color= !banner_search_bg_color
   .minisearch_text
     background-color= !banner_search_bg_color
@@ -665,7 +698,7 @@ form.minisearch
 form.mini_search
   table
     padding= !banner_search_padding
-    border= !banner_search_border 
+    border= !banner_search_border
     //background-color= !banner_search_bg_color
     background-color: white
   .mini_search_submit
@@ -681,7 +714,7 @@ form.mini_search
 // SHY LINKS
 //
 
-// these are links or elements that should not be visible until you hover over a parent 
+// these are links or elements that should not be visible until you hover over a parent
 // element. the problem with display:none is that it removes the element from the layout
 // and then making it visible again can lead to weird jerkiness. so, instead, we use opacity
 // for this.

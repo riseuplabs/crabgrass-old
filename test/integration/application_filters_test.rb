@@ -24,4 +24,16 @@ class ApplicationFiltersTest < ActionController::IntegrationTest
     get '/'
     assert_equal 'localhost', @controller.current_site.domain, "application controller should fallback to default site for 'current_site'"
   end
+
+  def test_unverified_user_gets_redirected
+    gerrard = users(:gerrard)
+    gerrard.unverified = true
+    gerrard.save!
+
+    login 'gerrard'
+    get '/me/dashboard'
+
+    assert_redirected_to :controller => 'account', :action => 'unverified'
+  end
+
 end

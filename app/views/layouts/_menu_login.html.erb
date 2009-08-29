@@ -1,30 +1,30 @@
 <div class="account_links">
 <% if logged_in? -%>
-  <%= link_to 'Account'[:menu_link_account], me_url(:action => 'edit') %>
-  &bull;
+
+  <%= link_to 'Account'[:menu_link_account], me_url(:action => 'edit') %> &bull;
   <%= link_to "Logout"[:menu_link_logout] + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %>
   <%= call_hook :top_right_links %>
+
 <% elsif !@login_form_already_rendered -%>
-  <span><%= link_to "Login".t, { :controller => '/account', :action => 'login', :redirect => params[:redirect] || request.request_uri }, { :onclick => "$('login_popup').toggle(); Field.focus('login'); return false;" } %></span>
-  <div id="login_popup" style="display: none;" class="round">
-    <% form_tag :controller => 'account', :action => 'login' do -%>
-      <%= hidden_field_tag 'redirect', params[:redirect] || request.request_uri %>
-      <table>
-        <tr>
-          <td><%= "Username".t %></td>
-          <td><%= text_field_tag 'login' %></td>
-        </tr>
-        <tr>
-          <td><%= "Password".t %></td>
-          <td><%= password_field_tag 'password' %></td>
-        </tr>
-        <tr><td colspan="2" style="text-align:right">
-          <%# link_line(link_to('Need a new account?'[:signup_link], {:controller => '/account', :action => 'signup', :redirect => params[:redirect]}), link_to('I forgot my password'[:forgot_password_link], :controller => '/account', :action => 'forgot_password')) %>
-            <%= button_to_function "Cancel"[:cancel_button], "$('login_popup').hide()" %>
-            <%= submit_tag _('Log in') %>
-        </td></tr>
-      </table>
-    <% end -%>
-  </div>
+
+  <%
+    strings = {
+      :login           => "Login"[:login],
+      :username        => "Username"[:username],
+      :password        => "Password"[:password],
+      :forgot_password => 'forgot password'[:forgot_password_link],
+      :create_account  => 'create account'[:signup_link],
+      :redirect        => params[:redirect] || request.request_uri,
+      :token           => form_authenticity_token
+    } 
+    options = {
+      :may_signup => may_signup?
+    }
+  %>
+  <span>
+    <%= link_to_function("Login"[:login], "loginDialog(#{strings.to_json}, #{options.to_json})") %>
+    <%# javascript_tag "loginDialog(#{strings.to_json}, #{options.to_json})" %>
+  </span>
+ 
 <% end -%>
 </div>

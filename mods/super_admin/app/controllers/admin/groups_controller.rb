@@ -2,6 +2,8 @@ class Admin::GroupsController < Admin::BaseController
 
   before_filter :fetch_group_by_name, :only => [ :show, :edit, :update, :destroy ]
 
+  permissions 'admin/super'
+
   # GET /groups
   # GET /groups.xml
   def index

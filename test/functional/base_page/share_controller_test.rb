@@ -215,7 +215,7 @@ class BasePage::ShareControllerTest < Test::Unit::TestCase
       assert_not_nil assigns(:recipients)
       assert_select 'tr.unsaved', nil, message
     else
-      assert_select 'div.big_notice', nil, message
+      assert_select 'div.small_notice', nil, message
     end
   end
 

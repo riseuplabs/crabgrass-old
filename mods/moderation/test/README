@@ -1,0 +1,5 @@
+Currently, these fixtures are used for tests, but cannot be loaded via
+"rake db:fixtures:load". Until we figure out how to make that happen, these
+fixtures should be used only for testing, not for seeding the db in development
+mode. For development mode, you have to put fixtures in the main test/fixtures
+directory. 

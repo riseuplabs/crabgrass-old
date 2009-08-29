@@ -119,7 +119,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   def paginate
     @page ||= 1
     @per_page ||= SECTION_SIZE
-    Page.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
+    Page.paginate options_for_find(:having => true).merge(:page => @page, :per_page => @per_page)
   end
 
   def count
@@ -133,7 +133,9 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   private
 
-  def options_for_find
+  # :having - when true will split off "HAVING" clause from GROUP BY into a :having key
+  # not compatible with rails 2.1, but needed by will_paginate
+  def options_for_find(opts = {})
     fulltext_filter = [@access_me_clause, @access_target_clause,
       @access_site_clause, @access_filter_clause, @tags].flatten.compact
 
@@ -148,7 +150,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     order      = sql_for_order
 
     # make the hash
-    return {
+    find_opts = {
       :conditions => conditions,
       :joins => sql_for_joins(conditions),
       :limit => @limit,         # \ manual offset or limit
@@ -156,8 +158,22 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :order => order,
       :include => @include,
       :select => @select,
-      :group => sql_for_group(order)
     }
+
+    find_opts[:group] = sql_for_group(order)
+
+    having = sql_for_having(order)
+    # either append HAVING clause to GROUP BY string
+    # or set a new :having key
+    unless having.blank?
+      if opts[:having]
+        find_opts[:having] = having
+      elsif !having.blank?
+        find_opts[:group] << " HAVING #{having} "
+      end
+    end
+
+    return find_opts
   end
 
   # the argument is an array, each element assumed to be a
@@ -195,7 +211,14 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   # TODO: make this more generall so it works with all aggregation functions.
   def sql_for_group(order_string)
     if match = /SUM\(.*\)/.match(order_string)
-      "pages.id HAVING #{match} > 0"
+      "pages.id"
+    end
+  end
+
+  # TODO: make this more generall so it works with all aggregation functions.
+  def sql_for_having(order_string)
+    if match = /SUM\(.*\)/.match(order_string)
+      "#{match} > 0"
     end
   end
 

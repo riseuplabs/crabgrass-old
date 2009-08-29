@@ -39,6 +39,8 @@ class Mailer < ActionMailer::Base
   include Mailers::Page
   include Mailers::User
   include Mailers::Request
+  include Mailers::Bugreport
+  include Mailers::Verification
 
   protected
 
@@ -55,6 +57,7 @@ class Mailer < ActionMailer::Base
     @user = options[:user]
     @current_user = options[:current_user]
     @page = options[:page]
+    @site = options[:site]
     @from_address = options[:from_address]
     @from_name = options[:from_name]
     @from = "%s <%s>" % [@from_name, @from_address]

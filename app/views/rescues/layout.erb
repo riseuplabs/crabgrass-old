@@ -1,48 +1,175 @@
+<%
+   def get_referer
+    return '/' unless raw = request.env["HTTP_REFERER"]
+    server = request.host_with_port
+    prot = request.protocol
+    if raw.starts_with?("#{prot}#{server}/")
+      raw.sub(/^#{prot}#{server}/, '').sub(/\/$/,'')
+    else
+      '/'
+    end
+  end
+
+  main_bg = '#222'
+  main_fg = '#999'
+  left_bar_bg = 'white'
+  left_bar_size = 360
+  heading_fg = '#add8e6'
+%>
+
 <html>
 <head>
-  <title>Action Controller: Exception caught</title>
+  <title><%= "System Error"[:exception_title] %></title>
   <style>
-    body {
-      background-color: #999;
-      color: #333;
-      padding: 1em;
+
+    html {
+      background-color: <%= main_bg %>;
+      color: <%= main_fg %>;
+      padding: 0; margin: 0;
     }
-    div#wrapper {
-      background: #fafafa;
-      border-right: 4px solid #666;
-      border-bottom: 4px solid #666;
+    body {
+      padding: 0; margin: 0;
+    }
+    .left {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      xpadding: 10px;
+      xbackground: <%= left_bar_bg %>;
+    }
+    .right {
+      margin-left: <%= left_bar_size %>px;
+      padding-right: 20px;
+    }
+    div#image {
+      background: url('/images/ui/repair.png') no-repeat 0 0;
+      height: 506px;
+      width: 321px;
     }
     div#header {
-      color: #666;
-      background: #dfd;
-      padding: 10px;
     }
     div#header h1 {
+      font-size: 2.5em;
+      color: <%= heading_fg %>;
+    }
+    .description {
       font-size: 1.5em;
     }
     div#content {
-      padding: 20px;
+      font-size: 0.9em;
+    }
+    div#content h1, div#content h2 {
+      font-size: 1em;
+    }
+    div#bugreport {
+    }
+    #links {
+      display: none;
+      font-size: smaller;
+      font-decoration: bold;
+      color: #fff;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #000;
+      background: #fff;
+      text-decoration: underline;
+    }
+    textarea {
+      border: 1px solid black;
     }
     body, p, ol, ul, td {
       font-family: verdana, arial, helvetica, sans-serif;
-      font-size:   13px;
-      line-height: 18px;
     }
     pre {
-      background-color: #eee;
+      background-color: #fff;
       padding: 10px;
-      font-size: 11px;
+      overflow-x: scroll;
+      color: #333;
     }
-    a { color: #000; }
-    a:visited { color: #666; }
-    a:hover { color: #fff; background-color:#000; }
-
   </style>
+
+  <script type="text/javascript">
+    function init() {
+      if (!document.getElementById) {
+          return;
+      }
+      var linksDiv = document.getElementById('links');
+      var detailsToggle = document.getElementById('details');
+      var contentDiv = document.getElementById('content');
+      var bugreportDiv = document.getElementById('bugreport');
+      var bugreportLink = document.getElementById('bugreport_link');
+      linksDiv.style.display = "block";
+      contentDiv.style.display = "none";
+      bugreportDiv.style.display = "none";
+      addEvent(detailsToggle, 'click', toggleDetails, false);
+      addEvent(bugreportLink, 'click', toggleBugreport, false);
+      <% if RAILS_ENV == 'development' %>
+      toggleDetails();
+      <% end %>
+    }
+
+    function addEvent(elm, evType, fn, useCapture) {
+      if (elm.addEventListener){
+          elm.addEventListener(evType, fn, useCapture);
+          return true;
+      }else if (elm.attachEvent) {
+          var r = elm.attachEvent('on' + evType, fn);
+          return r;
+      }else {
+          elm['on' + evType] = fn;
+      }
+    }
+
+    function toggleBugreport(e) {
+       bugReport = document.getElementById('bugreport');
+       bugReport.style.display = "block";
+    }
+
+    function toggleDetails(e) {
+      contentDiv = document.getElementById("content");
+      detailsLink = document.getElementById("details");
+      if (contentDiv.style.display == "block") {
+        //detailsLink.value = "Show Details";
+          detailsLink.innerHTML = "Show Details";
+        contentDiv.style.display = "none";
+      }else {
+        //detailsLink.value = "Hide Details";
+        detailsLink.innerHTML = "Hide Details";
+        contentDiv.style.display = "block";
+      }
+    }
+    addEvent(window, 'load', init, false);
+  </script>
+
 </head>
 <body>
-  <div id='wrapper'>
+  <div class="left"><div id='image'></div></div>
+  <div class="right">
     <div id='header'>
-      <h1>Ouch! Crabgrass has suffered severe head trauma</h1>
+      <h1><%= "Oops! We experienced an error."[:exception_headline] %></h1>
+      <p class="description"><%= "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."[:exception_description] %>
+      <p id="links">
+        <a href="<%= get_referer %>"><%= "Go Back"[:exception_back_link]%></a> |
+        <a href="#" id='bugreport_link'><%= "Submit Bug Report"[:exception_bug_report_link]%></a> |
+        <a href="#" id="details"><%= "Details"[:details_link]%></a>
+      </p>
+    </div>
+    <div id='bugreport'>
+       <% form_tag('/bugreport/submit') do %>
+         <p><%= "Please add a description of how you got to this page, and any additional comments"[:exception_bug_report_description] %></p>
+         <%= text_area_tag(:comments, nil, :size => "60x8") %>
+         <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
+         <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
+         <%= hidden_field_tag('error_action', request.parameters['action']) %>
+         <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
+         <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
+         <br>
+         <p><%= submit_tag("Submit Bug Report"[:exception_bug_report_link]) %></p>
+       <% end %>
     </div>
     <div id='content'>
       <%= @contents %>

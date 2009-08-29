@@ -1,15 +1,15 @@
-<% 
-  empty_box = false if empty_box.nil? 
+<%
+  empty_box = false if empty_box.nil?
   add_button_id = 'add_recipient_button'
 
   access = may_select_access_participation? ?
     "$('recipient[access]').value" :
     %{'#{default_access}'}
 
-  # the remote action that is triggered when the 'add' button is pressed (or 
+  # the remote action that is triggered when the 'add' button is pressed (or
   # the popup item is selected).
   add_action = {
-    :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true}, 
+    :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
     :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access}},
     :loading => spinner_icon_on('plus', add_button_id),
     :complete => spinner_icon_off('plus', add_button_id)
@@ -21,14 +21,40 @@
   #     is not submitted.
   eat_enter = "return(!enterPressed(event));"
   only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
-  key_pressed_function = remote_function(add_action.merge(:condition => only_on_enter_press)) + eat_enter; 
+  key_pressed_function = remote_function(add_action.merge(:condition => only_on_enter_press)) + eat_enter;
 
   # this is called after an item in the popup has been selected.
   # it makes it so selecting an item is like hitting the add button
   # we clear the recipient_name field so that we don't get a double submit
   after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
 
-  auto_tag = autocomplete_entity_tag('recipient_name', :onselect => after_update_function)
+  # called in order to render a popup row
+  # it is a little too complicated. basically, we want to just highlight
+  # the text but not the html tags.
+  render_popup_row_function = %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
+
+  # called to convert the row data into a value
+  extract_value_from_row_function = %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+
+  after_load_js = %Q[
+   after_load_function = function() {
+     new Autocomplete('recipient_name', {
+       serviceUrl:'/base_page/share/auto_complete',
+       minChars:2,
+       maxHeight:400,
+       width:300,
+       message:'#{'Enter Group or User Name...'[:entity_autocomplete_tip]}',
+       preloadedOnTop:true,
+       onSelect: #{after_update_function},
+       rowRenderer: #{render_popup_row_function},
+       selectValue: #{extract_value_from_row_function}
+      }, #{autocomplete_id_number});
+    }
+  ]
+
+  auto_tag = autocomplete_entity_tag('recipient_name',
+    :onselect => after_update_function,
+    :message => 'Enter Group or User Name...'[:entity_autocomplete_tip])
 
   # if there are no recipients at all, we will do not show the box
   recipients_exist = @page && @page.recipients.any?
@@ -46,8 +72,10 @@
 -->
   <tr>
     <td style='width:100%'>
-      <%= text_field_tag 'recipient_name', '', :style => 'width:100%',
-          :onkeypress => key_pressed_function %>
+      <%= text_field_tag 'recipient_name', '',
+        :style => 'width:100%',
+        :onkeypress => key_pressed_function %>
+      <%= javascript_tag(after_load_js) %>
       <%= auto_tag %>
     </td>
     <td>&nbsp;</td>
@@ -62,6 +90,5 @@
   </tr>
 </table>
 <div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
-  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>   
+  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>
 </div>
-

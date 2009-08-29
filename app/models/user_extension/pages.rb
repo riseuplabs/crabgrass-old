@@ -21,20 +21,27 @@ module UserExtension::Pages
         def pending
           find(:all, :conditions => ['resolved = ?',false], :order => 'happens_at' )
         end
+        def recent_pages
+          find(:all, :order => 'changed_at DESC', :limit => 15)
+        end
       end
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
 
       named_scope(:most_active_on, lambda do |site, time|
-        ret = { :joins => [:participations, :memberships],
+        ret = {
+          :joins => "
+            INNER JOIN user_participations
+              ON users.id = user_participations.user_id
+            INNER JOIN pages
+              ON pages.id = user_participations.page_id AND
+              pages.site_id = #{site.id}",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :select => "users.*, memberships.group_id, user_participations.changed_at"
+          :select => "users.*, user_participations.changed_at"
         }
-        if time.nil?
-          ret[:conditions] = ["memberships.group_id = ?", site.network.id]
-        else
-          ret[:conditions] = ["user_participations.changed_at >= ? AND memberships.group_id = ?", time, site.network.id]
+        if time
+          ret[:conditions] = ["user_participations.changed_at >= ?", time]
         end
         ret
       end)
@@ -368,14 +375,15 @@ module UserExtension::Pages
   # destroy the particular participation object
   def may_admin_page_without?(page, participation)
     method = participation.class.name.underscore.pluralize # user_participations or group_participations
-    original = page.send(method).clone
+    # work with a new, untained page object
+    # no changes to it should be saved!
+    page = Page.find(page.id)
     page.send(method).delete_if {|part| part.id == participation.id}
     begin
       result = page.has_access!(:admin, self)
     rescue PermissionDenied
       result = false
     end
-    page.send(method).replace(original)
     result
   end
 

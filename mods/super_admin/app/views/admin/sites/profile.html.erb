@@ -1,0 +1,34 @@
+<h2>Profile settings</h2>
+<span>You can choose which fields can be filled out in a profile and which profile tabs are active. Default is set to allow all.</span>
+<% form_for current_site, :url => admin_sites_path(:action => :update) do |f| %>
+<%= f.error_messages %>
+<span><i><%= flash[:notice] %></i></span>
+<br />
+<span><b>Profiles:</b></span>
+<% f.fields_for(:profiles) do |p| %>
+  <ul style="list-style-type:none;">
+    <li>
+      <%= p.check_box :public, { :checked => current_site.profile_enabled?(:public) } %>
+      <%= p.label :public, 'Public' %>
+    </li>
+    <li>
+      <%= p.check_box :private, { :checked => current_site.profile_enabled?(:private) } %>
+      <%= p.label :private, 'Private' %>
+    </li>
+  </ul>
+<% end -%>
+<span><b>Profile Fields:</b></span>
+<% f.fields_for(:profile_fields) do |pf| -%>
+  <ul style="list-style-type:none;">
+  <% %w(basic notes phone_numbers email_addresses locations im_addresses websites cryptkeys).each do |field| -%>
+    <li>
+      <%= pf.check_box field, { :checked => current_site.profile_field_enabled?(field.to_sym) } %>
+      <%= pf.label field, field.split('_').map(&:capitalize).join(' ') %>
+    </li>
+  <% end -%>
+  </ul>
+<% end -%>
+<br />
+<span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
+<br /><br />
+<% end %>

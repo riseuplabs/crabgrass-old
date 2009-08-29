@@ -54,7 +54,7 @@ class RequestToJoinUsViaEmail < Request
     request = find_by_code_and_email(code,email)
     if request
       if request.state != 'pending'
-        raise ErrorMessage.new("Invite has already been redeemed"[:invite_redeemed])
+        raise ErrorMessage.new("Invite has already been redeemed"[:invite_error_redeemed])
       end
       request.recipient = user
       request.save!

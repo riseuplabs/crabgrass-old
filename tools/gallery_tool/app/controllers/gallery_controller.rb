@@ -217,7 +217,6 @@ class GalleryController < BasePageController
   end
 
   def upload
-    logger.fatal 'go ahead'
     if request.xhr?
       render :layout => false
     elsif request.post?

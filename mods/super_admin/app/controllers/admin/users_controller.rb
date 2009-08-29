@@ -2,6 +2,8 @@ class Admin::UsersController < Admin::BaseController
 
   before_filter :fetch_user_by_login, :only => [ :show, :edit, :update, :destroy ]
 
+  permissions 'admin/super'
+
   # GET /users
   # GET /users.xml
   def index
@@ -56,6 +58,8 @@ class Admin::UsersController < Admin::BaseController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  rescue Exception => exc
+    render :action => 'new'
   end
 
   # PUT /users/1

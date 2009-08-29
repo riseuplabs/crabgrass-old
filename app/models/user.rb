@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include UserExtension::Groups     # user <--> groups
   include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags
+  include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
 
   ##
@@ -18,12 +19,21 @@ class User < ActiveRecord::Base
   include CrabgrassDispatcher::Validations
   validates_handle :login
 
-  validates_presence_of :email if Conf.require_user_email
-  # ^^ TODO: make this site specific
+
+  validates_presence_of :email, :if => :should_validate_email
 
   validates_as_email :email
   before_validation 'self.email = nil if email.empty?'
   # ^^ makes the validation succeed if email == ''
+
+  def should_validate_email
+    should_validate = if Site.current
+      Site.current.require_user_email
+    else
+      Conf.require_user_email
+    end
+    should_validate
+  end
 
   ##
   ## NAMED SCOPES
@@ -141,9 +151,10 @@ class User < ActiveRecord::Base
   def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
   alias_method_chain :setting, :safety
 
-  def update_or_create_setting(attrs)
+  def update_setting(attrs)
     if setting.id
-      setting.update_attributes(attrs)
+      setting.attributes = attrs
+      setting.save if setting.changed?
     else
       create_setting(attrs)
     end
@@ -283,4 +294,5 @@ class User < ActiveRecord::Base
   # TODO: this does not belong here, should be in the mod, but it was not working
   # there.
   include UserExtension::SuperAdmin rescue NameError
+  include UserExtension::Moderator  rescue NameError
 end

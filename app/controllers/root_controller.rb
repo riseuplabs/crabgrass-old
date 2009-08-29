@@ -3,9 +3,9 @@
 #
 class RootController < ApplicationController
 
-  helper :groups, :account, :wiki
+  helper :groups, :account, :wiki, :page
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  #javascript 'wiki_edit'
   permissions 'groups/base'
   before_filter :login_required, :except => ['index']
   before_filter :fetch_network
@@ -26,7 +26,8 @@ class RootController < ApplicationController
 
   def featured
     update_page_list('featured_panel',
-      :pages => paginate('featured_by', @group.id, 'descending', 'updated_at')
+      :pages => paginate('featured_by', @group.id, 'descending', 'updated_at'),
+      :expanded => true
     )
   end
 
@@ -135,15 +136,13 @@ class RootController < ApplicationController
 
   def update_page_list(target, locals)
     render :update do |page|
-      page.replace_html target, :partial => 'pages/list', :locals => locals
+      if locals[:expanded]
+        page.replace_html target, :partial => 'pages/list_expanded', :locals => locals
+      else
+        page.replace_html target, :partial => 'pages/list', :locals => locals
+      end
     end
   end
-
-#  def render_timed_panel
-#      render :update do |page|
-#        page.replace_html "#{@panel}_panel", :partial => 'root/timed_panel', :locals => {:panel => @panel}
-#      end
-#  end
 
   ##
   ## lists of active groups and users. used by the view.

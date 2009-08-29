@@ -1,4 +1,4 @@
-<div>
+<div class="tab_content_scroll">
   <table cellpadding='5' class='pretty'>
     <tr>
       <th align='left'><%= :name.t %></th>
@@ -40,7 +40,7 @@
   <%- form_remote_tag(
     :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},
     :loading => show_spinner('permissions'),
-    :complete => hide_spinner('permissions')
+    :complete => hide_spinner('permissions') + resize_modal
   ) do -%>
     <%= "User or group name"[:user_or_group_name] %>:<br/>
     <%= text_field_tag 'add_names','',:size=>17 %>
@@ -50,6 +50,5 @@
     <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
     <%= spinner 'permissions' %>
   <%- end -%>
-  <%= javascript_tag "Field.focus('add_names')" %>
 </p>
 <% end -%>

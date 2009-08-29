@@ -1,0 +1,17 @@
+<h2 class='alert'>Moderation</h2>
+
+<ul class="side_list">
+  <li class="small_icon mime_default_16">
+    <%= link_to_active 'Page Moderation', pages_path, @admin_active_tab == 'page_moderation' %>
+  </li>
+  <li class="small_icon comment_16">
+    <%= link_to_active 'Comment Moderation', admin_discussion_posts_path, @admin_active_tab == 'page_post_moderation' %>
+  </li>
+  <li class="small_icon lightning_16">
+    <%= link_to_active 'Wall Moderation', admin_wall_posts_path, @admin_active_tab == 'wall_post_moderation' %>
+  </li>
+  <li class="small_icon chat_16">
+    <%= link_to_active 'Chat Moderation', admin_chat_messages_path, @admin_active_tab == 'chat_messages_moderation' %>
+  </li>
+</ul>
+

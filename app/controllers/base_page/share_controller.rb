@@ -32,6 +32,7 @@ class BasePage::ShareController < ApplicationController
 
   # display the share or notify popup via ajax
   def show
+    render :partial => 'base_page/share/' + params[:name] + '_popup'
   end
 
   # there are three ways to submit the form:
@@ -71,7 +72,7 @@ class BasePage::ShareController < ApplicationController
       flash_message_now :success => @success_msg
       close_popup
     else
-      render :text => 'no button was pressed', :status => :error
+      close_popup
     end
   end
 

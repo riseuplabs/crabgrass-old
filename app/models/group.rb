@@ -39,6 +39,9 @@ class Group < ActiveRecord::Base
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
 
+  # group <--> chat channel relationship
+  has_one :chat_channel
+
   ##
   ## FINDERS
   ##
@@ -147,6 +150,33 @@ class Group < ActiveRecord::Base
   def profile
     self.profiles.visible_by(User.current)
   end
+
+  ##
+  ## MENU_ITEMS
+  ##
+
+  has_many :menu_items, :dependent => :destroy, :order => :position do
+
+    def update_order(menu_item_ids)
+      menu_item_ids.each_with_index do |id, position|
+        # find the menu_item with this id
+        menu_item = self.find(id)
+        menu_item.update_attribute(:position, position)
+      end
+      self
+    end
+  end
+
+  # creates a menu item for the group and returns it.
+  def add_menu_item(params)
+    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
+  end
+
+
+  # TODO: add visibility to menu_items so they can be visible to members only.
+  # def menu_items
+  #   self.menu_items.visible_by(User.current)
+  # end
 
   ##
   ## AVATAR

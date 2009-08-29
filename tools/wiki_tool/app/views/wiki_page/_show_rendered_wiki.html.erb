@@ -1,6 +1,6 @@
 <%= @wiki.body_html %>
 <% if @last_seen %>
 <%= load_lasted_change_diff %>
-<% elsif current_user.may?(:edit, @page) %>
+<% elsif may_edit_page? %>
 <%= decorate_with_edit_links %>
 <% end %>

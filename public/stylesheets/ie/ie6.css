@@ -20,7 +20,6 @@ div.popup_arrow {right: -16px} /* move popup nub slightly */
 
 /* page list */
 div.page_scroll {
-  width: 99.9%;
   zoom: 1;
 }
 div.page_list {zoom: 1;}
@@ -29,6 +28,37 @@ div.page_list {zoom: 1;}
 .selfclear {
   zoom: 1; /* triggers hasLayout */
   display: block; /* resets display */
+}
+
+/* fixes columns for drop down boxes in ie6/7 */
+span.topnav a {
+  position: relative;
+}
+.menu_items {
+  zoom: 1;
+  display: block;
+  width: 34em
+}
+div.leftcol {
+  width: 16em;
+  overflow: hidden;
+}
+div.rightcol {
+  position: absolute;
+  left: -.5em;
+  width: 16em;
+  top: 2.4em;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+#menu_me div.menu_items{
+  width: 14em;
+}
+#menu_me div.leftcol{
+  width: 12em;
+}
+#menu_me div.rightcol{
+  display: none;
 }
 
 /* opacity fix */
@@ -44,12 +74,6 @@ div.page_list {zoom: 1;}
   margin: expression( this == this.parentNode.firstChild || this == this.parentNode.lastChild ? "0em" : "1em 0" );
 }
 
-/* this one is special, because the :first-child is on the <li>, not the <a> */
-#top_menu ul li a {
-  border-left: expression(
-    window.Prototype && ($(this).up().up().previous() == null) ? "1px solid" : "none"
-  );
-}
 
 #page_sidebar ul.names li {
   border-top: expression( this == this.parentNode.firstChild ? "0" : "1px dotted white" )
@@ -58,3 +82,16 @@ div.page_list {zoom: 1;}
 /* temp hack for temp site home */
 form.mini_search table {width: 17em;}
 
+/* fix for stacking problem between drop down boxes and people/groups/networks tabs */
+li.menu {
+  z-index: 100;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
+
+/* for hover over entity boxes on sidebar of dashboard */
+ul.icon_boxes li:hover span {
+  display: block;
+  width: 10em;
+}
