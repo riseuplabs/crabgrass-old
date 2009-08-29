@@ -398,6 +398,12 @@ class Page < ActiveRecord::Base
     return ary.compact.sort_by{|item| item[0].name}
   end
 
+  # returns the appropriate user_participation or group_participation record.
+  # it would be better to use OOP, but this allows page to cache the results.
+  def participation_for(entity)
+    entity.is_a?(User) ? participation_for_user(entity) : participation_for_group(entity)
+  end
+
   protected
 
   before_save :ensure_owner

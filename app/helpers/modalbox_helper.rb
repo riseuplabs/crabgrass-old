@@ -28,7 +28,7 @@ module ModalboxHelper
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
   #
   def link_to_modal(label, options={}, html_options={})
-    options.reverse_merge! :title => label
+    options[:title] = label unless options[:title]
     #html_options = [:id, :class, :style, :icon]
     icon = options.delete(:icon) || html_options.delete(:icon)
     contents = options.delete(:url) || options.delete(:html)

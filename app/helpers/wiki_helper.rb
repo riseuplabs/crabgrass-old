@@ -120,7 +120,7 @@ module WikiHelper
   #
   # these functions are used by the toolbar plugins to show the modalbox popups.
   #
-  def insert_image_function(wiki)
+  def toolbar_insert_image_function(wiki)
     %(insertImageFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();
@@ -128,7 +128,7 @@ module WikiHelper
     })
   end
 
-  def create_link_function(wiki)
+  def toolbar_create_link_function(wiki)
     %(createLinkFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();

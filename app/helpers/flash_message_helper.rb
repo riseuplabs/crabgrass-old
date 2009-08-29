@@ -206,7 +206,6 @@ module FlashMessageHelper
       add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied])
     else
       flsh[:type] = options[:type]
-      flsh[:text] += options[:text]
     end
   end
 

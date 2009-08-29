@@ -94,7 +94,11 @@ module Undress
           when /^(https?|s?ftp):\/\//
             href.gsub(/^(https?|s?ftp):\/\//, "") == inner ? "[#{href}]" : "[#{inner} -> #{href}]"
           when /^[^\/]/
-            "[#{e.inner_text}]"
+            if inner != href
+              "[#{e.inner_text} -> #{href}]" 
+            else
+              "[#{e.inner_text}]" 
+            end
           when /^\/.[^\/]*\/.[^\/]*\//
             "[#{inner} -> #{href}]"
           when /(?:\/page\/\+)[0-9]+$/

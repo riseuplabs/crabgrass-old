@@ -92,6 +92,10 @@ module BasePagePermission
   alias_method :may_share_page?, :may_admin_page?
   alias_method :may_notify_page?, :may_edit_page?
 
+  def may_share_with_everyone?
+    !Site.current.try.network.nil?
+  end
+
   ##
   ## PARTICIPATION
   ##
@@ -105,6 +109,7 @@ module BasePagePermission
   alias_method :may_create_participation?, :may_admin_page?
   alias_method :may_destroy_participation?, :may_create_participation?
   alias_method :may_show_participation?,    :may_show_page?
+  alias_method :may_index_participation?,    :may_show_page?
 
   # This is needed for the views to destinct between displaying access
   # levels or not displaying them on cc.net

@@ -116,16 +116,24 @@ class Test::Unit::TestCase
   end
 
   def assert_error_message(regexp=nil)
-    assert_equal 'error', flash[:type]
+    assert_equal 'error', flash[:type], flash.inspect
     if regexp
-      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp, flash[:text]]
+      assert flash[:text] =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, flash[:text]]
+    end
+  end
+
+  def assert_message(regexp=nil)
+    assert ['error','info','success'].include?(flash[:type]), 'no flash message (%s)'%flash.inspect
+    if regexp
+      str = flash[:text].any || flash[:title]
+      assert(str =~ regexp, 'error message did not match %s. it was %s.'%[regexp.inspect, str])
     end
   end
 
   def assert_success_message(title_regexp = nil, text_regexp = nil)
     assert_equal 'success', flash[:type]
     if title_regexp
-      assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp, flash[:text]]
+      assert flash[:title] =~ title_regexp, 'success message title did not match %s. it was %s.'%[title_regexp.inspect, flash[:text]]
     end
     if text_regexp
       assert flash[:text] =~ text_regexp, 'success message text did not match %s. it was %s.'%[text_regexp, flash[:text]]

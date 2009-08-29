@@ -19,6 +19,18 @@ class BasePage::ParticipationController < ApplicationController
   ## Participation CRUD
   ##
 
+  # this is used for ajax pagination
+  def index
+    tab = params[:tab] == 'permissions' ? 'permissions_tab' : 'participation_tab'
+    render :update do |page|
+      if params[:tab] == 'permissions'
+        page.replace_html 'permissions_tab', :partial => 'base_page/participation/permissions'
+      elsif params[:tab] == 'participation'
+        page.replace_html 'participation_tab', :partial => 'base_page/participation/participation'
+      end
+    end
+  end
+
   # create or update a user_participation object, granting new access.
   def create
     begin
@@ -58,7 +70,7 @@ class BasePage::ParticipationController < ApplicationController
     flash_message_now :exception => exc
     show_error_message
   end
-  
+
   def show
      if params[:popup]
        render :partial => 'base_page/participation/' + params[:name] + '_popup'

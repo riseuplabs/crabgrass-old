@@ -220,7 +220,8 @@ module BasePageHelper
       :name => options.delete(:name)
     })
     #options.merge!(:after_hide => 'afterHide()')
-    link_to_modal(options.delete(:label), {:url => popup_url}, options)
+    title = options.delete(:title) || options[:label]
+    link_to_modal(options.delete(:label), {:url => popup_url, :title => title}, options)
   end
 
   # to be included in the popup result for any popup that should refresh the sidebar when it closes.
@@ -231,8 +232,8 @@ module BasePageHelper
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
   def popup_line(options)
-    name = options[:name]
-    li_id     = "#{name}_li"
+    id = options.delete(:id) || options[:name]
+    li_id     = "#{id}_li"
     link = show_popup_link(options)
     content_tag :li, link, :id => li_id
   end
@@ -274,33 +275,23 @@ module BasePageHelper
     end
   end
 
-  def details_line
+  def details_line(id='details')
+    if id == 'details'
+      label = "Details"[:page_details_link]
+      icon = 'table'
+    elsif id == 'more'
+      label = "More"[:see_more_link]
+      icon = nil
+    end
+
     if may_show_page?
-      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table', :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => "Details"[:page_details_link], :icon => icon, :controller => 'participation')
     end
   end
 
   ##
   ## MISC HELPERS
   ##
-
-  def select_page_access(name, options={})
-    selected = options[:selected]
-
-    options = {:blank => true, :expand => false}.merge(options)
-    select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
-    if options[:blank]
-      select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
-      selected ||= ''
-    else
-      selected ||= default_access
-    end
-    if options[:expand]
-      select_tag name, options_for_select(select_options, selected), :size => select_options.size
-    else
-      select_tag name, options_for_select(select_options, selected)
-    end
-  end
 
   def page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize

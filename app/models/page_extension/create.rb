@@ -78,13 +78,35 @@ module PageExtension::Create
 
     # parses a list of recipients, turning them into email, user, or group
     # objects as appropriate.
-    # returns array [users, groups, emails]
+    #
+    # valid recipients:
+    #
+    #   array form: ['green','blue','animals']
+    #   hash form: {'green' => {:access => :admin}}
+    #              or {'green' => true}
+    #   object form: [#<User id: 4, login: "blue">]
+    #
+    # special recipients:
+    #
+    #   :participants -- all the people who have access to the page.
+    #   :contributors -- everyone who has ever modified the page.
+    #   :all -- share with the whole site.
+    #
+    # returns an array [users, groups, emails, special] where:
+    #
+    #   [users]  an array of all parsed users
+    #   [groups] an array of all parsed groups
+    #   [emails] an array of all parsed emails
+    #   [special] special recipients (:participants, etc)
+    #
     def parse_recipients!(recipients)
-       users = []; groups = []; emails = []; errors = []
+      users = []; groups = []; emails = []; specials = []; errors = []
       if recipients.is_a? Hash
         entities = []
         recipients.each do |key,value|
-          entities << key if value.is_a?(Hash)
+          if value.is_a?(Hash) or value == "1" or value === true
+            entities << key
+          end
         end
       elsif recipients.is_a? Array
         entities = recipients
@@ -99,6 +121,8 @@ module PageExtension::Create
           groups << entity
         elsif entity.is_a? User
           users << entity
+        elsif entity.try(:starts_with, ':')
+          specials << entity
         elsif u = User.find_by_login(entity.to_s)
           users << u
         elsif g = Group.find_by_name(entity.to_s)
@@ -106,7 +130,7 @@ module PageExtension::Create
         elsif entity =~ RFC822::EmailAddress
           emails << entity
         elsif entity.any?
-          errors << '"%s" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found] % entity
+          errors << '"{name}" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found, h(entity)]
         end
       end
 
@@ -114,7 +138,7 @@ module PageExtension::Create
         raise ErrorMessages.new('Could not understand some recipients.', errors)
       end
 
-      [users, groups, emails]
+      [users, groups, emails, specials]
     end # parse_recipients!
 
   end # ClassMethods
