@@ -11,12 +11,14 @@ class TrackingTest < Test::Unit::TestCase
     user = users(:blue)
     group = groups(:rainbow)
     assert membership = user.memberships.find_by_group_id(group.id)
-    Tracking.insert_delayed(:current_user => user, :group => group)
-    Tracking.process
-    visits = membership.reload.total_visits
-    Tracking.insert_delayed(:current_user => user.id, :group => group.id)
-    Tracking.process
-    assert_equal visits+1, membership.reload.total_visits, 'total_visits should increment'
+    assert_difference('Membership.find(%d).total_visits'%membership.id) do
+      Tracking.insert_delayed(:current_user => user, :group => group)
+      Tracking.process
+    end
+    assert_difference('Membership.find(%d).total_visits'%membership.id) do
+      Tracking.insert_delayed(:current_user => user.id, :group => group.id)
+      Tracking.process
+    end
   end
 
   def test_user_visit_tracked
