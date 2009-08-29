@@ -46,6 +46,7 @@ class Admin::ChatMessagesController < Admin::BaseController
   end
 
   def set_active_tab
+    @active_tab = :moderation
     @admin_active_tab = 'chat_messages_moderation'
   end
 

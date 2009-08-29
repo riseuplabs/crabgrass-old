@@ -2,10 +2,10 @@
 hook_text = call_hook :chat_message_actions, :message => message
 %>
 
-<%= "<div class='message #{message.level} shy_parent' id='message-#{message.id}'>
+<%= "<div class='message #{message.level} shy_parent' id='#{dom_id message}'>
       <a name='#{message.id}'></a>
       <span class='time'>#{message.created_at.strftime('%R')}</span>
       <span class='sender'>#{message.sender_name}</span>
       <span class='content'>#{message.content}</span> #{hook_text}</div>"
 %>
-  
+

@@ -114,7 +114,15 @@ ins
 //
 
 div.formatting_reference
+  margin-top: 0.5em
   float: right
+
+div.wiki_buttons
+  margin-top: 0.5em
+  input
+    font-size: 1.25em
+    padding: 0.1em 0.5em
+    margin-right: 0.5em
 
 a.edit
   display: inline
@@ -134,42 +142,74 @@ h2:hover a.edit,
 h3:hover a.edit
   opacity: 0.6
 
-.html_editor_instance
-  padding: 4px
-  border-top: 1px solid #ddd
-  outline: 0
-  min-height: 10em
-  max-height: 30em
-  overflow-y: auto
-  cursor: text
-  &:focus
-    background-color: #ffe
-
-.html_editor_panel
-  border-bottom: 1px solid #666
-  border-top: 1px solid white
+//
+// WYSIWYG EDITOR
+// Take care when changing this css, it is hard to get it to look ok in all browsers.
+//
 
 .html_editor_wrapper
   border: 1px solid #666
 
-.nicEdit-panelContain
+.htmlarea
   border: 0 !important
 
-.nicEdit-selectContain
-  width: 120px !important
+.htmlarea .toolbar
+  border-right: 0
+  border-bottom: 1px solid #999
+  background: #eee
+  .button
+    background: #eee
+    border-color: #eee
+    &:hover
+      background: white
 
-.nicEdit-selectTxt
-  width: 90px !important
+.htmlarea iframe
+  width: 100% !important
+  border: 0 !important
+  border-top: 1px solid #ddd !important
+  &:focus
+    background-color: #ffe
 
-.nicEdit-pane
-  h1
-    font-size: 1.55em
-  h2
-    font-size: 1.1em
-  h3
-    font-size: 1em
-  h4
-    font-size: 0.8em
+.htmlarea .statusBar
+  border-left: 0 !important
+  background: #eee
+
+.statusBarWidgetContainer
+  display: none
+
+//.html_editor_instance
+//  padding: 4px
+//  border-top: 1px solid #ddd
+//  outline: 0
+//  min-height: 10em
+//  max-height: 30em
+//  overflow-y: auto
+//  cursor: text
+//  &:focus
+//    background-color: #ffe
+
+//.html_editor_panel
+//  border-bottom: 1px solid #666
+//  border-top: 1px solid white
+
+//.nicEdit-panelContain
+//  border: 0 !important
+
+//.nicEdit-selectContain
+//  width: 120px !important
+
+//.nicEdit-selectTxt
+//  width: 90px !important
+
+//.nicEdit-pane
+//  h1
+//    font-size: 1.55em
+//  h2
+//    font-size: 1.1em
+//  h3
+//    font-size: 1em
+//  h4
+//    font-size: 0.8em
 
 
 //

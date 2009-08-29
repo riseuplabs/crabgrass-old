@@ -1,39 +1,52 @@
 <%
   render :partial => 'tabs'
-  active_tab = current_user.setting.preferred_editor_sym
   @show_posts = false
+  separator = Conf.text_editor_sym == :html_preferred ? '' : '|'
 %>
-<%= Formy.tabs(:type => :simple) do |f|
-  f.tab do |t|
-    t.id       "link-tab-greencloth"
-    t.selected active_tab == :greencloth
-    t.label    "Plain Editor"[:wiki_plain_editor]
-    t.function "selectWikiEditorTab('%s', %s)" % [
-      page_xurl(@page, :action => 'update_editors', :editor => 'greencloth'),
-      {
-        :wiki_id => @wiki.id,
-        :tab_id  => 'link-tab-greencloth',
-        :area_id => 'tab-edit-greencloth',
-        :editor  => 'greencloth',
-        :token   => form_authenticity_token
-      }.to_json
-    ]
+<%= Formy.tabs(:type => :simple, :separator => separator) do |f|
+  if Conf.allow_greencloth_editor?
+    f.tab do |t|
+      t.id       "link-tab-greencloth"
+      t.selected preferred_editor_tab == :greencloth
+      t.label    wiki_editor_tab_label(:plain)
+      if Conf.text_editor_sym == :html_preferred
+        t.class  "page_url float_right"
+      else
+        t.class  "page_url"
+      end
+      t.function "selectWikiEditorTab('%s', %s)" % [
+        page_xurl(@page, :action => 'update_editors', :editor => 'greencloth'),
+        {
+          :wiki_id => @wiki.id,
+          :tab_id  => 'link-tab-greencloth',
+          :area_id => 'tab-edit-greencloth',
+          :editor  => 'greencloth',
+          :token   => form_authenticity_token
+        }.to_json
+      ]
+    end
   end
 
-  f.tab do |t|
-    t.id       "link-tab-html"
-    t.selected active_tab == :html
-    t.label    "Visual Editor"[:wiki_visual_editor]
-    t.function "selectWikiEditorTab('%s', %s)" % [
-      page_xurl(@page, :action => 'update_editors', :editor => 'html'),
-      {
-        :wiki_id => @wiki.id,
-        :tab_id  => 'link-tab-html',
-        :area_id => 'tab-edit-html',
-        :editor  => 'html',
-        :token   => form_authenticity_token
-      }.to_json
-    ]
+  if Conf.allow_html_editor?
+    f.tab do |t|
+      t.id       "link-tab-html"
+      t.selected preferred_editor_tab == :html
+      t.label    wiki_editor_tab_label(:html)
+      t.class    "page_url"
+      if separator == ""
+        t.style  "padding-right: 1em; margin-right: 0.75em; border-right: 2px solid #ccc;"
+      end
+      t.function "selectWikiEditorTab('%s', %s)" % [
+        page_xurl(@page, :action => 'update_editors', :editor => 'html'),
+        {
+          :wiki_id => @wiki.id,
+          :tab_id  => 'link-tab-html',
+          :area_id => 'tab-edit-html',
+          :editor  => 'html',
+          :token   => form_authenticity_token
+        }.to_json
+      ]
+    end
   end
 
   f.tab do |t|
@@ -57,13 +70,17 @@ end %>
 <%= hidden_field 'wiki', 'version' %>
 <% locked_error_message -%>
 
-<div id="tab-edit-greencloth" class="tab_content" style="<%= 'display:none' if active_tab != :greencloth %>">
-  <%= render :partial => "edit_greencloth", :locals => {:load_content => active_tab == :greencloth} %>
+% if Conf.allow_greencloth_editor?
+<div id="tab-edit-greencloth" class="tab_content" style="<%= 'display:none' if preferred_editor_tab != :greencloth %>">
+  <%= render :partial => "edit_greencloth", :locals => {:load_content => preferred_editor_tab == :greencloth} %>
 </div>
+% end
 
-<div id="tab-edit-html" class="tab_content" style="<%= 'display:none' if active_tab != :html %>">
-  <%= render :partial => "edit_wysiwyg", :locals => {:load_content => active_tab == :html} %>
+% if Conf.allow_html_editor?
+<div id="tab-edit-html" class="tab_content" style="<%= 'display:none' if preferred_editor_tab != :html %>">
+  <%= render :partial => "edit_wysiwyg", :locals => {:load_content => preferred_editor_tab == :html} %>
 </div>
+% end
 
 <div id="tab-edit-preview" class="tab_content" style="display:none">
   <div class="wiki" id="<%= wiki_preview_id @wiki %>"></div>
@@ -73,13 +90,9 @@ end %>
   <%= big_spinner %>
 </div>
 
-<div class="buttons">
- <% if locked_for_me? -%>
-   <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
- <% else -%>
-   <%= submit_tag 'Save'[:save_button], :name => 'save' %>
- <% end -%>
- <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+<div class="wiki_buttons">
+ <% if locked_for_me? -%><%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+ <% else -%><%= submit_tag 'Save'[:save_button], :name => 'save' %><% end %><%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
 </div>
 
 <% end %>

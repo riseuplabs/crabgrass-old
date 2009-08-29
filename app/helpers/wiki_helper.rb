@@ -53,8 +53,12 @@ module WikiHelper
   end
 
   ##
-  ## IMAGE POPUP
+  ## WIKI EDITING POPUPS
   ##
+
+  ## the actions for these popups are defined in ControllerExtension::WikiPopup
+  ## because they may be in the wiki_controller or the wiki_page_controller. I am not
+  ## sure why we do it that way, but that is how it is.
 
   def popup_image_list(wiki)
     style = "height:64px;width:64px"
@@ -99,6 +103,37 @@ module WikiHelper
     else
       url_for(wiki_action('image_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
     end
+  end
+
+  def link_popup_show_url(wiki)
+    if @page and @page.data and @page.data == wiki
+      page_xurl(@page, :action => 'link_popup_show', :wiki_id => wiki.id)
+    else
+      url_for(wiki_action('link_popup_show', :wiki_id => wiki.id).merge({:escape => false}))
+    end
+  end
+
+  def update_link_function(wiki,action)
+    "updateLink('%s','%s');" % [wiki.id,action]
+  end
+
+  #
+  # these functions are used by the toolbar plugins to show the modalbox popups.
+  #
+  def insert_image_function(wiki)
+    %(insertImageFunction = function() {
+      var editor = new HtmlEditor(#{wiki.id});
+      editor.saveSelection();
+      #{modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image])};
+    })
+  end
+
+  def create_link_function(wiki)
+    %(createLinkFunction = function() {
+      var editor = new HtmlEditor(#{wiki.id});
+      editor.saveSelection();
+      #{modalbox_function(link_popup_show_url(@wiki), :title => 'Add Link'[:add_link])};
+    })
   end
 
   ##
@@ -157,6 +192,43 @@ module WikiHelper
     )
   end
 
+  ##
+  ## WIKI EDITORS
+  ##
+
+  def preferred_editor_tab
+    @active_editor_tab ||= begin
+      active_tab = current_user.setting.preferred_editor_sym
+      if active_tab == :greencloth and !Conf.allow_greencloth_editor?
+        active_tab = :html
+      elsif active_tab == :html and !Conf.allow_html_editor?
+        active_tab = :greencloth
+      end
+      active_tab
+    end
+  end
+
+  # why is this logic so complex? different installs want really different things.
+  def wiki_editor_tab_label(type)
+    if type == :plain
+      if Conf.allow_html_editor?
+        if Conf.text_editor_sym == :html_preferred
+          "Advanced Editor"[:wiki_advanced_editor]
+        else
+          "Plain Editor"[:wiki_plain_editor]
+        end
+      else
+        "Editor"[:wiki_editor]
+      end
+    else
+      if Conf.text_editor_sym == :html_preferred || !Conf.allow_greencloth_editor?
+        "Editor"[:wiki_editor]
+      else
+        "Visual Editor"[:wiki_visual_editor]
+      end
+    end
+  end
+
   def create_wiki_toolbar(wiki)
     body_id = wiki_body_id(wiki)
     toolbar_id = wiki_toolbar_id(wiki)
@@ -176,6 +248,15 @@ module WikiHelper
   # for the wysiwyg html editor.
   def ugly_html(html)
     UglifyHtml.new( html || "" ).make_ugly
+  end
+
+  AVAILABLE_EDITOR_LANGS = %w(b5 ch cz da de ee el es eu fa fi fr gb he hu it ja lt lv nb nl pl pt_br ro ru sh si sr sv th vn).inject({}) {|h,l| h[l]=l; h}
+
+  def html_editor_language_code()
+    code = session[:language_code].to_s.downcase
+    short_code = code.sub(/_.*$/,'')
+    default = 'en'
+    AVAILABLE_EDITOR_LANGS[code] || AVAILABLE_EDITOR_LANGS[short_code] || default
   end
 
 end

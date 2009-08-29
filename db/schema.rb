@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090813194055) do
+ActiveRecord::Schema.define(:version => 20090821060849) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(:version => 20090813194055) do
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
     t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -392,6 +392,9 @@ ActiveRecord::Schema.define(:version => 20090813194055) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
+    t.boolean  "public_requested",                 :default => false
+    t.boolean  "vetted",                           :default => false
+    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
@@ -439,6 +442,8 @@ ActiveRecord::Schema.define(:version => 20090813194055) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
+    t.boolean  "vetted",                      :default => false
+    t.integer  "yuck_count",    :limit => 11, :default => 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -589,6 +594,7 @@ ActiveRecord::Schema.define(:version => 20090813194055) do
     t.string  "email_sender_name",    :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
+    t.integer "moderation_group_id",  :limit => 11
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -773,7 +779,7 @@ ActiveRecord::Schema.define(:version => 20090813194055) do
     t.integer  "login_landing",              :limit => 11, :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "preferred_editor",           :limit => 11, :default => 0
+    t.integer  "preferred_editor",           :limit => 4
   end
 
   add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"

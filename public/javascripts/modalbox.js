@@ -182,7 +182,11 @@ Modalbox.Methods = {
 	confirm: function(message, options) {
 		options = $H(this.strings).merge(options).merge({'message':message})
 		if (options.get('action')) {
-			var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			if (options.get('method') == "delete") {
+				var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="POST"><input type="hidden" value="#{method}" name="_method"/><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			} else {
+				var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
+			}
 		} else if (options.get('ok_function')) {
 			var html = '<div class="MB_confirm"><p>#{message}</p><form><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.back()" value="#{cancel}" /><input type="button" onclick="#{ok_function}" value="#{ok}" /></form></div>';
 		}
@@ -327,9 +331,15 @@ Modalbox.Methods = {
 			this.MBclose.focus(); // If no focusable elements exist focus on close button
 	},
 
-	_findFocusableElements: function(){ // Collect form elements or links from MB content
-		this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]').invoke('addClassName', 'MB_focusable');
-		return this.MBcontent.select('.MB_focusable');
+	// Collect form elements or links from MB content
+	_findFocusableElements: function() {
+		if (Prototype.Browser.IE && this.MBcontent.select('iframe').length) {
+			return []; // IE dies a horrible death if the modalbox includes an iframe, unless we return [] here.
+                 // Not sure if it is the focus or the adding the class that triggers it.
+		} else {
+			this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]').invoke('addClassName', 'MB_focusable');
+			return this.MBcontent.select('.MB_focusable');
+		}
 	},
 
 	_kbdHandler: function(event) {

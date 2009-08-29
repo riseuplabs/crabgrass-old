@@ -87,6 +87,7 @@ class Admin::PagesController < Admin::BaseController
   protected
 
   def set_active_tab
+    @active_tab = :moderation
     @admin_active_tab = 'page_moderation'
   end
 
