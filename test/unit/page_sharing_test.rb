@@ -32,7 +32,6 @@ class PageSharingTest < Test::Unit::TestCase
   def test_share_page_with_owner
     user = users(:kangaroo)
     group = groups(:animals)
-
     page = Page.create(:title => 'fun fun', :user => user, :share_with => group, :access => :admin)
     assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
     assert group.may?(:admin, page), 'group be able to admin group'
@@ -219,6 +218,27 @@ class PageSharingTest < Test::Unit::TestCase
     assert owner.member_of?(committee)
     assert_nothing_raised do
       owner.share_page_with!(page, 'rainbow+the-cold-colors', {})
+    end
+  end
+
+  # send notification to special symbols :participants or :contributors
+  def test_notify_special
+    owner = users(:kangaroo)
+    userlist = [users(:dolphin), users(:penguin), users(:iguana)]
+    page = Page.create!(:title => 'title', :user => owner, :share_with => userlist, :access => :edit)
+
+    # send notice to participants
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 4) do
+      owner.share_page_with!(page, ':participants', :send_notice => true)
+    end
+
+    # send notice to contributors
+    page.add(users(:penguin),:changed_at => Time.now) # simulate contribution
+    page.add(users(:kangaroo),:changed_at => Time.now)
+    page.save
+    UserParticipation.update_all :inbox => false
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 2) do
+      owner.share_page_with!(page, ':contributors', :send_notice => true)
     end
   end
 

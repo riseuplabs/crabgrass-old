@@ -78,8 +78,8 @@ module TaskListPageHelper
   def possible_users
     return @possible_users if @possible_users
     @possible_users = []
-    if @page.users_with_access.any?
-      @possible_users += @page.users_with_access
+    if @page.users.with_access.any?
+      @possible_users += @page.users.with_access
     end
     @page.groups.each do |group|
       @possible_users += group.users

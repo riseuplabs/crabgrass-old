@@ -666,7 +666,6 @@ already_contacts_info: "You are already the friend of this person."
 try_again: "Try Again"
 invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
 invite_accept_headline: 'Accept invitation to join group "{group_name}"'
-invite_not_found: "Invite not found"
 invite_accept_via_existing_account: "I already have an account"
 invite_accept_via_register: "I need to register a new account"
 join_group_success: "You have joined group {group_name}"
@@ -775,6 +774,11 @@ notify_page_link: "Send Notification"
 notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
 notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
 notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+
+notify_no_access_error: 'Sorry, "{name}" does not have access to this page.'
+share_already_exists_error: '"{name}" already has access to this page.'
+share_pester_error: 'Sorry, you are not allowed to share with "{name}".'
+name_or_email_not_found: '"{name}" does not match the name of any users or groups and is not a valid email address.'
 
 # creating
 

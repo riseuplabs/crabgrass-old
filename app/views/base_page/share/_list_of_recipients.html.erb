@@ -12,6 +12,15 @@
   # it to go to user z.
   # So, for now, disable showing current participants.
   #
+  # Also, the current code does not correctly display the access level of prior recipients anyway.
+  #
+  # NOTE2: it appears that the code was originally written so that sharing + notifying to people
+  # who already have access did not cause a notice to be sent. This logic did not work, however, and
+  # I think that it is too complex.
+  #
+  # There is another good reason to not list the users with access here: for pages with many users
+  # it makes it so that the popup takes a very long time to load.
+  #
   # %>
 <% empty_box = true %>
 <table><tbody class="autocomplete_results_table" id="share_page_recipient_table">
