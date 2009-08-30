@@ -1,5 +1,21 @@
 module AutocompleteHelper
 
+  # creates the javascript for autocomplete on text field with field_id
+  #
+  # options:
+  #
+  #  :url
+  #    what url to use to get the auto complete data. optional
+  #
+  #  :onselect
+  #    what js function to run when an item is selected
+  #
+  #  :message
+  #    the message to display, if any, before a user starts to type.
+  #
+  #  :container
+  #    the dom id of an element that will be the container for the popup. optional
+  #
   def autocomplete_entity_tag(field_id, options={})
     options[:url] ||= '/autocomplete/entities'
     options[:onselect] ||= 'null'
@@ -11,6 +27,7 @@ module AutocompleteHelper
         width:300,
         onSelect: #{options[:onselect]},
         message: '#{options[:message]}',
+        container: '#{options[:container]}',
         preloadedOnTop: true,
         rowRenderer: #{render_entity_row_function},
         selectValue: #{extract_value_from_entity_row_function}
