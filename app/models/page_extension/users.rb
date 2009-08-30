@@ -112,6 +112,7 @@ module PageExtension::Users
   # * limited to users who have access OR changed_at
   # This uses a limited query, otherwise it takes forever on pages with many participants.
   def sorted_user_participations(options={})
+    options[:page] ||= 1 if options.key?(:page)   # options[:page] might be set to nil
     options.reverse_merge!(
       :order=>'access ASC, changed_at DESC, users.login ASC',
       :limit => (options[:page] ? nil : 31),

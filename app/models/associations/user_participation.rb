@@ -19,11 +19,15 @@ class UserParticipation < ActiveRecord::Base
   belongs_to :user
   serialize :notice
 
-  #use this for counting stars :)
+  # use this for counting stars :)
   include UserParticipationExtension::Starring
 
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe
+
+  def entity
+    user
+  end
 
   def access_sym
     ACCESS_TO_SYM[self.access]

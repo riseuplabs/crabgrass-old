@@ -45,16 +45,6 @@ module BasePageHelper
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
-  # setting to be overridden by install mods
-  # this is the default access for creating a new page participation.
-  def default_access
-    'admin'
-  end
-
-  def access_from_params(para=params[:access])
-    (para||:view).to_sym
-  end
-
   ##
   ## SIDEBAR HELPERS
   ##
@@ -226,9 +216,9 @@ module BasePageHelper
 
   # to be included in the popup result for any popup that should refresh the sidebar when it closes.
   # also, set refresh_sidebar to true one the popup_line call
-  def refresh_sidebar_on_close
-    javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
-  end
+  #def refresh_sidebar_on_close
+  #  javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
+  #end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
   def popup_line(options)

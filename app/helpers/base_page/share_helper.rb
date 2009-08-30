@@ -1,32 +1,75 @@
 module BasePage::ShareHelper
 
-  def page_access_options
-    [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
+#  def page_access_options
+#    [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
+#  end
+
+  def page_access_options(options={})
+    @access_options ||= [
+      ['Full Access'[:page_access_admin],'admin'],
+      ['Write Ability'[:page_access_edit],'edit'],
+      ['Read Only'[:page_access_view],'view']
+    ]
+    if options[:remove]
+      @access_options + [['No Access'[:page_access_none],'remove']]
+    elsif options[:blank]
+      @access_options + [["(%s)" % 'No Change'[:no_change],'']]
+    else
+      @access_options
+    end
   end
 
+  # displays the access level of a participation.
+  # eg:
+  #   <span class="admin">Full Access</span>
+  #
   def display_access(participation)
     if participation
       access = participation.access_sym.to_s
       option = page_access_options.find{|option| option[1] == access}
-      option[0]
+      content_tag :span, option[0], :class => access
     end
   end
 
-  def select_page_access(name, options={})
-    selected = options[:selected]
+  def display_access_icon(participation)
+    icon = case participation.access_sym
+      when :admin then 'tiny_wrench'
+      when :edit then 'tiny_pencil'
+      when :view then 'tiny_no_pencil'
+    end
+    icon_tag(icon)
+  end
 
-    options = {:blank => true, :expand => false}.merge(options)
-    select_options = page_access_options
+  #
+  # creates a select tag for page access
+  #
+  # There are two forms:
+  #
+  #   select_page_access(name, participation, options)
+  #   select_page_access(name, options)
+  #
+  # options:
+  #
+  #  [blank] if true, include 'no change' as an option
+  #  [expand] if true, show as list instead of popup.
+  #  [remove] if true, show an entry that allows for access removal
+  #
+  def select_page_access(name, participation={}, options=nil)
+    options = participation if participation.is_a?(Hash)
+
+    selected = participation.try(:access_sym) || options[:selected]
+    options.reverse_merge!(:blank => true, :expand => false, :remove => false, :class => 'access')
+
+    select_options = page_access_options(:blank => options[:blank], :remove => options.delete(:remove))
     if options.delete(:blank)
-      select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
       selected ||= ''
     else
-      selected ||= default_access
+      selected ||= Conf.default_page_access
     end
     if options.delete(:expand)
       options[:size] = select_options.size
     end
-    select_tag name, options_for_select(select_options, selected), options
+    select_tag name, options_for_select(select_options, selected.to_s), options
   end
 
   ##
@@ -62,7 +105,7 @@ module BasePage::ShareHelper
     access = old_participation.try.access
     access ||= may_select_access_participation? ?
       "$('recipient[access]').value" :
-      %{'#{default_access}'}
+      "'#{Conf.default_page_access}'"
     other_select = "$('recipients[#{recipient.name.gsub(/\+/,"%2b")}][access]')"
     this_select = "$('share_with_everyone_access')"
     sync_function = "#{other_select}.value = #{this_select}.value"
@@ -75,7 +118,7 @@ module BasePage::ShareHelper
   def add_action(recipient, access, spinner_id)
     access ||= may_select_access_participation? ?
       "$('recipient[access]').value" :
-      %{'#{default_access}'}
+      "'#{Conf.default_page_access}'"
     {
       :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
       :with => %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
