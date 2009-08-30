@@ -2,6 +2,8 @@
 ## This partial will add a line item to the share/notify recipients list.
 ##
 
+alter_access = true if alter_access.nil?
+
 # showNoticeMessage() will ensure the autocomplete popup is hidden
 
 # the response is wrapped in this 'if' in case the popup has been hidden before we return.
@@ -23,7 +25,7 @@ else
 
   # update the ui by adding the recipients
   @recipients.each do |recipient|
-    page.insert_html(:top, 'share_page_recipient_table',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true })
+    page.insert_html(:top, 'share_page_recipient_table',:partial => 'recipient', :locals => { :recipient => recipient, :access => params[:recipient][:access], :unsaved => true, :alter_access => alter_access })
   end
   page << "$('recipient_name').value = '';"
   page.show('share_page_recipient_area') if @recipients.any?

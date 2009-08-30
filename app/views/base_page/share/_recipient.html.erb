@@ -6,6 +6,7 @@
 # access    -> what access level do we want to give to the new participation
 # unsaved   -> flag: does this participation contain changes that need to be saved / is new
 # blank     -> include blank as an access level option.
+# alter_access -> if true, then we allow the user to change the access level of pre-existing participations.
 
 blank = false if blank.nil?
 access = 'admin' if access.nil?
@@ -16,6 +17,7 @@ else
   newitem = unsaved
 end
 newitem = true if @page and @page.new_record?
+alter_access = true if alter_access.nil?
 
 recipient_name = recipient.name.gsub(/\+/,"%2b")   # encode + as %2b
 participation = (@page.participation_for(recipient) if @page)
@@ -38,7 +40,7 @@ end
     <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
   </td>
   <td>
-%   if !may_share_page?
+%   if (!alter_access && participation) || !may_share_page?
       <%= hidden_field_tag "recipients[#{recipient.name}]", "1", :id => id %>
       <%= display_access(participation) %>
 %   elsif may_select_access_participation?

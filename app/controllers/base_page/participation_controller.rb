@@ -8,12 +8,11 @@ This is a controller for managing participations with a page
 
 =end
 
-class BasePage::ParticipationController < ApplicationController
+class BasePage::ParticipationController < BasePage::SidebarController
 
   before_filter :login_required
   verify :method => :post, :only => [:move, :set_owner]
-  helper 'base_page', 'base_page/participation'
-  permissions 'base_page'
+  helper 'base_page/participation', 'base_page/share'
 
   ##
   ## Participation CRUD
@@ -32,6 +31,7 @@ class BasePage::ParticipationController < ApplicationController
   end
 
   # create or update a user_participation object, granting new access.
+  # this is currently unused
   def create
     begin
       users, groups, emails = Page.parse_recipients!(params[:add_names])
@@ -45,6 +45,21 @@ class BasePage::ParticipationController < ApplicationController
     rescue Exception => exc
       flash_message_now :exception => exc
       show_error_message
+    end
+  end
+
+  def update
+    upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
+    gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
+    part = upart || gpart
+    entity = part.entity
+    if params[:access] == 'remove'
+      destroy
+    else
+      @page.add(entity, :access => params[:access]).save!
+      render :update do |page|
+        page.replace_html dom_id(part), :partial => 'base_page/participation/permission_row', :locals => {:participation => part.reload}
+      end
     end
   end
 
@@ -201,15 +216,6 @@ class BasePage::ParticipationController < ApplicationController
 
   def show_error_message
     render :template => 'base_page/show_errors'
-  end
-
-  prepend_before_filter :fetch_page
-  def fetch_page
-    if params[:page_id]
-      @page = Page.find_by_id(params[:page_id])
-      @upart = @page.participation_for_user(current_user)
-    end
-    true
   end
 
 end

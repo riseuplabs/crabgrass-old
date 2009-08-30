@@ -113,8 +113,6 @@ table.share_page_recipient_add
     font-size: 0.9em
   td.unsaved
     background-color: #BBFF99
-  select
-    font-size: 0.9em
   span.entity
     width: 15em
     overflow: hidden
@@ -123,25 +121,25 @@ table.share_page_recipient_add
 .popup #share_page_recipient_table td
   background-color: #fff
 
-div.notify_details,
-div.share_details
-  background: white
-  border: 1px solid #999
-  border-bottom: 0
-  max-height: 15em
-  //min-height: 5em
-  overflow-y: auto
-  margin: 3px
-  table
-    width: 100%
-    td
-      padding: 0.5em 0.25em
-      //overflow: hidden
-  ul
-    margin: 0
-
-div.notify_details
-  padding: 0.5em
+//div.notify_details,
+//div.share_details
+//  background: white
+//  border: 1px solid #999
+//  border-bottom: 0
+//  max-height: 15em
+//  //min-height: 5em
+//  overflow-y: auto
+//  margin: 3px
+//  table
+//    width: 100%
+//    td
+//      padding: 0.5em 0.25em
+//      //overflow: hidden
+//  ul
+//    margin: 0
+//
+//div.notify_details
+//  padding: 0.5em
 
 table.notify
   width: 100%
@@ -150,6 +148,10 @@ table.notify
   tr.gap
     td
       padding-top: 1em
+
+#permissions_tab, #share_page_recipient_table
+  select.access
+    font-size: 0.9em
 
 //
 // PAGE SIDEBAR
@@ -339,9 +341,7 @@ div.title_box
 div.sub_menu
   width: 200px
 
-
 // permission tab in details popup
-
-div.tab_content_scroll
-  overflow: auto
-  height: 20em
+//div.tab_content_scroll
+//  overflow: auto
+//  height: 20em

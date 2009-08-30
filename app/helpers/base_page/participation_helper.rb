@@ -1,12 +1,24 @@
 module BasePage::ParticipationHelper
 
-  def access_sym_to_str(sym)
-    if sym == :admin
-      content_tag :span, "Coordinator"[:coordinator], :class=>sym
-    elsif sym == :edit
-      content_tag :span, "Participant"[:participant], :class=>sym
-    elsif sym == :view
-      "Viewer"[:viewer]
+  def show_or_edit_page_access(participation)
+    if participation.is_a?(UserParticipation)
+      part_id = {:upart_id => participation.id}
+    else
+      part_id = {:gpart_id => participation.id}
+    end
+    select_id = "access_select_#{participation.id}"
+    display_access_icon(participation) + '&nbsp;' +
+    if may_remove_participation?(participation)
+      select_page_access(select_id, participation, {
+        :remove => true,
+        :onchange => remote_function(
+          :url => {:controller => 'base_page/participation', :action => 'update', :page_id => @page.id}.merge(part_id),
+          :loading => show_spinner(dom_id(participation)),
+          :with => "'access='+$('#{select_id}').value"
+        )
+      })
+    else
+      display_access(participation)
     end
   end
 
