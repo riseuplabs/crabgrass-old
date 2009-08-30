@@ -1,7 +1,7 @@
 #
 # Handles exceptions for all crabgrass controllers.
 #
-# This is the proper way to report an error in crabgrass:
+# This is an easy way to report an error in crabgrass:
 #
 #   raise ErrorMessage.new("i am sorry dave, i can't do that right now")
 #
@@ -12,6 +12,18 @@
 # For not found, use:
 #
 #   raise_not_found("Invite"[:invite])
+#
+# Some people might consider this bad programming style, since it uses exceptions
+# for error messages and they consider exceptions to be only for the unexpected.
+#
+# However, raise_error is pretty explicit, and is just an easy way to bail out
+# of the current controller and report the error. The problem is, there is a lot
+# of common logic to error reporting, and it seems a shame to repeat this everywhere
+# you want to display a simple error message.
+#
+# The use of 'raise ErrorMessage.new' is more like a goto, and could lead to problems.
+# In some cases, however, it is nice to put sanity checking deep in the models where
+# it would be impractical to expose an api for testing the validity of every oject.
 #
 
 module ControllerExtension::RescueErrors
@@ -78,7 +90,7 @@ module ControllerExtension::RescueErrors
     end
   end
 
-  # display an error message or messages
+  # renders an error message or messages
   def render_error(exception=nil)
     respond_to do |format|
       format.html do
@@ -101,6 +113,22 @@ module ControllerExtension::RescueErrors
         render :update do |page|
           page.call('showNoticeMessage', display_messages)
         end
+      end
+    end
+  end
+
+  protected
+
+  # override the default 'rescue_action_locally' so that we can print an error
+  # message when the request is an ajax one.
+  def rescue_action_locally(exception)
+    respond_to do |format|
+      format.html do
+        super(exception)
+      end
+      format.js do
+        @exception = exception
+        render :template => 'rescues/diagnostics.rjs', :layout => false
       end
     end
   end

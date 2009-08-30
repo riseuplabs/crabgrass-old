@@ -70,7 +70,7 @@ module ImageHelper
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
     "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
@@ -92,7 +92,7 @@ module ImageHelper
   end
 
   def big_spinner()
-    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;"
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", :class => 'spin'
   end
 
   # we can almost do this to trick ie into working with event.target,
