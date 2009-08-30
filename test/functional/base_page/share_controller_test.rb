@@ -44,7 +44,7 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     assert_response :success
     assert_select_rjs :insert, :top, 'share_page_recipient_table' do
       assert_select 'tr.unsaved'
-      assert_select 'option[selected=selected][value=edit]', 'Participant', 'new user should have edit access'
+      assert_select 'option[selected=selected][value=edit]', /Write/, 'new user should have edit access'
     end
 
     # this request should not end in adding the user a second time

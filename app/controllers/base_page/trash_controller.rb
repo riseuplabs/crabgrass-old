@@ -1,8 +1,7 @@
-class BasePage::TrashController < ApplicationController
+class BasePage::TrashController < BasePage::SidebarController
 
   before_filter :login_required
-  helper 'base_page', 'base_page/trash'
-  permissions 'base_page'
+  helper 'base_page/trash'
 
   def show
     render :partial => 'base_page/trash/popup'
@@ -39,11 +38,6 @@ class BasePage::TrashController < ApplicationController
   end
 
   protected
-
-  prepend_before_filter :fetch_data
-  def fetch_data
-    @page = Page.find params[:page_id] if params[:page_id]
-  end
 
   def move
     url = from_url(@page)

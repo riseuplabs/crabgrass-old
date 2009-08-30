@@ -49,8 +49,6 @@ class BasePageController < ApplicationController
   # can be overridden by the subclasses
   def create
     @page_class = get_page_type
-    # permissions have to be set before we call @page_class.build!
-    setup_params_page_access
     @page = build_new_page(@page_class)
 
     if params[:cancel]
@@ -103,7 +101,11 @@ class BasePageController < ApplicationController
   after_filter :update_view_count, :only => [:show, :edit, :create]
   def update_view_count
     return true unless @page and @page.id
-    action = track_action_from_params
+    action = case params[:action]
+      when 'create' then :edit
+      when 'edit' then :edit
+      when 'show' then :view
+    end
     return true unless action
 
     group = current_site.tracking? && @group
@@ -204,17 +206,17 @@ class BasePageController < ApplicationController
   end
 
   def build_new_page(page_class)
-     opts = (params[:page] || HashWithIndifferentAccess.new).dup
-     page_class.build!(opts)
-  end
-
-  def setup_params_page_access
     params[:page] ||= HashWithIndifferentAccess.new
     params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
-    params[:page][:access] = access_from_params(params[:access])
+    params[:page][:access] = case params[:access]
+      when 'admin' then :admin
+      when 'edit'  then :edit
+      when 'view'  then :view
+      else Conf.default_page_access
+    end
+    page_class.build!( params[:page].dup )
   end
-
 
   # returns a new data object for page initialization
   # tools override this to build their own data objects
@@ -232,12 +234,5 @@ class BasePageController < ApplicationController
     end
   end
 
-  def track_action_from_params
-    case params[:action]
-    when 'create' then :edit
-    when 'edit' then :edit
-    when 'show' then :view
-    end
-  end
 end
 

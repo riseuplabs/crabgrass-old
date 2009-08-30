@@ -40,6 +40,7 @@ deleted: "Deleted"
 remove: "Remove"
 share: "Share"
 contributed: "Contributed"
+users: "Users"
 groups: "Groups"
 networks: "Networks"
 committees: "Committees"
@@ -111,8 +112,6 @@ recipients: "Recipients"
 
 destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
 confirmation: "Are you sure?"
-
-entity_autocomplete_tip: "Enter Group or User Name..."
 
 ##
 ## MEDIA
@@ -784,6 +783,8 @@ share_already_exists_error: '"{name}" already has access to this page.'
 share_pester_error: 'Sorry, you are not allowed to share with "{name}".'
 name_or_email_not_found: '"{name}" does not match the name of any users or groups and is not a valid email address.'
 
+entity_autocomplete_tip: "Enter the name of a group or person."
+
 # creating
 
 contribute_content_link: "Create Page"
@@ -804,9 +805,9 @@ summary_help: "Optional. The summary is a sentence or paragraph that briefly des
 tags_help: "Optional. For tags, use a few words that best describe this page."
 page_owner_help: "The page owner is the person or group with primary responsibility for this page. You can choose yourself, or any of the groups you are in."
 sharing_help: "Optional. You can share this page with multiple recipients (either users or groups)."
-coordinator_help: "<b>Coordinator</b> access will grant unrestricted access to this page (including deleting and sharing)."
-participant_help: "<b>Participant</b> access will grant the ability to edit and contribute to this page."
-viewer_help: "<b>Viewer</b> access makes this page visible, and nothing more."
+coordinator_help: "<b>Full Access</b> will grant unrestricted ability to modify this page (including deleting and sharing)."
+participant_help: "<b>Write Ability</b> will allow editing of this page."
+viewer_help: "<b>Read Only</b> will allow viewing of this page, and nothing more."
 wiki_body_help: "Optional. Enter here the initial body text for the page."
 upload_image_help: "Optional. Select an initial image file to upload to this page."
 upload_zip_file_help: "Optional. Select a ZIP file (collection of images) to upload to this page."

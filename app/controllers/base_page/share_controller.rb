@@ -22,13 +22,12 @@
 # you cannot share to users/groups that you cannot pester, unless
 # the page is private and they already have access.
 #
-class BasePage::ShareController < ApplicationController
+class BasePage::ShareController < BasePage::SidebarController
 
   before_filter :login_required
   verify :xhr => true
 
-  helper 'base_page', 'base_page/share', 'autocomplete'
-  permissions 'base_page'
+  helper 'base_page/share', 'autocomplete'
 
   # display the share or notify popup via ajax
   def show
@@ -72,7 +71,7 @@ class BasePage::ShareController < ApplicationController
         end
         @recipients.compact!
       end
-      render :partial => 'base_page/share/add_recipient'
+      render :partial => 'base_page/share/add_recipient', :locals => {:alter_access => action == :share}
     elsif (params[:share] || params[:notify]) and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
@@ -99,14 +98,6 @@ class BasePage::ShareController < ApplicationController
 
   def show_error_message
     render :template => 'base_page/show_errors'
-  end
-
-  prepend_before_filter :fetch_page
-  def fetch_page
-    if params[:page_id].any?
-      @page = Page.find_by_id(params[:page_id])
-    end
-    true
   end
 
   #

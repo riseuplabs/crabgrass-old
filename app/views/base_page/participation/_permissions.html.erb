@@ -1,57 +1,46 @@
-<div class="tab_content_scroll">
-  <table cellpadding='5' class='pretty'>
-    <tr>
-      <th align='left'><%= :name.t %></th>
-      <th align='left'><%= :access.t %></th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
+<table cellpadding='5' class='pretty'>
+  <tr>
+    <th align='left'><%= :name.t %></th>
+    <th align='right'><%= :access.t %></th>
+    <th style='width:20px'>&nbsp;</th>
+  </tr>
+% if (gparts = @page.group_participations).any?
+    <tr class='<%=cycle "odd","even"%>'>
+      <td colspan='4'><b><%= "groups"[:groups] %></b></td>
     </tr>
-%   if @page.group_participations.any?
-      <tr class='<%=cycle "odd","even"%>'>
-        <td colspan='4'><i><%= "groups"[:groups] %></i></td>
-      </tr>
-%   end
-%   @page.group_participations.each do |gpart|
-      <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(gpart) %>'>
-        <td>&nbsp;&nbsp;<%= link_to_group(gpart.group_id) %></td>
-        <td><%= access_sym_to_str gpart.access_sym %></td>
-        <td><%= link_to_remove_group_participation(gpart) %></td>
-        <td style='width:20px'><%=spinner(dom_id(gpart))%></td>
-      </tr>
-%   end
-%   if (uparts = @page.sorted_user_participations(:page => params[:page])).any?
-      <tr class='<%=cycle "odd","even"%>'>
-        <td colspan='4'><i><%= "users"[:users] %></i></td>
-      </tr>
-%   end
-%   uparts.each do |upart|
-      <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(upart) %>'>
-        <td>&nbsp;&nbsp;<%= link_to_user(upart.user_id) %></td>
-        <td><%= access_sym_to_str upart.access_sym %></td>
-        <td><%= link_to_remove_user_participation(upart) %></td>
-        <td style='width:20px'><%=spinner(dom_id(upart))%></td>
-      </tr>
-%   end
-%   if uparts.total_entries > uparts.per_page
-      <tr><td colspan="4"><%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'permissions'}) %></td></tr>
-%   end
-  </table>
-</div>
+% end
+% gparts.each do |gpart|
+    <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(gpart) %>'>
+      <%= render :partial => 'base_page/participation/permission_row', :locals => {:participation => gpart} %>
+    </tr>
+% end
+% if (uparts = @page.sorted_user_participations(:page => params[:page])).any?
+    <tr class='<%=cycle "odd","even"%>'>
+      <td colspan='4'><b><%= "users"[:users] %></b></td>
+    </tr>
+% end
+% uparts.each do |upart|
+    <tr class='<%=cycle "odd","even"%>' id='<%= dom_id(upart) %>'>
+      <%= render :partial => 'base_page/participation/permission_row', :locals => {:participation => upart} %>
+    </tr>
+% end
+% if uparts.total_entries > uparts.per_page
+    <tr><td colspan="4"><%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'permissions'}) %></td></tr>
+% end
+</table>
 
-<% if may_create_participation?-%>
+% # DISABLED FOR NOW. I THINK IT IS CONFUSING TO HAVE THE ABILITY TO ADD PERMISSIONS HERE AND ALSO IN THE SHARE POPUP.
+% if false and may_create_participation?
 <p>
-  <%- form_remote_tag(
-    :url => {:controller => 'participation', :action => 'create', :page_id => @page.id},
-    :loading => show_spinner('permissions'),
-    :complete => hide_spinner('permissions') + resize_modal
-  ) do -%>
-    <%= "User or group name"[:user_or_group_name] %>:<br/>
-    <%= text_field_tag 'add_names','',:size=>17 %>
-    <%- if may_select_access_participation? -%>
-      <%= select_page_access 'access', :blank => false %>
-    <%- end -%>
-    <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
-    <%= spinner 'permissions' %>
-  <%- end -%>
+%   form_remote_tag(:url => {:controller => 'participation', :action => 'create', :page_id => @page.id}, :loading => show_spinner('permissions'), :complete => hide_spinner('permissions') + resize_modal) do
+      <%= "User or group name"[:user_or_group_name] %>:<br/>
+      <%= text_field_tag 'add_names','',:size=>17 %>
+%     if may_select_access_participation?
+        <%= select_page_access 'access', :blank => false %>
+%     end
+      <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
+      <%= spinner 'permissions' %>
+%   end
 </p>
-<% end -%>
+% end
+
