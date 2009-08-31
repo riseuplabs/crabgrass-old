@@ -7,9 +7,11 @@
 # unsaved   -> flag: does this participation contain changes that need to be saved / is new
 # blank     -> include blank as an access level option.
 # alter_access -> if true, then we allow the user to change the access level of pre-existing participations.
+# visible   -> visibility of the row
 
 blank = false if blank.nil?
 access = 'admin' if access.nil?
+visible = 'true' if visible.nil?
 access_options = {:blank => blank, :selected => access}
 if unsaved.nil?
   newitem = false
@@ -35,7 +37,8 @@ else
 end
 %>
 
-<tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
+<tr class="<%= 'unsaved' if newitem %>" id="<%= id %>"
+  <%= "style='display:none'" unless visible %>>
   <td style="width:100%">
     <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
   </td>

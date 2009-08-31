@@ -77,7 +77,7 @@ class BasePage::ShareController < BasePage::SidebarController
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
       options[:send_notice] ||= params[:notify].any?
-
+      options[:share_with_everyone] = may_share_with_everyone? && params[:share_with_everyone]
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message_now :success => @success_msg

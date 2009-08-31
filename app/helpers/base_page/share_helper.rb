@@ -91,11 +91,11 @@ module BasePage::ShareHelper
     spinner_id = "add_site"
 
     id = "share_recipient_%s" % recipient.name
-    add_function = remote_function(add_action(recipient, access, id))
-    remove_function = "$('%s').remove()" % id
-    toggle_function = "if ($('#{id}') == null)
-      { #{add_function} } else
-      { #{remove_function} }"
+    toggle_function = "
+      $('#{id}').toggle();
+      $('#{id}').enabled = $('#{id}').visible"
+    #  { #{add_function} } else
+    #  { #{remove_function} }"
     # disabling form elements does not work with ie6.
     # so we just keep them enabled.
     # unless disabled
@@ -104,6 +104,21 @@ module BasePage::ShareHelper
     #,:disabled => disabled }
   end
 
+  def share_all_recipient
+    recipient = Site.current.network
+    old_participation = @page.try.participation_for_group(recipient)
+    part = old_participation || @recipients.try.include?(recipient)
+    visible = !part.nil?
+    access = old_participation.try.access
+    access ||= may_select_access_participation? ?
+      "$('recipient[access]').value" :
+      %{'#{default_access}'}
+    render :partial => 'base_page/share/recipient',
+      :locals => {:recipient => recipient,
+        :access => access.to_s,
+        :unsaved => false,
+        :visible => visible}
+  end
 
   def access_options
     recipient = Site.current.network

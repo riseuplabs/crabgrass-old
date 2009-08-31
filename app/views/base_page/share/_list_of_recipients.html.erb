@@ -24,6 +24,9 @@
   # %>
 <% empty_box = true %>
 <table><tbody class="autocomplete_results_table" id="share_page_recipient_table">
+    <% if may_share_with_everyone? %>
+      <%= share_all_recipient %>
+  <% end -%>
 <% if !empty_box %>
   <% if @page && @page.recipients.any? -%>
     <% @page.recipients.each do |recipient, access| %>
