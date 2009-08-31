@@ -82,6 +82,17 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     assert_select_rjs :insert, :top, 'share_page_recipient_table' do
       assert_select 'td', /blue/
     end
+
+    # lets make sure this also works when the recipient only has indirect access
+    page.add(groups(:rainbow), :access => :edit)
+    page.add(users(:red))
+    page.save
+    xhr :post, :notify, { :page_id =>  page.id, :recipient => {:name => 'red' }, :add => true }
+    assert_response :success
+    assert_select_rjs :insert, :top, 'share_page_recipient_table' do
+      assert_select 'td', /red/
+      assert_select 'td:nth-child(2)', /write/i
+    end
   end
 
   # tests giving access to new or existing users or groups

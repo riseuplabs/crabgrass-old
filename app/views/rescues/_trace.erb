@@ -1,6 +1,7 @@
 <%
   traces = [
-    ["Application Trace", @exception.application_backtrace],
+#    ["Application Trace", @exception.application_backtrace],
+    ["Application Trace", @exception.clean_backtrace.grep(/^[^\/]/)],
     ["Framework Trace", @exception.framework_backtrace],
     ["Full Trace", @exception.clean_backtrace]
   ]

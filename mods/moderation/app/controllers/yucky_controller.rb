@@ -2,6 +2,7 @@ class YuckyController < ApplicationController
   include  ActionView::Helpers::TextHelper # for truncate
 
   permissions 'admin/moderation'
+  permissions 'posts'
 
   before_filter :login_required
 
