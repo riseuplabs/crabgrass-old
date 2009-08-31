@@ -50,12 +50,12 @@ It would be nice to use these eventually:
 
     config.registerButton("cg-insertimage", "Insert/Modify Image", [_editor_url + "images/ed_buttons_main.png",6,3], false, <%=toolbar_insert_image_function(@wiki)%>);
 
-    config.registerButton("cg-createlink", "Insert Web Link", [_editor_url + "images/ed_buttons_main.png",6,1], false, <%=toobar_create_link_function(@wiki)%>);
+    config.registerButton("cg-createlink", "Insert Web Link", [_editor_url + "images/ed_buttons_main.png",6,1], false, <%=toolbar_create_link_function(@wiki)%>);
 
     config.toolbar = [
-      ["formatblock", "bold", "italic", "underline", "strikethrough", "removeformat"],
+      ["formatblock", "bold", "italic"],
       ["separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent"],
-      ["separator", "inserttable", "separator", "cg-insertimage", "cg-createlink"]
+      ["separator", "cg-insertimage", "cg-createlink"]
     ];
 
     config.formatblock = {
@@ -79,5 +79,5 @@ It would be nice to use these eventually:
 <div class="html_editor_wrapper" style="height: 454px">
   <%# all hell breaks loose if textarea doesn't have an element style of width:100%.
     # However, the hardcoded height is just laziness %>
-  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width: 100%; height: 447px"></textarea>
+  <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width: 100%; height: 447px"><%= greencloth_to_editable_html(@wiki.body, @page.owner_name || 'page') if load_content %></textarea>
 </div>

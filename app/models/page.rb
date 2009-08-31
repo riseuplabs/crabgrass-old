@@ -248,8 +248,6 @@ class Page < ActiveRecord::Base
 
     ########################################################
     ## THESE ARE TEMPORARY HACKS...
-    ## until the new permission system is working.
-    ## then, this logic should all be moved there.
     return false if tmp_hack_for_deleted_pages?(perm)
     ## END TEMP HACKS
     #########################################################
@@ -266,8 +264,6 @@ class Page < ActiveRecord::Base
     allowed ? true : raise(PermissionDenied.new)
   end
 
-  protected
-
   # returns the participation object for entity with the highest access level.
   # If no participation exists, we return nil.
   def most_privileged_participation_for(entity)
@@ -280,6 +276,8 @@ class Page < ActiveRecord::Base
     end
     parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
+
+  protected
 
   # do not allow comments or editing of deleted pages:
   def tmp_hack_for_deleted_pages?(perm)

@@ -1,6 +1,8 @@
 class AssetPage < Page
   include PageExtension::RssData
 
+  before_save :set_cover
+
   def supports_attachments
     false
   end
@@ -21,8 +23,8 @@ class AssetPage < Page
 
   def asset=(a)
     self.data = a
-    self.cover = a if a.is_a?(ImageAsset)
   end
+
 
   # title is the filename if title hasn't been set
   def title
@@ -49,6 +51,10 @@ class AssetPage < Page
         asset.save_without_revision!
       end
     end
+  end
+
+  def set_cover
+    self.cover = self.data if self.data.is_a?(ImageAsset)
   end
 end
 

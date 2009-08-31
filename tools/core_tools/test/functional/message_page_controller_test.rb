@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../../../../test/test_helper'
 class MessagePageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations
 
+=begin
   def setup
     @request.host = "localhost"
   end
@@ -56,4 +57,6 @@ class MessagePageControllerTest < ActionController::TestCase
       page_urls << page.name_url
     end
   end
+=end
+
 end

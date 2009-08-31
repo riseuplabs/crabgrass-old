@@ -26,8 +26,14 @@ module BasePage::ShareHelper
   def display_access(participation)
     if participation
       access = participation.access_sym.to_s
+      if access.empty? and @page
+        participation = @page.most_privileged_participation_for(participation.entity)
+        access = participation.access_sym.to_s
+      end
       option = page_access_options.find{|option| option[1] == access}
-      content_tag :span, option[0], :class => access
+      if option
+        content_tag :span, option[0], :class => access
+      end
     end
   end
 
