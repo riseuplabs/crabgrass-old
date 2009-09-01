@@ -48,6 +48,12 @@ module Undress
           assert_renders_textile textile, html
         end
         
+        test "wihout a letter in headers" do
+          html = "<h1>a<em>bc</em></h1>"
+          textile = "h1. a[_bc_]\n"
+          assert_renders_textile textile, html
+        end
+
         test "without a letter after the tag" do
           textile = "x[*x xx*]"
           html = "x<strong>x xx</strong>"
@@ -225,6 +231,12 @@ module Undress
       end
 
       context "tables" do
+        test "converts table with empty cell" do
+          html = "<table>  <tbody>  <tr>  <td>&nbsp;a</td>  <td> </td>  </tr>  <tr>  <td>&nbsp;b</td>  <td>&nbsp;c</td>  </tr>  </tbody>  </table>"
+          textile = "|a||\n|b|c|\n"
+          assert_renders_textile textile, html
+        end
+
         test "converts a simple table" do
           assert_renders_textile "|foo|bar|baz|\n|1|2|3|\n",
                                  "<table><tr><td>foo</td><td>bar</td><td>baz</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></table>"
