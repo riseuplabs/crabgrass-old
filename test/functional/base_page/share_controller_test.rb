@@ -11,19 +11,7 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     login_as :blue
     xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
     assert_response :success
-    assert_raises Test::Unit::AssertionFailedError do
-      assert_select 'input#share_with_everyone'
-    end
-  end
-
-  # tests that the share popup loads
-  def test_show_share_with_everyone
-    with_site :unlimited do
-      login_as :blue
-      xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
-      assert_response :success
-      assert_select 'input#share_with_everyone'
-    end
+    assert_select 'div' # just so we check html syntax
   end
 
   # tests thate the notify popup loads
@@ -221,20 +209,34 @@ class BasePage::ShareControllerTest < ActionController::TestCase
   # test if sharing with and notifying a new user works
   def test_notification
     login_as :blue
-    page = Page.find(1)
-    user1 = User.find_by_login('blue')
-    user2 = User.find_by_login('red')
+    page = nil
 
-    # assert that a UserParticipation for the User and Page already exists
-    upart = UserParticipation.find_by_page_id_and_user_id(page.id, user2.id)
-    assert upart, 'the userparticipation should already exist to notify the user'
-    assert !upart.inbox,'participation.inbox flag should be false'
+    assert_difference 'UserParticipation.count' do
+      page = DiscussionPage.create! :title => 'x', :owner => users(:blue)
+    end
 
     # try to push the participation to inbox
-    xhr :post, :notify, {:page_id => 1, :notify => "1", :recipients => { user2.login.to_sym => { :send_notice => 1} }, :notification => {:send_notice => "1", :send_message => 'additional_message'}, :recipient => {:access => 'admin'}}
-    assert_response :success
-    upart.reload
-    assert upart.inbox, 'participation.inbox should be set to true now'
+    assert_difference 'UserParticipation.count', 2 do
+      assert_difference 'UserParticipation.count(:all, :conditions => {:inbox => true})', 2 do
+        xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['yellow', 'green'], :notification => {:send_notice => "1", :send_message => 'xxxxxxxxx'}}
+        assert_response :success
+      end
+    end
+
+    # send emails (and simulate the participants checkbox not checked)
+    assert_difference 'ActionMailer::Base.deliveries.size', 2 do
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'yellow' => {}, 'green' => {}, ':participants' => "0"}, :notification => {:send_notice => "1", :send_message => 'yyyyyyyyyy', :send_email => "1"}}
+    end
+
+    # send to inbox, but only some are new.
+    assert_difference 'UserParticipation.count(:all, :conditions => {:inbox => true})', 1 do
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['yellow', 'red'], :notification => {:send_notice => "1", :send_message => 'zzzzzzzzz'}}
+    end
+
+    # send to inbox, symbolic + explicit (there are only 4 participants)
+    assert_difference 'ActionMailer::Base.deliveries.size', 4 do
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'yellow' => {}, ':participants' => "1"}, :notification => {:send_notice => "1", :send_email => "1", :send_message => 'aaaaaa'}}
+    end
   end
 
   # test if notifying an existing user works

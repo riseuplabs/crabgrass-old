@@ -27,7 +27,7 @@ details_box = %(
   <b>#{link_to_function("Close"[:close], "$('error_details').hide()")}</b>
 
   <pre>#{ h exception_detailed_message(@exception) }</pre>
-  #{render(:partial => 'rescues/trace.erb')}
+  #{render(:partial => 'rescues/trace.erb') if @exception}
   #{render(:partial => 'rescues/request_and_response')}
 
 </div>

@@ -206,6 +206,8 @@ module UserExtension::Pages
   # There are also special recipient names that start with ":", such as :contributors.
   # See models/page_extension/create.rb parse_recipients!() for details.
   #
+  # In the hash form, {"recipient_name" => "0"} is skipped. This is useful for checkboxes.
+  #
   # valid options:
   #        :access -- sets access level directly. one of nil, :admin, :edit, or
   #                   :view. (nil will remove access)
@@ -228,10 +230,37 @@ module UserExtension::Pages
   # auto saves the @page if has been changed.)
   #
   def share_page_with!(page, recipients, options)
-    options = HashWithIndifferentAccess.new(options)
     return true unless recipients
-    return share_page_with_hash!(page, recipients, options) if recipients.is_a?(Hash)
 
+    options = HashWithIndifferentAccess.new(options)
+    users_to_email = []
+
+    if recipients.is_a?(Hash)
+      users_to_email.concat share_with_recipient_hash!(page, recipients, options)
+    else
+      users_to_email.concat share_with_recipient_array!(page, recipients, options)
+    end
+
+    ## send access granted emails (TODO)
+    # emails.each do |email|
+    #   Mailer::page.deliver_share_notice_with_url_access(email, msg, mailer_options)
+    # end
+
+    ## send notification emails
+    if options[:send_notice] and options[:mailer_options] and options[:send_email]
+      users_to_email.uniq!
+      users_to_email.each do |user|
+        #logger.debug '----------------- emailing %s' % user.email
+        Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
+      end
+    end
+  end
+
+  private
+
+  # share the page, given an array of recipients, or an individual recipient.
+  # returns: a list of users to notify.
+  def share_with_recipient_array!(page, recipients, options)
     users, groups, emails, specials = Page.parse_recipients!(recipients)
     users_to_email = []
 
@@ -255,22 +284,31 @@ module UserExtension::Pages
       end
     end
 
-    ## send access granted emails (TODO)
-    # emails.each do |email|
-    #   Mailer::page.deliver_share_notice_with_url_access(email, msg, mailer_options)
-    # end
-
-    ## send notification emails
-    if options[:send_notice] and options[:mailer_options] and options[:send_email]
-      users_to_email.uniq!
-      users_to_email.each do |user|
-        #logger.info '----------------- emailing %s' % user.email
-        Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
-      end
-    end
+    return users_to_email
   end
 
-  private
+  #
+  # takes recipients in hash form, like so {:blue => {:access => :admin}}.
+  # and then calls share_with_recipient_array! with the appropriate options.
+  #
+  # returns an array of users to notify.
+  #
+  # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
+  # must be HashWithIndifferentAccess. You have been warned.
+  #
+  def share_with_recipient_hash!(page, recipients, global_options=HashWithIndifferentAccess.new)
+    users = []
+    recipients.each do |recipient,local_options|
+      if local_options == "0"
+        next # skip unchecked checkboxes
+      else
+        options = local_options.is_a?(Hash) ? global_options.merge(local_options) : global_options
+        users.concat share_with_recipient_array!(page, recipient, options)
+      end
+    end
+    return users
+  end
+
 
   # just like share_page_with, but don't do any actual sharing, just
   # raise an exception of there are any problems with sharing.
@@ -349,16 +387,6 @@ module UserExtension::Pages
     users_to_pester # returns users to pester so they can get an email, maybe.
   end
 
-  # takes recipients in hash form, like so {:blue => {:access => :admin}}.
-  # and then calls share_page_with! with the appropriate options
-  # VERY IMPORTANT NOTE: Either all the keys must be symbols or the hash types
-  # must be HashWithIndifferentAccess. You have been warned.
-  def share_page_with_hash!(page, recipient_hash, global_options=HashWithIndifferentAccess.new)
-    recipient_hash.each do |recipient,local_options|
-      options = local_options.is_a?(Hash) ? global_options.merge(local_options) : global_options
-      self.share_page_with!(page, recipient, options)
-    end
-  end
 
   #
   # check that +self+ may pester user and has admin access if sharing requires
