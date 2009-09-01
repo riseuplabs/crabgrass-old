@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090806021857) do
+ActiveRecord::Schema.define(:version => 20090821060849) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(:version => 20090806021857) do
     t.integer  "sender_id",   :limit => 11
     t.string   "sender_name"
     t.string   "level"
+    t.datetime "deleted_at"
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -778,6 +779,7 @@ ActiveRecord::Schema.define(:version => 20090806021857) do
     t.integer  "login_landing",              :limit => 11, :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "preferred_editor",           :limit => 4
   end
 
   add_index "user_settings", ["user_id"], :name => "index_user_settings_on_user_id"

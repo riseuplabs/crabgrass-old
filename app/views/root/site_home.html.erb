@@ -84,6 +84,12 @@ form.mini_search table {
   margin-right: 1em;
 }
 <% end %>
+<% default_hash = @show_featured ? 'featured' : 'recent-pages' -%>
+<% content_for :script do %>
+  <%= "onHashChanged = showTabByHash;" %>
+  <%= "defaultHash = defaultHash || '#{default_hash}';" %>
+<% end %>
+
 
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
@@ -100,8 +106,7 @@ form.mini_search table {
   </td>
 </tr>
 </table>
-Links
-<ul>
+<ul class="navbar">
   <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
 </ul>
 &nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
@@ -150,12 +155,6 @@ Links
     t.show_tab 'most_stars_panel'
   end
 end %>
-
-<% content_for :tail do %>
- <%# this activates the correct tab based on the window.location.hash.
-     onHashChanged() is called whenever location.hash changes. %>
- <%= javascript_tag("onHashChanged = showTabByHash") %>
-<% end %>
 
 <div class="page_scroll rigid">
 

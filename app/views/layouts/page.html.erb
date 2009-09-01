@@ -13,6 +13,7 @@
 <% end -%>
 <div class='content_box'>
   <%= yield %>
+  <%= @content_box %>
   <%= render :partial => 'posts/list' if @show_posts %>
 </div>
 

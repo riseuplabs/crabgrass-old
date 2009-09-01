@@ -2,9 +2,11 @@
   <h2 class="first"><%= 'Current Tags'[:current_tags] %></h2>
 
   <% if( @page.tags.any? ) %>
+    <div class="edit_tags selfclear">
     <% @page.tags.sort_by{|t|t.name}.each do |tag| %>
       <%= remove_tag_link( tag ) %>
     <% end %>
+    </div>
   <% else %>
     <p>(<%= "no tags"[:no_tags] %>)</p>
   <% end %>

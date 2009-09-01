@@ -28,7 +28,7 @@ module ModalboxHelper
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
   #
   def link_to_modal(label, options={}, html_options={})
-    options.reverse_merge! :title => label
+    options[:title] = label unless options[:title]
     #html_options = [:id, :class, :style, :icon]
     icon = options.delete(:icon) || html_options.delete(:icon)
     contents = options.delete(:url) || options.delete(:html)
@@ -60,14 +60,6 @@ module ModalboxHelper
   # of the modalbox.
   def resize_modal
     'Modalbox.updatePosition();'
-  end
-
-  # loads the localized string into modalbox
-  def modal_default_strings
-#    document.observe("dom:loaded", function() {
-#      // initially hide all containers for tab content
-#      $$('div.tabcontent').invoke('hide');
-#    });
   end
 
   def modalbox_function(contents, options)
@@ -166,6 +158,8 @@ module ModalboxHelper
     #
     def link_to_with_confirm(name, options = {}, html_options = nil)
       if options.is_a?(Hash) and options[:confirm]
+        # this seems like a bad form. the confirm should be in html_options.
+        # is this really used anywhere?
         message = options[:confirm]
         action = options[:url]
         method = options[:method]
@@ -180,6 +174,7 @@ module ModalboxHelper
       if message
         method ||= 'post'
         token = form_authenticity_token
+        action = url_for(action) if action.is_a?(Hash)
         link_to_function(name, %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}"})], html_options)
       else
         link_to_without_confirm(name, options, html_options)

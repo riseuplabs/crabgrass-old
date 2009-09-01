@@ -70,7 +70,7 @@ module ImageHelper
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
     "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
@@ -92,7 +92,7 @@ module ImageHelper
   end
 
   def big_spinner()
-    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;"
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", :class => 'spin'
   end
 
   # we can almost do this to trick ie into working with event.target,
@@ -122,8 +122,8 @@ module ImageHelper
       icon_options = {} # don't bother with spinner for confirm links
     else
       icon_options = {
-        :loading => spinner_icon_on(icon, id),
-        :complete => spinner_icon_off(icon, id)
+        :loading => [spinner_icon_on(icon, id), options[:loading]].combine(';'),
+        :complete => [spinner_icon_off(icon, id), options[:complete]].combine(';')
       }
     end
     html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
@@ -160,7 +160,7 @@ module ImageHelper
   end
 
   def link_to_toggle(label, id)
-    function = "$('#{id}').toggle(); eventTarget(event).toggleClassName('right_16').toggleClassName('sort_down_16')"
+    function = "linkToggle(eventTarget(event), '#{id}')"
     link_to_function_with_icon label, function, :icon => 'right'
   end
 

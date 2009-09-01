@@ -38,9 +38,10 @@ form.mini_search table {width: 17em;}
 
 /* opacity fix */
 .shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
+.shy_parent:hover .shy { filter: alpha(opacity=100)}
 .shy:hover { filter: alpha(opacity=100)}
-.shy_parent:hover .shy { filter: alpha(opacity=60)}
 
+/* fixes columns for drop down boxes in ie6/7 */
 span.topnav a {
   position: relative;
 }
@@ -70,6 +71,7 @@ div.rightcol {
   display: none;
 }
 
+/* stacking problem between drop down boxes and people/groups/networks tabs */
 li.menu {
   z-index: 100;
 }
@@ -77,3 +79,8 @@ ul.tabset.top li {
   z-index: 1;
 }
 
+/* for hover over entity boxes on sidebar of dashboard */
+ul.icon_boxes li:hover span {
+  display: block;
+  width: 10em;
+}

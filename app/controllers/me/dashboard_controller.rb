@@ -18,12 +18,12 @@ class Me::DashboardController < Me::BaseController
   #end
 
   def show_welcome_box
-    current_user.update_or_create_setting(:show_welcome => true)
+    current_user.update_setting(:show_welcome => true)
     render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
   end
 
   def close_welcome_box
-    current_user.update_or_create_setting(:show_welcome => false)
+    current_user.update_setting(:show_welcome => false)
     render(:update) {|page| page.replace 'welcome_box', :partial => 'welcome_box'}
   end
 

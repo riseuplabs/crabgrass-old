@@ -99,6 +99,7 @@
 .shield_16 {background-image: url(/images/png/16/shield.png)}
 .sort_down_16 {background-image: url(/images/png/16/sort_down.png)}
 .sort_up_16 {background-image: url(/images/png/16/sort_up.png)}
+.spacer_16 {background-image: url(/images/png/16/spacer.png)}
 .star_16 {background-image: url(/images/png/16/star.png)}
 .star_empty_16 {background-image: url(/images/png/16/star_empty.png)}
 .star_empty_dark_16 {background-image: url(/images/png/16/star_empty_dark.png)}
@@ -109,10 +110,12 @@
 .tag_16 {background-image: url(/images/png/16/tag.png)}
 .tags_16 {background-image: url(/images/png/16/tags.png)}
 .tiny_minus_16 {background-image: url(/images/png/16/tiny_minus.png)}
+.tiny_no_pencil_16 {background-image: url(/images/png/16/tiny_no_pencil.png)}
 .tiny_pencil_16 {background-image: url(/images/png/16/tiny_pencil.png)}
 .tiny_pending_16 {background-image: url(/images/png/16/tiny_pending.png)}
 .tiny_plus_16 {background-image: url(/images/png/16/tiny_plus.png)}
 .tiny_star_16 {background-image: url(/images/png/16/tiny_star.png)}
+.tiny_trash_16 {background-image: url(/images/png/16/tiny_trash.png)}
 .tiny_wrench_16 {background-image: url(/images/png/16/tiny_wrench.png)}
 .transmit_16 {background-image: url(/images/png/16/transmit.png)}
 .trash_16 {background-image: url(/images/png/16/trash.png)}

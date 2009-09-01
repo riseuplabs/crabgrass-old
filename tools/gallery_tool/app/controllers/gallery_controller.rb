@@ -245,7 +245,6 @@ class GalleryController < BasePageController
     end
   end
 
-
   def remove
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
@@ -279,14 +278,33 @@ class GalleryController < BasePageController
     @assets ||= []
     params[:assets].each do |file|
       next if file.size == 0 # happens if no file was selected
-      asset = Asset.make(:uploaded_data => file) do |asset|
-        asset.parent_page = @page
-      end
-      @assets << asset
-      @page.add_image!(asset, current_user)
+      build_asset_data(@assets, file)
     end
+    if params[:asset][:zipfile] and params[:asset][:zipfile].size != 0
+      build_zip_file_data(@assets, params[:asset][:zipfile])
+    end
+
     # gallery page has no 'data' field
     return nil
+  end
+
+  def build_asset_data(assets, file)
+    asset = Asset.make(:uploaded_data => file) do |asset|
+      asset.parent_page = @page
+    end
+    @assets << asset
+    @page.add_image!(asset, current_user)
+    asset.save!
+  end
+
+  def build_zip_file_data(assets, file)
+    zip_assets, failures = Asset.make_from_zip(file)
+    zip_assets.each do |asset|
+      asset.parent_page = @page
+      @assets << asset
+      @page.add_image!(asset, current_user)
+      asset.save!
+    end
   end
 
   def destroy_page_data

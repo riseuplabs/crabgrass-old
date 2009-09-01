@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include UserExtension::Groups     # user <--> groups
   include UserExtension::Pages      # user <--> pages
   include UserExtension::Tags       # user <--> tags
+  include UserExtension::ChatChannels # user <--> chat channels
   include UserExtension::AuthenticatedUser
 
   ##
@@ -178,9 +179,10 @@ class User < ActiveRecord::Base
   def setting_with_safety(*args); setting_without_safety(*args) or UserSetting.new; end
   alias_method_chain :setting, :safety
 
-  def update_or_create_setting(attrs)
+  def update_setting(attrs)
     if setting.id
-      setting.update_attributes(attrs)
+      setting.attributes = attrs
+      setting.save if setting.changed?
     else
       create_setting(attrs)
     end

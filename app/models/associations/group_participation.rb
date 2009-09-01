@@ -22,6 +22,10 @@ class GroupParticipation < ActiveRecord::Base
   belongs_to :page
   belongs_to :group
 
+  def entity
+    group
+  end
+
   def access_sym
     ACCESS_TO_SYM[self.access]
   end

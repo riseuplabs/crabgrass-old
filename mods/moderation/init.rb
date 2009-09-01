@@ -8,6 +8,11 @@ Dispatcher.to_prepare do
   Page.class_eval do
     acts_as_rateable
   end
+  ChatMessage.class_eval do
+    acts_as_rateable
+    alias_method :created_by, :sender
+  end
+
   require 'moderation_listener'
   require 'page_view_listener'
   require 'chat_view_listener'

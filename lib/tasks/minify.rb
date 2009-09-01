@@ -1,6 +1,9 @@
 # This task minifies and then compresses the crabgrass javascript.
 # It should be run every time you modify the code in one of the javascript files.
 #
+# Only some scripts are combined and compressed: only scripts specified
+# by constants that end in _JS and are defined in layout_helper.rb
+#
 # There are a couple of reasons we might want to use this method instead of
 # of the many other possibilities:
 #
@@ -29,9 +32,6 @@
 # (5) If all the prior checks pass, then we append .gz to the requested filename.
 #
 
-MAIN_JS = ['prototype', 'application', 'effects', 'modalbox', 'controls', 'autocomplete']
-EXTRA_JS = ['dragdrop', 'builder', 'slider']
-
 # if minify_source is true, then the files passed in will get replaced with the
 # the minified versions
 def compressor(files, minify_source=false)
@@ -49,11 +49,19 @@ def compressor(files, minify_source=false)
     puts cmd
     ret = system(cmd)
     raise "Minification failed for #{file}" if !ret
-    cmd = "gzip --best -c #{out_file} > #{file}.gz"
+    cmd = "gzip --rsyncable --best -c #{out_file} > #{file}.gz"
     puts cmd
     ret = system(cmd)
     raise "Compression failed for #{file}" if !ret
   end
+end
+
+# hash in the form: {:bundlename => ['file1','file2']}
+def join_files(hash)
+  output = hash.keys.first.to_s + '.js'
+  files = hash.values.first
+  cmd = 'cat %s > %s' % [files.collect{|f|f+".js"}.join(' '), output]
+  puts cmd; system(cmd)
 end
 
 desc "minify javascript"
@@ -62,12 +70,18 @@ task :minify do
   if ENV["FILE"]
     compressor(ENV["FILE"])
   else
-    cmd = 'cat %s > main.js' % MAIN_JS.collect{|f|f+".js"}.join(' ')
-    puts cmd; system(cmd)
-    cmd = 'cat %s > extra.js' % EXTRA_JS.collect{|f|f+".js"}.join(' ')
-    puts cmd; system(cmd)
+
+    # grab definitions for MAIN_JS, EXTRA_JS, and WIKI_JS
+    script_file_constants = `grep '_JS = ' ../../app/helpers/layout_helper.rb`
+    eval(script_file_constants)
+
+    join_files(MAIN_JS)
+    join_files(EXTRA_JS)
+    join_files(WIKI_JS)
+
     compressor('main.js', true)
     compressor('extra.js', true)
+    compressor('wiki.js', true)
   end
 end
 

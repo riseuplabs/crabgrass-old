@@ -1,59 +1,29 @@
 <% class_display_name = 'page'.t if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
-<%
-  # DEPRECATED HACK...
-  users = []
-  users.concat @page.users
-  @page.groups.collect{|group| users.concat group.users}
-  users.uniq!
-  users.sort_by{|u|u.login}
-%>
 
 <table class='notify'>
   <tr>
     <td colspan="2"><h2 class="first"><%= 'Recipients'[:recipients] %></h2></td>
   </tr>
-
   <tr>
-    <td class="check"><%= check_box :ignored, :notify_contributors, :onClick => "$('notify_contributor_area').toggle();" + resize_modal %></td>
-    <td><%= label :ignored, :notify_contributors, '<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page.'[:notify_contribution] %></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-      <div id='notify_contributor_area' class='notify_details' style='display:none'>
-        <%= render :partial => 'notify_recipient_list', :locals => {:users => @page.contributors} %>
-      </div>
+    <td colspan="2">
+      <%= render :partial => 'add_recipient_widget', :locals => {:empty_box => true, :action => 'notify'} %>
     </td>
   </tr>
 
+% if @page.contributors_count #> 0
   <tr class='gap'>
-    <td class="check"><%= check_box :ignored, :notify_current_access, { :onClick => "$('notify_current_access_area').toggle();" + resize_modal }%></td>
-    <td><%= label :ignored, :notify_current_access, '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
+    <td class="check"><%= check_box 'recipients', ':contributors' %></td>
+    <td><%= label 'recipients', ':contributors', '<b>Prior Contribution:</b> notify people who have made a contribution to this page.'[:notify_contribution] %></td>
   </tr>
-  <tr>
-    <td></td>
-    <td>
-      <div id='notify_current_access_area' class='notify_details' style='display:none'>
-        <%= render :partial => 'notify_recipient_list', :locals => {:users => users, :groups => @page.groups} %>
-      </div>
-    </td>
+% end
+
+  <tr class='gap'>
+    <td class="check"><%= check_box 'recipients', ':participants' %></td>
+    <td><%= label 'recipients', ':participants', '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
   </tr>
 
-  <%- if may_share_page? -%>
   <tr class='gap'>
-    <td class="check"><%= check_box :ignored, :share_with_new, :onClick => "$('share_page_recipients_new').toggle();" + resize_modal %></td>
-    <td><%= label :ignored, :share_with_new, '<b>New Access:</b> share this page with new people or groups, and notify them.'[:notify_new_access] %></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><div id='share_page_recipients_new' style='display:none;'>
-      <%= render :partial => 'add_recipient_widget', :locals => {:empty_box => true} %>
-    </div></td>
-  </tr>
-  <%- end -%>
-
-  <tr>
    <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
   </tr>
   <%= render :partial => 'notification_message_form', :locals => {:forced_send => true} %>

@@ -26,6 +26,9 @@ activate_js_to_rearrange_photos: Activar Javascript para usar Drag&Drop para rea
 activity_contact_created: "{user} a\xC3\xB1adido {other_user} como un contacto"
 activity_group_created: "{user} creado {group_type} {group}"
 activity_group_destroyed: "{group} fue eliminado/a por {user}"
+activity_message: "{author} escribi\xC3\xB3: {message}"
+activity_unread: Tienes {count} [mensajes privados] sin leer
+activity_unread_singular: Tienes un [mensaje privado] sin leer
 activity_user_destroyed: "{user} se ha jubilado"
 activity_user_joined_group: "{user} se ha unido {group_type} {group}"
 activity_user_left_group: "{user} ha dejado {group_type} {group}"
@@ -49,14 +52,18 @@ add_star_link: "A\xC3\xB1adir Estrella {:star_count}"
 add_tags: "A\xC3\xB1adir Etiqueta"
 add_websites: Agregar Sitios Web
 additional_page_access: Acceso Adicional
+administer_site: Administrar Sitio
 administration: "Administraci\xC3\xB3n "
 alert_error: Error
 alert_field_errors: Hay problemas con los siguientes campos
 alert_not_saved: Los cambios no han podido ser guardados
 alert_permission_denied: Permiso Denegado
+alert_permission_denied_details: "Lo sentimos. No tienes permiso para realizar tal acci\xC3\xB3n."
 alert_saved: Cambios guardados
+all: Todos
 all_content: Todo el contenido
 all_groups: todos los grupos
+all_networks: Todas las Redes
 all_page_types: "todos los tipos de p\xC3\xA1ginas"
 all_people: todas las personas
 all_people_link: todas las personas
@@ -106,6 +113,7 @@ contact_request_message_label: "Cu\xC3\xA9ntale a %s por qu\xC3\xA9 quieres ser 
 contacts: Contactos
 contribute_content_link: Contribuir
 contribute_group_content_link: "A\xC3\xB1adir p\xC3\xA1gina a {group}"
+contribute_to_site: Contribuir al Sitio
 contributed: Contribuido
 coordinating_council: "consejo de coordinaci\xC3\xB3n"
 coordinator: Coordinador
@@ -114,6 +122,7 @@ coordinators: Coordinadores
 council: Consejo
 council_help: "Si este grupo tiene un consejo de coordinaci\xC3\xB3n, entonces s\xC3\xB3lo un miembro de ese Consejo podr\xC3\xA1 administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
 councils: Consejos
+create_a_group: Crear un Grupo
 create_a_new_thing: Crear un nuevo :thing
 create_button: Crear
 create_committee: "crear comit\xC3\xA9"
@@ -136,6 +145,7 @@ current_video_sources: |
 
 data_for_page_missing: "Los datos de esta p\xC3\xA1gina no est\xC3\xA1n disponibles."
 date: fecha
+date_all_time: Todo el Tiempo
 date_centuries: siglos
 date_days: "d\xC3\xADas"
 date_hours: horas
@@ -143,6 +153,7 @@ date_minutes: minutos
 date_months: meses
 date_older: Antiguo
 date_seconds: segundos
+date_this_month: Este Mes
 date_this_week: La Semana Pasada
 date_today: Hoy
 date_weeks: semanas
@@ -179,6 +190,7 @@ download: Descargar
 download_gallery: "Descargar \xC3\x81lbum de Fotos"
 drag_and_drop_to_rearrange_photos: Para reorganizar las fotos usar la funcion tomar y soltar
 edit: editar
+edit_appearance: Editar Apariencia
 edit_attachments: Editar archivos adjuntos
 edit_attachments_link: Editar
 edit_featured_content: editar contenido destacado
@@ -258,6 +270,7 @@ group_join_chat: "\xC3\x9Anete al Chat"
 group_language: El idioma principal de este %s.
 group_members_publicly_visible: Hacer Publico Los Miembros
 group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de we.riseup.net/yourgroupname. Adem\xC3\xA1s, el nombre del grupo ser\xC3\xA1 mostrado en el perfil de la p\xC3\xA1gina de cada uno de los miembros (we.riseup.net / nombre de usuario)"
+group_membership_count: "{count} Miembros"
 group_not_allowed_to_view_image_error: "El grupo que es propietario de esta p\xC3\xA1gina no est\xC3\xA1 autorizado a ver esta foto."
 group_privacy_settings: "%s Configuraci\xC3\xB3n de privacidad "
 group_profile_description_may_request_membership: Permite a las personas pedir ser miembro de este {group_type}.
@@ -290,6 +303,7 @@ invalid_email: "Correo electr\xC3\xB3nico no es valido"
 invalid_email_text: "La direcci\xC3\xB3n de correo electr\xC3\xB3nico que proporcionaste no es v\xC3\xA1lida."
 invalid_token: "Se\xC3\xB1al invalida"
 invalid_token_text: "El enlace para restablecer la contrase\xC3\xB1a que has especificado no es v\xC3\xA1lido. Puede ser que ya fue utilizado, o ha expirado."
+invite: invitar
 invite_accept_headline: "Acepta invitaci\xC3\xB3n para participar en grupo"
 invite_accept_info: "Te gustar\xC3\xADa aceptar la solicitud para participar. \xC2\xBFYa tienes una cuenta en este servidor?"
 invite_accept_via_existing_account: Ya tengo una cuenta
@@ -304,6 +318,8 @@ joins_the_chatroom: se une a la sala de chat
 large: grande
 last_change: ultimo cambio
 last_name: apellido
+last_seen: "\xC3\xBAltimas vez visto"
+leave_channel: Salir del Canal
 leave_group: deja %s
 leave_group_link: Dejar {group_type}
 left_the_chatroom: "salido de la sala de chat "
@@ -380,6 +396,8 @@ month_short_october: octubre
 month_short_september: septiembre
 more_information: "M\xC3\xA1s informaci\xC3\xB3n"
 most_active: "M\xC3\xA1s activo"
+most_active_groups: "Grupos M\xC3\xA1s Activos"
+most_active_members: "Miembros M\xC3\xA1s Activos"
 most_viewed: "M\xC3\xA1s Vistos"
 move_button: Mueve
 move_image_left: Mover la foto hacia la izquierda
@@ -408,6 +426,7 @@ my_tasks_headline: Mis Tareas
 my_world_heading: Mi Mundo
 name: Nombre
 network: Red
+network_aettings: "Configuraci\xC3\xB3n de Red"
 network_invite_info: "Ingresa el nombre de los grupos que te gustar\xC3\xADa invitar a esta red."
 networks: Redes
 new_council: "Nuevo consejo de coordinaci\xC3\xB3n para el grupo {group_name}"
@@ -430,6 +449,7 @@ no_tags: No existen etiquetas
 no_title_given: (no tiene titulo)
 none: ninguno/a
 not_featured_content: El contenido aun no ha sido destacado
+not_found: No Encontrado
 not_set: No esta establecido
 notify_contribution: "<b>Contribuci\xC3\xB3n Anterior:</b> notificar a las personas que han hecho una <b>contribuci\xC3\xB3n</b> a esta p\xC3\xA1gina."
 notify_current_access: "<b>Current Access:</b> notificar a las personas o grupos que tienen acceso actualmente  a esta p\xC3\xA1gina."
@@ -532,6 +552,7 @@ profile_public_description: "Este perfil es p\xC3\xBAblico y puede ser visto por
   La informaci\xC3\xB3n que pongas aqu\xC3\xAD tambi\xC3\xA9n puede ser buscada por otras personas.\r\n\
   Ten cuidado con la informaci\xC3\xB3n personal que revelas y puede ser vista por otros."
 profile_saved: " Su perfil se ha guardado. "
+public: Publico
 public_checkbox: Publico
 public_checkbox_help: "Si se selecciona, cualquiera puede ver esta p\xC3\xA1gina."
 public_key: "Clave P\xC3\xBAblica"
@@ -551,6 +572,8 @@ recent_member_group_pages: "Paginas m\xC3\xA1s recientes del grupo"
 recent_network_pages: "Paginas m\xC3\xA1s recientes de la red"
 recent_pages: Paginas Recientes
 recent_wall_posts: "Las m\xC3\xA1s recientes noticias"
+recently_active_groups: Grupos Recientemente Activos
+recently_active_members: Miembros Recientemente Activos
 recently_created: Creado recientemente
 recipient_tip: "Separa a los destinatarios con comas, espacios o escribiendolos en l\xC3\xADneas nuevas."
 recipients: destinatarios
@@ -595,10 +618,12 @@ save_changes: Guardar Cambios
 save_survey: Guardar Encuesta
 saved_new_order: Nueva orden guardada!
 saving_your_changes: Guardar tus cambios...
+say_message_button: Di
 search: Buscar
 search_headline: Buscar
 see_all_link: Ver Todos
 see_more_link: "M\xC3\xA1s"
+see_tips_to_get_started: Ver los Tips para comenzar
 select_image_file: seleccionar archivo de foto
 send_button: Enviar
 send_invites: enviar invitaciones

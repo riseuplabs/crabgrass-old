@@ -1,3 +1,23 @@
+
+//
+// CRABGRASS HELPERS
+//
+
+// shows the 'notice' message (ie errors and success)
+// if there is a popup currently open, then the messages shows up there.
+// set msg to "" in order to hide it.
+function showNoticeMessage(msg) {
+  Autocomplete.hideAll();
+  if ($('modal_message')) {
+    $('modal_message').update(msg);
+  } else if ($('message')) {
+    $('message').update(msg);
+    if (msg)
+      window.location.hash = "message";
+  }
+}
+
+// opens the greencloth editing reference.
 function quickRedReference() {
   window.open(
     "/static/greencloth",
@@ -25,11 +45,30 @@ function setClassVisibility(selector, visibility) {
 // FORM UTILITY
 //
 
-// toggle the visibility of another element based on if
-// a checkbox is checked or not.
-function checkbox_toggle_visibility(checkbox, element_id) {
-  if (checkbox.checked) {$(element_id).show();}
-  else {$(element_id).hide();}
+// Toggle the visibility of another element based on if a checkbox is checked or
+// not. Additionally, sets the focus to the first input or textarea that is visible.
+function checkboxToggle(checkbox, element) {
+  if (checkbox.checked) {
+    $(element).show();
+    var focusElm = $(element).select('input[type=text]), textarea').first();
+    var isVisible = focusElm.visible() && !focusElm.ancestors().find(function(e){return !e.visible()});
+    if (focusElm && isVisible) {
+      focusElm.focus();
+    }
+  } else {
+    $(element).hide();
+  }
+}
+
+// Toggle the visibility of another element using a link with an
+// expanding/contracting arrow.
+function linkToggle(link, element) {
+  if (link) {
+    link = Element.extend(link);
+    link.toggleClassName('right_16');
+    link.toggleClassName('sort_down_16');
+    $(element).toggle();
+  }
 }
 
 // toggle all checkboxes of a particular css selected, based on the
@@ -42,13 +81,13 @@ function toggle_all_checkboxes(checkbox, selector) {
 // use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
 // value is optional.
 function submit_form(form_element, name, value) {
-  e = form_element;
-  form = null;
+  var e = form_element;
+  var form = null;
   do {
     if(e.tagName == 'FORM'){form = e; break}
   } while(e = e.parentNode)
   if (form) {
-    input = document.createElement("input");
+    var input = document.createElement("input");
     input.name = name;
     input.type = "hidden";
     input.value = value;
@@ -61,49 +100,6 @@ function submit_form(form_element, name, value) {
   }
 }
 
-// give a radio button group name, return the value of the currently
-// selected button.
-function activeRadioValue(name) {
-  try { return $$('input[name='+name+']').detect(function(e){return $F(e)}).value; } catch(e) {}
-}
-
-function insertImage(wikiId) {
-  try {
-    var assetId = activeRadioValue('image');
-    var link = $('link_to_image').checked;
-    var size = activeRadioValue('image_size');
-    var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
-    var url = thumbnails[size];
-    var insertText = '\n!' + url + '!';
-    if (link)
-      insertText += ':' + thumbnails['full'];
-    insertText += '\n';
-    insertAtCursor(wikiId, insertText);
-  } catch(e) {}
-}
-
-//
-// TEXT AREAS
-//
-
-function insertAtCursor(textarea, text) {
-  var element = $(textarea);
-  if (document.selection) {
-    //IE support
-    sel = document.selection.createRange();
-    sel.text = text;
-  } else if (element.selectionStart || element.selectionStart == '0') {
-    //Mozilla/Firefox/Netscape 7+ support
-    var startPos = element.selectionStart;
-    var endPos   = element.selectionEnd;
-    element.value = element.value.substring(0, startPos) + text + element.value.substring(endPos, element.value.length);
-    element.setSelectionRange(startPos, endPos+text.length);
-    element.scrollTop = startPos
-  } else {
-    element.value += text;
-  }
-  element.focus();
-}
 
 function decorate_wiki_edit_links(ajax_link) {
   $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
@@ -131,7 +127,7 @@ function enterPressed(event) {
 }
 
 function eventTarget(event) {
-  event = event || window.event; // IE doesn't pass event as argument.
+  event = event || window.event;            // IE doesn't pass event as argument.
   return(event.target || event.srcElement); // IE doesn't use .target
 }
 
@@ -143,7 +139,8 @@ function eventTarget(event) {
 // this should be replaced with element.cumulativeOffset()
 //
 function absolutePosition(obj) {
-  var curleft = curtop = 0;
+  var curleft = 0;
+  var curtop = 0;
   if (obj.offsetParent) {
     do {
       curleft += obj.offsetLeft;
@@ -153,8 +150,8 @@ function absolutePosition(obj) {
   return [curleft,curtop];
 }
 function absolutePositionParams(obj) {
-  obj_dims = absolutePosition(obj);
-  page_dims = document.viewport.getDimensions();
+  var obj_dims = absolutePosition(obj);
+  var page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
 
@@ -166,33 +163,39 @@ function absolutePositionParams(obj) {
 function evalAttributeOnce(element, attribute) {
   if (element.readAttribute(attribute)) {
     eval(element.readAttribute(attribute));
-    element.writeAttribute(attribute, null);
+    element.writeAttribute(attribute, "");
   }
 }
 
 function showTab(tabLink, tabContent, hash) {
-  tabset = tabLink.parentNode.parentNode
-  $$('ul.tabset a').each( function(elem) {
-    if (tabset == elem.parentNode.parentNode) {elem.removeClassName('active');}
-  })
-  $$('.tab_content').each( function(elem) {elem.hide();})
-  tabLink.addClassName('active');
-  tabContent.show();
-  evalAttributeOnce(tabContent, 'onclick');
-  tabLink.blur();
-  if (hash) {window.location.hash = hash}
+  tabLink = $(tabLink);
+  tabContent = $(tabContent);
+  var tabset = tabLink.up('.tabset');
+  if (tabset) {
+    tabset.select('a').invoke('removeClassName', 'active');
+    $$('.tab_content').invoke('hide');
+    tabLink.addClassName('active');
+    tabContent.show();
+    evalAttributeOnce(tabContent, 'onclick');
+    tabLink.blur();
+    if (hash) {window.location.hash = hash}
+  }
   return false;
 }
 
 var defaultHash = null;
 
 function showTabByHash() {
-  if (hash = (window.location.hash || defaultHash)) {
+  var hash = window.location.hash || defaultHash;
+  if (hash) {
     hash = hash.replace(/^#/, '').replace(/-/g, '_');
-    tabContent = $(hash + '_panel');
-    tabLink = $(hash + '_link');
-    showTab(tabLink, tabContent)
+    showTab(hash+'_link', hash+'_panel')
   }
+}
+
+// returns true if the element is in a tab content area that is visible.
+function isTabVisible(elem) {
+  return $(elem).ancestors().find(function(e){return e.hasClassName('tab_content') && e.visible();})
 }
 
 //
@@ -201,8 +204,6 @@ function showTabByHash() {
 
 var DropMenu = Class.create({
   initialize: function(menu_id) {
-//    this.show_timeout = null;
-//    this.hide_timeout = null;
     this.timeout = null;
     if(!$(menu_id)) return;
     this.trigger = $(menu_id);
@@ -287,4 +288,3 @@ function loginDialog(txt,options) {
   form = form.interpolate(txt);
   Modalbox.show(form, {title:txt.login, width:350});
 }
-

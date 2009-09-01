@@ -1,0 +1,47 @@
+There are two kinds of javascript files:
+
+  (1) bundled: bundled scripts get joined together and compressed when running
+      in production mode. They are referred to by symbol, rather than by filename.
+
+      There are currently three bundles:
+
+      a) main: always loaded for every request
+      b) extra: a bundle of fancy effects, like drag and drop.
+      c) wiki: all the stuff needed for editing wikis
+
+  (2) as needed: these are loaded on a per controller (and per action) basis,
+      using the 'javascript' method.
+
+The optional scripts are loaded like so:
+
+  class MyController < ApplicationController
+    javascript :tasks, :wiki
+    javascript :extra, :action => :index
+  end
+
+The script bundles are defined by constants in layout_helper.rb:
+
+  MAIN_JS = ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']
+  EXTRA_JS = ['dragdrop', 'builder', 'slider']
+  WIKI_JS = ['wiki/textile_editor', 'wiki/nicEdit.js', 'wiki/wiki_tabs']
+
+The order determines what order the files are loaded in.
+
+If you modify any of these files, make sure to run this command:
+
+  rake minify
+
+This will generate main.js.gz and extra.js.gz, etc. These are minified and compressed combinations of all
+the javascript files defined by MAIN_JS and EXTRA_JS.
+
+In order to use these file correctly, you should configure apache like so:
+
+  AddEncoding gzip .gz
+  RewriteCond %{HTTP:Accept-encoding} gzip
+  RewriteCond %{HTTP_USER_AGENT} !Safari
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.*)$ $1.gz [QSA,L]
+
+More details can be found in the minify.rb file. In order to run minify, you must have java installed.
+
+

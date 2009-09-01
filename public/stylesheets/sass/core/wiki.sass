@@ -25,7 +25,7 @@
     //margin-top: 1.5em
     color: #666
     border-bottom: 2px dotted #999
-    font-family= !body_text_font_family 
+    font-family= !body_text_font_family
     &:first-child, &.first
       margin-top: 0
   h2
@@ -114,7 +114,15 @@ ins
 //
 
 div.formatting_reference
+  margin-top: 0.5em
   float: right
+
+div.wiki_buttons
+  margin-top: 0.5em
+  input
+    font-size: 1.25em
+    padding: 0.1em 0.5em
+    margin-right: 0.5em
 
 a.edit
   display: inline
@@ -129,10 +137,80 @@ a.edit
 a.edit:hover
   opacity: 1 !important
 
-h1:hover a.edit, 
+h1:hover a.edit,
 h2:hover a.edit,
 h3:hover a.edit
   opacity: 0.6
+
+//
+// WYSIWYG EDITOR
+// Take care when changing this css, it is hard to get it to look ok in all browsers.
+//
+
+.html_editor_wrapper
+  border: 1px solid #666
+
+.htmlarea
+  border: 0 !important
+
+.htmlarea .toolbar
+  border-right: 0
+  border-bottom: 1px solid #999
+  background: #eee
+  .button
+    background: #eee
+    border-color: #eee
+    &:hover
+      background: white
+
+.htmlarea iframe
+  width: 100% !important
+  border: 0 !important
+  border-top: 1px solid #ddd !important
+  &:focus
+    background-color: #ffe
+
+.htmlarea .statusBar
+  border-left: 0 !important
+  background: #eee
+
+.statusBarWidgetContainer
+  display: none
+
+//.html_editor_instance
+//  padding: 4px
+//  border-top: 1px solid #ddd
+//  outline: 0
+//  min-height: 10em
+//  max-height: 30em
+//  overflow-y: auto
+//  cursor: text
+//  &:focus
+//    background-color: #ffe
+
+//.html_editor_panel
+//  border-bottom: 1px solid #666
+//  border-top: 1px solid white
+
+//.nicEdit-panelContain
+//  border: 0 !important
+
+//.nicEdit-selectContain
+//  width: 120px !important
+
+//.nicEdit-selectTxt
+//  width: 90px !important
+
+//.nicEdit-pane
+//  h1
+//    font-size: 1.55em
+//  h2
+//    font-size: 1.1em
+//  h3
+//    font-size: 1em
+//  h4
+//    font-size: 0.8em
+
 
 //
 // table of contents
@@ -146,7 +224,7 @@ a.anchor
     color: #666 !important
     text-decoration: none
 
-h1:hover a.anchor, 
+h1:hover a.anchor,
 h2:hover a.anchor,
 h3:hover a.anchor
   opacity: 1

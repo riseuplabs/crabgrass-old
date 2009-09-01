@@ -6,6 +6,9 @@
 
   <div id='share_error_message'></div>
 
+  <% if may_share_with_everyone? %>
+    <%= render :partial => 'base_page/share/share_with_everyone' %>
+  <% end %>
   <%= render :partial => 'base_page/share/add_recipient_widget' %>
 
   <% if notify %>

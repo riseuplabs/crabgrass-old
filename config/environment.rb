@@ -96,9 +96,10 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   # the absolutely required gems
+  config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
+  config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
   #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
-
   #config.frameworks += [ :action_web_service]
   #config.action_web_service = Rails::OrderedOptions.new
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )

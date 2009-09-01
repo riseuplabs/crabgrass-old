@@ -12,7 +12,7 @@ class ChatController < ApplicationController
   stylesheet 'groups'
   permissions 'chat'
   before_filter :login_required
-  prepend_before_filter :get_channel_and_user
+  prepend_before_filter :get_channel_and_user, :except => :index
   append_before_filter :breadcrumbs
 
   # show a list of available channels
@@ -21,11 +21,7 @@ class ChatController < ApplicationController
       @groups = current_user.all_groups
       channel_users = {}
       @groups.each do |group|
-        if group.chat_channel
-          channel_users[group] = group.chat_channel.active_channel_users.size
-        else
-          channel_users[group] = 0
-        end
+        channel_users[group] = group.chat_channel ? group.chat_channel.users.size : 0
       end
       @group_array = channel_users.sort {|a,b| a[1] <=> b[1]}
       @group_array.reverse!
@@ -35,13 +31,13 @@ class ChatController < ApplicationController
   # http request front door
   # everything else is xhr request.
   def channel
-    #unless @channel.users.include?(@user)
-      user_joins_channel(@user, @channel)
-    #end
+    user_joins_channel(@user, @channel)
+    @messages = [@channel_user.join_message]
+    message_id = @messages.last.id
+    session[:first_retrieved_message_id] = message_id
+    session[:last_retrieved_message_id] = message_id
     @channel_user.record_user_action :not_typing
-    @messages = @channel.latest_messages
-    session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
-    @html_title = Time.now.strftime('%Y.%m.%d')
+    @html_title = Time.zone.now.strftime('%Y.%m.%d')
   end
 
   # Post a user's message to a channel
@@ -58,16 +54,13 @@ class ChatController < ApplicationController
       logger.info(command)
       case command
       when 'me'
-        user_action_in_channel(@user, @channel, arguments)
-        @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+        @message = user_action_in_channel(@user, @channel, arguments)
       else
         return false
       end
     else
-      user_say_in_channel(@user, @channel, message)
-      @message = ChatMessage.find(:first, :order => "id DESC", :conditions => ["sender_id = ?", @user.id])
+      @message = user_say_in_channel(@user, @channel, message)
     end
-
     @channel_user.record_user_action :just_finished_typing
 
     render :layout => false
@@ -84,9 +77,11 @@ class ChatController < ApplicationController
     return false unless request.xhr?
 
     # get latest messages, update id of last seen message
-    session[:last_retrieved_message_id] ||= 0
     @messages = @channel.messages.since(session[:last_retrieved_message_id])
     session[:last_retrieved_message_id] = @messages.last.id if @messages.any?
+
+    # deleted messages
+    @deleted_messages = ChatMessage.all(:conditions => ["id > ? AND channel_id = ? AND deleted_at IS NOT NULL", session[:first_retrieved_message_id], @channel.id])
 
     @channel_user.record_user_action :not_typing
 
@@ -94,10 +89,6 @@ class ChatController < ApplicationController
   end
 
   def user_list
-    @channel.users_just_left.each do |ex_user|
-      user_leaves_channel(ex_user.user, @channel)
-      ex_user.destroy
-    end
     render :partial => 'chat/userlist', :layout => false
   end
 
@@ -108,31 +99,21 @@ class ChatController < ApplicationController
   end
 
   def archive
-    @path = params[:path] || []
-    @parsed = parse_filter_path(params[:path])
-    @months = ChatMessage.months(@channel)
+    @months = @channel.messages.months
     unless @months.empty?
-      @current_year  = (Date.today).year
+      @current_year  = Time.zone.now.year
       @start_year    = @months[0]['year'] || @current_year.to_s
-      @current_month = (Date.today).month
-
-      # normalize path
-      unless @parsed.keyword?('date')
-        @path << 'date'<< "%s-%s" % [@months.last['year'], @months.last['month']]
-      end
-      @parsed = parse_filter_path(@path)
-      date = @parsed.keyword?('date')[1]
-      date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
-      @year = year = $1
-      @month = month = $2
-      @day = day = $3
-      unless day.empty?
-        @messages = []
-        ChatMessage.for_day(@channel, year, month, day).each do |m|
-          @messages << "#{m.sender_name}: #{m.content}"
-        end
+      @current_month = Time.zone.now.month
+      @date = params[:date] ? params[:date] : "%s-%s" % [@months.last['year'], @months.last['month']]
+      @date =~ /(\d{4})-(\d{1,2})-?(\d{0,2})/
+      @year = $1
+      @month = $2
+      @day = $3
+      unless @day.empty?
+        @messages = @channel.messages.for_day(@year, @month, @day)
+        @html_title = Time.zone.local(@year, @month, @day).strftime('%Y.%m.%d')
       else
-        @days = ChatMessage.days(@channel, year, month)
+        @days = @channel.messages.days(@year, @month)
       end
     end
   end
@@ -155,7 +136,9 @@ class ChatController < ApplicationController
     @channel_user = ChatChannelsUser.find(:first,
                                           :conditions => {:channel_id => @channel,
                                                           :user_id => @user})
-    @channel_user = ChatChannelsUser.create({:channel => @channel, :user => @user}) if  (!@channel_user and @user.is_a? User)
+    if (!@channel_user and (@user.is_a? User) and (action_name != 'archive'))
+      @channel_user = ChatChannelsUser.create!({:channel => @channel, :user => @user})
+    end
     true
   end
 
@@ -163,19 +146,19 @@ class ChatController < ApplicationController
   def user_say_in_channel(user, channel, say)
     say = sanitize(say)
     #say = say.gsub(":)", "<img src='../images/emoticons/smiley.png' \/>")
-    ChatMessage.new(:channel => channel, :content => say, :sender => user).save
+    ChatMessage.create(:channel => channel, :content => say, :sender => user)
   end
 
   def user_action_in_channel(user, channel, say)
-    ChatMessage.new(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action').save
+    ChatMessage.create(:channel => channel, :content => sanitize(say), :sender => user, :level => 'action')
   end
 
   def user_joins_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys')
   end
 
   def user_leaves_channel(user, channel)
-    ChatMessage.new(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys').save
+    ChatMessage.create(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys')
   end
 
   def sanitize(say)
@@ -187,8 +170,7 @@ class ChatController < ApplicationController
 # in a paragraph block (<p> stuff </p>), and things will
 # look funny if we don't strip that off
     say  = GreenCloth.new(say).to_html
-    say.gsub!(/^<p>/, '')
-    say.gsub!(/<\/p>$/, '')
+    say.gsub! /\A<p>(.+)<\/p>\Z/m, '\1'
     return say
   end
 

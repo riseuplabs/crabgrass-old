@@ -107,6 +107,7 @@ Modalbox.Methods = {
 		this.MBcontent = new Element("div", {id: "MB_content"}).update(
 			this.MBloading = new Element("div", {id: "MB_loading"}).update(this.strings.loading)
 		);
+		this.MBframe.insert({'bottom':new Element("div",{id:'modal_message'})});
 		this.MBframe.insert({'bottom':this.MBcontent});
 
 		var injectToEl = $(document.body);
@@ -157,7 +158,7 @@ Modalbox.Methods = {
 			this.MBwindow.hide();
 			this.priorContent = []; // added for cg
 			this._deinit();
-		} else throw("Modalbox is not initialized.");
+		}
 	},
 
 	// Internal hide method to use with overlay and close link
@@ -178,14 +179,31 @@ Modalbox.Methods = {
 
 	// displays a simple confirmation dialog
 	// options for ajax: ok_function
-	// options for form: method, action, token
+	// options for http: method, action, token
 	confirm: function(message, options) {
 		options = $H(this.strings).merge(options).merge({'message':message})
+		options.set('ok_function', options.get('ok_function') || 'this.form.submit()');
 		if (options.get('action')) {
-			var html = '<div class="MB_confirm"><p>#{message}</p><form class="button-to" action="#{action}" method="#{method}"><input type="button" onclick="Modalbox.hide()" value="#{cancel}" /><input type="submit" value="#{ok}"/><input type="hidden" value="#{token}" name="authenticity_token"/></form></div>';
-		} else if (options.get('ok_function')) {
-			var html = '<div class="MB_confirm"><p>#{message}</p><form><img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> <input type="button" onclick="Modalbox.back()" value="#{cancel}" /><input type="button" onclick="#{ok_function}" value="#{ok}" /></form></div>';
+			if (options.get('method') == 'delete') {
+				options.set('form_attrs', 'action="#{action}" method="post"'.interpolate(options));
+			} else {
+				options.set('form_attrs', 'action="#{action}" method="#{method}"'.interpolate(options));
+			}
 		}
+		if (options.get('method') == 'get') {
+			var hidden_fields = '';
+		} else {
+			var hidden_fields = '<input type="hidden" value="#{token}" name="authenticity_token"/><input type="hidden" value="#{method}" name="_method"/>'.interpolate(options);
+		}
+		var html = '<div class="MB_confirm">' +
+			'<p>#{message}</p>' +
+			'<form #{form_attrs}>' +
+				'<img src="/images/spinner.gif" style="display:none" id="MB_spinner"/> ' +
+				'<input type="button" onclick="Modalbox.back()" value="#{cancel}" />' +
+				'<input type="button" onclick="#{ok_function}" value="#{ok}" />' +
+				hidden_fields +
+			'</form>' +
+		'</div>';
 		this.show(html.interpolate(options), {title: options.get('title'), width: 350});
 	},
 
@@ -327,9 +345,15 @@ Modalbox.Methods = {
 			this.MBclose.focus(); // If no focusable elements exist focus on close button
 	},
 
-	_findFocusableElements: function(){ // Collect form elements or links from MB content
-		this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]').invoke('addClassName', 'MB_focusable');
-		return this.MBcontent.select('.MB_focusable');
+	// Collect form elements or links from MB content
+	_findFocusableElements: function() {
+		if (Prototype.Browser.IE && this.MBcontent.select('iframe').length) {
+			return []; // IE dies a horrible death if the modalbox includes an iframe, unless we return [] here.
+                 // Not sure if it is the focus or the adding the class that triggers it.
+		} else {
+			this.MBcontent.select('input:not([type~=hidden]), select, textarea, button, a[href]').invoke('addClassName', 'MB_focusable');
+			return this.MBcontent.select('.MB_focusable');
+		}
 	},
 
 	_kbdHandler: function(event) {
@@ -465,5 +489,3 @@ Modalbox.Methods = {
 };
 
 Object.extend(Modalbox, Modalbox.Methods);
-
-if(Modalbox.overrideAlert) window.alert = Modalbox.alert;

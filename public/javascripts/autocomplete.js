@@ -24,6 +24,7 @@ var Autocomplete = function(el, options, id){
   this.instanceId = null;
   this.onChangeInterval = null;
   this.ignoreValueChange = false;
+  this.messageDisplayed = false;
   this.serviceUrl = options.serviceUrl;
   this.options = {
     autoSubmit:false,
@@ -31,7 +32,9 @@ var Autocomplete = function(el, options, id){
     maxHeight:300,
     deferRequestBy:0,
     width:0,
-    container:null
+    container:null,
+    message:"",
+    preloadedOnTop:false
   };
   if(options){ Object.extend(this.options, options); }
   if(Autocomplete.isDomLoaded){
@@ -52,6 +55,10 @@ Autocomplete.getInstance = function(id){
 
 Autocomplete.highlight = function(value, re){
   return value.replace(re, function(match){ return '<ins>' + match + '<\/ins>' });
+};
+
+Autocomplete.hideAll = function() {
+  Autocomplete.instances.invoke('hide');
 };
 
 Autocomplete.prototype = {
@@ -87,9 +94,15 @@ Autocomplete.prototype = {
     Event.observe(this.el, window.opera ? 'keypress':'keydown', this.onKeyPress.bind(this));
     Event.observe(this.el, 'keyup', this.onKeyUp.bind(this));
     Event.observe(this.el, 'blur', this.enableKillerFn.bind(this));
-    /* If we have preloaded data we might want to display it on focus.*/ 
+    Event.observe(this.el, 'click', this.clearMessage.bind(this));
+    /* If we have preloaded data we might want to display it on focus.*/
     Event.observe(this.el, 'focus', this.fixPosition.bind(this));
     this.container.setStyle({ maxHeight: this.options.maxHeight + 'px' });
+    if (this.options.message != "") {
+      this.el.setStyle({ color: '#808080' });
+      this.el.value = this.options.message;
+      this.messageDisplayed=true;
+    }
     this.instanceId = Autocomplete.instances.push(this) - 1;
     /* I think we should trigger a preloading request from here */
     this.requestSuggestions("");
@@ -149,6 +162,7 @@ Autocomplete.prototype = {
   },
 
   onKeyUp: function(e) {
+    this.clearMessage();
     switch (e.keyCode) {
       case Event.KEY_UP:
       case Event.KEY_DOWN:
@@ -181,11 +195,28 @@ Autocomplete.prototype = {
       /* display preloaded suggestions if there are any. */
       this.updateSuggestions("");
       this.suggest();
-    } else { 
+    } else {
       this.getSuggestions();
       this.suggest();
     }
   },
+
+  clearMessage: function() {
+    if (this.messageDisplayed) {
+      this.el.setStyle({ color: '#000000' });
+      var start = this.options.message.length;
+      var end = this.el.value.length;
+      var typed = this.el.value.substring(start,end);
+      if (typed) {
+        this.el.value = typed
+      }
+      else {
+        this.el.value = ""
+      }
+      this.messageDisplayed=false;
+    }
+  },
+
 
   getSuggestions: function() {
     var cr = this.cachedResponse[this.currentValue];
@@ -212,7 +243,7 @@ Autocomplete.prototype = {
         this.updateSuggestions(this.filterResponse(cr1));
         this.requestSuggestions(this.currentValue);
       }
-      if (this.suggestions.length === 0 && this.currentValue.length >= this.options.minChars) { 
+      if (this.suggestions.length === 0 && this.currentValue.length >= this.options.minChars) {
         this.badQueries.push(this.currentValue);
       }
     } else {
@@ -221,22 +252,35 @@ Autocomplete.prototype = {
     }
   },
 
+  // This function filters the response results using the current search terms.
+  // For a response result to be included in the results, it must match all the
+  // search terms.
+  //
+  // This is accomplished by converting each search term into a regular expression.
+  // Each regexp is prefixed by [\s\+>^] because we are looking for words outside
+  // any possible the html tags.
   filterResponse: function(response) {
-    var re = new RegExp('[\\s\+>]' + this.currentValue.match(/\w+/g).join('|\\s\+>'), 'gi');
-    var suggest=[];
-    var dat=[];
-    response.suggestions.each( function(value, i) {
-      if (value.match(re)) {
-        suggest.push(value);
-        dat.push(response.data[i]);
-      }
-    }.bind(this));
-    var ret = {
-      data:dat,
-      query:this.currentValue,
-      suggestions:suggest 
-    };
-    return ret;
+    var suggest =[];
+    var data = [];
+    var terms = this.currentValue.match(/\w+/g);
+    if (terms) {
+      // build array of search term regexps
+      var regexps = [];
+      terms.each( function(term, i) {
+        regexps.push(new RegExp('[\\s\\+>_-]' + term + '|^' + term, 'i'));
+      });
+      // match this against each response suggestion
+      response.suggestions.each( function(value, i) {
+        var all_matched = regexps.all( function(regexp) {
+          return value.match(regexp);
+        });
+        if (all_matched) {
+          suggest.push(value);
+          data.push(response.data[i]);
+        }
+      });
+    }
+    return {data:data, query:this.currentValue, suggestions:suggest};
   },
 
   isBadQuery: function(q) {
@@ -313,7 +357,7 @@ Autocomplete.prototype = {
       this.updateSuggestions(this.filterResponse(response));
       this.suggest();
     }
-    if (this.suggestions.length === 0) { this.badQueries.push(response.query);}
+    if (this.suggestions.length === 0 && response.query.length >= this.minChars) { this.badQueries.push(response.query);}
   },
 
   /* this will update the Suggestions with the given response.
@@ -322,7 +366,7 @@ Autocomplete.prototype = {
   updateSuggestions: function(response) {
     this.suggestions=[]
     this.data=[]
-    if (this.cachedResponse[""]) {
+    if (this.cachedResponse[""] && this.options.preloadedOnTop) {
       var filtered = this.filterResponse(this.cachedResponse[""]);
       this.appendSuggestions(filtered); /*adding preloaded suggestions*/
     }

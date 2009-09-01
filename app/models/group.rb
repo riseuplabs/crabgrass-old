@@ -169,7 +169,7 @@ class Group < ActiveRecord::Base
 
   # creates a menu item for the group and returns it.
   def add_menu_item(params)
-    item=MenuItem.create!(params.merge :group_id => self.id, :position => self.menu_items.count)
+    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
   end
 
 
