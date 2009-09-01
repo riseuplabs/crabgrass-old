@@ -107,7 +107,7 @@ class BasePage::ParticipationController < BasePage::SidebarController
 
   def update_share_all
     if params[:add]
-      @page.add(Site.current.network, :access=>Conf.default_page_access)
+      @page.add(Site.current.network, :access=>Conf.default_page_access).save!
     else
       @page.remove(Site.current.network)
     end
