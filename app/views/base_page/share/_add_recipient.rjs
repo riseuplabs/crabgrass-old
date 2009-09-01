@@ -19,11 +19,6 @@ if flash[:type] == 'error'
 else
   page.call 'showNoticeMessage', ''
 
-  if may_share_with_everyone? and @recipients.include?(Site.current.network)
-    page.replace_html 'share_with_everyone_div', :partial => 'share_with_everyone'
-    page["share_recipient_#{Site.current.network.name}"].show
-  end
-
   # update the ui by adding the recipients
   @recipients.each do |recipient|
     page << "if ($('share_recipient_#{recipient.name}') == null){"

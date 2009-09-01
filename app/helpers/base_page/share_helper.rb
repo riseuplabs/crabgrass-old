@@ -78,62 +78,6 @@ module BasePage::ShareHelper
     select_tag name, options_for_select(select_options, selected.to_s), options
   end
 
-  ##
-  ## STUFF FOR SHARE WITH EVERYONE
-  ##
-
-  def check_box_options
-    recipient = Site.current.network
-    old_participation = @page.try.participation_for_group(recipient)
-    disabled = !old_participation.nil?
-    in_list = @recipients.try.include?(recipient)
-    access = old_participation.try.access
-    spinner_id = "add_site"
-
-    id = "share_recipient_%s" % recipient.name
-    toggle_function = "
-      $('#{id}').toggle();
-      $('#{id}').enabled = $('#{id}').visible"
-    #  { #{add_function} } else
-    #  { #{remove_function} }"
-    # disabling form elements does not work with ie6.
-    # so we just keep them enabled.
-    # unless disabled
-    { :onclick => toggle_function,
-      :checked => in_list || disabled }
-    #,:disabled => disabled }
-  end
-
-  def share_all_recipient
-    recipient = Site.current.network
-    old_participation = @page.try.participation_for_group(recipient)
-    part = old_participation || @recipients.try.include?(recipient)
-    visible = !part.nil?
-    access = old_participation.try.access
-    access ||= may_select_access_participation? ?
-      "$('recipient[access]').value" :
-      %{'#{default_access}'}
-    render :partial => 'base_page/share/recipient',
-      :locals => {:recipient => recipient,
-        :access => access.to_s,
-        :unsaved => false,
-        :visible => visible}
-  end
-
-  def access_options
-    recipient = Site.current.network
-    old_participation = @page.try.participation_for_group(recipient)
-    access = old_participation.try.access
-    access ||= may_select_access_participation? ?
-      "$('recipient[access]').value" :
-      "'#{Conf.default_page_access}'"
-    other_select = "$('recipients[#{recipient.name.gsub(/\+/,"%2b")}][access]')"
-    this_select = "$('share_with_everyone_access')"
-    sync_function = "#{other_select}.value = #{this_select}.value"
-
-    {:blank => false, :selected => access, :onchange => sync_function} # :disabled => disabled
-  end
-
   protected
 
   def add_action(recipient, access, spinner_id)
