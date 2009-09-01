@@ -95,7 +95,7 @@ module BasePageHelper
       }
       checkbox_line = sidebar_checkbox('Shared with all users'[:share_all_checkbox], @page.shared_with_all?, url, li_id, checkbox_id, :title => "If checked, all Users can access this page."[:share_all_checkbox_help])
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
-    else
+    elsif Site.current.network
       content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, 'Shared with all users'[:share_all_checkbox], :class => 'a'), :class => 'small_icon'
     end
   end

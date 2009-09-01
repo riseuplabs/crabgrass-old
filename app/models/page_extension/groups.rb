@@ -65,6 +65,7 @@ module PageExtension::Groups
   end
 
   def shared_with_all?
+    self.site.try.network and
     !participation_for_group(self.site.try.network).nil?
   end
 
