@@ -47,6 +47,12 @@ module Undress
           html = "<p>s<span style='font-weight:bold;'>o</span>me</p>"
           assert_renders_textile textile, html
         end
+
+        test "at the end of the word" do
+          html = "<p>ds <u>underline</u>sds</p>"
+          textile  = "ds [+underline+]sds\n"
+          assert_renders_textile textile, html
+        end
         
         test "wihout a letter in headers" do
           html = "<h1>a<em>bc</em></h1>"
