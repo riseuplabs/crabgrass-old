@@ -231,6 +231,7 @@ module FlashMessageHelper
   end
 
   def exception_detailed_message(exception)
+    return "Warning: Trying to get detailed message but no exception given."
     message = exception.clean_message
     file, line = exception.backtrace.first.split(":")[0, 2]
     if File.exists?(file)

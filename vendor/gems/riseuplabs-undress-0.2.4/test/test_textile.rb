@@ -47,6 +47,12 @@ module Undress
           html = "<p>s<span style='font-weight:bold;'>o</span>me</p>"
           assert_renders_textile textile, html
         end
+        
+        test "without a letter after the tag" do
+          textile = "x[*x xx*]"
+          html = "x<strong>x xx</strong>"
+          assert_renders_textile textile, html
+        end
 
         test "italics" do
           textile = "a perfect wo[_r_]ld\n"

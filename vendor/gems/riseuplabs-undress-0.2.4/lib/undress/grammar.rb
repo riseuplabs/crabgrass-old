@@ -140,7 +140,7 @@ module Undress
     # Helper to determine if a node contents a whole word
     # useful to convert for example a letter italic inside a word
     def complete_word?(node)
-      return true if ! node.previous_node || ! node.next_node
+      return true if ! node.previous_node && ! node.next_node
       
       p, n = node.previous_node, node.next_node
 

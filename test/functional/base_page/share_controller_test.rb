@@ -11,19 +11,7 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     login_as :blue
     xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
     assert_response :success
-    assert_raises Test::Unit::AssertionFailedError do
-      assert_select 'input#share_with_everyone'
-    end
-  end
-
-  # tests that the share popup loads
-  def test_show_share_with_everyone
-    with_site :unlimited do
-      login_as :blue
-      xhr :post, :show, :name => 'share', :popup => true, :page_id => 1
-      assert_response :success
-      assert_select 'input#share_with_everyone'
-    end
+    assert_select 'div' # just so we check html syntax
   end
 
   # tests thate the notify popup loads
