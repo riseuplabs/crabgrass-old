@@ -54,6 +54,7 @@ add_websites: Ajouter des sites web
 additional_page_access: "Acc\xC3\xA8s Additionnel"
 administer_site: Administrer Site
 administration: Administration
+alert: Alerte
 alert_error: Erreur
 alert_field_errors: "Il y a un probl\xC3\xA8me avec les champs suivants"
 alert_not_saved: "Les modifications ne peuvent \xC3\xAAtre sauvegard\xC3\xA9es"
@@ -106,6 +107,9 @@ committee_publicly_visible: Publier les commissions
 committee_publicly_visible_description: "Les commissions sont visibles de tou-te-s \xC3\xA0 %s/yourgroupname"
 committees: Commissions
 comparing_changes_header: "Comparaison des modifications de {user} \xC3\xA0 {when} de {old_version} vers {new_version}"
+confirm: confirmer
+confirm_inappropriate_chat: "\xC3\x8Ates-vous s\xC3\xBBr(e) que cette conversation est inappropri\xC3\xA9e? Cliquez sur \"OK\" seulement si vous pensez que le contenu est insultant ou impoli. Un mod\xC3\xA9rateur interviendra sous peu."
+confirm_inappropriate_page: "\xC3\x8Ates-vous s\xC3\xBBr(e) que cette page est inappropri\xC3\xA9e? Cliquez sur \"OK\" seulement si vous pensez que le contenu est insultant, impoli ou mal intentionn\xC3\xA9. Un mod\xC3\xA9rateur s'occupera de ce cas tr\xC3\xA8s bient\xC3\xB4t."
 confirm_new_password: Confirmer le Nouveau Mot de Passe
 confirmation: "\xC3\x8Ates-vous s\xC3\xBBr ?"
 contact: Ami-e
@@ -150,7 +154,8 @@ date_minutes: minutes
 date_months: mois
 date_older: Plus Vieux
 date_seconds: secondes
-date_this_week: "La Semaine Pass\xC3\xA9e"
+date_this_month: Ce Mois
+date_this_week: Cette Semaine
 date_today: Aujourd'hui
 date_weeks: semaines
 date_years: "ann\xC3\xA9es"
@@ -206,6 +211,7 @@ email_notice_hello: "Bonjour, {from} vous a envoy\xC3\xA9 une page web."
 email_notice_hello_with_message: "Bonjour, {from} vous a envoy\xC3\xA9 une page web avec le message suivant : {message}"
 email_notice_subject: "Jetez un \xC5\x93il \xC3\xA0 la page \"{title}\""
 empty_results: "Aucun r\xC3\xA9sultat"
+entity_autocomplete_tip: Entrer un nom de groupe ou d'utilisateur
 error_saving_new_order: Erreur lors de la sauvegarde du nouvel arrangement !
 expired_featured_content: "Contenu Important Expir\xC3\xA9"
 external_video_page_description: "Afficher une vid\xC3\xA9o h\xC3\xA9berg\xC3\xA9e sur un autre site "
@@ -220,6 +226,7 @@ file_size: Taille du fichier
 file_version_deleted: "version du fichier supprim\xC3\xA9e"
 files: Fichiers
 first_name: "pr\xC3\xA9nom"
+flag_inappropriate: "signaler comme inappropri\xC3\xA9"
 folder_class_description: "Cr\xC3\xA9er un r\xC3\xA9pertoire pour organiser d'autres pages."
 folder_display: Dossier
 folder_page_description: Une collection de fichiers.
@@ -282,6 +289,7 @@ group_successfully_updated: "Le groupe est mis \xC3\xA0 jour."
 group_summary: Information succincte sur ce %s.
 group_wiki: Wiki du groupe
 groups: Groupes
+have_your_say: Prend La Parole !
 height: Hauteur
 history: Historique
 icon: Icone
@@ -291,7 +299,7 @@ image_count_total: ":count Images"
 image_title: "Titre de l'image: %s"
 inbox_description: Affiche les pages auxquelles je participe activement ou dont je suis les modifications
 include_full_checkbox: Inclus le lien vers l'image de taille originale
-incoming: A venir
+incoming: Entrant
 information: Information
 insert_image_heading: Ajouter une image
 insert_image_instructions: "Cliquer sur une image pour l'ins\xC3\xA9rer dans le texte du wiki."
@@ -299,6 +307,7 @@ invalid_email: Mail invalide
 invalid_email_text: L'adresse mail fournie est invalide.
 invalid_token: Lien invalide
 invalid_token_text: "Le lien de r\xC3\xA9g\xC3\xA9n\xC3\xA9ration de mot de passe sp\xC3\xA9cifi\xC3\xA9 est invalide. Il doit \xC3\xAAtre d\xC3\xA9j\xC3\xA0 utilis\xC3\xA9, ou a d\xC3\xBBt expirer."
+invite: Inviter
 invite_accept_headline: "Accepter l'invitation \xC3\xA0 rejoindre le groupe \"{group_name}\""
 invite_accept_info: "Avez-vous d\xC3\xA9j\xC3\xA0 un compte sur ce site ? Cliquez sur l'un des liens suivants pour accepter l'invitation."
 invite_accept_via_existing_account: "J'ai d\xC3\xA9j\xC3\xA0 un compte"
@@ -313,7 +322,8 @@ joins_the_chatroom: rejoindre le salon de discussion
 large: grande
 last_change: "Derni\xC3\xA8re modification"
 last_name: nom
-leave_channel: quitter le salon
+last_seen: "vu derni\xC3\xA8rement"
+leave_channel: Quitter Le Salon
 leave_group: quitter %s
 leave_group_link: Quitter {group_type}
 left_the_chatroom: quitter le salon de discussion
@@ -611,6 +621,7 @@ save_changes: Sauvegarder les modifications
 save_survey: "Sauvegarder l'enqu\xC3\xAAte"
 saved_new_order: "Nouvel arrangement enregistr\xC3\xA9 !"
 saving_your_changes: Sauvegarde de vos modifications...
+say_message_button: Parle
 search: Rechercher
 search_headline: Recherche
 see_all_link: Tout afficher
@@ -763,9 +774,13 @@ welcome_find_people_text: "Parcourir le r\xC3\xA9pertoire des utilisateurs \xC3\
 welcome_heading: Bienvenue sur {site_title}, {user_name} !
 welcome_hide_link: "Cacher le message d'accueil "
 welcome_login_message: "!>/plugin_assets/riseup/riseup-yellow.gif!\r\n\
-  \r\n  Ce site utilise Crabgrass, un <a href=\"http://www.affero.org/oagpl.html\">logiciel libre</a> web con\xC3\xA7u pour les r\xC3\xA9seaux sociaux, le travail collaboratif et l\xE2\x80\x99organisation de r\xC3\xA9seaux, et taill\xC3\xA9 pour les besoins des mouvements de solidarit\xC3\xA9s internationales. Le but \xC3\xA0 long terme est de fournir les outils techniques permettant l'organisation de r\xC3\xA9seaux conf\xC3\xA9d\xC3\xA9raux, actifs, d\xC3\xA9mocratiques, de transformation sociale. [en lire plus... -> /crabgrass/about]\r\n  \r\n  h3. \xC3\x8Ates-vous nouveaux sur ce site ?\r\n\
-  \r\n  [Inscrivez-vous ici -> /account/signup] pour commencer. Nous en sommes aux d\xC3\xA9veloppements initiaux. Comme les am\xC3\xA9liorations sont dirig\xC3\xA9es par les retours de nos utilisat-eur-rice-s, faites-nous part de la mani\xC3\xA8re dont vous utilisez ce site, ce que vous voulez voir modifi\xC3\xA9, ce que vous aimez, et ce que vous n'aimez pas."
-welcome_message: "Crabgrass permet aux organisations de transformation sociale de faire les choses, communiquer, collaborer et \xC3\xA9tablir des r\xC3\xA9seaux."
+  \r\n\
+  Ce site utilise Crabgrass, un <a href=\"http://www.affero.org/oagpl.html\">logiciel libre</a> web con\xC3\xA7u pour les r\xC3\xA9seaux sociaux, le travail collaboratif et l\xE2\x80\x99organisation de r\xC3\xA9seaux, et taill\xC3\xA9 pour les besoins des mouvements de solidarit\xC3\xA9s internationales. Le but \xC3\xA0 long terme est de fournir les outils techniques permettant l'organisation de r\xC3\xA9seaux conf\xC3\xA9d\xC3\xA9raux, actifs, d\xC3\xA9mocratiques, de transformation sociale. [en lire plus... -> /crabgrass/about]\r\n\
+  \r\n\
+  h3. \xC3\x8Ates-vous nouveaux sur ce site ?\r\n\
+  \r\n\
+  [Inscrivez-vous ici -> /account/signup] pour commencer. Nous en sommes aux d\xC3\xA9veloppements initiaux. Comme les am\xC3\xA9liorations sont dirig\xC3\xA9es par les retours de nos utilisat-eur-rice-s, faites-nous part de la mani\xC3\xA8re dont vous utilisez ce site, ce que vous voulez voir modifi\xC3\xA9, ce que vous aimez, et ce que vous n'aimez pas."
+welcome_message: "Crabgrass permet aux organisations de transformation sociale de s'organiser, communiquer, collaborer et \xC3\xA9tablir des r\xC3\xA9seaux."
 welcome_show_link: Afficher le message d'accueil
 welcome_title: Bienvenue sur {site_title}
 welcome_upload_icon_link: "D\xC3\xA9finir un avatar"
