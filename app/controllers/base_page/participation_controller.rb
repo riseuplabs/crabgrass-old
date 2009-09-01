@@ -105,6 +105,17 @@ class BasePage::ParticipationController < BasePage::SidebarController
     render :template => 'base_page/participation/reset_public_line'
   end
 
+  def update_share_all
+    if params[:add]
+      @page.add(Site.current.network, :access=>Conf.default_page_access)
+    else
+      @page.remove(Site.current.network)
+    end
+    @page.updated_by = current_user
+    @page.save
+    render :template => 'base_page/reset_sidebar'
+  end
+
   def update_star
     @upart = @page.add(current_user, :star => params[:add])
     @upart.save!
