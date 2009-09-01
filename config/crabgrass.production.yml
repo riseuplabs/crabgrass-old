@@ -1,6 +1,6 @@
 #
-# This is the main global crabgrass configuration. 
-# 
+# This is the main global crabgrass configuration.
+#
 # Most of the time, no other configuration should be required other than the
 # options in this file. Unusual options might be configured elsewhere.
 #
@@ -49,6 +49,9 @@ profile_fields:
   - websites
 
 # ensure_page_owner: false
+
+# text_editor: greencloth_only
+text_editor: html_preferred
 
 ##
 ## SITES

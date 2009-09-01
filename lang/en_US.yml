@@ -192,10 +192,10 @@ include_full_checkbox: include link to full image
 ## ACCOUNT
 ##
 
-signup_link: "New Account"
+signup_link: "Need a new account?"
 signup_email_info: "Optional: used if you forget your password"
-forgot_password_link: "Forgot Password"
-signup_info: Choose your login name and your password then click "{sign_up}"
+forgot_password_link: "I forgot my password"
+signup_info: Create Your Account - Please fill in all of the requested information and then click "{sign_up}"
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
 login_name: "Login name"
@@ -434,7 +434,6 @@ profile_last_login: "Last Login"
 profile_member_since: "Member Since"
 private_info: "PRIVATE INFO: "
 private_info_description: Items below will only be seen by site administrators
-remove: remove
 Home: Home
 Work: Work
 School: School

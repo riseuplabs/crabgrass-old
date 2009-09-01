@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_timezone, :pre_clean
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
+  before_filter :redirect_missing_info_user
   before_render :context_if_appropriate
 
   session :session_secure => Conf.enforce_ssl
@@ -73,6 +74,12 @@ class ApplicationController < ActionController::Base
   def redirect_unverified_user
     if logged_in? and current_user.unverified?
       redirect_to account_url(:action => 'unverified')
+    end
+  end
+
+  def redirect_missing_info_user
+    if logged_in? and current_user.missing_profile_info?
+      redirect_to account_url(:action => 'missing_info')
     end
   end
 

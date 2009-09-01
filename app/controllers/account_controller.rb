@@ -8,6 +8,7 @@ class AccountController < ApplicationController
   before_filter :find_or_build_profiles, :only => [:signup, :missing_info]
 
   skip_before_filter :redirect_unverified_user, :only => [:unverified, :login, :logout, :signup, :verify_email]
+  skip_before_filter :redirect_missing_info_user, :only => [:login, :logout, :signup, :missing_info]
 
   # TODO: it would be good to require post for logout in the future
   verify :method => :post, :only => [:language]
@@ -273,17 +274,17 @@ class AccountController < ApplicationController
       updated_location = ProfileLocation.new(params[:visible_profile][:locations].first)
       params[:visible_profile].delete(:locations)
     else
-      updated_location = ProfileLocation.new
+      updated_location = nil
     end
 
     @visible_profile.attributes = @visible_profile.attributes.merge(params[:visible_profile] || {})
-
     @visible_profile.locations[0] ||= ProfileLocation.new
-    location = @visible_profile.locations[0]
-    location.attributes = location.attributes.merge(updated_location.attributes)
+    if updated_location
+      location = @visible_profile.locations[0]
+      location.attributes = updated_location.attributes
+    end
 
     @user.setup_profile_required_info(@visible_profile, @hidden_profile)
   end
-
 
 end
