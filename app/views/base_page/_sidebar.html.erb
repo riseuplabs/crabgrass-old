@@ -12,7 +12,7 @@
         <%= watch_line %>
         <%= star_line %>
       </ul>
-      <%- if (access_changing_commands = [share_line, notify_line, public_line].compact).any? -%>
+      <%- if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any? -%>
         <ul class='side_list commands rule'>
           <%= access_changing_commands %>
         </ul>

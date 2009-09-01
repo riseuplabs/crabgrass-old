@@ -23,16 +23,7 @@ recipient_name = recipient.name.gsub(/\+/,"%2b")   # encode + as %2b
 participation = (@page.participation_for(recipient) if @page)
 
 id = "share_recipient_%s" % recipient.name
-if may_share_with_everyone? and recipient == Site.current.network
-  remove_function = "$('%s').remove();
-    $('share_with_everyone').checked=false;" % id
-  this_select = "$('recipients[#{recipient.name.gsub(/\+/,"%2b")}][access]')"
-  other_select = "$('share_with_everyone_access')"
-  sync_function = "#{other_select}.value = #{this_select}.value"
-  access_options[:onchange] = sync_function
-else
-  remove_function = "$('%s').remove()" % id
-end
+remove_function = "$('%s').remove()" % id
 %>
 
 <tr class="<%= 'unsaved' if newitem %>" id="<%= id %>">
@@ -47,7 +38,13 @@ end
       <%= select_page_access "recipients[#{recipient_name}][access]", access_options %>
 %   else
 %     # why is this included as a hidden field if you are not allowed to set the access level?
-%     # perhaps if may_select_access_participations is false, then a default should be hard coded?
+%     # perhaps if may_select_access_participations is false, then a default should be hard coded?  --elijah
+%     # I thought may_select_access_participation? might become a per user setting.
+%     # In that case the access value can differ even if this person can not change it.
+%     # However you are right about hardcoding it. It should be hardcoded to not change.
+%     # Currently we only use it as a per site setting - so it could even be completely
+%     # hard coded.
+%     # --azul
       <%= hidden_field "recipients[#{recipient.name}]", :access, :value => access %>
 %   end
   </td>
