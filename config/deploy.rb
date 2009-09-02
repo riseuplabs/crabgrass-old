@@ -130,29 +130,29 @@ namespace :crabgrass do
 
   desc "Link in the shared dirs"
   task :link_to_shared do
-    run "rm -rf #{release_path}/tmp"
-    run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
+    run "rm -rf #{current_release}/tmp"
+    run "ln -nfs #{shared_path}/tmp #{current_release}/tmp"
 
-    run "rm -rf #{release_path}/index"
-    run "ln -nfs #{shared_path}/index #{release_path}/index"
+    run "rm -rf #{current_release}/index"
+    run "ln -nfs #{shared_path}/index #{current_release}/index"
 
-    run "rm -rf #{release_path}/assets"
-    run "ln -nfs #{shared_path}/assets #{release_path}/assets"
+    run "rm -rf #{current_release}/assets"
+    run "ln -nfs #{shared_path}/assets #{current_release}/assets"
 
-    run "rm -rf #{release_path}/public/assets"
-    run "ln -nfs #{shared_path}/public_assets #{release_path}/public/assets"
+    run "rm -rf #{current_release}/public/assets"
+    run "ln -nfs #{shared_path}/public_assets #{current_release}/public/assets"
 
-    run "rm -rf #{release_path}/public/avatars"
-    run "ln -nfs #{shared_path}/avatars #{release_path}/public/avatars"
+    run "rm -rf #{current_release}/public/avatars"
+    run "ln -nfs #{shared_path}/avatars #{current_release}/public/avatars"
 
-    run "rm -rf #{release_path}/public/latex"
-    run "ln -nfs #{shared_path}/latex #{release_path}/public/latex"
+    run "rm -rf #{current_release}/public/latex"
+    run "ln -nfs #{shared_path}/latex #{current_release}/public/latex"
 
-    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{deploy_to}/#{shared_dir}/config/secret.txt #{release_path}/config/secret.txt"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{current_release}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/secret.txt #{current_release}/config/secret.txt"
 
-    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{release_path}/public/favicon.ico"
-    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{release_path}/public/favicon.png"
+    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{current_release}/public/favicon.ico"
+    #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{current_release}/public/favicon.png"
   end
 
   desc "refresh the staging database"
