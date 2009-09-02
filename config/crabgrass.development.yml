@@ -29,7 +29,6 @@ enabled_mods:
   - connectingclassrooms
   - design_tester
   - moderation
-  - gibberize
 
 email:
   delivery_method: :sendmail
