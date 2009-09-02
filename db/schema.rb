@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090821060849) do
+ActiveRecord::Schema.define(:version => 20090902112047) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -259,6 +259,14 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
 
   add_index "im_addresses", ["profile_id"], :name => "im_addresses_profile_id_index"
 
+  create_table "keys", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "keys", ["name"], :name => "keys_index", :unique => true
+
   create_table "languages", :force => true do |t|
     t.string   "name"
     t.string   "code"
@@ -315,6 +323,8 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
+    t.integer  "yuck_count",  :limit => 11, :default => 0
+    t.boolean  "vetted",                    :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -727,6 +737,17 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
   end
 
   execute "ALTER TABLE trackings ENGINE = MyISAM"
+
+  create_table "translations", :force => true do |t|
+    t.text     "text"
+    t.integer  "key_id",      :limit => 11
+    t.integer  "language_id", :limit => 11
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "custom",                    :default => false
+  end
+
+  add_index "translations", ["key_id"], :name => "index_translations_on_key_id"
 
   create_table "user_participations", :force => true do |t|
     t.integer  "page_id",       :limit => 11
