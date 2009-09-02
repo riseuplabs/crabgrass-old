@@ -23,6 +23,8 @@ public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/all.css
 public/stylesheets/themes
+.sass-cache
+.sass-cache/*
 public/javascripts/all.js
 public/assets/*
 lang/la_US.yml

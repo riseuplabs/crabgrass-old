@@ -39,6 +39,7 @@ set :copy_strategy, :checkout
 set :copy_exclude, [".git"]
 
 set :git_shallow_clone, 1  # only copy the most recent, not the entire repository (default:1)
+set :git_enable_submodules, 0
 set :keep_releases, 3
 
 ssh_options[:paranoid] = false
@@ -177,14 +178,14 @@ end
 namespace :debian do
   desc "Setup rails symlinks, for debian location"
   task :symlinks do
-    run "ln -s /usr/share/rails/actionmailer #{release_path}/vendor/actionmailer"
-    run "ln -s /usr/share/rails/actionpack #{release_path}/vendor/actionpack"
-    run "ln -s /usr/share/rails/activemodel #{release_path}/vendor/actionmodel"
-    run "ln -s /usr/share/rails/activerecord #{release_path}/vendor/activerecord"
-    run "ln -s /usr/share/rails/activeresource #{release_path}/vendor/activeresource"
-    run "ln -s /usr/share/rails/activesupport #{release_path}/vendor/activesupport"
-    run "ln -s /usr/share/rails #{release_path}/vendor/rails"
-    run "ln -s /usr/share/rails/railties #{release_path}/vendor/railties"
+    ["actionmailer", "actionpack", "activemodel",
+    "activerecord", "activeresource", "activesupport", "railties"].each do |package|
+      run "rm -f #{current_release}/vendor/#{package}"
+      run "ln -s /usr/share/rails/#{package} #{current_release}/vendor/#{package}"
+    end
+
+    run "rm -f #{current_release}/vendor/rails"
+    run "ln -s /usr/share/rails #{current_release}/vendor/rails"
   end
 end
 

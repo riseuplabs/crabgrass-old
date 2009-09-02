@@ -1,6 +1,96 @@
 module BasePage::ShareHelper
 
+#  def page_access_options
+#    [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
+#  end
 
+  def page_access_options(options={})
+    @access_options ||= [
+      ['Full Access'[:page_access_admin],'admin'],
+      ['Write Ability'[:page_access_edit],'edit'],
+      ['Read Only'[:page_access_view],'view']
+    ]
+    if options[:remove]
+      @access_options + [['No Access'[:page_access_none],'remove']]
+    elsif options[:blank]
+      @access_options + [["(%s)" % 'No Change'[:no_change],'']]
+    else
+      @access_options
+    end
+  end
+
+  # displays the access level of a participation.
+  # eg:
+  #   <span class="admin">Full Access</span>
+  #
+  def display_access(participation)
+    if participation
+      access = participation.access_sym.to_s
+      if access.empty? and @page
+        participation = @page.most_privileged_participation_for(participation.entity)
+        access = participation.access_sym.to_s
+      end
+      option = page_access_options.find{|option| option[1] == access}
+      if option
+        content_tag :span, option[0], :class => access
+      end
+    end
+  end
+
+  def display_access_icon(participation)
+    icon = case participation.access_sym
+      when :admin then 'tiny_wrench'
+      when :edit then 'tiny_pencil'
+      when :view then 'tiny_no_pencil'
+    end
+    icon_tag(icon)
+  end
+
+  #
+  # creates a select tag for page access
+  #
+  # There are two forms:
+  #
+  #   select_page_access(name, participation, options)
+  #   select_page_access(name, options)
+  #
+  # options:
+  #
+  #  [blank] if true, include 'no change' as an option
+  #  [expand] if true, show as list instead of popup.
+  #  [remove] if true, show an entry that allows for access removal
+  #
+  def select_page_access(name, participation={}, options=nil)
+    options = participation if participation.is_a?(Hash)
+
+    selected = participation.try(:access_sym) || options[:selected]
+    options.reverse_merge!(:blank => true, :expand => false, :remove => false, :class => 'access')
+
+    select_options = page_access_options(:blank => options[:blank], :remove => options.delete(:remove))
+    if options.delete(:blank)
+      selected ||= ''
+    else
+      selected ||= Conf.default_page_access
+    end
+    if options.delete(:expand)
+      options[:size] = select_options.size
+    end
+    select_tag name, options_for_select(select_options, selected.to_s), options
+  end
+
+  protected
+
+  def add_action(recipient, access, spinner_id)
+    access ||= may_select_access_participation? ?
+      "$('recipient[access]').value" :
+      "'#{Conf.default_page_access}'"
+    {
+      :url => {:controller => 'base_page/share', :action => 'update', :page_id => nil, :add => true},
+      :with => %{'recipient[name]=#{recipient.name}&recipient[access]=' + #{access}},
+      :loading => spinner_icon_on('spacer', spinner_id),
+      :complete => spinner_icon_off('spacer', spinner_id)
+      }
+  end
 
 
 end

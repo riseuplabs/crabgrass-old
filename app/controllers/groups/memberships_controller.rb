@@ -82,24 +82,4 @@ class Groups::MembershipsController < Groups::BaseController
     @letter_page = params[:letter] || ''
   end
 
-  # what the hell is this doing here?
-  def access_denied
-    respond_to do |accepts|
-      accepts.html do
-        if logged_in?
-          render :action => 'show_nothing'
-        else
-          flash[:error] = 'Please login to perform that action.'
-          redirect_to :controller => '/account', :action => 'login', :redirect => request.request_uri
-        end
-      end
-      accepts.xml do
-        headers["Status"]           = "Unauthorized"
-        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-        render :text => "Could't authenticate you", :status => '401 Unauthorized'
-      end
-    end
-    false
-  end
-
 end

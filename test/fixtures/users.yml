@@ -4,21 +4,21 @@
 # Table name: users
 #
 #  id                        :integer(11)   not null, primary key
-#  login                     :string(255)   
-#  email                     :string(255)   
-#  crypted_password          :string(40)    
-#  salt                      :string(40)    
-#  created_at                :datetime      
-#  updated_at                :datetime      
-#  remember_token            :string(255)   
-#  remember_token_expires_at :datetime      
-#  display_name              :string(255)   
-#  time_zone                 :string(255)   
-#  language                  :string(5)     
-#  avatar_id                 :integer(11)   
+#  login                     :string(255)
+#  email                     :string(255)
+#  crypted_password          :string(40)
+#  salt                      :string(40)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  remember_token            :string(255)
+#  remember_token_expires_at :datetime
+#  display_name              :string(255)
+#  time_zone                 :string(255)
+#  language                  :string(5)
+#  avatar_id                 :integer(11)
 #
 
-# 
+#
 # The password for each user is set to their login.
 #
 
@@ -26,16 +26,16 @@
 <% email = `git config --get user.email`.chomp %>
 <% email = nil unless email.any? %>
 
-<% i = 0 %>
-<% for login in %w[quentin aaron gerrard blue orange purple yellow red green kangaroo dolphin penguin iguana] do %>
+<% [[1, "quentin"], [2, "aaron"], [3, "gerrard"], [4, "blue"], [5, "orange"], [6, "purple"], [7, "yellow"], [8, "red"], [9, "green"], [10, "kangaroo"], [11, "dolphin"], [12, "penguin"], [13, "iguana"]].each do |id,login| %>
 <%=login%>:
-  id: <%=i+=1%>
-  login: <%=login%>
+  id: <%= id %>
+  login: <%= login %>
   display_name: <%=login.capitalize%>!
   email: <%= email || "#{login}@localhost" %>
   salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") %>
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--#{login}--") %>
-  created_at: <%= 5.days.ago.to_s :db %>
+  created_at: <%= rand(5).days.ago.to_s :db %>
+  last_seen_at: <%= rand(10).days.ago.to_s :db %>
 <% end %>
 
 ### Connecting Classrooms ###

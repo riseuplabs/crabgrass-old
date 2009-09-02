@@ -1,12 +1,12 @@
-
-class BasePage::AssetsController < ApplicationController
+class BasePage::AssetsController < BasePage::SidebarController
 
   before_filter :login_required
-  helper 'base_page', 'base_page/assets'
-  permissions 'base_page'
+  helper 'base_page/assets'
 
   def show
-    if params[:close]
+    if params[:popup]
+      render :partial => 'base_page/assets/popup'
+    else # close
       render :template => 'base_page/reset_sidebar'
     end
   end
@@ -38,10 +38,8 @@ class BasePage::AssetsController < ApplicationController
 
   protected
 
-  prepend_before_filter :fetch_data
-  def fetch_data
-    @page = Page.find params[:page_id] if params[:page_id]
-    @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
+  def fetch_page
+    super
     if @page and params[:id]
       @asset = @page.assets.find_by_id params[:id]
     end

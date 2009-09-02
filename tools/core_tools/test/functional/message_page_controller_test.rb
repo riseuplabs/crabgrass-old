@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../../../../test/test_helper'
 class MessagePageControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations
 
+=begin
   def setup
     @request.host = "localhost"
   end
@@ -22,8 +23,8 @@ class MessagePageControllerTest < ActionController::TestCase
     end
 
     p = Page.find(:all)[-1] # most recently created page (?)
-    assert p.users.include?(User.find_by_login 'red'), "MessagePage should be shared with red."
-    assert p.users.include?(User.find_by_login 'orange'), "MessagePage should be shared with orange."
+    assert p.users.include?(User.find_by_login('red')), "MessagePage should be shared with red."
+    assert p.users.include?(User.find_by_login('orange')), "MessagePage should be shared with orange."
     assert !p.user_participations.map(&:inbox).include?(false), "MessagePage should be sent to inbox."
 
     get :show, :page_id => p.id
@@ -56,4 +57,6 @@ class MessagePageControllerTest < ActionController::TestCase
       page_urls << page.name_url
     end
   end
+=end
+
 end

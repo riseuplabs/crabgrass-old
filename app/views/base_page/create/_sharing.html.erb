@@ -30,9 +30,9 @@
     if may_select_access_participation?
       r.info [
         help(:sharing),
-        content_tag(:div, help(:coordinator), :class => 'small_icon wrench_16 bullet'),
-        content_tag(:div, help(:participant), :class => 'small_icon pencil_16 bullet'),
-        content_tag(:div, help(:viewer), :class => 'small_icon magnifier_16 bullet'),
+        content_tag(:div, help(:coordinator), :class => 'small_icon tiny_wrench_16 bullet'),
+        content_tag(:div, help(:participant), :class => 'small_icon tiny_pencil_16 bullet'),
+        content_tag(:div, help(:viewer), :class => 'small_icon tiny_no_pencil_16 bullet'),
       ].join
     else
       r.info help(:sharing)

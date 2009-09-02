@@ -54,8 +54,14 @@ module UserExtension::Users
       end
       has_many :discussions, :through => :relationships
       has_many :contacts,    :through => :relationships
-      has_many :friends,     :through => :relationships,
-        :conditions => "relationships.type = 'Friendship'", :source => :contact
+
+      has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
+        def most_active
+          max_visit_count = find(:first, :select => 'MAX(relationships.total_visits) as id').id || 1
+          select = "users.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
+          find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+        end
+      end
 
       # same result as user.friends, but chainable with other named scopes
       named_scope(:friends_of, lambda do |user|
@@ -223,5 +229,9 @@ module UserExtension::Users
     end
 
   end # InstanceMethods
+
+  private
+
+  MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(relationships.visited_at) - ?) / ?) AS last_visit_weight, (relationships.total_visits / ?) as total_visits_weight'
 
 end

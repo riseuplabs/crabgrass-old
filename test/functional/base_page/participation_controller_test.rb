@@ -159,7 +159,9 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   end
 
   def test_show_popup
-  # TODO: Write this test
+    login_as :blue
+    post :show, :name => 'details', :popup => "true", :page_id => "1"
+    assert_response :success
   end
 
   def test_move

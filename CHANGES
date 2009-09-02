@@ -1,3 +1,13 @@
+0.5.0 -- in progress
+  * site administration ui
+  * private messages
+  * ui enhancements: drop down menus, modal popups, autocomplete
+  * time frame tracking of page activity (most edits/views/stars this week/month/year).
+  * upgrade procedure:
+    (0) check doc/INSTALL for the required packages and ensure they are installed.
+    (1) rake db:migrate RAILS_ENV=x
+    (2) rake cg:chat:clean_invalid RAILS_ENV=x
+
 0.4.0 -- 2009 June 20
   * ability to run multiple sites (virtual domains)
   * improved system of page sharing
@@ -7,7 +17,7 @@
     (1) rake create_a_secret
     (2) rake db:migrate
     (3) create a crabgrass.production.yml. See doc/CONFIGURATION for more information.
-  
+
 0.3.9
   * first alpha development release
 

@@ -1,13 +1,13 @@
-<% popup('Edit Attachments'[:edit_attachments], :id => 'assets_popup', :width => '25em') do -%>
-  <blockquote>
   <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
   <p><%= "Use radio buttons to select the page cover"[:use_radio_buttons_to_select_page_cover] %>
-  <table width='' cellpadding='4'>
+  <table class="styled">
     <% if @page.assets.any? -%>
       <%= asset_rows -%>
       <tr>
         <td> <%= remove_cover_asset_checkbox %></td>
         <td> <%= "None"[:none] %>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
       </tr>
     <% else -%>
      <tr><td>(<%='none'.t%>)</td></tr>
@@ -16,19 +16,9 @@
 
   <h2><%= "Add New Attachment"[:add_new_attachment] %></h2>
   <% form_for( :asset, Asset.new(), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
-    <table>
-      <tr>
-        <td align='right'><%="File".t %>: </td><td><%= f.file_field 'uploaded_data', :size => '20' %></td>
-      </tr>
-      <tr>
-        <td align='right'><%= check_box_tag('use_as_cover', "1") %></td><td><%= "Use as cover"[:use_as_cover] %></td>
-      </tr>
-      <tr>
-        <td colspan='2' align='right'><%= submit_tag 'Upload Attachment'[:upload_attachment] %></td>
-      </tr>
-    </table>
+    <%= f.file_field 'uploaded_data', :size => '20' %>&nbsp;<%= submit_tag 'Upload'[:upload] %><br/>
+    <label><%= check_box_tag('use_as_cover', "1") %> <%= "Use as cover"[:use_as_cover] %></label>
   <% end -%>
-  </blockquote>
 
   <div class='buttons'>
     <% form_remote_tag(
@@ -38,6 +28,4 @@
          <%= submit_tag "Close"[:close_button], :name => 'close' %>
     <% end -%>
   </div>
-
-<% end -%>
 

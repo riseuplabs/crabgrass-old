@@ -12,7 +12,7 @@
         <%= watch_line %>
         <%= star_line %>
       </ul>
-      <%- if (access_changing_commands = [share_line, notify_line, public_line].compact).any? -%>
+      <%- if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any? -%>
         <ul class='side_list commands rule'>
           <%= access_changing_commands %>
         </ul>
@@ -27,7 +27,7 @@
     <%= call_hook :page_sidebar_actions %>
   <% end -%>
 
-  <%- if !(tag_content = page_tags).nil? -%>
+  <%- if !(tag_content = page_tags).nil? || may_update_tags? -%>
     <h3><%= 'tags'[:tags] %></h3>
     <div class='tags'>
       <%= tag_content %>
@@ -56,12 +56,20 @@
     </ul>
   <% end -%>
 
-  <% if @page.user_participations.any? -%>
+% if (uparts = @page.sorted_user_participations(:limit => 6)).any?
+%   if uparts.length >= 6
+%     @more = true
+%     uparts.pop
+%   end
     <h3><%= "People"[:people] %></h3>
     <ul class='side_list names'>
-      <% @page.sorted_user_participations.each do |user_part| %>
+%     uparts.each do |user_part|
         <li><%= link_to_user_participation(user_part) %></li>
-      <% end -%>
+%     end
+%     if @more
+        <%= details_line('more') %>
+%     end
     </ul>
-  <% end -%>
+%  end
 </div>
+

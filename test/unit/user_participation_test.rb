@@ -28,10 +28,10 @@ class UserParticipationTest < Test::Unit::TestCase
   def test_updated
     u = users(:blue)
     page = Page.create :title => 'hello', :user => u
-    assert_equal 0, page.contributors_count
-    u.updated(page)
-    page.save
-    assert_equal 1, page.reload.contributors_count
+    assert_difference 'Page.find(%d).contributors_count' % page.id do
+      u.updated(page)
+      page.save
+    end
   end
 
   def test_participations

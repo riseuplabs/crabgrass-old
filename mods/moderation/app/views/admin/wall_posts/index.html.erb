@@ -1,0 +1,26 @@
+<% @title_box = '<h1>Wall Post Moderation</h1>' %>
+
+<%# post_moderation_navigation_links %>
+
+<% @info_box = capture do %>
+  <div style="display:inline;'">
+    <%= "All Posts:"%>&nbsp;
+    <%= link_to_active( 'all', { :controller => 'admin/wall_posts', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
+    <%= link_to_active( 'pending', :controller => 'admin/wall_posts', :action => 'index', :view => 'pending')%>
+  </div>
+  <div style="display:inline; margin-left:2em;'">
+    <%= "Flagged Posts:"%>&nbsp;
+    <%= link_to_active( 'new', :controller => 'admin/wall_posts', :action => 'index', :view => 'new')%>&nbsp;
+    <%= link_to_active( 'vetted',  :controller => 'admin/wall_posts', :action => 'index', :view => 'vetted')%>&nbsp;
+    <%= link_to_active( 'deleted', :controller => 'admin/wall_posts', :action => 'index', :view => 'deleted')%>
+  </div>
+<% end %>
+
+<div class="page_list">
+  <%= render :partial => 'listing' if @posts.any?%>
+
+  <%= '<em>There are no posts for this view</em>' unless @posts.any?%>
+</div>
+
+
+

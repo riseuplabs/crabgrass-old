@@ -1,0 +1,43 @@
+<%= pagination_links(@pages) %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Created At</th>
+    <th>Created By</th>
+  </tr>
+  <% @pages.each do |page| %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
+      <td><%= link_to page.title, page_url(page) %></td>
+      <td><%=h page.type %></td>
+      <td><%=h page.created_at.strftime("%d %b, %Y ") %></td>
+      <td><%=h page.created_by_login %></td>
+      <% params = {:id => page.id, :view => @current_view} %>
+      <% if actions=actions_for(@current_view) %>
+          <% actions.each do |action| %>
+            <td style=" width:120px">
+              <%= button_to_action(action, params) %>
+            </td>
+        <% end %>
+      <% elsif @current_view == 'public requested' %>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Make&nbsp;Public", { :action => 'update_public', :id => page.id, :view => @current_view, :public => true }, :method => :post %>&nbsp;<%= link_to "Deny", { :action => 'update_public', :id => page.id, :view => @current_view, :public => false }, :method => :post  %>
+          </span>
+          <%#= button_to "Public", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => true } %>
+          <%#= button_to "Deny", :action => "update_public", :params => {:id => page.id, :view => @current_view, :public => false} %>
+        </td>
+      <% elsif @current_view == 'public' %>
+        <td colspan="2" style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to "Remove Public", { :action => 'remove_public', :id => page.id, :view => @current_view }, :method => :post %>
+          </span>
+        </td>
+          <%#= button_to "Remove Public", :action => "remove_public", :params => {:id => page.id, :view => @current_view} %>
+      <%end%>
+    </tr>
+  <% end %>
+</table>
+
+<%= pagination_links(@pages) %>

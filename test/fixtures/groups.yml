@@ -20,49 +20,60 @@ true_levellers:
   id: 1
   name: the-true-levellers
   full_name: The True Levellers
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 animals:
   id: 2
   name: animals
   site_id: 2
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 rainbow:
   id: 3
   name: rainbow
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 warm:
   id: 31
   parent_id: 3
   name: rainbow+the-warm-colors
   type: Committee
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 cold:
   id: 32
   parent_id: 3
   name: rainbow+the-cold-colors
   type: Committee
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 public_group:
   id: 1000
   name: public_group_everyone_can_see
 #  summary: The public group that everyone can see
+  created_at: <%= rand(30).days.ago.to_s :db %>
+
 public_committee:
   id: 1001
   parent_id: 1000
   name: public_group_everyone_can_see+public_committee
 #  summary: The public committee of the public group that everyone can see
   type: Committee
+  created_at: <%= rand(30).days.ago.to_s :db %>
+
 private_committee:
   id: 1002
   parent_id: 1000
   name: public_group_everyone_can_see+private_committee
   type: Committee
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 
 private_group:
   id: 2000
   name: private_group
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 # these two are also the sites networks.
 cnt:
@@ -71,18 +82,23 @@ cnt:
   full_name: Confederación Nacional del Trabajo
   type: Network
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
+
 fai:
   id: 3002
   name: fai
   full_name: Federación Anarquista Ibérica
   type: Network
   site_id: 2
+  created_at: <%= rand(30).days.ago.to_s :db %>
+
 # lets have another one so we can access it from within the sites.
 fau:
   id: 3003
   name: fau
   full_name: Freie Arbeiter Union
   type: Network
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 #
 # super admin group
@@ -94,6 +110,7 @@ super_admin_group:
   full_name: group of superadmins
   type: Group
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 #
 # for testing connecting classrooms
@@ -105,6 +122,7 @@ teachers:
   full_name: group of teachers for cc testing
   type: Group
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class1:
   id: 7
@@ -113,6 +131,7 @@ class1:
   type: Group
   site_id: 1
   council_id: 71
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class2:
   id: 8
@@ -121,6 +140,7 @@ class2:
   type: Group
   site_id: 1
   council_id: 81
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class1_teachers:
   id: 71
@@ -129,6 +149,7 @@ class1_teachers:
   full_name: the teachers and visitors in class1
   type: Council
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class1_workgroup:
   id: 72
@@ -137,6 +158,7 @@ class1_workgroup:
   full_name: a subset of the students in class1
   type: Committee
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class2_teachers:
   id: 81
@@ -145,6 +167,7 @@ class2_teachers:
   full_name: the teachers and visitors in class2
   type: Council
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>
 
 class2_workgroup:
   id: 82
@@ -153,3 +176,4 @@ class2_workgroup:
   full_name: a subset of the students in class2
   type: Committee
   site_id: 1
+  created_at: <%= rand(30).days.ago.to_s :db %>

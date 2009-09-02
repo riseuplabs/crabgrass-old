@@ -11,4 +11,9 @@ module CacheHelper
     params.merge(:user_id => current_user.id, :version => current_user.version, :path => nil, :authenticity_token => nil)
   end
 
+  def menu_cache_key(options={})
+    current_site_key = current_site.id ? "current_site="+current_site.id.to_s+"&" : ""
+    "menu/#{current_site_key}submenu=#{options[:submenu]}&user_id=#{current_user.id}&version=#{current_user.version}"
+  end
+
 end

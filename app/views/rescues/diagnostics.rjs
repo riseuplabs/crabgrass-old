@@ -1,0 +1,51 @@
+
+page << "$$('.spin').invoke('hide');"
+
+details_box = %(
+<div id="error_details" style="display:none">
+  <style>
+  #error_details {
+    background: #444;
+    color: white;
+    position: absolute;
+    padding: 20px;
+    top: 20px;
+    left: 20px;
+    border: 5px solid #666;
+    z-index: 10000;
+  }
+  #error_details a {
+    color: #9CF;
+  }
+  #error_details pre {
+    background: white;
+    color: black;
+    padding: 1em;
+  }
+  </style>
+
+  <b>#{link_to_function("Close"[:close], "$('error_details').hide()")}</b>
+
+  <pre>#{ h exception_detailed_message(@exception) }</pre>
+  #{render(:partial => 'rescues/trace.erb') if @exception}
+  #{render(:partial => 'rescues/request_and_response')}
+
+</div>
+)
+
+# render(:template => 'rescues/diagnostics.erb')
+
+details_link = link_to_function('Details'[:details]+ARROW, "$('error_details').toggle()")
+
+flash_message_now(
+  :type => 'error',
+  :title => "System Error"[:exception_title],
+  :text => [
+    "Oops! We experienced an error."[:exception_headline],
+     details_link,
+     details_box
+  ].join(' ')
+)
+
+page.call 'showNoticeMessage', display_messages
+

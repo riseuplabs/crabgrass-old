@@ -56,7 +56,7 @@ class Me::TrashControllerTest < ActionController::TestCase
     return unless sphinx_working?(:test_text_search_and_sort)
     login_as :blue
 
-    get :index, :path => ["text", "test", "ascending", "group_name"]
+    get :index, :path => ["text", "test", "ascending", "owner_name"]
     assert_response :success
     assert assigns(:pages).any?, "should find a deleted page with group sorting."
   end

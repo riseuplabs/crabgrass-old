@@ -14,9 +14,9 @@ class WikiController < ApplicationController
   permissions 'wiki'
 
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
+  include ControllerExtension::WikiPopup
 
-  before_filter :login_required, :except => [:show]
+  before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload]
   before_filter :fetch_wiki
 
   # show the rendered wiki
@@ -111,6 +111,7 @@ class WikiController < ApplicationController
   end
 
   def fetch_wiki
+    @group ||= Group.find(params[:group_id])
     if params[:wiki_id] and !params[:profile_id]
       profile = @group.profiles.find_by_wiki_id(params[:wiki_id])
       @wiki = profile.wiki || profile.create_wiki(:user => current_user)

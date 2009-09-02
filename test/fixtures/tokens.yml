@@ -29,3 +29,9 @@ strange:
   id: 5
   value: Kg1lkWeToZbJngKMiQUBZz74KbBway78FGIoyIy1
   user_id: 1
+verify_gerrard:
+  created_at: <%= 1.hour.ago.to_s :db %>
+  action: verify
+  id: 6
+  value: eGzsrjbNnGh4APFxc4N3
+  user_id: 3

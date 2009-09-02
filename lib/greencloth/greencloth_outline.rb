@@ -124,9 +124,13 @@ module GreenclothOutline
 
   # called by greencloth when [[toc]] is encountered
   def symbol_toc
-    return '' unless outline and !@headings.nil?
-    tree = convert_to_tree(@headings)
-    generate_toc_html(tree, 1)
+    if outline
+      return '' if @headings.nil?
+      tree = convert_to_tree(@headings)
+      generate_toc_html(tree, 1)
+    else
+      "<p>[[toc]]</p>" # if outlining is disabled, pass through the macro text.
+    end
   end
 
   private

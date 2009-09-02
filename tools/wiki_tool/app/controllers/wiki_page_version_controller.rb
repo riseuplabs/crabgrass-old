@@ -2,7 +2,7 @@ class WikiPageVersionController < BasePageController
   include ControllerExtension::WikiRenderer
 
   stylesheet 'wiki_edit'
-  javascript 'wiki_edit'
+  #javascript 'wiki_edit'
   helper :wiki, :wiki_page
   permissions :wiki_page_version
 
@@ -56,12 +56,10 @@ class WikiPageVersionController < BasePageController
 
   def revert
     version = @wiki.versions.find_by_version params[:id]
-    raise ErrorMessage.new('version not found') unless version
+    raise_error('version not found') unless version
     @wiki.body = version.body
     @wiki.lock(Time.zone.now, current_user)
     render :template => 'wiki_page/edit'
-  rescue Exception => exc
-    flash_message_now :exception => exc
   end
 
   ##

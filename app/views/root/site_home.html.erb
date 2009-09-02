@@ -47,7 +47,49 @@ form.mini_search table {
   width: 18em;
 }
 
+/** expanded page list **/
+.page_list.expanded .info {
+  float: right;
+}
+.page_list.expanded .title {
+  float: left;
+}
+.page_list.expanded .title a {
+   font-weight: bold;
+   color: #444;
+   font-size: 1.25em;
+}
+.page_list.expanded .page_row {
+  margin-bottom: 1.25em;
+  padding-bottom: 1.25em;
+  border-bottom: 1px dotted #ccc;
+  color: #666;
+}
+.page_list.expanded .summary {
+  clear: both;
+  font-size: 0.9em;
+  padding-top: 0.7em;
+}
+.page_list.expanded .tags {
+  margin-top: 0.25em;
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+}
+.page_list.expanded .tags a {
+  color: #666;
+}
+.page_list.expanded .cover img {
+  float: left;
+  margin-right: 1em;
+}
 <% end %>
+<% default_hash = @show_featured ? 'featured' : 'recent-pages' -%>
+<% content_for :script do %>
+  <%= "onHashChanged = showTabByHash;" %>
+  <%= "defaultHash = defaultHash || '#{default_hash}';" %>
+<% end %>
+
 
 <% @right_column = capture do %>
   <%= render :partial => 'sidebar' %>
@@ -64,6 +106,10 @@ form.mini_search table {
   </td>
 </tr>
 </table>
+<ul class="navbar">
+  <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
+</ul>
+&nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
 <% end %>
 <% if params[:welcome_box] && logged_in? -%>
   <div id='welcome_box'>
@@ -109,12 +155,6 @@ form.mini_search table {
     t.show_tab 'most_stars_panel'
   end
 end %>
-
-<% content_for :tail do %>
- <%# this activates the correct tab based on the window.location.hash. 
-     onHashChanged() is called whenever location.hash changes. %>
- <%= javascript_tag("onHashChanged = showTabByHash") %>
-<% end %>
 
 <div class="page_scroll rigid">
 

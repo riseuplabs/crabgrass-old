@@ -98,9 +98,9 @@ class Groups::FeaturesControllerTest < ActionController::TestCase
     end
     assert response.is_a?(Hash), "JSON response should get parsed"
 
-    assert_equal pages.collect(&:title), response["suggestions"], "suggestions should be all the matching page titles"
+    assert_equal pages.collect(&:title).sort, response["suggestions"].sort, "suggestions should be all the matching page titles"
     assert_equal "ier", response["query"]
-    assert_equal pages.collect(&:id), response["data"], "suggestions 'data' field should contain page ids"
+    assert_equal pages.collect(&:id).sort, response["data"].sort, "suggestions 'data' field should contain page ids"
   end
 
   def test_non_xhr_redirect_to_index

@@ -18,7 +18,7 @@ h1
   font-size= !h1_font_size
   line-height: 1em
 h2, h3, h4, h5
-  font-family= !body_text_font_family 
+  font-family= !body_text_font_family
   line-height: 1em
 h2
   font-size= !h2_font_size
@@ -54,16 +54,16 @@ div#masthead
 // TOP_MENU
 //
 
-div#login_popup
-  border= !popup_border
-  background= !popup_bg
-  color= !popup_color
-  position: absolute
-  right: 2em
-  padding: 1em
-  z-index: 10
-  td
-    padding: 0.25em
+form.login_dialog
+  label
+    font-weight: bold
+    display: block
+  input#login, input#password
+    width: 99%
+    margin-bottom: 1em
+  input[type=submit]
+    font-size: 1.1em
+    float: right
 
 div#top_menu
   background-color= !menu_bg_color
@@ -78,46 +78,132 @@ div#top_menu
     a
       color= !menu_fg_color
       margin: 0 0.5em
+
   ul
     margin: 0
     padding: 0
     list-style: none
     width: auto
-    li
-      float: left
-      padding: 0
-      margin: 0
+
+  // the menus
+  li.menu
+    float: left
+    margin: 0
+    position: relative
+    &:last-child span.topnav a
+      border-right: 1px solid
+      border-color= !menu_border_color
+    //&:hover
+    //  background= !menu_item_active_fg_color
+    //  color= !menu_item_active_background
+
+  // the active menus
+  li.menu.active
+    padding-bottom= !menu_item_active_bump_height
+    margin-bottom= -!menu_item_active_bump_height
+    background= !menu_item_active_bump "no-repeat 50% 100%"
+    &:hover
+      padding-bottom: 0
+      margin-bottom: 0
+      background: none transparent
+
+  // the menu names
+  li.menu span.topnav
+    border: 0
+    a
+      display: block
+      font-weight: 400
+      border-left: 1px solid
+      border-color= !menu_border_color
+      color= !menu_fg_color
+      padding= !menu_item_padding
+      text-transform: capitalize
       &.active
-        padding-bottom= !menu_item_active_bump_height
-        margin-bottom= -!menu_item_active_bump_height
-        background= !menu_item_active_bump "no-repeat 50% 100%"
-      &:first-child a
-        border-left: 1px solid
-        border-color= !menu_border_color
-      span
-        border: 0
-      a
-        display: block
-        //background: none
-        font-weight: 400
-        border-right: 1px solid
-        border-color= !menu_border_color
-        color= !menu_fg_color
-        padding= !menu_item_padding
-        text-transform: capitalize
-        //background: blue
-        //border: 1px solid pink
-        &.active
-          color= !menu_item_active_fg_color
-          //color: pink
-          //font-weight: normal
-          background= !menu_item_active_background
-          //background: red
-          //border: 1px solid green
-          //&:hover
-          //  color= !menu_item_active_fg_color
-          //  font-weight: normal
-          //  background= !menu_item_active_background
+        color= !menu_item_active_fg_color
+        background= !menu_item_active_background
+
+  // sub menu items
+  div.menu_items
+    position: absolute
+    top: 2.4em
+    left: 0
+    background= !menu_dropdown_bg_color
+    padding: 0.75em 0.5em 0.5em
+    border-width: 1px 2px 2px 1px
+    border-color= !menu_border_color
+    border-style: solid
+    z-index: 99
+    h3
+      margin: 0 0 0.5em 4px
+      .see_all
+        font-size: smaller
+        font-variant: small-caps
+    ul
+      border: 0 none transparent
+      width: auto
+      position: static
+    li
+      float: none
+      //margin-bottom: 1em !important
+    a
+      border: 0px none transparent
+      color= !link_color
+
+    // for name icon links, draw a colored border when hover
+    // for this to work, we need to increase the padding from the default.
+    // in this case, an extra 5px
+    a.name_icon
+      display: block
+      border: 1px solid white
+      background-position: 4px 50%
+      padding: 12px 5px 12px 45px
+      &.two
+        padding-top: 5px
+        padding-bottom: 5px
+      &:hover
+        background-color: #ffc
+        border: 1px solid #cc9
+
+    div.leftcol
+      float: left
+      width: 17em
+      &.menu_me
+        padding: 0em 1em
+    div.rightcol
+      width: 17em
+      margin-left: 18em
+
+  #menu_me
+    div.leftcol
+      width: 12em
+    div.rightcol
+      width: 23em
+      margin-left: 13em
+      border-left: 1px dotted #ccc
+      padding-left: 1em
+    ul.recent_pages li
+      margin-top: 0.5em
+    h3
+      margin: 0
+
+    //ul.side_list a
+    //  padding: 4px 0
+    //ul.recent_pages a
+    //  padding: 4px 0
+
+//  ul.groups_dashboard ul.networks_dashboard ul.people_dashboard
+//    //li.leftcol
+//      //width: 50%
+//    //li.rightcol
+//      //margin-left: 12em
+//    li.name_icon
+//      padding: 4px 0 4px 36px
+//      min-height: 36px
+//  //    ul.networks_dashboard*/
+//  //      width: 15em*/
+//    li.name_icon
+//      padding: 4px 0 4px 36px
+//      min-height: 36px
 
 
 //
@@ -173,6 +259,52 @@ div#top_menu
     a
       text-transform: capitalize
 
+  // the navigation bar
+  ul.navbar
+    margin: 1em 0em 1em 0em
+    padding: 0 0 0.25em 0
+    list-style: none
+    width: auto
+
+  // the menu names
+  li.navbar_menu
+    float: left
+    margin: 0
+    position: relative
+    span.navbar_item
+      border: 0
+      position: relative
+      a
+        display: block
+        font-weight: 400
+        border-right: none
+        background-color: #FBFDFF
+        border-color: #D4E3F5 #D4E3F5 #89BBEC #D4E3F5
+        border-style: solid none solid solid
+        border-width: 1px
+        font-weight: bold
+        font-size: smaller
+        //!navbar_border_color
+        color= #4978BC
+        padding: 0.5em 0.75em
+        text-transform: capitalize
+        &:hover
+          background-color: #F6FAFF
+    &:last-child span.navbar_item a
+      border-right: 1px solid #89BBEC
+      -webkit-border-top-right-radius: 4px
+      -webkit-border-bottom-right-radius: 4px
+      -moz-border-radius-topright: 4px
+      -moz-border-radius-bottomright: 4px
+    &:first-child span.navbar_item a
+      -webkit-border-top-left-radius: 4px
+      -webkit-border-bottom-left-radius: 4px
+      -moz-border-radius-topleft: 4px
+      -moz-border-radius-bottomleft: 4px
+      //&:hover
+      //  background= !menu_item_active_fg_color
+      //  color= !menu_item_active_background
+
 //
 // INFO_BOX
 //
@@ -209,7 +341,7 @@ div#top_menu
   letter-spacing: 1px
   word-spacing: 2px
 
-// 
+//
 // INSET BOX
 //
 
@@ -249,7 +381,7 @@ div#top_menu
 
 //
 // FOOTER
-// 
+//
 
 #footer
   border-top= !footer_border
@@ -262,15 +394,9 @@ div#top_menu
     float: left
     width: 45%
     padding: 0 2em
-    clear: both
   div.right
     float: left
     width: 45%
   div.language_menu
     float: right
-
-
-#message
-  div.big_notice
-    padding: 0 4em 1.5em 4em
 

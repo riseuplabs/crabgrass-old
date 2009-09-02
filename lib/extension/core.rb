@@ -36,12 +36,31 @@ class NilClass
   end
 end
 
-# A class that return nil for everything, and never complains.
-# Used by Object#try().
+#
+# SilentNil
+#
+# A class that behaves like nil, but will not complain if you call methods on it.
+# It just always returns more nil. Used by Object#try().
+#
 class SilentNil
   include Singleton
   def method_missing(*args)
     nil
+  end
+  def to_s
+    ""
+  end
+  def inspect
+    "nil"
+  end
+  def nil?
+    true
+  end
+  def empty?
+    true
+  end
+  def zero?
+    true
   end
 end
 
@@ -68,8 +87,36 @@ class Object
   # Examples:
   #
   #  1. @person.try(:name)
+  #
+  #     this is useful if you are not sure if @person has .name() method.
+  #     or if you think @person might be nil.
+  #     similar to:
+  #
+  #       @person.name if @person and @person.respond_to?(:name)
+  #
   #  2. @person.try.name
+  #
+  #     this is useful if you are not sure if @person is nil.
+  #     however, this will still report an error if person is not nil, but
+  #     person does not respond to 'name'.
+  #     similar to:
+  #
+  #       @person.name if @person
+  #
   #  3. @person.try(:name=, 'bob')
+  #
+  #     Same as usage #1, but with arguments.
+  #
+  #  4. @person.try(:flags).try[:status]
+  #
+  #     In other words, calls to try can be chained.
+  #     This is similar to writing:
+  #
+  #       if @person and @person.respond_to?(:flags) and !@person.flags.nil?
+  #         @person.flags[:status]
+  #       end
+  #
+  # I heart syntax sugar.
   #
   def try(method=nil, *args)
     if method.nil?
@@ -77,7 +124,8 @@ class Object
     elsif respond_to? method
       send(method, *args)
     else
-      nil
+      nil # we must return nil here and not SilentNil.instance, so that you can do
+          # things like: object.try(:hi) || 'bye'
     end
   end
 
@@ -136,16 +184,23 @@ end
 
 
 class Hash
-  # returns a copy of the hash,
-  # limited to the specified keys
+  # returns a copy of the hash, limited to the specified keys
   def allow(*keys)
-    if keys.first.is_a? Array
-      keys = keys.first
-    end
+    keys = keys.first if keys.first.is_a? Array
     hsh = {}
     keys.each do |key|
       value = self[key] || self[key.to_s] || self[key.to_sym]
       hsh[key] = value if value
+    end
+    hsh
+  end
+
+  # returns a copy of the hash, without any of the specified keys
+  def forbid(*keys)
+    keys = keys.first if keys.first.is_a? Array
+    hsh = self.clone
+    keys.each do |key|
+      hsh.delete(key); hsh.delete(key.to_s); hsh.delete(key.to_sym)
     end
     hsh
   end
@@ -168,3 +223,16 @@ class Symbol
     true
   end
 end
+
+class TrueClass
+  def any?
+    true
+  end
+end
+
+class FalseClass
+  def any?
+    false
+  end
+end
+

@@ -24,7 +24,8 @@ class BasePage::TrashControllerTest < Test::Unit::TestCase
   def test_destroy_with_login
     login_as :blue
 
-    page = Page.find(1)
+    page = Page.create! :title => 'delete me', :owner => users(:blue), :user => users(:blue)
+    page_id = page.id
 
     assert_no_difference 'Page.count' do
       xhr :post, :update, :delete => true, :type => 'move_to_trash', :page_id => page.id
@@ -38,7 +39,7 @@ class BasePage::TrashControllerTest < Test::Unit::TestCase
       xhr :post, :update, :delete => true, :type => 'shred_now', :page_id => page.id
     end
     assert_raise ActiveRecord::RecordNotFound, "Should not be able to find page after destroying." do
-      Page.find(1)
+      Page.find(page_id)
     end
   end
 

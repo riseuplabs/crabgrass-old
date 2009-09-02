@@ -1,0 +1,5 @@
+if @menu_item # one entry was updated...
+  page.replace dom_id(@menu_item), :partial => 'menu_item'
+else          # the order has changed
+  page.replace 'menu_items_form', :partial => 'menu_items_form'
+end

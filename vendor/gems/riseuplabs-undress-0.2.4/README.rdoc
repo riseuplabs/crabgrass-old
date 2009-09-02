@@ -1,0 +1,42 @@
+= Undress
+
+Easily convert back HTML to Textile, Greencloth.
+
+    require "undress/textile"
+
+    code =<<html
+      <h1>Hello world!</h1>
+      <p><strong>Hey!</strong> How is it going?</p>
+      <h2>Supported Markup Languages so far:</h2>
+      <ul>
+        <li>Textile</li>
+        <li>Greencloth</li>
+      </ul>
+    html
+
+    Undress(code).to_textile
+
+Will produce
+
+    h1. Hello world!
+
+    *Hey!* How is it going?
+
+    h2. Supported Markup Languages so far:
+
+    * Textile
+    * Greencloth
+
+== Supported Markup Languages
+
+* Textile
+* Greencloth, see [http://we.riseup.net]
+
+== Get it
+
+    gem install zevarito-undress
+
+== License
+
+Authors:: Nicolas Sanguinetti (foca[http://github.com/foca]), Alvaro Gil (zevarito[http://github.com/zevarito])
+License:: MIT (Check LICENSE for details)

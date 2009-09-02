@@ -3,6 +3,10 @@ class GroupsController < Groups::BaseController
   stylesheet 'groups'
   permissions 'groups/memberships', 'groups/requests'
 
+  # needed by for group wiki editing
+  javascript :wiki, :only => :show
+  stylesheet :wiki_edit
+
   helper 'groups', 'wiki'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
@@ -11,9 +15,9 @@ class GroupsController < Groups::BaseController
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
-   helper 'task_list_page' # :only => ['tasks']
-   stylesheet 'tasks', :action => :tasks
-   javascript :extra, :action => :tasks
+    helper 'task_list_page' # :only => ['tasks']
+    stylesheet 'tasks', :action => :tasks
+    javascript :extra, :action => :tasks
   ## end task list cruft
 
   include Groups::Search

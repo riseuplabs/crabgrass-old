@@ -5,7 +5,7 @@
   include_message = false if include_message.nil?
   send_email      = false if send_email.nil?
 
-  check_box_options = {:checked => send_notice, :onchange => "checkbox_toggle_visibility(this, 'notification_details'); $('notification_send_message').focus()"}
+  check_box_options = {:checked => send_notice, :onclick => "checkboxToggle(this, 'notification_details');" + resize_modal}
   if forced_send
     check_box_options.merge!({:checked => true, :disabled => true})
     send_notice = true
@@ -33,7 +33,7 @@ these are not supported yet.
     </td>
   </tr>
   <tr>
-    <td><%= check_box :ignored, :include_message, :checked=>include_message, :onClick => "checkbox_toggle_visibility(this, 'share_message_holder'); $('notification_send_message').focus()" %></td>
+    <td><%= check_box :ignored, :include_message, :checked => include_message, :onClick => "checkboxToggle(this, 'share_message_holder');" + resize_modal %></td>
     <td><label for='ignored_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
   </tr>
   <tr>
@@ -41,6 +41,6 @@ these are not supported yet.
     <td><div id='share_message_holder' style='<%= "display:none" unless include_message %>'>
       <%= text_area :notification, :send_message, :rows => 6, :cols => 60 %>
     </div></td>
-  <tr>
+  </tr>
   </tbody>
 

@@ -64,6 +64,11 @@ module PageExtension::Groups
     end
   end
 
+  def shared_with_all?
+    self.site.try.network and
+    !participation_for_group(self.site.try.network).nil?
+  end
+
   # returns all the groups with a particular access level
   # - use option :all for all the accesslevels
   # --

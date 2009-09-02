@@ -22,16 +22,16 @@
 # you cannot share to users/groups that you cannot pester, unless
 # the page is private and they already have access.
 #
-class BasePage::ShareController < ApplicationController
+class BasePage::ShareController < BasePage::SidebarController
 
   before_filter :login_required
   verify :xhr => true
 
-  helper 'base_page', 'base_page/share', 'autocomplete'
-  permissions 'base_page'
+  helper 'base_page/share', 'autocomplete'
 
   # display the share or notify popup via ajax
   def show
+    render :partial => 'base_page/share/' + params[:name] + '_popup'
   end
 
   # there are three ways to submit the form:
@@ -47,7 +47,19 @@ class BasePage::ShareController < ApplicationController
   #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
-    @success_msg ||= "You successfully shared this page."[:shared_page_success]
+    @success_msg = "You successfully shared this page."[:shared_page_success]
+    notify_or_share(:share)
+  end
+
+  # handles the notification with or without sharing
+  def notify
+    @success_msg = "You successfully sent notifications."[:notify_success]
+    notify_or_share(:notify)
+  end
+
+  protected
+
+  def notify_or_share(action)
     if params[:cancel]
       close_popup
     elsif params[:add]
@@ -55,34 +67,26 @@ class BasePage::ShareController < ApplicationController
       if params[:recipient] and params[:recipient][:name].any?
         recipients_names = params[:recipient][:name].strip.split(/[, ]/)
         recipients_names.each do |recipient_name|
-          @recipients << find_recipient(recipient_name)
+          @recipients << find_recipient(recipient_name, action)
         end
         @recipients.compact!
       end
-      render :partial => 'base_page/share/add_recipient'
-    elsif params[:share] and params[:recipients]
+      render :partial => 'base_page/share/add_recipient', :locals => {:alter_access => action == :share}
+    elsif (params[:share] || params[:notify]) and params[:recipients]
       options = params[:notification] || HashWithIndifferentAccess.new
       convert_checkbox_boolean(options)
       options[:mailer_options] = mailer_options()
-      # we save if we are in share or notify process
-      options[:notify] = params[:notify]
+      options[:send_notice] ||= params[:notify].any?
+
       current_user.share_page_with!(@page, params[:recipients], options)
       @page.save!
       flash_message_now :success => @success_msg
+
       close_popup
     else
-      render :text => 'no button was pressed', :status => :error
+      close_popup
     end
   end
-
-  # handles the notification with or without sharing
-  def notify
-    @success_msg = "You successfully sent notifications."[:notify_success]
-    params[:share] = params[:notify] # act as if share button was pressed if notify pressed.
-    update
-  end
-
-  protected
 
   ##
   ## UI METHODS FOR THE SHARE & NOTIFY FORMS
@@ -96,30 +100,40 @@ class BasePage::ShareController < ApplicationController
     render :template => 'base_page/show_errors'
   end
 
-  prepend_before_filter :fetch_page
-  def fetch_page
-    if params[:page_id].any?
-      @page = Page.find_by_id(params[:page_id])
-    end
-    true
-  end
-
-  def find_recipient(recipient_name)
+  #
+  # given a recipient name, we try to find an appriopriate user or group object.
+  # a lot can go wrong: the name might not exist, you may not have permission, the user might
+  # already have access, etc.
+  #
+  def find_recipient(recipient_name, action=:share)
     recipient_name.strip!
     return nil unless recipient_name.any?
     recipient = User.on(current_site).find_by_login(recipient_name) || Group.find_by_name(recipient_name)
     if recipient.nil?
-      flash_message_now(:error => 'no such name'[:no_such_name])
+      recipient_display = " (#{h(recipient_name)})";
+      flash_message_now(:type => 'error',
+        :title => "Not Found"[:not_found] + recipient_display)
+      return nil
     elsif !recipient.may_be_pestered_by?(current_user)
-      flash_message_now(:error => 'you may not pester'[:you_may_not_pester])
-    elsif @page && (upart = recipient.participations.find_by_page_id(@page.id)) && !upart.access.nil?
-      flash_message_now(:error => 'a participation for this user / group already exists'[:participation_already_exists])
-    else
-      return recipient
+      flash_message_now(:type => 'error',
+        :title => 'Sorry, you are not allowed to share with "{name}"'[:share_pester_error, recipient.name])
+      return nil
+    elsif @page
+      upart = recipient.participations.find_by_page_id(@page.id)
+      if upart && action == :share && !upart.access.nil?
+        flash_message_now(:type => 'info',
+          :title => '"{name}" already has access to this page.'[:share_already_exists_error, recipient.name])
+        return nil
+      elsif upart.nil? && action == :notify
+        if !recipient.may?(:view, @page) and !may_share_page?
+          flash_message_now(:type => 'error',
+            :title => 'Sorry, "{name}" does not have access to this page.'[:notify_no_access_error, recipient.name])
+          return nil
+        end
+      end
     end
-    return nil
+    return recipient
   end
-
 
   private
 

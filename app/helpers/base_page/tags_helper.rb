@@ -1,13 +1,13 @@
 module BasePage::TagsHelper
 
   def remove_tag_link(tag)
-    link = link_to_remote("(remove)",
-      :url => {:controller => 'base_page/tags', :action => 'update', :remove => tag.name, :page_id => @page.id},
-      :html => {:style => 'display:inline; padding:0;'},
-      :loading  => show_spinner('tag'),
-      :complete => hide("tag_#{tag.id}") + hide_spinner('tag')
+    link = link_to_remote_with_icon(
+      "Delete"[:delete],
+      { :url => {:controller => 'base_page/tags', :action => 'update', :remove => tag.name, :page_id => @page.id},
+        :complete => hide("tag_#{tag.id}") },
+      { :class => 'shy', :icon => 'tiny_trash'}
     )
-    content_tag(:p, h(tag.name) + ' ' + link, :id => "tag_#{tag.id}")
+    content_tag(:p, h(tag.name) + ' ' + link, :id => "tag_#{tag.id}", :class => 'shy_parent small_icon tag_16')
   end
 
   def options_for_edit_tag_form

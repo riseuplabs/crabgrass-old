@@ -1,58 +1,53 @@
 class ChatChannel < ActiveRecord::Base
-
   set_table_name 'channels'
 
   belongs_to :group
+  validates_presence_of :group
+
   has_many :channels_users, :dependent => :delete_all, :class_name => 'ChatChannelsUser', :foreign_key => 'channel_id'
 
-  has_many :users, :order => 'login asc', :through => :channels_users do
-    def push_with_attributes(user, join_attrs)
-      ChatChannelsUser.create join_attrs.merge(:user => user, :channel => proxy_owner)
-    end
-#    def cleanup
-#      connection.execute("DELETE FROM channels_users WHERE last_seen < DATE_SUB(\'#{ Time.zone.now.strftime("%Y-%m-%d %H:%M:%S") }\', INTERVAL 1 MINUTE) OR last_seen IS NULL")
-#    end
-  end
+  has_many :users, :order => 'login asc', :through => :channels_users
 
-  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all do
+  has_many :messages, :class_name => 'ChatMessage', :foreign_key => 'channel_id', :order => 'created_at asc', :dependent => :delete_all, :conditions => 'deleted_at IS NULL' do
     def since(last_seen_id)
       find(:all, :conditions => ['id > ?', last_seen_id])
     end
-  end
-
-  def latest_messages(time = nil)
-    time ||= 1.day.ago.to_s(:db)
-    messages.find(:all, :conditions => ["created_at < ?", time], :order => 'created_at DESC').reverse
-  end
-
-  def users_just_left
-    ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 30 SECOND) AND channel_id = ?", Time.zone.now.to_s(:db), self.id])
-  end
-
-  def active_channel_users
-    @active_channel_users = ChatChannelsUser.find_by_sql(["SELECT * FROM channels_users cu WHERE cu.last_seen >= ? AND cu.channel_id = ?", 30.seconds.ago.to_s(:db), self.id])
-  end
-
-  def keep
-    500
-  end
-
-  def record_seeing_user(user, typing_action)
-    # use typing_delta to change typing counter, but keep value bounded between -2 and 2
-    typing = 0
-    c_user = self.channels_users.find_by_user_id(user.id)
-    if c_user and c_user.typing?
-      typing = c_user.typing
-      if typing_action == 2 and typing < 2
-        typing += 2
-      elsif typing_action == -2
-        typing = -2
-      elsif typing_action == 0 and typing > 0
-        typing -= 1
-      end
+    # returns an array of months that had messages for a particular channel
+    def months
+      return unless self.first
+      sql = "SELECT MONTH(messages.created_at) AS month, "
+      sql += "YEAR(messages.created_at) AS year FROM messages "
+      sql += "WHERE channel_id = '#{self.first.channel_id}' AND #{conditions} "
+      sql += "GROUP BY year, month ORDER BY year, month"
+      ChatMessage.connection.select_all(sql)
     end
+    # returns an array with the days that had messages for a channel on a month
+    def days(year, month)
+      return unless self.first
+      begin_date = Time.zone.local(year, month)
+      end_date = begin_date.advance(:months => 1)
+      sql = "SELECT DAY(messages.created_at) AS day FROM messages "
+      sql += "WHERE channel_id = '#{self.first.channel_id}' AND #{conditions} "
+      sql += "AND messages.created_at >= '#{begin_date.to_s(:db)}' "
+      sql += "AND messages.created_at < '#{end_date.to_s(:db)}' "
+      sql += "GROUP BY day ORDER BY day"
+      ChatMessage.connection.select_all(sql)
+    end
+    # get all messages for the channel on a day
+    def for_day(year, month, day)
+      begin_date = Time.zone.local(year, month, day)
+      end_date = begin_date.advance(:days => 1)
+      conditions = "created_at >= '#{begin_date.to_s(:db)}' "
+      conditions += "AND created_at < '#{end_date.to_s(:db)}'"
+      find(:all, :conditions => conditions)
+    end
+  end
 
-    self.users.delete(user)
-    self.users.push_with_attributes(user, { :last_seen => Time.zone.now, :typing => 10 })
+  def self.cleanup!
+    users_just_left = ChatChannelsUser.find(:all, :conditions => ["last_seen < DATE_SUB(?, INTERVAL 1 MINUTE) OR last_seen IS NULL", Time.now.utc.to_s(:db)])
+    users_just_left.each do |ex_user|
+      ChatMessage.create(:channel => ex_user.channel, :sender => ex_user.user, :content => :left_the_chatroom.t, :level => 'sys')
+      ex_user.destroy
+    end
   end
 end

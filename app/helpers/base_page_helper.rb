@@ -45,16 +45,6 @@ module BasePageHelper
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
-  # setting to be overridden by install mods
-  # this is the default access for creating a new page participation.
-  def default_access
-    'admin'
-  end
-
-  def access_from_params(para=params[:access])
-    (para||:view).to_sym
-  end
-
   ##
   ## SIDEBAR HELPERS
   ##
@@ -91,6 +81,22 @@ module BasePageHelper
              :add => !existing_watch, :page_id => @page.id}
       checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], existing_watch, url, li_id, checkbox_id)
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
+    end
+  end
+
+  def share_all_line
+    if may_share_with_all?
+      li_id = 'share_all_li'
+      checkbox_id = 'share_all_checkbox'
+      url = {:controller => 'base_page/participation',
+        :action => 'update_share_all',
+        :page_id => @page.id,
+        :add => !@page.shared_with_all?
+      }
+      checkbox_line = sidebar_checkbox('Shared with all users'[:share_all_checkbox], @page.shared_with_all?, url, li_id, checkbox_id, :title => "If checked, all Users can access this page."[:share_all_checkbox_help])
+      content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
+    elsif Site.current.network
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, 'Shared with all users'[:share_all_checkbox], :class => 'a'), :class => 'small_icon'
     end
   end
 
@@ -140,11 +146,7 @@ module BasePageHelper
   # used in the sidebar of deleted pages
   def destroy_line
     if may_destroy_page?
-      link = link_to("Destroy Immediately"[:delete_page_via_shred],
-        {:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy'},
-        :method => 'post',
-        :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]]
-      )
+      link = link_to_with_confirm("Destroy Immediately"[:delete_page_via_shred], {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]], :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
       content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
@@ -161,17 +163,6 @@ module BasePageHelper
   ##
   ## SIDEBAR COLLECTIONS
   ##
-
-  def page_tags
-    if @page.tags.any?
-      links = @page.tags.collect do |tag|
-        tag_link(tag, @page.owner)
-      end.join("\n")
-      content_tag :div, links, :class => 'tags'
-    elsif may_update_tags?
-      ''
-    end
-  end
 
   def page_attachments
     if @page.assets.any?
@@ -194,15 +185,15 @@ module BasePageHelper
   # for the popup to display in the right spot, we actually offset it by
   # top: -32px, right: 43px from the natural position of the clicked element.
   #
-  def popup_holder_style
-    page_width, page_height = params[:page].split('x')
-    object_x, object_y      = params[:position].split('x')
-    right = page_width.to_i - object_x.to_i
-    top   = object_y.to_i
-    right += 17
-    top -= 32
-    "display: block; right: #{right}px; top: #{top}px;"
-  end
+#  def popup_holder_style
+#    page_width, page_height = params[:page].split('x')
+#    object_x, object_y      = params[:position].split('x')
+#    right = page_width.to_i - object_x.to_i
+#    top   = object_y.to_i
+#    right += 17
+#    top -= 32
+#    "display: block; right: #{right}px; top: #{top}px;"
+#  end
 
   # creates a <a> tag with an ajax link to show a sidebar popup
   # and change the icon of the enclosing <li> to be spinning
@@ -213,6 +204,7 @@ module BasePageHelper
   # optional:
   #  :controller -- controller to call show_popup on
   #
+
   # NOTE: before you change the wacky way this works, be warned of this...
   # The right column has overflow:hidden set. This means that the popup
   # cannot be in the right column, or when it appears the window will not
@@ -223,39 +215,45 @@ module BasePageHelper
   # NOTE #2: this is no longer how the right column works. so we should not
   # have to use absolutely positioned popups anymore.
   #
+
   def show_popup_link(options)
     options[:controller] ||= options[:name]
-    link_to_remote_with_icon(
-      options[:label],
-      :url => {
-        :controller => "base_page/#{options[:controller]}",
-        :action => 'show',
-        :popup => true,
-        :page_id => @page.id,
-        :name => options[:name]
-       },
-      :with => "absolutePositionParams(this)",
-      :icon => options[:icon]
-    )
+    popup_url = url_for({
+      :controller => "base_page/#{options.delete(:controller)}",
+      :action => 'show',
+      :popup => true,
+      :page_id => @page.id,
+      :name => options.delete(:name)
+    })
+    #options.merge!(:after_hide => 'afterHide()')
+    title = options.delete(:title) || options[:label]
+    link_to_modal(options.delete(:label), {:url => popup_url, :title => title}, options)
   end
+
+  # to be included in the popup result for any popup that should refresh the sidebar when it closes.
+  # also, set refresh_sidebar to true one the popup_line call
+  #def refresh_sidebar_on_close
+  #  javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
+  #end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
   def popup_line(options)
-    name = options[:name]
-    li_id     = "#{name}_li"
+    id = options.delete(:id) || options[:name]
+    li_id     = "#{id}_li"
     link = show_popup_link(options)
     content_tag :li, link, :id => li_id
   end
 
   def edit_attachments_line
     if may_show_page?
-      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach')
+      popup_line(:name => 'assets', :label => 'edit'[:edit_attachments_link], :icon => 'attach', :title => 'Edit Attachments'[:edit_attachments])
     end
   end
 
   def edit_tags_line
     if may_update_tags?
-      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link], :icon => 'tag')
+      popup_line(:name => 'tags', :label => 'edit'[:edit_tags_link],
+        :title => 'Edit Tags'[:edit_tags], :icon => 'tag')
     end
   end
 
@@ -283,33 +281,23 @@ module BasePageHelper
     end
   end
 
-  def details_line
+  def details_line(id='details')
+    if id == 'details'
+      label = "Details"[:page_details_link]
+      icon = 'table'
+    elsif id == 'more'
+      label = "More"[:see_more_link]
+      icon = nil
+    end
+
     if may_show_page?
-      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table', :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => "Details"[:page_details_link], :icon => icon, :controller => 'participation')
     end
   end
 
   ##
   ## MISC HELPERS
   ##
-
-  def select_page_access(name, options={})
-    selected = options[:selected]
-
-    options = {:blank => true, :expand => false}.merge(options)
-    select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
-    if options[:blank]
-      select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
-      selected ||= ''
-    else
-      selected ||= default_access
-    end
-    if options[:expand]
-      select_tag name, options_for_select(select_options, selected), :size => select_options.size
-    else
-      select_tag name, options_for_select(select_options, selected)
-    end
-  end
 
   def page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize

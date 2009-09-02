@@ -1,10 +1,10 @@
-class BasePage::TagsController < ApplicationController
+class BasePage::TagsController < BasePage::SidebarController
 
   before_filter :login_required
-  helper 'base_page', 'base_page/tags'
-  permissions 'base_page'
+  helper 'base_page/tags'
 
   def show
+    render :partial => 'base_page/tags/popup'
   end
 
   def update
@@ -25,11 +25,5 @@ class BasePage::TagsController < ApplicationController
   end
 
   protected
-
-  prepend_before_filter :fetch_data
-  def fetch_data
-    @page = Page.find params[:page_id] if params[:page_id]
-    @upart = (@page.participation_for_user(current_user) if logged_in? and @page)
-  end
 
 end

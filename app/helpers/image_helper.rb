@@ -59,13 +59,6 @@ module ImageHelper
   ## returns the img tag for the page's icon
   def page_icon(page)
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
-#    image_tag "pages/#{page.icon}", :size => "22x22"
-  end
-
-  ## returns css style text to display the page's icon
-  def page_icon_style(icon)
-   # XXX
-   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 
   ##
@@ -77,7 +70,7 @@ module ImageHelper
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
     "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
   end
   def spinner_id(id)
@@ -99,7 +92,7 @@ module ImageHelper
   end
 
   def big_spinner()
-    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;"
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", :class => 'spin'
   end
 
   # we can almost do this to trick ie into working with event.target,
@@ -125,10 +118,14 @@ module ImageHelper
   def link_to_remote_with_icon(label, options, html_options={})
     icon = options.delete(:icon) || html_options.delete(:icon)
     id = html_options[:id] || 'link%s'%rand(1000000)
-    icon_options = {
-      :loading => spinner_icon_on(icon, id),
-      :complete => spinner_icon_off(icon, id)
-    }
+    if options[:confirm]
+      icon_options = {} # don't bother with spinner for confirm links
+    else
+      icon_options = {
+        :loading => [spinner_icon_on(icon, id), options[:loading]].combine(';'),
+        :complete => [spinner_icon_off(icon, id), options[:complete]].combine(';')
+      }
+    end
     html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
     html_options[:id] ||= id
     link_to_remote(
@@ -155,7 +152,12 @@ module ImageHelper
   end
 
   def link_to_with_icon(icon, label, url, options={})
-    link_to label, url, options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    if url
+      link_to label, url, options
+    else
+      content_tag :a, label, options
+    end
   end
 
   def link_to_icon(icon, url, options={})
@@ -163,7 +165,7 @@ module ImageHelper
   end
 
   def link_to_toggle(label, id)
-    function = "$('#{id}').toggle(); eventTarget(event).toggleClassName('right_16').toggleClassName('sort_down_16')"
+    function = "linkToggle(eventTarget(event), '#{id}')"
     link_to_function_with_icon label, function, :icon => 'right'
   end
 
@@ -197,7 +199,9 @@ module ImageHelper
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
-  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
+  # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
+  #
+  # thumbnail_name: one of :small, :medium, :large
   #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
@@ -209,7 +213,7 @@ module ImageHelper
   #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]

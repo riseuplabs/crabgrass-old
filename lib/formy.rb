@@ -47,7 +47,7 @@ the rules for javascript tabs:
   end
   f.tab do |t|
     t.label 'Ajax Link'
-    t.click remote_function(:url=>{:action => 'ajaxy_thing'})
+    t.function remote_function(:url=>{:action => 'ajaxy_thing'})
     t.selected false
   end
 end
@@ -280,7 +280,13 @@ module Formy
 
   class Tabset < Root
     class Tab < Element
-      # required: label & ( link | url | show_tab )
+      # required: label & ( link | url | show_tab | function)
+      #
+      # link     -- the a tag to put as the tab label.
+      # url      -- the url to link the tab to
+      # show_tab -- the dom_id of the div to show when the panel is clicked
+      # function -- javascript to get called when the tab is clicked. may be used alone or
+      #             in conjunction with show_tab or url (but not compatible with 'link' option)
       #
       # if show_tab is set to an dom id that ends in '_panel', then special things happen:
       #
@@ -298,7 +304,7 @@ module Formy
       #   hash -- overide default location.hash that is activated when this tab is activated
       #   default -- if true, this is the default tab that gets loaded.
       #
-      element_attr :label, :link, :show_tab, :url, :selected, :icon, :id, :style, :class, :hash, :default
+      element_attr :label, :link, :show_tab, :url, :function, :selected, :icon, :id, :style, :class, :hash, :default
 
       def close
         selected = 'active' if "#{@selected}" == "true"
@@ -306,19 +312,25 @@ module Formy
         if @link
           a_tag = @link
         elsif @url
-          a_tag = content_tag :a, @label, :href => @url, :class => @class, :style => @style, :id => @id
+          a_tag = content_tag :a, @label, :href => @url, :class => @class, :style => @style, :id => @id, :onclick => @function
         elsif @show_tab
           if @show_tab =~ /_panel$/
             @hash ||= @show_tab.sub(/_panel$/, '').gsub('_','-')
-            onclick = "showTab(this, $('%s'), '%s')" % [@show_tab, @hash]
+            onclick = "showTab(this, $('%s'), '%s');" % [@show_tab, @hash]
             @id = @show_tab.sub(/_panel$/, '_link')
           else
-            onclick = "showTab(this, $('%s'))" % @show_tab
+            onclick = "showTab(this, $('%s'));" % @show_tab
+          end
+          if @function
+            @function += ';' unless @function.ends_with(';')
+            onclick = @function + onclick
           end
           a_tag = content_tag :a, @label, :onclick => onclick, :class => @class, :style => @style, :id => @id
           if @default
             puts javascript_tag('defaultHash = "%s"' % @hash)
           end
+        elsif @function
+          a_tag = content_tag :a, @label, :href => '#', :class => @class, :style => @style, :id => @id, :onclick => @function
         end
         puts content_tag(:li, a_tag, :class => 'tab')
         super
@@ -328,19 +340,35 @@ module Formy
     sub_element Tabset::Tab
 
     def initialize(options={})
-      super( {'class' => 'top'}.merge(options) )
+      super( {:type => :top}.merge(options) )
+      @options[:separator] ||= "|"
     end
 
     def open
       super
-      puts "<div style='height:1%'>" # this is to force hasLayout in ie
-      puts "<ul class='tabset #{@options['class']}'>"
+      if @options[:type] == :simple
+        puts "<ul class='tabset simple #{@options[:class]}'>"
+      elsif @options[:type] == :top
+        puts "<div style='height:1%'>" # this is to force hasLayout in ie
+        puts "<ul class='tabset top #{@options[:class]}'>"
+      else
+        raise 'no such tabset type'
+      end
     end
 
     def close
-      @elements.each {|e| raw_puts e}
-      puts "<li></li></ul>"
-      puts "</div>"
+      if @options[:type] == :simple
+        if @options[:separator].any?
+          raw_puts @elements.join("<li> #{options[:separator]} </li>")
+        else
+          raw_puts @elements.join
+        end
+        puts "</ul>"
+      elsif @options[:type] == :top
+        @elements.each {|e| raw_puts e}
+        puts "<li></li></ul>"
+        puts "</div>"
+      end
       super
     end
 
@@ -541,6 +569,4 @@ module Formy
 #    end
 
   end
-
 end
-

@@ -23,6 +23,7 @@ enabled_mods:
   - super_admin
   - student
   - connectingclassrooms
+  - moderation
 enabled_tools:
   - asset_tool
   - core_tools

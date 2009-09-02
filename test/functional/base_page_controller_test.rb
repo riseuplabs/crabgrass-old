@@ -1,19 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'base_page_controller'
 
-# showlog
-
-# Re-raise errors caught by the controller.
-class BasePageController; def rescue_action(e) raise e end; end
-
-class Tool::BasePageControllerTest < Test::Unit::TestCase
+class BasePageControllerTest < ActionController::TestCase
   fixtures :pages, :groups, :users, :memberships, :group_participations, :user_participations, :sites
-
-  def setup
-    @controller = BasePageController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_create_without_login
     get :create, :id => WikiPage.param_id
