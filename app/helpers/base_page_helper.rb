@@ -153,10 +153,10 @@ module BasePageHelper
 
   def view_line
     if @show_print != false
-      printable = link_to_with_icon 'printer', "Printable"[:print_view_link], page_url(@page, :action => "print")
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
       #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
       #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
-      content_tag :li, printable
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 
