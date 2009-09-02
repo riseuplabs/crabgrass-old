@@ -26,7 +26,7 @@ module WikiPagePermission
     logged_in? && current_user.may?(:edit, page)
   end
 
-  %w[break_lock upload].each{ |action|
+  %w[break_lock upload update_editors].each{ |action|
     alias_method "may_#{action}_wiki_page?", :may_edit_wiki_page?
   }
 
