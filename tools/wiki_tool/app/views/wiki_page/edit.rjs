@@ -1,0 +1,5 @@
+if editing_a_section?
+  page.replace_html(:wiki_html, wiki_body_html_with_edit_form)
+else
+  page.replace_html(:wiki_html, wiki_body_html)
+end

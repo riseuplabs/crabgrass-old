@@ -2,7 +2,11 @@
 
 <div class='wiki'>
   <div id='wiki_html'>
-    <%= render :partial => 'wiki_html' %>
+    <% if editing_a_section? %>
+      <%= wiki_body_html_with_edit_form  %>
+    <% else %>
+      <%= render :partial => 'wiki_html' %>
+    <% end %>
   </div>
   <br style='clear:both' />
 </div><!-- end wiki -->

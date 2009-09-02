@@ -46,6 +46,10 @@ class WikiPageControllerTest < ActionController::TestCase
   end
 =end
 
+  # edit, save, done
+  # edit, lock stolen, try to save, see lock error, retake lock, save
+  # edit, lock stolen, thief saves, try save, see old version error, save (overwrites)
+  # test decorate with edit links
   def test_create
     login_as :quentin
 
@@ -103,7 +107,7 @@ class WikiPageControllerTest < ActionController::TestCase
 
   def test_edit_inline
     login_as :blue
-    xhr :get, :edit_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three"
+    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "section-three"
 
     assert_response :success
 
@@ -132,7 +136,7 @@ class WikiPageControllerTest < ActionController::TestCase
     get :show, :page_id => page.id
     page = assigns(:page)
     assert_nothing_raised do
-      xhr :get, :edit_inline, :page_id => page.id, :id => "hello"
+      xhr :get, :edit, :page_id => page.id, :section => "hello"
       textarea = assigns(:wiki).body_html.match(/<textarea.*>(.*)<\/textarea>/m)[1]
       assert_nil textarea.match(/goodbye/)
       assert_not_nil assigns(:wiki).body_html.match(/goodbye/), 'outside the form, goodbye heading should be on the wiki'
@@ -142,9 +146,9 @@ class WikiPageControllerTest < ActionController::TestCase
 
   def test_save_inline
     login_as :blue
-    xhr :get, :edit_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three"
+    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "section-three"
     # save the new (without a header)
-    xhr :post, :save_inline, :page_id => pages(:multi_section_wiki).id, :id => "section-three", :save => "Save",
+    xhr :post, :save, :page_id => pages(:multi_section_wiki).id, :section => "section-three", :save => "Save",
                   :body => "a line"
 
     assert_response :success
