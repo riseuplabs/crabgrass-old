@@ -1,4 +1,4 @@
-class BasePage::ParticipationController < ApplicationController
+class BasePage::ParticipationController < BasePage::SidebarController
 
   before_filter :login_required
 
