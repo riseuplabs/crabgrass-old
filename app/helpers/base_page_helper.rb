@@ -45,16 +45,6 @@ module BasePageHelper
     link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
   end
 
-  # setting to be overridden by install mods
-  # this is the default access for creating a new page participation.
-  def default_access
-    'admin'
-  end
-
-  def access_from_params(para=params[:access])
-    (para||:view).to_sym
-  end
-
   ##
   ## SIDEBAR HELPERS
   ##
@@ -91,6 +81,22 @@ module BasePageHelper
              :add => !existing_watch, :page_id => @page.id}
       checkbox_line = sidebar_checkbox('Watch For Updates'[:watch_checkbox], existing_watch, url, li_id, checkbox_id)
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
+    end
+  end
+
+  def share_all_line
+    if may_share_with_all?
+      li_id = 'share_all_li'
+      checkbox_id = 'share_all_checkbox'
+      url = {:controller => 'base_page/participation',
+        :action => 'update_share_all',
+        :page_id => @page.id,
+        :add => !@page.shared_with_all?
+      }
+      checkbox_line = sidebar_checkbox('Shared with all users'[:share_all_checkbox], @page.shared_with_all?, url, li_id, checkbox_id, :title => "If checked, all Users can access this page."[:share_all_checkbox_help])
+      content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
+    elsif Site.current.network
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, 'Shared with all users'[:share_all_checkbox], :class => 'a'), :class => 'small_icon'
     end
   end
 
@@ -147,10 +153,10 @@ module BasePageHelper
 
   def view_line
     if @show_print != false
-      printable = link_to_with_icon 'printer', "Printable"[:print_view_link], page_url(@page, :action => "print")
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
       #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
       #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
-      content_tag :li, printable
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 
@@ -220,19 +226,20 @@ module BasePageHelper
       :name => options.delete(:name)
     })
     #options.merge!(:after_hide => 'afterHide()')
-    link_to_modal(options.delete(:label), {:url => popup_url}, options)
+    title = options.delete(:title) || options[:label]
+    link_to_modal(options.delete(:label), {:url => popup_url, :title => title}, options)
   end
 
   # to be included in the popup result for any popup that should refresh the sidebar when it closes.
   # also, set refresh_sidebar to true one the popup_line call
-  def refresh_sidebar_on_close
-    javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
-  end
+  #def refresh_sidebar_on_close
+  #  javascript_tag('afterHide = function(){%s}' % remote_function(:url => {:controller => 'base_page/sidebar', :action => 'refresh', :page_id => @page.id}))
+  #end
 
   # create the <li></li> for a sidebar line that will open a popup when clicked
   def popup_line(options)
-    name = options[:name]
-    li_id     = "#{name}_li"
+    id = options.delete(:id) || options[:name]
+    li_id     = "#{id}_li"
     link = show_popup_link(options)
     content_tag :li, link, :id => li_id
   end
@@ -274,33 +281,23 @@ module BasePageHelper
     end
   end
 
-  def details_line
+  def details_line(id='details')
+    if id == 'details'
+      label = "Details"[:page_details_link]
+      icon = 'table'
+    elsif id == 'more'
+      label = "More"[:see_more_link]
+      icon = nil
+    end
+
     if may_show_page?
-      popup_line(:name => 'details', :label => ":page_class Details"[:page_details_link] % {:page_class => page_class }, :icon => 'table', :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => "Details"[:page_details_link], :icon => icon, :controller => 'participation')
     end
   end
 
   ##
   ## MISC HELPERS
   ##
-
-  def select_page_access(name, options={})
-    selected = options[:selected]
-
-    options = {:blank => true, :expand => false}.merge(options)
-    select_options = [['Coordinator'[:coordinator],'admin'],['Participant'[:participant],'edit'],['Viewer'[:viewer],'view']]
-    if options[:blank]
-      select_options = [['(' + 'no change'[:no_change] + ')','']] + select_options
-      selected ||= ''
-    else
-      selected ||= default_access
-    end
-    if options[:expand]
-      select_tag name, options_for_select(select_options, selected), :size => select_options.size
-    else
-      select_tag name, options_for_select(select_options, selected)
-    end
-  end
 
   def page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize

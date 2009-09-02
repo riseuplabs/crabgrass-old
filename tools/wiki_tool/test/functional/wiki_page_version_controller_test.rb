@@ -59,4 +59,13 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     assert assigns(:difftext).length > 10, "difftext should contain something substantial"
   end
 
+  def test_revert
+    login_as :orange
+    pages(:wiki).data.smart_save!(:user => users(:blue), :body => "version 1")
+    pages(:wiki).data.smart_save!(:user => users(:yellow), :body => "version 2")
+    post :revert, :page_id => pages(:wiki).id, :id => 1
+    assert_response :success
+    assert_select 'textarea', 'version 1'
+  end
+
 end

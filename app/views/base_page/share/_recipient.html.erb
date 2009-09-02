@@ -6,17 +6,23 @@
 # access    -> what access level do we want to give to the new participation
 # unsaved   -> flag: does this participation contain changes that need to be saved / is new
 # blank     -> include blank as an access level option.
+# alter_access -> if true, then we allow the user to change the access level of pre-existing participations.
 
 blank = false if blank.nil?
 access = 'admin' if access.nil?
+access_options = {:blank => blank, :selected => access}
 if unsaved.nil?
   newitem = false
 else
   newitem = unsaved
 end
 newitem = true if @page and @page.new_record?
+alter_access = true if alter_access.nil?
 
-id = "share_recipient_%s" % rand(100000000)
+recipient_name = recipient.name.gsub(/\+/,"%2b")   # encode + as %2b
+participation = (@page.participation_for(recipient) if @page)
+
+id = "share_recipient_%s" % recipient.name
 remove_function = "$('%s').remove()" % id
 %>
 
@@ -25,14 +31,25 @@ remove_function = "$('%s').remove()" % id
     <%= display_entity(recipient, :avatar => 'xsmall', :format => :both, :block => true) %>
   </td>
   <td>
-    <%- if may_select_access_participation? -%>
-      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
-    <%- else -%>
-      <%= hidden_field 'recipients['+recipient.name.gsub(/\+/,"%2b")+']', :access, :value => access %>
-    <%- end -%>
+%   if (!alter_access && participation) || !may_share_page?
+      <%= hidden_field_tag "recipients[#{recipient.name}]", "1", :id => id %>
+      <%= display_access(participation) %>
+%   elsif may_select_access_participation?
+      <%= select_page_access "recipients[#{recipient_name}][access]", access_options %>
+%   else
+%     # why is this included as a hidden field if you are not allowed to set the access level?
+%     # perhaps if may_select_access_participations is false, then a default should be hard coded?  --elijah
+%     # I thought may_select_access_participation? might become a per user setting.
+%     # In that case the access value can differ even if this person can not change it.
+%     # However you are right about hardcoding it. It should be hardcoded to not change.
+%     # Currently we only use it as a per site setting - so it could even be completely
+%     # hard coded.
+%     # --azul
+      <%= hidden_field "recipients[#{recipient.name}]", :access, :value => access %>
+%   end
   </td>
   <td>
-    <%= link_to_function_icon('minus', remove_function) if newitem %>
+    <%= link_to_function_icon('tiny_trash', remove_function, :title => :remove.t) if newitem %>
   </td>
 </tr>
 

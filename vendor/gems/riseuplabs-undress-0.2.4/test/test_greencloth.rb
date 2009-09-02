@@ -5,6 +5,10 @@ class Undress::GreenClothTest < Test::Unit::TestCase
     assert_equal greencloth, Undress(html).to_greencloth
   end
 
+  def assert_not_renders_greencloth(greencloth, html)
+    assert_not_equal greencloth, Undress(html).to_greencloth
+  end
+
   context "parsing badly indented documents" do
     test "badly indent doc" do
       html = "<ul>
@@ -35,6 +39,26 @@ class Undress::GreenClothTest < Test::Unit::TestCase
   # this is ok to ensure invalid html -> to greencloth but xhtmlize! must have
   # tests on test_undress or something too
   context "parsing not valid xhtml documents" do
+    context "with tables" do
+      test "cells should not have spaces at the start/end inside" do
+        html = "<table>  <tbody>  <tr class='odd'>  <th>&nbsp;1&nbsp;<br></th>  <th>2<br/>&nbsp;</th>  </tr>  <tr class='even'>  <td>&nbsp;11<br/></td>  <td>22</td>  </tr>  </tbody>  </table>"
+        greencloth = "|_. 1|_. 2|\n|11|22|\n"
+        assert_renders_greencloth greencloth, html 
+      end
+
+      test "tables should not have <br> inside <td> and <th>" do
+        html = "<table>  <tbody>  <tr class='odd'>  <th>1<br></th>  <th>2<br/></th>  </tr>  <tr class='even'>  <td>11<br/></td>  <td>22</td>  </tr>  </tbody>  </table>"
+        greencloth = "|_. 1|_. 2|\n|11|22|\n"
+        assert_renders_greencloth greencloth, html 
+      end
+      
+      test "tables should not have spases beetween <td> inside" do
+        html = "<table>  <tbody>  <tr class='odd'>  <td>1</td>  <td>2</td>  </tr>  <tr class='even'>  <td>11</td>  <td>22</td>  </tr>  </tbody>  </table>"
+        greencloth = "|1|2|\n|11|22|\n"
+        assert_renders_greencloth greencloth, html 
+      end
+    end
+
     test "with <u> tags" do
       html = "<u>underline</u>"
       greencloth = "+underline+"
@@ -290,6 +314,12 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
   # links
   context "Converting html links to greencloth" do
+    test "simple link test" do
+      html = "<a href='url'>text</a>"
+      greencloth = "[text]"
+      assert_not_renders_greencloth greencloth,html
+    end
+
     test "convert a link to a wiki page inside a paragraph" do
       html = "<p>this is a <a href='/page/plain-link'>plain link</a> in some text</p>"
       greencloth = "this is a [plain link] in some text\n"

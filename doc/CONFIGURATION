@@ -78,6 +78,11 @@ ensure_page_owner
   If true, then every page must have an owner. If false, you are allowed to create
   pages without owners. The default is true.
 
+default_page_access
+  This option determines what page access level is shown by default when granting access
+  and which access is used when adding access but none is specific. Valid values are 'admin',
+  'edit', or 'view'. The default is 'admin'.
+
 dev_email
   Email address where bug reports are sent.
   Example: dev_email: 'developer@domain.com'

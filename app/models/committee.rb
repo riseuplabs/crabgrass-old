@@ -1,14 +1,9 @@
 class Committee < Group
-  before_destroy :eliminate_councilship
 
-  def eliminate_councilship
-    if g = Group.find(:first, :conditions => { :council_id => self.id })
-      g.council_id = nil
-      g.save!
-    end
-  end
+  ##
+  ## NAMING
+  ##
 
-  # NAMING
   # the name of a committee includes the name of the parent,
   # so the committee names are unique. however, for display purposes
   # we want to just display the committee name without the parent name.
@@ -31,12 +26,6 @@ class Committee < Group
     end
   end
 
-  #has_many :delegations, :dependent => :destroy
-  #has_many :groups, :through => :delegations
-  #def group()
-  #  groups.first if groups.any?
-  #end
-
   # called when the parent's name has change
   def parent_name_changed
     self.name = short_name
@@ -54,9 +43,27 @@ class Committee < Group
   end
   alias_method :short_name=, :name=
 
+  ##
+  ## ORGANIZATIONAL
+  ##
+
+  private
+
+  before_destroy :remove_from_parent
+  def remove_from_parent
+    parent.remove_committee!(self)
+    true
+  end
+
   def parent=(p)
     raise 'call group.add_committee! instead'
   end
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  public
 
   # if user has +access+ to group, return true.
   # otherwise, raise PermissionDenied
@@ -70,10 +77,6 @@ class Committee < Group
     end
     ok or raise PermissionDenied.new
   end
-
-  ##
-  ## relationships to users
-  ##
 
   def may_be_pestered_by!(user)
     if user.member_of?(self)

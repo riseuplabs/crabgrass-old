@@ -17,8 +17,11 @@ class PostsControllerTest < Test::Unit::TestCase
 
   def test_create
     login_as :red
-    post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
-    assert pages(:page1).discussion.posts.last.body = 'test post'
+    page = pages(:page1)
+    assert_difference 'Page.find(%d).contributors_count' % page.id do
+      post :create, :post => {:body => 'test post'}, :page_id   => page.id
+      assert_equal 'test post', page.discussion.posts(true).last.body
+    end
   end
 
   def test_edit

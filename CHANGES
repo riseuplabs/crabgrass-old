@@ -4,8 +4,9 @@
   * ui enhancements: drop down menus, modal popups, autocomplete
   * time frame tracking of page activity (most edits/views/stars this week/month/year).
   * upgrade procedure:
-    (0) git submodule --init
-    (1) rake cg:chat:clean_invalid
+    (0) check doc/INSTALL for the required packages and ensure they are installed.
+    (1) rake db:migrate RAILS_ENV=x
+    (2) rake cg:chat:clean_invalid RAILS_ENV=x
 
 0.4.0 -- 2009 June 20
   * ability to run multiple sites (virtual domains)

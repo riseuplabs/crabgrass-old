@@ -1,3 +1,5 @@
+* Fix spaces and <br> inside table cells
+
 0.2.3
 
 * Add Hpricot style extension

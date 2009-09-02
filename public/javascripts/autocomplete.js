@@ -57,6 +57,10 @@ Autocomplete.highlight = function(value, re){
   return value.replace(re, function(match){ return '<ins>' + match + '<\/ins>' });
 };
 
+Autocomplete.hideAll = function() {
+  Autocomplete.instances.invoke('hide');
+};
+
 Autocomplete.prototype = {
 
   killerFn: null,

@@ -65,6 +65,7 @@ class Conf
   cattr_accessor :secret
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
+  cattr_accessor :default_page_access
   cattr_accessor :text_editor
 
   # set automatically from site.admin_group
@@ -118,6 +119,7 @@ class Conf
     self.sites         = []
     self.secret        = nil
     self.ensure_page_owner = true
+    self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
   end
 
@@ -146,7 +148,12 @@ class Conf
       end
     end
 
-    true
+    ## convert some strings in config to symbols
+    ['default_page_access'].each do |conf_var|
+      self.send(conf_var+'=', self.send(conf_var).to_sym)
+    end
+
+    return true
   end
 
   ##
