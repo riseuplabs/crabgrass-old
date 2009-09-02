@@ -152,7 +152,7 @@ module ImageHelper
   end
 
   def link_to_with_icon(icon, label, url, options={})
-    options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    options=options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
     if url
       link_to label, url, options
     else
