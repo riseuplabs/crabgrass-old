@@ -84,6 +84,22 @@ module BasePageHelper
     end
   end
 
+  def share_all_line
+    if may_share_with_all?
+      li_id = 'share_all_li'
+      checkbox_id = 'share_all_checkbox'
+      url = {:controller => 'base_page/participation',
+        :action => 'update_share_all',
+        :page_id => @page.id,
+        :add => !@page.shared_with_all?
+      }
+      checkbox_line = sidebar_checkbox('Shared with all users'[:share_all_checkbox], @page.shared_with_all?, url, li_id, checkbox_id, :title => "If checked, all Users can access this page."[:share_all_checkbox_help])
+      content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
+    elsif Site.current.network
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, 'Shared with all users'[:share_all_checkbox], :class => 'a'), :class => 'small_icon'
+    end
+  end
+
   def public_line
     if may_public_page?
       li_id = 'public_li'
@@ -137,10 +153,10 @@ module BasePageHelper
 
   def view_line
     if @show_print != false
-      printable = link_to_with_icon 'printer', "Printable"[:print_view_link], page_url(@page, :action => "print")
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
       #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
       #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
-      content_tag :li, printable
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 

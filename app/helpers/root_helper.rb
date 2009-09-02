@@ -23,5 +23,24 @@ module RootHelper
     #, :update => "#{panel_name}_panel")
   end
 
+  def contribute_link
+    if may_contribute_to_site?
+      link_to_with_icon 'plus', "Contribute to Site"[:contribute_to_site], {:controller => '/pages', :action => 'create', :group => current_site.network}
+    end
+  end
+
+  def create_group_link
+    if may_create_group?
+      link_to_with_icon 'membership_add', "Create a Group", '/groups/new'
+    end
+  end
+
+  def welcome_box_link
+    if params[:welcome_box]
+      link_to_with_icon 'cancel', "Hide Tips"[:hide_tips], '/'
+    else
+      link_to_with_icon 'weather_sun', "See Tips to get started"[:see_tips_to_get_started], '/?welcome_box=1'
+    end
+  end
 end
 

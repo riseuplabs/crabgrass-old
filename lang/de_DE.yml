@@ -27,7 +27,10 @@ action: Aktion
 activate_js_to_rearrange_photos: Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!
 activity_contact_created: "{user} hat {other_user} als Kontakt hinzugef\xC3\xBCgt"
 activity_group_created: "{user} hat {group_type} {group} erstellt"
-activity_group_destroyed: "{group} wurde durch {user} zerst\xC3\xB6rt"
+activity_group_destroyed: "{group} wurde durch {user} gel\xC3\xB6scht"
+activity_message: "{author} schrieb: {message}"
+activity_unread: Du hast {count} ungelesene [private Nachrichten]
+activity_unread_singular: Du hast eine ungelesene [private Nachricht]
 activity_user_destroyed: "{user} hat sich gel\xC3\xB6scht"
 activity_user_joined_group: "{user} ist der {group_type} {group} beigetreten"
 activity_user_left_group: "{user} hat {group_type} {group} verlassen"
@@ -50,13 +53,18 @@ add_photo_to_gallery: Bild zur Gallerie hinzuf&uuml;gen
 add_star_link: "Stern hinzuf\xC3\xBCgen (:star_count)"
 add_tags: "Tags hinzuf\xC3\xBCgen"
 add_websites: "Webseiten hinzuf\xC3\xBCgen"
+additional_page_access: Weitere Zugriffe
+administration: Administration
 alert_error: Error
 alert_field_errors: Es gibt Probleme mit den folgenden Feldern
 alert_not_saved: "\xC3\x84nderungen konnten nicht gespeichert werden"
 alert_permission_denied: Keine Berechtigung
+alert_permission_denied_details: "Tschuldige, aber du kannst diese Aktion nicht durchf\xC3\xBChren."
 alert_saved: "\xC3\x84nderungen gespeichert"
+all: Alle
 all_content: Gesamter Inhalt
 all_groups: alle Gruppen
+all_networks: Alle Netzwerke
 all_page_types: alle Seitenarten
 all_people: alle Personen
 all_people_link: neue Leute
@@ -85,6 +93,7 @@ attachments: "Anh\xC3\xA4nge"
 away: abwesend
 back_button: "Zur\xC3\xBCck"
 back_to_group: "zur\xC3\xBCck zu :group_name"
+basic_settings: Grundeinstellungen
 break_lock: Sperre aufheben
 break_lock_button: Sperre aufheben
 cancel_button: Abbrechen
@@ -98,6 +107,7 @@ committee_publicly_visible_description: "Arbeitsgruppen k\xC3\xB6nnen von Nichtm
 committees: Arbeitsgruppen
 comparing_changes_header: "Vergleich der \xC3\x84nderungen durch :user am :when zwischen :old_version und :new_version"
 confirm_new_password: "Best\xC3\xA4tige neues Passwort"
+confirmation: Sicher?
 contact: Kontakt
 contact_request_message_label: Sage %s warum du sein Kontakt werden willst.
 contacts: Kontakte
@@ -107,6 +117,7 @@ coordinating_council: Koordinierendes Gremium
 coordinator: Koordinator
 coordinators: Koordinatoren
 council_help: Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun.
+create_a_group: Eine Gruppe erstellen
 create_a_new_thing: Neue :thing erstellen
 create_button: Erstellen
 create_committee: Arbeitsgruppe erstellen
@@ -166,6 +177,7 @@ download: Herunterladen
 download_gallery: Gallerie herunterladen
 drag_and_drop_to_rearrange_photos: Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern
 edit: bearbeiten
+edit_appearance: Bearbeite erscheinen
 edit_attachments: "Anh\xC3\xA4nge bearbeiten"
 edit_attachments_link: Bearbeiten
 edit_featured_content: Aktuelle Inhalte bearbeiten
@@ -197,6 +209,7 @@ file_class_description: Eine hochgeladene Datei.
 file_must_be_image_error: "Nur Bilddateien k\xC3\xB6nnen zur Galerie hinzugef\xC3\xBCgt werden."
 file_size: "Dateigr\xC3\xB6\xC3\x9Fe"
 file_version_deleted: "Dateiversion gel\xC3\xB6scht"
+files: Dateien
 first_name: Vorname
 folder_class_description: Eine Sammlung an Dateien.
 folder_display: Ordner
@@ -264,7 +277,10 @@ group_successfully_updated: Die Gruppe wurde aktualisiert.
 group_summary: Kurzinformation zu dieser %s.
 group_wiki: Wiki der Gruppe
 groups: Gruppen
+have_your_say: Sag auch was!
+height: "H\xC3\xB6he"
 history: Verlauf
+icon: Icon
 im_addresses: IM Adressen
 image_count: Bild :number von :count gesamt
 image_count_total: ":count Bilder"
@@ -279,6 +295,7 @@ invalid_email: "Ung\xC3\xBCltige Emailadresse"
 invalid_email_text: "Die von Dir angegebene Emailadresse ist ung\xC3\xBCltig."
 invalid_token: "Ung\xC3\xBCltiger Token"
 invalid_token_text: "Der Link zum R\xC3\xBCcksetzen des Passwortes ist ung\xC3\xBCltig. Wahrscheinlich wurde er schon benutzt oder seine G\xC3\xBCltigkeit ist abgelaufen."
+invite: Einladen
 invite_accept_headline: Einladung zum Bitritt zur Gruppe annehmen
 invite_accept_info: Du willst die Einladung annehmen. Hast Du schon einen Zugang zu diesem Server?
 invite_accept_via_existing_account: Ich habe bereits einen Zugang.
@@ -286,16 +303,20 @@ invite_accept_via_register: Ich will einen neuen Zugang anmelden.
 invite_info: Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser %s beizutreten, ein.
 invite_not_found: Einladung nicht gefunden
 join_chat: am schwatz teilnehmen
+join_group_link: Join {group_type}
 join_group_success: Du hast dich der Gruppe {group_name} angeschlossen.
 join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage \xC3\xBCberpr\xC3\xBCfen, indem Du \"%s\" besuchst."
 joins_the_chatroom: Chatraum betreten
 large: "gro\xC3\x9F"
 last_change: "letzte \xC3\x84nderung"
 last_name: Familienname
+last_seen: Zuletzt gesehen
 leave_group: "%s verlassen"
+leave_group_link: Verlasse {group_type}
 left_the_chatroom: hat den Chatroom verlassen
 link_name: Linkname
 link_name_description: "Dieser Name dient als Bezeichner der Gruppe in Links und URLs. Es d\xC3\xBCrfen nur alphanumerische Zeichen und keine Leerzeichen enthalten sein."
+location: Ort
 location_address: Adresse
 location_city: Ort
 location_country: Land
@@ -337,6 +358,7 @@ media_without_group: Alle %s
 medium: mittel
 member_groups_of_network: Gruppen im Netzwerk
 members: BenutzerInnen
+membership: Mitgliedschaft
 menu_chat: Chat
 menu_groups: Gruppen
 menu_home: Start
@@ -392,6 +414,7 @@ my_tasks_headline: Meine Aufgaben
 my_world_heading: Meine Welt
 name: Name
 network: Netzwerk
+network_aettings: Netzwerkeinstellungen
 network_invite_info: Gib die Namen der Gruppen ein, welche du in dieses Netzwerk einladen willst.
 networks: Netzwerke
 new_group: Neue Gruppe
@@ -413,6 +436,7 @@ no_tags: Keine Tags
 no_title_given: Kein Titel angegeben
 none: keine
 not_featured_content: Noch nicht angebotene Inhalte
+not_found: Nicht gefunden
 not_set: nicht aktiv
 notify_contribution: <b>Mitwirkende:</b> Benachrichtige Leute die an dieser Seite <b>mitgewirkt</b> haben.
 notify_current_access: <b>Teilnehmer:</b> benachrichtige Leute die bereits Zugang zu dieser Seite haben.
@@ -457,6 +481,7 @@ page_list_heading_updated_by: Aktualisiert von
 page_locked_header: Seite gesperrt
 page_not_part_of_group: Seite nicht Teil dieser Gruppe
 page_notice_message: Seite von {user} am {date} gesendet.
+page_owner_help: "Der oder die SeitenbesitzerIn ist die Person oder die Gruppe, welche die Hauptverantwortung f\xC3\xBCr diese Seite tr\xC3\xA4gt. W\xC3\xA4hle dich selber, oder eine beliebige andere Gruppe, in der du Mitglied bist."
 page_with_message: mit Botschaft
 pagination_next: weiter
 pagination_previous: "zur\xC3\xBCck"
@@ -487,6 +512,7 @@ permissions: Rechte
 personal_message: "Pers\xC3\xB6nliche Nachricht"
 personal_message_class_description: "Eine pers\xC3\xB6nliche Nachricht an individuelle Empf\xC3\xA4nger."
 phone_numbers: Telefonnummern
+photo: Foto
 post_message: Poste Nachricht
 prev_change: "Letzte \xC3\x84nderung"
 preview: Vorschau
@@ -510,6 +536,7 @@ profile_public_description: "Dieses Profil ist \xC3\xB6ffentlich und kann von al
   Die Informationen, die du hier angegeben hast, sind au\xC3\x9Ferdem von allen anderen Menschen \xC3\xBCber diverse Suchmaschinen zu finden.\r\n\
   Bedenke das, wenn du pers\xC3\xB6nliche Informationen von dir in deinem \xC3\xB6ffentlichen Profil bekannt gibst."
 profile_saved: Dein Profil wurde gespeichert.
+public: "\xC3\x96ffentlich"
 public_checkbox: "\xC3\x96ffentlich"
 public_checkbox_help: Wenn markiert, kann jeder diese Seite betrachten.
 public_key: Public Key
@@ -527,6 +554,7 @@ recent_member_group_pages: Aktuelle Mitgliedsgruppenseiten
 recent_network_pages: Neue Netzwerk-Seiten
 recent_pages: Aktuelle Seiten
 recent_wall_posts: "J\xC3\xBCngste Beitr\xC3\xA4ge auf der Mauer"
+recently_created: "K\xC3\xBCrzlich erstellt"
 recipient_tip: "Trenne Empf\xC3\xA4nger mit Kommata, Leerzeichen oder Zeilenspr\xC3\xBCungen."
 recipients: "Empf\xC3\xA4nger"
 redirect_to_foreign_domain: |-
@@ -545,6 +573,7 @@ remove_from_inbox: Entferne von Eingang
 remove_star_link: Entferne Stern (:star_count)
 removing_image: Entferne Bild...
 request_friend_link: "Zu meinen Kontakten hinzuf\xC3\xBCgen"
+request_join_group_link: Sich {group_type} anschliessen
 request_status: "Diese Anfrage wurde von :user um :time :status "
 request_to_friend_description: ":user w\xC3\xBCrde gerne :other_user zu seinen/ihren Kontakten hinzuf\xC3\xBCgen"
 request_to_join_our_network_description: "Gruppe :group wurde eingeladen, sich beim Netzwerk :network anzuschlie\xC3\x9Fen"
@@ -553,8 +582,10 @@ request_to_join_us_via_email_description: ":email wurde eingeladen, sich :group 
 request_to_join_you_description: ":user w\xC3\xBCrde sich gerne :group anschlie\xC3\x9Fen"
 request_to_join_your_network_description: ":group stellte eine Anfrage, sich dem Netzwerk :network anzuschlie\xC3\x9Fen"
 requested_forgot_password: "Du hast eine \xC3\x84nderung deines Passworts angefordert"
+requests: Anfragen
 requests_from_me: Von mir
 requests_to_me: An mich
+required: "(ben\xC3\xB6tigt)"
 reset_password: "Setze Passwort zur\xC3\xBCck"
 reset_password_mail_greeting: "%s, dein Passwort wurde auf deine Anfrage zur\xC3\xBCckgesetzt."
 reset_password_mail_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zur\xC3\xBCcksetzen deines Passworts enth\xC3\xA4lt."
@@ -568,9 +599,12 @@ save_changes: "Speichere \xC3\x84nderungen"
 save_survey: Umfrage Speichern
 saved_new_order: Neue Reihenfolge gespeichert!
 saving_your_changes: "&Auml;nderungen werden gespeichert..."
+say_message_button: Schreien
 search: Suche
 search_headline: Suche
+see_all_link: Alles sehen
 see_more_link: Mehr
+see_tips_to_get_started: Starttips sehen
 select_image_file: "W\xC3\xA4hle Bilddatei"
 send_button: Sende
 send_invites: Einladungen senden
@@ -593,6 +627,7 @@ share_page_recipients_results: Diese {page_class} wird geteilt mit
 share_page_recipients_sections: "W\xC3\xA4hle aus deinen Gruppen oder Freunden"
 share_page_recipients_selection: "W\xC3\xA4hle aus"
 share_this_page: Teile diese Seite
+sharing_help: "Optional. Du kannst diese Seite mit unterschiedlichen Empf\xC3\xA4ngerInnen teilen (egal ob Personen oder Gruppen)"
 show_gallery: Gallerie &Uuml;berblick
 signup_button: Registrieren
 signup_confirm_password: "Passwort best\xC3\xA4tigen"
@@ -616,6 +651,7 @@ subject_must_not_be_empty: Betreff darf nicht leer sein
 successful_undelete_image: L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht.
 sucessfully_removed_image: Bild erfolgreich entfernt (:undo_link)
 summary: Zusammenfassung
+summary_help: Optional. Die Zusammenfassung kann ein Satz oder ein Absatz sein, welcher kurz den Inhalt der Seite beschreibt.
 sunday: Sonntag
 survey_design: Gestalte Diese Umfrage
 survey_list_all: Zeige alle Antworten
@@ -634,27 +670,36 @@ survey_responses_enabled: Offen f&uuml;r Antworten? Wenn ausgew&auml;hlt k&ouml;
 survey_take: Nimm Teil
 survey_your_rating_of_this_response: Deine Stimme f&uuml; diese Antwort
 tags: Tags
+tags_help: "Optional. Benutze am besten ein paar verschiedene W\xC3\xB6rter um den Inhalt der Seite zu beschreiben."
 task_list_page_description: "Eine Liste an To-Do-Eintr\xC3\xA4gen."
 task_list_page_display: Aufgabenliste
 tasks: Aufgaben
+thing_not_found: "{thing} nicht gefunden"
+thing_settings: "{thing} Settings"
 this_is_committee: Diese Arbeitsgruppe ist Teil von {parent_group}.
 this_is_coordinating: Dieses Gremium ist der <strong>koordinierende Rat</strong> von {parent_group}.
 thursday: Donnerstag
 time_zone: Zeitzone
 title: Titel
+title_help: "Ben\xC3\xB6tigt. Der Titel wird ben\xC3\xB6tigt um die Seite zu identifizieren."
 to: An
 toggle_selection: Setze Auswahl
+trash: "M\xC3\xBCll"
+trash_description: "Im M\xC3\xBCll befinden sich all deine gel\xC3\xB6schten Seiten. Du kannst eine Seite wiederherstellen indem du {undelete} klickst oder sie auch permanent zerst\xC3\xB6rst indem du {destroy} klickst."
 try_again: Versuch's nochmal
 tuesday: Dienstag
 type_your_messages_here: "Tippe deine Nachricht hier und dr\xC3\xBCcke Enter..."
 typing: tippt
+undelete_from_trash: Wiederherstellen
 undo: r&uuml;ckg&auml;ngig
 unfeature_button: Defeature!
 unknown: unbekannt
 unread: ungelesen
 updated: aktualisiert
 upload_attachment: Lade Anhang hoch
+upload_file_help: "Ben\xC3\xB6tigt. W\xC3\xA4hle eine Datei, welche du hochladen willst."
 upload_image: Lade Bild hoch
+upload_image_help: "Optional. W\xC3\xA4hle ein erstes Bild um es hochzuladen."
 upload_images: Hochladen
 upload_new_image: Neues Bild hochladen
 uploaded_image_cropped: Hochgeladenes Bild wird auf 96x96 Pixel zugeschnitten/gestreckt.
@@ -676,6 +721,7 @@ version_number: Version :version
 versions: Versionen
 video: Video
 video_class_description: Zeige ein Video, welches auf einer externen Seite gespeichert ist.
+video_embed: Eingebettet
 video_embed_code_prompt: Embedcode eines externen Videos
 video_service_is_not_supported: "wird nicht unterst\xC3\xBCtzt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
 view_all: Alles ansehen
@@ -683,7 +729,9 @@ view_requests: Anfragen zeigen
 view_slideshow: Diashow ansehen
 viewed: Gesehen
 viewer: BesucherInnen
+viewer_help: <b>ZuseherIn</b>-Zugriff macht diese Seite sichtbar, aber sonst nichts.
 viewers: Ankucker
+visibility: Sichtbarkeit
 wall_heading: "\xC3\x96ffentliches Schwarzes Brett"
 wall_post_button: Neue Nachricht schreiben
 watch_checkbox: Benachrichtigung bei Aktualisierungen
@@ -700,15 +748,19 @@ welcome_find_groups_text: Durchsuche das Gruppen-Verzeichnis nach f&uuml;r Dich 
 welcome_find_people_link: Finde Kontakte
 welcome_find_people_text: Durchst&ouml;bere das Mitglieder-Verzeichnis nach anderen Benutzern.
 welcome_heading: Willkommen auf {site_title}, {user_name}!
+welcome_hide_link: Willkommenstext verstecken
 welcome_message: Crabgrass erm&ouml;glicht es am sozialen Wandel interessierten Organisationen Dinge anzupacken, sich zu Koordinieren und zu Netzwerken.
+welcome_show_link: Willkommenstext zeigen
 welcome_title: Willkommen auf {site_title}
 welcome_upload_icon_link: Lade ein Symbol hoch
 welcome_upload_icon_text: Lade ein Bild als dein Symbol hoch. Dieses Symbol wird neben jedem deiner Beitr&auml;ge erscheinen.
 when_does_feature_expire: Ab wann ist dieses Feature nicht mehr aktuell?
+width: Breite
 wiki_is_locked: Dieses Wiki ist momentan gesperrt von :user
 wiki_lost_text_confirmation: Aller ungesicherter Text wird verlohren gehen. Bist du Dir sicher?
 wiki_page_description: Ein allgemeines Textdokument
 wiki_page_display: Wiki
+wiki_revert_version: "R\xC3\xBCckg\xC3\xA4ngig zu Version {version}"
 wiki_section_edit: bearbeite diesen Abschnitt
 wont_be_able_to_save: "Du wirst diese Seite nicht speichern k\xC3\xB6nnen"
 you_are_not_member_of_any_group: Du bist bei keiner Gruppe Mitglied.
