@@ -89,11 +89,37 @@ class TestHeadings < Test::Unit::TestCase
     greencloth = GreenCloth.new( in_texts(:multiline_headings) )
     tree = greencloth.green_tree
 
-    assert_equal "h1. section one line one\nline two\n\nsection one text\n\n",
+    assert_equal "h1. section one line one\nline two\n\nsection one text\n\nh2. subsection\nwithout content\n\n",
       tree.find('section-one-line-one-line-two').markup
 
     assert_equal "h1. section two line one\nline two\n\nsection two text",
       tree.find('section-two-line-one-line-two').markup
+  end
+
+  def test_nested_sections
+    greencloth = GreenCloth.new( in_texts(:weird_and_nested) )
+    tree = greencloth.green_tree
+
+    assert_equal "h1. Highest\n\nlower\n-----------\n\nlower text\n\nh2. even lower\n\nh3. lowest\n\nlowest text\n\nh3. lowest and blankest\n\n",
+      tree.find('highest').markup
+
+    assert_equal "lower\n-----------\n\nlower text\n\n",
+      tree.find('lower').markup
+
+    assert_equal "h2. even lower\n\nh3. lowest\n\nlowest text\n\nh3. lowest and blankest\n\n",
+      tree.find('even-lower').markup
+
+    assert_equal "h3. lowest\n\nlowest text\n\n",
+      tree.find('lowest').markup
+
+    assert_equal "h3. lowest and blankest\n\n",
+      tree.find('lowest-and-blankest').markup
+
+    assert_equal "high as they get\n=================\n\nh2. underling\n\nunderling text",
+      tree.find('high-as-they-get').markup
+
+    assert_equal "h2. underling\n\nunderling text",
+      tree.find('underling').markup
   end
 
   def test_link_with_whitespace_after_first_char

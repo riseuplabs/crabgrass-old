@@ -118,9 +118,8 @@ class GreenTree < Array
     if sibling
       return sibling
     else
-      # we have no siblings, so parent's
-      # next sibling must be the next node on the list
-      return parent.next_sibling
+      # we have no siblings, so try parent's successor
+      return parent.successor
     end
   end
 

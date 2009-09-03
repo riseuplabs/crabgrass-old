@@ -81,7 +81,6 @@ module GreenclothStructure
     # each element in oversection_headings is a list
     # this list contains all the headings (title and subsections) that make up a section
     until headings.empty?
-      # require 'ruby-debug';debugger;1-1
       current_heading = headings.shift
       heading_level, text, name = *current_heading
 
