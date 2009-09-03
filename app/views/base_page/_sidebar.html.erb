@@ -12,7 +12,9 @@
         <%= watch_line %>
         <%= star_line %>
       </ul>
-      <%- if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any? -%>
+% # Share with all is currently not active on youthportal.
+% # To activate add share_all_line to the array and enable in base_page_permissions
+      <%- if (access_changing_commands = [share_line, notify_line, public_line].compact).any? -%>
         <ul class='side_list commands rule'>
           <%= access_changing_commands %>
         </ul>
