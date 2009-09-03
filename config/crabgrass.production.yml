@@ -50,8 +50,8 @@ profile_fields:
 
 # ensure_page_owner: false
 
-# text_editor: greencloth_only
-text_editor: html_preferred
+text_editor: greencloth_only
+#text_editor: html_preferred
 
 ##
 ## SITES
