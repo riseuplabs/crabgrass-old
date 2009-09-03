@@ -6,7 +6,7 @@
     <th>&nbsp;</th>
   </tr>
 
-% uparts = @page.user_participations.paginate(:page => params[:page], :include => :user, :order => 'users.login ASC')
+% uparts = @page.user_participations.paginate(:page => params[:page], :per_page => 15, :include => :user, :order => 'users.login ASC')
 % uparts.each do |upart|
 %   next unless upart.user
     <tr class='<%=cycle "odd","even"%>'>
