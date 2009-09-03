@@ -56,8 +56,8 @@
     </ul>
   <% end -%>
 
-% if (uparts = @page.sorted_user_participations(:limit => 6)).any?
-%   if uparts.length >= 6
+% if (uparts = @page.sorted_user_participations(:limit => 20)).any?
+%   if uparts.length >= 20
 %     @more = true
 %     uparts.pop
 %   end

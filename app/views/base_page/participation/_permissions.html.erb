@@ -14,7 +14,7 @@
       <%= render :partial => 'base_page/participation/permission_row', :locals => {:participation => gpart} %>
     </tr>
 % end
-% if (uparts = @page.sorted_user_participations(:page => params[:page])).any?
+% if (uparts = @page.sorted_user_participations(:page => params[:page], :per_page => 15)).any?
     <tr class='<%=cycle "odd","even"%>'>
       <td colspan='4'><b><%= "users"[:users] %></b></td>
     </tr>
