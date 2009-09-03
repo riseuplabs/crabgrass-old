@@ -1,3 +1,6 @@
+# this is a wrapper for the lower level WikiLock class
+# it adds lock permissions, breaking and section hierarchy
+# see WikiLock for more info
 module WikiExtension
   module Locking
 

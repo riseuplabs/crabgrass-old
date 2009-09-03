@@ -43,6 +43,8 @@ end
 
 class WikiLockError < StandardError; end
 
+class WikiSectionError < StandardError; end
+
 # extend base Exception class to have record() method.
 # this is useful like so:
 #

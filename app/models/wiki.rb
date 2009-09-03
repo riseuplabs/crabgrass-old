@@ -70,7 +70,8 @@ class Wiki < ActiveRecord::Base
   # versions are so tightly coupled that wiki.versions should always be up to date
   # this must be declared after acts_as_versioned, since AAV declares its own after_save
   # callback that create versions
-  after_save :reload_versions
+  # locks should reloaded too, since some locks may become invalid (because of section heading changes)
+  after_save :reload_versions_and_locks
 
   # only save a new version if the body has changed
   def create_new_version? #:nodoc:
@@ -125,8 +126,8 @@ class Wiki < ActiveRecord::Base
       raise WikiLockError.new("Can't save '#{section}' since someone has locked it.")
     end
 
-    set_body_for_section(section, text)
     unlock!(section, user)
+    set_body_for_section(section, text)
 
     self.user = user
     self.save!
@@ -208,8 +209,10 @@ class Wiki < ActiveRecord::Base
   end
 
   # reload the association
-  def reload_versions
+  def reload_versions_and_locks
     self.versions(true)
+    # will clear out obsolete locks (expired or non-existant sections)
+    self.section_locks(true)
   end
 
   ##

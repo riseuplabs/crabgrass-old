@@ -30,7 +30,7 @@ module WikiExtension
     def find(section)
       node = green_tree if section == :document
       node ||= green_tree.find(section)
-      return node || (raise "Can't find wiki section {section}"[:cant_find_wiki_section, section])
+      return node || (raise WikiSectionError, "Can't find wiki section {section}"[:cant_find_wiki_section, section])
     end
   end
 end

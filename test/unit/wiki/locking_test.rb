@@ -46,6 +46,40 @@ module Wiki::LockingTest
         context "when a user locks 'section-two'" do
           setup { @wiki.lock! 'section-two', @user }
 
+          context "and a different user renames 'section-two' bypassing locks" do
+            setup do
+              body = @wiki.body.sub('section two', 'section 2')
+              @wiki.update_attributes!({:user => @different_user, :body => body, :body_html => nil})
+            end
+
+            should "have no section locked for either user" do
+              assert @wiki.sections_locked_for(@user).empty?
+              assert @wiki.sections_locked_for(@different_user).empty?
+            end
+
+            should "have all sections open for either user" do
+              assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user)
+              assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user)
+            end
+          end
+
+          context "and a different user renames 'section-two' without saving" do
+            setup do
+              @wiki.body = @wiki.body.sub('section two', 'section 2')
+            end
+
+            should "have no section locked for either user" do
+              assert @wiki.sections_locked_for(@user).empty?
+              assert @wiki.sections_locked_for(@different_user).empty?
+            end
+
+            should "have all sections open for either user" do
+              assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@user)
+              assert_same_elements @wiki.all_sections, @wiki.sections_open_for(@different_user)
+            end
+          end
+
+
           context "and a different user locks 'section-one'" do
             setup { @wiki.lock! 'section-one', @different_user }
 
