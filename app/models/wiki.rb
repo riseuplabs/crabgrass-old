@@ -141,6 +141,7 @@ class Wiki < ActiveRecord::Base
     if body_changed?
       write_attribute(:body_html, nil)
       write_attribute(:raw_structure, nil)
+      @structure = nil
     end
   end
 
