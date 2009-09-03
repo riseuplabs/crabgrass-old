@@ -43,11 +43,11 @@ class WikiLock < ActiveRecord::Base
   def sections_open_for(user)
     open_to_everyone = all_sections - locks.keys
     open_to_user = open_to_everyone
-
     # take the sections open to everyone and add ones locked by this user
     # which must be open to that user
     locks.inject(open_to_user) do |matching, (section, lock)| # parens will splat a single [:document, {...}] input
       matching << section if lock[:by] == user.id
+      matching
     end
 
     open_to_user.uniq

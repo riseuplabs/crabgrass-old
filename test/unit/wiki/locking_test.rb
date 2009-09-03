@@ -46,6 +46,17 @@ module Wiki::LockingTest
         context "when a user locks 'section-two'" do
           setup { @wiki.lock! 'section-two', @user }
 
+          context "and a different user locks 'section-one'" do
+            setup { @wiki.lock! 'section-one', @different_user }
+
+            should "appear to that user that 'section-two' is open" do
+              assert @wiki.sections_open_for(@user).include?('section-two')
+            end
+
+            should "appear to the different user that 'section-one' is open" do
+              assert @wiki.sections_open_for(@different_user).include?('section-one')
+            end
+          end
 
           should "return 'section-two' from section_edited_by" do
             assert_equal 'section-two', @wiki.section_edited_by(@user)
