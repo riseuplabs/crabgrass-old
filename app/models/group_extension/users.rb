@@ -7,7 +7,7 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
-      after_destroy :destroy_memberships
+      before_destroy :destroy_memberships
 #      before_create :set_created_by
 
       has_many :memberships, :before_add => :check_duplicate_memberships
@@ -92,10 +92,14 @@ module GroupExtension::Users
   def destroy_memberships
     user_names = []
     self.memberships.each do |membership|
-      user_names << membership.user.name
+      user = membership.user
+      user_names << user.name
       membership.skip_destroy_notification = true
+      user.clear_peer_cache_of_my_peers
       membership.destroy
+      user.update_membership_cache
     end
+    self.increment!(:version)
   end
 
   def set_created_by
