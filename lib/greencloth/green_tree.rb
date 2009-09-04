@@ -171,11 +171,11 @@ class GreenTree < Array
   # returns the whole greencloth text, with this section replaced with +markup+
   # does not modify any data this node has
   def sub_markup(section_markup)
-    old_markup = greencloth.to_s.clone
+    current_markup = greencloth.to_s.clone
     # we want to preserve any trailing whitespace
     #that way if we replace the text with other text, section boundaries will remain valid
-    old_section_markup = self.markup
-    trailing_whitespace = old_section_markup.scan(/\s+\Z/).last.to_s
+    current_section_markup = self.markup
+    trailing_whitespace = current_section_markup.scan(/\s+\Z/).last.to_s
 
 
     # don't apprend the trailing whitespace to the sections that
@@ -184,8 +184,8 @@ class GreenTree < Array
       section_markup << trailing_whitespace
     end
 
-    old_markup[self.start_index..self.end_index] = section_markup
-    old_markup
+    current_markup[self.start_index..self.end_index] = section_markup
+    current_markup
   end
 
 
