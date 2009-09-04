@@ -118,7 +118,7 @@ class WikiPageController < BasePageController
 
   # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
   def update_editors
-    return if @wiki.locked_by_id != current_user.id || !@wiki.editable_by?(current_user)
+    return unless @wiki.document_open_for?(current_user)
     render :json => update_editor_data(:editor => params[:editor], :wiki => params[:wiki])
   end
 
