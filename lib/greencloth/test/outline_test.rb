@@ -19,65 +19,107 @@ class TestHeadings < Test::Unit::TestCase
 
   def test_successive_heading
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+    tree = greencloth.green_tree
 
-    assert_equal 'vegetables', greencloth.heading_tree.successor('fruits').name
-    assert_equal 'pears', greencloth.heading_tree.successor('tasty-apples').name
-    assert_equal 'vegetables', greencloth.heading_tree.successor('pears').name
+    assert_equal 'vegetables', tree.find('fruits').successor.name
+    assert_equal 'pears', tree.find('tasty-apples').successor.name
+    assert_equal 'vegetables', tree.find('pears').successor.name
+  end
+
+  def test_badly_organized_successive_heading
+    greencloth = GreenCloth.new( in_texts(:badly_organized_fruits) )
+    tree = greencloth.green_tree
+
+    assert_equal 'vegetables', tree.find('fruits').successor.name
+    assert_equal 'tasty-apples', tree.find('green-apples').successor.name
+    assert_equal 'pears', tree.find('tasty-apples').successor.name
   end
 
   def test_get_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+    tree = greencloth.green_tree
 
-    assert_equal "h2. Tasty Apples\n\nh3. Green\n\nh3. Red",
-      greencloth.get_text_for_heading('tasty-apples')
+    assert_equal "h2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\n",
+      tree.find('tasty-apples').markup
 
     assert_equal "h1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans",
-      greencloth.get_text_for_heading('vegetables')
+      tree.find('vegetables').markup
 
-    assert_equal "h2. Pears", greencloth.get_text_for_heading('pears')
+    assert_equal "h2. Pears\n\n", tree.find('pears').markup
   end
 
   def test_weird_text
     greencloth = GreenCloth.new( in_texts(:weird_chars) )
-    assert_equal "h1. i eat 'food'", greencloth.get_text_for_heading('i-eat-food')
+    tree = greencloth.green_tree
+
+    assert_equal "h1. i eat 'food'\n\n", tree.find('i-eat-food').markup
   end
 
   def test_get_setext_style_headings
     greencloth = GreenCloth.new( in_texts(:setext_trees) )
+    tree = greencloth.green_tree
 
-    assert_equal "Evergreens\n==========\n\nh3. Cedar\n\nh3. Redwood\n\nh3. Fir",
-      greencloth.get_text_for_heading('evergreens')
+    assert_equal "Evergreens\n==========\n\nh3. Cedar\n\nh3. Redwood\n\nh3. Fir\n\n",
+      tree.find('evergreens').markup
 
     assert_equal "Oaks\n----\n\nh3. White Oak\n\nh3. Red Oak",
-      greencloth.get_text_for_heading('oaks')
+      tree.find('oaks').markup
 
-    assert_equal "h3. Fir", greencloth.get_text_for_heading('fir')
+    assert_equal "h3. Fir\n\n", tree.find('fir').markup
   end
 
   def test_duplicate_names
     greencloth = GreenCloth.new( in_texts(:double_trouble) )
+    tree = greencloth.green_tree
 
-    assert_equal "h1. Title\n\nh3. Under first", greencloth.get_text_for_heading('title')
-
-    assert_equal "h1. Title\n\nh3. Under second", greencloth.get_text_for_heading('title_2')
+    assert_equal "h1. Title\n\nh3. Under first\n\n", tree.find('title').markup
+    assert_equal "h1. Title\n\nh3. Under second", tree.find('title_2').markup
   end
 
   def test_set_text
     greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+    tree = greencloth.green_tree
 
-    assert_equal "[[toc]]\n\nh1. Fruits\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', 'xxxxx')
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nxxxxx\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", tree.find('tasty-apples').sub_markup('xxxxx')
 
-    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", greencloth.dup.set_text_for_heading('tasty-apples', "h2. Oranges\n\nooooo")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", tree.find('tasty-apples').sub_markup("h2. Oranges\n\nooooo")
   end
 
   def test_multinine_heading
     greencloth = GreenCloth.new( in_texts(:multiline_headings) )
+    tree = greencloth.green_tree
 
-    assert_equal "h1. section one line one\nline two\n\nsection one text",
-      greencloth.get_text_for_heading('section-one-line-one-line-two')
+    assert_equal "h1. section one line one\nline two\n\nsection one text\n\nh2. subsection\nwithout content\n\n",
+      tree.find('section-one-line-one-line-two').markup
 
     assert_equal "h1. section two line one\nline two\n\nsection two text",
-      greencloth.get_text_for_heading('section-two-line-one-line-two')
+      tree.find('section-two-line-one-line-two').markup
+  end
+
+  def test_nested_sections
+    greencloth = GreenCloth.new( in_texts(:weird_and_nested) )
+    tree = greencloth.green_tree
+
+    assert_equal "h1. Highest\n\nlower\n-----------\n\nlower text\n\nh2. even lower\n\nh3. lowest\n\nlowest text\n\nh3. lowest and blankest\n\n",
+      tree.find('highest').markup
+
+    assert_equal "lower\n-----------\n\nlower text\n\n",
+      tree.find('lower').markup
+
+    assert_equal "h2. even lower\n\nh3. lowest\n\nlowest text\n\nh3. lowest and blankest\n\n",
+      tree.find('even-lower').markup
+
+    assert_equal "h3. lowest\n\nlowest text\n\n",
+      tree.find('lowest').markup
+
+    assert_equal "h3. lowest and blankest\n\n",
+      tree.find('lowest-and-blankest').markup
+
+    assert_equal "high as they get\n=================\n\nh2. underling\n\nunderling text",
+      tree.find('high-as-they-get').markup
+
+    assert_equal "h2. underling\n\nunderling text",
+      tree.find('underling').markup
   end
 
   def test_link_with_whitespace_after_first_char
@@ -89,6 +131,21 @@ class TestHeadings < Test::Unit::TestCase
   def test_anchor_link_with_whitespace_after_first_char
     greencloth = GreenCloth.new("[# link]")
     assert_equal "<p><a href=\"#link\">link</a></p>", greencloth.to_html
+  end
+
+  def test_set_text_around_untitled_section
+    greencloth = GreenCloth.new( in_texts(:untitled_leading_section) )
+    tree = greencloth.green_tree
+
+    assert_equal "\nwelcome to our great list of fruits and vegetables\n\nh1. No Fruits\n\nh1. Vegetables\n\nh2. Green Beans", tree.find('fruits').sub_markup('h1. No Fruits')
+  end
+
+  def test_plain_old_text
+    greencloth = GreenCloth.new( in_texts(:plain_old_text) )
+    tree = greencloth.green_tree
+
+    assert_equal [], tree.section_names
+    assert_equal greencloth.size - 1, tree.end_index
   end
 
   protected

@@ -10,7 +10,7 @@ module WikiPageHelper
 
   def locked_error_message
     if locked_for_me?
-      user_id = @wiki.locked_by_id
+      user_id = @wiki.locker_of(:document).id
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
       msgs = [
@@ -30,26 +30,50 @@ module WikiPageHelper
    )
   end
 
-  def locked_for_me?(section = :all)
+  def locked_for_me?(section = :document)
     if @wiki and logged_in?
-      !@wiki.editable_by?(current_user, section)
+      @wiki.section_locked_for?(section, current_user)
     else
       false
     end
   end
 
-  def decorate_with_edit_links
-    url = page_xurl(@page, :action => 'edit_inline', :id => '_change_me_')
-    opts = {:url => url}
+  def wiki_body_html(wiki = @wiki)
+    html = wiki.body_html
+    doc = Hpricot(html)
+    doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |heading_el|
+      section = heading_el['href'].sub(/^.*#/, '')
 
-    if @heading_with_form
-      opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
+      link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
+      if show_inline_editor?
+        link_opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
+      end
+      link = link_to_remote_icon('pencil', link_opts, :class => 'edit',
+                        :title => 'Edit This Section'[:wiki_section_edit],
+                        :id => "#{section}_edit_link")
+      heading_el.parent.insert_after(Hpricot(link), heading_el)
     end
+    doc.to_html
+  end
 
-    link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit], :id => '_change_me__edit_link')
-    link.gsub!('"','\"')
+  def wiki_body_html_with_edit_form(wiki = @wiki, section = @editing_section)
+    html = wiki_body_html(wiki).dup
 
-    javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
+    return html unless show_inline_editor?
+    markup_to_edit = wiki.get_body_for_section(section)
+
+    inline_form = render_inline_form(markup_to_edit, section)
+    inline_form << "\n"
+
+    # replace section html with the form
+    # and return the modified html
+    doc = Hpricot(html)
+    doc.at("a[@name=#{section}]").parent.swap(inline_form)
+    doc.to_html
+  end
+
+  def render_inline_form(markup, section)
+    render :partial => 'edit_inline', :locals => {:markup => markup, :section => section}
   end
 
 end
