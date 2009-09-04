@@ -67,6 +67,10 @@ class GreenTree < Array
   alias :to_s :inspect
   alias :leaf? :empty?
 
+  def root?
+    self.parent.nil?
+  end
+
   def children; self; end
 
   def add_child(text, name, heading_level)
@@ -78,7 +82,7 @@ class GreenTree < Array
   # in their original order
   def siblings
     # this node has no siblings since it's a root node
-    return [] if self.parent.nil?
+    return [] if self.root?
     # we have some siblings
     return self.parent.children
   end
@@ -98,8 +102,8 @@ class GreenTree < Array
 
   # parent and parents parent for this node (excluding itself)
   def ancestors
-    return [] if parent.nil?
-    [parent] + parent.ancestors
+    return [] if self.root?
+    [self.parent] + self.parent.ancestors
   end
 
   # children and childrens children for this node (including itself)
@@ -112,7 +116,7 @@ class GreenTree < Array
   # returns the node after this one
   def successor
     # this node has no successor since it's a root node
-    return nil if parent.nil?
+    return nil if self.root?
 
     sibling = self.next_sibling
     if sibling
@@ -173,7 +177,14 @@ class GreenTree < Array
     old_section_markup = self.markup
     trailing_whitespace = old_section_markup.scan(/\s+\Z/).last.to_s
 
-    old_markup[self.start_index..self.end_index] = section_markup + trailing_whitespace
+
+    # don't apprend the trailing whitespace to the sections that
+    # hit the end of the document text
+    unless self.root? or self.successor.nil?
+      section_markup << trailing_whitespace
+    end
+
+    old_markup[self.start_index..self.end_index] = section_markup
     old_markup
   end
 
