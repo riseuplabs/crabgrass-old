@@ -61,11 +61,14 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
 
   def test_revert
     login_as :orange
-    pages(:wiki).data.smart_save!(:user => users(:blue), :body => "version 1")
-    pages(:wiki).data.smart_save!(:user => users(:yellow), :body => "version 2")
+    pages(:wiki).data.update_document!(users(:blue), 1, "version 1")
+    pages(:wiki).data.update_document!(users(:yellow), 2, "version 2")
     post :revert, :page_id => pages(:wiki).id, :id => 1
-    assert_response :success
-    assert_select 'textarea', 'version 1'
+
+    wiki = Wiki.find(pages(:wiki).data.id)
+
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'show'), "revert should redirect to show wiki action"
+    assert_equal "version 1", wiki.body
   end
 
 end
