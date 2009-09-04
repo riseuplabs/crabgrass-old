@@ -21,12 +21,12 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     # create versions
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
       login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
+      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" / i)
     end
 
     # create another modification by the last user
     # should not create a new version
-    pages(:wiki).data.smart_save!(:user => users(:purple), :body => "text 6 for the wiki")
+    pages(:wiki).data.update_document!(users(:purple), 6, "text 6 for the wiki")
 
     login_as :orange
     pages(:wiki).data.versions.reload
@@ -48,7 +48,7 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     login_as :orange
 
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
+      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" / i)
     end
 
     post :diff, :page_id => pages(:wiki).id, :id => "4-5"
