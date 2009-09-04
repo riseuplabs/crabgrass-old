@@ -27,10 +27,10 @@ class WikiController < ApplicationController
   # show the entire edit form
   def edit
     if @public and @private
-      @private.lock(Time.now, current_user) if @private.editable_by?(current_user)
-      @public.lock(Time.now, current_user) if @public.editable_by?(current_user)
+      @private.lock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.lock!(:document, current_user) if @public.document_open_for?(current_user)
     else
-      @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
+      @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
     end
   end
 
@@ -48,7 +48,7 @@ class WikiController < ApplicationController
   # a re-edit called from preview, just one area.
   def edit_area
     return render(:action => 'done') if params[:close]
-    @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
+    @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
   end
 
   # save the wiki show the preview
@@ -57,8 +57,7 @@ class WikiController < ApplicationController
     return break_lock if params[:break_lock]
 
     begin
-      @wiki.smart_save!(:body => params[:body],
-        :user => current_user, :version => params[:version])
+      @wiki.update_document!(current_user, params[:version], params[:body])
         unlock_for_current_user
     rescue Exception => exc
       @message = exc.to_s
@@ -82,14 +81,14 @@ class WikiController < ApplicationController
 
   def break_lock
     if @public and @private
-      @private.unlock
-      @public.unlock
+      @private.unlock!(:document, current_user, :force => true)
+      @public.unlock!(:document, current_user, :force => true)
 
-      @private.lock(Time.now, current_user)
-      @public.lock(Time.now, current_user)
+      @private.lock!(:document, current_user)
+      @public.lock!(:document, current_user)
     else
-      @wiki.unlock
-      @wiki.lock(Time.now, current_user)
+      @wiki.unlock!(:document, current_user, :force => true)
+      @wiki.lock!(:document, current_user)
     end
 
     render(:action => 'edit')
@@ -102,10 +101,10 @@ class WikiController < ApplicationController
 
   def unlock_for_current_user
     if @public and @private
-      @private.unlock if @private.editable_by?(current_user)
-      @public.unlock if @public.editable_by?(current_user)
+      @private.unlock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.unlock!(:document, current_user) if @public.document_open_for?(current_user)
     else
-      @wiki.unlock if @wiki.editable_by?(current_user)
+      @wiki.unlock!(:document, current_user) if @wiki.document_open_for?(current_user)
     end
   end
 
