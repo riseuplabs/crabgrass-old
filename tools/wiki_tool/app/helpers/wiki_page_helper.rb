@@ -38,18 +38,19 @@ module WikiPageHelper
     end
   end
 
-  ### TODO: cache all greencloth html using the cache helper
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
     doc = Hpricot(html)
     doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |heading_el|
       section = heading_el['href'].sub(/^.*#/, '')
 
-      link_opts = {:url => page_url(@page, :action => 'edit', :section => section)}
-      if editing_a_section?
+      link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
+      if show_inline_editor?
         link_opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
       end
-      link = link_to_remote_icon('pencil', link_opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit], :id => "#{section}_edit_link")
+      link = link_to_remote_icon('pencil', link_opts, :class => 'edit',
+                        :title => 'Edit This Section'[:wiki_section_edit],
+                        :id => "#{section}_edit_link")
       heading_el.parent.insert_after(Hpricot(link), heading_el)
     end
     doc.to_html
@@ -58,8 +59,7 @@ module WikiPageHelper
   def wiki_body_html_with_edit_form(wiki = @wiki, section = @editing_section)
     html = wiki_body_html(wiki).dup
 
-    return html unless editing_a_section?
-
+    return html unless show_inline_editor?
     markup_to_edit = wiki.get_body_for_section(section)
 
     inline_form = render_inline_form(markup_to_edit, section)
@@ -75,57 +75,6 @@ module WikiPageHelper
   def render_inline_form(markup, section)
     render :partial => 'edit_inline', :locals => {:markup => markup, :section => section}
   end
-
-
-  # def replace_section_with_form(html, section, form)
-  #    doc =
-  #
-  #    return doc.to_html
-  #  end
-
-
-
-  #
-  # def wiki_html_cache_key(wiki = @wiki)
-  #   cache_key("wikis/html", :_id => @wiki.id, :body_hash => @wiki.body.to_s,
-  #               :may_edit_page => may_edit_page?, :editing_a_section => editing_a_section?,
-  #               # page url keys on page owner changes (which might change links as well )
-  #               :page_url => page_url(@page))
-  # end
-
-
-  # # use javascript to add edit links to each section heading
-  # # solves the problem of some user's not having edit permissions
-  # def decorate_with_edit_links
-    #
-    # opts = {:url => url}
-    #
-    # if editing_a_section?
-    #   opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
-    # end
-    #
-    # link = link_to_remote_icon('pencil', opts, :class => 'edit', :title => 'Edit This Section'[:wiki_section_edit], :id => '_change_me__edit_link')
-    # link.gsub!('"','\"')
-    #
-    # javascript_tag %Q[decorate_wiki_edit_links("#{link}")]
-  # end
-
-  # returns the body html, but with a form in the place of the named heading
-  def body_html_with_form(wiki, section = :document)
-    body_html = wiki.body_html.dup
-    return body_html if section == :document
-
-    greencloth = GreenCloth.new(wiki.body)
-    text_to_edit = greencloth.get_text_for_heading(section)
-
-    form << "\n"
-    next_heading = greencloth.heading_tree.successor(section)
-    next_heading = next_heading ? next_heading.name : nil
-    html = replace_section_with_form(html, section, next_heading, form)
-
-    html
-  end
-
 
 end
 

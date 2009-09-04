@@ -57,8 +57,11 @@ class Wiki < ActiveRecord::Base
   alias_method :existing_section_locks, :section_locks
   def section_locks(force_reload = false)
     # current section_locks or create a new one if it doesn't exist
-    # will save the wiki (if wiki is a new_record?) and will create a new WikiLock
-    existing_section_locks(force_reload) || build_section_locks(:wiki => self)
+    locks = (existing_section_locks(force_reload) || build_section_locks(:wiki => self))
+    # section_locks should always have self as its wiki instance
+    # in case self.body is updated (and section names get changed)
+    locks.wiki = self
+    locks
   end
 
   acts_as_versioned :if => :create_new_version? do

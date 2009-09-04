@@ -1,6 +1,6 @@
 <%
   render :partial => 'tabs'
-  active_tab = current_user.setting.preferred_editor_sym
+  active_tab = current_user.setting.preferred_editor_sym || :greencloth
   @show_posts = false
 %>
 <%= Formy.tabs(:type => :simple) do |f|
@@ -53,7 +53,7 @@
   end
 end %>
 
-<% form_tag(page_xurl(@page, :action => 'update'), :id => wiki_form_id(@wiki)) do -%>
+<% form_tag(page_url(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do -%>
 <%= hidden_field 'wiki', 'version' %>
 <% locked_error_message -%>
 
