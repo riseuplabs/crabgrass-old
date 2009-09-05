@@ -8,13 +8,35 @@ module PageExtension::Tracking
   end
 
   module InstanceMethods
-    # gets the number of stars for one page
-    def stats_per_day
-      self.dailies
+
+    # returns an array of view counts, [daily, weekly, monthly, all time]
+    def views_stats
+      [  hourlies.sum(:views),
+         dailies.sum(:views, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:views),
+         views_count ]
     end
 
-    def stats_per_hour
-      self.hourlies
+    # returns an array of view counts, [daily, weekly, monthly, all time]
+    def stars_stats
+      [  hourlies.sum(:stars),
+         dailies.sum(:stars, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:stars),
+         stars_count ]
     end
+
+    def edits_stats
+      [  hourlies.sum(:edits),
+         dailies.sum(:edits, :conditions => ['created_at > ?',1.week.ago]),
+         dailies.sum(:edits) ]
+    end
+
+    #def stats_per_day
+    #  self.dailies
+    #end
+    #
+    #def stats_per_hour
+    #  self.hourlies
+    #end
   end
 end
