@@ -1,36 +1,4 @@
-<%#
-  # This partial displays the list of recipients that is generated when you
-  # are in the process of adding recipients to a page.
-  #
-  # arguments:
-  # empty_box -- boolean. If true, then hide the current participants
-  #
-  # NOTE: for now, I have made empty_box always true. Why? Imagine this scenario:
-  # (1) a page has x & y users. (2) you go to share with user z. (3) you click the
-  # box to send user z a message. (4) you click share.
-  # This message will now be sent to users x, y, and z, even though you only wanted
-  # it to go to user z.
-  # So, for now, disable showing current participants.
-  #
-  # Also, the current code does not correctly display the access level of prior recipients anyway.
-  #
-  # NOTE2: it appears that the code was originally written so that sharing + notifying to people
-  # who already have access did not cause a notice to be sent. This logic did not work, however, and
-  # I think that it is too complex.
-  #
-  # There is another good reason to not list the users with access here: for pages with many users
-  # it makes it so that the popup takes a very long time to load.
-  #
-  # %>
-<% empty_box = true %>
+% # please do not add here a list of current participants: it makes pages with many participants impossibly slow. Also, it creates very complicated and buggy page sharing logic.
 <table><tbody class="autocomplete_results_table" id="share_page_recipient_table">
-<% if !empty_box %>
-  <% if @page && @page.recipients.any? -%>
-    <% @page.recipients.each do |recipient, access| %>
-    <%= render :partial => 'base_page/share/recipient',
-        :locals => {:recipient => recipient, :access => access.to_s, :unsaved => false} %>
-    <% end -%>
-  <% end -%>
-<% end %>
 </tbody></table>
 

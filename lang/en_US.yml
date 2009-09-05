@@ -33,7 +33,6 @@ access: "Access"
 name: "Name"
 user: "User"
 to: "To"
-viewed: "Viewed"
 people: "People"
 delete: "Delete"
 deleted: "Deleted"
@@ -76,6 +75,7 @@ see_all_link: "See All"
 details_link: "Details"
 check_all: "Check All"
 return_link: "Return"
+statistics: "Statistics"
 
 summary: "Summary"
 edit: "Edit"
@@ -682,6 +682,10 @@ invite_not_found: "Invite not found"
 ## PAGES
 ##
 
+starred: "Starred"
+viewed: "Viewed"
+edited: "Edited"
+
 all_page_types: "all page types"
 edit_title: "edit title"
 data_for_page_missing: "The data for this page is missing."
@@ -690,7 +694,6 @@ updated: "updated"
 created: "created"
 unread: "unread"
 read: "read"
-starred: "starred"
 all_people: "All People"
 all_groups: "All Groups"
 all_networks: "All Networks"
@@ -797,6 +800,7 @@ only_me: "Me"
 create_page_button: "Create {page_class}"
 page_added_to_group: "This page will be added to {group_type} {group_name}."
 additional_page_access: "Additional Access"
+page_owner_error: "Page owner cannot be empty."
 
 # help
 

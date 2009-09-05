@@ -126,6 +126,10 @@ module FlashMessageHelper
     raise ErrorNotFound.new(message)
   end
 
+  def raise_denied(message=nil)
+    raise PermissionDenied.new(message)
+  end
+
   ##
   ## BUILDING THE MESSAGE
   ## normally, this should not be called directly, but there are a few times
@@ -230,8 +234,8 @@ module FlashMessageHelper
     heading+text
   end
 
-  def exception_detailed_message(exception)
-    return "Warning: Trying to get detailed message but no exception given."
+  def exception_detailed_message(exception=nil)
+    return "Warning: Trying to get detailed message but no exception given." unless exception
     message = exception.clean_message
     file, line = exception.backtrace.first.split(":")[0, 2]
     if File.exists?(file)

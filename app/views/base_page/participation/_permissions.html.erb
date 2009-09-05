@@ -14,7 +14,7 @@
       <%= render :partial => 'base_page/participation/permission_row', :locals => {:participation => gpart} %>
     </tr>
 % end
-% if (uparts = @page.sorted_user_participations(:page => params[:page])).any?
+% if (uparts = @page.sorted_user_participations(:page => params[:page], :per_page => 10, :include => :user)).any?
     <tr class='<%=cycle "odd","even"%>'>
       <td colspan='4'><b><%= "users"[:users] %></b></td>
     </tr>
@@ -24,10 +24,10 @@
       <%= render :partial => 'base_page/participation/permission_row', :locals => {:participation => upart} %>
     </tr>
 % end
-% if uparts.total_entries > uparts.per_page
-    <tr><td colspan="4"><%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'permissions'}) %></td></tr>
-% end
 </table>
+% if uparts.total_entries > uparts.per_page
+<%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'permissions'}) %>
+% end
 
 % # DISABLED FOR NOW. I THINK IT IS CONFUSING TO HAVE THE ABILITY TO ADD PERMISSIONS HERE AND ALSO IN THE SHARE POPUP.
 % if false and may_create_participation?

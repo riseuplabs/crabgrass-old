@@ -8,13 +8,14 @@
 // set msg to "" in order to hide it.
 function showNoticeMessage(msg) {
   Autocomplete.hideAll();
-  if ($('modal_message')) {
+  if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
     $('modal_message').update(msg);
   } else if ($('message')) {
     $('message').update(msg);
     if (msg)
       window.location.hash = "message";
   }
+  $$('.spin').invoke('hide');
 }
 
 // opens the greencloth editing reference.
