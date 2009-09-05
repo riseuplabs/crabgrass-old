@@ -2,7 +2,7 @@
 <table class="form">
   <tr>
     <td><%= label_tag 'page[owner]', "Owner" %></td>
-    <td><%= select_tag 'page[owner]', options_for_page_owner(:include_me => false, :group => (@page.owner && @page.owner.kind_of?(Group) ? @page.owner : nil)) %></td>
+    <td><%= select_tag 'page[owner]', options_for_page_owner(:include_me => false, :selected => @page.owner) %></td>
   </tr>
   <tr>
     <td><%= label_tag 'page[title]', "Title" %></td>

@@ -20,8 +20,9 @@
       </td>
     </tr>
 % end
-% if uparts.total_entries > uparts.per_page
-    <tr><td colspan="4"><%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'participation'}) %></td></tr>
-% end
 </table>
+% if uparts.total_entries > uparts.per_page
+<%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'participation'}) %>
+% end
+
 

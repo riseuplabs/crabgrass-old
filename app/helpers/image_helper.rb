@@ -71,7 +71,7 @@ module ImageHelper
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
-    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
+    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' class='#{options[:class]}' />"
   end
   def spinner_id(id)
     if id.is_a? ActiveRecord::Base

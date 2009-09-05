@@ -127,7 +127,10 @@ module ControllerExtension::RescueErrors
         super(exception)
       end
       format.js do
-        @exception = exception
+        add_variables_to_assigns
+        @template.instance_variable_set("@exception", exception)
+        @template.instance_variable_set("@rescues_path", File.dirname(rescues_path("stub")))
+        @template.send!(:assign_variables_from_controller)
         render :template => 'rescues/diagnostics.rjs', :layout => false
       end
     end

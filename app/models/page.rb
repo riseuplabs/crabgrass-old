@@ -329,13 +329,13 @@ class Page < ActiveRecord::Base
     end
     if entity.nil?
       if Conf.ensure_page_owner?
-        raise ArgumentError.new("cannot set page.owner to nil")
+        raise ErrorMessage.new("Page owner cannot be empty."[:page_owner_error])
       else
         self.owner_id = nil
         self.owner_name = nil
         self.owner_type = nil
       end
-    else
+    elsif self.owner_name != entity.name
       self.owner_id = entity.id
       self.owner_name = entity.name
       if entity.is_a? Group
@@ -369,31 +369,6 @@ class Page < ActiveRecord::Base
         owner.login, owner.id
       ]))
     end
-  end
-
-  # a list of people and groups that have admin access to this page
-  def admins
-    # sometimes the owner is not in the list, this is a grave error, but
-    # we ensure that the owner is included in the list of admins.
-    groups = group_participations.select{|p|p.access_sym == :admin}.collect{|p|p.group}
-    users = user_participations.select{|p|p.access_sym == :admin}.collect{|p|p.user}
-    if owner
-      groups.unshift(owner) if owner.is_a? Group and !groups.include?(owner)
-      users.unshift(owner) if owner.is_a? User and !users.include?(owner)
-    end
-    return groups + users
-  end
-
-  # returns an array of each users or group and their access to this page.
-  # self.owner is removed from the list.
-  # eg: [[<user1>,:edit],[<user2>,:admin]]
-  def recipients
-    ary = self.user_participations.collect{|part|
-      [part.user,part.access_sym] if part.user != owner
-    } + self.group_participations.collect{|part|
-      [part.group,part.access_sym] if part.group != owner
-    }
-    return ary.compact.sort_by{|item| item[0].name}
   end
 
   # returns the appropriate user_participation or group_participation record.

@@ -1,5 +1,4 @@
 <%
-  empty_box = false if empty_box.nil?  # deprecated
   action = 'update' if action.nil?     # either 'update' or 'notify'
 
   add_button_id = 'add_recipient_button'
@@ -34,9 +33,6 @@
     :message => 'Enter the name of a group or person.'[:entity_autocomplete_tip],
     :container => 'autocomplete_container'
   )
-
-  # if there are no recipients at all, we will do not show the box
-  recipients_exist = @page && @page.recipients.any?
 %>
 <table class='share_page_recipient_add'>
 <!--
@@ -71,6 +67,6 @@
 this does not make sense in the context of the notify page.
 <h2 class="first"><%= 'This Page will be shared with:'[:share_page_recipients_list] %></h2>
 -->
-<div class="autocomplete_results_area" id="share_page_recipient_area" <%='style="display:none"' if (!recipients_exist || empty_box) %>>
-  <%= render :partial => 'base_page/share/list_of_recipients', :locals => {:empty_box => empty_box} %>
+<div class="autocomplete_results_area" id="share_page_recipient_area" style="display:none">
+  <%= render :partial => 'base_page/share/list_of_recipients' %>
 </div>
