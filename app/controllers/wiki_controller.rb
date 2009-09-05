@@ -18,19 +18,19 @@ class WikiController < ApplicationController
 
   before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload]
   before_filter :fetch_wiki
+  before_filter :setup_wiki_rendering
 
   # show the rendered wiki
   def show
-    @wiki.render_html{|body| render_wiki_html(body, @group.name)}
   end
 
   # show the entire edit form
   def edit
     if @public and @private
-      @private.lock(Time.now, current_user) if @private.editable_by?(current_user)
-      @public.lock(Time.now, current_user) if @public.editable_by?(current_user)
+      @private.lock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.lock!(:document, current_user) if @public.document_open_for?(current_user)
     else
-      @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
+      @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
     end
   end
 
@@ -48,7 +48,7 @@ class WikiController < ApplicationController
   # a re-edit called from preview, just one area.
   def edit_area
     return render(:action => 'done') if params[:close]
-    @wiki.lock(Time.now, current_user) if @wiki.editable_by?(current_user)
+    @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
   end
 
   # save the wiki show the preview
@@ -57,10 +57,8 @@ class WikiController < ApplicationController
     return break_lock if params[:break_lock]
 
     begin
-      @wiki.smart_save!(:body => params[:body],
-        :user => current_user, :version => params[:version])
-        unlock_for_current_user
-      @wiki.render_html{|body| render_wiki_html(body, @group.name)}
+      @wiki.update_document!(current_user, params[:version], params[:body])
+      unlock_for_current_user
     rescue Exception => exc
       @message = exc.to_s
       return render(:action => 'error')
@@ -83,14 +81,14 @@ class WikiController < ApplicationController
 
   def break_lock
     if @public and @private
-      @private.unlock
-      @public.unlock
+      @private.unlock!(:document, current_user, :force => true)
+      @public.unlock!(:document, current_user, :force => true)
 
-      @private.lock(Time.now, current_user)
-      @public.lock(Time.now, current_user)
+      @private.lock!(:document, current_user)
+      @public.lock!(:document, current_user)
     else
-      @wiki.unlock
-      @wiki.lock(Time.now, current_user)
+      @wiki.unlock!(:document, current_user, :force => true)
+      @wiki.lock!(:document, current_user)
     end
 
     render(:action => 'edit')
@@ -103,10 +101,10 @@ class WikiController < ApplicationController
 
   def unlock_for_current_user
     if @public and @private
-      @private.unlock if @private.editable_by?(current_user)
-      @public.unlock if @public.editable_by?(current_user)
+      @private.unlock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.unlock!(:document, current_user) if @public.document_open_for?(current_user)
     else
-      @wiki.unlock if @wiki.editable_by?(current_user)
+      @wiki.unlock!(:document, current_user) if @wiki.document_open_for?(current_user)
     end
   end
 
@@ -123,6 +121,11 @@ class WikiController < ApplicationController
       @wiki = @public if params[:wiki_id] == @public.id.to_s
       @wiki = @private if params[:wiki_id] == @private.id.to_s
     end
+  end
+
+  def setup_wiki_rendering
+    return unless @wiki
+    @wiki.render_body_html_proc {|body| render_wiki_html(body, @group.name)}
   end
 
   # which images should be displayed in the image upload popup

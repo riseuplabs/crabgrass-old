@@ -9,6 +9,7 @@ nokogiri
 launchy
 ruby-debug
 redgreen (optional but recommended, redgreen colorizes test output)
+Roman2K-rails-test-serving (purely optional - speeds up test runs)
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
@@ -17,6 +18,7 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 (1) NEVER destroy a page that has been loaded from fixtures. This will mess up subsequent tests. Why? Because page_terms table cannot use transactions and so doesn't get rolled back.
 
 (2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
+>>>>>>> master:doc/TESTING
 
 == Integration Tests
 
@@ -119,3 +121,18 @@ rake cg:update_fixtures
 
 
 They will update page_terms.yml fixtures, which is what is actually used for resolving permissions.
+
+== Speeding Up Tests
+
+If you want to do proper test driven development, getting the tests to run faster is important. We don't use mocks, factories and other tricks to speed up the tests, but there is a simple way to speed up test loading time by 3
+
+RailsTestServing is a deamon that loads rails framework code and runs in the background. When you run the tests, the server will feed them the preloaded framework code, cutting down startup costs. This works with code reloading like you'd expect.
+
+First, add to bashrc/bash_profile/bash_login: `export RUBYLIB=".:test:$RUBYLIB"`
+
+Then run:
+sudo gem install Roman2K-rails-test-serving -s http://gems.github.com
+ruby test/test_helper.rb --serve
+ruby test/unit/my_test_file.rb [opts]
+
+Full manual: http://roman.flucti.com/a-test-server-for-rails-applications
