@@ -1,13 +1,6 @@
 <%= render :partial => '/widgets/mini_search' %>
 
-<div class="sidebox dark">
-  <h2 class="first"><%= "Have Your Say!"[:have_your_say] %></h2>
-  <ul class="side_list">
-    <li>
-      <%= [contribute_link, create_group_link, welcome_box_link].join('<li></li>') %>
-    </li>
-  </ul>
-</div>
+<%= render :partial => 'sidebox_links' %>
 
 
 <div class="sidebox">
