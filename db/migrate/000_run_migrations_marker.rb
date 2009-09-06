@@ -2,11 +2,6 @@ class RunMigrationsMarker < ActiveRecord::Migration
   class << self
 
   def up
-    return
-    # disabling this for it does not work anymore.
-    # and i don't know what it is supposed to do.
-    # Having this disabled i can do
-    # rake db:migrate:reset again.
     begin
 
       migration_numbers.each do |migration_number|

@@ -42,6 +42,9 @@ class CreateSurveyTables < ActiveRecord::Migration
   end
 
   def self.down
-
+    drop_table :survey_answers
+    drop_table :survey_responses
+    drop_table :survey_questions
+    drop_table :surveys
   end
 end
