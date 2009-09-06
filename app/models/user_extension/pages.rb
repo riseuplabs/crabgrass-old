@@ -161,6 +161,13 @@ module UserExtension::Pages
       page.contributors_count += 1
     end
 
+    # update everyone's participation
+    if options[:all_resolved]
+      page.user_participations.update_all('viewed = 0, inbox = (watch | inbox), resolved = 1')
+    else
+      page.user_participations.update_all('viewed = 0, inbox = (watch | inbox)')
+    end
+
     # create self's participation if it does not exist
     my_part = find_or_build_participation(page)
     my_part.update_attributes(
@@ -168,15 +175,6 @@ module UserExtension::Pages
       :resolved => (options[:resolved] || options[:all_resolved] || my_part.resolved?)
     )
 
-    # update everyone's participation
-    page.user_participations.each do |party|
-      unless party.user_id == self.id
-        party.resolved = options[:all_resolved] || party.resolved?
-        party.viewed = false
-        party.inbox = true if party.watch?
-      end
-      party.save
-    end
     # this is unfortunate, because perhaps we have already just modified the page?
     page.resolved = options[:all_resolved] || page.resolved?
     page.updated_at = now
@@ -252,6 +250,37 @@ module UserExtension::Pages
       users_to_email.each do |user|
         #logger.debug '----------------- emailing %s' % user.email
         Mailer.deliver_share_notice(user, options[:send_message], options[:mailer_options])
+      end
+    end
+  end
+
+  #
+  # check that +self+ may pester user and has admin access if sharing requires
+  # granting new access.
+  #
+  def may_share!(page,entity,options)
+    user  = entity if entity.is_a? User
+    group = entity if entity.is_a? Group
+    access = options[:access] || options[:grant_access] || :view
+    if user
+      if page.public? and !self.may_pester?(user)
+        raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] %  user.login)
+      elsif access.nil?
+        if !user.may?(:view,page)
+          raise PermissionDenied.new('%s is not allowed to view this page. They must be granted greater access first.'[:share_msg_grant_required] % user.login)
+        end
+      elsif !user.may?(access, page)
+        if !self.may?(:admin,page)
+          raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
+        elsif !self.may_pester?(user)
+          raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] % user.login)
+        end
+      end
+    elsif group
+      unless group.may?(access,page)
+        unless self.may?(:admin,page) and self.may_pester?(group)
+          raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
+        end
       end
     end
   end
@@ -387,38 +416,6 @@ module UserExtension::Pages
     users_to_pester # returns users to pester so they can get an email, maybe.
   end
 
-
-  #
-  # check that +self+ may pester user and has admin access if sharing requires
-  # granting new access.
-  #
-  def may_share!(page,entity,options)
-    user  = entity if entity.is_a? User
-    group = entity if entity.is_a? Group
-    access = options[:access] || options[:grant_access] || :view
-    if user
-      if page.public? and !self.may_pester?(user)
-        raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] %  user.login)
-      elsif access.nil?
-        if !user.may?(:view,page)
-          raise PermissionDenied.new('%s is not allowed to view this page. They must be granted greater access first.'[:share_msg_grant_required] % user.login)
-        end
-      elsif !user.may?(access, page)
-        if !self.may?(:admin,page)
-          raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
-        elsif !self.may_pester?(user)
-          raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] % user.login)
-        end
-      end
-    elsif group
-      unless group.may?(access,page)
-        unless self.may?(:admin,page) and self.may_pester?(group)
-          raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
-        end
-      end
-    end
-  end
-
   #
   # this is something of a hack, but much better than the hack it replaced.
   # in general, we have a big performance problem when trying to share/notify
@@ -439,6 +436,8 @@ module UserExtension::Pages
 
   # return true if the user may still admin a page even if we
   # destroy the particular participation object
+  #
+  # this method is VERY expensive to call, and should only be called with caution.
   def may_admin_page_without?(page, participation)
     method = participation.class.name.underscore.pluralize # user_participations or group_participations
     # work with a new, untained page object

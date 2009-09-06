@@ -12,10 +12,9 @@ page << "if ($('recipient_name')) {"
 # give focus to text field
 page << "$('recipient_name').focus();"
 
-if flash[:type] == 'error'
+if flash[:type].any?
   # there must have been an error
   page.call 'showNoticeMessage', display_messages
-  page.hide('popup_spinner')
 else
   page.call 'showNoticeMessage', ''
 

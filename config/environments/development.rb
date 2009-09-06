@@ -22,6 +22,29 @@ def export_yml(table_name)
   end
 end
 
+#
+# have you ever wanted to know what part of your code was triggering a particular
+# sql query? enable this and set the STOP_ON_SQL constant to find out.
+#
+# For example:
+#
+# STOP_ON_SQL = "SELECT * FROM `users` WHERE (`users`.`id` = 633)"
+#
+STOP_ON_SQL = nil
+if STOP_ON_SQL
+  STOP_ON_SQL_MATCH = Regexp.escape(STOP_ON_SQL).gsub(/\\\s+/, '\s+')
+  class ActiveRecord::ConnectionAdapters::AbstractAdapter
+    def log_with_debug(sql, name, &block)
+      if sql.match(STOP_ON_SQL_MATCH)
+        debugger
+        true
+      end
+      log_without_debug(sql, name, &block)
+    end
+    alias_method_chain :log, :debug
+  end
+end
+
 ##
 ## CONFIGURATION.
 ##

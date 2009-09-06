@@ -111,7 +111,8 @@ module Undress
       e.search("br").remove
       e.next_node.content = "" if e.next_node && e.next_node.text?
       e.previous_node.content = "" if e.previous_node && e.previous_node.text?
-      e.inner_html = e.inner_html.gsub(/&nbsp;/,"\s").strip
+      content = e.inner_html.gsub(/\&nbsp\;/,"\s").strip
+      e.inner_html = content == "" ? [] : content
     end
   end
 end

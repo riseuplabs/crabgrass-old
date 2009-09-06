@@ -1,23 +1,15 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'base_page/participation_controller'
 
-# Re-raise errors caught by the controller.
-class BasePage::ParticipationController; def rescue_action(e) raise e end; end
-
-class BasePage::ParticipationControllerTest < Test::Unit::TestCase
+class BasePage::ParticipationControllerTest < ActionController::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,
            :taggings, :tags
 
-
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
-    @controller = BasePage::ParticipationController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
   end
@@ -155,7 +147,7 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
   end
 
   def test_details
-  # TODO: Write this test
+   # TODO: Write this test
   end
 
   def test_show_popup
@@ -164,65 +156,15 @@ class BasePage::ParticipationControllerTest < Test::Unit::TestCase
     assert_response :success
   end
 
-  def test_move
-    group1 = groups(:animals)
-    group2 = groups(:rainbow)
-    user = users(:blue)
-    page = Page.create! :title => 'snowy snow', :user => user, :share_with => group2, :access => :admin
-    login_as :blue
-    post :move, :page_id => page.id, :group_id => group2.id
-    assert assigns(:page).owner
-    assert_equal group2, assigns(:page).owner
-  end
+  #def test_move
+  #  group1 = groups(:animals)
+  #  group2 = groups(:rainbow)
+  #  user = users(:blue)
+  #  page = Page.create! :title => 'snowy snow', :user => user, :share_with => group2, :access => :admin
+  #  login_as :blue
+  #  post :move, :page_id => page.id, :group_id => group2.id
+  #  assert assigns(:page).owner
+  #  assert_equal group2, assigns(:page).owner
+  #end
 
-  def test_share
-  # TODO: Write this test
-  end
-
-
-=begin
-# these old tests might be useful in writing a new test for the share function
-  def test_notify
-    login_as :red
-    get :create
-
-    post :notify, :id => pages(:page1).id, :to => users(:blue).login, :message => "check out this page"
-    assert UserParticipation.find(:all).find { |up| up.user_id == users(:blue).id and up.page_id == pages(:page1).id and up.notice }
-
-  end
-
-  def test_add_access
-    page = Page.find(1)
-    assert page, 'page should exist'
-
-    user = User.find_by_login('red')
-    assert user, 'user should exist'
-    assert user.may?(:admin, page), 'user should be able to admin page'
-    login = login_as(:red)
-    assert_equal login, 8, 'should login as user 8'
-
-    group = Group.find_by_name('public_group_everyone_can_see')
-    assert group, 'group should exist'
-    assert !group.may?(:admin, page), 'public group should not have access to page'
-
-    post 'access', :id => page.id, :add_name => group.name
-    assert user.may_pester?(group), 'user should be able to pester pub group'
-    page.reload
-    assert group.may?(:admin, page), 'public group should have access to page'
-
-    group_private = Group.find_by_name('private_group')
-    assert group, 'private group should exist'
-    assert !group_private.may?(:admin, page), 'private group should not have access to page originally'
-
-    post 'access', :id => page.id, :add_name => group_private.name
-    page.reload
-    assert !group_private.may?(:admin, page), 'private group should still not have access to page'
-
-    post 'access', :id => page.id, :add_name => users(:penguin).name
-    page.reload
-    users(:penguin).reload
-# TODO: figure out why this assert fails intermittently
-#    assert users(:penguin).may?(:admin, page), 'user penguin should have access to page'
-  end
-=end
 end

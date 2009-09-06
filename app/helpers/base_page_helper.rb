@@ -153,10 +153,10 @@ module BasePageHelper
 
   def view_line
     if @show_print != false
-      printable = link_to_with_icon 'printer', "Printable"[:print_view_link], page_url(@page, :action => "print")
+      printable = link_to "Printable"[:print_view_link], page_url(@page, :action => "print")
       #source = @page.controller.respond_to?(:source) ? page_url(@page, :action=>"source") : nil
       #text = ["View As"[:view_page_as], printable, source].compact.join(' ')
-      content_tag :li, printable
+      content_tag :li, printable, :class => 'small_icon printer_16'
     end
   end
 
@@ -275,11 +275,11 @@ module BasePageHelper
     end
   end
 
-  def move_line
-    if may_move_page?
-      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
-    end
-  end
+#  def move_line
+#    if may_move_page?
+#      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
+#    end
+#  end
 
   def details_line(id='details')
     if id == 'details'
@@ -301,31 +301,6 @@ module BasePageHelper
 
   def page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
-  end
-
-  def select_page_owner(_erbout)
-    owner_name = @page.owner ? @page.owner.name : ''
-    if may_move_page?
-      form_tag(url_for(:controller => '/base_page/participation', :action => 'set_owner', :page_id => @page.id)) do
-        possibles = @page.admins.to_select('both_names', 'name')
-        unless Conf.ensure_page_owner?
-          possibles << ["(#{"None"[:none]})",""]
-        end
-        concat(
-          select_tag(
-            'owner',
-             options_for_select(possibles, owner_name),
-            :onchange => 'this.form.submit();'
-          ),
-          binding
-        )
-      end
-      ""
-    elsif @page.owner
-      h(@page.owner.both_names)
-    else
-      "None"[:none]
-    end
   end
 
 end
