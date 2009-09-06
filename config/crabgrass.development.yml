@@ -27,7 +27,6 @@ enabled_mods:
   - super_admin
   - student
   - connectingclassrooms
-  - design_tester
   - moderation
 
 email:
