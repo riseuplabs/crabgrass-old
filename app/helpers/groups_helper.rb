@@ -123,9 +123,9 @@ module GroupsHelper
   ##
 
   def create_group_link
-    if @active_tab == :groups
+    if @active_tab == :groups or @active_tab == :home
       if may_create_group?
-        link_to_with_icon('plus', "Create a new {thing}"[:create_a_new_thing, :group.t.downcase], groups_url(:action => 'new'))
+        link_to_with_icon('membership_add', "Create a new {thing}"[:create_a_new_thing, :group.t.downcase], groups_url(:action => 'new'))
       end
     elsif @active_tab == :networks
       if may_create_network?

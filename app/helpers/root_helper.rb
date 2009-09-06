@@ -29,12 +29,6 @@ module RootHelper
     end
   end
 
-  def create_group_link
-    if may_create_group?
-      link_to_with_icon 'membership_add', "Create a Group", '/groups/new'
-    end
-  end
-
   def welcome_box_link
     if params[:welcome_box]
       link_to_with_icon 'cancel', "Hide Tips"[:hide_tips], '/'
