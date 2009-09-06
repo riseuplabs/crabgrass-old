@@ -4,6 +4,6 @@ class AddCoverIdToPages < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :pages, :cover_id
+    remove_column :pages, :cover_id
   end
 end

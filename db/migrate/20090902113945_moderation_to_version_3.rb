@@ -4,6 +4,6 @@ class ModerationToVersion3 < ActiveRecord::Migration
   end
 
   def self.down
-    Engines.plugins["moderation"].migrate(0)
+    Engines.plugins["moderation"].migrate(1)
   end
 end

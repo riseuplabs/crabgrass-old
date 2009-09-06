@@ -19,13 +19,13 @@ class SwitchToActsAsTaggableOn < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :taggings, :created_at, :datetime
-    remove_column :taggings, :context, :string
-    remove_column :taggings, :tagger_id, :integer
-    remove_column :taggings, :tagger_type, :string
+    remove_column :taggings, :created_at
+    remove_column :taggings, :context
+    remove_column :taggings, :tagger_id
+    remove_column :taggings, :tagger_type
 
-    remove_index :taggings, 'tag_id_index'
-    remove_index :taggings, 'taggable_id_index'
+    remove_index :taggings, :name => 'tag_id_index'
+    remove_index :taggings, :name => 'taggable_id_index'
 
     add_index "taggings", ["taggable_type", "taggable_id"], :name => "fk_taggings_taggable"
   end
