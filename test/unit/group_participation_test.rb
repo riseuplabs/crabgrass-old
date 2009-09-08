@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupParticipationTest < Test::Unit::TestCase
-  fixtures :groups, :users, :memberships, :group_participations, :pages
+  fixtures :groups, :users, :memberships, :group_participations
 
   def test_name_change
     group = groups(:rainbow)
@@ -11,7 +11,7 @@ class GroupParticipationTest < Test::Unit::TestCase
     group.name = 'colors'
     group.save!
 
-    assert pages.size > 0, 'there should be pages for rainbow'
+    assert pages.size > 0
     pages.each do |page|
       page.reload
       assert_equal group.name, page.owner_name

@@ -25,10 +25,8 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
       assert_error_message
     end
 
-    # messaging is disabled on cc.net!
-    assert_no_difference 'Post.count' do
+    assert_difference 'Post.count' do
       post :create, :id => 'green', :post => {:body => 'hi'}
-      assert_error_message
     end
   end
 
@@ -61,9 +59,8 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
   def test_should_update_conversation
     login_as :blue
 
-    # messaging is disabled on cc.net!
-    assert_no_difference 'Post.count' do
-      assert_no_difference 'PrivatePostActivity.count' do
+    assert_difference 'Post.count' do
+      assert_difference 'PrivatePostActivity.count' do
         put :update, :id => users(:orange).to_param, :post => {:body => 'hi'}
       end
     end
@@ -78,21 +75,18 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
     login_as :blue
     put :update, :id => users(:orange).to_param, :post => {:body => 'hi'}
 
-    # messaging is disabled on cc.net!
-    assert_equal 0, UnreadActivity.for_dashboard(users(:orange)).count
+    assert_equal 1, UnreadActivity.for_dashboard(users(:orange)).first.unread_count
 
     login_as :green
     put :update, :id => users(:orange).to_param, :post => {:body => 'hi'}
 
-    # messaging is disabled on cc.net!
-    assert_equal 0, UnreadActivity.for_dashboard(users(:orange)).count
+    assert_equal 2, UnreadActivity.for_dashboard(users(:orange)).first.unread_count
 
     login_as :orange
     get :show, :id => users(:blue).to_param
     assert_response :success
 
-    # messaging is disabled on cc.net!
-    assert_equal 0, UnreadActivity.for_dashboard(users(:orange)).count
+    assert_equal 1, UnreadActivity.for_dashboard(users(:orange)).first.unread_count
   end
 
 end

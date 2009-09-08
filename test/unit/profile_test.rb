@@ -108,7 +108,6 @@ class ProfileTest < Test::Unit::TestCase
   def test_find_committee
     user = users(:red)
 
-    debugger
     correct_visible_groups = Committee.find(:all).select do |g|
       user.may?(:view,g)
     end
