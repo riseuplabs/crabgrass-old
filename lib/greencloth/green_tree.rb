@@ -3,57 +3,128 @@
 ##
 class GreenTree < Array
   attr_accessor :heading_level
-  attr_accessor :tree_level
-  attr_accessor :text
   attr_accessor :name
-  attr_accessor :markup_index
-  attr_accessor :type
-  attr_accessor :parent
 
-  def initialize(text=nil, name=nil, heading_level=nil, parent=nil)
+  attr_accessor :start_index
+  attr_accessor :end_index
+
+  attr_accessor :parent
+  attr_accessor :text
+
+  def to_hash
+    hash = {
+      :name => self.name,
+      :start_index => self.start_index,
+      :end_index => self.end_index,
+      :heading_level => self.heading_level,
+      :children => self.collect {|child| child.to_hash}
+      }
+  end
+
+  def self.from_hash(hash, greencloth)
+    root_node = GreenTree.new(nil, hash[:name], hash[:heading_level], nil, greencloth)
+    root_node.start_index = hash[:start_index]
+    root_node.end_index = hash[:end_index]
+
+    subtree_from_hash(root_node, hash[:children])
+    root_node
+  end
+
+  def self.subtree_from_hash(parent_node, child_hashes)
+    child_hashes.each do |hash|
+      child_node = parent_node.add_child(nil, hash[:name], hash[:heading_level])
+      child_node.start_index = hash[:start_index]
+      child_node.end_index = hash[:end_index]
+
+      subtree_from_hash(child_node, hash[:children])
+    end
+  end
+
+  def initialize(text = nil, name = nil, heading_level = nil, parent = nil, greencloth = nil)
     tree = super()
     tree.text = text
     tree.heading_level = heading_level
     tree.name = name
     tree.parent = parent
+    tree.greencloth = greencloth || (parent.greencloth if parent)
     tree
   end
 
   def inspect
     if leaf?
-      %Q["#{text}"]
+      %Q["#{name}(#{start_index}..#{end_index})"]
     else
-      %Q["#{text||'root'}" -> [#{self.map{|i|i.inspect}.join(', ')}]]
+      %Q["#{name||'document'}(#{start_index}..#{end_index})" -> [#{self.map{|i|i.inspect}.join(', ')}]]
     end
+  end
+
+  def ==(other)
+    return self.name == other.name &&
+            self.heading_level == other.heading_level &&
+            self.parent == other.parent
   end
 
   alias :to_s :inspect
   alias :leaf? :empty?
-  alias :children= :concat
-  alias :child :slice
-  def children; self; end
 
-  def add_child(txt, name, heading_level)
-    self << GreenTree.new(txt, name, heading_level, self)
+  def root?
+    self.parent.nil?
   end
 
-  # returns the heading text for the one after the 'heading_name'
-  def successor(heading_name)
-    children.each_with_index do |node, i|
-      if node.name == heading_name
-        next_child = child(i+1)
-        if self.parent.nil?
-          return next_child
-        else
-          # go up a level to find the next element if we have to
-          return next_child ? next_child : self.parent.successor(self.name)
-        end
-      elsif !node.leaf?
-        found = node.successor(heading_name)
-        return found unless found.nil?
-      end
+  def children; self; end
+
+  def add_child(text, name, heading_level)
+    self << GreenTree.new(text, name, heading_level, self)
+    return self.last
+  end
+
+  # returns a list of siblings for this node (including itself)
+  # in their original order
+  def siblings
+    # this node has no siblings since it's a root node
+    return [] if self.root?
+    # we have some siblings
+    return self.parent.children
+  end
+
+  # the sibling after this node
+  def next_sibling
+    # find self node among siblings
+    self_index = siblings.index(self)
+    # this will return the next sibling, or nil if we have no next siblings
+    return siblings[self_index + 1] if self_index
+  end
+
+  # all children and parents for this node
+  def genealogy
+    ancestors + descendants
+  end
+
+  # parent and parents parent for this node (excluding itself)
+  def ancestors
+    return [] if self.root?
+    [self.parent] + self.parent.ancestors
+  end
+
+  # children and childrens children for this node (including itself)
+  def descendants
+    all = [self]
+    children.each { |child|  all += child.descendants }
+    all.compact
+  end
+
+  # returns the node after this one
+  def successor
+    # this node has no successor since it's a root node
+    return nil if self.root?
+
+    sibling = self.next_sibling
+    if sibling
+      return sibling
+    else
+      # we have no siblings, so try parent's successor
+      return parent.successor
     end
-    return nil # not found
   end
 
   # walks tree, looking for a node that matches
@@ -70,35 +141,96 @@ class GreenTree < Array
   end
 
   # get the list of all the available heading names in this tree
-  # makes no guarantee about ordering
-  def heading_names
+  # order from text top to text bottom
+  def section_names
     names = []
     names << self.name
     children.each do |child|
-      names.concat child.heading_names
+      names.concat child.section_names
     end
     names.compact
   end
 
+
+  def prepare_markup_indexes
+    if self.parent
+      puts "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
+    else
+      markup = self.greencloth.to_s.clone
+      self.prepare_markup_start_index!(markup)
+      self.prepare_markup_end_index!(markup)
+      self.end_index = markup.size - 1
+    end
+  end
+
+  # returns the markup text for this section
+  def markup
+    greencloth[self.start_index..self.end_index]
+  end
+
+  # returns the whole greencloth text, with this section replaced with +markup+
+  # does not modify any data this node has
+  def sub_markup(section_markup)
+    current_markup = greencloth.to_s.clone
+    # we want to preserve any trailing whitespace
+    #that way if we replace the text with other text, section boundaries will remain valid
+    current_section_markup = self.markup
+    trailing_whitespace = current_section_markup.scan(/\s+\Z/).last.to_s
+
+
+    # don't apprend the trailing whitespace to the sections that
+    # hit the end of the document text
+    unless self.root? or self.successor.nil?
+      section_markup << trailing_whitespace
+    end
+
+    current_markup[self.start_index..self.end_index] = section_markup
+    current_markup
+  end
+
+
+  protected
+
+  # others should not be able to modify this
+  attr_accessor :greencloth
+
   # modifies markup
   # finds the location for each heading in the markup
-  def prepare_markup_index!(markup)
+  def prepare_markup_start_index!(markup)
+    # recurse over children first, this way we're guaranteed
+    # to find every occurance of any title text in left-to-right (or top-to-bottom in a greencloth text)
+    # order
+    children.each do |node|
+      node.prepare_markup_start_index!(markup)
+    end
+
     if self.text
       # find the first occurance of this node in the markup
-      self.markup_index = markup.index(self.markup_regexp)
-      if self.markup_index.nil?
+      self.start_index = markup.index(self.markup_regexp)
+      if self.start_index.nil?
         puts "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
-        markup[self.markup_index] = "\000"
+        markup[self.start_index] = "\000"
       end
     else
-      self.markup_index = 0
+      self.start_index = 0
     end
+  end
 
-    children.each do |node|
-      node.prepare_markup_index!(markup)
+  def prepare_markup_end_index!(markup)
+    # self and all children have start index
+    # traverse the tree depth first, left-to-right (directly top-to-bottom in greencloth text layout)
+    self.children.each do |child_node|
+      child_node.prepare_markup_end_index!(markup)
+      child_node_successor = child_node.successor
+      if child_node_successor
+        child_node.end_index = child_node_successor.start_index - 1
+      else
+        # no successor for this child node. means this is the last node
+        child_node.end_index = markup.size - 1
+      end
     end
   end
 

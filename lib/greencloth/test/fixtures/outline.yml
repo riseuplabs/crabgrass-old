@@ -169,6 +169,9 @@ in: |-
 
   section one text
 
+  h2. subsection
+  without content
+
   h1. section two line one
   line two
 
@@ -177,6 +180,8 @@ out: |-
   <h1 class="first"><a name="section-one-line-one-line-two"></a>section one line one<br />
   line two<a class="anchor" href="#section-one-line-one-line-two">&para;</a></h1>
   <p>section one text</p>
+  <h2><a name="subsection-without-content"></a>subsection<br />
+  without content<a class="anchor" href="#subsection-without-content">&para;</a></h2>
   <h1><a name="section-two-line-one-line-two"></a>section two line one<br />
   line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h1>
   <p>section two text</p>
@@ -189,6 +194,92 @@ in: |-
 out: |-
   <h1 class="first"><a name="i-eat-food"></a>i eat &#8216;food&#8217;<a class="anchor" href="#i-eat-food">&para;</a></h1>
   <h1><a name="it-is-yŭmmy"></a>it is yŭmmy<a class="anchor" href="#it-is-yŭmmy">&para;</a></h1>
+---
+name: badly organized fruits
+in: |-
+  h1. Fruits
 
+  h3. Green Apples
 
+  h2. Tasty Apples
 
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Turnips
+
+  h2. Green Beans
+out: |-
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h3><a name="green-apples"></a>Green Apples<a class="anchor" href="#green-apples">&para;</a></h3>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="turnips"></a>Turnips<a class="anchor" href="#turnips">&para;</a></h2>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: untitled leading section
+in: |-
+
+  welcome to our great list of fruits and vegetables
+
+  h1. Fruits
+
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Green Beans
+out: |-
+  <p>welcome to our great list of fruits and vegetables</p>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: plain old text
+in: |-
+  curiouser and curiouser
+
+out: |-
+  <p>curiouser and curiouser</p>
+
+---
+name: weird and nested
+in: |-
+  loose stuff
+
+  h1. Highest
+
+  lower
+  -----------
+
+  lower text
+
+  h2. even lower
+
+  h3. lowest
+
+  lowest text
+
+  h3. lowest and blankest
+
+  high as they get
+  =================
+
+  h2. underling
+
+  underling text
+out: |-
+  <p>loose stuff</p>
+  <h1 class="first"><a name="highest"></a>Highest<a class="anchor" href="#highest">&para;</a></h1>
+  <h2><a name="lower"></a>lower<a class="anchor" href="#lower">&para;</a></h2>
+  <p>lower text</p>
+  <h2><a name="even-lower"></a>even lower<a class="anchor" href="#even-lower">&para;</a></h2>
+  <h3><a name="lowest"></a>lowest<a class="anchor" href="#lowest">&para;</a></h3>
+  <p>lowest text</p>
+  <h3><a name="lowest-and-blankest"></a>lowest and blankest<a class="anchor" href="#lowest-and-blankest">&para;</a></h3>
+  <h1><a name="high-as-they-get"></a>high as they get<a class="anchor" href="#high-as-they-get">&para;</a></h1>
+  <h2><a name="underling"></a>underling<a class="anchor" href="#underling">&para;</a></h2>
+  <p>underling text</p>

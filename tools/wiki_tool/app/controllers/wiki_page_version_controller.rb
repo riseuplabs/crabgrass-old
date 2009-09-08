@@ -12,7 +12,6 @@ class WikiPageVersionController < BasePageController
 
   def show
     @version = @wiki.versions.find_by_version(params[:id])
-    @version.render_html{|body| render_wiki_html(body, @page.owner_name)} if @version
   end
 
   def next
@@ -40,9 +39,6 @@ class WikiPageVersionController < BasePageController
     @new = @wiki.versions.find_by_version(new_id)
 
     if @old and @new
-      @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-      @new.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
       @old_markup = @old.body_html || ''
       @new_markup = @new.body_html || ''
       @difftext = HTMLDiff.diff( @old_markup , @new_markup)
@@ -57,9 +53,13 @@ class WikiPageVersionController < BasePageController
   def revert
     version = @wiki.versions.find_by_version params[:id]
     raise_error('version not found') unless version
-    @wiki.body = version.body
-    @wiki.lock(Time.zone.now, current_user)
-    render :template => 'wiki_page/edit'
+
+    @wiki.revert_to_version(version.version, current_user)
+    # blow away all locks
+    @wiki.unlock!(:document, current_user, :break => true)
+    redirect_to page_url(@page, :action => 'show')
+  rescue Exception => exc
+    flash_message_now :exception => exc
   end
 
   ##
@@ -77,7 +77,7 @@ class WikiPageVersionController < BasePageController
   # before filter
   def setup_view
     @show_attach = true
-    unless @wiki.nil? or @wiki.editable_by?(current_user)
+    unless @wiki.nil? or @wiki.document_open_for?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
     end
   end

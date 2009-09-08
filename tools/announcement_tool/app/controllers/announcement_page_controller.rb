@@ -1,9 +1,6 @@
 class AnnouncementPageController < WikiPageController
   # needed to pick up view/announcement_page/show
   def show
-    @wiki.render_html do |text|
-      GreenCloth.new(text).to_html
-    end
   end
 
   private
@@ -22,7 +19,7 @@ class AnnouncementPageController < WikiPageController
   def fetch_wiki
     return true unless @page
     raise "Announcement has no Content" unless @wiki = @page.data
-    @locked_for_me = !@wiki.editable_by?(current_user) if logged_in?
+    @locked_for_me = !@wiki.document_open_for?(current_user) if logged_in?
   end
 
   def build_page_data

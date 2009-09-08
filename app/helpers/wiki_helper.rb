@@ -238,7 +238,7 @@ module WikiHelper
   end
 
   def wiki_locked_notice(wiki)
-    return if wiki.editable_by? current_user
+    return if wiki.document_open_for? current_user
 
     error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locked_by}
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
