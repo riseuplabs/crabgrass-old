@@ -48,11 +48,6 @@ remove_function = "$('%s').remove()" % id
       <%= hidden_field "recipients[#{recipient.name}]", :access, :value => access %>
 %   end
   </td>
-  <%- if may_select_access_participation? -%>
-    <td>
-      <%= select_page_access 'recipients['+recipient.name.gsub(/\+/,"%2b")+'][access]', {:blank => blank, :selected => access} %>
-    </td>
-  <%- end -%>
   <td>
     <%= link_to_function_icon('tiny_trash', remove_function, :title => :remove.t) if newitem %>
   </td>

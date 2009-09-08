@@ -1,9 +1,9 @@
 <% @title_box = capture do -%>
   <h1><%= "My Messages"[:my_messages_headline] %></h1>
 <% end -%>
-<%# @info_box_class = 'tabs' %>
-<%# @info_box = capture do -%>
-  <%# Formy.tabs do |f|
+<% @info_box_class = 'tabs' %>
+<% @info_box = capture do -%>
+  <%= Formy.tabs do |f|
     f.tab do |t|
       t.label 'Recent'[:overview]
       t.url my_messages_path
@@ -23,5 +23,5 @@
       t.icon 'mime_lock'
     end
   end %>
-<%# end -%>
+<% end -%>
 

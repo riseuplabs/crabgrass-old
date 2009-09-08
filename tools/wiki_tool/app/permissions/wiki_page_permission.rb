@@ -13,11 +13,13 @@ module WikiPagePermission
   #      true
   #    end
   #  end
-  def may_print_wiki_page?(page = @page)
+  def may_show_wiki_page?(page = @page)
     page.nil? or
     page.public? or
     logged_in? && current_user.may?(:view, page)
   end
+
+  alias_method :may_print_wiki_page?, :may_show_wiki_page?
 
   def may_edit_wiki_page?(page = @page)
     page.nil? or
