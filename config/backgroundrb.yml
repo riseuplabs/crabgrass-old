@@ -24,7 +24,7 @@
 %>
 ---
 :backgroundrb: 
-  :ip: localhost
+  :ip: 127.0.0.1 
   :port: 11006
   :persistent_disabled: true
   :debug_log: true
