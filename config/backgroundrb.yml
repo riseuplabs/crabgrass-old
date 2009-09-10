@@ -24,7 +24,7 @@
 %>
 ---
 :backgroundrb: 
-  :ip: localhost
+  :ip: 127.0.0.1 
   :port: 11006
   :persistent_disabled: true
   :debug_log: true
@@ -40,8 +40,6 @@
       :trigger_args: <%= daily %>
     :process_trackings:
       :trigger_args: <%= hourly %>
-    :update_last_seen:
-      :trigger_args: <%= two_minutes %>
     :reindex_sphinx:
       :trigger_args: <%= hourly %>
     :clean_chat_channels_users:

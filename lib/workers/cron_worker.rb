@@ -29,12 +29,6 @@ class CronWorker < BackgrounDRb::MetaWorker
     Daily.update
   end
 
-  # updates the last_seen field of the users table.
-  # this should be called every other minute.
-  def update_last_seen
-    Tracking.update_last_seen
-  end
-
   # the output of this is logged to: log/backgroundrb_debug_11006.log
   # if debug_log == true in backgroundrb.yml
   def reindex_sphinx
