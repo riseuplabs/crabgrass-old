@@ -10,6 +10,9 @@ module NavigationHelpers
     
     when /the homepage/
       '/'
+    when /the new authentication page/
+      new_authentication_path
+
     
     # Add more mappings here.
     # Here is a more fancy example:
