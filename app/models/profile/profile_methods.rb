@@ -74,7 +74,7 @@ module ProfileMethods
   def filter_relationships_for_site(relationships)
     # filter possible profiles on current_site
     if site = Site.current
-      relationships.delete(:stranger) unless site.profile_enabled? 'public'
+      relationships.delete(:stranger) unless site.profile_enabled? 'public' or proxy_owner.is_a?(Group)
       relationships.delete(:friend) unless site.profile_enabled? 'private'
     end
   end
