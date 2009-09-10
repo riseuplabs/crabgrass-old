@@ -40,8 +40,6 @@
       :trigger_args: <%= daily %>
     :process_trackings:
       :trigger_args: <%= hourly %>
-    :update_last_seen:
-      :trigger_args: <%= two_minutes %>
     :reindex_sphinx:
       :trigger_args: <%= hourly %>
     :clean_chat_channels_users:

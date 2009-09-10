@@ -53,20 +53,7 @@ class TrackingTest < Test::Unit::TestCase
       Daily.update
     end
   end
-
-  # Testing the user seen functionality. We are tracking users this way in order
-  # to avoid the database access for every action.
-
-  def test_seeing_users
-    Tracking.saw_user(4)
-    Tracking.update_last_seen_users
-    assert_not_nil old_timestamp=User.find(4).last_seen_at, "blue should have last_seen updated."
-    sleep(1)
-    Tracking.saw_user(4)
-    Tracking.update_last_seen_users
-    assert ( old_timestamp<User.find(4).last_seen_at), "blue should have last_seen updated."
-  end
-
+  
   def test_most_active_groups
     user = users(:blue)
     group1 = groups(:rainbow)
