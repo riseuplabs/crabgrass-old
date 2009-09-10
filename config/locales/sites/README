@@ -1,0 +1,15 @@
+Each site has it's own folder here. That folder multiple yml files, one file per language.
+
+I18n module will look in here first for a translation key and if nothing is found, it will default to locales/lang.yml file.
+
+Example structure:
+
+
+config/
+  locales/
+    en.yml
+    es.yml
+    sites/
+      examplesitedomain.org/
+        en.yml
+        es.yml

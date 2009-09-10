@@ -1,4 +1,5 @@
---- 
+---
+_locale_code: de_DE
 About_Me: "&Uuml;ber mich"
 Admin: Admin
 Announcements: "Ank\xC3\xBCndigungen"
@@ -236,7 +237,7 @@ grant_access: "Zugang gew\xC3\xA4hren"
 group: Gruppe
 group_administration_not_allowed: Du kannst diese Gruppe nicht administrieren.
 group_directory: |
-  Gruppen-Verzeichnis 
+  Gruppen-Verzeichnis
 
 group_directory_link: Gruppen-Verzeichnis
 group_discussion: Diskussion
@@ -247,15 +248,15 @@ group_home_welcome: Willkommen
 group_information: ":group_type Information"
 group_invite_email: |-
   {from_user} hat Dich eingeladen, der Gruppe "{group}" beizutreten.
-  
+
   Hier kannst Du dieser Einladung folgen:
-  
+
     {accept_invite_link}
-  
+
   Die Homepage der Gruppe findest Du hier:
-  
+
     {group_home_link}
-  
+
   Wenn Du der Gruppe nicht beitreten magst ignoriere einfach diese Mail.
 group_invite_subject: Einladung, der Gruppe "{group}" beizutreten
 group_join_chat: Am Plausch teilnehmen

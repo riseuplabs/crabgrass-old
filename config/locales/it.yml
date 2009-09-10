@@ -1,4 +1,6 @@
---- 
+---
+_locale_code: it_IT
+
 About_Me: Dico di me
 Admin: Amministratore
 Announcements: Annunci
@@ -255,15 +257,15 @@ group_home_welcome: Benvenut*
 group_information: Informazioni su :group_type
 group_invite_email: |
   {from_user} ti ha invitato/a a entrare nel gruppo "{group}".
-  
+
   Se vuoi entrare a far parte di questo gruppo, fai click qui:
-  
+
     {accept_invite_link}
-  
+
   Ecco il link alla pagina iniziale di questo gruppo:
-  
+
     {group_home_link}
-  
+
   Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
 
 group_invite_subject: Invito a entrare nel gruppo "{group}"
