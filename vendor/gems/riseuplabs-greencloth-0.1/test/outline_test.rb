@@ -4,7 +4,7 @@ require 'ruby-debug'
 require 'yaml'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
-require test_dir + '/../greencloth.rb'
+require test_dir + '/../lib/greencloth.rb'
 
 class TestHeadings < Test::Unit::TestCase
 
