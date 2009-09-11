@@ -174,7 +174,7 @@ message_must_not_be_empty: message must not be empty
 subject: subject
 message: message
 from: from
-To: To
+to: To
 date: date
 request_status: "This request is: :status."
 status_resolved: resolved
@@ -433,18 +433,18 @@ profile_public_description: |
 profile_private_description: This profile is private and is only visible to your friends.
 profile_last_login: "Last Login"
 profile_member_since: "Member Since"
-Home: Home
-Work: Work
-School: School
-Personal: Personal
-Other: Other
-About_Me: About Me
-Social_Change_Interests: Social Change Interests
-Personal_Interests: Personal Interests
-Work_Life: Work Life
-Fax: Fax
-Mobile: Mobile
-Pager: Pager
+home: Home
+work: Work
+school: School
+personal: Personal
+other: Other
+about_me: About Me
+social_change_interests: Social Change Interests
+personal_interests: Personal Interests
+work_life: Work Life
+fax: Fax
+mobile: Mobile
+pager: Pager
 general_info: General Information
 first_name: first name
 middle_name: middle
@@ -561,9 +561,8 @@ rss_feed: RSS Feed
 group_has_no_public_profile: This group does not have a public profile.
 pending_tasks: pending tasks.
 no_committees: no committees
-Category: Category
-Founded: Founded
-Language: Language
+category: Category
+founded: Founded
 not_set: not set
 no_members: (no members)
 new_group: "New group"
@@ -720,7 +719,7 @@ pagination_previous: "Previous"
 move_this_page: "Move This Page"
 move_page_to_different_group: "Move this page to a different group"
 
-Announcements: "Announcements"
+announcements: "Announcements"
 watch_checkbox: "Watch For Updates"
 add_star_link: "Add Star (:star_count)"
 remove_star_link: "Remove Star (:star_count)"
