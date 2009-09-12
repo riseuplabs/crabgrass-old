@@ -89,13 +89,13 @@ it:
   collection_class_description: "Pagine speciali che contengono altre pagine."
   committee: comitato
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
-  committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo %s/nomedeltuogruppo"
+  committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo {domain}/nomedeltuogruppo"
   committees: comitati
   comparing_changes_header: "Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version"
   confirm_new_password: "Conferma Nuova Password"
   confirmation: "Sei sicuro?"
   contact: Contatto
-  contact_request_message_label: "Spiega a %s perché vorresti diventare un suo contatto."
+  contact_request_message_label: "Spiega a {user} perché vorresti diventare un suo contatto."
   contacts: contatti
   contribute_content_link: Contribuisci
   contribute_group_content_link: "Aggiungi Pagina a {group}"
@@ -168,7 +168,7 @@ it:
   discussion_page_display: "Discussione di Gruppo"
   discussions: Discussioni
   display_name: "Nome visualizzato"
-  dont_have_permission_to_create_committees: "Non hai i permessi necessari per creare comitati in %s"
+  dont_have_permission_to_create_committees: "Non hai i permessi necessari per creare comitati in {group}"
   dont_understand_group_type: "Impossibile capire il tipo di gruppo :type"
   download: Scarica
   download_gallery: "Scarica Galleria"
@@ -215,7 +215,7 @@ it:
   folder_page_display: Cartella
   forgot_password_link: "Ho dimenticato la mia password."
   forgot_password_mail_expiry: "Questo link rimarrà valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password."
-  forgot_password_mail_greeting: "%s, per cambiare la tua password, visita"
+  forgot_password_mail_greeting: "{user}, per cambiare la tua password, visita"
   forgot_password_text: "Se hai dimenticato la password che usi per effettuare l'accesso, possiamo inviarti un link via email che ti permetterà di generarne una nuova."
   forgotten_email_address: "Quale indirizzo email hai inserito quando hai creato il tuo account?"
   format: Formato
@@ -256,23 +256,23 @@ it:
       Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
   group_invite_subject: "Invito a entrare nel gruppo \"{group}\""
   group_join_chat: "Entra in chat"
-  group_language: "Il linguaggio principale di questo %s."
+  group_language: "Il linguaggio principale di questo {group}."
   group_members_publicly_visible: "Rendi i Membri Publicamente Visibili"
-  group_members_publicly_visible_description: "I membri non sono visibili dai non membri a %s/nomedeltuogruppo. Inoltre, il nome del gruppo sarà elencato nella pagina del profilo di ogni membro (all'indirizzo %s/nomeutente)"
+  group_members_publicly_visible_description: "I membri non sono visibili dai non membri a {domain}/nomedeltuogruppo. Inoltre, il nome del gruppo sarà elencato nella pagina del profilo di ogni membro (all'indirizzo {domain}/nomeutente)"
   group_membership_count: "{count} Membri"
   group_not_allowed_to_view_image_error: "Non è permesso vedere questa immagine al gruppo che possiede questa pagina."
-  group_privacy_settings: "Impostazioni Privacy del %s"
+  group_privacy_settings: "Impostazioni Privacy del {group}"
   group_profile_description_may_request_membership: "Permetti agli altri di richiedere di diventare membri di questo {group_type}."
   group_profile_description_may_see: "Se selezionato, l'informazione del profilo diverrà visibile. Altrimenti, il profilo per questo {group_type} sarà interamente nascosto."
   group_profile_description_may_see_committees: "Permetti agli altri di vedere quali sono i comitati di questo {group_type}."
   group_profile_description_may_see_groups: "Permetti agli altri di vedere i gruppi che fanno parte di questo {group_type}."
   group_profile_description_may_see_members: "Permetti agli altri di vedere la lista dei membri di questo {group_type}."
   group_profile_description_may_see_networks: "Permetti agli altri di vedere di quali reti fa parte questo {group_type}."
-  group_publicly_visible: "Rendi %s Publicamente Visibile"
-  group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo è visibile dai non iscritti all'indirizzo %s/nomedeltuogruppo."
+  group_publicly_visible: "Rendi {group} Publicamente Visibile"
+  group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo è visibile dai non iscritti all'indirizzo {domain}/nomedeltuogruppo."
   group_successfully_created: "Gruppo creato con successo."
   group_successfully_updated: "Gruppo aggiornato con successo."
-  group_summary: "Breve sommario riguardante questo %s."
+  group_summary: "Breve sommario riguardante questo {group}."
   group_wiki: "Wiki del gruppo"
   groups: Gruppi
   have_your_say: "Dì la tua!"
@@ -284,7 +284,7 @@ it:
   im_addresses: "Indirizzi IM"
   image_count: "Immagine :number di :count"
   image_count_total: ":count Immagini"
-  image_title: "Titolo immagine: %s"
+  image_title: "Titolo immagine: {title}"
   inbox_description: "Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti"
   include_full_checkbox: "includi link nell'immagine grande"
   incoming: "In arrivo"
@@ -305,7 +305,7 @@ it:
   join_chat: "entra in chat"
   join_group_link: "Entra in {group_type}"
   join_group_success: "Sei entrat* nel gruppo {group_name}"
-  join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sarà stata approvata. Puoi controllare lo stato delle tue richieste visitando \"%s\"."
+  join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sarà stata approvata. Puoi controllare lo stato delle tue richieste visitando \"{my_requests_url}\"."
   joins_the_chatroom: "entra nella stanza della chat"
   language: Lingua
   large: grande
@@ -351,12 +351,12 @@ it:
   media_audios: "Registrazioni Audio"
   media_document: Documento
   media_documents: Documenti
-  media_for_group: "%s in %s"
+  media_for_group: "{media_type} in {group}"
   media_image: Immagine
   media_images: Immagini
   media_video: Video
   media_videos: Video
-  media_without_group: "Tuttti %s"
+  media_without_group: "Tuttti {media_type}"
   medium: medium
   member_groups_of_network: "Gruppi Membri"
   members: Membri
@@ -580,7 +580,7 @@ it:
   reject_button: rifiuta
   rejected: rifiutato
   remove: rimuovi
-  remove_contact_confirmation: "Sei sicuro di voler rimuovere il contatto \"%s\"?"
+  remove_contact_confirmation: "Sei sicuro di voler rimuovere il contatto \"{user}\"?"
   remove_contact_info: "Se rimuovi qualcuno dalla tua lista dei contatti, non potrai più vedere se ha effettuato l'accesso o vedere il suo profilo. Inoltre, questo significa che verrai rimosso anche dalla sua lista dei contatti."
   remove_friend_link: "Rimuovi Dai Miei Contatti"
   remove_from_gallery: "Rimuovi dalla galleria"
@@ -597,10 +597,10 @@ it:
   requests_from_me: "Richieste da me"
   requests_to_me: "Richieste da me"
   reset_password: "Reimposta Password"
-  reset_password_mail_greeting: "%s, la tua password è stata reimpostata come hai richiesto."
+  reset_password_mail_greeting: "{user}, la tua password è stata reimpostata come hai richiesto."
   reset_password_mail_sent: "Ti è stata inviata un'email contenente le istruzioni per reimpostare la tua password."
   reset_password_mail_warning: "Se non hai richiesto che la tua password fosse cambiata, contattaci."
-  reset_password_text: "Ciao, %s. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui."
+  reset_password_text: "Ciao, {user}. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui."
   rss_feed: "Feed RSS"
   save_button: Salva
   save_changes: "Salva Modifiche"

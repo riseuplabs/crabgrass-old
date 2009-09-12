@@ -89,13 +89,13 @@ es:
   collection_class_description: "Páginas especiales que tienen otras páginas."
   committee: Comité
   committee_publicly_visible: "Hacer comités públicos"
-  committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en %s/yourgroupname"
+  committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en {domain}/yourgroupname"
   committees: Comités
   comparing_changes_header: "Comparando cambios para :user at :when from :old_version to :new_version"
   confirm_new_password: "Confirmar nueva contraseña"
   confirmation: "¿Estás seguro?"
   contact: Contacto
-  contact_request_message_label: "Cuéntale a %s por qué quieres ser su contacto."
+  contact_request_message_label: "Cuéntale a {user} por qué quieres ser su contacto."
   contacts: Contactos
   contribute_content_link: Contribuir
   contribute_group_content_link: "Añadir página a {group}"
@@ -168,7 +168,7 @@ es:
   discussion_page_display: "Group Discussion"
   discussions: Debates
   display_name: "Nombre visible"
-  dont_have_permission_to_create_committees: "Usted no tiene permiso para crear comités bajo %s"
+  dont_have_permission_to_create_committees: "Usted no tiene permiso para crear comités bajo {group}"
   dont_understand_group_type: "No se puede entender la clase de grupo :type"
   download: Descargar
   download_gallery: "Descargar Álbum de Fotos"
@@ -215,7 +215,7 @@ es:
   folder_page_display: Carpeta
   forgot_password_link: "Olvidé mi contraseña"
   forgot_password_mail_expiry: "Este enlace es valido por 24 horas. Si usted necesita restablecer su contraseña después de la expiración, tendrá que visitar la página de contraseña olvidada y pedir un nuevo enlace."
-  forgot_password_mail_greeting: "%s, para restablecer su contraseña, por favor visite"
+  forgot_password_mail_greeting: "{user}, para restablecer su contraseña, por favor visite"
   forgot_password_text: "Si ha olvidado la contraseña que utiliza para iniciar la sesión, podemos enviarle por correo electrónico un enlace que le permitirá generar una nueva contraseña."
   forgotten_email_address: "Que correo electrónico usaste cuando creaste la cuenta?"
   format: Formato
@@ -256,23 +256,23 @@ es:
       Si no deseas unirte a este grupo, simplemente ignora este mensaje de correo electrónico.
   group_invite_subject: "Invitación a unirse a grupo \"{group}\""
   group_join_chat: "Únete al Chat"
-  group_language: "El idioma principal de este %s."
+  group_language: "El idioma principal de este {group}."
   group_members_publicly_visible: "Hacer Publico Los Miembros"
-  group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de %s/yourgroupname. Además, el nombre del grupo será mostrado en el perfil de la página de cada uno de los miembros (%s / nombre de usuario)"
+  group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de {domain}/yourgroupname. Además, el nombre del grupo será mostrado en el perfil de la página de cada uno de los miembros ({domain} / nombre de usuario)"
   group_membership_count: "{count} Miembros"
   group_not_allowed_to_view_image_error: "El grupo que es propietario de esta página no está autorizado a ver esta foto."
-  group_privacy_settings: "%s Configuración de privacidad "
+  group_privacy_settings: "{group} Configuración de privacidad "
   group_profile_description_may_request_membership: "Permite a las personas pedir ser miembro de este {group_type}."
   group_profile_description_may_see: "Si se selecciona, la información sobre el perfil a continuación será visible. En caso contrario, el perfil de este {group_type} estara oculto completamente."
   group_profile_description_may_see_committees: "Permite que las personas vean que comités este {group_type} tiene."
   group_profile_description_may_see_groups: "Permite que la gente vea los grupos que forman parte de este {group_type}."
   group_profile_description_may_see_members: "Permite que la gente vea la lista de miembros de este {group_type}."
   group_profile_description_may_see_networks: "Permite que la gente vea qué redes este {group_type} pertenece."
-  group_publicly_visible: "Hacer %s Publico"
-  group_publicly_visible_description: "El grupo que aparece en el directorio público y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de %s/yourgroupname."
+  group_publicly_visible: "Hacer {group} Publico"
+  group_publicly_visible_description: "El grupo que aparece en el directorio público y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de {domain}/yourgroupname."
   group_successfully_created: "Grupo ha sido creado. "
   group_successfully_updated: "Grupo ha sido actualizado."
-  group_summary: "Breve información sobre este %s. "
+  group_summary: "Breve información sobre este {group}. "
   group_wiki: "Grupo Wiki"
   groups: Grupos
   height: Altura
@@ -283,7 +283,7 @@ es:
   im_addresses: "Direcciones IM"
   image_count: "Foto :number of :count"
   image_count_total: ":count Fotos"
-  image_title: "Título de la foto: %s"
+  image_title: "Título de la foto: {title}"
   inbox_description: "El buzón con las páginas en las que estoy participando activamente o esperando por cambios"
   include_full_checkbox: "incluir el enlace en la foto"
   incoming: Entrante
@@ -304,7 +304,7 @@ es:
   join_chat: "Únete a la charla"
   join_group_link: "Unirse {group_type}"
   join_group_success: "Te has unido al grupo {group_name}"
-  join_request_info: "No serás miembro de este grupo hasta que tu solicitud sea aprobada. Puedes seguir la trayectoria de tus solicitudes visitando \"%s\"."
+  join_request_info: "No serás miembro de este grupo hasta que tu solicitud sea aprobada. Puedes seguir la trayectoria de tus solicitudes visitando \"{my_requests_url}\"."
   joins_the_chatroom: "se une a la sala de chat"
   language: Idioma
   large: grande
@@ -350,12 +350,12 @@ es:
   media_audios: "Grabación de sonidos"
   media_document: Documento
   media_documents: Documentos
-  media_for_group: "%s en %s"
+  media_for_group: "{media_type} en {group}"
   media_image: Foto
   media_images: Fotos
   media_video: Video
   media_videos: Videos
-  media_without_group: "Todos %s"
+  media_without_group: "Todos {media_type}"
   medium: medio
   member_groups_of_network: "Miembros de los grupos"
   members: Miembros
@@ -580,7 +580,7 @@ es:
   reject_button: eliminar
   rejected: rechazado
   remove: eliminar
-  remove_contact_confirmation: "¿Estás seguro que quieres dejar de ser contacto con %s?"
+  remove_contact_confirmation: "¿Estás seguro que quieres dejar de ser contacto con {user}?"
   remove_contact_info: "Si eliminas a alguien de tu lista de contactos, no serás capaz de ver cuando ellos ingresen o ver su perfil completo. También, al remover un/una contacto significará que tú también serás borrado de su lista de contactos."
   remove_friend_link: "Eliminar de mis contactos"
   remove_from_gallery: "Eliminar el álbum de fotos"
@@ -603,10 +603,10 @@ es:
   requests_to_me: "Peticiones para mi"
   required: (requerido)
   reset_password: "Restablecer la contraseña"
-  reset_password_mail_greeting: "%s, su contraseña fue restablecida como lo solicito."
+  reset_password_mail_greeting: "{user}, su contraseña fue restablecida como lo solicito."
   reset_password_mail_sent: "Un mensaje de correo electrónico ha sido enviado con instrucciones para restablecer su contraseña."
   reset_password_mail_warning: "Si no ha solicitado que su contraseña sea cambiada, póngase en contacto con nosotros."
-  reset_password_text: "Hola, %s. Si ha olvidado la contraseña que utiliza para acceder, puede establecer una nueva aquí. "
+  reset_password_text: "Hola, {user}. Si ha olvidado la contraseña que utiliza para acceder, puede establecer una nueva aquí. "
   return_link: Regresar
   rss_feed: "RSS Feed "
   saturday: sabado

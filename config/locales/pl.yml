@@ -78,12 +78,12 @@ pl:
   collection_class_description: "Specjalne strony zawierające podstrony."
   committee: Komitet
   committee_publicly_visible: "Komitety będą publicznie widoczne"
-  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem %s/nazwatwojejgrupy"
+  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {domain}/nazwatwojejgrupy"
   committees: Komitety
   comparing_changes_header: "Porównanie zmian dokonanych :when from :old_version przez :user z :new_version"
   confirm_new_password: "Powtórz nowe hasło"
   contact: Kontakt
-  contact_request_message_label: "Tą wiadomość %s otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
+  contact_request_message_label: "Tą wiadomość {user} otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
   contacts: Kontakty
   contribute_content_link: "Udziel się"
   contributed: Udział
@@ -145,7 +145,7 @@ pl:
   discussion_page_display: "Dyskusja Grupy"
   discussions: Dyskusje
   display_name: Wyświetlane
-  dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w %s"
+  dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w {group}"
   dont_understand_group_type: "Nie rozumiem typu grupy :type"
   download: Ściągnij
   download_gallery: "Ściągnij galerię"
@@ -186,7 +186,7 @@ pl:
   forgot_password_mail_expiry: |-
       Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
       ponownie ustawić swoje hasło po tym czasie, musisz ponownie odwiedzić stronę z zapomnianym hasłem i poprosić o nowy link.
-  forgot_password_mail_greeting: "%s, żeby zresetować swoje hasło wejdź na"
+  forgot_password_mail_greeting: "{user}, żeby zresetować swoje hasło wejdź na"
   forgot_password_text: "Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło."
   forgotten_email_address: "Jaki adres e-mail podałeś/podałaś nam kiedy Twoje konto zostało utwożone?"
   format: Format
@@ -227,11 +227,11 @@ pl:
       Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
   group_invite_subject: "Zaproszenie do grupy \"{group}\""
   group_join_chat: "Dołącz do czatu"
-  group_language: "Główny język %s."
+  group_language: "Główny język {group}."
   group_members_publicly_visible: "Udostępnij publicznie listę uczestników i uczestniczek"
-  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem %s/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników (%s/użytkownik)."
+  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem {domain}/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników ({domain}/użytkownik)."
   group_not_allowed_to_view_image_error: "Grupa do której należy ta strona nie ma uprawnień do oglądania tej grafiki."
-  group_privacy_settings: "%s ustawienia prywatności"
+  group_privacy_settings: "{group} ustawienia prywatności"
   group_profile_description_may_request_membership: "Pozwól ludziom na wysyłanie pytań o członkostwo w {group_type}."
   group_profile_description_may_see: |-
       Jeśli zaznaczone, informacja o profilu, zamieszczona poniżej będzie widoczna.
@@ -240,11 +240,11 @@ pl:
   group_profile_description_may_see_groups: "Pozwól ludziom na oglądanie grup, które są częścią {group_type}."
   group_profile_description_may_see_members: "Pozwól ludziom na oglądanie listy członkowskiej {group_type}."
   group_profile_description_may_see_networks: "Pozwól ludziom na oglądanie do jakich sieci należy {group_type}."
-  group_publicly_visible: "%s będzie publicznie widoczne"
-  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem %s/nazwatwojejgrupy."
+  group_publicly_visible: "{group} będzie publicznie widoczne"
+  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem {domain}/nazwatwojejgrupy."
   group_successfully_created: "Grupa została utworzona."
   group_successfully_updated: "Strona grupy została zaktualizowana."
-  group_summary: "Krótka informacja na temat %s."
+  group_summary: "Krótka informacja na temat {group}."
   group_wiki: "Grupowe Wiki"
   groups: Grupy
   highest_contributors: "Najbardziej aktywni"
@@ -253,7 +253,7 @@ pl:
   im_addresses: "Adres IM"
   image_count: "Zdjęcie :number z :count"
   image_count_total: ":count Zdjęć"
-  image_title: "Obraz title: %s"
+  image_title: "Obraz title: {title}"
   inbox_description: "Skrzynka odbiorcza ze stronami w których aktywnie uczestniczę lub których zmiany obseruję  "
   include_full_checkbox: "włącz link do pełnego obrazu"
   incoming: Przychodzące
@@ -272,7 +272,7 @@ pl:
   invite_not_found: "Zaproszenie nieodnalezione"
   join_chat: "dołącz do czata"
   join_group_success: "Dołączyłeś/łaś do grupy {group_name}"
-  join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"%s\"."
+  join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"{my_requests_url}\"."
   joins_the_chatroom: "dołącz do czata"
   language: Język
   large: powiększ
@@ -314,12 +314,12 @@ pl:
   media_audios: "Nagrania dźwiękowe"
   media_document: "Dokument\n"
   media_documents: Dokumenty
-  media_for_group: "%s w %s"
+  media_for_group: "{media_type} w {group}"
   media_image: Obraz
   media_images: Obrazy
   media_video: Wideo
   media_videos: Widea
-  media_without_group: "Wszystko %s\n"
+  media_without_group: "Wszystko {media_type}\n"
   medium: średni
   member_groups_of_network: "Grupy członkowie"
   members: "Uczestnicy i uczestniczki"
@@ -507,7 +507,7 @@ pl:
   reject_button: odrzuć
   rejected: "odrzucone\n"
   remove: usuń
-  remove_contact_confirmation: "Na pewno chcesz zerwać kontakt z %s?"
+  remove_contact_confirmation: "Na pewno chcesz zerwać kontakt z {user}?"
   remove_contact_info: "Jeżeli usuniesz osobę ze swojej listy kontaktów, przestaniesz otrzymywać informację kiedy się zaloguje oraz stracisz dostęp do jej pełnego profilu. Ten proces działa w obu kierunkach (tzn automatycznie usuniesz się z kontaktów usuwanej osoby). "
   remove_friend_link: "Usuń z Moich Kontaktów"
   remove_from_gallery: "Usuń z galerii"
@@ -526,10 +526,10 @@ pl:
   requests_from_me: "ode mnie"
   requests_to_me: "do mnie"
   reset_password: "Ustaw hasło na nowo"
-  reset_password_mail_greeting: "%s, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
+  reset_password_mail_greeting: "{user}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
   reset_password_mail_sent: "Został wysłany e-mail zawierający instrukcje w jaki sposób ustawić hasło na nowo."
   reset_password_mail_warning: "Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami."
-  reset_password_text: "Cześć, %s.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj."
+  reset_password_text: "Cześć, {user}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj."
   rss_feed: "Zasilacz RSS"
   saturday: Sobota
   save_button: Zapisz

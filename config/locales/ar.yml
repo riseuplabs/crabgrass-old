@@ -90,13 +90,13 @@ ar:
   collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
   committee: لجنة
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
-  committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على %s/yourgroupname"
+  committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {domain}/yourgroupname"
   committees: اللجان
   comparing_changes_header: "مقارنة تعديلات المستخدم :user في :when بين :old_version و :new_version"
   confirm_new_password: "تأكيد كلمة المرور الجديدة "
   confirmation: "هل أنت متأكد؟"
   contact: "جهة الإتصال"
-  contact_request_message_label: "أخبر %s لماذا ترغب أن تكون من ضمن قائمة اتصاله"
+  contact_request_message_label: "أخبر {user} لماذا ترغب أن تكون من ضمن قائمة اتصاله"
   contacts: "قائمة الإتصال"
   contribute_content_link: شارك
   contribute_group_content_link: "أضف الصفحة إلى {group}"
@@ -170,7 +170,7 @@ ar:
   discussion_page_display: "مناقشة جماعية"
   discussions: مناقشات
   display_name: "إظهار الإسم"
-  dont_have_permission_to_create_committees: "أنت غير مٌخول لإنشاء لجنة تحت %s"
+  dont_have_permission_to_create_committees: "أنت غير مٌخول لإنشاء لجنة تحت {group}"
   dont_understand_group_type: "لم يتم تمييز نوع المجموعة :type"
   download: حفظ
   download_gallery: "حفظ معرض الصور"
@@ -237,7 +237,7 @@ ar:
       </ul>
   forgot_password_link: "نسيت كلمة المرور"
   forgot_password_mail_expiry: "سيبقى هذا الرابط فعّال لمدة 24 ساعة. إذا كنت ترغب بتغيير كلمة المرور بعد هذه الفترة عليك زيارة الصفحة الخاصة بنسيان كلمة المرور مرة أخرى وطلب رابط جديد"
-  forgot_password_mail_greeting: "%s, لتغيير كلمة المرور، الرجاء زيارة"
+  forgot_password_mail_greeting: "{user}, لتغيير كلمة المرور، الرجاء زيارة"
   forgot_password_text: "إذا نسيت كلمة المرور، يمكننا أن نرسل لك بريد إلكتروني يحتوي على رابط سيسمح لك بتعريف كلمة مرور جديدة"
   forgotten_email_address: "ما هو البريد الإلكتروني الذي أدخلتُه عندما قمت بالتسجيل لأوّل مرة؟"
   format: صيغة
@@ -278,23 +278,23 @@ ar:
       إذا كنت لا ترغب في الانضمام إلى هذه المجموعة ، ببساطة تجاهل هذه البريد الالكتروني.
   group_invite_subject: "دعوة للانضمام إلى مجموعة \"{group}\""
   group_join_chat: "الانضمام للدردشة"
-  group_language: "اللغة الرئيسية لهذا %s."
+  group_language: "اللغة الرئيسية لهذا {group}."
   group_members_publicly_visible: "جعل الأعضاء مرئيين للجميع"
-  group_members_publicly_visible_description: "يمكن لغير المشتركين مشاهدة المشتركين على الرابط %s/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط(%s/username)"
+  group_members_publicly_visible_description: "يمكن لغير المشتركين مشاهدة المشتركين على الرابط {domain}/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط({domain}/username)"
   group_membership_count: "{count} عضو"
   group_not_allowed_to_view_image_error: "لا يُسمح للمجموعة التي تملك هذه الصفحة أن تشاهد هذه الصورة."
-  group_privacy_settings: "%s إعدادات الخصوصية"
+  group_privacy_settings: "{group} إعدادات الخصوصية"
   group_profile_description_may_request_membership: "السماح للمشتركين بتقديم طلب انضمام لهذه{group_type}."
   group_profile_description_may_see: "اذا أُختير, معلومات الملف الشخصي التي بالأسفل سوف تكون مرئية. وإلا, الملف الشخصي لهذه المجموعة {group_type} ستكون مخفية تماما\"."
   group_profile_description_may_see_committees: "السماح للمشتركين بمشهادة ما تحتويه المجموعة {group_type} من لجان"
   group_profile_description_may_see_groups: "السماح للمشتركين بمشاهدة المجموعات التي تشكل جزء من هذه{group_type}."
   group_profile_description_may_see_members: "السماح للمشتركين بمشاهدة قائمة العضوية لهذه {group_type}."
   group_profile_description_may_see_networks: "السماح للمشتركين بمشاهدة ماهي الشبكات التي هذه {group_type} جزأً منها"
-  group_publicly_visible: "إجعل %s مرئي للجميع"
-  group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط %s/yourgroupname."
+  group_publicly_visible: "إجعل {group} مرئي للجميع"
+  group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط {domain}/yourgroupname."
   group_successfully_created: "تم إنشاء المجموعة بنجاح"
   group_successfully_updated: "تم تعديل هذه المجموعة بنجاح"
-  group_summary: "معلومات مختصرة بخصوص %s"
+  group_summary: "معلومات مختصرة بخصوص {group}"
   group_wiki: "مجموعة ويكي"
   groups: المجموعات
   have_your_say: "ابدي رأيك"
@@ -306,7 +306,7 @@ ar:
   im_addresses: "مُعرِّف المسنجر"
   image_count: "صورة :number من :count"
   image_count_total: ":count صور"
-  image_title: "عنوان الصورة: %s"
+  image_title: "عنوان الصورة: {title}"
   inbox_description: "صندوق الوارد للصفحات التي أشارك بها أو أراقب تغييراتها"
   include_full_checkbox: "يشمل رابط للصورة كاملة"
   incoming: الوارد
@@ -327,7 +327,7 @@ ar:
   join_chat: "انضم للدردشة"
   join_group_link: "انضم ل{group_type}"
   join_group_success: "لقد انضممت إلى مجموعة {group_name}"
-  join_request_info: "لن تصبح عضو في هذه المجموعة حتى يتم الموافقة على طلبك. يمكنك تتبع حالة طلبك من خلال زيارة \"%s\"."
+  join_request_info: "لن تصبح عضو في هذه المجموعة حتى يتم الموافقة على طلبك. يمكنك تتبع حالة طلبك من خلال زيارة \"{my_requests_url}\"."
   joins_the_chatroom: "الدخول إلى غرفة الدردشة"
   language: اللغة
   large: كبير
@@ -373,12 +373,12 @@ ar:
   media_audios: "تسجيلات صوتية"
   media_document: وثيقة
   media_documents: وثائق
-  media_for_group: "%s قي %s"
+  media_for_group: "{media_type} قي {group}"
   media_image: صورة
   media_images: صور
   media_video: فيديو
   media_videos: فيديوهات
-  media_without_group: "الكل %s"
+  media_without_group: "الكل {media_type}"
   medium: متوسط
   member_groups_of_network: "أعضاء المجموعات"
   members: الأعضاء
@@ -605,7 +605,7 @@ ar:
   reject_button: رفض
   rejected: "تم الرفض"
   remove: حذف
-  remove_contact_confirmation: "هل أنت متأكد أنك تريد إزالة %s من قائمة اتصالاتك؟"
+  remove_contact_confirmation: "هل أنت متأكد أنك تريد إزالة {user} من قائمة اتصالاتك؟"
   remove_contact_info: "عند إزالة شخص من قائمة اتصالاتك فأنَّهُ لا يمكنك مشاهدة وقت دخوله للنظام أو مشاهدة ملفه كاملاً، إزالة هذا الشخص من قائمة اتصالك سيؤدي إلى إزالتك من قائمة اتصاله"
   remove_friend_link: "إحذفه من قائمة إتصالي"
   remove_from_gallery: "الإزالة من معرض الصور"
@@ -628,10 +628,10 @@ ar:
   requests_to_me: "إلي أنا"
   required: (مطلوب)
   reset_password: "تغيير كلمة المرور"
-  reset_password_mail_greeting: "%s, تم تغيير كلمة المرور حسب طلبك."
+  reset_password_mail_greeting: "{user}, تم تغيير كلمة المرور حسب طلبك."
   reset_password_mail_sent: "تم إرسال بريد إلكتروني لك يحتوي تعليمات حوا تغيير كلمة المرور"
   reset_password_mail_warning: "الرجاء الإتصال بنا إذا لم تطلب تغيير كلمة المرور"
-  reset_password_text: "مرحباً، %s. إذا كنت نست كلمة المرور، يمكنك تعريف كلمة مرور جديدة من هنا."
+  reset_password_text: "مرحباً، {user}. إذا كنت نست كلمة المرور، يمكنك تعريف كلمة مرور جديدة من هنا."
   return_link: العودة
   rss_feed: "RSS تغذية"
   saturday: السبت

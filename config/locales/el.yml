@@ -57,7 +57,7 @@ el:
   collection: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
-  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση %s/yourgroupname"
+  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {domain}/yourgroupname"
   committees: επιτροπές
   confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
   contact: Επαφή
@@ -82,7 +82,7 @@ el:
   from: από
   height: Ύψος
   history: Ιστορικό
-  image_title: "Τίτλος εικόνας: %s"
+  image_title: "Τίτλος εικόνας: {title}"
   incoming: Εισερχόμενα
   language: Γλώσσα
   last_change: "Τελευταία Αλλαγή"

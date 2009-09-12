@@ -87,13 +87,13 @@ ru:
   collection_class_description: "Особые страницы, которые содержат другие страницы."
   committee: комитет
   committee_publicly_visible: "Сделать комитеты видимыми для всех"
-  committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу %s/yourgroupname"
+  committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {domain}/yourgroupname"
   committees: Комитеты
   comparing_changes_header: "Сравнение изменений, сделанных :user в :when с :old_version  до :new_version"
   confirm_new_password: "Подтвердить новый пароль"
   confirmation: "Вы уверены?"
   contact: Товарищ
-  contact_request_message_label: "Расскажите %s, зачем Вы хотите стать его товарищем. "
+  contact_request_message_label: "Расскажите {user}, зачем Вы хотите стать его товарищем. "
   contacts: товарищи
   contribute_content_link: "Создать страницу"
   contribute_group_content_link: "Добавить страницу в {group}"
@@ -165,7 +165,7 @@ ru:
   discussion_page_display: "Обсуждение группой"
   discussions: Обсуждения
   display_name: "Отображаемое имя"
-  dont_have_permission_to_create_committees: "У Вас нет разрешения на создание коммитетов от имени %s"
+  dont_have_permission_to_create_committees: "У Вас нет разрешения на создание коммитетов от имени {group}"
   dont_understand_group_type: "Невозможно истолковать тип группы :type"
   download: Скачать
   download_gallery: "Скачать галерею"
@@ -209,7 +209,7 @@ ru:
   folder_page_display: папка
   forgot_password_link: "Я забыл свой пароль"
   forgot_password_mail_expiry: "Эта ссылка будет действительна в течение 24 часов. Если Вам необходимо будет сменить пароль по истечение этого времени, Вы снова должны будете посетить страницу напоминания пароля и запросить новую ссылку. "
-  forgot_password_mail_greeting: "%s, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
+  forgot_password_mail_greeting: "{user}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
   forgot_password_text: "Если Вы забыли используемый для входа пароль, мы можем отправить Вам по электронной почте ссылку, перейдя по которой Вы сможете создать новый пароль. "
   forgotten_email_address: "Какой электронный адрес Вы указали при создании аккаунта? "
   format: Формат
@@ -246,18 +246,18 @@ ru:
       Если Вы не желаете вступить в эту группу, просто проигнорируйте это письмо.
   group_invite_subject: "Приглашение вступить в группу \"{group}\""
   group_join_chat: "Войти в чат"
-  group_language: "Основной язык этой %s. "
+  group_language: "Основной язык этой {group}. "
   group_members_publicly_visible: "Сделать участников видимыми для всех"
-  group_members_publicly_visible_description: "Участники видимы для не-участников по адресу %s/yourgroupname. Также, имя группы будет внесено в список на странице профиля каждого из участников группы (%s/username)"
+  group_members_publicly_visible_description: "Участники видимы для не-участников по адресу {domain}/yourgroupname. Также, имя группы будет внесено в список на странице профиля каждого из участников группы ({domain}/username)"
   group_membership_count: "{count} участников"
   group_not_allowed_to_view_image_error: "Группе, которая владеет этой страницей, не позволяется просматривать это изображение."
-  group_privacy_settings: "Настройки приватности %s"
+  group_privacy_settings: "Настройки приватности {group}"
   group_profile_description_may_request_membership: "Разрешить людям запрашивать членство в этой {group_type}."
   group_profile_description_may_see_committees: "Разрешить людям видеть, какие комитеты входят в {group_type}."
-  group_publicly_visible_description: "Группа показывается в общедоступном списке и <i>профиль</i> группы видим для не-участников по адресу %s/yourgroupname."
+  group_publicly_visible_description: "Группа показывается в общедоступном списке и <i>профиль</i> группы видим для не-участников по адресу {domain}/yourgroupname."
   group_successfully_created: "Группа была успешно создана."
   group_successfully_updated: "Группа была успешно обновлена."
-  group_summary: "Краткая информация об этой %s."
+  group_summary: "Краткая информация об этой {group}."
   group_wiki: "Wiki группы"
   groups: Группы
   height: Высота
@@ -268,7 +268,7 @@ ru:
   im_addresses: "Адреса в службах мгновенных сообщений"
   image_count: "Изображение :number из :count"
   image_count_total: ":count изображений"
-  image_title: "Заглавие изображения: %s"
+  image_title: "Заглавие изображения: {title}"
   inbox_description: "Входящие уведомления для страниц, в которых я активно участвую или отслеживаю изменения."
   include_full_checkbox: "Включить ссылку на целое изображение"
   incoming: Входящие
@@ -289,7 +289,7 @@ ru:
   join_chat: "войти в чат"
   join_group_link: "Вступить в {group_type}"
   join_group_success: "Вы вступили в группу {group_name}"
-  join_request_info: "Вы не станете членом этой группы до тех пор, пока Ваш запрос не будет одобрен. Вы можете отслеживать статус Ваш запросов, посещая \"%s\"."
+  join_request_info: "Вы не станете членом этой группы до тех пор, пока Ваш запрос не будет одобрен. Вы можете отслеживать статус Ваш запросов, посещая \"{my_requests_url}\"."
   joins_the_chatroom: "входит в комнату чата"
   language: Язык
   large: большой
@@ -335,12 +335,12 @@ ru:
   media_audios: Звукозаписи
   media_document: Документ
   media_documents: Документы
-  media_for_group: "%s в %s"
+  media_for_group: "{media_type} в {group}"
   media_image: Изображение
   media_images: Изображеия
   media_video: Видеозапись
   media_videos: Видеозаписи
-  media_without_group: "Все %s"
+  media_without_group: "Все {media_type}"
   medium: средний
   members: Участники
   membership: Членство
@@ -520,7 +520,7 @@ ru:
   reject_button: отклонить
   rejected: отклонённые
   remove: удалить
-  remove_contact_confirmation: "Вы уверены, что хотите удалить %s из числа своих товарищей?"
+  remove_contact_confirmation: "Вы уверены, что хотите удалить {user} из числа своих товарищей?"
   remove_contact_info: "Если Вы удалите кого-либо из списка своих товарищей, вы больше не сможете просматривать его полный профиль и видеть, когда он авторизован. Кроме того, его удаление означает, что и Вы будете удалены из списка его товарищей."
   remove_friend_link: "Удалить из моих контактов"
   remove_from_gallery: "Удалить из галереи"
@@ -541,10 +541,10 @@ ru:
   requests_from_me: "Запросы от меня"
   requests_to_me: "Запросы мне"
   reset_password: "Смена пароля"
-  reset_password_mail_greeting: "%s, по Вашему запросу пароль был изменён."
+  reset_password_mail_greeting: "{user}, по Вашему запросу пароль был изменён."
   reset_password_mail_sent: "Было отправлено электронное письмо, содержащее инструкции по смене Вашего пароля. "
   reset_password_mail_warning: "Если Вы не запрашивали изменение этого пароля, свяжитесь с нами, пожалуйста. "
-  reset_password_text: "Здравствуйте, %s. Если Вы забыли пароль, используемый для авторизации, здесь Вы можете установить новый. "
+  reset_password_text: "Здравствуйте, {user}. Если Вы забыли пароль, используемый для авторизации, здесь Вы можете установить новый. "
   rss_feed: RSS-канал
   saturday: Суббота
   save_button: Сохранить

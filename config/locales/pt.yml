@@ -67,12 +67,12 @@ pt:
   collection_class_description: "Páginas especiais contendo outras páginas."
   committee: comitê
   committee_publicly_visible: "Tornar Públicos os Comitês"
-  committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em %s/yourgroupname"
+  committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em {domain}/yourgroupname"
   committees: comitês
   comparing_changes_header: "Comparando alterações feitas por :user em :when de :old_version para :new_version"
   confirm_new_password: "Confirmar Nova Senha"
   contact: Contato
-  contact_request_message_label: "Diga a %s porque você deseja se tornar um contato. "
+  contact_request_message_label: "Diga a {user} porque você deseja se tornar um contato. "
   contacts: contatos
   contribute_content_link: Contribuir
   contributed: Contrubuído
@@ -129,7 +129,7 @@ pt:
   discuss_request_link: "discutir este pedido com :person_or_group"
   discussions: Discussões
   display_name: "Visualizar nome"
-  dont_have_permission_to_create_committees: "Você não está autorizado para criar comitês sob %s"
+  dont_have_permission_to_create_committees: "Você não está autorizado para criar comitês sob {group}"
   dont_understand_group_type: "Não foi possível entender o tipo de grupo :type"
   download: Baixar
   download_gallery: "Baixar Galeria"
@@ -166,7 +166,7 @@ pt:
   forgot_password_link: "Esqueci minha senha"
   forgot_password_mail_expiry: |
       Este link é válido durante 24 horas. Se você precisar restabelecer sua senha depois disso, você terá de voltar a visitar a página de senha esquecida e pedir um novo link.
-  forgot_password_mail_greeting: "%s, para restabelecer sua senha, visite"
+  forgot_password_mail_greeting: "{user}, para restabelecer sua senha, visite"
   forgot_password_text: |
       Se você esqueceu sua senha para fazer log in, nós podemos enviar-lhe um e-mail que lhe permitirá criar outra.
   forgotten_email_address: "Qual foi o e-mail que você forneceu quando criou sua conta?"
@@ -206,16 +206,16 @@ pt:
 
       Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
   group_invite_subject: "Convite para fazer parte do grupo \"{group}\""
-  group_language: "Idioma principal deste %s."
+  group_language: "Idioma principal deste {group}."
   group_members_publicly_visible: "Tornar Públicos os Membros"
-  group_members_publicly_visible_description: "Os membros são visíveis por não membros do %s/yourgroupname. Além disso, o nome do grupo será listado na página de perfil de cada membro (%s/username)"
+  group_members_publicly_visible_description: "Os membros são visíveis por não membros do {domain}/yourgroupname. Além disso, o nome do grupo será listado na página de perfil de cada membro ({domain}/username)"
   group_not_allowed_to_view_image_error: "O grupo dono desta página não tem autorização para ver esta foto."
-  group_privacy_settings: "Configurações de Privacidade do %s"
-  group_publicly_visible: "Tornar Público o grupo %s"
-  group_publicly_visible_description: "O grupo aparece em um diretório público e o <i>profile</i> do grupo é visível para não membros do %s/yourgroupname."
+  group_privacy_settings: "Configurações de Privacidade do {group}"
+  group_publicly_visible: "Tornar Público o grupo {group}"
+  group_publicly_visible_description: "O grupo aparece em um diretório público e o <i>profile</i> do grupo é visível para não membros do {domain}/yourgroupname."
   group_successfully_created: "O novo grupo foi criado."
   group_successfully_updated: "O grupo foi atualizado."
-  group_summary: "Breve descrição do grupo %s."
+  group_summary: "Breve descrição do grupo {group}."
   group_wiki: "Wiki do Grupo"
   groups: Grupos
   highest_contributors: "Maiores Colaboradores"
@@ -224,7 +224,7 @@ pt:
   im_addresses: "Endereços IM"
   image_count: "Foto :number of :count"
   image_count_total: ":count Fotos"
-  image_title: "Título da imagem: %s"
+  image_title: "Título da imagem: {title}"
   inbox_description: "Caixa de entrada das páginas das quais eu estou participando ativamente ou esperando mudanças"
   include_full_checkbox: "incluir link a imagem completa"
   incoming: Entrante
@@ -242,7 +242,7 @@ pt:
   invite_info: "Digite uma lista de identificações de usuário ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste %s."
   invite_not_found: "Não há convite"
   join_chat: "entre no bate-papo"
-  join_request_info: "Você não será membro deste grupo enquanto seu pedido não for aprovado. Para acompanhar a evolução de seu pedido clique \"%s\"."
+  join_request_info: "Você não será membro deste grupo enquanto seu pedido não for aprovado. Para acompanhar a evolução de seu pedido clique \"{my_requests_url}\"."
   joins_the_chatroom: "entra no bate-papo"
   language: Idioma
   large: extensão
@@ -284,12 +284,12 @@ pt:
   media_audios: "Gravações de som"
   media_document: Documento
   media_documents: Documentos
-  media_for_group: "%s em %s"
+  media_for_group: "{media_type} em {group}"
   media_image: Imagem
   media_images: Imagens
   media_video: Vídeo
   media_videos: Vídeos
-  media_without_group: "Todos %s"
+  media_without_group: "Todos {media_type}"
   medium: intermédio
   member_groups_of_network: "Grupos Membros"
   members: Membros
@@ -442,7 +442,7 @@ pt:
   reject_button: recusar
   rejected: recusado
   remove: eliminar
-  remove_contact_confirmation: "Você tem certeza de que quer deixar de ter contato com %s?"
+  remove_contact_confirmation: "Você tem certeza de que quer deixar de ter contato com {user}?"
   remove_contact_info: "Se você eliminar contatos de sua lista, você não poderá vê-los quando fizerem login ou ver seu perfil completo. Além do mais, você também será eliminado/a das listas de contatos deles."
   remove_friend_link: "Eliminar dos Meus Contatos"
   remove_from_gallery: "Tirar da galeria"
@@ -461,11 +461,11 @@ pt:
   requests_from_me: "Meus pedidos"
   requests_to_me: "Pedidos para mim"
   reset_password: "Restabelecer senha"
-  reset_password_mail_greeting: "%s, sua senha foi restabelecida conforme você pediu."
+  reset_password_mail_greeting: "{user}, sua senha foi restabelecida conforme você pediu."
   reset_password_mail_sent: "Foi enviado um e-mail com instruções para restabelecer sua senha."
   reset_password_mail_warning: "Se você não pediu para mudar sua senha, entre em contato conosco."
   reset_password_text: |
-      Olá, %s. Se você esqueceu sua senha, você pode criar outra aqui.
+      Olá, {user}. Se você esqueceu sua senha, você pode criar outra aqui.
   rss_feed: "Feed RSS"
   saturday: sábado
   save_button: Salvar

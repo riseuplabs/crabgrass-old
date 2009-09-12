@@ -57,12 +57,12 @@ sv:
   collection: samling
   collection_class_description: "Speciella sidor som innehåller andra sidor."
   committee: kommitté
-  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på %s/gruppnamn"
+  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {domain}/gruppnamn"
   committees: Kommittéer
   comparing_changes_header: "Jämför ändringar av :user :when från :old_version till :new_version"
   confirm_new_password: "Bekräfta det nya lösenordet"
   contact: Kontakt
-  contact_request_message_label: "Säg %s varför du vill vara deras kontakt."
+  contact_request_message_label: "Säg {user} varför du vill vara deras kontakt."
   contacts: kontakter
   contribute_content_link: Bidra
   coordinating_council: koordinationsråd
@@ -107,7 +107,7 @@ sv:
   discuss_request_link: "diskutera den här begäran med :person_or_group"
   discussions: Diskussioner
   display_name: Visningsnamn
-  dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under %s"
+  dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under {group}"
   dont_understand_group_type: "Förstod inte grupptypen :type"
   download: "Ladda ner"
   download_gallery: "Ladda ner galleri"
@@ -137,7 +137,7 @@ sv:
       Den här länken kommer att fungera i 24 timmar. Om du behöver
       återställa lösenordet efter det måste du besöka sidan för glömt
       lösenord igen och begära en ny länk.
-  forgot_password_mail_greeting: "%s, för att återställa lösenordet kan du besöka"
+  forgot_password_mail_greeting: "{user}, för att återställa lösenordet kan du besöka"
   forgot_password_text: "Om du har glömt lösenordet du använder för att logga in, kan vi skicka ett e-brev med en länk som gör att du kan skapa ett nytt."
   forgotten_email_address: "Vad för e-postadress gav du oss när du skapade ditt konto?"
   format: Formatera
@@ -170,9 +170,9 @@ sv:
         {accept_invite_link}
   group_invite_subject: "Inbjudan till \"{group}\""
   group_members_publicly_visible: "Gör medlemmar synliga offentligt"
-  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på %s/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida (%s/användarnamn)"
+  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på {domain}/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida ({domain}/användarnamn)"
   group_not_allowed_to_view_image_error: "Gruppen som äger sidan har inte tillåtelse att se den här bilden."
-  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på %s/gruppnamn."
+  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på {domain}/gruppnamn."
   group_successfully_created: "Gruppen skapades utan problem."
   group_successfully_updated: "Gruppen uppdaterades utan problem."
   group_wiki: Gruppwiki
@@ -183,7 +183,7 @@ sv:
   im_addresses: IM-adresser
   image_count: "Bild :number av :count"
   image_count_total: ":count bilder"
-  image_title: "Bildtitel: %s"
+  image_title: "Bildtitel: {title}"
   inbox_description: "Inkorg för sidor jag aktivt deltar i eller övervakar efter ändringar."
   include_full_checkbox: "ta med länk till hela bilden"
   incoming: Inkommande
@@ -196,7 +196,7 @@ sv:
   invalid_token_text: "Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut."
   invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna %s."
   join_chat: "delta i chatten"
-  join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"%s\"."
+  join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{my_requests_url}\"."
   language: Språk
   large: stor
   last_change: "senaste ändring"
@@ -231,12 +231,12 @@ sv:
   media_audios: Ljudinspelningar
   media_document: Dokument
   media_documents: Dokument
-  media_for_group: "%s i %s"
+  media_for_group: "{media_type} i {group}"
   media_image: Bild
   media_images: Bilder
   media_video: Video
   media_videos: Videor
-  media_without_group: "Alla %s"
+  media_without_group: "Alla {media_type}"
   medium: mellan
   member_groups_of_network: Medlemsgrupper
   members: Medlemmar

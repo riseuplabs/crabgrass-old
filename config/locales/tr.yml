@@ -82,13 +82,13 @@ tr:
   collection_class_description: "Diğer sayfaları tutan özel sayfalar."
   committee: Komite
   committee_publicly_visible: "Komiteleri Herkese Görünür Yap"
-  committee_publicly_visible_description: "Komiteler %s/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
+  committee_publicly_visible_description: "Komiteler {domain}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
   committees: Komiteler
   comparing_changes_header: "{user} tarafından {when} tarihinde {old_version} sürümünden {new_version} sürümüne yapılan değişiklikleri kıyaslıyor"
   confirm_new_password: "Yeni Şifrenizi Doğrulayın"
   confirmation: "Emin misiniz?"
   contact: Arkadaş
-  contact_request_message_label: "%s kullanıcısına neden onun arkadaşı olmak istediğinizi söyleyin."
+  contact_request_message_label: "{user} kullanıcısına neden onun arkadaşı olmak istediğinizi söyleyin."
   contacts: Aarkadaşlar
   contribute_content_link: "Sayda oluştur"
   contribute_group_content_link: "{group} Grubuna Sayfa Ekle"
@@ -157,7 +157,7 @@ tr:
   discussion_page_display: "Grup Tartışması"
   discussions: Tartışmalar
   display_name: "İsmi göster"
-  dont_have_permission_to_create_committees: "%s altında komite oluşturma izniniz yok."
+  dont_have_permission_to_create_committees: "{group} altında komite oluşturma izniniz yok."
   dont_understand_group_type: ":type grup tipi anlaşılmadı"
   download: İndir
   download_gallery: "İndirilenler Galerisi"
@@ -203,7 +203,7 @@ tr:
   folder_page_display: Dosya
   forgot_password_link: "Şifremi unuttum"
   forgot_password_mail_expiry: "Bu bağlantı 24 saat boyunca geçerli olacaktır. Eğer şifrenizi daha sonra sıfırlamanız gerekiyorsa unutulmuş şifre sayfasını tekrar ziyaret edip yeni bir link istemelisiniz."
-  forgot_password_mail_greeting: "%s, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
+  forgot_password_mail_greeting: "{user}, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
   forgot_password_text: "Kullanıcı girişinde kullandığınız şifreyi unuttuysanız yeni bir şifre oluşturmanızı sağlayacak bir bağlantıyı email olarak size gönderiyoruz."
   forgotten_email_address: "Hesabınızı açarken bize hangi e-posta adresinizi vermiştiniz?"
   format: Biçim
@@ -238,22 +238,22 @@ tr:
         {accept_invite_link}
   group_invite_subject: "\"{group}\" grubuna katılmak için davet"
   group_join_chat: "Konuşmaya Katıl"
-  group_language: "Bu %s ana dili"
+  group_language: "Bu {group} ana dili"
   group_members_publicly_visible: "Üyeleri Herkes İçin Görünür Yap"
-  group_members_publicly_visible_description: "Üyeler %s/yourgroupname üye olmayanlar tarafından da görüntülenebilir. Ayrıca, grubun ismi her üyenin profil sayfasında listelenecektir. (%s/username)"
+  group_members_publicly_visible_description: "Üyeler {domain}/yourgroupname üye olmayanlar tarafından da görüntülenebilir. Ayrıca, grubun ismi her üyenin profil sayfasında listelenecektir. ({domain}/username)"
   group_not_allowed_to_view_image_error: "Bu sayfanın ait olduğu gruba bu görüntüyü gösterme izni verilmiyor."
-  group_privacy_settings: "%s Güvenlik Ayarları"
+  group_privacy_settings: "{group} Güvenlik Ayarları"
   group_profile_description_may_request_membership: "İnsanların {group_type} grubuna üyelik talebi göndermesine izin ver."
   group_profile_description_may_see: "İşaretlenmişse, aşağıdaki profil bilgisi görünür olacaktır. Değilse, {group_type} 'ın profili tamamen gizli olacaktır."
   group_profile_description_may_see_committees: "Kişilere {group_type} türündeki gruplarda hangi komiteler olduğunu görme izni ver."
   group_profile_description_may_see_groups: "Kişilere {group_type} türündeki grupları görme izni ver."
   group_profile_description_may_see_members: "{group_type} 'ın üyelik listesinin görünür olmasına izin ver."
   group_profile_description_may_see_networks: "{group_type} 'ın hangi ağlarda olduğunun görünür olmasına izin ver."
-  group_publicly_visible: "%sları Herkes İçin Görünür Yap"
-  group_publicly_visible_description: "Grup genel rehberde görünmektedir ve grup <i>profile</i>  %s/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir."
+  group_publicly_visible: "{group}ları Herkes İçin Görünür Yap"
+  group_publicly_visible_description: "Grup genel rehberde görünmektedir ve grup <i>profile</i>  {domain}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir."
   group_successfully_created: "Grup başarıyla oluşturuldu."
   group_successfully_updated: "Grup başarıyla güncellendi."
-  group_summary: "%s ile ilgili kısa bilgi."
+  group_summary: "{group} ile ilgili kısa bilgi."
   group_wiki: "Vikipedi Grubu"
   groups: Gruplar
   height: Boy
@@ -264,7 +264,7 @@ tr:
   im_addresses: "IM Adresleri"
   image_count: "Fotoğraf :number of :count"
   image_count_total: ":count Fotoğraflar"
-  image_title: "Görüntü başlığı: %s"
+  image_title: "Görüntü başlığı: {title}"
   inbox_description: "Aktif olarak katıldığım ya da değişikliklerini takip ettiğim sayfalar için gelen kutusu"
   include_full_checkbox: "tam görüntüye bağlantıyı dahil et"
   incoming: Gelen
@@ -284,7 +284,7 @@ tr:
   join_chat: "sohbete katıl"
   join_group_link: "Katıl {group_type}"
   join_group_success: "{group_name} grubuna katıldınız"
-  join_request_info: "Başvurunuz kabul edilene kadar bu grubun üyesi olamazsınız. Başvurunuzun durumunu \"%s\" bölümünü ziyaret ederek görüntüleyebilirsiniz."
+  join_request_info: "Başvurunuz kabul edilene kadar bu grubun üyesi olamazsınız. Başvurunuzun durumunu \"{my_requests_url}\" bölümünü ziyaret ederek görüntüleyebilirsiniz."
   joins_the_chatroom: "sohbet odasına bağlanır"
   language: Dil
   large: büyük
@@ -329,12 +329,12 @@ tr:
   media_audios: "Ses Kayıtları"
   media_document: Belge
   media_documents: Belgeler
-  media_for_group: "%s %s 'ın içinde"
+  media_for_group: "{media_type} {group} 'ın içinde"
   media_image: Görüntü
   media_images: Görüntüler
   media_video: Video
   media_videos: Videolar
-  media_without_group: "Hepsi %s"
+  media_without_group: "Hepsi {media_type}"
   medium: orta
   member_groups_of_network: "Üye Gruplar"
   members: Üyeler
@@ -551,7 +551,7 @@ tr:
   reject_button: Reddet
   rejected: reddedildi
   remove: kaldır
-  remove_contact_confirmation: "%s ile artık arkadaş olmak istemediğinizden emin misiniz?"
+  remove_contact_confirmation: "{user} ile artık arkadaş olmak istemediğinizden emin misiniz?"
   remove_contact_info: "Kişileri arkadaş listenizden silerseniz, profillerini ve çevrimiçi oldukları zamanı göremezsiniz. Ayrıca, onları arkadaş listenizden silmeniz, sizin de onların listesinden silinmeniz anlamına gelecektir. "
   remove_friend_link: "Arkadaşlarlarımdan çıkar"
   remove_from_gallery: "Galeriden çıkar"
@@ -574,10 +574,10 @@ tr:
   requests_to_me: bana
   required: (gerekli)
   reset_password: "Şifreyi Sıfırla"
-  reset_password_mail_greeting: "%s, isteğinize uygun olarak şifreniz sıfırlandı."
+  reset_password_mail_greeting: "{user}, isteğinize uygun olarak şifreniz sıfırlandı."
   reset_password_mail_sent: "Şifrenizi sıfırlamak için gereken yönergeleri içeren email gönderildi."
   reset_password_mail_warning: "Eğer şifrenizin değişmesini istemiyorsanız, lütfen bizimle bağlantı kurun"
-  reset_password_text: "Merhaba, %s. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz."
+  reset_password_text: "Merhaba, {user}. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz."
   return_link: "Geri dön"
   rss_feed: "RSS Bildirimcisi"
   saturday: Cumartesi

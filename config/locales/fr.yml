@@ -90,7 +90,7 @@ fr:
   collection_class_description: "Page spéciale qui comprend les autres pages"
   committee: Commission
   committee_publicly_visible: "Publier les commissions"
-  committee_publicly_visible_description: "Les commissions sont visibles de tou-te-s à %s/yourgroupname"
+  committee_publicly_visible_description: "Les commissions sont visibles de tou-te-s à {domain}/yourgroupname"
   committees: Commissions
   comparing_changes_header: "Comparaison des modifications de {user} à {when} de {old_version} vers {new_version}"
   confirm: confirmer
@@ -99,7 +99,7 @@ fr:
   confirm_new_password: "Confirmer le Nouveau Mot de Passe"
   confirmation: "Êtes-vous sûr ?"
   contact: Ami-e
-  contact_request_message_label: "Expliquez à %s pourquoi vous voulez être son ami-e."
+  contact_request_message_label: "Expliquez à {user} pourquoi vous voulez être son ami-e."
   contacts: Ami-e-s
   contribute_content_link: "Créer une Page"
   contribute_group_content_link: "Ajouter une page au/à la {group}"
@@ -171,7 +171,7 @@ fr:
   discussion_page_display: "Discussion de groupe"
   discussions: Discussions
   display_name: "Nom affiché"
-  dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour créer des commissions sous %s"
+  dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour créer des commissions sous {group}"
   dont_understand_group_type: "Ne peut comprendre le type de groupe :type"
   download: Téléchargement
   download_gallery: "Télécharger la Galerie"
@@ -220,7 +220,7 @@ fr:
   folder_page_display: Dossier
   forgot_password_link: "J'ai oublié mon mot de passe"
   forgot_password_mail_expiry: "Ce lien sera valide pendant 24 heures. Si vous avez besoin de régénérer votre mot de passe après ce délai, vous aurez à retourner à nouveau sur la page pour demander un nouveau lien."
-  forgot_password_mail_greeting: "%s, pour régénérer votre mot de passe"
+  forgot_password_mail_greeting: "{user}, pour régénérer votre mot de passe"
   forgot_password_text: "Si vous avez oublié votre mot de passe de connexion, nous pouvons vous envoyer un lien par mail pour vous permettre d'en générer un nouveau."
   forgotten_email_address: "Quelle adresse mail avez vous donné lors de la création du compte ?"
   format: Format
@@ -261,23 +261,23 @@ fr:
       Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail.
   group_invite_subject: "Invitation à rejoindre le groupe \"{group}\""
   group_join_chat: "Rejoindre Salon de Discussion"
-  group_language: "La langue principale de ce %s."
+  group_language: "La langue principale de ce {group}."
   group_members_publicly_visible: "Afficher publiquement les membres du groupe"
-  group_members_publicly_visible_description: "Les membres sont visibles de tou-te-s à %s/yourgroupname. De même, le nom du groupe sera affiché sur le profil de chaque membre (%s/username)"
+  group_members_publicly_visible_description: "Les membres sont visibles de tou-te-s à {domain}/yourgroupname. De même, le nom du groupe sera affiché sur le profil de chaque membre ({domain}/username)"
   group_membership_count: "{count} Membres"
   group_not_allowed_to_view_image_error: "Le groupe qui possède cette page n'est pas autorisé à voir cette image."
-  group_privacy_settings: "%s Paramètres de Confidentialité"
+  group_privacy_settings: "{group} Paramètres de Confidentialité"
   group_profile_description_may_request_membership: "Autoriser les demandes pour rejoindre ce {group_type}."
   group_profile_description_may_see: "Si coché, les informations ci-dessous seront visibles. sinon, le profil de ce {group_type} seront complètement cachées."
   group_profile_description_may_see_committees: "Publier les commissions de ce {group_type}."
   group_profile_description_may_see_groups: "Publier les groupes qui font partie de ce {group_type}."
   group_profile_description_may_see_members: "Publier la liste des membres de ce {group_type}."
   group_profile_description_may_see_networks: "Publier les réseaux dont ce {group_type} est membre."
-  group_publicly_visible: "Publier %s "
-  group_publicly_visible_description: "Le groupe apparaît dans le répertoire public et le <i>profil</i> du groupe est visible de tou-te-s à %s/yourgroupname."
+  group_publicly_visible: "Publier {group} "
+  group_publicly_visible_description: "Le groupe apparaît dans le répertoire public et le <i>profil</i> du groupe est visible de tou-te-s à {domain}/yourgroupname."
   group_successfully_created: "Le groupe est créé."
   group_successfully_updated: "Le groupe est mis à jour."
-  group_summary: "Information succincte sur ce %s."
+  group_summary: "Information succincte sur ce {group}."
   group_wiki: "Wiki du groupe"
   groups: Groupes
   have_your_say: "Prend La Parole !"
@@ -289,7 +289,7 @@ fr:
   im_addresses: "Adresses de messagerie instantanée"
   image_count: "Image :number sur :count"
   image_count_total: ":count Images"
-  image_title: "Titre de l'image: %s"
+  image_title: "Titre de l'image: {title}"
   inbox_description: "Affiche les pages auxquelles je participe activement ou dont je suis les modifications"
   include_full_checkbox: "Inclus le lien vers l'image de taille originale"
   incoming: Entrant
@@ -310,7 +310,7 @@ fr:
   join_chat: "rejoindre le salon de discussion"
   join_group_link: "Rejoindre {group_type}"
   join_group_success: "Vous avez rejoint le groupe {group_name}"
-  join_request_info: "Vous ne serez pas membre de ce groupe avant qu'elle ne soit approuvée. Vous pouvez en vérifier l'état en visitant \"%s\"."
+  join_request_info: "Vous ne serez pas membre de ce groupe avant qu'elle ne soit approuvée. Vous pouvez en vérifier l'état en visitant \"{my_requests_url}\"."
   joins_the_chatroom: "rejoindre le salon de discussion"
   language: Langue
   large: grande
@@ -356,12 +356,12 @@ fr:
   media_audios: "Enregistrements Audio"
   media_document: Document
   media_documents: Documents
-  media_for_group: "%s dans %s"
+  media_for_group: "{media_type} dans {group}"
   media_image: Image
   media_images: Images
   media_video: Vidéo
   media_videos: Vidéos
-  media_without_group: "Tous les %s"
+  media_without_group: "Tous les {media_type}"
   medium: moyenne
   member_groups_of_network: "Groupes membres"
   members: Membres
@@ -587,7 +587,7 @@ fr:
   reject_button: Rejeter
   rejected: rejetées
   remove: retirer
-  remove_contact_confirmation: "Voulez-vous vraiment ne plus être ami-e avec %s ?"
+  remove_contact_confirmation: "Voulez-vous vraiment ne plus être ami-e avec {user} ?"
   remove_contact_info: "Si vous retirez quelqu'un de la liste de vos ami-e-s, vous ne serez plus en mesure de voir quand il-le est connecté-e, ni de voir son profil complet. De même, le/la retirer de vos ami-e-s fera que vous serez également retiré-e de la liste de ses ami-e-s."
   remove_friend_link: "Retirer De Mes Ami-e-s"
   remove_from_gallery: "Retirer de la galerie"
@@ -610,10 +610,10 @@ fr:
   requests_to_me: "à mon intention"
   required: (requis)
   reset_password: "Réinitialiser le mot de passe"
-  reset_password_mail_greeting: "%s, votre mot de passe a été réinitialisé à votre demande."
+  reset_password_mail_greeting: "{user}, votre mot de passe a été réinitialisé à votre demande."
   reset_password_mail_sent: "Un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé."
   reset_password_mail_warning: "Si vous n'avez pas demandé à réinitialiser votre mot de passe, merci de nous contacter."
-  reset_password_text: "Bonjour, %s. Si vous avez oublié votre mot de passe pour vous connecter, vous pouvez en définir un ici."
+  reset_password_text: "Bonjour, {user}. Si vous avez oublié votre mot de passe pour vous connecter, vous pouvez en définir un ici."
   return_link: Retour
   rss_feed: "Flux RSS"
   saturday: Samedi

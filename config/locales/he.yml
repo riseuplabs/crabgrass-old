@@ -74,12 +74,12 @@ he:
   committee_publicly_visible: "הפכי את הוועדה לשקופה ציבורית"
   committee_publicly_visible_description: |-
       ניתן לצפות בוועדות על ידי לא-חברות ב-
-      %s/yourgroupname
+      {domain}/yourgroupname
   committees: וועדות
   comparing_changes_header: "השוואת שינויים על ידי :user ב :when מ :old_version ל :new_version"
   confirm_new_password: "אשר\\י ססמה חדשה"
   contact: "אשת קשר"
-  contact_request_message_label: "ספר\\י ל %s למה את\\ה רוצה להיות חבר\\ה שלהם."
+  contact_request_message_label: "ספר\\י ל {user} למה את\\ה רוצה להיות חבר\\ה שלהם."
   contacts: "א\\נשי קשר"
   contribute_content_link: צור\צרי
   coordinating_council: "וועדה מתאמת"
