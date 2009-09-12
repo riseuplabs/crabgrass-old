@@ -12,10 +12,10 @@
   three_days = "0 0 0 */3 * * *"
 
 #  OTHER OPTIONS
-#  :backgroundrb: 
+#  :backgroundrb:
 #    :log: foreground      # foreground mode,print log messages on console
 #    :debug_log: false     # disable log workers and other logging
-#    :persistent_disabled: false 
+#    :persistent_disabled: false
 #       # false: we use a database to keep a persistent job queue
 #       # true: the job queue is kept only in memory and might be lost
 #    :persistent_delay: 10
@@ -23,11 +23,12 @@
 #       # database for enqueued tasks
 %>
 ---
-:backgroundrb: 
-  :ip: 127.0.0.1 
+:backgroundrb:
+  :ip: 127.0.0.1
   :port: 11006
   :persistent_disabled: true
   :debug_log: true
+  :environment: production
 :schedules:
   :cron_worker:
     :clean_fragment_cache:

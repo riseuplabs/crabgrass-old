@@ -97,7 +97,7 @@ end
 ##
 
 def bgrb_pid
-  `exec pgrep -f 'script/backgroundrb'`.chomp
+  `exec pgrep -f backgroundrb`.chomp
 end
 
 def load_backgroundrb_config
@@ -115,7 +115,7 @@ def start_backgroundrb
   Dir.mkdir(pid_dir) unless File.exists?(pid_dir)
   puts "Starting backgroundrb..."
   system("#{$root}/script/backgroundrb start -e #{$environment}")
-  
+
   if (pid = bgrb_pid).any?
     puts "Started backgroundrb successfuly (pid %s)." % pid
   else
@@ -177,14 +177,14 @@ end
 
 ##
 ## UTILITY
-## 
+##
 
 def process_elapsed_time(pid)
   time = `ps -p #{pid} -o "%t"`.chomp.split("\n")[1]
   return 'unknown' unless time
   time = time.strip
   if time =~ /-/
-    days, time = time.split('-') 
+    days, time = time.split('-')
   else
     days = 0
   end
@@ -197,7 +197,7 @@ end
 
 def assert_file_exists(filename)
   unless File.exists?(filename)
-    puts "ERROR: file not found: %s" % filename 
+    puts "ERROR: file not found: %s" % filename
     puts "Bailing out."
     exit
   end
@@ -205,7 +205,7 @@ end
 
 ##
 ## EXECUTION
-## 
+##
 
 process_command
 exit
