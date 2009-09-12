@@ -222,16 +222,23 @@ class Wiki < ActiveRecord::Base
   ## RELATIONSHIP TO GROUPS
   ##
 
-  # clears the rendered html. this is called
-  # when a group's name is changed or some other event happens
-  # which might affect how the html is rendered by greencloth.
-  # this only clears the primary group's wikis, which should be fine
-  # because link_context just uses the primary group's name.
-  def self.clear_all_html(group)
+  # Clears the rendered HTML. This should be called when a group/user name is
+  # changed or some other event happens which might affect how the HTML is
+  # rendered by greencloth.
+  def self.clear_all_html(owner)
     # for wiki's owned by pages
-    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT data_id FROM pages WHERE data_type='Wiki' AND owner_type = 'Group' AND owner_id = #{group.id.to_i})")
-    # for wiki's owned by groups
-    Wiki.connection.execute("UPDATE wikis set body_html = NULL WHERE id IN (SELECT wiki_id FROM profiles WHERE entity_id = #{group.id.to_i})")
+    Wiki.connection.execute(quote_sql([
+      "UPDATE wikis, pages SET wikis.body_html = NULL WHERE pages.data_id = wikis.id AND pages.data_type = 'Wiki' AND pages.owner_id = ? AND pages.owner_type = ?",
+      owner.id,
+      owner.class.class_name
+    ]))
+
+    # for wiki's owned by by profiles
+    Wiki.connection.execute(quote_sql([
+      "UPDATE wikis, profiles SET wikis.body_html = NULL WHERE profiles.wiki_id = wikis.id AND profiles.entity_id = ? AND profiles.entity_type = ?",
+      owner.id,
+      owner.class.class_name
+    ]))
   end
 
   ##
