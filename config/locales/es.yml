@@ -30,7 +30,7 @@ es:
   add_one_or_more_tags: "Agregar uno o más etiquetas, separadas por comas"
   add_phone_number: "Agregar Número de Teléfono"
   add_photo_to_gallery: "Haz clic en la foto para agregarla"
-  add_star_link: "Añadir Estrella {:star_count}"
+  add_star_link: "Añadir Estrella (:star_count)"
   add_tags: "Añadir Etiqueta"
   add_websites: "Agregar Sitios Web"
   additional_page_access: "Acceso Adicional"

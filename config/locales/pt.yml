@@ -26,7 +26,7 @@ pt:
   add_one_or_more_tags: "Adicionar uma ou mais tags, separadas por vírgulas"
   add_phone_number: "Adicionar Número de Telefone"
   add_photo_to_gallery: "adicionar foto a galeria: "
-  add_star_link: "Adicionar estrela {:star_count)"
+  add_star_link: "Adicionar estrela (:star_count)"
   add_websites: "Adicionar Sites Online"
   admin: Administração
   alert_error: Erro

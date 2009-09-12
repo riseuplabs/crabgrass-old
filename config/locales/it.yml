@@ -30,7 +30,7 @@ it:
   add_one_or_more_tags: "Aggiungi una o più etichette, separate da virgole"
   add_phone_number: "Aggiungi Numero di Telefono"
   add_photo_to_gallery: "aggiungi foto alla galleria:"
-  add_star_link: "Aggiungi Stella {:star_count}"
+  add_star_link: "Aggiungi Stella (:star_count)"
   add_tags: "Aggiungi Etichette"
   add_websites: "Aggiungi Siti Web"
   additional_page_access: "Accesso Addizionale"
