@@ -606,8 +606,6 @@ en:
 
   # create/edit forms
 
-  group_language: "The main language of this %s."
-  group_summary: "Brief information regarding this %s."
   link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
   fullname: "Full Name"
   descriptive_name_for_display: "A descriptive name used for display"

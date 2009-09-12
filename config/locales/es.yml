@@ -89,7 +89,7 @@ es:
   collection_class_description: "Páginas especiales que tienen otras páginas."
   committee: Comité
   committee_publicly_visible: "Hacer comités públicos"
-  committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en we.riseup.net/yourgroupname"
+  committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en %s/yourgroupname"
   committees: Comités
   comparing_changes_header: "Comparando cambios para :user at :when from :old_version to :new_version"
   confirm_new_password: "Confirmar nueva contraseña"
@@ -258,7 +258,7 @@ es:
   group_join_chat: "Únete al Chat"
   group_language: "El idioma principal de este %s."
   group_members_publicly_visible: "Hacer Publico Los Miembros"
-  group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de we.riseup.net/yourgroupname. Además, el nombre del grupo será mostrado en el perfil de la página de cada uno de los miembros (we.riseup.net / nombre de usuario)"
+  group_members_publicly_visible_description: "Los miembros pueden ser vistos por aquellos que no son miembros de %s/yourgroupname. Además, el nombre del grupo será mostrado en el perfil de la página de cada uno de los miembros (%s / nombre de usuario)"
   group_membership_count: "{count} Miembros"
   group_not_allowed_to_view_image_error: "El grupo que es propietario de esta página no está autorizado a ver esta foto."
   group_privacy_settings: "%s Configuración de privacidad "
@@ -269,7 +269,7 @@ es:
   group_profile_description_may_see_members: "Permite que la gente vea la lista de miembros de este {group_type}."
   group_profile_description_may_see_networks: "Permite que la gente vea qué redes este {group_type} pertenece."
   group_publicly_visible: "Hacer %s Publico"
-  group_publicly_visible_description: "El grupo que aparece en el directorio público y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de we.riseup.net/yourgroupname."
+  group_publicly_visible_description: "El grupo que aparece en el directorio público y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de %s/yourgroupname."
   group_successfully_created: "Grupo ha sido creado. "
   group_successfully_updated: "Grupo ha sido actualizado."
   group_summary: "Breve información sobre este %s. "

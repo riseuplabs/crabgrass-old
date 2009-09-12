@@ -57,7 +57,7 @@ sv:
   collection: samling
   collection_class_description: "Speciella sidor som innehåller andra sidor."
   committee: kommitté
-  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på we.riseup.net/gruppnamn"
+  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på %s/gruppnamn"
   committees: Kommittéer
   comparing_changes_header: "Jämför ändringar av :user :when från :old_version till :new_version"
   confirm_new_password: "Bekräfta det nya lösenordet"
@@ -170,9 +170,9 @@ sv:
         {accept_invite_link}
   group_invite_subject: "Inbjudan till \"{group}\""
   group_members_publicly_visible: "Gör medlemmar synliga offentligt"
-  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på we.riseup.net/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida (we.riseup.net/användarnamn)"
+  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på %s/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida (%s/användarnamn)"
   group_not_allowed_to_view_image_error: "Gruppen som äger sidan har inte tillåtelse att se den här bilden."
-  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på we.riseup.net/gruppnamn."
+  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på %s/gruppnamn."
   group_successfully_created: "Gruppen skapades utan problem."
   group_successfully_updated: "Gruppen uppdaterades utan problem."
   group_wiki: Gruppwiki

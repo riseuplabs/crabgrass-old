@@ -90,7 +90,7 @@ ar:
   collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
   committee: لجنة
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
-  committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على we.riseup.net/yourgroupname"
+  committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على %s/yourgroupname"
   committees: اللجان
   comparing_changes_header: "مقارنة تعديلات المستخدم :user في :when بين :old_version و :new_version"
   confirm_new_password: "تأكيد كلمة المرور الجديدة "
@@ -280,7 +280,7 @@ ar:
   group_join_chat: "الانضمام للدردشة"
   group_language: "اللغة الرئيسية لهذا %s."
   group_members_publicly_visible: "جعل الأعضاء مرئيين للجميع"
-  group_members_publicly_visible_description: "يمكن لغير المشتركين مشاهدة المشتركين على الرابط we.riseup.net/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط(we.riseup.net/username)"
+  group_members_publicly_visible_description: "يمكن لغير المشتركين مشاهدة المشتركين على الرابط %s/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط(%s/username)"
   group_membership_count: "{count} عضو"
   group_not_allowed_to_view_image_error: "لا يُسمح للمجموعة التي تملك هذه الصفحة أن تشاهد هذه الصورة."
   group_privacy_settings: "%s إعدادات الخصوصية"
@@ -291,7 +291,7 @@ ar:
   group_profile_description_may_see_members: "السماح للمشتركين بمشاهدة قائمة العضوية لهذه {group_type}."
   group_profile_description_may_see_networks: "السماح للمشتركين بمشاهدة ماهي الشبكات التي هذه {group_type} جزأً منها"
   group_publicly_visible: "إجعل %s مرئي للجميع"
-  group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط we.riseup.net/yourgroupname."
+  group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط %s/yourgroupname."
   group_successfully_created: "تم إنشاء المجموعة بنجاح"
   group_successfully_updated: "تم تعديل هذه المجموعة بنجاح"
   group_summary: "معلومات مختصرة بخصوص %s"

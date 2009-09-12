@@ -57,7 +57,7 @@ el:
   collection: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
-  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση we.riseup.net/yourgroupname"
+  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση %s/yourgroupname"
   committees: επιτροπές
   confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
   contact: Επαφή

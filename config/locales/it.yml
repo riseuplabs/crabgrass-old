@@ -89,7 +89,7 @@ it:
   collection_class_description: "Pagine speciali che contengono altre pagine."
   committee: comitato
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
-  committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo we.riseup.net/nomedeltuogruppo"
+  committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo %s/nomedeltuogruppo"
   committees: comitati
   comparing_changes_header: "Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version"
   confirm_new_password: "Conferma Nuova Password"
@@ -258,7 +258,7 @@ it:
   group_join_chat: "Entra in chat"
   group_language: "Il linguaggio principale di questo %s."
   group_members_publicly_visible: "Rendi i Membri Publicamente Visibili"
-  group_members_publicly_visible_description: "I membri non sono visibili dai non membri a we.riseup.net/nomedeltuogruppo. Inoltre, il nome del gruppo sarà elencato nella pagina del profilo di ogni membro (all'indirizzo we.riseup.net/nomeutente)"
+  group_members_publicly_visible_description: "I membri non sono visibili dai non membri a %s/nomedeltuogruppo. Inoltre, il nome del gruppo sarà elencato nella pagina del profilo di ogni membro (all'indirizzo %s/nomeutente)"
   group_membership_count: "{count} Membri"
   group_not_allowed_to_view_image_error: "Non è permesso vedere questa immagine al gruppo che possiede questa pagina."
   group_privacy_settings: "Impostazioni Privacy del %s"
@@ -269,7 +269,7 @@ it:
   group_profile_description_may_see_members: "Permetti agli altri di vedere la lista dei membri di questo {group_type}."
   group_profile_description_may_see_networks: "Permetti agli altri di vedere di quali reti fa parte questo {group_type}."
   group_publicly_visible: "Rendi %s Publicamente Visibile"
-  group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo è visibile dai non iscritti all'indirizzo we.riseup.net/nomedeltuogruppo."
+  group_publicly_visible_description: "Il gruppo appare nell'elenco pubblico e il <em>profilo</em> del gruppo è visibile dai non iscritti all'indirizzo %s/nomedeltuogruppo."
   group_successfully_created: "Gruppo creato con successo."
   group_successfully_updated: "Gruppo aggiornato con successo."
   group_summary: "Breve sommario riguardante questo %s."

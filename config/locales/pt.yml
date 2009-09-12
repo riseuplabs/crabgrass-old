@@ -67,7 +67,7 @@ pt:
   collection_class_description: "Páginas especiais contendo outras páginas."
   committee: comitê
   committee_publicly_visible: "Tornar Públicos os Comitês"
-  committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em we.riseup.net/yourgroupname"
+  committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em %s/yourgroupname"
   committees: comitês
   comparing_changes_header: "Comparando alterações feitas por :user em :when de :old_version para :new_version"
   confirm_new_password: "Confirmar Nova Senha"
@@ -208,11 +208,11 @@ pt:
   group_invite_subject: "Convite para fazer parte do grupo \"{group}\""
   group_language: "Idioma principal deste %s."
   group_members_publicly_visible: "Tornar Públicos os Membros"
-  group_members_publicly_visible_description: "Os membros são visíveis por não membros do we.riseup.net/yourgroupname. Além disso, o nome do grupo será listado na página de perfil de cada membro (we.riseup.net/username)"
+  group_members_publicly_visible_description: "Os membros são visíveis por não membros do %s/yourgroupname. Além disso, o nome do grupo será listado na página de perfil de cada membro (%s/username)"
   group_not_allowed_to_view_image_error: "O grupo dono desta página não tem autorização para ver esta foto."
   group_privacy_settings: "Configurações de Privacidade do %s"
   group_publicly_visible: "Tornar Público o grupo %s"
-  group_publicly_visible_description: "O grupo aparece em um diretório público e o <i>profile</i> do grupo é visível para não membros do we.riseup.net/yourgroupname."
+  group_publicly_visible_description: "O grupo aparece em um diretório público e o <i>profile</i> do grupo é visível para não membros do %s/yourgroupname."
   group_successfully_created: "O novo grupo foi criado."
   group_successfully_updated: "O grupo foi atualizado."
   group_summary: "Breve descrição do grupo %s."

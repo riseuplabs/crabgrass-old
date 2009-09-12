@@ -249,7 +249,7 @@ tr:
   group_profile_description_may_see_groups: "Kişilere {group_type} türündeki grupları görme izni ver."
   group_profile_description_may_see_members: "{group_type} 'ın üyelik listesinin görünür olmasına izin ver."
   group_profile_description_may_see_networks: "{group_type} 'ın hangi ağlarda olduğunun görünür olmasına izin ver."
-  group_publicly_visible: "%ları Herkes İçin Görünür Yap"
+  group_publicly_visible: "%sları Herkes İçin Görünür Yap"
   group_publicly_visible_description: "Grup genel rehberde görünmektedir ve grup <i>profile</i>  %s/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir."
   group_successfully_created: "Grup başarıyla oluşturuldu."
   group_successfully_updated: "Grup başarıyla güncellendi."

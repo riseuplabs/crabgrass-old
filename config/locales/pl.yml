@@ -78,7 +78,7 @@ pl:
   collection_class_description: "Specjalne strony zawierające podstrony."
   committee: Komitet
   committee_publicly_visible: "Komitety będą publicznie widoczne"
-  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem we.riseup.net/nazwatwojejgrupy"
+  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem %s/nazwatwojejgrupy"
   committees: Komitety
   comparing_changes_header: "Porównanie zmian dokonanych :when from :old_version przez :user z :new_version"
   confirm_new_password: "Powtórz nowe hasło"
@@ -229,9 +229,9 @@ pl:
   group_join_chat: "Dołącz do czatu"
   group_language: "Główny język %s."
   group_members_publicly_visible: "Udostępnij publicznie listę uczestników i uczestniczek"
-  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem we.riseup.net/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników (we.riseup.net/użytkownik)."
+  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem %s/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników (%s/użytkownik)."
   group_not_allowed_to_view_image_error: "Grupa do której należy ta strona nie ma uprawnień do oglądania tej grafiki."
-  group_privacy_settings: "&s ustawienia prywatności"
+  group_privacy_settings: "%s ustawienia prywatności"
   group_profile_description_may_request_membership: "Pozwól ludziom na wysyłanie pytań o członkostwo w {group_type}."
   group_profile_description_may_see: |-
       Jeśli zaznaczone, informacja o profilu, zamieszczona poniżej będzie widoczna.
@@ -241,7 +241,7 @@ pl:
   group_profile_description_may_see_members: "Pozwól ludziom na oglądanie listy członkowskiej {group_type}."
   group_profile_description_may_see_networks: "Pozwól ludziom na oglądanie do jakich sieci należy {group_type}."
   group_publicly_visible: "%s będzie publicznie widoczne"
-  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem we.riseup.net/nazwatwojejgrupy."
+  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem %s/nazwatwojejgrupy."
   group_successfully_created: "Grupa została utworzona."
   group_successfully_updated: "Strona grupy została zaktualizowana."
   group_summary: "Krótka informacja na temat %s."
