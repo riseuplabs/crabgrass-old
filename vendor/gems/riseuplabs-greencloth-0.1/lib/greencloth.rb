@@ -321,12 +321,15 @@ class GreenCloth < RedCloth::TextileDoc
 
   def initialize(string, default_owner_name = 'page', restrictions = [])
     @default_owner = default_owner_name
-    restrictions.each { |r| method("#{r}=").call( true ) }
 
     # filter_ids    -- don't allow the user to set dom ids in the markup. This can
     #                  royally mess with the display of a page.
     # sanitize_html -- allows some basic html, see ALLOWED_TAGS aboved.
-    super(string, [:filter_ids, :sanitize_html])
+    restrictions << :sanitize_html
+    restrictions << :filter_ids
+    restrictions << :filter_html if restrictions.include?(:lite_mode)
+
+    super(string, restrictions)
   end
 
   # RedCloth calls clone of the GreenCloth object before
