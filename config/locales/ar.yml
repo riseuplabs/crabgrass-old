@@ -616,7 +616,7 @@ ar:
   request_join_group_link: "طلب الإنضمام لٍ {group_type}"
   request_status: "هذا الطلب {status} بواسطة {user} في {time}"
   request_to_friend_description: "{user} هل ترغب في ان تكون ضمن قائمة اتصال {other_user}"
-  request_to_join_our_network_description: "group {تم} دعوة المجوعة للإنضمام إلى شبكة {network}"
+  request_to_join_our_network_description: "{group} تم دعوة المجوعة للإنضمام إلى شبكة {network}"
   request_to_join_us_description: "{user} تم دعوته للانضمام {group}"
   request_to_join_us_via_email_description: "{email} تم دعوته للإنضمام {group}"
   request_to_join_you_description: "{user} تم دعوته للإنضمام  {group}"
