@@ -154,7 +154,7 @@ class GreenTree < Array
 
   def prepare_markup_indexes
     if self.parent
-      logger.error "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
+      #logger.error "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
     else
       markup = self.greencloth.to_s.clone
       self.prepare_markup_start_index!(markup)
@@ -213,7 +213,7 @@ class GreenTree < Array
       # find the first occurance of this node in the markup
       self.start_index = markup.index(self.markup_regexp)
       if self.start_index.nil?
-        logger.error "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
+        #logger.error "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
@@ -228,7 +228,7 @@ class GreenTree < Array
     self.children.each do |child_node|
       child_node.prepare_markup_end_index!(markup)
       child_node_successor = child_node.successor
-      if child_node_successor
+      if child_node_successor and child_node_successor.start_index
         child_node.end_index = child_node_successor.start_index - 1
       else
         # no successor for this child node. means this is the last node
