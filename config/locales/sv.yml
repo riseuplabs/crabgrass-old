@@ -194,7 +194,7 @@ sv:
   invalid_email_text: "E-postadressen du angivit är ogiltig."
   invalid_token: "Ogiltig symbol"
   invalid_token_text: "Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut."
-  invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna %s."
+  invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna {group_type}."
   join_chat: "delta i chatten"
   join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{my_requests_url}\"."
   language: Språk

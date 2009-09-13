@@ -291,7 +291,6 @@ tr:
   last_change: "Son Değişiklik"
   last_name: "Soy ad"
   leave_channel: "kanaldan ayrıl"
-  leave_group: "%s grubundan ayrıl "
   leave_group_link: "{group_type} grubundan ayrıl"
   left_the_chatroom: "Sohbet odasından ayrıldı"
   link_name: "Bağlantı Adı"

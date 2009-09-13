@@ -318,7 +318,6 @@ fr:
   last_name: nom
   last_seen: "vu dernièrement"
   leave_channel: "Quitter Le Salon"
-  leave_group: "quitter %s"
   leave_group_link: "Quitter {group_type}"
   left_the_chatroom: "quitter le salon de discussion"
   link_name: "Nom du lien"

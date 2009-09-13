@@ -300,7 +300,7 @@ it:
   invite_accept_info: "Hai già un account si questo sito web? Fai click su uno dei link seguenti per accettare l'invito."
   invite_accept_via_existing_account: "Possiedo già un account"
   invite_accept_via_register: "Devo creare un nuovo account"
-  invite_info: "Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo %s."
+  invite_info: "Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo {group_type}."
   invite_not_found: "Invito non trovato"
   join_chat: "entra in chat"
   join_group_link: "Entra in {group_type}"
@@ -313,7 +313,6 @@ it:
   last_name: cognome
   last_seen: "vist* per l'ultima volta"
   leave_channel: "Abbandona Canale"
-  leave_group: "abbandona %s"
   leave_group_link: "Abbandona {group_type}"
   left_the_chatroom: "ha abbandonato la stanza di chat"
   link_name: "Nome Link"

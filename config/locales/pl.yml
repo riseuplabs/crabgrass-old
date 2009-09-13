@@ -268,7 +268,7 @@ pl:
   invite_accept_info: "Czy chesz zaakceptować prośbę o dołączenie. Czy masz już konto na tym serwerze?"
   invite_accept_via_existing_account: "Tak, mam już konto"
   invite_accept_via_register: "Chcę zarejestrować nowe konto"
-  invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w %s."
+  invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w {group_type}."
   invite_not_found: "Zaproszenie nieodnalezione"
   join_chat: "dołącz do czata"
   join_group_success: "Dołączyłeś/łaś do grupy {group_name}"
@@ -278,7 +278,7 @@ pl:
   large: powiększ
   last_change: "Ostatnia zmiana"
   last_name: nazwisko
-  leave_group: "opuść %s"
+  leave_group_link: "opuść {group_type}"
   left_the_chatroom: "opuść pokój czatów"
   link_name: "Nazwa linku"
   link_name_description: "Ta nazwa pokazywać będzie w jaki sposób będziesz się odnosić/ła do tej grupy w linkach i URL. Może zawierać jedynie alfanumeryczne litery, bez jakichkolwiek spacji."

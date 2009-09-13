@@ -299,7 +299,7 @@ es:
   invite_accept_info: "Te gustaría aceptar la solicitud para participar. ¿Ya tienes una cuenta en este servidor?"
   invite_accept_via_existing_account: "Ya tengo una cuenta"
   invite_accept_via_register: "Tengo que registrar una nueva cuenta"
-  invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustaría que se uniera a este/a %s"
+  invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustaría que se uniera a este/a {group_type}"
   invite_not_found: "No hay invitación  "
   join_chat: "Únete a la charla"
   join_group_link: "Unirse {group_type}"
@@ -312,7 +312,6 @@ es:
   last_name: apellido
   last_seen: "últimas vez visto"
   leave_channel: "Salir del Canal"
-  leave_group: "deja %s"
   leave_group_link: "Dejar {group_type}"
   left_the_chatroom: "salido de la sala de chat "
   link_name: "Nombre del enlace"

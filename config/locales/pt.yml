@@ -239,7 +239,7 @@ pt:
   invite_accept_info: "Você gostaria de aceitar o pedido para participar. Você já tem uma conta neste servidor?"
   invite_accept_via_existing_account: "Eu já tenho uma conta"
   invite_accept_via_register: "Eu preciso me cadastrar"
-  invite_info: "Digite uma lista de identificações de usuário ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste %s."
+  invite_info: "Digite uma lista de identificações de usuário ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste {group_type}."
   invite_not_found: "Não há convite"
   join_chat: "entre no bate-papo"
   join_request_info: "Você não será membro deste grupo enquanto seu pedido não for aprovado. Para acompanhar a evolução de seu pedido clique \"{my_requests_url}\"."
@@ -248,7 +248,7 @@ pt:
   large: extensão
   last_change: "última mudança"
   last_name: sobrenome
-  leave_group: "sair do %s"
+  leave_group_link: "sair do {group_type}"
   left_the_chatroom: "saiu do bate-papo"
   link_name: "Nome do link"
   link_name_description: "Este é o nome por meio do qual você vai se referir a este grupo nos links e URLs. Use apenas caracteres alfanuméricos, os espaços não são permitidos."

@@ -93,7 +93,7 @@ de:
   confirm_new_password: "Bestätige neues Passwort"
   confirmation: Sicher?
   contact: Kontakt
-  contact_request_message_label: "Sage %s warum du sein Kontakt werden willst."
+  contact_request_message_label: "Sage {user} warum du sein Kontakt werden willst."
   contacts: Kontakte
   contribute_content_link: "Tu was!"
   contributed: Mitgearbeitet
@@ -155,7 +155,7 @@ de:
   discussion_page_display: "Gruppen Diskussion"
   discussions: Diskussionen
   display_name: "Namen anzeigen"
-  dont_have_permission_to_create_committees: "Du kannst keine Arbeitsgruppen unter %s anlegen."
+  dont_have_permission_to_create_committees: "Du kannst keine Arbeitsgruppen unter {group} anlegen."
   dont_understand_group_type: "Gruppentyp :type ist unbekannt."
   download: Herunterladen
   download_gallery: "Gallerie herunterladen"
@@ -202,7 +202,7 @@ de:
   folder_page_display: Verzeichnis
   forgot_password_link: "Ich habe mein Passwort vergessen"
   forgot_password_mail_expiry: "Dieser Link behält seine Gültigkeit für 24 Stunden. Willst Du Dein Passwort später rücksetzen musst Du Dir auf der \"Passwort vergessen\"-Seite einen neuen Link zuschicken lassen."
-  forgot_password_mail_greeting: "%s, um Dein Passwort zurückzusetzen besuche bitte"
+  forgot_password_mail_greeting: "{user}, um Dein Passwort zurückzusetzen besuche bitte"
   forgot_password_text: "Falls Du Dein Passwort vergessen hast können wir Dir einen Link schicken, mit dem Du ein neues generieren kannst."
   forgotten_email_address: "Welche Email-Adresse hast Du bei der Anmeldung angegeben?"
   format: Format
@@ -243,22 +243,22 @@ de:
       Wenn Du der Gruppe nicht beitreten magst ignoriere einfach diese Mail.
   group_invite_subject: "Einladung, der Gruppe \"{group}\" beizutreten"
   group_join_chat: "Am Plausch teilnehmen"
-  group_language: "Die Hauptsprache dieser %s."
+  group_language: "Die Hauptsprache dieser {group}."
   group_members_publicly_visible: "Mitglieder öffentlich sichtbar machen"
   group_members_publicly_visible_description: "Nichtmitglieder können eine Liste mit Mitgliedern unter we.riseup.net/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (we.riseup.net/Nutzername)"
   group_not_allowed_to_view_image_error: "Die Gruppe, der diese Seite gehört, darf dieses Bild nicht anschauen."
-  group_privacy_settings: "%s Datenschutz Einstellungen"
+  group_privacy_settings: "{group} Datenschutz Einstellungen"
   group_profile_description_may_request_membership: "Erlaube Personen, eine Mitgliedschaftsanfrage an diese {group_type} zu stellen."
   group_profile_description_may_see: "Untenstehende Infos werden sichtbar sein, wenn das Kästchen angekreuzt ist. Andernfalls wird das Profil für diese {group_type} komplett versteckt."
   group_profile_description_may_see_committees: "Erlaube Personen, welche Arbeitsgruppen diese {group_type} besitzt."
   group_profile_description_may_see_groups: "Anderen erlauben, die Gruppen, die zu dieser {group_type} gehören, zu sehen."
   group_profile_description_may_see_members: "Anderen erlauben, die Mitgliederliste dieser {group_type} einzusehen."
   group_profile_description_may_see_networks: "Andere dürfen sehen, zu welchem Netzwerk diese {group_type} gehört."
-  group_publicly_visible: "%s öffentlich sichtbar machen"
+  group_publicly_visible: "{group} öffentlich sichtbar machen"
   group_publicly_visible_description: "Die Gruppe erscheint im öffentlichen Verzeichnis und das  <i>Profil</i> kann von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
   group_successfully_created: "Die Gruppe wurde angelegt."
   group_successfully_updated: "Die Gruppe wurde aktualisiert."
-  group_summary: "Kurzinformation zu dieser %s."
+  group_summary: "Kurzinformation zu dieser {group}."
   group_wiki: "Wiki der Gruppe"
   groups: Gruppen
   have_your_say: "Sag auch was!"
@@ -270,7 +270,7 @@ de:
   im_addresses: "IM Adressen"
   image_count: "Bild :number von :count gesamt"
   image_count_total: ":count Bilder"
-  image_title: "Bildtitel: %s"
+  image_title: "Bildtitel: {title}"
   inbox_description: "Liste von Seiten, an denen ich aktiv teilhabe oder bei denen ich Änderungen registriere."
   include_full_checkbox: "Link zum ganzen Bild einfügen"
   incoming: Eingang
@@ -286,19 +286,18 @@ de:
   invite_accept_info: "Du willst die Einladung annehmen. Hast Du schon einen Zugang zu diesem Server?"
   invite_accept_via_existing_account: "Ich habe bereits einen Zugang."
   invite_accept_via_register: "Ich will einen neuen Zugang anmelden."
-  invite_info: "Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser %s beizutreten, ein."
+  invite_info: "Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser {group_type} beizutreten, ein."
   invite_not_found: "Einladung nicht gefunden"
   join_chat: "am schwatz teilnehmen"
   join_group_link: "Join {group_type}"
   join_group_success: "Du hast dich der Gruppe {group_name} angeschlossen."
-  join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage überprüfen, indem Du \"%s\" besuchst."
+  join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage überprüfen, indem Du \"{my_requests_url}\" besuchst."
   joins_the_chatroom: "Chatraum betreten"
   language: Sprache
   large: groß
   last_change: "letzte Änderung"
   last_name: Familienname
   last_seen: "Zuletzt gesehen"
-  leave_group: "%s verlassen"
   leave_group_link: "Verlasse {group_type}"
   left_the_chatroom: "hat den Chatroom verlassen"
   link_name: Linkname
@@ -336,12 +335,12 @@ de:
   media_audios: Tonaufnahmen
   media_document: Dokument
   media_documents: Dokumente
-  media_for_group: "%s in %s"
+  media_for_group: "{media_type} in {group}"
   media_image: Bild
   media_images: Bilder
   media_video: Video
   media_videos: Videos
-  media_without_group: "Alle %s"
+  media_without_group: "Alle {media_type}"
   medium: mittel
   member_groups_of_network: "Gruppen im Netzwerk"
   members: BenutzerInnen
@@ -558,7 +557,7 @@ de:
   reject_button: Abweisen
   rejected: abgewiesen
   remove: Entfernen
-  remove_contact_confirmation: "Bist du sicher, dass du den Kontakt zu %s abbrechen willst?"
+  remove_contact_confirmation: "Bist du sicher, dass du den Kontakt zu {user} abbrechen willst?"
   remove_contact_info: "Wenn du Personen von deiner Kontaktliste entfernst, wirst du nicht mehr sehen können, wann sich die Personen eingeloggt haben - außerdem wirst du keinen Zugang zu deren kompletten Profil mehr haben. Wenn du eine Person von deiner Kontaktliste entfernst, wirst du auch nicht mehr auf der Kontaktliste der entfernten Person erscheinen."
   remove_friend_link: "Entferne von meinen Kontakten"
   remove_from_gallery: "Aus Gallerie entfernen"
@@ -580,10 +579,10 @@ de:
   requests_to_me: "An mich"
   required: (benötigt)
   reset_password: "Setze Passwort zurück"
-  reset_password_mail_greeting: "%s, dein Passwort wurde auf deine Anfrage zurückgesetzt."
+  reset_password_mail_greeting: "{user}, dein Passwort wurde auf deine Anfrage zurückgesetzt."
   reset_password_mail_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zurücksetzen deines Passworts enthält."
   reset_password_mail_warning: "Wenn du keine Anfrage, dein Passwort zurückzusetzen, gestellt hast, kontaktiere uns bitte."
-  reset_password_text: "Hallo %s. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen."
+  reset_password_text: "Hallo {user}. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen."
   return_link: Zur&uuml;ck
   rss_feed: "RSS Feed"
   saturday: Samstag
