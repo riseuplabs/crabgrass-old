@@ -7,7 +7,7 @@ en:
 
   #permission_denied: 'Permission denied'
   #upload_attachment: "Upload Attachment"
-  #rename {upload_images} -> {upload}
+  #rename {{upload_images}} -> {{upload}}
   #insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
   ##
@@ -22,9 +22,9 @@ en:
   ## GENERIC MACROS
   ##
 
-  create_a_new_thing: "Create a new {thing}"
-  thing_not_found: "{thing} not found"
-  thing_settings: "{thing} Settings"
+  create_a_new_thing: "Create a new {{thing}}"
+  thing_not_found: "{{thing}} not found"
+  thing_settings: "{{thing}} Settings"
 
   ##
   ## GENERIC TERMS
@@ -111,7 +111,7 @@ en:
   viewers: "Viewers"
   recipients: "Recipients"
 
-  destroy_confirmation: "Are you sure you want to delete this {thing}? This action cannot be undone."
+  destroy_confirmation: "Are you sure you want to delete this {{thing}}? This action cannot be undone."
   confirmation: "Are you sure?"
 
   ##
@@ -165,9 +165,9 @@ en:
   ### TO BE SORTED
   ###
 
-  group_information: "{group_type} Information"
+  group_information: "{{group_type}} Information"
 
-  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain ({url}) after your login. For security reasons we have removed this parameter from the URL."
+  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain ({{url}}) after your login. For security reasons we have removed this parameter from the URL."
   subject_must_not_be_empty: subject must not be empty
   at_least_one_recipient_is_required: at least one recipient is required
   message_must_not_be_empty: message must not be empty
@@ -176,12 +176,12 @@ en:
   from: from
   to: To
   date: date
-  request_status: "This request is: {status}."
+  request_status: "This request is: {{status}}."
   status_resolved: resolved
   status_pending: pending
   approve_or_reject_link: approve or reject this request
-  request_status: This request was {status} by {user} on {time}
-  discuss_request_link: discuss this request with {person_or_group}
+  request_status: This request was {{status}} by {{user}} on {{time}}
+  discuss_request_link: discuss this request with {{person_or_group}}
   small: small
   medium: medium
   large: large
@@ -196,7 +196,7 @@ en:
   signup_link: "New Account"
   signup_email_info: "Optional: used if you forget your password"
   forgot_password_link: "Forgot Password"
-  signup_info: Choose your login name and your password then click "{sign_up}"
+  signup_info: Choose your login name and your password then click "{{sign_up}}"
   login_failure_reason: "Username or password is incorrect."
   signup_success_message: "Thanks for signing up!"
   login_name: "Login name"
@@ -213,15 +213,15 @@ en:
   forgot_password_text: |
     If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
   reset_password_text: |
-    Hello, {user}. If you've forgotten the password you use to log in, you can set a new one here.
+    Hello, {{user}}. If you've forgotten the password you use to log in, you can set a new one here.
 
-  forgot_password_mail_greeting: {user}, to reset your password, please visit
+  forgot_password_mail_greeting: {{user}}, to reset your password, please visit
   forgot_password_mail_expiry: |
     This link will remain valid for 24 hours. If you need to reset your
     password after that, you will have to visit the forgotten password page
     again to request a new link.
 
-  reset_password_mail_greeting: {user}, your password has been reset as you requested.
+  reset_password_mail_greeting: {{user}}, your password has been reset as you requested.
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
   your_login: "Your login"
   invalid_email: "Invalid Email"
@@ -294,16 +294,16 @@ en:
   ## ACTIVITIES
   ##
 
-  activity_contact_created: "{user} added {other_user} as a friend"
-  activity_user_status: "{user} is now {status}"
-  activity_user_left_group: "{user} has left {group_type} {group}"
-  activity_user_joined_group: "{user} has joined {group_type} {group}"
-  activity_user_destroyed: "{user} has retired"
-  activity_group_created: "{user} created {group_type} {group}"
-  activity_group_destroyed: "{group} was destroyed by {user}"
-  activity_wall_message: "{author} wrote to {user}: {message}"
-  activity_message: "{author} wrote: {message}"
-  activity_unread: "You have {count} unread [private messages]"
+  activity_contact_created: "{{user}} added {{other_user}} as a friend"
+  activity_user_status: "{{user}} is now {{status}}"
+  activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
+  activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
+  activity_user_destroyed: "{{user}} has retired"
+  activity_group_created: "{{user}} created {{group_type}} {{group}}"
+  activity_group_destroyed: "{{group}} was destroyed by {{user}}"
+  activity_wall_message: "{{author}} wrote to {{user}}: {{message}}"
+  activity_message: "{{author}} wrote: {{message}}"
+  activity_unread: "You have {{count}} unread [private messages]"
   activity_unread_singular: "You have an unread [private message]"
 
   ##
@@ -320,8 +320,8 @@ en:
   media_documents: "Documents"
   media_all: "Media"
   media_alls: "Media"
-  media_for_group: "{media_type} in {group}"
-  media_without_group: "All {media_type}"
+  media_for_group: "{{media_type}} in {{group}}"
+  media_without_group: "All {{media_type}}"
   history: "History"
   other_formats: "Other Formats"
   file_version_deleted: "file version deleted"
@@ -335,17 +335,17 @@ en:
   file_size: "File size"
   format: "Format"
   regenerate: "regenerate thumbnails"
-  version_number: "version {version}"
+  version_number: "version {{version}}"
 
   ##
   ## GALLERY
   ##
 
   order_changed: Order changed.
-  error_saving_new_order: "Error saving new order: {error_message}"
-  sucessfully_removed_image: Successfully removed image! ({undo_link})
-  image_count: Photo {number} of {count}
-  image_count_total: "{count} Photos"
+  error_saving_new_order: "Error saving new order: {{error_message}}"
+  sucessfully_removed_image: Successfully removed image! ({{undo_link}})
+  image_count: Photo {{number}} of {{count}}
+  image_count_total: "{{count}} Photos"
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
@@ -372,10 +372,10 @@ en:
   file_must_be_image_error: "File must be an image to be part of a gallery."
   group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
   add_another_file: "Add another file"
-  slideshow_delay_input: "Update every {input_field} seconds"
+  slideshow_delay_input: "Update every {{input_field}} seconds"
   add_comment: "Add Comment"
   make_album_cover: "make this image the album cover"
-  image_title: "Image title: {title}"
+  image_title: "Image title: {{title}}"
   upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
 
@@ -408,7 +408,7 @@ en:
   inbox_description: Inbox of pages I am actively participating in or watching for changes
   toggle_selection: Toggle Selection
   remove_from_inbox: Remove from inbox
-  my_settings: Settings for {user}
+  my_settings: Settings for {{user}}
   upload_image: "Upload Image"
   uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
   select_image_file: "select image file"
@@ -472,15 +472,15 @@ en:
   location_postal_code: postal code
   location_country: country
 
-  #users_recent_activity: "{user}'s Recent Activity"
-  #users_recent_work: "{user}'s Recent Work"
+  #users_recent_activity: "{{user}}'s Recent Activity"
+  #users_recent_work: "{{user}}'s Recent Work"
   recent_contributions: "Recent Contributions"
   delete_post: Delete Post
   post_message: Post Message
   top_rated: Top Rated
   most_viewed: Most Viewed
   highest_contributors: Highest Contributors
-  users_world: "{user}'s World"
+  users_world: "{{user}}'s World"
   request_friend_link: "Add To My Friends"
   remove_friend_link: "Remove From My Friends"
   edit_profile_link: "Edit Profile"
@@ -505,12 +505,12 @@ en:
   user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
   user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
-  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this {group_type}."
-  group_profile_description_may_see_committees: "Allow people to see what committees this {group_type} has."
-  group_profile_description_may_see_networks: "Allow people to see what networks this {group_type} is part of."
-  group_profile_description_may_see_members: "Allow people to see the membership list of this {group_type}."
-  group_profile_description_may_request_membership: "Allow people to request to be a member of this {group_type}."
-  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this {group_type} will be hidden entirely."
+  group_profile_description_may_see_groups: "Allow people to see the groups that are part of this {{group_type}}."
+  group_profile_description_may_see_committees: "Allow people to see what committees this {{group_type}} has."
+  group_profile_description_may_see_networks: "Allow people to see what networks this {{group_type}} is part of."
+  group_profile_description_may_see_members: "Allow people to see the membership list of this {{group_type}}."
+  group_profile_description_may_request_membership: "Allow people to request to be a member of this {{group_type}}."
+  group_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, the profile for this {{group_type}} will be hidden entirely."
 
 
   ##
@@ -518,34 +518,34 @@ en:
   ##
 
   group_join_chat: "Join Chat"
-  group_privacy_settings: '{group} Privacy Settings'
-  group_publicly_visible: 'Make {group} Publicly Visible'
+  group_privacy_settings: '{{group}} Privacy Settings'
+  group_publicly_visible: 'Make {{group}} Publicly Visible'
   committee_publicly_visible: 'Make Committees Publicly Visible'
   allow_membership_requests: 'Allow Membership Requests'
-  group_home_headline: "{group_type} Home"
+  group_home_headline: "{{group_type}} Home"
   group_home_welcome: "Welcome"
   group_administration_not_allowed: "You cannot administer this group."
   page_not_part_of_group: "Page not part of this group"
   group_successfully_updated: "Group was successfully updated."
   only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
   group_successfully_created: "Group was successfully created."
-  dont_understand_group_type: "Could not understand group type {type}"
-  dont_have_permission_to_create_committees: "You do not have permission to create committees under {group}"
-  group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {domain}/yourgroupname.
-  committee_publicly_visible_description: Committees are viewable by non-members at {domain}/yourgroupname
+  dont_understand_group_type: "Could not understand group type {{type}}"
+  dont_have_permission_to_create_committees: "You do not have permission to create committees under {{group}}"
+  group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {{domain}}/yourgroupname.
+  committee_publicly_visible_description: Committees are viewable by non-members at {{domain}}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description:   Members are viewable by non-members at {domain}/yourgroupname. Also, the name of the group will be listed on each members profile page ({domain}/username)
+  group_members_publicly_visible_description:   Members are viewable by non-members at {{domain}}/yourgroupname. Also, the name of the group will be listed on each members profile page ({{domain}}/username)
   page_list: Page list
   recent_network_pages: "Recent Network Pages"
-  recent_member_group_pages: "Recent Activity from Your Groups in {network}"
+  recent_member_group_pages: "Recent Activity from Your Groups in {{network}}"
   featured_content_header: "Featured"
   create_group_link: "create group"
   typing: typing
   away: away
   you_are_not_member_of_any_group: You are not a member of any group.
   upload_image: "Upload Image"
-  back_to_group: back_to {group_name}
-  edit_featured_content_for_group: Edit Featured Content For {group_name}
+  back_to_group: back_to {{group_name}}
+  edit_featured_content_for_group: Edit Featured Content For {{group_name}}
   mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
   current_featured_content: Current Featured Content
   when_does_feature_expire: When does this feature expire?
@@ -554,7 +554,7 @@ en:
   expired_featured_content: Expired Featured Content
   feature_button: Feature!
   reactivate_button: Reactivate!
-  no_group_named: there is no group named <b>{name}</b>.
+  no_group_named: there is no group named <b>{{name}}</b>.
   featured_content: Featured Content
   group_wiki: Group Wiki
   rss_feed: RSS Feed
@@ -568,10 +568,10 @@ en:
   new_group: "New group"
   create_group_link: "create a new group"
   create_committee: "create committee"
-  group_language: "The main language of this {group}."
-  group_summary: "Brief information regarding this {group}."
+  group_language: "The main language of this {{group}}."
+  group_summary: "Brief information regarding this {{group}}."
   new_network: "New network"
-  group_membership_count: "{count} Members"
+  group_membership_count: "{{count}} Members"
 
   # directory
 
@@ -591,10 +591,10 @@ en:
   view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
-  destroy_group_link: "Destroy {group_type}"
-  join_group_link: "Join {group_type}"
-  leave_group_link: "Leave {group_type}"
-  request_join_group_link: "Request to Join {group_type}"
+  destroy_group_link: "Destroy {{group_type}}"
+  join_group_link: "Join {{group_type}}"
+  leave_group_link: "Leave {{group_type}}"
+  request_join_group_link: "Request to Join {{group_type}}"
 
   # results
 
@@ -615,21 +615,21 @@ en:
   # council
 
   coordinating_council: "Coordinating Council"
-  this_is_coordinating: "This is the <strong>coordinating council</strong> for {parent_group}."
-  new_council: "New council for group {group_name}"
+  this_is_coordinating: "This is the <strong>coordinating council</strong> for {{parent_group}}."
+  new_council: "New council for group {{group_name}}"
   council_help: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
 
   # committee
 
-  this_is_committee: "This committee is part of {parent_group}."
+  this_is_committee: "This committee is part of {{parent_group}}."
 
   ##
   ## REQUESTS
   ##
 
-  contact_request_message_label: "Tell {user} why you want to be their friend."
+  contact_request_message_label: "Tell {{user}} why you want to be their friend."
   add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-  join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "{my_requests_url}".
+  join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "{{my_requests_url}}".
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
   approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
@@ -648,24 +648,24 @@ en:
   outgoing: "Outgoing"
   state: "state"
   action: "action"
-  request_to_friend_description: "{user} would like to be the friend of {other_user}"
-  request_to_join_our_network_description: "group {group} was invited to join network {network}"
-  request_to_join_us_description: "{user} was invited to join {group}"
-  request_to_join_us_via_email_description: "{email} was invited to join {group}"
-  request_to_join_you_description: "{user} requested to join {group}"
-  request_to_join_your_network_description: "{group} requested to join network {network}"
+  request_to_friend_description: "{{user}} would like to be the friend of {{other_user}}"
+  request_to_join_our_network_description: "group {{group}} was invited to join network {{network}}"
+  request_to_join_us_description: "{{user}} was invited to join {{group}}"
+  request_to_join_us_via_email_description: "{{email}} was invited to join {{group}}"
+  request_to_join_you_description: "{{user}} requested to join {{group}}"
+  request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
 
   send_invites_button: "Send Invites"
-  send_invites_headline: "Send invitations to join {group}"
-  invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {group_type}."
-  remove_contact_confirmation: "Are you sure you wish to no longer be friends with {user}?"
+  send_invites_headline: "Send invitations to join {{group}}"
+  invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {{group_type}}."
+  remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   already_contacts_info: "You are already the friend of this person."
   try_again: "Try Again"
   invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
-  invite_accept_headline: 'Accept invitation to join group "{group_name}"'
+  invite_accept_headline: 'Accept invitation to join group "{{group_name}}"'
   invite_accept_via_existing_account: "I already have an account"
   invite_accept_via_register: "I need to register a new account"
-  join_group_success: "You have joined group {group_name}"
+  join_group_success: "You have joined group {{group_name}}"
 
   # invite/request errors
 
@@ -707,7 +707,7 @@ en:
   page_list_heading_owner: "owner"
   page_list_heading_last_updated: "last updated"
   page_list_heading_stars: "stars"
-  page_notice_message: "page sent by {user} on {date}"
+  page_notice_message: "page sent by {{user}} on {{date}}"
   page_with_message: "with message"
   pagination_next: "Next"
   pagination_previous: "Previous"
@@ -719,19 +719,19 @@ en:
 
   announcements: "Announcements"
   watch_checkbox: "Watch For Updates"
-  add_star_link: "Add Star ({star_count})"
-  remove_star_link: "Remove Star ({star_count})"
+  add_star_link: "Add Star ({{star_count}})"
+  remove_star_link: "Remove Star ({{star_count}})"
   public_checkbox: "Public"
   public_checkbox_help: "If checked, anyone may view this page."
-  move_page_link: "Move {page_class}"
-  page_details_link: "{page_class} Details"
+  move_page_link: "Move {{page_class}}"
+  page_details_link: "{{page_class}} Details"
 
   # trash
 
   trash: "Trash"
-  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking {undelete} or permanently destroy a page by clicking {destroy}."
+  trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking {{undelete}} or permanently destroy a page by clicking {{destroy}}."
 
-  delete_page_link: "Delete {page_class}"
+  delete_page_link: "Delete {{page_class}}"
   delete_page_via_trash: "Move To Trash"
   delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
   delete_page_via_shred: "Destroy Immediately"
@@ -764,35 +764,35 @@ en:
   grant_access: "Grant Access"
   share_page_email: "Send an email notification"
   share_page_message: "Send a message (optional)"
-  share_page_link: "Share {page_class}"
+  share_page_link: "Share {{page_class}}"
   share_page_options: "Choose options"
-  share_page_recipients: "Share This {page_class}"
+  share_page_recipients: "Share This {{page_class}}"
   share_page_recipients_sections: "Choose from your groups or friends"
   share_page_recipients_selection: "Make your selection"
-  share_page_recipients_results: "This {page_class} will be shared with"
+  share_page_recipients_results: "This {{page_class}} will be shared with"
   notify_page_link: "Send Notification"
   notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
   notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
 
-  notify_no_access_error: 'Sorry, "{name}" does not have access to this page.'
-  share_already_exists_error: '"{name}" already has access to this page.'
-  share_pester_error: 'Sorry, you are not allowed to share with "{name}".'
-  name_or_email_not_found: '"{name}" does not match the name of any users or groups and is not a valid email address.'
+  notify_no_access_error: 'Sorry, "{{name}}" does not have access to this page.'
+  share_already_exists_error: '"{{name}}" already has access to this page.'
+  share_pester_error: 'Sorry, you are not allowed to share with "{{name}}".'
+  name_or_email_not_found: '"{{name}}" does not match the name of any users or groups and is not a valid email address.'
 
   entity_autocomplete_tip: "Enter the name of a group or person."
 
   # creating
 
   contribute_content_link: "Create Page"
-  contribute_group_content_link: "Add Page To {group}"
+  contribute_group_content_link: "Add Page To {{group}}"
   page_create_owner: "Page Owner"
-  create_page_information: "{page_class} Information"
-  create_page_data: "{page_class} Data"
+  create_page_information: "{{page_class}} Information"
+  create_page_data: "{{page_class}} Data"
   create_page: "Create Page"
   only_me: "Me"
-  create_page_button: "Create {page_class}"
-  page_added_to_group: "This page will be added to {group_type} {group_name}."
+  create_page_button: "Create {{page_class}}"
+  page_added_to_group: "This page will be added to {{group_type}} {{group_name}}."
   additional_page_access: "Additional Access"
   page_owner_error: "Page owner cannot be empty."
 
@@ -961,7 +961,7 @@ en:
   survey_list_all: "List All Responses"
 
   save_survey: "Save Survey"
-  survey_response_by: "Response by {login}"
+  survey_response_by: "Response by {{login}}"
 
   survey_rate_this_response: "Rate This Response"
   survey_your_rating_of_this_response: "Your Rating of This Response"
@@ -990,28 +990,28 @@ en:
 
   locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
   view_while_locked_error: "You have this wiki locked. If you want to stop editing, click the cancel button."
-  wiki_is_locked: "This wiki is currently locked by {user}"
+  wiki_is_locked: "This wiki is currently locked by {{user}}"
   wont_be_able_to_save: "You will not be able to save this page"
   page_locked_header: "Page Locked"
-  locked_by_user: "Locked by {user}"
+  locked_by_user: "Locked by {{user}}"
   break_lock: "Break Lock"
   break_lock_button: "Break Lock"
   versions: "Versions"
   last_change: "Last Change"
   print_underlined_p: "<u>p</u>rint"
   edit_underlined_e: "<u>e</u>dit"
-  comparing_changes_header: "Comparing changes by {user} at {when} from {old_version} to {new_version}"
+  comparing_changes_header: "Comparing changes by {{user}} at {{when}} from {{old_version}} to {{new_version}}"
   prev_change: "Previous Change"
   next_change: "Next Change"
   formatting_reference_link: "Editing Help"
-  version_doesnt_exist: "There is no version {version}"
-  you_are_viewing_version: "You are viewing version {version} by {user}"
+  version_doesnt_exist: "There is no version {{version}}"
+  you_are_viewing_version: "You are viewing version {{version}} by {{user}}"
   diff_link: "view changes"
-  created_when_by: "created {when} by {user}"
+  created_when_by: "created {{when}} by {{user}}"
   insert_image_heading: "Insert Image"
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
-  wiki_revert_version: "Revert To Version {version}"
+  wiki_revert_version: "Revert To Version {{version}}"
 
   wiki_plain_editor: "Plain Editor"
   wiki_visual_editor: "Visual Editor"
@@ -1030,7 +1030,7 @@ en:
   my_status_heading: "Your Current Status"
   # ^^ no longer used
 
-  users_wall: "{user}'s Wall"
+  users_wall: "{{user}}'s Wall"
   ## ^^ no longer used
 
   recent_wall_posts: "Recent Wall Posts"
@@ -1040,25 +1040,25 @@ en:
   ## EMAIL
   ##
 
-  group_invite_subject: "Invitation to join group \"{group}\""
+  group_invite_subject: "Invitation to join group \"{{group}}\""
   group_invite_email: |
-    {from_user} has invited you to join group "{group}".
+    {{from_user}} has invited you to join group "{{group}}".
 
     If you wish to join this group, click here:
 
-      {accept_invite_link}
+      {{accept_invite_link}}
 
     The home page of this group can be found here:
 
-      {group_home_link}
+      {{group_home_link}}
 
     If you do not wish to join this group, simply ignore this email.
 
-  email_notice_subject: 'Check out page "{title}"'
-  email_notice_hello_with_message: "Hello, {from} has sent you a web page with the following message: {message}"
-  email_notice_hello: "Hello, {from} has sent you a web page."
+  email_notice_subject: 'Check out page "{{title}}"'
+  email_notice_hello_with_message: "Hello, {{from}} has sent you a web page with the following message: {{message}}"
+  email_notice_hello: "Hello, {{from}} has sent you a web page."
   email_notice_access: "You may access this page here:"
-  email_link_expires: "This link will expire in {days} days."
+  email_link_expires: "This link will expire in {{days}} days."
 
 
   ##
@@ -1118,8 +1118,8 @@ en:
 
   welcome_show_link: "Show Welcome"
   welcome_hide_link: "Hide Welcome"
-  welcome_title: "Welcome to {site_title}"
-  welcome_heading: "Welcome to {site_title}, {user_name}!"
+  welcome_title: "Welcome to {{site_title}}"
+  welcome_heading: "Welcome to {{site_title}}, {{user_name}}!"
   welcome_message: "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."
   welcome_login_message: ""
 

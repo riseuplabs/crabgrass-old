@@ -4,11 +4,11 @@ el:
   accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
   access: Πρόσβαση
   activate_js_to_rearrange_photos: "Ενεργοποιήστε την JavaScript ώστε να ανατακτοποιείτε τις φωτογραφίες με Drag&Drop"
-  activity_contact_created: "ο/η {user} πρόσθεσε τον/την {other_user} ως επαφή"
-  activity_group_created: "{user} δημιούργησε {group_type} {group}"
-  activity_group_destroyed: "{group} διαγράφηκε από {user}"
-  activity_user_left_group: "{user} αποχώρησε από {group_type} {group}"
-  activity_user_status: "{user} είναι τώρα {status}"
+  activity_contact_created: "ο/η {{user}} πρόσθεσε τον/την {{other_user}} ως επαφή"
+  activity_group_created: "{{user}} δημιούργησε {{group_type}} {{group}}"
+  activity_group_destroyed: "{{group}} διαγράφηκε από {{user}}"
+  activity_user_left_group: "{{user}} αποχώρησε από {{group_type}} {{group}}"
+  activity_user_status: "{{user}} είναι τώρα {{status}}"
   add_another_file: "Προσθήκη και άλλου αρχείου"
   add_button: Πρόσθεσε
   add_comment: "Προσθήκη Σχολίου"
@@ -48,7 +48,7 @@ el:
   attachments: Επισυνάψεις
   away: απουσιάζω
   back_button: Πίσω
-  back_to_group: "επιστροφή στην {group_name}"
+  back_to_group: "επιστροφή στην {{group_name}}"
   cancel_button: Ακύρωση
   cancel_link: ακύρωση
   category: Κατηγορία
@@ -57,7 +57,7 @@ el:
   collection: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
-  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {domain}/yourgroupname"
+  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {{domain}}/yourgroupname"
   committees: επιτροπές
   confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
   contact: Επαφή
@@ -82,7 +82,7 @@ el:
   from: από
   height: Ύψος
   history: Ιστορικό
-  image_title: "Τίτλος εικόνας: {title}"
+  image_title: "Τίτλος εικόνας: {{title}}"
   incoming: Εισερχόμενα
   language: Γλώσσα
   last_change: "Τελευταία Αλλαγή"

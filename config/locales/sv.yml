@@ -4,13 +4,13 @@ sv:
   accept_usage_agreement: "Jag accepterar användningsavtalet"
   action: handling
   activate_js_to_rearrange_photos: "Aktivera Javascript om du vill använda drag-och-släpp-metoden för att flytta runt bilder!"
-  activity_contact_created: "{user} lade till {other_user} som kontakt"
-  activity_group_created: "{user} skapade en {group_type} {group}"
-  activity_group_destroyed: "{group} förstördes av {user}"
-  activity_user_destroyed: "{user} har dragit sig tillbaka"
-  activity_user_joined_group: "{user} gick med i {group_type} {group}"
-  activity_user_left_group: "{user} lämnade {group_type} {group}"
-  activity_user_status: "{user} är för närvarande {status}"
+  activity_contact_created: "{{user}} lade till {{other_user}} som kontakt"
+  activity_group_created: "{{user}} skapade en {{group_type}} {{group}}"
+  activity_group_destroyed: "{{group}} förstördes av {{user}}"
+  activity_user_destroyed: "{{user}} har dragit sig tillbaka"
+  activity_user_joined_group: "{{user}} gick med i {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} lämnade {{group_type}} {{group}}"
+  activity_user_status: "{{user}} är för närvarande {{status}}"
   add_another_file: "Lägg till ny fil"
   add_button: "Lägg till"
   add_comment: "lägg till kommentar"
@@ -23,7 +23,7 @@ sv:
   add_location: "Lägg till plats"
   add_phone_number: "Lägg till telefonnummer"
   add_photo_to_gallery: "Lägg till ett foto till ett galleri:"
-  add_star_link: "Stjärna ({star_count})"
+  add_star_link: "Stjärna ({{star_count}})"
   add_websites: "Lägg till webbsajter"
   admin: Admin
   alert_error: Fel
@@ -47,7 +47,7 @@ sv:
   article_page_display: artikel
   at_least_one_recipient_is_required: "det krävs minst en mottagare"
   back_button: Tillbaka
-  back_to_group: "tillbaka till {group_name}"
+  back_to_group: "tillbaka till {{group_name}}"
   break_lock: "bryt lås"
   break_lock_button: "Bryt lås"
   cancel_button: Avbryt
@@ -57,17 +57,17 @@ sv:
   collection: samling
   collection_class_description: "Speciella sidor som innehåller andra sidor."
   committee: kommitté
-  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {domain}/gruppnamn"
+  committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {{domain}}/gruppnamn"
   committees: Kommittéer
-  comparing_changes_header: "Jämför ändringar av {user} {when} från {old_version} till {new_version}"
+  comparing_changes_header: "Jämför ändringar av {{user}} {{when}} från {{old_version}} till {{new_version}}"
   confirm_new_password: "Bekräfta det nya lösenordet"
   contact: Kontakt
-  contact_request_message_label: "Säg {user} varför du vill vara deras kontakt."
+  contact_request_message_label: "Säg {{user}} varför du vill vara deras kontakt."
   contacts: kontakter
   contribute_content_link: Bidra
   coordinating_council: koordinationsråd
   coordinator: Koordinator
-  create_a_new_thing: "skapa en ny {thing}"
+  create_a_new_thing: "skapa en ny {{thing}}"
   create_button: Skapa
   create_committee: "skapa kommitté"
   create_page: "Skapa sida"
@@ -76,7 +76,7 @@ sv:
   created: skapad
   created_by: "Skapades av"
   created_on: Skapad
-  created_when_by: "skapad {when} av {user}"
+  created_when_by: "skapad {{when}} av {{user}}"
   csrf_error_message: |
       Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:
   current_video_sources: "stöds för närvarande: youtube, blip.tv, google video, vimeo"
@@ -94,21 +94,21 @@ sv:
   date_weeks: veckor
   date_years: år
   date_yesterday: Igår
-  delete_page_link: "Radera {page_class}"
+  delete_page_link: "Radera {{page_class}}"
   delete_this_version: "radera denna version"
   delete_version_confirm: "Vill du säkert radera den här informationen?"
   description: beskrivning
   descriptions: Beskrivningar
   descriptive_name_for_display: "Ett beskrivande namn för uppvisning"
   destroy: förstör
-  destroy_group_link: "förstör {group_type}"
+  destroy_group_link: "förstör {{group_type}}"
   diff_link: diff
   directory_of_groups: "Katalog över grupper"
-  discuss_request_link: "diskutera den här begäran med {person_or_group}"
+  discuss_request_link: "diskutera den här begäran med {{person_or_group}}"
   discussions: Diskussioner
   display_name: Visningsnamn
-  dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under {group}"
-  dont_understand_group_type: "Förstod inte grupptypen {type}"
+  dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under {{group}}"
+  dont_understand_group_type: "Förstod inte grupptypen {{type}}"
   download: "Ladda ner"
   download_gallery: "Ladda ner galleri"
   drag_and_drop_to_rearrange_photos: "Drag & släpp bilder för att flytta runt dem."
@@ -137,7 +137,7 @@ sv:
       Den här länken kommer att fungera i 24 timmar. Om du behöver
       återställa lösenordet efter det måste du besöka sidan för glömt
       lösenord igen och begära en ny länk.
-  forgot_password_mail_greeting: "{user}, för att återställa lösenordet kan du besöka"
+  forgot_password_mail_greeting: "{{user}}, för att återställa lösenordet kan du besöka"
   forgot_password_text: "Om du har glömt lösenordet du använder för att logga in, kan vi skicka ett e-brev med en länk som gör att du kan skapa ett nytt."
   forgotten_email_address: "Vad för e-postadress gav du oss när du skapade ditt konto?"
   format: Formatera
@@ -159,20 +159,20 @@ sv:
   group_discussion: gruppdiskussion
   group_discussion_class_description: "En gruppdiskussion i ett särskilt ämne."
   group_has_no_public_profile: "Den här gruppen har ingen offentlig profil."
-  group_home_headline: "{group_type} hem"
+  group_home_headline: "{{group_type}} hem"
   group_home_welcome: Välkommen
-  group_information: "Information för {group_type}"
+  group_information: "Information för {{group_type}}"
   group_invite_email: |-
-      {from_user} har bjudit in dig till "{group}".
+      {{from_user}} har bjudit in dig till "{{group}}".
 
       Klicka här om du vill gå med i gruppen:
 
-        {accept_invite_link}
-  group_invite_subject: "Inbjudan till \"{group}\""
+        {{accept_invite_link}}
+  group_invite_subject: "Inbjudan till \"{{group}}\""
   group_members_publicly_visible: "Gör medlemmar synliga offentligt"
-  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på {domain}/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida ({domain}/användarnamn)"
+  group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på {{domain}}/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida ({{domain}}/användarnamn)"
   group_not_allowed_to_view_image_error: "Gruppen som äger sidan har inte tillåtelse att se den här bilden."
-  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på {domain}/gruppnamn."
+  group_publicly_visible_description: "Gruppen framträder i den offentliga katalogen, och gruppens <i>profil</i> syns av icke-medlemmar på {{domain}}/gruppnamn."
   group_successfully_created: "Gruppen skapades utan problem."
   group_successfully_updated: "Gruppen uppdaterades utan problem."
   group_wiki: Gruppwiki
@@ -181,9 +181,9 @@ sv:
   history: Historia
   home: Hem
   im_addresses: IM-adresser
-  image_count: "Bild {number} av {count}"
-  image_count_total: "{count} bilder"
-  image_title: "Bildtitel: {title}"
+  image_count: "Bild {{number}} av {{count}}"
+  image_count_total: "{{count}} bilder"
+  image_title: "Bildtitel: {{title}}"
   inbox_description: "Inkorg för sidor jag aktivt deltar i eller övervakar efter ändringar."
   include_full_checkbox: "ta med länk till hela bilden"
   incoming: Inkommande
@@ -194,9 +194,9 @@ sv:
   invalid_email_text: "E-postadressen du angivit är ogiltig."
   invalid_token: "Ogiltig symbol"
   invalid_token_text: "Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut."
-  invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna {group_type}."
+  invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna {{group_type}}."
   join_chat: "delta i chatten"
-  join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{my_requests_url}\"."
+  join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{{my_requests_url}}\"."
   language: Språk
   large: stor
   last_change: "senaste ändring"
@@ -208,7 +208,7 @@ sv:
   location_postal_code: postnummer
   location_state: delstat/provins
   locations: Ställen
-  locked_by_user: "låst av {user}"
+  locked_by_user: "låst av {{user}}"
   locking_error: "Låsningsfel. Dina ändringar kan inte sparas, för någon annan har sparat nya ändringar före dig."
   login: "Logga in"
   login_button: "Logga in"
@@ -231,12 +231,12 @@ sv:
   media_audios: Ljudinspelningar
   media_document: Dokument
   media_documents: Dokument
-  media_for_group: "{media_type} i {group}"
+  media_for_group: "{{media_type}} i {{group}}"
   media_image: Bild
   media_images: Bilder
   media_video: Video
   media_videos: Videor
-  media_without_group: "Alla {media_type}"
+  media_without_group: "Alla {{media_type}}"
   medium: mellan
   member_groups_of_network: Medlemsgrupper
   members: Medlemmar
@@ -268,14 +268,14 @@ sv:
   most_viewed: "Mest sedda"
   move_image_left: "Flytta bilden åt vänster"
   move_image_right: "Flytta bilden åt höger"
-  move_page_link: "Flytta {page_class}"
+  move_page_link: "Flytta {{page_class}}"
   my_completed_tasks_link: Fullföljd
   my_dashboard: "Min panel"
   my_groups: "Mina grupper"
   my_pages: "Mina sidor"
   my_pending_tasks_link: Väntlista
   my_requests_headline: "Mina förfrågningar"
-  my_settings: "Inställningar för {user}"
+  my_settings: "Inställningar för {{user}}"
   my_status_heading: "Din nuvarande status"
   my_tasks: Uppgifter
   my_tasks_description: "Listor på uppgifter som jag har tillgång till"

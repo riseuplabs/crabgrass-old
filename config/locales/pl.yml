@@ -5,14 +5,14 @@ pl:
   access: Dostęp
   action: akcja
   activate_js_to_rearrange_photos: "Włącz JavaScript jeśli chcesz móc przeciągać i aranżować układ fotografii!"
-  activity_contact_created: "{user} dodał/a {other_user} do swoich kontaktów"
-  activity_group_created: "{user} stworzył/a {group_type} {group}"
-  activity_group_destroyed: "grupa {group} została usunięta przez {user}"
-  activity_user_destroyed: "{user} idzie na emeryturę"
-  activity_user_joined_group: "{user} dołączył/a do {group_type} {group}"
-  activity_user_left_group: "{user} opuścił/a {group_type} {group}"
-  activity_user_status: "{user} jest {status}"
-  activity_wall_message: "{author} napisał/a do {user}: {message}"
+  activity_contact_created: "{{user}} dodał/a {{other_user}} do swoich kontaktów"
+  activity_group_created: "{{user}} stworzył/a {{group_type}} {{group}}"
+  activity_group_destroyed: "grupa {{group}} została usunięta przez {{user}}"
+  activity_user_destroyed: "{{user}} idzie na emeryturę"
+  activity_user_joined_group: "{{user}} dołączył/a do {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} opuścił/a {{group_type}} {{group}}"
+  activity_user_status: "{{user}} jest {{status}}"
+  activity_wall_message: "{{author}} napisał/a do {{user}}: {{message}}"
   add_another_file: "Dodaj kolejny pilk"
   add_button: Dodaj
   add_comment: "dodaj komentarz"
@@ -27,7 +27,7 @@ pl:
   add_one_or_more_tags: "Dodaj jeden lub więcej tagów, rozdzielonych przecinkami"
   add_phone_number: "Dodaj telefon"
   add_photo_to_gallery: "Kliknij na zdjęcie żeby je dodać"
-  add_star_link: "Dodaj gwiazdkę ({star_count})"
+  add_star_link: "Dodaj gwiazdkę ({{star_count}})"
   add_tags: "Dodaj Tagi"
   add_websites: "Dodaj stronę"
   admin: Admin
@@ -66,7 +66,7 @@ pl:
   attachments: Załączniki
   away: "gdzie indziej"
   back_button: Wróć
-  back_to_group: "powrót do grupy {group_name}"
+  back_to_group: "powrót do grupy {{group_name}}"
   break_lock: "Usuń blokadę"
   break_lock_button: "Usuń blokadę"
   cancel_button: Anuluj
@@ -78,12 +78,12 @@ pl:
   collection_class_description: "Specjalne strony zawierające podstrony."
   committee: Komitet
   committee_publicly_visible: "Komitety będą publicznie widoczne"
-  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {domain}/nazwatwojejgrupy"
+  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {{domain}}/nazwatwojejgrupy"
   committees: Komitety
-  comparing_changes_header: "Porównanie zmian dokonanych {when} from {old_version} przez {user} z {new_version}"
+  comparing_changes_header: "Porównanie zmian dokonanych {{when}} from {{old_version}} przez {{user}} z {{new_version}}"
   confirm_new_password: "Powtórz nowe hasło"
   contact: Kontakt
-  contact_request_message_label: "Tą wiadomość {user} otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
+  contact_request_message_label: "Tą wiadomość {{user}} otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
   contacts: Kontakty
   contribute_content_link: "Udziel się"
   contributed: Udział
@@ -91,19 +91,19 @@ pl:
   coordinator: Koordynator
   coordinators: "osoby koordynujące"
   council_help: "Jeśli ta grupa posiada radę koordynującą, wtedy tylko członek/ini tej rady może administrować grupą. W innym przypadku jakikolwiek członek/ini grupy może to robić."
-  create_a_new_thing: "Stwórz {thing}"
+  create_a_new_thing: "Stwórz {{thing}}"
   create_button: Stwórz
   create_committee: "stwórz komitet"
   create_group_link: "stwórz grupę"
   create_page: "Stwórz stronę"
-  create_page_button: "Stwórz {page_class}"
-  create_page_data: "dane {page_class}"
-  create_page_information: "informacje o {page_class}"
+  create_page_button: "Stwórz {{page_class}}"
+  create_page_data: "dane {{page_class}}"
+  create_page_information: "informacje o {{page_class}}"
   create_task_list: "stwórz nową listę zadań"
   created: stworzone
   created_by: "Stworzone przez"
   created_on: "Stworzone "
-  created_when_by: "stworzone {when} przez {user}"
+  created_when_by: "stworzone {{when}} przez {{user}}"
   csrf_error_message: |
       Twoja próba zalogowania nosi znamiona ataku na stronę. Nie martw się: ten błąd zdarza się często błędnie. Po prostu jesteśmy paranoikami. Wszystko co musisz zrobić to odświeżyć tą stronę zanim ponownie spróbujesz się zalogować. Możesz też nacisnąć tego linka żeby spróbować jeszcze raz:
   current_attachments: "Obecne załączniki"
@@ -125,7 +125,7 @@ pl:
   date_years: lata
   date_yesterday: Wczoraj
   delete: Usuń
-  delete_page_link: "Usuń {page_class}"
+  delete_page_link: "Usuń {{page_class}}"
   delete_post: "Usuń post"
   delete_this_version: "usuń tą wersję"
   delete_version_confirm: "Czy na pewno chcesz usunąć tą wersję?"
@@ -133,20 +133,20 @@ pl:
   descriptions: Opisy
   descriptive_name_for_display: "Wyświetlana nazwa opisowa"
   destroy: zniszcz
-  destroy_confirmation: "Czy jeteś pewien/a że chcesz zlikwidować {thing} ? To działanie nie bedzie mogło być odwrócone."
-  destroy_group_link: "zniszcz {group_type}"
+  destroy_confirmation: "Czy jeteś pewien/a że chcesz zlikwidować {{thing}} ? To działanie nie bedzie mogło być odwrócone."
+  destroy_group_link: "zniszcz {{group_type}}"
   details_link: Szczegóły
   diff_link: różnica
   directory_of_groups: "Katalog grup"
   directory_of_networks: "Katalog sieci"
   directory_of_people: "Katalog ludzi"
-  discuss_request_link: "przedyskutuj tą prośbę z {person_or_group}"
+  discuss_request_link: "przedyskutuj tą prośbę z {{person_or_group}}"
   discussion_page_description: "Dyskusja grupy na konkretny temat"
   discussion_page_display: "Dyskusja Grupy"
   discussions: Dyskusje
   display_name: Wyświetlane
-  dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w {group}"
-  dont_understand_group_type: "Nie rozumiem typu grupy {type}"
+  dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w {{group}}"
+  dont_understand_group_type: "Nie rozumiem typu grupy {{type}}"
   download: Ściągnij
   download_gallery: "Ściągnij galerię"
   drag_and_drop_to_rearrange_photos: "Przeciągnij i upuść grafiki żeby je zaaranżować"
@@ -154,7 +154,7 @@ pl:
   edit_attachments: "Edytuj załączniki"
   edit_attachments_link: Edytuj
   edit_featured_content: "edytuj wyróżnioną zawartość"
-  edit_featured_content_for_group: "Edytuj ostatnią zawartość dla {group_name}"
+  edit_featured_content_for_group: "Edytuj ostatnią zawartość dla {{group_name}}"
   edit_gallery: "Edytuj galerię"
   edit_profile_link: "Edytuj profil"
   edit_settings: "edytuj ustawienia "
@@ -186,7 +186,7 @@ pl:
   forgot_password_mail_expiry: |-
       Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
       ponownie ustawić swoje hasło po tym czasie, musisz ponownie odwiedzić stronę z zapomnianym hasłem i poprosić o nowy link.
-  forgot_password_mail_greeting: "{user}, żeby zresetować swoje hasło wejdź na"
+  forgot_password_mail_greeting: "{{user}}, żeby zresetować swoje hasło wejdź na"
   forgot_password_text: "Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło."
   forgotten_email_address: "Jaki adres e-mail podałeś/podałaś nam kiedy Twoje konto zostało utwożone?"
   format: Format
@@ -210,50 +210,50 @@ pl:
   group_discussion: dyskusja
   group_discussion_class_description: "Dyskusja na konkretny temat."
   group_has_no_public_profile: "Ta grupa nie ma publicznego profilu."
-  group_home_headline: "{group_type}"
+  group_home_headline: "{{group_type}}"
   group_home_welcome: Witamy
-  group_information: "Informacje o {group_type}"
+  group_information: "Informacje o {{group_type}}"
   group_invite_email: |
-      {from_user} zaprasza cię do grupy "{group}".
+      {{from_user}} zaprasza cię do grupy "{{group}}".
 
       Jeśli chcesz do niej dołączyć, kliknij tutaj:
 
-        {accept_invite_link}
+        {{accept_invite_link}}
 
       Strona domowa tej grupy znajduje się tutaj:
 
-        {group_home_link}
+        {{group_home_link}}
 
       Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
-  group_invite_subject: "Zaproszenie do grupy \"{group}\""
+  group_invite_subject: "Zaproszenie do grupy \"{{group}}\""
   group_join_chat: "Dołącz do czatu"
-  group_language: "Główny język {group}."
+  group_language: "Główny język {{group}}."
   group_members_publicly_visible: "Udostępnij publicznie listę uczestników i uczestniczek"
-  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem {domain}/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników ({domain}/użytkownik)."
+  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem {{domain}}/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników ({{domain}}/użytkownik)."
   group_not_allowed_to_view_image_error: "Grupa do której należy ta strona nie ma uprawnień do oglądania tej grafiki."
-  group_privacy_settings: "{group} ustawienia prywatności"
-  group_profile_description_may_request_membership: "Pozwól ludziom na wysyłanie pytań o członkostwo w {group_type}."
+  group_privacy_settings: "{{group}} ustawienia prywatności"
+  group_profile_description_may_request_membership: "Pozwól ludziom na wysyłanie pytań o członkostwo w {{group_type}}."
   group_profile_description_may_see: |-
       Jeśli zaznaczone, informacja o profilu, zamieszczona poniżej będzie widoczna.
-      W przeciwnym wypadku, profil tej {group_type} będzie ukryty całkowicie.
-  group_profile_description_may_see_committees: "Pozwól ludziom na przeglądanie do jakich komitetów {group_type} należy."
-  group_profile_description_may_see_groups: "Pozwól ludziom na oglądanie grup, które są częścią {group_type}."
-  group_profile_description_may_see_members: "Pozwól ludziom na oglądanie listy członkowskiej {group_type}."
-  group_profile_description_may_see_networks: "Pozwól ludziom na oglądanie do jakich sieci należy {group_type}."
-  group_publicly_visible: "{group} będzie publicznie widoczne"
-  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem {domain}/nazwatwojejgrupy."
+      W przeciwnym wypadku, profil tej {{group_type}} będzie ukryty całkowicie.
+  group_profile_description_may_see_committees: "Pozwól ludziom na przeglądanie do jakich komitetów {{group_type}} należy."
+  group_profile_description_may_see_groups: "Pozwól ludziom na oglądanie grup, które są częścią {{group_type}}."
+  group_profile_description_may_see_members: "Pozwól ludziom na oglądanie listy członkowskiej {{group_type}}."
+  group_profile_description_may_see_networks: "Pozwól ludziom na oglądanie do jakich sieci należy {{group_type}}."
+  group_publicly_visible: "{{group}} będzie publicznie widoczne"
+  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem {{domain}}/nazwatwojejgrupy."
   group_successfully_created: "Grupa została utworzona."
   group_successfully_updated: "Strona grupy została zaktualizowana."
-  group_summary: "Krótka informacja na temat {group}."
+  group_summary: "Krótka informacja na temat {{group}}."
   group_wiki: "Grupowe Wiki"
   groups: Grupy
   highest_contributors: "Najbardziej aktywni"
   history: Historia
   home: "Strona startowa"
   im_addresses: "Adres IM"
-  image_count: "Zdjęcie {number} z {count}"
-  image_count_total: "{count} Zdjęć"
-  image_title: "Obraz title: {title}"
+  image_count: "Zdjęcie {{number}} z {{count}}"
+  image_count_total: "{{count}} Zdjęć"
+  image_title: "Obraz title: {{title}}"
   inbox_description: "Skrzynka odbiorcza ze stronami w których aktywnie uczestniczę lub których zmiany obseruję  "
   include_full_checkbox: "włącz link do pełnego obrazu"
   incoming: Przychodzące
@@ -268,17 +268,17 @@ pl:
   invite_accept_info: "Czy chesz zaakceptować prośbę o dołączenie. Czy masz już konto na tym serwerze?"
   invite_accept_via_existing_account: "Tak, mam już konto"
   invite_accept_via_register: "Chcę zarejestrować nowe konto"
-  invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w {group_type}."
+  invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w {{group_type}}."
   invite_not_found: "Zaproszenie nieodnalezione"
   join_chat: "dołącz do czata"
-  join_group_success: "Dołączyłeś/łaś do grupy {group_name}"
-  join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"{my_requests_url}\"."
+  join_group_success: "Dołączyłeś/łaś do grupy {{group_name}}"
+  join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"{{my_requests_url}}\"."
   joins_the_chatroom: "dołącz do czata"
   language: Język
   large: powiększ
   last_change: "Ostatnia zmiana"
   last_name: nazwisko
-  leave_group_link: "opuść {group_type}"
+  leave_group_link: "opuść {{group_type}}"
   left_the_chatroom: "opuść pokój czatów"
   link_name: "Nazwa linku"
   link_name_description: "Ta nazwa pokazywać będzie w jaki sposób będziesz się odnosić/ła do tej grupy w linkach i URL. Może zawierać jedynie alfanumeryczne litery, bez jakichkolwiek spacji."
@@ -288,7 +288,7 @@ pl:
   location_postal_code: "kod pocztowy"
   location_state: stan/województwo
   locations: Lokalizacje
-  locked_by_user: "Zablokowane przez {user}"
+  locked_by_user: "Zablokowane przez {{user}}"
   locking_error: "Błąd zamknięcia. Nie mogę zapisać Twoich danych, ktoś inny zapisał zmiany pierwszy."
   login: Login
   login_button: "Zaloguj się"
@@ -314,12 +314,12 @@ pl:
   media_audios: "Nagrania dźwiękowe"
   media_document: "Dokument\n"
   media_documents: Dokumenty
-  media_for_group: "{media_type} w {group}"
+  media_for_group: "{{media_type}} w {{group}}"
   media_image: Obraz
   media_images: Obrazy
   media_video: Wideo
   media_videos: Widea
-  media_without_group: "Wszystko {media_type}\n"
+  media_without_group: "Wszystko {{media_type}}\n"
   medium: średni
   member_groups_of_network: "Grupy członkowie"
   members: "Uczestnicy i uczestniczki"
@@ -354,7 +354,7 @@ pl:
   move_button: Przesuń
   move_image_left: "Przesuń obraz w lewo"
   move_image_right: "Przesuń obraz w prawo"
-  move_page_link: "Przesuń {page_class}"
+  move_page_link: "Przesuń {{page_class}}"
   move_page_to_different_group: "Przesuń tą stronę do innej grupy"
   move_this_page: "Przesuń ta stronę"
   my_completed_tasks_link: Ukończone
@@ -371,7 +371,7 @@ pl:
   my_peers_link: "Moi towarzysze/towarzyszki"
   my_pending_tasks_link: "W toku"
   my_requests_headline: "Moje Zgłoszenia"
-  my_settings: "Ustawienia dla {user}"
+  my_settings: "Ustawienia dla {{user}}"
   my_status_heading: "Twój aktualny status"
   my_tasks: Zadania
   my_tasks_description: "Lista zadań do których mam dostęp"
@@ -390,7 +390,7 @@ pl:
   no_committees: "żadnych komitetów"
   no_contacts_msg: |
       Nie masz żadnych kontaktów
-  no_group_named: "nie ma grupy o nazwie <b>{name}</b>."
+  no_group_named: "nie ma grupy o nazwie <b>{{name}}</b>."
   no_images_in_gallery: "Brak obrazów w Galerii"
   no_members: "(no members)"
   no_peers_msg: "Nie masz żadnych znajomych."
@@ -412,7 +412,7 @@ pl:
   other_formats: "Inne Formaty"
   outgoing: Wysłane
   page_details: "Szczegóły strony"
-  page_details_link: "{page_class} Szczegóły"
+  page_details_link: "{{page_class}} Szczegóły"
   page_is_not_static: "Strona nie jest unieruchomiona"
   page_list: "Lista strony"
   page_list_heading_created: utworzone
@@ -426,7 +426,7 @@ pl:
   page_list_heading_updated_by: "zaktualizowane przez"
   page_locked_header: "Strona zablokowana"
   page_not_part_of_group: "Strona nie jest częścią tej grupy"
-  page_notice_message: "strona przesłana przez {user} {date}"
+  page_notice_message: "strona przesłana przez {{user}} {{date}}"
   page_with_message: "z wiadomością"
   pager: Pager
   pagination_next: kolejny
@@ -507,29 +507,29 @@ pl:
   reject_button: odrzuć
   rejected: "odrzucone\n"
   remove: usuń
-  remove_contact_confirmation: "Na pewno chcesz zerwać kontakt z {user}?"
+  remove_contact_confirmation: "Na pewno chcesz zerwać kontakt z {{user}}?"
   remove_contact_info: "Jeżeli usuniesz osobę ze swojej listy kontaktów, przestaniesz otrzymywać informację kiedy się zaloguje oraz stracisz dostęp do jej pełnego profilu. Ten proces działa w obu kierunkach (tzn automatycznie usuniesz się z kontaktów usuwanej osoby). "
   remove_friend_link: "Usuń z Moich Kontaktów"
   remove_from_gallery: "Usuń z galerii"
   remove_from_inbox: "Usuń ze skrzynki odbiorczej"
-  remove_star_link: "Usuń Gwiazdkę ({star_count})"
+  remove_star_link: "Usuń Gwiazdkę ({{star_count}})"
   removing_image: "Usuń Obraz..."
   request_friend_link: "Dodaj do moich kontaktów"
-  request_status: "Ta wiadomość została {status} przez {user} {time}"
-  request_to_friend_description: "{user} chce zostać dodana/y do kontaktów {other_user}"
-  request_to_join_our_network_description: "grupa {group} została zaproszona do sieci {network}"
-  request_to_join_us_description: "{user} otrzymał/a zaproszenie do {group}"
-  request_to_join_us_via_email_description: "{email} otrzyma zaproszenie do {group}"
-  request_to_join_you_description: "{user} prosi o dodanie do {group}"
-  request_to_join_your_network_description: "{group} prosi o włączenie do sieci {network}"
+  request_status: "Ta wiadomość została {{status}} przez {{user}} {{time}}"
+  request_to_friend_description: "{{user}} chce zostać dodana/y do kontaktów {{other_user}}"
+  request_to_join_our_network_description: "grupa {{group}} została zaproszona do sieci {{network}}"
+  request_to_join_us_description: "{{user}} otrzymał/a zaproszenie do {{group}}"
+  request_to_join_us_via_email_description: "{{email}} otrzyma zaproszenie do {{group}}"
+  request_to_join_you_description: "{{user}} prosi o dodanie do {{group}}"
+  request_to_join_your_network_description: "{{group}} prosi o włączenie do sieci {{network}}"
   requested_forgot_password: "Poprosiłeś/łaś o zmianę hasła"
   requests_from_me: "ode mnie"
   requests_to_me: "do mnie"
   reset_password: "Ustaw hasło na nowo"
-  reset_password_mail_greeting: "{user}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
+  reset_password_mail_greeting: "{{user}}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
   reset_password_mail_sent: "Został wysłany e-mail zawierający instrukcje w jaki sposób ustawić hasło na nowo."
   reset_password_mail_warning: "Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami."
-  reset_password_text: "Cześć, {user}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj."
+  reset_password_text: "Cześć, {{user}}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj."
   rss_feed: "Zasilacz RSS"
   saturday: Sobota
   save_button: Zapisz
@@ -544,7 +544,7 @@ pl:
   send_button: Wyślij
   send_invites: "wyślij zaproszenia"
   send_invites_button: "Wyślij zaproszenia"
-  send_invites_headline: "Wyślij zaproszenia do grupy {group}"
+  send_invites_headline: "Wyślij zaproszenia do grupy {{group}}"
   send_message_link: "Wyślij wiadomość"
   separate_tags: "Oddziel tagi używająć przecinków."
   set_status_button: "Ustaw Status"
@@ -552,13 +552,13 @@ pl:
   settings: ustawienia
   share: Współużytkowuj
   share_button: Współużytkowuj
-  share_link: "Udostępnij {page_class}"
+  share_link: "Udostępnij {{page_class}}"
   share_page_email: "Wyślij powiadomienie mailem"
-  share_page_link: "Współuzytkowuj {page_class}"
+  share_page_link: "Współuzytkowuj {{page_class}}"
   share_page_message: "Wyślij wiadomość (optional)"
   share_page_options: "Wybierz opcje"
-  share_page_recipients: "Współużytkowuj {page_class} z"
-  share_page_recipients_results: "Ta {page_class} będzie wpsółużytkowana z "
+  share_page_recipients: "Współużytkowuj {{page_class}} z"
+  share_page_recipients_results: "Ta {{page_class}} będzie wpsółużytkowana z "
   share_page_recipients_sections: "Wybierz spośród swoich grup lub przyjaciół"
   share_page_recipients_selection: "Stwórz własny wybór"
   share_this_page: "Współużytkowuj tą stronę"
@@ -567,14 +567,14 @@ pl:
   signup_confirm_password: "Potwierdź hasło"
   signup_email: "Twój mejl"
   signup_email_info: "Nie jest to wymagane ale przydatne jeśli zapomnisz hasła."
-  signup_info: "Wybierz sobie login oraz hasło i kliknij \"{sign_up}\""
+  signup_info: "Wybierz sobie login oraz hasło i kliknij \"{{sign_up}}\""
   signup_link: "Potrzebujesz nowego konta?"
   signup_login_name: "Twój login"
   signup_password: "Twoje hasło"
   signup_success: "Twój profil został utworzony"
   signup_success_message: Witamy!
   signup_title: "Stwórz swoje konto"
-  slideshow_delay_input: "Uaktualnij każdy {input_field} seconds"
+  slideshow_delay_input: "Uaktualnij każdy {{input_field}} seconds"
   small: mały
   social_change_interests: "Zainteresowanie Zmianami Społecznymi"
   starred: ogwiazdkowane
@@ -584,15 +584,15 @@ pl:
   subject: przedmiot
   subject_must_not_be_empty: "obiekt nie może być pusty"
   successful_undelete_image: "Pomyślne nieskasowanie obrazu"
-  sucessfully_removed_image: "Pomyślnie usunięty obraz! ({undo_link})"
+  sucessfully_removed_image: "Pomyślnie usunięty obraz! ({{undo_link}})"
   summary: Podsumowanie
   sunday: Niedziela
   tags: Tagi
   task_list_page_description: "Lista wszystkich danych."
   task_list_page_display: "Lista zadań"
   tasks: Zadania
-  this_is_committee: "Ten komitet jest częścią {parent_group}."
-  this_is_coordinating: "Ten komitet jest <strong>radą koorynującą</strong> dla {parent_group}."
+  this_is_committee: "Ten komitet jest częścią {{parent_group}}."
+  this_is_coordinating: "Ten komitet jest <strong>radą koorynującą</strong> dla {{parent_group}}."
   thursday: Czwartek
   time_zone: "Strefa Czasowa"
   title: Tytuł
@@ -625,10 +625,10 @@ pl:
   user_profile_description_may_see_groups: |
       Pozwól ludziom na przeglądanie do jakich grup należysz.
   username: "Imię Użytkownika/Użytkowniczki"
-  users_wall: "{user}'s Mur"
-  users_world: "{user}'s Świat"
-  version_doesnt_exist: "Nie ma takiej wersji {version}"
-  version_number: "wersja {version}"
+  users_wall: "{{user}}'s Mur"
+  users_world: "{{user}}'s Świat"
+  version_doesnt_exist: "Nie ma takiej wersji {{version}}"
+  version_number: "wersja {{version}}"
   versions: Wersje
   video: wideo
   video_class_description: "Pokaż wideo które znajduje się na zewnętrznych stronach internetowych."
@@ -647,20 +647,20 @@ pl:
   wednesday: Środa
   welcome_find_people_link: "Znajdź ludzi"
   welcome_find_people_text: "Przeglądaj spis użytkowników/użytkowniczek, by znaleźć ludzi których znasz."
-  welcome_heading: "{user_name} witaj na {site_title}!"
+  welcome_heading: "{{user_name}} witaj na {{site_title}}!"
   welcome_message: "Crabgrass umożliwia organizacjom społecznej zmiany ralizowanie zajawek, wychodzenie naprzeciw światu, kolaborowanie, budowanie sieci."
-  welcome_title: "Witaj na stronie {site_title}"
+  welcome_title: "Witaj na stronie {{site_title}}"
   welcome_upload_icon_link: "Załaduj ikonkę użytkownika/użytkowniczki"
   welcome_upload_icon_text: "Załaduj obraz, by używać go jako swojej ikonki. Ta ikonka pojawi się obok każdego napisanego przez Ciebie komentarza."
   when_does_feature_expire: "Kiedy wygasł ten składnik?"
-  wiki_is_locked: "To wiki jest obecnie zablokowane przez {user}"
+  wiki_is_locked: "To wiki jest obecnie zablokowane przez {{user}}"
   wiki_page_description: "Niesformatowany dokument tekstowy."
   wiki_page_display: Wiki
   wont_be_able_to_save: "Nie będziesz w stanie zapisać tej strony"
   work: Praca
   work_life: "Okres trwania pracy"
   you_are_not_member_of_any_group: "Nie jesteś członkiem/członkinią żadnej z grup."
-  you_are_viewing_version: "Oglądasz wersję {version} {user}"
+  you_are_viewing_version: "Oglądasz wersję {{version}} {{user}}"
   you_have_no_contacts: "Nie masz żadnych kontaktów"
   you_have_no_groups: "Nie masz żadnych grup"
   you_have_no_peers: "Nie masz żadnych znajomych"
