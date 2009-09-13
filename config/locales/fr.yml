@@ -30,7 +30,7 @@ fr:
   add_one_or_more_tags: "Ajouter une ou plusieurs étiquettes, séparées par des virgules"
   add_phone_number: "Ajouter un numéro de téléphone"
   add_photo_to_gallery: "Cliquer sur une Photo pour l'ajouter"
-  add_star_link: "Ajouter une étoile (:star_count)"
+  add_star_link: "Ajouter une étoile ({star_count})"
   add_tags: "Ajouter étiquettes"
   add_websites: "Ajouter des sites web"
   additional_page_access: "Accès Additionnel"
@@ -76,7 +76,7 @@ fr:
   attachments: "Fichiers joints"
   away: absent
   back_button: Revenir
-  back_to_group: "revenir au groupe :group_name"
+  back_to_group: "revenir au groupe {group_name}"
   basic_settings: Parametres
   break_lock: "Forcer le verrou"
   break_lock_button: "forcer le verrou"
@@ -113,7 +113,7 @@ fr:
   council_help: "Si ce groupe possède un conseil, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
   councils: Conseils
   create_a_group: "Créer un Groupe"
-  create_a_new_thing: "Créer un-e nouvel-le :thing"
+  create_a_new_thing: "Créer un-e nouvel-le {thing}"
   create_button: Créer
   create_committee: "Créer une commission"
   create_group_link: "créer un nouveau groupe"
@@ -125,7 +125,7 @@ fr:
   created: créé
   created_by: "Créée par"
   created_on: "Créé sur"
-  created_when_by: "créé à :when par :user"
+  created_when_by: "créé à {when} par {user}"
   csrf_error_message: "Votre demande de connexion ressemble à une tentative de piratage de ce site. Pas d'inquiétude: cette erreur arrive fréquemment même pour des demandes anodines. Nous sommes simplement particulièrement paranoïaques. Tout ce que vous avez à faire est de recharger la page avant de vous connecter. Vous pouvez essayer de nouveau ce lien:"
   current_attachments: "Pièces jointes actuelles"
   current_featured_content: "Pages Importantes"
@@ -166,13 +166,13 @@ fr:
   directory_of_groups: "Répertoire des Groupes"
   directory_of_networks: "Répertoire des Réseaux"
   directory_of_people: "Répertoire des personnes"
-  discuss_request_link: "Discuter de cette demande avec :person_or_group"
+  discuss_request_link: "Discuter de cette demande avec {person_or_group}"
   discussion_page_description: "Discuter d'un sujet particulier avec un ou plusieurs groupes ou utilisat-rice-eur-s"
   discussion_page_display: "Discussion de groupe"
   discussions: Discussions
   display_name: "Nom affiché"
   dont_have_permission_to_create_committees: "Vous n'avez pas les droits pour créer des commissions sous {group}"
-  dont_understand_group_type: "Ne peut comprendre le type de groupe :type"
+  dont_understand_group_type: "Ne peut comprendre le type de groupe {type}"
   download: Téléchargement
   download_gallery: "Télécharger la Galerie"
   drag_and_drop_to_rearrange_photos: "Attrapez et glissez les images pour les arranger"
@@ -181,7 +181,7 @@ fr:
   edit_attachments: "Modifier les fichiers joints"
   edit_attachments_link: Modifier
   edit_featured_content: "modifier le contenu important"
-  edit_featured_content_for_group: "Modifier le Contenu Important du Groupe :group_name"
+  edit_featured_content_for_group: "Modifier le Contenu Important du Groupe {group_name}"
   edit_gallery: "Modifier la galerie"
   edit_profile_link: "Modifier le Profil"
   edit_settings: "Modifier les Paramètres"
@@ -246,7 +246,7 @@ fr:
   group_has_no_public_profile: "Ce groupe n'a pas de profil public."
   group_home_headline: "Page d'Accueil du {group_type}"
   group_home_welcome: Bienvenue
-  group_information: "Information de :group_type"
+  group_information: "Information de {group_type}"
   group_invite_email: |-
       {from_user} vous a invité à rejoindre le groupe "{group}".
 
@@ -287,8 +287,8 @@ fr:
   home: Accueil
   icon: Icone
   im_addresses: "Adresses de messagerie instantanée"
-  image_count: "Image :number sur :count"
-  image_count_total: ":count Images"
+  image_count: "Image {number} sur {count}"
+  image_count_total: "{count} Images"
   image_title: "Titre de l'image: {title}"
   inbox_description: "Affiche les pages auxquelles je participe activement ou dont je suis les modifications"
   include_full_checkbox: "Inclus le lien vers l'image de taille originale"
@@ -329,7 +329,7 @@ fr:
   location_postal_code: "code postal"
   location_state: état/province
   locations: Lieux
-  locked_by_user: "Verrouillé par :user"
+  locked_by_user: "Verrouillé par {user}"
   locking_error: "Erreur de verrouillage. Vos modification ne peuvent être prises en compte, quelqu'un d'autre a fait des modifications en premier."
   login: Connexion
   login_button: "Se connecter"
@@ -437,7 +437,7 @@ fr:
   no_change: "aucun changement"
   no_committees: "pas de commission"
   no_contacts_msg: "Vous n'avez aucun-e ami-e."
-  no_group_named: "Il n'existe pas de groupe nommé <b>:name</b>."
+  no_group_named: "Il n'existe pas de groupe nommé <b>{name}</b>."
   no_images_in_gallery: "Aucune image dans la Galerie"
   no_members: "(aucun membre)"
   no_peers_msg: "Vous n'avez aucun pair."
@@ -571,7 +571,7 @@ fr:
   read: lire
   recent_activity: "Activité récente"
   recent_contributions: "Contributions récentes"
-  recent_member_group_pages: "Pages Récentes des Membres de vos Groupes dans :network"
+  recent_member_group_pages: "Pages Récentes des Membres de vos Groupes dans {network}"
   recent_network_pages: "Pages Récentes du Réseau"
   recent_pages: "Pages récentes"
   recent_wall_posts: "Messages Récents sur le Mur"
@@ -580,7 +580,7 @@ fr:
   recently_created: "Récemment créé"
   recipient_tip: "Séparez les destinataires par des virgules, des espaces ou de nouvelles lignes."
   recipients: Destinataires
-  redirect_to_foreign_domain: "Vous essayez de rediriger vers un autre domaine (:url) après votre connexion. Pour des raisons de sécurité, nous avons supprimé ce paramètre de l'URL."
+  redirect_to_foreign_domain: "Vous essayez de rediriger vers un autre domaine ({url}) après votre connexion. Pour des raisons de sécurité, nous avons supprimé ce paramètre de l'URL."
   regenerate: "régénérer les vignettes"
   reject: rejeter
   reject_button: Rejeter
@@ -592,17 +592,17 @@ fr:
   remove_from_gallery: "Retirer de la galerie"
   remove_from_inbox: "Retirer de la boite de réception"
   remove_last_access_error: "Vous ne pouvez supprimer votre dernier accès à cette page."
-  remove_star_link: "Retirer l'étoile (:star_count)"
+  remove_star_link: "Retirer l'étoile ({star_count})"
   removing_image: "Retirer l'image..."
   request_friend_link: "Ajouter À Mes Ami-e-s"
   request_join_group_link: "Demande pour Rejoindre {group_type}"
-  request_status: "Cette demande a été :status par :user à :time"
-  request_to_friend_description: ":user aimerait être l'ami-e de :other_user"
-  request_to_join_our_network_description: "Le groupe :group a été invité à rejoindre le réseau :network"
-  request_to_join_us_description: ":user a été invité à rejoindre :group"
-  request_to_join_us_via_email_description: ":email a été invité à rejoindre :group"
-  request_to_join_you_description: ":user a demandé à rejoindre :group"
-  request_to_join_your_network_description: ":group a demandé à rejoindre le réseau :network"
+  request_status: "Cette demande a été {status} par {user} à {time}"
+  request_to_friend_description: "{user} aimerait être l'ami-e de {other_user}"
+  request_to_join_our_network_description: "Le groupe {group} a été invité à rejoindre le réseau {network}"
+  request_to_join_us_description: "{user} a été invité à rejoindre {group}"
+  request_to_join_us_via_email_description: "{email} a été invité à rejoindre {group}"
+  request_to_join_you_description: "{user} a demandé à rejoindre {group}"
+  request_to_join_your_network_description: "{group} a demandé à rejoindre le réseau {network}"
   requested_forgot_password: "Vous avez demandé une modification du mot de passe"
   requests: Requêtes
   requests_from_me: "de ma part"
@@ -640,9 +640,9 @@ fr:
   settings: Paramètres
   share: Partager
   share_button: Partager
-  share_link: "Partager :page_class"
+  share_link: "Partager {page_class}"
   share_page_email: "Envoyer une notification par mail"
-  share_page_link: "Partager :page_class"
+  share_page_link: "Partager {page_class}"
   share_page_message: "Envoyer un message (optionnel)"
   share_page_options: "Choisir les options"
   share_page_recipients: "Partager Cette {page_class} Avec "
@@ -663,7 +663,7 @@ fr:
   signup_success: "Enregistrement réussi"
   signup_success_message: "Merci de votre inscription !"
   signup_title: "Créez votre compte"
-  slideshow_delay_input: "Mettre à jour toutes les :input_field secondes"
+  slideshow_delay_input: "Mettre à jour toutes les {input_field} secondes"
   small: petit
   social_change_interests: "Intérêts pour la transformation sociale"
   starred: étoilé
@@ -673,7 +673,7 @@ fr:
   subject: sujet
   subject_must_not_be_empty: "Le sujet ne doit pas être vide"
   successful_undelete_image: "Récupération de l'image réussie"
-  sucessfully_removed_image: "Image retirée ! (:undo_link)"
+  sucessfully_removed_image: "Image retirée ! ({undo_link})"
   summary: Sommaire
   summary_help: "Optionnel. Le sommaire est une phrase ou un paragraphe qui décrit brièvement le contenu de cette page."
   sunday: Dimanche
@@ -739,9 +739,9 @@ fr:
   user_profile_description_may_see_contacts: "Autoriser autrui à voir votre liste d'ami-e-s."
   user_profile_description_may_see_groups: "Autoriser autrui à voir les groupes dont vous êtes membres."
   username: "Nom d'utilisateur"
-  users_wall: "Mur de :user"
-  users_world: "Monde de :user"
-  version_doesnt_exist: "Il n'y a pas de version :version"
+  users_wall: "Mur de {user}"
+  users_world: "Monde de {user}"
+  version_doesnt_exist: "Il n'y a pas de version {version}"
   version_number: "version {version}"
   versions: Versions
   video: vidéo
@@ -790,7 +790,7 @@ fr:
   when_does_feature_expire: "Quand l'importance doit-elle expirer ?"
   width: largeur
   wiki_body_help: "Optionnel. Entrez ici le texte initial de cette page."
-  wiki_is_locked: "Ce wiki est actuellement verrouillé par :user"
+  wiki_is_locked: "Ce wiki est actuellement verrouillé par {user}"
   wiki_lost_text_confirmation: "Tout texte non sauvegardé sera perdu. Êtes-vous certain de vouloir procéder ?"
   wiki_page_description: "Créer un document texte modifiable."
   wiki_page_display: "Page Wiki"
@@ -800,7 +800,7 @@ fr:
   work: Travail
   work_life: "Vie de taff"
   you_are_not_member_of_any_group: "Vous n'êtes membre d'aucun groupe."
-  you_are_viewing_version: "Vous regardez la version :version de :user"
+  you_are_viewing_version: "Vous regardez la version {version} de {user}"
   you_have_no_contacts: "Vous n'avez aucun-e ami-e"
   you_have_no_groups: "Vous n'avez aucun groupe"
   you_have_no_peers: "Vous n'avez pas de pair"

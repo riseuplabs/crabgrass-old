@@ -26,7 +26,7 @@ pt:
   add_one_or_more_tags: "Adicionar uma ou mais tags, separadas por vírgulas"
   add_phone_number: "Adicionar Número de Telefone"
   add_photo_to_gallery: "adicionar foto a galeria: "
-  add_star_link: "Adicionar estrela (:star_count)"
+  add_star_link: "Adicionar estrela ({star_count})"
   add_websites: "Adicionar Sites Online"
   admin: Administração
   alert_error: Erro
@@ -69,7 +69,7 @@ pt:
   committee_publicly_visible: "Tornar Públicos os Comitês"
   committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em {domain}/yourgroupname"
   committees: comitês
-  comparing_changes_header: "Comparando alterações feitas por :user em :when de :old_version para :new_version"
+  comparing_changes_header: "Comparando alterações feitas por {user} em {when} de {old_version} para {new_version}"
   confirm_new_password: "Confirmar Nova Senha"
   contact: Contato
   contact_request_message_label: "Diga a {user} porque você deseja se tornar um contato. "
@@ -79,7 +79,7 @@ pt:
   coordinating_council: "conselho de coordenação"
   coordinator: Coordenador
   council_help: "Se este grupo tiver um conselho coordenador, então apenas um membro desse conselho pode administrar o grupo. Caso contrário, qualquer membro do grupo pode fazê-lo."
-  create_a_new_thing: "criar um(a) novo(a) :thing"
+  create_a_new_thing: "criar um(a) novo(a) {thing}"
   create_button: Criar
   create_committee: "criar comitê"
   create_group_link: "criar grupo"
@@ -91,7 +91,7 @@ pt:
   created: criado
   created_by: "Criado por"
   created_on: "Criado em "
-  created_when_by: "criado :when por :user"
+  created_when_by: "criado {when} por {user}"
   csrf_error_message: |
       Seu pedido de log in parece ser uma tentativa de hackear este site. Não se preocupe: é um erro freqüente, até no caso dos pedidos mais inocentes. Nós estamos apenas sendo excessivamente paranóicos. Você só tem que voltar a carregar a página antes de tentar fazer log in. Você pode usar este link para tentar novamente:
   current_attachments: "Arquivos Anexos Atuais"
@@ -112,7 +112,7 @@ pt:
   date_years: anos
   date_yesterday: Ontem
   delete: Eliminar
-  delete_page_link: "Eliminar :page_class"
+  delete_page_link: "Eliminar {page_class}"
   delete_post: "Eliminar Anúncio"
   delete_this_version: "apagar essa versão"
   delete_version_confirm: "Você tem certeza que quer apagar essa versão?"
@@ -126,11 +126,11 @@ pt:
   directory_of_groups: "Diretório de grupos"
   directory_of_networks: "Diretório de redes"
   directory_of_people: "Diretório de Pessoas"
-  discuss_request_link: "discutir este pedido com :person_or_group"
+  discuss_request_link: "discutir este pedido com {person_or_group}"
   discussions: Discussões
   display_name: "Visualizar nome"
   dont_have_permission_to_create_committees: "Você não está autorizado para criar comitês sob {group}"
-  dont_understand_group_type: "Não foi possível entender o tipo de grupo :type"
+  dont_understand_group_type: "Não foi possível entender o tipo de grupo {type}"
   download: Baixar
   download_gallery: "Baixar Galeria"
   drag_and_drop_to_rearrange_photos: "Arraste e solte as imagens para reorganizá-las"
@@ -138,7 +138,7 @@ pt:
   edit_attachments: "Editar Arquivos Anexos"
   edit_attachments_link: Editar
   edit_featured_content: "editar conteúdo em destaque"
-  edit_featured_content_for_group: "Editar conteúdo em destaque do grupo :group_name"
+  edit_featured_content_for_group: "Editar conteúdo em destaque do grupo {group_name}"
   edit_gallery: "Editar Galeria"
   edit_profile_link: "Editar Perfil"
   edit_settings: "editar configurações"
@@ -192,7 +192,7 @@ pt:
   group_has_no_public_profile: "Este grupo não tem um perfil público."
   group_home_headline: "Home do {group_type}"
   group_home_welcome: Bem-vindo/a
-  group_information: "Informação do :group_type"
+  group_information: "Informação do {group_type}"
   group_invite_email: |
       {from_user} convidou você para fazer parte do grupo "{group}".
 
@@ -222,8 +222,8 @@ pt:
   history: Histórico
   home: Home
   im_addresses: "Endereços IM"
-  image_count: "Foto :number of :count"
-  image_count_total: ":count Fotos"
+  image_count: "Foto {number} of {count}"
+  image_count_total: "{count} Fotos"
   image_title: "Título da imagem: {title}"
   inbox_description: "Caixa de entrada das páginas das quais eu estou participando ativamente ou esperando mudanças"
   include_full_checkbox: "incluir link a imagem completa"
@@ -258,7 +258,7 @@ pt:
   location_postal_code: código_de_endereçamento_postal_CEP
   location_state: estado/província
   locations: Localizações
-  locked_by_user: "bloqueado por :user"
+  locked_by_user: "bloqueado por {user}"
   locking_error: "Erro de bloqueio. Não é possível salvar seus dados; alguém já salvou novas mudanças."
   login: Login
   login_button: "Log in"
@@ -322,7 +322,7 @@ pt:
   move_button: Deslocar
   move_image_left: "Colocar a imagem à esquerda"
   move_image_right: "Colocar a imagem à direita"
-  move_page_link: "Deslocar :page_class"
+  move_page_link: "Deslocar {page_class}"
   move_page_to_different_group: "Transferir esta página para um outro grupo"
   move_this_page: "Deslocar Esta Página"
   my_completed_tasks_link: Completo
@@ -353,7 +353,7 @@ pt:
   no_change: "nenhuma alteração"
   no_committees: "não há comitês"
   no_contacts_msg: "Você não tem contatos."
-  no_group_named: "não há nenhum grupo sob o nome <b>:name</b>."
+  no_group_named: "não há nenhum grupo sob o nome <b>{name}</b>."
   no_images_in_gallery: "Não há imagens na Galeria"
   no_members: "(no members)"
   no_peers_msg: "Você não tem parceiros."
@@ -373,7 +373,7 @@ pt:
   other_formats: "Outros formatos "
   outgoing: "De saída"
   page_details: "Detalhes da Página"
-  page_details_link: "Detalhes de :page_class "
+  page_details_link: "Detalhes de {page_class} "
   page_is_not_static: "A página não é estática"
   page_list: "Lista de páginas"
   page_list_heading_created: gerado
@@ -447,16 +447,16 @@ pt:
   remove_friend_link: "Eliminar dos Meus Contatos"
   remove_from_gallery: "Tirar da galeria"
   remove_from_inbox: "Eliminar da caixa de entrada"
-  remove_star_link: "Eliminar estrela (:star_count) "
+  remove_star_link: "Eliminar estrela ({star_count}) "
   removing_image: "Eliminar imagem..."
   request_friend_link: "Adicionar aos Meus Contatos"
-  request_status: "Este pedido foi :status por :user em :time"
-  request_to_friend_description: ":user gostaria de ser contato de :other_user"
-  request_to_join_our_network_description: "O grupo :group foi convidado para fazer parte da rede :network"
-  request_to_join_us_description: ":user foi convidado para fazer parte de :group"
-  request_to_join_us_via_email_description: ":email foi convidado para fazer parte de :group"
-  request_to_join_you_description: ":user pediu para fazer parte de :group"
-  request_to_join_your_network_description: ":group pediu para fazer parte da rede :network"
+  request_status: "Este pedido foi {status} por {user} em {time}"
+  request_to_friend_description: "{user} gostaria de ser contato de {other_user}"
+  request_to_join_our_network_description: "O grupo {group} foi convidado para fazer parte da rede {network}"
+  request_to_join_us_description: "{user} foi convidado para fazer parte de {group}"
+  request_to_join_us_via_email_description: "{email} foi convidado para fazer parte de {group}"
+  request_to_join_you_description: "{user} pediu para fazer parte de {group}"
+  request_to_join_your_network_description: "{group} pediu para fazer parte da rede {network}"
   requested_forgot_password: "Você pediu uma nova senha"
   requests_from_me: "Meus pedidos"
   requests_to_me: "Pedidos para mim"
@@ -488,9 +488,9 @@ pt:
   settings: Configuração
   share: Partilhar
   share_button: Partilhar
-  share_link: "Partilhar :page_class"
+  share_link: "Partilhar {page_class}"
   share_page_email: "Enviar uma notificação de e-mail"
-  share_page_link: "Partilhar :page_class"
+  share_page_link: "Partilhar {page_class}"
   share_page_message: "Enviar uma mensagem (opcional)"
   share_page_options: "Escolher opções"
   share_page_recipients: "Partilhar este {page_class} com"
@@ -510,7 +510,7 @@ pt:
   signup_success: "Você foi cadastrado/a"
   signup_success_message: "Obrigado por ter se cadastrado!"
   signup_title: "Crie sua conta"
-  slideshow_delay_input: "Atualize cada :input_field segundos"
+  slideshow_delay_input: "Atualize cada {input_field} segundos"
   small: pequeno
   social_change_interests: "Interesses quanto a mudança social"
   starred: estrelado
@@ -520,7 +520,7 @@ pt:
   subject: assunto
   subject_must_not_be_empty: "você deve incluir um assunto"
   successful_undelete_image: "A imagem foi recuperada."
-  sucessfully_removed_image: "A imagem foi eliminada! (:undo_link)"
+  sucessfully_removed_image: "A imagem foi eliminada! ({undo_link})"
   summary: Resumo
   sunday: domingo
   tags: Tags
@@ -554,10 +554,10 @@ pt:
   user: Usuário
   user_or_group_name: "Nome do usuário ou do grupo"
   username: Usuário
-  users_wall: "Mural do :user "
-  users_world: "Mundo do :user"
-  version_doesnt_exist: "Não há nenhuma versão :version"
-  version_number: "versão :version"
+  users_wall: "Mural do {user} "
+  users_world: "Mundo do {user}"
+  version_doesnt_exist: "Não há nenhuma versão {version}"
+  version_number: "versão {version}"
   versions: versões
   video: vídeo
   video_class_description: "Mostrar um vídeo hospedado em site externo."
@@ -572,14 +572,14 @@ pt:
   websites: Sites
   wednesday: quarta-feira
   when_does_feature_expire: "Quando é que caduca este destaque?"
-  wiki_is_locked: "Atualmente, esta wiki está bloqueada por :user"
+  wiki_is_locked: "Atualmente, esta wiki está bloqueada por {user}"
   wiki_page_description: "Um documento com formato de texto livre."
   wiki_page_display: Wiki
   wont_be_able_to_save: "Você não vai poder salvar esta página"
   work: Trabalho
   work_life: "Vida de Trabalho"
   you_are_not_member_of_any_group: "Você não é membro de nenhum grupo."
-  you_are_viewing_version: "Você está vendo a versão :version por :user"
+  you_are_viewing_version: "Você está vendo a versão {version} por {user}"
   you_have_no_contacts: "Você não tem contatos"
   you_have_no_groups: "Você não tem nenhum grupo"
   you_have_no_peers: "Você não tem parceiros"

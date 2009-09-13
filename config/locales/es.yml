@@ -30,7 +30,7 @@ es:
   add_one_or_more_tags: "Agregar uno o más etiquetas, separadas por comas"
   add_phone_number: "Agregar Número de Teléfono"
   add_photo_to_gallery: "Haz clic en la foto para agregarla"
-  add_star_link: "Añadir Estrella (:star_count)"
+  add_star_link: "Añadir Estrella ({star_count})"
   add_tags: "Añadir Etiqueta"
   add_websites: "Agregar Sitios Web"
   additional_page_access: "Acceso Adicional"
@@ -75,7 +75,7 @@ es:
   attachments: "Archivos adjuntos"
   away: fuera
   back_button: Regresar
-  back_to_group: "regresar :group_name"
+  back_to_group: "regresar {group_name}"
   basic_settings: "Ajustes básicos"
   break_lock: "rompe el candado"
   break_lock_button: "Rompe Candado"
@@ -91,7 +91,7 @@ es:
   committee_publicly_visible: "Hacer comités públicos"
   committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en {domain}/yourgroupname"
   committees: Comités
-  comparing_changes_header: "Comparando cambios para :user at :when from :old_version to :new_version"
+  comparing_changes_header: "Comparando cambios para {user} at {when} from {old_version} to {new_version}"
   confirm_new_password: "Confirmar nueva contraseña"
   confirmation: "¿Estás seguro?"
   contact: Contacto
@@ -109,7 +109,7 @@ es:
   council_help: "Si este grupo tiene un consejo de coordinación, entonces sólo un miembro de ese Consejo podrá administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
   councils: Consejos
   create_a_group: "Crear un Grupo"
-  create_a_new_thing: "Crear un nuevo :thing"
+  create_a_new_thing: "Crear un nuevo {thing}"
   create_button: Crear
   create_committee: "crear comité"
   create_group_link: "crear grupo"
@@ -121,7 +121,7 @@ es:
   created: creado
   created_by: "Creado por"
   created_on: "Creado en"
-  created_when_by: "creado :when by :user"
+  created_when_by: "creado {when} by {user}"
   csrf_error_message: "Su petición de acceso tiene la apariencia de un intento de piratear este sitio web. No se preocupe: este error ocurre con frecuencia incluso en el caso de las solicitudes inocentes. Estamos siendo sólo extra precavidos. Todo lo que tienes que hacer es volver a cargar la página antes de intentar iniciar sesión. Puede seguir este enlace para volver a intentarlo:"
   current_attachments: "Archivos ajuntos actualizados"
   current_featured_content: "Contenido destacado más reciente"
@@ -144,7 +144,7 @@ es:
   date_years: años
   date_yesterday: Ayer
   delete: Borrar
-  delete_page_link: "Borrar :page_class"
+  delete_page_link: "Borrar {page_class}"
   delete_page_via_shred: "Destruir immediatamente"
   delete_page_via_shred_info: "Esto destruira permanentemente la página. Esta acción no se puede deshacer."
   delete_page_via_trash: "Mueve al cesto"
@@ -163,13 +163,13 @@ es:
   directory_of_groups: "Directorio de grupos"
   directory_of_networks: "Directorio de las redes"
   directory_of_people: Directorio
-  discuss_request_link: "discutir esta solicitud con :person_or_group"
+  discuss_request_link: "discutir esta solicitud con {person_or_group}"
   discussion_page_description: "Un grupo de debate sobre un tema especifico. "
   discussion_page_display: "Group Discussion"
   discussions: Debates
   display_name: "Nombre visible"
   dont_have_permission_to_create_committees: "Usted no tiene permiso para crear comités bajo {group}"
-  dont_understand_group_type: "No se puede entender la clase de grupo :type"
+  dont_understand_group_type: "No se puede entender la clase de grupo {type}"
   download: Descargar
   download_gallery: "Descargar Álbum de Fotos"
   drag_and_drop_to_rearrange_photos: "Para reorganizar las fotos usar la funcion tomar y soltar"
@@ -178,7 +178,7 @@ es:
   edit_attachments: "Editar archivos adjuntos"
   edit_attachments_link: Editar
   edit_featured_content: "editar contenido destacado"
-  edit_featured_content_for_group: "Editar contenido destacado para :group_name"
+  edit_featured_content_for_group: "Editar contenido destacado para {group_name}"
   edit_gallery: "Revisar Álbum de Fotos"
   edit_profile_link: "Editar Perfil"
   edit_settings: "editar los ajustes"
@@ -241,7 +241,7 @@ es:
   group_has_no_public_profile: "Este grupo no tiene un perfil público."
   group_home_headline: "{group_type} Inicio"
   group_home_welcome: Bienvenido
-  group_information: ":group_type Información"
+  group_information: "{group_type} Información"
   group_invite_email: |
       {from_user} te ha invitado a participar en el grupo "{group}".
 
@@ -281,8 +281,8 @@ es:
   home: Inicio
   icon: "Símbolo gráfico"
   im_addresses: "Direcciones IM"
-  image_count: "Foto :number of :count"
-  image_count_total: ":count Fotos"
+  image_count: "Foto {number} of {count}"
+  image_count_total: "{count} Fotos"
   image_title: "Título de la foto: {title}"
   inbox_description: "El buzón con las páginas en las que estoy participando activamente o esperando por cambios"
   include_full_checkbox: "incluir el enlace en la foto"
@@ -323,7 +323,7 @@ es:
   location_postal_code: código_postal
   location_state: estado/provincia
   locations: Lugares
-  locked_by_user: "bloqueado por :user"
+  locked_by_user: "bloqueado por {user}"
   locking_error: "Hubo un error. No puede guardar los datos, alguien ha guardado nuevos cambios primero."
   login: Ingresar
   login_button: Ingresa
@@ -394,7 +394,7 @@ es:
   move_button: Mueve
   move_image_left: "Mover la foto hacia la izquierda"
   move_image_right: "Mover la foto hacia la derecha"
-  move_page_link: "Mover :page_class"
+  move_page_link: "Mover {page_class}"
   move_page_to_different_group: "Mover esta página a un grupo diferente"
   move_this_page: "Mueve esta página"
   my_completed_tasks_link: Completo
@@ -431,7 +431,7 @@ es:
   no_change: "ningún cambio"
   no_committees: "No hay comités"
   no_contacts_msg: "No tienes contactos."
-  no_group_named: "No existe un grupo con el nombre de <b>:name</b>."
+  no_group_named: "No existe un grupo con el nombre de <b>{name}</b>."
   no_images_in_gallery: "No hay fotos en el álbum"
   no_members: "(no miembros)"
   no_peers_msg: "No tienes compañeros."
@@ -461,7 +461,7 @@ es:
   page_added_to_group: "Esta página se añadirá a {group_type} {group_name}."
   page_create_owner: "Propietario de página"
   page_details: "Detalles de la página"
-  page_details_link: ":page_class Detalles"
+  page_details_link: "{page_class} Detalles"
   page_group_collection: Colecciones
   page_group_discussion: Debates
   page_group_event: Eventos
@@ -573,7 +573,7 @@ es:
   recently_created: "Creado recientemente"
   recipient_tip: "Separa a los destinatarios con comas, espacios o escribiendolos en líneas nuevas."
   recipients: destinatarios
-  redirect_to_foreign_domain: "Usted está tratando de redirigir a un sitio extranjero (:url) después de su ingreso. Por razones de seguridad hemos eliminado este parámetro de la URL."
+  redirect_to_foreign_domain: "Usted está tratando de redirigir a un sitio extranjero ({url}) después de su ingreso. Por razones de seguridad hemos eliminado este parámetro de la URL."
   regenerate: "Regenerar las fotos pequeñas"
   reject: rechazar
   reject_button: eliminar
@@ -585,17 +585,17 @@ es:
   remove_from_gallery: "Eliminar el álbum de fotos"
   remove_from_inbox: "Eliminar del buzón"
   remove_last_access_error: "Usted no puede eliminar su último acceso a esta página."
-  remove_star_link: "Eliminar Estrella (:star_count)"
+  remove_star_link: "Eliminar Estrella ({star_count})"
   removing_image: "Eliminar foto...."
   request_friend_link: "Añadir a mis contactos"
   request_join_group_link: "Solicitud para unirse {group_type}"
-  request_status: "Esta solicitud fue :status by :user on :time"
-  request_to_friend_description: ":user quiere ser el contacto de :other_user"
-  request_to_join_our_network_description: "grupo :group fue invitado a unirse a la red :network"
-  request_to_join_us_description: ":user fue invitado a unirse :group"
-  request_to_join_us_via_email_description: ":email fue invitado a unirse a :group"
-  request_to_join_you_description: ":user solicito unirse a :group"
-  request_to_join_your_network_description: ":group solicito unirse a la red :network"
+  request_status: "Esta solicitud fue {status} by {user} on {time}"
+  request_to_friend_description: "{user} quiere ser el contacto de {other_user}"
+  request_to_join_our_network_description: "grupo {group} fue invitado a unirse a la red {network}"
+  request_to_join_us_description: "{user} fue invitado a unirse {group}"
+  request_to_join_us_via_email_description: "{email} fue invitado a unirse a {group}"
+  request_to_join_you_description: "{user} solicito unirse a {group}"
+  request_to_join_your_network_description: "{group} solicito unirse a la red {network}"
   requested_forgot_password: "Usted ha solicitado un cambio de contraseña"
   requests: Solicitudes
   requests_from_me: "Peticiones mias"
@@ -633,9 +633,9 @@ es:
   settings: configuración
   share: Compartir
   share_button: Compartir
-  share_link: "Compartir :page_class"
+  share_link: "Compartir {page_class}"
   share_page_email: "Enviar notificación por correo electrónico"
-  share_page_link: "Compartir :page_class"
+  share_page_link: "Compartir {page_class}"
   share_page_message: "Enviar un mensaje (opcional)"
   share_page_options: "Elegir opciones"
   share_page_recipients: "Compartir esta {page_class} con"
@@ -656,7 +656,7 @@ es:
   signup_success: "Registro completo"
   signup_success_message: "¡Gracias por registrarte!"
   signup_title: "Crea Tu Cuenta"
-  slideshow_delay_input: "Actualizar cada :input_field seconds"
+  slideshow_delay_input: "Actualizar cada {input_field} seconds"
   small: pequeño
   social_change_interests: "Intereses de cambio social"
   starred: estrellado
@@ -666,7 +666,7 @@ es:
   subject: tema
   subject_must_not_be_empty: "el tema no debe estar vacío"
   successful_undelete_image: "La foto ha sido recuperada exitosamente"
-  sucessfully_removed_image: "Foto ha sido exitosamente eliminada! (:undo_link)"
+  sucessfully_removed_image: "Foto ha sido exitosamente eliminada! ({undo_link})"
   summary: Resumen
   summary_help: "Opcional. El resumen es una frase o párrafo en el que se describe brevemente el contenido de esta página."
   sunday: Domingo
@@ -734,10 +734,10 @@ es:
   user_profile_description_may_see_contacts: "Permite a la gente ver su lista de amigos."
   user_profile_description_may_see_groups: "Permite a las personas ver los grupos a los cuales usted es un miembro."
   username: Usuario
-  users_wall: ":user's Mural"
-  users_world: ":user's Mundo"
-  version_doesnt_exist: "No hay versión :version"
-  version_number: "versión :version"
+  users_wall: "{user}'s Mural"
+  users_world: "{user}'s Mundo"
+  version_doesnt_exist: "No hay versión {version}"
+  version_number: "versión {version}"
   versions: versiones
   video: video
   video_class_description: "Mostrar un vídeo alojado en un sitio web externo."
@@ -777,7 +777,7 @@ es:
   when_does_feature_expire: "Cuándo expirará esta característica?"
   width: Anchura
   wiki_body_help: "Opcional. Incorpore aquí el texto inicial para la página."
-  wiki_is_locked: "Este wiki se encuentra actualmente bloqueado por :user"
+  wiki_is_locked: "Este wiki se encuentra actualmente bloqueado por {user}"
   wiki_lost_text_confirmation: "Cualquier texto que no se haya guardado será perdido. ¿Está usted seguro?"
   wiki_page_description: "Un documento con texto de formato libre"
   wiki_page_display: Wiki
@@ -787,7 +787,7 @@ es:
   work: Trabajo
   work_life: "La vida laboral"
   you_are_not_member_of_any_group: "No eres miembro de ningún grupo. "
-  you_are_viewing_version: "Usted está viendo la versión :version by :usuario"
+  you_are_viewing_version: "Usted está viendo la versión {version} by {usuario}"
   you_have_no_contacts: "Usted no tiene contactos"
   you_have_no_groups: "Usted no pertenece en ningún grupo"
   you_have_no_peers: "Usted no tiene compañeros"

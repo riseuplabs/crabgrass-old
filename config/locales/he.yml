@@ -27,7 +27,7 @@ he:
   add_one_or_more_tags: "הוסיפי תווית אחת או יותר, מופרדות באמצעות פסיקים"
   add_phone_number: "הוסיפי מספר טלפון"
   add_photo_to_gallery: "לחצי על תמונה על מנת להוסיפה"
-  add_star_link: "הוסיפי כוכב (:star_count)"
+  add_star_link: "הוסיפי כוכב ({star_count})"
   add_tags: "הוסיפי תגיות"
   add_websites: "הוסיפי אתר אינטרנט"
   admin: ניהול
@@ -62,7 +62,7 @@ he:
   attachments: צרופות
   away: מרוחק\ת
   back_button: חזרה
-  back_to_group: "חזרה אל :group_name"
+  back_to_group: "חזרה אל {group_name}"
   break_lock: "פתח נעילה"
   cancel_button: ביטול
   cancel_link: ביטול
@@ -76,7 +76,7 @@ he:
       ניתן לצפות בוועדות על ידי לא-חברות ב-
       {domain}/yourgroupname
   committees: וועדות
-  comparing_changes_header: "השוואת שינויים על ידי :user ב :when מ :old_version ל :new_version"
+  comparing_changes_header: "השוואת שינויים על ידי {user} ב {when} מ {old_version} ל {new_version}"
   confirm_new_password: "אשר\\י ססמה חדשה"
   contact: "אשת קשר"
   contact_request_message_label: "ספר\\י ל {user} למה את\\ה רוצה להיות חבר\\ה שלהם."
@@ -86,7 +86,7 @@ he:
   coordinator: מתאמ\ת
   coordinators: מתאמים
   council_help: "אם לקבוצה זו יש וועדה מתאמת, אזי רק חבר\\ה בוועדה יכול\\ה לנהל את הקבוצה. אם לא, כל חבר\\ה בקבוצה יכול\\ה לנהל אותה."
-  create_a_new_thing: "צרי :thing חדש"
+  create_a_new_thing: "צרי {thing} חדש"
   create_button: צור\צרי
   create_committee: "צרי וועדה"
   create_group_link: "צרי קבוצה"
@@ -98,7 +98,7 @@ he:
   created: נוצר
   created_by: "נוצר ע\"י"
   created_on: "נוצר בתאריך"
-  created_when_by: "נוצר ב :when ע\"י :user"
+  created_when_by: "נוצר ב {when} ע\"י {user}"
   current_attachments: "צרופות נוכחיות"
   current_tags: "תגיות נוכחיות"
   date: תאריך
@@ -115,7 +115,7 @@ he:
   date_years: שנים
   date_yesterday: אתמול
   delete: מחק\י
-  delete_page_link: "מחק\\י :page_class"
+  delete_page_link: "מחק\\י {page_class}"
   delete_post: "מחק\\י את הפוסט"
   delete_this_version: "מחק\\י את הגרסה הזו"
   delete_version_confirm: "האם את\\ה בטוח\\ה שברצונך למחוק את הגרסה הנ\"ל?"

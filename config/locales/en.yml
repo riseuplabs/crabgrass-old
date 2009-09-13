@@ -7,7 +7,7 @@ en:
 
   #permission_denied: 'Permission denied'
   #upload_attachment: "Upload Attachment"
-  #rename :upload_images -> :upload
+  #rename {upload_images} -> {upload}
   #insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
   ##
@@ -165,9 +165,9 @@ en:
   ### TO BE SORTED
   ###
 
-  group_information: ":group_type Information"
+  group_information: "{group_type} Information"
 
-  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."
+  redirect_to_foreign_domain: "You are trying to redirect to a foreign domain ({url}) after your login. For security reasons we have removed this parameter from the URL."
   subject_must_not_be_empty: subject must not be empty
   at_least_one_recipient_is_required: at least one recipient is required
   message_must_not_be_empty: message must not be empty
@@ -176,12 +176,12 @@ en:
   from: from
   to: To
   date: date
-  request_status: "This request is: :status."
+  request_status: "This request is: {status}."
   status_resolved: resolved
   status_pending: pending
   approve_or_reject_link: approve or reject this request
-  request_status: This request was :status by :user on :time
-  discuss_request_link: discuss this request with :person_or_group
+  request_status: This request was {status} by {user} on {time}
+  discuss_request_link: discuss this request with {person_or_group}
   small: small
   medium: medium
   large: large
@@ -342,10 +342,10 @@ en:
   ##
 
   order_changed: Order changed.
-  error_saving_new_order: "Error saving new order: :error_message"
-  sucessfully_removed_image: Successfully removed image! (:undo_link)
-  image_count: Photo :number of :count
-  image_count_total: ":count Photos"
+  error_saving_new_order: "Error saving new order: {error_message}"
+  sucessfully_removed_image: Successfully removed image! ({undo_link})
+  image_count: Photo {number} of {count}
+  image_count_total: "{count} Photos"
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
@@ -372,7 +372,7 @@ en:
   file_must_be_image_error: "File must be an image to be part of a gallery."
   group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
   add_another_file: "Add another file"
-  slideshow_delay_input: "Update every :input_field seconds"
+  slideshow_delay_input: "Update every {input_field} seconds"
   add_comment: "Add Comment"
   make_album_cover: "make this image the album cover"
   image_title: "Image title: {title}"
@@ -472,15 +472,15 @@ en:
   location_postal_code: postal code
   location_country: country
 
-  #users_recent_activity: ":user's Recent Activity"
-  #users_recent_work: ":user's Recent Work"
+  #users_recent_activity: "{user}'s Recent Activity"
+  #users_recent_work: "{user}'s Recent Work"
   recent_contributions: "Recent Contributions"
   delete_post: Delete Post
   post_message: Post Message
   top_rated: Top Rated
   most_viewed: Most Viewed
   highest_contributors: Highest Contributors
-  users_world: ":user's World"
+  users_world: "{user}'s World"
   request_friend_link: "Add To My Friends"
   remove_friend_link: "Remove From My Friends"
   edit_profile_link: "Edit Profile"
@@ -529,7 +529,7 @@ en:
   group_successfully_updated: "Group was successfully updated."
   only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
   group_successfully_created: "Group was successfully created."
-  dont_understand_group_type: "Could not understand group type :type"
+  dont_understand_group_type: "Could not understand group type {type}"
   dont_have_permission_to_create_committees: "You do not have permission to create committees under {group}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {domain}/yourgroupname.
   committee_publicly_visible_description: Committees are viewable by non-members at {domain}/yourgroupname
@@ -537,15 +537,15 @@ en:
   group_members_publicly_visible_description:   Members are viewable by non-members at {domain}/yourgroupname. Also, the name of the group will be listed on each members profile page ({domain}/username)
   page_list: Page list
   recent_network_pages: "Recent Network Pages"
-  recent_member_group_pages: "Recent Activity from Your Groups in :network"
+  recent_member_group_pages: "Recent Activity from Your Groups in {network}"
   featured_content_header: "Featured"
   create_group_link: "create group"
   typing: typing
   away: away
   you_are_not_member_of_any_group: You are not a member of any group.
   upload_image: "Upload Image"
-  back_to_group: back_to :group_name
-  edit_featured_content_for_group: Edit Featured Content For :group_name
+  back_to_group: back_to {group_name}
+  edit_featured_content_for_group: Edit Featured Content For {group_name}
   mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
   current_featured_content: Current Featured Content
   when_does_feature_expire: When does this feature expire?
@@ -554,7 +554,7 @@ en:
   expired_featured_content: Expired Featured Content
   feature_button: Feature!
   reactivate_button: Reactivate!
-  no_group_named: there is no group named <b>:name</b>.
+  no_group_named: there is no group named <b>{name}</b>.
   featured_content: Featured Content
   group_wiki: Group Wiki
   rss_feed: RSS Feed
@@ -648,12 +648,12 @@ en:
   outgoing: "Outgoing"
   state: "state"
   action: "action"
-  request_to_friend_description: ":user would like to be the friend of :other_user"
-  request_to_join_our_network_description: "group :group was invited to join network :network"
-  request_to_join_us_description: ":user was invited to join :group"
-  request_to_join_us_via_email_description: ":email was invited to join :group"
-  request_to_join_you_description: ":user requested to join :group"
-  request_to_join_your_network_description: ":group requested to join network :network"
+  request_to_friend_description: "{user} would like to be the friend of {other_user}"
+  request_to_join_our_network_description: "group {group} was invited to join network {network}"
+  request_to_join_us_description: "{user} was invited to join {group}"
+  request_to_join_us_via_email_description: "{email} was invited to join {group}"
+  request_to_join_you_description: "{user} requested to join {group}"
+  request_to_join_your_network_description: "{group} requested to join network {network}"
 
   send_invites_button: "Send Invites"
   send_invites_headline: "Send invitations to join {group}"
@@ -719,8 +719,8 @@ en:
 
   announcements: "Announcements"
   watch_checkbox: "Watch For Updates"
-  add_star_link: "Add Star (:star_count)"
-  remove_star_link: "Remove Star (:star_count)"
+  add_star_link: "Add Star ({star_count})"
+  remove_star_link: "Remove Star ({star_count})"
   public_checkbox: "Public"
   public_checkbox_help: "If checked, anyone may view this page."
   move_page_link: "Move {page_class}"
@@ -764,7 +764,7 @@ en:
   grant_access: "Grant Access"
   share_page_email: "Send an email notification"
   share_page_message: "Send a message (optional)"
-  share_page_link: "Share :page_class"
+  share_page_link: "Share {page_class}"
   share_page_options: "Choose options"
   share_page_recipients: "Share This {page_class}"
   share_page_recipients_sections: "Choose from your groups or friends"
@@ -990,10 +990,10 @@ en:
 
   locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
   view_while_locked_error: "You have this wiki locked. If you want to stop editing, click the cancel button."
-  wiki_is_locked: "This wiki is currently locked by :user"
+  wiki_is_locked: "This wiki is currently locked by {user}"
   wont_be_able_to_save: "You will not be able to save this page"
   page_locked_header: "Page Locked"
-  locked_by_user: "Locked by :user"
+  locked_by_user: "Locked by {user}"
   break_lock: "Break Lock"
   break_lock_button: "Break Lock"
   versions: "Versions"
@@ -1004,10 +1004,10 @@ en:
   prev_change: "Previous Change"
   next_change: "Next Change"
   formatting_reference_link: "Editing Help"
-  version_doesnt_exist: "There is no version :version"
-  you_are_viewing_version: "You are viewing version :version by :user"
+  version_doesnt_exist: "There is no version {version}"
+  you_are_viewing_version: "You are viewing version {version} by {user}"
   diff_link: "view changes"
-  created_when_by: "created :when by :user"
+  created_when_by: "created {when} by {user}"
   insert_image_heading: "Insert Image"
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
@@ -1030,7 +1030,7 @@ en:
   my_status_heading: "Your Current Status"
   # ^^ no longer used
 
-  users_wall: ":user's Wall"
+  users_wall: "{user}'s Wall"
   ## ^^ no longer used
 
   recent_wall_posts: "Recent Wall Posts"

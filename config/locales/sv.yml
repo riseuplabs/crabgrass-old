@@ -23,7 +23,7 @@ sv:
   add_location: "Lägg till plats"
   add_phone_number: "Lägg till telefonnummer"
   add_photo_to_gallery: "Lägg till ett foto till ett galleri:"
-  add_star_link: "Stjärna (:star_count)"
+  add_star_link: "Stjärna ({star_count})"
   add_websites: "Lägg till webbsajter"
   admin: Admin
   alert_error: Fel
@@ -47,7 +47,7 @@ sv:
   article_page_display: artikel
   at_least_one_recipient_is_required: "det krävs minst en mottagare"
   back_button: Tillbaka
-  back_to_group: "tillbaka till :group_name"
+  back_to_group: "tillbaka till {group_name}"
   break_lock: "bryt lås"
   break_lock_button: "Bryt lås"
   cancel_button: Avbryt
@@ -59,7 +59,7 @@ sv:
   committee: kommitté
   committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {domain}/gruppnamn"
   committees: Kommittéer
-  comparing_changes_header: "Jämför ändringar av :user :when från :old_version till :new_version"
+  comparing_changes_header: "Jämför ändringar av {user} {when} från {old_version} till {new_version}"
   confirm_new_password: "Bekräfta det nya lösenordet"
   contact: Kontakt
   contact_request_message_label: "Säg {user} varför du vill vara deras kontakt."
@@ -67,7 +67,7 @@ sv:
   contribute_content_link: Bidra
   coordinating_council: koordinationsråd
   coordinator: Koordinator
-  create_a_new_thing: "skapa en ny :thing"
+  create_a_new_thing: "skapa en ny {thing}"
   create_button: Skapa
   create_committee: "skapa kommitté"
   create_page: "Skapa sida"
@@ -76,7 +76,7 @@ sv:
   created: skapad
   created_by: "Skapades av"
   created_on: Skapad
-  created_when_by: "skapad :when av :user"
+  created_when_by: "skapad {when} av {user}"
   csrf_error_message: |
       Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:
   current_video_sources: "stöds för närvarande: youtube, blip.tv, google video, vimeo"
@@ -94,7 +94,7 @@ sv:
   date_weeks: veckor
   date_years: år
   date_yesterday: Igår
-  delete_page_link: "Radera :page_class"
+  delete_page_link: "Radera {page_class}"
   delete_this_version: "radera denna version"
   delete_version_confirm: "Vill du säkert radera den här informationen?"
   description: beskrivning
@@ -104,11 +104,11 @@ sv:
   destroy_group_link: "förstör {group_type}"
   diff_link: diff
   directory_of_groups: "Katalog över grupper"
-  discuss_request_link: "diskutera den här begäran med :person_or_group"
+  discuss_request_link: "diskutera den här begäran med {person_or_group}"
   discussions: Diskussioner
   display_name: Visningsnamn
   dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under {group}"
-  dont_understand_group_type: "Förstod inte grupptypen :type"
+  dont_understand_group_type: "Förstod inte grupptypen {type}"
   download: "Ladda ner"
   download_gallery: "Ladda ner galleri"
   drag_and_drop_to_rearrange_photos: "Drag & släpp bilder för att flytta runt dem."
@@ -161,7 +161,7 @@ sv:
   group_has_no_public_profile: "Den här gruppen har ingen offentlig profil."
   group_home_headline: "{group_type} hem"
   group_home_welcome: Välkommen
-  group_information: "Information för :group_type"
+  group_information: "Information för {group_type}"
   group_invite_email: |-
       {from_user} har bjudit in dig till "{group}".
 
@@ -181,8 +181,8 @@ sv:
   history: Historia
   home: Hem
   im_addresses: IM-adresser
-  image_count: "Bild :number av :count"
-  image_count_total: ":count bilder"
+  image_count: "Bild {number} av {count}"
+  image_count_total: "{count} bilder"
   image_title: "Bildtitel: {title}"
   inbox_description: "Inkorg för sidor jag aktivt deltar i eller övervakar efter ändringar."
   include_full_checkbox: "ta med länk till hela bilden"
@@ -208,7 +208,7 @@ sv:
   location_postal_code: postnummer
   location_state: delstat/provins
   locations: Ställen
-  locked_by_user: "låst av :user"
+  locked_by_user: "låst av {user}"
   locking_error: "Låsningsfel. Dina ändringar kan inte sparas, för någon annan har sparat nya ändringar före dig."
   login: "Logga in"
   login_button: "Logga in"
@@ -268,7 +268,7 @@ sv:
   most_viewed: "Mest sedda"
   move_image_left: "Flytta bilden åt vänster"
   move_image_right: "Flytta bilden åt höger"
-  move_page_link: "Flytta :page_class"
+  move_page_link: "Flytta {page_class}"
   my_completed_tasks_link: Fullföljd
   my_dashboard: "Min panel"
   my_groups: "Mina grupper"

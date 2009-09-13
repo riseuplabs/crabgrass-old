@@ -30,7 +30,7 @@ it:
   add_one_or_more_tags: "Aggiungi una o più etichette, separate da virgole"
   add_phone_number: "Aggiungi Numero di Telefono"
   add_photo_to_gallery: "aggiungi foto alla galleria:"
-  add_star_link: "Aggiungi Stella (:star_count)"
+  add_star_link: "Aggiungi Stella ({star_count})"
   add_tags: "Aggiungi Etichette"
   add_websites: "Aggiungi Siti Web"
   additional_page_access: "Accesso Addizionale"
@@ -75,7 +75,7 @@ it:
   attachments: Allegati
   away: via
   back_button: Indietro
-  back_to_group: "back_to :group_name"
+  back_to_group: "back_to {group_name}"
   basic_settings: "Impostazioni di base"
   break_lock: "annulla blocco"
   break_lock_button: "Annulla Blocco"
@@ -91,7 +91,7 @@ it:
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
   committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo {domain}/nomedeltuogruppo"
   committees: comitati
-  comparing_changes_header: "Confronto dei cambiamenti fatti da :user alle :when da :old_version a :new_version"
+  comparing_changes_header: "Confronto dei cambiamenti fatti da {user} alle {when} da {old_version} a {new_version}"
   confirm_new_password: "Conferma Nuova Password"
   confirmation: "Sei sicuro?"
   contact: Contatto
@@ -109,7 +109,7 @@ it:
   council_help: "Se questo gruppo ha un consiglio di coordinazione, allora solamente un membro di quel consiglio può amministrare il gruppo. Altrimenti, qualsiasi membro del gruppo può farlo."
   councils: Consigli
   create_a_group: "Crea un Gruppo"
-  create_a_new_thing: "Crea un nuovo :thing"
+  create_a_new_thing: "Crea un nuovo {thing}"
   create_button: Crea
   create_committee: "crea comitato"
   create_group_link: "crea gruppo"
@@ -121,7 +121,7 @@ it:
   created: creato
   created_by: "Creato da"
   created_on: "Creato il"
-  created_when_by: "creato il :when da :user"
+  created_when_by: "creato il {when} da {user}"
   csrf_error_message: "La tua richiesta di accesso sembra un tentativo di violare la sicurezza di questo sito web. Comunque, a volte questo errore si può verificare anche per richieste di accesso perfettamente lecite. E' solo che siamo molto paranoici. Per risolvere questo problema, è sufficiente ricaricare la pagina prima di tentare nuovamente l'accesso. Puoi seguire questo link per provare nuovamente:"
   current_attachments: "Allegati Correnti"
   current_featured_content: "Contenuti in evidenza"
@@ -144,7 +144,7 @@ it:
   date_years: anni
   date_yesterday: Ieri
   delete: Elimina
-  delete_page_link: "Elimina :page_class"
+  delete_page_link: "Elimina {page_class}"
   delete_page_via_shred: "Distruggi Immediatamente"
   delete_page_via_shred_info: "Questo distruggerà definitivamente la pagina. Questa azione non può essere annullata."
   delete_page_via_trash: "Sposta nel Cestino"
@@ -163,13 +163,13 @@ it:
   directory_of_groups: "Elenco dei gruppi"
   directory_of_networks: "Elenco delle Reti"
   directory_of_people: "Elenco delle Persone"
-  discuss_request_link: "discuti questa richiesta con :person_or_group"
+  discuss_request_link: "discuti questa richiesta con {person_or_group}"
   discussion_page_description: "Discuti di un particolare argomento con i gruppi o con altri utenti."
   discussion_page_display: "Discussione di Gruppo"
   discussions: Discussioni
   display_name: "Nome visualizzato"
   dont_have_permission_to_create_committees: "Non hai i permessi necessari per creare comitati in {group}"
-  dont_understand_group_type: "Impossibile capire il tipo di gruppo :type"
+  dont_understand_group_type: "Impossibile capire il tipo di gruppo {type}"
   download: Scarica
   download_gallery: "Scarica Galleria"
   drag_and_drop_to_rearrange_photos: "Trascina e rilascia le immagini per riordinarle"
@@ -178,7 +178,7 @@ it:
   edit_attachments: "Modifica allegati"
   edit_attachments_link: Modifica
   edit_featured_content: "modifica contenuti in evidenza"
-  edit_featured_content_for_group: "Modifica Contenuti in Evidenza per :group_name"
+  edit_featured_content_for_group: "Modifica Contenuti in Evidenza per {group_name}"
   edit_gallery: "Modifica Galleria"
   edit_profile_link: "Modifica Profilo"
   edit_settings: "modifica impostazioni"
@@ -241,7 +241,7 @@ it:
   group_has_no_public_profile: "Questo gruppo non ha un profilo pubblico."
   group_home_headline: "Pagina iniziale {group_type}"
   group_home_welcome: Benvenut*
-  group_information: "Informazioni su :group_type"
+  group_information: "Informazioni su {group_type}"
   group_invite_email: |
       {from_user} ti ha invitato/a a entrare nel gruppo "{group}".
 
@@ -282,8 +282,8 @@ it:
   home: "Pagina Iniziale"
   icon: Icona
   im_addresses: "Indirizzi IM"
-  image_count: "Immagine :number di :count"
-  image_count_total: ":count Immagini"
+  image_count: "Immagine {number} di {count}"
+  image_count_total: "{count} Immagini"
   image_title: "Titolo immagine: {title}"
   inbox_description: "Elenco di pagine a cui sto partecipando attivamente o di cui seguo i cambiamenti"
   include_full_checkbox: "includi link nell'immagine grande"
@@ -324,7 +324,7 @@ it:
   location_postal_code: "codice postale"
   location_state: provincia
   locations: Indirizzi
-  locked_by_user: "Bloccato da :user"
+  locked_by_user: "Bloccato da {user}"
   locking_error: "Errore bloccante. Impossibile salvare i tuoi dati, qualcun altro ha salvato i nuovi cambiamenti prima di te."
   login: Accesso
   login_button: Entra
@@ -395,7 +395,7 @@ it:
   move_button: Sposta
   move_image_left: "Sposta immagine a sinistra"
   move_image_right: "Sposta immagine a destra"
-  move_page_link: "Sposta :page_class"
+  move_page_link: "Sposta {page_class}"
   move_page_to_different_group: "Sposta questa pagina in un altro gruppo"
   move_this_page: "Sposta Questa Pagina"
   my_completed_tasks_link: Completato
@@ -432,7 +432,7 @@ it:
   no_change: "nessun cambiamento"
   no_committees: "nessun comitato"
   no_contacts_msg: "Non hai amici."
-  no_group_named: "non c'è nessun gruppo chiamato <strong>:name</strong>."
+  no_group_named: "non c'è nessun gruppo chiamato <strong>{name}</strong>."
   no_images_in_gallery: "Nessuna immagine nella galleria"
   no_members: "(non ci sono membri)"
   no_peers_msg: "Non hai contatti."
@@ -462,7 +462,7 @@ it:
   page_added_to_group: "Questa pagina verrà aggiunta a {group_name} {group_type}."
   page_create_owner: "Proprietario della Pagina"
   page_details: "Dettagli Pagina"
-  page_details_link: "Dettagli :page_class"
+  page_details_link: "Dettagli {page_class}"
   page_group_collection: Collezioni
   page_group_discussion: Discussioni
   page_group_event: Eventi
@@ -566,7 +566,7 @@ it:
   read: letto
   recent_activity: "Attività Recenti"
   recent_contributions: "Contributi Recenti"
-  recent_member_group_pages: "Attività Recenti dai Tuoi Gruppi in :network"
+  recent_member_group_pages: "Attività Recenti dai Tuoi Gruppi in {network}"
   recent_network_pages: "Pagine da Reti Recenti"
   recent_pages: "Pagine Recenti"
   recently_active_groups: "Gruppi Attivi di Recente"
@@ -585,13 +585,13 @@ it:
   remove_from_gallery: "Rimuovi dalla galleria"
   remove_from_inbox: "Rimuovi da \"In Arrivo\""
   removing_image: "Rimozione immagine in corso..."
-  request_status: "Questa richiesta è stata :status da :user il :time"
-  request_to_friend_description: ":user vorrebbe essere il contatto di :other_user"
-  request_to_join_our_network_description: "il gruppo :group è stato inviato a entrare nella rete :network"
-  request_to_join_us_description: ":user è stato invitato a entrare nel grupo :group"
-  request_to_join_us_via_email_description: ":email è stato invitato/a a entrare nel gruppo :group"
-  request_to_join_you_description: ":user ha richiesto di entrare nel gruppo :group"
-  request_to_join_your_network_description: ":group ha richiesto di entrare nella rete :network"
+  request_status: "Questa richiesta è stata {status} da {user} il {time}"
+  request_to_friend_description: "{user} vorrebbe essere il contatto di {other_user}"
+  request_to_join_our_network_description: "il gruppo {group} è stato inviato a entrare nella rete {network}"
+  request_to_join_us_description: "{user} è stato invitato a entrare nel grupo {group}"
+  request_to_join_us_via_email_description: "{email} è stato invitato/a a entrare nel gruppo {group}"
+  request_to_join_you_description: "{user} ha richiesto di entrare nel gruppo {group}"
+  request_to_join_your_network_description: "{group} ha richiesto di entrare nella rete {network}"
   requested_forgot_password: "Hai richiesto di cambiare la tua password"
   requests_from_me: "Richieste da me"
   requests_to_me: "Richieste da me"
@@ -627,7 +627,7 @@ it:
   signup_success: "Registrazione eseguita con successo"
   signup_success_message: "Grazie per esserti registrato!"
   signup_title: "Crea il tuo account"
-  slideshow_delay_input: "Aggiorna ogni :input_field secondi"
+  slideshow_delay_input: "Aggiorna ogni {input_field} secondi"
   small: piccolo
   social_change_interests: "Interessi riguardanti il cambiamento sociale"
   starred: speciali
@@ -637,7 +637,7 @@ it:
   subject: oggetto
   subject_must_not_be_empty: "l'oggetto non deve essere vuoto"
   successful_undelete_image: "Imagine recuperata con successo."
-  sucessfully_removed_image: "Immagine rimossa con successo! (:undo_link)"
+  sucessfully_removed_image: "Immagine rimossa con successo! ({undo_link})"
   summary: Sommario
   sunday: Domenica
   tags: Tag
@@ -660,8 +660,8 @@ it:
   upload_new_image: "carica nuova immagine"
   uploaded_image_cropped: "L'immagine caricata verrà ridimensionata a 96x96 pixel."
   username: "Nome Utente"
-  version_doesnt_exist: "Non esiste la versione :version"
-  version_number: "versione :version"
+  version_doesnt_exist: "Non esiste la versione {version}"
+  version_number: "versione {version}"
   versions: versioni
   video: video
   video_class_description: "Mostra un video ospitato su un sito esterno"
@@ -694,12 +694,12 @@ it:
   welcome_upload_icon_link: "Carica icona utente"
   welcome_upload_icon_text: "Carica un'immagine da usare come icona. Questa icona apparirà accanto a ogni commento che scrivi."
   when_does_feature_expire: "Quando questo contenuto in evidenza scadrà?"
-  wiki_is_locked: "Questo wiki è bloccato da :user"
+  wiki_is_locked: "Questo wiki è bloccato da {user}"
   wiki_page_description: "Un documento di testo a forma libera."
   wiki_page_display: Wiki
   wont_be_able_to_save: "Non potrai salvare questa pagina"
   work: Lavoro
   work_life: "Vita Lavorativa"
-  you_are_viewing_version: "Stai vedendo la versione :version di :user"
+  you_are_viewing_version: "Stai vedendo la versione {version} di {user}"
   you_have_no_groups: "Non sei membro di alcun gruppo"
   your_login: "Il tuo login"

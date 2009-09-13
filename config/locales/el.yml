@@ -48,7 +48,7 @@ el:
   attachments: Επισυνάψεις
   away: απουσιάζω
   back_button: Πίσω
-  back_to_group: "επιστροφή στην :group_name"
+  back_to_group: "επιστροφή στην {group_name}"
   cancel_button: Ακύρωση
   cancel_link: ακύρωση
   category: Κατηγορία

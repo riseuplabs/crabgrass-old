@@ -30,7 +30,7 @@ de:
   add_one_or_more_tags: "Füge ein oder mehr Tags hinzu (getrennt durch Kommas)"
   add_phone_number: "Telefonnummer hinzufügen"
   add_photo_to_gallery: "Bild zur Gallerie hinzuf&uuml;gen"
-  add_star_link: "Stern hinzufügen (:star_count)"
+  add_star_link: "Stern hinzufügen ({star_count})"
   add_tags: "Tags hinzufügen"
   add_websites: "Webseiten hinzufügen"
   additional_page_access: "Weitere Zugriffe"
@@ -74,7 +74,7 @@ de:
   attachments: Anhänge
   away: abwesend
   back_button: Zurück
-  back_to_group: "zurück zu :group_name"
+  back_to_group: "zurück zu {group_name}"
   basic_settings: Grundeinstellungen
   break_lock: "Sperre aufheben"
   break_lock_button: "Sperre aufheben"
@@ -89,7 +89,7 @@ de:
   committee_publicly_visible: "Arbeitsgruppen öffentlich sichtbar machen"
   committee_publicly_visible_description: "Arbeitsgruppen können von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
   committees: Arbeitsgruppen
-  comparing_changes_header: "Vergleich der Änderungen durch :user am :when zwischen :old_version und :new_version"
+  comparing_changes_header: "Vergleich der Änderungen durch {user} am {when} zwischen {old_version} und {new_version}"
   confirm_new_password: "Bestätige neues Passwort"
   confirmation: Sicher?
   contact: Kontakt
@@ -102,7 +102,7 @@ de:
   coordinators: Koordinatoren
   council_help: "Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun."
   create_a_group: "Eine Gruppe erstellen"
-  create_a_new_thing: "Neue :thing erstellen"
+  create_a_new_thing: "Neue {thing} erstellen"
   create_button: Erstellen
   create_committee: "Arbeitsgruppe erstellen"
   create_group_link: "Gruppe erstellen"
@@ -114,7 +114,7 @@ de:
   created: erstellt
   created_by: "Erstellt von"
   created_on: "Erstellt an"
-  created_when_by: "Erstellt :when von :user"
+  created_when_by: "Erstellt {when} von {user}"
   csrf_error_message: "Dein Loginversuch erweckt den Anschein eines Einbruchsversuches. Keine Sorge, das passiert gelegentlich auch bei harmlosen Anfragen. Wir sind halt besonders paranoid. Lade die Seite neu, um es noch einmal zu versuchen. Dazu kannst Du folgenden Link verwenden:"
   current_attachments: "aktuelle Anhänge"
   current_featured_content: "Aktuelle Inhalte"
@@ -135,7 +135,7 @@ de:
   date_years: Jahre
   date_yesterday: Gestern
   delete: Löschen
-  delete_page_link: "Lösche :page_class"
+  delete_page_link: "Lösche {page_class}"
   delete_post: "Eintrag löschen"
   delete_this_version: "Lösche diese Version"
   delete_version_confirm: "Willst Du diese Version tatsächlich löschen?"
@@ -150,13 +150,13 @@ de:
   directory_of_groups: "Verzeichnis der Gruppen"
   directory_of_networks: "Verzeichnis der Netzwerke"
   directory_of_people: "Verzeichnis von Personen"
-  discuss_request_link: "Diese Anfrage mit :person_or_group bereden"
+  discuss_request_link: "Diese Anfrage mit {person_or_group} bereden"
   discussion_page_description: "Eine Diskussion mit mehreren Teilnehmern &uuml;ber ein bestimmtes Thema."
   discussion_page_display: "Gruppen Diskussion"
   discussions: Diskussionen
   display_name: "Namen anzeigen"
   dont_have_permission_to_create_committees: "Du kannst keine Arbeitsgruppen unter {group} anlegen."
-  dont_understand_group_type: "Gruppentyp :type ist unbekannt."
+  dont_understand_group_type: "Gruppentyp {type} ist unbekannt."
   download: Herunterladen
   download_gallery: "Gallerie herunterladen"
   drag_and_drop_to_rearrange_photos: "Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern"
@@ -165,7 +165,7 @@ de:
   edit_attachments: "Anhänge bearbeiten"
   edit_attachments_link: Bearbeiten
   edit_featured_content: "Aktuelle Inhalte bearbeiten"
-  edit_featured_content_for_group: "Ausgewählte Inhalte von :group_name bearbeiten"
+  edit_featured_content_for_group: "Ausgewählte Inhalte von {group_name} bearbeiten"
   edit_gallery: "Gallerie bearbeiten"
   edit_profile_link: "Profil bearbeiten"
   edit_settings: "Einstellungen bearbeiten"
@@ -228,7 +228,7 @@ de:
   group_has_no_public_profile: "Diese Gruppe hat kein öffentlich einsehbares Profil."
   group_home_headline: "{group_type} Home"
   group_home_welcome: Willkommen
-  group_information: ":group_type Information"
+  group_information: "{group_type} Information"
   group_invite_email: |-
       {from_user} hat Dich eingeladen, der Gruppe "{group}" beizutreten.
 
@@ -268,8 +268,8 @@ de:
   home: Home
   icon: Icon
   im_addresses: "IM Adressen"
-  image_count: "Bild :number von :count gesamt"
-  image_count_total: ":count Bilder"
+  image_count: "Bild {number} von {count} gesamt"
+  image_count_total: "{count} Bilder"
   image_title: "Bildtitel: {title}"
   inbox_description: "Liste von Seiten, an denen ich aktiv teilhabe oder bei denen ich Änderungen registriere."
   include_full_checkbox: "Link zum ganzen Bild einfügen"
@@ -309,7 +309,7 @@ de:
   location_postal_code: Postleitzahl
   location_state: Bundesland
   locations: Orte
-  locked_by_user: "gesperrt durch :user"
+  locked_by_user: "gesperrt durch {user}"
   locking_error: "Fehler. Kann Deine Daten nicht sichern - jemand anders hat zuerst neue Änderungen übermittelt. "
   login: Anmelden
   login_button: Anmelden
@@ -377,7 +377,7 @@ de:
   move_button: Verschieben
   move_image_left: "Bild nach links verschieben"
   move_image_right: "Bild nach rechts verschieben"
-  move_page_link: "Verschiebe :page_class"
+  move_page_link: "Verschiebe {page_class}"
   move_page_to_different_group: "Verschiebe diese Seite in eine andere Gruppe"
   move_this_page: "Verschiebe diese Seite"
   my_completed_tasks_link: Erledigt
@@ -413,7 +413,7 @@ de:
   no_change: "keine Änderung"
   no_committees: "Keine Arbeitsgruppen"
   no_contacts_msg: "Du hast keine Kontakte."
-  no_group_named: "Es gibt keine Gruppe namens <b>:name</b>."
+  no_group_named: "Es gibt keine Gruppe namens <b>{name}</b>."
   no_images_in_gallery: "In dieser Gallerie sind noch keine Bilder"
   no_members: "(keine TeilnehmerInnen)"
   no_peers_msg: "Du hast keine Peers."
@@ -442,7 +442,7 @@ de:
   page: Seite
   page_create_owner: "Seiten Besitzer"
   page_details: Seitendetails
-  page_details_link: ":page_class Details"
+  page_details_link: "{page_class} Details"
   page_group_collection: Kollektionen
   page_group_discussion: Diskussionen
   page_group_event: Events
@@ -551,7 +551,7 @@ de:
   recipients: Empfänger
   redirect_to_foreign_domain: |-
       Du versuchst nach deinem Login auf eine fremde Domain weitergeleitet zu werden. Es ist auch m&ouml;glich, dass jemand versucht etwas unmoralisches zu tun. Aus Sicherheitsgr&uuml;nden haben wir den Parameter aus der URL entfernt.
-      Der in der URL enthaltene Parameter war: :url
+      Der in der URL enthaltene Parameter war: {url}
   regenerate: "Aktualisiere Thumbnails"
   reject: Abweisen
   reject_button: Abweisen
@@ -562,17 +562,17 @@ de:
   remove_friend_link: "Entferne von meinen Kontakten"
   remove_from_gallery: "Aus Gallerie entfernen"
   remove_from_inbox: "Entferne von Eingang"
-  remove_star_link: "Entferne Stern (:star_count)"
+  remove_star_link: "Entferne Stern ({star_count})"
   removing_image: "Entferne Bild..."
   request_friend_link: "Zu meinen Kontakten hinzufügen"
   request_join_group_link: "Sich {group_type} anschliessen"
-  request_status: "Diese Anfrage wurde von :user um :time :status "
-  request_to_friend_description: ":user würde gerne :other_user zu seinen/ihren Kontakten hinzufügen"
-  request_to_join_our_network_description: "Gruppe :group wurde eingeladen, sich beim Netzwerk :network anzuschließen"
-  request_to_join_us_description: ":user wurde eingeladen, sich :group anzuschließen"
-  request_to_join_us_via_email_description: ":email wurde eingeladen, sich :group anzuschließen"
-  request_to_join_you_description: ":user würde sich gerne :group anschließen"
-  request_to_join_your_network_description: ":group stellte eine Anfrage, sich dem Netzwerk :network anzuschließen"
+  request_status: "Diese Anfrage wurde von {user} um {time} {status} "
+  request_to_friend_description: "{user} würde gerne {other_user} zu seinen/ihren Kontakten hinzufügen"
+  request_to_join_our_network_description: "Gruppe {group} wurde eingeladen, sich beim Netzwerk {network} anzuschließen"
+  request_to_join_us_description: "{user} wurde eingeladen, sich {group} anzuschließen"
+  request_to_join_us_via_email_description: "{email} wurde eingeladen, sich {group} anzuschließen"
+  request_to_join_you_description: "{user} würde sich gerne {group} anschließen"
+  request_to_join_your_network_description: "{group} stellte eine Anfrage, sich dem Netzwerk {network} anzuschließen"
   requested_forgot_password: "Du hast eine Änderung deines Passworts angefordert"
   requests: Anfragen
   requests_from_me: "Von mir"
@@ -610,9 +610,9 @@ de:
   settings: Einstellungen
   share: Teile
   share_button: Teile
-  share_link: "Teile :page_class"
+  share_link: "Teile {page_class}"
   share_page_email: "Sende eine E-Mailbenachrichtigung"
-  share_page_link: "Teile :page_class"
+  share_page_link: "Teile {page_class}"
   share_page_message: "Sende eine Nachricht (optional)"
   share_page_options: "Wähle Optionen"
   share_page_recipients: "Teile diese {page_class} mit"
@@ -633,7 +633,7 @@ de:
   signup_success: "Registration erfolgreich"
   signup_success_message: "Danke für die Registrierung!"
   signup_title: "Erstelle dein Konto"
-  slideshow_delay_input: "Aktualisiere alle :input_field Sekunden"
+  slideshow_delay_input: "Aktualisiere alle {input_field} Sekunden"
   small: klein
   social_change_interests: "Interessen im Zusammenhang mit sozialem Wandel"
   starred: Sternenübersäht
@@ -643,7 +643,7 @@ de:
   subject: Betreff
   subject_must_not_be_empty: "Betreff darf nicht leer sein"
   successful_undelete_image: "L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht."
-  sucessfully_removed_image: "Bild erfolgreich entfernt (:undo_link)"
+  sucessfully_removed_image: "Bild erfolgreich entfernt ({undo_link})"
   summary: Zusammenfassung
   summary_help: "Optional. Die Zusammenfassung kann ein Satz oder ein Absatz sein, welcher kurz den Inhalt der Seite beschreibt."
   sunday: Sonntag
@@ -709,10 +709,10 @@ de:
   user_profile_description_may_see_contacts: "Anderen erlauben, Deine Liste persönlicher Kontakte einzusehen."
   user_profile_description_may_see_groups: "Anderen Deine Gruppenzugehörigkeiten offenbaren."
   username: Username
-  users_wall: ":user's Wand"
-  users_world: ":user's Welt"
-  version_doesnt_exist: "Es gibt keine Version :version"
-  version_number: "Version :version"
+  users_wall: "{user}'s Wand"
+  users_world: "{user}'s Welt"
+  version_doesnt_exist: "Es gibt keine Version {version}"
+  version_number: "Version {version}"
   versions: Versionen
   video: Video
   video_class_description: "Zeige ein Video, welches auf einer externen Seite gespeichert ist."
@@ -751,7 +751,7 @@ de:
   welcome_upload_icon_text: "Lade ein Bild als dein Symbol hoch. Dieses Symbol wird neben jedem deiner Beitr&auml;ge erscheinen."
   when_does_feature_expire: "Ab wann ist dieses Feature nicht mehr aktuell?"
   width: Breite
-  wiki_is_locked: "Dieses Wiki ist momentan gesperrt von :user"
+  wiki_is_locked: "Dieses Wiki ist momentan gesperrt von {user}"
   wiki_lost_text_confirmation: "Aller ungesicherter Text wird verlohren gehen. Bist du Dir sicher?"
   wiki_page_description: "Ein allgemeines Textdokument"
   wiki_page_display: Wiki
@@ -761,7 +761,7 @@ de:
   work: "Arbeit"
   work_life: Arbeitsleben
   you_are_not_member_of_any_group: "Du bist bei keiner Gruppe Mitglied."
-  you_are_viewing_version: "Du betrachtest Version :version von :user"
+  you_are_viewing_version: "Du betrachtest Version {version} von {user}"
   you_have_no_contacts: "Du hast keine Kontakte"
   you_have_no_groups: "Du hast keine Gruppen"
   you_have_no_peers: "Du hast keine Peers"

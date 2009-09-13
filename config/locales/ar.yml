@@ -31,7 +31,7 @@ ar:
   add_one_or_more_tags: "اضف علامة أو اكثر، افصل بينها بفواصل"
   add_phone_number: "أضف رقم الهاتف"
   add_photo_to_gallery: "إضغط على الصورة لإضافتها"
-  add_star_link: "أضف تقييم (:star_count)"
+  add_star_link: "أضف تقييم ({star_count})"
   add_tags: "أضف العلامات"
   add_websites: "أضف موقع ويب"
   additional_page_access: "وصول إضافي"
@@ -76,7 +76,7 @@ ar:
   attachments: المرفقات
   away: بعيد
   back_button: رجوع
-  back_to_group: "رجوع لـ :group_name"
+  back_to_group: "رجوع لـ {group_name}"
   basic_settings: "إعدادات أساسية"
   break_lock: "حجز القطع"
   break_lock_button: "حجز القطع"
@@ -92,7 +92,7 @@ ar:
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
   committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {domain}/yourgroupname"
   committees: اللجان
-  comparing_changes_header: "مقارنة تعديلات المستخدم :user في :when بين :old_version و :new_version"
+  comparing_changes_header: "مقارنة تعديلات المستخدم {user} في {when} بين {old_version} و {new_version}"
   confirm_new_password: "تأكيد كلمة المرور الجديدة "
   confirmation: "هل أنت متأكد؟"
   contact: "جهة الإتصال"
@@ -110,7 +110,7 @@ ar:
   council_help: "إذا كان لهذه المجموعة مجلس تنسيق، فلن يستطيع إدارة هذه المجموعة إلا أعضاء ذلك المجلس. إن لم يكن للمجموعة مجلس تنسيق، سيصير بإمكان أي عضو إدارتها."
   councils: مجالس
   create_a_group: "انشاء مجموعة"
-  create_a_new_thing: "إنشاء جديد للـ :thing"
+  create_a_new_thing: "إنشاء جديد للـ {thing}"
   create_button: إنشاء
   create_committee: "إنشاء لجنة"
   create_group_link: "إنشاء مجموعة "
@@ -122,7 +122,7 @@ ar:
   created: "تمّّ الإنشاء"
   created_by: "أٌنشئ بواسطة"
   created_on: "أُنشئ في"
-  created_when_by: "أُنشئ في :when بواسطة :user"
+  created_when_by: "أُنشئ في {when} بواسطة {user}"
   csrf_error_message: |
       يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط
   current_attachments: "المرفقات الحالية"
@@ -146,7 +146,7 @@ ar:
   date_years: السنوات
   date_yesterday: البارحة
   delete: حذف
-  delete_page_link: "حذف :page_class"
+  delete_page_link: "حذف {page_class}"
   delete_page_via_shred: "دمر حالا"
   delete_page_via_shred_info: "ستدمر هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء."
   delete_page_via_trash: "انقل إلى المهملات"
@@ -165,13 +165,13 @@ ar:
   directory_of_groups: "دليل المجموعات"
   directory_of_networks: "دليل الشبكات"
   directory_of_people: "دليل المشتركون"
-  discuss_request_link: "ناقش هذا الطلب مع :person_or_group"
+  discuss_request_link: "ناقش هذا الطلب مع {person_or_group}"
   discussion_page_description: "ناقش موضوعا معينا في مجموعة أو مع مستخدمين آخرين."
   discussion_page_display: "مناقشة جماعية"
   discussions: مناقشات
   display_name: "إظهار الإسم"
   dont_have_permission_to_create_committees: "أنت غير مٌخول لإنشاء لجنة تحت {group}"
-  dont_understand_group_type: "لم يتم تمييز نوع المجموعة :type"
+  dont_understand_group_type: "لم يتم تمييز نوع المجموعة {type}"
   download: حفظ
   download_gallery: "حفظ معرض الصور"
   drag_and_drop_to_rearrange_photos: "اسحب وافلت الصور لتُعيد ترتيبها"
@@ -180,7 +180,7 @@ ar:
   edit_attachments: "تحرير المرفقات"
   edit_attachments_link: تحرير
   edit_featured_content: "تحرير المحتوى المُختار"
-  edit_featured_content_for_group: "تحرير المحتوى المُختار لِـ :group_name"
+  edit_featured_content_for_group: "تحرير المحتوى المُختار لِـ {group_name}"
   edit_gallery: "تحرير معرض الصور"
   edit_profile_link: "تحرير الملف "
   edit_settings: "تحرير الاعدادات"
@@ -263,7 +263,7 @@ ar:
   group_has_no_public_profile: "هذه المجموعة لا يوجد لديها ملف عام."
   group_home_headline: "الصفحة الرئيسية لِـ{group_type}"
   group_home_welcome: "مرحباً بك"
-  group_information: "معلومات :group_type"
+  group_information: "معلومات {group_type}"
   group_invite_email: |
       {from_user} قام بدعوتك للانضمام إلى مجموعة "{group}".
 
@@ -304,8 +304,8 @@ ar:
   home: "الصفحة الرئيسية"
   icon: أيقونة
   im_addresses: "مُعرِّف المسنجر"
-  image_count: "صورة :number من :count"
-  image_count_total: ":count صور"
+  image_count: "صورة {number} من {count}"
+  image_count_total: "{count} صور"
   image_title: "عنوان الصورة: {title}"
   inbox_description: "صندوق الوارد للصفحات التي أشارك بها أو أراقب تغييراتها"
   include_full_checkbox: "يشمل رابط للصورة كاملة"
@@ -346,7 +346,7 @@ ar:
   location_postal_code: "الرمز البريدي"
   location_state: "الولاية / المقاطعة"
   locations: المواقع
-  locked_by_user: "مغلق من قِبل:user"
+  locked_by_user: "مغلق من قِبل{user}"
   locking_error: "خطأ في الإغلاق. لا يمكن حفظ البيانات, شخص آخر قام بحفظ تغييرات قبلك"
   login: دخول
   login_button: دخول
@@ -417,7 +417,7 @@ ar:
   move_button: "نقل "
   move_image_left: "أنقل الصورة لليسار"
   move_image_right: "نقل الصورة لليمين"
-  move_page_link: "    نقل   :page_class    "
+  move_page_link: "    نقل   {page_class}    "
   move_page_to_different_group: "انقل هذه الصفحة إلى مجموعة أخرى"
   move_this_page: "انقل هذه الصفحة"
   my_completed_tasks_link: المُنجز
@@ -455,7 +455,7 @@ ar:
   no_change: "لا يوجد تغيير"
   no_committees: "لا يوجد لجان"
   no_contacts_msg: "لا يوجد أشخاص في قائمة اتصالك"
-  no_group_named: "لا يوجد مجموعة بإسم<b>:name</b>."
+  no_group_named: "لا يوجد مجموعة بإسم<b>{name}</b>."
   no_images_in_gallery: "لا يوجد صور في معرض الصور"
   no_members: "(لا يوجد أعضاء)"
   no_peers_msg: "لا يوجد أي أقران"
@@ -485,7 +485,7 @@ ar:
   page_added_to_group: "هذه الصفحة سيتم إضافتها لِ{group_type} {group_name}."
   page_create_owner: "مالك الصفحة"
   page_details: "تفاصيل الصفحة"
-  page_details_link: ":page_class تفاصيل"
+  page_details_link: "{page_class} تفاصيل"
   page_group_collection: المجموعات
   page_group_discussion: المناقشات
   page_group_event: الأحداث
@@ -589,7 +589,7 @@ ar:
   read: إقرأ
   recent_activity: "آخر فعالية"
   recent_contributions: "أحدث المشاركات"
-  recent_member_group_pages: "أحدث المشاركات بواسطة مجموعاتك في :network"
+  recent_member_group_pages: "أحدث المشاركات بواسطة مجموعاتك في {network}"
   recent_network_pages: "أحدث صفحات الشبكات"
   recent_pages: "الصفحات التي زرتها حديثاً"
   recent_wall_posts: "أحدث المشاركات المنشورة"
@@ -598,7 +598,7 @@ ar:
   recently_created: "أنشئت مؤخرا"
   recipient_tip: "إفصل بين المستقبلين بواسطة الفاصلة،المسافة،أو سطر جديد"
   recipients: المستقبلون
-  redirect_to_foreign_domain: "أنت تحاول الدخول لموقع خارجي (:url) بعد الدخول ولأسباب أمنية ستتم إزالة المتغيِّر من العنوان"
+  redirect_to_foreign_domain: "أنت تحاول الدخول لموقع خارجي ({url}) بعد الدخول ولأسباب أمنية ستتم إزالة المتغيِّر من العنوان"
   regenerate: "إعادة تكوين المُصغَّرات"
   reject: رفض
   reject_button: رفض
@@ -610,17 +610,17 @@ ar:
   remove_from_gallery: "الإزالة من معرض الصور"
   remove_from_inbox: "الحذف من صندوق الوارد"
   remove_last_access_error: "لا يمكنك إزالة آخر دخول إلى هذه الصفحة."
-  remove_star_link: "إحذف تقييم (:star_count)"
+  remove_star_link: "إحذف تقييم ({star_count})"
   removing_image: "يتم حذف الصورة..."
   request_friend_link: "أضف لقائمة إتصالي"
   request_join_group_link: "طلب الإنضمام لٍ {group_type}"
-  request_status: "هذا الطلب :status بواسطة :user في :time"
-  request_to_friend_description: ":user هل ترغب في ان تكون ضمن قائمة اتصال :other_user"
-  request_to_join_our_network_description: "group :تم دعوة المجوعة للإنضمام إلى شبكة :network"
-  request_to_join_us_description: ":user تم دعوته للانضمام :group"
-  request_to_join_us_via_email_description: ":email تم دعوته للإنضمام :group"
-  request_to_join_you_description: ":user تم دعوته للإنضمام  :group"
-  request_to_join_your_network_description: ":group تم دعوته للإنضمام الى الشبكة   :network"
+  request_status: "هذا الطلب {status} بواسطة {user} في {time}"
+  request_to_friend_description: "{user} هل ترغب في ان تكون ضمن قائمة اتصال {other_user}"
+  request_to_join_our_network_description: "group {تم} دعوة المجوعة للإنضمام إلى شبكة {network}"
+  request_to_join_us_description: "{user} تم دعوته للانضمام {group}"
+  request_to_join_us_via_email_description: "{email} تم دعوته للإنضمام {group}"
+  request_to_join_you_description: "{user} تم دعوته للإنضمام  {group}"
+  request_to_join_your_network_description: "{group} تم دعوته للإنضمام الى الشبكة   {network}"
   requested_forgot_password: "لقد طلبت تغيير كلمة المرور"
   requests: الطلبات
   requests_from_me: "مني أنا"
@@ -658,9 +658,9 @@ ar:
   settings: الإعدادات
   share: مشاركة
   share_button: مشاركة
-  share_link: "شارك:page_class"
+  share_link: "شارك{page_class}"
   share_page_email: "أرسل تذكير بالبريد الإلكتروني"
-  share_page_link: "شارك :page_class"
+  share_page_link: "شارك {page_class}"
   share_page_message: "أرسل رسالة  (إختياري)"
   share_page_options: "إختر من الخيارات"
   share_page_recipients: "شارك {page_class} مع"
@@ -681,7 +681,7 @@ ar:
   signup_success: "تم التسجيل بنجاح"
   signup_success_message: "شكراً لك على التسجيل!"
   signup_title: "تسجيل حساب جديد"
-  slideshow_delay_input: "إعادة التحميل كل: :input_field seconds"
+  slideshow_delay_input: "إعادة التحميل كل: {input_field} seconds"
   small: صغير
   social_change_interests: "اهتمامات التغيير الإجتماعي"
   starred: تقيم
@@ -691,7 +691,7 @@ ar:
   subject: الموضوع
   subject_must_not_be_empty: "الرجاء ادخال الموضوع"
   successful_undelete_image: "تمَّ الغاء حذف الصورة"
-  sucessfully_removed_image: "تمت إزالة الصورة! (:undo_link)"
+  sucessfully_removed_image: "تمت إزالة الصورة! ({undo_link})"
   summary: الخلاصة
   summary_help: "اختياري. الخلاصة هي أن الجملة أو الفقرة تقدم  وصفا موجزا لمضمون هذه الصفحة."
   sunday: الأحد
@@ -759,10 +759,10 @@ ar:
   user_profile_description_may_see_contacts: "السماح للمشتركين بمشاهدة قائمة اتصالاتك الشخصية"
   user_profile_description_may_see_groups: "السماح للمشتركين بمشاهدة ما هي المجموعات التي أنت عضو فيها."
   username: "اسم المستخدم"
-  users_wall: ":user's جدار"
-  users_world: ":user's عالم"
-  version_doesnt_exist: "لا يوجدنسخة :version"
-  version_number: "نسخة رقم :version"
+  users_wall: "{user}'s جدار"
+  users_world: "{user}'s عالم"
+  version_doesnt_exist: "لا يوجدنسخة {version}"
+  version_number: "نسخة رقم {version}"
   versions: النُسخ
   video: فيديو
   video_class_description: "أظهر الفيديوالموجود على موقع الكتروني خارجي "
@@ -809,7 +809,7 @@ ar:
   when_does_feature_expire: "متى تنتهي هذه الميزة؟"
   width: عرض
   wiki_body_help: "اختياري. أدخل هنا النص الأولي للصفحة."
-  wiki_is_locked: "هذا الويكي مقفل حالياً بواسطة :user"
+  wiki_is_locked: "هذا الويكي مقفل حالياً بواسطة {user}"
   wiki_lost_text_confirmation: "أي نص غير محفوظ سوف يضيع. هل أنت متأكد؟"
   wiki_page_description: "أنشىء وثيقة نصية حرة  قابلة للتعديل"
   wiki_page_display: "صفحة ويكي"
@@ -819,7 +819,7 @@ ar:
   work: العمل
   work_life: "الحياة العملية"
   you_are_not_member_of_any_group: "لم تعد عضوا في أي مجموعة"
-  you_are_viewing_version: "انت تستعرض النسخة :version by :user"
+  you_are_viewing_version: "انت تستعرض النسخة {version} by {user}"
   you_have_no_contacts: "لا يوجد أشخاص في قائمة اتصالاتك"
   you_have_no_groups: "انت لست عضواً في اي مجموعة"
   you_have_no_peers: "لا يوجد لديك أقران"

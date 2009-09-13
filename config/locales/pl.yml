@@ -27,7 +27,7 @@ pl:
   add_one_or_more_tags: "Dodaj jeden lub więcej tagów, rozdzielonych przecinkami"
   add_phone_number: "Dodaj telefon"
   add_photo_to_gallery: "Kliknij na zdjęcie żeby je dodać"
-  add_star_link: "Dodaj gwiazdkę (:star_count)"
+  add_star_link: "Dodaj gwiazdkę ({star_count})"
   add_tags: "Dodaj Tagi"
   add_websites: "Dodaj stronę"
   admin: Admin
@@ -66,7 +66,7 @@ pl:
   attachments: Załączniki
   away: "gdzie indziej"
   back_button: Wróć
-  back_to_group: "powrót do grupy :group_name"
+  back_to_group: "powrót do grupy {group_name}"
   break_lock: "Usuń blokadę"
   break_lock_button: "Usuń blokadę"
   cancel_button: Anuluj
@@ -80,7 +80,7 @@ pl:
   committee_publicly_visible: "Komitety będą publicznie widoczne"
   committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {domain}/nazwatwojejgrupy"
   committees: Komitety
-  comparing_changes_header: "Porównanie zmian dokonanych :when from :old_version przez :user z :new_version"
+  comparing_changes_header: "Porównanie zmian dokonanych {when} from {old_version} przez {user} z {new_version}"
   confirm_new_password: "Powtórz nowe hasło"
   contact: Kontakt
   contact_request_message_label: "Tą wiadomość {user} otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
@@ -91,7 +91,7 @@ pl:
   coordinator: Koordynator
   coordinators: "osoby koordynujące"
   council_help: "Jeśli ta grupa posiada radę koordynującą, wtedy tylko członek/ini tej rady może administrować grupą. W innym przypadku jakikolwiek członek/ini grupy może to robić."
-  create_a_new_thing: "Stwórz :thing"
+  create_a_new_thing: "Stwórz {thing}"
   create_button: Stwórz
   create_committee: "stwórz komitet"
   create_group_link: "stwórz grupę"
@@ -103,7 +103,7 @@ pl:
   created: stworzone
   created_by: "Stworzone przez"
   created_on: "Stworzone "
-  created_when_by: "stworzone :when przez :user"
+  created_when_by: "stworzone {when} przez {user}"
   csrf_error_message: |
       Twoja próba zalogowania nosi znamiona ataku na stronę. Nie martw się: ten błąd zdarza się często błędnie. Po prostu jesteśmy paranoikami. Wszystko co musisz zrobić to odświeżyć tą stronę zanim ponownie spróbujesz się zalogować. Możesz też nacisnąć tego linka żeby spróbować jeszcze raz:
   current_attachments: "Obecne załączniki"
@@ -125,7 +125,7 @@ pl:
   date_years: lata
   date_yesterday: Wczoraj
   delete: Usuń
-  delete_page_link: "Usuń :page_class"
+  delete_page_link: "Usuń {page_class}"
   delete_post: "Usuń post"
   delete_this_version: "usuń tą wersję"
   delete_version_confirm: "Czy na pewno chcesz usunąć tą wersję?"
@@ -140,13 +140,13 @@ pl:
   directory_of_groups: "Katalog grup"
   directory_of_networks: "Katalog sieci"
   directory_of_people: "Katalog ludzi"
-  discuss_request_link: "przedyskutuj tą prośbę z :person_or_group"
+  discuss_request_link: "przedyskutuj tą prośbę z {person_or_group}"
   discussion_page_description: "Dyskusja grupy na konkretny temat"
   discussion_page_display: "Dyskusja Grupy"
   discussions: Dyskusje
   display_name: Wyświetlane
   dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w {group}"
-  dont_understand_group_type: "Nie rozumiem typu grupy :type"
+  dont_understand_group_type: "Nie rozumiem typu grupy {type}"
   download: Ściągnij
   download_gallery: "Ściągnij galerię"
   drag_and_drop_to_rearrange_photos: "Przeciągnij i upuść grafiki żeby je zaaranżować"
@@ -154,7 +154,7 @@ pl:
   edit_attachments: "Edytuj załączniki"
   edit_attachments_link: Edytuj
   edit_featured_content: "edytuj wyróżnioną zawartość"
-  edit_featured_content_for_group: "Edytuj ostatnią zawartość dla :group_name"
+  edit_featured_content_for_group: "Edytuj ostatnią zawartość dla {group_name}"
   edit_gallery: "Edytuj galerię"
   edit_profile_link: "Edytuj profil"
   edit_settings: "edytuj ustawienia "
@@ -212,7 +212,7 @@ pl:
   group_has_no_public_profile: "Ta grupa nie ma publicznego profilu."
   group_home_headline: "{group_type}"
   group_home_welcome: Witamy
-  group_information: "Informacje o :group_type"
+  group_information: "Informacje o {group_type}"
   group_invite_email: |
       {from_user} zaprasza cię do grupy "{group}".
 
@@ -251,8 +251,8 @@ pl:
   history: Historia
   home: "Strona startowa"
   im_addresses: "Adres IM"
-  image_count: "Zdjęcie :number z :count"
-  image_count_total: ":count Zdjęć"
+  image_count: "Zdjęcie {number} z {count}"
+  image_count_total: "{count} Zdjęć"
   image_title: "Obraz title: {title}"
   inbox_description: "Skrzynka odbiorcza ze stronami w których aktywnie uczestniczę lub których zmiany obseruję  "
   include_full_checkbox: "włącz link do pełnego obrazu"
@@ -288,7 +288,7 @@ pl:
   location_postal_code: "kod pocztowy"
   location_state: stan/województwo
   locations: Lokalizacje
-  locked_by_user: "Zablokowane przez :user"
+  locked_by_user: "Zablokowane przez {user}"
   locking_error: "Błąd zamknięcia. Nie mogę zapisać Twoich danych, ktoś inny zapisał zmiany pierwszy."
   login: Login
   login_button: "Zaloguj się"
@@ -354,7 +354,7 @@ pl:
   move_button: Przesuń
   move_image_left: "Przesuń obraz w lewo"
   move_image_right: "Przesuń obraz w prawo"
-  move_page_link: "Przesuń :page_class"
+  move_page_link: "Przesuń {page_class}"
   move_page_to_different_group: "Przesuń tą stronę do innej grupy"
   move_this_page: "Przesuń ta stronę"
   my_completed_tasks_link: Ukończone
@@ -390,7 +390,7 @@ pl:
   no_committees: "żadnych komitetów"
   no_contacts_msg: |
       Nie masz żadnych kontaktów
-  no_group_named: "nie ma grupy o nazwie <b>:name</b>."
+  no_group_named: "nie ma grupy o nazwie <b>{name}</b>."
   no_images_in_gallery: "Brak obrazów w Galerii"
   no_members: "(no members)"
   no_peers_msg: "Nie masz żadnych znajomych."
@@ -412,7 +412,7 @@ pl:
   other_formats: "Inne Formaty"
   outgoing: Wysłane
   page_details: "Szczegóły strony"
-  page_details_link: ":page_class Szczegóły"
+  page_details_link: "{page_class} Szczegóły"
   page_is_not_static: "Strona nie jest unieruchomiona"
   page_list: "Lista strony"
   page_list_heading_created: utworzone
@@ -512,16 +512,16 @@ pl:
   remove_friend_link: "Usuń z Moich Kontaktów"
   remove_from_gallery: "Usuń z galerii"
   remove_from_inbox: "Usuń ze skrzynki odbiorczej"
-  remove_star_link: "Usuń Gwiazdkę (:star_count)"
+  remove_star_link: "Usuń Gwiazdkę ({star_count})"
   removing_image: "Usuń Obraz..."
   request_friend_link: "Dodaj do moich kontaktów"
-  request_status: "Ta wiadomość została :status przez :user :time"
-  request_to_friend_description: ":user chce zostać dodana/y do kontaktów :other_user"
-  request_to_join_our_network_description: "grupa :group została zaproszona do sieci :network"
-  request_to_join_us_description: ":user otrzymał/a zaproszenie do :group"
-  request_to_join_us_via_email_description: ":email otrzyma zaproszenie do :group"
-  request_to_join_you_description: ":user prosi o dodanie do :group"
-  request_to_join_your_network_description: ":group prosi o włączenie do sieci :network"
+  request_status: "Ta wiadomość została {status} przez {user} {time}"
+  request_to_friend_description: "{user} chce zostać dodana/y do kontaktów {other_user}"
+  request_to_join_our_network_description: "grupa {group} została zaproszona do sieci {network}"
+  request_to_join_us_description: "{user} otrzymał/a zaproszenie do {group}"
+  request_to_join_us_via_email_description: "{email} otrzyma zaproszenie do {group}"
+  request_to_join_you_description: "{user} prosi o dodanie do {group}"
+  request_to_join_your_network_description: "{group} prosi o włączenie do sieci {network}"
   requested_forgot_password: "Poprosiłeś/łaś o zmianę hasła"
   requests_from_me: "ode mnie"
   requests_to_me: "do mnie"
@@ -552,9 +552,9 @@ pl:
   settings: ustawienia
   share: Współużytkowuj
   share_button: Współużytkowuj
-  share_link: "Udostępnij :page_class"
+  share_link: "Udostępnij {page_class}"
   share_page_email: "Wyślij powiadomienie mailem"
-  share_page_link: "Współuzytkowuj :page_class"
+  share_page_link: "Współuzytkowuj {page_class}"
   share_page_message: "Wyślij wiadomość (optional)"
   share_page_options: "Wybierz opcje"
   share_page_recipients: "Współużytkowuj {page_class} z"
@@ -574,7 +574,7 @@ pl:
   signup_success: "Twój profil został utworzony"
   signup_success_message: Witamy!
   signup_title: "Stwórz swoje konto"
-  slideshow_delay_input: "Uaktualnij każdy :input_field seconds"
+  slideshow_delay_input: "Uaktualnij każdy {input_field} seconds"
   small: mały
   social_change_interests: "Zainteresowanie Zmianami Społecznymi"
   starred: ogwiazdkowane
@@ -584,7 +584,7 @@ pl:
   subject: przedmiot
   subject_must_not_be_empty: "obiekt nie może być pusty"
   successful_undelete_image: "Pomyślne nieskasowanie obrazu"
-  sucessfully_removed_image: "Pomyślnie usunięty obraz! (:undo_link)"
+  sucessfully_removed_image: "Pomyślnie usunięty obraz! ({undo_link})"
   summary: Podsumowanie
   sunday: Niedziela
   tags: Tagi
@@ -625,10 +625,10 @@ pl:
   user_profile_description_may_see_groups: |
       Pozwól ludziom na przeglądanie do jakich grup należysz.
   username: "Imię Użytkownika/Użytkowniczki"
-  users_wall: ":user's Mur"
-  users_world: ":user's Świat"
-  version_doesnt_exist: "Nie ma takiej wersji :version"
-  version_number: "wersja :version"
+  users_wall: "{user}'s Mur"
+  users_world: "{user}'s Świat"
+  version_doesnt_exist: "Nie ma takiej wersji {version}"
+  version_number: "wersja {version}"
   versions: Wersje
   video: wideo
   video_class_description: "Pokaż wideo które znajduje się na zewnętrznych stronach internetowych."
@@ -653,14 +653,14 @@ pl:
   welcome_upload_icon_link: "Załaduj ikonkę użytkownika/użytkowniczki"
   welcome_upload_icon_text: "Załaduj obraz, by używać go jako swojej ikonki. Ta ikonka pojawi się obok każdego napisanego przez Ciebie komentarza."
   when_does_feature_expire: "Kiedy wygasł ten składnik?"
-  wiki_is_locked: "To wiki jest obecnie zablokowane przez :user"
+  wiki_is_locked: "To wiki jest obecnie zablokowane przez {user}"
   wiki_page_description: "Niesformatowany dokument tekstowy."
   wiki_page_display: Wiki
   wont_be_able_to_save: "Nie będziesz w stanie zapisać tej strony"
   work: Praca
   work_life: "Okres trwania pracy"
   you_are_not_member_of_any_group: "Nie jesteś członkiem/członkinią żadnej z grup."
-  you_are_viewing_version: "Oglądasz wersję :version :user"
+  you_are_viewing_version: "Oglądasz wersję {version} {user}"
   you_have_no_contacts: "Nie masz żadnych kontaktów"
   you_have_no_groups: "Nie masz żadnych grup"
   you_have_no_peers: "Nie masz żadnych znajomych"

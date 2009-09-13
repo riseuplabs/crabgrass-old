@@ -27,7 +27,7 @@ tr:
   add_one_or_more_tags: "Virgüllerle ayrılmış bir veya daha fazla etiket ekle"
   add_phone_number: "Telefon numara ekle"
   add_photo_to_gallery: "Galeriye resim ekle"
-  add_star_link: "Yıldız ekle (:star_count)"
+  add_star_link: "Yıldız ekle ({star_count})"
   add_tags: "Etiket ekle"
   add_websites: "Web Sitesi Ekle"
   additional_page_access: "Ek erişim"
@@ -68,7 +68,7 @@ tr:
   attachments: Eklentiler
   away: Dışarıda
   back_button: Geri
-  back_to_group: "geri dön :group_name"
+  back_to_group: "geri dön {group_name}"
   basic_settings: "Temel Ayarlar"
   break_lock: "Kilitlemeyi Kaldır"
   break_lock_button: "Kilitlemeyi Kaldır"
@@ -112,7 +112,7 @@ tr:
   created: Oluşturuldu
   created_by: "Tarafından oluşturuldu"
   created_on: Oluşturuldu
-  created_when_by: ":user tarafından :when da oluşturuldu"
+  created_when_by: "{user} tarafından {when} da oluşturuldu"
   csrf_error_message: "Giriş başvurunuz, siteyi çökertmeye yönelik bir deneme görünümündedir. Endişelenmeyin: bu hata genellikle masum kullanıcıların başvurularında bile sık sık ortaya çıkabilmektedir. Bu tip aşırı önlemler sizin güvenliğiniz içindir. Bu aşamada yapmanız gereken giriş yapmadan önce sayfayı yeniden yüklemenizdir. Tekrar denemek için şu bağlantıyı takip edebilirsiniz:"
   current_attachments: "Mevcut İletiler"
   current_featured_content: "Hâlen Gösterilen İçerik"
@@ -152,13 +152,13 @@ tr:
   directory_of_groups: "Grupler Dizini"
   directory_of_networks: "Ağ Rehberi"
   directory_of_people: "Kişiler Rehberi"
-  discuss_request_link: "bu talebi :person_or_group ile tartış"
+  discuss_request_link: "bu talebi {person_or_group} ile tartış"
   discussion_page_description: "Gruplarla veya diğer kullanıcılarla bir konu hakkında tartış."
   discussion_page_display: "Grup Tartışması"
   discussions: Tartışmalar
   display_name: "İsmi göster"
   dont_have_permission_to_create_committees: "{group} altında komite oluşturma izniniz yok."
-  dont_understand_group_type: ":type grup tipi anlaşılmadı"
+  dont_understand_group_type: "{type} grup tipi anlaşılmadı"
   download: İndir
   download_gallery: "İndirilenler Galerisi"
   drag_and_drop_to_rearrange_photos: "Görüntüleri düzenlemek icin sürükle ve bırak"
@@ -166,7 +166,7 @@ tr:
   edit_attachments: "Eklentileri Düzenle"
   edit_attachments_link: Düzenle
   edit_featured_content: "gösterilen içeriği değiştir"
-  edit_featured_content_for_group: ":group_name Grubu için Gösterilen İçeriği Düzenle"
+  edit_featured_content_for_group: "{group_name} Grubu için Gösterilen İçeriği Düzenle"
   edit_gallery: "Galeriyi Düzenle"
   edit_profile_link: "Profili Düzenle"
   edit_settings: "Ayarları Değiştir"
@@ -229,7 +229,7 @@ tr:
   group_has_no_public_profile: "Bu grubun profili herkes tarafından görüntülenemez"
   group_home_headline: "{group_type} Anasayfa"
   group_home_welcome: Hoşgeldiniz
-  group_information: ":group_type Bilgiler"
+  group_information: "{group_type} Bilgiler"
   group_invite_email: |-
       {from_user} sizi "{group}" grubuna katılmaya davet etti.
 
@@ -262,8 +262,8 @@ tr:
   home: Anasayfa
   icon: Simge
   im_addresses: "IM Adresleri"
-  image_count: "Fotoğraf :number of :count"
-  image_count_total: ":count Fotoğraflar"
+  image_count: "Fotoğraf {number} of {count}"
+  image_count_total: "{count} Fotoğraflar"
   image_title: "Görüntü başlığı: {title}"
   inbox_description: "Aktif olarak katıldığım ya da değişikliklerini takip ettiğim sayfalar için gelen kutusu"
   include_full_checkbox: "tam görüntüye bağlantıyı dahil et"
@@ -302,7 +302,7 @@ tr:
   location_postal_code: "posta kodu"
   location_state: eyalet/il
   locations: Konumlar
-  locked_by_user: ":user tarafından kilitlendi"
+  locked_by_user: "{user} tarafından kilitlendi"
   locking_error: "Kilitleme hatası. Verileriniz kaydedilemedi, sizden önce başka biri değişiklikleri kaydetti."
   login: "Oturum aç"
   login_button: Giriş
@@ -407,7 +407,7 @@ tr:
   no_change: "Değişiklik Yok"
   no_committees: "komite yok"
   no_contacts_msg: "Arkadaşınız yok."
-  no_group_named: "<b>:name</b> isimli bir grup yok."
+  no_group_named: "<b>{name}</b> isimli bir grup yok."
   no_images_in_gallery: "Galeride görüntü yok"
   no_members: "(üye yok)"
   no_peers_msg: "Şu anda eşiniz yok."
@@ -537,14 +537,14 @@ tr:
   read: oku
   recent_activity: "En Son Etkinlik"
   recent_contributions: "En Son Yapılan Katkılar"
-  recent_member_group_pages: ":network içindeki Gruplarınızda En Son Etkinlikler"
+  recent_member_group_pages: "{network} içindeki Gruplarınızda En Son Etkinlikler"
   recent_network_pages: "En Son Ağ Sayfaları"
   recent_pages: "En Son Sayfalar"
   recent_wall_posts: "En Son Duvar Yazıları"
   recently_created: "En Son Oluşturulanlar"
   recipient_tip: "Alıcıları, virgül, boşluk, ya da yeni satırlarla ayırın."
   recipients: Alıcılar
-  redirect_to_foreign_domain: "Giriş yaptıktan sonra yabancı bir etki alanına (:url) yönlenmeye çalışıyorsunuz. Güvenlik sebepleri dolayısıyla URL'den bu parametreyi kaldırdık."
+  redirect_to_foreign_domain: "Giriş yaptıktan sonra yabancı bir etki alanına ({url}) yönlenmeye çalışıyorsunuz. Güvenlik sebepleri dolayısıyla URL'den bu parametreyi kaldırdık."
   regenerate: "küçük resimler oluşturun"
   reject: reddet
   reject_button: Reddet
@@ -556,17 +556,17 @@ tr:
   remove_from_gallery: "Galeriden çıkar"
   remove_from_inbox: "Gelen kutusundan çıkar"
   remove_last_access_error: "Bu sayfaya en son yapmış olduğunuz girişi kaldıramazsınız."
-  remove_star_link: "İşareti Kaldır (:star_count)"
+  remove_star_link: "İşareti Kaldır ({star_count})"
   removing_image: "Görüntü Kaldırılıyor..."
   request_friend_link: "Arkadaşlarıma ekle"
   request_join_group_link: "{group_type} grubuna katılmak için izin al "
-  request_status: "Bu istek :user tarafından :time 'da :status"
-  request_to_friend_description: ":user , :other_user adlı kişinin arkadaşı olmak istiyor"
-  request_to_join_our_network_description: ":group grubu, :network ağına katılması için davet edildi"
-  request_to_join_us_description: ":user adlı kullanıcı :group grubuna katılması için davet edildi"
-  request_to_join_us_via_email_description: ":email , :group grubuna katılması için davet edildi"
-  request_to_join_you_description: ":user adlı kullanıcı :group grubuna davet edildi"
-  request_to_join_your_network_description: ":group grubu, :network ağına katılması için davet edildi"
+  request_status: "Bu istek {user} tarafından {time} 'da {status}"
+  request_to_friend_description: "{user} , {other_user} adlı kişinin arkadaşı olmak istiyor"
+  request_to_join_our_network_description: "{group} grubu, {network} ağına katılması için davet edildi"
+  request_to_join_us_description: "{user} adlı kullanıcı {group} grubuna katılması için davet edildi"
+  request_to_join_us_via_email_description: "{email} , {group} grubuna katılması için davet edildi"
+  request_to_join_you_description: "{user} adlı kullanıcı {group} grubuna davet edildi"
+  request_to_join_your_network_description: "{group} grubu, {network} ağına katılması için davet edildi"
   requested_forgot_password: "Şifrenizi değiştirme talebinde bulundunuz."
   requests: İstekler
   requests_from_me: benden
@@ -602,9 +602,9 @@ tr:
   settings: Ayarlar
   share: Paylaş
   share_button: Paylaş
-  share_link: "Paylaş :page_class "
+  share_link: "Paylaş {page_class} "
   share_page_email: "E-mail yoluyla bildir"
-  share_page_link: "Paylaş :page_class"
+  share_page_link: "Paylaş {page_class}"
   share_page_message: "Bir ileti gönderin (isteğe bağlı)"
   share_page_options: "Tercihleri seçin"
   share_page_recipients: "Bu {page_class}'yı Paylaş"
@@ -625,7 +625,7 @@ tr:
   signup_success: "Kayıt Başarılı"
   signup_success_message: "Kayıt olduğunuz için teşekkür ederiz!"
   signup_title: "Kullanıcı Hesabınızı Yaratın"
-  slideshow_delay_input: "Her :input_field saniyede güncelle"
+  slideshow_delay_input: "Her {input_field} saniyede güncelle"
   small: kuçuk
   social_change_interests: "Sosyal Değişime Dayalı İlgiler"
   starred: işaretlenmiş
@@ -635,7 +635,7 @@ tr:
   subject: Konu
   subject_must_not_be_empty: "alan boş bırakılamaz"
   successful_undelete_image: "Görüntü başarıyla geri alındı."
-  sucessfully_removed_image: "Görüntü başarıyla kaldırıldı! (:undo_link)"
+  sucessfully_removed_image: "Görüntü başarıyla kaldırıldı! ({undo_link})"
   summary: Özet
   summary_help: "İsteğe bağlı. Özet, bu sayfanın içeriğini kısaca tanımlayan bir cümle ya da paragraftan oluşur."
   sunday: Pazar
@@ -701,9 +701,9 @@ tr:
   user_profile_description_may_see_contacts: "Kişilere arkadaş listenizi görme izni verir."
   user_profile_description_may_see_groups: "Kişilere, hangi gruplara üye olduğunuzu görme izni verir."
   username: "Kullanıcı adı"
-  users_wall: ":user'in Duvarı"
-  users_world: ":user 'ın Dünyası"
-  version_doesnt_exist: ":version sürümü mevcut değildir."
+  users_wall: "{user}'in Duvarı"
+  users_world: "{user} 'ın Dünyası"
+  version_doesnt_exist: "{version} sürümü mevcut değildir."
   version_number: versiyon
   versions: Sürümler
   video: Görüntü
@@ -744,7 +744,7 @@ tr:
   when_does_feature_expire: "Bu özelliğin süresi ne zaman biter?"
   width: Genişlik
   wiki_body_help: "İsteğe bağlı. Buraya sayfa için başlangıç metnini giriniz."
-  wiki_is_locked: "Bu viki hâlen :user tarafından kilitlenmiş durumda"
+  wiki_is_locked: "Bu viki hâlen {user} tarafından kilitlenmiş durumda"
   wiki_lost_text_confirmation: "Kaydedilmemiş tüm bilgiler silinecek? Emin misiniz?"
   wiki_page_description: "Sonradan özgür biçimde düzenlenebilecek bir metin belgesi yaratın."
   wiki_page_display: "Viki Sayfası"
@@ -754,7 +754,7 @@ tr:
   work: İş
   work_life: "İş Yaşamı"
   you_are_not_member_of_any_group: "Herhangi bir grubun üyesi değilsin."
-  you_are_viewing_version: ":user tarafından hazırlanan :version sürümünü görüntülemektesiniz."
+  you_are_viewing_version: "{user} tarafından hazırlanan {version} sürümünü görüntülemektesiniz."
   you_have_no_contacts: "Şu anda arkadaşınız yok"
   you_have_no_groups: "Herhangı bir grupunuz yok"
   you_have_no_peers: "Şu anda eşiniz yok."
