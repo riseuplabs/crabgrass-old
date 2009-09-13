@@ -154,7 +154,7 @@ class GreenTree < Array
 
   def prepare_markup_indexes
     if self.parent
-      puts "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
+      logger.error "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
     else
       markup = self.greencloth.to_s.clone
       self.prepare_markup_start_index!(markup)
@@ -204,18 +204,21 @@ class GreenTree < Array
       node.prepare_markup_start_index!(markup)
     end
 
+    # assume the node markup starts at the begining of the document
+    # this is true for :document node
+    # and is better than 'nil' start_index for nodes that can't be be found in the markup
+    self.start_index = 0
+
     if self.text
       # find the first occurance of this node in the markup
       self.start_index = markup.index(self.markup_regexp)
       if self.start_index.nil?
-        puts "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
+        logger.error "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
         markup[self.start_index] = "\000"
       end
-    else
-      self.start_index = 0
     end
   end
 
