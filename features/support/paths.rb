@@ -7,13 +7,17 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    
+
     when /the homepage/
       '/'
-    when /the new authentication page/
-      new_authentication_path
+    when /the logout page/
+      account_path(:action => 'logout')
+    when /the login page/
+      login_path
+    when /my dashboard page/
+      '/me/dashboard'
 
-    
+    
     # Add more mappings here.
     # Here is a more fancy example:
     #
