@@ -101,6 +101,7 @@ require 'jcode' # / encoding
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_structure'
+require 'exceptions'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -362,8 +363,18 @@ class GreenCloth < RedCloth::TextileDoc
   def to_structure
     # force extract headings being run
     # prevents formatter mangled HTML from being used to find headings
-    extract_headings
-    self.green_tree.to_hash
+    begin
+      extract_headings
+      self.green_tree.to_hash
+    rescue GreenClothException => exc
+      logger.error exc.message if defined? logger and logger.respond_to? :error
+      return {
+        :children => [],
+        :name => nil,
+        :start_index => 0,
+        :end_index => self.size - 1,
+        :heading_level => 0}
+    end
   end
 
   # populates @headings, and then restores the string to its original form.
