@@ -283,3 +283,43 @@ out: |-
   <h1><a name="high-as-they-get"></a>high as they get<a class="anchor" href="#high-as-they-get">&para;</a></h1>
   <h2><a name="underling"></a>underling<a class="anchor" href="#underling">&para;</a></h2>
   <p>underling text</p>
+---
+name: overdecorated
+in: |-
+  h2. _emphasis_
+
+  __italicized__
+  --------------
+
+  h2. *strong*
+
+  **bold**
+  --------
+
+  h2. ??citation??
+
+  -deleted text-
+  --------------
+
+  h2. +inserted text+
+
+  ^superscript^
+  -------------
+
+  h2. ~subscript~
+
+  @code@
+  ------
+
+out: |-
+  <h2 class="first"><a name="emphasis"></a><em>emphasis</em><a class="anchor" href="#emphasis">&para;</a></h2>
+  <h2><a name="italicized"></a><i>italicized</i><a class="anchor" href="#italicized">&para;</a></h2>
+  <h2><a name="strong"></a><strong>strong</strong><a class="anchor" href="#strong">&para;</a></h2>
+  <h2><a name="bold"></a><b>bold</b><a class="anchor" href="#bold">&para;</a></h2>
+  <h2><a name="citation"></a><cite>citation</cite><a class="anchor" href="#citation">&para;</a></h2>
+  <h2><a name="deleted-text"></a>-deleted text-<a class="anchor" href="#deleted-text">&para;</a></h2>
+  <h2><a name="inserted-text"></a><ins>inserted text</ins><a class="anchor" href="#inserted-text">&para;</a></h2>
+  <h2><a name="superscript"></a><sup>superscript</sup><a class="anchor" href="#superscript">&para;</a></h2>
+  <h2><a name="subscript"></a><sub>subscript</sub><a class="anchor" href="#subscript">&para;</a></h2>
+  <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
+

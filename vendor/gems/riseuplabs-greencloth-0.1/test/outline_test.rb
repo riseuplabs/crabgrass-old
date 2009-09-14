@@ -148,6 +148,28 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal greencloth.size - 1, tree.end_index
   end
 
+  def test_overdecorated
+    greencloth = GreenCloth.new( in_texts(:overdecorated) )
+    tree = greencloth.green_tree
+
+    section_markup_map = {
+      'emphasis' => "h2. _emphasis_\n\n",
+      'italicized' => "__italicized__\n--------------\n\n",
+      'strong' => "h2. *strong*\n\n",
+      'bold' => "**bold**\n--------\n\n",
+      'citation' => "h2. ??citation??\n\n",
+      'deleted-text' => "-deleted text-\n--------------\n\n",
+      'inserted-text' => "h2. +inserted text+\n\n",
+      'superscript' => "^superscript^\n-------------\n\n",
+      'subscript' => "h2. ~subscript~\n\n",
+      'code' => "@code@\n------"
+    }
+
+    section_markup_map.each do |section, markup|
+      assert_equal markup, tree.find(section).markup
+    end
+  end
+
   protected
 
   def in_texts(name)

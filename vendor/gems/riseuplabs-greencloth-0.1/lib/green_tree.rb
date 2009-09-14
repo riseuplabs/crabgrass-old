@@ -253,9 +253,20 @@ class GreenTree < Array
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
 
+    # allowed formatting characters around heading text
+    # /[\^\s_\*\+\?\-~]/
+
     Regexp.union(
-      /^#{heading_text}\s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)/,
-      /^h#{heading_level}\. #{heading_text}\s*?(\r?\n\r?\n?|$)/
+      /^
+      [\^@_\*\+\?\-~]* # no whitespace '\s' match should happen here here
+      #{heading_text}[\^@\s_\*\+\?\-~]*
+      \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
+      /x,
+      /^
+      h#{heading_level}\.\s+
+      [\^@\s_\*\+\?\-~]*#{heading_text}[\^@\s_\*\+\?\-~]*
+      \s*?(\r?\n\r?\n?|$)
+      /x
     )
   end
 
