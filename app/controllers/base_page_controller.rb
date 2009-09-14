@@ -91,7 +91,7 @@ class BasePageController < ApplicationController
     true
   end
 
-  after_filter :save_if_needed
+  after_filter :save_if_needed, :except => :create
   def save_if_needed
     @upart.save if @upart and !@upart.new_record? and @upart.changed?
     @page.save if @page and !@page.new_record? and @page.changed?
