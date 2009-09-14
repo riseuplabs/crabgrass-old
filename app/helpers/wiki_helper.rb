@@ -170,7 +170,7 @@ module WikiHelper
     label = :version_number.t % {:version => version.version}
      # add users name
      if version.user_id
-       user_name = User.find(version.user_id).name
+       user_name = User.find_by_id(version.user_id).try.name || 'unknown'[:unknown]
        label << ' ' << :created_when_by.t % {
          :when => full_time(version.updated_at),
          :user => user_name
