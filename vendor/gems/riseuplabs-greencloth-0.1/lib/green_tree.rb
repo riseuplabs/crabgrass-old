@@ -228,7 +228,7 @@ class GreenTree < Array
     self.children.each do |child_node|
       child_node.prepare_markup_end_index!(markup)
       child_node_successor = child_node.successor
-      if child_node_successor
+      if child_node_successor and child_node_successor.start_index
         child_node.end_index = child_node_successor.start_index - 1
       else
         # no successor for this child node. means this is the last node
