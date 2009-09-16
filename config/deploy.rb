@@ -9,18 +9,21 @@
 set :application, "crabgrass"
 set :user, "crabgrass"
 
-set :repository, "labs.riseup.net/crabgrass.git"
-set :branch, "master"
+set :repository, "ssh://git@193.138.105.70:123/crabgrass.git"
+set :branch, "unido"
 
-deploy_host = "xxxxxx"
-staging_host = "xxxxxx"
+## TODO: setup the deploy host once it is ready.
+deploy_host = ""
+staging_host = "193.138.105.70"
 
 staging = ENV['TARGET'] != 'production'
 
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
-set :app_db_pass, 'xxxxxxxxx'
-set :secret,  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+## TODO: set up mysql create user crabgrass and set this password
+set :app_db_pass, ''
+## TODO: figure out what this one does.
+set :secret, ""
 
 ##
 ## Items you should probably leave alone
@@ -51,6 +54,12 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
+##
+## SSH OPTIONS
+##
+
+# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
+# ssh_options[:port] = 25
 
 ##
 ## CUSTOM TASKS
@@ -186,6 +195,7 @@ end
 after  "deploy:setup",   "crabgrass:create_shared"
 after  "deploy:symlink", "crabgrass:link_to_shared"
 before "deploy:restart", "debian:symlinks"
+after  "deploy:migrate", "passenger:restart"
 after  "deploy:restart", "passenger:restart"
 
 
