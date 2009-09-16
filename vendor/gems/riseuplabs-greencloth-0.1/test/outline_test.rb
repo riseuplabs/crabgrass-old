@@ -162,7 +162,9 @@ class TestHeadings < Test::Unit::TestCase
       'inserted-text' => "h2. +inserted text+\n\n",
       'superscript' => "^superscript^\n-------------\n\n",
       'subscript' => "h2. ~subscript~\n\n",
-      'code' => "@code@\n------"
+      'code' => "@code@\n------\n\n",
+      'table' => "h2. [-table-]"
+
     }
 
     section_markup_map.each do |section, markup|

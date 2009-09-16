@@ -311,6 +311,8 @@ in: |-
   @code@
   ------
 
+  h2. [-table-]
+
 out: |-
   <h2 class="first"><a name="emphasis"></a><em>emphasis</em><a class="anchor" href="#emphasis">&para;</a></h2>
   <h2><a name="italicized"></a><i>italicized</i><a class="anchor" href="#italicized">&para;</a></h2>
