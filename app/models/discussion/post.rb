@@ -19,6 +19,13 @@ class Post < ActiveRecord::Base
   belongs_to :discussion
   belongs_to :user
 
+
+  ##
+  ## named scopes
+  ##
+
+  named_scope :visible, :conditions => 'deleted_at IS NULL'
+
   ##
   ## attributes
   ##
