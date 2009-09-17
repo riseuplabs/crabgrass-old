@@ -436,7 +436,7 @@ class Page < ActiveRecord::Base
   end
 
   # DEPRECATED
-  def self.make(function,options={})
+  def self.make_a_call(function,options={})
     PageStork.send(function, options)
   end
 

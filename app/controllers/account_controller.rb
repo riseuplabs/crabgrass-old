@@ -173,10 +173,6 @@ class AccountController < ApplicationController
   end
 
   protected
-  #def send_welcome_message(user)
-  #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
-  #  page.save
-  #end
 
   # where to go when the user logs in?
   # depends on the settings (for example, unverified users should not see any pages)
