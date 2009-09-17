@@ -4,5 +4,5 @@ document.observe('dom:loaded', function() {
 });
 <% end -%>
 
-<div class='fieldset'><%= text_area_tag 'wiki[body]', (@wiki.body if load_content), :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
+<div class='fieldset'><%= text_area_tag 'wiki[body]', (h(@wiki.body) if load_content), :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %></div>
 <%= formatting_reference_link %>

@@ -254,17 +254,17 @@ class GreenTree < Array
     heading_text.gsub!('\\n', '\\r?\\n')
 
     # allowed formatting characters around heading text
-    # /[\^\s_\*\+\?\-~]/
+    # /[\[\]\^\s_\*\+\?\-~]/
 
     Regexp.union(
       /^
-      [\^@_\*\+\?\-~]* # no whitespace '\s' match should happen here here
-      #{heading_text}[\^@\s_\*\+\?\-~]*
+      [\[\]\^@_\*\+\?\-~]* # no whitespace '\s' match should happen here here
+      #{heading_text}[\[\]\^@\s_\*\+\?\-~]*
       \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
       /x,
       /^
       h#{heading_level}\.\s+
-      [\^@\s_\*\+\?\-~]*#{heading_text}[\^@\s_\*\+\?\-~]*
+      [\[\]\^@\s_\*\+\?\-~]*#{heading_text}[\[\]\^@\s_\*\+\?\-~]*
       \s*?(\r?\n\r?\n?|$)
       /x
     )
