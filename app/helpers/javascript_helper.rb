@@ -57,5 +57,13 @@ module JavascriptHelper
     %[$('%s').update(%s);] % [element_id, html.inspect]
   end
 
+  def dom_loaded_javascript_tag(javascript)
+    javascript_tag %Q[
+      document.observe('dom:loaded', function() {
+        #{javascript}
+      })
+    ]
+  end
+
 end
 
