@@ -28,7 +28,7 @@ module JavascriptHelper
     else
       element_id = "$('" + dom_id(element_id) + "')"
     end
-    "replace_class_name(#{element_id}, '#{old_class}', '#{new_class}');"
+    "replaceClassName(#{element_id}, '#{old_class}', '#{new_class}');"
   end
 
   def add_class_name(element_id, class_name)

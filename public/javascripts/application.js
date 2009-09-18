@@ -34,7 +34,7 @@ function quickRedReference() {
 // CSS UTILITY
 //
 
-function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
+function replaceClassName(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
 
 function setClassVisibility(selector, visibility) {
   $$(selector).each(function(element){
@@ -72,16 +72,16 @@ function linkToggle(link, element) {
   }
 }
 
-// toggle all checkboxes of a particular css selected, based on the
+// toggle all checkboxes of a particular css selector, based on the
 // checked status of the checkbox passed in.
-function toggle_all_checkboxes(checkbox, selector) {
+function toggleAllCheckboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
 // submits a form, from the onclick of a link.
-// use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
+// use like <a href='' onclick='submitForm(this,"bob")'>bob</a>
 // value is optional.
-function submit_form(form_element, name, value) {
+function submitForm(form_element, name, value) {
   var e = form_element;
   var form = null;
   do {

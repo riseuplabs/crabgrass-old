@@ -22,7 +22,7 @@ module SurveyPageHelper
 
     link_to_function object.add_question_link_text do |page|
       page.insert_html(:bottom, :questions, :partial => 'edit_question', :locals => {:question => object})
-      page.call 'survey_designer_enable_sorting'
+      page.call 'surveyDesignerEnableSorting'
     end
   end
 
