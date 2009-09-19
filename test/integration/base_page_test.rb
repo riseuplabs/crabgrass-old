@@ -1,8 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
 class BasePageTest < ActionController::IntegrationTest
-  fixtures :sites, :pages, :groups, :users, :memberships
-
   def test_share_with_all
     with_site :unlimited do
       host! 'test.host'

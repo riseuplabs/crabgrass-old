@@ -1,7 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
 class CustomAppearancesTest < ActionController::IntegrationTest
-  fixtures :sites, :custom_appearances, :groups, :users
 
   def test_custom_appearance_cache
     CustomAppearance.clear_cached_css
