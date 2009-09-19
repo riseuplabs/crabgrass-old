@@ -7,7 +7,7 @@
   :method => 'put' do -%>
 
   <div class='fieldset'>
-    <%= text_area_tag 'wiki[body]', h(markup), :rows => rows, :cols => 60, :style => 'width:99%;'  %>
+    <%= text_area_tag 'wiki[body]', h(markup), :rows => rows, :cols => 60, :style => 'width:99%;', :id => wiki_body_id(@wiki)  %>
     <%= formatting_reference_link %>
     <div>
       <%= submit_tag("Save", :name => 'save') unless @wiki_inline_error %>
@@ -18,6 +18,7 @@
           :method => 'put' %>
 
       <%= spinner('save') %>
+      <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
     </div>
   </div>
 <% end %>
