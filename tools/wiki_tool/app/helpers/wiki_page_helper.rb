@@ -84,7 +84,7 @@ module WikiPageHelper
     end
 
     replace_node.swap(inline_form)
-    delete_nodes.each {|node| node.swap('<span\>')}
+    delete_nodes.each {|node| node.swap('<span></span>')}
 
     # return the modified html
     doc.to_html
