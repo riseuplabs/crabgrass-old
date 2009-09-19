@@ -1,8 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
 class ApplicationFiltersTest < ActionController::IntegrationTest
-  fixtures :groups, :sites, :users
-
   def setup
     @hosts = ["localhost", "test.host"]
     enable_site_testing

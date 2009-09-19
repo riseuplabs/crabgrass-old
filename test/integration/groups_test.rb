@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupsTest < ActionController::IntegrationTest
-  fixtures :users, :groups, :memberships
-
   def test_join_network_we_have_access_to
     login :penguin
     get '/fau'
