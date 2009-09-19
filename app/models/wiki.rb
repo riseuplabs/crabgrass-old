@@ -7,6 +7,7 @@
 #       t.integer  "version",    :limit => 11
 #       t.text     "body"
 #       t.text     "body_html"
+#       t.text     "raw_structure"
 #       t.datetime "updated_at"
 #       t.integer  "user_id",    :limit => 11
 #     end
@@ -18,10 +19,9 @@
 #       t.text     "body"
 #       t.text     "body_html"
 #       t.datetime "updated_at"
-#       t.integer  "user_id",      :limit => 11
-#       t.integer  "version",      :limit => 11
-#       t.integer  "lock_version", :limit => 11, :default => 0
-#       t.text     "edit_locks"
+#       t.integer  "user_id",       :limit => 11
+#       t.integer  "version",       :limit => 11
+#       t.text     "raw_structure"
 #     end
 #
 #     add_index "wikis", ["user_id"], :name => "index_wikis_user_id"
