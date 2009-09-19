@@ -33,7 +33,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
 
     #assert_equal 1, assigns(:survey).responses_count
     # ^^ i can't get the counter cache working
-    assert_equal "info", flash[:type]
+    assert_equal "success", flash[:type]
     assert_equal @user.id, assigns("response").user_id
     assert_equal ["a1", "a2", "a3"], assigns("response").answers.map{|a| a.value}
 

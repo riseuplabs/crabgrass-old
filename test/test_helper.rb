@@ -1,3 +1,5 @@
+require 'rubygems'
+
 begin
   require 'ruby-debug'
 rescue LoadError => exc
@@ -5,9 +7,18 @@ rescue LoadError => exc
 end
 
 begin
-  require 'redgreen'
+  require 'redgreen' unless ARGV.include? "--no-color"
 rescue LoadError => exc
   # no redgreen installed
+end
+
+# this can speed running a single test method from 11 seconds to 3
+# see http://roman.flucti.com/a-test-server-for-rails-applications
+begin
+  require 'rails_test_serving'
+  RailsTestServing.boot
+rescue LoadError => exc
+  # no rails-test-server gem
 end
 
 ENV["RAILS_ENV"] = "test"
@@ -364,5 +375,9 @@ end
 class ActionController::IntegrationTest
   # we load all fixtures because webrat integration test should see exactly
   # the same thing the user sees in development mode
-  fixtures :all
+  # using self.inherited to make sure
+  # all fixtures are being loaded only if some integration tests are being defined
+  def self.inherited(subclass)
+    subclass.fixtures :all
+  end
 end

@@ -100,7 +100,8 @@ $KCODE = 'u'    # \ set utf8 as the default
 require 'jcode' # / encoding
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
-require 'greencloth_outline'
+require 'greencloth_structure'
+require 'exceptions'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -310,7 +311,7 @@ end
 ##
 
 class GreenCloth < RedCloth::TextileDoc
-  include GreenclothOutline
+  include GreenclothStructure
 
   attr_accessor :original
   attr_accessor :offtags
@@ -321,12 +322,15 @@ class GreenCloth < RedCloth::TextileDoc
 
   def initialize(string, default_owner_name = 'page', restrictions = [])
     @default_owner = default_owner_name
-    restrictions.each { |r| method("#{r}=").call( true ) }
 
     # filter_ids    -- don't allow the user to set dom ids in the markup. This can
     #                  royally mess with the display of a page.
     # sanitize_html -- allows some basic html, see ALLOWED_TAGS aboved.
-    super(string, [:filter_ids, :sanitize_html])
+    restrictions << :sanitize_html
+    restrictions << :filter_ids
+    restrictions << :filter_html if restrictions.include?(:lite_mode)
+
+    super(string, restrictions)
   end
 
   # RedCloth calls clone of the GreenCloth object before
@@ -356,8 +360,20 @@ class GreenCloth < RedCloth::TextileDoc
     return html
   end
 
+  def to_structure
+    # force extract headings being run
+    # prevents formatter mangled HTML from being used to find headings
+    extract_headings
+    self.green_tree.to_hash
+  end
+
   # populates @headings, and then restores the string to its original form.
-  def extract_headings()
+  def extract_headings
+    # initialize to empty, in case we find no headings, we will still have
+    # non-nil collections
+    @headings = []
+    @heading_names = {}
+
     self.extend(GreenClothFormatterHTML)
     original = self.dup
     apply_rules([:normalize_heading_blocks])
@@ -577,7 +593,9 @@ class GreenCloth < RedCloth::TextileDoc
           c.chop! # remove last char from c.
         end
         label = c
-        url = %(#{b=="www."?"http://www.":b}#{c})
+
+        url = ((b == "www.") ? "http://www." : b).to_s + c.to_s
+        # url = %(#{b=="www."?"http://www.":b}#{c})
         link = nil
         if @block
           link = @block.call(:auto => true, :url => url)

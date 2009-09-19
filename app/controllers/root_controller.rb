@@ -5,7 +5,8 @@ class RootController < ApplicationController
 
   helper :groups, :account, :wiki, :page
   stylesheet 'wiki_edit'
-  #javascript 'wiki_edit'
+  javascript :wiki, :action => :index
+
   permissions 'root','groups/base'
   before_filter :login_required, :except => ['index']
   before_filter :fetch_network
