@@ -53,7 +53,7 @@ class TrackingTest < Test::Unit::TestCase
       Daily.update
     end
   end
-  
+
   def test_most_active_groups
     user = users(:blue)
     group1 = groups(:rainbow)
@@ -81,11 +81,11 @@ class TrackingTest < Test::Unit::TestCase
     if action != :unstar
       assert_equal "#{action.to_s}s", ["views", "edits", "stars"].find{|a| Tracking.last.send a},
         'Tracking did not count the right action.'
-      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'There shall be exactly one action counted.'
     else
       # TODO: check this before ActiveRecord gets in the way.
-      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'For :unstar all values should evaluate to false.'
     end
   end
