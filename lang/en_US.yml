@@ -991,7 +991,7 @@ video_embed_code_prompt: "Embed code from external video source."
 ##
 
 locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
-view_while_locked_error: "You have this wiki locked. If you want to stop editing, click the cancel button."
+view_while_locked_error: "If you want to stop editing, click the cancel button."
 wiki_is_locked: "This wiki is currently locked by :user"
 wont_be_able_to_save: "You will not be able to save this page"
 page_locked_header: "Page Locked"

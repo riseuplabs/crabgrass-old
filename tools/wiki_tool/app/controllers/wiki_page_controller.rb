@@ -27,7 +27,7 @@ class WikiPageController < BasePageController
       # we have no body to show, edit instead
       redirect_to_edit
     elsif current_locked_section == :document
-      flash_message :info => "You have this wiki locked. If you want to stop editing, click the cancel button."[:view_while_locked_error]
+      flash_message :info => "If you want to stop editing, click the cancel button."[:view_while_locked_error]
       redirect_to_edit
     elsif current_locked_section
       @editing_section = current_locked_section
