@@ -94,6 +94,14 @@ module WikiPageHelper
     render :partial => 'edit_inline', :locals => {:markup => markup, :section => section}
   end
 
+
+  def confirm_discarding_wiki_edit_text_area(wiki = @wiki)
+    confirm_discarding_text_area(wiki_body_id(wiki),
+         ["input[name=break_lock]",
+          "input[name=save]",
+          "input[name=cancel]"])
+  end
+
   protected
 
   def find_heading_node(doc, section)
