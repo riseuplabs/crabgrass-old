@@ -28,7 +28,7 @@ module JavascriptHelper
     else
       element_id = "$('" + dom_id(element_id) + "')"
     end
-    "replace_class_name(#{element_id}, '#{old_class}', '#{new_class}');"
+    "replaceClassName(#{element_id}, '#{old_class}', '#{new_class}');"
   end
 
   def add_class_name(element_id, class_name)
@@ -55,6 +55,14 @@ module JavascriptHelper
   def replace_html(element_id, html)
     element_id = dom_id(element_id) unless element_id.is_a?(String)
     %[$('%s').update(%s);] % [element_id, html.inspect]
+  end
+
+  def dom_loaded_javascript_tag(javascript)
+    javascript_tag %Q[
+      document.observe('dom:loaded', function() {
+        #{javascript}
+      })
+    ]
   end
 
 end

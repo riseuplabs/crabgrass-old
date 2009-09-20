@@ -16,4 +16,14 @@ module CacheHelper
     "menu/#{current_site_key}submenu=#{options[:submenu]}&user_id=#{current_user.id}&version=#{current_user.version}"
   end
 
+  # example input: cache_key('wiki', :version => 1, :editable => false)
+  # output "wiki/version=1&editable=false"
+  def cache_key(path, options = {})
+    path = "#{path}/"
+    key_pairs = []
+    options.each do |k, v|
+      key_pairs << "#{k}=#{v}"
+    end
+    path + key_pairs.sort.join('&')
+  end
 end

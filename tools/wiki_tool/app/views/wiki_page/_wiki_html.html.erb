@@ -1,0 +1,12 @@
+<% if @last_seen %>
+<%= spinner('last_seen_diff', :show => true) %>
+<%= load_lasted_change_diff %>
+<% elsif show_inline_editor? %>
+<%= wiki_body_html_with_edit_form %>
+<% else %>
+<% # show wiki inline error on top of wiki html, when we have it, but have no inline form %>
+<% if @wiki_inline_error %>
+  <blockquote class="error"><%=h @wiki_inline_error %></blockquote>
+<% end %>
+<%= wiki_body_html  %>
+<% end %>

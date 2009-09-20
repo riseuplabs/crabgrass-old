@@ -170,7 +170,7 @@ module WikiHelper
     label = :version_number.t % {:version => version.version}
      # add users name
      if version.user_id
-       user_name = User.find(version.user_id).name
+       user_name = User.find_by_id(version.user_id).try.name || 'unknown'[:unknown]
        label << ' ' << :created_when_by.t % {
          :when => full_time(version.updated_at),
          :user => user_name
@@ -234,11 +234,11 @@ module WikiHelper
     toolbar_id = wiki_toolbar_id(wiki)
     image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
 
-    "wiki_edit_add_toolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
+    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
 
   def wiki_locked_notice(wiki)
-    return if wiki.editable_by? current_user
+    return if wiki.document_open_for? current_user
 
     error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locked_by}
     %Q[<blockquote class="error">#{h error_text}</blockquote>]

@@ -1,7 +1,6 @@
 require "#{File.dirname(__FILE__)}/../test_helper"
 
 class CachingTest < ActionController::IntegrationTest
-
   def setup
     Rails.cache.clear
     ActionController::Base.perform_caching = true

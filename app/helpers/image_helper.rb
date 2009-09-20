@@ -83,12 +83,12 @@ module ImageHelper
 
   def spinner_icon_on(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
-    "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
+    "replaceClassName(#{target}, '#{icon}_16', 'spinner_icon')"
   end
 
   def spinner_icon_off(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
-    "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
+    "replaceClassName(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
   def big_spinner()

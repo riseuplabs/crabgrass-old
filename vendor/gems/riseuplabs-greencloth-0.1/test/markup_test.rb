@@ -4,7 +4,7 @@ require 'yaml'
 require 'test/unit'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
-require test_dir + '/../greencloth.rb'
+require test_dir + '/../lib/greencloth.rb'
 
 SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] !~ /\.rb/
   ARGV[0]

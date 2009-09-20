@@ -54,19 +54,6 @@ class TrackingTest < Test::Unit::TestCase
     end
   end
 
-  # Testing the user seen functionality. We are tracking users this way in order
-  # to avoid the database access for every action.
-
-  def test_seeing_users
-    Tracking.saw_user(4)
-    Tracking.update_last_seen_users
-    assert_not_nil old_timestamp=User.find(4).last_seen_at, "blue should have last_seen updated."
-    sleep(1)
-    Tracking.saw_user(4)
-    Tracking.update_last_seen_users
-    assert ( old_timestamp<User.find(4).last_seen_at), "blue should have last_seen updated."
-  end
-
   def test_most_active_groups
     user = users(:blue)
     group1 = groups(:rainbow)
@@ -94,11 +81,11 @@ class TrackingTest < Test::Unit::TestCase
     if action != :unstar
       assert_equal "#{action.to_s}s", ["views", "edits", "stars"].find{|a| Tracking.last.send a},
         'Tracking did not count the right action.'
-      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'There shall be exactly one action counted.'
     else
       # TODO: check this before ActiveRecord gets in the way.
-      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'For :unstar all values should evaluate to false.'
     end
   end

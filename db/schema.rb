@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# This file is auto-generated from the current state of the database. Instead of editing this file,
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -833,13 +833,20 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
 
   add_index "websites", ["profile_id"], :name => "websites_profile_id_index"
 
+  create_table "wiki_locks", :force => true do |t|
+    t.integer "wiki_id",      :limit => 11
+    t.text    "locks"
+    t.integer "lock_version", :limit => 11, :default => 0
+  end
+
   create_table "wiki_versions", :force => true do |t|
-    t.integer  "wiki_id",    :limit => 11
-    t.integer  "version",    :limit => 11
+    t.integer  "wiki_id",       :limit => 11
+    t.integer  "version",       :limit => 11
     t.text     "body"
     t.text     "body_html"
     t.datetime "updated_at"
-    t.integer  "user_id",    :limit => 11
+    t.integer  "user_id",       :limit => 11
+    t.text     "raw_structure"
   end
 
   add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
@@ -849,10 +856,9 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.text     "body"
     t.text     "body_html"
     t.datetime "updated_at"
-    t.integer  "user_id",      :limit => 11
-    t.integer  "version",      :limit => 11
-    t.integer  "lock_version", :limit => 11, :default => 0
-    t.text     "edit_locks"
+    t.integer  "user_id",       :limit => 11
+    t.integer  "version",       :limit => 11
+    t.text     "raw_structure"
   end
 
   add_index "wikis", ["user_id"], :name => "index_wikis_user_id"

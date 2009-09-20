@@ -486,7 +486,7 @@ Control.TextArea.ToolBar = Class.create(	{
 // add the toolbar controlling wiki body
 // each id used by the toolbar has a prefix, so that multiple toolbars
 // can be used on the same page
-function wiki_edit_add_toolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
+function wikiEditAddToolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
 {
   //setup
   var textarea = new Control.TextArea(wiki_body_id);
