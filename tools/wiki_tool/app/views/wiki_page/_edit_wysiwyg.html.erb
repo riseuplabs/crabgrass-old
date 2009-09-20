@@ -81,3 +81,6 @@ It would be nice to use these eventually:
     # However, the hardcoded height is just laziness %>
   <textarea name="wiki[body_html]" id="<%= wiki_body_html_id(@wiki)%>" style="width: 100%; height: 447px"><%= greencloth_to_editable_html(@wiki.body, @page.owner_name || 'page') if load_content %></textarea>
 </div>
+
+<%= dom_loaded_javascript_tag(confirm_discarding_wiki_edit_text_area(wiki_body_html_id(@wiki))) %>
+
