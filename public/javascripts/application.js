@@ -116,14 +116,14 @@ function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelector
   var originalValue = textArea.value;
 
   // setup confirmation
-  window.onbeforeunload = function() {
+  Event.observe(window, 'beforeunload', function(ev) {
     if(confirmActive) {
       var newValue = textArea.value;
       if(newValue != originalValue) {
-        return discardingMessage;
+        ev.returnValue = discardingMessage;
       }
     }
-  }
+  })
 
   // toggle off the confirmation when saving or explicitly discarding the text area (clicking 'cancel' for example)
   savingSelectors.each(function(savingSelector) {
