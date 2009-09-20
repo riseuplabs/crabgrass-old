@@ -12,8 +12,10 @@ module AuthenticatedSystem
 
   def load_user(id)
     user = User.find_by_id(id)
-    user.seen!
-    user.current_site = current_site if user
+    if user
+      user.seen!
+      user.current_site = current_site
+    end
     return user
   end
 
