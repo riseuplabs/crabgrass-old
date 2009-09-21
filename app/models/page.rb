@@ -72,6 +72,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Index     # page full text searching
   include PageExtension::Starring  # ???
   include PageExtension::Tracking  # page tracking views, edits and stars
+  include PageExtension::PageHistory  
 
   acts_as_taggable_on :tags
   acts_as_site_limited
