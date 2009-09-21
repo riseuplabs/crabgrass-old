@@ -88,7 +88,15 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_stop_watching
-    true
+    @upart = @page.add(@pepe, :watch => true)
+    @upart.save!
+    @page.reload
+    @upart = @page.add(@pepe, :watch => nil)
+    @upart.save!
+    @page.reload
+    assert_equal 2, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::StopWatching, @page.page_history.last.class
   end
 
   def test_share_page

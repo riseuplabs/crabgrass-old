@@ -10,3 +10,4 @@ class PageHistory::MakePublic     < PageHistory; end
 class PageHistory::MakePrivate    < PageHistory; end
 class PageHistory::Deleted        < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
+class PageHistory::StopWatching   < PageHistory; end

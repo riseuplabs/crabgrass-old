@@ -7,4 +7,8 @@ module UserParticipationExtension::PageHistory
   def start_watching?
     self.watch_changed? and self.watch == true
   end
+
+  def stop_watching?
+    self.watch_changed? and self.watch != true
+  end
 end
