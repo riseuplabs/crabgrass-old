@@ -7,5 +7,4 @@ document.observe('dom:loaded', function() {
 <div class='fieldset'>
   <%= text_area_tag 'wiki[body]', (h(@wiki.body) if load_content), :rows => 30, :cols => 80, :id => wiki_body_id(@wiki) %>
 </div>
-<%= dom_loaded_javascript_tag(confirm_discarding_wiki_edit_text_area) %>
 <%= formatting_reference_link %>
