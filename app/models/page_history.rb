@@ -6,7 +6,7 @@ class PageHistory < ActiveRecord::Base
   validates_presence_of :user, :page
 end
 
-class PageHistory::ChangeName     < PageHistory; end
+class PageHistory::ChangeTitle    < PageHistory; end
 class PageHistory::AddStar        < PageHistory; end
 class PageHistory::RemoveStar     < PageHistory; end
 class PageHistory::MakePublic     < PageHistory; end

@@ -19,7 +19,7 @@ class PageTrackingObserver < ActiveRecord::Observer
   def after_update(model)
     if model.is_a? Page
       page = model
-      PageHistory::ChangeName.create!(:user => User.current, :page => page)   if page.title_changed?
+      PageHistory::ChangeTitle.create!(:user => User.current, :page => page)  if page.title_changed?
       PageHistory::Deleted.create!(:user => User.current, :page => page)      if page.deleted?
       PageHistory::MakePrivate.create!(:user => User.current, :page => page)  if page.marked_as_private?
       PageHistory::MakePublic.create!(:user => User.current, :page => page)   if page.marked_as_public?

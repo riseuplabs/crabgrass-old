@@ -32,7 +32,7 @@ class Page_HistoryTest < Test::Unit::TestCase
     @page.save!
     assert_equal 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
-    assert_equal PageHistory::ChangeName, @page.page_history.last.class
+    assert_equal PageHistory::ChangeTitle, @page.page_history.last.class
   end
 
   def test_add_star
