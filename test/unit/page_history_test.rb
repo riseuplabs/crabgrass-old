@@ -36,8 +36,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_add_star
-    @upart = @page.add(@pepe, :star => true )
-    @upart.save!
+    @upart = @page.add(@pepe, :star => true ).save!
     @page.reload
     assert_equal 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
@@ -45,10 +44,8 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_remove_star
-    @upart = @page.add(@pepe, :star => true )
-    @upart.save!
-    @upart = @page.add(@pepe, :star => nil)
-    @upart.save!
+    @upart = @page.add(@pepe, :star => true).save!
+    @upart = @page.add(@pepe, :star => nil).save!
     @page.reload
     assert_equal 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
@@ -95,8 +92,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_start_watching
-    @upart = @page.add(@pepe, :watch => true)
-    @upart.save!
+    @upart = @page.add(@pepe, :watch => true).save!
     @page.reload
     assert_equal 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
@@ -104,11 +100,9 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_stop_watching
-    @upart = @page.add(@pepe, :watch => true)
-    @upart.save!
+    @upart = @page.add(@pepe, :watch => true).save!
     @page.reload
-    @upart = @page.add(@pepe, :watch => nil)
-    @upart.save!
+    @upart = @page.add(@pepe, :watch => nil).save!
     @page.reload
     assert_equal 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
@@ -124,7 +118,12 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_add_comment
-    true    
+    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    assert_equal 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::AddComment, @page.page_history.last.class
+    assert_equal Post, @page.page_history.last.object.class
+    assert_equal Post.last, @page.page_history.last.object
   end
 
   def test_edit_comment
