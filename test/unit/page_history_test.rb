@@ -9,6 +9,24 @@ class Page_HistoryTest < Test::Unit::TestCase
     User.current = @pepe
   end
 
+  def test_save_page_without_modifications
+    @page.save!
+    assert_equal 0, @page.page_history.count
+  end
+
+  def test_validations
+    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(:user => nil, :page => nil) end
+    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(:user => @pepe, :page => nil) end
+    assert_raise ActiveRecord::RecordInvalid do PageHistory.create!(:user => nil, :page => @page) end
+  end
+
+  def test_associations
+    page_history = PageHistory.create!(:user => @pepe, :page => @page)
+    assert_equal @pepe, page_history.user
+    assert_kind_of Page, page_history.page
+    assert_equal @page.page_history.last, PageHistory.last
+  end
+
   def test_change_page_title
     @page.title = "Other title"
     @page.save!
@@ -61,9 +79,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_add_tag
-    return true
-    @page.tag_list.add("people, fight")
-    assert_equal ['people', 'fight'], @page.tags
+    true
   end
 
   def test_remove_tag
@@ -108,6 +124,14 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_add_comment
+    true    
+  end
+
+  def test_edit_comment
+    true
+  end
+
+  def test_delete_comment
     true
   end
 

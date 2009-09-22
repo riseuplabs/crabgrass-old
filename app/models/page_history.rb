@@ -1,6 +1,8 @@
 class PageHistory < ActiveRecord::Base
   belongs_to :user
   belongs_to :page
+
+  validates_presence_of :user, :page
 end
 
 class PageHistory::ChangeName     < PageHistory; end
