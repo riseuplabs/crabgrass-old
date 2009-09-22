@@ -127,11 +127,23 @@ class Page_HistoryTest < Test::Unit::TestCase
   end
 
   def test_edit_comment
-    true
+    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    @post = Post.last
+    @post.update_attribute("body", "Some nice comment, congrats!")
+    assert_equal 2, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::UpdateComment, @page.page_history.last.class
+    assert_equal Post, @page.page_history.last.object.class
+    assert_equal Post.last, @page.page_history.last.object
   end
 
   def test_delete_comment
-    true
+    Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
+    @post = Post.last
+    @post.destroy
+    assert_equal 2, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::DestroyComment, @page.page_history.last.class
   end
 
   def test_page_destroyed
