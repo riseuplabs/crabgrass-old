@@ -6,10 +6,10 @@ module PageExtension::PageHistory
   end
 
   def marked_as_public?
-    self.public_changed? and self.public == true
+    self.public_changed? && self.public == true
   end
 
   def marked_as_private?
-    self.public_changed? and self.public == false
+    self.public_changed? && self.public == false
   end
 end
