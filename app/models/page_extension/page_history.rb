@@ -5,14 +5,6 @@ module PageExtension::PageHistory
     end
   end
 
-  def star_added?
-    self.stars_count_was < self.stars_count ? true : false
-  end
-  
-  def star_removed?
-    self.stars_count_was > self.stars_count ? true : false
-  end
-
   def marked_as_public?
     self.public_changed? and self.public == true
   end

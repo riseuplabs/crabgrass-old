@@ -11,4 +11,12 @@ module UserParticipationExtension::PageHistory
   def stop_watching?
     self.watch_changed? and self.watch != true
   end
+
+  def star_added?
+    self.star_changed? and self.star == true
+  end
+  
+  def star_removed?
+    self.star_changed? and self.star != true
+  end
 end
