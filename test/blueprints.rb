@@ -41,12 +41,31 @@ User.blueprint do
   last_seen_at      { updated_date }
 end
 
+#
+# Groups
+#
+
+# requires :user
+def Group.make_owned_by(attributes)
+  raise "Missing keys (:user) are required for this blueprint" if !attributes.has_key?(:user)
+  user = attributes.delete :user
+  group = Group.make_unsaved(attributes)
+  group.created_by = user
+  group.save!
+  group
+end
+
+Group.blueprint do
+  full_name       { Sham.title }
+  name            { full_name.gsub(/[^a-z]/,"") }
+end
+
 # 
 # Pages
 #
 
 # requieres :user, :owner, :access
-def Page.make_page_owned_by(attributes, machinist_attributes = {}) 
+def Page.make_owned_by(attributes, machinist_attributes = {}) 
   page = Page.make_unsaved(machinist_attributes)
   attributes.reverse_merge!(page.attributes)
   page = Page.build!(attributes)

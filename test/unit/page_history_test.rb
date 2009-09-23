@@ -6,7 +6,7 @@ class Page_HistoryTest < Test::Unit::TestCase
     @pepe = User.make :login => "pepe"
     @manu = User.make :login => "manu"
     User.current = @pepe
-    @page = Page.make_page_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
+    @page = Page.make_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
     @last_count = @page.page_history.count
   end
 
@@ -143,8 +143,37 @@ class Page_HistoryTest < Test::Unit::TestCase
     assert_equal User, @page.page_history.last.object.class
   end
 
-  def test_share_page_with_group
-    true
+  def test_share_page_with_group_assigning_full_access
+    @pepe.share_page_with!(@page, Group.make_owned_by(:user => @pepe), :access => 1)
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantGroupFullAccess, @page.page_history.last.class
+    assert_equal Group, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_group_assigning_write_access
+    @pepe.share_page_with!(@page, Group.make_owned_by(:user => @pepe), :access => 2)
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantGroupWriteAccess, @page.page_history.last.class
+    assert_equal Group, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_group_assigning_read_access
+    @pepe.share_page_with!(@page, Group.make_owned_by(:user => @pepe), :access => 3)
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantGroupReadAccess, @page.page_history.last.class
+    assert_equal Group, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_group_removing_access
+    @pepe.share_page_with!(@page, Group.make_owned_by(:user => @pepe), :access => 3)
+    @page.group_participations.last.destroy
+    assert_equal @last_count + 2, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::RevokedGroupAccess, @page.page_history.last.class
+    assert_equal Group, @page.page_history.last.object.class
   end
 
   def test_update_content
