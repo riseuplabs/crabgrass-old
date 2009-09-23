@@ -447,10 +447,10 @@ link_name: "Link Name"
 language: "Language"
 minimum_stars_for_important_pages: "Minimum stars for important pages"
 minimum_stars_for_important_pages_description: "Set the minimum stars, a page needs, to appear under the 'important' - list on the group's landing page"
-group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at we.riseup.net/yourgroupname.
+group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at my.mruyouthplatform.org/yourgroupname.
 committee_publicly_visible_description: Committees are viewable by non-members at we.riseup.net/yourgroupname
 group_members_publicly_visible: Make Members Publicly Visible
-group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (we.riseup.net/username)
+group_members_publicly_visible_description:   Members are viewable by non-members at we.riseup.net/yourgroupname. Also, the name of the group will be listed on each members profile page (my.mruyouthplatform.org/username)
 page_list: Page list
 
 typing: typing

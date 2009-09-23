@@ -42,6 +42,9 @@ class Asset < ActiveRecord::Base
   include AssetExtension::Upload
   validates_presence_of :filename
 
+  def content_type
+    read_attribute(:content_type) or `file --mime-type '#{private_filename}'`.split(':').last.strip
+  end
   
   ##
   ## ACCESS
