@@ -110,11 +110,36 @@ class Page_HistoryTest < Test::Unit::TestCase
     assert_equal PageHistory::StopWatching, @page.page_history.last.class
   end
 
-  def test_share_page_with_user
+  def test_share_page_with_user_assigning_full_access
     @pepe.share_page_with!(@page, [@manu.login], {:access => 1})
     assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::GrantUserFullAccess, @page.page_history.last.class
+    assert_equal User, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_user_assigning_write_access
+    @pepe.share_page_with!(@page, [@manu.login], {:access => 2})
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantUserWriteAccess, @page.page_history.last.class
+    assert_equal User, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_user_assigning_read_access
+    @pepe.share_page_with!(@page, [@manu.login], {:access => 3})
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantUserReadAccess, @page.page_history.last.class
+    assert_equal User, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_user_removing_access
+    @pepe.share_page_with!(@page, [@manu.login], {:access => 3})
+    @page.user_participations.last.destroy
+    assert_equal @last_count + 2, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::RevokedUserAccess, @page.page_history.last.class
     assert_equal User, @page.page_history.last.object.class
   end
 

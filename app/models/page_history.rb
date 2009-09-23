@@ -21,6 +21,21 @@ class PageHistory::GrantUserFullAccess < PageHistory
   validates_presence_of :object_id
 end
 
+class PageHistory::GrantUserWriteAccess < PageHistory
+  validates_format_of :object_type, :with => /User/
+  validates_presence_of :object_id
+end
+
+class PageHistory::GrantUserReadAccess < PageHistory
+  validates_format_of :object_type, :with => /User/
+  validates_presence_of :object_id
+end
+
+class PageHistory::RevokedUserAccess < PageHistory
+  validates_format_of :object_type, :with => /User/
+  validates_presence_of :object_id
+end
+
 class PageHistory::AddComment < PageHistory
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id

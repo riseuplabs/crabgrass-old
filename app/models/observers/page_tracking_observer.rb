@@ -9,6 +9,8 @@ class PageTrackingObserver < ActiveRecord::Observer
       PageHistory::AddStar.create!(:user => User.current, :page => up.page)                                   if up.star_added?
       PageHistory::RemoveStar.create!(:user => User.current, :page => up.page)                                if up.star_removed?
       PageHistory::GrantUserFullAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_full_access?
+      PageHistory::GrantUserWriteAccess.create!(:user => User.current, :page => up.page, :object => up.user)  if up.granted_user_write_access?
+      PageHistory::GrantUserReadAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_read_access?
     end
 
     if model.is_a? Post and model.discussion.page
@@ -33,6 +35,11 @@ class PageTrackingObserver < ActiveRecord::Observer
   end
 
   def after_destroy(model)
+    if model.is_a? UserParticipation
+      up = model
+      PageHistory::RevokedUserAccess.create!(:user => User.current, :page => up.page, :object => up.user)
+    end
+
     if model.is_a? Post and model.discussion.page
       post = model
       PageHistory::DestroyComment.create!(:user => User.current, :page => post.discussion.page, :object => post)

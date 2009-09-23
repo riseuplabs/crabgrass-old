@@ -23,4 +23,16 @@ module UserParticipationExtension::PageHistory
   def granted_user_full_access?
     self.access_changed? && self.access_sym == :admin
   end
+
+  def granted_user_write_access?
+    self.access_changed? && self.access_sym == :edit
+  end
+
+  def granted_user_read_access?
+    self.access_changed? && self.access_sym == :view
+  end
+
+  def cleared_user_access?
+    self.access_changed? && self.access_sym == nil
+  end
 end
