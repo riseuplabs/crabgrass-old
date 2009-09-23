@@ -5,13 +5,14 @@ class Page_HistoryTest < Test::Unit::TestCase
   def setup
     @pepe = User.make :login => "pepe"
     @manu = User.make :login => "manu"
-    @page = Page.make :stars_count => 0
     User.current = @pepe
+    @page = Page.make_page_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
+    @last_count = @page.page_history.count
   end
 
   def test_save_page_without_modifications
     @page.save!
-    assert_equal 0, @page.page_history.count
+    assert_equal @last_count, @page.page_history.count
   end
 
   def test_validations
@@ -30,7 +31,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   def test_change_page_title
     @page.title = "Other title"
     @page.save!
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::ChangeTitle, @page.page_history.last.class
   end
@@ -38,7 +39,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   def test_add_star
     @upart = @page.add(@pepe, :star => true ).save!
     @page.reload
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::AddStar, @page.page_history.last.class
   end
@@ -47,7 +48,7 @@ class Page_HistoryTest < Test::Unit::TestCase
     @upart = @page.add(@pepe, :star => true).save!
     @upart = @page.add(@pepe, :star => nil).save!
     @page.reload
-    assert_equal 2, @page.page_history.count
+    assert_equal @last_count + 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::RemoveStar, @page.page_history.last.class
   end  
@@ -55,7 +56,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   def test_mark_as_public
     @page.public = true
     @page.save
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::MakePublic, @page.page_history.last.class
   end
@@ -63,14 +64,14 @@ class Page_HistoryTest < Test::Unit::TestCase
   def test_mark_as_private
     @page.public = false
     @page.save
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::MakePrivate, @page.page_history.last.class
   end
 
   def test_page_deleted
     @page.delete
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::Deleted, @page.page_history.last.class
   end
@@ -94,7 +95,7 @@ class Page_HistoryTest < Test::Unit::TestCase
   def test_start_watching
     @upart = @page.add(@pepe, :watch => true).save!
     @page.reload
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::StartWatching, @page.page_history.last.class
   end
@@ -104,12 +105,20 @@ class Page_HistoryTest < Test::Unit::TestCase
     @page.reload
     @upart = @page.add(@pepe, :watch => nil).save!
     @page.reload
-    assert_equal 2, @page.page_history.count
+    assert_equal @last_count + 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::StopWatching, @page.page_history.last.class
   end
 
-  def test_share_page
+  def test_share_page_with_user
+    @pepe.share_page_with!(@page, [@manu.login], {:access => 1})
+    assert_equal @last_count + 1, @page.page_history.count
+    assert_equal @pepe, @page.page_history.last.user
+    assert_equal PageHistory::GrantUserFullAccess, @page.page_history.last.class
+    assert_equal User, @page.page_history.last.object.class
+  end
+
+  def test_share_page_with_group
     true
   end
 
@@ -119,7 +128,7 @@ class Page_HistoryTest < Test::Unit::TestCase
 
   def test_add_comment
     Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
-    assert_equal 1, @page.page_history.count
+    assert_equal @last_count + 1, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::AddComment, @page.page_history.last.class
     assert_equal Post, @page.page_history.last.object.class
@@ -130,7 +139,7 @@ class Page_HistoryTest < Test::Unit::TestCase
     Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
     @post = Post.last
     @post.update_attribute("body", "Some nice comment, congrats!")
-    assert_equal 2, @page.page_history.count
+    assert_equal @last_count + 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::UpdateComment, @page.page_history.last.class
     assert_equal Post, @page.page_history.last.object.class
@@ -141,7 +150,7 @@ class Page_HistoryTest < Test::Unit::TestCase
     Post.build(:body => "Some nice comment", :user => @pepe, :page => @page).save!
     @post = Post.last
     @post.destroy
-    assert_equal 2, @page.page_history.count
+    assert_equal @last_count + 2, @page.page_history.count
     assert_equal @pepe, @page.page_history.last.user
     assert_equal PageHistory::DestroyComment, @page.page_history.last.class
   end

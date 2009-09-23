@@ -45,12 +45,13 @@ end
 # Pages
 #
 
-# This method is useful to make Pages owned by Users or Groups whitout to have to pass all attributes 
-# only passing the user or group instance and optional attributes
-def Page.make_page_owned_by(object, attributes = {})
-  raise "object needs to be an User or Group" if object.class != User || object.class != Group
-  attributes.merge!({:owner_type => object.class.to_s, :owner_id => object.id, :owner_name => object.display_name})
-  Page.make(attributes)
+# requieres :user, :owner, :access
+def Page.make_page_owned_by(attributes, machinist_attributes = {}) 
+  page = Page.make_unsaved(machinist_attributes)
+  attributes.reverse_merge!(page.attributes)
+  page = Page.build!(attributes)
+  page.save!
+  page.reload
 end
 
 # By default we allways make pages with this blueprint owned by users
@@ -72,5 +73,5 @@ Page.blueprint do
   owner_id          u.id
   owner_name        u.display_name  
 
-  type              "DiscussionPage"
+  type              "WikiPage"
 end

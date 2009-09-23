@@ -3,11 +3,12 @@ class PageTrackingObserver < ActiveRecord::Observer
 
   def after_save(model)
     if model.is_a? UserParticipation
-      user_participation = model
-      PageHistory::StartWatching.create!(:user => User.current, :page => user_participation.page) if user_participation.start_watching?
-      PageHistory::StopWatching.create!(:user => User.current, :page => user_participation.page)  if user_participation.stop_watching?
-      PageHistory::AddStar.create!(:user => User.current, :page => user_participation.page)       if user_participation.star_added?
-      PageHistory::RemoveStar.create!(:user => User.current, :page => user_participation.page)    if user_participation.star_removed?
+      up = model
+      PageHistory::StartWatching.create!(:user => User.current, :page => up.page)                             if up.start_watching?
+      PageHistory::StopWatching.create!(:user => User.current, :page => up.page)                              if up.stop_watching?
+      PageHistory::AddStar.create!(:user => User.current, :page => up.page)                                   if up.star_added?
+      PageHistory::RemoveStar.create!(:user => User.current, :page => up.page)                                if up.star_removed?
+      PageHistory::GrantUserFullAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_full_access?
     end
 
     if model.is_a? Post and model.discussion.page

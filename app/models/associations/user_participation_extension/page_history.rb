@@ -19,4 +19,8 @@ module UserParticipationExtension::PageHistory
   def star_removed?
     self.star_changed? && self.star != true
   end
+
+  def granted_user_full_access?
+    self.access_changed? && self.access_sym == :admin
+  end
 end

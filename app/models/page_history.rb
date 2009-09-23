@@ -15,6 +15,12 @@ class PageHistory::Deleted        < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
 
+
+class PageHistory::GrantUserFullAccess < PageHistory
+  validates_format_of :object_type, :with => /User/
+  validates_presence_of :object_id
+end
+
 class PageHistory::AddComment < PageHistory
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
