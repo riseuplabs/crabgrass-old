@@ -1,0 +1,3 @@
+class ModeratedPage < ModeratedFlag 
+
+end

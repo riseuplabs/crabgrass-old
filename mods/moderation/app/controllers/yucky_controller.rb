@@ -8,14 +8,15 @@ class YuckyController < ApplicationController
 
   # marks the rateable as yucky!
   def add
-    @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
-    @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
+    if params[:flag]
+      @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
+      @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
 
-    case @rateable_type
-      when :post; add_post
-      when :page; add_page
-      when :chat_message; add_chat_message
+      case @rateable_type
+        when :chat_message; add_chat_message
+      end
     end
+    close_popup
   end
 
   # removes any yucky marks from the rateable
@@ -25,29 +26,17 @@ class YuckyController < ApplicationController
       @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
     end
     case @rateable_type
-      when :post; remove_post
-      when :page; remove_page
       when :chat_message; remove_chat_message
     end
   end
 
   protected
 
-  def add_page
-    summary = @rateable.title
-    url = page_url(@rateable, :only_path => false)
-    send_moderation_notice(url, summary)
-    redirect_to referer
-  end
-
   def add_post
     summary = truncate(@rateable.body,400) + (@rateable.body.size > 400 ? "…" : '')
     url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
     send_moderation_notice(url, summary)
 
-    render :update do |page|
-      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
-    end
   end
 
   def add_chat_message
@@ -61,16 +50,6 @@ class YuckyController < ApplicationController
     render :update do |page|
       @message = @rateable
       page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
-    end
-  end
-
-  def remove_page
-    redirect_to referer
-  end
-
-  def remove_post
-    render :update do |page|
-      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
     end
   end
 
