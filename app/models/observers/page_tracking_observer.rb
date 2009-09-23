@@ -1,5 +1,5 @@
 class PageTrackingObserver < ActiveRecord::Observer
-  observe :page, :user_participation, :post
+  observe :page, :user_participation, :group_participation, :post
 
   def after_save(model)
     if model.is_a? UserParticipation
@@ -11,6 +11,13 @@ class PageTrackingObserver < ActiveRecord::Observer
       PageHistory::GrantUserFullAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_full_access?
       PageHistory::GrantUserWriteAccess.create!(:user => User.current, :page => up.page, :object => up.user)  if up.granted_user_write_access?
       PageHistory::GrantUserReadAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_read_access?
+    end
+
+    if model.is_a? GroupParticipation
+      gp = model
+      PageHistory::GrantGroupFullAccess.create!(:user => User.current, :page => gp.page, :object => gp.group)  if gp.granted_group_full_access?
+      PageHistory::GrantGroupWriteAccess.create!(:user => User.current, :page => gp.page, :object => gp.group) if gp.granted_group_write_access?
+      PageHistory::GrantGroupReadAccess.create!(:user => User.current, :page => gp.page, :object => gp.group)  if gp.granted_group_read_access?
     end
 
     if model.is_a? Post and model.discussion.page
@@ -38,6 +45,11 @@ class PageTrackingObserver < ActiveRecord::Observer
     if model.is_a? UserParticipation
       up = model
       PageHistory::RevokedUserAccess.create!(:user => User.current, :page => up.page, :object => up.user)
+    end
+
+    if model.is_a? GroupParticipation
+      gp = model
+      PageHistory::RevokedGroupAccess.create!(:user => User.current, :page => gp.page, :object => gp.group)
     end
 
     if model.is_a? Post and model.discussion.page

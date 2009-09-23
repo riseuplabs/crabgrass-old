@@ -15,6 +15,25 @@ class PageHistory::Deleted        < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
 
+class PageHistory::GrantGroupFullAccess < PageHistory
+  validates_format_of :object_type, :with => /Group/
+  validates_presence_of :object_id
+end
+
+class PageHistory::GrantGroupWriteAccess < PageHistory
+  validates_format_of :object_type, :with => /Group/
+  validates_presence_of :object_id
+end
+
+class PageHistory::GrantGroupReadAccess < PageHistory
+  validates_format_of :object_type, :with => /Group/
+  validates_presence_of :object_id
+end
+
+class PageHistory::RevokedGroupAccess < PageHistory
+  validates_format_of :object_type, :with => /Group/
+  validates_presence_of :object_id
+end
 
 class PageHistory::GrantUserFullAccess < PageHistory
   validates_format_of :object_type, :with => /User/
