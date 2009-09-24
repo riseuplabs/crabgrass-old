@@ -6,6 +6,7 @@
 ## Items to configure
 ##
 
+ssh_options[:port] = 123
 set :application, "crabgrass"
 set :user, "crabgrass"
 
