@@ -7,6 +7,7 @@ class AddObjectToPageHistory < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :object_id, :object_type
+    remove_column :page_histories, :object_id
+    remove_column :page_histories, :object_type
   end
 end
