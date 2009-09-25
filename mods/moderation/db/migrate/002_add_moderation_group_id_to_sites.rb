@@ -4,6 +4,6 @@ class AddModerationGroupIdToSites < ActiveRecord::Migration
   end
 
   def self.down
-    add_column :sites, :moderation_group_id
+    remove_column :sites, :moderation_group_id
   end
 end

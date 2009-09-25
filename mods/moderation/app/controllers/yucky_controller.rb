@@ -5,7 +5,7 @@ class YuckyController < ApplicationController
   permissions 'posts'
 
   before_filter :login_required
-
+  permissions 'posts'
   # marks the rateable as yucky!
   def add
     @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)

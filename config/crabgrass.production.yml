@@ -20,6 +20,7 @@ enabled_languages:
   - ar_EG
 enabled_mods:
   - super_admin
+  - moderation
   - unido
 enabled_tools:
   - asset_tool
