@@ -1,6 +1,8 @@
 class AddModerationGroupIdToSites < ActiveRecord::Migration
   def self.up
-    add_column :sites, :moderation_group_id, :integer
+    unless Site.columns.collect{|p| p.name}.include?("moderation_group_id")
+      add_column :sites, :moderation_group_id, :integer
+    end
   end
 
   def self.down
