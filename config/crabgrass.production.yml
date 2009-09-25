@@ -35,15 +35,15 @@ enabled_tools:
   - external_video_tool
   - announcement_tool
   - feed_tool
-email:
-  delivery_method: :smtp
-  smtp_settings:
-    domain: localhost
-    address: smtp.gmail.com
-    port: 587
-    authentication: :plain
-    user_name: xxxxxx@gmail.com
-    password: xxxxxxx
+#email:
+#  delivery_method: :smtp
+#  smtp_settings:
+#    domain: localhost
+#    address: smtp.gmail.com
+#    port: 587
+#    authentication: :plain
+#    user_name: xxxxxx@gmail.com
+#    password: xxxxxxx
 
 ##
 ## SITES
@@ -54,6 +54,7 @@ sites:
     domain: my.MRUyouthplatform.org
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
+    moderation_group: superadmin
 
 ##
 ## SITE DEFAULTS
