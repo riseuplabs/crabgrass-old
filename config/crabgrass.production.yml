@@ -50,8 +50,11 @@ enabled_tools:
 ##
 
 sites:
-  - name: MRUyouthplatform
-    domain: my.MRUyouthplatform.org
+  - name: mru
+#    domain: my.MRUyouthplatform.org
+    domain: 193.138.105.70
+    network: mru
+    limited: false
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
     moderation_group: superadmin
