@@ -39,7 +39,7 @@ sites:
 # bound to localhost:
   - name: site1
     admin_group: rainbow
-#    moderation_group: rainbow
+    moderation_group: rainbow
 
 # bound to test.host
 #  - name: site2

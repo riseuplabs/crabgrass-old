@@ -54,6 +54,7 @@ sites:
 #    domain: my.MRUyouthplatform.org
     domain: 193.138.105.70
     network: mru
+    title: "MRU Youthplatform.org"
     limited: false
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
