@@ -9,7 +9,7 @@
   </tr>
   <% @pages.each do |page| %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
-      <td><%= link_to page.title, page_url(page) %></td>
+      <td><%= link_to page.title, page_url(page), {:target =>  '_blank'} %></td>
       <td><%=h page.type %></td>
       <td><%=h page.created_at.strftime("%d %b, %Y ") %></td>
       <td><%=h page.created_by_login %></td>

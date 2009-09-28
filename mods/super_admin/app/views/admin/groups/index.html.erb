@@ -1,6 +1,6 @@
 <% @title_box = '<h1>Edit Groups</h1>' %>
 
-<i>Total number of groups:</i> <%= @groups.count %><br /><br />
+<i>Total number of groups:</i> <%= @groups.size %><br /><br />
 
 <%= alphabetical_filter(:controller => 'admin/groups') %>
 
