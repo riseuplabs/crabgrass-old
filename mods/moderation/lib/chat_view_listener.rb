@@ -15,14 +15,14 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       #
       # WOW: THIS IS GOING TO BE INCREDIBLY SLOW
       #
-      flagged_message = current_user.find_flagged_chatmessages_by_id(message.id)
+      flagged_message = current_user.find_flagged_chat_message_by_id(message.id)
       #rating = message.ratings.find_by_user_id(current_user.id)
       if flagged_message.size == 0
         if current_user.moderator?
           icon = 'trash'
           link_name = 'move message to trash'[:trash_message]
           confirm = nil
-          url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :add)
+          url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :trash)
           link = link_to_remote_with_icon(
             link_name, {:url => url, :confirm => confirm}, {:icon => icon, :class => 'shy'}
           )

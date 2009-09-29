@@ -1,4 +1,5 @@
 class BasePage::YuckyController < BasePage::SidebarController
+  include ModerationNotice
 
   permissions 'admin/moderation'
   permissions 'posts'
@@ -17,6 +18,12 @@ class BasePage::YuckyController < BasePage::SidebarController
   def add
     if params[:flag]
       @flag.add({:reason=>params[:reason],:comment=>params[:comment]}) unless @flag.nil? 
+      if params[:post_id]
+        summary = truncate(@flag.post.body,400) + (@flag.post.body.size > 400 ? "…" : '')
+        url = page_url(@flag.post.discussion.page, :only_path => false) + "#posts-#{@flag.post.id}"
+      elsif params[:page_id]
+      end
+      send_moderation_notice(url, summary)
     end
     close_popup
   end

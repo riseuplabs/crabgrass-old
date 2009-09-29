@@ -1,8 +1,8 @@
-module Admin::PagesHelper
+module Admin::AllHelper
 
-  def tab_link(title, view=nil)
+  def tab_link(title, controller, view=nil)
     view ||= title
-    link_to_active( title, :controller => 'admin/pages', :action => 'index', :view => view)
+    link_to_active( title, :controller => controller, :action => 'index', :view => view)
   end
 
   def actions_for(tab)
@@ -19,9 +19,15 @@ module Admin::PagesHelper
     button_to(action.capitalize.t, :action => action, :params => params)
   end
 
-  def flagged_details(foreign_id)
+  def flagged_details(foreign_id, type)
     reason = ""
-    flags = ModeratedPage.find_all_by_foreign_id(foreign_id)
+    if type == 'ModeratedPage'
+      flags = ModeratedPage.find_all_by_foreign_id(foreign_id)
+    elsif type == 'ModeratedPost'
+      flags = ModeratedPost.find_all_by_foreign_id(foreign_id)
+    else
+      return
+    end
     flags.each do |flag|
       reason = flag.reason_flagged.empty? ? "none given" : flag.reason_flagged
     end

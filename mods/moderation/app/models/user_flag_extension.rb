@@ -13,7 +13,7 @@ module UserFlagExtension
     def find_flagged_post_by_id(foreign_id)
       self.moderated_posts.find(:all, :conditions => ['foreign_id = ?', foreign_id])
     end
-    def find_flagged_chatmessages_by_id(foreign_id)
+    def find_flagged_chat_message_by_id(foreign_id)
       self.moderated_chat_messages.find(:all, :conditions => ['foreign_id = ?', foreign_id])
     end
   end

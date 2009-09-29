@@ -16,23 +16,32 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
     pages = Page.find(:all)
     pages.each do |page|
       next unless page.flow == 3
-      next if ModeratedPage.find_by_foreign_id(page.id)
-      options={:foreign_id=>page.id,:deleted_at=>Time.now}
-      ModeratedPage.create!(options)
+      if mpage = ModeratedPage.find_by_foreign_id(page.id)
+        mpage.udate_attribute(:deleted_at, Time.now) unless mpage.deleted_at =~ /\d+/
+      else 
+        options={:foreign_id=>page.id,:deleted_at=>Time.now} 
+        ModeratedPage.create!(options)
+      end
     end
     posts = Post.find(:all)
     posts.each do |post|
       next unless post.deleted_at =~ /\d+/
-      next if ModeratedPost.find_by_foreign_id(post.id)
-      options={:foreign_id=>post.id,:deleted_at=>post.deleted_at}
-      ModeratedPost.create!(options)
+      if mpost = ModeratedPost.find_by_foreign_id(post.id) 
+        mpost.update_attribute(:deleted_at, post.deleted_at) unless mpost.deleted_at =~ /\d+/
+      else
+        options={:foreign_id=>post.id,:deleted_at=>post.deleted_at}
+        ModeratedPost.create!(options)
+      end
     end
     chats = ChatMessage.find(:all)
     chats.each do |chat|
       next unless chat.deleted_at =~ /\d+/
-      next if ModeratedChat.find_by_foreign_id(chat.id)
-      options={:foreign_id=>chat.id,:deleted_at=>chat.deleted_at}
-      ModeratedChat.create!(options)
+      if mchat = ModeratedChat.find_by_foreign_id(chat.id)
+        mchat.update_attribute(:deleted_at, chat.deleted_at) unless mchat.deleted_at =~ /\d+/
+      else 
+        options={:foreign_id=>chat.id,:deleted_at=>chat.deleted_at}
+        ModeratedChat.create!(options)
+      end
     end
   end
 
