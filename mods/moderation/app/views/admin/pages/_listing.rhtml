@@ -1,4 +1,4 @@
-<%= pagination_links(@pages) %>
+<%= pagination_links(@flagged) %>
 
 <table>
   <tr>
@@ -7,12 +7,17 @@
     <th>Created At</th>
     <th>Created By</th>
   </tr>
-  <% @pages.each do |page| %>
+  <% @flagged.each do |flag| %>
+    <% if (@current_view == 'all' or @current_view =~ /^public/) %>
+      <% page = flag %>
+    <% else %>
+      <% page = flag.page %>
+    <% end %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
       <td><%= link_to page.title, page_url(page), {:target =>  '_blank'} %></td>
       <td><%=h page.type %></td>
       <td><%=h page.created_at.strftime("%d %b, %Y ") %></td>
-      <td><%=h page.created_by_login %></td>
+      <td><%=h page.updated_by_login %></td>
       <% params = {:id => page.id, :view => @current_view} %>
       <% if actions=actions_for(@current_view) %>
           <% actions.each do |action| %>
@@ -40,4 +45,4 @@
   <% end %>
 </table>
 
-<%= pagination_links(@pages) %>
+<%= pagination_links(@flagged) %>

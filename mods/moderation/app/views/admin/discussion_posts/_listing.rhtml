@@ -6,14 +6,19 @@
     <th>Created</th>
     <th></th>
   </tr>
-  <% @posts.each do |post| %>
+  <% @posts.each do |flagged_post| %>
+    <% unless @current_view == 'all' %>
+      <% post = flagged_post.post %>
+    <% else %>
+      <% post = flagged_post %>
+    <% end %>
     <% page_link_tag = page_link(post); post_link_tag = post_link(post) %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
       <td><%= page_link_tag %></td>
       <td><%= post_link_tag %></td>
       <td><%=h post.created_at.strftime("%d %b, %Y ") %></td>
       <td colspan="2" style="padding-right:0em;">
-        <% if @current_view == 'pending' %>
+        <% if @current_view == 'new' %>
           <span class="actions">
           <%= link_to "This Post Is OK", { :action => 'approve', :id => post.id, :view => @current_view }, :method => :post %>
           <%#= button_to "This Post Is OK", :action => "approve", :params => {:id => post.id, :view => @current_view} %>
