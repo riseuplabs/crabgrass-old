@@ -7,10 +7,14 @@ class ModeratedFlag < ActiveRecord::Base
 #  belongs_to :foreign, :polymorphic => true
   belongs_to :user
 
-  def add(options)
+  def add(options={})
     self.update_attribute(:reason_flagged, options[:reason]) if options[:reason]
     self.update_attribute(:comment, options[:comment]) if options[:comment]
     self.save!
+  end
+
+  def trash_all_by_foreign_id(foreign_id)
+    self.update_all('deleted_at=now()',"foreign_id=#{foreign_id}")
   end
 
   def find_by_user_and_foreign(user_id, foreign_id)
@@ -19,6 +23,10 @@ class ModeratedFlag < ActiveRecord::Base
 
   def find_by_foreign_id(foreign_id)
     find(:first, :conditions => ['foreign_id=?',foreign_id])
+  end
+
+  def find_all_by_foreign_id(foreign_id)
+    find(:all, :conditions => ['foreign_id=?',foreign_id])
   end
 
   named_scope :by_foreign_id, lambda {|foreign_id|
