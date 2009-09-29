@@ -6,7 +6,6 @@
   <div style="display:inline;'">
     <%= "All Posts:"%>&nbsp;
     <%= link_to_active( 'all', { :controller => 'admin/discussion_posts', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
-    <%= link_to_active( 'pending', :controller => 'admin/discussion_posts', :action => 'index', :view => 'pending')%>
   </div>
   <div style="display:inline; margin-left:2em;'">
     <%= "Flagged Posts:"%>&nbsp;

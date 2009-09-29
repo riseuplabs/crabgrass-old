@@ -6,12 +6,14 @@ class YuckyController < ApplicationController
 
   before_filter :login_required
 
+  def show_add
+    form_url=>{:action=>'add',:message_id=>params[:message_id]}
+    render :partial=>'base_page/yucky/show_add_popup', :locals=>{:form_url=>form_url}
+  end
+
   # marks the rateable as yucky!
   def add
     if params[:flag]
-      @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
-      @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
-
       case @rateable_type
         when :chat_message; add_chat_message
       end
@@ -40,22 +42,24 @@ class YuckyController < ApplicationController
   end
 
   def add_chat_message
-    @rateable.update_attribute(:deleted_at, Time.now) if current_user.moderator?
+    @flag.add
+    @flag.chatmessage.update_attribute(:deleted_at, Time.now) if current_user.moderator?
     summary = @rateable.content
     date = @rateable.created_at
     url = "/chat/archive/"
     url += @rateable.channel.name
-    url += "/date/#{date.year}-#{date.month}-#{date.day}##{@rateable.id}"
+    url += "/date/#{date.year}-#{date.month}-#{date.day}##{@flag.chatmessage.id}"
     send_moderation_notice(url, summary)
     render :update do |page|
-      @message = @rateable
+      @message = @flag.chatmessage
       page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
 
   def remove_chat_message
     render :update do |page|
-      @message = @rateable
+      @message = @flag.chatmessage
+      @flag.destroy
       page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
     end
   end
@@ -82,8 +86,7 @@ class YuckyController < ApplicationController
       @rateable = Post.find(params[:post_id])
       @rateable_type = :post
     elsif params[:chat_message_id]
-      @rateable = ChatMessage.find(params[:chat_message_id])
-      @rateable_type = :chat_message
+      @flag = current_user.find_chatmessage_by_id(params[:chat_message_id]) || ModeratedChatMessage.new(:foreign_id=>params[:chat_message_id], :user_id => current_user.id)
     end
   end
 

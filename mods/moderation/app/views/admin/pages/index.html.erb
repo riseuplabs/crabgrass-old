@@ -30,8 +30,8 @@ options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
 <% end %>
 
 <div class="page_list">
-  <%= render :partial => 'listing' if @pages.any? %>
-  <%= '<em>There are no pages for this view</em>' unless @pages.any?%>
+  <%= render :partial => 'listing' if @flagged.any? %>
+  <%= '<em>There are no pages for this view</em>' unless @flagged.any?%>
 </div>
 
 

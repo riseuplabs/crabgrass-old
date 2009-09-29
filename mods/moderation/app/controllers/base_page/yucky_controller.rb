@@ -16,18 +16,21 @@ class BasePage::YuckyController < BasePage::SidebarController
 
   def add
     if params[:flag]
-      @flag.add(current_user.id, {:reason=>params[:reason],:comment=>params[:comment]}) unless @flag.nil? 
+      @flag.add({:reason=>params[:reason],:comment=>params[:comment]}) unless @flag.nil? 
     end
     close_popup
   end
 
   def remove
-    @flag.remove(current_user)
+    ### for some reason we update the :yucky_count in the page/post/chat model
+    @flag.destroy
     if params[:post_id]
+      @flag.post.update_attribute(:yuck_count, ModeratedPage.by_foreign_id(params[:post_id]).count)
       render :update do |page|
         page.replace_html "post-body-#{@post.id}", :partial => 'posts/post_body', :locals => {:post => @post}
       end
     elsif params[:page_id]
+      @flag.page.update_attribute(:yuck_count, ModeratedPost.by_foreign_id(params[:page_id]).count)
       redirect_to referer
     end
   end
@@ -45,12 +48,12 @@ class BasePage::YuckyController < BasePage::SidebarController
   prepend_before_filter :fetch_flag
   def fetch_flag
     if params[:post_id]
-      @flag = params[:moderated_id] ? ModeratedPost.find_by_id(params[:moderated_id]) : ModeratedPost.new(:foreign_id => params[:post_id])
-      @post = Post.find_by_id(params[:post_id])
-      @flag.foreign = @post
+      @flag = current_user.find_flagged_post_by_id(params[:post_id]).first || ModeratedPost.new(:foreign_id => params[:post_id], :user_id => current_user.id)
+      @post = @flag.post #Post.find_by_id(params[:post_id])
+      #@flag.foreign ||= @post
     elsif params[:page_id]
-      @flag = params[:moderated_id] ? ModeratedPage.find_by_id(params[:moderated_id]) : ModeratedPage.new(:foreign_id => params[:page_id])
-      @flag.foreign = Page.find_by_id(params[:page_id])
+      @flag = current_user.find_flagged_page_by_id(params[:page_id]).first || ModeratedPage.new(:foreign_id => params[:page_id], :user_id => current_user.id)
+      #@flag.foreign ||= Page.find_by_id(params[:page_id])
     else
       return false
     end
