@@ -1,5 +1,5 @@
 <% @title_box = '<h1>Edit Users</h1>' %>
-<% @info_box = 'Total number of users: %s' % @users.count %>
+<% @info_box = 'Total number of users: %s' % @users.total_entries %>
 
 <%= alphabetical_filter(:controller => 'admin/users') %>
 
@@ -31,7 +31,7 @@
   <% end -%>
 </table>
 
-<%= pagination_links @pages %>
+<%= pagination_links @users %>
 
 <p><%= link_to_with_icon 'plus', 'New user', new_user_path %></p>
 
