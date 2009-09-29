@@ -47,9 +47,6 @@ email:
 
 ##
 ## SITES
-##
-
-sites:
   - name: mru
     domain: my.MRUyouthplatform.org
     network: mru
@@ -58,6 +55,7 @@ sites:
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
     moderation_group: superadmin
+    default: true
 
 ##
 ## SITE DEFAULTS
