@@ -4,24 +4,25 @@
 
 class ModeratedFlag < ActiveRecord::Base
 
-  belongs_to :foreign, :polymorphic => true
+#  belongs_to :foreign, :polymorphic => true
   belongs_to :user
 
-  def add(current_user_id, options)
-    self.reason_flagged = options[:reason] if options[:reason]
-    self.comment = options[:comment] if options[:comment]
+  def add(options)
+    self.update_attribute(:reason_flagged, options[:reason]) if options[:reason]
+    self.update_attribute(:comment, options[:comment]) if options[:comment]
     self.save!
   end
 
-  def remove(current_user)
-    if self.find_by_user(current_user).first
-      self.destroy
-#??? what is this??  self.foreign.update_attribute(:yuck_count, self.foreign.ratings.with_rating(YUCKY_RATING).count)
-    end
+  def find_by_user_and_foreign(user_id, foreign_id)
+    self.find(:first, :conditions => ["user_id=? and foreign_id=?", user_id, foreign_id], :order => 'created_at DESC')
   end
 
-  named_scope :with_rating, lambda {|rating|
-    { :conditions => ['rating = ?', rating] }
+  def find_by_foreign_id(foreign_id)
+    find(:first, :conditions => ['foreign_id=?',foreign_id])
+  end
+
+  named_scope :by_foreign_id, lambda {|foreign_id|
+    { :conditions => ['foreign_id = ?', foreign_id] }
   }
   named_scope :by_user, lambda {|user|
     { :conditions => ['user_id = ?', user.id] }
