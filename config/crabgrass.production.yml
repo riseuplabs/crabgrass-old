@@ -35,8 +35,8 @@ enabled_tools:
   - external_video_tool
   - announcement_tool
   - feed_tool
-#email:
-#  delivery_method: :smtp
+email:
+  delivery_method: :sendmail
 #  smtp_settings:
 #    domain: localhost
 #    address: smtp.gmail.com
