@@ -51,8 +51,7 @@ email:
 
 sites:
   - name: mru
-#    domain: my.MRUyouthplatform.org
-    domain: 193.138.105.70
+    domain: my.MRUyouthplatform.org
     network: mru
     title: "MRU Youthplatform.org"
     limited: false
