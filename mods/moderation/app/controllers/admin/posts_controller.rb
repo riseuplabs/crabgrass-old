@@ -7,7 +7,7 @@ class Admin::PostsController < Admin::BaseController
     view = params[:view] || 'new'
     @current_view = view
     if view == 'all'
-      @posts = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
+      @flagged = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
     else
       if view == 'new' 
         # all posts that have been flagged as inappropriate have not had any admin action yet.

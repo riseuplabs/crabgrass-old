@@ -22,6 +22,8 @@ class BasePage::YuckyController < BasePage::SidebarController
         summary = truncate(@flag.post.body,400) + (@flag.post.body.size > 400 ? "…" : '')
         url = page_url(@flag.post.discussion.page, :only_path => false) + "#posts-#{@flag.post.id}"
       elsif params[:page_id]
+        summary = @flag.page.summary
+        url = page_url(@flag.page)
       end
       send_moderation_notice(url, summary)
     end

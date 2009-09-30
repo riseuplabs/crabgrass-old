@@ -25,7 +25,7 @@ class Admin::PagesController < Admin::BaseController
       elsif view == 'vetted'
         ### vetted means an admin has reviewed the page but decided not to delete.
         # all pages that have been marked as vetted by an admin (and are not deleted)
-        options = { :conditions => ['vetted_at IS NOT NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
+        options = {:select => "distinct foreign_id", :conditions => ['vetted_at IS NOT NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
       elsif view == 'deleted'
         # list the pages that are 'deleted' by being hidden from view.
         ### might have to select by page here for backwards compatibility

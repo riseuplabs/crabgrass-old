@@ -15,32 +15,24 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       #
       # WOW: THIS IS GOING TO BE INCREDIBLY SLOW
       #
-      flagged_message = current_user.find_flagged_chat_message_by_id(message.id)
-      #rating = message.ratings.find_by_user_id(current_user.id)
-      if flagged_message.size == 0
+      rating = message.ratings.find_by_user_id(current_user.id)
+      if rating.nil? or rating.rating != YUCKY_RATING
         if current_user.moderator?
           icon = 'trash'
           link_name = 'move message to trash'[:trash_message]
           confirm = nil
-          url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :trash)
-          link = link_to_remote_with_icon(
-            link_name, {:url => url, :confirm => confirm}, {:icon => icon, :class => 'shy'}
-          )
         else
-          popup_url = url_for({
-            :controller => 'yucky',
-            :action => 'show_add',
-            :popup => 'true',
-            :message_id => message.id
-          })
-          link = link_to_modal('flag as inappropriate',{:url=>popup_url,:icon=>'sad_plus'},{})
-          #icon = 'sad_plus'
-          #link_name = :flag_inappropriate.t
-          #confirm = :confirm_inappropriate_page.t
-          #success = nil
+          icon = 'sad_plus'
+          link_name = :flag_inappropriate.t
+          confirm = :confirm_inappropriate_page.t
+          success = nil
         end
+        url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :add)
+        return link_to_remote_with_icon(
+          link_name, {:url => url, :confirm => confirm}, {:icon => icon, :class => 'shy'}
+        )
         #content_tag(:span, link, :class => "shy", :id => "flag-#{context[:message].id}"})
-      else
+      elsif rating.rating == YUCKY_RATING
         url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :remove)
         return link = link_to_remote_with_icon(
           :flag_appropriate.t, {:url => url}, {:icon => 'sad_minus', :class => 'shy'}

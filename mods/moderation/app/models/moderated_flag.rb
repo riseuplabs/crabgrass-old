@@ -17,6 +17,11 @@ class ModeratedFlag < ActiveRecord::Base
     self.update_all('deleted_at=now()',"foreign_id=#{foreign_id}")
   end
 
+  def user_login
+    return "Unknown" if self.user.nil?
+    return self.user.login
+  end
+
   def find_by_user_and_foreign(user_id, foreign_id)
     self.find(:first, :conditions => ["user_id=? and foreign_id=?", user_id, foreign_id], :order => 'created_at DESC')
   end

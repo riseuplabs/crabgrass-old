@@ -3,7 +3,7 @@ class Admin::DiscussionPostsController < Admin::PostsController
 
   def fetch_posts(options)
     conditions = (options.delete(:conditions) || [])
-    @posts = ModeratedPost.paginate(options.merge(:page => params[:page], :conditions => conditions, :select => 'distinct foreign_id'))
+    @flagged = ModeratedPost.paginate(options.merge(:page => params[:page], :conditions => conditions, :select => 'distinct foreign_id'))
     @admin_active_tab = 'page_post_moderation'
   end
 end
