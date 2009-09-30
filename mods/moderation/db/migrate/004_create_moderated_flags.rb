@@ -12,6 +12,7 @@ class CreateModeratedFlags < ActiveRecord::Migration
       t.column :created_at,	:datetime
       t.column :updated_at,	:datetime
       t.column :user_id,	:integer
+      t.column :foreign_id,	:integer, :null => false
     end
   end
 

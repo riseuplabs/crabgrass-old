@@ -1,5 +1,5 @@
 class AddModerationGroupIdToSites < ActiveRecord::Migration
-  self.up
+  def self.up
     self.really_up unless Site.columns.collect{|s| s.name}.include?("moderation_group_id")
   end
 
