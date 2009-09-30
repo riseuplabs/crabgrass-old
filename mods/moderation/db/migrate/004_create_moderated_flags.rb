@@ -11,8 +11,7 @@ class CreateModeratedFlags < ActiveRecord::Migration
       t.column :comment,	:string
       t.column :created_at,	:datetime
       t.column :updated_at,	:datetime
-      t.column :foreign_id,	:integer, :null => false
-      t.column :user_id,	:integer, :null => false
+      t.column :user_id,	:integer
     end
   end
 
