@@ -15,7 +15,7 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
     pages.each do |page|
       next unless page.flow == 3
       if mpage = ModeratedPage.find_by_foreign_id(page.id)
-        mpage.udate_attribute(:deleted_at, Time.now) unless mpage.deleted_at =~ /\d+/
+        mpage.update_attribute(:deleted_at, Time.now) unless mpage.deleted_at =~ /\d+/
       else 
         options={:foreign_id=>page.id,:deleted_at=>Time.now} 
         ModeratedPage.create!(options)
