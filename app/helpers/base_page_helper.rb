@@ -218,9 +218,10 @@ module BasePageHelper
 
   def show_popup_link(options)
     options[:controller] ||= options[:name]
+    show_popup = options[:show_popup] || 'show'
     popup_url = url_for({
       :controller => "base_page/#{options.delete(:controller)}",
-      :action => 'show',
+      :action => show_popup,# 'show',
       :popup => true,
       :page_id => @page.id,
       :name => options.delete(:name)

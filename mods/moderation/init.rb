@@ -18,4 +18,6 @@ Dispatcher.to_prepare do
   require 'chat_view_listener'
 
   apply_mixin_to_model(Site, ModerationSiteExtension)
+  apply_mixin_to_model(User, UserFlagExtension)
+  apply_mixin_to_model(Page, PageFlagExtension)
 end

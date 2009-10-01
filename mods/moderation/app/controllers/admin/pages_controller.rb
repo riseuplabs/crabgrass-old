@@ -11,25 +11,29 @@ class Admin::PagesController < Admin::BaseController
       @group = Group.find(params[:group])
     end
 
-    if view == 'pending'
-      # all pages that have been flagged as inappropriate or have been requested to be made public but have not had any admin action yet.
-      options = { :conditions => ['flow IS NULL AND ((vetted = ? AND rating = ?) OR (public_requested = ? AND public = ?))', false, YUCKY_RATING, true, false], :joins => :ratings, :order => 'updated_at DESC' }
-    elsif view == 'new'
-      options = { :conditions => ['flow IS NULL AND (vetted = ? AND rating = ?)', false, YUCKY_RATING], :joins => :ratings, :order => 'updated_at DESC' }
-    elsif view == 'vetted'
-      # all pages that have been marked as vetted by an admin (and are not deleted)
-      options = { :conditions => ['flow IS NULL AND vetted = ?', true], :order => 'updated_at DESC' }
-    elsif view == 'deleted'
-      # list the pages that are 'deleted' by being hidden from view.
-      options = { :conditions => ['flow = ?',FLOW[:deleted]], :order => 'updated_at DESC' }
-    elsif view == 'public requested'
-      options = { :conditions => ['public_requested = ?',true], :order => 'created_at DESC' }
-    elsif view == 'public'
-      options = { :conditions => ['public = ?',true], :order => 'created_at DESC' }
-    elsif view == 'all'
-      options = { :order => 'updated_at DESC' }
+    if view == 'all'
+      @flagged = Page.paginate({:order=>'updated_at DESC', :page=>params[:page]})
+    elsif (view=~/^public/)
+      options={:conditions=>['public_requested=?',true]} if view=~/requested/
+      options={:conditions=>['public=?',true]} if view=='public'
+      options.merge!({:order => 'created_at DESC', :page=>params[:page]})
+      @flagged = Page.paginate(options)
+    else
+      if view == 'new'
+        #options = { :conditions => ['moderated_flags.deleted_at IS NULL AND moderated_flags.vetted_at IS NULL'], :joins => 'inner join moderated_flags on pages.id=moderated_flags.foreign_id', :order => 'updated_at DESC'}
+        options = {:select => "distinct foreign_id", :conditions => ['vetted_at IS NULL and deleted_at IS NULL'], :order => 'updated_at DESC'}
+      elsif view == 'vetted'
+        ### vetted means an admin has reviewed the page but decided not to delete.
+        # all pages that have been marked as vetted by an admin (and are not deleted)
+        options = {:select => "distinct foreign_id", :conditions => ['vetted_at IS NOT NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
+      elsif view == 'deleted'
+        # list the pages that are 'deleted' by being hidden from view.
+        ### might have to select by page here for backwards compatibility
+        options = { :select => "distinct foreign_id", :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' }
+      end
+      #@pages = (@group ? @group.pages : Page).paginate(options.merge(:page => params[:page]))
+      @flagged = ModeratedPage.paginate(options.merge(:page => params[:page]))
     end
-    @pages = (@group ? @group.pages : Page).paginate(options.merge(:page => params[:page]))
   end
 
   # for vetting:       params[:page][:vetted] == true
@@ -48,25 +52,23 @@ class Admin::PagesController < Admin::BaseController
 
   # Approves a page by marking :vetted = true
   def approve
-    page = Page.find params[:id]
-    page.update_attribute(:vetted, true)
-
-    # get rid of all yucky associated with the page
-    page.ratings.destroy_all
+    ModeratedPage.update_all('vetted_at=now()',"foreign_id=#{params[:id]}")
+    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:vetted, true)
+    # ??? get rid of all yucky associated with the page
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
-    page = Page.find params[:id]
-    page.update_attribute(:flow, FLOW[:deleted])
+    ModeratedPage.update_all('deleted_at=now()',"foreign_id=#{params[:id]}")
+    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:flow, FLOW[:deleted])
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # undelete a page by setting setting flow=nil, the page will now be 'undeleted'(unhidden)
   def undelete
-    page = Page.find params[:id]
-    page.update_attribute(:flow, nil)
+    ModeratedPage.update_all("deleted_at=NULL","foreign_id=#{params[:id]}")
+    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:flow, nil)
     redirect_to :action => 'index', :view => params[:view]
   end
 
