@@ -5,13 +5,18 @@ namespace :cg do
     task :create => :environment do
       unless ENV['NAME']
         puts 'ERROR: site name required, use NAME=<name> to specify the name.'
+        puts 'options: NETWORK=<name> DOMAIN=<domain> TITLE=<title> EMAIL=<email>'
         exit
       end
       if Site.find_by_name(ENV["NAME"])
         puts 'ERROR: a site with that name already exists.'
         exit
       end
-      Site.create! :name => ENV["NAME"]
+      Site.create! :name => ENV["NAME"],
+        :network => Network.find_by_name(ENV["NETWORK"]),
+        :domain => ENV["DOMAIN"],
+        :title => ENV["TITLE"],
+        :email_sender => ENV["EMAIL"]
       puts 'Site "%s" created' % ENV["NAME"]
     end
 
