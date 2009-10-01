@@ -44,7 +44,11 @@ module ModalboxHelper
         :showAfterLoading => true
       )
       function = modalbox_function(contents, options)
-      link_to_function_with_icon(label, function, html_options)
+      if label
+        link_to_function_with_icon(label, function, html_options)
+      else
+        link_to_function_icon(icon, function, html_options)
+      end
     else
       function = modalbox_function(contents, options)
       link_to_function(label, function, html_options)
