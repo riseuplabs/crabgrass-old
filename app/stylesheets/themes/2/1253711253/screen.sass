@@ -1,0 +1,72 @@
+/*
+  Welcome to Susy. Use this file to define screen styles.
+  Import this file using the following HTML or equivalent:
+  <link href="/stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
+
+/* @group reset */
+@import compass/reset.sass
+/* @end */
+
+/* @group defaults */
+@import ../../../base.sass
+/* @end */
+
+/* colors */
+@import ../../../colors.sass
+/* end */
+
+/* colors */
+@import ../../../fonts.sass
+/* end */
+
+
+body
+  +susy(center)
+  font-family= !body_text_font_family
+  
+#page
+  :border 1px solid #ccc
+  +container(center)
+  #header
+    +full
+    :border 1px solid #ccc
+    #brand
+      +columns(12)
+      :text-align left
+    #commands
+      +full(12)
+      #menu
+        +columns(8,12)
+        +alpha(12)
+        :text-align left
+      #user
+        +columns(4,12)
+        +omega(12)
+        :text-align right
+    #navigation
+      +full(12)
+      #breadcrumb
+        +columns(8,12)
+        +alpha(12)
+        :text-align left
+      #search
+        +columns(4,12)
+        +omega(12)
+        :text-align right
+  #wrapper
+    :border 1px solid #ccc
+    +full
+    #title
+      +columns(12)
+    #content
+      +full(12)
+      #sidebar
+        +columns(3)
+        :background-color #eee
+        :border 1px solid #ccc
+      #main
+        +columns(9)
+  #footer
+    :border 1px solid #ccc
+    +full
+

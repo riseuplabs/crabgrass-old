@@ -105,6 +105,10 @@ Rails::Initializer.run do |config|
   #config.action_web_service = Rails::OrderedOptions.new
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
+  #config.gem "haml"
+  #config.gem "chriseppstein-compass", :lib => "compass"
+  #config.gem "ericam-compass-susy-plugin", :lib => "susy"
+
 
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
@@ -115,7 +119,9 @@ Rails::Initializer.run do |config|
   # we want handle sass templates ourselves
   # so we must not load the 'plugins/rails.rb' part of Sass
   module Sass
-    RAILS_LOADED = true
+    # this was commented to get compass working
+    # TODO: check for some problem with this
+    #RAILS_LOADED = true
   end
 
   ###
