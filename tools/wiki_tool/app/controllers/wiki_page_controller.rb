@@ -10,6 +10,8 @@ class WikiPageController < BasePageController
   javascript :wiki, :action => :edit
 
   helper :wiki # for wiki toolbar stuff
+  helper_method :save_or_cancel_edit_lock_wiki_error_text
+
   permissions 'wiki_page'
 
   before_filter :setup_wiki_rendering
@@ -201,8 +203,7 @@ class WikiPageController < BasePageController
   # if the user has a section locked, redirect them to edit
   def force_save_or_cancel
     if current_locked_section == :document
-      flash_message :info => "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
-        {:save_button => 'Save'[:save_button], :cancel_button => 'Cancel'[:cancel_button]}]
+      flash_message :info => save_or_cancel_edit_lock_wiki_error_text
       redirect_to_edit
     end
   end
@@ -262,5 +263,11 @@ class WikiPageController < BasePageController
   # which is not :document
   def show_inline_editor?
     @editing_section && @editing_section != :document
+  end
+
+  ### HELPER METHODS
+  def save_or_cancel_edit_lock_wiki_error_text
+    "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
+      {:save_button => 'Save'[:save_button], :cancel_button => 'Cancel'[:cancel_button]}]
   end
 end
