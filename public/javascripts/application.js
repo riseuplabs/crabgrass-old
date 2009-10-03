@@ -111,19 +111,20 @@ function setRows(elem, rows) {
 // everything that matches savingSelectors will permenantly disable the confirm message when clicked
 // this a way to exclude "Save" and "Cancel" buttons from raising the "Do you want to discard this?" dialog
 function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelectors) {
-  var textArea = $(textAreaId);
   var confirmActive = true;
-  var originalValue = textArea.value;
 
   // setup confirmation
-  Event.observe(window, 'beforeunload', function(ev) {
+  // Event.observe(window, 'beforeunload', function(ev) {
+  //   if(confirmActive) {
+  //     ev.returnValue = discardingMessage;
+  //   }
+  // })
+
+  window.onbeforeunload = function(ev) {
     if(confirmActive) {
-      var newValue = textArea.value;
-      if(newValue != originalValue) {
-        ev.returnValue = discardingMessage;
-      }
+      return discardingMessage;
     }
-  })
+  };
 
   // toggle off the confirmation when saving or explicitly discarding the text area (clicking 'cancel' for example)
   savingSelectors.each(function(savingSelector) {

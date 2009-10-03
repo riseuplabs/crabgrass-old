@@ -6,6 +6,8 @@ class WikiPageVersionController < BasePageController
   helper :wiki, :wiki_page
   permissions :wiki_page_version
 
+  before_filter :force_save_or_cancel, :only => [:show, :list, :diff]
+
   ##
   ## ACCESS: public or :view
   ##
@@ -78,10 +80,18 @@ class WikiPageVersionController < BasePageController
   def setup_view
     @show_attach = true
     unless @wiki.nil? or @wiki.document_open_for?(current_user)
-      @title_addendum = render_to_string(:partial => 'locked_notice')
+      @title_addendum = render_to_string(:partial => 'wiki_page/locked_notice')
     end
   end
 
+  # if the user has a section locked, redirect them to edit
+  def force_save_or_cancel
+    if logged_in? and @wiki and @wiki.section_edited_by(current_user) == :document
+      flash_message :info => "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
+        {:save_button => 'Save'[:save_button], :cancel_button => 'Cancel'[:cancel_button]}]
+      redirect_to page_url(@page, :action => 'edit')
+    end
+  end
 
   # gets the next or previous version number
   def get_jump(direction)
