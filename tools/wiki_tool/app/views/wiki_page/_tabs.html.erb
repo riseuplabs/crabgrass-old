@@ -3,7 +3,11 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label "Show"[:show]
-    t.url page_url(@page,:action=>'show')
+    if action?(:edit)
+      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+    else
+      t.url page_url(@page,:action=>'show')
+    end
     t.selected action?(:show) && !controller?(:wiki_page_version)
     t.class 'page_url'
   end
@@ -11,7 +15,11 @@
     f.tab do |t|
       if !locked_for_me?
         t.label "Edit"[:edit]
-        t.url page_url(@page,:action => 'edit')
+        if action?(:edit)
+          t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+        else
+          t.url page_url(@page,:action => 'edit')
+        end
       else
         t.label "Break Lock"[:break_lock]
         t.url page_url(@page,:action => 'edit', :break_lock => true)
@@ -19,31 +27,37 @@
       t.selected action?(:edit) || action?(:update)
       t.class 'page_url'
     end
-      # f.tab do |t|
-      #   t.link link_to('Break Lock'[:break_lock], page_url(@page, :action => 'edit', :break_lock => true), :class => 'page_url')
-      #   t.url page_url(@page,:action=>'edit')
-      #   t.selected action?(:edit)
-      #   t.class 'page_url'
-      # end
   end
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|
     t.label "Versions"[:versions]
-    t.url page_url(@page,:action=>'version-list')
+    if action?(:edit)
+      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+    else
+      t.url page_url(@page,:action=>'version-list')
+    end
     t.selected controller?(:wiki_page_version) && !(action?(:diff) && params[:id] == last_change_id)
     t.class 'page_url'
   end
   if @wiki.version > 1
     f.tab do |t|
       t.label "Last Change"[:last_change]
-      t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
+      if action?(:edit)
+        t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+      else
+        t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
+      end
       t.selected controller?(:wiki_page_version) && action?(:diff) && params[:id] == last_change_id
       t.class 'page_url'
     end
   end
   f.tab do |t|
     t.label "Print"[:print]
-    t.url page_url(@page,:action=>'print')
+    if action?(:edit)
+      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+    else
+      t.url page_url(@page,:action=>'print')
+    end
     t.class 'page_url'
   end
 end -%>
