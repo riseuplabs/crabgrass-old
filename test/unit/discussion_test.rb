@@ -57,4 +57,41 @@ class DiscussionTest < Test::Unit::TestCase
     assert check_associations(Discussion)
   end
 
+  def test_discussion_update
+    discussion = Discussion.create
+    post1      = discussion.posts.create(:body => 'hi', :user => users(:blue))
+    post2      = discussion.posts.create(:body => 'hello', :user => users(:red))
+    assert_equal 2, discussion.reload.posts_count
+    assert_last_post_properties post2, discussion
+    post2.delete
+    assert_equal 1, discussion.reload.posts_count
+    assert_last_post_properties post1, discussion
+    post2.undelete
+    assert_equal 2, discussion.reload.posts_count
+    assert_last_post_properties post2, discussion
+    post2.destroy
+    assert_equal 1, discussion.reload.posts_count
+    assert_last_post_properties post1, discussion
+    post1.delete
+    assert_equal 0, discussion.reload.posts_count
+    assert_last_post_properties nil, discussion
+    post1.destroy
+    assert_equal 0, discussion.reload.posts_count
+    assert_last_post_properties nil, discussion
+  end
+
+  def assert_last_post_properties(post, discussion)
+    if post.nil?
+      assert discussion.last_post.nil?
+      assert discussion.replied_at.nil?
+      assert discussion.replied_by.nil?
+      return
+    end
+    assert_equal post, discussion.last_post
+    assert post.updated_at - discussion.replied_at < 1
+    assert post.updated_at > discussion.replied_at
+    assert_equal post.user, discussion.replied_by
+  end
+
+
 end

@@ -9,7 +9,7 @@ class Admin::PostsController < Admin::BaseController
     if view == 'all'
       @flagged = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
     else
-      if view == 'new' 
+      if view == 'new'
         # all posts that have been flagged as inappropriate have not had any admin action yet.
         options = { :conditions => ['vetted_at IS NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
       elsif view == 'vetted'
@@ -36,27 +36,23 @@ class Admin::PostsController < Admin::BaseController
   # Approves a post by marking :vetted = true
   def approve
     ModeratedPost.update_all('vetted_at=now()',"foreign_id=#{params[:id]}")
-    ModeratedPost.find_by_foreign_id(params[:id]).post.update_attribute(:vetted, true)
+    Post.find(params[:id]).update_attribute(:vetted, true)
     # get rid of all yucky associated with the post
     #post.ratings.destroy_all
     redirect_to :action => 'index', :view => params[:view]
   end
 
-  # Reject a post by setting deleted_at=now, the post will now be 'deleted'(hidden)
+  # We use delete to hide a post.
   def trash
-    ModeratedPost.update_all('deleted_at=now()',"foreign_id=#{params[:id]}")
-    post = Post.find params[:id]
-    post.update_attribute(:deleted_at, Time.now)
-    post.discussion.page.save if post.discussion.page
+    Post.find(params[:id]).delete
+    ModeratedPost.update_all("deleted_at=now()","foreign_id=#{params[:id]}")
     redirect_to :action => 'index', :view => params[:view]
   end
 
-  # undelete a post by setting setting deleted_at=false, the post will now be 'undeleted'(unhidden)
+  # Undelete a hidden post in order to show it.
   def undelete
+    Post.find(params[:id]).undelete
     ModeratedPost.update_all("deleted_at=NULL","foreign_id=#{params[:id]}")
-    post = Post.find params[:id]
-    post.update_attribute(:deleted_at, nil)
-    post.discussion.page.save if post.discussion.page
     redirect_to :action => 'index', :view => params[:view]
   end
 
