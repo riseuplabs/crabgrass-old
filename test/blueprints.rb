@@ -94,3 +94,13 @@ Page.blueprint do
 
   type              "WikiPage"
 end
+
+#
+# Wiki
+#
+Wiki.blueprint do
+  version 1
+  body_html { Faker::Lorem.paragraph }
+  body  { body_html }
+  user_id { User.make.id }
+end

@@ -1,5 +1,5 @@
 class PageTrackingObserver < ActiveRecord::Observer
-  observe :page, :user_participation, :group_participation, :post
+  observe :page, :user_participation, :group_participation, :post, :wiki
 
   def after_save(model)
     if model.is_a? UserParticipation
@@ -33,6 +33,11 @@ class PageTrackingObserver < ActiveRecord::Observer
       PageHistory::Deleted.create!(:user => User.current, :page => page)      if page.deleted?
       PageHistory::MakePrivate.create!(:user => User.current, :page => page)  if page.marked_as_private?
       PageHistory::MakePublic.create!(:user => User.current, :page => page)   if page.marked_as_public?
+    end
+
+    if model.class == Wiki
+      wiki = model
+      PageHistory::UpdatedContent.create(:user => User.current, :page => Page.find(:first, :conditions => {:data_type => "Wiki", :data_id => wiki.id})) if wiki.body_changed?
     end
 
     if model.is_a? Post and model.discussion.page

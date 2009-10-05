@@ -14,6 +14,7 @@ class PageHistory::MakePrivate    < PageHistory; end
 class PageHistory::Deleted        < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
+class PageHistory::UpdatedContent < PageHistory; end
 
 class PageHistory::GrantGroupFullAccess < PageHistory
   validates_format_of :object_type, :with => /Group/
