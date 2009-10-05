@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PageTrackingTest < Test::Unit::TestCase
+class PageTrackingObserverTest < Test::Unit::TestCase
 
   def setup
     @pepe = User.make :login => "pepe"
