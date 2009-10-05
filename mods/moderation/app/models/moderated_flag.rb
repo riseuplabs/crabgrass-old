@@ -13,7 +13,7 @@ class ModeratedFlag < ActiveRecord::Base
     self.save!
   end
 
-  def trash_all_by_foreign_id(foreign_id)
+  def self.trash_all_by_foreign_id(foreign_id)
     self.update_all('deleted_at=now()',"foreign_id=#{foreign_id}")
   end
 
@@ -22,17 +22,17 @@ class ModeratedFlag < ActiveRecord::Base
     return self.user.login
   end
 
-  def find_by_user_and_foreign(user_id, foreign_id)
-    self.find(:first, :conditions => ["user_id=? and foreign_id=?", user_id, foreign_id], :order => 'created_at DESC')
-  end
-
-  def find_by_foreign_id(foreign_id)
-    find(:first, :conditions => ['foreign_id=?',foreign_id])
-  end
-
-  def find_all_by_foreign_id(foreign_id)
-    find(:all, :conditions => ['foreign_id=?',foreign_id])
-  end
+#  def find_by_user_and_foreign(user_id, foreign_id)
+#    self.find(:first, :conditions => ["user_id=? and foreign_id=?", user_id, foreign_id], :order => 'created_at DESC')
+#  end
+#
+#  def find_by_foreign_id(foreign_id)
+#    find(:first, :conditions => ['foreign_id=?',foreign_id])
+#  end
+#
+#  def find_all_by_foreign_id(foreign_id)
+#    find(:all, :conditions => ['foreign_id=?',foreign_id])
+#  end
 
   named_scope :by_foreign_id, lambda {|foreign_id|
     { :conditions => ['foreign_id = ?', foreign_id] }
