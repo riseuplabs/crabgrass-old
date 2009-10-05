@@ -25,6 +25,8 @@ class Discussion < ActiveRecord::Base
 
   has_many :posts, :order => 'posts.created_at', :dependent => :destroy, :class_name => 'Post'
 
+  has_many :visible_posts, :order => 'posts.created_at', :class_name => 'Post', :conditions => {:deleted_at => nil}
+
   belongs_to :commentable, :polymorphic => true
 
   # if we are a private discussion:
@@ -82,6 +84,13 @@ class Discussion < ActiveRecord::Base
     else
       1
     end
+  end
+
+  def posts_changed
+    update_attributes! :posts_count => visible_posts.count,
+      :last_post => visible_posts.last,
+      :replied_by => visible_posts.last.try.user,
+      :replied_at => visible_posts.last.try.updated_at
   end
 
 end

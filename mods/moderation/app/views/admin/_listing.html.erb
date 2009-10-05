@@ -1,0 +1,47 @@
+<div class="page_list">
+  <%= pagination_links(@flagged) %>
+
+  <table>
+    <tr>
+      <th>Title</th>
+      <%= '<th>Details</th>' unless (@current_view=='all' or @current_view =~ /^public/) %>
+      <th><%= listing_custom_column_header(obj_type, @current_view) %></th>
+      <th>Created At</th>
+      <th>Created By</th>
+      <th>Take Action</th>
+    </tr>
+
+  <% @flagged.each do |flag| %>
+    <% if (@current_view == 'all' or @current_view =~ /^public/) %>
+      <% @page = flag %>
+    <% else %>
+      <% @page = flag.foreign %>
+    <% end %>
+    <% next if @page.nil? %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
+      <td><%= flagged_page_link(@page) %></td>
+      <%= show_flag_details(flag) %>
+      <td><%= listing_custom_column_content(@page, @current_view) %></td>
+      <td><%=h @page.created_at.strftime("%d %b, %Y ") %></td>
+      <td><%= list_created_by(@page) %></td>
+      <td>
+        <% params = {:id => @page.id, :view => @current_view} %>
+        <span class="actions">
+        <% if @current_view =~ /^public$/ %>
+            <%= link_to "Remove Public", { :action => 'remove_public', :id => @page.id, :view => @current_view }, :method => :post %>
+        <% elsif @current_view =~ /^public.*requested/ %>
+             <%= link_to "Approve Public", { :action => 'update_public', :id => @page.id, :view => @current_view, :public=>true }, :method => :post %>
+        <% else %>
+          <% actions_for(@current_view).each do |action| %>
+            <%= button_to_action(action, params) %>
+          <% end %>
+        <% end %>
+        </span>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= pagination_links(@flagged) %>
+</div>
+

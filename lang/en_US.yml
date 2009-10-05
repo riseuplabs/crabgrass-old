@@ -186,7 +186,7 @@ medium: medium
 large: large
 full: full
 include_full_checkbox: include link to full image
-
+confirm_discarding_text_area: "All your unsaved work will be lost. Press {cancel} to continue editing."
 
 ##
 ## ACCOUNT
@@ -991,9 +991,10 @@ video_embed_code_prompt: "Embed code from external video source."
 ##
 
 locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
-view_while_locked_error: "If you want to stop editing, click the cancel or the save button."
+save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."
 wiki_is_locked: "This wiki is currently locked by :user"
 wont_be_able_to_save: "You will not be able to save this page"
+leave_editing_wiki_page_warning: "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."
 page_locked_header: "Page Locked"
 locked_by_user: "Locked by :user"
 break_lock: "Break Lock"
