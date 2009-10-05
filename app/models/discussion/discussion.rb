@@ -91,6 +91,7 @@ class Discussion < ActiveRecord::Base
       :last_post => visible_posts.last,
       :replied_by => visible_posts.last.try.user,
       :replied_at => visible_posts.last.try.updated_at
+    page.save if page
   end
 
 end
