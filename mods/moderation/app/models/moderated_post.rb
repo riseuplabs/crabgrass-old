@@ -6,8 +6,4 @@ class ModeratedPost < ModeratedFlag
     self.post
   end
 
-  def deleted_at
-    self.post.deleted_at
-  end
-
 end
