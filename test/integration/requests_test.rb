@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class RequestsTest < ActionController::IntegrationTest
-  fixtures :users, :groups, :memberships, :languages
-
   def test_redeem_signup
     req = RequestToJoinUsViaEmail.create(
       :created_by => users(:dolphin),

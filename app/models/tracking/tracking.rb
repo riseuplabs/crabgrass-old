@@ -5,8 +5,6 @@ class Tracking < ActiveRecord::Base
   #belongs_to :group
   #belongs_to :user
 
-  @seen_users=Set.new
-
   # Tracks the actions quickly. Following things can be tracked:
   # :current_user - user that was doing anything
   # :action       - one of :view, :edit, :star
@@ -22,23 +20,6 @@ class Tracking < ActiveRecord::Base
     ))
     true
   end
-
-  def self.saw_user(user_id)
-    @seen_users << user_id
-    true
-  end
-
-  ##
-  ## Sets last_seen for users that were active in the last 5 minutes.
-  ##
-  def self.update_last_seen_users
-    connection.execute("UPDATE users
-                       SET users.last_seen_at = UTC_TIMESTAMP() - INTERVAL 1 MINUTE
-                       WHERE users.id IN (#{@seen_users.to_a.join(', ')})")
-    @seen_users.clear
-    true
-  end
-
 
   ##
   ## Takes all the page view records that have been inserted into trackings

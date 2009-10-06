@@ -9,7 +9,7 @@ module WikiExtension
         raise WikiLockError, "can't lock a nonexistant section"[:cant_lock_nonexistant_section]
       end
 
-      if section_edited_by?(user)
+      if section_edited_by?(user) and section_edited_by(user) != section
         raise WikiLockError, "you already have a section locked. Can't lock another."[:cant_lock_another_section]
       end
 

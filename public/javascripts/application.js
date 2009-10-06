@@ -34,7 +34,7 @@ function quickRedReference() {
 // CSS UTILITY
 //
 
-function replace_class_name(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
+function replaceClassName(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
 
 function setClassVisibility(selector, visibility) {
   $$(selector).each(function(element){
@@ -72,16 +72,16 @@ function linkToggle(link, element) {
   }
 }
 
-// toggle all checkboxes of a particular css selected, based on the
+// toggle all checkboxes of a particular css selector, based on the
 // checked status of the checkbox passed in.
-function toggle_all_checkboxes(checkbox, selector) {
+function toggleAllCheckboxes(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
 // submits a form, from the onclick of a link.
-// use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
+// use like <a href='' onclick='submitForm(this,"bob")'>bob</a>
 // value is optional.
-function submit_form(form_element, name, value) {
+function submitForm(form_element, name, value) {
   var e = form_element;
   var form = null;
   do {
@@ -101,20 +101,42 @@ function submit_form(form_element, name, value) {
   }
 }
 
-
-function decorate_wiki_edit_links(ajax_link) {
-  $$('.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.achor').each(
-    function(elem) {
-      var heading_name = elem.href.replace(/^.*#/, '');
-      var link = ajax_link.replace(/_change_me_/g, heading_name);
-      elem.insert({after:link});
-    }
-  );
-}
-
 function setRows(elem, rows) {
   elem.rows = rows;
   elem.toggleClassName('tall');
+}
+
+// starts watching the textarea
+// when window.onbeforeunload event happens it will ask the user if they want to leave the unsaved form
+// everything that matches savingSelectors will permenantly disable the confirm message when clicked
+// this a way to exclude "Save" and "Cancel" buttons from raising the "Do you want to discard this?" dialog
+function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelectors) {
+  var confirmActive = true;
+
+  // setup confirmation
+  // Event.observe(window, 'beforeunload', function(ev) {
+  //   if(confirmActive) {
+  //     ev.returnValue = discardingMessage;
+  //   }
+  // })
+
+  window.onbeforeunload = function(ev) {
+    if(confirmActive) {
+      return discardingMessage;
+    }
+  };
+
+  // toggle off the confirmation when saving or explicitly discarding the text area (clicking 'cancel' for example)
+  savingSelectors.each(function(savingSelector) {
+    var savingElements = $$(savingSelector);
+    savingElements.each(function(savingElement) {
+      savingElement.observe('click', function() {
+        // user clicked 'save', 'cancel' or something similar
+        // we should no longer display confirmation when leaving page
+        confirmActive = false;
+      })
+    });
+  });
 }
 
 //

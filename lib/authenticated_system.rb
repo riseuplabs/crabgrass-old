@@ -11,9 +11,11 @@ module AuthenticatedSystem
   end
 
   def load_user(id)
-    update_last_seen_at(id)
     user = User.find_by_id(id)
-    user.current_site = current_site if user
+    if user
+      user.seen!
+      user.current_site = current_site
+    end
     return user
   end
 
@@ -28,13 +30,6 @@ module AuthenticatedSystem
   end
 
   protected
-
-    def update_last_seen_at(user_id)
-      # we are caching these and only writing every other minute.
-      Tracking.saw_user(user_id)
-      #User.update_all ['last_seen_at = ?', Time.now], ['id = ?', user_id]
-      #current_user.last_seen_at = Time.now
-    end
 
     # Store the given user in the session.
     def current_user=(new_user)
