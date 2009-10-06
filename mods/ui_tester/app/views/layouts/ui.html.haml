@@ -1,0 +1,13 @@
+- inside_layout 'ui_base' do
+
+  - if @title_box.any?
+    .title_box
+      = @title_box
+  - if @info_box.any?
+    .info_box
+      = @info_box
+
+  .content_box
+    = yield
+
+
