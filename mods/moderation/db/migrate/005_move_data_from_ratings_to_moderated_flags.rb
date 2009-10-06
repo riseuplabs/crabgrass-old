@@ -22,7 +22,7 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
         end
       elsif page.vetted == true
         if mpage = ModeratedPage.find_by_foreign_id(page.id)
-          mpage.updated_attribute(:vetted_at, Time.now)
+          mpage.update_attribute(:vetted_at, Time.now)
         else
           options = {:foreign_id=>page.id,:vetted_at=>Time.now}
           ModeratedPage.create!(options)
@@ -39,7 +39,7 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
         end
       elsif post.vetted == true
         if mpost = ModeratedPost.find_by_foreign_id(post.id)
-          mpost.updated_attribute(:vetted_at, Time.now)
+          mpost.update_attribute(:vetted_at, Time.now)
         else
           options = {:foreign_id=>post.id,:vetted_at=>Time.now}
           ModeratedPost.create!(options)
