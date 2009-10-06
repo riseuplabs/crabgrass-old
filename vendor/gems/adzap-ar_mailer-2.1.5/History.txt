@@ -1,0 +1,135 @@
+= 2.1.5
+
+* Bugs fixed
+  * Load ar_mailer after environment to fix issue with lazy loading of ActionMailer in Rails 2.3
+
+= 2.1.4
+
+* Bugs fixed
+  * Explicitly require ar_mailer in ar_sendmail because its not getting loaded by the Rails environment for some reason
+
+= 2.1.3
+
+* Tests now pass on gem install
+* Removed deprecated ActionMailer::ARMailer class
+* Bugs fixed
+  * Fixed issue with pre-loading ActionMailer. No use ActionMailer::Base.email_class directly rather than store in ARSendmail instance var so no need to pre-load ActionMailer.
+
+= 2.1.2
+
+* Bugs fixed
+  * Require ar_mailer in ar_sendmail since the change to remove TableName and use email_class
+
+= 2.1.1
+ 
+ * Force gem rebuild
+
+= 2.1.0
+
+* Switched to using a Rails generator for migration and model files. The ar_sendmail options have been removed.
+
+= 2.0.2
+
+* Removed TableName option from ar_sendmail options as its redundant. The Rails environment gets loaded so the settings for email class also get loaded
+* Bugs fixed
+  * Email class reloading issue in development mode causing AR email class defaults to be lost when cached
+
+= 2.0.1
+
+* Added option to use smtp setting of :tls => false to disable TLS auto start in Ruby 1.8.7+
+* Removed some cruft which can be handled by ActiveSupport
+
+= 2.0.0
+
+* Removed need to use ARMailer subclass. Just set the delivery method and you are ready to go. Backwards compatible with a deprecation notice if you subclass old ARMailer class.
+* Only include SMTP TLS patch if Ruby version < 1.8.7 as it has an alternative. Changes based on Calvin Yu's [cyu] fork.
+* Renamed default migration name to the modern Rails default
+* Only authenticate if emails waiting to be sent
+* Added --version switch to ar_sendmail binary
+* Created a lighthouse account for this project (adzap fork only). See README.
+
+= 1.4.4
+
+* Exit init.d script with message if no mailers defined.
+
+= 1.4.3
+
+* Bugs fixed
+  * Replaced mistaken call to log when removing pid file artifact for 
+    non-running daemon
+
+= 1.4.2
+
+* New Features
+  * Added Ruby based linux init.d script for handling daemon startup using yaml
+    config file. See files share/linux/ar_sendmail and ar_sendmail.conf
+* Bugs fixed
+  * Proper handling for relative and absolute paths for the pid file
+* Removed hoe dependency since we need the explicit gemspec file for github and 
+  not deploying to RubyForge its not as useful.
+* Moved old BSD rc.d script to share/bsd folder 
+* Updated README with github gem install, docs and init script info
+ 
+= 1.4.1
+
+* Bugs fixed
+  * Daemon failed on startup fixed with expanding full path of pid file
+
+= 1.4.0
+
+* Forked gem and published on GitHub (gem sources -a http://gems.github.com)
+* New Features
+  * Added pid file creation on daemonize with command line option to specify pid filename [Dylan Egan]
+
+= 1.3.1
+
+* Fix bug #12530, gmail causes SSL errors.  Submitted by Kyle Maxwell
+  and Alex Ostleitner.
+* Try ActionMailer::Base::server_settings then ::smtp_settings.  Fixes
+  bug #12516.  Submitted by Alex Ostleitner.
+
+= 1.3.0
+
+* New Features
+  * Added automatic mail queue cleanup.
+    * MAY CAUSE LOSS OF DATA.  If you haven't run ar_sendmail within
+      the expiry time, set it to 0.
+* Bugs fixed
+  * Authentication errors are now handled by retrying once.
+
+= 1.2.0
+
+* Bugs fixed
+  * Handle SMTPServerBusy by backing off @delay seconds then re-queueing
+  * Allow email delivery class to be set in ARMailer.
+  * ar_sendmail --mailq works with --table-name now.
+* Miscellaneous Updates
+  * Added documentation to require 'action_mailer/ar_mailer' in
+    instructions.
+  * Moved to ZSS p4 repository
+  * Supports TLS now.  Requested by Dave Thomas. smtp_tls.rb from Kyle
+    Maxwell & etc.
+
+= 1.1.0
+
+* Features
+  * Added --chdir to set rails directory
+  * Added --environment to set RAILS_ENV
+  * Exits cleanly on TERM or INT signals
+  * Added FreeBSD rc.d script
+  * Exceptions during SMTP sending are now logged
+  * No longer waits if sending email took too long
+* Bugs fixed
+  * Fixed last send attempt in --mailq
+  * Better SMTP error handling
+    * Messages are removed from the queue on 5xx errors
+    * Added Net::SMTP.reset to avoid needing to recreate the connection
+
+= 1.0.1
+
+* Bugs fixed
+  * From and to of email destination were swapped
+
+= 1.0.0
+
+* Birthday

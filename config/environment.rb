@@ -100,6 +100,7 @@ Rails::Initializer.run do |config|
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
   config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'
+  config.gem "adzap-ar_mailer", :lib => 'action_mailer/ar_mailer', :version => '2.1.5', :source => 'http://gems.github.com'
   #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
   #config.frameworks += [ :action_web_service]
