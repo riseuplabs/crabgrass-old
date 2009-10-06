@@ -25,7 +25,7 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
     posts.each do |post|
       next unless post.deleted_at =~ /\d+/
       next if mpost = ModeratedPost.find_by_foreign_id(post.id) 
-      ModeratedPost.create!(:foreign_id=>post.id)
+      ModeratedPost.create!({:foreign_id=>post.id, :deleted_at => post.deleted_at})
       end
     end
   end
