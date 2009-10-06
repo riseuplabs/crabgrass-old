@@ -13,19 +13,36 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
     end
     pages = Page.find(:all)
     pages.each do |page|
-      next unless page.flow == 3
-      if mpage = ModeratedPage.find_by_foreign_id(page.id)
-        mpage.update_attribute(:deleted_at, Time.now) unless mpage.deleted_at =~ /\d+/
-      else 
-        options={:foreign_id=>page.id,:deleted_at=>Time.now} 
-        ModeratedPage.create!(options)
+      if page.flow == 3
+        if mpage = ModeratedPage.find_by_foreign_id(page.id)
+          mpage.update_attribute(:deleted_at, Time.now) unless mpage.deleted_at =~ /\d+/
+        else 
+          options={:foreign_id=>page.id,:deleted_at=>Time.now} 
+          ModeratedPage.create!(options)
+        end
+      elsif page.vetted == true
+        if mpage = ModeratedPage.find_by_foreign_id(page.id)
+          mpage.updated_attribute(:vetted_at, Time.now)
+        else
+          options = {:foreign_id=>page.id,:vetted_at=>Time.now}
+          ModeratedPage.create!(options)
+        end
       end
-    end
     posts = Post.find(:all)
     posts.each do |post|
-      next unless post.deleted_at =~ /\d+/
-      next if mpost = ModeratedPost.find_by_foreign_id(post.id) 
-      ModeratedPost.create!({:foreign_id=>post.id, :deleted_at => post.deleted_at})
+      if post.deleted_at =~ /\d+/
+        if mpost = ModeratedPost.find_by_foreign_id(post.id) 
+          mpost.update_attribute(:deleted_at, post.deleted_at) unless mpost.deleted_at =~ /\d+/
+        else
+          ModeratedPost.create!({:foreign_id=>post.id, :deleted_at => post.deleted_at})
+        end
+      elsif post.vetted == true 
+        if mpost = ModeratedPost.find_by_foreign_id(post.id)
+          mpost.updated_attribute(:vetted_at, Time.now) 
+        else
+          options = {:foreign_id=>post.id,:vetted_at=>Time.now}
+          ModeratedPost.create!(options)
+        end
       end
     end
   end
