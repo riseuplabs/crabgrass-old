@@ -64,6 +64,8 @@ sites:
     limited: true
     email_sender: 'my@tvetplatform.org'
     default: false
+    admin_group: tvet-admins
+    moderation_group: tvet-moderators
 
 ##
 ## SITE DEFAULTS
