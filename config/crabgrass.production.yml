@@ -57,6 +57,13 @@ sites:
     admin_group: superadmin
     moderation_group: superadmin
     default: true
+  - name: tvet
+    domain: my.tvetplatform.org
+    network: tvet
+    title: "TVET Platform"
+    limited: true
+    email_sender: 'my@tvetplatform.org'
+    default: false
 
 ##
 ## SITE DEFAULTS
