@@ -1,0 +1,90 @@
+//
+// please add a comment as to the purpose every bit of markup in this file. 
+//
+
+html,
+body,
+pre,
+img,
+applet,
+object,
+iframe,
+form,
+fieldset
+  margin: 0
+  padding: 0
+  border: none
+
+// this is supposed to be required for ie to correctly be able to resize the
+// fonts. ??? is this true? what does it really do?
+body
+  font-size: 100%
+
+// better defaults for tables
+table
+  border-spacing: 0
+
+// set the body text here
+p,
+ol,
+ul,
+td,
+div
+  font-family= !body_text_font_family
+  font-size= !body_text_font_size
+  line-height= !body_text_line_height
+
+
+// what is the purpose of this?
+//blockquote
+//  margin: 0
+//  padding: 0
+//  border: none
+//  quotes: none
+//
+//  &:before, &:after
+//    content: ''
+//    content: none
+
+
+// what is the purpose of this?
+//em
+//  font-style: normal
+
+// what is the purpose of this?
+//q
+//  quotes: none
+//
+//  &:before, &:after
+//    content: ''
+//    content: none
+
+// i can't imagine what the purpose of this was, but it is illegal markup anyway
+// :focus
+//  outline: 0
+
+// what is the purpose of this?
+//ins
+//  text-decoration: none
+//del
+//  text-decoration: line-through
+
+// Enable self-clearing floats
+.selfclear:after 
+  content: "."
+  display: block
+  height: 0
+  clear: both
+  visibility: hidden
+
+// IE7
+.selfclear
+  display: inline-block
+
+.selfclear
+  display: block
+
+// IE < 7
+* html .selfclear
+  height: 1px
+

@@ -34,22 +34,20 @@ module LayoutHelper
 
   # CustomAppearances model allows administrators to override the default css values
   # this method will link to the appropriate overriden css
-  # prefix is used to add the compiled prefix for compass use
-  def themed_stylesheet_link_tag(path, prefix="")
+  def themed_stylesheet_link_tag(path, css_prefix_path=nil)
     appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
 
-    themed_stylesheet_url = appearance.themed_stylesheet_url(path)
-    stylesheet_link_tag(compass_prefix(themed_stylesheet_url,prefix))
+    themed_stylesheet_url = appearance.themed_stylesheet_url(path,css_prefix_path)
+    stylesheet_link_tag(themed_stylesheet_url)
   end
 
   # custom stylesheet
   # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
-  # prefix is used to add the compiled prefix for compass use
-  def optional_stylesheet_tag(prefix="")
+  def optional_stylesheet_tag(css_prefix_path=nil)
     stylesheet = controller.class.stylesheet || {}
     sheets = [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    sheets.collect {|s| themed_stylesheet_link_tag(s)}
+    sheets.collect {|s| themed_stylesheet_link_tag(s,css_prefix_path)}
   end
 
   # crabgrass_stylesheets()
@@ -64,41 +62,28 @@ module LayoutHelper
   # (5) content_for :style (inline styles set in the views)
   # (6) mod styles (so that mods can insert their own styles after everthing else)
 
-  # prefix is used to add the compiled prefix for compass use
-
-  def crabgrass_stylesheets(prefix="")
+  def crabgrass_stylesheets(css_prefix_path=nil)
     lines = []
 
-    lines << themed_stylesheet_link_tag('screen.css', prefix)
-    lines << stylesheet_link_tag(compass_prefix('icon_png.css', prefix))
-    lines << optional_stylesheet_tag(prefix)
+    lines << themed_stylesheet_link_tag('screen.css',css_prefix_path)
+    lines << stylesheet_link_tag('icon_png')
+    lines << optional_stylesheet_tag(css_prefix_path)
     lines << '<style type="text/css">'
     #lines << context_styles
     lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'
-    lines << stylesheet_link_tag(compass_prefix('ie/ie6', prefix))
-    lines << stylesheet_link_tag(compass_prefix('icon_gif', prefix))
+    lines << stylesheet_link_tag('ie/ie6')
+    lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
-    lines << stylesheet_link_tag(compass_prefix('ie/ie7',prefix))
-    lines << stylesheet_link_tag(compass_prefix('icon_gif',prefix))
+    lines << stylesheet_link_tag('ie/ie7')
+    lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     if language_direction == "rtl"
-      lines << themed_stylesheet_link_tag('rtl',prefix)
+      lines << themed_stylesheet_link_tag('rtl',css_prefix_path)
     end
     lines.join("\n")
-  end
-
-  # 
-  # handle the addition of the compiled prefix to make the layouts
-  # compatibles with compass without code changes on old layouts
-  def compass_prefix(path,prefix="")
-    if prefix == ""
-      path
-    else
-      File.join(prefix,path)
-    end
   end
 
   def favicon_link

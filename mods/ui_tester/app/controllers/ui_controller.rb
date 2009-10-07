@@ -10,8 +10,8 @@ class UiController < ApplicationController
   helper 'base_page'
   before_filter :fetch_random_data, :fetch_site
   #stylesheet 'post'
-  stylesheet 'gallery'
-  stylesheet 'contribute'
+  #stylesheet 'gallery'
+  #stylesheet 'contribute'
 
   def index
     data = params[:data]
