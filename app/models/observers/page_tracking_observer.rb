@@ -4,13 +4,13 @@ class PageTrackingObserver < ActiveRecord::Observer
   def after_save(model)
     if model.is_a? UserParticipation
       up = model
+      PageHistory::GrantUserFullAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_full_access?
+      PageHistory::GrantUserWriteAccess.create!(:user => User.current, :page => up.page, :object => up.user)  if up.granted_user_write_access?
+      PageHistory::GrantUserReadAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_read_access?
       PageHistory::StartWatching.create!(:user => User.current, :page => up.page)                             if up.start_watching?
       PageHistory::StopWatching.create!(:user => User.current, :page => up.page)                              if up.stop_watching?
       PageHistory::AddStar.create!(:user => User.current, :page => up.page)                                   if up.star_added?
       PageHistory::RemoveStar.create!(:user => User.current, :page => up.page)                                if up.star_removed?
-      PageHistory::GrantUserFullAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_full_access?
-      PageHistory::GrantUserWriteAccess.create!(:user => User.current, :page => up.page, :object => up.user)  if up.granted_user_write_access?
-      PageHistory::GrantUserReadAccess.create!(:user => User.current, :page => up.page, :object => up.user)   if up.granted_user_read_access?
     end
 
     if model.is_a? GroupParticipation
