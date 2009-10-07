@@ -46,8 +46,8 @@ text_editor: greencloth_only
 ##
 
 sites:
-  - name: connectingclassrooms
-    admin_group: superadmin
+  - name: site1
+    admin_group: rainbow
     moderation_group: rainbow
 
 # bound to localhost:
