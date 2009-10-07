@@ -4,7 +4,8 @@ class Admin::PagesController < Admin::BaseController
   permissions 'admin/moderation'
 
   def index
-    view = params[:view] || 'new'
+    params[:view] ||= 'new'
+    view = params[:view] 
     @current_view = view
 
     if params[:group] && params[:group].any?
