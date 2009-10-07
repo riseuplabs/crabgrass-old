@@ -100,7 +100,8 @@ module WikiPageHelper
     confirm_discarding_text_area(text_area_id,
           ["input[name=break_lock]",
           "input[name=save]",
-          "input[name=cancel]"],
+          "input[name=cancel]",
+          "input[name=ajax_cancel]"],
           "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."[:leave_editing_wiki_page_warning]
           )
 
