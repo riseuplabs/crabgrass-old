@@ -1,0 +1,29 @@
+require File.dirname(__FILE__) + '/../test_helper'
+require 'mailer'
+
+class MailerPageHistoryTest < Test::Unit::TestCase
+  def setup
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
+
+    @user_a = User.make :login => "miguel", :display_name => "Miguel Bakunin"
+    @user_b = User.make :login => "anselme", :display_name => "Anselme Belgarin"
+    User.current = @user
+    @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host")
+    @page = Page.make_owned_by(:user => @user, :owner => @user, :access => 1, :site => @site)
+  end
+
+  def test_send_watched_notification
+    page_history = PageHistory::AddStar.create!(:user => @user_a, :page => @page)
+    message = Mailer.create_send_watched_notification(@user_b, page_history)
+    assert_equal "Crabgrass Social Network : #{@page.title}", message.subject
+    assert_equal [@user_b.email], message.to
+    assert_equal ["robot@crabgrass.org"], message.from
+    assert message.body.match(/Anselme Belgarin/)
+    assert message.body.match(/Miguel Bakunin/)
+    assert message.body.match(/#{@page.title}/)
+    assert message.body.match(/#{@site.title}/)
+    assert message.body.match(/added a star/)
+  end
+end

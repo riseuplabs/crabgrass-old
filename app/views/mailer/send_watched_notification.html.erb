@@ -1,0 +1,17 @@
+Hello <%= @user.display_name %>,
+
+The page "<%= @page_history.page.title %>" in network "<%= @site.title %>" has been modified:
+
+  <%= description_for(@page_history) %>
+
+You may access this page here:
+
+  <%= page_url(@page_history.page) %>
+
+To stop watching this page for changes, click here:
+
+  <%= page_url(@page_history.page) %>
+
+---
+Change your email notification settings:
+<%= me_url(:action => 'edit') %>

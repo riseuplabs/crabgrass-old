@@ -26,10 +26,17 @@ Sham.salt             { Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{Sham.login
 Sham.crypted_password { Digest::SHA1.hexdigest("--#{Sham.salt}--#{Sham.login}--") }
 Sham.summary          { Faker::Lorem.paragraph }
 
+#
+# Site
+#
+Site.blueprint do
+  domain       "crabgrass.org"
+  email_sender "robot@$current_host"
+end
+
 # 
 # Users
 #
-
 User.blueprint do
   login 
   display_name
@@ -93,6 +100,14 @@ Page.blueprint do
   owner_name        u.display_name  
 
   type              "WikiPage"
+end
+
+#
+# UserParticipation
+#
+UserParticipation.blueprint do
+  access  1
+  watch   false
 end
 
 #
