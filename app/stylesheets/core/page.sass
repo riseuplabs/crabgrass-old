@@ -1,0 +1,347 @@
+div
+  &.page_search_form
+    text-align: center
+    line-height: 2.5em
+    margin-bottom: 1em
+  //&.buttons
+  //  margin-top: 1em
+  //  padding-top: 1em
+  //  border-top: 1px solid #ccc
+  //  text-align: center
+
+//
+// PAGE LIST
+//
+
+.page_list
+  background: white
+  table
+    width: 100%
+    color: #888
+    border-collapse: collapse
+  td
+    padding: 0.25em
+    border-bottom= !content_border
+    background-color: white
+    &.last
+      text-align: right
+    &.date
+      background: #FFF4E8
+      color: #F28367
+      text-transform: capitalize
+      font-weight: bold
+    &.excerpt b
+      color: black
+  th
+    text-transform: uppercase
+    border-bottom: 1px solid #ccc
+    border-top: 2px solid #ccc
+    padding: 0.75em
+    padding-left: 0.5em
+    text-align: left
+    font-size: 0.8em
+    color: #C2C2C2
+    &.last
+      text-align: right
+    &.selected
+      background-color: #eee
+  //a
+  //  color= !page_list_link_color
+  span
+    &.status
+      color: red
+    &.star
+      color: #EBBA20
+      font-weight: bold
+
+.page_scroll
+  max-height: 40em
+  overflow: auto
+  border-top: 1px solid #ccc
+  clear: left
+  padding-top: none
+
+// the fixed height is necessary to prevent ugly flashes
+// when a different tab is selected.
+.page_scroll.rigid
+  height: 40em
+  border: none
+
+.filter_menu
+  display: none
+
+.section div.round
+  background: #fff url(/images/ui/down-arrow.png) no-repeat right
+  height: 26px
+  line-height: 26px
+  text-align: center
+  border: 1px solid #E1E1E1
+  width: 140px
+  font-weight: normal
+
+//
+// SHARE PAGE WIDGET
+//
+
+// the input form area
+table.share_page_recipient_add
+  width: 100%
+  div.scroll
+    overflow: auto
+    height: 20em
+    width: 13em
+    padding: 0.5em
+    font-size: 0.8em
+
+// the enclosure for the list of added recipients
+.autocomplete_results_area
+  margin: 6px 10px 6px 10px
+  border: 1px solid #ccc
+  max-height: 15em
+  overflow: auto
+  // ie hack:
+  _height: 10em
+  table
+    width: 100%
+
+// the list af added recipients
+.autocomplete_results_table
+  td
+    padding: 4px
+    border-bottom: 1px solid #ccc
+    background-color: #f6f6f6
+    font-size: 0.9em
+  td.unsaved
+    background-color: #BBFF99
+  span.entity
+    width: 15em
+    overflow: hidden
+
+// make it a different color in a popup
+.popup #share_page_recipient_table td
+  background-color: #fff
+
+//div.notify_details,
+//div.share_details
+//  background: white
+//  border: 1px solid #999
+//  border-bottom: 0
+//  max-height: 15em
+//  //min-height: 5em
+//  overflow-y: auto
+//  margin: 3px
+//  table
+//    width: 100%
+//    td
+//      padding: 0.5em 0.25em
+//      //overflow: hidden
+//  ul
+//    margin: 0
+//
+//div.notify_details
+//  padding: 0.5em
+
+table.notify
+  width: 100%
+  td.check
+    vertical-align: top
+  tr.gap
+    td
+      padding-top: 1em
+
+#permissions_tab, #share_page_recipient_table
+  select.access
+    font-size: 0.9em
+
+//
+// PAGE SIDEBAR
+//
+
+#page_sidebar
+  padding-top: 2.5em
+  a,
+  a:visited
+    color= !right_column_link_color
+  h3
+    color= !right_column_fg_color
+    border: 1px solid
+    border-color: #eee #bbb #bbb #eee
+    background: #e0e0e0
+    text-transform: uppercase
+    font-size: 0.8em
+    padding: 0.5em 0.75em
+    margin: 2.5em 0 0.5em 0
+    -moz-border-radius: 4px
+  ul.rule
+    border-top: 1px dotted #fff
+    padding-top: 0.5em
+    margin-top: 0.5em
+  ul.names li:first-child
+    border-top: 0
+  ul.names li
+    padding: 3px 0
+    border-top: 1px dotted white
+    span
+      background-position: 100% 0
+      background-repeat: no-repeat
+      padding-right: 20px
+      margin-right: -20px
+  input.check
+    float: left
+    margin: 7px 0 0 -18px
+
+//
+// TAGS
+//
+
+#page_sidebar
+  .tags
+    overflow: hidden
+  .tags a
+    width: 100%
+    overflow: hidden
+    background-color: #dde
+    padding: 0px 2px
+    line-height: 175%
+    white-space: nowrap
+  .tags a:hover
+    background-color: #eef
+
+.edit_tags p
+  float: left
+  width: 40%
+  margin: 0.25em
+
+//
+// POST
+//
+
+#posts
+  background: #fff
+  margin-bottom: 5px
+  .comments-head
+    border-top: 1px solid #E1E1E1
+    padding-top: 20px
+    padding-bottom: 10px
+  .post-author
+    text-align: right
+    padding-left: 10px
+    margin-right: 10px
+    color: #6E6E6C
+    font-size: 12px
+    div.username,
+    div.date
+      margin-right: 40px
+    div.fields
+      font-size: 10px
+
+table.posts
+  width: 100%
+  border-top: 1px solid #ccc
+  .shade-even
+    background-color: #fff
+  .shade-odd
+    background-color= !post_bg_color
+  tr.post td
+    vertical-align: top
+  tr.post-spacer-bottom td
+    line-height: 10px
+    border-bottom: 1px solid #ccc
+  tr.post-spacer-top td
+    line-height: 10px
+  textarea
+    margin-bottom: 5px
+  td.post-body
+    border-left: 1px solid #ccc
+    padding: 0 10px
+    // the first and last <p> should not have an outer margin
+    p:first-child
+      margin-top: 0
+    p:last-child
+      margin-bottom: 0
+  td:hover .post_action_icon
+    display: block
+  td .post_action_icon
+    position: absolute
+    right: 0
+    bottom: 0
+    display: none
+
+//
+// TITLE_BOX
+//
+
+div.title_box
+  form
+    .h1
+      line-height: 1em
+      margin: 0
+      padding: 0
+    .h2
+      line-height: 2em
+      margin: 0
+      padding: 1
+    .h3
+      line-height: .5em
+      margin: 0
+      padding: 1
+  .h1
+    font-size: 2em
+    font-weight: bold
+    line-height: 1.2em
+  .h2
+    font-size: 1.5em
+    font-weight: bold
+    line-height: 3em
+    padding: 0px 0px 0px 20px
+  .h3
+    font-size: 1.5em
+    font-weight: normal
+    line-height: 1.2em
+
+//
+// POPUP!
+//
+
+//div.popup
+//  background= !popup_bg
+//  h1
+//    background: #999
+//    color: white
+//    border-bottom: 1px solid #666
+//    padding: 10px
+//    margin: 0
+//    background: #ccc
+//    border-top: 1px solid #999
+//    padding: 10px
+//  h2
+//    color: #cc0000
+//   font-size: 1.1em
+//   line-height: 1em
+//    &.first
+//      margin-top: 0
+//  blockquote
+//    margin: 0
+//    //padding: 1em
+
+//div.popup_arrow
+//  height: 29px
+//  width: 15px
+//  background: url(/images/ui/wedge_right.png)
+//  position: absolute
+//  top: 30px
+//  right: -15px
+
+//div#popup_holder
+//  position: absolute
+//  z-index: 100
+//  display: none
+
+// This is used by the delete page popup submenu.
+div.sub_menu
+  width: 200px
+
+// permission tab in details popup
+//div.tab_content_scroll
+//  overflow: auto
+//  height: 20em

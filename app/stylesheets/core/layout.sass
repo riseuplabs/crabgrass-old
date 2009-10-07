@@ -1,0 +1,34 @@
+table.layout
+  border-collapse: collapse
+  width: 100%
+
+.left_column, .right_column, .main_column
+  border= !outer_border
+  border-width= !outer_border_width
+  vertical-align: top
+  padding: 0
+
+.main_column
+  background-color= !content_bg_color
+  //border= !content_border
+  //border-color= !content_border_color
+
+// LEFT
+
+.left_column
+  background-color= !left_column_bg_color
+  width= !left_column_width
+  border-right: 0
+  padding= !left_column_margin
+
+.left_layout .main_column
+  border-left= !left_column_dividing_border
+
+// RIGHT
+
+.right_column
+  width= !right_column_width
+  padding-left= !right_column_margin
+  border: 0
+  color= #666
+

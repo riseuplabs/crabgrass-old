@@ -1,0 +1,185 @@
+//
+// ICONS
+//
+
+// for use with icon + text
+.small_icon
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  &.right
+    background-position: 100% 50%
+    padding-left: 4px
+    padding-right: 20px
+  &.bullet
+    background-position: 0 2px
+    margin: 0.5em 0
+
+.none_16
+  background-image: none
+
+// for use with icon stand alone
+.small_icon_button
+  height: 16px
+  width: 16px
+  display: block
+  padding: 0
+
+.spinner_icon
+  background-image: url(/images/spinner.gif)
+
+.big_icon
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  padding: 14px 0 14px 54px
+  // min-height: 48px (doesn't work for ie6)
+
+.page_icon
+  height: 16px
+  width: 16px
+  background-repeat: no-repeat
+  background-position: 0 50%
+
+
+//
+// name icons are for showing an icon with a user or group.
+// we display the icons as background images, aligned center,
+// and then add padding to make enough room for the icon.
+//
+// there are other ways we could do this: we could set the height
+// or the min-height. however, then the text does not appear centered
+// if the icon is much bigger than the line height.
+//
+// the padding method is not ideal:
+// * if the font is a different size, then the top/bottom padding numbers will be wrong
+// * if the text takes up two lines instead of one, then there should be no padding.
+//
+// however, after having tried other methods, the padding method seems to do better.
+//
+.name_icon
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  &.tiny
+    padding: 0px 0 0px 17px
+  &.xsmall
+    padding: 2px 0 4px 26px
+  &.small
+    padding: 7px 0 7px 40px
+    line-height: 14px
+  &.medium
+    padding: 15px 0 15px 60px
+    display: block
+    font-size: 1.3em
+  b
+    display: none
+  // this class is set when we know we will have two lines of text
+  &.two
+    padding-top: 0
+    padding-bottom: 0
+
+.name_icon:hover
+  b
+    display: block
+    position: absolute
+    background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left
+    color: white
+    bottom: 25px
+    left: -5px
+    z-index= !z_tooltip
+    padding: 3px 5px 9px 5px
+    // ^^ must be in px to match gif bg
+    &:hover
+      display: none
+
+.page_list a.name_icon.xsmall
+  display: block
+
+button
+  &.icon_16
+    vertical-align: text-top
+    background-repeat: no-repeat
+    border: none
+    margin: 0
+    padding: 0
+    background-color: transparent
+    height: 16px
+    width: 16px
+
+  &.icon_48
+    vertical-align: middle
+    background-repeat: no-repeat
+    border: none
+    margin: 0
+    padding: 0
+    background-color: transparent
+    height: 48px
+    width: 48px
+
+
+img
+  &.left
+    float: left
+    margin: 0 0.2em 0.5em 0
+
+  &.right
+    float: right
+    margin: 0 0 0.5em 0.5em
+
+  &.framed
+    padding: 2px
+    border: 1px solid #ccc
+    background: white
+
+  &.avatar
+    vertical-align: middle
+
+
+a.thumbnail
+  display: block
+  overflow: hidden
+  outline: 0
+  background: white
+  border: 1px solid white
+  outline: 1px solid #999
+  margin: 0 5px 5px 0
+
+  &:hover
+    border: 1px solid #cdf
+    outline: 1px solid black
+
+
+ul.icon_boxes
+  padding: 0
+  margin: 0
+  list-style: none
+
+  li
+    float: left
+    border: 1px solid #ccc
+    height: 32px
+    width: 32px
+    margin: 0 5px 5px 0
+    z-index: auto
+
+    span
+      display: none
+      padding: 1em
+      background-color: black
+      color: white
+      font-weight: bold
+      z-index: 10
+      position: absolute
+      top: 4px
+      left: 0
+
+    div
+      position: relative
+
+    &:hover span
+      display: inline
+
+    a
+      display: block
+
+

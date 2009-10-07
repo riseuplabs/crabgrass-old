@@ -121,7 +121,7 @@ Rails::Initializer.run do |config|
   module Sass
     # this was commented to get compass working
     # TODO: check for some problem with this
-    #RAILS_LOADED = true
+    RAILS_LOADED = true
   end
 
   ###
