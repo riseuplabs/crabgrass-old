@@ -16,7 +16,7 @@
           {:loading => show_spinner('save'),
           :url => page_url(@page, :action => 'update', :section => section, :cancel => true),
           :method => 'put'},
-          {:name => 'cancel'} %>
+          {:name => 'ajax_cancel'} %>
 
       <%= spinner('save') %>
       <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
