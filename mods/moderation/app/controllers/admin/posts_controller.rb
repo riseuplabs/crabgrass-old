@@ -4,7 +4,8 @@ class Admin::PostsController < Admin::BaseController
   permissions 'admin/moderation'
 
   def index
-    view = params[:view] || 'new'
+    params[:view] ||= 'new'
+    view = params[:view]
     @current_view = view
     if view == 'all'
       @flagged = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
