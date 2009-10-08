@@ -33,6 +33,7 @@ class Group < ActiveRecord::Base
   include GroupExtension::Pages      # group <--> page behavior
 
   acts_as_site_limited
+  acts_as_crud_limited
 
   attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
@@ -41,6 +42,12 @@ class Group < ActiveRecord::Base
 
   # group <--> chat channel relationship
   has_one :chat_channel
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  created_by :test
 
   ##
   ## FINDERS
