@@ -21,6 +21,7 @@ enabled_mods:
 #  - design_tester
   - super_admin
   - moderation
+  - unido
 #  - gibberize
 
 email:

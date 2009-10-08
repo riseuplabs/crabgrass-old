@@ -55,7 +55,7 @@ sites:
     limited: false
     email_sender: 'my@MRUyouthplatform.org'
     admin_group: superadmin
-    moderation_group: superadmin
+    moderation_group: "mru+ccmru"
     default: true
   - name: tvet
     domain: my.tvetplatform.org
