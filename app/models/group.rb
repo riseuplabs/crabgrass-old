@@ -47,7 +47,15 @@ class Group < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
-  created_by :test
+  permit :create, :to => :admin, :of => :site
+  #permit :read, :to => :view
+  permit :update, :to => :admin
+  permit :destroy, :to => :admin, :if => :only_one_member
+
+  def only_one_member
+    self.members_count == 1
+  end
+  #permit :crud, :to => :superadmin
 
   ##
   ## FINDERS
