@@ -40,9 +40,13 @@ module WikiPageHelper
 
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
+    return html unless logged_in? and current_user.may?(:edit, wiki.page)
+
     doc = Hpricot(html)
     doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |heading_el|
       section = heading_el['href'].sub(/^.*#/, '')
+      next unless wiki.all_sections.include? section
+
 
       link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
       if show_inline_editor?
