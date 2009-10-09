@@ -8,6 +8,38 @@ class UserTest < Test::Unit::TestCase
     Time.zone = TimeZone["Pacific Time (US & Canada)"]
   end
 
+  def test_ensure_values_in_receive_notifications 
+    user = User.make
+
+    user.receive_notifications = nil
+    user.save!
+    assert_equal nil, user.receive_notifications
+
+    user.receive_notifications = true
+    user.save!
+    assert_equal nil, user.receive_notifications
+
+    user.receive_notifications = false
+    user.save!
+    assert_equal nil, user.receive_notifications
+
+    user.receive_notifications = "Any" 
+    user.save!
+    assert_equal nil, user.receive_notifications
+
+    user.receive_notifications = "Digest" 
+    user.save!
+    assert_equal "Digest", user.receive_notifications
+
+    user.receive_notifications = "Single" 
+    user.save!
+    assert_equal "Single", user.receive_notifications
+
+    user.receive_notifications = "" 
+    user.save!
+    assert_equal nil, user.receive_notifications
+  end
+
   ## ensure that a user and a group cannot have the same handle
   def test_namespace
     assert_no_difference 'User.count' do
