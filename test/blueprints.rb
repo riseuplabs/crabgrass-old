@@ -71,7 +71,7 @@ end
 # Pages
 #
 
-# requieres :user, :owner, :access
+# requieres :owner in attributes
 def Page.make_owned_by(attributes, machinist_attributes = {}) 
   page = Page.make_unsaved(machinist_attributes)
   attributes.reverse_merge!(page.attributes)
@@ -83,7 +83,7 @@ end
 # By default we allways make pages with this blueprint owned by users
 # if you want make pages owned by groups or users with specific attributes
 # check out make_page_owned_by method
-Page.blueprint do
+def make_a_page
   title
   summary
   created_at        { created_date }
@@ -91,15 +91,14 @@ Page.blueprint do
   stars_count       { 0 }
   views_count       { rand(100) }
   resolved          { boolean }
+end
 
-  u = User.make
-  updated_by_login  u.login
-  updated_by_id     u.id
-  owner_type        "User"
-  owner_id          u.id
-  owner_name        u.display_name  
+WikiPage.blueprint do
+  make_a_page
+end
 
-  type              "WikiPage"
+Page.blueprint do
+  make_a_page
 end
 
 #
@@ -119,3 +118,10 @@ Wiki.blueprint do
   body  { body_html }
   user_id { User.make.id }
 end
+
+# 
+# Others
+#
+RateManyPage.blueprint {}
+
+Poll.blueprint {}

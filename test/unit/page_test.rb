@@ -91,7 +91,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_discussion
-    @page = create_page :title => 'this is a very fine test page'
+    @page = WikiPage.make :title => 'this is a very fine test page'
     assert discussion = Discussion.create
     assert discussion.valid?, discussion.errors.full_messages
     #discussion.pages << @page
@@ -120,11 +120,8 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_denormalized
-    user = User.find 3
-    group = Group.find 3
-    page = create_page :title => 'oak tree'
-    page.add(group, :access => :admin)
-    page.save
+    group = Group.make
+    page = Page.make_owned_by :owner => group, :title => 'oak tree'
     assert_equal group.name, page.owner_name, 'page should have a denormalized copy of the group name'
   end
 
@@ -136,7 +133,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_delete_and_undelete
-    page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
+    page = RateManyPage.make :title => 'longer lived', :data => Poll.make
     poll_id = page.data.id
     assert_equal page.flow, nil, 'a new page should have flow nil'
     page.delete
@@ -251,9 +248,8 @@ class PageTest < Test::Unit::TestCase
 
   def test_attachment_options
     asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
-    page = Page.create! :title => 'page with attachments' do |page|
-      page.add_attachment! asset, :filename => 'picture', :cover => true
-    end
+    page = Page.make :title => 'page with attachments'
+    page.add_attachment! asset, :filename => 'picture', :cover => true
 
     assert_equal 'picture.jpg', page.assets.first.filename
     assert_equal asset, page.cover
@@ -285,11 +281,11 @@ class PageTest < Test::Unit::TestCase
 
   def create_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
-    Page.create(defaults.merge(options))
+    Page.make(defaults.merge(options))
   end
 
   def build_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
-    Page.new(defaults.merge(options))
+    Page.make_unsaved(defaults.merge(options))
   end
 end

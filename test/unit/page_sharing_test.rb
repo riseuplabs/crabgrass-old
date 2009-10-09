@@ -88,10 +88,11 @@ class PageSharingTest < Test::Unit::TestCase
   end
 
   def test_add_page
-    user = users(:kangaroo)
+    user = User.make
+  
     page = nil
     assert_nothing_raised do
-      page = Page.create!(:title => 'fun fun')
+      page = Page.make(:title => 'fun fun')
     end
 
     page.add(user, :access => :edit)

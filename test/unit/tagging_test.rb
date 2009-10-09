@@ -34,8 +34,8 @@ class TaggingTest < Test::Unit::TestCase
   end
 
   def test_users_tag_cache
-    user = User.create :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx'
-    page = Page.create :title => 'hi'
+    user = User.make :login => 'fishy', :password => 'xxxxxx', :password_confirmation => 'xxxxxx'
+    page = Page.make :title => 'hi'
     page.tag_list = 'one, two'
     page.save!
 
