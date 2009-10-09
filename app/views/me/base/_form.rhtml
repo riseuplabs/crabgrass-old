@@ -7,6 +7,9 @@
 <p><label for="user_email"><%= "Email"[:email] %></label><br/>
 <%= text_field 'user', 'email'  %></p>
 
+<p><label for="user_receive_notifications"><%= "Receive Notifications"[:receive_notifications] %></label><br/>
+<%= select 'user', 'receive_notifications', [["None", ""], ["Single","Single"], ["Digest","Digest"]]   %></p>
+
 <p><label for="user_language"><%= "Language"[:language] %></label><br/>
 <%= select 'user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p>
 

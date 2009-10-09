@@ -7,7 +7,7 @@ class PageHistory < ActiveRecord::Base
 
   def self.send_pending_notifications
     pending_notifications.each do |page_history|
-      recipients(page_history).each do |user|
+      recipients(page_history, "Single").each do |user|
         Mailer.deliver_send_watched_notification(user, page_history)
       end
       page_history.update_attribute :notification_sent_at, Time.now
@@ -18,10 +18,10 @@ class PageHistory < ActiveRecord::Base
     PageHistory.find :all, :conditions => {:notification_sent_at => nil}
   end
 
-  def self.recipients(page_history)
+  def self.recipients(page_history, method)
     users_watching_ids = UserParticipation.find(:all, :conditions => {:page_id => page_history.page.id, :watch => true}).map(&:user_id)
     users_watching_ids.delete(page_history.user.id)
-    User.find :all, :conditions => ["id in (?)", users_watching_ids]
+    User.find :all, :conditions => ["receive_notifications = (?) and id in (?)", method, users_watching_ids]
   end
 end
 

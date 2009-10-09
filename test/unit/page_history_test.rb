@@ -26,14 +26,31 @@ class PageHistoryTest < Test::Unit::TestCase
     assert_equal @page.page_history.last, PageHistory.last
   end
 
-  def test_recipients
-    user_a = User.make :login => "user_a"; user_b = User.make :login => "user_b"
+  def test_recipients_for_single_notifications
+    user   = User.make :login => "user", :receive_notifications => nil
+    user_a = User.make :login => "user_a", :receive_notifications => "Digest"
+    user_b = User.make :login => "user_b", :receive_notifications => "Single"
+    user_c = User.make :login => "user_c", :receive_notifications => "Single"
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
     User.current = user_b
     UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
-    assert PageHistory::StartWatching.recipients(PageHistory::StartWatching.last).include?(user_a)
-    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last).include?(user_b)
+    User.current = user_c
+    UserParticipation.make_unsaved(:page => @page, :user => user_c, :watch => true).save!
+
+    assert_equal 1, PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").count
+
+    # this should not receive notifications because he has it disabled 
+    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user)
+
+    # this should not receive notifications because he has Digest enabled 
+    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_a)
+
+    # this should receibe notifications because he has it enabled
+    assert PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_b)
+
+    # this should not receive_notifications because he was the performer
+    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_c)
   end  
 
   def test_pending_notifications
@@ -41,7 +58,7 @@ class PageHistoryTest < Test::Unit::TestCase
   end
 
   def test_send_pending_notifications
-    user_a = User.make 
+    user_a = User.make :receive_notifications => "Single" 
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
     PageHistory.send_pending_notifications

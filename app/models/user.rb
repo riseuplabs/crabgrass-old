@@ -21,6 +21,12 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email, :if => :should_validate_email
 
+  before_validation :validates_receive_notifications
+  
+  def validates_receive_notifications
+    self.receive_notifications = nil if ! ['Single', 'Digest'].include?(self.receive_notifications)
+  end
+
   validates_as_email :email
   before_validation 'self.email = nil if email.empty?'
   # ^^ makes the validation succeed if email == ''
