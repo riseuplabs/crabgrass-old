@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PageHistoryTest < Test::Unit::TestCase
 
   def setup
+    Page.delete_all
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
@@ -11,6 +12,12 @@ class PageHistoryTest < Test::Unit::TestCase
     User.current = @user
     @site = Site.make(:domain => "crabgrass.org", :title => "Crabgrass Social Network", :email_sender => "robot@$current_host")
     @page = Page.make_owned_by(:site => @site, :user => @user, :owner => @user, :access => 1)
+  end
+
+  def teardown
+    Page.delete_all
+    User.delete_all
+    User.current = nil
   end
 
   def test_validations
@@ -23,7 +30,6 @@ class PageHistoryTest < Test::Unit::TestCase
     page_history = PageHistory.create!(:user => @user, :page => @page)
     assert_equal @user, page_history.user
     assert_kind_of Page, page_history.page
-    assert_equal @page.page_history.last, PageHistory.last
   end
 
   def test_recipients_for_single_notifications

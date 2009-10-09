@@ -5,9 +5,14 @@ class PageTest < Test::Unit::TestCase
   fixtures :pages, :users, :groups, :polls
 
   def setup
+    PageHistory.delete_all
   end
 
-  def test_the_page_history_order
+  def teardown
+    PageHistory.delete_all
+  end
+
+  def test_page_history_order
     user = User.make
     page = WikiPage.make :owner => user 
     action_1 = PageHistory::AddStar.create!(:page => page, :user => user, :created_at => "2007-10-10 10:10:10")
