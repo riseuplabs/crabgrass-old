@@ -34,6 +34,12 @@ module PageExtension::Assets
 
   public
 
+  # if a page has a cover that's not an Asset record
+  # page subclasses should override this method should return its location
+  def external_cover_url
+    nil
+  end
+
   # Adds an asset as an attachment to this page. The asset may be in the form of
   # a Hash or an Asset, either already created or new_record?()
   #

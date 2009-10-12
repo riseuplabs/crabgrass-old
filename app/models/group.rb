@@ -49,12 +49,11 @@ class Group < ActiveRecord::Base
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
     group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
-    joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
     # The grouping serves as a distinct.
     # A DISTINCT term in the select seems to get striped of by rails.
     # The other way to solve duplicates would be to put profiles.friend = true
     # in other side of OR
-    {:joins => joins, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
+    {:include => :profiles, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
 
   # finds groups that are of type Group (but not Committee or Network)

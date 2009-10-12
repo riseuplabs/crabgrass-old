@@ -31,7 +31,8 @@ class Groups::DirectoryController < Groups::BaseController
   end
 
   def most_active
-    @groups = Group.only_type(@group_type).most_visits.paginate(:all, :page => params[:page])
+    user = logged_in? ? current_user : nil
+    @groups = Group.only_type(@group_type).visible_by(user).most_visits.paginate(:all, :page => params[:page])
     render_list
   end
 

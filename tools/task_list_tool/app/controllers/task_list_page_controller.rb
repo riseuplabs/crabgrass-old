@@ -39,6 +39,7 @@ class TaskListPageController < BasePageController
     @task.name = 'untitled' unless @task.name.any?
     @task.task_list = @list
     @task.save
+    render :template => 'task_list_page/create_task'
   end
 
   # ajax only, returns rjs
@@ -47,6 +48,7 @@ class TaskListPageController < BasePageController
     @task = @list.tasks.find(params[:id])
     @task.completed = true
     @task.move_to_bottom # also saves task
+    render :template => 'task_list_page/mark_task_complete'
   end
 
   # ajax only, returns rjs
@@ -55,6 +57,7 @@ class TaskListPageController < BasePageController
     @task = @list.tasks.find(params[:id])
     @task.completed = false
     @task.move_to_bottom # also saves task
+    render :template => 'task_list_page/mark_task_pending'
   end
 
   # ajax only, returns nothing

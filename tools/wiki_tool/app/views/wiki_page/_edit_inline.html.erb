@@ -13,9 +13,10 @@
       <%= submit_tag("Save", :name => 'save') unless @wiki_inline_error %>
 
       <%= button_to_remote 'Cancel',
-          :loading => show_spinner('save'),
+          {:loading => show_spinner('save'),
           :url => page_url(@page, :action => 'update', :section => section, :cancel => true),
-          :method => 'put' %>
+          :method => 'put'},
+          {:name => 'ajax_cancel'} %>
 
       <%= spinner('save') %>
       <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
