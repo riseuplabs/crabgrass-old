@@ -26,8 +26,7 @@
       <%= check_box_tag 'remember_me' %></p>
       <%- end -%>
       <% if may_signup? %>
-        <%#= link_to 'Need a new account?'[:signup_link], { :controller => '/account', :action => 'signup', :redirect => params[:redirect] } %>
-        <%= link_to 'Need a new account?'[:signup_link], "http://mruyouthplatform.org/?page_id=55" %>
+        <%= link_to 'Need a new account?'[:signup_link], { :controller => '/account', :action => 'signup', :redirect => params[:redirect] } %>
         <br/>
       <% end %>
       <%= link_to 'I forgot my password'[:forgot_password_link], :controller => '/account', :action => 'forgot_password' %>
