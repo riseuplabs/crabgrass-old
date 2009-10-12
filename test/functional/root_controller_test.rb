@@ -70,3 +70,5 @@ class RootControllerTest < ActionController::TestCase
   end
 end
 
+end
+

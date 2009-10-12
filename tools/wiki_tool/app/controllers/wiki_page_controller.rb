@@ -21,6 +21,9 @@ class WikiPageController < BasePageController
   before_filter :ensure_desired_locked_section_exists, :only => [:edit, :update]
   # if we have some section locked, but we don't need it. we should drop the lock
   before_filter :release_old_locked_section!, :only => [:edit, :update]
+
+  before_render :setup_title_box
+
   ##
   ## ACCESS: public or :view
   ##
@@ -195,8 +198,12 @@ class WikiPageController < BasePageController
 
   def setup_view
     @show_attach = true
+  end
+
+  def setup_title_box
     unless @wiki.nil? or @wiki.document_open_for?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
+      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title')
     end
   end
 

@@ -54,11 +54,11 @@ module ProfileMethods
 
   # a shortcut to grab the 'private' profile
   def private
-    @private_profile ||= (find_by_access(:friend) || create(:friend => true))
+    @private_profile ||= (find_by_access(:friend) || create_or_build(:friend => true))
   end
 
   def hidden
-    @hidden_profile ||= (find_by_access || create)
+    @hidden_profile ||= (find_by_access || create_or_build)
   end
 
   def create_or_build(args={})

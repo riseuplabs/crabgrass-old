@@ -1,15 +1,14 @@
 <% @title_box = '<h1>Chat Messages Moderation</h1>' %>
 
 <% @info_box = capture do %>
-  <div style="display:inline;'">
-    <%= "All Chat Messages:"%>&nbsp;
-    <%= link_to_active( 'all', { :controller => 'admin/chat_messages', :action => 'index', :view => 'all' }, @current_view == 'all' )%>&nbsp;
+  <div style="display:inline; float:right;">
+    <%= link_to_see_all_flags_by_type('chats') %>
   </div>
-  <div style="display:inline; margin-left:2em;'">
+  <div style="display:inline; margin-left:0;">
     <%= "Flagged Messages:"%>&nbsp;
-    <%= tab_link('new')%>&nbsp;
-    <%= tab_link('vetted')%>&nbsp;
-    <%= tab_link('deleted')%>
+    <span class="small_icon flag_orange_16"><%= tab_link('new')%></span>&nbsp;
+    <span class="small_icon flag_green_16"><%= tab_link('vetted')%></span>&nbsp;
+    <span class="small_icon flag_red_16"><%= tab_link('deleted')%></span>
   </div>
 <% end %>
 
