@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
+# WARNING:
+# this test are not isolated since their are using instance objects that for example create a page
+# involve create an user participation and that makes create a page_history object, so when you read
+# the tests some counts for example seems to not have sense, but this is because of that already created data.
 class PageHistoryTest < Test::Unit::TestCase
 
   def setup
@@ -32,36 +36,83 @@ class PageHistoryTest < Test::Unit::TestCase
     assert_kind_of Page, page_history.page
   end
 
+  def test_recipients_for_digest_notifications
+    user   = User.make :login => "user", :receive_notifications => nil
+    user_a = User.make :login => "user_a", :receive_notifications => "Single"
+    user_b = User.make :login => "user_b", :receive_notifications => "Digest"
+    user_c = User.make :login => "user_c", :receive_notifications => "Digest"
+
+    UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
+    UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
+    UserParticipation.make_unsaved(:page => @page, :user => user_c, :watch => true).save!
+
+    assert_equal 2, PageHistory.recipients_for_digest_notifications(@page).count
+
+    # this should not receive notifications because he has it disabled 
+    assert !PageHistory.recipients_for_digest_notifications(@page).include?(user)
+
+    # this should not receive notifications because he has Single enabled 
+    assert !PageHistory.recipients_for_digest_notifications(@page).include?(user_a)
+
+    # this should receibe notifications because he has it enabled
+    assert PageHistory.recipients_for_digest_notifications(@page).include?(user_b)
+    assert PageHistory.recipients_for_digest_notifications(@page).include?(user_c)
+  end
+
+  def test_send_digest_pending_notifications
+    PageHistory.delete_all
+    user_a = User.make :receive_notifications => "Digest" 
+    user_b = User.make :receive_notifications => "Digest" 
+    user_c = User.make :receive_notifications => "Single" 
+
+    UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
+    UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
+    UserParticipation.make_unsaved(:page => @page, :user => user_c, :watch => true).save!
+
+    PageHistory.delete_all
+
+    @page.participation_for_user(user_a).update_attribute :star, true
+    @page.participation_for_user(user_b).update_attribute :star, true
+    @page.participation_for_user(user_c).update_attribute :star, true
+
+    assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
+    assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
+    PageHistory.send_digest_pending_notifications
+    assert_equal 2, ActionMailer::Base.deliveries.count
+    assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
+  end
+
+  def test_pending_digest_notifications_by_page
+    assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
+  end
+
   def test_recipients_for_single_notifications
     user   = User.make :login => "user", :receive_notifications => nil
     user_a = User.make :login => "user_a", :receive_notifications => "Digest"
     user_b = User.make :login => "user_b", :receive_notifications => "Single"
     user_c = User.make :login => "user_c", :receive_notifications => "Single"
-    User.current = user_a
+    
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
-    User.current = user_b
     UserParticipation.make_unsaved(:page => @page, :user => user_b, :watch => true).save!
-    User.current = user_c
     UserParticipation.make_unsaved(:page => @page, :user => user_c, :watch => true).save!
 
-    assert_equal 1, PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").count
+    assert_equal 2, PageHistory.recipients_for_single_noification(PageHistory.last).count
+    
+    PageHistory.last.update_attribute(:user, user_c)
+    assert_equal 1, PageHistory.recipients_for_single_noification(PageHistory.last).count
 
     # this should not receive notifications because he has it disabled 
-    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user)
+    assert !PageHistory.recipients_for_single_noification(PageHistory.last).include?(user)
 
     # this should not receive notifications because he has Digest enabled 
-    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_a)
+    assert !PageHistory.recipients_for_single_noification(PageHistory.last).include?(user_a)
 
     # this should receibe notifications because he has it enabled
-    assert PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_b)
+    assert PageHistory.recipients_for_single_noification(PageHistory.last).include?(user_b)
 
     # this should not receive_notifications because he was the performer
-    assert !PageHistory::StartWatching.recipients(PageHistory::StartWatching.last, "Single").include?(user_c)
+    assert !PageHistory.recipients_for_single_noification(PageHistory.last).include?(user_c)
   end  
-
-  def test_pending_notifications
-    assert_equal 1, PageHistory.pending_notifications.size
-  end
 
   def test_send_pending_notifications
     user_a = User.make :receive_notifications => "Single" 
@@ -71,4 +122,9 @@ class PageHistoryTest < Test::Unit::TestCase
     assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
   end
+
+  def test_pending_notifications
+    assert_equal 1, PageHistory.pending_notifications.size
+  end
+
 end

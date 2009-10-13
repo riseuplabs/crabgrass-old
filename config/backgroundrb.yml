@@ -34,6 +34,8 @@
   :cron_worker:
     :send_pending_notifications_for_watched_pages:
       :trigger_args: <%= five_minutes %>
+    :send_pending_digest_notifications_for_watched_pages:
+      :trigger_args: <%= daily %>
     :clean_fragment_cache:
       :trigger_args: <%= daily %>
     :clean_session_cache:

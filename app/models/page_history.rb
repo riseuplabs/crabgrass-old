@@ -7,21 +7,48 @@ class PageHistory < ActiveRecord::Base
 
   def self.send_pending_notifications
     pending_notifications.each do |page_history|
-      recipients(page_history, "Single").each do |user|
+      recipients_for_single_noification(page_history).each do |user|
         Mailer.deliver_send_watched_notification(user, page_history)
       end
       page_history.update_attribute :notification_sent_at, Time.now
     end
   end
 
+  def self.send_digest_pending_notifications
+    pending_digest_notifications_by_page.each do |page_id, page_histories|
+      page = Page.find(page_id)
+      recipients_for_digest_notifications(page).each do |user|
+        Mailer.deliver_send_digest_pending_notifications(user, page, page_histories)
+      end
+      PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
+    end
+  end
+
+  def self.pending_digest_notifications_by_page
+    histories = {}
+    PageHistory.find(:all, :order => "created_at desc", :conditions => {:notification_digest_sent_at => nil}).each do |page_history|
+      histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
+      histories[page_history.page.id] << page_history
+    end
+    histories
+  end
+
   def self.pending_notifications
     PageHistory.find :all, :conditions => {:notification_sent_at => nil}
   end
 
-  def self.recipients(page_history, method)
-    users_watching_ids = UserParticipation.find(:all, :conditions => {:page_id => page_history.page.id, :watch => true}).map(&:user_id)
-    users_watching_ids.delete(page_history.user.id)
-    User.find :all, :conditions => ["receive_notifications = (?) and id in (?)", method, users_watching_ids]
+  def self.recipients_for_page(page)
+    UserParticipation.find(:all, :conditions => {:page_id => page.id, :watch => true}).map(&:user_id)
+  end
+  
+  def self.recipients_for_digest_notifications(page)
+    User.find :all, :conditions => ["receive_notifications = 'Digest' and id in (?)", recipients_for_page(page)]
+  end
+
+  def self.recipients_for_single_noification(page_history)
+    users_watching_ids = recipients_for_page(page_history.page) 
+    users_watching_ids.delete(page_history.user.id) 
+    User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
   end
 end
 
