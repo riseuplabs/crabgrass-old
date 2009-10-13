@@ -171,10 +171,10 @@ class PageTrackingObserverTest < Test::Unit::TestCase
   def test_update_content
     page = WikiPage.make(:data => Wiki.new(:user => @pepe, :body => ""))
     wiki = Wiki.find page.data_id
-    previous_page_history_count = page.page_history.count
-    wiki.update_section!(:document, @pepe, 1, "content")
+    previous_page_history = page.page_history.count
+    wiki.update_section!(:document, @pepe, 1, "dsds")
     assert_equal PageHistory::UpdatedContent, PageHistory.last.class
-    assert_equal previous_page_history_count + 1, page.page_history.count 
+    assert_equal previous_page_history + 1, page.page_history.count 
     assert_equal @pepe, PageHistory.last.user
   end
 
