@@ -1,4 +1,4 @@
-Gibberize
+Translator
 ==========
 
 This crabgrass mod allow add a translation user interface to crabgrass.
@@ -7,7 +7,7 @@ Usage
 =======
 
 edit config/routes.rb
-  map.from_plugin :gibberize
+  map.from_plugin :translator
 
 Specify the logins you want to be translators in config/sites.yml:
 
@@ -27,25 +27,25 @@ default:
 
 Use "translators" and/or "translation_group"
 
-Uncomment gibberize on config/mods_enabled.list
+Uncomment translator on config/mods_enabled.list
 
-Run Gibberize Migrations:
+Run Translator Migrations:
 
 $ ./script/generate plugin_migration
 $ rake db:migrate
 
-Populate the gibberize database with the contents of RAILS_ROOT/lang/*.yml:
+Populate the translator database with the contents of RAILS_ROOT/lang/*.yml:
 
 $ this doesn't exist yet.
 
-restart rails and browse to: http://localhost:3000/gibberize
+restart rails and browse to: http://localhost:3000/translator
 
 
-Running Gibberize in development mode
+Running Translator in development mode
 =====================================
 
 Suppose you make a change to the text of crabgrass and now you want this
-key to appear in gibberize. You can manually add the key in the gibberize
+key to appear in translator. You can manually add the key in the translator
 ui, or you can do this to auto-popuplate the database with detected keys:
 
    rake cg:l10n:extract_keys
@@ -54,16 +54,16 @@ This will generate the file lang/defaults_from_source.yml. Then, if you run:
 
    rake cg:l10n:load_keys
 
-It will populate the gibberize database with these keys.
+It will populate the translator database with these keys.
 
-In development mode you may want to load Gibberize fixtures:
+In development mode you may want to load Translator fixtures:
 $ rake db:fixtures:plugins:load
 
 Translating into piglatin
 =========================
 
-It can be very useful to create 'dummy' translations of every key so you can 
-visually scan a page and see what strings have yet to be localized. 
+It can be very useful to create 'dummy' translations of every key so you can
+visually scan a page and see what strings have yet to be localized.
 
 Run this once:
 
@@ -77,13 +77,13 @@ Then, every time you modify en_US.yml:
 Translation workflow
 ====================
 
-Step 1: load .yml files into the gibberize database
+Step 1: load .yml files into the translator database
 
   rake cg:l10n:load_translations
 
-Step 2: translate using the gibberize UI
+Step 2: translate using the translator UI
 
-  http://localhost:3000/gibberize
+  http://localhost:3000/translator
 
 Step 3: export these database translations to .yml files:
 
@@ -93,7 +93,7 @@ Step 3: export these database translations to .yml files:
 Credits
 =======
 
-The Gibberize mod is based on Gibberize <http://code.autistici.org/project/gibberize>
+The Translator mod is based on Gibberize <http://code.autistici.org/project/gibberize>
 and the SuperAdmin mod.
 Turned into a mod by Pietro Ferrari <pietro@riseup.net>
 
@@ -111,8 +111,8 @@ NOTES
 <script type="text/javascript">
   google.load("language", "1");
   function initialize() {
-    google.language.translate('<%= original %>', 
-                              '<%= crabgrass_default_language.code[0,2] %>', 
+    google.language.translate('<%= original %>',
+                              '<%= crabgrass_default_language.code[0,2] %>',
                               '<%= @translation.language.code[0,2] %>',
       function(result) {
         var translated = document.getElementById("googletranslate");

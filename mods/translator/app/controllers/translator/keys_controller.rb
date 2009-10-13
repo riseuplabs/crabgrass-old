@@ -1,4 +1,4 @@
-class Gibberize::KeysController < Gibberize::BaseController
+class Translator::KeysController < Translator::BaseController
 
   # GET /keys
   def index

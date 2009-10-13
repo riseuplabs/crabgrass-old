@@ -1,4 +1,4 @@
-module Gibberize::BaseHelper
+module translator::BaseHelper
   def flash_notice
     "<div class='errorExplanation'>#{flash[:notice]}</div>" if flash[:notice]
   end
@@ -21,7 +21,7 @@ module Gibberize::BaseHelper
   # here.
   def link_to_active(link_label, url_hash, active=nil)
     if url_hash.is_a? Hash and active.nil?
-      url_hash[:controller] = "gibberize/" + url_hash[:controller]
+      url_hash[:controller] = "translator/" + url_hash[:controller]
       url_hash[:action] = 'index' if url_hash[:action].nil?
       selected = url_hash.inject(true) do |selected, p|
         param, value = p

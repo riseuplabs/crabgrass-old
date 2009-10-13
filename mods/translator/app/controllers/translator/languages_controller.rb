@@ -1,4 +1,4 @@
-class Gibberize::LanguagesController < Gibberize::BaseController
+class Translator::LanguagesController < Translator::BaseController
   # GET /languages
   # GET /languages.xml
   def index

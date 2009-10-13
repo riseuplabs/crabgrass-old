@@ -1,15 +1,15 @@
-class Gibberize::BaseController < ApplicationController
+class Translator::BaseController < ApplicationController
 
   include FlashMessageHelper
   include AuthenticatedSystem
 
-  layout 'gibberize'
-  helper 'gibberize/keys', 'gibberize/languages', 'gibberize/translations', 'gibberize/base'
+  layout 'translator'
+  helper 'translator/keys', 'translator/languages', 'translator/translations', 'translator/base'
   before_filter :login_required
 
-  include Gibberize::KeysHelper
-  include Gibberize::LanguagesHelper
-  include Gibberize::TranslationsHelper
+  include Translator::KeysHelper
+  include Translator::LanguagesHelper
+  include Translator::TranslationsHelper
 
   def index
     @languages = LANGUAGES.values
