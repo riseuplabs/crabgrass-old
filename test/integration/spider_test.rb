@@ -3,8 +3,6 @@ require "#{File.dirname(__FILE__)}/../test_helper"
 class SpiderTest < ActionController::IntegrationTest
   include Caboose::SpiderIntegrator
 
-  fixtures :users, :groups, :pages, :tasks, :profiles
-
   def test_spider
     get '/'
     assert_response :success

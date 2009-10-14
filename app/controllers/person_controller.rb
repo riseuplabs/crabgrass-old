@@ -111,6 +111,7 @@ class PersonController < ApplicationController
         elsif params[:profile] == 'public'
           @profile = @user.profiles.public
         end
+        return true
       else
         @profile = @user.profiles.visible_by(current_user)
       end

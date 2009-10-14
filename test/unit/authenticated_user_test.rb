@@ -4,6 +4,16 @@ class AuthenticatedUserTest < Test::Unit::TestCase
 
   fixtures :users
 
+  def test_last_seen
+    quentin = users(:quentin)
+    last_seen_at = quentin.last_seen_at
+    quentin.seen!
+    assert_not_equal quentin.last_seen_at, last_seen_at
+    last_seen_at = quentin.last_seen_at
+    quentin.seen!
+    assert_equal quentin.last_seen_at, last_seen_at
+  end
+
   def test_should_create_user
     assert_difference 'User.count' do
       user = create_user

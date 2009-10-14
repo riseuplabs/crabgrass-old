@@ -1,12 +1,17 @@
 <%=
 Formy.tabs do |f|
   f.tab do |t|
-    t.label :permissions.t
-    t.show_tab 'permissions_tab'
+    t.label "Information"[:information]
+    t.show_tab 'information_tab'
     t.selected true
   end
   f.tab do |t|
-    t.label :participation.t
+    t.label "Permissions"[:permissions]
+    t.show_tab 'permissions_tab'
+    t.selected false
+  end
+  f.tab do |t|
+    t.label "Participation"[:participation]
     t.show_tab 'participation_tab'
     t.selected false
   end

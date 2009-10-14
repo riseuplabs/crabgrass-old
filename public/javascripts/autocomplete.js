@@ -25,6 +25,7 @@ var Autocomplete = function(el, options, id){
   this.onChangeInterval = null;
   this.ignoreValueChange = false;
   this.messageDisplayed = false;
+  this.ignoreUpdates = false;
   this.serviceUrl = options.serviceUrl;
   this.options = {
     autoSubmit:false,
@@ -95,8 +96,14 @@ Autocomplete.prototype = {
     Event.observe(this.el, 'keyup', this.onKeyUp.bind(this));
     Event.observe(this.el, 'blur', this.enableKillerFn.bind(this));
     Event.observe(this.el, 'click', this.clearMessage.bind(this));
-    /* If we have preloaded data we might want to display it on focus.*/
+
+    // If we have preloaded data we might want to display it on focus.
     Event.observe(this.el, 'focus', this.fixPosition.bind(this));
+
+    // when we no longer have focus, ignore updates from prior ajax requests.
+    Event.observe(this.el, 'blur', function(){this.ignoreUpdates = true;}.bind(this));
+    Event.observe(this.el, 'focus', function(){this.ignoreUpdates = false;}.bind(this));
+
     this.container.setStyle({ maxHeight: this.options.maxHeight + 'px' });
     if (this.options.message != "") {
       this.el.setStyle({ color: '#808080' });
@@ -315,7 +322,9 @@ Autocomplete.prototype = {
     }.bind(this));
     this.enabled = true;
     this.fixPosition();
-    this.container.update(content.join('')).show();
+    this.container.update(content.join(''));
+    if (!this.ignoreUpdates)
+      this.container.show();
   },
 
   displaySuggestion: function(value, i, data) {

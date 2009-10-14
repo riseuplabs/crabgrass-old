@@ -153,6 +153,8 @@ namespace :crabgrass do
 
     #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.ico #{current_release}/public/favicon.ico"
     #run "ln -nfs #{deploy_to}/#{shared_dir}/css/favicon.png #{current_release}/public/favicon.png"
+    run "rm -rf #{current_release}/db/sphinx"
+    run "ln -nfs #{shared_path}/sphinx #{current_release}/db/sphinx"
   end
 
   desc "refresh the staging database"

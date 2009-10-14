@@ -44,7 +44,7 @@ module ApplicationHelper
     end
   end
 
-  ## coverts bytes into something more readable
+  ## converts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
@@ -123,9 +123,9 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next], :inner_window => 2}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next], :inner_window => 2}
     end
     will_paginate(things, defaults.merge(options))
   end

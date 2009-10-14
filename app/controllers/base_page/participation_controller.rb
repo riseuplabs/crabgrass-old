@@ -12,7 +12,7 @@ class BasePage::ParticipationController < BasePage::SidebarController
 
   before_filter :login_required
   verify :method => :post, :only => [:move, :set_owner]
-  helper 'base_page/participation', 'base_page/share'
+  helper 'base_page/participation', 'base_page/share', 'autocomplete'
 
   ##
   ## Participation CRUD
@@ -87,11 +87,11 @@ class BasePage::ParticipationController < BasePage::SidebarController
   end
 
   def show
-     if params[:popup]
-       render :partial => 'base_page/participation/' + params[:name] + '_popup'
-     elsif params[:cancel]
-       close_popup
-     end
+    if params[:popup]
+      render :partial => 'base_page/participation/' + params[:name] + '_popup'
+    elsif params[:cancel]
+      close_popup
+    end
   end
 
   ##
@@ -145,36 +145,16 @@ class BasePage::ParticipationController < BasePage::SidebarController
   ## hmm... this is not technically part of the participation
   ##
 
-  # moves this page to a new group.
-  def move
-    if params[:cancel]
-      close_popup
-    elsif params[:group_id].any?
-      group = if params[:group_id].match(/^\d+$/)
-                Group.find params[:group_id]
-              else
-                Group.find_by_name params[:group_id]
-              end
-      raise PermissionDenied.new unless current_user.member_of?(group)
-      @page.owner = group
+  def set_owner
+    owner = Entity.find_by_name!(params[:owner_name])
+    if owner and owner != current_user and !current_user.member_of?(owner)
+      raise_denied
+    end
+    @page.owner = owner
+    if @page.owner_name_changed?
       current_user.updated(@page)
       @page.save!
-      clear_referer(@page)
-      redirect_to page_url(@page)
     end
-  end
-
-  # this is very similar to move.
-  # only allow changing the owner to someone who is already an admin
-  def set_owner
-    if params[:owner].any?
-      owner = (User.on(current_site).find_by_login(params[:owner]) || Group.find_by_name(params[:owner]))
-      raise PermissionDenied.new unless owner.may?(:admin,@page)
-      @page.owner = owner
-    else
-      @page.owner = nil
-    end
-    @page.save!
     clear_referer(@page)
     redirect_to page_url(@page)
   end

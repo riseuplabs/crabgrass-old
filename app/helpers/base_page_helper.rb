@@ -218,9 +218,10 @@ module BasePageHelper
 
   def show_popup_link(options)
     options[:controller] ||= options[:name]
+    show_popup = options[:show_popup] || 'show'
     popup_url = url_for({
       :controller => "base_page/#{options.delete(:controller)}",
-      :action => 'show',
+      :action => show_popup,# 'show',
       :popup => true,
       :page_id => @page.id,
       :name => options.delete(:name)
@@ -275,11 +276,11 @@ module BasePageHelper
     end
   end
 
-  def move_line
-    if may_move_page?
-      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
-    end
-  end
+#  def move_line
+#    if may_move_page?
+#      popup_line(:name => 'move', :label => "Move :page_class"[:move_page_link] % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
+#    end
+#  end
 
   def details_line(id='details')
     if id == 'details'
@@ -328,5 +329,4 @@ module BasePageHelper
       "None"[:none]
     end
   end
-
 end

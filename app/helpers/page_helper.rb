@@ -474,58 +474,6 @@ module PageHelper
     options_for_select(['unread','pending','starred'].to_localized_select, selected)
   end
 
-  # returns option tags usable in a select menu to choose a group from the
-  # groups current_user is a member of or has access to.
-  # accepted options:
-  #  :group -- a group object to make selected
-  #  :include_me -- if true, include option for 'me'
-  #  :include_none -- if true, include an option for 'none'
-  def options_for_page_owner(options={})
-    groups = current_user.primary_groups_and_networks.sort { |a, b|
-       a.display_name.downcase <=> b.display_name.downcase
-    }
-    html = []
-
-    if options[:group]
-      selected_group = options[:group].name
-    elsif params[:group]
-      selected_group = params[:group].sub(' ', '+') # (sub '+' for committee names)
-    elsif params[:page] and params[:page].is_a?(Hash) and params[:page][:owner]
-      selected_group = params[:page][:owner]
-    else
-      selected_group = nil
-    end
-
-    if options.key?(:group) and options[:group].nil?
-      # if this method was called with :group => nil, a group must have been intended
-      # but the group was not there, so we include none
-      options[:include_none] = true
-    elsif !Conf.ensure_page_owner?
-      options[:include_none] = true
-    end
-
-    if options[:include_none]
-      html << content_tag(:option, "None"[:none], :value => "", :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic')
-      selected_group = 'none'
-    end
-
-    if options[:include_me]
-      me_label = "%s (%s)" % ['Me'[:only_me], current_user.name]
-      html << content_tag(:option, me_label, :value => current_user.name, :class => 'spaced', :selected => !selected_group, :style => 'font-style: italic' )
-    end
-
-    groups.collect do |group|
-      selected = selected_group == group.name ? 'selected' : nil
-      html << content_tag( :option, truncate(group.display_name,40), :value => group.name, :class => 'spaced', :selected => selected )
-      group.committees.each do |committee|
-        selected = selected_group == committee.name ? 'selected' : nil
-        html << content_tag( :option, truncate(committee.display_name,40), :value => committee.name, :class => 'indented', :selected => selected)
-      end
-    end
-
-    html.join("\n")
-  end
-
   ##
   ## PAGE CREATION
   ##

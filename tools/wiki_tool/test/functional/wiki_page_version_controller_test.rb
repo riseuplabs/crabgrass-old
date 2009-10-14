@@ -21,12 +21,12 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     # create versions
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
       login_as user
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
+      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" / i)
     end
 
     # create another modification by the last user
     # should not create a new version
-    pages(:wiki).data.smart_save!(:user => users(:purple), :body => "text 6 for the wiki")
+    pages(:wiki).data.update_document!(users(:purple), 6, "text 6 for the wiki")
 
     login_as :orange
     pages(:wiki).data.versions.reload
@@ -48,7 +48,7 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
     login_as :orange
 
     (1..5).zip([:orange, :yellow, :blue, :red, :purple]).each do |i, user|
-      pages(:wiki).data.smart_save!(:user => users(user), :body => "text %d for the wiki" / i)
+      pages(:wiki).data.update_document!(users(user), i, "text %d for the wiki" / i)
     end
 
     post :diff, :page_id => pages(:wiki).id, :id => "4-5"
@@ -61,11 +61,14 @@ class WikiPageVersionControllerTest < Test::Unit::TestCase
 
   def test_revert
     login_as :orange
-    pages(:wiki).data.smart_save!(:user => users(:blue), :body => "version 1")
-    pages(:wiki).data.smart_save!(:user => users(:yellow), :body => "version 2")
+    pages(:wiki).data.update_document!(users(:blue), 1, "version 1")
+    pages(:wiki).data.update_document!(users(:yellow), 2, "version 2")
     post :revert, :page_id => pages(:wiki).id, :id => 1
-    assert_response :success
-    assert_select 'textarea', 'version 1'
+
+    wiki = Wiki.find(pages(:wiki).data.id)
+
+    assert_redirected_to @controller.page_url(assigns(:page), :action => 'show'), "revert should redirect to show wiki action"
+    assert_equal "version 1", wiki.body
   end
 
 end

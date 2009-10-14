@@ -71,7 +71,7 @@ module ImageHelper
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
     options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
-    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
+    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' class='#{options[:class]}' />"
   end
   def spinner_id(id)
     if id.is_a? ActiveRecord::Base
@@ -83,12 +83,12 @@ module ImageHelper
 
   def spinner_icon_on(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
-    "replace_class_name(#{target}, '#{icon}_16', 'spinner_icon')"
+    "replaceClassName(#{target}, '#{icon}_16', 'spinner_icon')"
   end
 
   def spinner_icon_off(icon, id)
     target = id ? "$('#{id}')" : 'eventTarget(event)'
-    "replace_class_name(#{target}, 'spinner_icon', '#{icon}_16')"
+    "replaceClassName(#{target}, 'spinner_icon', '#{icon}_16')"
   end
 
   def big_spinner()
@@ -152,7 +152,7 @@ module ImageHelper
   end
 
   def link_to_with_icon(icon, label, url, options={})
-    options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    options=options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
     if url
       link_to label, url, options
     else

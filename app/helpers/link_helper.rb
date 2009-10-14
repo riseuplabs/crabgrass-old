@@ -82,7 +82,7 @@ module LinkHelper
     name = options.delete(:name) || 'commit'
     value = options.delete(:value) || label
     accesskey = shortcut_key label
-    onclick = %Q<submit_form(this, "#{name}", "#{value}");>
+    onclick = %Q<submitForm(this, "#{name}", "#{value}");>
     if options[:confirm]
       onclick = %Q<if(confirm("#{options[:confirm]}")){#{onclick};}else{return
  false;}>

@@ -1,17 +1,25 @@
 <% if @wiki_inline_error %>
   <blockquote class="error"><%=h @wiki_inline_error %></blockquote>
 <% end %>
+<% rows = [word_wrap((markup||""), 80).count("\n")+4, 30].min %>
+<% form_remote_tag :loading => show_spinner('save'),
+  :url => page_url(@page, :action => 'update', :section => section),
+  :method => 'put' do -%>
 
-<% rows = [word_wrap((text||""), 80).count("\n")+4, 30].min %>
-<% form_remote_tag :loading => show_spinner('save'), 
-  :url => page_xurl(@page, :action => 'save_inline', :id => heading) do -%>
   <div class='fieldset'>
-    <%= text_area_tag 'body', text, :rows => rows, :cols => 60, :style => 'width:99%;'  %>
+    <%= text_area_tag 'wiki[body]', h(markup), :rows => rows, :cols => 60, :style => 'width:99%;', :id => wiki_body_id(@wiki)  %>
     <%= formatting_reference_link %>
     <div>
       <%= submit_tag("Save", :name => 'save') unless @wiki_inline_error %>
-      <%= submit_tag 'Cancel', :name => 'cancel' %>
+
+      <%= button_to_remote 'Cancel',
+          {:loading => show_spinner('save'),
+          :url => page_url(@page, :action => 'update', :section => section, :cancel => true),
+          :method => 'put'},
+          {:name => 'ajax_cancel'} %>
+
       <%= spinner('save') %>
+      <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
     </div>
   </div>
 <% end %>
