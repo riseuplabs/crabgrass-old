@@ -7,8 +7,8 @@
 <h2 class="alert">
   <%= "Featured"[:featured_content_header] %>
   <%= edit_featured_link("Edit"[:edit]) %>
-</h2> 
-<%= render :partial => "featured_item", :collection => @featured_pages %>
+</h2>
+<%= render :partial => "groups/featured/featured_item", :collection => @featured_pages %>
 <% end %>
 
 <% @important_pages = Page.find_by_path(
@@ -18,5 +18,5 @@
   if false and @important_pages.any?%>
 <hr class="thick" />
 <h2 class="section"><%= "Popular".t %></h2>
-<%= render :partial => "featured_item", :collection => @important_pages %>
+<%= render :partial => "groups/featured/featured_item", :collection => @important_pages %>
 <% end %>

@@ -38,9 +38,13 @@ module Admin::AllHelper
       title = 'See All Pages'
       controller = 'pages'
     elsif obj_type == "posts"
-      icon = 'chat_16'
+      icon = 'page_discussion_16'
       title = 'See All Posts'
       controller = 'discussion_posts'
+    elsif obj_type == "chats"
+      icon = 'chat_16'
+      title = 'See All Chat Messages'
+      controller = 'chat_messages'
     end
     link = "<span class='small_icon #{icon}'>" + link_to_active( title, { :controller => "admin/#{controller}", :action => 'index', :view => 'all' }, @current_view == 'all' ) + "</span>"
   end

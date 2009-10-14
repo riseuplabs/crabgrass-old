@@ -40,9 +40,13 @@ module WikiPageHelper
 
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
+    return html unless logged_in? and current_user.may?(:edit, wiki.page)
+
     doc = Hpricot(html)
     doc.search('h1 a.anchor, h2 a.anchor, h3 a.anchor, h4 a.anchor').each do |heading_el|
       section = heading_el['href'].sub(/^.*#/, '')
+      next unless wiki.all_sections.include? section
+
 
       link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
       if show_inline_editor?
@@ -100,7 +104,8 @@ module WikiPageHelper
     confirm_discarding_text_area(text_area_id,
           ["input[name=break_lock]",
           "input[name=save]",
-          "input[name=cancel]"],
+          "input[name=cancel]",
+          "input[name=ajax_cancel]"],
           "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."[:leave_editing_wiki_page_warning]
           )
 
