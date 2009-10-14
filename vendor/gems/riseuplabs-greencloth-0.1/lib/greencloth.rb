@@ -85,11 +85,11 @@ offtags work like this:
 require 'rubygems'
 begin
   # try redcloth 4.1
-  gem 'redcloth', '>= 4.1'
+  #gem 'redcloth', '>= 4.1'
   require 'redcloth'
 rescue Exception
   # try redcloth 4.0
-  gem 'RedCloth', '>= 4.0'
+  #gem 'RedCloth', '>= 4.0'
   require 'RedCloth'
 end
 
