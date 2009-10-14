@@ -22,6 +22,19 @@ class ModeratedFlag < ActiveRecord::Base
     return self.user.login
   end
 
+  def self.display_flags(page, view)
+    if view == 'new'
+      conditions = ['vetted_at IS NULL and deleted_at IS NULL']
+    elsif view == 'vetted'
+      conditions = ['vetted_at IS NOT NULL and deleted_at IS NULL']
+    elsif view == 'deleted'
+      conditions = ['deleted_at IS NOT NULL']
+    else
+      return
+    end
+    paginate(:page => page, :select => "distinct foreign_id", :conditions => conditions, :order => 'updated_at DESC')
+  end
+
   named_scope :by_foreign_id, lambda {|foreign_id|
     { :conditions => ['foreign_id = ?', foreign_id] }
   }
