@@ -41,7 +41,7 @@ You can replace 'all' with 'units' or 'functionals'.
 To run the test for a particular tool or mod:
 
   rake test:tools:all TOOL=gallery_tool
-  rake test:mods:all MOD=gibberize
+  rake test:mods:all MOD=translator
 
 == Tests and Sites
 

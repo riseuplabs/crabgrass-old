@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
-  map.from_plugin :gibberize   rescue NameError
+  map.from_plugin :translator   rescue NameError
   map.from_plugin :moderation  rescue NameError
 
   map.namespace :admin do |admin|

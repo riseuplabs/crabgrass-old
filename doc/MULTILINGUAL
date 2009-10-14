@@ -29,7 +29,7 @@ This task only works with mysql. You should only have to do this once.
 
 == Editing crabgrass UI translations
 
-You can edit the UI translations in crabgrass using the gibberize plugin.
-For information on how to use, see mods/gibberize/README
+You can edit the UI translations in crabgrass using the translator plugin.
+For information on how to use, see mods/translator/README
 
 
