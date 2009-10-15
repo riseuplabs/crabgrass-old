@@ -17,10 +17,6 @@ class Key < ActiveRecord::Base
     {:joins => 'LEFT OUTER JOIN translations ON keys.id = translations.key_id AND translations.language_id = %i'%language.id, :conditions => 'translations.text IS NULL'}
   }
 
-  named_scope :custom, lambda { |language|
-    {:joins => 'LEFT OUTER JOIN translations ON keys.id = translations.key_id AND translations.language_id = %i'%language.id, :conditions => ['translations.custom = ?', true]}
-  }
-
   named_scope :out_of_date, lambda { |language|
     {:joins => 'LEFT OUTER JOIN translations t1 ON keys.id = t1.key_id LEFT OUTER JOIN translations t2 ON keys.id = t2.key_id', :conditions => ["t1.language_id = ? AND t2.language_id = ? AND t1.updated_at < t2.updated_at", language.id, Language.default.id]}
   }

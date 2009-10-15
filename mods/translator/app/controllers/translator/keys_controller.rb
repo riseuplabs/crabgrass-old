@@ -16,8 +16,6 @@ class Translator::KeysController < Translator::BaseController
         @keys = Key.by_name.untranslated(@language).paginate(:page => params[:page])
       elsif @filter == 'out_of_date'
         @keys = Key.by_name.out_of_date(@language).paginate(:page => params[:page])
-      elsif @filter == 'custom'
-        @keys = Key.by_name.custom(@language).paginate(:page => params[:page])
       end
     else
       @keys = Key.by_name.paginate(:page => params[:page])

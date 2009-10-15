@@ -34,8 +34,7 @@ module LanguageExtension
 
   def self.add_to_class_definition
     lambda do
-      has_many :translations, :dependent => :destroy, :conditions => ['custom = ?', false]
-      has_many :custom_translations, :dependent => :destroy, :class_name => 'Translation', :conditions => ['custom = ?', true]
+      has_many :translations, :dependent => :destroy
     end
   end
 end
