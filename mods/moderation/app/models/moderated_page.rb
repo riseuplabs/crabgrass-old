@@ -11,9 +11,13 @@ class ModeratedPage < ModeratedFlag
   end
 
   def undelete
-    self.page.update_attribute(:flow, nil)
-    self.deleted_at = nil;
-    self.save!
+    self.page.undelete
+    ModeratedPage.undelete_all(self.foreign_id)
+  end
+
+  def trash
+    self.page.delete
+    ModeratedPage.trash_all(self.foreign_id)
   end
 
 end

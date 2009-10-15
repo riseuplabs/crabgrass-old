@@ -41,23 +41,22 @@ class Admin::PagesController < Admin::BaseController
 
   # Approves a page by marking :vetted = true
   def approve
-    ModeratedPage.update_all('vetted_at=now()',"foreign_id=#{params[:id]}")
-    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:vetted, true)
-    # ??? get rid of all yucky associated with the page
+    @mpage.approve
+    #ModeratedPage.approve(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
-    ModeratedPage.update_all('deleted_at=now()',"foreign_id=#{params[:id]}")
-    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:flow, FLOW[:deleted])
+    @mpage.trash
+    #ModeratedPage.trash(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # undelete a page by setting setting flow=nil, the page will now be 'undeleted'(unhidden)
   def undelete
-    ModeratedPage.update_all("deleted_at=NULL","foreign_id=#{params[:id]}")
-    ModeratedPage.find_by_foreign_id(params[:id]).page.update_attribute(:flow, nil)
+    @mpage.undelete
+    #ModeratedPage.undelete(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -85,5 +84,15 @@ class Admin::PagesController < Admin::BaseController
   def authorized?
     may_moderate?
   end
+
+  prepend_before_filter :fetch_flagged
+  def fetch_flagged
+    if params[:id]
+      @mpage = ModeratedPage.find_by_foreign_id(params[:id])
+    else
+      return
+    end
+  end
+
 end
 

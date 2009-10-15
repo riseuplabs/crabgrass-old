@@ -4,6 +4,9 @@ module ModerationNotice
 
   # Notify the admins that content has been marked as innapropriate
   def send_moderation_notice(url, summary)
+    render :update do |page|
+      page.alert("Summary: #{summary}\n\nURL: #{url}")
+    end
     email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
     admins = current_site.super_admin_group.users
     admins.each do |admin|

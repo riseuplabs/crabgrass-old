@@ -22,6 +22,23 @@ class ModeratedFlag < ActiveRecord::Base
     return self.user.login
   end
 
+  def approve
+    self.foreign.update_attribute(:vetted, true)
+    self.approve_all(self.foreign_id)
+  end
+
+  def self.approve_all(foreign_id)
+    self.update_all('vetted_at=now()',"foreign_id=#{foreign_id}")
+  end
+
+  def self.trash_all(foreign_id)
+    self.update_all('deleted_at=now()',"foreign_id=#{foreign_id}")
+  end
+
+  def self.undelete_all(foreign_id)
+    self.update_all("deleted_at=NULL","foreign_id=#{foreign_id}")
+  end
+
   def self.display_flags(page, view)
     if view == 'new'
       conditions = ['vetted_at IS NULL and deleted_at IS NULL']
