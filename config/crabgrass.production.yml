@@ -67,6 +67,15 @@ sites:
     default: false
     admin_group: tvet-admins
     moderation_group: tvet-moderators
+  - name: unido
+    domain: unido.mruyouthplatform.org
+    network: unido
+    title: "UNIDO Platform"
+    limited: true
+    email_sender: 'my@unidoplatform.org'
+    default: false
+    admin_group: unido-admins
+    moderation_group: unido-admins
 
 ##
 ## SITE DEFAULTS
