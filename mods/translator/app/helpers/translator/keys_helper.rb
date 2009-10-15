@@ -1,4 +1,4 @@
-module translator::KeysHelper
+module Translator::KeysHelper
 
   def key_path(arg, options={})
     translator_key_path(arg,options)

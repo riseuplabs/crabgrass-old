@@ -1,4 +1,4 @@
-module translator::TranslationsHelper
+module Translator::TranslationsHelper
 
   def translation_path(arg, options={})
     translator_translation_path(arg,options)

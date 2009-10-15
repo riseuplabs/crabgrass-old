@@ -1,4 +1,4 @@
-module translator::LanguagesHelper
+module Translator::LanguagesHelper
 
   def language_path(arg, options={})
     translator_language_path(arg,options)
