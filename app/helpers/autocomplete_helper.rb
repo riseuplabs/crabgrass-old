@@ -26,7 +26,7 @@ module AutocompleteHelper
         maxHeight:400,
         width:300,
         onSelect: #{options[:onselect]},
-        message: '#{options[:message]}',
+        message: '#{escape_javascript(options[:message])}',
         container: '#{options[:container]}',
         preloadedOnTop: true,
         rowRenderer: #{render_entity_row_function},

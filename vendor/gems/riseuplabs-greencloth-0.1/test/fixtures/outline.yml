@@ -2,7 +2,9 @@
 name: empty outline
 in: |-
   [[toc]]
-out: ""
+out: |-
+  <ul class="toc">
+  </ul>
 ---
 name: fruity outline
 in: |-
@@ -324,4 +326,33 @@ out: |-
   <h2><a name="superscript"></a><sup>superscript</sup><a class="anchor" href="#superscript">&para;</a></h2>
   <h2><a name="subscript"></a><sub>subscript</sub><a class="anchor" href="#subscript">&para;</a></h2>
   <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
+  <h2><a name="table"></a><del>table</del><a class="anchor" href="#table">&para;</a></h2>
+---
+name: leading and trailing whitespace
+in: |-
+  Clearly a Section
+  ===
+
+    still a section
+
+  ---
+  more text
+
+  <code>
+    coding
+
+     not a section
+
+    ---
+    more text here
+  </code>
+out: |-
+  <h1 class="first"><a name="clearly-a-section"></a>Clearly a Section<a class="anchor" href="#clearly-a-section">&para;</a></h1>
+  <h2><a name="still-a-section"></a>still a section<a class="anchor" href="#still-a-section">&para;</a></h2>
+  <p>more text</p>
+  <pre><code>  coding
+     not a section
+    ---
+    more text here
+  </code></pre>
 
