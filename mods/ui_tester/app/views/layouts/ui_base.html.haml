@@ -18,22 +18,26 @@
 
 %body{:class=>language_direction}
   #page
-    #header
-      #brand 
+    %hgroup
+      %header.title
         %h1.site_title
           Site Name
-      #commands
-        #menu menu
-        #user user
-      #navigation
-        #breadcrumb breadcrumb
-        #search search
-    #wrapper
-      #title title
-      #content
-        #sidebar sidebar
-        #main
+      %nav
+        %section#menu menu
+        %section#user user
+      %header.breadcrumb
+        %section#breadcrumb 
+          %h6 breadcrumb
+        %section#search search
+    %section#wrapper
+      %header#title 
+        %h2 group name
+      %nav
+        contribute
+      %content
+        %aside#sidebar sidebar
+        %article#main
           dummy text
     
-    #footer
+    %footer
       footer

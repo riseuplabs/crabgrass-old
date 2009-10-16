@@ -166,4 +166,4 @@ ActiveRecord::Base.partial_updates = false
 PAGES = PageClassRegistrar.proxies.dup.freeze
 Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
 
-
+Haml::Template.options[:format] = :html5
