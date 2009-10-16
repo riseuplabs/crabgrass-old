@@ -10,12 +10,12 @@ ssh_options[:port] = 123
 set :application, "crabgrass"
 set :user, "crabgrass"
 
-set :repository, "ssh://git@193.138.105.70:123/crabgrass.git"
+set :repository, "ssh://git@193.138.105.69:123/crabgrass.git"
 set :branch, "unido"
 
 ## TODO: setup the deploy host once it is ready.
-deploy_host = ""
-staging_host = "193.138.105.70"
+deploy_host = "193.138.105.70"
+staging_host = "193.138.105.69"
 
 staging = ENV['TARGET'] != 'production'
 
