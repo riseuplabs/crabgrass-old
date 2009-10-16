@@ -42,21 +42,18 @@ class Admin::PagesController < Admin::BaseController
   # Approves a page by marking :vetted = true
   def approve
     @mpage.approve
-    #ModeratedPage.approve(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
     @mpage.trash
-    #ModeratedPage.trash(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # undelete a page by setting setting flow=nil, the page will now be 'undeleted'(unhidden)
   def undelete
     @mpage.undelete
-    #ModeratedPage.undelete(params[:id])
     redirect_to :action => 'index', :view => params[:view]
   end
 

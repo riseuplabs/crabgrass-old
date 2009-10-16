@@ -22,22 +22,36 @@ class ModeratedFlag < ActiveRecord::Base
     return self.user.login
   end
 
+  ### don't these seem awfully repetitious? ;-)
   def approve
     self.foreign.update_attribute(:vetted, true)
-    self.approve_all(self.foreign_id)
+    ModeratedFlag.approve_all(self.foreign_id, self.type)
   end
 
-  def self.approve_all(foreign_id)
-    self.update_all('vetted_at=now()',"foreign_id=#{foreign_id}")
+  def trash
+    self.foreign.delete
+    ModeratedFlag.trash_all(self.foreign_id, self.type)
   end
 
-  def self.trash_all(foreign_id)
-    self.update_all('deleted_at=now()',"foreign_id=#{foreign_id}")
+  def undelete
+    self.foreign.undelete
+    ModeratedFlag.undelete_all(self.foreign_id, self.type)
+  end
+  ### end awfully repetitious
+
+  ### oh these also seem repetitious
+  def self.approve_all(foreign_id, type)
+    self.update_all('vetted_at=now()',"foreign_id=#{foreign_id} and type='#{type}'")
   end
 
-  def self.undelete_all(foreign_id)
-    self.update_all("deleted_at=NULL","foreign_id=#{foreign_id}")
+  def self.trash_all(foreign_id, type)
+    self.update_all('deleted_at=now()',"foreign_id=#{foreign_id} and type='#{type}'")
   end
+
+  def self.undelete_all(foreign_id, type)
+    self.update_all("deleted_at=NULL","foreign_id=#{foreign_id} and type='#{type}'")
+  end
+  ### end also repetitious
 
   def self.display_flags(page, view)
     if view == 'new'
