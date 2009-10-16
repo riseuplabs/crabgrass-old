@@ -172,6 +172,19 @@ class TestHeadings < Test::Unit::TestCase
     end
   end
 
+  def test_leading_and_trailing_whitespace
+    greencloth = GreenCloth.new( in_texts(:leading_and_trailing_whitespace) )
+    tree = greencloth.green_tree
+
+    assert_equal "Clearly a Section\n===\n\n  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('clearly-a-section').markup
+
+    assert_equal "  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('still-a-section').markup
+
+    assert_nil tree.find('not-a-section')
+  end
+
   protected
 
   def in_texts(name)
