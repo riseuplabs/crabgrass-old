@@ -25,15 +25,15 @@ body
   font-family= !body_text_font_family
   
 #page
-  :border 1px solid #fc0
   +container(center)
-  #header
-    +full
+  :border 1px solid #fc0
+  hgroup
+    +full(12)
     :border 1px solid #ccc
-    #brand
+    header.title
       +columns(12)
       :text-align left
-    #commands
+    nav
       +full(12)
       #menu
         +columns(8,12)
@@ -43,7 +43,7 @@ body
         +columns(4,12)
         +omega(12)
         :text-align right
-    #navigation
+    header.breadcrumb
       +full(12)
       #breadcrumb
         +columns(8,12)
@@ -54,19 +54,22 @@ body
         +omega(12)
         :text-align right
   #wrapper
+    +full(12)
     :border 1px solid #ccc
-    +full
     #title
       +columns(12)
-    #content
+    nav
+      +columns(12)
+    content
       +full(12)
-      #sidebar
+      aside
         +columns(3)
         :background-color #eee
         :border 1px solid #ccc
-      #main
+      article#main
         +columns(9)
-  #footer
+  footer
+    +columns(12,12)
+    +full(12)
     :border 1px solid #ccc
-    +full
 
