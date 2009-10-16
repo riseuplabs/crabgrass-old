@@ -88,8 +88,11 @@ module Admin::AllHelper
       return "n/a"
     end
     if user_id
-      user = User.find(user_id)
-      h(user.login)
+      if user = User.find_by_id(user_id)
+        h(user.login)
+      else
+        "Unknown"
+      end
     else
       "Unknown"
     end
