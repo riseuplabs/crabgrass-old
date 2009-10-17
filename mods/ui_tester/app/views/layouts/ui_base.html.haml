@@ -18,22 +18,56 @@
 
 %body{:class=>language_direction}
   #page
-    %hgroup
+    %hgroup#main
       %header.title
         %h1.site_title
           Site Name
       %nav
-        %section#menu menu
-        %section#user user
+        %section#menu 
+          %ul
+            %li Home
+            %li Me
+            %li People
+            %li Groups
+            %li Networks
+        %section#user 
+          %ul
+            %li Welcome userName
+            %li inbox(4)
+            %li Help
+            %li Sign Out
       %header.breadcrumb
         %section#breadcrumb 
-          %h6 breadcrumb
-        %section#search search
+          %h6 Network / Groupname
+        %section#search 
+          %input{:type=>'text'}
     %section#wrapper
-      %header#title 
-        %h2 group name
-      %nav
-        contribute
+      %hgroup#group
+        %header
+          %h2 group name
+        %nav
+          %h3 Join Group
+          %ul
+            %li Open
+            %li Local(Argentina)
+      %section#start
+        %nav
+          %section#contribute
+            contribute
+          %section#shortcuts
+            %header
+              Welcome UserName Get Started by exploring the group and featured links.
+            %ul.issues
+              %li Link to Issue
+              %li Link to another Issue
+              %li Link to another Issue
+            %ul.icons
+              %li Text and Discussions
+              %li Multimedia
+              %li Poll and Votes
+              %li Planning Tools
+              %li Archive
+
       %content
         %aside#sidebar sidebar
         %article#main
