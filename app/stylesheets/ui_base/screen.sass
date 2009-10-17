@@ -27,7 +27,7 @@ body
 #page
   +container(center)
   :border 1px solid #fc0
-  hgroup
+  hgroup#main
     +full(12)
     :border 1px solid #ccc
     header.title
@@ -36,11 +36,11 @@ body
     nav
       +full(12)
       #menu
-        +columns(8,12)
+        +columns(7,12)
         +alpha(12)
         :text-align left
       #user
-        +columns(4,12)
+        +columns(5,12)
         +omega(12)
         :text-align right
     header.breadcrumb
@@ -56,8 +56,24 @@ body
   #wrapper
     +full(12)
     :border 1px solid #ccc
+    hgroup#group
+      +columns(12,12)
+      header
+        +columns(8,12)
+        +alpha(12)
+      nav
+        +columns(3,12)
+        +omega(12)
     #title
       +columns(12)
+    #start
+      +columns(12)
+      #contribute
+        +columns(3,12)
+        +omega(12)
+      #shortcuts
+        +columns(9,12)
+        +alpha(12)
     nav
       +columns(12)
     content
@@ -72,4 +88,8 @@ body
     +columns(12,12)
     +full(12)
     :border 1px solid #ccc
-
+  li
+    :display inline-block
+    :float left
+    :padding 0.2em
+  
