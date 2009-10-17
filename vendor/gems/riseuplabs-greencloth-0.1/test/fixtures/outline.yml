@@ -355,7 +355,7 @@ out: |-
     ---
     more text here
   </code></pre>
-
+---
 name: code block weirdness
 in: |-
   real stuff
@@ -371,3 +371,10 @@ in: |-
 
   </code>
 out: |-
+  <h2 class="first"><a name="real-stuff"></a>real stuff<a class="anchor" href="#real-stuff">&para;</a></h2>
+  <pre><code>
+  a.. b
+  -----
+  aa... bb
+  -----
+  </code></pre>

@@ -11,7 +11,7 @@ in: 'You can force [@code blocks@] like so.'
 out: '<p>You can force <code>code blocks</code> like so.</p>'
 # this markup is not allowed in RedCloth, so we don't allow it either:
 #---
-# 
+#
 #in: what about <pre>__inline__</pre> this?
 #out: <p>what about <pre>__inline__</pre> this?</p>
 ---
@@ -31,7 +31,7 @@ out: |-
   <pre><code>_a_ &lt; _b_
   </code></pre>
 
-# greencloth doesn't support manual <pre><code> 
+# greencloth doesn't support manual <pre><code>
 #---
 #in: |-
 #  <pre><code>
@@ -55,8 +55,8 @@ out: |-
 
 
 ##
-## special greencloth code block  
-## 
+## special greencloth code block
+##
 
 ---
 in: |-
@@ -103,9 +103,9 @@ out: |-
 ---
 in: |-
   <code>one fish</code>
-  
+
   <code>two fish</code>
-  
+
   <code>red fish</code>
 out: |-
   <pre><code>one fish</code></pre>
@@ -133,7 +133,7 @@ out: |-
 
 ##
 ## ensure custom greencloth filters don't apply to code blocks
-## 
+##
 
 ---
 in: |-
