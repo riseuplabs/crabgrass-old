@@ -376,7 +376,7 @@ class GreenCloth < RedCloth::TextileDoc
 
     self.extend(GreenClothFormatterHTML)
     original = self.dup
-    apply_rules([:normalize_heading_blocks])
+    apply_rules([:normalize_heading_blocks, :offtag_obvious_code_blocks])
     to(GreenClothFormatterHTML)
     self.replace(original)
   end

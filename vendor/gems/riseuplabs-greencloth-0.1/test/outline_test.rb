@@ -185,6 +185,21 @@ class TestHeadings < Test::Unit::TestCase
     assert_nil tree.find('not-a-section')
   end
 
+  def test_code_block_weirdness
+    greencloth = GreenCloth.new( in_texts(:code_block_weirdness) )
+    tree = greencloth.green_tree
+
+    assert_equal ['real-stuff'], tree.section_names
+
+
+    assert_equal "real stuff\n----\n\n<code>\n\na.. b\n-----\n\naa... bb\n-----\n\n</code>",
+      tree.find('real-stuff').markup
+
+    assert_nil tree.find('aa-bb')
+    assert_nil tree.find('a-b')
+  end
+
+
   protected
 
   def in_texts(name)

@@ -356,3 +356,18 @@ out: |-
     more text here
   </code></pre>
 
+name: code block weirdness
+in: |-
+  real stuff
+  ----
+
+  <code>
+
+  a.. b
+  -----
+
+  aa... bb
+  -----
+
+  </code>
+out: |-
