@@ -39,4 +39,19 @@ module Translator::KeysHelper
     end
   end
 
+  def translate_key_languages_links(site = @site)
+    site_id = site.blank? ? "" : site.id
+
+    links = []
+    @languages.each { |language|
+      if @key.translations.for_language(language).for_site(site).blank?
+        links << link_to(language.name, :controller => :translations,
+                                        :action => :new,
+                                        :key => @key.name,
+                                        :language => language,
+                                        :site_id => site_id)
+      end
+    }
+    links.join("\n")
+  end
 end

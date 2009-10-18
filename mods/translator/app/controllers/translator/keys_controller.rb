@@ -26,6 +26,7 @@ class Translator::KeysController < Translator::BaseController
   def show
     @key = Key.find_by_name(params[:id], :include => :translations)
     @languages = Language.find(:all)
+    @sites = Site.find(:all)
   end
 
   # GET /keys/new

@@ -6,11 +6,22 @@ class Translation < ActiveRecord::Base
   validates_presence_of :key, :language, :text
 
   named_scope :for_language, lambda { |language|
-    {:conditions => ['language_id = ?', language.id]}
+    {:conditions => {:language_id => language.id}}
+  }
+
+  named_scope :for_site, lambda { |site|
+    site_id = site.blank? ? nil : site.id
+
+    {:conditions => {:site_id => site_id}}
   }
 
   def validate_on_create
-    if Key.find(key_id).languages.include?(Language.find(language_id))
+    # check for an existing translation for this key
+    similar_translations = Key.find(key_id).translations.select do |translation|
+      (translation.language_id == language_id) && (translation.site_id == site_id)
+    end
+
+    unless similar_translations.blank?
       errors.add("language_id", "already has a translation")
     end
   end

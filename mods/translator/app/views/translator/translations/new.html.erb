@@ -1,4 +1,7 @@
-<h1>New translation</h1>
+<h1>
+  New translation
+  <%= "(for '#{@site.title}' only)" if @site %>
+</h1>
 
 <%= error_messages_for :translation %>
 

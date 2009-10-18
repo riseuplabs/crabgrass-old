@@ -10,15 +10,21 @@ class Key < ActiveRecord::Base
   ##
 
   named_scope :translated, lambda { |language|
-    {:joins => :translations, :conditions => ['language_id = ?', language.id]}
+    {:include => :translations, :conditions => ['translations.site_id IS NULL AND translations.language_id = ?', language.id]}
   }
 
   named_scope :untranslated, lambda { |language|
-    {:joins => 'LEFT OUTER JOIN translations ON keys.id = translations.key_id AND translations.language_id = %i'%language.id, :conditions => 'translations.text IS NULL'}
-  }
+      { :select => "`keys`.*",
+        :joins =>
+          'LEFT OUTER JOIN translations ON keys.id = translations.key_id AND translations.language_id = %i AND translations.site_id is NULL'%language.id,
+          :conditions => 'translations.text IS NULL'}
+    }
 
   named_scope :out_of_date, lambda { |language|
-    {:joins => 'LEFT OUTER JOIN translations t1 ON keys.id = t1.key_id LEFT OUTER JOIN translations t2 ON keys.id = t2.key_id', :conditions => ["t1.language_id = ? AND t2.language_id = ? AND t1.updated_at < t2.updated_at", language.id, Language.default.id]}
+    { :joins => 'LEFT OUTER JOIN translations t1 ON keys.id = t1.key_id LEFT OUTER JOIN translations t2 ON keys.id = t2.key_id',
+      :conditions =>
+        ["t1.language_id = ? AND t2.language_id = ? AND t1.updated_at < t2.updated_at AND t1.site_id IS NULL AND t2.site_id IS NULL",
+          language.id, Language.default.id]}
   }
 
   named_scope :by_name, :order => 'keys.name ASC'
@@ -28,7 +34,7 @@ class Key < ActiveRecord::Base
   end
 
   def default
-    trans = Translation.find_by_key_id_and_language_id(self.id, Language.default.id)
+    trans = Translation.find_by_key_id_and_language_id_and_site_id(self.id, Language.default.id, nil)
     return trans.text if trans and trans.text.any?
     return self.name.to_s.gsub('_', ' ')
   end

@@ -1,4 +1,6 @@
 class Translator::TranslationsController < Translator::BaseController
+
+  before_filter :fetch_sites
   # GET /translations
   # GET /translations.xml
   def index
@@ -23,18 +25,21 @@ class Translator::TranslationsController < Translator::BaseController
     @translation = Translation.new
     @key = Key.find_by_name(params[:key])
     @language = Language.find_by_code(params[:language])
+    @site = Site.find_by_id(params[:site_id])
 
-    if trans = @key.translations.find_by_language_id(@language.id)
+    if trans = @key.translations.for_site(@site).find_by_language_id(@language.id)
       redirect_to :action => :edit, :id => trans
     else
       @translation.key = @key
       @translation.language = @language
+      @translation.site = @site
     end
   end
 
   # GET /translations/1/edit
   def edit
     @translation = Translation.find(params[:id])
+    @site = @translation.site
   end
 
   # POST /translations
@@ -82,5 +87,11 @@ class Translator::TranslationsController < Translator::BaseController
     @buffer = String.new
     translations.each {|t| @buffer << "#{t.key.name}: #{t.text}\n"}
     render :layout => false
+  end
+
+  protected
+  def fetch_sites
+
+    @sites = Site.all
   end
 end
