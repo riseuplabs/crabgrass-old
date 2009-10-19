@@ -6,7 +6,7 @@ namespace :cg do
 
     def react(message)
       puts message unless ENV["QUIET"]
-      yields if block_given? and ENV["FIX"]
+      yield if block_given? and ENV["FIX"]
     end
 
     def check_for_name!
