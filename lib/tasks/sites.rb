@@ -27,6 +27,7 @@ namespace :cg do
           site.write_attribute option, fill
         end
       end
+      return site
     end
 
     def verify_group_type(site, site_conf, group_type)
@@ -35,9 +36,9 @@ namespace :cg do
       if group = site.send(group_type.to_sym)
         old_group=group
         verify_group_name(group, group_name)
-        verify_group_site(group, site)
+        group=verify_group_site(group, site)
       elsif group = Group.find_by_name(group_name)
-        verify_group_site(group, site)
+        group=verify_group_site(group, site)
       elsif group_name
         react "#{group_type}: #{group_name} does not exist... creating"
         if group_type == 'network'
@@ -51,6 +52,7 @@ namespace :cg do
       end
       verify_group_admin(group)
       finalize(group, old_group)
+      return site
     end
 
     def verify_group_name(group, group_name)
@@ -70,15 +72,17 @@ namespace :cg do
       else
         raise "#{group.name} belongs to a different site. Aborting..."
       end
+      return group
     end
 
     def verify_group_admin(group)
       admin = User.find_by_login ENV['ADMIN']
       return unless group and admin
       return if group.users.include?(admin)
-      react "#{group.name} does not include admin #{admin}..." do
+      react "#{group.name} does not include admin #{admin.login}..." do
         react "... adding to group."
-        group.add_user! User.find_by_name(admin)
+        group.save!
+        group.add_user! admin
       end
     end
 
@@ -142,7 +146,7 @@ namespace :cg do
       puts "checking site #{site_conf['name']}..."
       if site = Site.find_by_name(site_conf['name'])
         old_site = site
-        verify_site_options(site, site_conf)
+        site = verify_site_options(site, site_conf)
       else
         puts "  site does not exist yet... creating"
         site = Site.new :name=>site_conf['name'],
