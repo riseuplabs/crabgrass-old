@@ -41,7 +41,7 @@ namespace :cg do
       elsif group_name
         react "#{group_type}: #{group_name} does not exist... creating"
         if group_type == 'network'
-          group = Network.new :name=>group_name, :site=>site
+          group = site.network.build :name=>group_name, :site=>site
         else
           group = Group.new :name=>group_name, :site=>site
         end
@@ -54,20 +54,20 @@ namespace :cg do
 
     def verify_group_name(group, group_name)
       if group.name != group_name
-        react "WARNING: #{group_type} is set to #{group_name} in config."
-        react "                          and to #{group.name} in database."
+        react "WARNING: group is set to #{group_name} in config."
+        react "                  and to #{group.name} in database."
       end
     end
 
     def verify_group_site(group, site)
       # what happens if site does not exist because we are in testing mode?
       return unless site.limited? and group.site_id != site.id
-      react "#{group_type}: #{group_name} does not belong to site yet."
+      react "#{group.name} does not belong to site yet."
       unless group.site_id
         react "Attaching to site..."
         group.site = site
       else
-        raise "#{group_type} #{group_name} belongs to a different site. Aborting..."
+        raise "#{group.name} belongs to a different site. Aborting..."
       end
     end
 
