@@ -23,7 +23,7 @@ class Translator::BaseController < ApplicationController
   end
 
   def import_english
-    system('rake cg:l10n:load_translations FILE=en_US.yml RAILS_ENV=%s' % RAILS_ENV)
+    system('rake cg:l10n:load_translations FILE=en.yml RAILS_ENV=%s' % RAILS_ENV)
     flash_message :success => true
     redirect_to :action => nil
   end
