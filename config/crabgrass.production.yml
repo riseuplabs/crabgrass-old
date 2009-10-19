@@ -76,6 +76,15 @@ sites:
     default: false
     admin_group: unido-admins
     moderation_group: unido-admins
+  - name: mdg
+    domain: mdg.mruyouthplatform.org
+    network: mdg
+    title: "MDG Platform"
+    limited: true
+    email_sender: 'my@mdgplatform.org'
+    default: false
+    admin_group: mdg-admins
+    moderation_group: mdg-admins
 
 ##
 ## SITE DEFAULTS
