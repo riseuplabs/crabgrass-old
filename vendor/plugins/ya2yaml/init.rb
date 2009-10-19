@@ -1,0 +1,1 @@
+require 'ya2yaml'
