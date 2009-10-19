@@ -215,13 +215,13 @@ en:
   reset_password_text: |
     Hello, {{user}}. If you've forgotten the password you use to log in, you can set a new one here.
 
-  forgot_password_mail_greeting: {{user}}, to reset your password, please visit
+  forgot_password_mail_greeting: "{{user}}, to reset your password, please visit"
   forgot_password_mail_expiry: |
     This link will remain valid for 24 hours. If you need to reset your
     password after that, you will have to visit the forgotten password page
     again to request a new link.
 
-  reset_password_mail_greeting: {{user}}, your password has been reset as you requested.
+  reset_password_mail_greeting: "{{user}}, your password has been reset as you requested."
   reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
   your_login: "Your login"
   invalid_email: "Invalid Email"

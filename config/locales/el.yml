@@ -1,4 +1,5 @@
-el:
+--- 
+el: 
   _locale_code: el_GR
   about_me: "Σχετικά με εμένα"
   accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
@@ -24,7 +25,6 @@ el:
   add_photo_to_gallery: "Κάντε click σε μια φωτογραφία για να την προσθέσετε"
   add_tags: "Προσθέστε ετικέτες"
   add_websites: "Προσθήκη Ιστοσελίδας"
-  admin: Διαχειριστής
   alert_error: Σφάλμα!
   alert_field_errors: "Υπάρχουν προβλήματα με τα παρακάτω πεδία"
   alert_not_saved: "Οι αλλαγές δεν αποθηκεύτηκαν"
@@ -38,7 +38,6 @@ el:
   allow_membership_requests: "Επιτρέψτε τις αιτήσεις εγγραφής μελών"
   already_contacts_info: "Είστε ήδη επαφή αυτού του προσώπου"
   announcements: Ανακοινώσεις
-  approval_vote: "ψήφος έγκρισης"
   approve: εγκρίνω
   approve_button: έγκριση
   approved: εγγεκριμένο
@@ -54,7 +53,6 @@ el:
   category: Κατηγορία
   check_all: "Επιλογή Όλων"
   close_button: Κλείσιμο
-  collection: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
   committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {{domain}}/yourgroupname"
@@ -89,7 +87,6 @@ el:
   last_name: επίθετο
   locations: Τοποθεσίες
   login: Σύνδεση
-  logout: Αποσύνδεση
   members: Μέλη
   message: μήνυμα
   message_page_display: μήνυμα

@@ -1,4 +1,5 @@
-ru:
+--- 
+ru: 
   _locale_code: ru_RU
   about_me: "Обо мне"
   accept_usage_agreement: "Я принимаю условия пользовательского соглашения"
@@ -34,7 +35,6 @@ ru:
   add_tags: "Добавить метки"
   add_websites: "Добавить web-сайты"
   additional_page_access: "Дополнительный доступ"
-  admin: Администрирование
   administer_site: "Управление сайтом"
   administration: Администрирование
   alert_error: Ошибка
@@ -56,8 +56,6 @@ ru:
   announcement_page_description: Извещение.
   announcement_page_display: Извещение.
   announcements: Объявления
-  approval_vote: "голосование за одобрение"
-  approval_vote_class_description: "Одобрить, или отвергнуть каждый из вариантов."
   approve: одобрить
   approve_button: Одобрить
   approve_contact_info: "Запрос на знакомство от этого пользователя уже существует. Хотите одобрить его?"
@@ -83,8 +81,6 @@ ru:
   category: Категория
   check_all: "Отметить всё"
   close_button: Закрыть
-  collection: коллекция
-  collection_class_description: "Особые страницы, которые содержат другие страницы."
   committee: комитет
   committee_publicly_visible: "Сделать комитеты видимыми для всех"
   committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {{domain}}/yourgroupname"
@@ -174,7 +170,6 @@ ru:
   edit_appearance: "Редактировать внешний вид"
   edit_attachments: "Редактировать вложения"
   edit_attachments_link: Редактировать
-  edit_featured_content: "редактировать основное содержимое"
   edit_featured_content_for_group: "Редактировать основное содержимое для {{group_name}}"
   edit_gallery: "Редактировать галерею"
   edit_profile_link: "Редактировать профиль"
@@ -197,7 +192,6 @@ ru:
   featured_content: "Основной материал"
   featured_content_header: Основное
   file: файл
-  file_class_description: "Загруженный файл."
   file_must_be_image_error: "Чтобы стать частью галереи, файл должен быть изображением. "
   file_size: "Размер файла"
   file_version_deleted: "версия файла удалена"
@@ -205,8 +199,6 @@ ru:
   first_name: имя
   folder_class_description: "Создайте папку для объединения других страниц."
   folder_display: Папка
-  folder_page_description: "Коллекция файлов."
-  folder_page_display: папка
   forgot_password_link: "Я забыл свой пароль"
   forgot_password_mail_expiry: "Эта ссылка будет действительна в течение 24 часов. Если Вам необходимо будет сменить пароль по истечение этого времени, Вы снова должны будете посетить страницу напоминания пароля и запросить новую ссылку. "
   forgot_password_mail_greeting: "{{user}}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
@@ -221,7 +213,6 @@ ru:
   full: полный
   fullname: "Полное имя"
   galleries: Галереи
-  gallery_class_description: "Коллекция изображений."
   gallery_description: "Загрузить множество изображений, или упорядочить имеющиеся изображения в набор."
   gallery_display: галерея
   general_info: "Общая информация"
@@ -230,19 +221,17 @@ ru:
   group_administration_not_allowed: "Вы не можете управлять этой группой."
   group_directory: "Каталог групп"
   group_directory_link: "Список группы"
-  group_discussion: "групповое обсуждение"
-  group_discussion_class_description: "Групповое обсуждение отдельного вопроса."
   group_has_no_public_profile: "Для данной группы отсутствует общедоступный профиль."
   group_home_headline: "Домашняя страница {{group_type}}"
   group_home_welcome: "Добро пожаловать"
   group_information: "Информация о {{group_type}}"
   group_invite_email: |-
       {{from_user}} пригласил Вас вступить в группу "{{group}}".
-
+      
       Если Вы желаете вступить в эту группу, нажмите здесь:
-
+      
       {{accept_invite_link}}
-
+      
       Если Вы не желаете вступить в эту группу, просто проигнорируйте это письмо.
   group_invite_subject: "Приглашение вступить в группу \"{{group}}\""
   group_join_chat: "Войти в чат"
@@ -274,7 +263,6 @@ ru:
   incoming: Входящие
   information: Информация
   insert_image_heading: "Вставить изображение"
-  insert_image_instructions: "Щёлкните по эксизу изображения, чтобы вставить его в текст страницы вики."
   invalid_email: "Недействительный адрес Email"
   invalid_email_text: "Предоставленный Вами адрес электронной почты недействителен."
   invalid_token: "Неверный признак"
@@ -286,7 +274,6 @@ ru:
   invite_accept_via_register: "Мне надо зарегистрировать новый аккаунт"
   invite_info: "Введите список авторизационных имён пользователей, или адресов электронной почты людей, которых вы хотите  пригласить для присоединения к это(му/той) {{group_type}}."
   invite_not_found: "Приглашение не найдено"
-  join_chat: "войти в чат"
   join_group_link: "Вступить в {{group_type}}"
   join_group_success: "Вы вступили в группу {{group_name}}"
   join_request_info: "Вы не станете членом этой группы до тех пор, пока Ваш запрос не будет одобрен. Вы можете отслеживать статус Ваш запросов, посещая \"{{my_requests_url}}\"."
@@ -296,7 +283,6 @@ ru:
   last_change: "последнее изменение"
   last_name: фамилия
   last_seen: "в последний раз был"
-  leave_channel: "Покинуть канал"
   leave_group_link: "Покинуть {{group_type}}"
   left_the_chatroom: "покинул комнату чата"
   link_name: "Имя ссылки"
@@ -318,7 +304,6 @@ ru:
   login_password: Пароль
   login_required: "Необходимо войти"
   login_required_description: "Пожалуйста, войдите, чтобы произвести это действие. "
-  logout: Выйти
   logout_success: "До свидания"
   logout_success_message: "Вы вышли из системы."
   make_album_cover: "Сделать это изображение обложкой альбома"
@@ -477,13 +462,10 @@ ru:
   peers: Связи
   pending_tasks: "текущие задания."
   people: Люди
-  permission_denied: Запрещено
   permission_denied_description: "У Вас не достаточно полномочий для выполнения этого действия."
   permissions: Разрешения
   personal: Личное
   personal_interests: "Личные интересы"
-  personal_message: "личное сообщение"
-  personal_message_class_description: "Личное сообщение было отправлено индивидуальным получателям."
   phone_numbers: "Телефонные номера"
   photo: Фотография
   post_message: "Отправить сообщение"
@@ -568,7 +550,6 @@ ru:
   settings: Настройки
   share: Поделиться
   share_button: Поделиться
-  share_link: "Поделиться {{page_class}}"
   share_page_email: "Отправить уведомление по email"
   share_page_link: "Поделиться {{page_class}}"
   share_page_message: "Отправить сообщение (опционально)"
@@ -577,7 +558,6 @@ ru:
   share_page_recipients_results: "Эта {{page_class}} будет разделена с"
   share_page_recipients_sections: "Выберите из Ваших групп, или друзей"
   share_page_recipients_selection: "Сделайте Вашу подборку"
-  share_this_page: "Разделить эту страницу"
   show_gallery: "Показать галерею"
   signup_button: Записаться
   signup_confirm_password: "Подтвердить пароль"
@@ -635,10 +615,8 @@ ru:
   undo: отменить
   unread: непрочитанные
   updated: обновлено
-  upload_attachment: "Загрузить вложенный файл"
   upload_file_help: "Помощь в загрузке файлов"
   upload_image: "Загрузить изображение"
-  upload_images: Загрузить
   upload_new_image: "загрузить новое изображение"
   uploaded_image_cropped: "Загруженное изображение будет обрезано и растянуто до квадрата со стороной 96 пикселов."
   usage_agreement_heading: "Пользовательское соглашение"
@@ -656,8 +634,6 @@ ru:
   version_doesnt_exist: "Версии с номером {{version}} не существует"
   version_number: "версия {{version}}"
   versions: версии
-  video: видео
-  video_class_description: "Показать видео, размещённое на внешнем веб-узле."
   video_embed: Встроить
   video_embed_code_prompt: "Код для вставки видео из внешних источников"
   video_service_is_not_supported: "не поддерживается (в настоящее время только youtube, google video, blip.tv и vimeo)"
@@ -673,11 +649,11 @@ ru:
   welcome_hide_link: "Скрыть приветствие"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-
+      
       Этот сайт работает на Crabgrass, <a href="http://www.affero.org/oagpl.html">свободном</a> Веб-приложении, предназначенном для групповой и сетевой организации, и оптимизированном для нужд движения за всеобщую справедливость. Долгосрочной целью проекта является предоставление технических инструментов для содействия деятельным, конфедеративным и построенным на принципах прямой демократии сетям, добивающимся перемен в обществе. [дополнительная информация... -> /crabgrass/about]
-
+      
       h3. Новичок на этом сайте?
-
+      
       [Вступайте здесь -> /account/signup], чтобы начать действовать. Мы находимся на раннем этапе развития. Так как изменения основываются на откликах пользователей, дайте нам знать, как вы используете сайт, что бы вы хотели поменять, что вам нравится, а что нет.
   welcome_message: "Crabgrass позволяет организациям, выступающим за изменение общества, выполнять поставленные задачи, высказываться, сотрудничать и связываться между собой."
   welcome_show_link: "Показать приветствие"
@@ -693,5 +669,4 @@ ru:
   you_are_not_member_of_any_group: "Вы не являетесь членом какой-либо группы. "
   you_are_viewing_version: "Вы просматриваете версию {{version}} от пользователя {{user}}"
   you_have_no_contacts: "У вас нет контактов"
-  you_have_no_groups: "Вы не принадлежите ни к одной из групп"
   your_login: "Ваше имя пользователя"

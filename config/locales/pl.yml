@@ -1,4 +1,5 @@
-pl:
+--- 
+pl: 
   _locale_code: pl_PL
   about_me: "O mnie"
   accept_usage_agreement: "Akceptuje warunki użytkowania"
@@ -30,7 +31,6 @@ pl:
   add_star_link: "Dodaj gwiazdkę ({{star_count}})"
   add_tags: "Dodaj Tagi"
   add_websites: "Dodaj stronę"
-  admin: Admin
   alert_error: Błąd
   alert_field_errors: "Przy następujących polach wystąpiły problemy"
   alert_not_saved: "Zmiany nie mogły zostać zapisane"
@@ -47,8 +47,6 @@ pl:
   announcement_page_description: Ogłoszenie.
   announcement_page_display: Ogłoszenie
   announcements: Ogłoszenia
-  approval_vote: "głos poparcia"
-  approval_vote_class_description: "Zatwierdzenie lub odrzucenie każdej możliwości."
   approve: zatwierdź
   approve_button: zatwierdź
   approve_contact_info: "Istnieje już prośba o dodatnie do kontaktów od tej osoby. Czy chcesz ją zatwierdzić?"
@@ -74,8 +72,6 @@ pl:
   category: Kategoria
   check_all: "Zaznacz wszystko"
   close_button: Zamknij
-  collection: kolekcja
-  collection_class_description: "Specjalne strony zawierające podstrony."
   committee: Komitet
   committee_publicly_visible: "Komitety będą publicznie widoczne"
   committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {{domain}}/nazwatwojejgrupy"
@@ -104,8 +100,7 @@ pl:
   created_by: "Stworzone przez"
   created_on: "Stworzone "
   created_when_by: "stworzone {{when}} przez {{user}}"
-  csrf_error_message: |
-      Twoja próba zalogowania nosi znamiona ataku na stronę. Nie martw się: ten błąd zdarza się często błędnie. Po prostu jesteśmy paranoikami. Wszystko co musisz zrobić to odświeżyć tą stronę zanim ponownie spróbujesz się zalogować. Możesz też nacisnąć tego linka żeby spróbować jeszcze raz:
+  csrf_error_message: "Twoja próba zalogowania nosi znamiona ataku na stronę. Nie martw się: ten błąd zdarza się często błędnie. Po prostu jesteśmy paranoikami. Wszystko co musisz zrobić to odświeżyć tą stronę zanim ponownie spróbujesz się zalogować. Możesz też nacisnąć tego linka żeby spróbować jeszcze raz:\n"
   current_attachments: "Obecne załączniki"
   current_featured_content: "Obecna wyróżniona zawartość"
   current_tags: "Aktualne Tagi"
@@ -153,7 +148,6 @@ pl:
   edit: Edytuj
   edit_attachments: "Edytuj załączniki"
   edit_attachments_link: Edytuj
-  edit_featured_content: "edytuj wyróżnioną zawartość"
   edit_featured_content_for_group: "Edytuj ostatnią zawartość dla {{group_name}}"
   edit_gallery: "Edytuj galerię"
   edit_profile_link: "Edytuj profil"
@@ -174,14 +168,11 @@ pl:
   featured_content: "Wyróżniona treść"
   featured_content_header: Wyróżnione
   file: plik
-  file_class_description: "Załadowany plik."
   file_must_be_image_error: "Plik musi być grafiką żeby stać się częścią galerii. "
   file_size: "Rozmiar pliku"
   file_version_deleted: "wersja pliku usunięta"
   first_name: imię
   folder_display: Folder
-  folder_page_description: "Zbiór aktywów"
-  folder_page_display: Katalog
   forgot_password_link: "Odzyskiwanie hasła"
   forgot_password_mail_expiry: |-
       Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
@@ -198,7 +189,6 @@ pl:
   full: pełne
   fullname: "Imię i nazwisko"
   galleries: Galerie
-  gallery_class_description: "Kolekcja grafik."
   gallery_description: "Kolekjcja obrazów."
   gallery_display: galeria
   general_info: "Ogólne informacje"
@@ -207,23 +197,21 @@ pl:
   group_administration_not_allowed: "Nie zarządzasz tą grupą."
   group_directory: "Katalog grup"
   group_directory_link: "katalog grup"
-  group_discussion: dyskusja
-  group_discussion_class_description: "Dyskusja na konkretny temat."
   group_has_no_public_profile: "Ta grupa nie ma publicznego profilu."
   group_home_headline: "{{group_type}}"
   group_home_welcome: Witamy
   group_information: "Informacje o {{group_type}}"
   group_invite_email: |
       {{from_user}} zaprasza cię do grupy "{{group}}".
-
+      
       Jeśli chcesz do niej dołączyć, kliknij tutaj:
-
+      
         {{accept_invite_link}}
-
+      
       Strona domowa tej grupy znajduje się tutaj:
-
+      
         {{group_home_link}}
-
+      
       Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
   group_invite_subject: "Zaproszenie do grupy \"{{group}}\""
   group_join_chat: "Dołącz do czatu"
@@ -259,7 +247,6 @@ pl:
   incoming: Przychodzące
   information: Informacje
   insert_image_heading: "Wklej obraz"
-  insert_image_instructions: "Kliknij na miniaturę obrazu, aby wkleić go w tekście wiki"
   invalid_email: "Nieprawidłowy adres e-mail"
   invalid_email_text: "Adres e-mail który zsotał wprowadzony jest błędny."
   invalid_token: "Niepoprawna autoryzacja"
@@ -270,7 +257,6 @@ pl:
   invite_accept_via_register: "Chcę zarejestrować nowe konto"
   invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w {{group_type}}."
   invite_not_found: "Zaproszenie nieodnalezione"
-  join_chat: "dołącz do czata"
   join_group_success: "Dołączyłeś/łaś do grupy {{group_name}}"
   join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"{{my_requests_url}}\"."
   joins_the_chatroom: "dołącz do czata"
@@ -298,7 +284,6 @@ pl:
   login_password: Hasło
   login_required: "Wymagany login"
   login_required_description: "Proszę zaloguj się aby wykonać tą czynność."
-  logout: Wyloguj
   logout_success: "Do zobaczenia!"
   logout_success_message: "Wylogowano z systemu."
   make_album_cover: "ustaw ten obraz jako okładkę albumu"
@@ -360,8 +345,7 @@ pl:
   my_completed_tasks_link: Ukończone
   my_contacts: "moi znajomi"
   my_contacts_link: "moje kontakty"
-  my_dashboard: |
-      Mój panel
+  my_dashboard: "Mój panel\n"
   my_groups: "Moje Grupy"
   my_groups_link: "moje grupy"
   my_pages: "Moje Strony"
@@ -388,8 +372,7 @@ pl:
   next_change: "Następna Zamiana"
   no_change: "bez zmiany"
   no_committees: "żadnych komitetów"
-  no_contacts_msg: |
-      Nie masz żadnych kontaktów
+  no_contacts_msg: "Nie masz żadnych kontaktów\n"
   no_group_named: "nie ma grupy o nazwie <b>{{name}}</b>."
   no_images_in_gallery: "Brak obrazów w Galerii"
   no_members: "(no members)"
@@ -452,13 +435,10 @@ pl:
   pending: "w toku"
   pending_tasks: "zadanie w toku."
   people: Ludzie
-  permission_denied: "Odmowa pozwolenia"
   permission_denied_description: "Nie posiadasz wystarczającego pozwolenia na wykonanie tej czynności."
   permissions: Pozwolenia
   personal: Osobiste
   personal_interests: "Prywatne zainteresowania"
-  personal_message: "prywatna wiadomość"
-  personal_message_class_description: "Prywatna wiadomość wysłana do indywidualnych odbiorców/odbiorczyń."
   phone_numbers: "Numery Telefonu"
   post_message: "Wyślij wiadomość"
   prev_change: "Wcześniejsza zmiana"
@@ -552,7 +532,6 @@ pl:
   settings: ustawienia
   share: Współużytkowuj
   share_button: Współużytkowuj
-  share_link: "Udostępnij {{page_class}}"
   share_page_email: "Wyślij powiadomienie mailem"
   share_page_link: "Współuzytkowuj {{page_class}}"
   share_page_message: "Wyślij wiadomość (optional)"
@@ -561,7 +540,6 @@ pl:
   share_page_recipients_results: "Ta {{page_class}} będzie wpsółużytkowana z "
   share_page_recipients_sections: "Wybierz spośród swoich grup lub przyjaciół"
   share_page_recipients_selection: "Stwórz własny wybór"
-  share_this_page: "Współużytkowuj tą stronę"
   show_gallery: "Pokaż Galerię"
   signup_button: Dołącz
   signup_confirm_password: "Potwierdź hasło"
@@ -608,9 +586,7 @@ pl:
   unknown: nieznany
   unread: "nieprzeczytane\n"
   updated: zaktualizowane
-  upload_attachment: "Załaduj Załącznik"
   upload_image: "Załaduj Obraz"
-  upload_images: Załaduj
   upload_new_image: "załaduj nowy obraz"
   uploaded_image_cropped: "Załadowany obraz będzie obcięty i rozciągnięty do kwadratu 96 pixeli."
   usage_agreement_heading: "Warunki umowy"
@@ -622,16 +598,13 @@ pl:
   user_profile_description_may_request_contact: "Pozwól ludziom na wysyłanie próśb o dołącznie do Twoich kontaktów."
   user_profile_description_may_see: "Jeśli zaznaczone, informacje z Twojego profilu,zamieszczone poniżej będą widoczne. W innym przypadku Twój profil będzie całkowicie ukryty."
   user_profile_description_may_see_contacts: "Pozwól ludziom na przeglądanie listy Twoich prywatnych kontaktów."
-  user_profile_description_may_see_groups: |
-      Pozwól ludziom na przeglądanie do jakich grup należysz.
+  user_profile_description_may_see_groups: "Pozwól ludziom na przeglądanie do jakich grup należysz.\n"
   username: "Imię Użytkownika/Użytkowniczki"
   users_wall: "{{user}}'s Mur"
   users_world: "{{user}}'s Świat"
   version_doesnt_exist: "Nie ma takiej wersji {{version}}"
   version_number: "wersja {{version}}"
   versions: Wersje
-  video: wideo
-  video_class_description: "Pokaż wideo które znajduje się na zewnętrznych stronach internetowych."
   video_embed_code_prompt: "Osadzone kody z zewnętrznego źródła wideo"
   video_service_is_not_supported: "nie ma wsparcia (obecnie tylko youtube, google video, blip.tv, and vimeo)"
   view_all: "przejrzyj wszystkie"
@@ -662,6 +635,5 @@ pl:
   you_are_not_member_of_any_group: "Nie jesteś członkiem/członkinią żadnej z grup."
   you_are_viewing_version: "Oglądasz wersję {{version}} {{user}}"
   you_have_no_contacts: "Nie masz żadnych kontaktów"
-  you_have_no_groups: "Nie masz żadnych grup"
   you_have_no_peers: "Nie masz żadnych znajomych"
   your_login: "Twój login"

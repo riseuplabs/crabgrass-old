@@ -1,4 +1,5 @@
-sv:
+--- 
+sv: 
   _locale_code: sv_SE
   about_me: "Om mig"
   accept_usage_agreement: "Jag accepterar användningsavtalet"
@@ -25,7 +26,6 @@ sv:
   add_photo_to_gallery: "Lägg till ett foto till ett galleri:"
   add_star_link: "Stjärna ({{star_count}})"
   add_websites: "Lägg till webbsajter"
-  admin: Admin
   alert_error: Fel
   alert_field_errors: "Något är fel med följande fält"
   alert_not_saved: "Det gick inte att spara förändringarna"
@@ -36,8 +36,6 @@ sv:
   all_people: "alla personer"
   all_states: "alla tillstånd"
   already_contacts_info: "Du är redan den här personens kontakt."
-  approval_vote: bifallsomröstning
-  approval_vote_class_description: "Bifall eller inte om varje möjlighet."
   approve: bifall
   approve_button: bifall
   approve_contact_info: "Det finns redan en kontaktansökan från den här användaren. Vill du godkänna den?"
@@ -54,8 +52,6 @@ sv:
   cancel_link: avbryt
   category: Kategori
   close_button: Stäng
-  collection: samling
-  collection_class_description: "Speciella sidor som innehåller andra sidor."
   committee: kommitté
   committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {{domain}}/gruppnamn"
   committees: Kommittéer
@@ -77,8 +73,7 @@ sv:
   created_by: "Skapades av"
   created_on: Skapad
   created_when_by: "skapad {{when}} av {{user}}"
-  csrf_error_message: |
-      Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:
+  csrf_error_message: "Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:\n"
   current_video_sources: "stöds för närvarande: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Datan för den här sidan saknas."
   date: datum
@@ -125,13 +120,10 @@ sv:
   error_saving_new_order: "Det gick inte att spara den nya ordern!"
   fax: Fax
   file: Fil
-  file_class_description: "En uppladdad fil."
   file_must_be_image_error: "Filen måste vara en bild för att hamna i galleriet."
   file_size: Filstorlek
   file_version_deleted: "filversion borttagen"
   first_name: förnamn
-  folder_page_description: "En samling tillgångar."
-  folder_page_display: Mapp
   forgot_password_link: "Jag har glömt mitt lösenord"
   forgot_password_mail_expiry: |-
       Den här länken kommer att fungera i 24 timmar. Om du behöver
@@ -149,24 +141,21 @@ sv:
   full: full
   fullname: "Helt namn"
   galleries: Gallerier
-  gallery_class_description: "En samling bilder."
   gallery_display: galleri
   general_info: "Allmän information"
   grant_access: "Tilldela åtkomst"
   group: Grupp
   group_administration_not_allowed: "Du kan inte administrera den här gruppen."
   group_directory: Gruppkatalog
-  group_discussion: gruppdiskussion
-  group_discussion_class_description: "En gruppdiskussion i ett särskilt ämne."
   group_has_no_public_profile: "Den här gruppen har ingen offentlig profil."
   group_home_headline: "{{group_type}} hem"
   group_home_welcome: Välkommen
   group_information: "Information för {{group_type}}"
   group_invite_email: |-
       {{from_user}} har bjudit in dig till "{{group}}".
-
+      
       Klicka här om du vill gå med i gruppen:
-
+      
         {{accept_invite_link}}
   group_invite_subject: "Inbjudan till \"{{group}}\""
   group_members_publicly_visible: "Gör medlemmar synliga offentligt"
@@ -189,13 +178,11 @@ sv:
   incoming: Inkommande
   information: Information
   insert_image_heading: "Lägg in bild"
-  insert_image_instructions: "Klicka på en miniatyr för att lägga in bilden i wikitexten."
   invalid_email: "Ogiltig e-postadress"
   invalid_email_text: "E-postadressen du angivit är ogiltig."
   invalid_token: "Ogiltig symbol"
   invalid_token_text: "Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut."
   invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna {{group_type}}."
-  join_chat: "delta i chatten"
   join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{{my_requests_url}}\"."
   language: Språk
   large: stor
@@ -216,7 +203,6 @@ sv:
   login_failure_reason: "Användarnamnet eller lösenordet stämmer inte."
   login_name: Användarnamn
   login_password: Lösenord
-  logout: "Logga ut"
   logout_success: Hejdå
   logout_success_message: "Du är utloggad."
   make_album_cover: "gör denna bild till albumomslag"
