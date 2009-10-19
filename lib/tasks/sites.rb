@@ -41,7 +41,8 @@ namespace :cg do
       elsif group_name
         react "#{group_type}: #{group_name} does not exist... creating"
         if group_type == 'network'
-          group = site.network.build :name=>group_name, :site=>site
+          group = Network.build :name=>group_name, :site=>site
+          site.network = group
         else
           group = Group.new :name=>group_name, :site=>site
         end
