@@ -21,7 +21,7 @@ enabled_mods:
   - design_tester
 #  - super_admin
 #  - moderation
-#  - gibberize
+#  - translator
 
 email:
   delivery_method: :sendmail
