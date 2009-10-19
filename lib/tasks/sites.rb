@@ -40,7 +40,11 @@ namespace :cg do
         verify_group_site(group, site)
       elsif group_name
         react "#{group_type}: #{group_name} does not exist... creating"
-        group = Group.new :name=>group_name, :site=>site
+        if group_type == 'network'
+          group = Network.new :name=>group_name, :site=>site
+        else
+          group = Group.new :name=>group_name, :site=>site
+        end
       else
         react "WARNING: no #{group_type} set."
       end
@@ -106,7 +110,7 @@ namespace :cg do
 
     desc 'creates a new site'
     task :create => :environment do
-      unless ENV['NAME']
+      unless name = ENV['NAME']
         puts 'ERROR: site name required, use NAME=<name> to specify the name.'
         react 'options: NETWORK=<name> DOMAIN=<domain> TITLE=<title> EMAIL=<email>'
         exit
@@ -143,7 +147,7 @@ namespace :cg do
         site = Site.new :name=>site_conf['name'],
           :limited => site_conf['limited'] || Conf.limited || true
       end
-      ['moderation_group','admin_group'].each do |group_type|
+      ['moderation_group','admin_group', 'network'].each do |group_type|
         group = verify_group_type(site, site_conf, group_type)
       end
       finalize(site, old_site)
