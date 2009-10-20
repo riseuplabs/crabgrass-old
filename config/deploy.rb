@@ -148,6 +148,17 @@ namespace :crabgrass do
     run "ln -nfs #{shared_path}/sphinx #{current_release}/db/sphinx"
   end
 
+  desc "Write the VERSION file to the server"
+  task :create_version_files do
+    version = `git describe --abbrev=0`.chomp
+    run "echo #{version} > #{current_release}/VERSION"
+
+    timestamp = current_release.scan(/\d{10,}/).first
+    if timestamp
+      run "echo #{timestamp} > #{current_release}/RELEASE"
+    end
+  end
+
   desc "refresh the staging database"
   task :refresh do
     run "touch #{deploy_to}/shared/tmp/refresh.txt"
@@ -185,6 +196,7 @@ end
 
 after  "deploy:setup",   "crabgrass:create_shared"
 after  "deploy:symlink", "crabgrass:link_to_shared"
+after  "deploy:symlink", "crabgrass:create_version_files"
 before "deploy:restart", "debian:symlinks"
 after  "deploy:restart", "passenger:restart"
 
