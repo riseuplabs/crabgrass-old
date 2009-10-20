@@ -33,12 +33,6 @@
     t.selected controller?(:wiki_page_version) && !(action?(:diff) && params[:id] == last_change_id)
     t.class 'page_url'
   end
-  f.tab do |t|
-    t.label "History"[:history]
-    t.url page_url(@page,:action => 'page_history')
-    t.selected controller?(:wiki_page) && action?(:page_history)
-    t.class 'page_url'
-  end
   if @wiki.version > 1
     f.tab do |t|
       t.label "Last Change"[:last_change]
