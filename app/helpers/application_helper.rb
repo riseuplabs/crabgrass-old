@@ -38,10 +38,12 @@ module ApplicationHelper
   ##
 
   # returns the first of the args where any? returns true
+  # if none has any, return last
   def first_with_any(*args)
     for str in args
       return str if str.any?
     end
+    return args.last
   end
 
   ## coverts bytes into something more readable
