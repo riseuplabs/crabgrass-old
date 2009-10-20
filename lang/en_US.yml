@@ -631,7 +631,7 @@ this_is_committee: "This committee is part of {parent_group}."
 
 contact_request_message_label: "Tell %s why you want to be their friend."
 add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
+join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {link_to_requests}."
 network_invite_info: "Enter the names of the groups you would like to invite to join this network."
 remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
 approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
