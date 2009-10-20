@@ -85,6 +85,30 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", tree.find('tasty-apples').sub_markup("h2. Oranges\n\nooooo")
   end
 
+  def test_repeatedly_set_text
+    greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+    tree = greencloth.green_tree
+
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+
+    tree = GreenCloth.new(markup).green_tree
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+
+    tree = GreenCloth.new(markup).green_tree
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+  end
+
+  def test_set_text_leaves_some_trailing_whitespace
+      greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+      tree = greencloth.green_tree
+
+      markup = tree.find('red').sub_markup("h3. Red")
+      assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+  end
+
   def test_multinine_heading
     greencloth = GreenCloth.new( in_texts(:multiline_headings) )
     tree = greencloth.green_tree
