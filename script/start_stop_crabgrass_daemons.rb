@@ -149,6 +149,7 @@ def stop_backgroundrb
   puts "Stopping backgroundrb daemon..."
   system("#{$root}/script/backgroundrb stop -e #{$environment}")
   system("pkill -f 'script/backgroundrb'") # make sure it is dead
+  sleep 1
   if bgrb_pid.any?
     puts "ERROR: failed to stop backgroundrb (%s)." % bgrb_pid
   else
