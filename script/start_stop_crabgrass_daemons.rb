@@ -97,7 +97,7 @@ end
 ##
 
 def bgrb_pid
-  `pgrep -f backgroundrb master`.chomp
+  `pgrep -f 'backgroundrb master'`.chomp
 end
 
 def load_backgroundrb_config
