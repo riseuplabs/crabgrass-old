@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'mocha'
 
 begin
   require 'ruby-debug'
@@ -376,6 +377,15 @@ See also doc/SPHINX"
   ##
   ## AUTHENTICATION
   ##
+  def login_as(user)
+    user = case user
+      when Symbol then users(user)
+      when User   then user
+      else             nil
+    end
+    @controller.stubs(:current_user).returns(user)
+    @request.session[:user] = user
+  end
 
   # the normal acts_as_authenticated 'login_as' does not work for integration tests
   def login(user)
