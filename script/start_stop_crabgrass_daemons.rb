@@ -30,8 +30,18 @@ def process_command
     stop_backgroundrb
     sleep 1
     start_backgroundrb
+  when 'restart-sphinx'
+    restart_sphinx
+  when 'restart-bgrb'
+    stop_backgroundrb
+    sleep 1
+    start_backgroundrb
   when 'status'
     status_sphinx
+    status_backgroundrb
+  when 'status-sphinx'
+    status_sphinx
+  when 'status-bgrb'
     status_backgroundrb
   when 'start-sphinx'
     start_sphinx
@@ -113,7 +123,9 @@ end
 def start_backgroundrb
   pid_dir = "#{$root}/tmp/pids"
   Dir.mkdir(pid_dir) unless File.exists?(pid_dir)
-  puts "Starting backgroundrb..."
+  # this is echoed by the BackgrounDRb::StartStop
+  # puts "Starting backgroundrb..."
+  puts ""
   system("#{$root}/script/backgroundrb start -e #{$environment}")
 
   if (pid = bgrb_pid).any?
