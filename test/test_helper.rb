@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'mocha'
 
 begin
   require 'ruby-debug'
