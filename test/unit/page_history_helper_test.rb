@@ -16,49 +16,49 @@ class PageHistoryHelperTest < Test::Unit::TestCase
     description = "Pepe le Piu has modified the page title"
     assert_equal description, description_for(PageHistory::ChangeTitle.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu have added a star"
+    description = "Pepe le Piu has added a star"
     assert_equal description, description_for(PageHistory::AddStar.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu have removed a star"
+    description = "Pepe le Piu has removed a star"
     assert_equal description, description_for(PageHistory::RemoveStar.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu has made public the page"
+    description = "Pepe le Piu has made the page public"
     assert_equal description, description_for(PageHistory::MakePublic.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu has made private the page"
+    description = "Pepe le Piu has made unchecked the option to make the page public"
     assert_equal description, description_for(PageHistory::MakePrivate.create!(:user => @user, :page => @page))
 
     description = "Pepe le Piu has deleted the page"
     assert_equal description, description_for(PageHistory::Deleted.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu have start watching this page"
+    description = "Pepe le Piu has started watching this page"
     assert_equal description, description_for(PageHistory::StartWatching.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu have stop watching this page"
+    description = "Pepe le Piu has stop watching this page"
     assert_equal description, description_for(PageHistory::StopWatching.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu have updated the page content"
+    description = "Pepe le Piu has updated the page content"
     assert_equal description, description_for(PageHistory::UpdatedContent.create!(:user => @user, :page => @page))
 
-    description = "Pepe le Piu grant full access to the group Insurrectos"
+    description = "Pepe le Piu granted full access to the group Insurrectos"
     assert_equal description, description_for(PageHistory::GrantGroupFullAccess.create!(:user => @user, :page => @page, :object => @group))
 
-    description = "Pepe le Piu grant write access to the group Insurrectos"
+    description = "Pepe le Piu granted write access to the group Insurrectos"
     assert_equal description, description_for(PageHistory::GrantGroupWriteAccess.create!(:user => @user, :page => @page, :object => @group))
 
-    description = "Pepe le Piu grant read access to the group Insurrectos"
+    description = "Pepe le Piu granted read access to the group Insurrectos"
     assert_equal description, description_for(PageHistory::GrantGroupReadAccess.create!(:user => @user, :page => @page, :object => @group))
 
     description = "Pepe le Piu revoked access to the group Insurrectos"
     assert_equal description, description_for(PageHistory::RevokedGroupAccess.create!(:user => @user, :page => @page, :object => @group))
 
-    description = "Pepe le Piu grant full access to the user Kropotkin"
+    description = "Pepe le Piu granted full access to the user Kropotkin"
     assert_equal description, description_for(PageHistory::GrantUserFullAccess.create!(:user => @user, :page => @page, :object => @user_a))
 
-    description = "Pepe le Piu grant write access to the user Kropotkin"
+    description = "Pepe le Piu granted write access to the user Kropotkin"
     assert_equal description, description_for(PageHistory::GrantUserWriteAccess.create!(:user => @user, :page => @page, :object => @user_a))
 
-    description = "Pepe le Piu grant read access to the user Kropotkin"
+    description = "Pepe le Piu granted read access to the user Kropotkin"
     assert_equal description, description_for(PageHistory::GrantUserReadAccess.create!(:user => @user, :page => @page, :object => @user_a))
 
     description = "Pepe le Piu revoked access to the user Kropotkin"
