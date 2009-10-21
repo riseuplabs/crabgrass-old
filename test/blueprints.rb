@@ -125,3 +125,11 @@ end
 RateManyPage.blueprint {}
 
 Poll.blueprint {}
+
+Discussion.blueprint {}
+
+Post.blueprint do
+  discussion { Discussion.make }
+  body       { Faker::Lorem.paragraph }
+  user       { User.make }
+end

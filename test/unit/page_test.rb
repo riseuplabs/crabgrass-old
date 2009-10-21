@@ -293,6 +293,35 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
+  def test_update_at_updated_by_certain_fields
+    page = Page.make 
+    last_updated_at = page.updated_at
+
+    page.save!
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :resolved, !page.resolved
+    assert_equal page.updated_at, last_updated_at
+    
+    page.update_attribute :public, !page.public
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :created_by_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :updated_by_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :site_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :stars_count, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :views_count, rand(500)
+    assert_equal page.updated_at, last_updated_at
+  end
+
   protected
 
   def create_page(options = {})

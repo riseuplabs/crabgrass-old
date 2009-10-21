@@ -50,69 +50,106 @@ class PageHistory < ActiveRecord::Base
     users_watching_ids.delete(page_history.user.id) 
     User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
   end
+
+  protected
+
+  def page_updated_at
+    Page.update_all(["updated_at = ?", created_at], ["id = ?", page.id])
+  end
 end
 
-class PageHistory::ChangeTitle    < PageHistory; end
 class PageHistory::AddStar        < PageHistory; end
 class PageHistory::RemoveStar     < PageHistory; end
 class PageHistory::MakePublic     < PageHistory; end
 class PageHistory::MakePrivate    < PageHistory; end
-class PageHistory::Deleted        < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
-class PageHistory::UpdatedContent < PageHistory; end
+
+class PageHistory::ChangeTitle < PageHistory
+  after_save :page_updated_at  
+end
+
+class PageHistory::Deleted < PageHistory
+  after_save :page_updated_at  
+end
+
+class PageHistory::UpdatedContent < PageHistory
+  after_save :page_updated_at  
+end
 
 class PageHistory::GrantGroupFullAccess < PageHistory
+  after_save :page_updated_at  
+
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantGroupWriteAccess < PageHistory
+  after_save :page_updated_at  
+
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantGroupReadAccess < PageHistory
+  after_save :page_updated_at  
+
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::RevokedGroupAccess < PageHistory
+  after_save :page_updated_at  
+
   validates_format_of :object_type, :with => /Group/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserFullAccess < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserWriteAccess < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::GrantUserReadAccess < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::RevokedUserAccess < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /User/
   validates_presence_of :object_id
 end
 
 class PageHistory::AddComment < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end
 
 class PageHistory::UpdateComment < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end
 
 class PageHistory::DestroyComment < PageHistory
+  after_save :page_updated_at  
+  
   validates_format_of :object_type, :with => /Post/
   validates_presence_of :object_id
 end

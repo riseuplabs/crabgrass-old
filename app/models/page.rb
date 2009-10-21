@@ -74,6 +74,9 @@ class Page < ActiveRecord::Base
   include PageExtension::Tracking  # page tracking views, edits and stars
   include PageExtension::PageHistory  
 
+  # disable timestamps, we set the updated_at field through certain PageHistory subclasses
+  self.record_timestamps = false
+
   acts_as_taggable_on :tags
   acts_as_site_limited
   attr_protected :owner
@@ -449,5 +452,4 @@ class Page < ActiveRecord::Base
   def supports_attachments
     true
   end
-
 end
