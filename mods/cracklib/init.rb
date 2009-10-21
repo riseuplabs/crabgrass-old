@@ -1,7 +1,7 @@
 self.load_once = false
 
-if File.exists?('/usr/sbin/crack_testlib')
-  ::CRACKLIB_COMMAND = '/usr/sbin/crack_testlib'
+if File.exists?('/usr/sbin/cracklib-check')
+  ::CRACKLIB_COMMAND = '/usr/sbin/cracklib-check'
 else
   ::CRACKLIB_COMMAND = `which cracklib-check`.chomp
 end

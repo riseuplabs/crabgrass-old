@@ -27,6 +27,8 @@ module UserExtension::Pages
       end
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
+      has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
+      has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
 
       named_scope(:most_active_on, lambda do |site, time|
         ret = {
