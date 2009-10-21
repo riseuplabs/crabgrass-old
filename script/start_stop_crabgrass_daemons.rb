@@ -99,6 +99,7 @@ def status_sphinx
     puts "  running for %s" % process_elapsed_time(pid)
   else
     puts "Sphinx searchd NOT running."
+    exit 1
   end
 end
 
@@ -181,6 +182,7 @@ def status_backgroundrb
     if File.exists?($backgroundrb_pid_file)
       puts "  WARNING: file %s exists (contents: %s)" % [$backgroundrb_pid_file, File.read($backgroundrb_pid_file)]
     end
+    exit 1
   end
   pids = `pgrep -f packet_worker_runner`.chomp.split("\n")
   pids.each do |pid|
