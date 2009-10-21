@@ -6,12 +6,12 @@ The page "<%= @page_history.page.title %>" in network "<%= @site.title %>" has b
 
 You may access this page here:
 
-  <%= page_url(@page_history.page) %>
+  <%= "http://#{@site.domain}#{page_url(@page_history.page)}" %>
 
 To stop watching this page for changes, click here:
 
-  <%= page_url(@page_history.page) %>
+  <%= "http://#{@site.domain}#{page_url(@page_history.page)}" %>
 
 ---
 Change your email notification settings:
-<%= me_url(:action => 'edit') %>
+<%= "http://#{@site.domain}#{me_url(:action => 'edit')}" %>

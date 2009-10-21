@@ -8,7 +8,7 @@ class PageHistory < ActiveRecord::Base
   def self.send_pending_notifications
     pending_notifications.each do |page_history|
       recipients_for_single_noification(page_history).each do |user|
-        Mailer.deliver_send_watched_notification(user, page_history)
+        Mailer.deliver_page_history_single_notification(user, page_history)
       end
       page_history.update_attribute :notification_sent_at, Time.now
     end
@@ -18,7 +18,7 @@ class PageHistory < ActiveRecord::Base
     pending_digest_notifications_by_page.each do |page_id, page_histories|
       page = Page.find(page_id)
       recipients_for_digest_notifications(page).each do |user|
-        Mailer.deliver_send_digest_pending_notifications(user, page, page_histories)
+        Mailer.deliver_page_history_digest_notification(user, page, page_histories)
       end
       PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
     end

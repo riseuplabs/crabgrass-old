@@ -11,12 +11,12 @@ this is a digest email resuming the last changes:
 
 You may access this page here:
 
-  <%= page_url(@page) %>
+  <%= "http://#{@site.domain}#{page_url(@page)}" %>
 
 To stop watching this page for changes, click here:
 
-  <%= page_url(@page) %>
+  <%= "http://#{@site.domain}#{page_url(@page)}" %>
 
 ---
 Change your email notification settings:
-<%= me_url(:action => 'edit') %>
+<%= "http://#{@site.domain}#{me_url(:action => 'edit')}" %>

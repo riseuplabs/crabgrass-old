@@ -7,7 +7,7 @@ module Mailers::PageHistory
     end
   end
 
-  def send_watched_notification(user, page_history)
+  def page_history_single_notification(user, page_history)
     @user                 = user
     @page_history         = page_history
     @site                 = page_history.page.site
@@ -16,7 +16,7 @@ module Mailers::PageHistory
     setup_watched_notification_email
   end
 
-  def send_digest_pending_notifications(user, page, page_histories)
+  def page_history_digest_notification(user, page, page_histories)
     @user                   = user
     @site                   = page.site
     @subject                = "#{@site.title} : #{page.title}"

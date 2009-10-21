@@ -16,7 +16,7 @@ class MailerPageHistoryTest < Test::Unit::TestCase
 
   def test_send_watched_notification
     page_history = PageHistory::AddStar.create!(:user => @user_a, :page => @page)
-    message = Mailer.create_send_watched_notification(@user_b, page_history)
+    message = Mailer.create_page_history_single_notification(@user_b, page_history)
     assert_equal "Crabgrass Social Network : #{@page.title}", message.subject
     assert_equal [@user_b.email], message.to
     assert_equal ["robot@crabgrass.org"], message.from
@@ -31,7 +31,7 @@ class MailerPageHistoryTest < Test::Unit::TestCase
     page_histories = []
     page_histories << PageHistory::AddStar.create!(:user => @user_a, :page => @page)
     page_histories << PageHistory::RemoveStar.create!(:user => @user_b, :page => @page)
-    message = Mailer.create_send_digest_pending_notifications(@user_a, @page, page_histories)
+    message = Mailer.create_page_history_digest_notification(@user_a, @page, page_histories)
     assert_equal "Crabgrass Social Network : #{@page.title}", message.subject
     assert_equal [@user_a.email], message.to
     assert message.body.match(/Hello Miguel Bakunin/)
