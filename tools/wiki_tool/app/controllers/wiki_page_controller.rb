@@ -9,7 +9,7 @@ class WikiPageController < BasePageController
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :edit
 
-  helper :page_history, :wiki # for wiki toolbar stuff
+  helper :wiki # for wiki toolbar stuff
   permissions 'wiki_page'
 
   before_filter :setup_wiki_rendering
@@ -120,9 +120,6 @@ class WikiPageController < BasePageController
   def update_editors
     return unless @wiki.document_open_for?(current_user)
     render :json => update_editor_data(:editor => params[:editor], :wiki => params[:wiki])
-  end
-
-  def page_history
   end
 
   ##
