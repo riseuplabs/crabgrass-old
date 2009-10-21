@@ -170,7 +170,7 @@ class PageHistoryTest < Test::Unit::TestCase
     user_a = User.make :receive_notifications => "Single" 
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
-    PageHistory.send_pending_notifications
+    PageHistory.send_single_pending_notifications
     assert_equal 1, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
   end
