@@ -5,8 +5,8 @@ class CronWorker < BackgrounDRb::MetaWorker
     # this method is called, when worker is loaded for the first time
   end
 
-  def send_pending_notifications_for_watched_pages
-    PageHistory.send_pending_notifications
+  def send_pending_single_notifications_for_watched_pages
+    PageHistory.send_single_pending_notifications
   end
 
   def send_pending_digest_notifications_for_watched_pages

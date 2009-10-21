@@ -32,7 +32,7 @@
   :environment: production
 :schedules:
   :cron_worker:
-    :send_pending_notifications_for_watched_pages:
+    :send_pending_single_notifications_for_watched_pages:
       :trigger_args: <%= five_minutes %>
     :send_pending_digest_notifications_for_watched_pages:
       :trigger_args: <%= daily %>

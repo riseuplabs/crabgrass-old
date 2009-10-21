@@ -5,7 +5,7 @@ class PageHistory < ActiveRecord::Base
 
   validates_presence_of :user, :page
 
-  def self.send_pending_notifications
+  def self.send_single_pending_notifications
     pending_notifications.each do |page_history|
       recipients_for_single_noification(page_history).each do |user|
         Mailer.deliver_page_history_single_notification(user, page_history)
