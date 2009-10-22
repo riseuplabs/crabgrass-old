@@ -22,8 +22,7 @@ class MailerPageHistoryTest < Test::Unit::TestCase
     assert_equal ["robot@crabgrass.org"], message.from
     assert message.body.match(/Hello Anselme Belgarin/)
     assert message.body.match(/Miguel Bakunin/)
-    assert message.body.match(/The page \"#{@page.title}/)
-    assert message.body.match(/in network \"#{@site.title}/)
+    assert message.body.match(/The page you are watching \"#{@page.title}/)
     assert message.body.match(/added a star/)
   end
 
@@ -36,9 +35,8 @@ class MailerPageHistoryTest < Test::Unit::TestCase
     assert_equal [@user_a.email], message.to
     assert message.body.match(/Hello Miguel Bakunin/)
     assert message.body.match(/Anselme Belgarin/)
-    assert message.body.match(/has been modified,\nthis is a digest email resuming the last changes/)
-    assert message.body.match(/The page \"#{@page.title}/)
-    assert message.body.match(/in network \"#{@site.title}/)
+    assert message.body.match(/has been modified:\n/)
+    assert message.body.match(/The page you are watching \"#{@page.title}/)
     assert message.body.match(/added a star/)
     assert message.body.match(/removed a star/)
   end
