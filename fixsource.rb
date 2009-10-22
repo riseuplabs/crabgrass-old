@@ -1,7 +1,5 @@
 #!/usr/bin/ruby1.9
 
-require 'pp'
-
 def replace_line(line)
   old_line = line.dup
   replaced = true
@@ -35,7 +33,6 @@ def replace_line(line)
       # not sure what to do with these - can use index i guess
       # but it will likely have to be fixed manually.
       args.each do |arg|
-        warnings << "unknown key '#{arg}' in #{line}"
         ph = placeholders[args.index(arg)] || args.index(arg)
         newline << ", :#{ph} => #{arg}"
       end
@@ -117,13 +114,20 @@ def checkfile(filename)
   file_warnings
 end
 
+def ruby_code_file?(file)
+  return false if file =~ /^\./
+  return false if file =~ /(jar|jpg|png|swf|xcf|gz|log|ico|beam|sp\w|doc|yml|pdf|rd|gif|tiff|js|sqlite3)$/i
+  return false if file =~ /gibberish|coderay|multiple_select|ruby_sess\./
+
+  true
+end
 def searchdirectory(directory)
   dir_warnings = {}
 
   Dir.open(directory) do |dir|
     dir.each do |file|
-      next if file =~ /^\./
-      path_to_file = dir.path + '/' + file
+      next unless ruby_code_file? file
+      path_to_file = File.join(dir.path, file)
       if File.file?(path_to_file)
         file_warnings = checkfile(path_to_file)
         dir_warnings[path_to_file] = file_warnings unless file_warnings.empty?
