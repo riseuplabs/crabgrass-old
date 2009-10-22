@@ -57,9 +57,7 @@ class AccountController < ApplicationController
   end
 
   def signup
-    if current_site.signup_redirect_url.any?
-      redirect_to current_site.signup_redirect_url
-    elsif !may_signup?
+    if !may_signup?
       raise PermissionDenied.new('new user registration is closed at this time')
     end
 
