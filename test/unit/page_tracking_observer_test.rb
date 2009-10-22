@@ -84,6 +84,13 @@ class PageTrackingObserverTest < Test::Unit::TestCase
     true
   end
 
+  def test_create_page 
+    page = Page.make_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
+    page.reload
+    assert_equal PageHistory::PageCreated, page.page_history.last.class
+    assert_equal PageHistory::GrantUserFullAccess, page.page_history.first.class 
+  end
+
   def test_start_watching
     @upart = @page.add(@pepe, :watch => true).save!
     @page.reload

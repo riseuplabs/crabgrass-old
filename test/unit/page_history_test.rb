@@ -45,46 +45,64 @@ class PageHistoryTest < Test::Unit::TestCase
     PageHistory.create!(:user => @user, :page => page)
     assert_not_change_updated_at page 
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
+    assert_change_updated_at page, PageHistory::PageCreated.create!(:user => @user, :page => page)
+
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdatedContent.create!(:user => @user, :page => page)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::ChangeTitle.create!(:user => @user, :page => page)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::Deleted.create!(:user => @user, :page => page)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::AddComment.create!(:user => @user, :page => page, :object => post)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::UpdateComment.create!(:user => @user, :page => page, :object => post)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::DestroyComment.create!(:user => @user, :page => page, :object => post)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupFullAccess.create!(:user => @user, :page => page, :object => group)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupWriteAccess.create!(:user => @user, :page => page, :object => group)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantGroupReadAccess.create!(:user => @user, :page => page, :object => group)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedGroupAccess.create!(:user => @user, :page => page, :object => group)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserFullAccess.create!(:user => @user, :page => page, :object => user)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserWriteAccess.create!(:user => @user, :page => page, :object => user)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::GrantUserReadAccess.create!(:user => @user, :page => page, :object => user)
 
-    page = Page.make :created_at => 3.months.ago, :updated_at => 2.months.ago    
+    page = Page.make
+    Page.update_all(["created_at = ?, updated_at = ?", 3.months.ago, 2.months.ago], ["id = ?", page.id])
     assert_change_updated_at page, PageHistory::RevokedUserAccess.create!(:user => @user, :page => page, :object => user)
   end
 
@@ -171,12 +189,12 @@ class PageHistoryTest < Test::Unit::TestCase
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
     PageHistory.send_single_pending_notifications
-    assert_equal 1, ActionMailer::Base.deliveries.count
+    assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
   end
 
   def test_pending_notifications
-    assert_equal 1, PageHistory.pending_notifications.size
+    assert_equal 2, PageHistory.pending_notifications.size
   end
 
   private

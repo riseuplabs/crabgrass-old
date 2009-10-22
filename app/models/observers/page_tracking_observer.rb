@@ -1,6 +1,15 @@
 class PageTrackingObserver < ActiveRecord::Observer
   observe :page, :user_participation, :group_participation, :post, :wiki
 
+  def after_create(model)
+    if User.current
+      if model.is_a? Page
+        page = model
+        PageHistory::PageCreated.create!(:user => User.current, :page => page)
+      end
+    end
+  end
+
   def after_save(model)
     if User.current
       if model.is_a? UserParticipation

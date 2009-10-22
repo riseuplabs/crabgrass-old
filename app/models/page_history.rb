@@ -65,6 +65,10 @@ class PageHistory::MakePrivate    < PageHistory; end
 class PageHistory::StartWatching  < PageHistory; end
 class PageHistory::StopWatching   < PageHistory; end
 
+class PageHistory::PageCreated < PageHistory
+  after_save :page_updated_at
+end
+
 class PageHistory::ChangeTitle < PageHistory
   after_save :page_updated_at  
 end

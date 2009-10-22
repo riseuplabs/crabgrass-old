@@ -15,6 +15,7 @@ module PageHistoryHelper
 
   def build_description(page_history)
     case page_history.class.to_s
+    when PageHistory::PageCreated.to_s            then "{user.display_name} has created the page"
     when PageHistory::ChangeTitle.to_s            then "{user.display_name} has modified the page title"
     when PageHistory::AddStar.to_s                then "{user.display_name} has added a star"
     when PageHistory::RemoveStar.to_s             then "{user.display_name} has removed a star"

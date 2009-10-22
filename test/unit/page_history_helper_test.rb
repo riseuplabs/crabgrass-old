@@ -13,6 +13,9 @@ class PageHistoryHelperTest < Test::Unit::TestCase
   end
 
   def test_description
+    description = "Pepe le Piu has created the page"
+    assert_equal description, description_for(PageHistory::PageCreated.create!(:user => @user, :page => @page))
+
     description = "Pepe le Piu has modified the page title"
     assert_equal description, description_for(PageHistory::ChangeTitle.create!(:user => @user, :page => @page))
 
