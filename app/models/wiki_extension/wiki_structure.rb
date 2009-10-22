@@ -25,6 +25,14 @@ module WikiExtension
       find(section).markup
     end
 
+    def get_level(section)
+      find(section).heading_level
+    end
+
+    def get_successor(section)
+      find(section).successor
+    end
+
     protected
 
     def find(section)

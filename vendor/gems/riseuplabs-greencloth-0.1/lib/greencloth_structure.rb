@@ -21,8 +21,19 @@ module GreenclothStructure
   # but be warned that to_html will mangled the string and it will not the
   # original!
   def green_tree
-    extract_headings unless @headings
-    @green_tree ||= convert_to_tree(@headings)
+    begin
+      extract_headings unless @headings
+      @green_tree ||= convert_to_tree(@headings)
+    rescue GreenClothException => exc
+      logger.error exc.message if defined? logger and logger.respond_to? :error
+      return GreenTree.from_hash({
+        :children => [],
+        :name => nil,
+        :start_index => 0,
+        :end_index => self.size - 1,
+        :heading_level => 0},
+        self)
+    end
   end
 
   protected
@@ -46,9 +57,7 @@ module GreenclothStructure
 
   # called by greencloth when [[toc]] is encountered
   def symbol_toc
-    return '' unless outline and !@headings.nil?
-    tree = convert_to_tree(@headings)
-    generate_toc_html(tree, 1)
+    generate_toc_html(green_tree, 1)
   end
 
   private

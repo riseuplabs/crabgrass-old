@@ -101,6 +101,7 @@ require 'jcode' # / encoding
 
 $: << File.dirname( __FILE__)  # add this dir to search path.
 require 'greencloth_structure'
+require 'exceptions'
 
 ##
 ## GREENCLOTH HTML FORMATTER
@@ -321,12 +322,15 @@ class GreenCloth < RedCloth::TextileDoc
 
   def initialize(string, default_owner_name = 'page', restrictions = [])
     @default_owner = default_owner_name
-    restrictions.each { |r| method("#{r}=").call( true ) }
 
     # filter_ids    -- don't allow the user to set dom ids in the markup. This can
     #                  royally mess with the display of a page.
     # sanitize_html -- allows some basic html, see ALLOWED_TAGS aboved.
-    super(string, [:filter_ids, :sanitize_html])
+    restrictions << :sanitize_html
+    restrictions << :filter_ids
+    restrictions << :filter_html if restrictions.include?(:lite_mode)
+
+    super(string, restrictions)
   end
 
   # RedCloth calls clone of the GreenCloth object before
@@ -370,11 +374,12 @@ class GreenCloth < RedCloth::TextileDoc
     @headings = []
     @heading_names = {}
 
-    self.extend(GreenClothFormatterHTML)
-    original = self.dup
-    apply_rules([:normalize_heading_blocks])
+    formatter = self.clone()                   # \  in case one of the before filters
+    formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
+
+    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :normalize_heading_blocks])
     to(GreenClothFormatterHTML)
-    self.replace(original)
+    self.replace(formatter)
   end
 
   # what is this used for???

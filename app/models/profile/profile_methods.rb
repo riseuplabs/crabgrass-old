@@ -11,9 +11,9 @@ module ProfileMethods
   def visible_by(user)
     if user
       relationships = proxy_owner.relationships_to(user)
-      relationships << :stranger unless relationships.include?(:stranger) # not sure this is needed
 
-      filter_relationships_for_site(relationships)
+      # site relationship settings are for user <=> user relationships only
+      filter_relationships_for_site(relationships) unless proxy_owner.is_a? Group
 
       profile = find_by_access(*relationships)
     else
@@ -54,11 +54,11 @@ module ProfileMethods
 
   # a shortcut to grab the 'private' profile
   def private
-    @private_profile ||= (find_by_access(:friend) || create(:friend => true))
+    @private_profile ||= (find_by_access(:friend) || create_or_build(:friend => true))
   end
 
   def hidden
-    @hidden_profile ||= (find_by_access || create)
+    @hidden_profile ||= (find_by_access || create_or_build)
   end
 
   def create_or_build(args={})

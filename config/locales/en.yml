@@ -188,6 +188,7 @@ en:
   full: full
   include_full_checkbox: include link to full image
 
+  confirm_discarding_text_area: "All your unsaved work will be lost. Press {{cancel}} to continue editing."
 
   ##
   ## ACCOUNT
@@ -629,7 +630,8 @@ en:
 
   contact_request_message_label: "Tell {{user}} why you want to be their friend."
   add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-  join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "{{my_requests_url}}".
+  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {{link_to_requests}}."
+
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
   approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
@@ -989,9 +991,10 @@ en:
   ##
 
   locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
-  view_while_locked_error: "You have this wiki locked. If you want to stop editing, click the cancel button."
+  save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either {{save_button}} or {{cancel_button}} to stop editing."
   wiki_is_locked: "This wiki is currently locked by {{user}}"
   wont_be_able_to_save: "You will not be able to save this page"
+  leave_editing_wiki_page_warning: "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."
   page_locked_header: "Page Locked"
   locked_by_user: "Locked by {{user}}"
   break_lock: "Break Lock"
@@ -1166,3 +1169,7 @@ en:
   confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
   confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
   chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
+  offensive_behavior: "Offensive Behavior"
+  off_topic: "Off Topic"
+  offensive_language: "Offensive Language"
+  other_reason: "Other Reason"

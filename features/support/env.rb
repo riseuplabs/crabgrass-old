@@ -14,7 +14,7 @@ Cucumber::Rails.use_transactional_fixtures
 # (e.g. rescue_action_in_public / rescue_responses / rescue_from)
 Cucumber::Rails.bypass_rescue
 
-require 'webrat'
+require 'webrat/rails'
 require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
 
 Webrat.configure do |config|

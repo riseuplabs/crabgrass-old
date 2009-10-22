@@ -101,6 +101,13 @@ module AuthenticatedUser
     true
   end
 
+  # Update last_seen_at if have passed 5 minutes from the last time
+  def seen!
+    now = Time.now.utc
+    return unless last_seen_at.nil? || last_seen_at < now - 5.minutes
+    update_attribute :last_seen_at, now
+  end
+
   protected
 
   # before filter

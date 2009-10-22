@@ -154,7 +154,7 @@ class GreenTree < Array
 
   def prepare_markup_indexes
     if self.parent
-      puts "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
+      raise GreenClothException, "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
     else
       markup = self.greencloth.to_s.clone
       self.prepare_markup_start_index!(markup)
@@ -172,16 +172,14 @@ class GreenTree < Array
   # does not modify any data this node has
   def sub_markup(section_markup)
     current_markup = greencloth.to_s.clone
-    # we want to preserve any trailing whitespace
-    #that way if we replace the text with other text, section boundaries will remain valid
-    current_section_markup = self.markup
-    trailing_whitespace = current_section_markup.scan(/\s+\Z/).last.to_s
 
+    markup_newlines = section_markup.scan(/[\n\r]+\Z/).last.to_s
+    # should have minimum 2 newlines
 
     # don't apprend the trailing whitespace to the sections that
     # hit the end of the document text
     unless self.root? or self.successor.nil?
-      section_markup << trailing_whitespace
+      section_markup << "\n\n" if markup_newlines.length < 2
     end
 
     current_markup[self.start_index..self.end_index] = section_markup
@@ -204,18 +202,21 @@ class GreenTree < Array
       node.prepare_markup_start_index!(markup)
     end
 
+    # assume the node markup starts at the begining of the document
+    # this is true for :document node
+    # and is better than 'nil' start_index for nodes that can't be be found in the markup
+    self.start_index = 0
+
     if self.text
       # find the first occurance of this node in the markup
       self.start_index = markup.index(self.markup_regexp)
       if self.start_index.nil?
-        puts "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
+        raise GreenClothException, "GREENCLOTH ERROR: Can't find heading with text: '#{text}' in markup"
       else
         # modify the markup, so that it will no longer match
         # the markup_regexp at this position
         markup[self.start_index] = "\000"
       end
-    else
-      self.start_index = 0
     end
   end
 
@@ -225,7 +226,7 @@ class GreenTree < Array
     self.children.each do |child_node|
       child_node.prepare_markup_end_index!(markup)
       child_node_successor = child_node.successor
-      if child_node_successor
+      if child_node_successor and child_node_successor.start_index
         child_node.end_index = child_node_successor.start_index - 1
       else
         # no successor for this child node. means this is the last node
@@ -250,9 +251,20 @@ class GreenTree < Array
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
 
+    # allowed formatting characters around heading text
+    # /[\[\]\^\s_\*\+\?\-~]/
+
     Regexp.union(
-      /^#{heading_text}\s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)/,
-      /^h#{heading_level}\. #{heading_text}\s*?(\r?\n\r?\n?|$)/
+      /^
+      [ \[\]\^@_\*\+\?\-~]*
+      #{heading_text}[\[\]\^@\s_\*\+\?\-~]*
+      \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
+      /x,
+      /^
+      h#{heading_level}\.\s+
+      [\[\]\^@\s_\*\+\?\-~]*#{heading_text}[\[\]\^@\s_\*\+\?\-~]*
+      \s*?(\r?\n\r?\n?|$)
+      /x
     )
   end
 

@@ -30,8 +30,18 @@ def process_command
     stop_backgroundrb
     sleep 1
     start_backgroundrb
+  when 'restart-sphinx'
+    restart_sphinx
+  when 'restart-bgrb'
+    stop_backgroundrb
+    sleep 1
+    start_backgroundrb
   when 'status'
     status_sphinx
+    status_backgroundrb
+  when 'status-sphinx'
+    status_sphinx
+  when 'status-bgrb'
     status_backgroundrb
   when 'start-sphinx'
     start_sphinx
@@ -89,6 +99,7 @@ def status_sphinx
     puts "  running for %s" % process_elapsed_time(pid)
   else
     puts "Sphinx searchd NOT running."
+    exit 1
   end
 end
 
@@ -97,7 +108,7 @@ end
 ##
 
 def bgrb_pid
-  `exec pgrep -f 'script/backgroundrb'`.chomp
+  `pgrep -f 'backgroundrb master'`.chomp
 end
 
 def load_backgroundrb_config
@@ -113,9 +124,11 @@ end
 def start_backgroundrb
   pid_dir = "#{$root}/tmp/pids"
   Dir.mkdir(pid_dir) unless File.exists?(pid_dir)
-  puts "Starting backgroundrb..."
+  # this is echoed by the BackgrounDRb::StartStop
+  # puts "Starting backgroundrb..."
+  puts ""
   system("#{$root}/script/backgroundrb start -e #{$environment}")
-  
+
   if (pid = bgrb_pid).any?
     puts "Started backgroundrb successfuly (pid %s)." % pid
   else
@@ -137,6 +150,7 @@ def stop_backgroundrb
   puts "Stopping backgroundrb daemon..."
   system("#{$root}/script/backgroundrb stop -e #{$environment}")
   system("pkill -f 'script/backgroundrb'") # make sure it is dead
+  sleep 1
   if bgrb_pid.any?
     puts "ERROR: failed to stop backgroundrb (%s)." % bgrb_pid
   else
@@ -168,6 +182,7 @@ def status_backgroundrb
     if File.exists?($backgroundrb_pid_file)
       puts "  WARNING: file %s exists (contents: %s)" % [$backgroundrb_pid_file, File.read($backgroundrb_pid_file)]
     end
+    exit 1
   end
   pids = `pgrep -f packet_worker_runner`.chomp.split("\n")
   pids.each do |pid|
@@ -177,14 +192,14 @@ end
 
 ##
 ## UTILITY
-## 
+##
 
 def process_elapsed_time(pid)
   time = `ps -p #{pid} -o "%t"`.chomp.split("\n")[1]
   return 'unknown' unless time
   time = time.strip
   if time =~ /-/
-    days, time = time.split('-') 
+    days, time = time.split('-')
   else
     days = 0
   end
@@ -197,7 +212,7 @@ end
 
 def assert_file_exists(filename)
   unless File.exists?(filename)
-    puts "ERROR: file not found: %s" % filename 
+    puts "ERROR: file not found: %s" % filename
     puts "Bailing out."
     exit
   end
@@ -205,7 +220,7 @@ end
 
 ##
 ## EXECUTION
-## 
+##
 
 process_command
 exit

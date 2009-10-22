@@ -11,6 +11,11 @@ at_exit do
   $server.close if $server
 end
 
+Given /I am on (.+)/ do |path|
+  $browser.goto @host + path_to(path)
+  assert_successful_response
+end
+
 When /I press "(.*)"/ do |button|
   $browser.button(:text, button).click
   assert_successful_response
@@ -64,6 +69,10 @@ end
 Then /I should not see "(.*)"/ do |text|
   div = $browser.div(:text, /#{text}/).html rescue nil
   assert_nil div
+end
+
+Then /^I should be on (.+)$/ do |page_name|
+  assert_equal path_to(page_name), URI.parse($browser.url).path
 end
 
 def find_label(text)

@@ -385,5 +385,9 @@ end
 class ActionController::IntegrationTest
   # we load all fixtures because webrat integration test should see exactly
   # the same thing the user sees in development mode
-  # fixtures :all
+  # using self.inherited to make sure
+  # all fixtures are being loaded only if some integration tests are being defined
+  def self.inherited(subclass)
+    subclass.fixtures :all
+  end
 end

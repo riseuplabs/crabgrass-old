@@ -110,14 +110,14 @@ class WikiPageControllerTest < ActionController::TestCase
 
   def test_edit_inline
     login_as :blue
-    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "section-three"
+    xhr :get, :edit, :page_id => pages(:multi_section_wiki).id, :section => "second-oversection"
 
     assert_response :success
 
     wiki = assigns(:wiki)
     blue = users(:blue)
 
-    assert_equal blue, wiki.locker_of("section-three"), "wiki section three should be locked by blue"
+    assert_equal blue, wiki.locker_of("second-oversection"), "wiki second oversection should be locked by blue"
 
     # nothing should appear locked to blue
     assert_equal wiki.all_sections, wiki.sections_open_for(users(:blue)), "no sections should look locked to blue"
@@ -125,7 +125,7 @@ class WikiPageControllerTest < ActionController::TestCase
                   wiki.sections_open_for(users(:gerrard)),
                   "no sections except what blue has locked (and its ancestors) should look locked to gerrard"
 
-    assert_rendered_update_wiki_html(wiki, 'section-three')
+    assert_rendered_update_wiki_html(wiki, 'second-oversection', ['section-three'])
   end
 
   # various regression tests for text that has thrown errors in the past.
@@ -196,8 +196,12 @@ class WikiPageControllerTest < ActionController::TestCase
 
   protected
 
-  def assert_rendered_update_wiki_html(wiki, inline_form_section = nil)
+  def assert_rendered_update_wiki_html(wiki, inline_form_section = nil, inline_form_subsections = nil)
+    # inline form subsections should not be displayed either
+    inline_form_subsections ||= []
     html_heading_names = wiki.all_sections - [:document, inline_form_section]
+    html_heading_names -= inline_form_subsections
+
     assert_select_rjs :replace_html, :wiki_html do |els|
       if inline_form_section
         section_body = wiki.get_body_for_section(inline_form_section)
@@ -206,6 +210,7 @@ class WikiPageControllerTest < ActionController::TestCase
 
       full_html = els.collect(&:to_s).join("\n")
       assert_html_for_wiki_section_headings(full_html, html_heading_names)
+      assert_no_html_for_wiki_section_headings(full_html, inline_form_subsections)
     end
   end
 
@@ -216,6 +221,16 @@ class WikiPageControllerTest < ActionController::TestCase
       # Ex: /<h\d+.*?><a name="section-two"><\/a>/
       heading_re = %r{<h\d+.*?><a name="#{html_heading}"></a>}
       assert full_html =~ heading_re, "wiki html should contain [#{html_heading}]"
+    end
+  end
+
+  def assert_no_html_for_wiki_section_headings(full_html, html_heading_names)
+    # now check that we have none of the headings
+    html_heading_names.each do |html_heading|
+
+      # Ex: /<h\d+.*?><a name="section-two"><\/a>/
+      heading_re = %r{<h\d+.*?><a name="#{html_heading}"></a>}
+      assert full_html !~ heading_re, "wiki html should not contain [#{html_heading}]"
     end
   end
 
