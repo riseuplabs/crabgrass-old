@@ -1,7 +1,10 @@
-class BasePage::YuckyController < BasePage::SidebarController
+class BasePage::YuckyController < ApplicationController
   include ModerationNotice
 
+  helper 'base_page'
+
   permissions 'admin/moderation'
+  permissions 'flag'
   permissions 'posts'
 
   before_filter :login_required
@@ -62,6 +65,7 @@ class BasePage::YuckyController < BasePage::SidebarController
       #@flag.foreign ||= @post
     elsif params[:page_id]
       @flag = current_user.find_flagged_page_by_id(params[:page_id]).first || ModeratedPage.new(:foreign_id => params[:page_id], :user_id => current_user.id)
+      @page = @flag.page
       #@flag.foreign ||= Page.find_by_id(params[:page_id])
     else
       return false

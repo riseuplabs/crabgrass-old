@@ -1,0 +1,28 @@
+<% @info_box_class = 'tabs' %>
+<% @info_box = Formy.tabs do |f|
+  f.tab do |t|
+    t.label 'Week'
+    t.url url_for(:action => 'week')
+    t.selected action?(:week)
+  end
+  f.tab do |t|
+    t.label 'Month'
+    t.url url_for(:action => 'month')
+    t.selected action?(:month)
+  end
+  f.tab do |t|
+    t.label 'Year'
+    t.url url_for(:action => 'year')
+    t.selected action?(:year)
+  end
+  f.tab do |t|
+    t.label 'All Time'
+    t.url url_for(:action => 'all_time')
+    t.selected action?(:all_time)
+  end
+  f.tab do |t|
+    t.label 'Version Info'
+    t.url url_for(:action => 'version')
+    t.selected action?(:version)
+  end
+end %>
