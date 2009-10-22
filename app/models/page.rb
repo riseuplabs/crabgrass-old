@@ -76,6 +76,7 @@ class Page < ActiveRecord::Base
 
   # disable timestamps, we set the updated_at field through certain PageHistory subclasses
   self.record_timestamps = false
+  before_save :save_timestamps
 
   acts_as_taggable_on :tags
   acts_as_site_limited
@@ -451,5 +452,11 @@ class Page < ActiveRecord::Base
   # override this in subclasses…
   def supports_attachments
     true
+  end
+
+  protected
+
+  def save_timestamps
+    self.created_at = self.updated_at = Time.now if self.new_record?
   end
 end

@@ -322,6 +322,12 @@ class PageTest < Test::Unit::TestCase
     assert_equal page.updated_at, last_updated_at
   end
 
+  def test_even_with_timestamps_disabled_it_should_timestamp_when_create
+    page = Page.make :created_at => nil, :updated_at => nil
+    assert_not_nil page.created_at
+    assert_not_nil page.updated_at
+  end
+
   protected
 
   def create_page(options = {})
