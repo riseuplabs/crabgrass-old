@@ -1,0 +1,10 @@
+- @title_box = content_tag(:h1, 'Version Info')
+= render :partial => 'tabs'
+
+%table.pretty(style="width:200px")
+  %tbody
+  - @version_info.each do |key, value|
+    %tr
+      %td= key
+      %td
+        %strong= value

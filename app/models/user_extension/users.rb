@@ -186,16 +186,21 @@ module UserExtension::Users
     def relationship_to(user)
       relationships_to(user).first
     end
+
     def relationships_to(user)
       return :stranger unless user
-      (@tmp_relationships_hash ||= {})[user.login] ||= get_relationships_to(user)
+
+      @relationships_to_user_cache ||= {}
+      @relationships_to_user_cache[user.login] ||= get_relationships_to(user)
+      @relationships_to_user_cache[user.login].dup
     end
+
     def get_relationships_to(user)
       ret = []
       ret << :friend   if friend_of?(user)
       ret << :peer     if peer_of?(user)
   #   ret << :fof      if fof_of?(user)
-      ret << :stranger if ret.empty?
+      ret << :stranger
       ret
     end
 

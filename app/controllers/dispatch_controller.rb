@@ -173,7 +173,8 @@ class DispatchController < ApplicationController
          'pages.name = ? AND group_participations.group_id IN (?)',
           name, Group.namespace_ids(group.id)
       ],
-      :joins => :group_participations
+      :joins => :group_participations,
+      :readonly => false
     )
   end
 

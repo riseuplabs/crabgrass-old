@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < Test::Unit::TestCase
-  fixtures :groups, :users, :profiles, :memberships
+  fixtures :groups, :users, :profiles, :memberships, :sites
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -60,6 +60,19 @@ class GroupTest < Test::Unit::TestCase
 
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
     assert u.may_pester?(g) == true, 'should be able to pester private group'
+  end
+
+  def test_site_disabling_public_profiles_doesnt_affect_groups
+    with_site(:local, :profiles => ["private"]) do
+      u = users(:red)
+      g = groups(:animals)
+
+      g.profiles.public.update_attributes!(:may_request_membership => true)
+
+      assert g.profiles.visible_by(u).public?
+      assert g.profiles.visible_by(u).may_request_membership?
+
+    end
   end
 
   def test_association_callbacks
