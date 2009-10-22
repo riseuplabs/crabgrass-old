@@ -48,9 +48,9 @@ module GroupExtension::Users
     return [:stranger] unless user
     return [:stranger] if user.is_a? UnauthenticatedUser
 
-    @relationships ||= {}
-    @relationships[user.login] ||= get_relationships_to(user)
-    @relationships[user.login].dup
+    @relationships_to_user_cache ||= {}
+    @relationships_to_user_cache[user.login] ||= get_relationships_to(user)
+    @relationships_to_user_cache[user.login].dup
   end
 
   def get_relationships_to(user)

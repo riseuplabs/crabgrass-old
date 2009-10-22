@@ -190,9 +190,9 @@ module UserExtension::Users
     def relationships_to(user)
       return :stranger unless user
 
-      @relationships ||= {}
-      @relationships[user.login] ||= get_relationships_to(user)
-      @relationships[user.login].dup
+      @relationships_to_user_cache ||= {}
+      @relationships_to_user_cache[user.login] ||= get_relationships_to(user)
+      @relationships_to_user_cache[user.login].dup
     end
 
     def get_relationships_to(user)
