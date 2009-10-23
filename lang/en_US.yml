@@ -164,7 +164,6 @@ menu_link_account: "Account"
 ###
 
 group_information: ":group_type Information"
-
 redirect_to_foreign_domain: "You are trying to redirect to a foreign domain {url} after your login. For security reasons we have removed this parameter from the URL."
 subject_must_not_be_empty: "subject must not be empty"
 at_least_one_recipient_is_required: "at least one recipient is required"
@@ -363,7 +362,7 @@ saved_new_order: "Saved new order!"
 error_saving_new_order: "Error saving new order!"
 no_title_given: "(no title given)"
 saving_your_changes: "Saving your changes..."
-activate_js_to_rearrange_photos: Activate JavaScript to use Drag\&amp;Drop to rearrange photos!
+activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
 drag_and_drop_to_rearrange_photos: "Drag &amp; Drop images to rearrange them"
 no_images_in_gallery: "No images in Gallery"
 add_existing_image: "Add Photo"
