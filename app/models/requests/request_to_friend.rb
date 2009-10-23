@@ -15,7 +15,7 @@ class RequestToFriend < Request
       errors.add_to_base('Friendship already exists')
     end
     if RequestToFriend.appearing_as_state(state).find_by_created_by_id_and_recipient_id(created_by_id, recipient_id)
-      errors.add_to_base('Request already exists for %s'[:request_exists_error] % recipient.name)
+      errors.add_to_base('Request already exists for {recipient}'[:request_exists_error, {:recipient => recipient.name}])
     end
   end
 

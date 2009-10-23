@@ -1,9 +1,12 @@
 <% @title_box = capture do -%>
-  <h1><%=h "Send request to join %s"[:send_join_request_title] % @group.display_name %></h1>
+  <h1><%=h "Send request to join {group_name}"[:send_join_request, {:group_name => @group.display_name}] %></h1>
 <% end -%>
-		
+
 <blockquote>
-  <p><%= "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {link_to_requests}."[:join_request_info, link_to('my requests'.t, :controller => '/me/requests', :action => 'from_me')] %></p>
+  <p>
+    <% link_to_requests_html = link_to('my requests'.t, :controller => '/me/requests', :action => 'from_me')%>
+    <%= "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {link_to_requests}."[:join_request_info, {:link_to_requests => link_to_requests_html}] %>
+  </p>
   <%- form_tag(:controller => 'groups/requests', :action => 'create_join', :id => @group) do -%>
     <!-- <p>Optional message included with the join request:<br/>
       <%# text_area_tag 'message', params[:message], :rows => 2, :cols => 50 %>

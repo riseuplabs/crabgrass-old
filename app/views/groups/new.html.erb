@@ -1,6 +1,6 @@
 <%
   if @group.committee?
-    headline = 'New committee for group %s'[:new_committee] % @parent.name
+    headline = "New committee for group {group_name}"[:new_committee, {:group_name => @parent.name}]
     url = committees_url(:action => :create, :id => @parent)
   elsif @group.council?
     headline = 'New council for group {group_name}'[:new_council, @parent.name]
