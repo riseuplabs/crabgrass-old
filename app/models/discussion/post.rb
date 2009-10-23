@@ -19,6 +19,15 @@ class Post < ActiveRecord::Base
   belongs_to :discussion
   belongs_to :user
 
+  after_create :update_discussion
+  after_destroy :update_discussion
+
+  ##
+  ## named scopes
+  ##
+
+  named_scope :visible, :conditions => 'deleted_at IS NULL'
+
   ##
   ## attributes
   ##
@@ -73,6 +82,17 @@ class Post < ActiveRecord::Base
     end
   end
 
+  # These are currently only used from moderation mod.
+  def delete
+    update_attribute :deleted_at, Time.now
+    update_discussion
+  end
+
+  def undelete
+    update_attribute :deleted_at, nil
+    update_discussion
+  end
+
   # this should be able to be handled in the subclasses, but sometimes
   # when you create a new post, the subclass is not set yet.
   def public?
@@ -88,24 +108,8 @@ class Post < ActiveRecord::Base
 
   protected
 
-  def after_create
-    discussion.update_attributes(:replied_by => self.user, :last_post => self,
-      :replied_at => Time.now, :posts_count => discussion.posts_count+1)
-
-    # none of these work, because the page we have here now is not the same
-    # as the page object that the controller will be saving. Also, the save will
-    # overwrite any increment_counter we do.
-    # discussion.page.posts_count_will_change! if discussion.page
-    # Page.increment_counter(:posts_count, discussion.page.id) if discussion.page
-    # discussion.page.posts_count = discussion.posts_count if discussion.page
-  end
-
-  def after_destroy
-    Discussion.decrement_counter(:posts_count, discussion.id)
-
-    # not sure how to decrement the page.posts_count.
-    #discussion.page.posts_count_will_change! if discussion.page
-    #Page.decrement_count(:posts_count, discussion.page.id) if discussion.page
+  def update_discussion
+    discussion.posts_changed
   end
 
 end

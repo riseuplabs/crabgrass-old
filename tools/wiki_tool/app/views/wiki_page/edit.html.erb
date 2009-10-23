@@ -66,7 +66,7 @@
   end
 end %>
 
-<% form_tag(page_xurl(@page, :action => 'edit'), :id => wiki_form_id(@wiki)) do -%>
+<% form_tag(page_url(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do -%>
 <%= hidden_field 'wiki', 'version' %>
 <% locked_error_message -%>
 
@@ -91,8 +91,14 @@ end %>
 </div>
 
 <div class="wiki_buttons">
- <% if locked_for_me? -%><%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
- <% else -%><%= submit_tag 'Save'[:save_button], :name => 'save' %><% end %><%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+  <% if locked_for_me? -%>
+    <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+  <% else -%>
+    <%= submit_tag 'Save'[:save_button], :name => 'save' %>
+  <% end %>
+  <% unless @wiki_is_blank %>
+    <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+  <% end %>
 </div>
 
 <% end %>

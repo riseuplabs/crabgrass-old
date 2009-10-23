@@ -1,0 +1,1 @@
+page.replace_html(:wiki_html, :partial => 'wiki_html')

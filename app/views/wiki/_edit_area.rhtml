@@ -12,7 +12,7 @@
   <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80, :id => wiki_body_id(wiki) %></div>
   <div>
     <%= formatting_reference_link %>
-    <% if wiki.editable_by?(current_user) %>
+    <% if wiki.document_open_for?(current_user) %>
       <%= submit_tag 'Save'[:save_button], :name => 'save' %>
     <% else %>
       <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>

@@ -3,7 +3,7 @@
 
     NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
 
-    rake db:fixtures:load    
+    rake db:fixtures:load
     rake cg:update_page_terms
     rake cg:update_fixtures
     rake db:test:prepare
@@ -48,11 +48,11 @@ red_page1:
   page_id: 1
   user_id: 8
   access: 1
-red_page2:
-  id: <%= id+=1 %>
-  page_id: 2
-  user_id: 8
-  access: 1
+#red_page2:
+#  id: <%= id+=1 %>
+#  page_id: 2
+#  user_id: 8
+#  access: 1
 red_page3:
   id: <%= id+=1 %>
   page_id: 3
@@ -77,7 +77,7 @@ tasklist24:
   id: <%= id+=1 %>
   page_id: 201
   user_id: 4
-  access: 1  
+  access: 1
 ranked_vote_orange:
   id: <%= id+=1 %>
   page_id: 190

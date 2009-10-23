@@ -1,14 +1,12 @@
-<%- if featured_item.respond_to?(:cover) && !featured_item.cover.nil? -%>
 <%=
-cover = featured_item.cover
-if cover.respond_to?(:thumbnail)
-  link_to(thumbnail_img_tag(cover, :medium, {:crop => "200x200"}, {:class => "thumb"}),
+if featured_item.cover.respond_to?(:thumbnail)
+  link_to(thumbnail_img_tag(featured_item.cover, :medium, {:crop => "200x200"}, {:class => "thumb"}),
     page_url(featured_item))
-else
-  link_to(image_tag(cover, :class => "thumb", :width => "200", :alt => "thumbnail"), page_url(featured_item))
+elsif featured_item.external_cover_url
+  link_to(image_tag(featured_item.external_cover_url, :class => "thumb", :width => "200", :alt => "thumbnail"), page_url(featured_item))
 end
 %>
-<%- end -%>
+
 <h4 class="small_icon <%= featured_item.icon %>_16"><%= link_to(featured_item.title, page_url(featured_item)) %></h4>
 <p><%= featured_item.summary %></p>
 <hr style="clear:both; " class="thin" />

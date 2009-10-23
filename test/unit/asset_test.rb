@@ -57,8 +57,6 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_versions
-    assert_equal 0, Asset::Version.count
-
     @asset = Asset.make :uploaded_data => upload_data('image.png')
     @id = @asset.id
     @filename_for_1 = @asset.private_filename

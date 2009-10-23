@@ -20,12 +20,12 @@ class AutocompleteControllerTest < Test::Unit::TestCase
     xhr :get, :entities, :query => ''
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].count,
+    assert_equal response["suggestions"].size,
       users(:blue).friends.count + users(:blue).groups.count,
       "suggestions should contain all friends and groups."
-    assert_equal response["suggestions"].count, response["data"].count,
+    assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
-    assert response["suggestions"].count > 5,
+    assert response["suggestions"].size > 5,
       "there should be a number of preloaded suggestions for blue."
     assert_equal response["query"], '',
       "query should be empty for preloading."
@@ -36,9 +36,9 @@ class AutocompleteControllerTest < Test::Unit::TestCase
     xhr :get, :entities, :query => 'pu'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].count, response["data"].count,
+    assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
-    assert response["suggestions"].count > 0,
+    assert response["suggestions"].size > 0,
       "there should be suggestions for blue starting with 'pu'."
     assert_equal response["query"], 'pu',
       "response.query should contain the query string."
@@ -54,9 +54,9 @@ class AutocompleteControllerTest < Test::Unit::TestCase
     xhr :get, :entities, :query => 'an'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].count, response["data"].count,
+    assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
-    assert response["suggestions"].count > 0,
+    assert response["suggestions"].size > 0,
       "there should be suggestions for quentin starting with 'an' -> animals."
     assert_equal response["query"], 'an',
       "response.query should contain the query string."
@@ -72,9 +72,9 @@ class AutocompleteControllerTest < Test::Unit::TestCase
     xhr :get, :entities, :query => 'bl'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
-    assert_equal response["suggestions"].count, response["data"].count,
+    assert_equal response["suggestions"].size, response["data"].size,
       "there should be as many data objects as suggestions."
-    assert response["suggestions"].count > 0,
+    assert response["suggestions"].size > 0,
       "there should be suggestions for red starting with 'bl' -> blue."
     assert_equal response["query"], 'bl',
       "response.query should contain the query string."
