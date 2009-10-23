@@ -1,4 +1,3 @@
----
 
 ##
 ## TO BE DESTROYED
@@ -363,8 +362,8 @@ successful_undelete_image: "Successfully undeleted image."
 saved_new_order: "Saved new order!"
 error_saving_new_order: "Error saving new order!"
 no_title_given: "(no title given)"
-saving_your_changes:" Saving your changes..."
-activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
+saving_your_changes: "Saving your changes..."
+activate_js_to_rearrange_photos: Activate JavaScript to use Drag\&amp;Drop to rearrange photos!
 drag_and_drop_to_rearrange_photos: "Drag &amp; Drop images to rearrange them"
 no_images_in_gallery: "No images in Gallery"
 add_existing_image: "Add Photo"
