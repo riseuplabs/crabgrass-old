@@ -1,6 +1,6 @@
---- 
-ar: 
+ar:
   _locale_code: ar_EG
+  _locale_rtl: "1"
   about_me: معلوماتي
   accept_usage_agreement: "أوافق على تعليمات اتفاقية الإستخدام"
   access: الدخول
@@ -35,6 +35,7 @@ ar:
   add_tags: "أضف العلامات"
   add_websites: "أضف موقع ويب"
   additional_page_access: "وصول إضافي"
+  admin: "مدير الموقع"
   administer_site: "إدارة الموقع"
   administration: إدارة
   alert_error: خطأ
@@ -56,6 +57,8 @@ ar:
   announcement_page_description: إعلان.
   announcement_page_display: إعلان
   announcements: إعلانات
+  approval_vote: "أوافق على التصويت"
+  approval_vote_class_description: "الموافقة أو عدم الموافقة على كل احتمالية"
   approve: موافق
   approve_button: موافق
   approve_contact_info: "لقد طلب هذا الشخص أن تكون من ضمن قائمة اتصاله، هل توافق؟"
@@ -83,6 +86,8 @@ ar:
   category: تصنيف
   check_all: "اختر الكل"
   close_button: إغلاق
+  collection: مجموعة
+  collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
   committee: لجنة
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
   committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {{domain}}/yourgroupname"
@@ -118,7 +123,8 @@ ar:
   created_by: "أٌنشئ بواسطة"
   created_on: "أُنشئ في"
   created_when_by: "أُنشئ في {{when}} بواسطة {{user}}"
-  csrf_error_message: "يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط\n"
+  csrf_error_message: |
+      يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط
   current_attachments: "المرفقات الحالية"
   current_featured_content: "المحتوى المُختار حالياً"
   current_tags: "العلامات الحالية"
@@ -173,16 +179,19 @@ ar:
   edit_appearance: "تحرير الشكل"
   edit_attachments: "تحرير المرفقات"
   edit_attachments_link: تحرير
+  edit_featured_content: "تحرير المحتوى المُختار"
   edit_featured_content_for_group: "تحرير المحتوى المُختار لِـ {{group_name}}"
   edit_gallery: "تحرير معرض الصور"
   edit_profile_link: "تحرير الملف "
   edit_settings: "تحرير الاعدادات"
   edit_tags: "تحرير العلامات"
   edit_tags_link: تحرير
-  edit_title: "تحرير العنوان\n"
+  edit_title: |
+      تحرير العنوان
   edit_underlined_e: <u>تحرير</u>
   email: "البريد الالكتروني"
-  email_addresses: "عنوان البريد الإلكتروني\n"
+  email_addresses: |
+      عنوان البريد الإلكتروني
   email_link_expires: "هذا الرابط شوف تنتهي صلاحيته في {{days}} أيام."
   email_notice_access: "بإمكانك الوصول لهذه الصفحة هنا:"
   email_notice_hello: "مرحبا، أرسل لك {{from}} صفحة وب."
@@ -198,6 +207,7 @@ ar:
   featured_content: "المحتوى المخُتار"
   featured_content_header: المخُتار
   file: الملف
+  file_class_description: "ملف تم تحميله"
   file_must_be_image_error: "يجب أن يكون الملف صورة حتى بصبح جزء من معرض الصور"
   file_size: "حجم الملف"
   file_version_deleted: "تم حذف نسخة الملف"
@@ -205,6 +215,26 @@ ar:
   first_name: "الإسم الأول"
   folder_class_description: "مجموعة ملفات"
   folder_display: مجلد
+  folder_page_description: "مجموعة من الملفات."
+  folder_page_display: مجلد
+  footer_text_crabgrass: |-
+      <span>هذا الموقعم مدعوم بواسطة <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL البرمجيات الحرة</a> لتنظيم الشبكات.</span>
+      <ul>
+        <li><a href='https://labs.riseup.net/report-a-bug'>للتبليغ عن أخطاء</a></li>
+        <li><a href='https://labs.riseup.net/request-a-feature'>أطلب ميزة</a></li>
+        <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>صفحات crabgrass المساعدة </a></li>
+        <li><a href='https://we.riseup.net/cgdev/get-involved'>الإنضمام</a></li>
+      </ul>
+  footer_text_riseup: |-
+      <span>هذا الموقع تم تشغيله من قبل <a href="http://riseup.net">riseup.net</a>, مجموعتكم التكنولوجية المستقلة الصديقة لكم منذ 1999.</span>
+      <ul>
+        <li><a href="http://help.riseup.net/policy/privacy/">ضمان الخصوصية</a></li>
+        <li><a href="http://help.riseup.net/about-us/">من نحن</a></li>
+        <li><a href="https://mail.riseup.net/">حسابات البريد الإلكتروني</a></li>
+        <li><a href="https://lists.riseup.net/">القوائم البريدية</a></li>
+        <li><a href="http://status.riseup.net/">حالة النظام</a></li>
+        <li><a href="http://riseup.net/donate/">التبرع لriseup.net</a></li>
+      </ul>
   forgot_password_link: "نسيت كلمة المرور"
   forgot_password_mail_expiry: "سيبقى هذا الرابط فعّال لمدة 24 ساعة. إذا كنت ترغب بتغيير كلمة المرور بعد هذه الفترة عليك زيارة الصفحة الخاصة بنسيان كلمة المرور مرة أخرى وطلب رابط جديد"
   forgot_password_mail_greeting: "{{user}}, لتغيير كلمة المرور، الرجاء زيارة"
@@ -219,6 +249,7 @@ ar:
   full: كامل
   fullname: "الإسم الكامل"
   galleries: "معارض الصور"
+  gallery_class_description: "مجموعة من الصور."
   gallery_description: "ارفع عددا من الصور أو نظم صورا موجودة في مجموعة."
   gallery_display: "معرض الصور"
   general_info: "معلومات عامة"
@@ -227,21 +258,23 @@ ar:
   group_administration_not_allowed: "لا يمكنك ان تكون مديراَ على هذه المجموعة."
   group_directory: "دليل المجموعة"
   group_directory_link: "دليل المجموعة"
+  group_discussion: المناقشة
+  group_discussion_class_description: "نقاش المجموعة حول موضوع معين."
   group_has_no_public_profile: "هذه المجموعة لا يوجد لديها ملف عام."
   group_home_headline: "الصفحة الرئيسية لِـ{{group_type}}"
   group_home_welcome: "مرحباً بك"
   group_information: "معلومات {{group_type}}"
   group_invite_email: |
       {{from_user}} قام بدعوتك للانضمام إلى مجموعة "{{group}}".
-      
+
       إذا كنت ترغب في أن تنضم إلى هذه المجموعة ، انقر هنا
-      
+
         {{accept_invite_link}}
-      
+
       الصفحة الرئيسية لهذه المجموعة يمكن ان تجدها هنا:
-      
+
         {{group_home_link}}
-      
+
       إذا كنت لا ترغب في الانضمام إلى هذه المجموعة ، ببساطة تجاهل هذه البريد الالكتروني.
   group_invite_subject: "دعوة للانضمام إلى مجموعة \"{{group}}\""
   group_join_chat: "الانضمام للدردشة"
@@ -279,6 +312,7 @@ ar:
   incoming: الوارد
   information: المعلومات
   insert_image_heading: "إدراج صورة"
+  insert_image_instructions: "اضغط على الصورة المصغرة لاضافتها الى نص الويكي."
   invalid_email: "عنوان البريد الإلكتروني غير صحيح"
   invalid_email_text: "عنوان البريد الإلكتروني غير صحيح"
   invalid_token: "رابط غير صحيح"
@@ -290,6 +324,7 @@ ar:
   invite_accept_via_register: "أريد التسجيل بحساب جديد"
   invite_info: "أدخل قائمة باسماء دخول المستخدمين او عنوان البريد الالكتروني للمشتركين الذين ترغب في دعوتهم للانضمام لهذه {{group_type}}"
   invite_not_found: "الدعوة غير موجودة"
+  join_chat: "انضم للدردشة"
   join_group_link: "انضم ل{{group_type}}"
   join_group_success: "لقد انضممت إلى مجموعة {{group_name}}"
   join_request_info: "لن تصبح عضو في هذه المجموعة حتى يتم الموافقة على طلبك. يمكنك تتبع حالة طلبك من خلال زيارة \"{{my_requests_url}}\"."
@@ -299,6 +334,7 @@ ar:
   last_change: "التغيير الأخير"
   last_name: "الإسم الأخير"
   last_seen: "شوهد آخر مرة"
+  leave_channel: "اترك القناة"
   leave_group_link: "اترك {{group_type}}"
   left_the_chatroom: "غادر غرفة محادثة"
   link_name: "إسم الرابط"
@@ -320,6 +356,7 @@ ar:
   login_password: "كلمة المرور"
   login_required: "الدخول مطلوب"
   login_required_description: "الرجاء الدخول للقيا بهذا النشاط"
+  logout: خروج
   logout_success: وداعاً
   logout_success_message: "تم تسجيل الخروج بنجاح."
   make_album_cover: "إجعل هذه الصورة غلاف للألبوم"
@@ -405,7 +442,8 @@ ar:
   name: الإسم
   network: شبكة
   network_aettings: "إعدادات الشبكة"
-  network_invite_info: "أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة\n"
+  network_invite_info: |
+      أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة
   networks: الشبكات
   new_council: "مجلس جديد لمجموعة {{group_name}}"
   new_group: "مجموعة جديدة"
@@ -457,7 +495,8 @@ ar:
   page_group_media_image: الصور
   page_group_media_video: الفيديوهات
   page_group_planning: "أدوات التخطيط"
-  page_group_task: "المهام\n"
+  page_group_task: |
+      المهام
   page_group_text: "النص والمناقشات"
   page_group_vote: "استطلاعات الرأي والتصويت"
   page_is_not_static: "صفحة ليست ثابتة"
@@ -501,10 +540,13 @@ ar:
   pending: "في الإنتظار"
   pending_tasks: "المهام التي في الإنتظار."
   people: المشتركون
+  permission_denied: "لا يوجد صلاحيات"
   permission_denied_description: "لا يوجد لديك التصريح الكافي للقيام بهذا النشاط"
   permissions: صلاحيات
   personal: شخصي
   personal_interests: "اهتمامات شخصية"
+  personal_message: "رسالة شخصية"
+  personal_message_class_description: "رسالة شخصية أُرسلت لمستقبلين معينين"
   phone_numbers: "أرقام الهاتف"
   photo: صورة
   photo_credit: "رصيد الصور"
@@ -537,7 +579,8 @@ ar:
   public_checkbox_help: "إذا أختير , بإمكان أي أحد أن يستعرض هذه الصفحة."
   public_key: "المفتاح العمومي"
   public_profile: "ملفي العام"
-  ranked_vote_instructions: "اسحب وافلت العناصر في القائمة حتى يتم ترتيبها، بحيث تجعل العناصر المفضّلة بالأعلى والأقل تفضيلاً بالأسفل. عندما تنتهي اضغط موافق لتسجبل التصويت\n"
+  ranked_vote_instructions: |
+      اسحب وافلت العناصر في القائمة حتى يتم ترتيبها، بحيث تجعل العناصر المفضّلة بالأعلى والأقل تفضيلاً بالأسفل. عندما تنتهي اضغط موافق لتسجبل التصويت
   ranked_vote_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص للتصنيف حسب الأفضلية."
   ranked_vote_page_display: "صوت مصنف"
   rate_many_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص من أجل الموافقة أو عدم الموافقة."
@@ -615,6 +658,7 @@ ar:
   settings: الإعدادات
   share: مشاركة
   share_button: مشاركة
+  share_link: "شارك{{page_class}}"
   share_page_email: "أرسل تذكير بالبريد الإلكتروني"
   share_page_link: "شارك {{page_class}}"
   share_page_message: "أرسل رسالة  (إختياري)"
@@ -623,6 +667,7 @@ ar:
   share_page_recipients_results: "مشاركة {{page_class}} مع"
   share_page_recipients_sections: "اختار من ضمن مجموعاتك او أصدقائك"
   share_page_recipients_selection: "قم بالإختيار"
+  share_this_page: "شارك هذه الصفحة"
   sharing_help: "اختياري. يمكنك مشاركة هذه الصفحة مع عدة مستلمين (سواء مستخدمين أو مجموعات)."
   show_gallery: "إظهار معرض الصور"
   signup_button: "سجل الآن"
@@ -694,9 +739,11 @@ ar:
   unknown: "غير معروف"
   unread: "غير مقروء"
   updated: "تم التعديل"
+  upload_attachment: "تحميل المرفقات"
   upload_file_help: "مطلوب. إختيار ملف للتحميل على هذه الصفحة."
   upload_image: "تحميل صورة"
   upload_image_help: "اختياري. اختر  ملف صورة أولية للتحميل على هذه الصفحة."
+  upload_images: تحميل
   upload_new_image: "حمِّل صورة جديدة"
   uploaded_image_cropped: "سوف يتم قص وتمديد الصور المحمّلة إلى 96 بكسل مُربّع"
   usage_agreement_heading: "اتفاقية الإستخدام"
@@ -705,7 +752,8 @@ ar:
   user: المستخدم
   user_or_group_name: "المستخدم أو إسم المجموعة"
   user_profile_description_allow_peers: "الموافقة على هذا الخيار يعني أنك تسمح للمستخدمين المشتركين معك بنفس المجموعة أن يشاهدوا ملفك الخاص"
-  user_profile_description_may_pester: "السماح للمشتركين بتشارك المحتوى معك وان يرسلوا لك الدعوات\n"
+  user_profile_description_may_pester: |
+      السماح للمشتركين بتشارك المحتوى معك وان يرسلوا لك الدعوات
   user_profile_description_may_request_contact: "السماح للمشتركين بأن يطلبوا أن يكونوا من ضمن قائمة إتصالك الشخصية"
   user_profile_description_may_see: "اذا أُختير, معلومات الملف الشخصي التي بالأسفل ستكون مرئية, وإلا ، سيتم اخفاء ملفك الشخصي تماماً."
   user_profile_description_may_see_contacts: "السماح للمشتركين بمشاهدة قائمة اتصالاتك الشخصية"
@@ -716,6 +764,8 @@ ar:
   version_doesnt_exist: "لا يوجدنسخة {{version}}"
   version_number: "نسخة رقم {{version}}"
   versions: النُسخ
+  video: فيديو
+  video_class_description: "أظهر الفيديوالموجود على موقع الكتروني خارجي "
   video_embed: تضمين
   video_embed_code_prompt: "تضمين الكود من مصدر فيديو خارجي"
   video_service_is_not_supported: "غير مدعوم(في الوقت الحالي فقط youtube, google video, blip.tv, and vimeo)"
@@ -745,11 +795,11 @@ ar:
   welcome_hide_link: "إخفاء مرحبا بك"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-      
+
        هذا الموقعم مدعوم بواسطةCrabgrass <a href="http://www.affero.org/oagpl.html">البرمجيات الحرة</a> تطبيق الويب مصمم من أجل المجموعات وتنظيم الشبكات, ومصمم لتلبية احتياجات حركة العدالة العالميالهدف البعيد المدى هو توفير الأدوات التقنية لتسهيل الأنشطة والكونفدرالية ، وشبكات التغيير الاجتماعي الديمقراطي المباشر. [more... -> /crabgrass/about]
-      
+
         h3. هل أنت جديد هنا?
-      
+
         [Sign up here -> /account/signup]لتبدأ. نحن في مرحلة مبكرة من البرمجة والتطوير. حيث التعديلات نستوحيها من ملاحظات المستخدمين, تأكد من أن عليك التأكد بأن تعلمنا كيف كنت تستخدم الموقع, ما الذي ترغب في تغييره, ماذا تحب, وما الذي لا تحبه
   welcome_message: "Crabgrass تمكن منظمات التغيير الاجتماعي من أجل انجاز الامور ، ونشر المبادئ ، والتعاون ، والإتصال. "
   welcome_show_link: "أظهر مرحبا بك"
@@ -771,5 +821,6 @@ ar:
   you_are_not_member_of_any_group: "لم تعد عضوا في أي مجموعة"
   you_are_viewing_version: "انت تستعرض النسخة {{version}} by {{user}}"
   you_have_no_contacts: "لا يوجد أشخاص في قائمة اتصالاتك"
+  you_have_no_groups: "انت لست عضواً في اي مجموعة"
   you_have_no_peers: "لا يوجد لديك أقران"
   your_login: "معلومات الدخول"

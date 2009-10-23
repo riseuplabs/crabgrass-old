@@ -1,5 +1,4 @@
---- 
-es: 
+es:
   _locale_code: es_ES
   about_me: "Acerca de mí"
   accept_usage_agreement: "Accepto el acuerdo de términos de uso"
@@ -35,6 +34,7 @@ es:
   add_tags: "Añadir Etiqueta"
   add_websites: "Agregar Sitios Web"
   additional_page_access: "Acceso Adicional"
+  admin: Admin
   administer_site: "Administrar Sitio"
   administration: "Administración "
   alert_error: Error
@@ -56,6 +56,8 @@ es:
   announcement_page_description: "Un anuncio."
   announcement_page_display: Anuncio
   announcements: Anuncios
+  approval_vote: "voto de aprobación"
+  approval_vote_class_description: "Aprueba o desaprueba cada posibilidad"
   approve: aprobar
   approve_button: aprueba
   approve_contact_info: "Una petición de contacto ya existe de esta/e usuario. ¿Quieres aprobarla?"
@@ -83,6 +85,8 @@ es:
   category: Categoría
   check_all: "Marcar todo"
   close_button: Cerrar
+  collection: colección
+  collection_class_description: "Páginas especiales que tienen otras páginas."
   committee: Comité
   committee_publicly_visible: "Hacer comités públicos"
   committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en {{domain}}/yourgroupname"
@@ -173,6 +177,7 @@ es:
   edit_appearance: "Editar Apariencia"
   edit_attachments: "Editar archivos adjuntos"
   edit_attachments_link: Editar
+  edit_featured_content: "editar contenido destacado"
   edit_featured_content_for_group: "Editar contenido destacado para {{group_name}}"
   edit_gallery: "Revisar Álbum de Fotos"
   edit_profile_link: "Editar Perfil"
@@ -198,6 +203,7 @@ es:
   featured_content: "Contenido destacado"
   featured_content_header: Destacado
   file: archivo
+  file_class_description: "Un archivo cargado"
   file_must_be_image_error: "Archivo debe ser una foto para ser parte de un Álbum."
   file_size: "Tamaño del archivo"
   file_version_deleted: "la versión del archivo borrado"
@@ -205,6 +211,8 @@ es:
   first_name: "primer nombre"
   folder_class_description: "Crear una carpeta para organizar otras páginas."
   folder_display: Carpeta
+  folder_page_description: "Una colección de activos."
+  folder_page_display: Carpeta
   forgot_password_link: "Olvidé mi contraseña"
   forgot_password_mail_expiry: "Este enlace es valido por 24 horas. Si usted necesita restablecer su contraseña después de la expiración, tendrá que visitar la página de contraseña olvidada y pedir un nuevo enlace."
   forgot_password_mail_greeting: "{{user}}, para restablecer su contraseña, por favor visite"
@@ -219,6 +227,7 @@ es:
   full: completo
   fullname: "Nombre completo"
   galleries: "Álbumes de fotos"
+  gallery_class_description: "Una colección de fotos."
   gallery_description: "Subir imágenes múltiples u organizar las imágenes existentes en un conjunto."
   gallery_display: álbum
   general_info: "Información General"
@@ -227,21 +236,23 @@ es:
   group_administration_not_allowed: "Usted no puede administrar este grupo."
   group_directory: "Directorio del grupo"
   group_directory_link: "directorio de group"
+  group_discussion: debate
+  group_discussion_class_description: "Un debate de grupo sobre un tema específico."
   group_has_no_public_profile: "Este grupo no tiene un perfil público."
   group_home_headline: "{{group_type}} Inicio"
   group_home_welcome: Bienvenido
   group_information: "{{group_type}} Información"
   group_invite_email: |
       {{from_user}} te ha invitado a participar en el grupo "{{group}}".
-      
+
       Si deseas unirte a este grupo, haz clic aquí:
-      
+
          {{accept_invite_link}}
-      
+
       La página principal de este grupo se puede encontrar aquí:
-      
+
          {{group_home_link}}
-      
+
       Si no deseas unirte a este grupo, simplemente ignora este mensaje de correo electrónico.
   group_invite_subject: "Invitación a unirse a grupo \"{{group}}\""
   group_join_chat: "Únete al Chat"
@@ -278,6 +289,7 @@ es:
   incoming: Entrante
   information: Información
   insert_image_heading: "Añade Foto"
+  insert_image_instructions: "Haz clik en la miniatura de la imagen para insertarla dentro del texto del wiki."
   invalid_email: "Correo electrónico no es valido"
   invalid_email_text: "La dirección de correo electrónico que proporcionaste no es válida."
   invalid_token: "Señal invalida"
@@ -289,6 +301,7 @@ es:
   invite_accept_via_register: "Tengo que registrar una nueva cuenta"
   invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustaría que se uniera a este/a {{group_type}}"
   invite_not_found: "No hay invitación  "
+  join_chat: "Únete a la charla"
   join_group_link: "Unirse {{group_type}}"
   join_group_success: "Te has unido al grupo {{group_name}}"
   join_request_info: "No serás miembro de este grupo hasta que tu solicitud sea aprobada. Puedes seguir la trayectoria de tus solicitudes visitando \"{{my_requests_url}}\"."
@@ -298,6 +311,7 @@ es:
   last_change: "ultimo cambio"
   last_name: apellido
   last_seen: "últimas vez visto"
+  leave_channel: "Salir del Canal"
   leave_group_link: "Dejar {{group_type}}"
   left_the_chatroom: "salido de la sala de chat "
   link_name: "Nombre del enlace"
@@ -319,6 +333,7 @@ es:
   login_password: Contraseña
   login_required: "Se requiere ingresar"
   login_required_description: "Inicie sesión para realizar esa acción."
+  logout: Desconectar
   logout_success: Adios
   logout_success_message: "Has salido."
   make_album_cover: "hacer esta foto la portada del álbum"
@@ -473,7 +488,8 @@ es:
   page_locked_header: "Página bloqueada"
   page_not_part_of_group: "Esta página no forma parte de este grupo"
   page_notice_message: "página enviada {{user}} el {{date}}"
-  page_owner_help: "Opcional. El propietario de la página es la persona o grupo con la responsabilidad primordial de esta página. Puede elegirse a usted mismo, o cualquiera de los grupos que pertenezca.\n"
+  page_owner_help: |
+      Opcional. El propietario de la página es la persona o grupo con la responsabilidad primordial de esta página. Puede elegirse a usted mismo, o cualquiera de los grupos que pertenezca.
   page_with_message: "con mensaje"
   pager: Paginador
   pagination_next: próxima
@@ -500,10 +516,13 @@ es:
   pending: pendiente
   pending_tasks: "tareas pendientes."
   people: Gente
+  permission_denied: "Permiso denegado"
   permission_denied_description: "Usted no tiene permisos suficientes para realizar esa acción."
   permissions: Permisos
   personal: Personal
   personal_interests: "Intereses personales"
+  personal_message: "mensaje personal"
+  personal_message_class_description: "Un mensaje personal enviado a los distintos recipientes."
   phone_numbers: "Números Telefónicos"
   photo: Foto
   photo_credit: "Crédito de la foto"
@@ -614,6 +633,7 @@ es:
   settings: configuración
   share: Compartir
   share_button: Compartir
+  share_link: "Compartir {{page_class}}"
   share_page_email: "Enviar notificación por correo electrónico"
   share_page_link: "Compartir {{page_class}}"
   share_page_message: "Enviar un mensaje (opcional)"
@@ -622,6 +642,7 @@ es:
   share_page_recipients_results: "Esta {{page_class}} será compartida/o con"
   share_page_recipients_sections: "Elige entre tus grupos o amigos"
   share_page_recipients_selection: "Haz tu selección"
+  share_this_page: "Compartir esta pagina"
   sharing_help: "Opcional. Puede compartir esta página con varios destinatarios (los usuarios o grupos)."
   show_gallery: "Mostrar Álbum de fotos"
   signup_button: Apúntate
@@ -652,8 +673,10 @@ es:
   survey_design: "Diseñar encuesta"
   survey_list_all: "Catalogar todas las respuestas"
   survey_may_rate: "¿Puede calificar respuestas?"
-  survey_may_see_ratings: "¿Puede ver puntuaciones?\n"
-  survey_may_see_responses: "¿Puede ver las respuestas?\n"
+  survey_may_see_ratings: |
+      ¿Puede ver puntuaciones?
+  survey_may_see_responses: |
+      ¿Puede ver las respuestas?
   survey_my_response: "Mi Respuesta"
   survey_page_description: "Crear una serie de preguntas para las personas responder."
   survey_page_display: Encuestas
@@ -693,9 +716,11 @@ es:
   unknown: desconocido
   unread: "No leído"
   updated: actualizado
+  upload_attachment: "Cargar archivo adjunto"
   upload_file_help: "Requerido. Seleccione un archivo para subir a esta página."
   upload_image: "Cargar foto"
   upload_image_help: "Opcional. Seleccione un archivo de imagen para subir a esta página."
+  upload_images: Cargar
   upload_new_image: "cargar nueva imagen"
   uploaded_image_cropped: "La foto cargada será recortada y estirada a 96 píxeles cuadrados."
   usage_agreement_heading: "Acuerdo de uso "
@@ -714,6 +739,8 @@ es:
   version_doesnt_exist: "No hay versión {{version}}"
   version_number: "versión {{version}}"
   versions: versiones
+  video: video
+  video_class_description: "Mostrar un vídeo alojado en un sitio web externo."
   video_embed: Insertado
   video_embed_code_prompt: "Código incrustado en el video procedente de fuente externa"
   video_service_is_not_supported: "no es compatible (en la actualidad sólo con YouTube, Google Video, blip.tv, y vimeo)"
@@ -762,5 +789,6 @@ es:
   you_are_not_member_of_any_group: "No eres miembro de ningún grupo. "
   you_are_viewing_version: "Usted está viendo la versión {{version}} by {{usuario}}"
   you_have_no_contacts: "Usted no tiene contactos"
+  you_have_no_groups: "Usted no pertenece en ningún grupo"
   you_have_no_peers: "Usted no tiene compañeros"
   your_login: "Tu nombre de usuario"

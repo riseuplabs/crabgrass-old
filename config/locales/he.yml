@@ -1,6 +1,6 @@
---- 
-he: 
+he:
   _locale_code: he_IL
+  _locale_rtl: "1"
   about_me: אודותיי
   accept_usage_agreement: "אני מסכימ\\ה לתנאים הרשומים בהסכם השימוש"
   access: גישה
@@ -30,6 +30,7 @@ he:
   add_star_link: "הוסיפי כוכב ({{star_count}})"
   add_tags: "הוסיפי תגיות"
   add_websites: "הוסיפי אתר אינטרנט"
+  admin: ניהול
   alert_error: שגיאה
   alert_field_errors: "קיימות בעיות עם השדות הבאים"
   alert_not_saved: "השינויים לא יכולים להשמר"
@@ -44,6 +45,8 @@ he:
   allow_membership_requests: "אשר\\י בקשות הצטרפות"
   already_contacts_info: "את\\ה כבר חבר\\ה של המשתמש\\ת."
   announcements: הודעות
+  approval_vote: "הצבעת אישור"
+  approval_vote_class_description: "הצביעי בעד או נגד כל אפשרות."
   approve: אשרי
   approve_button: אשר\י
   approve_contact_info: "בקשת חברות ממשתמש\\ת זו כבר קיימת. האם ברצונך לאשרה?"
@@ -65,6 +68,8 @@ he:
   cancel_link: ביטול
   category: קטגוריה
   close_button: סגור
+  collection: אוסף
+  collection_class_description: "דפים מיוחדים אשר מכילים דפים נוספים."
   committee: וועדה
   committee_publicly_visible: "הפכי את הוועדה לשקופה ציבורית"
   committee_publicly_visible_description: |-

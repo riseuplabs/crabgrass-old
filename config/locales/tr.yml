@@ -1,5 +1,4 @@
---- 
-tr: 
+tr:
   _locale_code: tr_TR
   about_me: Hakkımda
   accept_usage_agreement: "Kullanım anlaşmasını kabul ediyorum"
@@ -32,6 +31,7 @@ tr:
   add_tags: "Etiket ekle"
   add_websites: "Web Sitesi Ekle"
   additional_page_access: "Ek erişim"
+  admin: Yönetici
   administration: Yönetim
   alert_error: Hata
   alert_field_errors: "Bu alanlarda problemler var"
@@ -49,6 +49,8 @@ tr:
   announcement_page_description: "Duyuru ekle."
   announcement_page_display: Duyuru
   announcements: Duyurular
+  approval_vote: "onay oyu"
+  approval_vote_class_description: "Her olasılığı onayla ya da geri çevir"
   approve: onay
   approve_button: Onayla
   approve_contact_info: "Bu kullancı tarafından size gönderilmiş bir arkadaşlık talebi zaten var. Onaylıyor musunuz?"
@@ -76,6 +78,8 @@ tr:
   category: Kategori
   check_all: "Hepsini Kontrol Et"
   close_button: Kapat
+  collection: koleksiyon
+  collection_class_description: "Diğer sayfaları tutan özel sayfalar."
   committee: Komite
   committee_publicly_visible: "Komiteleri Herkese Görünür Yap"
   committee_publicly_visible_description: "Komiteler {{domain}}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
@@ -161,6 +165,7 @@ tr:
   edit: Düzenleme
   edit_attachments: "Eklentileri Düzenle"
   edit_attachments_link: Düzenle
+  edit_featured_content: "gösterilen içeriği değiştir"
   edit_featured_content_for_group: "{{group_name}} Grubu için Gösterilen İçeriği Düzenle"
   edit_gallery: "Galeriyi Düzenle"
   edit_profile_link: "Profili Düzenle"
@@ -186,6 +191,7 @@ tr:
   featured_content: "Gösterilen içerik"
   featured_content_header: "Gösterilen İcerik"
   file: Dosya
+  file_class_description: "Yüklenmiş dosya."
   file_must_be_image_error: "Galeriye eklenmesi için dosyanın bir görüntü olması gerekir."
   file_size: "Dosya boyütü"
   file_version_deleted: "dosya versiyonu silindi"
@@ -193,6 +199,8 @@ tr:
   first_name: "İlk isim"
   folder_class_description: "Diğer sayfaları organize etmek için bir klasör oluşturun"
   folder_display: Klasör
+  folder_page_description: "Dosya koleksiyonu."
+  folder_page_display: Dosya
   forgot_password_link: "Şifremi unuttum"
   forgot_password_mail_expiry: "Bu bağlantı 24 saat boyunca geçerli olacaktır. Eğer şifrenizi daha sonra sıfırlamanız gerekiyorsa unutulmuş şifre sayfasını tekrar ziyaret edip yeni bir link istemelisiniz."
   forgot_password_mail_greeting: "{{user}}, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
@@ -207,6 +215,7 @@ tr:
   full: Tümü
   fullname: "Tam isim"
   galleries: Galeriler
+  gallery_class_description: "Resimlerden oluşan koleksiyon"
   gallery_description: "Çoklu resimler yükleyin ya da varolan resimleri tek bir dizi olarak organize edin"
   gallery_display: Galeri
   general_info: "Genel Bilgiler"
@@ -215,15 +224,17 @@ tr:
   group_administration_not_allowed: "Bu grubu yönetme yetkiniz yok."
   group_directory: "Grup Dizini"
   group_directory_link: "Grup Rehberi"
+  group_discussion: tartışma
+  group_discussion_class_description: "Belirli bir konu üzerine grup tartışması."
   group_has_no_public_profile: "Bu grubun profili herkes tarafından görüntülenemez"
   group_home_headline: "{{group_type}} Anasayfa"
   group_home_welcome: Hoşgeldiniz
   group_information: "{{group_type}} Bilgiler"
   group_invite_email: |-
       {{from_user}} sizi "{{group}}" grubuna katılmaya davet etti.
-      
+
       Bu gruba katılmak istiyorsanız, buraya tıklayın:
-      
+
         {{accept_invite_link}}
   group_invite_subject: "\"{{group}}\" grubuna katılmak için davet"
   group_join_chat: "Konuşmaya Katıl"
@@ -259,6 +270,7 @@ tr:
   incoming: Gelen
   information: Bilgi
   insert_image_heading: "Görüntü Ekle"
+  insert_image_instructions: "Vikipedi metninin içine eklemek için görüntüye tıklayın."
   invalid_email: "Geçersiz E-mail"
   invalid_email_text: "Verdiğiniz email adresi geçersiz."
   invalid_token: "Geçersiz Token"
@@ -269,6 +281,7 @@ tr:
   invite_accept_via_register: "Yeni bir kullanıcı hesabı açmam gerek"
   invite_info: "{{group_type}} grubuna davet etmek istediğiniz kişilerin email adreslerini ya da kullanıcı girişlerini listeler. "
   invite_not_found: "Davet bulunamadı"
+  join_chat: "sohbete katıl"
   join_group_link: "Katıl {{group_type}}"
   join_group_success: "{{group_name}} grubuna katıldınız"
   join_request_info: "Başvurunuz kabul edilene kadar bu grubun üyesi olamazsınız. Başvurunuzun durumunu \"{{my_requests_url}}\" bölümünü ziyaret ederek görüntüleyebilirsiniz."
@@ -277,6 +290,7 @@ tr:
   large: büyük
   last_change: "Son Değişiklik"
   last_name: "Soy ad"
+  leave_channel: "kanaldan ayrıl"
   leave_group_link: "{{group_type}} grubundan ayrıl"
   left_the_chatroom: "Sohbet odasından ayrıldı"
   link_name: "Bağlantı Adı"
@@ -298,6 +312,7 @@ tr:
   login_password: Şifre
   login_required: "Kullancı girişi gerekli"
   login_required_description: "Bunu yapmak için lütfen kullanıcı girişi yapın."
+  logout: "Oturumu kapat"
   logout_success: "Güle güle"
   logout_success_message: "Oturumunuz kapatıldı."
   make_album_cover: "bu görüntüyü albüm kapağı yap"
@@ -475,10 +490,13 @@ tr:
   pending: bekleyen
   pending_tasks: "bekleyen görevler."
   people: Kişiler
+  permission_denied: "İzin verilmedi"
   permission_denied_description: "Bu işlemi yürütmek için yeterli izniniz yok."
   permissions: İzinler
   personal: Kişisel
   personal_interests: "Kişisel İlgiler"
+  personal_message: "kişisel mesaj"
+  personal_message_class_description: "Birseysel alıcılara birer kişisel mesaj gönderildi."
   phone_numbers: "Telefon Numaraları"
   photo: Fotoğraf
   photo_credit: Kaynak
@@ -584,6 +602,7 @@ tr:
   settings: Ayarlar
   share: Paylaş
   share_button: Paylaş
+  share_link: "Paylaş {{page_class}} "
   share_page_email: "E-mail yoluyla bildir"
   share_page_link: "Paylaş {{page_class}}"
   share_page_message: "Bir ileti gönderin (isteğe bağlı)"
@@ -592,6 +611,7 @@ tr:
   share_page_recipients_results: "Bu {{page_class}} paylaşılıyor:  "
   share_page_recipients_sections: "Gruplarınızdan ya da arkadaşlarınızdan seçin"
   share_page_recipients_selection: "Seçiminizi yapınız"
+  share_this_page: "Bu Sayfayı Paylaş"
   sharing_help: "İsteğe bağlı.Bu sayfayı çoklu alıcılarla (kullanıcılar ya da gruplarla) paylaşabilirsiniz."
   show_gallery: "Galeriyi Göster"
   signup_button: "Üye Ol"
@@ -663,9 +683,11 @@ tr:
   unknown: Bilinmeyen
   unread: Okunmamış
   updated: güncellendi
+  upload_attachment: "Dosya ekle"
   upload_file_help: "Gerekli. Bu sayfaya yüklemek için bir dosya seçin."
   upload_image: "Görüntü Yükle"
   upload_image_help: "İsteğe bağlı. Bu sayfaya yüklemek için başlangıç olarak bir görüntü dosyası seçin."
+  upload_images: Yükle
   upload_new_image: "Yeni görüntü yükle"
   uploaded_image_cropped: "Yüklenen resim kesilecek ve 96 piksel kare boyutuna uyarlanacaktır."
   usage_agreement_heading: "Kullanım Anlaşması"
@@ -684,6 +706,8 @@ tr:
   version_doesnt_exist: "{{version}} sürümü mevcut değildir."
   version_number: versiyon
   versions: Sürümler
+  video: Görüntü
+  video_class_description: "Başka bir site tarafından desteklenen bir video göster."
   video_embed: yerleştir
   video_embed_code_prompt: "Dışarıdan bir video kaynağının kodunu yerleştirin - gömün."
   video_service_is_not_supported: "desteklenmiyor (hâlen yalnızca youtube, google video, blip.tv, ve vimeo desteklenmektedir)"
@@ -732,5 +756,6 @@ tr:
   you_are_not_member_of_any_group: "Herhangi bir grubun üyesi değilsin."
   you_are_viewing_version: "{{user}} tarafından hazırlanan {{version}} sürümünü görüntülemektesiniz."
   you_have_no_contacts: "Şu anda arkadaşınız yok"
+  you_have_no_groups: "Herhangı bir grupunuz yok"
   you_have_no_peers: "Şu anda eşiniz yok."
   your_login: Girişiniz

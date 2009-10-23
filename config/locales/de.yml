@@ -1,5 +1,4 @@
---- 
-de: 
+de:
   _locale_code: de_DE
   about_me: "&Uuml;ber mich"
   accept_usage_agreement: "Ich akzeptiere die Benutzungsbedingungen"
@@ -35,6 +34,7 @@ de:
   add_tags: "Tags hinzufügen"
   add_websites: "Webseiten hinzufügen"
   additional_page_access: "Weitere Zugriffe"
+  admin: Admin
   administration: Administration
   alert_error: Error
   alert_field_errors: "Es gibt Probleme mit den folgenden Feldern"
@@ -55,6 +55,8 @@ de:
   announcement_page_description: "Eine Ank&uuml;ndigung"
   announcement_page_display: Ank&uuml;ndigung
   announcements: Ankündigungen
+  approval_vote: Befürwortungsabstimmung
+  approval_vote_class_description: "Zustimmung oder Ablehnung von jeder Möglichkeit"
   approve: zustimmen
   approve_button: zustimmen
   approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. Möchtest du diese annehmen?"
@@ -81,6 +83,8 @@ de:
   category: Kategorie
   check_all: "Alles ausw&auml;hlen"
   close_button: Schließen
+  collection: Sammlung
+  collection_class_description: "Spezialseiten, die andere Seiten enthalten."
   committee: Arbeitsgruppe
   committee_publicly_visible: "Arbeitsgruppen öffentlich sichtbar machen"
   committee_publicly_visible_description: "Arbeitsgruppen können von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
@@ -160,6 +164,7 @@ de:
   edit_appearance: "Bearbeite erscheinen"
   edit_attachments: "Anhänge bearbeiten"
   edit_attachments_link: Bearbeiten
+  edit_featured_content: "Aktuelle Inhalte bearbeiten"
   edit_featured_content_for_group: "Ausgewählte Inhalte von {{group_name}} bearbeiten"
   edit_gallery: "Gallerie bearbeiten"
   edit_profile_link: "Profil bearbeiten"
@@ -185,6 +190,7 @@ de:
   featured_content: "Angebotene Inhalte"
   featured_content_header: Angeboten
   file: Datei
+  file_class_description: "Eine hochgeladene Datei."
   file_must_be_image_error: "Nur Bilddateien können zur Galerie hinzugefügt werden."
   file_size: Dateigröße
   file_version_deleted: "Dateiversion gelöscht"
@@ -192,6 +198,8 @@ de:
   first_name: Vorname
   folder_class_description: "Eine Sammlung an Dateien."
   folder_display: Ordner
+  folder_page_description: "Eine Sammlung von Ressourcen."
+  folder_page_display: Verzeichnis
   forgot_password_link: "Ich habe mein Passwort vergessen"
   forgot_password_mail_expiry: "Dieser Link behält seine Gültigkeit für 24 Stunden. Willst Du Dein Passwort später rücksetzen musst Du Dir auf der \"Passwort vergessen\"-Seite einen neuen Link zuschicken lassen."
   forgot_password_mail_greeting: "{{user}}, um Dein Passwort zurückzusetzen besuche bitte"
@@ -206,29 +214,32 @@ de:
   full: komplett
   fullname: "vollständiger Name"
   galleries: Galerien
+  gallery_class_description: "Eine Bilder-Sammlung."
   gallery_description: "Eine geordnete Bilder-Kollektion"
   gallery_display: Galerie
   general_info: "Generelle Infos"
   grant_access: "Zugang gewähren"
   group: Gruppe
   group_administration_not_allowed: "Du kannst diese Gruppe nicht administrieren."
-  group_directory: Gruppen-Verzeichnis
+  group_directory: "Gruppen-Verzeichnis"
   group_directory_link: Gruppen-Verzeichnis
+  group_discussion: Diskussion
+  group_discussion_class_description: "Eine Gruppendiskussion zu einem bestimmten Thema."
   group_has_no_public_profile: "Diese Gruppe hat kein öffentlich einsehbares Profil."
   group_home_headline: "{{group_type}} Home"
   group_home_welcome: Willkommen
   group_information: "{{group_type}} Information"
   group_invite_email: |-
       {{from_user}} hat Dich eingeladen, der Gruppe "{{group}}" beizutreten.
-      
+
       Hier kannst Du dieser Einladung folgen:
-      
+
         {{accept_invite_link}}
-      
+
       Die Homepage der Gruppe findest Du hier:
-      
+
         {{group_home_link}}
-      
+
       Wenn Du der Gruppe nicht beitreten magst ignoriere einfach diese Mail.
   group_invite_subject: "Einladung, der Gruppe \"{{group}}\" beizutreten"
   group_join_chat: "Am Plausch teilnehmen"
@@ -265,6 +276,7 @@ de:
   incoming: Eingang
   information: Information
   insert_image_heading: "Bild einfügen"
+  insert_image_instructions: "Klicke auf das kleine Bild um es in den Wikitext einzufügen."
   invalid_email: "Ungültige Emailadresse"
   invalid_email_text: "Die von Dir angegebene Emailadresse ist ungültig."
   invalid_token: "Ungültiger Token"
@@ -276,6 +288,7 @@ de:
   invite_accept_via_register: "Ich will einen neuen Zugang anmelden."
   invite_info: "Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser {{group_type}} beizutreten, ein."
   invite_not_found: "Einladung nicht gefunden"
+  join_chat: "am schwatz teilnehmen"
   join_group_link: "Join {{group_type}}"
   join_group_success: "Du hast dich der Gruppe {{group_name}} angeschlossen."
   join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage überprüfen, indem Du \"{{my_requests_url}}\" besuchst."
@@ -306,6 +319,7 @@ de:
   login_password: Passwort
   login_required: "Login erforderlich"
   login_required_description: "Für diese Aktion logge Dich bitte ein."
+  logout: Abmelden
   logout_success: "auf Wiedersehn"
   logout_success_message: "Du hast dich abgemeldet."
   make_album_cover: "dieses Bild als Albumcover auswählen"
@@ -481,10 +495,13 @@ de:
   pending: Offen
   pending_tasks: "Offene Aufgaben."
   people: Personen
+  permission_denied: "Zugriff verweigert"
   permission_denied_description: "Du hast nicht genügend Rechte um diese Aktion auszuführen."
   permissions: Rechte
   personal: Persönlich
   personal_interests: "Persönliche Interessen"
+  personal_message: "Persönliche Nachricht"
+  personal_message_class_description: "Eine persönliche Nachricht an individuelle Empfänger."
   phone_numbers: Telefonnummern
   photo: Foto
   post_message: "Poste Nachricht"
@@ -593,6 +610,7 @@ de:
   settings: Einstellungen
   share: Teile
   share_button: Teile
+  share_link: "Teile {{page_class}}"
   share_page_email: "Sende eine E-Mailbenachrichtigung"
   share_page_link: "Teile {{page_class}}"
   share_page_message: "Sende eine Nachricht (optional)"
@@ -601,6 +619,7 @@ de:
   share_page_recipients_results: "Diese {{page_class}} wird geteilt mit"
   share_page_recipients_sections: "Wähle aus deinen Gruppen oder Freunden"
   share_page_recipients_selection: "Wähle aus"
+  share_this_page: "Teile diese Seite"
   sharing_help: "Optional. Du kannst diese Seite mit unterschiedlichen EmpfängerInnen teilen (egal ob Personen oder Gruppen)"
   show_gallery: "Gallerie &Uuml;berblick"
   signup_button: Registrieren
@@ -672,9 +691,11 @@ de:
   unknown: unbekannt
   unread: ungelesen
   updated: aktualisiert
+  upload_attachment: "Lade Anhang hoch"
   upload_file_help: "Benötigt. Wähle eine Datei, welche du hochladen willst."
   upload_image: "Lade Bild hoch"
   upload_image_help: "Optional. Wähle ein erstes Bild um es hochzuladen."
+  upload_images: Hochladen
   upload_new_image: "Neues Bild hochladen"
   uploaded_image_cropped: "Hochgeladenes Bild wird auf 96x96 Pixel zugeschnitten/gestreckt."
   usage_agreement_heading: Nutzungsvereinbarung
@@ -693,6 +714,8 @@ de:
   version_doesnt_exist: "Es gibt keine Version {{version}}"
   version_number: "Version {{version}}"
   versions: Versionen
+  video: Video
+  video_class_description: "Zeige ein Video, welches auf einer externen Seite gespeichert ist."
   video_embed: Eingebettet
   video_embed_code_prompt: "Embedcode eines externen Videos"
   video_service_is_not_supported: "wird nicht unterstützt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
@@ -735,10 +758,11 @@ de:
   wiki_revert_version: "Rückgängig zu Version {{version}}"
   wiki_section_edit: "bearbeite diesen Abschnitt"
   wont_be_able_to_save: "Du wirst diese Seite nicht speichern können"
-  work: Arbeit
+  work: "Arbeit"
   work_life: Arbeitsleben
   you_are_not_member_of_any_group: "Du bist bei keiner Gruppe Mitglied."
   you_are_viewing_version: "Du betrachtest Version {{version}} von {{user}}"
   you_have_no_contacts: "Du hast keine Kontakte"
+  you_have_no_groups: "Du hast keine Gruppen"
   you_have_no_peers: "Du hast keine Peers"
   your_login: "Dein Login"

@@ -1,5 +1,4 @@
---- 
-it: 
+it:
   _locale_code: it_IT
   about_me: "Dico di me"
   accept_usage_agreement: "Accetto i termini di utilizzo"
@@ -35,6 +34,7 @@ it:
   add_tags: "Aggiungi Etichette"
   add_websites: "Aggiungi Siti Web"
   additional_page_access: "Accesso Addizionale"
+  admin: Amministratore
   administer_site: "Amministra Sito"
   administration: Amministrazione
   alert_error: Errore
@@ -56,6 +56,8 @@ it:
   announcement_page_description: "Un annuncio."
   announcement_page_display: Annuncio
   announcements: Annunci
+  approval_vote: "voto di approvazione"
+  approval_vote_class_description: "Approvazione o disapprovazione di ogni possibilità."
   approve: approva
   approve_button: approva
   approve_contact_info: "Esiste già una richiesta di contatto da questo utente. Vuoi approvarla?"
@@ -83,6 +85,8 @@ it:
   category: Categoria
   check_all: "Seleziona tutto"
   close_button: Chiudi
+  collection: collezione
+  collection_class_description: "Pagine speciali che contengono altre pagine."
   committee: comitato
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
   committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo {{domain}}/nomedeltuogruppo"
@@ -173,6 +177,7 @@ it:
   edit_appearance: "Modifica Aspetto"
   edit_attachments: "Modifica allegati"
   edit_attachments_link: Modifica
+  edit_featured_content: "modifica contenuti in evidenza"
   edit_featured_content_for_group: "Modifica Contenuti in Evidenza per {{group_name}}"
   edit_gallery: "Modifica Galleria"
   edit_profile_link: "Modifica Profilo"
@@ -198,6 +203,7 @@ it:
   featured_content: "Contenuti in Evidenza"
   featured_content_header: "In evidenza"
   file: File
+  file_class_description: "Un file caricato."
   file_must_be_image_error: "Il file deve essere un'immagine per essere caricato in una galleria."
   file_size: "Dimensioni file"
   file_version_deleted: "file di versione eliminato"
@@ -205,6 +211,8 @@ it:
   first_name: nome
   folder_class_description: "Crea una cartella per raggruppare altre pagine."
   folder_display: Cartella
+  folder_page_description: "Una collezione di risorse."
+  folder_page_display: Cartella
   forgot_password_link: "Ho dimenticato la mia password."
   forgot_password_mail_expiry: "Questo link rimarrà valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password."
   forgot_password_mail_greeting: "{{user}}, per cambiare la tua password, visita"
@@ -219,6 +227,7 @@ it:
   full: pieno
   fullname: "Nome Completo"
   galleries: Gallerie
+  gallery_class_description: "Una collezione di immagini."
   gallery_description: "Carica immagini multiple o organizza le immagini esistenti in una raccolta."
   gallery_display: galleria
   general_info: "Informazioni Generali"
@@ -227,21 +236,23 @@ it:
   group_administration_not_allowed: "Non puoi amministrare questo gruppo."
   group_directory: "Elenco dei Gruppi"
   group_directory_link: "Elenco dei gruppi"
+  group_discussion: "discussione di gruppo"
+  group_discussion_class_description: "Una discussione di gruppo su un particolare argomento."
   group_has_no_public_profile: "Questo gruppo non ha un profilo pubblico."
   group_home_headline: "Pagina iniziale {{group_type}}"
   group_home_welcome: Benvenut*
   group_information: "Informazioni su {{group_type}}"
   group_invite_email: |
       {{from_user}} ti ha invitato/a a entrare nel gruppo "{{group}}".
-      
+
       Se vuoi entrare a far parte di questo gruppo, fai click qui:
-      
+
         {{accept_invite_link}}
-      
+
       Ecco il link alla pagina iniziale di questo gruppo:
-      
+
         {{group_home_link}}
-      
+
       Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
   group_invite_subject: "Invito a entrare nel gruppo \"{{group}}\""
   group_join_chat: "Entra in chat"
@@ -279,6 +290,7 @@ it:
   incoming: "In arrivo"
   information: Informazioni
   insert_image_heading: "Inserisci Immagine"
+  insert_image_instructions: "Fai click su un'immagine per inserirla nel testo del wiki."
   invalid_email: "Indirizzo email non valido"
   invalid_email_text: "L'indirizzo email che hai inserito non è valido."
   invalid_token: "Token Non Valido"
@@ -290,6 +302,7 @@ it:
   invite_accept_via_register: "Devo creare un nuovo account"
   invite_info: "Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo {{group_type}}."
   invite_not_found: "Invito non trovato"
+  join_chat: "entra in chat"
   join_group_link: "Entra in {{group_type}}"
   join_group_success: "Sei entrat* nel gruppo {{group_name}}"
   join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sarà stata approvata. Puoi controllare lo stato delle tue richieste visitando \"{{my_requests_url}}\"."
@@ -299,6 +312,7 @@ it:
   last_change: "ultimo cambiamento"
   last_name: cognome
   last_seen: "vist* per l'ultima volta"
+  leave_channel: "Abbandona Canale"
   leave_group_link: "Abbandona {{group_type}}"
   left_the_chatroom: "ha abbandonato la stanza di chat"
   link_name: "Nome Link"
@@ -320,6 +334,7 @@ it:
   login_password: Password
   login_required: "Accesso Richiesto"
   login_required_description: "Devi effettuare l'accesso prima di compiere questa azione."
+  logout: Disconnetti
   logout_success: Arrivederci
   logout_success_message: "Disconnessione effettuata con successo."
   make_album_cover: "rendi questa immagine la copertina dell'album"
@@ -501,10 +516,13 @@ it:
   pending: Pendenti
   pending_tasks: "compiti pendenti."
   people: Persone
+  permission_denied: "Permesso negato"
   permission_denied_description: "Non hai sufficienti permessi per eseguire questa azione."
   permissions: Permessi
   personal: Personale
   personal_interests: "Interessi Personali"
+  personal_message: "messaggio personale"
+  personal_message_class_description: "Un messaggio personale inviato a diversi destinatari."
   phone_numbers: "Numeri di Telefono"
   photo: Foto
   photo_credit: "Crediti Foto"
@@ -645,6 +663,8 @@ it:
   version_doesnt_exist: "Non esiste la versione {{version}}"
   version_number: "versione {{version}}"
   versions: versioni
+  video: video
+  video_class_description: "Mostra un video ospitato su un sito esterno"
   video_embed_code_prompt: "Inserisci il codice per il video esterno"
   video_service_is_not_supported: "non è supportato (al momento sono supportati solamente YouTube, Google Video, blip.tv e vimeo)"
   view_all: "vedi tutti"
@@ -662,11 +682,11 @@ it:
   welcome_hide_link: "Nascondi Benvenuto"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-      
+
       Questo sito web è basato su Crabgrass, un'applicazione web che è <a href="http://www.affero.org/oagpl.html">software libero</a> e che è stata progettata per l'organizzazione di gruppi e reti, e che è tagliata su misura per le necessità dei movimenti per la giustizia globale. L'obiettivo a lungo termine è di fornire gli strumenti tecnici per favorire il lavoro delle reti per un cambiamento sociale attivo, confederale e di democrazia diretta. [di più... -> /crabgrass/about]
-      
+
       h3. Questo sito web è nuovo per te?
-      
+
       [Iscriviti -> /account/signup] e inizia a usarlo. Siamo in una fase di sviluppo iniziale. Visto che i cambiamenti alla piattaforma sono diretti dal feedback dei nostri utenti, vi raccomandiamo di farci sapere come state usando il sito, quali modifiche vorreste, e cosa vi piace e cosa no.
   welcome_message: "Crabgrass permette a gruppi e organizzazioni impegnati nel cambiamento sociale di portare a termine i loro compiti, diffondere informazioni, collaborare e fare rete insieme."
   welcome_show_link: "Mostra Benvenuto"
@@ -681,4 +701,5 @@ it:
   work: Lavoro
   work_life: "Vita Lavorativa"
   you_are_viewing_version: "Stai vedendo la versione {{version}} di {{user}}"
+  you_have_no_groups: "Non sei membro di alcun gruppo"
   your_login: "Il tuo login"
