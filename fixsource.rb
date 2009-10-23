@@ -1,14 +1,32 @@
 #!/usr/bin/ruby1.9
+require 'yaml'
+
+class Object
+  def blank?
+    self.nil? ||  (self.respond_to?(:empty?) and self.empty?)
+  end
+end
+
+$dictionary_supplement = {}
+
+
+def key_exists?(key)
+  $dictionary.keys.include?(key)
+end
 
 def replace_line(line)
   old_line = line.dup
   replaced = true
   warnings = []
+  key = nil
+  default_string = nil
 
   case line
   # "hello there"[:welcome_greeting]
   when /["']([\w\-\!\?\.,\s]+)["']\[:(\S+)\s*\]/
     line_type = '(hello there"[:welcome_greeting])'
+    default_string = $1
+    key = $2
     line.gsub!(/["']([\w\-\!\?\.,\s]+)["']\[:([^\s\]\,]+)\s*\]/,'I18n.t(:\2)')
   # <%= "You are logged in as {login}"[:login_info, h(current_user.login)] %>
   when /(["'])([^\1]+)\1\[(:\S+),\s*(\S+[^\]]+)\]/
@@ -20,6 +38,7 @@ def replace_line(line)
     default_string = $2
     key = $3
     args = $4
+
     # i found at least one case like: 'default {var}'[:key, {:var => value}]
     if args =~ /\{(:[^\}]+)\}/
       newline = "I18n.t(#{key}, "+ $1 + ')'
@@ -34,6 +53,7 @@ def replace_line(line)
       # but it will likely have to be fixed manually.
       args.each do |arg|
         ph = placeholders[args.index(arg)] || args.index(arg)
+        warnings << "unknown key '#{arg}' in #{line}" if ph.is_a? Numeric
         newline << ", :#{ph} => #{arg}"
       end
 #          placeholders.each do |ph|
@@ -79,10 +99,12 @@ def replace_line(line)
   # :version_number.t % {:version => version.version, :or_more_args => more.args}
   when /\s:(\S+)\.t\s*%\s*\{([^\}]+)\}/
     line_type = '(:version_number.t % {:version => version.version, :or_more_args => more.args})'
+    key = $1
     line.gsub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
   # :welcome_greeting.t
   when /\s:(\S+)\.t[\s,]/
     line_type = '(:welcome_greeting.t)'
+    key = $1
     line.gsub!(/:(\S+)\.I18n.t([\s,])/,'I18n.t(:\1)\2')
   else
     replaced = false
@@ -92,6 +114,18 @@ def replace_line(line)
     puts "TYPE:" +line_type
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
+  end
+
+  if key
+    key = key.to_s.gsub(/^:/, "")
+    unless key_exists?(key)
+      if default_string.blank?
+        warnings << "TOTALLY missing key: #{key} !!!"
+      else
+        warnings << "missing key: #{key} with default string: #{default_string}"
+        $dictionary_supplement[key] = default_string
+      end
+    end
   end
 
   warnings
@@ -116,8 +150,8 @@ end
 
 def ruby_code_file?(file)
   return false if file =~ /^\./
-  return false if file =~ /(jar|jpg|png|swf|xcf|gz|log|ico|beam|sp\w|doc|yml|pdf|rd|gif|tiff|js|sqlite3)$/i
-  return false if file =~ /gibberish|coderay|multiple_select|ruby_sess\./
+  return false if file =~ /(jar|jpg|png|swf|xcf|gz|log|ico|svg|beam|sp\w|doc|yml|pdf|rd|gif|tiff|js|sqlite3)$/i
+  return false if file =~ /gibberish|fixsource\.rb|coderay|multiple_select|ruby_sess\./
 
   true
 end
@@ -163,18 +197,31 @@ def print_file_warnings(file, warnings)
   puts ""
 end
 
+def print_dictionary_supplement
+  puts "\n============================="
+  puts "=== DICTIONARY SUPPLEMENT ===\n\n"
+  $dictionary_supplement.keys.sort.each do |key|
+    default_string = $dictionary_supplement[key]
+    puts "#{key}: \"#{default_string}\""
+  end
+end
 
 input = ARGV[0] || './'
 
 warnings = nil
+
+$dictionary = YAML.load_file("config/locales/en.yml")["en"]
+
 if File.file?(input)
   warnings = checkfile(input)
   print_warnings_banner
   print_file_warnings(input, warnings)
+  print_dictionary_supplement
 elsif File.directory?(input)
   warnings = searchdirectory(input)
   print_warnings_banner
   print_dir_warnings(warnings)
+  print_dictionary_supplement
 else
   puts input+': not a file or directory!'
 end
