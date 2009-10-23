@@ -10,6 +10,10 @@ en:
   #rename {{upload_images}} -> {{upload}}
   #insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
+  create_group_link: "create a new group"
+  create_committee: "create committee"
+
+
   ##
   ## UNUSED, BUT KEEP ANYWAY
   ##
@@ -379,6 +383,8 @@ en:
   image_title: "Image title: {{title}}"
   upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
+  too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
+  cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
 
   ##
   ## ME
@@ -535,7 +541,7 @@ en:
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {{domain}}/yourgroupname.
   committee_publicly_visible_description: Committees are viewable by non-members at {{domain}}/yourgroupname
   group_members_publicly_visible: Make Members Publicly Visible
-  group_members_publicly_visible_description:   Members are viewable by non-members at {{domain}}/yourgroupname. Also, the name of the group will be listed on each members profile page ({{domain}}/username)
+  group_members_publicly_visible_description: Members are viewable by non-members at {{domain}}/yourgroupname. Also, the name of the group will be listed on each members profile page ({{domain}}/username)
   page_list: Page list
   recent_network_pages: "Recent Network Pages"
   recent_member_group_pages: "Recent Activity from Your Groups in {{network}}"
@@ -567,12 +573,12 @@ en:
   not_set: not set
   no_members: (no members)
   new_group: "New group"
-  create_group_link: "create a new group"
-  create_committee: "create committee"
   group_language: "The main language of this {{group}}."
   group_summary: "Brief information regarding this {{group}}."
   new_network: "New network"
   group_membership_count: "{{count}} Members"
+  membership_exists_error: "Membership already exists for {{member}}"
+  you_are_a_member_already_error: "You are a member already"
 
   # directory
 
@@ -596,6 +602,7 @@ en:
   join_group_link: "Join {{group_type}}"
   leave_group_link: "Leave {{group_type}}"
   request_join_group_link: "Request to Join {{group_type}}"
+  send_join_request: "Send request to join {{group_name}}"
 
   # results
 
@@ -623,6 +630,8 @@ en:
   # committee
 
   this_is_committee: "This committee is part of {{parent_group}}."
+  new_committee: "New committee for group {{group_name}}"
+
 
   ##
   ## REQUESTS
@@ -660,7 +669,11 @@ en:
   send_invites_button: "Send Invites"
   send_invites_headline: "Send invitations to join {{group}}"
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {{group_type}}."
+  invite_sent: "Invitation sent to {{recipient}}"
+  invites_sent: "{{count}} invitations sent"
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
+  contact_removed: "{{user}} has been removed from your contact list."
+  not_contact_of: "You are not the contact of {{user}}."
   already_contacts_info: "You are already the friend of this person."
   try_again: "Try Again"
   invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
@@ -674,6 +687,7 @@ en:
   invite_error_redeemed: "Invite has already been redeemed."
   invite_error_already_member: "You are already a member of that group."
   invite_not_found: "Invite not found"
+  request_exists_error: "Request already exists for {{recipient}}"
 
   ##
   ## PAGES
@@ -777,6 +791,7 @@ en:
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
   notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
 
+  share_grant_required_error: "{{name}} is not allowed to view this page. They must be granted greater access first."
   notify_no_access_error: 'Sorry, "{{name}}" does not have access to this page.'
   share_already_exists_error: '"{{name}}" already has access to this page.'
   share_pester_error: 'Sorry, you are not allowed to share with "{{name}}".'
