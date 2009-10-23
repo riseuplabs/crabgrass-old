@@ -18,102 +18,88 @@
 
 %body{:class=>language_direction}
   #page
-    %header
-      %h1.site_title
-        Site Name
+    %section#main
+      %header.container
+        %h1.site_title Hello World
+        %section#search
+          %form
+            %input{:type=>'text'}
+            %input{:type=>'hidden'}
+            %button{:type=>'submit'}
       %nav
-        %ul#menu
-          %li 
-            %a{:href => "#", :onclick => "#"}  Home
-          %li 
-            %a{:href => "#", :onclick => "#"}  Me
-          %li  
-            %a{:href => "#", :onclick => "#"}  People
-          %li  
-            %a{:href => "#", :onclick => "#"}  Groups
-          %li  
-            %a{:href => "#", :onclick => "#"}  Networks
-        %ul#user
-          %li Welcome userName
-          %li  
-            %a{:href => "#", :onclick => "#"}  inbox(4)
-          %li  
-            %a{:href => "#", :onclick => "#"}  Help
-          %li  
-            %a{:href => "#", :onclick => "#"}  Sign Out
-      %section
-        %header
-          %h6.breadcrumb
-            Network / Groupname
-          #search
-            %form
-              %input{:type=>'text'}
-              %input{:type=>'hidden'}
-              %button{:type=>'submit'}
+        %section.container
+          %ul#menu
+            %li 
+              %a{:href => "#", :onclick => "#"}  Home
+            %li 
+              %a{:href => "#", :onclick => "#"}  Me
+            %li  
+              %a{:href => "#", :onclick => "#"}  People
+            %li  
+              %a{:href => "#", :onclick => "#"}  Groups
+            %li  
+              %a{:href => "#", :onclick => "#"}  Networks
+          %ul#user
+            %li Welcome userName
+            %li  
+              %a{:href => "#", :onclick => "#"}  inbox(4)
+            %li  
+              %a{:href => "#", :onclick => "#"}  Help
+            %li  
+              %a{:href => "#", :onclick => "#"}  Sign Out
+      %section.container
+        %ul#breadcrumb
+          %li
+            %a{:href => "#", :onclick => "#"} Network
+          %li
+            %a{:href => "#", :onclick => "#"} / Group Name   
     #content
       %header
-      %h2 Group Name
-      %nav#join
-        %h3 Join Group
-        %ul
+        %h2 Group Name
+        %a{:href => "#", :onclick => "#"}  Join Group
+      %nav#participate
+        %section#helpful-links
+          %h4 Helpful Links:
+          %ul.issues
+            %li 
+              %a{:href => "#", :onclick => "#"} Link to Issue
+            %li
+              %a{:href => "#", :onclick => "#"} Link to another Issue
+            %li 
+              %a{:href => "#", :onclick => "#"} Link to another Issue
+          %a.tooltip
+        %ul.icons
           %li 
-            %a{:href => "#", :onclick => "#"}  Open
+            %a{:href => "#", :onclick => "#"} Contribute
           %li 
-            %a{:href => "#", :onclick => "#"}  Local(Argentina)
-      %nav
-        %ul
+            %a{:href => "#", :onclick => "#"} Browse All Content
           %li 
-            %a{:href => "#", :onclick => "#"}  Contribute
+            %a{:href => "#", :onclick => "#"} Tasks
           %li 
-            %a{:href => "#", :onclick => "#"}  Join Group Chat
-          %section#explore
-            %header
-              %h4 Welcome UserName Get Started by exploring the group and featured links.
-            %section
-              %ul.issues
-                %li 
-                  %a{:href => "#", :onclick => "#"} Link to Issue
-                %li
-                  %a{:href => "#", :onclick => "#"} Link to another Issue
-                %li 
-                  %a{:href => "#", :onclick => "#"} Link to another Issue
-              %a.tooltip
-            %ul.icons
-              %li 
-                %a{:href => "#", :onclick => "#"} Text and Discussions
-              %li 
-                %a{:href => "#", :onclick => "#"} Multimedia
-              %li 
-                %a{:href => "#", :onclick => "#"} Poll and Votes
-              %li 
-                %a{:href => "#", :onclick => "#"} Planning Tools
-              %li 
-                %a{:href => "#", :onclick => "#"} Archive
+            %a{:href => "#", :onclick => "#"} Join Chat Group
       %section
         %aside
           %section
-            %section
+            %section#about-group
               %header
                 %h3 About Group
+                %a{:href => "#", :onclick => "#"} Edit
               %p 
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 %a Read More
-              %ul
-                %li 
-                  %a{:href => "#", :onclick => "#"} CREATED
-                %li 
-                  %a{:href => "#", :onclick => "#"} UPDATED
-                %li 
-                  %a{:href => "#", :onclick => "#"} ACTIVITY
-                %li
-                  %a{:href => "#", :onclick => "#"} TAGS
-            %section
+              %ul#details
+                %li CREATED 
+                %li UPDATED
+                %li ACTIVITY
+                %li TAGS
+                %li LOCAL
+            %section#people
               %header
                 %h3 People
-              %section
-                %header
-                  %h5 Coordinators
-                  %ul
+                %a{:href => "#", :onclick => "#"} Edit
+              %figure
+                %legend Coordinators & New Members
+                  %ul#member-images
                     %li 
                       %a{:href => "#", :onclick => "#"}
                         %img lorem
@@ -123,99 +109,88 @@
                     %li 
                       %a{:href => "#", :onclick => "#"}
                         %img lorem
-              %section
-                %header
-                  %h5 New Members
-                %ul
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-            %section
+            %section#networks
               %header
-                %h3 Committees
-                %ul
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-                  %li 
-                    %a{:href => "#", :onclick => "#"}
-                      %img lorem
-          %section
-            %section
-              %header
-                %h3 Featured
-              %article
-                %h4 Crabgrass vs. ThePoint
-                %p Lorem ipsum.
-                %ul
-                  %li tag name
-                  %li tag name
-              %article
-                %h4 Crabgrass vs. ThePoint
-                %p Lorem ipsum.
-                %ul
-                  %li tag name
-                  %li tag name
-        %section
-          %header
-            %h3 Announcements
-            %a See All
-          %ul
-            %li
-              %h4.announcement Announcement Name
+                %h3 Networks & Committees
+                %a{:href => "#", :onclick => "#"} Edit
+              %ul#network-images
+                %li 
+                  %a{:href => "#", :onclick => "#"}
+                    %img lorem
+                %li 
+                  %a{:href => "#", :onclick => "#"}
+                    %img lorem
+                %li 
+                  %a{:href => "#", :onclick => "#"}
+                    %img lorem
+          %section#featured
+            %header
+              %h3 Featured
+              %a{:href => "#", :onclick => "#"} Edit
+            %article
+              %h4 Crabgrass vs. ThePoint
               %p Lorem ipsum.
-            %li
-              %h4.announcement Announcement Name
+              %ul.tags
+                %li tag name
+                %li tag name
+            %article
+              %h4 Crabgrass vs. ThePoint
               %p Lorem ipsum.
+              %ul.tags
+                %li tag name
+                %li tag name
         %section
-          %nav
-            %ul#tabcontrol.tabs
-              %li#tab-recent.tab-selected RECENT PAGES
-              %li#tab-viewed.tab-unselected MOST VIEWED
-              %li#tab-active.tab-unselected MOST ACTIVE
-              %li#tab-stars.tab-unselected MOST STARS
-            %ul#panecontrol.panes
-              %li#pane-recent.pane-selected
-                %section.pane
-                  %section
-                    %ul
-                      %li Thread Title,
-                      %li Category,
-                      %li Preview
-                    %ul
-                      %li Last Post by
-                      %li Time
-                      %li Starred
-                    %article
-                      %heaader
-                        %h4 Crabgrass vs ThePoint
-                      %p Lorem ipsum in the pane.
-                    %article
-                      %heaader
-                        %h4 Crabgrass vs ThePoint
-                      %p Lorem ipsum in the pane.
-                    %article
-                      %heaader
-                        %h4 Crabgrass vs ThePoint
-                      %p Lorem ipsum in the pane.
-                    %article
-                      %heaader
-                        %h4 Crabgrass vs ThePoint
-                      %p Lorem ipsum in the pane.              
-              %li#pane-viewed.pane-unselected
-              %li#pane-active.pane-unselected
-              %li#pane-stars.pane-unselected
-          %footer
-            pagination
+          %section#wiki
+            %header
+              %h3 Group Wiki
+              %a See All
+          %section#announcements
+            %header
+              %h3 Announcements
+              %a See All
+            %article
+              %h4.announcement Announcement Name
+              %p Lorem ipsum
+          %section#posts
+            %nav
+              %ul#tabcontrol.tabs
+                %li#tab-recent.tab-selected RECENT PAGES
+                %li#tab-viewed.tab-unselected MOST VIEWED
+                %li#tab-active.tab-unselected MOST ACTIVE
+                %li#tab-stars.tab-unselected MOST STARS
+              %ul#panecontrol.panes
+                %li#pane-recent.pane-selected
+                  %section.pane
+                    %section
+                      %ul
+                        %li Thread Title,
+                        %li Category,
+                        %li Preview
+                      %ul
+                        %li Last Post by
+                        %li Time
+                        %li Starred
+                      %article
+                        %heaader
+                          %h4 Crabgrass vs ThePoint
+                        %p Lorem ipsum in the pane.
+                      %article
+                        %heaader
+                          %h4 Crabgrass vs ThePoint
+                        %p Lorem ipsum in the pane.
+                      %article
+                        %heaader
+                          %h4 Crabgrass vs ThePoint
+                        %p Lorem ipsum in the pane.
+                      %article
+                        %heaader
+                          %h4 Crabgrass vs ThePoint
+                        %p Lorem ipsum in the pane.              
+                %li#pane-viewed.pane-unselected
+                %li#pane-active.pane-unselected
+                %li#pane-stars.pane-unselected
+            %footer
+              pagination
   
     %footer
       footer
