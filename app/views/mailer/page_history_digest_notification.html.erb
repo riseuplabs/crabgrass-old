@@ -4,7 +4,8 @@ The page you are watching "<%= @page.title %>" has been modified:
 <%= "http://#{@site.domain}#{page_url(@page)}" %>
 
 <% @page_histories.each do |page_history| %>
-  <%= "* #{description_for(page_history)}\n\n" %>
+  <%= "* #{description_for(page_history)} at #{full_time(page_history.created_at)}" %>
+  <%= details_for(page_history).concat("\n\n\n") if !details_for(page_history).empty? %>
 <% end %>
 
 

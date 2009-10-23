@@ -20,7 +20,7 @@ module PageHistoryHelper
 
   def build_details(page_history)
     case page_history.class.to_s
-    when PageHistory::ChangeTitle.to_s            then "From: \"#{page_history.details.fetch(:from)}\" => \"#{page_history.details.fetch(:to)}\"" 
+    when PageHistory::ChangeTitle.to_s            then "From: \"#{page_history.details.fetch(:from)}\" To: \"#{page_history.details.fetch(:to)}\"" 
     end
   end
 

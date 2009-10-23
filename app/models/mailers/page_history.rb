@@ -4,6 +4,7 @@ module Mailers::PageHistory
       add_template_helper(PageHistoryHelper)
       add_template_helper(PageHelper)
       add_template_helper(UrlHelper)
+      add_template_helper(TimeHelper)
     end
   end
 
