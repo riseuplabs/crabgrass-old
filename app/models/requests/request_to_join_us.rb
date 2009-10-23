@@ -42,9 +42,9 @@ class RequestToJoinUs < Request
   end
 
   def description
-    ":user was invited to join :group"[:request_to_join_us_description] % {
+    "{user} was invited to join {group}"[:request_to_join_us_description, {
       :user => user_span(recipient), :group => group_span(group)
-    }
+    }]
   end
 
 end

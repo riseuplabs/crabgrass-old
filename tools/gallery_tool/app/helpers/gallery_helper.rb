@@ -35,9 +35,9 @@ module GalleryHelper
     available_elements = {
       :count => lambda {
         '<p class="meta">'+if @image_index
-                             'Photo :number of :count'[:image_count]%{:number => @image_index.to_s, :count => @image_count.to_s }
+                             'Photo {number} of {count}'[:image_count, {:number => @image_index.to_s, :count => @image_count.to_s }]
                            else
-                             ":count Images"[:image_count_total] %{ :count => @image_count.to_s }
+                             "{count} Images"[:image_count_total, { :count => @image_count.to_s }]
                            end+'</p>'
       },
       :download => lambda {

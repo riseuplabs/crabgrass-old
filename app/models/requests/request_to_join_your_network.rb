@@ -46,9 +46,9 @@ class RequestToJoinYourNetwork < Request
   end
 
   def description
-    ":group requested to join network :network"[:request_to_join_your_network_description] % {
+    "{group} requested to join network {network}"[:request_to_join_your_network_description, {
       :group => group_span(group), :network => group_span(network)
-    }
+    }]
   end
 
 end
