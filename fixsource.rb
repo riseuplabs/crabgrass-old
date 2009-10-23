@@ -123,8 +123,8 @@ def replace_line(line)
         warnings << "TOTALLY missing key: #{key} !!!"
       else
         warnings << "missing key: #{key} with default string: #{default_string}"
-        $dictionary_supplement[key] = default_string
       end
+      $dictionary_supplement[key] = default_string
     end
   end
 
@@ -191,7 +191,7 @@ def print_file_warnings(file, warnings)
   puts "#{file}"
   warnings.each do |line, messages|
     messages.each do |msg|
-      puts ("  %03d: " % line) + msg
+      puts ("  %3d: " % line) + msg
     end
   end
   puts ""
