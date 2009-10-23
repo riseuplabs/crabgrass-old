@@ -106,6 +106,14 @@ class PageHistoryTest < Test::Unit::TestCase
     assert_change_updated_at page, PageHistory::RevokedUserAccess.create!(:user => @user, :page => page, :object => user)
   end
 
+  def test_change_title_saves_old_and_new_value
+    page = Page.make :title => "Bad title"
+    page.update_attribute :title, "Nice title"
+    page_history = PageHistory::ChangeTitle.find :first, :conditions => {:page_id => page.id}
+    assert_equal "Bad title", page_history.details[:from]
+    assert_equal "Nice title", page_history.details[:to]
+  end
+
   def test_recipients_for_digest_notifications
     user   = User.make :login => "user", :receive_notifications => nil
     user_a = User.make :login => "user_a", :receive_notifications => "Single"

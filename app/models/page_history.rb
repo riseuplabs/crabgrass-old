@@ -5,6 +5,8 @@ class PageHistory < ActiveRecord::Base
 
   validates_presence_of :user, :page
 
+  serialize :details, Hash
+
   def self.send_single_pending_notifications
     pending_notifications.each do |page_history|
       recipients_for_single_noification(page_history).each do |user|
@@ -70,7 +72,15 @@ class PageHistory::PageCreated < PageHistory
 end
 
 class PageHistory::ChangeTitle < PageHistory
+  before_save :add_details
   after_save :page_updated_at  
+
+  def add_details
+    self.details = {
+      :from => self.page.title_was,
+      :to   => self.page.title
+    }
+  end  
 end
 
 class PageHistory::Deleted < PageHistory

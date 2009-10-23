@@ -1,17 +1,28 @@
 module PageHistoryHelper
   def description_for(page_history)
     description = build_description(page_history) || ""
+    eval_string_description(page_history, description)
+  end
+
+  def details_for(page_history)
+    description = build_details(page_history) || ""
+  end
+
+  protected
+
+  def eval_string_description(page_history, description)
     description.scan(/(\{\w+\.\w+\})/).flatten.each do |object_and_attribute|
       object, attribute = object_and_attribute.gsub(/\{|\}/, "").split(".")
       description.gsub!(object_and_attribute, page_history.send(object.to_sym).send(attribute.to_sym))
     end
-    description
+    description    
   end
 
-  def description_with_links_for(page_history)
+  def build_details(page_history)
+    case page_history.class.to_s
+    when PageHistory::ChangeTitle.to_s            then "From: \"#{page_history.details.fetch(:from)}\" => \"#{page_history.details.fetch(:to)}\"" 
+    end
   end
-
-  protected
 
   def build_description(page_history)
     case page_history.class.to_s
