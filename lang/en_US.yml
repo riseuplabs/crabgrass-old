@@ -503,7 +503,7 @@ profile_option_may_see: "Profile is visible"
 user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
 user_profile_description_may_see_contacts: "Allow people to see your list of friends."
 user_profile_description_may_request_contact: "Allow people to request to be your friend."
-user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
+user_profile_description_may_pester: "Allow people who are not your friends or peers to share content with you and send you invitations."
 user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
 user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
