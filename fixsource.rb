@@ -146,7 +146,7 @@ def replace_line(line, location_info)
     end
   end
 
-  warnings
+  return warnings, replaced
 end
 
 def checkfile(filename)
@@ -157,7 +157,10 @@ def checkfile(filename)
     line_index = 1
     while line = file.gets
       location_info = "#{filename}:#{line_index}"
-      line_warnings = replace_line(line, location_info)
+      replaced = true
+      while replaced
+        line_warnings, replaced = replace_line(line, location_info)
+      end
       unless line_warnings.empty?
         file_warnings[line_index] = line_warnings
       end
