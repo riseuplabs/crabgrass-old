@@ -125,9 +125,9 @@ def replace_line(line, location_info)
   end
 
   if replaced
-    puts "\n-- TYPE: #{line_type} --"
-    puts "* key:     '#{key}'"
-    puts "* default: '#{default_string}'"
+    puts "\n\t\t-- type: #{line_type} --"
+    puts "* KEY:     '#{key}'"
+    puts "* DEFAULT: '#{default_string}'"
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
   end
