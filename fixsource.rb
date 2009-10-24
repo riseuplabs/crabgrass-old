@@ -8,13 +8,14 @@ class Object
 end
 
 $dictionary_supplement = {}
+$dictionary_supplement_locations = {}
 
 
 def key_exists?(key)
   $dictionary.keys.include?(key)
 end
 
-def replace_line(line)
+def replace_line(line, location_info)
   old_line = line.dup
   replaced = true
   warnings = []
@@ -23,11 +24,11 @@ def replace_line(line)
 
   case line
   # "hello there"[:welcome_greeting]
-  when /["']([\w\-\!\?\.,\s]+)["']\[:(\S+)\s*\]/
+  when /["']([\w\-\!\?\.,\s]+)["']\[:(\S+?)\s*\]/
     line_type = '(hello there"[:welcome_greeting])'
     default_string = $1
     key = $2
-    line.gsub!(/["']([\w\-\!\?\.,\s]+)["']\[:([^\s\]\,]+)\s*\]/,'I18n.t(:\2)')
+    line.gsub!(/["']([\w\-\!\?\.,\s]+)["']\[:([^\s\]\,]+?)\s*\]/,'I18n.t(:\2)')
   # <%= "You are logged in as {login}"[:login_info, h(current_user.login)] %>
   when /(["'])([^\1]+)\1\[(:\S+),\s*(\S+[^\]]+)\]/
     line_type = '(MACRO "You are logged in as {login}"[:login_info, h(current_user.login)])'
@@ -105,13 +106,13 @@ def replace_line(line)
   when /\s:(\S+)\.t[\s,]/
     line_type = '(:welcome_greeting.t)'
     key = $1
-    line.gsub!(/:(\S+)\.I18n.t([\s,])/,'I18n.t(:\1)\2')
+    line.gsub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
   else
     replaced = false
   end
 
-  if replaced
-    puts "TYPE:" +line_type
+  if replaced and false
+    puts "TYPE:" + line_type
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
   end
@@ -120,11 +121,13 @@ def replace_line(line)
     key = key.to_s.gsub(/^:/, "")
     unless key_exists?(key)
       if default_string.blank?
-        warnings << "TOTALLY missing key: #{key} !!!"
+        warnings << "TOTALLY missing translation key: '#{key}' !!!"
       else
-        warnings << "missing key: #{key} with default string: #{default_string}"
+        warnings << "missing translation key: '#{key}' with default string: \"#{default_string}\""
       end
       $dictionary_supplement[key] = default_string
+      $dictionary_supplement_locations[key] ||= []
+      $dictionary_supplement_locations[key] << location_info
     end
   end
 
@@ -138,7 +141,8 @@ def checkfile(filename)
   File.open(filename) do |file|
     line_index = 1
     while line = file.gets
-      line_warnings = replace_line(line)
+      location_info = "#{filename}:#{line_index}"
+      line_warnings = replace_line(line, location_info)
       unless line_warnings.empty?
         file_warnings[line_index] = line_warnings
       end
@@ -203,6 +207,12 @@ def print_dictionary_supplement
   $dictionary_supplement.keys.sort.each do |key|
     default_string = $dictionary_supplement[key]
     puts "#{key}: \"#{default_string}\""
+    locations = $dictionary_supplement_locations[key]
+    locations.each do |location|
+      puts "   in #{location}"
+    end
+    puts
+
   end
 end
 
