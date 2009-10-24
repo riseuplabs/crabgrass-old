@@ -201,7 +201,7 @@ class GalleryController < BasePageController
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => "Error saving new order: :error_message"[:error_saving_new_order] %{ :error_message => exc.message}
+    render :text => "Error saving new order: :error_message"[:error_saving_new_order_message] %{ :error_message => exc.message}
   end
 
   def add
