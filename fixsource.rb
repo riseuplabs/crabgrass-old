@@ -25,7 +25,7 @@ def replace_line(line, location_info)
   case line
   # "hello there"[:welcome_greeting]
   when /["']([\w\-\!\?\.,\s]+)["']\[:(\S+?)\s*\]/
-    line_type = '(hello there"[:welcome_greeting])'
+    line_type = '("hello there"[:welcome_greeting])'
     default_string = $1
     key = $2
     line.gsub!(/["']([\w\-\!\?\.,\s]+)["']\[:([^\s\]\,]+?)\s*\]/,'I18n.t(:\2)')
@@ -107,12 +107,26 @@ def replace_line(line, location_info)
     line_type = '(:welcome_greeting.t)'
     key = $1
     line.gsub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
+  # "hello there".t
+  when /['"](\S+)['"]\.t[\s,]/
+    line_type = '("hello there".t)'
+    default_string = $1
+    key = $1.downcase.gsub(/\s/, '_')
+    line.gsub!(/['"](\S+)['"]\.t[\s,]/, "I18n.t(:#{key})")
+  # _('Hello There')
+  when /_\(['"](\S+)['"]\)[\s,]/
+    line_type = "_('Hello There')"
+    default_string = $1
+    key = $1.downcase.gsub(/\s/, '_')
+    line.gsub!(/_\(['"](\S+)['"]\)[\s,]/, "I18n.t(:#{key})")
   else
     replaced = false
   end
 
-  if replaced and false
-    puts "TYPE:" + line_type
+  if replaced #and false
+    puts "\n-- TYPE: #{line_type} --"
+    puts "* key:     '#{key}'"
+    puts "* default: '#{default_string}'"
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
   end
