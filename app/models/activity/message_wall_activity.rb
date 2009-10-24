@@ -31,9 +31,15 @@ class MessageWallActivity < Activity
     if extra[:type] == "status"
       txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
     elsif user_id != author_id
-      txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_span(:user), :author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
+      author_html = user_span(:author)
+      user_html = user_span(:user)
+      message_html = content_tag(:span, extra[:snippet],:class => 'message')
+
+      txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_html, :author => author_html, :message => message_html}]
     else
-      txt = '{author} wrote: {message}'[:activity_message, {:author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
+      author_html = user_span(:author)
+      message_html = content_tag(:span,extra[:snippet], :class => 'message')
+      txt = '{author} wrote: {message}'[:activity_message, {:author => author_html, :message => message_html}]
     end
 #    if txt[-3..-1] == '...'
 #      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
