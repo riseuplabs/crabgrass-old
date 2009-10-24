@@ -2,7 +2,7 @@
 <% @profile ||= profile -%>
 <div class="profile">
 <table><tr>
-  <td style="text-align:left;">						
+  <td style="text-align:left;">
     <table><tr>
       <td>
         <%= photo @profile %>
@@ -21,9 +21,9 @@
 
 <dl>
   <% unless @profile.phone_numbers.empty? -%>
-    <dt><%= _('Phone') -%>:</dt>
+    <dt><%= :phone.t -%>:</dt>
     <% @profile.phone_numbers.each do |phone_number| -%>
-      <dd>                                                                  
+      <dd>
           <%= h(phone_number.phone_number) %>
         <em>
           <%= h(_(phone_number.phone_number_type)) %>

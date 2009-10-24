@@ -85,11 +85,6 @@ class SelectOneQuestion < SurveyQuestion
   def add_question_link_text
     "Select One Answer"[:add_select_one_question_link]
   end
-  # def description
-  #   :question_description_select_one.t
-  # end
-  #
-  # def partial ; 'surveys/select_one';  end
 end
 
 
@@ -98,10 +93,6 @@ class SelectManyQuestion < SurveyQuestion
   def add_question_link_text
     "Select Multiple Answers"[:add_select_many_question_link]
   end
-  # def description
-  #   :question_description_select_many.t
-  # end
-  # def partial ; 'surveys/select_many';  end
 end
 
 ######### IMAGE UPLOAD ###################
@@ -129,9 +120,4 @@ end
 
 ######### BOOLEAN ###################
 class BooleanQuestion < SurveyQuestion
-  # def description
-  #   :question_description_boolean.t
-  # end
-
-  # def partial ; 'surveys/boolean' ; end
 end

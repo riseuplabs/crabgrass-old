@@ -42,6 +42,7 @@ en:
   delete: "Delete"
   deleted: "Deleted"
   remove: "Remove"
+  cancel: "Cancel"
   share: "Share"
   contributed: "Contributed"
   users: "Users"
@@ -151,6 +152,9 @@ en:
   confirm: "Confirm"
   alert: "Alert"
   loading_progress: "Loading..."
+
+  # labels
+  buttons_list_label: "Action"
 
   ##
   ## NAVIGATION
@@ -380,6 +384,7 @@ en:
   slideshow_delay_input: "Update every {{input_field}} seconds"
   add_comment: "Add Comment"
   make_album_cover: "make this image the album cover"
+  album_cover_changed: "Album Cover Changed"
   image_title: "Image title: {{title}}"
   upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
@@ -424,6 +429,7 @@ en:
   username: Username
   display_name: Display name
   email: Email
+  phone: Phone
   language: Language
   time_zone: Time Zone
   set_status_messsage: What are you doing right now?
@@ -1188,3 +1194,13 @@ en:
   off_topic: "Off Topic"
   offensive_language: "Offensive Language"
   other_reason: "Other Reason"
+
+  ##
+  ## ADMIN
+  ##
+
+  signup_mode_default_description: "Default signup mode. Anyone can create a new account."
+  signup_mode_closed_description: "Signup is closed."
+  signup_mode_invite_only_description: "Signup is allowed by invitation only."
+  signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
+

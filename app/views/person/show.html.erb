@@ -1,6 +1,6 @@
 <%#
 ### TITLE BOX
-#%> 
+#%>
 
 <%- @title_box = capture do -%>
 <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
@@ -12,7 +12,7 @@
 
 <%#
 ### INFO BOX
-#%> 
+#%>
 
 <% @message_box = render(
   :partial => 'common/say_form',
@@ -51,6 +51,6 @@
   <div class='page_scroll'>
     <%= render :partial => 'pages/list' %>
     <br/>
-    <%= link_to :more.t + ARROW, person_search_url(:descending => :updated_at) %>
+    <%= link_to :see_more_link.t + ARROW, person_search_url(:descending => :updated_at) %>
   </div>
 </div>

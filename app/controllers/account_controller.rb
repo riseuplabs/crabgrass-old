@@ -174,7 +174,7 @@ class AccountController < ApplicationController
 
   protected
   #def send_welcome_message(user)
-  #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
+  #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_message.t
   #  page.save
   #end
 
