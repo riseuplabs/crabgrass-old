@@ -98,6 +98,7 @@ en:
   visibility: "Visibility"
   administration: "Administration"
   settings: "Settings"
+  messages: "Messages"
 
   page: "Page"
   discussions: "Discussions"
@@ -118,6 +119,8 @@ en:
 
   destroy_confirmation: "Are you sure you want to delete this {{thing}}? This action cannot be undone."
   confirmation: "Are you sure?"
+
+  success: "Success"
 
   ##
   ## MEDIA
@@ -175,7 +178,9 @@ en:
 
   group_information: "{{group_type}} Information"
 
+  illegal_redirect: "Illegal redirect"
   redirect_to_foreign_domain: "You are trying to redirect to a foreign domain ({{url}}) after your login. For security reasons we have removed this parameter from the URL."
+
   subject_must_not_be_empty: subject must not be empty
   at_least_one_recipient_is_required: at least one recipient is required
   message_must_not_be_empty: message must not be empty
@@ -236,7 +241,7 @@ en:
   invalid_email: "Invalid Email"
   invalid_email_text: "The email address you provided is invalid."
   reset_password: "Reset Password"
-  reset_password_mail_sent: "An email has been sent containing instructions for resetting your password."
+  reset_password_email_sent: "An email has been sent containing instructions for resetting your password."
   invalid_token: "Invalid Token"
   invalid_token_text: "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."
   password_reset: "Password Reset"
@@ -275,6 +280,12 @@ en:
     The OPERATOR does not claim ownership of content you upload or otherwise transmit through our servers or networks.
 
     If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
+
+  # verify email
+
+  successfully_verified_email_message: "Successfully Verified Email Address"
+  already_verified: "Already Verified."
+  already_verified_text: "You don't need to verify again."
 
   ##
   ## PASSWORD
@@ -346,6 +357,11 @@ en:
   regenerate: "regenerate thumbnails"
   version_number: "version {{version}}"
 
+  # avatar
+
+  avatar_image_upload_success: "Successfully uploaded a new avatar image"
+
+
   ##
   ## GALLERY
   ##
@@ -397,6 +413,7 @@ en:
 
   me_dashboard_link: "Dashboard"
   me_inbox_link: "Inbox"
+  me_trash_link: "Trash"
   me_search_link: "Search"
   me_tasks_link: "Tasks"
   my_world_heading: "My World"
@@ -677,6 +694,7 @@ en:
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {{group_type}}."
   invite_sent: "Invitation sent to {{recipient}}"
   invites_sent: "{{count}} invitations sent"
+  contact_request_sent: "Friend request has been sent"
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   contact_removed: "{{user}} has been removed from your contact list."
   not_contact_of: "You are not the contact of {{user}}."
@@ -767,6 +785,7 @@ en:
   user_or_group_name: "User or group name"
   information: "Information"
   remove_last_access_error: "You cannot remove your last remaining access to this page."
+  remove_access_error: "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."
 
   # tags
 
@@ -796,6 +815,9 @@ en:
   notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
   notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+
+  shared_page_success: "You successfully shared this page."
+  notify_success: "You successfully sent notifications."
 
   share_grant_required_error: "{{name}} is not allowed to view this page. They must be granted greater access first."
   notify_no_access_error: 'Sorry, "{{name}}" does not have access to this page.'
@@ -1204,3 +1226,6 @@ en:
   signup_mode_invite_only_description: "Signup is allowed by invitation only."
   signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
 
+  # custom appearances
+
+  succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"

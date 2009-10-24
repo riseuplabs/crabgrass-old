@@ -74,11 +74,11 @@ class Groups::RequestsController < Groups::BaseController
     if reqs.detect{|req|!req.valid?}
       reqs.each do |req|
         if req.valid?
-          flash_message_now :title => 'Error'.t,
+          flash_message_now :title => :alert_error.t,
             :text => "Success".t + ':',
             :success => 'Invitation sent to {recipient}'[:invite_sent, {:recipient => req.recipient.display_name}]
         else
-          flash_message_now :title => 'Error'.t, :object => req
+          flash_message_now :title => :alert_error.t, :object => req
         end
       end
     else

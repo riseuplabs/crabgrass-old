@@ -30,7 +30,7 @@ class Admin::CustomAppearancesController < Admin::BaseController
     begin
       @appearance.update_attributes!(params[:custom_appearance])
       flash_message :title => "Success".t,
-        :success => "Updated custom appearance #:appearance_id options!"[:succesfully_updated_custom_appearance] % {:appearance_id => @appearance.id }
+        :success => "Updated custom appearance #{appearance_id} options!"[:succesfully_updated_custom_appearance, {:appearance_id => @appearance.id }]
     rescue Exception => exc
       flash_message :object => @appearance
     end
