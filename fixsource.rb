@@ -24,11 +24,12 @@ def replace_line(line, location_info)
 
   case line
   # "hello there"[:welcome_greeting]
-  when /["']([\w\-\!\?\.,\s]+)["']\[:(\S+?)\s*\]/
+  when /([^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/
     line_type = '("hello there"[:welcome_greeting])'
-    default_string = $1
-    key = $2
-    line.gsub!(/["']([\w\-\!\?\.,\s]+)["']\[:([^\s\]\,]+?)\s*\]/,'I18n.t(:\2)')
+    prefix = $1
+    default_string = $3
+    key = $4
+    line.sub!(/([^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/, "#{prefix}I18n.t(:#{key})")
   # <%= "You are logged in as {login}"[:login_info, h(current_user.login)] %>
   when /(["'])([^\1]+)\1\[(:\S+),\s*(\S+[^\]]+)\]/
     line_type = '(MACRO "You are logged in as {login}"[:login_info, h(current_user.login)])'
@@ -65,7 +66,7 @@ def replace_line(line, location_info)
     end
     # this would be better but i'm having trouble escaping matched_part (sleepyyyy)
     # line.gsub!(/#{matched_part}/, newline)
-    line.gsub!(/(["'])[^\1]+\1\[:\S+,\s*\S+[^\]]+\]/, newline)
+    line.sub!(/(["'])[^\1]+\1\[:\S+,\s*\S+[^\]]+\]/, newline)
 ##########
 ########## this is really hairy stuff that might need to be fixed manually
 ########## since i think these strings need to be looked up in the yaml files
@@ -93,7 +94,7 @@ def replace_line(line, location_info)
       end
       newline << ")"
     end
-    line.gsub!(/(['"])[^\1]+\1\[:\S+\]\s+%\s+\S[^%]+/, newline)
+    line.sub!(/(['"])[^\1]+\1\[:\S+\]\s+%\s+\S[^%]+/, newline)
 ##########
 ########## end deprecated macros
 ##########
@@ -101,29 +102,29 @@ def replace_line(line, location_info)
   when /\s:(\S+)\.t\s*%\s*\{([^\}]+)\}/
     line_type = '(:version_number.t % {:version => version.version, :or_more_args => more.args})'
     key = $1
-    line.gsub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
+    line.sub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
   # :welcome_greeting.t
   when /\s:(\S+)\.t[\s,]/
     line_type = '(:welcome_greeting.t)'
     key = $1
-    line.gsub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
+    line.sub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
   # "hello there".t
-  when /['"](\S+)['"]\.t[\s,]/
+  when /(['"])(\S+)\1\.t[\s,]/
     line_type = '("hello there".t)'
-    default_string = $1
-    key = $1.downcase.gsub(/\s/, '_')
-    line.gsub!(/['"](\S+)['"]\.t[\s,]/, "I18n.t(:#{key})")
+    default_string = $2
+    key = $2.downcase.gsub(/\s/, '_')
+    line.sub!(/(['"])(\S+)\1\.t[\s,]/, "I18n.t(:#{key})")
   # _('Hello There')
-  when /_\(['"](\S+)['"]\)[\s,]/
+  when /_\((['"])(\S+)\1\)[\s,]/
     line_type = "_('Hello There')"
-    default_string = $1
-    key = $1.downcase.gsub(/\s/, '_')
-    line.gsub!(/_\(['"](\S+)['"]\)[\s,]/, "I18n.t(:#{key})")
+    default_string = $2
+    key = $2.downcase.gsub(/\s/, '_')
+    line.sub!(/_\((['"])(\S+)\1\)[\s,]/, "I18n.t(:#{key})")
   else
     replaced = false
   end
 
-  if replaced #and false
+  if replaced
     puts "\n-- TYPE: #{line_type} --"
     puts "* key:     '#{key}'"
     puts "* default: '#{default_string}'"
