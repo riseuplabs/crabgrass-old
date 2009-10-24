@@ -15,8 +15,8 @@ module UserExtension::SuperAdmin
   module ClassMethods
     # Removes the superadmins from some user-lists
     def inactive_user_ids
-      if Site.current.super_admin_group
-        Site.current.super_admin_group.user_ids
+      if Site.current.try.network.council
+        Site.current.network.council.user_ids
       else
         false
       end
