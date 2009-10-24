@@ -273,7 +273,7 @@ module UserExtension::Pages
         end
       elsif !user.may?(access, page)
         if !self.may?(:admin,page)
-          raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
+          raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_permission_denied_error])
         elsif !self.may_pester?(user)
           raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => user.login}])
         end

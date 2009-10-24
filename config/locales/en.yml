@@ -201,6 +201,10 @@ en:
   full: full
   include_full_checkbox: include link to full image
 
+  # private post activity links
+  a_message_link: "a message"
+  a_reply_link: "a reply"
+
   confirm_discarding_text_area: "All your unsaved work will be lost. Press {{cancel}} to continue editing."
 
   ##
@@ -326,6 +330,7 @@ en:
   activity_unread: "You have {{count}} unread [private messages]"
   activity_unread_singular: "You have an unread [private message]"
 
+
   ##
   ## ASSETS
   ##
@@ -357,9 +362,17 @@ en:
   regenerate: "regenerate thumbnails"
   version_number: "version {{version}}"
 
+  not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
+
   # avatar
 
-  avatar_image_upload_success: "Successfully uploaded a new avatar image"
+  avatar_image_upload_success: "Successfully uploaded a new avatar image."
+
+  # favicon
+
+  favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
+  not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
+
 
 
   ##
@@ -655,6 +668,13 @@ en:
   this_is_committee: "This committee is part of {{parent_group}}."
   new_committee: "New committee for group {{group_name}}"
 
+  # menu items
+  external_link_menu_item: "external link"
+  local_link_menu_item: "local link"
+  page_menu_item: "page"
+  search_menu_item: "search"
+  tag_menu_item: "tag"
+
 
   ##
   ## REQUESTS
@@ -820,6 +840,7 @@ en:
   notify_success: "You successfully sent notifications."
 
   share_grant_required_error: "{{name}} is not allowed to view this page. They must be granted greater access first."
+  share_permission_denied_error: "You are not allowed to change the access permissions of this page"
   notify_no_access_error: 'Sorry, "{{name}}" does not have access to this page.'
   share_already_exists_error: '"{{name}}" already has access to this page.'
   share_pester_error: 'Sorry, you are not allowed to share with "{{name}}".'
@@ -1033,8 +1054,6 @@ en:
   ## WIKI
   ##
 
-  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
-  save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either {{save_button}} or {{cancel_button}} to stop editing."
   wiki_is_locked: "This wiki is currently locked by {{user}}"
   wont_be_able_to_save: "You will not be able to save this page"
   leave_editing_wiki_page_warning: "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."
@@ -1063,6 +1082,17 @@ en:
   wiki_visual_editor: "Visual Editor"
   wiki_editor: "Editor"
   preview: "Preview"
+
+  # errors
+
+  locking_error: "Locking error. Can't save your data, someone else has saved new changes first."
+  save_or_cancel_edit_lock_wiki_error: "You have locked this wiki. Other users will not be able to edit it until you click either {{save_button}} or {{cancel_button}} to stop editing."
+
+  cant_find_wiki_section: "Can't find wiki section {{section}}"
+  cant_lock_another_section: "you already have a section locked. Can't lock another."
+  cant_lock_nonexistant_section: "can't lock a nonexistant section"
+  cant_unlock_nonexistant_section: "can't unlock a nonexistant section"
+
 
   ##
   ## WALL
@@ -1135,6 +1165,7 @@ en:
   ## AUTHENTICATED SYSTEM
   ##
 
+  anonymous: "anonymous"
   login_required: 'Login Required'
   login_required_description: 'Please login to perform that action.'
   permission_denied_description: 'You do not have sufficient permission to perform that action.'
