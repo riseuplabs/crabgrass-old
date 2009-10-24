@@ -420,7 +420,7 @@ module PageHelper
   ##
 
   def display_page_class_grouping(group)
-    "page_group_#{group.gsub(':','_')}".to_sym.t
+    I18n.t("page_group_#{group.gsub(':','_')}".to_sym)
   end
 
   def tree_of_page_types(available_page_types=nil, options={})

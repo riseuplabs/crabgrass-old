@@ -139,7 +139,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, @path.title],
+        :title => "%s :: %s :: %s" % [@group.display_name, I18n.t(params[:action].to_sym), @path.title],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')
