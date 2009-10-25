@@ -42,5 +42,26 @@ module RootHelper
       link_to_with_icon 'weather_sun', I18n.t(:see_tips_to_get_started), '/?welcome_box=1'
     end
   end
+
+  def home_sidebar_link_hook
+    call_hook :home_sidebar
+  end
+
+  # the welcome_home_message key can be used to overwrite the message on site home.
+  # This allows for translations of this message. If it is not set we fall back
+  # to the site networks summary.
+  def home_summary_html
+    translation=I18n.t :welcome_home_message,
+      :default => ( @group.profiles.public.summary || '' )
+    format_text(translation)
+  end
+
+  def titlebox_description_html
+    @group.profiles.public.summary_html
+  end
+
+  def sidebar_top_partial
+    'sidebox_top'
+  end
 end
 

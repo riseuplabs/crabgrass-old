@@ -1,0 +1,14 @@
+<table>
+<tr>
+  <td>
+    <p class="description" style="margin: 0"><%= titlebox_description_html %></p>
+  </td>
+  <td style="padding-left: 1em">
+    <%= display_media(@group.profiles.public.cover) %>
+  </td>
+</tr>
+</table>
+<ul class="navbar">
+  <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
+</ul>
+&nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
