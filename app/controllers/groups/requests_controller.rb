@@ -29,7 +29,7 @@ class Groups::RequestsController < Groups::BaseController
     end
 
     RequestToJoinYou.create! :created_by => current_user, :recipient => @group
-    flash_message_now :success => 'Request to join has been sent'.t
+    flash_message_now :success => :request_to_join_sent.t
   rescue Exception => exc
     flash_message_now :exception => exc
   end

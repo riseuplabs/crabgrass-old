@@ -285,8 +285,11 @@ en:
 
     If you do not fulfill your obligations under this Agreement, or you solicit others to breach their agreement with OPERATOR, OR FOR ANY OTHER REASON OR NO REASON, at the OPERATOR's sole discretion and without limiting its other remedies, OPERATOR may terminate your access to part or all of our services. However, our failure to act with respect to a breach by you or others does not waive our right to act with respect to subsequent or similar breaches.
 
+  congratulations_you_have_signed_up: "Congratulations! You have signed up for {{site_title}}."
+
   # verify email
 
+  you_should_receive_instructions_email: "You should receive an email with instructions how to finish creating your account."
   successfully_verified_email_message: "Successfully Verified Email Address"
   already_verified: "Already Verified."
   already_verified_text: "You don't need to verify again."
@@ -715,6 +718,7 @@ en:
   invite_sent: "Invitation sent to {{recipient}}"
   invites_sent: "{{count}} invitations sent"
   contact_request_sent: "Friend request has been sent"
+  request_to_join_sent: "Request to join has been sent"
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   contact_removed: "{{user}} has been removed from your contact list."
   not_contact_of: "You are not the contact of {{user}}."
@@ -732,6 +736,7 @@ en:
   invite_error_already_member: "You are already a member of that group."
   invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for {{recipient}}"
+  not_allowed_to_respond_to_request: "{{user}} is not allowed to {{command}} the request."
 
   ##
   ## PAGES
@@ -1260,3 +1265,8 @@ en:
   # custom appearances
 
   succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"
+  enable_masthead_question: "Enable masthead?"
+  masthead: "Masthead"
+  select_masthead_background_color: "Select masthead background color"
+  upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
+  upload_masthead_image_label: "Upload an image for the masthead. It can't be taller than 80 pixels."
