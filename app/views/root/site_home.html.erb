@@ -132,26 +132,26 @@ form.mini_search table {
 <%= Formy.tabs do |f|
   if @show_featured
     f.tab do |t|
-      t.label 'Featured'
+      t.label 'Featured'[:featured_content_header]
       t.show_tab 'featured_panel'
       t.default true
     end
   end
   f.tab do |t|
-    t.label 'Recent Pages'
+    t.label 'Recent Pages'.t
     t.show_tab 'recent_pages_panel'
     t.default !@show_featured
   end
   f.tab do |t|
-    t.label 'Most Viewed'
+    t.label 'Most Viewed'.t
     t.show_tab 'most_viewed_panel'
   end
   f.tab do |t|
-    t.label 'Most Active'
+    t.label 'Most Active'.t
     t.show_tab 'most_active_panel'
   end
   f.tab do |t|
-    t.label 'Most Stars'
+    t.label 'Most Stars'.t
     t.show_tab 'most_stars_panel'
   end
 end %>
