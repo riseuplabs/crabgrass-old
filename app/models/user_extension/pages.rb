@@ -27,6 +27,8 @@ module UserExtension::Pages
       end
 
       has_many :pages_owned, :class_name => 'Page', :as => :owner, :dependent => :nullify
+      has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
+      has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
 
       named_scope(:most_active_on, lambda do |site, time|
         ret = {
@@ -264,22 +266,22 @@ module UserExtension::Pages
     access = options[:access] || options[:grant_access] || :view
     if user
       if page.public? and !self.may_pester?(user)
-        raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] %  user.login)
+        raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => user.login}])
       elsif access.nil?
         if !user.may?(:view,page)
-          raise PermissionDenied.new('%s is not allowed to view this page. They must be granted greater access first.'[:share_msg_grant_required] % user.login)
+          raise PermissionDenied.new("{name} is not allowed to view this page. They must be granted greater access first."[:share_grant_required_error, {:name => user.login}])
         end
       elsif !user.may?(access, page)
         if !self.may?(:admin,page)
           raise PermissionDenied.new('You are not allowed to change the access permissions of this page'[:share_msg_permission_denied])
         elsif !self.may_pester?(user)
-          raise PermissionDenied.new('You are not allowed to share this page with %s'[:share_msg_pester_denied] % user.login)
+          raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => user.login}])
         end
       end
     elsif group
       unless group.may?(access,page)
         unless self.may?(:admin,page) and self.may_pester?(group)
-          raise PermissionDenied.new('Your not allowed to share this page with %s'[:share_msg_pester_denied] % group.name)
+          raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => group.name}])
         end
       end
     end

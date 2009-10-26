@@ -14,7 +14,7 @@
 <p>
 <% if @link and current_user.may?(:admin, @link) -%>
 <% with_name = @link.group_name || @page.created_by.name %>
-<%= link_to 'discuss this request with %s'[:discuss_request_link] % {:person_or_group => with_name}, page_url(@link) -%>
+<%= link_to 'discuss this request with {person_or_group}'[:discuss_request_link, {:person_or_group => with_name}], page_url(@link) -%>
 <% end -%>
 </p>
 </blockquote>

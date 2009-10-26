@@ -22,17 +22,18 @@ class ModeratedFlag < ActiveRecord::Base
     return self.user.login
   end
 
-#  def find_by_user_and_foreign(user_id, foreign_id)
-#    self.find(:first, :conditions => ["user_id=? and foreign_id=?", user_id, foreign_id], :order => 'created_at DESC')
-#  end
-#
-#  def find_by_foreign_id(foreign_id)
-#    find(:first, :conditions => ['foreign_id=?',foreign_id])
-#  end
-#
-#  def find_all_by_foreign_id(foreign_id)
-#    find(:all, :conditions => ['foreign_id=?',foreign_id])
-#  end
+  def self.display_flags(page, view)
+    if view == 'new'
+      conditions = ['vetted_at IS NULL and deleted_at IS NULL']
+    elsif view == 'vetted'
+      conditions = ['vetted_at IS NOT NULL and deleted_at IS NULL']
+    elsif view == 'deleted'
+      conditions = ['deleted_at IS NOT NULL']
+    else
+      return
+    end
+    paginate(:page => page, :select => "distinct foreign_id", :conditions => conditions, :order => 'updated_at DESC')
+  end
 
   named_scope :by_foreign_id, lambda {|foreign_id|
     { :conditions => ['foreign_id = ?', foreign_id] }

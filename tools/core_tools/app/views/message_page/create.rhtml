@@ -1,5 +1,8 @@
 <% @title_box = capture do %>
-  <h2><%= "create a new {thing}"[:create_a_new_thing, content_tag(:b, MessagePage.class_display_name)] %></h2>
+  <h2>
+    <% thing_html = content_tag(:b, MessagePage.class_display_name) %>
+    <%= "create a new {thing}"[:create_a_new_thing, {:thing => thing_html}] %>
+  </h2>
 <% end %>
 
 <%= header_for_page_create MessagePage %>
@@ -18,7 +21,7 @@
     <br/>
     <%= select_tag('contact_drop',
         options_for_select(
-           [["#{'contacts'.t}…",'']] + 
+           [["#{'contacts'.t}…",'']] +
            current_user.contacts.sort_by{|c|c.both_names}.to_select(:both_names, :name), params[:user_ids]),
         :onchange => "$('to').value += $('contact_drop').value + ' '") %>
     <%= select_tag('peer_drop',

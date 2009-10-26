@@ -76,13 +76,13 @@ class Groups::RequestsController < Groups::BaseController
         if req.valid?
           flash_message_now :title => 'Error'.t,
             :text => "Success".t + ':',
-            :success => 'Invitation sent to %s'[:invite_sent] % req.recipient.display_name
+            :success => 'Invitation sent to {recipient}'[:invite_sent, {:recipient => req.recipient.display_name}]
         else
           flash_message_now :title => 'Error'.t, :object => req
         end
       end
     else
-      flash_message_now :success => '%d invitations sent'[:invites_sent] % reqs.size
+      flash_message_now :success => '{count} invitations sent'[:invites_sent, {:count => reqs.size}]
       params[:recipients] = ""
     end
   rescue Exception => exc

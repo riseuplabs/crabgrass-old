@@ -1,9 +1,9 @@
 <ul class="plain">
-<li><input type='radio' name='reason' value='language'> Offensive Language</li>
-<li><input type='radio' name='reason' value='behavior'> Offensive Behavior</li>
-<li><input type='radio' name='reason' value='topic'> Off Topic</li>
-<li><input type='radio' name='reason' value='other'> Other</li>
+<li><input type='radio' name='reason' value='language'> <%= "Offensive Language"[:offensive_language] %></li>
+<li><input type='radio' name='reason' value='behavior'> <%= "Offensive Behavior"[:offensive_behavior] %></li>
+<li><input type='radio' name='reason' value='topic'> <%= "Off Topic"[:off_topic] %></li>
+<li><input type='radio' name='reason' value='other'> <%= "Other Reason"[:other_reason] %></li>
 </ul>
 
-Please add any comments:<br>
+<%= "Add Comment"[:add_comment] %>:<br>
 <textarea name="comment" rows="2" cols="40"> </textarea>

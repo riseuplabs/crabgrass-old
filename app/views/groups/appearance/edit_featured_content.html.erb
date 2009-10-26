@@ -1,6 +1,6 @@
-<%= link_to "back to :group_name"[:back_to_group]%{:group_name => @group.display_name}, group_url(:action => 'show', :id => @group)%>
+<%= link_to "back to {group_name}"[:back_to_group, {:group_name => @group.display_name}], group_url(:action => 'show', :id => @group)%>
 
-<h2 class="section"><%= "Edit Featured Content for :group_name"[:edit_featured_content_for_group]%{ :group_name => @group.display_name } %></h2>
+<h2 class="section"><%= "Edit Featured Content for {group_name}"[:edit_featured_content_for_group, { :group_name => @group.display_name}] %></h2>
 
 <%= "Here you can mark pages as featured content of this group."[:mark_pages_as_featured_content_for_group] %>
 
