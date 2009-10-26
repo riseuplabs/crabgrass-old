@@ -363,18 +363,8 @@ class GreenCloth < RedCloth::TextileDoc
   def to_structure
     # force extract headings being run
     # prevents formatter mangled HTML from being used to find headings
-    begin
-      extract_headings
-      self.green_tree.to_hash
-    rescue GreenClothException => exc
-      logger.error exc.message if defined? logger and logger.respond_to? :error
-      return {
-        :children => [],
-        :name => nil,
-        :start_index => 0,
-        :end_index => self.size - 1,
-        :heading_level => 0}
-    end
+    extract_headings
+    self.green_tree.to_hash
   end
 
   # populates @headings, and then restores the string to its original form.
@@ -384,11 +374,12 @@ class GreenCloth < RedCloth::TextileDoc
     @headings = []
     @heading_names = {}
 
-    self.extend(GreenClothFormatterHTML)
-    original = self.dup
-    apply_rules([:normalize_heading_blocks])
+    formatter = self.clone()                   # \  in case one of the before filters
+    formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
+
+    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :normalize_heading_blocks])
     to(GreenClothFormatterHTML)
-    self.replace(original)
+    self.replace(formatter)
   end
 
   # what is this used for???

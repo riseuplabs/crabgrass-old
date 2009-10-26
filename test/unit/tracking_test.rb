@@ -43,17 +43,29 @@ class TrackingTest < Test::Unit::TestCase
     Tracking.process
     Daily.update
     Hourly.find(:all).each{|h| h.destroy}
-    assert_difference 'Hourly.count' do
-      # 1, "hourly should be created for the tracked view" do
-      assert_tracking(user, group, page, action)
-      Tracking.process
+    assert_no_difference 'Daily.count' do
+      # daily should not be created for the new hourlies
+      # we only create them with one day delay to avoid double counting.
+      assert_difference 'Hourly.count' do
+        # 1, "hourly should be created for the tracked view" do
+        assert_tracking(user, group, page, action)
+        Tracking.process
+        Daily.update
+      end
     end
     assert_difference 'Daily.count' do
-    #, 1, "daily should be created from the existing hourlies" do
-      Daily.update
+      # we create trackings for the day before yesterday here
+      # - so they should be counted.
+      assert_no_difference 'Hourly.count' do
+        # Hourly should be created for the tracked view
+        # but then removed after being processed for daily.
+        assert_tracking(user, group, page, action, Time.now - 2.days)
+        Tracking.process
+        Daily.update
+      end
     end
   end
-  
+
   def test_most_active_groups
     user = users(:blue)
     group1 = groups(:rainbow)
@@ -68,12 +80,9 @@ class TrackingTest < Test::Unit::TestCase
 
   private
 
-  # This can theoretically fail because of te insert_delayed not having inserted
-  # anything yet - how ever this would only happen if the database table was locked
-  # at that very moment. This would be rare for the testing db. I haven't seen it
-  # happening as of now.
-  def assert_tracking(user, group, page, action)
-    Tracking.insert_delayed(:current_user => user, :group => group, :page => page, :action => action)
+  # Insert delayed is not delaysed for testing so this should not cause problems.
+  def assert_tracking(user, group, page, action, time=nil)
+    Tracking.insert_delayed(:current_user => user, :group => group, :page => page, :action => action, :time => time)
     track=Tracking.last
     assert_equal track.current_user_id, user.id, "User not stored correctly in Tracking"
     assert_equal track.group_id, group.id, "Group not stored correctly in Tracking"
@@ -81,11 +90,11 @@ class TrackingTest < Test::Unit::TestCase
     if action != :unstar
       assert_equal "#{action.to_s}s", ["views", "edits", "stars"].find{|a| Tracking.last.send a},
         'Tracking did not count the right action.'
-      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 1, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'There shall be exactly one action counted.'
     else
       # TODO: check this before ActiveRecord gets in the way.
-      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.count,
+      assert_equal 0, ["views", "edits", "stars"].select{|a| Tracking.last.send a}.size,
         'For :unstar all values should evaluate to false.'
     end
   end

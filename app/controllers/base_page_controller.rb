@@ -96,8 +96,8 @@ class BasePageController < ApplicationController
 
   after_filter :save_if_needed, :except => :create
   def save_if_needed
-    @upart.save if @upart and !@upart.new_record? and @upart.changed?
-    @page.save if @page and !@page.new_record? and @page.changed?
+    @upart.save if @upart and !@upart.new_record? and @upart.changed? and !@upart.readonly?
+    @page.save if @page and !@page.new_record? and @page.changed? and !@page.readonly?
     true
   end
 
@@ -173,7 +173,7 @@ class BasePageController < ApplicationController
     return if @discussion === false || @page.nil? # allow for the disabling of load_posts()
     @discussion ||= (@page.discussion ||= Discussion.new)
     current_page = params[:posts] || @discussion.last_page
-    @posts = Post.paginate_by_discussion_id(@discussion.id,
+    @posts = Post.visible.paginate_by_discussion_id(@discussion.id,
       :order => "created_at ASC", :page => current_page,
       :per_page => @discussion.per_page, :include => :ratings)
     @post = Post.new

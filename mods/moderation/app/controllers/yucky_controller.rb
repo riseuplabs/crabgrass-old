@@ -1,5 +1,6 @@
 class YuckyController < ApplicationController
   include  ActionView::Helpers::TextHelper # for truncate
+  include ModerationNotice
 
   permissions 'admin/moderation'
   permissions 'posts'
@@ -11,11 +12,7 @@ class YuckyController < ApplicationController
     @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
     @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
 
-    case @rateable_type
-      when :post; add_post
-      when :page; add_page
-      when :chat_message; add_chat_message
-    end
+    add_chat_message
   end
 
   # removes any yucky marks from the rateable
@@ -24,31 +21,10 @@ class YuckyController < ApplicationController
       rating.destroy
       @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
     end
-    case @rateable_type
-      when :post; remove_post
-      when :page; remove_page
-      when :chat_message; remove_chat_message
-    end
+    remove_chat_message
   end
 
   protected
-
-  def add_page
-    summary = @rateable.title
-    url = page_url(@rateable, :only_path => false)
-    send_moderation_notice(url, summary)
-    redirect_to referer
-  end
-
-  def add_post
-    summary = truncate(@rateable.body,400) + (@rateable.body.size > 400 ? "…" : '')
-    url = page_url(@rateable.discussion.page, :only_path => false) + "#posts-#{@rateable.id}"
-    send_moderation_notice(url, summary)
-
-    render :update do |page|
-      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
-    end
-  end
 
   def add_chat_message
     @rateable.update_attribute(:deleted_at, Time.now) if current_user.moderator?
@@ -64,29 +40,10 @@ class YuckyController < ApplicationController
     end
   end
 
-  def remove_page
-    redirect_to referer
-  end
-
-  def remove_post
-    render :update do |page|
-      page.replace_html "post-body-#{@rateable.id}", :partial => 'posts/post_body', :locals => {:post => @rateable}
-    end
-  end
-
   def remove_chat_message
     render :update do |page|
       @message = @rateable
       page.replace_html dom_id(@message), :partial => 'chat/message', :object => @message
-    end
-  end
-
-   # Notify the admins that content has been marked as innapropriate
-  def send_moderation_notice(url, summary)
-    email_options = mailer_options.merge({:subject => "Inappropriate content".t, :body => summary, :url => url, :owner => current_user})
-    admins = current_site.super_admin_group.users
-    admins.each do |admin|
-      AdminMailer.deliver_notify_inappropriate(admin, email_options)
     end
   end
 
@@ -97,11 +54,9 @@ class YuckyController < ApplicationController
   prepend_before_filter :fetch_rateable
   def fetch_rateable
     if params[:page_id]
-      @rateable = Page.find(params[:page_id])
-      @rateable_type = :page
+      return
     elsif params[:post_id]
-      @rateable = Post.find(params[:post_id])
-      @rateable_type = :post
+      return
     elsif params[:chat_message_id]
       @rateable = ChatMessage.find(params[:chat_message_id])
       @rateable_type = :chat_message

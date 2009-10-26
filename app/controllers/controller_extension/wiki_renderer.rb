@@ -131,7 +131,7 @@ module ControllerExtension::WikiRenderer
   def greencloth_to_editable_html(text, context_name='page')
     text ||= ""
     options = {:pass_through => ['strong', 'b', 'em', 'i', 'strike', 'del'], :rename_tag => {"ins" => "u"}}
-    UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
+    UglifyHtml.new( render_wiki_html(text, context_name), options ).make_ugly
   end
 
   private
@@ -144,7 +144,7 @@ module ControllerExtension::WikiRenderer
   def render_ugly_html_from_text(text, context_name='page')
     text ||= ""
     options = {:pass_through => ['strong', 'b', 'em', 'i', 'strike', 'del'], :rename_tag => {"ins" => "u"}}
-    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name, nil), options ).make_ugly
+    encode_line_endings UglifyHtml.new( render_wiki_html(text, context_name), options ).make_ugly
   end
 
 

@@ -46,6 +46,10 @@ module Wiki::LockingTest
         context "when a user locks 'section-two'" do
           setup { @wiki.lock! 'section-two', @user }
 
+          should "not raise WikiLockError when locking 'section-two' section again" do
+            assert_nothing_raised {@wiki.lock! 'section-two', @user}
+          end
+
           context "and a different user renames 'section-two' bypassing locks" do
             setup do
               body = @wiki.body.sub('section two', 'section 2')
@@ -124,9 +128,6 @@ module Wiki::LockingTest
                   assert !@wiki.sections_locked_for(@user).include?(section_heading)
                 end
 
-                should "raise WikiLockError when locking #{section_heading.inspect} section" do
-                  assert_raises(WikiLockError) {@wiki.lock! section_heading, @user}
-                end
 
                 should "raise no errors when unlocking #{section_heading.inspect} section" do
                   assert_nothing_raised {@wiki.unlock! section_heading, @user}

@@ -234,13 +234,13 @@ module WikiHelper
     toolbar_id = wiki_toolbar_id(wiki)
     image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
 
-    "wiki_edit_add_toolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
+    "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
 
   def wiki_locked_notice(wiki)
     return if wiki.document_open_for? current_user
 
-    error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locked_by}
+    error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locker_of(:document).try.name || 'unkown'[:unknown]}
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
   end
 

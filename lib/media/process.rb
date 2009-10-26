@@ -37,6 +37,7 @@ module Media
         application/vnd.oasis.opendocument.presentation-template
         application/vnd.oasis.opendocument.graphics-template
         application/vnd.oasis.opendocument.spreadsheet-template
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document
       ),
       :graphic_magick => %w(application/pdf application/bzpdf application/gzpdf
         application/postscript application/xpdf image/jpeg image/pjpeg image/gif
