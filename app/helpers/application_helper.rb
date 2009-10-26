@@ -44,7 +44,7 @@ module ApplicationHelper
     end
   end
 
-  ## coverts bytes into something more readable
+  ## converts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte

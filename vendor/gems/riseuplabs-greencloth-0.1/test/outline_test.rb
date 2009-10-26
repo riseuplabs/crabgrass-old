@@ -85,6 +85,30 @@ class TestHeadings < Test::Unit::TestCase
     assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Oranges\n\nooooo\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", tree.find('tasty-apples').sub_markup("h2. Oranges\n\nooooo")
   end
 
+  def test_repeatedly_set_text
+    greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+    tree = greencloth.green_tree
+
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+
+    tree = GreenCloth.new(markup).green_tree
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+
+    tree = GreenCloth.new(markup).green_tree
+    markup = tree.find('red').sub_markup("h3. Red\n\n")
+    assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+  end
+
+  def test_set_text_leaves_some_trailing_whitespace
+      greencloth = GreenCloth.new( in_texts(:fruity_outline) )
+      tree = greencloth.green_tree
+
+      markup = tree.find('red').sub_markup("h3. Red")
+      assert_equal "[[toc]]\n\nh1. Fruits\n\nh2. Tasty Apples\n\nh3. Green\n\nh3. Red\n\nh2. Pears\n\nh1. Vegetables\n\nh2. Turnips\n\nh2. Green Beans", markup
+  end
+
   def test_multinine_heading
     greencloth = GreenCloth.new( in_texts(:multiline_headings) )
     tree = greencloth.green_tree
@@ -171,6 +195,34 @@ class TestHeadings < Test::Unit::TestCase
       assert_equal markup, tree.find(section).markup
     end
   end
+
+  def test_leading_and_trailing_whitespace
+    greencloth = GreenCloth.new( in_texts(:leading_and_trailing_whitespace) )
+    tree = greencloth.green_tree
+
+    assert_equal "Clearly a Section\n===\n\n  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('clearly-a-section').markup
+
+    assert_equal "  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('still-a-section').markup
+
+    assert_nil tree.find('not-a-section')
+  end
+
+  def test_code_block_weirdness
+    greencloth = GreenCloth.new( in_texts(:code_block_weirdness) )
+    tree = greencloth.green_tree
+
+    assert_equal ['real-stuff'], tree.section_names
+
+
+    assert_equal "real stuff\n----\n\n<code>\n\na.. b\n-----\n\naa... bb\n-----\n\n</code>",
+      tree.find('real-stuff').markup
+
+    assert_nil tree.find('aa-bb')
+    assert_nil tree.find('a-b')
+  end
+
 
   protected
 

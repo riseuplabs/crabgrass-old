@@ -48,8 +48,8 @@ email:
 ##
 
 sites:
-  - name: blue
-    admin_group: blueadmins
+  - name: blue 
+    admin_group: blueadmins 
   - name: red
     admin_group: redadmins
 

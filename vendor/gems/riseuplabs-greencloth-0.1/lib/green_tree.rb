@@ -172,16 +172,14 @@ class GreenTree < Array
   # does not modify any data this node has
   def sub_markup(section_markup)
     current_markup = greencloth.to_s.clone
-    # we want to preserve any trailing whitespace
-    #that way if we replace the text with other text, section boundaries will remain valid
-    current_section_markup = self.markup
-    trailing_whitespace = current_section_markup.scan(/\s+\Z/).last.to_s
 
+    markup_newlines = section_markup.scan(/[\n\r]+\Z/).last.to_s
+    # should have minimum 2 newlines
 
     # don't apprend the trailing whitespace to the sections that
     # hit the end of the document text
     unless self.root? or self.successor.nil?
-      section_markup << trailing_whitespace
+      section_markup << "\n\n" if markup_newlines.length < 2
     end
 
     current_markup[self.start_index..self.end_index] = section_markup
@@ -258,7 +256,7 @@ class GreenTree < Array
 
     Regexp.union(
       /^
-      [\[\]\^@_\*\+\?\-~]* # no whitespace '\s' match should happen here here
+      [ \[\]\^@_\*\+\?\-~]*
       #{heading_text}[\[\]\^@\s_\*\+\?\-~]*
       \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
       /x,

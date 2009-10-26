@@ -1,5 +1,6 @@
 class YuckyController < ApplicationController
   include  ActionView::Helpers::TextHelper # for truncate
+  include ModerationNotice
 
   permissions 'admin/moderation'
   permissions 'posts'

@@ -1,1 +1,1 @@
-<%= "there is no group named <b>:name</b>."[:no_group_named]%s{:name => params[:id]} %>
+<%= "there is no group named <b>{name}</b>."[:no_group_named, {:name => params[:id]}] %>

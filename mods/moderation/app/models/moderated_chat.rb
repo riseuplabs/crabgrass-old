@@ -1,3 +1,0 @@
-class ModeratedChat < ModeratedFlag 
-
-end

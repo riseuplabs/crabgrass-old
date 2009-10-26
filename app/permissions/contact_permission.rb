@@ -25,7 +25,7 @@ module ContactPermission
   def may_remove_contact?(user=@user)
     return false unless logged_in? and user
     return true if current_user.friend_of?(user)
-    @error_message = 'You are not the contact of %s.'[:not_contact_of] % @user.name
+    @error_message = "You are not the contact of {user}."[:not_contact_of, {:user => @user.name}]
     return false
   end
 
