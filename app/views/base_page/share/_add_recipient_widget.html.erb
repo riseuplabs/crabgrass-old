@@ -65,7 +65,9 @@
 </table>
 <!--
 this does not make sense in the context of the notify page.
-<h2 class="first"><%= 'This Page will be shared with:'[:share_page_recipients_list] %></h2>
+<h2 class="first">
+  <%= 'This {page_class} will be shared with'[:share_page_recipients_results, {:page_class => I18n.t(:page)}] %>
+</h2>
 -->
 <div class="autocomplete_results_area" id="share_page_recipient_area" style="display:none">
   <%= render :partial => 'base_page/share/list_of_recipients' %>

@@ -10,6 +10,6 @@
       <%= f.file_field :favicon_uploaded_data, :size => "73" %>
     </p>
 
-    <%= submit_tag 'Update Favicon'.t, :class => "submit" %>
+    <%= submit_tag "Update {thing}"[:update_thing, {:thing => :favicon.t}], :class => "submit" %>
   <% end %>
 </div>

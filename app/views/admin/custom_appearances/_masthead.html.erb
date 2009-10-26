@@ -23,6 +23,6 @@
       <%= f.label :masthead_enabled, "Enable masthead?"[:enable_masthead_question]%>
     <p>
 
-    <%= submit_tag 'Update Masthead'.t, :class => "submit" %>
+    <%= submit_tag "Update {thing}"[:update_thing, {:thing => :masthead.t}], :class => "submit" %>
   <% end %>
 </div>

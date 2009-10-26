@@ -1,6 +1,6 @@
 <div class='tab_content tab_area' id="color_theme_tab" <%= tab_style 'color_theme' %> >
   <% form_for @appearance do |f| %>
     <%= input_selected_tab('color_theme') %>
-    <%= submit_tag 'Update Color Theme'.t, :class => "submit" %>
+    <%= submit_tag "Update {thing}"[:update_thing, {:thing => :color_theme.t}], :class => "submit" %>
   <% end %>
 </div>

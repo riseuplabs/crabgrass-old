@@ -14,7 +14,11 @@
 
   <tr>
     <td><%= check_box :notification, :send_notice, check_box_options %></td>
-    <td style="width:100%"><label for='notification_send_notice'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
+    <td style="width:100%">
+      <label for='notification_send_notice'>
+        <%= 'Send notification to inbox'[:share_send_notification]%>
+      </label>
+    </td>
   </tr>
   <tbody id='notification_details' style='<%= 'display:none' unless send_notice %>'>
   <tr>
@@ -34,7 +38,11 @@ these are not supported yet.
   </tr>
   <tr>
     <td><%= check_box :ignored, :include_message, :checked => include_message, :onClick => "checkboxToggle(this, 'share_message_holder');" + resize_modal %></td>
-    <td><label for='ignored_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
+    <td>
+      <label for='ignored_include_message'>
+        <%= 'Include a custom message'[:share_include_message] %>
+      </label>
+    </td>
   </tr>
   <tr>
     <td></td>

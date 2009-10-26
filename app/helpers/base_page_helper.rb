@@ -146,7 +146,7 @@ module BasePageHelper
   # used in the sidebar of deleted pages
   def destroy_line
     if may_destroy_page?
-      link = link_to_with_confirm("Destroy Immediately"[:delete_page_via_shred], {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]], :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
+      link = link_to_with_confirm("Destroy Immediately"[:delete_page_via_shared], {:confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]], :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
       content_tag :li, link, :class => 'small_icon minus_16'
     end
   end
