@@ -27,7 +27,7 @@ body
 #page
   +container(center)
   :border 1px solid #fc0
-  hgroup#main
+  hgroup.page
     +full(12)
     :border 1px solid #ccc
     header.title
@@ -53,10 +53,10 @@ body
         +columns(4,12)
         +omega(12)
         :text-align right
-  #wrapper
+  #content
     +full(12)
     :border 1px solid #ccc
-    hgroup#group
+    hgroup
       +columns(12,12)
       header
         +columns(8,12)
@@ -64,29 +64,22 @@ body
       nav
         +columns(3,12)
         +omega(12)
-    #title
-      +columns(12)
-    #start
-      +columns(12)
-      #contribute
-        +columns(3,12)
-        +omega(12)
-      #shortcuts
-        +columns(9,12)
-        +alpha(12)
-    nav
-      +columns(12)
-    content
-      +full(12)
-      aside
-        +columns(3)
-        :background-color #eee
-        :border 1px solid #ccc
-      article#main
-        +columns(9)
-  footer
+    aside
+      +columns(3,12)
+      +alpha(3)
+      :background-color #eee
+      :border 1px solid #ccc
+    section
+      #announcements
+        +prefix(3)
+      #wiki
+        +prefix(3)
+      #posts
+        +prefix(3)
+
+        footer
+  footer.page
     +columns(12,12)
-    +full(12)
     :border 1px solid #ccc
   li
     :display inline-block

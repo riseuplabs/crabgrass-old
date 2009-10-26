@@ -1,0 +1,51 @@
+%section#wiki
+  %header
+    %h3 Group Wiki
+    %a{:href => "#", :onclick => "#"} See more
+%section#announcements
+  %header
+    %h3 Announcements
+    %a{:href => "#", :onclick => "#"} See all
+  %article
+    %h4.announcement Announcement Name
+    %p Lorem ipsum
+%section#posts
+  %nav
+    %ul#tabcontrol.tabs
+      %li#tab-recent.tab-selected RECENT PAGES
+      %li#tab-viewed.tab-unselected MOST VIEWED
+      %li#tab-active.tab-unselected MOST ACTIVE
+      %li#tab-stars.tab-unselected MOST STARS
+    %ul#panecontrol.panes
+      %li.pane-recent.pane-selected
+        %section.pane
+          %section
+            %ul
+              %li Thread Title,
+              %li Category,
+              %li Preview
+            %ul
+              %li Last Post by
+              %li Time
+              %li Starred
+            %article
+              %heaader
+                %h4 Crabgrass vs ThePoint
+              %p Lorem ipsum in the pane.
+            %article
+              %heaader
+                %h4 Crabgrass vs ThePoint
+              %p Lorem ipsum in the pane.
+            %article
+              %heaader
+                %h4 Crabgrass vs ThePoint
+              %p Lorem ipsum in the pane.
+            %article
+              %heaader
+                %h4 Crabgrass vs ThePoint
+              %p Lorem ipsum in the pane.              
+      %li.pane-viewed.pane-unselected
+      %li.pane-active.pane-unselected
+      %li.pane-stars.pane-unselected
+  %footer
+    pagination
