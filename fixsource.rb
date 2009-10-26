@@ -109,17 +109,17 @@ def replace_line(line, location_info)
     key = $1
     line.sub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
   # "hello there".t
-  when /(['"])(\S+)\1\.t[\s,]/
+  when /(['"])(.+?)\1\.t[\s,]/
     line_type = '("hello there".t)'
     default_string = $2
     key = $2.downcase.gsub(/\s/, '_')
-    line.sub!(/(['"])(\S+)\1\.t[\s,]/, "I18n.t(:#{key})")
+    line.sub!(/(['"])(.+?)\1\.t[\s,]/, "I18n.t(:#{key})")
   # _('Hello There')
-  when /_\((['"])(\S+)\1\)[\s,]/
+  when /_\((['"])(.+?)\1\)[\s,]/
     line_type = "_('Hello There')"
     default_string = $2
     key = $2.downcase.gsub(/\s/, '_')
-    line.sub!(/_\((['"])(\S+)\1\)[\s,]/, "I18n.t(:#{key})")
+    line.sub!(/_\((['"])(.+?)\1\)[\s,]/, "I18n.t(:#{key})")
   else
     replaced = false
   end
