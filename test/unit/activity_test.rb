@@ -136,16 +136,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert check_associations(Activity)
   end
 
-#  def test_message_page
-#    u1 = users(:kangaroo)
-#    u2 = users(:iguana)
-#    @page = Page.make :private_message, :to => [u2], :from => u1, :title => "testing message_page activity", :body => "test message body"
-#    act = MessagePageActivity.for_dashboard(u2).find(:first)
-#    assert_equal u2, act.user
-#    assert_equal u1, act.other_user
-#    assert_equal @page.id, act.message_id
-#  end
-
   def assert_activity_for_user_group(act, user, group)
     assert_equal group.id, act.group.id
     assert_equal user.id, act.user.id

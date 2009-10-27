@@ -11,7 +11,7 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   permissions 'base_page', 'posts'
-  helper 'groups', 'autocomplete', 'base_page/share'
+  helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -71,6 +71,9 @@ class BasePageController < ApplicationController
         flash_message_now :exception => exc
       end
     end
+  end
+
+  def page_history
   end
 
   protected

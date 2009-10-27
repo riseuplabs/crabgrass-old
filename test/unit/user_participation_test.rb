@@ -62,8 +62,8 @@ class UserParticipationTest < Test::Unit::TestCase
   end
 
   def test_user_destroyed
-    user = users(:kangaroo)
-    page = Page.create :title => 'boing'
+    user = User.make 
+    page = Page.make :title => 'boing'
     page.add(user)
     page.save!
     user.destroy

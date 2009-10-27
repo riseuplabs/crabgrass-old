@@ -3,8 +3,7 @@
 
 <% @title_box = capture do -%>
   <div class='big_icon <%= @page_class.icon%>_48'>
-    thing_html = content_tag(:i, page_class.downcase)
-    <h1><%= "Create a new {thing}"[:create_a_new_thing, {:thing => thing_html}] %></h1>
+    <h1><%= "Create a new {thing}"[:create_a_new_thing, {:thing => content_tag(:i, page_class.downcase)}] %></h1>
   </div>
 <% end -%>
 

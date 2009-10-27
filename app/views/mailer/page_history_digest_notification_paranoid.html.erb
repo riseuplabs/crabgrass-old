@@ -1,0 +1,8 @@
+Hello <%= @user.display_name %>,
+
+A page that you are watching has been modified <%= pluralize(@page_histories.count, "time") %> since the last notification,
+you may access the page here:
+
+<%= "\thttp://#{@site.domain}/code/#{@code.code}" %>
+
+The link will expire in <%= pluralize(@code.days_left, 'day') %>.

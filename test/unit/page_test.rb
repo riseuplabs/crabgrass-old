@@ -5,6 +5,22 @@ class PageTest < Test::Unit::TestCase
   fixtures :pages, :users, :groups, :polls
 
   def setup
+    PageHistory.delete_all
+  end
+
+  def teardown
+    PageHistory.delete_all
+  end
+
+  def test_page_history_order
+    user = User.make
+    page = WikiPage.make :owner => user 
+    action_1 = PageHistory::AddStar.create!(:page => page, :user => user, :created_at => "2007-10-10 10:10:10")
+    action_2 = PageHistory::RemoveStar.create!(:page => page, :user => user, :created_at => "2008-10-10 10:10:10")
+    action_3 = PageHistory::StartWatching.create!(:page => page, :user => user, :created_at => "2009-10-10 10:10:10")
+    assert_equal action_1, page.page_histories[2]
+    assert_equal action_2, page.page_histories[1]
+    assert_equal action_3, page.page_histories[0]
   end
 
   def test_unique_names
@@ -91,7 +107,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_discussion
-    @page = create_page :title => 'this is a very fine test page'
+    @page = WikiPage.make :title => 'this is a very fine test page'
     assert discussion = Discussion.create
     assert discussion.valid?, discussion.errors.full_messages
     #discussion.pages << @page
@@ -120,11 +136,8 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_denormalized
-    user = User.find 3
-    group = Group.find 3
-    page = create_page :title => 'oak tree'
-    page.add(group, :access => :admin)
-    page.save
+    group = Group.make
+    page = Page.make_owned_by :owner => group, :title => 'oak tree'
     assert_equal group.name, page.owner_name, 'page should have a denormalized copy of the group name'
   end
 
@@ -136,7 +149,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_delete_and_undelete
-    page = RateManyPage.create! :title => 'longer lived', :data => Poll.new
+    page = RateManyPage.make :title => 'longer lived', :data => Poll.make
     poll_id = page.data.id
     assert_equal page.flow, nil, 'a new page should have flow nil'
     page.delete
@@ -251,9 +264,8 @@ class PageTest < Test::Unit::TestCase
 
   def test_attachment_options
     asset = Asset.create! :uploaded_data => upload_data('photo.jpg')
-    page = Page.create! :title => 'page with attachments' do |page|
-      page.add_attachment! asset, :filename => 'picture', :cover => true
-    end
+    page = Page.make :title => 'page with attachments'
+    page.add_attachment! asset, :filename => 'picture', :cover => true
 
     assert_equal 'picture.jpg', page.assets.first.filename
     assert_equal asset, page.cover
@@ -281,15 +293,50 @@ class PageTest < Test::Unit::TestCase
     end
   end
 
+  def test_update_at_updated_by_certain_fields
+    page = Page.make 
+    last_updated_at = page.updated_at
+
+    page.save!
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :resolved, !page.resolved
+    assert_equal page.updated_at, last_updated_at
+    
+    page.update_attribute :public, !page.public
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :created_by_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :updated_by_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :site_id, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :stars_count, rand(500)
+    assert_equal page.updated_at, last_updated_at
+
+    page.update_attribute :views_count, rand(500)
+    assert_equal page.updated_at, last_updated_at
+  end
+
+  def test_even_with_timestamps_disabled_it_should_timestamp_when_create
+    page = Page.make :created_at => nil, :updated_at => nil
+    assert_not_nil page.created_at
+    assert_not_nil page.updated_at
+  end
+
   protected
 
   def create_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
-    Page.create(defaults.merge(options))
+    Page.make(defaults.merge(options))
   end
 
   def build_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
-    Page.new(defaults.merge(options))
+    Page.make_unsaved(defaults.merge(options))
   end
 end

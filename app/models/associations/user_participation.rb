@@ -21,6 +21,7 @@ class UserParticipation < ActiveRecord::Base
 
   # use this for counting stars :)
   include UserParticipationExtension::Starring
+  include UserParticipationExtension::PageHistory
 
   # maybe later use this to replace all the notification stuff
   #  include ParticipationExtension::Subscribe
