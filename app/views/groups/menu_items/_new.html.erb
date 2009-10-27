@@ -10,10 +10,10 @@
     ) do |f| -%>
       <div style="float: right; width: 7em; text-align: right;">
         <%= spinner(spinner_id) %>
-        <%= submit_tag 'Create'.t %>
+        <%= submit_tag :create_button.t %>
       </div>
       <%= f.label :title, 'Title'.t, :style => 'width:6em'%>
-      <%= f.text_field :title, :size => 70, :style => 'width:15em'%> 
+      <%= f.text_field :title, :size => 70, :style => 'width:15em'%>
       <br/>
       <%= f.label :link, 'Link'.t, :style => 'width:6em'%>
       <%= f.text_field :link, :size => 70, :style => 'width:15em'%>

@@ -10,6 +10,6 @@
   <p><%= link_line(
     link_to_function('Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})"),
     submit_link('Undelete'[:undelete_from_trash], :name => 'undelete'),
-    submit_link('Destroy Immediately'[:delete_page_via_shred], :name => 'remove', :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]])
+    submit_link('Destroy Immediately'[:delete_page_via_shared], :name => 'remove', :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]])
   ) %></p>
 <% end %>

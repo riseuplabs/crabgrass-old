@@ -37,7 +37,7 @@
         cbs.checkbox do |cb|
           cb.label "Open Group"[:open_group]
           cb.input check_box(:profile, :membership_policy, {:onclick => ''}, Profile::MEMBERSHIP_POLICY[:open], Profile::MEMBERSHIP_POLICY[:approval])
-          cb.info 'Users are immediately added to the group - request don\'t have to be approved'[:open_group_description]
+          cb.info "Users are immediately added to the group - request don\'t have to be approved"[:open_group_description]
         end
       end
 

@@ -4,7 +4,7 @@
 
 <blockquote>
   <p>
-    <% link_to_requests_html = link_to('my requests'.t, :controller => '/me/requests', :action => 'from_me')%>
+    <% link_to_requests_html = link_to(:my_requests_link.t, :controller => '/me/requests', :action => 'from_me')%>
     <%= "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {link_to_requests}."[:join_request_info, {:link_to_requests => link_to_requests_html}] %>
   </p>
   <%- form_tag(:controller => 'groups/requests', :action => 'create_join', :id => @group) do -%>

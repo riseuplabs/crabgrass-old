@@ -29,6 +29,7 @@ en:
   create_a_new_thing: "Create a new {{thing}}"
   thing_not_found: "{{thing}} not found"
   thing_settings: "{{thing}} Settings"
+  update_thing: "Update {{thing}}"
 
   ##
   ## GENERIC TERMS
@@ -43,8 +44,11 @@ en:
   deleted: "Deleted"
   remove: "Remove"
   cancel: "Cancel"
+  link: "Link"
+  back: "Back"
   share: "Share"
   contributed: "Contributed"
+  contributions: "Contributions"
   users: "Users"
   groups: "Groups"
   networks: "Networks"
@@ -108,6 +112,8 @@ en:
   tasks: "Tasks"
   title: "Title"
   summary: "Summary"
+  body: "Body"
+  text_message: "Text Message"
 
   coordinator: "Coordinator"
   participant: "Participant"
@@ -121,6 +127,8 @@ en:
   confirmation: "Are you sure?"
 
   success: "Success"
+  error: "Error"
+
 
   ##
   ## MEDIA
@@ -149,9 +157,13 @@ en:
   save_button: "Save"
   move_button: "Move"
   add_button: "Add"
+  update_button: "Update"
   cancel_button: "Cancel"
   create_button: "Create"
   ok_button: "OK"
+  done_button: "Done"
+  delete_button: "Delete"
+  clear_link_button: "Clear Link"
   confirm: "Confirm"
   alert: "Alert"
   loading_progress: "Loading..."
@@ -346,6 +358,7 @@ en:
   media_images: "Images"
   media_document: "Document"
   media_documents: "Documents"
+  zip_file: "Zip File"
   media_all: "Media"
   media_alls: "Media"
   media_for_group: "{{media_type}} in {{group}}"
@@ -365,11 +378,15 @@ en:
   regenerate: "regenerate thumbnails"
   version_number: "version {{version}}"
 
+  upload_image: "Upload Image"
+  remove_image: "Remove image"
+
   not_an_image_error: "Uploaded data is not an image. Try png or jpeg files."
 
   # avatar
 
   avatar_image_upload_success: "Successfully uploaded a new avatar image."
+  confirm_delete_avatar: "Do you really want to delete your user image?"
 
   # favicon
 
@@ -428,7 +445,10 @@ en:
   ##
 
   me_dashboard_link: "Dashboard"
+
   me_inbox_link: "Inbox"
+  my_inbox_headline: "My Inbox"
+
   me_trash_link: "Trash"
   me_search_link: "Search"
   me_tasks_link: "Tasks"
@@ -443,6 +463,10 @@ en:
   my_pending_tasks_link: "Pending"
   my_completed_tasks_link: "Completed"
 
+  my_search_headline: "Search"
+
+  my_messages_headline: "My Messages"
+
   my_requests_headline: "My Requests"
 
   private_profile: "Private Profile"
@@ -454,10 +478,12 @@ en:
   toggle_selection: Toggle Selection
   remove_from_inbox: Remove from inbox
   my_settings: Settings for {{user}}
-  upload_image: "Upload Image"
   uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
   select_image_file: "select image file"
   or_image_url: "or image URL"
+  upload_image_link: "upload image"
+  remove_image_link: "remove image"
+
   save_changes: Save Changes
   username: Username
   display_name: Display name
@@ -466,6 +492,8 @@ en:
   language: Language
   time_zone: Time Zone
   set_status_messsage: What are you doing right now?
+
+  me_recent_messages: "Recent"
 
   ##
   ## PROFILE
@@ -520,6 +548,7 @@ en:
 
   #users_recent_activity: "{{user}}'s Recent Activity"
   #users_recent_work: "{{user}}'s Recent Work"
+
   recent_contributions: "Recent Contributions"
   delete_post: Delete Post
   post_message: Post Message
@@ -529,6 +558,7 @@ en:
   users_world: "{{user}}'s World"
   request_friend_link: "Add To My Friends"
   remove_friend_link: "Remove From My Friends"
+  user_preferences: "User Preferences"
   edit_profile_link: "Edit Profile"
   send_message_link: "Send Message"
   profile_saved: "Your profile has been saved."
@@ -584,24 +614,16 @@ en:
   page_list: Page list
   recent_network_pages: "Recent Network Pages"
   recent_member_group_pages: "Recent Activity from Your Groups in {{network}}"
-  featured_content_header: "Featured"
   create_group_link: "create group"
   typing: typing
   away: away
   you_are_not_member_of_any_group: You are not a member of any group.
-  upload_image: "Upload Image"
   back_to_group: back_to {{group_name}}
-  edit_featured_content_for_group: Edit Featured Content For {{group_name}}
-  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
-  current_featured_content: Current Featured Content
   when_does_feature_expire: When does this feature expire?
   unfeature_button: Unfeature!
-  not_featured_content: Not yet Featured Content
-  expired_featured_content: Expired Featured Content
   feature_button: Feature!
   reactivate_button: Reactivate!
   no_group_named: there is no group named <b>{{name}}</b>.
-  featured_content: Featured Content
   group_wiki: Group Wiki
   rss_feed: RSS Feed
   group_has_no_public_profile: This group does not have a public profile.
@@ -619,8 +641,24 @@ en:
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
 
+
+  # featured
+
+  featured_content_header: "Featured"
+  edit_featured_content_for_group: Edit Featured Content For {{group_name}}
+  mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
+  current_featured_content: Current Featured Content
+  not_featured_content: Not yet Featured Content
+  expired_featured_content: Expired Featured Content
+  featured_content: Featured Content
+  featured_pages: "Featured Pages"
+
+  updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
+
+
   # directory
 
+  my_networks: "My Networks"
   my_groups: "My Groups"
   group_directory: "Group Directory"
   directory_of_networks: "Directory of Networks"
@@ -664,12 +702,14 @@ en:
   coordinating_council: "Coordinating Council"
   this_is_coordinating: "This is the <strong>coordinating council</strong> for {{parent_group}}."
   new_council: "New council for group {{group_name}}"
-  council_help: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
+  council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
 
   # committee
 
   this_is_committee: "This committee is part of {{parent_group}}."
   new_committee: "New committee for group {{group_name}}"
+  dual_memberships: "Dual memberships"
+  dual_membership_info: "Members of {{group_type}} {{group_name}} who should also be in committee {{committee_name}}"
 
   # menu items
   external_link_menu_item: "external link"
@@ -677,6 +717,28 @@ en:
   page_menu_item: "page"
   search_menu_item: "search"
   tag_menu_item: "tag"
+  add_menu_item: "Add Item"
+
+  updating_this_list_will_update_menu_items: "Adding, removing and reordering menu items on this list will immediately update what menu items users see."
+
+  # appearance
+
+  edit_layout_heading: "Edit Layout"
+  group_icon: "Group Icon"
+  select_page_types: "Select Page Types"
+  select_visible_group_widgets: "Select the widgets visible on your group's front page"
+
+  widget_1: "Widget 1"
+  widget_2: "Widget 2"
+  widget_3: "Widget 3"
+  widget_4: "Widget 4"
+
+  # profiles
+  may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
+  open_group: "Open Group"
+  open_group_description: "Users are immediately added to the group - request don't have to be approved"
+
+
 
 
   ##
@@ -690,6 +752,7 @@ en:
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
   remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
   approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
+  approve_contact_request: "Approve contact request"
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
 
   destroy: "destroy"
@@ -699,6 +762,7 @@ en:
   rejected: "rejected"
   approved: "approved"
 
+  my_requests_link: "my requests"
   requests_to_me: "to me"
   requests_from_me: "from me"
   incoming: "Incoming"
@@ -712,6 +776,7 @@ en:
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
 
+  send_request_button: "Send Request"
   send_invites_button: "Send Invites"
   send_invites_headline: "Send invitations to join {{group}}"
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {{group_type}}."
@@ -768,6 +833,7 @@ en:
   page_list_heading_title: "title"
   page_list_heading_created: "created"
   page_list_heading_updated: "updated"
+  page_list_heading_deleted: "deleted"
   page_list_heading_posts: "posts"
   page_list_heading_owner: "owner"
   page_list_heading_last_updated: "last updated"
@@ -797,10 +863,15 @@ en:
   trash_description: "The trash is where all your deleted pages live. You can restore a page by clicking {{undelete}} or permanently destroy a page by clicking {{destroy}}."
 
   delete_page_link: "Delete {{page_class}}"
-  delete_page_via_trash: "Move To Trash"
+
+  delete_page_via_shared: "Destroy Immediately"
   delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
-  delete_page_via_shred: "Destroy Immediately"
-  delete_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
+
+  destroy_page_via_shared: "Destroy Immediately"
+  destroy_page_via_shared_info: "This will permanently destroy the page. This action cannot be undone."
+  destroy_page_via_trash: "Move To Trash"
+  destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
+
   undelete_from_trash: "Undelete"
 
   # details
@@ -824,6 +895,8 @@ en:
   edit_attachments: "Edit Attachments"
   current_attachments: "Current Attachments"
   add_new_attachment: "Add New Attachment"
+  use_radio_buttons_to_select_page_cover: "Use radio buttons to select the page cover"
+  use_as_cover: "Use as cover"
 
   # share/notify
 
@@ -840,6 +913,12 @@ en:
   notify_contribution: "<b>Prior Contribution:</b> notify people who have made a <b>contribution</b> to this page."
   notify_current_access: "<b>Current Access:</b> notify people or groups who currently have access to this page."
   notify_new_access: "<b>New Access:</b> share this page with new people or groups, and notify them."
+  notification_message: "Notification Message"
+
+  send_only_with_encryption: "Send only if encrypted distribution is possible"
+  share_additional_notification: "Send additional notification via"
+  share_send_notification: "Send notification to inbox"
+  share_include_message: "Include a custom message"
 
   shared_page_success: "You successfully shared this page."
   notify_success: "You successfully sent notifications."
@@ -1087,6 +1166,7 @@ en:
   wiki_visual_editor: "Visual Editor"
   wiki_editor: "Editor"
   preview: "Preview"
+  close_editor: "Close Editor"
 
   # errors
 
@@ -1179,8 +1259,10 @@ en:
   ## CHAT
   ##
 
+  chat: "Chat"
   joins_the_chatroom: 'joins the chatroom'
   left_the_chatroom: 'left the chatroom'
+  chat_archive_headline: "Chat Archive"
 
   ##
   ## TAGS
@@ -1270,3 +1352,13 @@ en:
   select_masthead_background_color: "Select masthead background color"
   upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
   upload_masthead_image_label: "Upload an image for the masthead. It can't be taller than 80 pixels."
+
+  masthead: "Masthead"
+  advanced: "Advanced"
+  favicon: "Browser Icon"
+  color_theme: "Color Theme"
+
+  update_color_theme: "Update Color Theme"
+  update_favicon: "Update Favicon"
+  update_masthead: "Update Masthead"
+

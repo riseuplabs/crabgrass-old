@@ -24,12 +24,12 @@ def replace_line(line, location_info)
 
   case line
   # "hello there"[:welcome_greeting]
-  when /([^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/
+  when /(.*[^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/
     line_type = '("hello there"[:welcome_greeting])'
     prefix = $1
     default_string = $3
     key = $4
-    line.sub!(/([^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/, "#{prefix}I18n.t(:#{key})")
+    line.sub!(/(.*[^"'])(["'])(.+?)\2\[:(\S+?)\s*\]/, "#{prefix}I18n.t(:#{key})")
   # <%= "You are logged in as {login}"[:login_info, h(current_user.login)] %>
   when /(["'])([^\1]+)\1\[(:\S+),\s*(\S+[^\]]+)\]/
     line_type = '(MACRO "You are logged in as {login}"[:login_info, h(current_user.login)])'
@@ -124,7 +124,7 @@ def replace_line(line, location_info)
     replaced = false
   end
 
-  if replaced
+  if replaced and false
     puts "\n\t\t-- type: #{line_type} --"
     puts "* KEY:     '#{key}'"
     puts "* DEFAULT: '#{default_string}'"
@@ -151,7 +151,7 @@ end
 
 def checkfile(filename)
   file_warnings = {}
-  puts " ---- READING #{filename}"
+  # puts " ---- READING #{filename}"
 
   File.open(filename) do |file|
     line_index = 1
@@ -205,7 +205,7 @@ end
 def print_dir_warnings(dir_warnings)
   dir_warnings.keys.sort.each do |file|
     file_warnings = dir_warnings[file]
-    print_file_warnings(file, file_warnings)
+    # print_file_warnings(file, file_warnings)
   end
 end
 

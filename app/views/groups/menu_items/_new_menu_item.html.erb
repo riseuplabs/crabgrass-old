@@ -21,7 +21,7 @@
    Link:<br/>
    <%= text_field 'menu_item', 'link', :size => 70 %><br/>
    <p>
-   <%= submit_tag 'Add Item'.t %>
+   <%= submit_tag :add_menu_item.t %>
    <%= button_to_function "Done", "Element.hide('new_menu_item_form_container'); Element.show('new_menu_item_link');" %>
    <%= spinner('new_menu_item_loading') %>
    </p>

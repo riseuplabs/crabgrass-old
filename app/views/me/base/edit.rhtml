@@ -9,9 +9,9 @@
   <table><tr>
   <td valign='top' id='user_avatar'><%= avatar_for @user, 'xlarge' %></td>
   <td valign='top' style='padding-left: 10px'>
-  <%= link_to_function('upload image'[:upload_image], "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
-  <%= link_to_remote_with_icon('remove image'[:remove_image], {
-    :url => {:action => 'delete_avatar'}, 
+  <%= link_to_function('upload image'[:upload_image_link], "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
+  <%= link_to_remote_with_icon('remove image'[:remove_image_link], {
+    :url => {:action => 'delete_avatar'},
     :update=>'user_avatar',
     :complete => "$('remove_image_link').hide()",
     :confirm => 'Do you really want to delete your user image?'[:confirm_delete_avatar],
@@ -29,9 +29,9 @@
     <% end -%>
   </div>
   </td></tr></table>
-  
+
   <% form_tag(me_url(:action => 'edit')) do -%>
-    <%= render :partial => 'form' %>  
+    <%= render :partial => 'form' %>
     <p class="form_buttons">
       <%= submit_tag 'Save changes'[:save_changes] %>
     </p>

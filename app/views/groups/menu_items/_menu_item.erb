@@ -24,7 +24,7 @@
     ) do |f| -%>
       <div style="float: right; width: 7em; text-align: right;">
         <%= spinner(spinner_id) %>
-        <%= submit_tag 'Save'.t %>
+        <%= submit_tag :save_button.t %>
         <%= link_to_function('cancel'.t, nil) do |page|
           page.toggle(dom_id(menu_item, :show))
           page.toggle(dom_id(menu_item, :edit))

@@ -3,7 +3,7 @@ remote_url = {:controller => 'chat', :action => 'say', :id => @channel}
 
 loading_command = %(
   msg = '<div class="message tmp" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
-  $('entryfield').value = ''; 
+  $('entryfield').value = '';
   $('entryfield').focus;
   new Insertion.Bottom('stage', msg);
   $('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight; )
@@ -48,7 +48,7 @@ complete = "eval(request.responseText)"
 </p>
 
 <%=
-link = link_to "view the chat room archive"[:chat_archive], {:action => :archive, :id => @channel.name}
+link = link_to "view the chat room archive"[:chat_archive_link], {:action => :archive, :id => @channel.name}
 content_tag(:p, link, :class => 'small_icon book_open_16')
 %>
 
