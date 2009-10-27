@@ -1,5 +1,0 @@
-0.4.6
------
-* if using moderation module, a db migration is required:
-    % script/generate plugin_migration
-    % rake db:migrate

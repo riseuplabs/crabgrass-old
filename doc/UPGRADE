@@ -1,0 +1,15 @@
+0.4.7
+-----
+* Contains a migration that removes duplicate daily trackings.
+  Due to a bug Hourlies where counted twice for dailies. This
+  migration fixes that. It only removes duplicates for the same
+  page and day - so it should be a no-op if there are none.
+  If you use trackings differently than on a daily basis you will
+  probably not want to run this migration. Just remove it. It does
+  not have any effect on the schema.
+
+0.4.6
+-----
+* if using moderation module, a db migration is required:
+    % script/generate plugin_migration
+    % rake db:migrate
