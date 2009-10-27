@@ -1174,3 +1174,45 @@ offensive_behavior: "Offensive Behavior"
 off_topic: "Off Topic"
 offensive_language: "Offensive Language"
 other_reason: "Other Reason"
+
+## 
+## PAGE HISTORY
+##
+
+# Detailed
+page_history_details_change_title: "From: \"{from}\" To: \"{to}\""
+
+# Short
+page_history_user_created_page: "{user_name} has created the page"
+page_history_change_title: "{user_name} has modified the page title"
+page_history_add_star: "{user_name} has added a star"
+page_history_remove_star: "{user_name} has removed a star"
+page_history_make_public: "{user_name} has made the page public"
+page_history_make_private: "{user_name} has made unchecked the option to make the page public"
+page_history_deleted_page: "{user_name} has deleted the page"
+page_history_start_watching: "{user_name} has started watching this page"
+page_history_stop_watching: "{user_name} has stop watching this page"
+page_history_updated_content: "{user_name} has updated the page content"
+page_history_granted_group_full_access: "{user_name} granted full access to the group {object_name}"
+page_history_granted_group_write_access: "{user_name} granted write access to the group {object_name}"
+page_history_granted_group_read_access: "{user_name} granted read access to the group {object_name}"
+page_history_revoked_group_access: "{user_name} revoked access to the group {object_name}"
+page_history_granted_user_full_access: "{user_name} granted full access to the user {object_name}"
+page_history_granted_user_write_access: "{user_name} granted write access to the user {object_name}"
+page_history_granted_user_read_access: "{user_name} granted read access to the user {object_name}"
+page_history_revoked_user_access: "{user_name} revoked access to the user {object_name}"
+page_history_added_comment: "{user_name} added a comment"
+page_history_updated_comment: "{user_name} updated a comment"
+page_history_destroyed_comment: "{user_name} destroyed a comment"
+
+# Emailed
+page_history_mailer_hello_user_name: "Hello {user_name}"
+page_history_the_page_you_are_watching_description: "The page you are watching \"{page_title}\" has been modified"
+page_history_mailer: "Change your email notification settings here: {page_link}"
+page_history_mailer_choose_turn_off_notifications: "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"
+
+# Emailed paranoid
+page_history_mailer_a_page_has_been_modified: "{site_title} : A page has been modified"
+page_history_mailer_a_page_you_are_watching: "A page that you are watching has been modified, you may access the page here"
+page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "A page that you are watching has been modified {histories_count} since the last notification,\nyou may access the page here:"
+page_history_mailer_expire_link: "The link will expire in {expire_time}"

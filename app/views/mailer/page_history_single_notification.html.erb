@@ -1,6 +1,6 @@
-Hello <%= @user.display_name %>,
+<%= "Hello {user_name}"[:page_history_mailer_hello_user_name, {:user_name => @user.display_name}] %>,
 
-The page you are watching "<%= @page_history.page.title %>" has been modified:
+<%= "The page you are watching \"{page_title}\" has been modified"[:page_history_the_page_you_are_watching_description, {:page_title => @page_history.page.title}] %>:
 <%= "http://#{@site.domain}#{page_url(@page_history.page)}" %>
 
   <%= "* #{description_for(@page_history)} at #{full_time(@page_history.created_at)}\n\n" %>
@@ -10,7 +10,7 @@ The page you are watching "<%= @page_history.page.title %>" has been modified:
   
 ------------
 
-Change your email notification settings here: <%= "http://#{@site.domain}#{me_url(:action => 'edit')}" %>
-You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed.
+<%= "Change your email notification settings here: {page_link}"[:page_history_mailer, {:page_link => "http://#{@site.domain}#{me_url(:action => 'edit')}"}] %>
+<%= "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"[:page_history_mailer_choose_turn_off_notifications] %>.
 
 ------------

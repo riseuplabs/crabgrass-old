@@ -21,7 +21,7 @@ module Mailers::PageHistory
     @user                 = user
     @page_history         = page_history
     @site                 = page_history.page.site
-    @subject              = "#{@site.title} : A page has been modified"
+    @subject              = "{site_title} : A page has been modified"[:page_history_mailer_a_page_has_been_modified, {:site_title => @site.title}]
     @body[:page_history]  = @page_history
 
     @body[:code] = Code.create!(:user => user, :page => page_history.page)
@@ -41,7 +41,7 @@ module Mailers::PageHistory
   def page_history_digest_notification_paranoid(user, page, page_histories)
     @user                   = user
     @site                   = page.site
-    @subject                = "#{@site.title} : A page has been modified"
+    @subject                = "{site_title} : A page has been modified"[:page_history_mailer_a_page_has_been_modified, {:site_title => @site.title}]
     @body[:page]            = page
     @body[:page_histories]  = page_histories
 
