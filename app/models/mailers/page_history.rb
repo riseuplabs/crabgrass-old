@@ -17,12 +17,36 @@ module Mailers::PageHistory
     setup_watched_notification_email
   end
 
+  def page_history_single_notification_paranoid(user, page_history) 
+    @user                 = user
+    @page_history         = page_history
+    @site                 = page_history.page.site
+    @subject              = "#{@site.title} : A page has been modified"
+    @body[:page_history]  = @page_history
+
+    @body[:code] = Code.create!(:user => user, :page => page_history.page)
+
+    setup_watched_notification_email
+  end
+
   def page_history_digest_notification(user, page, page_histories)
     @user                   = user
     @site                   = page.site
     @subject                = "#{@site.title} : #{page.title}"
     @body[:page]            = page
     @body[:page_histories]  = page_histories
+    setup_watched_notification_email
+  end
+
+  def page_history_digest_notification_paranoid(user, page, page_histories)
+    @user                   = user
+    @site                   = page.site
+    @subject                = "#{@site.title} : A page has been modified"
+    @body[:page]            = page
+    @body[:page_histories]  = page_histories
+
+    @body[:code] = Code.create!(:user => user, :page => page)
+    
     setup_watched_notification_email
   end
 

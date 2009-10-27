@@ -7,10 +7,14 @@ class PageHistory < ActiveRecord::Base
 
   serialize :details, Hash
 
-  def self.send_single_pending_notifications
+  def self.send_single_pending_notifications 
     pending_notifications.each do |page_history|
-      recipients_for_single_noification(page_history).each do |user|
-        Mailer.deliver_page_history_single_notification(user, page_history)
+      recipients_for_single_notification(page_history).each do |user|
+        if Conf.paranoid_emails?
+          Mailer.deliver_page_history_single_notification_paranoid(user, page_history)
+        else
+          Mailer.deliver_page_history_single_notification(user, page_history)
+        end
       end
       page_history.update_attribute :notification_sent_at, Time.now
     end
@@ -20,7 +24,11 @@ class PageHistory < ActiveRecord::Base
     pending_digest_notifications_by_page.each do |page_id, page_histories|
       page = Page.find(page_id)
       recipients_for_digest_notifications(page).each do |user|
-        Mailer.deliver_page_history_digest_notification(user, page, page_histories)
+        if Conf.paranoid_emails?
+          Mailer.deliver_page_history_digest_notification_paranoid(user, page, page_histories)
+        else
+          Mailer.deliver_page_history_digest_notification(user, page, page_histories)
+        end
       end
       PageHistory.update_all("notification_digest_sent_at = '#{Time.now}'", ["notification_digest_sent_at IS NULL and page_id = (?)", page_id])
     end
@@ -47,7 +55,7 @@ class PageHistory < ActiveRecord::Base
     User.find :all, :conditions => ["receive_notifications = 'Digest' and id in (?)", recipients_for_page(page)]
   end
 
-  def self.recipients_for_single_noification(page_history)
+  def self.recipients_for_single_notification(page_history)
     users_watching_ids = recipients_for_page(page_history.page) 
     users_watching_ids.delete(page_history.user.id) 
     User.find :all, :conditions => ["receive_notifications = 'Single' and id in (?)", users_watching_ids]
