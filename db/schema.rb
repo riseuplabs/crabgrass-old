@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091023194253) do
+ActiveRecord::Schema.define(:version => 20091023222730) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -334,9 +334,9 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.integer  "sender_id",   :limit => 11
     t.string   "sender_name"
     t.string   "level"
+    t.datetime "deleted_at"
     t.integer  "yuck_count",  :limit => 11, :default => 0
     t.boolean  "vetted",                    :default => false
-    t.datetime "deleted_at"
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -359,6 +359,22 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.integer  "user_id",        :limit => 11
     t.integer  "foreign_id",     :limit => 11, :null => false
   end
+
+  create_table "page_histories", :force => true do |t|
+    t.integer  "user_id",                     :limit => 11
+    t.integer  "page_id",                     :limit => 11
+    t.string   "type"
+    t.datetime "created_at"
+    t.integer  "object_id",                   :limit => 11
+    t.string   "object_type"
+    t.datetime "notification_sent_at"
+    t.datetime "notification_digest_sent_at"
+    t.string   "details"
+  end
+
+  add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
+  add_index "page_histories", ["object_id", "object_type"], :name => "index_page_histories_on_object_id_and_object_type"
+  add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", :force => true do |t|
     t.integer  "page_id",            :limit => 11
@@ -624,30 +640,12 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.boolean "limited"
     t.integer "signup_mode",          :limit => 1
     t.string  "email_sender_name",    :limit => 40
-    t.integer "moderation_group_id",  :limit => 11
     t.string  "profiles"
     t.string  "profile_fields"
+    t.integer "moderation_group_id",  :limit => 11
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
-
-  create_table "skill_involvements", :force => true do |t|
-    t.integer "user_id",     :limit => 11
-    t.integer "skill_id",    :limit => 11
-    t.boolean "learn_flag"
-    t.integer "learn_level", :limit => 11
-    t.boolean "can_flag"
-    t.integer "can_level",   :limit => 11
-    t.boolean "teach_flag"
-    t.integer "teach_level", :limit => 11
-  end
-
-  create_table "skills", :force => true do |t|
-    t.string "name"
-    t.text   "description"
-    t.string "language_code"
-    t.string "count_cache"
-  end
 
   create_table "survey_answers", :force => true do |t|
     t.integer  "question_id",       :limit => 11
@@ -745,19 +743,6 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
   end
 
   add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
-
-  create_table "taxonomies", :force => true do |t|
-    t.string "name"
-    t.text   "description"
-  end
-
-  create_table "taxonomy_items", :force => true do |t|
-    t.integer "lft",         :limit => 11
-    t.integer "rgt",         :limit => 11
-    t.integer "skill_id",    :limit => 11
-    t.integer "parent_id",   :limit => 11
-    t.integer "taxonomy_id", :limit => 11
-  end
 
   create_table "thumbnails", :force => true do |t|
     t.integer "parent_id",    :limit => 11
@@ -864,6 +849,9 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
+    t.string   "receive_notifications"
+    t.binary   "student_id_cache"
+    t.boolean  "encrypt_emails",                          :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
