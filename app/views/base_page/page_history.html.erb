@@ -6,7 +6,7 @@
     <th><%= "action"[:action] %></th>
   </tr>
 
-  <% @page.page_history.each do |ph| %>
+  <% @page.page_histories.each do |ph| %>
     <tr class="<%= cycle('odd','even') %>">
       <td><%= full_time(ph.created_at) %></td>
       <td><%= description_for(ph) %></td>

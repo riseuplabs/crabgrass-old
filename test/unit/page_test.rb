@@ -18,9 +18,9 @@ class PageTest < Test::Unit::TestCase
     action_1 = PageHistory::AddStar.create!(:page => page, :user => user, :created_at => "2007-10-10 10:10:10")
     action_2 = PageHistory::RemoveStar.create!(:page => page, :user => user, :created_at => "2008-10-10 10:10:10")
     action_3 = PageHistory::StartWatching.create!(:page => page, :user => user, :created_at => "2009-10-10 10:10:10")
-    assert_equal action_1, page.page_history[2]
-    assert_equal action_2, page.page_history[1]
-    assert_equal action_3, page.page_history[0]
+    assert_equal action_1, page.page_histories[2]
+    assert_equal action_2, page.page_histories[1]
+    assert_equal action_3, page.page_histories[0]
   end
 
   def test_unique_names
