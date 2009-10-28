@@ -150,7 +150,7 @@ namespace :crabgrass do
 
   desc "Write the VERSION file to the server"
   task :create_version_files do
-    version = `git describe --abbrev=0`.chomp
+    version = `git describe --tags --abbrev=0`.chomp
     run "echo #{version} > #{current_release}/VERSION"
 
     timestamp = current_release.scan(/\d{10,}/).first
