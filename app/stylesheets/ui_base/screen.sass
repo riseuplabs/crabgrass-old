@@ -8,26 +8,25 @@
 /* @end */
 
 /* @group defaults */
-@import base.sass
+@import ui_base/base.sass
 /* @end */
 
 /* colors */
-@import colors.sass
+@import ui_base/colors.sass
 /* end */
 
 /* fonts */
-@import fonts.sass
+@import ui_base/fonts.sass
 /* end */
 
-
 body
-  +susy(center)
+  +susy(right)
   font-family= !body_text_font_family
   
 #page
-  +container(center)
+  +container("left")
   :border 1px solid #fc0
-  hgroup.page
+  header.page
     +full(12)
     :border 1px solid #ccc
     header.title
@@ -43,41 +42,45 @@ body
         +columns(5,12)
         +omega(12)
         :text-align right
-    header.breadcrumb
-      +full(12)
-      #breadcrumb
-        +columns(8,12)
-        +alpha(12)
-        :text-align left
-      #search
-        +columns(4,12)
-        +omega(12)
-        :text-align right
   #content
     +full(12)
     :border 1px solid #ccc
-    hgroup
-      +columns(12,12)
-      header
-        +columns(8,12)
-        +alpha(12)
-      nav
-        +columns(3,12)
-        +omega(12)
-    aside
+    header
+      +full(12)
+      section#breadcrumb
+        +full(12)
+        :display block
+      nav#participate
+        +full(12)
+        :display block
+        section#helpful-links
+          +full(12)
+          :display block
+          ul 
+            :display inline-block
+          h4
+            :display inline-block
+        aside
+          +columns(3,12)
+          +alpha(3)
+        section#actions
+          +columns(9,12)
+          +prefix(3)
+          ul
+            :display inline-block
+          
+    aside.content
       +columns(3,12)
-      +alpha(3)
+      +alpha(12)
       :background-color #eee
-      :border 1px solid #ccc
-    section
-      #announcements
-        +prefix(3)
-      #wiki
-        +prefix(3)
-      #posts
-        +prefix(3)
+    section.content
+      +columns(9,12)
+      +omega(12)
+      section#announcements
+      section#wiki
+      section#posts
 
-        footer
+      footer
   footer.page
     +columns(12,12)
     :border 1px solid #ccc
