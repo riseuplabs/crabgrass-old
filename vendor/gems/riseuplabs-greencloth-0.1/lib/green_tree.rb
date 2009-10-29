@@ -245,8 +245,8 @@ class GreenTree < Array
     # take out carriage returns
     heading_text = Regexp.escape(self.text.gsub(/\r\n/, "\n"))
 
-    # remove html entities, and let them match any character
-    heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.')
+    # remove html entities, and let them match one to several characters
+    heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.{1,3}')
 
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
