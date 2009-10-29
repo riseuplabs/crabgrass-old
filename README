@@ -16,7 +16,7 @@ Crabgrass includes and depends upon many third party libraries that are not lice
 * Rails 2.1.0
 * Mysql >5.0
 * Hpricot 0.8.1
-* HAML/SASS
+* HAML/SASS > 2.2
 
 Optional:
 
