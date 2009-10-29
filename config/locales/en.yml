@@ -751,10 +751,7 @@ en:
   select_page_types: "Select Page Types"
   select_visible_group_widgets: "Select the widgets visible on your group's front page"
 
-  widget_1: "Widget 1"
-  widget_2: "Widget 2"
-  widget_3: "Widget 3"
-  widget_4: "Widget 4"
+  widget_index: "Widget {{index}}"
 
   # profiles
 

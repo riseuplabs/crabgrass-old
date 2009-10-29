@@ -104,16 +104,17 @@ def replace_line(line, location_info)
     key = $1
     line.sub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
   # :welcome_greeting.t
-  when /\s:(\S+)\.t[\s,]/
+  when /\s:(\S+)\.t[\s,\.]/
     line_type = '(:welcome_greeting.t)'
     key = $1
-    line.sub!(/:(\S+)\.t[\s,]/,'I18n.t(:\1)\2')
+    line.sub!(/:(\S+)\.t[\s,\.]/,'I18n.t(:\1)\2')
   # "hello there".t
-  when /(['"])(.+?)\1\.t[\s,]/
+  when /(.*[^"'])(['"])(.+?)\2\.t[\s,]/
     line_type = '("hello there".t)'
-    default_string = $2
-    key = $2.downcase.gsub(/\s/, '_')
-    line.sub!(/(['"])(.+?)\1\.t[\s,]/, "I18n.t(:#{key})")
+    prefix = $1
+    default_string = $3
+    key = $3.downcase.gsub(/\s/, '_')
+    line.sub!(/(.*[^"'])(['"])(.+?)\2\.t[\s,]/, "#{prefix}I18n.t(:#{key}) ")
   # _('Hello There')
   when /_\((['"])(.+?)\1\)[\s,]/
     line_type = "_('Hello There')"
