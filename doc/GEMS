@@ -4,7 +4,7 @@ tzinfo:: required for timezone support
 
 RedCloth:: The Crabgrass markup language, GreenCloth, is derived from RedCloth.
 
-haml:: used to generate css from site themes (custom appearances)
+haml:: Haml is used in some templates. Sass (part of haml gem) is used to generate css from site themes (custom appearances).
 
 hpricot:: used by visual WYISWYG wiki editor (version 0.8.1 minimum)
 
