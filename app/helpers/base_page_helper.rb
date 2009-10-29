@@ -13,10 +13,6 @@ module BasePageHelper
     content_tag(:div, content_tag(:span, text, :style => style, :class => 'page-link'), :class => 'page-class')
   end
 
-  def return_to_page(page)
-    content_tag(:p, link_to('&laquo; ' + 'return to'[:return_to] + ' <b>%s</b>' % @page.title, page_url(@page)))
-  end
-
   def recipient_checkbox_line(recipient, options={})
     name = CGI.escape(recipient.name) # so that '+' does show up as ' '
     ret = "<label>"
