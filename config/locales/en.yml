@@ -27,9 +27,13 @@ en:
   ##
 
   create_a_new_thing: "Create a new {{thing}}"
+
   thing_not_found: "{{thing}} not found"
+  thing_not_found_description: "Sorry, we were unable to locate '{{thing}}'"
+
   thing_settings: "{{thing}} Settings"
   update_thing: "Update {{thing}}"
+
 
   ##
   ## GENERIC TERMS
@@ -67,6 +71,7 @@ en:
   friends: "Friends"
   people: "People"
   members: "Members"
+  profile: "Profile"
   all_content: "All Content"
   more_information: "More Information"
   required: "(required)"
@@ -78,6 +83,7 @@ en:
   no_search_results: "No Results"
   empty_results: "None"
   not_found: "Not Found"
+  not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   search_headline: "Search"
   see_more_link: "More"
@@ -103,6 +109,7 @@ en:
   administration: "Administration"
   settings: "Settings"
   messages: "Messages"
+  popular: "Popular"
 
   page: "Page"
   discussions: "Discussions"
@@ -163,7 +170,6 @@ en:
   ok_button: "OK"
   done_button: "Done"
   delete_button: "Delete"
-  clear_link_button: "Clear Link"
   confirm: "Confirm"
   alert: "Alert"
   loading_progress: "Loading..."
@@ -238,6 +244,7 @@ en:
   signup_login_name: "Your login name"
   login_button: "Log in"
   login: "Login"
+  log_in: "Log in"
   signup_title: "Create Your Account"
   signup_email: "Your Email"
   forgot_password_text: |
@@ -504,6 +511,7 @@ en:
     The information you put here is also searchable by other people.
     Use caution when adding personal information to your public profile.
 
+  profile_permissions: "Permissions"
   profile_private_description: This profile is private and is only visible to your friends.
   profile_last_login: "Last Login"
   profile_member_since: "Member Since"
@@ -519,6 +527,7 @@ en:
   fax: Fax
   mobile: Mobile
   pager: Pager
+  instant_messaging: "Instant Messaging"
   general_info: General Information
   first_name: first name
   middle_name: middle
@@ -537,9 +546,14 @@ en:
   im_addresses: IM Addresses
   add_im_address: Add IM Address
   websites: Websites
+  website: Website
   add_websites: Add Website
+  site_name: "site name"
+  url: "url"
   add_encryption_key: Add Encryption Key
+  public_encryption_keys: "Public Encryption Keys"
   public_key: Public Key
+  fingerprint: "fingerprint"
   location_address: address
   location_city: city
   location_state: state/province
@@ -667,6 +681,8 @@ en:
   my_groups_link: "My Groups"
   group_directory_link: "Group Directory"
 
+  new_people_in_weeks: "new people in last 2 weeks"
+
 
   # commands
 
@@ -710,8 +726,15 @@ en:
   new_committee: "New committee for group {{group_name}}"
   dual_memberships: "Dual memberships"
   dual_membership_info: "Members of {{group_type}} {{group_name}} who should also be in committee {{committee_name}}"
+  edit_committe: "Edit Committee"
+
+  # networks
+
+  network_initial_member: "Choose a group to be an initial member of this network."
 
   # menu items
+
+  menu_items: "Navigation Bar"
   external_link_menu_item: "external link"
   local_link_menu_item: "local link"
   page_menu_item: "page"
@@ -734,6 +757,7 @@ en:
   widget_4: "Widget 4"
 
   # profiles
+
   may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
   open_group: "Open Group"
   open_group_description: "Users are immediately added to the group - request don't have to be approved"
@@ -750,8 +774,7 @@ en:
   join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {{link_to_requests}}."
 
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
-  remove_contact: "Remove contact {{user}}"
-  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
+
   approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
   approve_contact_request: "Approve contact request"
   recipient_tip: "Separate recipients with commas, spaces, or new lines."
@@ -779,6 +802,8 @@ en:
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"
+  send_contact_button: "Send contact invitation"
+  send_contacts_title: "Send contact invitation to {{user}}"
   send_invites_headline: "Send invitations to join {{group}}"
   invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {{group_type}}."
   invite_sent: "Invitation sent to {{recipient}}"
@@ -803,6 +828,8 @@ en:
   invite_not_found: "Invite not found"
   request_exists_error: "Request already exists for {{recipient}}"
   not_allowed_to_respond_to_request: "{{user}} is not allowed to {{command}} the request."
+
+
 
   ##
   ## PAGES
@@ -974,6 +1001,7 @@ en:
 
   wiki_page_description: "Create an editable free-form text document."
   wiki_page_display: "Wiki Page"
+  wiki: "Wiki"
 
   #collection_class_description: "Special pages that hold other pages."
   #collection_page_display: "collection"
@@ -1162,12 +1190,27 @@ en:
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
   wiki_revert_version: "Revert To Version {{version}}"
+  revert_to_previous_version: "Revert to previous version:"
+
+  private_homepage: "Private Homepage"
+  public_homepage: "Public Homepage"
+
+  # popup
+
+  clear_link_button: "Clear Link"
+  create_link_button: "Create Link"
+  insert_image: "Insert Image"
+  update_link_button: "Update Link"
+
+  # editor
 
   wiki_plain_editor: "Plain Editor"
   wiki_visual_editor: "Visual Editor"
   wiki_editor: "Editor"
   preview: "Preview"
   close_editor: "Close Editor"
+
+
 
   # errors
 
@@ -1247,6 +1290,10 @@ en:
   you_have_no_contacts: 'You have no friends'
   you_have_no_peers: 'You have no peers'
 
+  remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
+  remove_contact: "Remove contact {{user}}"
+  remove_contact_button: "Remove Contact"
+
   ##
   ## AUTHENTICATED SYSTEM
   ##
@@ -1264,6 +1311,9 @@ en:
   joins_the_chatroom: 'joins the chatroom'
   left_the_chatroom: 'left the chatroom'
   chat_archive_headline: "Chat Archive"
+  chat_archive_link: "view the chat room archive"
+  leave_channel: "Leave channel"
+
 
   ##
   ## TAGS

@@ -17,6 +17,6 @@
   options_for_group(@group))
   if false and @important_pages.any?%>
 <hr class="thick" />
-<h2 class="section"><%= "Popular".t %></h2>
+<h2 class="section"><%= :popular.t %></h2>
 <%= render :partial => "groups/featured/featured_item", :collection => @important_pages %>
 <% end %>
