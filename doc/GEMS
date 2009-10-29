@@ -8,11 +8,14 @@ haml:: Haml is used in some templates. Sass (part of haml gem) is used to genera
 
 hpricot:: used by visual WYISWYG wiki editor (version 0.8.1 minimum)
 
+chronic:: required by backgroundrb.
+
+packet:: required by backgroundrb.
+
 = Suggested Gems
 
 mime-types:: used to overcome a file uploading bug in ie6.
-chronic:: required by backgroundrb.
-packet:: required by backgroundrb.
+
 
 testing:
 
