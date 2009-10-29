@@ -189,6 +189,7 @@ en:
   menu_networks: "Networks"
   menu_link_logout: "Logout"
   menu_link_account: "Account"
+  menu_admin: "Admin"
 
   ###
   ### TO BE SORTED
@@ -660,6 +661,7 @@ en:
 
   featured_content_header: "Featured"
   edit_featured_content_for_group: Edit Featured Content For {{group_name}}
+  edit_featured_content_link: "edit featured content"
   mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
   current_featured_content: Current Featured Content
   not_featured_content: Not yet Featured Content
@@ -673,6 +675,9 @@ en:
   # directory
 
   my_networks: "My Networks"
+  my_networks_link: "my networks"
+  network_directory_link: "network directory"
+
   my_groups: "My Groups"
   group_directory: "Group Directory"
   directory_of_networks: "Directory of Networks"
@@ -855,14 +860,22 @@ en:
 
   page_list_heading_updated_by: "updated by"
   page_list_heading_created_by: "created by"
+  page_list_heading_deleted_by: "deleted by"
+
   page_list_heading_title: "title"
+  page_list_heading_new: "new"
   page_list_heading_created: "created"
   page_list_heading_updated: "updated"
   page_list_heading_deleted: "deleted"
   page_list_heading_posts: "posts"
   page_list_heading_owner: "owner"
+  page_list_heading_contribution: "contribution"
   page_list_heading_last_updated: "last updated"
   page_list_heading_stars: "stars"
+  page_list_heading_happens: "happens"
+  page_list_heading_last_post: "last post"
+  page_list_heading_views: "views"
+
   page_notice_message: "page sent by {{user}} on {{date}}"
   page_with_message: "with message"
   pagination_next: "Next"
@@ -881,6 +894,7 @@ en:
   public_checkbox_help: "If checked, anyone may view this page."
   move_page_link: "Move {{page_class}}"
   page_details_link: "{{page_class}} Details"
+  print_view_link: "Printable"
 
   # trash
 
@@ -898,6 +912,10 @@ en:
   destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
 
   undelete_from_trash: "Undelete"
+
+  confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
+  destroy_page_link: "Shred {{page_class}}"
+
 
   # details
 
@@ -924,6 +942,11 @@ en:
   use_as_cover: "Use as cover"
 
   # share/notify
+
+  page_access_admin: "Full Access"
+  page_access_edit: "Write Ability"
+  page_access_none: "No Access"
+  page_access_view: "Read Only"
 
   grant_access: "Grant Access"
   share_page_email: "Send an email notification"
@@ -1196,8 +1219,11 @@ en:
 
   clear_link_button: "Clear Link"
   create_link_button: "Create Link"
-  insert_image: "Insert Image"
   update_link_button: "Update Link"
+
+  insert_image: "Insert Image"
+  add_link: "Add Link"
+
 
   # editor
 
@@ -1361,11 +1387,13 @@ en:
   contribute_to_site: "Contribute to Site"
   create_a_group: "Create a Group"
   see_tips_to_get_started: "See Tips to get started"
+  hide_tips: "Hide Tips"
   most_active_members: "Most Active Members"
   recently_active_members: "Recently Active Members"
   most_active_groups: "Most Active Groups"
   recently_active_groups: "Recently Active Groups"
-  network_aettings: "Network Settings"
+  network_settings: "Network Settings"
+
   administer_site: "Administer Site"
   edit_appearance: "Edit Appearance"
 

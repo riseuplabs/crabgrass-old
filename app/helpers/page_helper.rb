@@ -238,7 +238,7 @@ module PageHelper
   def page_list_updated_or_created(page, options={})
     options[:type] ||= :twolines
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, :page_list_heading_updated.t) : content_tag(:span, :page_list_heading_new.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     separator = options[:type]==:twolines ? '<br/>' : '&bull;'
@@ -292,7 +292,7 @@ module PageHelper
     elsif column == :posts
       list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
     elsif column == :happens_at
-      list_heading 'happens'.t, 'happens_at', options
+      list_heading 'happens'[:page_list_heading_happens], 'happens_at', options
     elsif column == :contributors_count or column == :contributors
       list_heading image_tag('ui/person-dark.png'), 'contributors_count', options
     elsif column == :last_post
