@@ -1,5 +1,5 @@
 <% @title_box = capture do -%>
-  <h1><%=h "Remove contact %s"[:remove_contact] % @user.display_name%></h1>
+  <h1><%=h "Remove contact {user}"[:remove_contact, {:user => @user.display_name}] %></h1>
 <% end -%>
 
 <blockquote>
