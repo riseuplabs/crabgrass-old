@@ -21,8 +21,25 @@ module UrlHelper
     {:controller => '/networks', :action => nil, :id => @group}.merge(options)
   end
 
+  def directory_params(options={})
+    group_type = options.delete(:group_type)
+
+    case group_type
+    when :network
+      network_directory_params(options)
+    when :group
+      group_directory_params(options)
+    else
+      raise "Bad group type #{group_type} for when building directory_params for the url"
+    end
+  end
+
   def group_directory_params(options={})
     {:controller => '/groups/directory', :action => nil}.merge(options)
+  end
+
+  def network_directory_params(options={})
+    {:controller => '/networks/directory', :action => nil}.merge(options)
   end
 
   def committees_params(options={})
