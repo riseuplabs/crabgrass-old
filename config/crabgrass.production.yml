@@ -33,6 +33,7 @@ enabled_tools:
   - announcement_tool
 email:
   delivery_method: :sendmail
+  dev_email: "jeffrey@tinflag.com"
 ensure_page_owner: false
 
 ##
