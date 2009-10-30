@@ -102,6 +102,10 @@ class Post < ActiveRecord::Base
     'PrivatePost' == read_attribute(:type)
   end
 
+  def default?
+    false
+  end
+
   def lite_html
     GreenCloth.new(self.body, 'page', [:lite_mode]).to_html
   end
