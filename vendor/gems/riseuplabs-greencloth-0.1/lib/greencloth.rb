@@ -344,6 +344,7 @@ class GreenCloth < RedCloth::TextileDoc
 
   def to_html(*before_filters, &block)
     @block = block
+    @original_markup = self.clone()
 
     before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
       :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
