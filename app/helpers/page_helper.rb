@@ -219,7 +219,7 @@ module PageHelper
       page.posts_count
     elsif column == :last_post
       if page.discussion
-        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view], page_url(page)+"#posts-#{page.discussion.last_post_id}")]
+        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view_posts_link], page_url(page)+"#posts-#{page.discussion.last_post_id}")]
       end
     else
       page.send(column)
@@ -247,7 +247,7 @@ module PageHelper
 
   def page_list_contribution(page)
     field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, :page_list_heading_updated.t) : content_tag(:span, :page_list_heading_new.t, :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
@@ -262,7 +262,7 @@ module PageHelper
       #title += " " + icon_tag("tiny_pending") unless page.resolved?
     end
     if page.flag[:new]
-      title += " <span class='newpage'>#{'new'.t}</span>"
+      title += " <span class='newpage'>#{:page_list_heading_new.t}</span>"
     end
     return title
   end
@@ -348,7 +348,8 @@ module PageHelper
     html = "<td class='excerpt', colspan='#{column_size}'>"
     html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
     if notice[:message].any?
-      html += ' '+'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message]})
+      html += ' ' + "with message {mesage}"[:notice_with_message, {:message => notice_message_html}]
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")

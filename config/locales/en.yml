@@ -881,6 +881,8 @@ en:
   pagination_next: "Next"
   pagination_previous: "Previous"
 
+  view_posts_link: "view"
+
   # sidebar
 
   move_this_page: "Move This Page"
@@ -915,6 +917,8 @@ en:
 
   confirm_destroy_page: "Are you sure you want to destroy this page? It cannot be undeleted."
   destroy_page_link: "Shred {{page_class}}"
+  trash_page_link: "Move {{page_class}} to trash"
+
 
 
   # details
@@ -968,6 +972,9 @@ en:
   share_send_notification: "Send notification to inbox"
   share_include_message: "Include a custom message"
 
+  share_all_checkbox: "Shared with all users"
+  share_all_checkbox_help: "If checked, all Users can access this page."
+
   shared_page_success: "You successfully shared this page."
   notify_success: "You successfully sent notifications."
 
@@ -979,6 +986,8 @@ en:
   name_or_email_not_found: '"{{name}}" does not match the name of any users or groups and is not a valid email address.'
 
   entity_autocomplete_tip: "Enter the name of a group or person."
+
+  notice_with_message: "with message {{mesage}}"
 
   # creating
 
@@ -1226,7 +1235,8 @@ en:
 
 
   # editor
-
+  # advanded editor is what plain editor is called when visual editor is enabled
+  wiki_advanced_editor: "Advanced Editor"
   wiki_plain_editor: "Plain Editor"
   wiki_visual_editor: "Visual Editor"
   wiki_editor: "Editor"
