@@ -40,6 +40,7 @@ enabled_tools:
   - survey_tool
 email:
   delivery_method: :sendmail
+  dev_email: "jeffrey@tinflag.com"
 
 profiles:
   - private
