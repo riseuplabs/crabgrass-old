@@ -13,6 +13,15 @@ en:
   create_group_link: "create a new group"
   create_committee: "create committee"
 
+  # unsorted for events
+
+  all_day_event: "all day event"
+  update_event: "Update event"
+  starts_at: "starts at"
+  place: "place"
+
+
+
 
   ##
   ## UNUSED, BUT KEEP ANYWAY
@@ -75,6 +84,7 @@ en:
   all_content: "All Content"
   more_information: "More Information"
   required: "(required)"
+  more: "more"
 
   recent_activity: "Recent Activity"
   recent_pages: "Recent Pages"
@@ -85,6 +95,7 @@ en:
   not_found: "Not Found"
   not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
+  loadingdotdotdot: "Loading..."
   search_headline: "Search"
   see_more_link: "More"
   see_all_link: "See All"
@@ -92,6 +103,8 @@ en:
   check_all: "Check All"
   return_link: "Return"
   statistics: "Statistics"
+  next: "Next"
+  previous: "Previous"
 
   summary: "Summary"
   edit: "Edit"
@@ -121,6 +134,8 @@ en:
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
+  print: "Print"
+  show: "Show"
 
   coordinator: "Coordinator"
   participant: "Participant"
@@ -190,6 +205,7 @@ en:
   menu_link_logout: "Logout"
   menu_link_account: "Account"
   menu_admin: "Admin"
+  menu_moderation: "Moderation"
 
   ###
   ### TO BE SORTED
@@ -336,6 +352,8 @@ en:
   password_error_too_common: "is no good, it is based on a dictionary word."
   password_error_confirmation: "does not match password confirmation."
 
+  signup_time_to_crack_password: "(takes {{time}} to crack)"
+
 
   ##
   ## ACTIVITIES
@@ -385,6 +403,7 @@ en:
   format: "Format"
   regenerate: "regenerate thumbnails"
   version_number: "version {{version}}"
+  no_data_uploaded: "No data uploaded"
 
   upload_image: "Upload Image"
   remove_image: "Remove image"
@@ -401,7 +420,7 @@ en:
   favicon_image_bad_dimensions_error: "Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32."
   not_a_favicon_image_error: "Uploaded data is not an favicon image format. Try png, gif files."
 
-
+  asset_version_list_version_heading: "version"
 
   ##
   ## GALLERY
@@ -415,9 +434,12 @@ en:
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
+  back_to_gallery_link: "Back to Gallery"
+  gallery_changing_cover_message: "Changing cover..."
   download: Download
   download_gallery: Download Gallery
-  undo: undo
+  gallery_slideshow_apply_settings_button: "apply"
+  gallery_undo_link: "undo"
   remove_from_gallery: Remove from gallery
   removing_image: Removing Image...
   move_image_left: Move image left
@@ -447,6 +469,9 @@ en:
   upload_images_link: "Upload Images"
   too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
   cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
+  upload_a_zip_file_link: "Upload a ZIP-File"
+  upload_images_link: "Upload"
+  you_are_not_allowed_to_do_that: "You are not allowed to do that!"
 
   ##
   ## ME
@@ -978,6 +1003,7 @@ en:
   shared_page_success: "You successfully shared this page."
   notify_success: "You successfully sent notifications."
 
+  a_request_was_sent_to_admin_to_make_this_page_public_message: "A request was sent to Admin, to make this page public"
   share_grant_required_error: "{{name}} is not allowed to view this page. They must be granted greater access first."
   share_permission_denied_error: "You are not allowed to change the access permissions of this page"
   notify_no_access_error: 'Sorry, "{{name}}" does not have access to this page.'
@@ -1024,6 +1050,7 @@ en:
 
   announcement_page_description: "An announcement."
   announcement_page_display: "Announcement"
+  announcements_page_display: "Announcement"
 
   article_page_description: "Create a blog post or news article."
   article_page_display: "Article"
@@ -1149,7 +1176,7 @@ en:
   csrf_error_message: "Your login request has the appearance of an attempt to hack this website. Don't worry: this error happens frequently even for innocent requests. We are just being extra paranoid. All you have to do is to reload the page before attempting to login. You can follow this link to try again."
 
   ##
-  ## RANKED VOTE
+  ## RANKED VOTE & RATE MANY
   ##
 
   ranked_vote_instructions: |
@@ -1157,31 +1184,90 @@ en:
     most preferred at the top to least preferred at the bottom. When you are done,
     press confirm to record your vote.
 
+  add_new_possibility_link: "Add new possibility"
+  add_possibility_button: "Add Possibility"
+  new_possibility_heading: "New Possibility"
+
+  confirm_vote_button: "Confirm Vote"
+  edit_my_vote_tab: "Edit my vote"
+  show_results_tab: "Show results"
+  top_pick: "top pick"
 
   ##
   ## SURVEY PAGE
   ##
 
-  survey_design: "Design Survey"
-  survey_my_response: "My Response"
-  survey_take: "Take Survey"
-  survey_rate_responses: "Rate Responses"
-  survey_list_all: "List All Responses"
+  # design page
 
-  save_survey: "Save Survey"
-  survey_response_by: "Response by {{login}}"
-
-  survey_rate_this_response: "Rate This Response"
-  survey_your_rating_of_this_response: "Your Rating of This Response"
+  save_survey_button: "Save Survey"
 
   survey_responses_enabled: "Enable new responses? If checked, people can take the survey. Uncheck to close the survey."
   survey_rating_enabled: "Enable the rating of responses?"
 
+  survey_may_create_response: "May create response?"
   survey_may_see_responses: "May see responses?"
   survey_may_rate: "May rate responses?"
   survey_may_see_ratings: "May see ratings?"
 
+  survey_question_label: "Question:"
+  survey_description_heading: "Description"
+  survey_description_explaination: "This text will show up in the introduction tab, and will be the first thing that survey takers see."
+  select_many_choices_label: "Select many answer choices:"
+  select_one_choices_label: "Select one answer choices:"
+  video_embed_code_description: "This is not the website address. It is a code surrounded by < and > that the video site – youtube, etc – makes available to you for putting the video on other sites."
+  private_question_label: "Private Question"
+  their_answer_goes_here_label: "Their answer goes here..."
+
+  # responses
+
+  survey_response_by: "Response by {{login}}"
+
+  see_whole_response_link: "see whole response"
+  survey_average_rating_heading: "Average Rating:"
+  survey_previous_result: "Previously"
+  survey_rated_by_1_person_caption: "Rated by one person."
+  survey_rated_by_x_people_caption: "Rated by {{count}} people."
+  survey_respond_button: "Respond"
+  survey_rate_this_response_heading: "Rate This Response"
+  survey_select_a_rating_message: "Select a rating to see the next item."
+  survey_skip_next_link: "Skip To Next"
+  survey_you_already_rated_response_with_rating_heading: "You already rated this response - You gave it a {{rating}}."
+  survey_you_previousely_rated_message: "You previously rated this item with {{rating}}."
+  survey_your_rating_heading: "Your Rating:"
+
+
+
+  # questions
+
   survey_questions: "Questions"
+  add_long_text_question_link: "Long Answer"
+  add_select_many_question_link: "Select Multiple Answers"
+  add_select_one_question_link: "Select One Answer"
+  add_short_text_question_link: "Short Answer"
+  upload_image_question_link: "Upload Image"
+  video_link_question_link: "Video Link"
+
+
+
+  # tabs
+
+  survey_introduction_tab: "Introduction"
+  survey_create_tab: "Create Survey"
+  survey_list_all_tab: "List All Responses"
+  survey_my_response_tab: "My Response"
+  survey_rate_responses_tab: "Rate Responses"
+  survey_take_tab: "Take Survey"
+
+  # unsorted
+
+  survey_please_check_and_rate_message: "Please check your answers and rate other peoples responses."
+  survey_please_check_message: "Please check your answers."
+  survey_thanks_submit_message: "Thank you for submitting your response."
+
+  drag_to_move_tip: "drag to move"
+  each_line_is_a_choice_caption: "(each line is a possible choice)"
+  no_data_uploaded_label: "No data uploaded"
+
 
   ##
   ## EXTERNAL VIDEO
@@ -1201,6 +1287,7 @@ en:
   leave_editing_wiki_page_warning: "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."
   page_locked_header: "Page Locked"
   locked_by_user: "Locked by {{user}}"
+  locked_wiki_because_locked_section: "Wiki locked - a section is being edited. You can edit other sections."
   break_lock: "Break Lock"
   break_lock_button: "Break Lock"
   versions: "Versions"
@@ -1218,9 +1305,12 @@ en:
   insert_image_heading: "Insert Image"
   wiki_lost_text_confirmation: "Any unsaved text will be lost. Are you sure?"
   wiki_section_edit: "Edit This Section"
+
   wiki_revert_version: "Revert To Version {{version}}"
   revert_to_previous_version: "Revert to previous version:"
-
+  wiki_version_creator_heading: "person"
+  wiki_version_revert_link: "revert"
+  wiki_version_destroy_link: "destroy"
   private_homepage: "Private Homepage"
   public_homepage: "Public Homepage"
 
@@ -1242,8 +1332,6 @@ en:
   wiki_editor: "Editor"
   preview: "Preview"
   close_editor: "Close Editor"
-
-
 
   # errors
 
@@ -1346,6 +1434,7 @@ en:
   chat_archive_headline: "Chat Archive"
   chat_archive_link: "view the chat room archive"
   leave_channel: "Leave channel"
+  trash_chat_message: "move message to trash"
 
 
   ##
@@ -1411,6 +1500,7 @@ en:
   ## MODERATION
   ##
 
+  flag_button: "Flag"
   flag_appropriate: "flag as appropriate"
   flag_inappropriate: "flag as inappropriate"
   confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
@@ -1420,6 +1510,9 @@ en:
   off_topic: "Off Topic"
   offensive_language: "Offensive Language"
   other_reason: "Other Reason"
+  inappropriate_content: "Inappropriate content"
+
+  make_public_requested: "Make Public Requested"
 
   ##
   ## ADMIN
@@ -1448,3 +1541,7 @@ en:
   update_favicon: "Update Favicon"
   update_masthead: "Update Masthead"
 
+  # other
+
+  page_make_public_link: "make public"
+  page_make_public_pending_link: "make public (pending)"

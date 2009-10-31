@@ -54,7 +54,7 @@ class WikiPageController < BasePageController
     if show_inline_editor?
       @locker = @wiki.locker_of(@editing_section)
       @locker ||= User.new :login => 'unknown'
-      @wiki_inline_error = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => @locker.display_name}
+      @wiki_inline_error = 'This wiki is currently locked by {user}'[:wiki_is_locked, {:user => @locker.display_name}]
     end
   rescue ActiveRecord::StaleObjectError => exc
      # this exception is created by optimistic locking.

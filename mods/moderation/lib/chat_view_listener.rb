@@ -19,7 +19,7 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       if rating.nil? or rating.rating != YUCKY_RATING
         if current_user.moderator?
           icon = 'trash'
-          link_name = 'move message to trash'[:trash_message]
+          link_name = 'move message to trash'[:trash_chat_message]
           confirm = nil
         else
           icon = 'sad_plus'

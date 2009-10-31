@@ -77,7 +77,7 @@ module GalleryHelper
                         upload_target.hide();
                         $$('body').first().appendChild(upload_target);")+
         spinner('show_upload')+
-        link_to_remote("Upload"[:upload_images],
+        link_to_remote("Upload"[:upload_images_link],
                        { :url => page_url(@page, :action => 'upload'),
                          :update => 'target_for_upload',
                          :loading =>'$(\'show_upload_spinner\').show();',
@@ -108,7 +108,7 @@ module GalleryHelper
   end
 
   def undo_remove_link(image_id, position)
-    link_to_remote('undo'[:undo],
+    link_to_remote('undo'[:gallery_undo_link],
                    :url => {
                      :controller => 'gallery',
                      :action => 'add',
@@ -175,7 +175,7 @@ module GalleryHelper
     options = {
       :url => page_url(@page, :action => 'make_cover', :id => image.id),
       :update => 'gallery_notify_area',
-      :loading => "$('gallery_notify_area').innerHTML = '#{"Changing cover..."[:changing_cover]}';
+      :loading => "$('gallery_notify_area').innerHTML = '#{"Changing cover..."[:gallery_changing_cover_message]}';
                    $('gallery_spinner').show();",
       :complete => "$('gallery_spinner').hide();",
       :success => "$('make_cover_link_'+current_cover).show();

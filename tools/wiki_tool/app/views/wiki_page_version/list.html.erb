@@ -4,7 +4,7 @@
   <tr>
     <th></th>
     <th><%= "created"[:created] %></th>
-    <th><%= "person"[:person] %></th>
+    <th><%= "person"[:wiki_version_creator_heading] %></th>
     <th>&nbsp;</th>
   </tr>
   <% for version in @wiki.versions %>
@@ -15,8 +15,8 @@
     <td><%= link_to_user(version.user, :avatar => :xsmall) %></td>
     <td><%= link_line(
       link_to_if(version.version > 1, "diff"[:diff_link], page_url(@page, :action=>'version-diff', :id => "#{version.version.to_i-1}-#{version.version}")),
-      link_to_iff(may_revert_wiki_version?, "revert"[:revert], page_url(@page, :action => 'version-revert', :id => version.version)), 
-      link_to_iff(may_destroy_wiki_version?, "destroy"[:destroy], page_url(@page, :action => 'version-destroy', :id => version.id), {:method => :post, :confirm => "Are you sure?"[:confirmation]})
+      link_to_iff(may_revert_wiki_version?, "revert"[:wiki_version_revert_link], page_url(@page, :action => 'version-revert', :id => version.version)),
+      link_to_iff(may_destroy_wiki_version?, "destroy"[:wiki_version_destroy_link], page_url(@page, :action => 'version-destroy', :id => version.id), {:method => :post, :confirm => "Are you sure?"[:confirmation]})
      )%></td>
   </tr>
   <% end %>

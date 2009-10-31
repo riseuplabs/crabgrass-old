@@ -14,7 +14,7 @@ module WikiPageHelper
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
       msgs = [
-        'This wiki is currently locked by :user'[:wiki_locked] % {:user => display_name},
+        'This wiki is currently locked by {user}'[:wiki_is_locked, {:user => display_name}].
         'You will not be able to save this page'[:wont_be_able_to_save]
       ]
       flash_message_now :title => 'Page Locked'[:page_locked_header], :error => msgs

@@ -9,7 +9,7 @@
   <div id='instructions'>
     <%= :ranked_vote_instructions.t %>
     <% form_tag page_xurl(@page, :action => 'confirm') do %>
-      <div style='float:right'><%= submit_tag 'Confirm Vote'.t %></div>
+      <div style='float:right'><%= submit_tag 'Confirm Vote'[:confirm_vote_button].t %></div>
       <br style='clear:right'/>
     <% end %>
   </div>

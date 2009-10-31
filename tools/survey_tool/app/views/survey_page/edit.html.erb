@@ -17,13 +17,13 @@
 <div id="design_questions_container" class="survey_questions_container">
 
   <% form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f| %>
-    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
-    
-    <h2 class="alert"><%= "Description".t %></h2>
+    <p><%= submit_tag "Save Survey"[:save_survey_button], :class => "submit" %></p>
+
+    <h2 class="alert"><%= "Description"[:survey_description_heading] %></h2>
     <blockquote> <%="This text will show up in the introduction tab, and will be the first thing that survey takers see."[:survey_description_explaination]%>
       <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
     </blockquote>
-        
+
     <h2 class="alert"><%= "Permissions".t %></h2>
     <blockquote>
     <table class="permissions">
@@ -71,7 +71,7 @@
     </div>
     </blockquote>
 
-    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
+    <p><%= submit_tag "Save Survey"[:save_survey_button], :class => "submit" %></p>
   <% end %>
 </div>
 

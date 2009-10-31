@@ -36,11 +36,11 @@ module SurveyPageHelper
   end
 
   def private_question_checkbox(form)
-   content_tag :label, form.check_box(:private) + " " + "Private Question"[:private_question]
+   content_tag :label, form.check_box(:private) + " " + "Private Question"[:private_question_label]
   end
 
   def their_answer_goes_here
-    "Their answer goes here..."[:their_answer_goes_here]
+    "Their answer goes here..."[:their_answer_goes_here_label]
   end
 
   def respond_to_question_form(response_form, question)

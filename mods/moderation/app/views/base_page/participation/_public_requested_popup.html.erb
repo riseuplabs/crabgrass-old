@@ -1,5 +1,5 @@
 <% popup('Make Public Requested'.t, :id => 'details_popup', :width => "40em") do -%>
-  <%= 'A request was sent to Admin, to make this page public'.t %>
+  <%= 'A request was sent to Admin, to make this page public'[:a_request_was_sent_to_admin_to_make_this_page_public_message] %>
   <p>
     <% form_remote_tag(
 		       :url => {:controller => 'participation', :action => 'close_public_requested', :page_id => @page.id},
