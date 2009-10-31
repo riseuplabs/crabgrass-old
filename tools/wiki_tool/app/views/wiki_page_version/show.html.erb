@@ -4,7 +4,9 @@
   <%= :version_doesnt_exist.t % {:version => params[:version]} %>
 <% else %>
 
-<div style="float:right"><%= link_to "Revert To Version {version}"[:wiki_revert_version, @version.version], page_url(@page, :action => 'version-revert', :id => @version.version) %></div>
+<div style="float:right">
+  <%= link_to "Revert To Version {version}"[:wiki_revert_version, @version.version], page_url(@page, :action => 'version-revert', :id => @version.version) %>
+</div>
 
 <div>
 <%= :you_are_viewing_version.t % {:version => @version.version, :user => link_to_user(@version.user_id) }%><br/>

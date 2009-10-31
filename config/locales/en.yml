@@ -982,7 +982,7 @@ en:
   share_page_message: "Send a message (optional)"
   share_page_link: "Share {{page_class}}"
   share_page_options: "Choose options"
-  share_page_recipients: "Share This {{page_class}}"
+  share_page_recipients: "Share page with"
   share_page_recipients_sections: "Choose from your groups or friends"
   share_page_recipients_selection: "Make your selection"
   share_page_recipients_results: "This {{page_class}} will be shared with"

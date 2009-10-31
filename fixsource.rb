@@ -10,6 +10,9 @@ end
 $dictionary_supplement = {}
 $dictionary_supplement_locations = {}
 
+$total = 0
+$print_replaced = false
+$print_reading_file = false
 
 def key_exists?(key)
   $dictionary.keys.include?(key)
@@ -42,7 +45,7 @@ def replace_line(line, location_info)
     args = $4
 
     # i found at least one case like: 'default {var}'[:key, {:var => value}]
-    if args =~ /\{(:[^\}]+)\}/
+    if args =~ /\{\s*(:[^\}]+)\}/
       newline = "I18n.t(#{key}, "+ $1 + ')'
     else
       args = args.split(/,/)
@@ -125,13 +128,15 @@ def replace_line(line, location_info)
     replaced = false
   end
 
-  if replaced and false
+  if replaced and $print_replaced
     puts "\n\t\t-- type: #{line_type} --"
     puts "* KEY:     '#{key}'"
     puts "* DEFAULT: '#{default_string}'"
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
+    $total += 1
   end
+
 
   if key
     key = key.to_s.gsub(/^:/, "")
@@ -152,7 +157,7 @@ end
 
 def checkfile(filename)
   file_warnings = {}
-  # puts " ---- READING #{filename}"
+  puts " ---- READING #{filename}" if $print_reading_file
 
   File.open(filename) do |file|
     line_index = 1
@@ -161,9 +166,9 @@ def checkfile(filename)
       replaced = true
       while replaced
         line_warnings, replaced = replace_line(line, location_info)
-      end
-      unless line_warnings.empty?
-        file_warnings[line_index] = line_warnings
+        unless line_warnings.empty?
+          file_warnings[line_index] = line_warnings
+        end
       end
       line_index += 1
     end
@@ -206,7 +211,7 @@ end
 def print_dir_warnings(dir_warnings)
   dir_warnings.keys.sort.each do |file|
     file_warnings = dir_warnings[file]
-    # print_file_warnings(file, file_warnings)
+    print_file_warnings(file, file_warnings)
   end
 end
 
@@ -244,10 +249,11 @@ $dictionary = YAML.load_file("config/locales/en.yml")["en"]
 if File.file?(input)
   warnings = checkfile(input)
   print_warnings_banner
-  print_file_warnings(input, warnings)
+  print_file_warnings(input, warnings) unless warnings.empty?
   print_dictionary_supplement
 elsif File.directory?(input)
   warnings = searchdirectory(input)
+
   print_warnings_banner
   print_dir_warnings(warnings)
   print_dictionary_supplement
@@ -255,3 +261,5 @@ else
   puts input+': not a file or directory!'
 end
 
+
+puts "TOTAL: #{$total}"
