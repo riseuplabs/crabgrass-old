@@ -346,9 +346,9 @@ module PageHelper
 
   def page_notice_row(notice, column_size)
     html = "<td class='excerpt', colspan='#{column_size}'>"
-    html += I18n.t(:page_notice_message, :user => {:user => link_to_user(notice[:user_login)), :date => friendly_date(notice[:time])}]
+    html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
     if notice[:message].any?
-      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message]})
+      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
       html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
     end
     html += "</td>"
