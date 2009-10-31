@@ -2,20 +2,20 @@
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'User Preferences'[:user_preferences]
+    t.label I18n.t(:user_preferences)
     t.url me_url(:action => 'edit', :id => nil)
     t.selected controller?(:me) && action?(:edit)
   end
   if current_site.profile_enabled?(:public)
     f.tab do |t|
-      t.label 'Public Profile'[:public_profile]
+      t.label I18n.t(:public_profile)
       t.url url_for(:controller => '/profile', :action => 'edit', :id => 'public')
       t.selected controller?(:profile) && id?('public')
     end
   end
   if current_site.profile_enabled?(:private)
     f.tab do |t|
-      t.label 'Private Profile'[:private_profile]
+      t.label I18n.t(:private_profile)
       t.url url_for(:controller => '/profile', :action => 'edit', :id => 'private')
       t.selected controller?(:profile) && id?('private')
     end

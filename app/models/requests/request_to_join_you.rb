@@ -11,10 +11,10 @@ class RequestToJoinYou < Request
 
   def validate_on_create
     if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
-      errors.add_to_base('You are a member already'[:you_are_a_member_already_error])
+      errors.add_to_base(I18n.t(:you_are_a_member_already_error))
     end
     if RequestToJoinYou.appearing_as_state(state).find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
-      errors.add_to_base('Request already exists for {recipient}'[:request_exists_error, {:recipient => recipient.name}])
+      errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end
 

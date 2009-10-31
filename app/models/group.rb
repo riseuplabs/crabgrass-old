@@ -244,7 +244,7 @@ class Group < ActiveRecord::Base
     if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
-      raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => self.name}])
+      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
     end
   end
 

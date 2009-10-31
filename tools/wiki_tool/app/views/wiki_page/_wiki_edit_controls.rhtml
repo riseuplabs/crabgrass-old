@@ -7,17 +7,17 @@ access_keys ||= false
 
 <div class='edit-tab'><span>
   <% if !locked_for_me? -%>
-    <%= link_to('<u>e</u>dit'[:edit_underlined_e], page_url(@page,:action=>'edit'), access_keys ? {:accesskey => 'e'} : nil) %>
+    <%= link_to(I18n.t(:edit_underlined_e), page_url(@page,:action=>'edit'), access_keys ? {:accesskey => 'e'} : nil) %>
   <% else -%>
-    <%= "locked by :user"[:locked_by_user] % { :user => link_to_user(@wiki.locked_by_id) } %>
-    (<%= link_to 'break lock'.t, page_url(@page,:action=>'break_lock'), :method => :post %>)
+    <%= I18n.t(:locked_by_user) % { :user => link_to_user(@wiki.locked_by_id) } %>
+    (<%= link_to I18n.t(:break_lock), page_url(@page,:action=>'break_lock'), :method => :post %>)
   <% end %>
   &nbsp;
-  <%= link_to('<u>p</u>rint'[:print_underlined_p], page_url(@page, :action=>'print'), access_keys ? {:accesskey => 'p'} : nil) %>
+  <%= link_to(I18n.t(:print_underlined_p), page_url(@page, :action=>'print'), access_keys ? {:accesskey => 'p'} : nil) %>
   &nbsp;
-  <%= link_to 'versions'.t, page_url(@page,:action=>'versions') %>
+  <%= link_to I18n.t(:versions), page_url(@page,:action=>'versions') %>
   &nbsp;
-  <%= link_to 'last change'.t, page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 %>
+  <%= link_to I18n.t(:last_change), page_url(@page, :action=>'diff', :id => "#{@wiki.version.to_i-1}-#{@wiki.version}") if @wiki.version > 1 %>
 </span></div>
 <br style='clear: both' />
 

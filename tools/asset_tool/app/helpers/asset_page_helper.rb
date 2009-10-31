@@ -32,7 +32,7 @@ module AssetPageHelper
   def destroy_version_link(version)
     action = {
       :url => page_xurl(@page, :action => 'destroy_version', :id => version.version),
-      :confirm => 'Are you sure you want to delete this version?'[:delete_version_confirm],
+      :confirm => I18n.t(:delete_version_confirm),
       :before => "$($(this).up('td')).addClassName('busy')",
       :failure => "$($(this).up('td')).removeClassName('busy')"
     }

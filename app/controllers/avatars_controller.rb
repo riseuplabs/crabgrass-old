@@ -24,7 +24,7 @@ class AvatarsController < ApplicationController
       thing.avatar = avatar
     end
     thing.save! # make sure thing.updated_at has been updated.
-    flash_message :success => 'Successfully uploaded a new avatar image'[:avatar_image_upload_success]
+    flash_message :success => I18n.t(:avatar_image_upload_success)
   rescue Exception => exc
     flash_message :exception => exc
   ensure

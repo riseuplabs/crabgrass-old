@@ -8,7 +8,7 @@ class PasswordStrengthViewListener < Crabgrass::Hook::ViewListener
         </div>
       </div>
       <span id='pw_time_to_crack' style='display:none'>
-        #{"(takes {time} to crack)"[:signup_time_to_crack_password, "<span id='pw_time'>??</span>"]}
+        #{I18n.t(:signup_time_to_crack_password, :time => "<span id='pw_time'>??</span>")}
       </span>
     ] +
     observe_field('user_password', :function => "set_pw_bar(value, #{MIN_PASSWORD_STRENGTH});", :frequency => 0.25) +

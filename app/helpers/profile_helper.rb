@@ -9,7 +9,7 @@ module ProfileHelper
   end
 
   def remove_link(dom_id)
-    "<span class='remove'>%s</span>" % link_to_function('remove'.t, "Element.remove($('#{dom_id}'))")
+    "<span class='remove'>%s</span>" % link_to_function(I18n.t(:remove), "Element.remove($('#{dom_id}'))")
   end
 
   def add_row_link(title,action)
@@ -65,19 +65,19 @@ module ProfileHelper
   #end
 
   def member_since_line(profile)
-    "<div class='small_icon status_online_16'><em>#{"Member Since"[:profile_member_since]}</em>: #{friendly_date(profile.user.created_at)}</div>"
+    "<div class='small_icon status_online_16'><em>#{I18n.t(:profile_member_since)}</em>: #{friendly_date(profile.user.created_at)}</div>"
   end
 
   def last_login(user)
-    "%s: %s"  % ["Last Login"[:profile_last_login], friendly_date(user.last_seen_at)]
+    "%s: %s"  % [I18n.t(:profile_last_login), friendly_date(user.last_seen_at)]
   end
 
   def profile_description
     if @profile.public?
-      "This profile is visible to strangers"[:profile_public_description]
+      I18n.t(:profile_public_description)
     elsif @profile.private?
-      "This profile is only visible to contacts"[:profile_private_description]
-    end + ' ' + content_tag(:strong, link_to("Preview"[:preview]+ARROW, '/'+current_user.login+'?profile='+@profile.type))
+      I18n.t(:profile_private_description)
+    end + ' ' + content_tag(:strong, link_to(I18n.t(:preview)+ARROW, '/'+current_user.login+'?profile='+@profile.type))
   end
 end
 

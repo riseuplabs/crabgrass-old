@@ -39,7 +39,7 @@ class Me::RequestsController < Me::BaseController
     #if action?(:to_me)
     #  add_context requests_to_me.t, url_for(:controller => '/me/requests', :action => 'to_me')
     #elsif action?(:from_me)
-    #  add_context :requests_from_me.t, url_for(:controller => '/me/requests', :action => 'from_me')
+    #  add_context I18n.t(:requests_from_me), url_for(:controller => '/me/requests', :action => 'from_me')
     #end
   end
 

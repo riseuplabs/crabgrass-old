@@ -106,7 +106,7 @@ class GalleryController < BasePageController
   def make_cover
     unless current_user.may?(:admin, @page)
       if request.xhr?
-        render(:text => "You are not allowed to do that!"[:you_are_not_allowed_to_do_that],
+        render(:text => I18n.t(:you_are_not_allowed_to_do_that),
                :layout => false) and return
       else
         raise PermissionDenied
@@ -119,7 +119,7 @@ class GalleryController < BasePageController
     @page.save!
 
     if request.xhr?
-      render :text => :album_cover_changed.t, :layout => false
+      render :text => I18n.t(:album_cover_changed), :layout => false
     else
       flash_message(:album_cover_changed.t)
       redirect_to page_url(@page, :action => 'edit')
@@ -193,15 +193,15 @@ class GalleryController < BasePageController
     end
     current_user.updated(@page)
     if request.xhr?
-      render :text => "Order changed."[:order_changed], :layout => false
+      render :text => I18n.t(:order_changed), :layout => false
     else
-      flash_message_now "Order changed."[:order_changed]
+      flash_message_now I18n.t(:order_changed)
       redirect_to(:controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => "Error saving new order: :error_message"[:error_saving_new_order_message] %{ :error_message => exc.message}
+    render :text => I18n.t(:error_saving_new_order_message) %{ :error_message => exc.message}
   end
 
   def add

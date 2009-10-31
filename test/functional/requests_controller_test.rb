@@ -109,7 +109,7 @@ class RequestsControllerTest < Test::Unit::TestCase
     login_as :red
     get :redeem, :email => req.email, :code => req.code
     assert_response :success
-    assert :invite_error_redeemed.t.any?
+    assert I18n.t(:invite_error_redeemed).any?
     assert_error_message(/#{Regexp.escape(:invite_error_redeemed.t)}/)
   end
 
@@ -123,7 +123,7 @@ class RequestsControllerTest < Test::Unit::TestCase
 
     login_as :penguin
     get :redeem, :email => req.email, :code => req.code
-    assert :invite_error_already_member.t.any?
+    assert I18n.t(:invite_error_already_member).any?
     assert_response :success
     assert_error_message(/#{Regexp.escape(:invite_error_already_member.t)}/)
   end

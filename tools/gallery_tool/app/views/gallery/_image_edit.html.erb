@@ -17,8 +17,8 @@
 					     :action => 'update_order'
 					   },
 					   :loading => 'saving_changes_notifier();',
-					   :success => "update_notifier('#{'Saved new order!'[:saved_new_order]}');",
-					   :failure => "update_notifier('#{'Error saving new order!'[:error_saving_new_order]}');",
+					   :success => "update_notifier('#{I18n.t(:saved_new_order)}');",
+					   :failure => "update_notifier('#{I18n.t(:error_saving_new_order)}');",
 					   :with => "'images='+images.toJSON()+'&page_id=#{@page.id}'")}; }",
                            :hoverclass => 'swatch_container_hover',
                            :url => { :controller => 'gallery',

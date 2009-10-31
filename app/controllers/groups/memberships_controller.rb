@@ -70,7 +70,7 @@ class Groups::MembershipsController < Groups::BaseController
   def context
     @group_navigation = :membership
     super
-    add_context 'Membership'[:membership], url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
+    add_context I18n.t(:membership), url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
     #@left_column = render_to_string :partial => 'sidebar'
     @title_box = render_to_string :partial => 'title_box'
   end

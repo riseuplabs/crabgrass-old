@@ -29,7 +29,7 @@ class Groups::RequestsController < Groups::BaseController
     end
 
     RequestToJoinYou.create! :created_by => current_user, :recipient => @group
-    flash_message_now :success => :request_to_join_sent.t
+    flash_message_now :success => I18n.t(:request_to_join_sent)
   rescue Exception => exc
     flash_message_now :exception => exc
   end
@@ -74,15 +74,15 @@ class Groups::RequestsController < Groups::BaseController
     if reqs.detect{|req|!req.valid?}
       reqs.each do |req|
         if req.valid?
-          flash_message_now :title => :alert_error.t,
-            :text => "Success".t + ':',
-            :success => 'Invitation sent to {recipient}'[:invite_sent, {:recipient => req.recipient.display_name}]
+          flash_message_now :title => I18n.t(:alert_error),
+            :text => I18n.t(:success) + ':',
+            :success => I18n.t(:invite_sent, :recipient => req.recipient.display_name)
         else
-          flash_message_now :title => :alert_error.t, :object => req
+          flash_message_now :title => I18n.t(:alert_error), :object => req
         end
       end
     else
-      flash_message_now :success => '{count} invitations sent'[:invites_sent, {:count => reqs.size}]
+      flash_message_now :success => I18n.t(:invites_sent, :count => reqs.size)
       params[:recipients] = ""
     end
   rescue Exception => exc
@@ -94,7 +94,7 @@ class Groups::RequestsController < Groups::BaseController
   def context
     @group_navigation = :requests
     super
-    add_context('Requests'[:requests], {:controller => 'groups/requests', :action => :list, :id => @group})
+    add_context(I18n.t(:requests), {:controller => 'groups/requests', :action => :list, :id => @group})
   end
 
 end

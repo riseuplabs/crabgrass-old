@@ -64,7 +64,7 @@ class Me::TrashController < Me::BaseController
 
   def context
     super
-    add_context 'Trash'[:me_trash_link], url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
+    add_context I18n.t(:me_trash_link), url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
   end
 
 end

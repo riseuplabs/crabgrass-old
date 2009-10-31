@@ -21,9 +21,9 @@ module FlashMessageHelper
     elsif opts[:object]
       object = opts[:object]
       unless object.errors.empty?
-        flash.now[:error] = "Changes could not be saved."[:alert_not_saved]
+        flash.now[:error] = I18n.t(:alert_not_saved)
         flash.now[:text] ||= ""
-        flash.now[:text] += content_tag "p", "There are problems with the following fields"[:alert_field_errors] + ":"
+        flash.now[:text] += content_tag "p", I18n.t(:alert_field_errors) + ":"
         flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
         flash.now[:errors] = object.errors
       end
@@ -109,8 +109,8 @@ module FlashMessageHelper
         if flash[:title] == :skip
           flash[:title] = nil
         elsif flash[:title].empty?
-          flash[:title] = "Changes could not be saved"[:alert_not_saved] if flash[:type] == 'error'
-          flash[:title] = "Changes saved"[:alert_saved]                  if flash[:type] == 'success'
+          flash[:title] = I18n.t(:alert_not_saved) if flash[:type] == 'error'
+          flash[:title] = I18n.t(:alert_saved)                  if flash[:type] == 'success'
         end
         notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
         content_tag(:div, notice_contents, :class => "small_notice #{flash[:type]}")
@@ -158,21 +158,21 @@ module FlashMessageHelper
     if options[:exception]
       exc = options[:exception]
       if exc.is_a? PermissionDenied
-        add_flash_message(flsh, :text => options[:text], :title => 'Permission Denied'[:alert_permission_denied], :error => exc.to_s)
+        add_flash_message(flsh, :text => options[:text], :title => I18n.t(:alert_permission_denied), :error => exc.to_s)
       elsif exc.is_a? ErrorMessages
         add_flash_message(flsh, :text => options[:text], :title => exc.title, :error => exc.errors)
       elsif exc.is_a? ErrorMessage
-        add_flash_message(flsh, :text => options[:text], :title => 'Error'[:alert_error], :error => exc.to_s)
+        add_flash_message(flsh, :text => options[:text], :title => I18n.t(:alert_error), :error => exc.to_s)
       elsif exc.is_a? ActiveRecord::RecordInvalid
         add_flash_message(flsh, :text => options[:text], :object => exc.record)
       else
-        add_flash_message(flsh, :title => 'Error'[:alert_error], :error => exc.to_s)
+        add_flash_message(flsh, :title => I18n.t(:alert_error), :error => exc.to_s)
       end
     elsif options[:object]
       object = options[:object]
       unless object.errors.empty?
         flsh[:type] = 'error'
-        flsh[:text] += content_tag :p, "There are problems with the following fields"[:alert_field_errors] + ":"
+        flsh[:text] += content_tag :p, I18n.t(:alert_field_errors) + ":"
         flsh[:text] += content_tag :ul, object.errors.full_messages.collect { |msg| content_tag :li, msg }
       end
     elsif options[:error]
@@ -207,7 +207,7 @@ module FlashMessageHelper
       flsh[:type] = 'info'
       flsh[:title] = options[:info]
     elsif options[:permission_denied]
-      add_flash_message(flsh, :title => 'Permission Denied'[:alert_permission_denied])
+      add_flash_message(flsh, :title => I18n.t(:alert_permission_denied))
     else
       flsh[:type] = options[:type]
     end

@@ -1,5 +1,5 @@
 <% @title_box = capture do -%>
-<h1><%= 'Select Page Types'.t %></h1>
+<h1><%= I18n.t(:select_page_types) %></h1>
 <% end %>
 
 <%- form_tag(:controller => '/group', :action => 'edit_tools', :id => @group) do -%>

@@ -11,7 +11,7 @@
 #
 # For not found, use:
 #
-#   raise_not_found("Invite"[:invite])
+#   raise_not_found(I18n.t(:invite))
 #
 # Some people might consider this bad programming style, since it uses exceptions
 # for error messages and they consider exceptions to be only for the unexpected.
@@ -146,9 +146,9 @@ module ControllerExtension::RescueErrors
     end
 
     if logged_in?
-      add_flash_message(flsh, :title => "Permission Denied"[:alert_permission_denied], :error => 'You do not have sufficient permission to perform that action.'[:permission_denied_description])
+      add_flash_message(flsh, :title => I18n.t(:alert_permission_denied), :error => I18n.t(:permission_denied_description))
     else
-      add_flash_message(flsh, :title => 'Login Required'[:login_required], :type => 'info', :text => 'Please login to perform that action.'[:login_required_description])
+      add_flash_message(flsh, :title => I18n.t(:login_required), :type => 'info', :text => I18n.t(:login_required_description))
     end
   end
 

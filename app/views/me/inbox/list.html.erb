@@ -3,8 +3,8 @@ p#inbox_buttons {
   text-align: right;
 }
 <% end -%>
-<% @title_box = content_tag :h1, "My Inbox"[:my_inbox_headline] %>
-<% @info_box = "Inbox of pages I am actively participating in or watching for changes."[:inbox_description] %>
+<% @title_box = content_tag :h1, I18n.t(:my_inbox_headline) %>
+<% @info_box = I18n.t(:inbox_description) %>
 
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups, :show_extras => 'true', :url => url_for(:action => 'search')} %><br/>
@@ -15,8 +15,8 @@ p#inbox_buttons {
     :columns => [:checkbox, :icon, :title, :owner, :updated_by, :updated_at, :contributors]} %>
 
 <p id='inbox_buttons'>
-  <%= link_to_function 'Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %> &nbsp;&nbsp;
-  <%= submit_link 'Remove from inbox'[:remove_from_inbox], :name => 'remove' %> 
+  <%= link_to_function I18n.t(:toggle_selection), "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})" %> &nbsp;&nbsp;
+  <%= submit_link I18n.t(:remove_from_inbox), :name => 'remove' %> 
 </p>
   
 <% end # form -%>

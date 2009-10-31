@@ -125,9 +125,9 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
     end
     will_paginate(things, defaults.merge(options))
   end
@@ -144,7 +144,7 @@ module ApplicationHelper
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'[:see_more_link]+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 
@@ -169,7 +169,7 @@ module ApplicationHelper
 
     more_link = activity.link
     if more_link.is_a? Hash
-      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
+      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
     end
     more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
 
@@ -185,7 +185,7 @@ module ApplicationHelper
   end
 
   def formatting_reference_link
-   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % I18n.t(:formatting_reference_link)
   end
 
   # returns the related help string, but only if it is translated.

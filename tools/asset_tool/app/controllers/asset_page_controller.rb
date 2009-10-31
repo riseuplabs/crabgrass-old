@@ -82,7 +82,7 @@ class AssetPageController < BasePageController
 
   def build_page_data
     unless params[:asset][:uploaded_data].any?
-      @page.errors.add_to_base "No data uploaded"[:no_data_uploaded]
+      @page.errors.add_to_base I18n.t(:no_data_uploaded)
       raise ActiveRecord::RecordInvalid.new(@page)
     end
 

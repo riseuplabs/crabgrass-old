@@ -39,12 +39,12 @@ module BasePage::ShareHelper
     end
 
     if options[:include_none]
-      items.unshift(:value => '', :label => "None"[:none], :style => 'font-style: italic')
+      items.unshift(:value => '', :label => I18n.t(:none), :style => 'font-style: italic')
       selected_item ||= ''
     end
 
     if options[:include_me]
-      items.unshift(:value => current_user.name, :label => "%s (%s)" % ['Me'[:only_me], current_user.name], :style => 'font-style: italic')
+      items.unshift(:value => current_user.name, :label => "%s (%s)" % [I18n.t(:only_me), current_user.name], :style => 'font-style: italic')
       selected_item ||= current_user.name
     end
 
@@ -82,14 +82,14 @@ module BasePage::ShareHelper
 
   def page_access_options(options={})
     @access_options ||= [
-      ['Full Access'[:page_access_admin],'admin'],
-      ['Write Ability'[:page_access_edit],'edit'],
-      ['Read Only'[:page_access_view],'view']
+      [I18n.t(:page_access_admin),'admin'],
+      [I18n.t(:page_access_edit),'edit'],
+      [I18n.t(:page_access_view),'view']
     ]
     if options[:remove]
-      @access_options + [['No Access'[:page_access_none],'remove']]
+      @access_options + [[I18n.t(:page_access_none),'remove']]
     elsif options[:blank]
-      @access_options + [["(%s)" % 'No Change'[:no_change],'']]
+      @access_options + [["(%s)" % I18n.t(:no_change),'']]
     else
       @access_options
     end

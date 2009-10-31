@@ -17,7 +17,7 @@
     <td></td>
     <td>
       <div class="info">
-        <%= "Adding, removing and reordering page names on this list will immediately update what featured pages users see."[:updating_this_list_will_update_featured_pages] %>
+        <%= I18n.t(:updating_this_list_will_update_featured_pages) %>
       </div>
     </td>
   </tr>
@@ -25,7 +25,7 @@
 
 <% form_tag(groups_params(:action => 'show'), :method => :get, :multipart => false) do %>
 
-  <p class="form_buttons"><%= submit_tag "Done"[:done_button], :name => nil %></p>
+  <p class="form_buttons"><%= submit_tag I18n.t(:done_button), :name => nil %></p>
 <% end %>
 
   

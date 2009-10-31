@@ -2,11 +2,11 @@
 
 ways to translate a string:
 
-  "Hello"[:hello]
-  "Hello".t
-  :hello.t
+  I18n.t(:hello)
+  I18n.t(:hello)
+  I18n.t(:hello)
   "Hello %s" / id
-  _('Hello')
+  I18n.t(:hello)
 
 Too many! _ and / should not be used.
 

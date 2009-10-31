@@ -57,7 +57,7 @@ module Groups::MenuItemsHelper
 
 #  def cancel_menu_item_button(spinner_id)
 #    url = groups_menu_items_url(:action=>'update', :_method => :put)
-#    button_to_remote "Cancel".t,
+#    button_to_remote I18n.t(:cancel),
 #      :url      => url, # same as for the form. Update without data will just reload.
 #      :html     => {:action => url}, # non-ajax fallback
 #      :update => 'menu_items_list_container',

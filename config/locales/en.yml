@@ -242,6 +242,8 @@ en:
 
   confirm_discarding_text_area: "All your unsaved work will be lost. Press {{cancel}} to continue editing."
 
+  is_required: "is required"
+  
   ##
   ## ACCOUNT
   ##

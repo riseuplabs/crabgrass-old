@@ -53,7 +53,7 @@ options_for_page_states(@path) %>
 
 <span style='white-space: nowrap'>
 <%= text_field_tag 'search[text]', @path.search_text, :size => '20' %>
-<%= submit_tag 'Search'[:search] %>
+<%= submit_tag I18n.t(:search) %>
 </span>
 
 <script type="text/javascript">

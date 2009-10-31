@@ -33,7 +33,7 @@ class Me::SearchController < Me::BaseController
 
   def context
     super
-    add_context 'Search'[:me_search_link], url_for(:controller => '/me/search', :action => nil, :path => params[:path])
+    add_context I18n.t(:me_search_link), url_for(:controller => '/me/search', :action => nil, :path => params[:path])
   end
 
   def add_excerpts_to_pages(pages)

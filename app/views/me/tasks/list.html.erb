@@ -1,11 +1,11 @@
 <% @title_box = capture do -%>
-<h1><%= "My Tasks"[:my_tasks_headline] %></h1>
+<h1><%= I18n.t(:my_tasks_headline) %></h1>
 <% end -%>
 <% @info_box = capture do -%>
 <table class="columns">
   <tr>
-    <td><%= "All tasks assigned to me."[:my_tasks_description] %>  <%= link_to 'create new task list'[:create_task_list] + ARROW, create_page_url(TaskListPage) %></td>
-    <td class='right' style='text-align:right'><%= link_line(link_to_active('pending'[:my_pending_tasks_link], :controller => '/me/tasks', :action => 'pending'), link_to_active('completed'[:my_completed_tasks_link], :controller => '/me/tasks', :action => 'completed')) %></td>
+    <td><%= I18n.t(:my_tasks_description) %>  <%= link_to I18n.t(:create_task_list) + ARROW, create_page_url(TaskListPage) %></td>
+    <td class='right' style='text-align:right'><%= link_line(link_to_active(I18n.t(:my_pending_tasks_link), :controller => '/me/tasks', :action => 'pending'), link_to_active(I18n.t(:my_completed_tasks_link), :controller => '/me/tasks', :action => 'completed')) %></td>
   </tr>
 </table>
 <% end -%>

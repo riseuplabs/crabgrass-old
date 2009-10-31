@@ -9,5 +9,5 @@
       <%= link_to letter, url_proc.call(letter_url_opts) %>
     <% end %>
   <% end %>
-  <%= link_to 'All'[:all], url_proc.call(url_opts) %>
+  <%= link_to I18n.t(:all), url_proc.call(url_opts) %>
 </div>

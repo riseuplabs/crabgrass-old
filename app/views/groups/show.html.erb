@@ -1,5 +1,5 @@
 <%- @title_box = capture do -%>
-  <h1><%= "{group_type} Home"[:group_home_headline, {:group_type => @group.group_type.capitalize}] %></h1>
+  <h1><%= I18n.t(:group_home_headline, :group_type => @group.group_type.capitalize) %></h1>
 <%- end -%>
 
 <%- @info_box = capture do -%>
@@ -7,7 +7,7 @@
 <%- end -%>
 
 <% content_for :html_head do %>
-  <link rel="alternate" href="/groups/search/<%= @group.name %>/rss" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" />
+  <link rel="alternate" href="/groups/search/<%= @group.name %>/rss" title="<%= I18n.t(:rss_feed) %>" type="application/rss+xml" />
 <% end %>
 
 <div class='landing'>

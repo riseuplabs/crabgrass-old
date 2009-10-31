@@ -4,15 +4,15 @@ module Admin::SitesHelper
 
     case mode
     when :default
-      :signup_mode_default_description.t
+      I18n.t(:signup_mode_default_description)
     when :closed
-      :signup_mode_closed_description.t
+      I18n.t(:signup_mode_closed_description)
     when :invite_only
-      :signup_mode_invite_only_description.t
+      I18n.t(:signup_mode_invite_only_description)
     when :verify_email
-      :signup_mode_verify_email_description.t
+      I18n.t(:signup_mode_verify_email_description)
     else
-      :unknown.t
+      I18n.t(:unknown)
     end
   end
 end
