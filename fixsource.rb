@@ -11,8 +11,9 @@ $dictionary_supplement = {}
 $dictionary_supplement_locations = {}
 
 $total = 0
-$print_replaced = false
+$print_replaced = true
 $print_reading_file = false
+$writefile = true
 
 def key_exists?(key)
   $dictionary.keys.include?(key)
@@ -36,7 +37,6 @@ def replace_line(line, location_info)
   # <%= "You are logged in as {login}"[:login_info, h(current_user.login)] %>
   when /(["'])([^\1]+)\1\[(:\S+),\s*(\S+[^\]]+)\]/
     line_type = '(MACRO "You are logged in as {login}"[:login_info, h(current_user.login)])'
-
     matched_part = $&
     # break up string into "You are logged in as {login}" and
     # ":login_info, h(current_user.login)"
@@ -107,31 +107,33 @@ def replace_line(line, location_info)
     key = $1
     line.sub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
   # :welcome_greeting.t
-  when /\s:(\S+)\.t[\s,\.]/
+  when /\s:(\S+)\.t([\s,\.])/
     line_type = '(:welcome_greeting.t)'
     key = $1
-    line.sub!(/:(\S+)\.t[\s,\.]/,'I18n.t(:\1)\2')
+    line.sub!(/:(\S+)\.t([\s,\.])/, 'I18n.t(:\1)\2')
   # "hello there".t
-  when /(.*[^"'])(['"])(.+?)\2\.t[\s,]/
+  when /(.*[^"'])(['"])(.+?)\2\.t([\s,\.])/
     line_type = '("hello there".t)'
     prefix = $1
     default_string = $3
+    suffix = $4
     key = $3.downcase.gsub(/\s/, '_')
-    line.sub!(/(.*[^"'])(['"])(.+?)\2\.t[\s,]/, "#{prefix}I18n.t(:#{key}) ")
+    line.sub!(/(.*[^"'])(['"])(.+?)\2\.t[\s,\.]/, "#{prefix}I18n.t(:#{key})#{suffix}")
   # _('Hello There')
-  when /_\((['"])(.+?)\1\)[\s,]/
+  when /_\((['"])(.+?)\1\)([\s,\.])/
     line_type = "_('Hello There')"
     default_string = $2
+    suffix = $3
     key = $2.downcase.gsub(/\s/, '_')
-    line.sub!(/_\((['"])(.+?)\1\)[\s,]/, "I18n.t(:#{key})")
+    line.sub!(/_\((['"])(.+?)\1\)[\s,\.]/, "I18n.t(:#{key})#{suffix}")
   else
     replaced = false
   end
 
   if replaced and $print_replaced
     puts "\n\t\t-- type: #{line_type} --"
-    puts "* KEY:     '#{key}'"
-    puts "* DEFAULT: '#{default_string}'"
+    # puts "* KEY:     '#{key}'"
+    # puts "* DEFAULT: '#{default_string}'"
     puts "   from: #{old_line}"
     puts "   out:  #{line}\n"
     $total += 1
@@ -159,21 +161,34 @@ def checkfile(filename)
   file_warnings = {}
   puts " ---- READING #{filename}" if $print_reading_file
 
+  lines = []
+  replaced = false
   File.open(filename) do |file|
     line_index = 1
     while line = file.gets
       location_info = "#{filename}:#{line_index}"
-      replaced = true
-      while replaced
-        line_warnings, replaced = replace_line(line, location_info)
+      keep_trying = true
+      while keep_trying
+        line_warnings, keep_trying = replace_line(line, location_info)
+        replaced ||= keep_trying
         unless line_warnings.empty?
           file_warnings[line_index] = line_warnings
         end
       end
+
+      lines << line
       line_index += 1
     end
   end
+
+  writefile(filename, lines) if replaced and $writefile
   file_warnings
+end
+
+def writefile(filename, lines)
+  File.open(filename, "w") do |file|
+    lines.each {|line| file.puts line}
+  end
 end
 
 def ruby_code_file?(file)
