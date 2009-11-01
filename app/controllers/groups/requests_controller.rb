@@ -62,7 +62,7 @@ class Groups::RequestsController < Groups::BaseController
     end
     emails.each do |email|
       req = RequestToJoinUsViaEmail.create(:created_by => current_user,
-        :email => email, :requestable => @group, :language => Gibberish.current_language.to_s)
+        :email => email, :requestable => @group, :language => I18n.locale.to_s)
       begin
         Mailer.deliver_request_to_join_us!(req, mailer_options)
         reqs << req

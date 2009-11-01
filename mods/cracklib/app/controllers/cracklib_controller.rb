@@ -1,6 +1,6 @@
 class CracklibController < ActionController::Base
 
-  around_filter :set_language
+  before_folter :set_language
 
   # example params:
   #
@@ -19,9 +19,7 @@ class CracklibController < ActionController::Base
   # an around filter responsible for setting the current language.
   def set_language
     if session[:language_code]
-      Gibberish.use_language(session[:language_code]) { yield }
-    else
-      yield
+      I18n.locale = session[:language_code].to_sym
     end
   end
 

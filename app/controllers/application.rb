@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
-  around_filter :set_language
+  before_filter :set_language
   before_filter :set_timezone, :pre_clean
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
@@ -91,17 +91,13 @@ class ApplicationController < ActionController::Base
         code = request.compatible_language_from(I18n.available_locales)
         code ||= current_site.default_language
         code ||= 'en'
-        code.sub('-', '_').sub(/_\w\w/, '')
+        code.to_s.sub('-', '_').sub(/_\w\w/, '')
       else
-        current_user.language.to_sym
+        current_user.language
       end
     end
 
-    if session[:language_code]
-      Gibberish.use_language(session[:language_code]) { yield }
-    else
-      yield
-    end
+    I18n.locale = session[:language_code].to_sym
   end
 
   # if we have login_required this will be called and check the
