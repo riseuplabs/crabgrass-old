@@ -45,7 +45,7 @@ module Groups::MenuItemsHelper
 #  end
 
 #  def add_menu_item_button(spinner_id, disabled=false)
-#    button_to_remote(:add_button.t, {
+#    button_to_remote(I18n.t(:add_button), {
 #      :url    => groups_menu_items_url(:action=>'new'),
 #      :html   => {:action => groups_menu_items_url(:action=>'new')}, # non-ajax fallback
 #      :loading => show_spinner(spinner_id),

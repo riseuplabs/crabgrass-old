@@ -238,7 +238,7 @@ module PageHelper
   def page_list_updated_or_created(page, options={})
     options[:type] ||= :twolines
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, :page_list_heading_updated.t) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     separator = options[:type]==:twolines ? '<br/>' : '&bull;'
@@ -247,7 +247,7 @@ module PageHelper
 
   def page_list_contribution(page)
     field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, :page_list_heading_updated.t) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
@@ -262,7 +262,7 @@ module PageHelper
       #title += " " + icon_tag("tiny_pending") unless page.resolved?
     end
     if page.flag[:new]
-      title += " <span class='newpage'>#{:page_list_heading_new.t}</span>"
+      title += " <span class='newpage'>#{I18n.t(:page_list_heading_new)}</span>"
     end
     return title
   end

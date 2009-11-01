@@ -9,7 +9,7 @@
   <div id='instructions'>
     <%= I18n.t(:ranked_vote_instructions) %>
     <% form_tag page_xurl(@page, :action => 'confirm') do %>
-      <div style='float:right'><%= submit_tag I18n.t(:confirm_vote_button).t %></div>
+      <div style='float:right'><%= submit_tag I18n.t(:confirm_vote_button) %></div>
       <br style='clear:right'/>
     <% end %>
   </div>
@@ -40,7 +40,7 @@
 </ul>
 
 <%= sortable_element 'sort_list_voted', :handle => 'handle',
-  :containment => ['sort_list_voted', 'sort_list_unvoted'], 
+  :containment => ['sort_list_voted', 'sort_list_unvoted'],
   :url => page_xurl(@page, :action=>'sort') %>
 <%= sortable_element 'sort_list_unvoted', :handle => 'handle',
   :containment => ['sort_list_voted', 'sort_list_unvoted'],

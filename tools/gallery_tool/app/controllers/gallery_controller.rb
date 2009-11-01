@@ -121,7 +121,7 @@ class GalleryController < BasePageController
     if request.xhr?
       render :text => I18n.t(:album_cover_changed), :layout => false
     else
-      flash_message(:album_cover_changed.t)
+      flash_message(I18n.t(:album_cover_changed))
       redirect_to page_url(@page, :action => 'edit')
     end
   rescue ArgumentError # happens with wrong ID

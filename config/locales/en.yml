@@ -472,6 +472,8 @@ en:
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
+  add_star_link: "add star"
+  remove_star_link: "remove star"
 
   ##
   ## ME

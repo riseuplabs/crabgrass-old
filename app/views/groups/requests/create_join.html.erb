@@ -4,7 +4,7 @@
 
 <blockquote>
   <p>
-    <% link_to_requests_html = link_to(:my_requests_link.t, :controller => '/me/requests', :action => 'from_me')%>
+    <% link_to_requests_html = link_to(I18n.t(:my_requests_link), :controller => '/me/requests', :action => 'from_me')%>
     <%= I18n.t(:join_request_info, :link_to_requests => link_to_requests_html) %>
   </p>
   <%- form_tag(:controller => 'groups/requests', :action => 'create_join', :id => @group) do -%>

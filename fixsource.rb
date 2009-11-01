@@ -107,10 +107,10 @@ def replace_line(line, location_info)
     key = $1
     line.sub!(/:(\S+)\.t\s*%\s*\{([^\}]+)\}/,'I18n.t(:\1, \2)')
   # :welcome_greeting.t
-  when /\s:(\S+)\.t([\s,\.])/
+  when /:(\w+)\.t(\W)/
     line_type = '(:welcome_greeting.t)'
     key = $1
-    line.sub!(/:(\S+)\.t([\s,\.])/, 'I18n.t(:\1)\2')
+    line.sub!(/:(\w+)\.t(\W)/, 'I18n.t(:\1)\2')
   # "hello there".t
   when /(.*[^"'])(['"])(.+?)\2\.t([\s,\.])/
     line_type = '("hello there".t)'

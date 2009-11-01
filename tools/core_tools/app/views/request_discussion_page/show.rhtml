@@ -3,9 +3,8 @@
 
 <p>
 <% if @link -%>
-<%= "This request is: :status.".t[:request_status] % {
-  :status => content_tag(:b, @link.resolved? ? I18n.t(:status_resolved) : I18n.t(:status_pending))} -%>
-}
+<% status_html = content_tag(:b, @link.resolved? ? I18n.t(:status_resolved) : I18n.t(:status_pending))} %>
+<%= I18n.t(:request_status, :status =>  status_html) -%>
 <% end -%>
 </p>
 

@@ -13,7 +13,7 @@
 <%= Formy.form do |f|
   f.row do |r|
     r.label 'Size'
-    r.input radio_buttons_tag('image_size', [[:small.t, 'small'],[:medium.t,'medium'],[:large.t, 'large'],[:full.t, 'full']], :id => 'image_size-' + wiki.id.to_s)
+    r.input radio_buttons_tag('image_size', [[I18n.t(:small), 'small'], [I18n.t(:medium),'medium'], [I18n.t(:large), 'large'], [I18n.t(:full), 'full']], :id => 'image_size-' + wiki.id.to_s)
   end
   f.row do |r|
     r.label 'Options'

@@ -15,9 +15,9 @@ module RequestsHelper
     hash[:id] = @group if @group
 
     link_line(
-      link_to_active(:pending.t, hash.merge(:state => 'pending')),
-      link_to_active(:approved.t, hash.merge(:state => 'approved')),
-      link_to_active(:rejected.t, hash.merge(:state => 'rejected'))
+      link_to_active(I18n.t(:pending), hash.merge(:state => 'pending')),
+      link_to_active(I18n.t(:approved), hash.merge(:state => 'approved')),
+      link_to_active(I18n.t(:rejected), hash.merge(:state => 'rejected'))
     )
   end
 

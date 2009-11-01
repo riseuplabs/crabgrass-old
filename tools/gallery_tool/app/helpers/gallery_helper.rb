@@ -205,12 +205,12 @@ module GalleryHelper
     star_img = image_tag('icons/small_png/star_outline.png')
     nostar_img = image_tag('icons/small_png/star.png')
     (star ? add_options : remove_options).merge!(:style => "display:none;")
-    content_tag(:span, link_to_remote(star_img+:add_star.t,
+    content_tag(:span, link_to_remote(star_img + I18n.t(:add_star_link),
                                       :url => page_url(@page,
                                         :action => 'add_star',
                                         :id => image.id),
                                       :update => 'tfjs'), add_options)+
-      content_tag(:span, link_to_remote(nostar_img+:remove_star.t,
+      content_tag(:span, link_to_remote(nostar_img + I18n.t(:remove_star_link),
                                         :url => page_url(@page,
                                           :action => 'remove_star',
                                           :id => image.id),

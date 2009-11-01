@@ -1,5 +1,7 @@
 <% @title_box = content_tag :h1, I18n.t(:trash) %>
-<% @info_box = I18n.t(:trash_description, :undelete => content_tag(:b,I18n.t(:undelete_from_trash)), :destroy => content_tag(:b,I18n.t(:delete_page_via_shared))) %>
+<% @info_box = I18n.t(:trash_description,
+        :undelete => content_tag(:b, I18n.t(:undelete_from_trash)),
+        :destroy => content_tag(:b, I18n.t(:delete_page_via_shared))) %>
 
 <% content_for(:html_head) do %>
   <%= group_search_rss %>
