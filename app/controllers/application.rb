@@ -85,13 +85,13 @@ class ApplicationController < ActionController::Base
   # (5) english
   def set_language
     session[:language_code] ||= begin
-      if LANGUAGES.empty?
-        'en_US'
+      if I18n.available_locales.empty?
+        'en'
       elsif !logged_in? || current_user.language.empty?
-        code = request.compatible_language_from(AVAILABLE_LANGUAGE_CODES)
+        code = request.compatible_language_from(I18n.available_locales)
         code ||= current_site.default_language
-        code ||= 'en_US'
-        code.sub('-', '_')
+        code ||= 'en'
+        code.sub('-', '_').sub(/_\w\w/, '')
       else
         current_user.language.to_sym
       end

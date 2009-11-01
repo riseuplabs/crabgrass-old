@@ -12,7 +12,7 @@ class Translator::BaseController < ApplicationController
   include Translator::TranslationsHelper
 
   def index
-    @languages = LANGUAGES.values
+    @languages = I18n.available_languages
   end
 
   def apply_translations
