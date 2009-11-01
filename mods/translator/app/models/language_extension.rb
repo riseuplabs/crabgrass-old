@@ -10,7 +10,7 @@ module LanguageExtension
   module ClassMethods
     def default
       # TODO: make this configurable
-      @default ||= find_by_code('en_US')
+      @default ||= find_by_code('en')
     end
   end
 

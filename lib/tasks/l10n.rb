@@ -31,7 +31,7 @@ end
 def load_locale_data(language, site, dictionary)
   site_id = site ? site.id : nil
 
-  canonical_language = Language.find_by_code("en_US")
+  canonical_language = Language.find_by_code("en")
 
   dictionary.each do |k, text|
     if (language == canonical_language) && site.nil?
@@ -205,7 +205,7 @@ namespace :cg do
 
     desc "Create a piglatin file for testing"
     task(:create_piglatin) do
-      english = YAML::load_file(File.join(LANG_DIR, 'en_US.yml'))
+      english = YAML::load_file(File.join(LANG_DIR, 'en.yml'))
       piglatin = {}
       english.each do |k,v|
         piglatin[k] = v.split.map{|word| word.pig}.join(" ")

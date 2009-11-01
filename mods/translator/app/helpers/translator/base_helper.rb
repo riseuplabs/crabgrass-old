@@ -9,7 +9,7 @@ module Translator::BaseHelper
 
   # Crabgrass UI is written in English
   def crabgrass_default_language
-    Language.find_by_code("en_US")
+    Language.find_by_code("en")
   end
 
   # just like link_to, but sets the <a> tag to have class 'active'
