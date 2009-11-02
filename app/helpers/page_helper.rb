@@ -308,7 +308,7 @@ module PageHelper
     elsif column == :contribution
       list_heading I18n.t(:page_list_heading_contribution), 'updated_at', options
     elsif column
-      list_heading column.to_s.t, column.to_s, options
+      list_heading I18n.t(column.to_sym, :default => column.to_s), column.to_s, options
     end
   end
 

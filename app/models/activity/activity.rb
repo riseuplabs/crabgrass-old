@@ -193,7 +193,7 @@ class Activity < ActiveRecord::Base
     if group = self.send(attribute)
       group.group_type.downcase
     elsif group_type = self.send(attribute.to_s + '_type')
-      group_type.t.downcase
+      I18n.t(group_type.downcase.to_sym).downcase
     end
   end
 

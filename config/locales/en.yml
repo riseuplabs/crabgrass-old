@@ -1196,6 +1196,11 @@ en:
   show_results_tab: "Show results"
   top_pick: "top pick"
 
+  vote_good: "good"
+  vote_ok: "ok"
+  vote_bad: "bad"
+  vote_none: "none"
+
   ##
   ## SURVEY PAGE
   ##

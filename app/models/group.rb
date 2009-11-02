@@ -138,7 +138,8 @@ class Group < ActiveRecord::Base
   def network?;   instance_of? Network;   end
   def normal?;    instance_of? Group;     end
   def council?;   instance_of? Council;   end
-  def group_type; self.class.name.t;      end
+
+  def group_type; I18n.t(self.class.name.downcase.to_sym); end
 
   ##
   ## PROFILE

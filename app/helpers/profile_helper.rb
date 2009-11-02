@@ -42,10 +42,6 @@ module ProfileHelper
 =end
   end
 
-  def option_array(types)
-    types.collect{|a| [a.t, a] }
-  end
-
   def select_tag_with_id(name, option_tags = nil, options = {})
     tag_id = options.has_key?(:id) ? options[:id] : name
     content_tag :select, option_tags, { "name" => name, "id" => tag_id }.update(options.stringify_keys)

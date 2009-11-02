@@ -17,7 +17,10 @@
         <tr>
           <td align='right'><b><%= I18n.t(:format) %>:</b></td>
           <td>&nbsp;</td>
-          <td><%= @asset.format_description.t %> (<%=@asset.ext%>)</td>
+          <td>
+            <%= I18n.t(@asset.format_description.to_sym, :default => @asset.format_description) %>
+            (<%= @asset.ext %>)
+          </td>
         </tr>
       </table>
 

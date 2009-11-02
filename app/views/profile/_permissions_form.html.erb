@@ -45,7 +45,7 @@
         <td class="description"><%= I18n.t(:user_profile_description_may_see) %></td>
       </tr>
     <%- elsif @group -%>
-      <%- group_type = @group.type.t -%>
+      <%- group_type = I18n.t(((@group.type.try.downcase) || 'group').to_sym) -%>
       <tr class="<%=cycle('odd','even')%>">
         <td>
           <label class="checkbox"><%= check_box 'profile', 'may_see_groups', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_groups) %></label>
