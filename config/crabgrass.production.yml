@@ -40,7 +40,6 @@ enabled_tools:
   - survey_tool
 email:
   delivery_method: :sendmail
-  dev_email: "jeffrey@tinflag.com"
 
 
 profiles:
@@ -69,6 +68,7 @@ default_language: en_US
 enforce_ssl: false
 show_exceptions: true
 email_sender: "robot@$current_host"
+dev_email: "jeffrey@tinflag.com"
 chat: false
 tracking: true
 require_user_email: true
