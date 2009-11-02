@@ -173,6 +173,7 @@ en:
   approve_button: "Approve"
   reject_button: "Reject"
   close_button: "Close"
+  close_link: "close"
   share_button: "Share"
   save_button: "Save"
   move_button: "Move"

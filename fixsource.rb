@@ -193,14 +193,13 @@ end
 
 def ruby_code_file?(file)
   return false if file =~ /^\./
-  return false if file =~ /(jar|jpg|png|swf|xcf|gz|log|ico|svg|beam|sp\w|doc|yml|pdf|rd|gif|tiff|js|sqlite3)$/i
+  return false if file =~ /\.(jar|jpg|png|swf|xcf|gz|log|dia|ico|svg|beam|sp\w|doc|yml|pdf|rd|gif|tiff|js|sqlite3)$/i
   return false if file =~ /gibberish|fixsource\.rb|coderay|multiple_select|ruby_sess\./
 
   true
 end
 def searchdirectory(directory)
   dir_warnings = {}
-
   Dir.open(directory) do |dir|
     dir.each do |file|
       next unless ruby_code_file? file

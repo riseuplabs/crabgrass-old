@@ -2,23 +2,23 @@
 <% hide_profile = false if hide_profile.nil? %>
 
 <% unless hide_heading %>
-<h2 class='dim'><%= "Welcome to {site_title}, {user_name}!"[:welcome_heading, {:site_title => current_site.title, :user_name => current_user.display_name}] %></h2>
+<h2 class='dim'><%= I18n.t(:welcome_heading, :site_title => current_site.title, :user_name => current_user.display_name) %></h2>
 <% end %>
 
-<p class='description'><%= "Crabgrass enables social change organizations to get things done, get the word out, collaborate, and network."[:welcome_message] %> <%# link_to "More Information"[:more_information]+ARROW, :welcome_message_more_information_url.t %> </p>
+<p class='description'><%= I18n.t(:welcome_message) %> <%# link_to I18n.t(:more_information)+ARROW, I18n.t(:welcome_message_more_information_url) %> </p>
 
 <table>
 <% unless hide_profile %>
 <tr>
 
   <td>
-    <h3 class='small_icon profile_16'><%= link_to "Edit your profile"[:welcome_edit_profile_link], :controller => '/profile', :action => 'edit', :id => 'public' %></h3>
-    <span><%= "Let other people know more about you by editing your public or private profiles."[:welcome_edit_profile_text] %></span>
+    <h3 class='small_icon profile_16'><%= link_to I18n.t(:welcome_edit_profile_link), :controller => '/profile', :action => 'edit', :id => 'public' %></h3>
+    <span><%= I18n.t(:welcome_edit_profile_text) %></span>
   </td>
 
   <td>
-    <h3 class='small_icon user_icon_16'><%= link_to "Upload a user icon"[:welcome_upload_icon_link], :controller => '/me', :action => 'edit', :id => nil %></h3>
-    <span><%= "Upload an image to use as your icon. This icon will appear next to every comment you make."[:welcome_upload_icon_text] %></span>
+    <h3 class='small_icon user_icon_16'><%= link_to I18n.t(:welcome_upload_icon_link), :controller => '/me', :action => 'edit', :id => nil %></h3>
+    <span><%= I18n.t(:welcome_upload_icon_text) %></span>
   </td>
 
 </tr>
@@ -26,13 +26,13 @@
 <tr>
 
   <td>
-    <h3 class='small_icon user_16'><%= link_to "Find people"[:welcome_find_people_link], :controller => '/people', :action => nil %></h3>
-    <span><%= "Browse the user directory for people you know."[:welcome_find_people_text] %></span>
+    <h3 class='small_icon user_16'><%= link_to I18n.t(:welcome_find_people_link), :controller => '/people', :action => nil %></h3>
+    <span><%= I18n.t(:welcome_find_people_text) %></span>
   </td>
 
   <td>
-    <h3 class='small_icon group_16'><%= link_to "Find groups"[:welcome_find_groups_link], :controller => '/groups', :action => nil %></h3>
-    <span><%= "Browse the group directory for groups to join."[:welcome_find_groups_text] %></span>
+    <h3 class='small_icon group_16'><%= link_to I18n.t(:welcome_find_groups_link), :controller => '/groups', :action => nil %></h3>
+    <span><%= I18n.t(:welcome_find_groups_text) %></span>
   </td>
 
 </tr>
@@ -40,13 +40,13 @@
 <tr>
 
   <td>
-    <h3 class='small_icon membership_add_16'><%= link_to "Create a new group"[:welcome_create_group_link], groups_url(:action => 'new') %></h3>
-    <span><%= "Create a new group and invite other people to join. Groups allow you to share and collaborate with other people."[:welcome_create_group_text] %></span>
+    <h3 class='small_icon membership_add_16'><%= link_to I18n.t(:welcome_create_group_link), groups_url(:action => 'new') %></h3>
+    <span><%= I18n.t(:welcome_create_group_text) %></span>
   </td>
 
   <td>
-    <h3 class='small_icon page_add_16'><%= link_to "Create a new page"[:welcome_create_page_link], :controller => '/pages', :action => 'create' %></h3>
-    <span><%= "You can create new discussions, new wiki pages, upload images and files, start task lists, and much more..."[:welcome_create_page_text] %></span>
+    <h3 class='small_icon page_add_16'><%= link_to I18n.t(:welcome_create_page_link), :controller => '/pages', :action => 'create' %></h3>
+    <span><%= I18n.t(:welcome_create_page_text) %></span>
   </td>
 
 </tr>

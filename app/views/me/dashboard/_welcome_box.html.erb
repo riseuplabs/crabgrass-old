@@ -1,11 +1,11 @@
 <div id='welcome_box'>
-  <% if current_user.setting.show_welcome? %> 
+  <% if current_user.setting.show_welcome? %>
    <div class="inset_box round">
      <%= render :partial => 'welcome_box_content' %>
-     <div style='text-align:right'><%= link_to_remote_with_icon "Close Welcome"[:welcome_hide_link], :url => {:controller => 'me/dashboard', :action => 'close_welcome_box'}, :icon => 'cancel' %></div>
+     <div style='text-align:right'><%= link_to_remote_with_icon I18n.t(:welcome_hide_link), :url => {:controller => 'me/dashboard', :action => 'close_welcome_box'}, :icon => 'cancel' %></div>
    </div>
   <% else %>
-     <div style='float:right'><%= link_to_remote_with_icon "Show Welcome"[:welcome_show_link], :url => {:controller => 'me/dashboard', :action => 'show_welcome_box'}, :icon => 'weather_sun' %></div>
-  <% end %> 
+     <div style='float:right'><%= link_to_remote_with_icon I18n.t(:welcome_show_link), :url => {:controller => 'me/dashboard', :action => 'show_welcome_box'}, :icon => 'weather_sun' %></div>
+  <% end %>
 </div>
 

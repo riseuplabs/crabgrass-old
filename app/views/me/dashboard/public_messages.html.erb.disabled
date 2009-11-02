@@ -2,7 +2,7 @@
   @message_box ||= render(
     :partial => 'common/say_form',
     :locals => {
-      :submit => "Post New Message"[:wall_post_button],
+      :submit => I18n.t(:wall_post_button),
       :url => url_for(:controller => '/messages', :action => 'create', :user => @user)
     }
   )
