@@ -151,22 +151,19 @@ class PageFinderTest < Test::Unit::TestCase
   end
 
   def test_tagging
-    login(:blue)
-    user = users(:blue)
+    user = User.make
+    login(user)
 
     name = 'test page'
-    page = WikiPage.new do |p|
-      p.title = name.titleize
-      p.name = name.nameize
-      p.created_by = user
-    end
+    page = WikiPage.make_unsaved :title => name.titleize, :name => name.nameize, :created_by => user
     page.save
     page.add(user)
-    page.add(groups(:rainbow))
+    rainbow_group = Group.make
+    page.add(rainbow_group)
     page.tag_list = "pig, fish, elephant"
     page.save!
 
-    pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(groups(:rainbow)))
+    pages = Page.find_by_path('/tag/fish/', @controller.options_for_group(rainbow_group))
     assert_equal page.id, pages.first.id, 'find by tag should return correct page'
 
     pages = Page.find_by_path('/tag/fish/', @controller.options_for_me)

@@ -76,6 +76,7 @@ module WikiPageHelper
     # this is the heading node we want replace with the forms
     replace_node = find_heading_node(doc, section)
     # everything between replace_node and next_good_node should be deleted
+
     next_good_node = find_heading_node(doc, wiki.successor_for_section(section).try.name)
 
     # these nodes should be deleted
@@ -115,7 +116,12 @@ module WikiPageHelper
 
   def find_heading_node(doc, section)
     return nil if section.nil?
-    doc.at("a[@name=#{section}]").parent
+    anchor = doc.at("a[@name=#{section}]")
+    if anchor.nil?
+      raise WikiSectionError, "Can't find wiki section {section}"[:cant_find_wiki_section, section]
+    end
+
+    anchor.parent
   end
 end
 

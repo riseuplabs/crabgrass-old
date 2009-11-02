@@ -1,0 +1,15 @@
+<p><%= link_to "Back to the page"[:back_to_the_page], page_url(@page, :action => "show") %></p>
+
+<table class="pretty">
+  <tr>
+    <th><%= "date"[:date] %></th>
+    <th><%= "action"[:action] %></th>
+  </tr>
+
+  <% @page.page_histories.each do |ph| %>
+    <tr class="<%= cycle('odd','even') %>">
+      <td><%= full_time(ph.created_at) %></td>
+      <td><%= description_for(ph) %></td>
+    </tr>
+  <% end %>
+</table>

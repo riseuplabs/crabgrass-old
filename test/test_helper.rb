@@ -26,6 +26,8 @@ $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+
 require 'webrat'
 Webrat.configure do |config|
   config.mode = :rails
@@ -68,6 +70,7 @@ def mailer_options
 end
 
 class Test::Unit::TestCase
+  setup { Sham.reset }
 
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -373,6 +376,15 @@ See also doc/SPHINX"
   ##
   ## AUTHENTICATION
   ##
+  def login_as(user)
+    user = case user
+      when Symbol then users(user)
+      when User   then user
+      else             nil
+    end
+    @controller.stubs(:current_user).returns(user)
+    @request.session[:user] = user
+  end
 
   # the normal acts_as_authenticated 'login_as' does not work for integration tests
   def login(user)

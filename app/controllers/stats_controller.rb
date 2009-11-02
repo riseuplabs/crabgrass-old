@@ -34,6 +34,16 @@ class StatsController < ApplicationController
     render :template => 'stats/stats'
   end
 
+
+  def version
+    @version_info = grab_version_info
+    respond_to do |wants|
+      wants.html
+      wants.xml {render :xml => @version_info}
+      wants.json {render :json => @version_info}
+    end
+  end
+
 #  def log
 #    if defined?(ANALYZABLE_PRODUCTION_LOG) && File.file?(ANALYZABLE_PRODUCTION_LOG)
 #      render :text => '<pre>' + `pl_analyze #{ANALYZABLE_PRODUCTION_LOG}` + '</pre>'
@@ -176,6 +186,27 @@ class StatsController < ApplicationController
   end
   helper_method :pages_updated
 
+  def grab_version_info
+    ### for example:
+    # version => 0.4.6
+    # release => 20091016230956
+    # revision => 78d9244704573366308963078182bb937c4feb91
+    keys = %w(version release revision)
+    version_info = {}
+
+    keys.each do |key|
+      version_info[key] = 'unknown'
+
+      data_file = File.join(Rails.root, key.upcase)
+      if File.exists?(data_file)
+        data = File.read(data_file).chomp
+        data = Time.parse(data).to_s(:db) if key == 'release'
+        version_info[key] = data unless data.blank?
+      end
+    end
+
+    version_info
+  end
   private
 
   def quote_sql(*args)

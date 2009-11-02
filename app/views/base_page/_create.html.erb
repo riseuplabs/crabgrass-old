@@ -3,7 +3,7 @@
 
 <% @title_box = capture do -%>
   <div class='big_icon <%= @page_class.icon%>_48'>
-    <h1><%= "Create a new {thing}"[:create_a_new_thing, content_tag(:i, page_class.downcase)] %></h1>
+    <h1><%= "Create a new {thing}"[:create_a_new_thing, {:thing => content_tag(:i, page_class.downcase)}] %></h1>
   </div>
 <% end -%>
 
@@ -19,7 +19,7 @@
   <%= hidden_field_tag('group', params[:group]) if params[:group] %>
   <%= Formy.form do |form|
     render :partial => 'base_page/create/information', :locals => {:form => form}
-    
+
     if sections.any_in? ['file','files','external_video','body', 'image', 'event']
       #form.header '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase
       sections.each do |section|

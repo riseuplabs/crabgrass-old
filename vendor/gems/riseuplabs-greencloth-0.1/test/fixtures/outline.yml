@@ -2,7 +2,9 @@
 name: empty outline
 in: |-
   [[toc]]
-out: ""
+out: |-
+  <ul class="toc">
+  </ul>
 ---
 name: fruity outline
 in: |-
@@ -313,15 +315,78 @@ in: |-
 
   h2. [-table-]
 
+  [# Heading anchor -> head_anchor #]
+  -----------------------------------
+
+  h2. Anchor within [# heading -> head_anchor #]
+
+  Dots ...
+  --------
+
 out: |-
   <h2 class="first"><a name="emphasis"></a><em>emphasis</em><a class="anchor" href="#emphasis">&para;</a></h2>
   <h2><a name="italicized"></a><i>italicized</i><a class="anchor" href="#italicized">&para;</a></h2>
   <h2><a name="strong"></a><strong>strong</strong><a class="anchor" href="#strong">&para;</a></h2>
   <h2><a name="bold"></a><b>bold</b><a class="anchor" href="#bold">&para;</a></h2>
   <h2><a name="citation"></a><cite>citation</cite><a class="anchor" href="#citation">&para;</a></h2>
-  <h2><a name="deleted-text"></a>-deleted text-<a class="anchor" href="#deleted-text">&para;</a></h2>
+  <h2><a name="deleted-text"></a><del>deleted text</del><a class="anchor" href="#deleted-text">&para;</a></h2>
   <h2><a name="inserted-text"></a><ins>inserted text</ins><a class="anchor" href="#inserted-text">&para;</a></h2>
   <h2><a name="superscript"></a><sup>superscript</sup><a class="anchor" href="#superscript">&para;</a></h2>
   <h2><a name="subscript"></a><sub>subscript</sub><a class="anchor" href="#subscript">&para;</a></h2>
   <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
+  <h2><a name="table"></a><del>table</del><a class="anchor" href="#table">&para;</a></h2>
+  <h2><a name="heading-anchor"></a><a name="head_anchor">Heading anchor</a><a class="anchor" href="#heading-anchor">&para;</a></h2>
+  <h2><a name="anchor-within-heading"></a>Anchor within <a name="head_anchor">heading</a><a class="anchor" href="#anchor-within-heading">&para;</a></h2>
+  <h2><a name="dots"></a>Dots &#8230;<a class="anchor" href="#dots">&para;</a></h2>
 
+---
+name: leading and trailing whitespace
+in: |-
+  Clearly a Section
+  ===
+
+    still a section
+
+  ---
+  more text
+
+  <code>
+    coding
+
+     not a section
+
+    ---
+    more text here
+  </code>
+out: |-
+  <h1 class="first"><a name="clearly-a-section"></a>Clearly a Section<a class="anchor" href="#clearly-a-section">&para;</a></h1>
+  <h2><a name="still-a-section"></a>still a section<a class="anchor" href="#still-a-section">&para;</a></h2>
+  <p>more text</p>
+  <pre><code>  coding
+     not a section
+    ---
+    more text here
+  </code></pre>
+---
+name: code block weirdness
+in: |-
+  real stuff
+  ----
+
+  <code>
+
+  a.. b
+  -----
+
+  aa... bb
+  -----
+
+  </code>
+out: |-
+  <h2 class="first"><a name="real-stuff"></a>real stuff<a class="anchor" href="#real-stuff">&para;</a></h2>
+  <pre><code>
+  a.. b
+  -----
+  aa... bb
+  -----
+  </code></pre>

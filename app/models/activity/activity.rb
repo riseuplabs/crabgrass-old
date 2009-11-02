@@ -141,6 +141,11 @@ class Activity < ActiveRecord::Base
         "subject_type = 'User' AND subject_id = ? AND access != ?",
         user.id, Activity::PRIVATE
       ]}
+    elsif (current_user and (current_user.friend_of?(user) or current_user.peer_of?(user)) or current_user == user)
+      {:conditions => [
+        "subject_type = 'User' AND subject_id = ? AND access != ?",
+        user.id, Activity::DEFAULT
+      ]}
     else
       {:conditions => [
         "subject_type = 'User' AND subject_id = ? AND access = ?",

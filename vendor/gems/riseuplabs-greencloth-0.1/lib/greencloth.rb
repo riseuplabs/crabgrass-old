@@ -344,6 +344,7 @@ class GreenCloth < RedCloth::TextileDoc
 
   def to_html(*before_filters, &block)
     @block = block
+    @original_markup = self.clone()
 
     before_filters += [:delete_leading_whitespace, :normalize_code_blocks,
       :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :auto_links,
@@ -374,11 +375,12 @@ class GreenCloth < RedCloth::TextileDoc
     @headings = []
     @heading_names = {}
 
-    self.extend(GreenClothFormatterHTML)
-    original = self.dup
-    apply_rules([:normalize_heading_blocks])
+    formatter = self.clone()                   # \  in case one of the before filters
+    formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
+
+    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :normalize_heading_blocks])
     to(GreenClothFormatterHTML)
-    self.replace(original)
+    self.replace(formatter)
   end
 
   # what is this used for???

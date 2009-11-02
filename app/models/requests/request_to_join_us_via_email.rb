@@ -41,9 +41,9 @@ class RequestToJoinUsViaEmail < Request
   end
 
   def description
-    ":email was invited to join :group"[:request_to_join_us_via_email_description] % {
+    "{email} was invited to join {group}"[:request_to_join_us_via_email_description, {
       :email => email, :group => group_span(group)
-    }
+    }]
   end
 
   ##

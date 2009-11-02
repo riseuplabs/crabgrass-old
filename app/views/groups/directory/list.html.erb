@@ -2,7 +2,7 @@
 
 <% if @groups.any? %>
 
-  <%= letter_pagination_links(group_directory_params(:action => 'search'), :available_letters => @pagination_letters) if @pagination_letters %>
+  <%= letter_pagination_links(directory_params(:group_type => @group_type, :action => 'search'), :available_letters => @pagination_letters) if @pagination_letters %>
 
   <%= pagination_links(@groups) %>
   <%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => @show_committees }%>

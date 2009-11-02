@@ -1,5 +1,5 @@
 <% dialog_page(
-  :title => 'Accept invitation to join group'[:invite_accept_headline, @request.group.name], 
+  :title => 'Accept invitation to join group "{group_name}"'[:invite_accept_headline, {:group_name => @request.group.name}],
   :details => "Click one of the following to accept the invite"[:invite_accept_info]
 ) do %>
   <ul>

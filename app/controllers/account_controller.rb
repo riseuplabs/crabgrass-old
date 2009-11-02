@@ -18,7 +18,7 @@ class AccountController < ApplicationController
   def login
     if !( params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
       flash_message(:title => 'Illegal redirect'[:illegal_redirect],
-      :error => "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain]%{ :url => params.delete(:redirect)})
+      :error => "You are trying to redirect to a foreign domain {url} after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain, {:url => params.delete(:redirect)}])
       redirect_to params and return
     end
     return unless request.post?
@@ -173,10 +173,6 @@ class AccountController < ApplicationController
   end
 
   protected
-  #def send_welcome_message(user)
-  #  page = Page.make :private_message, :to => user, :from => user, :title => 'Welcome to crabgrass!', :body => :welcome_text.t
-  #  page.save
-  #end
 
   # where to go when the user logs in?
   # depends on the settings (for example, unverified users should not see any pages)

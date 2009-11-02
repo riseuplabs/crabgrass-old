@@ -25,7 +25,9 @@ module BackgrounDRb
 
     def self.read_config(config_file)
       config = YAML.load(ERB.new(IO.read(config_file)).result)
-      environment = ENV["RAILS_ENV"] || config[:backgroundrb][:environment] || "development"
+
+      environment = RAILS_ENV if defined? RAILS_ENV
+      environment ||= ENV["RAILS_ENV"] || config[:backgroundrb][:environment] || "development"
 
       if respond_to?(:silence_warnings)
         silence_warnings do

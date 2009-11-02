@@ -1,8 +1,10 @@
 <%# this is a partial of search controls to be used by any search view %>
 <% 
-  if @user
-    users ||= @user.friends
-    groups ||= @user.groups
+  if @user and @profile
+    users ||= @user.friends if @profile.may_see_contacts?
+    groups ||= @user.groups.visible_by(current_user) if @profile.may_see_groups?
+    users ||= []
+    groups ||= []
     users.unshift @user unless users.include? @user
   else
     users ||= nil; groups ||= nil 

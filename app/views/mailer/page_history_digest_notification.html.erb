@@ -1,0 +1,17 @@
+Hello <%= @user.display_name %>,
+
+The page you are watching "<%= @page.title %>" has been modified:
+<%= "http://#{@site.domain}#{page_url(@page)}" %>
+
+<% @page_histories.each do |page_history| %>
+  <%= "* #{description_for(page_history)} at #{full_time(page_history.created_at)}" %>
+  <%= details_for(page_history).concat("\n\n\n") if !details_for(page_history).empty? %>
+<% end %>
+
+
+------------
+
+Change your email notification settings here: <%= "http://#{@site.domain}#{me_url(:action => 'edit')}" %>
+You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed.
+
+------------
