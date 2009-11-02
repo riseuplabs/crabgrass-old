@@ -31,7 +31,7 @@ class CracklibController < ActionController::Base
       when :password_error_confirmation then 'info'
       else 'failed'
     end
-   "<span class='#{klass}'>#{"Password".t} #{translated_str}</span>"
+   "<span class='#{klass}'>#{I18n.t(:password)} #{translated_str}</span>"
   end
 
 end

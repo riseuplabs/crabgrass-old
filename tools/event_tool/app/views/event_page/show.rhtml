@@ -4,7 +4,7 @@
   <td><%= full_time @event.starts_at %></td>
 </tr>
 <tr>
-  <td align='right'><b><%= if !@event.is_all_day then 'ends at'.t+' :' else I18n.t(:all_day_event) end%></b></td>
+  <td align='right'><b><%= if !@event.is_all_day then I18n.t(:ends_at)+' :' else I18n.t(:all_day_event) end%></b></td>
   <td><%= if !@event.is_all_day then full_time @event.ends_at end%></td>
 </tr>
 <tr>

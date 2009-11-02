@@ -16,6 +16,7 @@ en:
   all_day_event: "all day event"
   update_event: "Update event"
   starts_at: "starts at"
+  ends_at: "ends at"
   place: "place"
 
 
@@ -1195,6 +1196,7 @@ en:
   edit_my_vote_tab: "Edit my vote"
   show_results_tab: "Show results"
   top_pick: "top pick"
+  first_choice_of: "first choice of"
 
   vote_good: "good"
   vote_ok: "ok"
@@ -1228,6 +1230,7 @@ en:
 
   # responses
 
+  survey: "Survey"
   survey_response_by: "Response by {{login}}"
 
   see_whole_response_link: "see whole response"

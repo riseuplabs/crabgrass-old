@@ -30,12 +30,12 @@
 <% end -%>
 
 <% if users.any? -%>
-<%= select_tag 'search[person]', "<option value=''>#{'all people'.t}</option>"+
+<%= select_tag 'search[person]', "<option value=''>#{I18n.t(:all_people)}</option>"+
 options_from_collection_for_select(users, "id", "name", @path.int_for('person')) %>
 <% end -%>
 
 <% if groups -%>
-<%= select_tag 'search[group]', "<option value=''>#{'all groups'.t}</option>"+
+<%= select_tag 'search[group]', "<option value=''>#{I18n.t(:all_groups)}</option>"+
 options_from_collection_for_select(groups, "id", "name", @path.int_for('group')) %>
 <% end -%>
 
@@ -43,7 +43,7 @@ options_from_collection_for_select(groups, "id", "name", @path.int_for('group'))
 <%# select_month(@path.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
 <%# select_year(@path.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
 
-<%= select_tag 'search[page_state]', "<option value=''>#{'all states'.t}</option>"+
+<%= select_tag 'search[page_state]', "<option value=''>#{I18n.t(:all_states)}</option>"+
 options_for_page_states(@path) %>
 <!--
 <label><%= check_box_tag 'search[pending]', 'true', @path.keyword?('pending') %> pending</label>

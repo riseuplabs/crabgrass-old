@@ -53,7 +53,7 @@ module ProfileHelper
   end
 
   #def birthday_line(profile)
-  #  "TODO (birthday_line)"#"<div class='small_icon date_16'><em>#{:"Year of birth".t} </em>: #{profile.birthday.year}</div>"
+  #  "TODO (birthday_line)"#"<div class='small_icon date_16'><em>#{I18n.t(:I18n)(:year_of_birth)} </em>: #{profile.birthday.year}</div>"
   #end
 
   #def interest_line(profile)

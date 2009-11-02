@@ -19,12 +19,12 @@
 
 <div class="pagination">
 <% if @old.version.to_i != 1 %>
-  <%= link_to "« #{"prev change".t}", page_url(@page, :action => 'version-diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
+  <%= link_to "« #{I18n.t(:prev_change)}", page_url(@page, :action => 'version-diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
   <span class="disabled">« <%= I18n.t(:prev_change) %></span>
 <% end %>
 <% if @wiki.version != @new.version %>
-  <%= link_to "#{"next change".t} »", page_url(@page, :action => 'version-diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
+  <%= link_to "#{I18n.t(:next_change)} »", page_url(@page, :action => 'version-diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
   <span class="disabled"><%= I18n.t(:next_change) %> »</span>
 <% end %>

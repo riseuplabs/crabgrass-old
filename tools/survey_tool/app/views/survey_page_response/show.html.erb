@@ -5,7 +5,7 @@ if @response
     links << link_to(I18n.t(:edit), page_url(@page, :action => 'response-edit', :id => @response.id))
   end
   if may_destroy_survey_response?(@response)
-    links << link_to(I18n.t(:delete), page_url(@page, :action => 'response-destroy', :id => @response.id), :method => :post, :confirm => I18n.t(:destroy_confirmation, :thing => 'Survey'.t))
+    links << link_to(I18n.t(:delete), page_url(@page, :action => 'response-destroy', :id => @response.id), :method => :post, :confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:survey)))
   end
   if @response.user_id != current_user.id
     links << link_to(I18n.t(:pagination_previous), page_url(@page, :action => 'response-show', :id => @response.id, :jump => 'prev'))

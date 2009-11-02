@@ -46,7 +46,7 @@ class Groups::RequestsController < Groups::BaseController
 
     reqs = []; mailers = []
     unless users.any? or emails.any? or groups.any?
-      raise ErrorMessage.new('recipient required'.t)
+      raise ErrorMessage.new(I18n.t(:recipient_required))
     end
     users.each do |user|
       if params[:email_all]
@@ -67,7 +67,7 @@ class Groups::RequestsController < Groups::BaseController
         Mailer.deliver_request_to_join_us!(req, mailer_options)
         reqs << req
       rescue Exception => exc
-        flash_message_now :text => "#{'Could not deliver email'.t} (#{email}):", :exception => exc
+        flash_message_now :text => "#{I18n.t(:could_not_deliver_email)} (#{email}):", :exception => exc
         req.destroy
       end
     end

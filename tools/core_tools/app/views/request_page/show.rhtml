@@ -3,7 +3,7 @@
 <% if @page.resolved? and @request.vote %>
 <div>
   <%= I18n.t(:request_status) % {
-   :staus => content_tag(:b, @request.vote.value == 1 ? I18n.t(:approved) : 'rejected'.t),
+   :staus => content_tag(:b, @request.vote.value == 1 ? I18n.t(:approved) : I18n.t(:rejected)),
    :user => content_tag(:b, @request.vote.user.login),
    :time => @request.vote.created_at} %>
 </div>

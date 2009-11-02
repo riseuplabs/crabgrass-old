@@ -6,7 +6,7 @@
   <div>
     <%= possible.description_html %>
     <% if @who_voted_for[possible.id].any? -%>
-    <p><%= 'first choice of'.t%>: <%= @who_voted_for[possible.id].join(', ') %></p>
+    <p><%= I18n.t(:first_choice_of)%>: <%= @who_voted_for[possible.id].join(', ') %></p>
     <% end -%>
   </div>
 </li>

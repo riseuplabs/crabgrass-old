@@ -79,7 +79,7 @@ class Request < ActiveRecord::Base
 
   def validate
     unless may_create?(created_by)
-      errors.add_to_base('Permission denied'.t)
+      errors.add_to_base(I18n.t(:permission_denied))
     end
   end
 

@@ -112,13 +112,13 @@ def replace_line(line, location_info)
     key = $1
     line.sub!(/:(\w+)\.t(\W)/, 'I18n.t(:\1)\2')
   # "hello there".t
-  when /(.*[^"'])(['"])(.+?)\2\.t([\s,\.])/
+  when /(.*[^"'])(['"])(.+?)\2\.t(\W)/
     line_type = '("hello there".t)'
     prefix = $1
     default_string = $3
     suffix = $4
     key = $3.downcase.gsub(/\s/, '_')
-    line.sub!(/(.*[^"'])(['"])(.+?)\2\.t[\s,\.]/, "#{prefix}I18n.t(:#{key})#{suffix}")
+    line.sub!(/(.*[^"'])(['"])(.+?)\2\.t\W/, "#{prefix}I18n.t(:#{key})#{suffix}")
   # _('Hello There')
   when /_\((['"])(.+?)\1\)([\s,\.])/
     line_type = "_('Hello There')"

@@ -36,7 +36,7 @@ module AssetPageHelper
       :before => "$($(this).up('td')).addClassName('busy')",
       :failure => "$($(this).up('td')).removeClassName('busy')"
     }
-    link_to_remote(image_tag('actions/delete.png'), action, :title => 'delete this version'.t)
+    link_to_remote(image_tag('actions/delete.png'), action, :title => I18n.t(:delete_this_version))
     # non-ajax? {:href => url_for(:controller => 'asset', :action => 'destroy', :id => @asset.id)})
   end
 
