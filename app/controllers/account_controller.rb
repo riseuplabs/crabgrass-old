@@ -72,6 +72,7 @@ class AccountController < ApplicationController
 
       @user.avatar = Avatar.new
       @user.unverified = current_site.needs_email_verification?
+      @user.receive_notifications = "Digest"
       @user.save!
       session[:signup_email_address] = nil
       self.current_user = @user
