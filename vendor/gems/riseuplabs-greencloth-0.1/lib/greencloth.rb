@@ -378,7 +378,7 @@ class GreenCloth < RedCloth::TextileDoc
     formatter = self.clone()                   # \  in case one of the before filters
     formatter.extend(GreenClothFormatterHTML)  # /  needs the formatter.
 
-    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :normalize_heading_blocks])
+    apply_rules([:normalize_code_blocks, :offtag_obvious_code_blocks, :dynamic_symbols, :bracket_links, :normalize_heading_blocks])
     to(GreenClothFormatterHTML)
     self.replace(formatter)
   end
