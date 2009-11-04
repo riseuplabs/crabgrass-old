@@ -54,13 +54,13 @@ class RequestToJoinUsViaEmail < Request
     request = find_by_code_and_email(code,email)
     if request
       if request.state != 'pending'
-        raise ErrorMessage.new("Invite has already been redeemed"[:invite_error_redeemed])
+        raise ErrorMessage.new(I18n.t(:invite_error_redeemed))
       end
       request.recipient = user
       request.save!
       return request
     else
-      raise ErrorNotFound.new("Invite"[:invite])
+      raise ErrorNotFound.new(I18n.t(:invite))
     end
   end
 

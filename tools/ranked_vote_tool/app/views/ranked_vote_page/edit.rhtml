@@ -7,9 +7,9 @@
   <%= spinner('progress', :show => true) %> <%= 'Saving...' %>
   </div>
   <div id='instructions'>
-    <%= :ranked_vote_instructions.t %>
+    <%= I18n.t(:ranked_vote_instructions) %>
     <% form_tag page_xurl(@page, :action => 'confirm') do %>
-      <div style='float:right'><%= submit_tag 'Confirm Vote'.t %></div>
+      <div style='float:right'><%= submit_tag I18n.t(:confirm_vote_button) %></div>
       <br style='clear:right'/>
     <% end %>
   </div>
@@ -19,9 +19,9 @@
 <ul id='sort_list_voted' class='possible_list plain'>
   <% if @possibles_voted.any? %>
      <%= render :partial => 'possible', :collection => @possibles_voted %>
-     <li id='none_voted' style='display:none'> <%= 'none'.t %> </li>
+     <li id='none_voted' style='display:none'> <%= I18n.t(:none) %> </li>
   <% else %>
-     <li id='none_voted' > <%= 'none'.t %> </li>
+     <li id='none_voted' > <%= I18n.t(:none) %> </li>
   <% end %>
 </ul>
 
@@ -29,9 +29,9 @@
 <ul id='sort_list_unvoted' class='possible_list plain'>
   <% if @possibles_unvoted.any? %>
     <%= render :partial => 'possible', :collection => @possibles_unvoted %>
-     <li id='none_unvoted' style='display:none'> <%= 'none'.t %> </li>
+     <li id='none_unvoted' style='display:none'> <%= I18n.t(:none) %> </li>
   <% else %>
-     <li id='none_unvoted'> <%= 'none'.t %> </li>
+     <li id='none_unvoted'> <%= I18n.t(:none) %> </li>
   <% end %>
 </ul>
 
@@ -40,7 +40,7 @@
 </ul>
 
 <%= sortable_element 'sort_list_voted', :handle => 'handle',
-  :containment => ['sort_list_voted', 'sort_list_unvoted'], 
+  :containment => ['sort_list_voted', 'sort_list_unvoted'],
   :url => page_xurl(@page, :action=>'sort') %>
 <%= sortable_element 'sort_list_unvoted', :handle => 'handle',
   :containment => ['sort_list_voted', 'sort_list_unvoted'],

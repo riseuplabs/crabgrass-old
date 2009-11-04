@@ -5,12 +5,12 @@
 <% winner = 'winner' if (@result.winners.any? and @result.winners.include?possible.id) %>
 <li class='<%=winner%>'>
   <div class='rank'><%= @result.rank(possible.id) %></div>
-  <span class='winner'><%= "(" + 'top pick'.t + ")" if winner.any? %></span>
+  <span class='winner'><%= "(" + I18n.t(:top_pick) + ")" if winner.any? %></span>
   <div class='name'><%= possible_name(possible) %></div>
   <div class='indent possible_details' id="<%=details_id(possible)%>" style='display: none'>
     <%= possible.description_html %>
     <% if @who_voted_for[possible.id].any? -%>
-    <p><%= 'first choice of'.t%>: <%= @who_voted_for[possible.id].join(', ') %></p>
+    <p><%= I18n.t(:first_choice_of)%>: <%= @who_voted_for[possible.id].join(', ') %></p>
     <% end -%>
   </div>
 	</li>

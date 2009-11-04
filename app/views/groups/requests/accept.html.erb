@@ -1,14 +1,14 @@
 <% dialog_page(
-    :title => 'Accept invitation to join group "{group_name}"'[:invite_accept_headline, @request.group.name],
-    :details => "Click one of the following to accept the invite"[:invite_accept_info],
+    :title => I18n.t(:invite_accept_headline, :group_name => @request.group.name),
+    :details => I18n.t(:invite_accept_info),
     :error => @error
 ) do %>
   <ul>
     <% if @request and @request.pending? %>
-      <li><%= link_to_with_icon 'user', 'I already have an account'[:invite_accept_via_existing_account], @login_url%></li>
-      <li><%= link_to_with_icon 'user_add', 'I need to register a new account'[:invite_accept_via_register], @register_url %></li>
+      <li><%= link_to_with_icon 'user', I18n.t(:invite_accept_via_existing_account), @login_url%></li>
+      <li><%= link_to_with_icon 'user_add', I18n.t(:invite_accept_via_register), @register_url %></li>
     <% else %>
-      <li><%= 'Error'.t %>: <%= 'Invite not found'.t %></li>
+      <li><%= I18n.t(:error) %>: <%= I18n.t(:invite_not_found) %></li>
     <% end  %>
   </ul>
 <% end %>

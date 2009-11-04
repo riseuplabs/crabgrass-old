@@ -26,7 +26,7 @@ class Groups::CommitteesController < GroupsController
   def get_parent
     parent = Group.find_by_name(params[:id])
     unless may_create_subcommittees?(parent)
-      raise PermissionDenied.new('You do not have permission to create committees under {group}'[:dont_have_permission_to_create_committees, {:group => parent.name}])
+      raise PermissionDenied.new(I18n.t(:dont_have_permission_to_create_committees, :group => parent.name))
     end
     parent
   end

@@ -57,7 +57,7 @@ class People::MessagesController < People::BaseController
 
   def context
     super
-    add_context('Messages'[:messages], person_messages_url)
+    add_context(I18n.t(:messages), person_messages_url)
     if action?(:show)
       add_context(h(@post.body[0..48]), person_message_path(@user, @post))
     end

@@ -1,18 +1,18 @@
-<h2 class='alert'><%= "Group Icon"[:group_icon] %></h2>
+<h2 class='alert'><%= I18n.t(:group_icon) %></h2>
 
 <%= avatar_for @group, 'xlarge' %>
 
-<p><%= "Uploaded image will be cropped and stretched to 96 pixels square."[:uploaded_image_cropped] %></p>
+<p><%= I18n.t(:uploaded_image_cropped) %></p>
 
 <p>
 <% @avatar ||= @group.avatar -%>
 <p><% form_for(:image, @avatar, :url => {:controller => 'avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
-   <%= "select image file"[:select_image_file] %><br />
+   <%= I18n.t(:select_image_file) %><br />
    <%= f.file_field :image_file %><br /><br />
-   <%= "or image URL"[:or_image_url] %><br />
+   <%= I18n.t(:or_image_url) %><br />
    <%= f.text_field :image_file_url %><br />
    <%= hidden_field_tag 'redirect', group_url(:action=>'edit',:id=>@group) %>
    <%= hidden_field_tag 'group_id', @group.id %>
-   <br /><%= submit_tag 'Upload Image'[:upload_image] %>
+   <br /><%= submit_tag I18n.t(:upload_image) %>
 <% end -%></p>
 </p>

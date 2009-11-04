@@ -1,6 +1,6 @@
 <%#
 ### TITLE BOX
-#%> 
+#%>
 
 <%- @title_box = capture do -%>
 <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
@@ -12,12 +12,12 @@
 
 <%#
 ### INFO BOX
-#%> 
+#%>
 
 <% @message_box = render(
   :partial => 'common/say_form',
   :locals => {
-    :submit => "Say"[:say_message_button],
+    :submit => I18n.t(:say_message_button),
     :url => person_messages_path(@user)
   }
 ) %>
@@ -32,7 +32,7 @@
     <%- end -%>
     <tr>
       <td class="left">
-        <%# header_with_more :h3, :dim, "Recent Activity".t %>
+        <%# header_with_more :h3, :dim, I18n.t(:recent_activity) %>
         <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
       </td>
       <td class="right">
@@ -47,10 +47,10 @@
 #%>
 
 <div class='section'>
-  <%= header_with_more(:h2, :alert, "Recent Contributions".t, person_search_url(:descending => 'updated_at')) %>
+  <%= header_with_more(:h2, :alert, I18n.t(:recent_contributions), person_search_url(:descending => 'updated_at')) %>
   <div class='page_scroll'>
     <%= render :partial => 'pages/list' %>
     <br/>
-    <%= link_to :more.t + ARROW, person_search_url(:descending => :updated_at) %>
+    <%= link_to I18n.t(:see_more_link) + ARROW, person_search_url(:descending => :updated_at) %>
   </div>
 </div>

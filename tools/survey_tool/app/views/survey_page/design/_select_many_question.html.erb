@@ -1,7 +1,7 @@
 <%= form.text_field :label, :size => 83 %>
-<strong><%= "Select many answer choices:"[:select_many_choices_label] %></strong>
+<strong><%= I18n.t(:select_many_choices_label) %></strong>
 <br/>
-<em><%= "(each line is a possible choice)"[:each_line_is_a_choice_caption] %></em>
+<em><%= I18n.t(:each_line_is_a_choice_caption) %></em>
 <br/>
 <%= form.text_area :newline_delimited_choices, :cols => 72, :rows => 12 %>
 <br/>

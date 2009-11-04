@@ -1,0 +1,666 @@
+pl:
+  about_me: "O mnie"
+  accept_usage_agreement: "Akceptuje warunki użytkowania"
+  access: Dostęp
+  action: akcja
+  activate_js_to_rearrange_photos: "Włącz JavaScript jeśli chcesz móc przeciągać i aranżować układ fotografii!"
+  activity_contact_created: "{{user}} dodał/a {{other_user}} do swoich kontaktów"
+  activity_group_created: "{{user}} stworzył/a {{group_type}} {{group}}"
+  activity_group_destroyed: "grupa {{group}} została usunięta przez {{user}}"
+  activity_user_destroyed: "{{user}} idzie na emeryturę"
+  activity_user_joined_group: "{{user}} dołączył/a do {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} opuścił/a {{group_type}} {{group}}"
+  activity_user_status: "{{user}} jest {{status}}"
+  activity_wall_message: "{{author}} napisał/a do {{user}}: {{message}}"
+  add_another_file: "Dodaj kolejny pilk"
+  add_button: Dodaj
+  add_comment: "dodaj komentarz"
+  add_contact_info: "Kiedy inny użytkownik lub użytkowniczka zostanie dodany jako twój kontakt będzie widzieć kiedy zalogujesz się do systemu oraz uzyska dostęp do twojego pełnego profilu. Ten proces działa w obie strony. "
+  add_description: "Dodaj opis"
+  add_email_address: "Dodaj adres mejlowy"
+  add_encryption_key: "Dodaj klucz publiczny (GPG/PGP)"
+  add_existing_image: "Dodaj zdjęcie"
+  add_im_address: "Dodaj komunikator"
+  add_location: "Dodaj lokalizację"
+  add_new_attachment: "Dodaj nowy załącznik"
+  add_one_or_more_tags: "Dodaj jeden lub więcej tagów, rozdzielonych przecinkami"
+  add_phone_number: "Dodaj telefon"
+  add_photo_to_gallery: "Kliknij na zdjęcie żeby je dodać"
+  add_star_link: "Dodaj gwiazdkę ({{star_count}})"
+  add_tags: "Dodaj Tagi"
+  add_websites: "Dodaj stronę"
+  admin: Admin
+  alert_error: Błąd
+  alert_field_errors: "Przy następujących polach wystąpiły problemy"
+  alert_not_saved: "Zmiany nie mogły zostać zapisane"
+  alert_permission_denied: "Odmowa dostępu"
+  alert_saved: "Zmiany zostały zapisane"
+  all_content: "Cała zawartość"
+  all_groups: "wszystkie grupy"
+  all_page_types: "wszystkie typy stron"
+  all_people: wszyscy
+  all_people_link: "wszyscy ludzie"
+  all_states: "wszystkie stany"
+  allow_membership_requests: "Pozwól na prośby o członkostwo"
+  already_contacts_info: "Ta osoba znajduje się już wśród twoich znajomych."
+  announcement_page_description: Ogłoszenie.
+  announcement_page_display: Ogłoszenie
+  announcements: Ogłoszenia
+  approval_vote: "głos poparcia"
+  approval_vote_class_description: "Zatwierdzenie lub odrzucenie każdej możliwości."
+  approve: zatwierdź
+  approve_button: zatwierdź
+  approve_contact_info: "Istnieje już prośba o dodatnie do kontaktów od tej osoby. Czy chcesz ją zatwierdzić?"
+  approve_or_reject_link: "zatwierdź lub odrzuć tą prośbę"
+  approved: zatwierdzone
+  archive: Archiwum
+  archive_filter_created_link: "Dane utworzone"
+  archive_filter_updated_link: "Ostatnie Dane Uaktualnione"
+  archive_headline: Archiwum
+  article_page_description: "Post na bloga lub artykuł."
+  article_page_display: artykuł
+  asset_page_description: "Załadowany plik"
+  asset_page_display: Plik
+  at_least_one_recipient_is_required: "wymagany jest co najmniej jeden odbiorca"
+  attachments: Załączniki
+  away: "gdzie indziej"
+  back_button: Wróć
+  back_to_group: "powrót do grupy {{group_name}}"
+  break_lock: "Usuń blokadę"
+  break_lock_button: "Usuń blokadę"
+  cancel_button: Anuluj
+  cancel_link: anuluj
+  category: Kategoria
+  check_all: "Zaznacz wszystko"
+  close_button: Zamknij
+  collection: kolekcja
+  collection_class_description: "Specjalne strony zawierające podstrony."
+  committee: Komitet
+  committee_publicly_visible: "Komitety będą publicznie widoczne"
+  committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {{domain}}/nazwatwojejgrupy"
+  committees: Komitety
+  comparing_changes_header: "Porównanie zmian dokonanych {{when}} from {{old_version}} przez {{user}} z {{new_version}}"
+  confirm_new_password: "Powtórz nowe hasło"
+  contact: Kontakt
+  contact_request_message_label: "Tą wiadomość {{user}} otrzyma jako wytłumaczenie dlaczego chcesz dołączyć do jej/jego kontaktów."
+  contacts: Kontakty
+  contribute_content_link: "Udziel się"
+  contributed: Udział
+  coordinating_council: "rada koordynująca"
+  coordinator: Koordynator
+  coordinators: "osoby koordynujące"
+  council_help: "Jeśli ta grupa posiada radę koordynującą, wtedy tylko członek/ini tej rady może administrować grupą. W innym przypadku jakikolwiek członek/ini grupy może to robić."
+  create_a_new_thing: "Stwórz {{thing}}"
+  create_button: Stwórz
+  create_committee: "stwórz komitet"
+  create_group_link: "stwórz grupę"
+  create_page: "Stwórz stronę"
+  create_page_button: "Stwórz {{page_class}}"
+  create_page_data: "dane {{page_class}}"
+  create_page_information: "informacje o {{page_class}}"
+  create_task_list: "stwórz nową listę zadań"
+  created: stworzone
+  created_by: "Stworzone przez"
+  created_on: "Stworzone "
+  created_when_by: "stworzone {{when}} przez {{user}}"
+  csrf_error_message: |
+      Twoja próba zalogowania nosi znamiona ataku na stronę. Nie martw się: ten błąd zdarza się często błędnie. Po prostu jesteśmy paranoikami. Wszystko co musisz zrobić to odświeżyć tą stronę zanim ponownie spróbujesz się zalogować. Możesz też nacisnąć tego linka żeby spróbować jeszcze raz:
+  current_attachments: "Obecne załączniki"
+  current_featured_content: "Obecna wyróżniona zawartość"
+  current_tags: "Aktualne Tagi"
+  current_video_sources: "obecnie obsługiwane: youtube, blip.tv, google video, vimeo"
+  data_for_page_missing: "Brakuje treści tej strony"
+  date: data
+  date_centuries: wieki
+  date_days: dni
+  date_hours: godziny
+  date_minutes: minuty
+  date_months: miesiące
+  date_older: Starsze
+  date_seconds: sekundy
+  date_this_week: "Zeszły tydzień"
+  date_today: Dzisiaj
+  date_weeks: tygodnie
+  date_years: lata
+  date_yesterday: Wczoraj
+  delete: Usuń
+  delete_page_link: "Usuń {{page_class}}"
+  delete_post: "Usuń post"
+  delete_this_version: "usuń tą wersję"
+  delete_version_confirm: "Czy na pewno chcesz usunąć tą wersję?"
+  description: opis
+  descriptions: Opisy
+  descriptive_name_for_display: "Wyświetlana nazwa opisowa"
+  destroy: zniszcz
+  destroy_confirmation: "Czy jeteś pewien/a że chcesz zlikwidować {{thing}} ? To działanie nie bedzie mogło być odwrócone."
+  destroy_group_link: "zniszcz {{group_type}}"
+  details_link: Szczegóły
+  diff_link: różnica
+  directory_of_groups: "Katalog grup"
+  directory_of_networks: "Katalog sieci"
+  directory_of_people: "Katalog ludzi"
+  discuss_request_link: "przedyskutuj tą prośbę z {{person_or_group}}"
+  discussion_page_description: "Dyskusja grupy na konkretny temat"
+  discussion_page_display: "Dyskusja Grupy"
+  discussions: Dyskusje
+  display_name: Wyświetlane
+  dont_have_permission_to_create_committees: "Nie masz uprawnień do tworzenia komitetów w {{group}}"
+  dont_understand_group_type: "Nie rozumiem typu grupy {{type}}"
+  download: Ściągnij
+  download_gallery: "Ściągnij galerię"
+  drag_and_drop_to_rearrange_photos: "Przeciągnij i upuść grafiki żeby je zaaranżować"
+  edit: Edytuj
+  edit_attachments: "Edytuj załączniki"
+  edit_attachments_link: Edytuj
+  edit_featured_content: "edytuj wyróżnioną zawartość"
+  edit_featured_content_for_group: "Edytuj ostatnią zawartość dla {{group_name}}"
+  edit_gallery: "Edytuj galerię"
+  edit_profile_link: "Edytuj profil"
+  edit_settings: "edytuj ustawienia "
+  edit_tags: "edytuj tagi"
+  edit_tags_link: Edytuj
+  edit_title: "edytuj tytuł"
+  edit_underlined_e: "<u>e</u>dytuj "
+  email: Mejl
+  email_addresses: "Adres mejlowy"
+  empty_results: Nic
+  error_saving_new_order: "Błąd przy zapisywaniu nowego porządku!"
+  expired_featured_content: "Niekatulana wyróżniona treść"
+  external_video_page_description: "Pokaż plik viedo umieszczony na zawnętrznej stronie Web."
+  external_video_page_display: "Wideo z zewnątrz"
+  fax: Fax
+  feature_button: Ważne!
+  featured_content: "Wyróżniona treść"
+  featured_content_header: Wyróżnione
+  file: plik
+  file_class_description: "Załadowany plik."
+  file_must_be_image_error: "Plik musi być grafiką żeby stać się częścią galerii. "
+  file_size: "Rozmiar pliku"
+  file_version_deleted: "wersja pliku usunięta"
+  first_name: imię
+  folder_display: Folder
+  folder_page_description: "Zbiór aktywów"
+  folder_page_display: Katalog
+  forgot_password_link: "Odzyskiwanie hasła"
+  forgot_password_mail_expiry: |-
+      Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
+      ponownie ustawić swoje hasło po tym czasie, musisz ponownie odwiedzić stronę z zapomnianym hasłem i poprosić o nowy link.
+  forgot_password_mail_greeting: "{{user}}, żeby zresetować swoje hasło wejdź na"
+  forgot_password_text: "Jeśli zapomniałeś/łaś hasła, którego używasz, żeby się zalogować, możemy wysłac Ci link w e-mailu za pomocą którego można wygenerować nowe hasło."
+  forgotten_email_address: "Jaki adres e-mail podałeś/podałaś nam kiedy Twoje konto zostało utwożone?"
+  format: Format
+  formatting_reference_link: "ściągawka z formatowania"
+  founded: "Założone przez"
+  friday: Piątek
+  friends: Znajomi
+  from: z
+  full: pełne
+  fullname: "Imię i nazwisko"
+  galleries: Galerie
+  gallery_class_description: "Kolekcja grafik."
+  gallery_description: "Kolekjcja obrazów."
+  gallery_display: galeria
+  general_info: "Ogólne informacje"
+  grant_access: Udostępnij
+  group: grupa
+  group_administration_not_allowed: "Nie zarządzasz tą grupą."
+  group_directory: "Katalog grup"
+  group_directory_link: "katalog grup"
+  group_discussion: dyskusja
+  group_discussion_class_description: "Dyskusja na konkretny temat."
+  group_has_no_public_profile: "Ta grupa nie ma publicznego profilu."
+  group_home_headline: "{{group_type}}"
+  group_home_welcome: Witamy
+  group_information: "Informacje o {{group_type}}"
+  group_invite_email: |
+      {{from_user}} zaprasza cię do grupy "{{group}}".
+
+      Jeśli chcesz do niej dołączyć, kliknij tutaj:
+
+        {{accept_invite_link}}
+
+      Strona domowa tej grupy znajduje się tutaj:
+
+        {{group_home_link}}
+
+      Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
+  group_invite_subject: "Zaproszenie do grupy \"{{group}}\""
+  group_join_chat: "Dołącz do czatu"
+  group_language: "Główny język {{group}}."
+  group_members_publicly_visible: "Udostępnij publicznie listę uczestników i uczestniczek"
+  group_members_publicly_visible_description: "Lista uczestniczek i uczestników będzie widoczna dla niezarejestrowanych pod adresem {{domain}}/nazwatwojejgrupy. Poza tym nazwa grupy będzie wyświetlana w profilach poszczególnych użytkowników ({{domain}}/użytkownik)."
+  group_not_allowed_to_view_image_error: "Grupa do której należy ta strona nie ma uprawnień do oglądania tej grafiki."
+  group_privacy_settings: "{{group}} ustawienia prywatności"
+  group_profile_description_may_request_membership: "Pozwól ludziom na wysyłanie pytań o członkostwo w {{group_type}}."
+  group_profile_description_may_see: |-
+      Jeśli zaznaczone, informacja o profilu, zamieszczona poniżej będzie widoczna.
+      W przeciwnym wypadku, profil tej {{group_type}} będzie ukryty całkowicie.
+  group_profile_description_may_see_committees: "Pozwól ludziom na przeglądanie do jakich komitetów {{group_type}} należy."
+  group_profile_description_may_see_groups: "Pozwól ludziom na oglądanie grup, które są częścią {{group_type}}."
+  group_profile_description_may_see_members: "Pozwól ludziom na oglądanie listy członkowskiej {{group_type}}."
+  group_profile_description_may_see_networks: "Pozwól ludziom na oglądanie do jakich sieci należy {{group_type}}."
+  group_publicly_visible: "{{group}} będzie publicznie widoczne"
+  group_publicly_visible_description: "Grupa będzie widoczna w publicznym katalogu i <i>profil</i> grupy będzie widoczny dla osób niezarejestrowanych pod adresem {{domain}}/nazwatwojejgrupy."
+  group_successfully_created: "Grupa została utworzona."
+  group_successfully_updated: "Strona grupy została zaktualizowana."
+  group_summary: "Krótka informacja na temat {{group}}."
+  group_wiki: "Grupowe Wiki"
+  groups: Grupy
+  highest_contributors: "Najbardziej aktywni"
+  history: Historia
+  home: "Strona startowa"
+  im_addresses: "Adres IM"
+  image_count: "Zdjęcie {{number}} z {{count}}"
+  image_count_total: "{{count}} Zdjęć"
+  image_title: "Obraz title: {{title}}"
+  inbox_description: "Skrzynka odbiorcza ze stronami w których aktywnie uczestniczę lub których zmiany obseruję  "
+  include_full_checkbox: "włącz link do pełnego obrazu"
+  incoming: Przychodzące
+  information: Informacje
+  insert_image_heading: "Wklej obraz"
+  insert_image_instructions: "Kliknij na miniaturę obrazu, aby wkleić go w tekście wiki"
+  invalid_email: "Nieprawidłowy adres e-mail"
+  invalid_email_text: "Adres e-mail który zsotał wprowadzony jest błędny."
+  invalid_token: "Niepoprawna autoryzacja"
+  invalid_token_text: "Link do ponownego ustanowienia hasła jest nieważny. Możliwe, że został już użyty lub wygasł."
+  invite_accept_headline: "Zaakceptuj zaproszenie by dołączyć do group'"
+  invite_accept_info: "Czy chesz zaakceptować prośbę o dołączenie. Czy masz już konto na tym serwerze?"
+  invite_accept_via_existing_account: "Tak, mam już konto"
+  invite_accept_via_register: "Chcę zarejestrować nowe konto"
+  invite_info: "Wpisz loginy albo mejle osób które chcesz zaprosić do członkowstwa w {{group_type}}."
+  invite_not_found: "Zaproszenie nieodnalezione"
+  join_chat: "dołącz do czata"
+  join_group_success: "Dołączyłeś/łaś do grupy {{group_name}}"
+  join_request_info: "Dołączysz do tej grupy dopiero po zatwierdzeniu twojego zgłoszenia przez jej członków. Możesz sprawdzić stan wszystkich swoich zgłoszeń wchodząc na \"{{my_requests_url}}\"."
+  joins_the_chatroom: "dołącz do czata"
+  language: Język
+  large: powiększ
+  last_change: "Ostatnia zmiana"
+  last_name: nazwisko
+  leave_group_link: "opuść {{group_type}}"
+  left_the_chatroom: "opuść pokój czatów"
+  link_name: "Nazwa linku"
+  link_name_description: "Ta nazwa pokazywać będzie w jaki sposób będziesz się odnosić/ła do tej grupy w linkach i URL. Może zawierać jedynie alfanumeryczne litery, bez jakichkolwiek spacji."
+  location_address: adres
+  location_city: miasto
+  location_country: państwo
+  location_postal_code: "kod pocztowy"
+  location_state: stan/województwo
+  locations: Lokalizacje
+  locked_by_user: "Zablokowane przez {{user}}"
+  locking_error: "Błąd zamknięcia. Nie mogę zapisać Twoich danych, ktoś inny zapisał zmiany pierwszy."
+  login: Login
+  login_button: "Zaloguj się"
+  login_failed: "Nie udało się zalogować"
+  login_failure_reason: "Złe hasło lub nazwa użytkownika."
+  login_name: Login
+  login_password: Hasło
+  login_required: "Wymagany login"
+  login_required_description: "Proszę zaloguj się aby wykonać tą czynność."
+  logout: Wyloguj
+  logout_success: "Do zobaczenia!"
+  logout_success_message: "Wylogowano z systemu."
+  make_album_cover: "ustaw ten obraz jako okładkę albumu"
+  mark_pages_as_featured_content_for_group: "Tutaj możesz zaznaczyć strony jako opisane zawartości tej grupy."
+  me_dashboard_link: Panel
+  me_inbox_link: "Skrzynka odbiorcza\n"
+  me_search_description: "Przeszukaj wszystkie strony do których masz dostęp"
+  me_search_link: Szukaj
+  me_tasks_link: Zadania
+  media_all: Media
+  media_alls: Media
+  media_audio: "Nagrywanie dźwięku"
+  media_audios: "Nagrania dźwiękowe"
+  media_document: "Dokument\n"
+  media_documents: Dokumenty
+  media_for_group: "{{media_type}} w {{group}}"
+  media_image: Obraz
+  media_images: Obrazy
+  media_video: Wideo
+  media_videos: Widea
+  media_without_group: "Wszystko {{media_type}}\n"
+  medium: średni
+  member_groups_of_network: "Grupy członkowie"
+  members: "Uczestnicy i uczestniczki"
+  menu_chat: Czat
+  menu_groups: Grupy
+  menu_home: "Strona domowa"
+  menu_link_account: Konto
+  menu_link_logout: Wyloguj
+  menu_me: Ja
+  menu_networks: Sieci
+  menu_people: Ludzie
+  message_must_not_be_empty: "wiadmość nie może być pusta"
+  message_page_description: "Wiadomość prywatna wysłana do indywisulanych odbiorów/odbiorczyń."
+  message_page_display: Wiadomość
+  middle_name: środek
+  mobile: Komórka
+  monday: Poniedziałek
+  month_short_april: Kwiecień
+  month_short_august: Sierpień
+  month_short_december: Grudzień
+  month_short_february: Luty
+  month_short_january: Styczeń
+  month_short_july: Lipiec
+  month_short_june: Czerwiec
+  month_short_march: Marzec
+  month_short_may: Maj
+  month_short_november: Listopad
+  month_short_october: Październik
+  month_short_september: Wrzesień
+  more_information: "Więcej informacji"
+  most_viewed: "Najczęściej pzreglądane"
+  move_button: Przesuń
+  move_image_left: "Przesuń obraz w lewo"
+  move_image_right: "Przesuń obraz w prawo"
+  move_page_link: "Przesuń {{page_class}}"
+  move_page_to_different_group: "Przesuń tą stronę do innej grupy"
+  move_this_page: "Przesuń ta stronę"
+  my_completed_tasks_link: Ukończone
+  my_contacts: "moi znajomi"
+  my_contacts_link: "moje kontakty"
+  my_dashboard: |
+      Mój panel
+  my_groups: "Moje Grupy"
+  my_groups_link: "moje grupy"
+  my_pages: "Moje Strony"
+  my_peers: "moi ziomale"
+  my_peers_description: "użytkownicy/czki z którymi dzielę wspólną grupę"
+  my_peers_explain: "użytkownicy/czki z którymi dzielę wspólną grupę"
+  my_peers_link: "Moi towarzysze/towarzyszki"
+  my_pending_tasks_link: "W toku"
+  my_requests_headline: "Moje Zgłoszenia"
+  my_settings: "Ustawienia dla {{user}}"
+  my_status_heading: "Twój aktualny status"
+  my_tasks: Zadania
+  my_tasks_description: "Lista zadań do których mam dostęp"
+  my_tasks_headline: "Moje zadania"
+  my_world_heading: "Mój Świat"
+  name: Imię
+  network: Sieć
+  network_invite_info: "Wprowadź nazwy grup które chcesz zaprosić do tej sieci."
+  networks: Sieci
+  new_group: "Nowa grupa"
+  new_network: "Nowa sieć"
+  new_password: "Nowe Hasło"
+  new_people: "Nowi ludzie"
+  next_change: "Następna Zamiana"
+  no_change: "bez zmiany"
+  no_committees: "żadnych komitetów"
+  no_contacts_msg: |
+      Nie masz żadnych kontaktów
+  no_group_named: "nie ma grupy o nazwie <b>{{name}}</b>."
+  no_images_in_gallery: "Brak obrazów w Galerii"
+  no_members: "(no members)"
+  no_peers_msg: "Nie masz żadnych znajomych."
+  no_public_profiles: "Póki co nie ma żadnych publicznych profili..."
+  no_search_results: "Brak wyników"
+  no_tags: "brak tagów"
+  no_title_given: "(no title given)"
+  none: nic
+  not_featured_content: "Nie ma jeszcze opisanej zawartości"
+  not_set: "nie ustawiony"
+  only_last_menber_can_delete_group: "Możesz wykasowac grupe tylko, jesli jesteś jej ostatnim uczestnikiem/uczestniczką"
+  only_me: "Tylko Ja"
+  options: Opcje
+  or_image_url: "albo obraz URL"
+  order_changed: "Porządek zmieniony."
+  organization: organizacja
+  organizational_role: "funkcja w organizacji"
+  other: Inny
+  other_formats: "Inne Formaty"
+  outgoing: Wysłane
+  page_details: "Szczegóły strony"
+  page_details_link: "{{page_class}} Szczegóły"
+  page_is_not_static: "Strona nie jest unieruchomiona"
+  page_list: "Lista strony"
+  page_list_heading_created: utworzone
+  page_list_heading_created_by: "utworzone przez"
+  page_list_heading_last_updated: "ostatnie uaktualnienia"
+  page_list_heading_owner: właściciel/właścicielka
+  page_list_heading_posts: posty
+  page_list_heading_stars: gwiazdki
+  page_list_heading_title: tytuł
+  page_list_heading_updated: zaktualizowane
+  page_list_heading_updated_by: "zaktualizowane przez"
+  page_locked_header: "Strona zablokowana"
+  page_not_part_of_group: "Strona nie jest częścią tej grupy"
+  page_notice_message: "strona przesłana przez {{user}} {{date}}"
+  page_with_message: "z wiadomością"
+  pager: Pager
+  pagination_next: kolejny
+  pagination_previous: wcześniejsze
+  participant: Uczestnik/Uczestniczka
+  participants: Uczestnicy
+  participation: Uczestnictwo
+  password: Hasło
+  password_confirmation: "Potwierdzenie hasła"
+  password_error_confirmation: "błąd w potwierdzeniu hasła"
+  password_error_default: "za niska siła hasła"
+  password_error_too_common: "hasło nie może być wyrazem ze słownika"
+  password_error_too_short: "hasło za krótkie"
+  password_error_too_similar: "za dużo znaków w haśle powtarza się"
+  password_error_too_simple: "hasło zbyt proste lub przewidywalne"
+  password_error_username: "hasło zawiera nazwę użytkownika"
+  password_error_whitespace: "hasło nie może być puste"
+  password_ok: "w porządku."
+  password_reset: "Ponowne ustawienie hasła"
+  password_reset_ok_text: "Twoje hasło zostało pomyślnie ustawione na nowo. teraz możesz się zarejestrowac przy pomocy swojego nowego hasła."
+  password_was_reset: "Twoje hasło zostało utworzone na nowo"
+  peers: Zanajomi
+  pending: "w toku"
+  pending_tasks: "zadanie w toku."
+  people: Ludzie
+  permission_denied: "Odmowa pozwolenia"
+  permission_denied_description: "Nie posiadasz wystarczającego pozwolenia na wykonanie tej czynności."
+  permissions: Pozwolenia
+  personal: Osobiste
+  personal_interests: "Prywatne zainteresowania"
+  personal_message: "prywatna wiadomość"
+  personal_message_class_description: "Prywatna wiadomość wysłana do indywidualnych odbiorców/odbiorczyń."
+  phone_numbers: "Numery Telefonu"
+  post_message: "Wyślij wiadomość"
+  prev_change: "Wcześniejsza zmiana"
+  preview: Przegląd
+  print_underlined_p: "<u>p</u> drukuj"
+  private: Prywatne
+  private_profile: "Prywatny Profil"
+  profile_last_login: "Ostatnia rejestracja"
+  profile_member_since: "Członek/Członkini od"
+  profile_option_allow_peers: "Widoczny/a dla znajomych"
+  profile_option_may_pester: "Można mnie niepokoić"
+  profile_option_may_request_contact: "Można prosić o prywatny kontakt"
+  profile_option_may_request_membership: "Zezwól na prośby o członkostwo"
+  profile_option_may_see: "Profil jest widoczny"
+  profile_option_may_see_committees: "Pokaż komitety"
+  profile_option_may_see_contacts: "Pokaż prywatne kontakty"
+  profile_option_may_see_groups: "Pokaż członkostwo w grupach"
+  profile_option_may_see_members: "Wyświetl członków i członkinie grupy"
+  profile_option_may_see_networks: "Wyświetl sieci"
+  profile_private_description: "Ten profil jest prywatny i jest widoczny jedynie dla Twoich kontaktów"
+  profile_public_description: |-
+      Ten profil jest publiczny i bedzie widoczny dla każdej osoby odwiedzającej tą stronę.
+      Informacje które tu zamieścisz mogą być wyszukiwane przez innych ludzi.
+      Z rozwagą dodawaj prywatne wiadomości do publicznego profilu.
+  profile_saved: "Twój profil został zapisany."
+  public_checkbox: Publiczny
+  public_key: "Klucz Publiczny"
+  public_profile: "Publiczny Profil"
+  ranked_vote_instructions: |-
+      Przeciągnij i upuść dane na tej liście aż znajdą się one w kolejności od najbardziej pożądanych na górze do najmniejpożądanych na dole.
+      Kiedy skończyć, naciśnij potwierdź by nagrać swój głos.
+  ranked_vote_page_description: "Sklasyfikowuj możliwości w zależności od preferencji."
+  ranked_vote_page_display: "Sklasyfikowane głosy"
+  reactivate_button: Reaktywuj!
+  read: czytaj
+  recent_activity: "Ostatnia Aktywność"
+  recent_contributions: "Ostatnie wsparcia"
+  recent_member_group_pages: "Ostatnie strony członka/członkini grupy"
+  recent_network_pages: "Ostatnie strony sieci"
+  recent_pages: "Ostatnie Strony"
+  recent_wall_posts: "Ostatnie posty na murze"
+  recipient_tip: "Możesz oddzielić poszczególnych odbiorców przecinkami, spacjami lub nowymi liniami."
+  recipients: odbiorcy/odbiorczynie
+  regenerate: "odnów miniatury"
+  reject: odrzuć
+  reject_button: odrzuć
+  rejected: "odrzucone\n"
+  remove: usuń
+  remove_contact_confirmation: "Na pewno chcesz zerwać kontakt z {{user}}?"
+  remove_contact_info: "Jeżeli usuniesz osobę ze swojej listy kontaktów, przestaniesz otrzymywać informację kiedy się zaloguje oraz stracisz dostęp do jej pełnego profilu. Ten proces działa w obu kierunkach (tzn automatycznie usuniesz się z kontaktów usuwanej osoby). "
+  remove_friend_link: "Usuń z Moich Kontaktów"
+  remove_from_gallery: "Usuń z galerii"
+  remove_from_inbox: "Usuń ze skrzynki odbiorczej"
+  remove_star_link: "Usuń Gwiazdkę ({{star_count}})"
+  removing_image: "Usuń Obraz..."
+  request_friend_link: "Dodaj do moich kontaktów"
+  request_status: "Ta wiadomość została {{status}} przez {{user}} {{time}}"
+  request_to_friend_description: "{{user}} chce zostać dodana/y do kontaktów {{other_user}}"
+  request_to_join_our_network_description: "grupa {{group}} została zaproszona do sieci {{network}}"
+  request_to_join_us_description: "{{user}} otrzymał/a zaproszenie do {{group}}"
+  request_to_join_us_via_email_description: "{{email}} otrzyma zaproszenie do {{group}}"
+  request_to_join_you_description: "{{user}} prosi o dodanie do {{group}}"
+  request_to_join_your_network_description: "{{group}} prosi o włączenie do sieci {{network}}"
+  requested_forgot_password: "Poprosiłeś/łaś o zmianę hasła"
+  requests_from_me: "ode mnie"
+  requests_to_me: "do mnie"
+  reset_password: "Ustaw hasło na nowo"
+  reset_password_mail_greeting: "{{user}}, Twoje hasło zostało ustawione na nowo, tak jak o to prosiłeś/łaś"
+  reset_password_mail_sent: "Został wysłany e-mail zawierający instrukcje w jaki sposób ustawić hasło na nowo."
+  reset_password_mail_warning: "Jeśli nie prosiłeś/łaś o zmiane hasła, proszę skontaktuj się z nami."
+  reset_password_text: "Cześć, {{user}}.Jeśli zapomniałeś/łaś hasła którego uzywasz do rejestracji, możesz ustawić nowe tutaj."
+  rss_feed: "Zasilacz RSS"
+  saturday: Sobota
+  save_button: Zapisz
+  save_changes: "Zapisz Zmiany"
+  saved_new_order: "Zapisz nowy porządek!"
+  saving_your_changes: "Zapisuję Twoje zmiany..."
+  school: Szkoła
+  search: Szukaj
+  search_headline: Szukaj
+  see_more_link: Więcej
+  select_image_file: "wybierz plik z obrazem"
+  send_button: Wyślij
+  send_invites: "wyślij zaproszenia"
+  send_invites_button: "Wyślij zaproszenia"
+  send_invites_headline: "Wyślij zaproszenia do grupy {{group}}"
+  send_message_link: "Wyślij wiadomość"
+  separate_tags: "Oddziel tagi używająć przecinków."
+  set_status_button: "Ustaw Status"
+  set_status_messsage: "Co teraz robisz?"
+  settings: ustawienia
+  share: Współużytkowuj
+  share_button: Współużytkowuj
+  share_link: "Udostępnij {{page_class}}"
+  share_page_email: "Wyślij powiadomienie mailem"
+  share_page_link: "Współuzytkowuj {{page_class}}"
+  share_page_message: "Wyślij wiadomość (optional)"
+  share_page_options: "Wybierz opcje"
+  share_page_recipients: "Współużytkowuj {{page_class}} z"
+  share_page_recipients_results: "Ta {{page_class}} będzie wpsółużytkowana z "
+  share_page_recipients_sections: "Wybierz spośród swoich grup lub przyjaciół"
+  share_page_recipients_selection: "Stwórz własny wybór"
+  share_this_page: "Współużytkowuj tą stronę"
+  show_gallery: "Pokaż Galerię"
+  signup_button: Dołącz
+  signup_confirm_password: "Potwierdź hasło"
+  signup_email: "Twój mejl"
+  signup_email_info: "Nie jest to wymagane ale przydatne jeśli zapomnisz hasła."
+  signup_info: "Wybierz sobie login oraz hasło i kliknij \"{{sign_up}}\""
+  signup_link: "Potrzebujesz nowego konta?"
+  signup_login_name: "Twój login"
+  signup_password: "Twoje hasło"
+  signup_success: "Twój profil został utworzony"
+  signup_success_message: Witamy!
+  signup_title: "Stwórz swoje konto"
+  slideshow_delay_input: "Uaktualnij każdy {{input_field}} seconds"
+  small: mały
+  social_change_interests: "Zainteresowanie Zmianami Społecznymi"
+  starred: ogwiazdkowane
+  state: stan
+  status_pending: "w toku"
+  status_resolved: określony
+  subject: przedmiot
+  subject_must_not_be_empty: "obiekt nie może być pusty"
+  successful_undelete_image: "Pomyślne nieskasowanie obrazu"
+  sucessfully_removed_image: "Pomyślnie usunięty obraz! ({{undo_link}})"
+  summary: Podsumowanie
+  sunday: Niedziela
+  tags: Tagi
+  task_list_page_description: "Lista wszystkich danych."
+  task_list_page_display: "Lista zadań"
+  tasks: Zadania
+  this_is_committee: "Ten komitet jest częścią {{parent_group}}."
+  this_is_coordinating: "Ten komitet jest <strong>radą koorynującą</strong> dla {{parent_group}}."
+  thursday: Czwartek
+  time_zone: "Strefa Czasowa"
+  title: Tytuł
+  to: Do
+  toggle_selection: "Przełącznik wyboru"
+  top_rated: "Najwyżej notowane"
+  try_again: "Spróbuj Ponownie"
+  tuesday: Wtorek
+  type_your_messages_here: "Tu wpisz swoją wiadomość i naciśnij enter..."
+  typing: wpisywanie
+  undo: cofnij
+  unfeature_button: Nieopisane!
+  unknown: nieznany
+  unread: "nieprzeczytane\n"
+  updated: zaktualizowane
+  upload_attachment: "Załaduj Załącznik"
+  upload_image: "Załaduj Obraz"
+  upload_images: Załaduj
+  upload_new_image: "załaduj nowy obraz"
+  uploaded_image_cropped: "Załadowany obraz będzie obcięty i rozciągnięty do kwadratu 96 pixeli."
+  usage_agreement_heading: "Warunki umowy"
+  usage_agreement_required: "Wymagana akceptacja warunków użytkowania"
+  user: Użytkownik/Użytkowniczka
+  user_or_group_name: "Użytkownik/Użytowniczka albo nazwa grupy"
+  user_profile_description_allow_peers: "Jeśli zaznaczone, ludzie z którymi dzielisz grupę będą mieli możliwość oglądania Twojego prywatnego profilu."
+  user_profile_description_may_pester: "Zezwól ludziom na dielnie się z Tobą zawartością i na wysyłanie zaproszeń."
+  user_profile_description_may_request_contact: "Pozwól ludziom na wysyłanie próśb o dołącznie do Twoich kontaktów."
+  user_profile_description_may_see: "Jeśli zaznaczone, informacje z Twojego profilu,zamieszczone poniżej będą widoczne. W innym przypadku Twój profil będzie całkowicie ukryty."
+  user_profile_description_may_see_contacts: "Pozwól ludziom na przeglądanie listy Twoich prywatnych kontaktów."
+  user_profile_description_may_see_groups: |
+      Pozwól ludziom na przeglądanie do jakich grup należysz.
+  username: "Imię Użytkownika/Użytkowniczki"
+  users_wall: "{{user}}'s Mur"
+  users_world: "{{user}}'s Świat"
+  version_doesnt_exist: "Nie ma takiej wersji {{version}}"
+  version_number: "wersja {{version}}"
+  versions: Wersje
+  video: wideo
+  video_class_description: "Pokaż wideo które znajduje się na zewnętrznych stronach internetowych."
+  video_embed_code_prompt: "Osadzone kody z zewnętrznego źródła wideo"
+  video_service_is_not_supported: "nie ma wsparcia (obecnie tylko youtube, google video, blip.tv, and vimeo)"
+  view_all: "przejrzyj wszystkie"
+  view_requests: "przejrzyj prośby"
+  view_slideshow: "Obejrzyj Pokaz Slajdów"
+  viewed: Przeglądane
+  viewer: "Osoba przeglądajaca"
+  viewers: "Osoby przeglądające"
+  wall_heading: "Publiczny Mur z Wiadomościami"
+  wall_post_button: "Wyślij Nową Wiadomość"
+  watch_checkbox: "Obserwuj uaktualnienia"
+  websites: "Strony internetowe"
+  wednesday: Środa
+  welcome_find_people_link: "Znajdź ludzi"
+  welcome_find_people_text: "Przeglądaj spis użytkowników/użytkowniczek, by znaleźć ludzi których znasz."
+  welcome_heading: "{{user_name}} witaj na {{site_title}}!"
+  welcome_message: "Crabgrass umożliwia organizacjom społecznej zmiany ralizowanie zajawek, wychodzenie naprzeciw światu, kolaborowanie, budowanie sieci."
+  welcome_title: "Witaj na stronie {{site_title}}"
+  welcome_upload_icon_link: "Załaduj ikonkę użytkownika/użytkowniczki"
+  welcome_upload_icon_text: "Załaduj obraz, by używać go jako swojej ikonki. Ta ikonka pojawi się obok każdego napisanego przez Ciebie komentarza."
+  when_does_feature_expire: "Kiedy wygasł ten składnik?"
+  wiki_is_locked: "To wiki jest obecnie zablokowane przez {{user}}"
+  wiki_page_description: "Niesformatowany dokument tekstowy."
+  wiki_page_display: Wiki
+  wont_be_able_to_save: "Nie będziesz w stanie zapisać tej strony"
+  work: Praca
+  work_life: "Okres trwania pracy"
+  you_are_not_member_of_any_group: "Nie jesteś członkiem/członkinią żadnej z grup."
+  you_are_viewing_version: "Oglądasz wersję {{version}} {{user}}"
+  you_have_no_contacts: "Nie masz żadnych kontaktów"
+  you_have_no_groups: "Nie masz żadnych grup"
+  you_have_no_peers: "Nie masz żadnych znajomych"
+  your_login: "Twój login"

@@ -124,7 +124,7 @@ module WikiHelper
     %(insertImageFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();
-      #{modalbox_function(image_popup_show_url(@wiki), :title => 'Insert Image'[:insert_image])};
+      #{modalbox_function(image_popup_show_url(@wiki), :title => I18n.t(:insert_image))};
     })
   end
 
@@ -132,7 +132,7 @@ module WikiHelper
     %(createLinkFunction = function() {
       var editor = new HtmlEditor(#{wiki.id});
       editor.saveSelection();
-      #{modalbox_function(link_popup_show_url(@wiki), :title => 'Add Link'[:add_link])};
+      #{modalbox_function(link_popup_show_url(@wiki), :title => I18n.t(:add_link))};
     })
   end
 
@@ -162,16 +162,16 @@ module WikiHelper
       :onchange => (remote_function(:url => wiki_action('old_version', :wiki_id => wiki.id),
                                       :loading => show_spinner(spinner_id),
                                       :with => "'old_version=' + $('#{select_tag_name}').value",
-                                      :confirm => "Any unsaved text will be lost. Are you sure?"[:confirm_unsaved_text_lost_label]))
+                                      :confirm => I18n.t(:wiki_lost_text_confirmation)))
   end
 
   # returns something like 'Version 3 created Fri May 08 12:22:03 UTC 2009 by Blue!'
   def wiki_version_label(version)
-    label = :version_number.t % {:version => version.version}
+    label = I18n.t(:version_number, :version => version.version)
      # add users name
      if version.user_id
-       user_name = User.find_by_id(version.user_id).try.name || 'unknown'[:unknown]
-       label << ' ' << :created_when_by.t % {
+       user_name = User.find_by_id(version.user_id).try.name || I18n.t(:unknown)
+       label << ' ' << I18n.t(:created_when_by) % {
          :when => full_time(version.updated_at),
          :user => user_name
        }
@@ -186,7 +186,7 @@ module WikiHelper
 
   def wiki_edit_link(wiki_id=nil)
     # note: firefox uses layerY, ie uses offsetY
-    link_to_remote_with_icon('Edit'[:edit], :icon => 'pencil',
+    link_to_remote_with_icon(I18n.t(:edit), :icon => 'pencil',
       :url => wiki_action('edit', :wiki_id => wiki_id),
       :with => "'height=' + (event.layerY? event.layerY : event.offsetY)"
     )
@@ -213,18 +213,18 @@ module WikiHelper
     if type == :plain
       if Conf.allow_html_editor?
         if Conf.text_editor_sym == :html_preferred
-          "Advanced Editor"[:wiki_advanced_editor]
+          I18n.t(:wiki_advanced_editor)
         else
-          "Plain Editor"[:wiki_plain_editor]
+          I18n.t(:wiki_plain_editor)
         end
       else
-        "Editor"[:wiki_editor]
+        I18n.t(:wiki_editor)
       end
     else
       if Conf.text_editor_sym == :html_preferred || !Conf.allow_greencloth_editor?
-        "Editor"[:wiki_editor]
+        I18n.t(:wiki_editor)
       else
-        "Visual Editor"[:wiki_visual_editor]
+        I18n.t(:wiki_visual_editor)
       end
     end
   end
@@ -232,7 +232,7 @@ module WikiHelper
   def create_wiki_toolbar(wiki)
     body_id = wiki_body_id(wiki)
     toolbar_id = wiki_toolbar_id(wiki)
-    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => 'Insert Image'[:insert_image])
+    image_popup_code = modalbox_function(image_popup_show_url(wiki), :title => I18n.t(:insert_image))
 
     "wikiEditAddToolbar('#{body_id}', '#{toolbar_id}', '#{wiki.id.to_s}', function() {#{image_popup_code}});"
   end
@@ -240,7 +240,7 @@ module WikiHelper
   def wiki_locked_notice(wiki)
     return if wiki.document_open_for? current_user
 
-    error_text = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => wiki.locker_of(:document).try.name || 'unkown'[:unknown]}
+    error_text = I18n.t(:wiki_is_locked, :user => wiki.locker_of(:document).try.name || I18n.t(:unknown))
     %Q[<blockquote class="error">#{h error_text}</blockquote>]
   end
 

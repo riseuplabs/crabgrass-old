@@ -3,19 +3,19 @@
   <% select_private = !(@private.body.nil? or @private.body == '' or @wiki == @public) -%>
   <%= Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Private Homepage'[:private_homepage]
+      t.label I18n.t(:private_homepage)
       t.icon 'shield'
       t.show_tab area_id(@private)
       t.selected select_private
     end
     f.tab do |t|
-      t.label 'Public Homepage'[:public_homepage]
+      t.label I18n.t(:public_homepage)
       t.icon 'world'
       t.show_tab area_id(@public)
       t.selected !select_private
     end
     f.tab do |t|
-      t.link link_to_remote_with_icon('Close Editor'[:close_editor], :url=>wiki_action('done'), :icon => 'close')
+      t.link link_to_remote_with_icon(I18n.t(:close_editor), :url=>wiki_action('done'), :icon => 'close')
     end
   end
   %>
@@ -29,13 +29,13 @@
 <% else %>
   <%= Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Edit'[:edit]
+      t.label I18n.t(:edit)
       t.icon 'house'
       t.show_tab area_id(@wiki)
       t.selected true
     end
     f.tab do |t|
-      t.link link_to_remote_with_icon('Close Editor'[:close_editor], :url=>wiki_action('done', :wiki_id => @wiki), :icon => 'close')
+      t.link link_to_remote_with_icon(I18n.t(:close_editor), :url=>wiki_action('done', :wiki_id => @wiki), :icon => 'close')
     end
   end %>
   <div class='tab_content tab_area' id='<%=area_id(@wiki)%>'>

@@ -45,7 +45,7 @@ module Groups::MenuItemsHelper
 #  end
 
 #  def add_menu_item_button(spinner_id, disabled=false)
-#    button_to_remote("Add".t, {
+#    button_to_remote(I18n.t(:add_button), {
 #      :url    => groups_menu_items_url(:action=>'new'),
 #      :html   => {:action => groups_menu_items_url(:action=>'new')}, # non-ajax fallback
 #      :loading => show_spinner(spinner_id),
@@ -57,7 +57,7 @@ module Groups::MenuItemsHelper
 
 #  def cancel_menu_item_button(spinner_id)
 #    url = groups_menu_items_url(:action=>'update', :_method => :put)
-#    button_to_remote "Cancel".t,
+#    button_to_remote I18n.t(:cancel),
 #      :url      => url, # same as for the form. Update without data will just reload.
 #      :html     => {:action => url}, # non-ajax fallback
 #      :update => 'menu_items_list_container',

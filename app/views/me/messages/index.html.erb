@@ -3,6 +3,6 @@
 <% if @activities.any? %>
   <%= render :partial => 'activity/list', :locals => {:activities => @activities} %>
 <% else %>
-  <p><%= "None"[:empty_results] %></p>
+  <p><%= I18n.t(:empty_results) %></p>
 <% end %>
 

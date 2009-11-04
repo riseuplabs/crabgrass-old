@@ -1,7 +1,7 @@
 <% if may_edit_title? -%>
 <div class='float_right'>
-  <%= link_to_modal("Edit Title"[:edit_title], {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:class => 'shy', :icon => 'pencil'}) %>
-  <%# link_to_remote_with_icon("Edit Title"[:edit_title], {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:class => 'shy'}) %>
+  <%= link_to_modal(I18n.t(:edit_title), {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:class => 'shy', :icon => 'pencil'}) %>
+  <%# link_to_remote_with_icon(I18n.t(:edit_title), {:icon => 'pencil', :url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:class => 'shy'}) %>
 </div>
 <% end -%>
 <h1>

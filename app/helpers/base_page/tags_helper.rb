@@ -2,7 +2,7 @@ module BasePage::TagsHelper
 
   def remove_tag_link(tag)
     link = link_to_remote_with_icon(
-      "Delete"[:delete],
+      I18n.t(:delete),
       { :url => {:controller => 'base_page/tags', :action => 'update', :remove => tag.name, :page_id => @page.id},
         :complete => hide("tag_#{tag.id}") },
       { :class => 'shy', :icon => 'tiny_trash'}

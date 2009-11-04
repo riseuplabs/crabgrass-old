@@ -4,7 +4,7 @@
 <%= render(
   :partial => 'common/say_form',
   :locals => {
-    :submit => "Say"[:say_message_button], 
+    :submit => I18n.t(:say_message_button), 
     :url => my_public_messages_path,
     :text => current_user.current_status
   }

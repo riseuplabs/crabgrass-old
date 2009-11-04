@@ -1,15 +1,15 @@
 <div class='tab_content tab_area' id="favicon_tab" <%= tab_style 'favicon' %>>
   <% form_for @appearance, :html => { :multipart => true }  do |f| %>
     <%= input_selected_tab('favicon') %>
-    <p> <%= "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."[:upload_favicon_image_label] %></p>
+    <p> <%= I18n.t(:upload_favicon_image_label) %></p>
     <p><%= display_favicon %></p>
 
     <p>
-      <%= f.label :favicon_uploaded_data, "Select image file"[:select_image_file] %>
+      <%= f.label :favicon_uploaded_data, I18n.t(:select_image_file) %>
       <br/>
       <%= f.file_field :favicon_uploaded_data, :size => "73" %>
     </p>
 
-    <%= submit_tag 'Update Favicon'.t, :class => "submit" %>
+    <%= submit_tag I18n.t(:update_thing, :thing => I18n.t(:favicon)), :class => "submit" %>
   <% end %>
 </div>

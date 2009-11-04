@@ -8,7 +8,7 @@
   <%= render :partial => 'group', :collection => @groups, :locals => { :show_committees => @show_committees }%>
   <%= pagination_links(@groups) %>
 <% else %>
-  <p><%= "No Results"[:no_search_results] %></p>
+  <p><%= I18n.t(:no_search_results) %></p>
 <% end %>
 
 

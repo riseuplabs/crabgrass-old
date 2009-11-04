@@ -130,7 +130,7 @@ module PageExtension::Create
         elsif entity =~ RFC822::EmailAddress
           emails << entity
         elsif entity.any?
-          errors << '"{name}" does not match the name of any users or groups and is not a valid email address'[:name_or_email_not_found, h(entity)]
+          errors << I18n.t(:name_or_email_not_found, :name => h(entity))
         end
       end
 

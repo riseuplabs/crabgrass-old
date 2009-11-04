@@ -1,25 +1,25 @@
-<p><label for="user_login"><%= "Username"[:username] %></label><br/>
+<p><label for="user_login"><%= I18n.t(:username) %></label><br/>
 <%= text_field 'user', 'login'  %></p>
 
-<p><label for="user_display_name"><%= "Display name"[:display_name] %></label><br/>
+<p><label for="user_display_name"><%= I18n.t(:display_name) %></label><br/>
 <%= text_field 'user', 'display_name'  %></p>
 
-<p><label for="user_email"><%= "Email"[:email] %></label><br/>
+<p><label for="user_email"><%= I18n.t(:email) %></label><br/>
 <%= text_field 'user', 'email'  %></p>
 
-<p><label for="user_receive_notifications"><%= "Do you want to receive email notifications about changes to pages you are \"watching\"?"[:do_you_want_to_receive_email_notifications] %></label><br/>
+<p><label for="user_receive_notifications"><%= I18n.t(:do_you_want_to_receive_email_notifications) %></label><br/>
 <%= select 'user', 'receive_notifications', [["No", ""], ["Yes: an email per change","Single"], ["Yes: just a summary email","Digest"]]   %></p>
 
-<p><label for="user_language"><%= "Language"[:language] %></label><br/>
+<p><label for="user_language"><%= I18n.t(:language) %></label><br/>
 <%= select 'user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p>
 
-<p><label for="user_time_zone"><%= "Time Zone"[:time_zone] %></label><br/>
+<p><label for="user_time_zone"><%= I18n.t(:time_zone) %></label><br/>
 <%= time_zone_select 'user', 'time_zone', nil, :include_blank => true %></p>
 
-<p><label for="user_password"><%= "Password"[:password] %></label><br/>
+<p><label for="user_password"><%= I18n.t(:password) %></label><br/>
 <%= password_field 'user', 'password'  %></p>
 
-<p><label for="user_password_confirmation"><%= "Password confirmation"[:password_confirmation] %></label><br/>
+<p><label for="user_password_confirmation"><%= I18n.t(:password_confirmation) %></label><br/>
 <%= password_field 'user', 'password_confirmation'  %></p>
 
 

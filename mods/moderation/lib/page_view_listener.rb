@@ -10,12 +10,12 @@ class PageViewListener < Crabgrass::Hook::ViewListener
     #OLD: if rating.nil? or rating.rating != YUCKY_RATING
     ### see: models/user_flag_extension.rb and init.rb
     if current_user.find_flagged_page_by_id(context[:page].id).size > 0
-      link = link_to 'flag as appropriate'[:flag_appropriate],
+      link = link_to I18n.t(:flag_appropriate),
         :controller => 'base_page/yucky', :page_id => context[:page].id, :action => 'remove'
       page_sidebar_list(content_tag(:li, link, :class => 'small_icon sad_minus_16'))
     #OLD: elsif rating.rating == YUCKY_RATING
     else
-      link = popup_line(:name => 'yucky', :label => 'flag as inappropriate'[:flag_inappropriate], :class => 'small_icon sad_plus_16', :controller => 'yucky', :page_id => context[:page].id, :show_popup => 'show_add')
+      link = popup_line(:name => 'yucky', :label => I18n.t(:flag_inappropriate), :class => 'small_icon sad_plus_16', :controller => 'yucky', :page_id => context[:page].id, :show_popup => 'show_add')
       page_sidebar_list(link)
     end
   end
@@ -34,7 +34,7 @@ class PageViewListener < Crabgrass::Hook::ViewListener
         :post_id => post.id,
         :page_id => context[:page].id
       })
-      link = link_to_modal('',{:url => popup_url, :icon => 'sad_plus',:title=>'flag as inappropriate'[:flag_inappropriate]}, {})
+      link = link_to_modal('',{:url => popup_url, :icon => 'sad_plus',:title=>I18n.t(:flag_inappropriate)}, {})
     #elsif rating.rating == YUCKY_RATING
     else
       link = link_to_remote_icon('sad_minus', :url=>{:controller => 'base_page/yucky', :post_id => post.id, :action => 'remove'})

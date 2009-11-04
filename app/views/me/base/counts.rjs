@@ -1,11 +1,7 @@
 if @unread_count > 0
-  page.replace_html 'inbox_line', link_to('Inbox'[:me_inbox_link] + ' (%i)' % @unread_count, '/me/inbox')
+  page.replace_html 'inbox_line', link_to(I18n.t(:me_inbox_link) + ' (%i)' % @unread_count, '/me/inbox')
 end
 
 if @to_me_count > 0
-  page.replace_html 'requests_line', link_to_active('Requests'[:requests] + ' (%i)' % @to_me_count, {:controller => '/me/requests', :action => 'to_me'})
+  page.replace_html 'requests_line', link_to_active(I18n.t(:requests) + ' (%i)' % @to_me_count, {:controller => '/me/requests', :action => 'to_me'})
 end
-#if @from_me_count > 0
-#  page.replace_html 'requests_count', link_to_active('From Me'.t + ' (%i)' % @from_me_count, {:controller => '/me/requests', :action => 'from_me'})
-#end
-

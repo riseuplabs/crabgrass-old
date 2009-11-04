@@ -1,0 +1,26 @@
+Each site has it's own folder here. That folder multiple yml files, one file per language.
+
+I18n module will look in here first for a translation key and if nothing is found, it will default to locales/lang.yml file.
+
+Example structure:
+
+
+config/
+  locales/
+    en.yml
+    es.yml
+    sites/
+      examplesite/
+        en.yml
+        es.yml
+
+
+### In config/locales/en.yml:
+en:
+  welcome_message: "Welcome to Crabgrass!"
+
+
+### In config/locales/sites/examplesite/en.yml
+en:
+  examplesite:
+    welcome_message: "Welcome to the Example Site!"

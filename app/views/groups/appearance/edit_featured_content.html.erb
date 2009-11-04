@@ -1,22 +1,24 @@
-<%= link_to "back to {group_name}"[:back_to_group, {:group_name => @group.display_name}], group_url(:action => 'show', :id => @group)%>
+<%= link_to I18n.t(:back_to_group, :group_name => @group.display_name), group_url(:action => 'show', :id => @group)%>
 
-<h2 class="section"><%= "Edit Featured Content for {group_name}"[:edit_featured_content_for_group, { :group_name => @group.display_name}] %></h2>
+<h2 class="section">
+  <%= I18n.t(:edit_featured_content_for_group, :group_name => @group.display_name) %>
+</h2>
 
-<%= "Here you can mark pages as featured content of this group."[:mark_pages_as_featured_content_for_group] %>
+<%= I18n.t(:mark_pages_as_featured_content_for_group) %>
 
-<%= link_to "currently featured content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "current", :page => 1) %> | 
+<%= link_to "currently featured content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "current", :page => 1) %> |
 <%= link_to "not yet featured content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "unfeatured", :page => 1) %> |
 <%= link_to "reactivate expired content", group_url(:action => 'edit_featured_content', :id => @group, :mode => "expired", :page => 1) %>
 
 <%= pagination_links(@content) %>
 
 <% if (params[:mode] == "current") || (params[:mode].nil?) %>
-<h4 class="section"><%= "Current Featured Content"[:current_featured_content] %></h4>
+<h4 class="section"><%= I18n.t(:current_featured_content) %></h4>
 <table>
   <tr>
-    <th><%= "Title".t %></th>
-    <th><%= "When does this feature expire?"[:when_does_feature_expire] %></th>
-    <th><%= "Action".t %></th>
+    <th><%= I18n.t(:title) %></th>
+    <th><%= I18n.t(:when_does_feature_expire) %></th>
+    <th><%= I18n.t(:buttons_list_label) %></th>
   </tr>
 <% @content.each do |p|%>
  <tr  class="<%=cycle(:even,:odd)%>">
@@ -25,7 +27,7 @@
 <%= hidden_field :featured_content, :mode, :value => :unfeature %>
 <%= hidden_field :featured_content, :id, :value => p.id %>
 <td><%= p.group_participations.find_by_group_id(@group.id).static_expires %></td>
-<td><%= submit_tag :unfeature_button.t %></td>
+<td><%= submit_tag I18n.t(:unfeature_button) %></td>
 <% end %>
 </tr>
 <% end %>
@@ -33,12 +35,12 @@
 <% end %>
 
 <% if params[:mode] == "unfeatured" %>
-<h4 class="section"><%= "Not yet Featured Content"[:not_featured_content] %></h4>
+<h4 class="section"><%= I18n.t(:not_featured_content) %></h4>
 <table>
   <tr>
-    <th><%= "Title".t %></th>
-    <th><%= :when_does_feature_expire.t %></th>
-    <th><%= "Action".t %></th>
+    <th><%= I18n.t(:title) %></th>
+    <th><%= I18n.t(:when_does_feature_expire) %></th>
+    <th><%= I18n.t(:buttons_list_label) %></th>
   </tr>
 <% @content.each do |p|%>
 <tr class="<%=cycle(:even,:odd)%>">
@@ -47,7 +49,7 @@
 <%= hidden_field :featured_content, :id, :value => p.id %>
 <td><%= link_to p.title, page_url(p), :class => "small_icon #{p.icon}_16" -%></td>
 <td><%= date_select :featured_content, :expires %></td>
-<td><%= submit_tag :feature_button.t %></td>
+<td><%= submit_tag I18n.t(:feature_button) %></td>
 <% end %>
 </tr>
 <% end %>
@@ -55,12 +57,12 @@
 <% end %>
 
 <% if params[:mode] == "expired"%>
-<h4 class="section"><%= "Expired Featured Content"[:expired_featured_content] %></h4>
+<h4 class="section"><%= I18n.t(:expired_featured_content) %></h4>
 <table>
   <tr>
-    <th><%= "Title".t %></th>
-    <th><%= :when_does_feature_expire.t %></th>
-    <th><%= "Action".t %></th>
+    <th><%= I18n.t(:title) %></th>
+    <th><%= I18n.t(:when_does_feature_expire) %></th>
+    <th><%= I18n.t(:buttons_list_label) %></th>
   </tr>
 <% @content.each do |p| %>
 <tr class="<%=cycle(:even,:odd)%>">
@@ -69,7 +71,7 @@
 <%= hidden_field :featured_content, :id, :value => p.id %>
 <%= hidden_field :featured_content, :mode, :value => :reactivate %>
 <td><%= date_select :featured_content, :expires %></td>
-<td><%= submit_tag :reactivate_button.t %></td>
+<td><%= submit_tag I18n.t(:reactivate_button) %></td>
 <% end %>
 </tr>
 <% end %>

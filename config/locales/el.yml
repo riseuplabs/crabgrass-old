@@ -1,0 +1,104 @@
+el:
+  about_me: "Σχετικά με εμένα"
+  accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
+  access: Πρόσβαση
+  activate_js_to_rearrange_photos: "Ενεργοποιήστε την JavaScript ώστε να ανατακτοποιείτε τις φωτογραφίες με Drag&Drop"
+  activity_contact_created: "ο/η {{user}} πρόσθεσε τον/την {{other_user}} ως επαφή"
+  activity_group_created: "{{user}} δημιούργησε {{group_type}} {{group}}"
+  activity_group_destroyed: "{{group}} διαγράφηκε από {{user}}"
+  activity_user_left_group: "{{user}} αποχώρησε από {{group_type}} {{group}}"
+  activity_user_status: "{{user}} είναι τώρα {{status}}"
+  add_another_file: "Προσθήκη και άλλου αρχείου"
+  add_button: Πρόσθεσε
+  add_comment: "Προσθήκη Σχολίου"
+  add_contact_info: "Όταν ένας άλλος χρήστης είναι επαφή σου, μπορεί να δει πότε είσαι συνδεδεμένος και έχει πρόσβαση στο πλήρες προφίλ σου. Όταν γίνεις επαφή ενός άλλου προσώπου, αυτόματα το πρόσωπο αυτό γίνεται και δική σου επαφή."
+  add_description: "Προσθήκη Περιγραφής"
+  add_email_address: "Προσθέστε διεύθυνση ηλεκτρονικού ταχυδρομείου"
+  add_encryption_key: "Προσθέστε κλειδί κρυπτογράφησης"
+  add_im_address: "Προσθέστε IM διεύθυνση (MSN,yahoo messenger etc)"
+  add_location: "Προσθήκη Τοποθεσίας"
+  add_new_attachment: "Πρόσθεσε μια νέα επισύναψη"
+  add_one_or_more_tags: "Προσθέστε μία ή περισσότερες ετικέτες, διαχωρίζοντάς τες με ένα κόμμα"
+  add_phone_number: "Προσθήκη Αριθμού Τηλεφώνου"
+  add_photo_to_gallery: "Κάντε click σε μια φωτογραφία για να την προσθέσετε"
+  add_tags: "Προσθέστε ετικέτες"
+  add_websites: "Προσθήκη Ιστοσελίδας"
+  admin: Διαχειριστής
+  alert_error: Σφάλμα!
+  alert_field_errors: "Υπάρχουν προβλήματα με τα παρακάτω πεδία"
+  alert_not_saved: "Οι αλλαγές δεν αποθηκεύτηκαν"
+  alert_permission_denied: "Απαγορεύτηκε η πρόσβαση"
+  alert_saved: "Οι αλλαγές αποθηκεύτηκαν"
+  all: Όλα
+  all_content: "Όλα τα περιεχόμενα"
+  all_groups: "όλες οι ομάδες"
+  all_page_types: "όλοι οι τύποι σελίδων"
+  all_people: "όλοι οι άνθρωποι"
+  allow_membership_requests: "Επιτρέψτε τις αιτήσεις εγγραφής μελών"
+  already_contacts_info: "Είστε ήδη επαφή αυτού του προσώπου"
+  announcements: Ανακοινώσεις
+  approval_vote: "ψήφος έγκρισης"
+  approve: εγκρίνω
+  approve_button: έγκριση
+  approved: εγγεκριμένο
+  archive: Αρχείο
+  article_page_display: άρθρο
+  at_least_one_recipient_is_required: "απαιτείται τουλάχιστον ένας παραλήπτης"
+  attachments: Επισυνάψεις
+  away: απουσιάζω
+  back_button: Πίσω
+  back_to_group: "επιστροφή στην {{group_name}}"
+  cancel_button: Ακύρωση
+  cancel_link: ακύρωση
+  category: Κατηγορία
+  check_all: "Επιλογή Όλων"
+  close_button: Κλείσιμο
+  collection: συλλογή
+  committee: Επιτροπή
+  committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
+  committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {{domain}}/yourgroupname"
+  committees: επιτροπές
+  confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
+  contact: Επαφή
+  contacts: Επαφές
+  coordinator: Συντονιστής
+  coordinators: Συντονιστές
+  council: Συμβούλιο
+  councils: Συμβούλια
+  created: δημιουργήθηκε
+  created_by: "Δημιουργήθηκε από"
+  created_on: "Δημιουργήθηκε την"
+  date: ημερομηνία
+  delete: Διαγραφή
+  description: περιγραφή
+  descriptions: Περιγραφές
+  discussions: Συζητήσεις
+  file: αρχείο
+  file_size: "Μέγεθος αρχείου"
+  files: Αρχεία
+  friday: Παρασκευή
+  friends: Φίλοι
+  from: από
+  height: Ύψος
+  history: Ιστορικό
+  image_title: "Τίτλος εικόνας: {{title}}"
+  incoming: Εισερχόμενα
+  language: Γλώσσα
+  last_change: "Τελευταία Αλλαγή"
+  last_name: επίθετο
+  locations: Τοποθεσίες
+  login: Σύνδεση
+  logout: Αποσύνδεση
+  members: Μέλη
+  message: μήνυμα
+  message_page_display: μήνυμα
+  monday: Δευτέρα
+  more_information: "Περισσότερες Πληροφορίες"
+  settings: Ρυθμίσεις
+  usage_agreement_required: "Χρειάζεται αποδοχή της συμφωνίας χρήσης"
+  user: Χρήστης
+  username: "Όνομα χρήστη"
+  versions: Εκδόσεις
+  websites: Ιστοσελίδες
+  wednesday: Τετάρτη
+  wiki_page_display: Wiki

@@ -1,7 +1,7 @@
 <% if @group.parent.all_users.any? %>
-<h2><%= "Dual memberships"[:dual_memberships] %></h2>
+<h2><%= I18n.t(:dual_memberships) %></h2>
 
-<p><%= "Members of :group_type <b>:group</b> who should also be in committee <b>:committee</b>"[:dual_membership_info] % {:group_type => @group.parent.group_type, :group => @group.parent.display_name, :committee => @group.display_name } %></p>
+<p><%=  I18n.t(:dual_membership_info, :group_type => @group.parent.group_type, :group => @group.parent.display_name, :committee => @group.display_name ) %></p>
 
 <blockquote>
 <% form_tag(:action => 'update', :id => @group) do -%>

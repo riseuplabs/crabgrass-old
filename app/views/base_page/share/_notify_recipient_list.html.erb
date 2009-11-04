@@ -13,11 +13,11 @@
 
   <tr><td cospan='2'><label>
     <%= check_box_tag('check_all', 1, false, :onClick => "toggleAllCheckboxes(this, 'input.#{klass}')") %>
-    <%= "Check All"[:check_all] %>
+    <%= I18n.t(:check_all) %>
   </label></td></tr>
 
   <% if groups.any? and !users.empty? %>
-  <tr><td cospan='2'><b><%= "Groups"[:groups] %></b></td></tr>
+  <tr><td cospan='2'><b><%= I18n.t(:groups) %></b></td></tr>
   <% end %>
 
   <%= column_layout(2, groups, :skip_table_tag => true, :balanced => true) do |recipient| 
@@ -25,7 +25,7 @@
   end %>
 
   <% if users.any? and !groups.empty? %>
-  <tr><td cospan='2'><b><%= "Users"[:users] %></b></td></tr>
+  <tr><td cospan='2'><b><%= I18n.t(:users) %></b></td></tr>
   <% end %>
 
   <%= column_layout(2, users, :skip_table_tag => true, :balanced => true) do |recipient| 

@@ -17,8 +17,8 @@ class AccountController < ApplicationController
 
   def login
     if !( params[:redirect].empty? || params[:redirect] =~ /^https?:\/\/#{request.domain}/ || params[:redirect] =~ /^\//)
-      flash_message(:title => 'Illegal redirect'[:illegal_redirect],
-      :error => "You are trying to redirect to a foreign domain {url} after your login. For security reasons we have removed this parameter from the URL."[:redirect_to_foreign_domain, {:url => params.delete(:redirect)}])
+      flash_message(:title => I18n.t(:illegal_redirect),
+      :error => I18n.t(:redirect_to_foreign_domain, :url => params.delete(:redirect)))
       redirect_to params and return
     end
     return unless request.post?
@@ -50,8 +50,8 @@ class AccountController < ApplicationController
       UnreadActivity.create(:user => current_user)
       redirect_successful_login
     else
-      flash_message_now :title => "Could not log in"[:login_failed],
-      :error => "Username or password is incorrect."[:login_failure_reason]
+      flash_message_now :title => I18n.t(:login_failed),
+      :error => I18n.t(:login_failure_reason)
     end
 
   end
@@ -67,7 +67,7 @@ class AccountController < ApplicationController
 
     if request.post?
       if params[:usage_agreement_accepted] != "1"
-        raise ErrorMessage.new("Acceptance of the usage agreement is required"[:usage_agreement_required])
+        raise ErrorMessage.new(I18n.t(:usage_agreement_required))
       end
 
       @user.avatar = Avatar.new
@@ -80,8 +80,8 @@ class AccountController < ApplicationController
       send_email_verification if current_site.needs_email_verification?
 
       redirect_to params[:redirect] || current_site.login_redirect(current_user)
-      flash_message :title => 'Registration successful'[:signup_success],
-        :success => "Thanks for signing up!"[:signup_success_message]
+      flash_message :title => I18n.t(:signup_success),
+        :success => I18n.t(:signup_success_message)
     end
   rescue Exception => exc
     @user = exc.record
@@ -95,11 +95,11 @@ class AccountController < ApplicationController
     @token = Token.find_by_value_and_action(params[:token], 'verify')
     @token.destroy if @token
     if @token.nil? or @token.user.nil? or !@token.user.unverified?
-      flash_message :title => "Already Verified."[:already_verified], :success => "You don't need to verify again."[:already_verified_text]
+      flash_message :title => I18n.t(:already_verified), :success => I18n.t(:already_verified_text)
     else
       @token.user.update_attribute(:unverified, false)
-      flash_message :title => 'Successfully Verified Email Address'[:successfully_verified_email_message],
-        :success => "Thanks for signing up!"[:signup_success_message]
+      flash_message :title => I18n.t(:successfully_verified_email_message),
+        :success => I18n.t(:signup_success_message)
     end
 
     redirect_to '/'
@@ -114,8 +114,8 @@ class AccountController < ApplicationController
     language = session[:language_code]
     reset_session
     session[:language_code] = language
-    flash_message :title => "Goodbye"[:logout_success],
-      :success => "You have been logged out."[:logout_success_message]
+    flash_message :title => I18n.t(:logout_success),
+      :success => I18n.t(:logout_success_message)
     redirect_to :controller => '/account', :action => 'index'
   end
 
@@ -129,8 +129,8 @@ class AccountController < ApplicationController
     return unless request.post?
 
     unless RFC822::EmailAddress.match(params[:email])
-      flash_message_now :title => "Invalid Email"[:invalid_email],
-        :error => "The email address you provided is invalid."[:invalid_email_text]
+      flash_message_now :title => I18n.t(:invalid_email),
+        :error => I18n.t(:invalid_email_text)
       render and return
     end
 
@@ -143,16 +143,16 @@ class AccountController < ApplicationController
       Mailer.deliver_forgot_password(token, mailer_options)
     end
 
-    flash_message :title => "Reset Password"[:reset_password],
-      :success => "An email has been sent containing instructions for resetting your password."[:reset_password_email_sent]
+    flash_message :title => I18n.t(:reset_password),
+      :success => I18n.t(:reset_password_email_sent)
     redirect_to :action => 'index'
   end
 
   def reset_password
     @token = Token.find_by_value_and_action(params[:token], 'recovery')
     unless @token && !@token.expired?
-      flash_message :title => "Invalid Token"[:invalid_token],
-        :error => "The password reset link you specified is invalid. Presumably it has already been used, or it has expired."[:invalid_token_text]
+      flash_message :title => I18n.t(:invalid_token),
+        :error => I18n.t(:invalid_token_text)
       redirect_to :action => 'index' and return
     end
 
@@ -164,8 +164,8 @@ class AccountController < ApplicationController
     if @user.save
       Mailer.deliver_reset_password(@user, mailer_options)
       @token.destroy
-      flash_message :title => "Password Reset"[:password_reset],
-        :success => "Your password has been successfully reset. You can now log in with your newly changed password."[:password_reset_ok_text]
+      flash_message :title => I18n.t(:password_reset),
+        :success => I18n.t(:password_reset_ok_text)
       redirect_to :action => 'index'
     else
       flash_message_now :object => @user

@@ -2,20 +2,20 @@
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'People'[:people]
+    t.label I18n.t(:people)
     t.url url_for(:controller => 'membership', :action => 'list', :id => group)
     t.selected params[:controller] == '/membership' && params[:action] == 'list'
   end
   if group.federatings.any?
     f.tab do |t|
-      t.label 'Groups'[:groups]
+      t.label I18n.t(:groups)
       t.url url_for(:controller => 'membership', :action => 'groups', :id => group)
       t.selected params[:controller] == '/membership' && params[:action] == 'groups'
     end
   end
   if may_edit_memberships?(group)
     f.tab do |t|
-      t.label 'Edit Committee'[:edit_committe]
+      t.label I18n.t(:edit_committe)
       t.url url_for(:controller => 'membership', :action => 'edit', :id => group)
       t.selected params[:controller] == '/membership' && params[:action] == 'edit'
     end

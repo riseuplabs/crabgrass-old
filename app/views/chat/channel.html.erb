@@ -3,7 +3,7 @@ remote_url = {:controller => 'chat', :action => 'say', :id => @channel}
 
 loading_command = %(
   msg = '<div class="message tmp" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
-  $('entryfield').value = ''; 
+  $('entryfield').value = '';
   $('entryfield').focus;
   new Insertion.Bottom('stage', msg);
   $('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight; )
@@ -31,7 +31,7 @@ complete = "eval(request.responseText)"
 <tr>
   <td width="1%" id='handle'><%= current_user.login %></td>
   <td width="99%">
-    <% default_text = "Type your messages here and press enter..."[:type_your_messages_here] -%>
+    <% default_text = I18n.t(:type_your_messages_here) -%>
     <textarea id="entryfield" name="message" rows="2"
       onkeypress="if (enterPressed(event)) {document.forms[0].onsubmit();}"
       onclick="if (this.value == '<%=default_text%>') {this.clear();}"><%= default_text %></textarea>
@@ -43,12 +43,12 @@ complete = "eval(request.responseText)"
 
 <p>
 <% form_tag(:action => :leave_channel, :id => @channel) do %>
-  <input type='submit' value='<%= "Leave channel"[:leave_channel]%>' onclick='stop_ajax()' />
+  <input type='submit' value='<%= I18n.t(:leave_channel)%>' onclick='stop_ajax()' />
 <% end %>
 </p>
 
 <%=
-link = link_to "view the chat room archive"[:chat_archive], {:action => :archive, :id => @channel.name}
+link = link_to I18n.t(:chat_archive_link), {:action => :archive, :id => @channel.name}
 content_tag(:p, link, :class => 'small_icon book_open_16')
 %>
 

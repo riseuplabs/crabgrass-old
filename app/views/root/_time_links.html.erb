@@ -3,25 +3,25 @@
 <div class='sub_tabs'>
 <%= link_line(
   link_to_remote_active(
-    'Today'[:date_today],
+    I18n.t(:date_today),
     :url => url_for(:time_span => 'today'),
     :active => (params[:time_span] == 'today'),
     :loading => show_spinner(spinner_id)
   ),
   link_to_remote_active(
-    'This Week'[:date_this_week],
+    I18n.t(:date_this_week),
     :url => url_for(:time_span => 'this_week'),
     :active => (params[:time_span] == 'this_week'),
     :loading => show_spinner(spinner_id)
   ),
   link_to_remote_active(
-    'This Month'[:date_this_month],
+    I18n.t(:date_this_month),
     :url => url_for(:time_span => 'this_month'),
     :active => (params[:time_span] == 'this_month'),
     :loading => show_spinner(spinner_id)
   ),
   link_to_remote_active(
-    'All Time'[:date_all_time],
+    I18n.t(:date_all_time),
     :url => url_for(:time_span => 'all_time'),
     :active => (params[:time_span] == 'all_time' || params[:time_span].empty?),
     :loading => show_spinner(spinner_id)

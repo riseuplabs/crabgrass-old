@@ -1,7 +1,7 @@
 <%= render :partial => '/widgets/mini_search' %>
 
 <div class="sidebox dark">
-  <h2 class="first"><%= "Have Your Say!"[:have_your_say] %></h2>
+  <h2 class="first"><%= I18n.t(:have_your_say) %></h2>
   <ul class="side_list">
     <li>
       <%= [contribute_link, create_group_link, welcome_box_link].join('<li></li>') %>
@@ -12,21 +12,21 @@
 
 <div class="sidebox">
 
-<h2 class=alert><%= "Members"[:members] %></h2>
+<h2 class=alert><%= I18n.t(:members) %></h2>
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Members"[:most_active_members], :entities => most_active_users() } %>   
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_members), :entities => most_active_users() } %>   
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Members"[:recently_active_members], :entities => recently_active_users() , :after => link_to('view all'[:view_all], people_directory_index_path)} %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_members), :entities => recently_active_users() , :after => link_to(I18n.t(:view_all), people_directory_index_path)} %>
 
 <br class='clear'/>
 
 
 
-<h2 class=alert><%= "Groups"[:groups] %></h2>
+<h2 class=alert><%= I18n.t(:groups) %></h2>
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Most Active Groups"[:most_active_groups], :entities => most_active_groups() } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_groups), :entities => most_active_groups() } %>
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Recently Active Groups"[:recently_active_groups], :entities => recently_active_groups(), :after => link_to('view all'[:view_all], group_directory_params(:action => 'most_active')) } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_groups), :entities => recently_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_params(:action => 'most_active')) } %>
 
 <br class='clear'/>
 

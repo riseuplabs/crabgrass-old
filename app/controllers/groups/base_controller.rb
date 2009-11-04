@@ -27,7 +27,7 @@ class Groups::BaseController < ApplicationController
     @group_navigation = :settings
     group_context
     @left_column = render_to_string(:partial => '/groups/navigation/sidebar')
-    add_context('Settings'[:settings], groups_url(:action => 'edit', :id => @group))
+    add_context(I18n.t(:settings), groups_url(:action => 'edit', :id => @group))
   end
 
 end

@@ -1,0 +1,696 @@
+ru:
+  about_me: "Обо мне"
+  accept_usage_agreement: "Я принимаю условия пользовательского соглашения"
+  access: Доступ
+  action: действие
+  activate_js_to_rearrange_photos: "Включите поддержку JavaScript, чтобы перетаскивать фотографии мышью!"
+  activity_contact_created: "{{user}} добавил {{other_user}} в число товарищей"
+  activity_group_created: "{{user}} создал {{group_type}} {{group}}"
+  activity_group_destroyed: "группа {{group}} была ликвидирована пользователем {{user}}"
+  activity_message: "{{author}} написал(а): {{message}}"
+  activity_unread: "У вас {{count}} непрочитанных [личных сообщений]"
+  activity_unread_singular: "У вас есть непрочитанное [private message]"
+  activity_user_destroyed: "пользователь {{user}} удалил свою учётную запись"
+  activity_user_joined_group: "{{user}} вступил в {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} покинул {{group_type}} {{group}}"
+  activity_user_status: "в настоящее время {{user}} {{status}}"
+  activity_wall_message: "{{author}} написал {{user}}: {{message}}"
+  add_another_file: "Добавить ещё один файл"
+  add_button: Добавить
+  add_comment: "добавить комментарий"
+  add_contact_info: "Когда другие пользователи становятся вашими товарищами, они получают возможность видеть, когда вы в системе, и у них появляется доступ к просмотру вашего полного профиля. Как только вы становитесь товарищем других пользователей, они тоже становятся вашими товарищами."
+  add_description: "Добавить описание"
+  add_email_address: "Добавить адрес электронной почты"
+  add_encryption_key: "Добавить ключ для шифрования"
+  add_existing_image: "добавить существующее изображение"
+  add_im_address: "Добавить адрес службы мгновенных сообщений"
+  add_location: "Добавить адрес"
+  add_new_attachment: "Прикрепить новый материал"
+  add_one_or_more_tags: "Добавить одну или несколько меток, разделённых запятыми"
+  add_phone_number: "Добавить телефонный номер"
+  add_photo_to_gallery: "добавить фотографию в галерею:"
+  add_star_link: "Добавить звёздочку ({{star_count}})"
+  add_tags: "Добавить метки"
+  add_websites: "Добавить web-сайты"
+  additional_page_access: "Дополнительный доступ"
+  admin: Администрирование
+  administer_site: "Управление сайтом"
+  administration: Администрирование
+  alert_error: Ошибка
+  alert_field_errors: "Обнаружены проблемы со следующими полями"
+  alert_not_saved: "Изменения не могут быть сохранены"
+  alert_permission_denied: Запрещено
+  alert_permission_denied_details: "Приносим извинения. У вас нет разрешения на выполнение этого действия."
+  alert_saved: "Изменения сохранены"
+  all: Все
+  all_content: "Всё содержимое"
+  all_groups: "все группы"
+  all_networks: "Все сети"
+  all_page_types: "все типы страниц"
+  all_people: "все люди"
+  all_people_link: "все люди"
+  all_states: "все состояния"
+  allow_membership_requests: "Разрешить запросы членства"
+  already_contacts_info: "Вы уже являетесь товарищем этого человека."
+  announcement_page_description: Извещение.
+  announcement_page_display: Извещение.
+  announcements: Объявления
+  approval_vote: "голосование за одобрение"
+  approval_vote_class_description: "Одобрить, или отвергнуть каждый из вариантов."
+  approve: одобрить
+  approve_button: Одобрить
+  approve_contact_info: "Запрос на знакомство от этого пользователя уже существует. Хотите одобрить его?"
+  approve_or_reject_link: "одобрить или отклонить этот запрос"
+  approved: одобрено
+  archive: Архив
+  archive_filter_created_link: "Дата создания"
+  archive_filter_updated_link: "Дата последней правки"
+  archive_headline: Архив
+  article_page_description: "Запись в блоге, или новостная статья."
+  article_page_display: статья
+  asset_page_description: "Загружайте изображение, документ, таблицу, презентацию или любой другой файл."
+  asset_page_display: Файл
+  at_least_one_recipient_is_required: "необходимо указать хотя бы одного получателя"
+  attachments: Вложения
+  away: отсутствует
+  back_button: Назад
+  back_to_group: "назад к {{group_name}}"
+  basic_settings: "Основные параметры"
+  cancel_button: Отменить
+  cancel_link: отменить
+  caption: Заглавие
+  category: Категория
+  check_all: "Отметить всё"
+  close_button: Закрыть
+  collection: коллекция
+  collection_class_description: "Особые страницы, которые содержат другие страницы."
+  committee: комитет
+  committee_publicly_visible: "Сделать комитеты видимыми для всех"
+  committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {{domain}}/yourgroupname"
+  committees: Комитеты
+  comparing_changes_header: "Сравнение изменений, сделанных {{user}} в {{when}} с {{old_version}}  до {{new_version}}"
+  confirm_new_password: "Подтвердить новый пароль"
+  confirmation: "Вы уверены?"
+  contact: Товарищ
+  contact_request_message_label: "Расскажите {{user}}, зачем Вы хотите стать его товарищем. "
+  contacts: товарищи
+  contribute_content_link: "Создать страницу"
+  contribute_group_content_link: "Добавить страницу в {{group}}"
+  contribute_to_site: "Добавить на сайт"
+  contributed: Внесённое
+  coordinating_council: "координационный совет"
+  coordinator: Координатор
+  coordinator_help: "<b>Координаторский</b> доступ даёт неограниченный доступ к этой странице (включая удаление и предоставление доступа)."
+  coordinators: Координаторы
+  council: Совет
+  council_help: "Есди эта группа имеет координационный совет, только члены этого совета могут администрировать группу. В противном случае, любой член группы может делать это. "
+  councils: Советы
+  create_a_group: "Создать группу"
+  create_a_new_thing: "Создать {{thing}}"
+  create_button: Создать
+  create_committee: "создать комитет"
+  create_group_link: "создать группу"
+  create_page: "Создать страницу"
+  create_page_button: "Создать страницу"
+  create_page_data: "Данные {{page_class}}"
+  create_page_information: "{{page_class}} - информация"
+  create_task_list: "создать новый список заданий"
+  created: создано
+  created_by: Создано
+  created_on: Создано
+  created_when_by: "создано {{user}} {{when}}"
+  csrf_error_message: "Ваш запрос авторизации похож на попытку взлома этого сайта. Не волнуйтесь, такая ошибка часто случается даже для обычных запросов. Просто мы очень подозрительны. Вам всего лишь надо перезагрузить эту страницу перед следующей попыткой авторизации. Чтобы попробовать снова, Вы можете пройти по этой ссылке: "
+  current_attachments: "Имеющиеся вложения"
+  current_featured_content: "Текущее основное содержимое"
+  current_tags: "Текущие метки"
+  current_video_sources: "В настоящий момент поддерживаются: youtube, blip.tv, google video, vimeo"
+  data_for_page_missing: "Данные для этой страницы отсутствуют."
+  date: дата
+  date_all_time: "Любое время"
+  date_centuries: века
+  date_days: дни
+  date_hours: часы
+  date_minutes: минуты
+  date_months: месяцы
+  date_older: Ранее
+  date_seconds: секунды
+  date_this_month: "Текущий месяц"
+  date_this_week: "На этой неделе"
+  date_today: Сегодня
+  date_weeks: недели
+  date_years: годы
+  date_yesterday: Вчера
+  delete: Удалить
+  delete_page_link: "Удалить {{page_class}}"
+  delete_page_via_shred: "Уничтожить незамедлительно"
+  delete_page_via_shred_info: "Страница будет удалена необратимо. Это действие нельзя откатить."
+  delete_page_via_trash: "Отправить в корзину"
+  delete_page_via_trash_info: "Страница будет перемещена в корзину, откуда её можно будет восстановить впоследствии."
+  delete_post: "Удалить сообщение"
+  delete_this_version: "удалить эту версию"
+  delete_version_confirm: "Вы действительно хотите удалить эту версию?"
+  description: описание
+  descriptions: Описания
+  descriptive_name_for_display: "Наглядное имя, используемое для показа."
+  destroy: ликвидировать
+  destroy_confirmation: "Вы уверены, что хотите удалить {{thing}}? Это действие нельзя откатить."
+  destroy_group_link: "ликвидировать {{group_type}}"
+  details_link: Подробнее
+  diff_link: различия
+  directory_of_groups: "Каталог групп"
+  directory_of_networks: "Каталог сетей"
+  directory_of_people: "Каталог людей"
+  discuss_request_link: "обсудить этот запрос с {{person_or_group}}"
+  discussion_page_display: "Обсуждение группой"
+  discussions: Обсуждения
+  display_name: "Отображаемое имя"
+  dont_have_permission_to_create_committees: "У Вас нет разрешения на создание коммитетов от имени {{group}}"
+  dont_understand_group_type: "Невозможно истолковать тип группы {{type}}"
+  download: Скачать
+  download_gallery: "Скачать галерею"
+  drag_and_drop_to_rearrange_photos: "Перетаскивайте и оставляйте изображения чтобы перегруппировать их"
+  edit: редактировать
+  edit_appearance: "Редактировать внешний вид"
+  edit_attachments: "Редактировать вложения"
+  edit_attachments_link: Редактировать
+  edit_featured_content: "редактировать основное содержимое"
+  edit_featured_content_for_group: "Редактировать основное содержимое для {{group_name}}"
+  edit_gallery: "Редактировать галерею"
+  edit_profile_link: "Редактировать профиль"
+  edit_settings: "редактировать настройки"
+  edit_tags: "Редактировать метки"
+  edit_tags_link: Редактировать
+  edit_title: "редактировать заглавие"
+  edit_underlined_e: р<u>е</u>дактировать
+  email: "Электронный адрес"
+  email_addresses: "Электронные адреса"
+  email_link_expires: "Эта ссылка станет недействительной через {{days}} дней."
+  email_notice_access: "У вас есть доступ к этой странице: "
+  email_notice_hello: "Приветствуем, {{from}} прислал(а) вам веб-страницу."
+  email_notice_hello_with_message: "Приветствуем, {{from}} прислал(а) вам веб-страницу со следующим сообщением: {{message}}"
+  email_notice_subject: "Проверьте страницу \"{{title}}\""
+  empty_results: "Ничего нет"
+  error_saving_new_order: "Ошибка при сохранении нового расположения!"
+  fax: Факс
+  feature_button: Функция!
+  featured_content: "Основной материал"
+  featured_content_header: Основное
+  file: файл
+  file_class_description: "Загруженный файл."
+  file_must_be_image_error: "Чтобы стать частью галереи, файл должен быть изображением. "
+  file_size: "Размер файла"
+  file_version_deleted: "версия файла удалена"
+  files: Файлы
+  first_name: имя
+  folder_class_description: "Создайте папку для объединения других страниц."
+  folder_display: Папка
+  folder_page_description: "Коллекция файлов."
+  folder_page_display: папка
+  forgot_password_link: "Я забыл свой пароль"
+  forgot_password_mail_expiry: "Эта ссылка будет действительна в течение 24 часов. Если Вам необходимо будет сменить пароль по истечение этого времени, Вы снова должны будете посетить страницу напоминания пароля и запросить новую ссылку. "
+  forgot_password_mail_greeting: "{{user}}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
+  forgot_password_text: "Если Вы забыли используемый для входа пароль, мы можем отправить Вам по электронной почте ссылку, перейдя по которой Вы сможете создать новый пароль. "
+  forgotten_email_address: "Какой электронный адрес Вы указали при создании аккаунта? "
+  format: Формат
+  formatting_reference_link: "описание форматирования"
+  founded: Найденные
+  friday: Пятница
+  friends: Друзья
+  from: от
+  full: полный
+  fullname: "Полное имя"
+  galleries: Галереи
+  gallery_class_description: "Коллекция изображений."
+  gallery_description: "Загрузить множество изображений, или упорядочить имеющиеся изображения в набор."
+  gallery_display: галерея
+  general_info: "Общая информация"
+  grant_access: "Разрешить доступ"
+  group: Группа
+  group_administration_not_allowed: "Вы не можете управлять этой группой."
+  group_directory: "Каталог групп"
+  group_directory_link: "Список группы"
+  group_discussion: "групповое обсуждение"
+  group_discussion_class_description: "Групповое обсуждение отдельного вопроса."
+  group_has_no_public_profile: "Для данной группы отсутствует общедоступный профиль."
+  group_home_headline: "Домашняя страница {{group_type}}"
+  group_home_welcome: "Добро пожаловать"
+  group_information: "Информация о {{group_type}}"
+  group_invite_email: |-
+      {{from_user}} пригласил Вас вступить в группу "{{group}}".
+
+      Если Вы желаете вступить в эту группу, нажмите здесь:
+
+      {{accept_invite_link}}
+
+      Если Вы не желаете вступить в эту группу, просто проигнорируйте это письмо.
+  group_invite_subject: "Приглашение вступить в группу \"{{group}}\""
+  group_join_chat: "Войти в чат"
+  group_language: "Основной язык этой {{group}}. "
+  group_members_publicly_visible: "Сделать участников видимыми для всех"
+  group_members_publicly_visible_description: "Участники видимы для не-участников по адресу {{domain}}/yourgroupname. Также, имя группы будет внесено в список на странице профиля каждого из участников группы ({{domain}}/username)"
+  group_membership_count: "{{count}} участников"
+  group_not_allowed_to_view_image_error: "Группе, которая владеет этой страницей, не позволяется просматривать это изображение."
+  group_privacy_settings: "Настройки приватности {{group}}"
+  group_profile_description_may_request_membership: "Разрешить людям запрашивать членство в этой {{group_type}}."
+  group_profile_description_may_see_committees: "Разрешить людям видеть, какие комитеты входят в {{group_type}}."
+  group_publicly_visible_description: "Группа показывается в общедоступном списке и <i>профиль</i> группы видим для не-участников по адресу {{domain}}/yourgroupname."
+  group_successfully_created: "Группа была успешно создана."
+  group_successfully_updated: "Группа была успешно обновлена."
+  group_summary: "Краткая информация об этой {{group}}."
+  group_wiki: "Wiki группы"
+  groups: Группы
+  height: Высота
+  highest_contributors: "Люди, внесшие наибольший вклад"
+  history: История
+  home: Домашний
+  icon: Пиктограмма
+  im_addresses: "Адреса в службах мгновенных сообщений"
+  image_count: "Изображение {{number}} из {{count}}"
+  image_count_total: "{{count}} изображений"
+  image_title: "Заглавие изображения: {{title}}"
+  inbox_description: "Входящие уведомления для страниц, в которых я активно участвую или отслеживаю изменения."
+  include_full_checkbox: "Включить ссылку на целое изображение"
+  incoming: Входящие
+  information: Информация
+  insert_image_heading: "Вставить изображение"
+  insert_image_instructions: "Щёлкните по эксизу изображения, чтобы вставить его в текст страницы вики."
+  invalid_email: "Недействительный адрес Email"
+  invalid_email_text: "Предоставленный Вами адрес электронной почты недействителен."
+  invalid_token: "Неверный признак"
+  invalid_token_text: "Указанная Вами ссылка для сброса пароля недействительна. Вероятно, она уже была использована, или срок её действия истёк."
+  invite: Пригласить
+  invite_accept_headline: "Принять приглашение вступить в группу"
+  invite_accept_info: "Вы хотели бы принять приглашение вступить. У Вас уже есть аккаунт на этом сервере? "
+  invite_accept_via_existing_account: "У меня уже есть аккаунт"
+  invite_accept_via_register: "Мне надо зарегистрировать новый аккаунт"
+  invite_info: "Введите список авторизационных имён пользователей, или адресов электронной почты людей, которых вы хотите  пригласить для присоединения к это(му/той) {{group_type}}."
+  invite_not_found: "Приглашение не найдено"
+  join_chat: "войти в чат"
+  join_group_link: "Вступить в {{group_type}}"
+  join_group_success: "Вы вступили в группу {{group_name}}"
+  join_request_info: "Вы не станете членом этой группы до тех пор, пока Ваш запрос не будет одобрен. Вы можете отслеживать статус Ваш запросов, посещая \"{{my_requests_url}}\"."
+  joins_the_chatroom: "входит в комнату чата"
+  language: Язык
+  large: большой
+  last_change: "последнее изменение"
+  last_name: фамилия
+  last_seen: "в последний раз был"
+  leave_channel: "Покинуть канал"
+  leave_group_link: "Покинуть {{group_type}}"
+  left_the_chatroom: "покинул комнату чата"
+  link_name: "Имя ссылки"
+  link_name_description: "Это название служит для указания на эту группу в ссылках и URL. Оно должно содержать только цифры и буквы, без пробелов. "
+  location: Местоположение
+  location_address: адрес
+  location_city: город
+  location_country: страна
+  location_postal_code: "почтовый индекс"
+  location_state: штат/область
+  locations: Адреса
+  locked_by_user: "заблокировано пользователем {{user}}"
+  locking_error: "Ошибка блокирования. Невозможно сохранить ваши данные, кто-то другой сохранил новые изменения первым."
+  login: Авторизация
+  login_button: Войти
+  login_failed: "Невозможно авторизоваться"
+  login_failure_reason: "Имя пользователя или пароль неверны."
+  login_name: "Имя пользователя"
+  login_password: Пароль
+  login_required: "Необходимо войти"
+  login_required_description: "Пожалуйста, войдите, чтобы произвести это действие. "
+  logout: Выйти
+  logout_success: "До свидания"
+  logout_success_message: "Вы вышли из системы."
+  make_album_cover: "Сделать это изображение обложкой альбома"
+  mark_pages_as_featured_content_for_group: "Здесь Вы можете отметить страницы, которые будут выступать в качестве основного содержимого данной группы."
+  me_dashboard_link: "Панель управления"
+  me_inbox_link: Входящие
+  me_search_description: "Поиск по страницам, к которым у вас есть доступ"
+  me_search_link: Поиск
+  me_tasks_link: задачи
+  media_all: Данные
+  media_alls: Данные
+  media_audio: Звукозапись
+  media_audios: Звукозаписи
+  media_document: Документ
+  media_documents: Документы
+  media_for_group: "{{media_type}} в {{group}}"
+  media_image: Изображение
+  media_images: Изображеия
+  media_video: Видеозапись
+  media_videos: Видеозаписи
+  media_without_group: "Все {{media_type}}"
+  medium: средний
+  members: Участники
+  membership: Членство
+  menu_chat: Чат
+  menu_groups: Группы
+  menu_home: Домой
+  menu_link_account: Аккаунт
+  menu_link_logout: Выход
+  menu_me: Я
+  menu_networks: Сети
+  menu_people: Люди
+  message: сообщение
+  message_must_not_be_empty: "сообщение не должно быть пустым"
+  message_page_description: "Отправить личное сообщение отдельным получателям."
+  message_page_display: сообщение
+  middle_name: отчество
+  mobile: Мобильный
+  monday: Понедельник
+  month_short_april: апр
+  month_short_august: авг
+  month_short_december: дек
+  month_short_february: фев
+  month_short_january: янв
+  month_short_july: июл
+  month_short_june: июн
+  month_short_march: мар
+  month_short_may: май
+  month_short_november: ноя
+  month_short_october: окт
+  month_short_september: сен
+  more_information: "Больше сведений"
+  most_active: "Самые активные"
+  most_active_groups: "Самые активные группы"
+  most_active_members: "Самые активные участники"
+  most_viewed: "Наиболее просматриваемые"
+  move_button: Переместить
+  move_image_left: "Передвинуть изображение влево"
+  move_image_right: "Передвинуть изображение вправо"
+  move_page_link: "Переместить {{page_class}}"
+  move_page_to_different_group: "Переместить эту страницу в другую группу"
+  move_this_page: "Переместить эту страницу"
+  my_completed_tasks_link: Выполненные
+  my_contacts: "Мои друзья"
+  my_contacts_link: "мои друзья"
+  my_dashboard: "Моя панель управления"
+  my_groups: "Мои группы"
+  my_groups_link: "Мои группы"
+  my_pages: "Мои страницы"
+  my_peers: "Мои товарищи"
+  my_peers_description: "пользователи, с которым я состою в общую группу"
+  my_peers_explain: "пользователи, с которыми я делю общие группы"
+  my_peers_link: "мои товарищи"
+  my_pending_tasks_link: "Ожидающие решения"
+  my_requests_headline: "Мои запросы"
+  my_settings: "Настройки для {{user}}"
+  my_status_heading: "Ваш текущий статус"
+  my_tasks: Задания
+  my_tasks_description: "Списки заданий, к которым у меня есть доступ"
+  my_tasks_headline: "Мои задачи"
+  my_world_heading: "Мой мир"
+  name: Имя
+  network: сеть
+  network_aettings: "Настройки сети"
+  network_invite_info: "Введите имена групп, которым вы хотите предложить присоединиться к данной сети. "
+  networks: Сети
+  new_council: "Новый консул для группы {{group_name}}"
+  new_group: "Новая группа"
+  new_network: "Новая сеть"
+  new_password: "Новый пароль"
+  new_people: "Новые люди"
+  new_people_link: "новый человек"
+  next_change: "следующее изменение"
+  no_change: "Не изменять"
+  no_committees: "комитеты отсутствуют"
+  no_contacts_msg: "У Вас нет контактов."
+  no_group_named: "группы с именем <b>{{name}}</b> не существует."
+  no_images_in_gallery: "В галерее нет изображений"
+  no_members: "(нет участников)"
+  no_public_profiles: "Ещё нет публичных профилей..."
+  no_search_results: "Нет результатов"
+  no_tags: "без меток"
+  no_title_given: "(заголовок не установлен)"
+  not_featured_content: "Основное содержание пока отсутствует"
+  not_found: "Не найден"
+  not_set: "не установлен"
+  notify_page_link: "Отправить уведомление"
+  only_last_menber_can_delete_group: "Вы можете удалить группу, только если вы её последний оставшийся участник"
+  only_me: Я
+  options: Опции
+  or_image_url: "или URL изображения"
+  order_changed: "Порядок изменён."
+  organization: организация
+  organizational_role: "роль в организации"
+  other: Другой
+  other_formats: "Другие форматы"
+  outgoing: Исходящие
+  page: Страница
+  page_create_owner: "Создатель страницы"
+  page_details_link: "Детали {{page_class}}"
+  page_is_not_static: "Страница не является статической"
+  page_list: "Список страниц"
+  page_list_heading_created: создано
+  page_list_heading_created_by: "создано пользователем "
+  page_list_heading_last_updated: "последнее обновление"
+  page_list_heading_owner: владелец
+  page_list_heading_posts: записи
+  page_list_heading_stars: звёздочки
+  page_list_heading_title: заглавие
+  page_list_heading_updated: обновлено
+  page_list_heading_updated_by: "обновлено пользователем"
+  page_locked_header: "Страница заблокирована"
+  page_not_part_of_group: "Страница не является частью этой группы."
+  page_notice_message: "страница отправлена {{date}} пользователем {{user}}"
+  page_with_message: "с сообщением"
+  pager: Пейджер
+  pagination_next: следующая
+  pagination_previous: предыдущая
+  participant: Участник
+  participants: Участники
+  participation: Участие
+  password: Пароль
+  password_confirmation: "Подтверждение пароля"
+  password_error_confirmation: "не совпадает с подтверждением."
+  password_error_default: "недостаточно сложный."
+  password_error_too_common: "плохой, он основан на слове из словаря."
+  password_error_too_short: "плохой, он слишком короткий."
+  password_error_too_similar: "плохой, он не содержит достаточное количество различных символов."
+  password_error_too_simple: "плохой, он слишком простой или предсказуемый."
+  password_error_username: "плохой, он основан на вашем имени пользователя."
+  password_error_whitespace: "плохой, он не содержит символов."
+  password_ok: хороший.
+  password_reset: "Сброс пароля"
+  password_reset_ok_text: "Ваш пароль был успешно сброшен. Теперь Вы можете авторизоваться с помощью Вашего нового изменённого пароля."
+  password_was_reset: "Ваш пароль был сброшен"
+  peers: Связи
+  pending_tasks: "текущие задания."
+  people: Люди
+  permission_denied: Запрещено
+  permission_denied_description: "У Вас не достаточно полномочий для выполнения этого действия."
+  permissions: Разрешения
+  personal: Личное
+  personal_interests: "Личные интересы"
+  personal_message: "личное сообщение"
+  personal_message_class_description: "Личное сообщение было отправлено индивидуальным получателям."
+  phone_numbers: "Телефонные номера"
+  photo: Фотография
+  post_message: "Отправить сообщение"
+  prev_change: "пред. изменение"
+  preview: "Предварительный просмотр"
+  print_underlined_p: <u>п</u>ечатать
+  private: Приватный
+  private_profile: "Личный профиль"
+  profile_last_login: "Последний вход"
+  profile_option_may_pester: "Можно беспокоить меня"
+  profile_option_may_request_contact: "Можно запрашивать добавление в личные контакты"
+  profile_option_may_see: "Профиль видимый"
+  profile_option_may_see_committees: "Показывать комитеты"
+  profile_option_may_see_contacts: "Показывать личные контакты"
+  profile_option_may_see_groups: "Показывать членство в группах"
+  profile_option_may_see_members: "Показывать членов группы"
+  profile_option_may_see_networks: "Показывать сети"
+  profile_private_description: "Данный профиль является личным, и видим только для ваших товарищей."
+  profile_public_description: |-
+      Этот профиль является общедоступным и будет виден для всякого, кто посещает этот сайт.
+      Информация, которую Вы помещаете здесь также доступна для поиска другим людям.
+      Соблюдайте осторожность, когда добавляете личную информацию Ваш общедоступный профиль.
+  profile_saved: "Ваш профиль был сохранён."
+  public: Публичный
+  public_key: "Открытый ключ"
+  public_profile: "Публичный профиль"
+  recent_activity: "Недавняя деятельность"
+  recent_pages: "Свежие страницы"
+  recipient_tip: "Разделяйте получателей запятыми, пробелами или переводами строки."
+  recipients: получатели
+  regenerate: "пересоздать пиктограммы"
+  reject: отклонить
+  reject_button: отклонить
+  rejected: отклонённые
+  remove: удалить
+  remove_contact_confirmation: "Вы уверены, что хотите удалить {{user}} из числа своих товарищей?"
+  remove_contact_info: "Если Вы удалите кого-либо из списка своих товарищей, вы больше не сможете просматривать его полный профиль и видеть, когда он авторизован. Кроме того, его удаление означает, что и Вы будете удалены из списка его товарищей."
+  remove_friend_link: "Удалить из моих контактов"
+  remove_from_gallery: "Удалить из галереи"
+  remove_from_inbox: "Удалить из входящих"
+  remove_star_link: "Убрать звёздочку ({{star_count}})"
+  removing_image: "Удаление изображения..."
+  request_friend_link: "Добавить в мои контакты"
+  request_join_group_link: "Отправить запрос на присоединение к {{group_type}}"
+  request_status: "{{user}} изменил состояние этого запроса на {{status}} в {{time}}"
+  request_to_friend_description: "Пользователь {{user}} хотел бы стать товарищем пользователя {{other_user}}"
+  request_to_join_our_network_description: "группе {{group}} предложено присоединиться к сети {{network}}"
+  request_to_join_us_description: "{{user}} был приглашён в {{group}}"
+  request_to_join_us_via_email_description: "{{email}} было предложено присоединиться к {{group}}"
+  request_to_join_you_description: "{{user}} запросил вступление в члены {{group}}"
+  request_to_join_your_network_description: "От группы {{group}} поступил запрос на присоединение к сети {{network}}"
+  requested_forgot_password: "Вы запросили изменение пароля"
+  requests: Запросы
+  requests_from_me: "Запросы от меня"
+  requests_to_me: "Запросы мне"
+  reset_password: "Смена пароля"
+  reset_password_mail_greeting: "{{user}}, по Вашему запросу пароль был изменён."
+  reset_password_mail_sent: "Было отправлено электронное письмо, содержащее инструкции по смене Вашего пароля. "
+  reset_password_mail_warning: "Если Вы не запрашивали изменение этого пароля, свяжитесь с нами, пожалуйста. "
+  reset_password_text: "Здравствуйте, {{user}}. Если Вы забыли пароль, используемый для авторизации, здесь Вы можете установить новый. "
+  rss_feed: RSS-канал
+  saturday: Суббота
+  save_button: Сохранить
+  save_changes: "Сохранить изменения"
+  save_survey: "Сохранить опрос"
+  saved_new_order: "Новый порядок сохранён! "
+  saving_your_changes: "Сохранение Ваших изменений..."
+  school: Школьный
+  search: Поиск
+  search_headline: Поиск
+  see_all_link: "Просмотреть все ссылки"
+  see_more_link: Далее
+  select_image_file: "выберите файл изображения"
+  send_button: Отправить
+  send_invites: "отправить приглашения"
+  send_invites_button: "Отправить приглашения"
+  send_invites_headline: "Отправить приглашения на присоединение к {{group}}"
+  send_message_link: "Отправить сообщение"
+  separate_tags: "Разделяйте метки запятыми."
+  set_status_button: "Установить статус"
+  set_status_messsage: "Что Вы делаете прямо сейчас?"
+  settings: Настройки
+  share: Поделиться
+  share_button: Поделиться
+  share_link: "Поделиться {{page_class}}"
+  share_page_email: "Отправить уведомление по email"
+  share_page_link: "Поделиться {{page_class}}"
+  share_page_message: "Отправить сообщение (опционально)"
+  share_page_options: "Выберите опции"
+  share_page_recipients: "Поделиться этой {{page_class}} с"
+  share_page_recipients_results: "Эта {{page_class}} будет разделена с"
+  share_page_recipients_sections: "Выберите из Ваших групп, или друзей"
+  share_page_recipients_selection: "Сделайте Вашу подборку"
+  share_this_page: "Разделить эту страницу"
+  show_gallery: "Показать галерею"
+  signup_button: Записаться
+  signup_confirm_password: "Подтвердить пароль"
+  signup_email: "Ваш адрес электронной почты"
+  signup_email_info: "Необязательно для заполнения: используется в случае, если Вы забудете Ваш пароль"
+  signup_info: "Выберите себе имя для авторизации и Ваш пароль, затем нажмите на \"{{sign_up}}\""
+  signup_link: "Нужна новая учётная запись?"
+  signup_login_name: "Ваше имя для авторизации"
+  signup_password: "Ваш пароль"
+  signup_success: "Регистрация прошла успешно"
+  signup_success_message: "Благодарим за вступление!"
+  signup_title: "Создайте Вашу учётную запись"
+  slideshow_delay_input: "Обновлять через каждые {{input_field}} секунд"
+  social_change_interests: "Заинтересованность в социальных переменах"
+  starred: "отмеченно звёздочкой"
+  state: состояние
+  status_pending: ожидает
+  subject: тема
+  subject_must_not_be_empty: "тема не должна быть пустой"
+  successful_undelete_image: "Изображение успешно восстановлено."
+  sucessfully_removed_image: "Изображение успешно удалено! ({{undo_link}})"
+  summary: Сводка
+  sunday: Воскресенье
+  survey_design: "Разработать опрос"
+  survey_list_all: "Перечислить все ответы"
+  survey_may_rate: "Можно ли оценивать ответы?"
+  survey_may_see_ratings: "Можно ли видеть оценки?"
+  survey_may_see_responses: "Можно ли видеть ответы?"
+  survey_my_response: "Мой ответ"
+  survey_page_description: "Создайте последовательность вопросов, на которые люди должны будут ответить."
+  survey_page_display: Опрос
+  survey_questions: Вопросы
+  survey_rate_responses: "Оценить ответы"
+  survey_rate_this_response: "Оценить этот ответ"
+  survey_rating_enabled: "Разрешить оценку ответов?"
+  survey_response_by: "Ответ от {{login}}"
+  survey_responses_enabled: "Разрешить новые ответы? Если отмечено, люди смогут принять участие в опросе. Снимите отметку, чтобы закрыть опрос."
+  survey_take: "Принять участие в опросе"
+  survey_your_rating_of_this_response: "Ваша оценка этого ответа"
+  tags: Метки
+  task_list_page_description: "Список пунктов для выполнения."
+  task_list_page_display: "список задач"
+  tasks: Задачи
+  this_is_committee: "Этот комитет является частью {{parent_group}}."
+  this_is_coordinating: "Этот комитет является <strong>координационным советом</strong> {{parent_group}}."
+  thursday: Четверг
+  time_zone: "Часовой пояс"
+  title: Заголовок
+  toggle_selection: "Инвертировать выделение"
+  trash: Корзина
+  trash_description: "Корзина - это место, куда помещаются все ваши удалённые страницы. Вы можете восстановить страницу, нажав {{undelete}} или уничтожить её навсегда, нажав {{destroy}}."
+  try_again: "Попробовать ещё"
+  tuesday: Вторник
+  type_your_messages_here: "Напечатайте здесь своё сообщение и нажмите «enter»..."
+  undo: отменить
+  unread: непрочитанные
+  updated: обновлено
+  upload_attachment: "Загрузить вложенный файл"
+  upload_file_help: "Помощь в загрузке файлов"
+  upload_image: "Загрузить изображение"
+  upload_images: Загрузить
+  upload_new_image: "загрузить новое изображение"
+  uploaded_image_cropped: "Загруженное изображение будет обрезано и растянуто до квадрата со стороной 96 пикселов."
+  usage_agreement_heading: "Пользовательское соглашение"
+  usage_agreement_required: "Требуется принять условия пользовательского соглашения"
+  user: Пользователь
+  user_or_group_name: "Имя пользователя или группы"
+  user_profile_description_allow_peers: "При выборе этой опции пользователи, с которыми вы делите общие группы, смогут просматривать Ваш личный профиль. "
+  user_profile_description_may_pester: "Разрешить людям делиться контентом с Вами и отправлять Вам приглашения. "
+  user_profile_description_may_request_contact: "Разрешить людям запрашивать добавление Вас в личные контакты."
+  user_profile_description_may_see: "При выборе этой опции будет видна информация из профиля ниже. В противном случае профиль будет полностью скрыт. "
+  user_profile_description_may_see_contacts: "Разрешить людям видеть ваш список личных контактов. "
+  user_profile_description_may_see_groups: "Разрешить людям видеть, участником каких групп Вы являетесь. "
+  username: "Имя пользователя"
+  users_wall: "Стена пользователя {{user}}"
+  version_doesnt_exist: "Версии с номером {{version}} не существует"
+  version_number: "версия {{version}}"
+  versions: версии
+  video: видео
+  video_class_description: "Показать видео, размещённое на внешнем веб-узле."
+  video_embed: Встроить
+  video_embed_code_prompt: "Код для вставки видео из внешних источников"
+  video_service_is_not_supported: "не поддерживается (в настоящее время только youtube, google video, blip.tv и vimeo)"
+  view_all: "посмотреть всё"
+  view_requests: "посмотреть запросы"
+  view_slideshow: "Показать слайд-шоу"
+  visibility: Видимость
+  wall_heading: "Стена публичных сообщений"
+  wall_post_button: "Написать новое сообщение"
+  watch_checkbox: "Следить за обновлениями"
+  websites: Web-сайты
+  wednesday: Среда
+  welcome_hide_link: "Скрыть приветствие"
+  welcome_login_message: |-
+      !>/plugin_assets/riseup/riseup-yellow.gif!
+
+      Этот сайт работает на Crabgrass, <a href="http://www.affero.org/oagpl.html">свободном</a> Веб-приложении, предназначенном для групповой и сетевой организации, и оптимизированном для нужд движения за всеобщую справедливость. Долгосрочной целью проекта является предоставление технических инструментов для содействия деятельным, конфедеративным и построенным на принципах прямой демократии сетям, добивающимся перемен в обществе. [дополнительная информация... -> /crabgrass/about]
+
+      h3. Новичок на этом сайте?
+
+      [Вступайте здесь -> /account/signup], чтобы начать действовать. Мы находимся на раннем этапе развития. Так как изменения основываются на откликах пользователей, дайте нам знать, как вы используете сайт, что бы вы хотели поменять, что вам нравится, а что нет.
+  welcome_message: "Crabgrass позволяет организациям, выступающим за изменение общества, выполнять поставленные задачи, высказываться, сотрудничать и связываться между собой."
+  welcome_show_link: "Показать приветствие"
+  welcome_title: "Добро пожаловать на {{site_title}}"
+  welcome_upload_icon_text: "Загрузите изображение для использования в качестве вашего аватара. Это изображение будет появляться рядом с каждым вашим комментарием."
+  width: Ширина
+  wiki_is_locked: "В настоящий момент wiki заблокировано пользователем {{user}}"
+  wiki_page_description: "Текстовый документ свободной формы. "
+  wiki_page_display: вики
+  wont_be_able_to_save: "Вы не сможете сохранить эту страницу"
+  work: Рабочий
+  work_life: "Трудовая жизнь"
+  you_are_not_member_of_any_group: "Вы не являетесь членом какой-либо группы. "
+  you_are_viewing_version: "Вы просматриваете версию {{version}} от пользователя {{user}}"
+  you_have_no_contacts: "У вас нет контактов"
+  you_have_no_groups: "Вы не принадлежите ни к одной из групп"
+  your_login: "Ваше имя пользователя"

@@ -20,7 +20,7 @@
 <% end %>
 
 <% form_tag({ :action => 'index' }, :method => :get) do %>
-<%# Filter by group: <%#= select_tag 'group', "<option value=''>#{'all groups'.t}</option>"+
+<%# Filter by group: <%#= select_tag 'group', "<option value=''>#{I18n.t(:all_groups)}</option>"+
 options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
 <%#= submit_tag 'Filter', :name => '' %>
 <% end %>

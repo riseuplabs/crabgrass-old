@@ -334,7 +334,7 @@ class Page < ActiveRecord::Base
     end
     if entity.nil?
       if Conf.ensure_page_owner?
-        raise ErrorMessage.new("Page owner cannot be empty."[:page_owner_error])
+        raise ErrorMessage.new(I18n.t(:page_owner_error))
       else
         self.owner_id = nil
         self.owner_name = nil

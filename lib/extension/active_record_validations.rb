@@ -16,7 +16,7 @@ module ActiveRecord::Validations
           optional_validation_attributes.each do |attr_name|
             value = self.respond_to?(attr_name.to_s) ? self.send(attr_name.to_s) : self[attr_name.to_s]
             if value.blank?
-              self.errors.add_on_blank(attr_name, "is required"[:is_required])
+              self.errors.add_on_blank(attr_name, I18n.t(:is_required))
               has_all_attributes = false
             end
           end

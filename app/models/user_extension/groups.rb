@@ -161,7 +161,7 @@ module UserExtension::Groups
 
   def check_duplicate_memberships(membership)
     if self.group_ids.include?(membership.group_id)
-      raise AssociationError.new('You are already a member of that group.'[:invite_error_already_member])
+      raise AssociationError.new(I18n.t(:invite_error_already_member))
     end
   end
 
