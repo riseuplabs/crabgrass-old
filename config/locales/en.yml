@@ -6,7 +6,6 @@ en:
   #permission_denied: 'Permission denied'
   #upload_attachment: "Upload Attachment"
   #rename {{upload_images}} -> {{upload}}
-  #insert_image_instructions: "Click on an image thumbnail to insert it into the wiki text."
 
   create_group_link: "create a new group"
   create_committee: "create committee"
@@ -703,7 +702,7 @@ en:
   expired_featured_content: Expired Featured Content
   featured_content: Featured Content
   featured_pages: "Featured Pages"
-
+  enter_page_title: "enter page title"
   updating_this_list_will_update_featured_pages: "Adding, removing and reordering page names on this list will immediately update what featured pages users see."
 
 

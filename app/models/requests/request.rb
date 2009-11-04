@@ -101,8 +101,7 @@ class Request < ActiveRecord::Base
     self.send(command + '!') # FSM call, eg approve!()
 
     unless self.state == newstate
-      raise PermissionDenied.new("{{user}} is not allowed to {{command}} the request."[:not_allowed_to_respond_to_request,
-                                                    {:user => user.name, :command => command}])
+      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => command))
     end
     save!
   end

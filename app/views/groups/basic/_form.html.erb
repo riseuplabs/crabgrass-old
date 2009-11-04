@@ -20,7 +20,7 @@
       r.label I18n.t(:language)
       r.label_for 'group_language'
       r.input select('group', 'language', Language.find(:all).to_select(:name, :code), {:include_blank => true})
-      r.info I18n.t(:group_language, :group_type => @group.group_type.downcase)
+      r.info I18n.t(:group_language, :group => @group.group_type.downcase)
     end
     f.row do |r|
       r.label I18n.t(:icon)

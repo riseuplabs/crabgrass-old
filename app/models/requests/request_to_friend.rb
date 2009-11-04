@@ -43,8 +43,7 @@ class RequestToFriend < Request
   end
 
   def description
-    "{user} would like to be the friend of {other_user}"[:request_to_friend_description, 
-      {:user => user_span(created_by), :other_user => user_span(recipient)}]
+    I18n.t(:request_to_friend_description, :user => user_span(created_by), :other_user => user_span(recipient))
   end
 
 end

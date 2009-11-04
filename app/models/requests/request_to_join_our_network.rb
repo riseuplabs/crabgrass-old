@@ -44,9 +44,7 @@ class RequestToJoinOurNetwork < Request
   end
 
   def description
-    "group {group} was invited to join network {network}"[:request_to_join_our_network_description,  {
-       :group => group_span(group), :network => group_span(network)
-    }]
+    I18n.t(:request_to_join_our_network_description,  :group => group_span(group), :network => group_span(network))
   end
 
 end

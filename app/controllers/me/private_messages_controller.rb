@@ -91,7 +91,7 @@ class Me::PrivateMessagesController < Me::BaseController
 
   def create_private_message
     if @recipient.nil?
-      raise ErrorMessage.new(I18n.t(:thing_not_found, :thing => params[:id)])
+      raise ErrorMessage.new(I18n.t(:thing_not_found, :thing => params[:id))
     elsif params[:post].try[:body].empty?
       raise ErrorMessage.new(I18n.t(:message_must_not_be_empty))
     end
