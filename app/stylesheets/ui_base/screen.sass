@@ -5,6 +5,7 @@
 
 /* @group reset */
 @import compass/reset.sass
+@import compass/utilities.sass
 /* @end */
 
 /* @group defaults */
@@ -20,72 +21,124 @@
 /* end */
 
 body
-  +susy(right)
-  font-family= !body_text_font_family
-  
+  +susy
 #page
-  +container("left")
+  a 
+    +hover-link
+  +sans-family
+  :border 1px solid #f60
+header.page
+  section#top
+    +container
+    :border 1px solid #fc0
+  section#title
+    +columns(8,16)
+    +alpha(16)
+    :background-color #eee
+  section#search
+    +columns(8,16)
+    +omega(16)
+    :text-align right
+nav.page
+  +container
   :border 1px solid #fc0
-  header.page
-    +full(12)
-    :border 1px solid #ccc
-    header.title
-      +columns(12)
-      :text-align left
-    nav
-      +full(12)
-      #menu
-        +columns(7,12)
-        +alpha(12)
-        :text-align left
-      #user
-        +columns(5,12)
-        +omega(12)
-        :text-align right
-  #content
-    +full(12)
-    :border 1px solid #ccc
-    header
-      +full(12)
-      section#breadcrumb
-        +full(12)
-        :display block
-      nav#participate
-        +full(12)
-        :display block
-        section#helpful-links
-          +full(12)
-          :display block
-          ul 
-            :display inline-block
-          h4
-            :display inline-block
-        aside
-          +columns(3,12)
-          +alpha(3)
-        section#actions
-          +columns(9,12)
-          +prefix(3)
-          ul
-            :display inline-block
-          
-    aside.content
-      +columns(3,12)
-      +alpha(12)
+  #menu
+    +columns(9,16)
+    +alpha(16)
+  #user
+    +columns(7,16)
+    +omega(16)
+    :text-align right
+#breadcrumb
+  +container
+  :border 1px solid #fc0
+#content.group-home
+  +container
+  :border 1px solid #fc0
+  #group-name
+    +columns(16)
+    +full
+    :border 1px solid #f60
+  #participate
+    +columns(16)
+    +full
+    :border 1px solid #f60
+    #helpful-links
+      +columns(16,16)
+    #actions
+      +columns(16,16)
+  #main
+    +columns(16)
+    +full
+  aside.main
+    +columns(5,16)
+    +alpha(16)
+    section.group-info
+      +columns(5,5)
       :background-color #eee
-    section.content
-      +columns(9,12)
-      +omega(12)
-      #announcements
-      #wiki
-      #posts
-
-      footer
-  footer.page
-    +columns(12,12)
-    :border 1px solid #ccc
-  li
-    :display inline-block
-    :float left
-    :padding 0.2em
-  
+  #group-info
+    +columns(5,5)
+  #about-group, #people, #networks, #featured
+    +columns(5,5)
+    h3 
+      +columns(4,5)
+      +alpha(4)
+    a
+      +columns(1,5)
+      +omega(1)
+  #about-group
+    p
+      +columns(5,5)
+      a
+        :white-space nowrap
+        :float none
+  #featured
+    :background-color #fc0
+    article
+      +columns(5,5)
+      h4
+      p
+        :font-size 10px
+      
+  section.main
+    +columns(11,16)
+    +omega(11)
+    #wiki, #posts 
+      +columns(11,11)
+      h3
+        +columns(9,11)
+        +alpha(9)
+      a
+        +columns(2,11)
+        +omega(2)
+        :white-space nowrap
+        :text-align right
+    #wiki, #posts
+      :background-color #fc0
+    #announcements
+      header
+        +columns(11,11)
+        :background-color #eee
+      h3
+        :display inline
+      article
+        +columns(11,11)
+        h4, p
+          :padding-left 24px
+  #posts
+    nav
+      +columns(11,16)
+      +omega(11)
+    article
+      +columns(11,16)
+      +omega(11)
+    footer
+      +columns(11,16)
+      +omega(11)
+footer.page
+  +container
+  :border 1px solid #fc0
+li
+  :display inline-block
+  :float left
+  :padding 0.2em

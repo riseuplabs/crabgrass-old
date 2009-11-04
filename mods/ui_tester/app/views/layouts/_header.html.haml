@@ -1,11 +1,12 @@
-%section#title
-  %h1.site_title Hello World
+%section#top
+  %section#title
+    %h1.site_title Site Name
   %section#search
     %form
       %input{:type=>'text'}
       %input{:type=>'hidden'}
       %button{:type=>'submit'}
-%nav
+%nav.page
   %section#menu
     %ul
       %li 
@@ -27,3 +28,9 @@
         %a{:href => "#", :onclick => "#"}  Help
       %li  
         %a{:href => "#", :onclick => "#"}  Sign Out
+%section#breadcrumb
+  %ul
+    %li 
+      %a{:href => "#", :onclick => "#"}  Network
+    %li 
+      %a{:href => "#", :onclick => "#"}  Group Name

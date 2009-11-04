@@ -4,13 +4,11 @@
 
 //  GRID
 
-!grid_unit = "em"
-!total_cols = 10
-!col_width = 5
-!gutter_width = 1
-!side_gutter_width = 1
-!align = "right"
-
+!grid_unit = "px"
+!col_width = 36px
+!gutter_width = 12px
+!side_gutter_width = 12px
+!total_cols = 16
 //
 //  HACKS
 //  Are you using hacks or conditional comments? Susy makes both possible.
@@ -21,8 +19,8 @@
 
 //  FONT-SIZE
 
-!base_font_size_px = 10
-!base_line_height_px = 16
+!base_font_size_px = 12
+!base_line_height_px = 18
 
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
@@ -33,7 +31,7 @@
 // Give yourself some font stacks to work with
 
 =sans-family
-  :font-family Futura, sans-serif
+  :font-family arial, helvetica, sans-serif
 
 =serif-family
   :font-family Baskerville, serif 
@@ -52,6 +50,28 @@ a
 /* @group headers */
 
 h1, h2, h3, h4, h5, h6
+  +sans-family
+  :line-height 1
+
+h1
+  :font-size 2.7em
+
+h2
+  :font-size 2.0em 
+  
+h3
+  :font-size 1.0em
+  :font-weight bold
+  
+h4
+  :font-size 0.9em
+  :font-weight bold
+  
+h5
+  :font-size 0.7em
+  
+h6
+  :font-size 0.6em
 
 /* @end */
 
@@ -99,25 +119,6 @@ td
 /* @group block tags */
 
 p
-
-=list-default(!ol = false)
-  @if !ol
-    :list-style decimal
-    :margin 0 1.5em 1.5em 1.5em
-  @else
-    :list-style disc
-    :margin 0 1.5em 1.5em 1.5em
-
-=no-style-list
-  +no-bullets
-  :margin 0
-  :padding 0
-
-ol
-  +list-default("ol")
-
-ul
-  +list-default
 
 blockquote
 

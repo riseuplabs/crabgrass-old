@@ -20,12 +20,13 @@
     #page
       %header.page
         =render :partial => 'layouts/header'
-      #content
-        %header
+      #content.group-home
+        %header.content
           =render :partial => 'layouts/group_header'
-        %aside.content
-          =render :partial => 'layouts/group_sidebar'
-        %section.content
-          =render :partial => 'layouts/content'
+        %section#main
+          %aside.main
+            =render :partial => 'layouts/group_sidebar'
+          %section.main
+            =render :partial => 'layouts/content'
       %footer.page
         footer
