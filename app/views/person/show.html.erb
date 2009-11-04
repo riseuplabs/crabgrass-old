@@ -6,7 +6,7 @@
 <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
 <h1>
   <%= @user.display_name %>
-  <em class='status'><%= h(@user.current_status) if @user.current_status %></em>
+  <em class='status'><%= h(@status) || ''  %></em>
 </h1>
 <%- end -%>
 

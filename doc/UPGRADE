@@ -8,6 +8,11 @@
   probably not want to run this migration. Just remove it. It does
   not have any effect on the schema.
 
+* Contains a migration that sets the access level of status post
+  activities so that they are able to be viewed by friends and 
+  peers only.  This does nto have any effect on the schema.
+
+
 0.4.6
 -----
 * if using moderation module, a db migration is required:
