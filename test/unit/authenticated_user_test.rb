@@ -5,13 +5,13 @@ class AuthenticatedUserTest < Test::Unit::TestCase
   fixtures :users
 
   def test_last_seen
-    quentin = users(:quentin)
+    quentin = User.make :login => "Tarantino"
     last_seen_at = quentin.last_seen_at
     quentin.seen!
-    assert_not_equal quentin.last_seen_at, last_seen_at
+    assert_not_equal quentin.last_seen_at.to_f, last_seen_at.to_f
     last_seen_at = quentin.last_seen_at
     quentin.seen!
-    assert_equal quentin.last_seen_at, last_seen_at
+    assert_equal quentin.last_seen_at.to_f, last_seen_at.to_f
   end
 
   def test_should_create_user

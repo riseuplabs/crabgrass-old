@@ -1,5 +1,5 @@
-<% @title_box = content_tag :h1, "Search"[:my_search_headline] %>
-<% @info_box = "Search through all pages you have access to."[:me_search_description] %>
+<% @title_box = content_tag :h1, I18n.t(:my_search_headline) %>
+<% @info_box = I18n.t(:me_search_description) %>
 
 <%= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups} %>
 

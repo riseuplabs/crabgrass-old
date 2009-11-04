@@ -16,7 +16,7 @@ edit_url           = page_xurl(@page, :action=>'edit_possible', :id=>possible.id
     <% else -%>
       <%=h possible.name %>
     <% end -%>
-    &nbsp;<%= link_to_remote_with_icon("Edit"[:edit], {:url => edit_url}, :icon=>'pencil', :class => 'edit') %>
+    &nbsp;<%= link_to_remote_with_icon(I18n.t(:edit), {:url => edit_url}, :icon=>'pencil', :class => 'edit') %>
   </div>
   <div class='indent possible_details' id="<%=details_id%>" style='display: none'>
     <%= possible.description_html %>

@@ -8,24 +8,24 @@
 %   if logged_in?
 %     cache(menu_cache_key) do
 %       if current_site.network
-<%=       top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+<%=       top_menu('menu_home', I18n.t(:menu_home), '/', :active => @active_tab == :home) %>
 %       end
 <%=     menu_me %>
 <%=     menu_people %>
 <%=     menu_groups %>
 %       if current_site.has_networks?
 <%=       top_menu "menu_networks",
-            "Networks"[:menu_networks],
+            I18n.t(:menu_networks),
             network_directory_url,
             :active => @active_tab == :networks,
             :menu_items => menu_items('boxes', {:entities => current_user.primary_networks.most_active, :cache_title => 'networks'} ) %>
 %       end
 %       if current_site.chat?
-<%=       top_menu "menu_chat", "Chat"[:menu_chat], '/chat', :active => @active_tab == :chat %>
+<%=       top_menu "menu_chat", I18n.t(:menu_chat), '/chat', :active => @active_tab == :chat %>
 %       end
 %     end
 %   else
-<%=   top_menu('menu_home', 'Home'[:menu_home], '/', :active => @active_tab == :home) %>
+<%=   top_menu('menu_home', I18n.t(:menu_home), '/', :active => @active_tab == :home) %>
 %   end
 
 <%= call_hook :top_menu %>

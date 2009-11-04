@@ -7,14 +7,14 @@
 
   <tr>
     <th colspan="2">
-      <h2 class="alert"><%= 'Profile'[:profile] -%></h2>
+      <h2 class="alert"><%= I18n.t(:profile) -%></h2>
     </th>
   </tr>
 
 <%- if current_site.profile_field_enabled? :notes -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class='label'>
-      <%= 'Descriptions'[:descriptions] -%>
+      <%= I18n.t(:descriptions) -%>
     </td>
     <td class="form">
       <table><tbody id="profile_notes">
@@ -22,7 +22,7 @@
           <%= render :partial => 'note', :locals => { :note => note, :index => index} %>
         <%- end -%>
       </tbody></table>
-      <%= add_row_link 'Add Description'.t, 'add_note' %>
+      <%= add_row_link I18n.t(:add_description), 'add_note' %>
     </td>
   </tr>
 <%- end -%>
@@ -30,7 +30,7 @@
 <%- if current_site.profile_field_enabled? :phone_numbers -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class='label'>
-      <%= 'Phone Numbers'[:phone_numbers] -%>
+      <%= I18n.t(:phone_numbers) -%>
     </td>
     <td class="form">
       <table>
@@ -40,7 +40,7 @@
         <%- end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add Phone Number'.t, 'add_phone_number' %>
+      <%= add_row_link I18n.t(:add_phone_number), 'add_phone_number' %>
     </td>
   </tr>
 <%- end -%>
@@ -48,7 +48,7 @@
 <%- if current_site.profile_field_enabled? :email_addresses -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class="label">
-      <%= 'Email Addresses'[:email_addresses] -%>
+      <%= I18n.t(:email_addresses) -%>
     </td>
     <td class="form">
       <table>
@@ -58,7 +58,7 @@
         <%- end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add Email Address'.t, 'add_email_address' %>
+      <%= add_row_link I18n.t(:add_email_address), 'add_email_address' %>
     </td>
   </tr>
 <%- end -%>
@@ -66,7 +66,7 @@
 <%- if current_site.profile_field_enabled? :locations -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class="label">
-      <%= 'Locations'[:location] -%>
+      <%= I18n.t(:location) -%>
     </td>
     <td class="form">
       <table>
@@ -76,7 +76,7 @@
         <%- end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add Location'.t, 'add_location' %>
+      <%= add_row_link I18n.t(:add_location), 'add_location' %>
     </td>
   </tr>
 <%- end -%>
@@ -84,7 +84,7 @@
 <%- if current_site.profile_field_enabled? :im_addresses -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class="label">
-      <%= 'IM Addresses'[:im_addresses] -%>
+      <%= I18n.t(:im_addresses) -%>
     </td>
     <td class="form">
       <table>
@@ -94,7 +94,7 @@
         <%- end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add IM Address'.t, 'add_im_address' %>
+      <%= add_row_link I18n.t(:add_im_address), 'add_im_address' %>
     </td>
   </tr>
 <%- end -%>
@@ -102,7 +102,7 @@
 <%- if current_site.profile_field_enabled? :websites -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class="label" valign="top">
-      <%= 'Websites'[:website] -%>
+      <%= I18n.t(:website) -%>
     </td>
     <td class="form">
       <table>
@@ -112,7 +112,7 @@
         <%- end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add Websites'.t, 'add_website' %>
+      <%= add_row_link I18n.t(:add_websites), 'add_website' %>
     </td>
   </tr>
 <%- end -%>
@@ -120,7 +120,7 @@
 <%- if current_site.profile_field_enabled? :cryptkeys -%>
   <tr class="<%=cycle('odd','even')%>">
     <td class="label" valign="top">
-      <%= 'Public Encryption Keys'[:public_encryption_keys] -%>
+      <%= I18n.t(:public_encryption_keys) -%>
     </td>
     <td class="form">
       <table>
@@ -130,7 +130,7 @@
         <% end -%>
         </tbody>
       </table>
-      <%= add_row_link 'Add Encryption Key'.t, 'add_crypt_key' %>
+      <%= add_row_link I18n.t(:add_encryption_key), 'add_crypt_key' %>
     </td>
   </tr>
 <%- end -%>

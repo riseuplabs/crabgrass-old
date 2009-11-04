@@ -20,7 +20,7 @@
 <% if not entities.empty? %>
 <% cache(menu_cache_key(:submenu => submenu)) do %>
 <div class="menu_items" style="display: none">
-  <h3 class="dim"><%= heading %>&nbsp;&nbsp;<span class='see_all'><%= link_to "See All"[:see_all_link] + ARROW, see_all_url %></span></h3>
+  <h3 class="dim"><%= heading %>&nbsp;&nbsp;<span class='see_all'><%= link_to I18n.t(:see_all_link) + ARROW, see_all_url %></span></h3>
   <div class='leftcol'>
     <ul>
       <%- for entity in left_col -%>

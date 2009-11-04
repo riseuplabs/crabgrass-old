@@ -1,10 +1,10 @@
 <div class="current_rating">
-    <h3 class='alert'><%= @rating == 0 ? "Rate This Response"[:survey_rate_this_response] : "You already rated this response - You gave it a {rating}."[:survey_you_already_rated_response_with_rating, @rating.to_s]%></h3>
+    <h3 class='alert'><%= @rating == 0 ? I18n.t(:survey_rate_this_response_heading) : I18n.t(:survey_you_already_rated_response_with_rating_heading, :rating => @rating.to_s)%></h3>
   <div class="rate_bar round">
     <%= render :partial => 'survey_page_response/rate/bar' %>
   </div>
-  <%= @rating == 0 ? "Select a rating to see the next item."[:survey_select_a_rating] : "You previously rated this item with {rating}."[:survey_you_previousely_rated, @rating.to_s] %>
-  <%= link_to_remote("Skip To Next"[:survey_skip_next]+ARROW, js_next_response_options(@rating)) %>
+  <%= @rating == 0 ? I18n.t(:survey_select_a_rating_message) : I18n.t(:survey_you_previousely_rated_message, :rating => @rating.to_s) %>
+  <%= link_to_remote(I18n.t(:survey_skip_next_link)+ARROW, js_next_response_options(@rating)) %>
 </div>
 
 <div class="current_response">

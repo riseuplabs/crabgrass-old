@@ -1,12 +1,12 @@
 <table cellpadding='5' class='pretty'>
   <tr>
-    <th align='left'><%= :name.t %></th>
-    <th align='right'><%= :access.t %></th>
+    <th align='left'><%= I18n.t(:name) %></th>
+    <th align='right'><%= I18n.t(:access) %></th>
     <th style='width:20px'>&nbsp;</th>
   </tr>
 % if (gparts = @page.group_participations).any?
     <tr class='<%=cycle "odd","even"%>'>
-      <td colspan='4'><b><%= "groups"[:groups] %></b></td>
+      <td colspan='4'><b><%= I18n.t(:groups) %></b></td>
     </tr>
 % end
 % gparts.each do |gpart|
@@ -16,7 +16,7 @@
 % end
 % if (uparts = @page.sorted_user_participations(:page => params[:page], :per_page => 10, :include => :user)).any?
     <tr class='<%=cycle "odd","even"%>'>
-      <td colspan='4'><b><%= "users"[:users] %></b></td>
+      <td colspan='4'><b><%= I18n.t(:users) %></b></td>
     </tr>
 % end
 % uparts.each do |upart|
@@ -33,12 +33,12 @@
 % if false and may_create_participation?
 <p>
 %   form_remote_tag(:url => {:controller => 'participation', :action => 'create', :page_id => @page.id}, :loading => show_spinner('permissions'), :complete => hide_spinner('permissions') + resize_modal) do
-      <%= "User or group name"[:user_or_group_name] %>:<br/>
+      <%= I18n.t(:user_or_group_name) %>:<br/>
       <%= text_field_tag 'add_names','',:size=>17 %>
 %     if may_select_access_participation?
         <%= select_page_access 'access', :blank => false %>
 %     end
-      <%= submit_tag 'Grant Access'[:grant_access], :name => 'add' %>
+      <%= submit_tag I18n.t(:grant_access), :name => 'add' %>
       <%= spinner 'permissions' %>
 %   end
 </p>

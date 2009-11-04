@@ -3,18 +3,18 @@
 <hr class="thick" />
 
 <%- cache(me_cache_key) do -%>
-  <h2 class="alert"><%= "My World"[:my_world_heading] %></h2>
+  <h2 class="alert"><%= I18n.t(:my_world_heading) %></h2>
   <%- if current_site.has_networks? -%>
-    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Networks'[:networks], :entities => current_user.all_groups.select{|g| g.network?}} %>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:networks), :entities => current_user.all_groups.select{|g| g.network?}} %>
   <%- end -%>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Groups"[:groups], :entities => current_user.groups.normals } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:groups), :entities => current_user.groups.normals } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Committees"[:committees], :entities => current_user.groups.committees } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:committees), :entities => current_user.groups.committees } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Councils"[:councils], :entities => current_user.groups.councils } %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:councils), :entities => current_user.groups.councils } %>
 
-  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => 'Contacts'[:contacts], :entities => current_user.friends} %>
+  <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:contacts), :entities => current_user.friends} %>
 
 <%- end -%>
 

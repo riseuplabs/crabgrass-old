@@ -15,10 +15,10 @@ class RequestToJoinYourNetwork < Request
       errors.add_to_base('recipient must be a network')
     end
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
-      errors.add_to_base('Membership already exists for {member}'[:membership_exists_error, {:member => group.name}])
+      errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
     end
     if RequestToJoinYourNetwork.appearing_as_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
-      errors.add_to_base('Request already exists for {recipient}'[:request_exists_error, {:recipient => group.name}])
+      errors.add_to_base(I18n.t(:request_exists_error, :recipient => group.name))
     end
   end
 
@@ -46,9 +46,7 @@ class RequestToJoinYourNetwork < Request
   end
 
   def description
-    "{group} requested to join network {network}"[:request_to_join_your_network_description, {
-      :group => group_span(group), :network => group_span(network)
-    }]
+    I18n.t(:request_to_join_your_network_description, :group => group_span(group), :network => group_span(network))
   end
 
 end

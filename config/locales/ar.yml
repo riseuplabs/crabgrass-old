@@ -1,0 +1,824 @@
+ar:
+  about_me: معلوماتي
+  accept_usage_agreement: "أوافق على تعليمات اتفاقية الإستخدام"
+  access: الدخول
+  action: نشاط
+  activate_js_to_rearrange_photos: "فعِّل جافا سكريبت لإستخدام سحب وفلت لإعادة ترتيب الصور"
+  activity_contact_created: "قام {{user}} بإضافة {{other_user}} كجزء من قائمة الإتصال"
+  activity_group_created: "{{user}} أنشأ {{group_type}} {{group}}"
+  activity_group_destroyed: "تم الغاء {{group}} بواسطة {{user}}"
+  activity_message: "{{author}} كتب: {{message}}"
+  activity_unread: "يوجد لديك {{count}} رسالة خاصة غير مقروءة"
+  activity_unread_singular: "يوجد لديك رسائل خاصة غير مقروءة"
+  activity_user_destroyed: "{{user}} تقاعد"
+  activity_user_joined_group: "{{user}} انضم لـ {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} ترك {{group_type}} {{group}}"
+  activity_user_status: "حالة {{user}} هي {{status}}"
+  activity_wall_message: "{{author}} كتب لـ {{user}}: {{message}}"
+  add_another_file: "أضف ملفا آخرا"
+  add_button: إضافة
+  add_comment: "إضافة تعليق"
+  add_contact_info: "يمكن للمسنخدمين في قائمة اتصالك مشاهدة وقت دخولك للنظام كما يمكنهم مشاهدة ملفك كاملاُ. عندما تصبح ضمن قائمة اتصال مستخدم آخر فأنّهُ يصبح ضمن قائمة اتصالك"
+  add_description: "أضف وصف"
+  add_email_address: "أضف عنوان بريد إلكتروني"
+  add_encryption_key: "أضف مفتاح تعمية"
+  add_existing_image: "أضِف صورة"
+  add_im_address: "أضف مُعرِّف المسنجر"
+  add_location: "أضف الموقع"
+  add_new_attachment: "أضف مُرفق جديد"
+  add_one_or_more_tags: "اضف علامة أو اكثر، افصل بينها بفواصل"
+  add_phone_number: "أضف رقم الهاتف"
+  add_photo_to_gallery: "إضغط على الصورة لإضافتها"
+  add_star_link: "أضف تقييم ({{star_count}})"
+  add_tags: "أضف العلامات"
+  add_websites: "أضف موقع ويب"
+  additional_page_access: "وصول إضافي"
+  admin: "مدير الموقع"
+  administer_site: "إدارة الموقع"
+  administration: إدارة
+  alert_error: خطأ
+  alert_field_errors: "يوجد أخطاء في الحقول التالية"
+  alert_not_saved: "لم يتم حفظ التغييرات"
+  alert_permission_denied: "غير مخوّل بالدخول"
+  alert_permission_denied_details: "نأسف. لا يوجد لك صلاحيات"
+  alert_saved: "تم حفظ التغييرات"
+  all: كل
+  all_content: "كل المحتوى"
+  all_groups: "كل المجموعات"
+  all_networks: "كل الشبكات"
+  all_page_types: "كل أنواع الصفحات"
+  all_people: "كل المشتركون"
+  all_people_link: "كل المشتركون"
+  all_states: "كل الحالات"
+  allow_membership_requests: "السماح بتقديم طلبات العضوية"
+  already_contacts_info: "أنت مُعرَّف أصلاً ضمن قائمة اتصال هذا المستخدم"
+  announcement_page_description: إعلان.
+  announcement_page_display: إعلان
+  announcements: إعلانات
+  approval_vote: "أوافق على التصويت"
+  approval_vote_class_description: "الموافقة أو عدم الموافقة على كل احتمالية"
+  approve: موافق
+  approve_button: موافق
+  approve_contact_info: "لقد طلب هذا الشخص أن تكون من ضمن قائمة اتصاله، هل توافق؟"
+  approve_or_reject_link: "وافق على هذا الطلب أو أرفضه"
+  approved: "تمت الموافقة"
+  archive: أرشيف
+  archive_filter_created_link: "تاريخ الإنشاء"
+  archive_filter_updated_link: "تاريخ آخر تعديل"
+  archive_headline: الأرشيف
+  article_page_description: "أنشئ تدوينة أو خبرا"
+  article_page_display: مقال
+  asset_page_description: "ارفع صورة، أو وثيقة، أو جدولا ممتدا، أو عرضا، أو أي ملف آخر"
+  asset_page_display: ملف
+  at_least_one_recipient_is_required: "عليك الإرسال لشخص واحد على الأقل"
+  attachments: المرفقات
+  away: بعيد
+  back_button: رجوع
+  back_to_group: "رجوع لـ {{group_name}}"
+  basic_settings: "إعدادات أساسية"
+  break_lock: "حجز القطع"
+  break_lock_button: "حجز القطع"
+  cancel_button: إلغاء
+  cancel_link: إلغاء
+  caption: "عنوان "
+  category: تصنيف
+  check_all: "اختر الكل"
+  close_button: إغلاق
+  collection: مجموعة
+  collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
+  committee: لجنة
+  committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
+  committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {{domain}}/yourgroupname"
+  committees: اللجان
+  comparing_changes_header: "مقارنة تعديلات المستخدم {{user}} في {{when}} بين {{old_version}} و {{new_version}}"
+  confirm_new_password: "تأكيد كلمة المرور الجديدة "
+  confirmation: "هل أنت متأكد؟"
+  contact: "جهة الإتصال"
+  contact_request_message_label: "أخبر {{user}} لماذا ترغب أن تكون من ضمن قائمة اتصاله"
+  contacts: "قائمة الإتصال"
+  contribute_content_link: شارك
+  contribute_group_content_link: "أضف الصفحة إلى {{group}}"
+  contribute_to_site: "تبرّع للموقع"
+  contributed: مشارك
+  coordinating_council: "مستشاري التنسيق"
+  coordinator: مُنسَّق
+  coordinator_help: "يمنح وصول <b>المنسق</b> صلاحيات غير محدودة لهذه الصفحة (بما فيها صلاحيات الحدف و المشاركة)"
+  coordinators: منسقون
+  council: مجلس
+  council_help: "إذا كان لهذه المجموعة مجلس تنسيق، فلن يستطيع إدارة هذه المجموعة إلا أعضاء ذلك المجلس. إن لم يكن للمجموعة مجلس تنسيق، سيصير بإمكان أي عضو إدارتها."
+  councils: مجالس
+  create_a_group: "انشاء مجموعة"
+  create_a_new_thing: "إنشاء جديد للـ {{thing}}"
+  create_button: إنشاء
+  create_committee: "إنشاء لجنة"
+  create_group_link: "إنشاء مجموعة "
+  create_page: إنشاء
+  create_page_button: "إنشاء{{page_class}}"
+  create_page_data: "بيانات {{page_class}} "
+  create_page_information: "معلومات {{page_class}}"
+  create_task_list: "إنشاء قائمة مهام جديدة"
+  created: "تمّّ الإنشاء"
+  created_by: "أٌنشئ بواسطة"
+  created_on: "أُنشئ في"
+  created_when_by: "أُنشئ في {{when}} بواسطة {{user}}"
+  csrf_error_message: |
+      يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط
+  current_attachments: "المرفقات الحالية"
+  current_featured_content: "المحتوى المُختار حالياً"
+  current_tags: "العلامات الحالية"
+  current_video_sources: "حالياً ندعم: youtube, blip.tv, google video, vimeo"
+  data_for_page_missing: "بيانات هذه الصفحة غير موجودة"
+  date: التاريخ
+  date_all_time: "كل الوقت"
+  date_centuries: "القرون الميلادية"
+  date_days: الأيام
+  date_hours: الساعات
+  date_minutes: الدقائق
+  date_months: الشهور
+  date_older: الأقدم
+  date_seconds: الثواني
+  date_this_month: "هذا الشهر"
+  date_this_week: "الأسبوع الماضي"
+  date_today: اليوم
+  date_weeks: الأسابيع
+  date_years: السنوات
+  date_yesterday: البارحة
+  delete: حذف
+  delete_page_link: "حذف {{page_class}}"
+  delete_page_via_shred: "دمر حالا"
+  delete_page_via_shred_info: "ستدمر هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء."
+  delete_page_via_trash: "انقل إلى المهملات"
+  delete_page_via_trash_info: "ستنقل الصفحة إلى المهملات، حيث يمكن استعادتها لاحقا."
+  delete_post: "حذف المشاركة"
+  delete_this_version: "حذف هذه النُسخة"
+  delete_version_confirm: "هل أنت متأكد أنك تريد حذف هذه النسخة؟"
+  description: الوصف
+  descriptions: الوصف
+  descriptive_name_for_display: "اسم توصيفي يستخدم للعرض"
+  destroy: الغاء
+  destroy_confirmation: "هل أنت متأكد أنك راغب في حذف هذا/هذه {{thing}}؟ لا يمكن الرجوع عن هذه النشاط."
+  destroy_group_link: "دمر {{group_type}}"
+  details_link: التفاصيل
+  diff_link: "معرفة الإختلاف"
+  directory_of_groups: "دليل المجموعات"
+  directory_of_networks: "دليل الشبكات"
+  directory_of_people: "دليل المشتركون"
+  discuss_request_link: "ناقش هذا الطلب مع {{person_or_group}}"
+  discussion_page_description: "ناقش موضوعا معينا في مجموعة أو مع مستخدمين آخرين."
+  discussion_page_display: "مناقشة جماعية"
+  discussions: مناقشات
+  display_name: "إظهار الإسم"
+  dont_have_permission_to_create_committees: "أنت غير مٌخول لإنشاء لجنة تحت {{group}}"
+  dont_understand_group_type: "لم يتم تمييز نوع المجموعة {{type}}"
+  download: حفظ
+  download_gallery: "حفظ معرض الصور"
+  drag_and_drop_to_rearrange_photos: "اسحب وافلت الصور لتُعيد ترتيبها"
+  edit: تحرير
+  edit_appearance: "تحرير الشكل"
+  edit_attachments: "تحرير المرفقات"
+  edit_attachments_link: تحرير
+  edit_featured_content: "تحرير المحتوى المُختار"
+  edit_featured_content_for_group: "تحرير المحتوى المُختار لِـ {{group_name}}"
+  edit_gallery: "تحرير معرض الصور"
+  edit_profile_link: "تحرير الملف "
+  edit_settings: "تحرير الاعدادات"
+  edit_tags: "تحرير العلامات"
+  edit_tags_link: تحرير
+  edit_title: |
+      تحرير العنوان
+  edit_underlined_e: <u>تحرير</u>
+  email: "البريد الالكتروني"
+  email_addresses: |
+      عنوان البريد الإلكتروني
+  email_link_expires: "هذا الرابط شوف تنتهي صلاحيته في {{days}} أيام."
+  email_notice_access: "بإمكانك الوصول لهذه الصفحة هنا:"
+  email_notice_hello: "مرحبا، أرسل لك {{from}} صفحة وب."
+  email_notice_hello_with_message: "مرحبا، أرسل لك {{from}} صفحة وب و معها الرسالة التالية: {{message}}"
+  email_notice_subject: "طالع صفحة \"{{title}}\""
+  empty_results: "لا يوجد نتائج"
+  error_saving_new_order: "خطأ في حفظ الترتيب الجديد!"
+  expired_featured_content: "انتهت صلاحية المحتوى المُختار"
+  external_video_page_description: "اعرض فيديو مستضاف على موقع خارجي."
+  external_video_page_display: "فيديو خارجي"
+  fax: الفاكس
+  feature_button: مُختارة!
+  featured_content: "المحتوى المخُتار"
+  featured_content_header: المخُتار
+  file: الملف
+  file_class_description: "ملف تم تحميله"
+  file_must_be_image_error: "يجب أن يكون الملف صورة حتى بصبح جزء من معرض الصور"
+  file_size: "حجم الملف"
+  file_version_deleted: "تم حذف نسخة الملف"
+  files: ملفات
+  first_name: "الإسم الأول"
+  folder_class_description: "مجموعة ملفات"
+  folder_display: مجلد
+  folder_page_description: "مجموعة من الملفات."
+  folder_page_display: مجلد
+  footer_text_crabgrass: |-
+      <span>هذا الموقعم مدعوم بواسطة <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL البرمجيات الحرة</a> لتنظيم الشبكات.</span>
+      <ul>
+        <li><a href='https://labs.riseup.net/report-a-bug'>للتبليغ عن أخطاء</a></li>
+        <li><a href='https://labs.riseup.net/request-a-feature'>أطلب ميزة</a></li>
+        <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>صفحات crabgrass المساعدة </a></li>
+        <li><a href='https://we.riseup.net/cgdev/get-involved'>الإنضمام</a></li>
+      </ul>
+  footer_text_riseup: |-
+      <span>هذا الموقع تم تشغيله من قبل <a href="http://riseup.net">riseup.net</a>, مجموعتكم التكنولوجية المستقلة الصديقة لكم منذ 1999.</span>
+      <ul>
+        <li><a href="http://help.riseup.net/policy/privacy/">ضمان الخصوصية</a></li>
+        <li><a href="http://help.riseup.net/about-us/">من نحن</a></li>
+        <li><a href="https://mail.riseup.net/">حسابات البريد الإلكتروني</a></li>
+        <li><a href="https://lists.riseup.net/">القوائم البريدية</a></li>
+        <li><a href="http://status.riseup.net/">حالة النظام</a></li>
+        <li><a href="http://riseup.net/donate/">التبرع لriseup.net</a></li>
+      </ul>
+  forgot_password_link: "نسيت كلمة المرور"
+  forgot_password_mail_expiry: "سيبقى هذا الرابط فعّال لمدة 24 ساعة. إذا كنت ترغب بتغيير كلمة المرور بعد هذه الفترة عليك زيارة الصفحة الخاصة بنسيان كلمة المرور مرة أخرى وطلب رابط جديد"
+  forgot_password_mail_greeting: "{{user}}, لتغيير كلمة المرور، الرجاء زيارة"
+  forgot_password_text: "إذا نسيت كلمة المرور، يمكننا أن نرسل لك بريد إلكتروني يحتوي على رابط سيسمح لك بتعريف كلمة مرور جديدة"
+  forgotten_email_address: "ما هو البريد الإلكتروني الذي أدخلتُه عندما قمت بالتسجيل لأوّل مرة؟"
+  format: صيغة
+  formatting_reference_link: "صياغة المرجع"
+  founded: أُسِّسَت
+  friday: الجمعة
+  friends: الأصدقاء
+  from: من
+  full: كامل
+  fullname: "الإسم الكامل"
+  galleries: "معارض الصور"
+  gallery_class_description: "مجموعة من الصور."
+  gallery_description: "ارفع عددا من الصور أو نظم صورا موجودة في مجموعة."
+  gallery_display: "معرض الصور"
+  general_info: "معلومات عامة"
+  grant_access: "صلاحيات الدخول"
+  group: مجموعة
+  group_administration_not_allowed: "لا يمكنك ان تكون مديراَ على هذه المجموعة."
+  group_directory: "دليل المجموعة"
+  group_directory_link: "دليل المجموعة"
+  group_discussion: المناقشة
+  group_discussion_class_description: "نقاش المجموعة حول موضوع معين."
+  group_has_no_public_profile: "هذه المجموعة لا يوجد لديها ملف عام."
+  group_home_headline: "الصفحة الرئيسية لِـ{{group_type}}"
+  group_home_welcome: "مرحباً بك"
+  group_information: "معلومات {{group_type}}"
+  group_invite_email: |
+      {{from_user}} قام بدعوتك للانضمام إلى مجموعة "{{group}}".
+
+      إذا كنت ترغب في أن تنضم إلى هذه المجموعة ، انقر هنا
+
+        {{accept_invite_link}}
+
+      الصفحة الرئيسية لهذه المجموعة يمكن ان تجدها هنا:
+
+        {{group_home_link}}
+
+      إذا كنت لا ترغب في الانضمام إلى هذه المجموعة ، ببساطة تجاهل هذه البريد الالكتروني.
+  group_invite_subject: "دعوة للانضمام إلى مجموعة \"{{group}}\""
+  group_join_chat: "الانضمام للدردشة"
+  group_language: "اللغة الرئيسية لهذا {{group}}."
+  group_members_publicly_visible: "جعل الأعضاء مرئيين للجميع"
+  group_members_publicly_visible_description: "يمكن لغير المشتركين مشاهدة المشتركين على الرابط {{domain}}/yourgroupname. كذلك سيظهر اسم المجموعة التي ينتمي إليها المشترك في ملفه على الرابط({{domain}}/username)"
+  group_membership_count: "{{count}} عضو"
+  group_not_allowed_to_view_image_error: "لا يُسمح للمجموعة التي تملك هذه الصفحة أن تشاهد هذه الصورة."
+  group_privacy_settings: "{{group}} إعدادات الخصوصية"
+  group_profile_description_may_request_membership: "السماح للمشتركين بتقديم طلب انضمام لهذه{{group_type}}."
+  group_profile_description_may_see: "اذا أُختير, معلومات الملف الشخصي التي بالأسفل سوف تكون مرئية. وإلا, الملف الشخصي لهذه المجموعة {{group_type}} ستكون مخفية تماما\"."
+  group_profile_description_may_see_committees: "السماح للمشتركين بمشهادة ما تحتويه المجموعة {{group_type}} من لجان"
+  group_profile_description_may_see_groups: "السماح للمشتركين بمشاهدة المجموعات التي تشكل جزء من هذه{{group_type}}."
+  group_profile_description_may_see_members: "السماح للمشتركين بمشاهدة قائمة العضوية لهذه {{group_type}}."
+  group_profile_description_may_see_networks: "السماح للمشتركين بمشاهدة ماهي الشبكات التي هذه {{group_type}} جزأً منها"
+  group_publicly_visible: "إجعل {{group}} مرئي للجميع"
+  group_publicly_visible_description: "المجموعة تظهر في الدليل العام و يمكن لغير الأعضاء مشاهدة <i>ملف</i> المجموعة على الرابط {{domain}}/yourgroupname."
+  group_successfully_created: "تم إنشاء المجموعة بنجاح"
+  group_successfully_updated: "تم تعديل هذه المجموعة بنجاح"
+  group_summary: "معلومات مختصرة بخصوص {{group}}"
+  group_wiki: "مجموعة ويكي"
+  groups: المجموعات
+  have_your_say: "ابدي رأيك"
+  height: ارتفاع
+  highest_contributors: "الأكثر مشاركة"
+  history: سِجِل
+  home: "الصفحة الرئيسية"
+  icon: أيقونة
+  im_addresses: "مُعرِّف المسنجر"
+  image_count: "صورة {{number}} من {{count}}"
+  image_count_total: "{{count}} صور"
+  image_title: "عنوان الصورة: {{title}}"
+  inbox_description: "صندوق الوارد للصفحات التي أشارك بها أو أراقب تغييراتها"
+  include_full_checkbox: "يشمل رابط للصورة كاملة"
+  incoming: الوارد
+  information: المعلومات
+  insert_image_heading: "إدراج صورة"
+  insert_image_instructions: "اضغط على الصورة المصغرة لاضافتها الى نص الويكي."
+  invalid_email: "عنوان البريد الإلكتروني غير صحيح"
+  invalid_email_text: "عنوان البريد الإلكتروني غير صحيح"
+  invalid_token: "رابط غير صحيح"
+  invalid_token_text: " رابط تغيير كلمة المرور غير صحيح، إما أنَّهُ تمّ استخدامُه أو انقضى الوقت المخصّص لإستخدام الرابط"
+  invite: ادعو
+  invite_accept_headline: "قبول دعوة للانضمام الى المجموعة"
+  invite_accept_info: "هل ترغب في قبول طلب للانضمام؟ هل لديك حساب على هذا الخادم؟"
+  invite_accept_via_existing_account: "لدي حساب"
+  invite_accept_via_register: "أريد التسجيل بحساب جديد"
+  invite_info: "أدخل قائمة باسماء دخول المستخدمين او عنوان البريد الالكتروني للمشتركين الذين ترغب في دعوتهم للانضمام لهذه {{group_type}}"
+  invite_not_found: "الدعوة غير موجودة"
+  join_chat: "انضم للدردشة"
+  join_group_link: "انضم ل{{group_type}}"
+  join_group_success: "لقد انضممت إلى مجموعة {{group_name}}"
+  join_request_info: "لن تصبح عضو في هذه المجموعة حتى يتم الموافقة على طلبك. يمكنك تتبع حالة طلبك من خلال زيارة \"{{my_requests_url}}\"."
+  joins_the_chatroom: "الدخول إلى غرفة الدردشة"
+  language: اللغة
+  large: كبير
+  last_change: "التغيير الأخير"
+  last_name: "الإسم الأخير"
+  last_seen: "شوهد آخر مرة"
+  leave_channel: "اترك القناة"
+  leave_group_link: "اترك {{group_type}}"
+  left_the_chatroom: "غادر غرفة محادثة"
+  link_name: "إسم الرابط"
+  link_name_description: "هذا الإسم سيشير إلى المجموعة في الروابط الإلكترونية. يجب أن يحتوي على أرقام أو حروف ولا يُسمح بوجود الفراغات"
+  location: موضع
+  location_address: العنوان
+  location_city: المدينة
+  location_country: البلد
+  location_postal_code: "الرمز البريدي"
+  location_state: "الولاية / المقاطعة"
+  locations: المواقع
+  locked_by_user: "مغلق من قِبل{{user}}"
+  locking_error: "خطأ في الإغلاق. لا يمكن حفظ البيانات, شخص آخر قام بحفظ تغييرات قبلك"
+  login: دخول
+  login_button: دخول
+  login_failed: "لم تتم عملية تسجيل الدخول"
+  login_failure_reason: "خطأ في إسم المستخدم أو كلمة المرور."
+  login_name: "اسم المستخدم"
+  login_password: "كلمة المرور"
+  login_required: "الدخول مطلوب"
+  login_required_description: "الرجاء الدخول للقيا بهذا النشاط"
+  logout: خروج
+  logout_success: وداعاً
+  logout_success_message: "تم تسجيل الخروج بنجاح."
+  make_album_cover: "إجعل هذه الصورة غلاف للألبوم"
+  mark_pages_as_featured_content_for_group: "هنا يمكنك اختيار الصفحات على انها المحتوى المُختار لهذه المجموعة."
+  me_dashboard_link: "لوحة التحكُّم"
+  me_inbox_link: "صندوق الوارد"
+  me_search_description: "ابحث في جميع الصفحات التي يُسمح لك بمشاهدتها"
+  me_search_link: بحث
+  me_tasks_link: المهام
+  media_all: وسيطة
+  media_alls: وسائط
+  media_audio: "تسجيل صوتي"
+  media_audios: "تسجيلات صوتية"
+  media_document: وثيقة
+  media_documents: وثائق
+  media_for_group: "{{media_type}} قي {{group}}"
+  media_image: صورة
+  media_images: صور
+  media_video: فيديو
+  media_videos: فيديوهات
+  media_without_group: "الكل {{media_type}}"
+  medium: متوسط
+  member_groups_of_network: "أعضاء المجموعات"
+  members: الأعضاء
+  membership: عضوية
+  menu_chat: دردشة
+  menu_groups: المجموعات
+  menu_home: "الصفحة الرئيسية"
+  menu_link_account: "معلوماتي الشخصية"
+  menu_link_logout: خروج
+  menu_me: أشيائي
+  menu_networks: الشبكات
+  menu_people: المشتركون
+  message: الرسالة
+  message_must_not_be_empty: "الرجاء ادخال الرسالة"
+  message_page_description: "أرسل رسالة خاصة لمتلقين أفراد."
+  message_page_display: "رسالة خاصة"
+  middle_name: متوسط
+  mobile: الجوال
+  monday: الإثنين
+  month_short_april: نيسان
+  month_short_august: آب
+  month_short_december: أيلول
+  month_short_february: شباط
+  month_short_january: "كانون الثاني"
+  month_short_july: حزيران
+  month_short_june: "تموز "
+  month_short_march: "آذار "
+  month_short_may: "أيار "
+  month_short_november: "تشرين الثاني "
+  month_short_october: "تشرين الأول"
+  month_short_september: أيلول
+  more_information: "مزيد من المعلومات"
+  most_active: "الأكثر نشاطاً"
+  most_active_groups: "المجموعات الأكثر نشاطاً"
+  most_active_members: "الأعضاء الأكثر نشاطاً"
+  most_viewed: "الأكثر مشاهدة"
+  move_button: "نقل "
+  move_image_left: "أنقل الصورة لليسار"
+  move_image_right: "نقل الصورة لليمين"
+  move_page_link: "    نقل   {{page_class}}    "
+  move_page_to_different_group: "انقل هذه الصفحة إلى مجموعة أخرى"
+  move_this_page: "انقل هذه الصفحة"
+  my_completed_tasks_link: المُنجز
+  my_contacts: "قائمة اتصالي"
+  my_contacts_link: أصدقائي
+  my_dashboard: "لوحة التحكُّم"
+  my_groups: مجموعاتي
+  my_groups_link: مجموعاتي
+  my_pages: صفحاتي
+  my_peers: أقراني
+  my_peers_description: "المستخدمون الذين اشترك معهم في نفس المجموعة "
+  my_peers_explain: "المستخدمين الذين اشترك مع مجوعتهم الشائعة "
+  my_peers_link: أقراني
+  my_pending_tasks_link: "في الإنتظار"
+  my_requests_headline: طلباتي
+  my_settings: "إعدادات {{user}}"
+  my_status_heading: "حالتك الحالية"
+  my_tasks: المهام
+  my_tasks_description: "قائمة المهام التي يُسمح لي بمشاهدتها"
+  my_tasks_headline: مهامي
+  my_world_heading: عالمي
+  name: الإسم
+  network: شبكة
+  network_aettings: "إعدادات الشبكة"
+  network_invite_info: |
+      أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة
+  networks: الشبكات
+  new_council: "مجلس جديد لمجموعة {{group_name}}"
+  new_group: "مجموعة جديدة"
+  new_network: "شبكة جديدة"
+  new_password: "كلمة مرور جديدة"
+  new_people: "مشتركون جدد"
+  new_people_link: "مشتركون جدد"
+  next_change: "التغيير التالي"
+  no_change: "لا يوجد تغيير"
+  no_committees: "لا يوجد لجان"
+  no_contacts_msg: "لا يوجد أشخاص في قائمة اتصالك"
+  no_group_named: "لا يوجد مجموعة بإسم<b>{{name}}</b>."
+  no_images_in_gallery: "لا يوجد صور في معرض الصور"
+  no_members: "(لا يوجد أعضاء)"
+  no_peers_msg: "لا يوجد أي أقران"
+  no_public_profiles: "لا يوجد ملف تعريفي حاليا..."
+  no_search_results: "لم يفلح البحث في إظهار أية نتائج"
+  no_tags: "لا يوجد علامات"
+  no_title_given: "(لم يتم ادخال العنوان)"
+  none: "لا أحد"
+  not_featured_content: "لا يوجد محتوى مُختار"
+  not_found: "غير موجود"
+  not_set: "لم تحدد"
+  notify_contribution: "<b>تبرع سابق:</b>إشعار الناس الذين قدموا<b>تبرعات</b>لهذه الصفحة."
+  notify_current_access: "<b>العنوان الحالي:</b>إشعار الناس أو الجماعات التي تقوم حاليا بالدخول الى هذه الصفحة."
+  notify_new_access: "<b>دخول جديد:</b> تشارك هذه الصفحة مع الناس أو المجموعات الجديدة,وأخطرهم بذلك."
+  notify_page_link: "أرسل إشعار"
+  only_last_menber_can_delete_group: "يمكنك فقط حذف مجموعة إذا كنت آخر عضو بالمجموعة"
+  only_me: أنا
+  options: خيارات
+  or_image_url: "أو رابط الصورة"
+  order_changed: "تم تغيير الترتيب."
+  organization: المنظمة
+  organizational_role: "دور المنظمة"
+  other: أخرى
+  other_formats: "صيَغ أُخرى"
+  outgoing: السابق
+  page: صفحة
+  page_added_to_group: "هذه الصفحة سيتم إضافتها لِ{{group_type}} {{group_name}}."
+  page_create_owner: "مالك الصفحة"
+  page_details: "تفاصيل الصفحة"
+  page_details_link: "{{page_class}} تفاصيل"
+  page_group_collection: المجموعات
+  page_group_discussion: المناقشات
+  page_group_event: الأحداث
+  page_group_media: "الوسائط المتعددة"
+  page_group_media_audio: الصوت
+  page_group_media_document: الوثائق
+  page_group_media_image: الصور
+  page_group_media_video: الفيديوهات
+  page_group_planning: "أدوات التخطيط"
+  page_group_task: |
+      المهام
+  page_group_text: "النص والمناقشات"
+  page_group_vote: "استطلاعات الرأي والتصويت"
+  page_is_not_static: "صفحة ليست ثابتة"
+  page_list: "قائمة الصفحة"
+  page_list_heading_created: "أُنشئ "
+  page_list_heading_created_by: "أُنشئ من قِبل"
+  page_list_heading_last_updated: "آخر تعديل"
+  page_list_heading_owner: المالك
+  page_list_heading_posts: المشاركات
+  page_list_heading_stars: التقييم
+  page_list_heading_title: العنوان
+  page_list_heading_updated: "تم تعديله"
+  page_list_heading_updated_by: "تم التعديل بواسطة"
+  page_locked_header: "الصفحة مقفلة"
+  page_not_part_of_group: "هذه الصفحة ليست جزأً من هذه المجموعة"
+  page_notice_message: "ارسلت الصفحة بواسطة {{user}} في {{date}}"
+  page_owner_help: "مالك الصفحة هو الشخص أو المجموعة ذات المسؤولية الكاملة عن هذه الصفحة. يمكن أن تختار نفسك ,أو أي مجموعة  من المجوعات التي تنتمي لها"
+  page_with_message: "مع رسالة"
+  pager: المتصفح
+  pagination_next: التالي
+  pagination_previous: السابق
+  participant: مُشارك
+  participant_help: "<b>المٌشارك</b> الدخول سوف يمنحك القدرة على التعديل والتبرع لهذه الصفحة."
+  participants: المشاركون
+  participation: المشاركة
+  password: "كلمة المرور"
+  password_confirmation: "تأكيد كلمة المرور"
+  password_error_confirmation: "لا يوجد تطابق في تأكيد كلمة السر"
+  password_error_default: "ليست قوية بما فيه الكفاية."
+  password_error_too_common: "ليس جيدا ، لأنها تستند الى قاموس الكلمات."
+  password_error_too_short: "ليس جيدا ، انها قصيرة جدا."
+  password_error_too_similar: "ليس جيدا ، لأنها لا تتضمن ما يكفي من الأحرف المختلفة."
+  password_error_too_simple: "ليس جيدا ، انها بسيطة جدا أو يمكن التنبؤ بها."
+  password_error_username: "ليس جيدا ، لأنها تستند على اسم المستخدم الخاص بك. "
+  password_error_whitespace: "ليس جيدا ، كلها فراغات بيضاء."
+  password_ok: "على ما يرام."
+  password_reset: "تغيير كلمة المرور"
+  password_reset_ok_text: "تم تغيير كلمة المرور بنجاح. يمكنك الآن استخدام كلمة المرور الجديدة للدخول"
+  password_was_reset: "تم تغيير كلمة المرور"
+  peers: الأقران
+  pending: "في الإنتظار"
+  pending_tasks: "المهام التي في الإنتظار."
+  people: المشتركون
+  permission_denied: "لا يوجد صلاحيات"
+  permission_denied_description: "لا يوجد لديك التصريح الكافي للقيام بهذا النشاط"
+  permissions: صلاحيات
+  personal: شخصي
+  personal_interests: "اهتمامات شخصية"
+  personal_message: "رسالة شخصية"
+  personal_message_class_description: "رسالة شخصية أُرسلت لمستقبلين معينين"
+  phone_numbers: "أرقام الهاتف"
+  photo: صورة
+  photo_credit: "رصيد الصور"
+  post_message: "ابعث رسالة"
+  prev_change: "التغيير السابق"
+  preview: معاينة
+  print_underlined_p: <u>طباعة</u>
+  private: خاص
+  private_profile: "ملفي الخاص"
+  profile_last_login: "آخر دخول"
+  profile_member_since: "عضو منذ"
+  profile_option_allow_peers: "مرئي للأقران"
+  profile_option_may_pester: "قد يزعجني"
+  profile_option_may_request_contact: "يمكن ارسال طلب للإضافة لقائمة الإتصال الشخصية"
+  profile_option_may_request_membership: "اسمح بطلبات العضوية"
+  profile_option_may_see: "الملف الشخصي مرئي"
+  profile_option_may_see_committees: "إظهار اللجان"
+  profile_option_may_see_contacts: "أظهر قائمة الإتصال الشخصية"
+  profile_option_may_see_groups: "أظهر عضوية المجموعات"
+  profile_option_may_see_members: "أظهر أعضاء المجموعات"
+  profile_option_may_see_networks: "أظهر الشبكات"
+  profile_private_description: "هذا الملف الشخصي خاص وهو مرئي فقط لقائمة الاتصال الخاصة بك"
+  profile_public_description: |-
+      هذا الملف الشخصي هو عام ومرئي لأي شخص يزور هذا الموقع الإلكتروني
+      المعلومات التي وضعتها هنا ايضاً قابلة للبحث من قبل أي شخص
+      توخى الحذر عند إضافة معلومات شخصية الى ملفك العام.
+  profile_saved: "تم حفظ ملفك الشخصي"
+  public: عام
+  public_checkbox: عام
+  public_checkbox_help: "إذا أختير , بإمكان أي أحد أن يستعرض هذه الصفحة."
+  public_key: "المفتاح العمومي"
+  public_profile: "ملفي العام"
+  ranked_vote_instructions: |
+      اسحب وافلت العناصر في القائمة حتى يتم ترتيبها، بحيث تجعل العناصر المفضّلة بالأعلى والأقل تفضيلاً بالأسفل. عندما تنتهي اضغط موافق لتسجبل التصويت
+  ranked_vote_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص للتصنيف حسب الأفضلية."
+  ranked_vote_page_display: "صوت مصنف"
+  rate_many_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص من أجل الموافقة أو عدم الموافقة."
+  rate_many_page_display: "استطلاع موافق عليه"
+  reactivate_button: "إعادة تفعيل!"
+  read: إقرأ
+  recent_activity: "آخر فعالية"
+  recent_contributions: "أحدث المشاركات"
+  recent_member_group_pages: "أحدث المشاركات بواسطة مجموعاتك في {{network}}"
+  recent_network_pages: "أحدث صفحات الشبكات"
+  recent_pages: "الصفحات التي زرتها حديثاً"
+  recent_wall_posts: "أحدث المشاركات المنشورة"
+  recently_active_groups: "المجموعات النشطة مؤخراً"
+  recently_active_members: "الأعضاء النشطين مؤخراً"
+  recently_created: "أنشئت مؤخرا"
+  recipient_tip: "إفصل بين المستقبلين بواسطة الفاصلة،المسافة،أو سطر جديد"
+  recipients: المستقبلون
+  redirect_to_foreign_domain: "أنت تحاول الدخول لموقع خارجي ({{url}}) بعد الدخول ولأسباب أمنية ستتم إزالة المتغيِّر من العنوان"
+  regenerate: "إعادة تكوين المُصغَّرات"
+  reject: رفض
+  reject_button: رفض
+  rejected: "تم الرفض"
+  remove: حذف
+  remove_contact_confirmation: "هل أنت متأكد أنك تريد إزالة {{user}} من قائمة اتصالاتك؟"
+  remove_contact_info: "عند إزالة شخص من قائمة اتصالاتك فأنَّهُ لا يمكنك مشاهدة وقت دخوله للنظام أو مشاهدة ملفه كاملاً، إزالة هذا الشخص من قائمة اتصالك سيؤدي إلى إزالتك من قائمة اتصاله"
+  remove_friend_link: "إحذفه من قائمة إتصالي"
+  remove_from_gallery: "الإزالة من معرض الصور"
+  remove_from_inbox: "الحذف من صندوق الوارد"
+  remove_last_access_error: "لا يمكنك إزالة آخر دخول إلى هذه الصفحة."
+  remove_star_link: "إحذف تقييم ({{star_count}})"
+  removing_image: "يتم حذف الصورة..."
+  request_friend_link: "أضف لقائمة إتصالي"
+  request_join_group_link: "طلب الإنضمام لٍ {{group_type}}"
+  request_status: "هذا الطلب {{status}} بواسطة {{user}} في {{time}}"
+  request_to_friend_description: "{{user}} هل ترغب في ان تكون ضمن قائمة اتصال {{other_user}}"
+  request_to_join_our_network_description: "{{group}} تم دعوة المجوعة للإنضمام إلى شبكة {{network}}"
+  request_to_join_us_description: "{{user}} تم دعوته للانضمام {{group}}"
+  request_to_join_us_via_email_description: "{{email}} تم دعوته للإنضمام {{group}}"
+  request_to_join_you_description: "{{user}} تم دعوته للإنضمام  {{group}}"
+  request_to_join_your_network_description: "{{group}} تم دعوته للإنضمام الى الشبكة   {{network}}"
+  requested_forgot_password: "لقد طلبت تغيير كلمة المرور"
+  requests: الطلبات
+  requests_from_me: "مني أنا"
+  requests_to_me: "إلي أنا"
+  required: (مطلوب)
+  reset_password: "تغيير كلمة المرور"
+  reset_password_mail_greeting: "{{user}}, تم تغيير كلمة المرور حسب طلبك."
+  reset_password_mail_sent: "تم إرسال بريد إلكتروني لك يحتوي تعليمات حوا تغيير كلمة المرور"
+  reset_password_mail_warning: "الرجاء الإتصال بنا إذا لم تطلب تغيير كلمة المرور"
+  reset_password_text: "مرحباً، {{user}}. إذا كنت نست كلمة المرور، يمكنك تعريف كلمة مرور جديدة من هنا."
+  return_link: العودة
+  rss_feed: "RSS تغذية"
+  saturday: السبت
+  save_button: حفظ
+  save_changes: "حفظ التغييرات"
+  save_survey: "حفظ  دراسة"
+  saved_new_order: "تم تخزين الترتيب الجديد!"
+  saving_your_changes: "جاري حفظ التغييرات..."
+  say_message_button: عبّر
+  school: مدرسة
+  search: بحث
+  search_headline: بحث
+  see_all_link: "مشاهدة الكل"
+  see_more_link: المزيد
+  see_tips_to_get_started: "شاهد بعض النصائح حتى تستخدم النظام"
+  select_image_file: "اختيار  ملف الصورة"
+  send_button: إرسال
+  send_invites: "إرسال الدعوات"
+  send_invites_button: "إرسال الدعوات"
+  send_invites_headline: "إرسال الدعوات للإنضمام لِـ {{group}}"
+  send_message_link: "أرسل الرسالة"
+  separate_tags: "أفصل العلامات باستخدام الفواصل"
+  set_status_button: "غير الحالة"
+  set_status_messsage: "ماذا تفعل الآن؟"
+  settings: الإعدادات
+  share: مشاركة
+  share_button: مشاركة
+  share_link: "شارك{{page_class}}"
+  share_page_email: "أرسل تذكير بالبريد الإلكتروني"
+  share_page_link: "شارك {{page_class}}"
+  share_page_message: "أرسل رسالة  (إختياري)"
+  share_page_options: "إختر من الخيارات"
+  share_page_recipients: "شارك {{page_class}} مع"
+  share_page_recipients_results: "مشاركة {{page_class}} مع"
+  share_page_recipients_sections: "اختار من ضمن مجموعاتك او أصدقائك"
+  share_page_recipients_selection: "قم بالإختيار"
+  share_this_page: "شارك هذه الصفحة"
+  sharing_help: "اختياري. يمكنك مشاركة هذه الصفحة مع عدة مستلمين (سواء مستخدمين أو مجموعات)."
+  show_gallery: "إظهار معرض الصور"
+  signup_button: "سجل الآن"
+  signup_confirm_password: "تأكيد كلمة المرور"
+  signup_email: "البريد الإلكتروني"
+  signup_email_info: "اختياري: يُستخدم إذا نسيت كلمة المرور"
+  signup_info: "أدخل اسم المستخدم وكلمة المرور ثم أُنقر \"{{sign_up}}\""
+  signup_link: "سجِّل الآن"
+  signup_login_name: "اسم المستخدم"
+  signup_password: "كلمة المرور"
+  signup_success: "تم التسجيل بنجاح"
+  signup_success_message: "شكراً لك على التسجيل!"
+  signup_title: "تسجيل حساب جديد"
+  slideshow_delay_input: "إعادة التحميل كل: {{input_field}} seconds"
+  small: صغير
+  social_change_interests: "اهتمامات التغيير الإجتماعي"
+  starred: تقيم
+  state: حالة
+  status_pending: "في الإنتظار"
+  status_resolved: محلول
+  subject: الموضوع
+  subject_must_not_be_empty: "الرجاء ادخال الموضوع"
+  successful_undelete_image: "تمَّ الغاء حذف الصورة"
+  sucessfully_removed_image: "تمت إزالة الصورة! ({{undo_link}})"
+  summary: الخلاصة
+  summary_help: "اختياري. الخلاصة هي أن الجملة أو الفقرة تقدم  وصفا موجزا لمضمون هذه الصفحة."
+  sunday: الأحد
+  survey_design: "تصميم الدراسة"
+  survey_list_all: "قائمة جميع الردود"
+  survey_may_rate: "ممكن تقييم الردود؟"
+  survey_may_see_ratings: "ممكن تقييم الردود؟"
+  survey_may_see_responses: "ممكن مشاهدة الردود؟"
+  survey_my_response: ردي
+  survey_page_description: "إنشاء سلسة من الأسئلة للناس للإجابة "
+  survey_page_display: " دراسة"
+  survey_questions: الأسئلة
+  survey_rate_responses: "قيًم الردود"
+  survey_rate_this_response: "قيًم هذا الرد"
+  survey_rating_enabled: "السماح بتقييم الردود؟"
+  survey_response_by: "تم الرد من قبل {{login}}"
+  survey_responses_enabled: "السماح بالردود الجديدة؟اذا تم الاختيار,يمكن للناس ان يشاهدوا الدراسة.اذا لم يتم الإختيار أغلق هذه الدراسة."
+  survey_take: "اتخاذ الدراسة"
+  survey_your_rating_of_this_response: "تقييمك لهذا الرد"
+  tags: علامات
+  tags_help: "اختياري. للعلامات ، إستخدم كلمات قليلة التي تقدم أفضل وصف لهذه الصفحة."
+  task_list_page_description: "أنشىء قائمة بالأشياء التي يجب عملها وأسند المهام لك أو للأخرين."
+  task_list_page_display: "قائمة المهام"
+  tasks: مهام
+  thing_not_found: "{{thing}} غير موجود"
+  thing_settings: "{{thing}} إعدادات"
+  this_is_committee: "هذه اللجنة جزء من  {{parent_group}}."
+  this_is_coordinating: "هذه اللجنة هي<strong>مستشار التنسيق</strong>لِ {{parent_group}}."
+  thursday: الخميس
+  time_zone: "المنطقة الزمنية"
+  title: العنوان
+  title_help: "مطلوب. العنوان يستخدم لتعريف هذه الصفحة."
+  to: إلى
+  toggle_selection: "تحويل الإختيار"
+  top_rated: "الأعلى تقييماً"
+  trash: المهملات
+  trash_description: "المهملات هو المكان الذي يوجد فيه جميع الصفحات المحذوفة. يمكنك استرجاع صفحة بالنقر على {{undelete}} أو تدميرصفحة نهائيا بالنقر على {{destroy}}."
+  try_again: "حاول لاحقاً"
+  tuesday: الثلاثاء
+  type_your_messages_here: "أدخل رسالتك هنا ثم اضغط على مفتاح ادخال (enter) في لوحة المفاتيح..."
+  typing: الطباعة
+  undelete_from_trash: "عدم الحذف"
+  undo: تراجع
+  unfeature_button: "غير مختارة!"
+  unknown: "غير معروف"
+  unread: "غير مقروء"
+  updated: "تم التعديل"
+  upload_attachment: "تحميل المرفقات"
+  upload_file_help: "مطلوب. إختيار ملف للتحميل على هذه الصفحة."
+  upload_image: "تحميل صورة"
+  upload_image_help: "اختياري. اختر  ملف صورة أولية للتحميل على هذه الصفحة."
+  upload_images: تحميل
+  upload_new_image: "حمِّل صورة جديدة"
+  uploaded_image_cropped: "سوف يتم قص وتمديد الصور المحمّلة إلى 96 بكسل مُربّع"
+  usage_agreement_heading: "اتفاقية الإستخدام"
+  usage_agreement_required: "الرجاء الموافقة على اتفاقية الإستخدام"
+  usage_agreement_text: "خدمات هذا الموقع تُقدَّم كما هي. أنت تٌقر أنَّكَ تفهم وتوافق على أنّّ مشغِّل الموقع لا يتحمَّل أية مسؤولية، من ضمن المسؤوليات التي لا يتحمّلها مشغِّل الموقع: أي انقطاع في الخدمة، عدم توفر خدمات أو ميزات معيَّنة، عدم إمكانية الدخول أو استخدام جزء من خدماتنا، كذلك أنت تُقِر أنَّكَ تفهم وتوافق على أنَّ مّشغِّل الموقع لا يتحمل مسؤولية أي الغاء أو خسارة أو عدم تسليم أية معلومات مخزَّنة أو تم تسليمها عبر خدماتنا. إنَّ مشغِّل هذا الموقع لا يقدِّم أي نوع من الضمان أو الكفالة. <br><br>  عند استخدامك هذه الخدمة أنت توافق على الشروط التالية <br><br> أنتَ توافق على أن لا تبيع أو تُعيد بيع أو تستثمر استخدام خدماتنا، كذلك أنت توافق على أن لا تستخدم خدماتنا أو المحتوى المتوفِّر على موقعنا لأية أغراض تجارية فيما عدا عرض خدماتنا على مواقع البحث أو التوجيه لخدماتنا من مواقع أخرى <br><br> كذلك أنت توافق على عدم استخدام خدماتنا لـ <br><br>    مضايقة الآخرين <br>    إيذاء أو استغلال القُصَّر <br>    انتحال شخصية شخص آخر <br>    إرسال رسائل استجداء <br>    جمع معومات شخصية عن مستخدمي هذا الموقع دون موافقتهم الصريحة <br>    معارضة أو إزعاج خدماتنا، تلك التي تخص مستخدمي الموقع أو أي شخص أو خدمة <br><br> كذلك أنت توافق على <br><br>    عدم الإفراط في استخدام خدماتنا <br>    تتحمَّل مسؤولية المحافظة على سريِّة معلومات حسابك وكلمات المرور <br>    تتحمَّل مسؤولية أعمال أي شخص يستخدم معلومات حسابك وكلمات المرور للدخول إلى الموقع <br>    ابلاغنا مباشرة في حالة استخدام حسابك بدون تفويض أو أي اختراق أمني لحسابك في أي وقت <br><br>    مشغِّل الموقع لا يدّعي ملك المحتوى الذي تحمِّله على موقعنا أو تنقلُهُ عبر خدماتنا أو شبكتنا <br><br>    إذا لم تلتزم بتعهداتك في هذه الإتفاقية، أو قمت بحث الآخرين على خرق اتفاقيتهم مع مشغِّل الموقع،  و فإنّ لمشغِّل الموقع الحرية في منعك من استخدام جزء أو كل خدمات الموقع، كذلك لمشغِّل الموقع الحُريّة في منعك من استخدام جزء من أو كل خدمات الموقع لأي سبب أو بدون سبب، كذلك فإنَّ عدم تعاملنا مع أي  خرق من قبلك أو من قبل غيرك لا يعني أننا نتخلّى عن حقنا في "
+  user: المستخدم
+  user_or_group_name: "المستخدم أو إسم المجموعة"
+  user_profile_description_allow_peers: "الموافقة على هذا الخيار يعني أنك تسمح للمستخدمين المشتركين معك بنفس المجموعة أن يشاهدوا ملفك الخاص"
+  user_profile_description_may_pester: |
+      السماح للمشتركين بتشارك المحتوى معك وان يرسلوا لك الدعوات
+  user_profile_description_may_request_contact: "السماح للمشتركين بأن يطلبوا أن يكونوا من ضمن قائمة إتصالك الشخصية"
+  user_profile_description_may_see: "اذا أُختير, معلومات الملف الشخصي التي بالأسفل ستكون مرئية, وإلا ، سيتم اخفاء ملفك الشخصي تماماً."
+  user_profile_description_may_see_contacts: "السماح للمشتركين بمشاهدة قائمة اتصالاتك الشخصية"
+  user_profile_description_may_see_groups: "السماح للمشتركين بمشاهدة ما هي المجموعات التي أنت عضو فيها."
+  username: "اسم المستخدم"
+  users_wall: "{{user}}'s جدار"
+  users_world: "{{user}}'s عالم"
+  version_doesnt_exist: "لا يوجدنسخة {{version}}"
+  version_number: "نسخة رقم {{version}}"
+  versions: النُسخ
+  video: فيديو
+  video_class_description: "أظهر الفيديوالموجود على موقع الكتروني خارجي "
+  video_embed: تضمين
+  video_embed_code_prompt: "تضمين الكود من مصدر فيديو خارجي"
+  video_service_is_not_supported: "غير مدعوم(في الوقت الحالي فقط youtube, google video, blip.tv, and vimeo)"
+  view_all: "أظهر الكل"
+  view_requests: "اظهر الطلبات"
+  view_slideshow: "عرض شرائح"
+  viewed: شوهِد
+  viewer: مشاهد
+  viewer_help: "<b>المشاهد</b> الدخول لهذه الصفحة يجعلها مرئية للجميع,لا أكثر ولا أقل "
+  viewers: المشاهدين
+  visibility: مرئي
+  wall_heading: "جدار الرسائل العامة"
+  wall_post_button: "شارك برسالة جديدة"
+  watch_checkbox: "مراقبة التعديلات"
+  websites: "مواقع إلكترونية"
+  wednesday: الأربعاء
+  welcome_create_group_link: "أنشىء مجموعة جديدة"
+  welcome_create_group_text: "إنشاء مجموعة جديدة ، ودعوة الآخرين للانضمام. المجموعات تسمح لك بالتبادل والتعاون مع سائر الناس."
+  welcome_create_page_link: "أنشىء صفحة جديدة"
+  welcome_create_page_text: "يمكنك إنشاء مناقشات جديدة ،  صفحة ويكي جديدة ، وتحميل الصور والملفات والبدء ب قوائم  المهام ، وغير ذلك الكثير..."
+  welcome_edit_profile_link: "تعديل ملفك الشخصي"
+  welcome_edit_profile_text: "السماح للناس بمعرفة المزيد عنك من خلال تعديل ملفك الشخصي العام أو الخاص"
+  welcome_find_groups_link: "البحث عن المجموعات"
+  welcome_find_groups_text: "تصفح دليل المجموعة من أجل الإنضمام للمجوعات."
+  welcome_find_people_link: "العثور على الناس"
+  welcome_find_people_text: "تصفح دليل المستخدين لتجد معارفك."
+  welcome_hide_link: "إخفاء مرحبا بك"
+  welcome_login_message: |-
+      !>/plugin_assets/riseup/riseup-yellow.gif!
+
+       هذا الموقعم مدعوم بواسطةCrabgrass <a href="http://www.affero.org/oagpl.html">البرمجيات الحرة</a> تطبيق الويب مصمم من أجل المجموعات وتنظيم الشبكات, ومصمم لتلبية احتياجات حركة العدالة العالميالهدف البعيد المدى هو توفير الأدوات التقنية لتسهيل الأنشطة والكونفدرالية ، وشبكات التغيير الاجتماعي الديمقراطي المباشر. [more... -> /crabgrass/about]
+
+        h3. هل أنت جديد هنا?
+
+        [Sign up here -> /account/signup]لتبدأ. نحن في مرحلة مبكرة من البرمجة والتطوير. حيث التعديلات نستوحيها من ملاحظات المستخدمين, تأكد من أن عليك التأكد بأن تعلمنا كيف كنت تستخدم الموقع, ما الذي ترغب في تغييره, ماذا تحب, وما الذي لا تحبه
+  welcome_message: "Crabgrass تمكن منظمات التغيير الاجتماعي من أجل انجاز الامور ، ونشر المبادئ ، والتعاون ، والإتصال. "
+  welcome_show_link: "أظهر مرحبا بك"
+  welcome_title: "مرحبا بك في  {{site_title}}"
+  welcome_upload_icon_link: "تحميل أيقونة  المستخدم "
+  welcome_upload_icon_text: "تحميل صورة لإستخدامها كأيقونة لك.هذه الأيقونة سوف تظهر بجانب كل تعليق سوف تفعله."
+  when_does_feature_expire: "متى تنتهي هذه الميزة؟"
+  width: عرض
+  wiki_body_help: "اختياري. أدخل هنا النص الأولي للصفحة."
+  wiki_is_locked: "هذا الويكي مقفل حالياً بواسطة {{user}}"
+  wiki_lost_text_confirmation: "أي نص غير محفوظ سوف يضيع. هل أنت متأكد؟"
+  wiki_page_description: "أنشىء وثيقة نصية حرة  قابلة للتعديل"
+  wiki_page_display: "صفحة ويكي"
+  wiki_revert_version: "العودة إلى نسخة{{version}}"
+  wiki_section_edit: "حرر هذا القسم"
+  wont_be_able_to_save: "لن تكون قادراً على حفظ هذه الصفحة"
+  work: العمل
+  work_life: "الحياة العملية"
+  you_are_not_member_of_any_group: "لم تعد عضوا في أي مجموعة"
+  you_are_viewing_version: "انت تستعرض النسخة {{version}} by {{user}}"
+  you_have_no_contacts: "لا يوجد أشخاص في قائمة اتصالاتك"
+  you_have_no_groups: "انت لست عضواً في اي مجموعة"
+  you_have_no_peers: "لا يوجد لديك أقران"
+  your_login: "معلومات الدخول"

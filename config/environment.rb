@@ -70,7 +70,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :relationship_observer, :post_observer
+    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based
@@ -99,6 +99,7 @@ Rails::Initializer.run do |config|
   config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
+  config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'
   #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
   #config.gem 'redcloth', :version => '>= 4.0.0'
   #config.frameworks += [ :action_web_service]

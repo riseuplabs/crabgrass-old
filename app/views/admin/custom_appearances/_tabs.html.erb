@@ -1,24 +1,24 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'Masthead'.t
+    t.label I18n.t(:masthead)
     t.show_tab 'masthead_tab'
     t.selected selected_tab?('masthead')
   end
 
   f.tab do |t|
-    t.label 'Browser Icon'.t
+    t.label I18n.t(:favicon)
     t.show_tab 'favicon_tab'
     t.selected selected_tab?('favicon')
   end
 
   f.tab do |t|
-    t.label 'Color Theme'.t
+    t.label I18n.t(:color_theme)
     t.show_tab 'color_theme_tab'
     t.selected selected_tab?('color_theme')
   end
 
   f.tab do |t|
-    t.label 'Advanced'.t
+    t.label I18n.t(:advanced)
     t.show_tab 'advanced_tab'
     t.selected selected_tab?('advanced')
   end

@@ -79,12 +79,12 @@ class Gallery < Page
 #  def check_permissions!(asset, user)
 #    unless user.may?(:view, asset)
 #      raise PermissionDenied.new
-#('The group that owns this page is not allowed to view that image'[:group_not_allowed_to_view_image_error])
+#(I18n.t(:group_not_allowed_to_view_image_error))
 #    end
 #  end
 
   def check_type!(asset)
-    raise ErrorMessage.new('File must be an image to be part of a gallery'[:file_must_be_image_error]) unless asset.is_image?
+    raise ErrorMessage.new(I18n.t(:file_must_be_image_error)) unless asset.is_image?
   end
 
 end

@@ -1,9 +1,9 @@
 <%# @title_box_class = 'tabs' -%>
 <%- @title_box = capture do -%>
-  <h1><%= "My Dashboard"[:my_dashboard] %></h1>
+  <h1><%= I18n.t(:my_dashboard) %></h1>
   <%# Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Recent Activity'[:recent_activity]
+      t.label I18n.t(:recent_activity)
       t.url me_url(:controller => 'dashboard', :action => nil)
       t.selected action?(:index)
     end

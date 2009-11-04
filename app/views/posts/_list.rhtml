@@ -1,7 +1,7 @@
 <div id="posts">
 
   <%- if may_create_posts? and !@show_reply -%>
-    <%= link_to_function "Add Comment"[:add_comment] + ARROW, "Element.show('reply_container'); Element.hide('show_reply_link')", :class => 'small_icon page_discussion_16 p', :id=>'show_reply_link' %>
+    <%= link_to_function I18n.t(:add_comment) + ARROW, "Element.show('reply_container'); Element.hide('show_reply_link')", :class => 'small_icon page_discussion_16 p', :id=>'show_reply_link' %>
   <%- end -%>
 
   <table border="0" cellspacing="0" cellpadding="0" class="posts">

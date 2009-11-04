@@ -1,7 +1,7 @@
 <br/><br/>
 <blockquote>
-  <h1><%= "Could not log in"[:login_failed] %></h1>
-  <%= :csrf_error_message.t %>
-  <h3><%= link_to "Try again"[:try_again], referer %></h3>
+  <h1><%= I18n.t(:login_failed) %></h1>
+  <%= I18n.t(:csrf_error_message) %>
+  <h3><%= link_to I18n.t(:try_again), referer %></h3>
 </blockquote>
 

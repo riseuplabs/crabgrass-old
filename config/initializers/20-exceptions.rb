@@ -22,7 +22,7 @@ class ErrorNotFound < ErrorMessage
     @thing = thing
   end
   def to_s
-    "{thing} not found"[:thing_not_found, @thing].capitalize
+    I18n.t(:thing_not_found, :thing => @thing).capitalize
   end
   def status
     :not_found

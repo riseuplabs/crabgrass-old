@@ -1,5 +1,5 @@
 <% form_remote_tag(*options_for_edit_tag_form) do -%>
-  <h2 class="first"><%= 'Current Tags'[:current_tags] %></h2>
+  <h2 class="first"><%= I18n.t(:current_tags) %></h2>
 
   <% if( @page.tags.any? ) %>
     <div class="edit_tags selfclear">
@@ -8,19 +8,19 @@
     <% end %>
     </div>
   <% else %>
-    <p>(<%= "no tags"[:no_tags] %>)</p>
+    <p>(<%= I18n.t(:no_tags) %>)</p>
   <% end %>
 
-  <h2><%= 'Add Tags'[:add_tags] %></h2>
-  <%= "Add one or more tags, separated by commas"[:add_one_or_more_tags]%>:
+  <h2><%= I18n.t(:add_tags) %></h2>
+  <%= I18n.t(:add_one_or_more_tags)%>:
   <p>
     <%= text_field_tag( 'add', '', { :size => 20, :tabindex => 1 } ) %>
-    <%= submit_tag :add_button.t, :name => 'add' %>
+    <%= submit_tag I18n.t(:add_button), :name => 'add' %>
   </p>
 
   <div class='buttons'>
     <%= spinner('tag') %>
-    <%= submit_tag :close_button.t, :name => 'close' %>
+    <%= submit_tag I18n.t(:close_button), :name => 'close' %>
     <%# close_modal_button %>
   </div>
 

@@ -1,8 +1,10 @@
 <%# this is a partial of search controls to be used by any search view %>
 <% 
-  if @user
-    users ||= @user.friends
-    groups ||= @user.groups
+  if @user and @profile
+    users ||= @user.friends if @profile.may_see_contacts?
+    groups ||= @user.groups.visible_by(current_user) if @profile.may_see_groups?
+    users ||= []
+    groups ||= []
     users.unshift @user unless users.include? @user
   else
     users ||= nil; groups ||= nil 
@@ -30,12 +32,12 @@
 <% end -%>
 
 <% if users.any? -%>
-<%= select_tag 'search[person]', "<option value=''>#{'all people'.t}</option>"+
+<%= select_tag 'search[person]', "<option value=''>#{I18n.t(:all_people)}</option>"+
 options_from_collection_for_select(users, "id", "name", @path.int_for('person')) %>
 <% end -%>
 
 <% if groups -%>
-<%= select_tag 'search[group]', "<option value=''>#{'all groups'.t}</option>"+
+<%= select_tag 'search[group]', "<option value=''>#{I18n.t(:all_groups)}</option>"+
 options_from_collection_for_select(groups, "id", "name", @path.int_for('group')) %>
 <% end -%>
 
@@ -43,7 +45,7 @@ options_from_collection_for_select(groups, "id", "name", @path.int_for('group'))
 <%# select_month(@path.int_for('month'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all months</option>') %>
 <%# select_year(@path.int_for('year'), :prefix => 'search', :include_blank => true).sub('value=""></option>', 'value="">all years</option>') %>
 
-<%= select_tag 'search[page_state]', "<option value=''>#{'all states'.t}</option>"+
+<%= select_tag 'search[page_state]', "<option value=''>#{I18n.t(:all_states)}</option>"+
 options_for_page_states(@path) %>
 <!--
 <label><%= check_box_tag 'search[pending]', 'true', @path.keyword?('pending') %> pending</label>
@@ -53,7 +55,7 @@ options_for_page_states(@path) %>
 
 <span style='white-space: nowrap'>
 <%= text_field_tag 'search[text]', @path.search_text, :size => '20' %>
-<%= submit_tag 'Search'[:search] %>
+<%= submit_tag I18n.t(:search) %>
 </span>
 
 <script type="text/javascript">

@@ -2,14 +2,14 @@
   <%= gallery_navigation :show %>
 <% end -%>
 
-<h2><%="Upload Images"[:upload_images_link]%> |     <%= link_to_remote('Upload a ZIP-File'[:upload_a_zip_file_link], :url => page_url(@page, :action => 'upload_zip'))%></h2>
+<h2><%=I18n.t(:upload_images_link)%> |     <%= link_to_remote(I18n.t(:upload_a_zip_file_link), :url => page_url(@page, :action => 'upload_zip'))%></h2>
 <% form_tag page_url(@page, :action => 'upload'), :method => :post, :multipart => true do -%>
   <table>
     <%= render :partial => 'upload' -%>
   </table>
   <%= spinner('upload') %>
-  <%= submit_tag "upload".t, :onClick => "$('upload_spinner').show();" %>
-  <%= button_to_function "cancel".t, "new Effect.SlideUp($('target_for_upload'));" %>
+  <%= submit_tag I18n.t(:upload), :onClick => "$('upload_spinner').show();" %>
+  <%= button_to_function I18n.t(:cancel), "new Effect.SlideUp($('target_for_upload'));" %>
 <% end -%>
 
 <%= javascript_tag "if($('target_for_upload')) $('target_for_upload').show();" %>

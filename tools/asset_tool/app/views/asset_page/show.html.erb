@@ -18,16 +18,16 @@
     </div>
 
     <div class='right'>
-      <h2 class='section'><%= 'Information'.t %></h2>
+      <h2 class='section'><%= I18n.t(:information) %></h2>
       <%= render :partial => 'information' %>
 
       <%= render :partial => 'galleries' %>
 
       <br/>
-      <h2 class='section'><%= 'History'.t %></h2>
+      <h2 class='section'><%= I18n.t(:history) %></h2>
       <%= render :partial => 'version_history' %>
       <br/>
-      <h2 class='section'><%= 'Other Formats'.t %></h2>
+      <h2 class='section'><%= I18n.t(:other_formats) %></h2>
       <%= render :partial => 'thumbnails' %>
     </div> <!-- end right -->
 

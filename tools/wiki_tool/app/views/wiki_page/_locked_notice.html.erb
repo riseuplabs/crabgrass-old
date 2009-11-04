@@ -1,5 +1,5 @@
 <% if @wiki.sections_open_for(current_user).blank? -%>
-<%= "locked by :user"[:locked_by_user] % { :user => link_to_user(@wiki.locker_of(:document)) } %>
+<%= I18n.t(:locked_by_user) % { :user => link_to_user(@wiki.locker_of(:document)) } %>
 <% else %>
-<%= "Wiki locked - a section is being edited. You can edit other sections."[:locked_wiki_because_locked_section] %>
+<%= I18n.t(:locked_wiki_because_locked_section) %>
 <%- end -%>

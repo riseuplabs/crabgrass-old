@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Admin : <%= controller.controller_class_name.sub("Controller","") %> : <%= controller.action_name %></title>
+  <%= stylesheet_link_tag('translator', :plugin => 'translator') %>
+</head>
+<body>
+
+<div id='container'>
+<div id='header'>
+  <div class='toplink'><%= link_to "Logout" + ' '  + current_user.display_name, :controller => '/account', :action => 'logout' %> </div>
+  <div class='toplink'><%= link_to "Exit Translator", :controller => '/me' %> </div>
+  <h1><%= link_to 'Crabgrass Translation Panel', '/translator' %></h1>
+<%= link_to 'Languages', languages_path %>
+<%= link_to 'Keys', keys_path %>
+</div>
+<div id='content'>
+  <div id="message"><%= display_messages %></div>
+  <%= yield  %>
+</div>
+
+</body>
+</html>
+

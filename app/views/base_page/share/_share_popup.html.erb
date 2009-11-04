@@ -2,6 +2,6 @@
 % form_remote_tag(:url => form_url, :loading => show_spinner('popup'), :html => {:id => 'share_page_form'}) do
   <%= render :partial => 'base_page/share/share_form' %>
   <div class='buttons'>
-    <%= spinner 'popup' %><%= submit_tag "Cancel"[:cancel_button], :name => 'cancel' %><%= submit_tag "Share"[:share_button], :name => 'share' %>
+    <%= spinner 'popup' %><%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %><%= submit_tag I18n.t(:share_button), :name => 'share' %>
   </div>
 % end

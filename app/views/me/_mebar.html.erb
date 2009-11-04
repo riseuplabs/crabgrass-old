@@ -18,7 +18,7 @@
   <% if inline_create_page %>
     <% active = show_active && controller?(:pages) && action?(:create) %>
     <li class='small_icon plus_16'><%= link_to_active(
-      "Create Page"[:contribute_content_link],
+      I18n.t(:contribute_content_link),
       {:controller => '/pages', :action => 'create'},
       active
     ) %></li>
@@ -26,35 +26,35 @@
 
   <% active = show_active && controller?('me/dashboard') %>
   <li class='small_icon house_16'><%= link_to_active(
-    'Dashboard'[:me_dashboard_link],
+    I18n.t(:me_dashboard_link),
     '/me/dashboard',
     active
   ) %></li>
 
   <% active = show_active && controller?('me/inbox') %>
   <li id="<%= 'inbox_line' unless skip_ids %>" class="small_icon inbox_16"><%= link_to_active(
-     'Inbox'[:me_inbox_link],
+     I18n.t(:me_inbox_link),
     '/me/inbox',
     active
   ) %></li>
 
   <% active = show_active && controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
   <li class="small_icon page_message_16"><%= link_to_active(
-    'Messages'[:messages],
+    I18n.t(:messages),
     my_messages_path,
     active
   ) %></li>
 
   <% active = show_active && controller?('me/tasks') %>
   <li class="small_icon page_tasks_16"><%= link_to_active(
-    'Tasks'[:me_tasks_link],
+    I18n.t(:me_tasks_link),
     '/me/tasks/pending',
     active
   ) %></li>
 
   <% active = show_active && controller?('me/requests') %>
   <li id="<%= 'requests_line' unless skip_ids %>" class='small_icon info_16'><%= link_to_active(
-    'Requests'[:requests],
+    I18n.t(:requests),
     {:controller => '/me/requests', :action => 'to_me'},
     active
   ) %></li>
@@ -84,14 +84,14 @@
 
     <% active = show_active && controller?('me/search') %>
     <li class="small_icon magnifier_16"><%= link_to_active(
-      'Search'[:me_search_link],
+      I18n.t(:me_search_link),
       '/me/search',
       active
     ) %></li>
 
     <% active = show_active && controller?('me/trash') %>
     <li id="<%='trash_line' unless skip_ids %>" class="small_icon trash_16"><%= link_to_active(
-      'Trash'[:trash],
+      I18n.t(:trash),
       {:controller => '/me/trash'},
       active
     ) %></li>

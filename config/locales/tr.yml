@@ -1,0 +1,760 @@
+tr:
+  about_me: Hakkımda
+  accept_usage_agreement: "Kullanım anlaşmasını kabul ediyorum"
+  access: Erişim
+  action: uygulama
+  activate_js_to_rearrange_photos: "Fotoğrafları düzenlemede Sürükle & Bırak'ı kullanmak için JavaScript'i aktif hale getirin!"
+  activity_contact_created: "{{user}} {{other_user}}'ı arkadaş olarak ekledi"
+  activity_group_created: "{{user}}, {{group_type}} {{group}} grubunu oluşturdu"
+  activity_group_destroyed: "{{group}}, {{user}} tarafından kaldırıldı "
+  activity_user_destroyed: "{{user}} çıkış yaptı"
+  activity_user_joined_group: "{{user}}, {{group_type}} {{group}} grubuna katıldı"
+  activity_user_left_group: "{{user}} {{group_type}} {{group}} grubundana ayrıldı"
+  activity_user_status: "{{user}} şimdi {{status}}"
+  activity_wall_message: "{{author}} {{user}} kullanıcısına yazdı: {{message}}"
+  add_another_file: "Başka dosya ekle"
+  add_button: Ekle
+  add_comment: "Yorum ekle"
+  add_contact_info: "Arkadaş listenizdeki kullanıcılar sizin bağlantı durumunuzu ve profil bilgilerinize ulaşabilir. Arkadaş listesine dahil olduğunuz kullanıcılar, sizin arkadaş listenize eklenecektir."
+  add_description: "Açıklama ekle"
+  add_email_address: "E-posta adresinizi ekleyin"
+  add_encryption_key: "Şifreleme Anahtarı Ekle"
+  add_existing_image: "Fotoğraf ekle"
+  add_im_address: "IM Adresi ekle"
+  add_location: "Konum Ekle"
+  add_new_attachment: "Yeni Dosya Ekle"
+  add_one_or_more_tags: "Virgüllerle ayrılmış bir veya daha fazla etiket ekle"
+  add_phone_number: "Telefon numara ekle"
+  add_photo_to_gallery: "Galeriye resim ekle"
+  add_star_link: "Yıldız ekle ({{star_count}})"
+  add_tags: "Etiket ekle"
+  add_websites: "Web Sitesi Ekle"
+  additional_page_access: "Ek erişim"
+  admin: Yönetici
+  administration: Yönetim
+  alert_error: Hata
+  alert_field_errors: "Bu alanlarda problemler var"
+  alert_not_saved: "Değişiklikler kaydedilemedi"
+  alert_permission_denied: "İzin Reddedildi"
+  alert_saved: "Değişiklikler kaydedildi"
+  all_content: "Tüm icerik"
+  all_groups: "Tüm Gruplar"
+  all_page_types: "tüm sayfa türleri"
+  all_people: herkez
+  all_people_link: "bütün kişiler"
+  all_states: "bütün durumlar"
+  allow_membership_requests: "Üyelik Taleplerine İzin Ver"
+  already_contacts_info: "Bu kullanıcıyla zaten arkadaşsınız."
+  announcement_page_description: "Duyuru ekle."
+  announcement_page_display: Duyuru
+  announcements: Duyurular
+  approval_vote: "onay oyu"
+  approval_vote_class_description: "Her olasılığı onayla ya da geri çevir"
+  approve: onay
+  approve_button: Onayla
+  approve_contact_info: "Bu kullancı tarafından size gönderilmiş bir arkadaşlık talebi zaten var. Onaylıyor musunuz?"
+  approve_or_reject_link: "bu talebi onayla veya reddet"
+  approved: onaylandı
+  archive: Arşiv
+  archive_filter_created_link: "Veri Yaratıldı"
+  archive_filter_updated_link: "Son Güncelleme Tarihi"
+  archive_headline: Arşiv
+  article_page_description: "Bir blog gönderisi veya haber yazısı oluştur."
+  article_page_display: Yazı
+  asset_page_description: "Görüntü, belge, hesap çizelgesi, sunum veya herhangi bir dosya yükle."
+  asset_page_display: Dosya
+  at_least_one_recipient_is_required: "en az bir alıcı gerekli"
+  attachments: Eklentiler
+  away: Dışarıda
+  back_button: Geri
+  back_to_group: "geri dön {{group_name}}"
+  basic_settings: "Temel Ayarlar"
+  break_lock: "Kilitlemeyi Kaldır"
+  break_lock_button: "Kilitlemeyi Kaldır"
+  cancel_button: "Vazgeç düğmesi"
+  cancel_link: "iptal et"
+  caption: Başlık
+  category: Kategori
+  check_all: "Hepsini Kontrol Et"
+  close_button: Kapat
+  collection: koleksiyon
+  collection_class_description: "Diğer sayfaları tutan özel sayfalar."
+  committee: Komite
+  committee_publicly_visible: "Komiteleri Herkese Görünür Yap"
+  committee_publicly_visible_description: "Komiteler {{domain}}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
+  committees: Komiteler
+  comparing_changes_header: "{{user}} tarafından {{when}} tarihinde {{old_version}} sürümünden {{new_version}} sürümüne yapılan değişiklikleri kıyaslıyor"
+  confirm_new_password: "Yeni Şifrenizi Doğrulayın"
+  confirmation: "Emin misiniz?"
+  contact: Arkadaş
+  contact_request_message_label: "{{user}} kullanıcısına neden onun arkadaşı olmak istediğinizi söyleyin."
+  contacts: Aarkadaşlar
+  contribute_content_link: "Sayda oluştur"
+  contribute_group_content_link: "{{group}} Grubuna Sayfa Ekle"
+  contributed: "Katkıda bulundu"
+  coordinating_council: "Koordinasyon Konseyi"
+  coordinator: Koordinatör
+  coordinator_help: "<b>Koordinatör</b> girişi bu sayfaya sınırsız ulaşım sağlamaktadır (silme ve paylaşma fonksiyonları dahil)."
+  coordinators: Koordinatörler
+  council: Konsey
+  council_help: "Eğer bu grubun bir koordinasyon konseyi varsa, yalnızca bu konseyin üyesi olan bir kullanıcı grubu yönetebilir. Aksi halde, grubun herhangi bir üyesi yönetici olabilir. "
+  councils: Konseyler
+  create_a_new_thing: "Yeni bir {{thing}} oluştur"
+  create_button: Oluştur
+  create_committee: "komite oluştur"
+  create_group_link: "Yeni grup ekle"
+  create_page: "Sayfa Oluştur"
+  create_page_button: "{{page_class}} Oluştur "
+  create_page_data: "{{page_class}} Verisi"
+  create_page_information: "{{page_class}} Bilgi"
+  create_task_list: "yeni görev listesi oluştur"
+  created: Oluşturuldu
+  created_by: "Tarafından oluşturuldu"
+  created_on: Oluşturuldu
+  created_when_by: "{{user}} tarafından {{when}} da oluşturuldu"
+  csrf_error_message: "Giriş başvurunuz, siteyi çökertmeye yönelik bir deneme görünümündedir. Endişelenmeyin: bu hata genellikle masum kullanıcıların başvurularında bile sık sık ortaya çıkabilmektedir. Bu tip aşırı önlemler sizin güvenliğiniz içindir. Bu aşamada yapmanız gereken giriş yapmadan önce sayfayı yeniden yüklemenizdir. Tekrar denemek için şu bağlantıyı takip edebilirsiniz:"
+  current_attachments: "Mevcut İletiler"
+  current_featured_content: "Hâlen Gösterilen İçerik"
+  current_tags: "En Son Etiketler"
+  current_video_sources: "Desteklenenler: youtube, blip.tv, google video, vimeo"
+  data_for_page_missing: "Bu sayfanın verileri eksik."
+  date: tarih
+  date_centuries: Yüzyıllar
+  date_days: Günler
+  date_hours: Saatler
+  date_minutes: Dakikalar
+  date_months: aylar
+  date_older: "Daha eski"
+  date_seconds: Sanyeler
+  date_this_week: "Geçen Hafta"
+  date_today: Bügün
+  date_weeks: Haftalar
+  date_years: Seneler
+  date_yesterday: Dün
+  delete: Sil
+  delete_page_link: "{{page_class}} 'ı Sil"
+  delete_page_via_shred: "Derhal Yok Et"
+  delete_page_via_shred_info: "Bu sayfayı kalıcı olarak yok edeceksiniz. Bu eylem geri alınamaz."
+  delete_page_via_trash: "Çöp Sepetine Taşı"
+  delete_page_via_trash_info: "Sayfa çöp sepetine taşınıyor. Daha sonra sayfayı oradan geri alabilirsiniz."
+  delete_post: "Gonderiyi sil"
+  delete_this_version: "bu versiyonu sil"
+  delete_version_confirm: "Bu versiyonu silmek istediğinizden emin misiniz?"
+  description: Tanım
+  descriptions: Açıklamalar
+  descriptive_name_for_display: "Görüntüleme için yeni bir tanımlayıcı isim kullanıldı"
+  destroy: "yok et"
+  destroy_confirmation: "Bunu silmek istediğinizden emin misiniz? Bu eylem geri alınamaz."
+  destroy_group_link: "{{group_type}} Yok Et"
+  details_link: Ayrıntılar
+  diff_link: "değişiklikleri incele"
+  directory_of_groups: "Grupler Dizini"
+  directory_of_networks: "Ağ Rehberi"
+  directory_of_people: "Kişiler Rehberi"
+  discuss_request_link: "bu talebi {{person_or_group}} ile tartış"
+  discussion_page_description: "Gruplarla veya diğer kullanıcılarla bir konu hakkında tartış."
+  discussion_page_display: "Grup Tartışması"
+  discussions: Tartışmalar
+  display_name: "İsmi göster"
+  dont_have_permission_to_create_committees: "{{group}} altında komite oluşturma izniniz yok."
+  dont_understand_group_type: "{{type}} grup tipi anlaşılmadı"
+  download: İndir
+  download_gallery: "İndirilenler Galerisi"
+  drag_and_drop_to_rearrange_photos: "Görüntüleri düzenlemek icin sürükle ve bırak"
+  edit: Düzenleme
+  edit_attachments: "Eklentileri Düzenle"
+  edit_attachments_link: Düzenle
+  edit_featured_content: "gösterilen içeriği değiştir"
+  edit_featured_content_for_group: "{{group_name}} Grubu için Gösterilen İçeriği Düzenle"
+  edit_gallery: "Galeriyi Düzenle"
+  edit_profile_link: "Profili Düzenle"
+  edit_settings: "Ayarları Değiştir"
+  edit_tags: "Etiketleri Düzenle"
+  edit_tags_link: Düzenle
+  edit_title: "başlığı düzenle"
+  edit_underlined_e: <u>D</u>üzenle
+  email: E-posta
+  email_addresses: "E-posta Adresleri"
+  email_link_expires: "Bu bağlantı {{days}} gün içinde geçerliliğini yitirecektir."
+  email_notice_access: "Bu sayfaya  buradan erişebilirsiniz:"
+  email_notice_hello: "Merhaba, {{from}} size bir web sayfası gönderdi."
+  email_notice_hello_with_message: "Merhaba, {{from}} size bu mesajın içinde bir web sayfası gönderdi: {{message}}"
+  email_notice_subject: "Bu sayfaya bak: \"{{title}}\""
+  empty_results: Yok
+  error_saving_new_order: "Yeni düzenin kaydedilmesinde hata!"
+  expired_featured_content: "Süresi Geçmiş Gösterilen İçerik"
+  external_video_page_description: "Harici bir web sitesindeki videoyu göster."
+  external_video_page_display: "Harici Video"
+  fax: Faks
+  feature_button: Göster!
+  featured_content: "Gösterilen içerik"
+  featured_content_header: "Gösterilen İcerik"
+  file: Dosya
+  file_class_description: "Yüklenmiş dosya."
+  file_must_be_image_error: "Galeriye eklenmesi için dosyanın bir görüntü olması gerekir."
+  file_size: "Dosya boyütü"
+  file_version_deleted: "dosya versiyonu silindi"
+  files: Dosyalar
+  first_name: "İlk isim"
+  folder_class_description: "Diğer sayfaları organize etmek için bir klasör oluşturun"
+  folder_display: Klasör
+  folder_page_description: "Dosya koleksiyonu."
+  folder_page_display: Dosya
+  forgot_password_link: "Şifremi unuttum"
+  forgot_password_mail_expiry: "Bu bağlantı 24 saat boyunca geçerli olacaktır. Eğer şifrenizi daha sonra sıfırlamanız gerekiyorsa unutulmuş şifre sayfasını tekrar ziyaret edip yeni bir link istemelisiniz."
+  forgot_password_mail_greeting: "{{user}}, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
+  forgot_password_text: "Kullanıcı girişinde kullandığınız şifreyi unuttuysanız yeni bir şifre oluşturmanızı sağlayacak bir bağlantıyı email olarak size gönderiyoruz."
+  forgotten_email_address: "Hesabınızı açarken bize hangi e-posta adresinizi vermiştiniz?"
+  format: Biçim
+  formatting_reference_link: "Düzenleme Yardımı"
+  founded: Kuruldu
+  friday: Cuma
+  friends: Arkadaşlar
+  from: kimden
+  full: Tümü
+  fullname: "Tam isim"
+  galleries: Galeriler
+  gallery_class_description: "Resimlerden oluşan koleksiyon"
+  gallery_description: "Çoklu resimler yükleyin ya da varolan resimleri tek bir dizi olarak organize edin"
+  gallery_display: Galeri
+  general_info: "Genel Bilgiler"
+  grant_access: "Giriş İzni Ver"
+  group: Grup
+  group_administration_not_allowed: "Bu grubu yönetme yetkiniz yok."
+  group_directory: "Grup Dizini"
+  group_directory_link: "Grup Rehberi"
+  group_discussion: tartışma
+  group_discussion_class_description: "Belirli bir konu üzerine grup tartışması."
+  group_has_no_public_profile: "Bu grubun profili herkes tarafından görüntülenemez"
+  group_home_headline: "{{group_type}} Anasayfa"
+  group_home_welcome: Hoşgeldiniz
+  group_information: "{{group_type}} Bilgiler"
+  group_invite_email: |-
+      {{from_user}} sizi "{{group}}" grubuna katılmaya davet etti.
+
+      Bu gruba katılmak istiyorsanız, buraya tıklayın:
+
+        {{accept_invite_link}}
+  group_invite_subject: "\"{{group}}\" grubuna katılmak için davet"
+  group_join_chat: "Konuşmaya Katıl"
+  group_language: "Bu {{group}} ana dili"
+  group_members_publicly_visible: "Üyeleri Herkes İçin Görünür Yap"
+  group_members_publicly_visible_description: "Üyeler {{domain}}/yourgroupname üye olmayanlar tarafından da görüntülenebilir. Ayrıca, grubun ismi her üyenin profil sayfasında listelenecektir. ({{domain}}/username)"
+  group_not_allowed_to_view_image_error: "Bu sayfanın ait olduğu gruba bu görüntüyü gösterme izni verilmiyor."
+  group_privacy_settings: "{{group}} Güvenlik Ayarları"
+  group_profile_description_may_request_membership: "İnsanların {{group_type}} grubuna üyelik talebi göndermesine izin ver."
+  group_profile_description_may_see: "İşaretlenmişse, aşağıdaki profil bilgisi görünür olacaktır. Değilse, {{group_type}} 'ın profili tamamen gizli olacaktır."
+  group_profile_description_may_see_committees: "Kişilere {{group_type}} türündeki gruplarda hangi komiteler olduğunu görme izni ver."
+  group_profile_description_may_see_groups: "Kişilere {{group_type}} türündeki grupları görme izni ver."
+  group_profile_description_may_see_members: "{{group_type}} 'ın üyelik listesinin görünür olmasına izin ver."
+  group_profile_description_may_see_networks: "{{group_type}} 'ın hangi ağlarda olduğunun görünür olmasına izin ver."
+  group_publicly_visible: "{{group}}ları Herkes İçin Görünür Yap"
+  group_publicly_visible_description: "Grup genel rehberde görünmektedir ve grup <i>profile</i>  {{domain}}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir."
+  group_successfully_created: "Grup başarıyla oluşturuldu."
+  group_successfully_updated: "Grup başarıyla güncellendi."
+  group_summary: "{{group}} ile ilgili kısa bilgi."
+  group_wiki: "Vikipedi Grubu"
+  groups: Gruplar
+  height: Boy
+  highest_contributors: "En Çok Katkıda Bulunanlar"
+  history: Geçmiş
+  home: Anasayfa
+  icon: Simge
+  im_addresses: "IM Adresleri"
+  image_count: "Fotoğraf {{number}} of {{count}}"
+  image_count_total: "{{count}} Fotoğraflar"
+  image_title: "Görüntü başlığı: {{title}}"
+  inbox_description: "Aktif olarak katıldığım ya da değişikliklerini takip ettiğim sayfalar için gelen kutusu"
+  include_full_checkbox: "tam görüntüye bağlantıyı dahil et"
+  incoming: Gelen
+  information: Bilgi
+  insert_image_heading: "Görüntü Ekle"
+  insert_image_instructions: "Vikipedi metninin içine eklemek için görüntüye tıklayın."
+  invalid_email: "Geçersiz E-mail"
+  invalid_email_text: "Verdiğiniz email adresi geçersiz."
+  invalid_token: "Geçersiz Token"
+  invalid_token_text: "Belirttiğiniz şifre sıfırlama bağlantısı geçersiz. Daha önce kullanılmış veya süresi geçmiş olabilir."
+  invite_accept_headline: "\"{{group_name}}\" grubuna katılma davetini kabul et"
+  invite_accept_info: "Bu web sitesinde bir kullanıcı hesabınız var mı? Daveti kabul etmek için aşağıdaki linklerden birine tıklayın."
+  invite_accept_via_existing_account: "Zaten bir kullanıcı hesabım var"
+  invite_accept_via_register: "Yeni bir kullanıcı hesabı açmam gerek"
+  invite_info: "{{group_type}} grubuna davet etmek istediğiniz kişilerin email adreslerini ya da kullanıcı girişlerini listeler. "
+  invite_not_found: "Davet bulunamadı"
+  join_chat: "sohbete katıl"
+  join_group_link: "Katıl {{group_type}}"
+  join_group_success: "{{group_name}} grubuna katıldınız"
+  join_request_info: "Başvurunuz kabul edilene kadar bu grubun üyesi olamazsınız. Başvurunuzun durumunu \"{{my_requests_url}}\" bölümünü ziyaret ederek görüntüleyebilirsiniz."
+  joins_the_chatroom: "sohbet odasına bağlanır"
+  language: Dil
+  large: büyük
+  last_change: "Son Değişiklik"
+  last_name: "Soy ad"
+  leave_channel: "kanaldan ayrıl"
+  leave_group_link: "{{group_type}} grubundan ayrıl"
+  left_the_chatroom: "Sohbet odasından ayrıldı"
+  link_name: "Bağlantı Adı"
+  link_name_description: "Bu grup, internet linki ve URL'lerde bu isimle işaret edilecektir. İsim yalnızca harfler ve rakamlardan oluşabilir, boşluk bırakılamaz."
+  location: Konum
+  location_address: adres
+  location_city: Şehir
+  location_country: ülke
+  location_postal_code: "posta kodu"
+  location_state: eyalet/il
+  locations: Konumlar
+  locked_by_user: "{{user}} tarafından kilitlendi"
+  locking_error: "Kilitleme hatası. Verileriniz kaydedilemedi, sizden önce başka biri değişiklikleri kaydetti."
+  login: "Oturum aç"
+  login_button: Giriş
+  login_failed: "Giriş Başarısız"
+  login_failure_reason: "Kullanıcı adı veya şifre yanlış."
+  login_name: "Kullanıcı adı"
+  login_password: Şifre
+  login_required: "Kullancı girişi gerekli"
+  login_required_description: "Bunu yapmak için lütfen kullanıcı girişi yapın."
+  logout: "Oturumu kapat"
+  logout_success: "Güle güle"
+  logout_success_message: "Oturumunuz kapatıldı."
+  make_album_cover: "bu görüntüyü albüm kapağı yap"
+  mark_pages_as_featured_content_for_group: "Burada sayfaları bu grubun gösterilen içeriği olarak işaretleyebilirsiniz."
+  me_dashboard_link: Pano
+  me_inbox_link: "Gelen kutusu"
+  me_search_description: "Erişiminiz olan bütün sayfalarda arat"
+  me_search_link: Ara
+  me_tasks_link: Görevler
+  media_all: Medya
+  media_alls: Medya
+  media_audio: "Ses kaydı"
+  media_audios: "Ses Kayıtları"
+  media_document: Belge
+  media_documents: Belgeler
+  media_for_group: "{{media_type}} {{group}} 'ın içinde"
+  media_image: Görüntü
+  media_images: Görüntüler
+  media_video: Video
+  media_videos: Videolar
+  media_without_group: "Hepsi {{media_type}}"
+  medium: orta
+  member_groups_of_network: "Üye Gruplar"
+  members: Üyeler
+  membership: Üyelik
+  menu_chat: Sohbet
+  menu_groups: Gruplar
+  menu_home: Anasayfa
+  menu_link_account: Hesap
+  menu_link_logout: Çıkış
+  menu_me: Ben
+  menu_networks: Ağlar
+  menu_people: Kişiler
+  message: Mesaj
+  message_must_not_be_empty: "mesaj boş olmamalı"
+  message_page_description: "Bireysel alıcılara kişisel mesaj gönder."
+  message_page_display: "Kişisel Mesaj"
+  middle_name: Orta
+  mobile: Mobil
+  monday: pazartesi
+  month_short_april: Nis
+  month_short_august: Auğ
+  month_short_december: Ara
+  month_short_february: Şub
+  month_short_january: Oca
+  month_short_july: Tem
+  month_short_june: Haz
+  month_short_march: Mar
+  month_short_may: May
+  month_short_november: Kas
+  month_short_october: Ekim
+  month_short_september: Eyl
+  more_information: "Daha Fazla Bilgi"
+  most_active: "En Çok Etkin"
+  most_viewed: "En Çok Görüntülenen "
+  move_button: Taşı
+  move_image_left: "Görüntüyü sola taşı"
+  move_image_right: "Görüntüyü sağa taşı"
+  move_page_link: "{{page_class}} 'ı taşı"
+  move_page_to_different_group: "Bu sayfayı başka bir gruba taşı"
+  move_this_page: "Bu Sayfayı Taşı"
+  my_completed_tasks_link: Tamamlandı
+  my_contacts: Arkadaşlarım
+  my_contacts_link: Arkadaşlarım
+  my_dashboard: Panom
+  my_groups: Gruplarım
+  my_groups_link: Gruplarım
+  my_pages: Sayfalarım
+  my_peers: Eşlerim
+  my_peers_description: "Ortak bir grubu paylaştığım kullanıcılar"
+  my_peers_explain: "Ortak bir grubu paylaştığım kullanıcılar"
+  my_peers_link: eşlerim
+  my_pending_tasks_link: Bekliyor
+  my_requests_headline: İsteklerim
+  my_settings: "{{user}} için ayarlar"
+  my_status_heading: "Mevcut Durum"
+  my_tasks: Görevler
+  my_tasks_description: "Erişimim olan görev listeleri"
+  my_tasks_headline: Görevlerim
+  my_world_heading: Dünyam
+  name: Ad
+  network: Ağ
+  network_invite_info: "Bu ağa katılmasını istediğiniz grupların isimlerini girin."
+  networks: Ağlar
+  new_council: "{{group_name}} grubu için yeni konsey"
+  new_group: "Yenı grup"
+  new_network: "Yeni ağ"
+  new_password: "Yenı şifre"
+  new_people: "Yenı kişiler"
+  new_people_link: "Yeni kişiler"
+  next_change: "Sonraki Değişiklik"
+  no_change: "Değişiklik Yok"
+  no_committees: "komite yok"
+  no_contacts_msg: "Arkadaşınız yok."
+  no_group_named: "<b>{{name}}</b> isimli bir grup yok."
+  no_images_in_gallery: "Galeride görüntü yok"
+  no_members: "(üye yok)"
+  no_peers_msg: "Şu anda eşiniz yok."
+  no_public_profiles: "Henüz açık profiliniz yok..."
+  no_search_results: "Arama sonucu yok"
+  no_tags: "etiket yok"
+  no_title_given: "(başlık yok)"
+  none: Hiçbiri
+  not_featured_content: "Henüz Gösterilmiş İçerik Değil"
+  not_set: ayarlanmadı
+  notify_contribution: "v<b>Prior Contribution:</b> kişileri bu sayfaya <b>katkıda bulunanlar</b> konusunda bilgilendirin."
+  notify_current_access: "<b>Geçerli Erişim:</b> bu sayfaya erişimi olan insan veya gruplara haber ver."
+  notify_new_access: "<b>Yeni Erişim:</b> bu sayfayı yeni kişilerle veya gruplarla paylaş ve onlara haber ver."
+  notify_page_link: "Bilgilendirme Gönder"
+  only_last_menber_can_delete_group: "Bir grubu sadece son üyeyseniz silebilirsiniz"
+  only_me: "Sadece ben"
+  options: Seçenekler
+  or_image_url: "ya da görüntünün linki"
+  order_changed: "Sıralama değişti."
+  organization: organizasyon
+  organizational_role: "kurumsal görev"
+  other: Diğer
+  other_formats: "Diğer Formatlar"
+  outgoing: Giden
+  page: Sayfa
+  page_added_to_group: "Bu sayfa şu gruba eklenecek: {{group_type}} {{group_name}}."
+  page_create_owner: "Sayfa Sahibi"
+  page_details: "Sayfa Ayrıntıları"
+  page_details_link: "{{page_class}} Detayları"
+  page_group_collection: Koleksiyonlar
+  page_group_discussion: Tartışmalar
+  page_group_event: Etkinlikler
+  page_group_media: Multimedya
+  page_group_media_audio: Ses
+  page_group_media_document: Belgeler
+  page_group_media_image: Görüntüler
+  page_group_media_video: Videolar
+  page_group_planning: "Araçları Ayarlama"
+  page_group_task: Görevler
+  page_group_text: "Metin ve Tartışmalar"
+  page_group_vote: "Anketler ve oylar"
+  page_is_not_static: "Sayfa sabit değil"
+  page_list: "Sayfa listesi"
+  page_list_heading_created: oluşturuldu
+  page_list_heading_created_by: oluşturan
+  page_list_heading_last_updated: "en son güncelleme"
+  page_list_heading_owner: sahip
+  page_list_heading_posts: bildiriler
+  page_list_heading_stars: yıldızlar
+  page_list_heading_title: başlık
+  page_list_heading_updated: güncellendi
+  page_list_heading_updated_by: güncelleyen
+  page_locked_header: "Sayfa Kilitli"
+  page_not_part_of_group: "Sayfa bu grubun parçası değil"
+  page_notice_message: "sayfa {{user}} tarafından {{date}} tarihinde gönderildi"
+  page_owner_help: "Sayfa sahibi, bu sayfa için öncelikli sorumluluğa sahip olan kişi ya da gruptur. Kendinizi, ya da içinde bulunduğunuz grupları seçebilirsiniz."
+  page_with_message: "mesaj ile"
+  pager: "Çağrı Cihazı"
+  pagination_next: Sonraki
+  pagination_previous: Önceki
+  participant: Katılımcı
+  participant_help: "<b>Katılımcı</b> girişi bu sayfayı düzenleme ve katkıda bulunma imkânı sağlayacaktır."
+  participants: Katılımcılar
+  participation: Katılım
+  password: Şifre
+  password_confirmation: "Şifre Doğrulama"
+  password_error_confirmation: "Şifre doğrulaması, şifre ile uyuşmuyor."
+  password_error_default: "şifre yeterince zor değil."
+  password_error_too_common: "yeterince iyi değil, sözlükte bulunabilecek bir kelime içeriyor."
+  password_error_too_short: "yeterince iyi değil, çok kısa."
+  password_error_too_similar: "iyi değil, yeterince farklı karakterler içermiyor."
+  password_error_too_simple: "yeterince iyi değil, fazla basit ve kolayca tahmin edilebilir."
+  password_error_username: "yeterince iyi değil, kullanıcı adınıza dayanıyor."
+  password_error_whitespace: "iyi değil, tamamıyla beyaz boşluktan oluşuyor."
+  password_ok: "Şıfre yeterli"
+  password_reset: "Şifreyi Sıfırla"
+  password_reset_ok_text: "Şifreniz başarıyla sıfırlandı. Şimdi yeni şifrenizle siteye giriş yapabilirsiniz. "
+  password_was_reset: "Şifreniz sıfırlandı"
+  peers: Eşler
+  pending: bekleyen
+  pending_tasks: "bekleyen görevler."
+  people: Kişiler
+  permission_denied: "İzin verilmedi"
+  permission_denied_description: "Bu işlemi yürütmek için yeterli izniniz yok."
+  permissions: İzinler
+  personal: Kişisel
+  personal_interests: "Kişisel İlgiler"
+  personal_message: "kişisel mesaj"
+  personal_message_class_description: "Birseysel alıcılara birer kişisel mesaj gönderildi."
+  phone_numbers: "Telefon Numaraları"
+  photo: Fotoğraf
+  photo_credit: Kaynak
+  post_message: "İleti Yaz"
+  prev_change: "Önceki Değişiklik"
+  preview: Görüntüle
+  print_underlined_p: <u>Y</u>azdır
+  private: Özel
+  private_profile: "Özel Profil"
+  profile_last_login: "Son giriş"
+  profile_member_since: "'dan beri üye"
+  profile_option_allow_peers: "Eşlere tarafından görülebilir"
+  profile_option_may_pester: "Rahatsız edilmeme izin ver"
+  profile_option_may_request_contact: "Arkadaşlık teklif edebilirsiniz"
+  profile_option_may_request_membership: "Üyelik başvurularına izin ver"
+  profile_option_may_see: "Profil acık"
+  profile_option_may_see_committees: "Komiteleri göster"
+  profile_option_may_see_contacts: "Arkadaşları göster"
+  profile_option_may_see_groups: "Grup üyeliklerini göster"
+  profile_option_may_see_members: "Grup üyelerini göster"
+  profile_option_may_see_networks: "Ağları göster"
+  profile_private_description: "Bu profil özel ve sadece arkadaşlarınız tarafından görülebilir."
+  profile_public_description: |-
+      Bu profil genel ve siteyi ziyaret eden her kullanıcı tarafından ziyaret edilebilir.
+      Buraya koyduğunuz bilgiler de öteki kullanıcılar tarafından aratılarak bulunabilir.
+      Açık durumda bulunan profilinize kişisel bilgiler koyarken dikkatli olun.
+  profile_saved: "Profiliniz kaydedildi."
+  public_checkbox: Genel
+  public_checkbox_help: "Eğer kontrol edildiyse, herkes bu sayfayı görüntüleyebilir."
+  public_key: "Açık Anahtar"
+  public_profile: "Genel Profil"
+  ranked_vote_instructions: "Önünüzdeki listeden öğeleri, en çok tercih edilen en üste, en az tercih edilen en alta gelecek şekilde sürükleyip bırakın. Bitirdiğiniz zaman, oyunuzu kaydetmek için lütfen onaylayın."
+  ranked_vote_page_description: "Kişiler için, tercihlerini sıralamaları için seçenekler sunan bir liste hazırlayın."
+  ranked_vote_page_display: "Sınıflandırılmış Oy"
+  rate_many_page_description: "Kişilerin onaylaması ya da onaylamaması için seçeneklerden oluşan bir liste hazırlayın."
+  rate_many_page_display: "Onay Anketi"
+  reactivate_button: Etkinleştirin!
+  read: oku
+  recent_activity: "En Son Etkinlik"
+  recent_contributions: "En Son Yapılan Katkılar"
+  recent_member_group_pages: "{{network}} içindeki Gruplarınızda En Son Etkinlikler"
+  recent_network_pages: "En Son Ağ Sayfaları"
+  recent_pages: "En Son Sayfalar"
+  recent_wall_posts: "En Son Duvar Yazıları"
+  recently_created: "En Son Oluşturulanlar"
+  recipient_tip: "Alıcıları, virgül, boşluk, ya da yeni satırlarla ayırın."
+  recipients: Alıcılar
+  redirect_to_foreign_domain: "Giriş yaptıktan sonra yabancı bir etki alanına ({{url}}) yönlenmeye çalışıyorsunuz. Güvenlik sebepleri dolayısıyla URL'den bu parametreyi kaldırdık."
+  regenerate: "küçük resimler oluşturun"
+  reject: reddet
+  reject_button: Reddet
+  rejected: reddedildi
+  remove: kaldır
+  remove_contact_confirmation: "{{user}} ile artık arkadaş olmak istemediğinizden emin misiniz?"
+  remove_contact_info: "Kişileri arkadaş listenizden silerseniz, profillerini ve çevrimiçi oldukları zamanı göremezsiniz. Ayrıca, onları arkadaş listenizden silmeniz, sizin de onların listesinden silinmeniz anlamına gelecektir. "
+  remove_friend_link: "Arkadaşlarlarımdan çıkar"
+  remove_from_gallery: "Galeriden çıkar"
+  remove_from_inbox: "Gelen kutusundan çıkar"
+  remove_last_access_error: "Bu sayfaya en son yapmış olduğunuz girişi kaldıramazsınız."
+  remove_star_link: "İşareti Kaldır ({{star_count}})"
+  removing_image: "Görüntü Kaldırılıyor..."
+  request_friend_link: "Arkadaşlarıma ekle"
+  request_join_group_link: "{{group_type}} grubuna katılmak için izin al "
+  request_status: "Bu istek {{user}} tarafından {{time}} 'da {{status}}"
+  request_to_friend_description: "{{user}} , {{other_user}} adlı kişinin arkadaşı olmak istiyor"
+  request_to_join_our_network_description: "{{group}} grubu, {{network}} ağına katılması için davet edildi"
+  request_to_join_us_description: "{{user}} adlı kullanıcı {{group}} grubuna katılması için davet edildi"
+  request_to_join_us_via_email_description: "{{email}} , {{group}} grubuna katılması için davet edildi"
+  request_to_join_you_description: "{{user}} adlı kullanıcı {{group}} grubuna davet edildi"
+  request_to_join_your_network_description: "{{group}} grubu, {{network}} ağına katılması için davet edildi"
+  requested_forgot_password: "Şifrenizi değiştirme talebinde bulundunuz."
+  requests: İstekler
+  requests_from_me: benden
+  requests_to_me: bana
+  required: (gerekli)
+  reset_password: "Şifreyi Sıfırla"
+  reset_password_mail_greeting: "{{user}}, isteğinize uygun olarak şifreniz sıfırlandı."
+  reset_password_mail_sent: "Şifrenizi sıfırlamak için gereken yönergeleri içeren email gönderildi."
+  reset_password_mail_warning: "Eğer şifrenizin değişmesini istemiyorsanız, lütfen bizimle bağlantı kurun"
+  reset_password_text: "Merhaba, {{user}}. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz."
+  return_link: "Geri dön"
+  rss_feed: "RSS Bildirimcisi"
+  saturday: Cumartesi
+  save_button: Kaydet
+  save_changes: "Değişiklikler kaydet"
+  save_survey: "Kaydet Anket"
+  saved_new_order: "Yeni talimat kaydedildi!"
+  saving_your_changes: "Değişiklikleriniz kaydediliyor..."
+  school: Okul
+  search: Ara
+  search_headline: Ara
+  see_all_link: "Hepsini Gör"
+  see_more_link: "Daha Fazlası"
+  select_image_file: "görüntü dosyası seçin"
+  send_button: Gönder
+  send_invites: "Davet gönder"
+  send_invites_button: "Davet Gönder"
+  send_invites_headline: "{{group}} grubuna katılım için davet gönder"
+  send_message_link: "İleti Gönder"
+  separate_tags: "Virgül kullanarak etiketleri ayırın"
+  set_status_button: "Durumu ayarla"
+  set_status_messsage: "Şu anda ne yapıyorsunuz?"
+  settings: Ayarlar
+  share: Paylaş
+  share_button: Paylaş
+  share_link: "Paylaş {{page_class}} "
+  share_page_email: "E-mail yoluyla bildir"
+  share_page_link: "Paylaş {{page_class}}"
+  share_page_message: "Bir ileti gönderin (isteğe bağlı)"
+  share_page_options: "Tercihleri seçin"
+  share_page_recipients: "Bu {{page_class}}'yı Paylaş"
+  share_page_recipients_results: "Bu {{page_class}} paylaşılıyor:  "
+  share_page_recipients_sections: "Gruplarınızdan ya da arkadaşlarınızdan seçin"
+  share_page_recipients_selection: "Seçiminizi yapınız"
+  share_this_page: "Bu Sayfayı Paylaş"
+  sharing_help: "İsteğe bağlı.Bu sayfayı çoklu alıcılarla (kullanıcılar ya da gruplarla) paylaşabilirsiniz."
+  show_gallery: "Galeriyi Göster"
+  signup_button: "Üye Ol"
+  signup_confirm_password: "Şifreyi Onayla"
+  signup_email: "Email Adresiniz"
+  signup_email_info: "İsteğe bağlı: şifrenizi unuttuğunuz zaman kullanılır"
+  signup_info: "Kullanıcı adı ve şifrenizi seçip ardından \"{{sign_up}}\" tuşuna basınız"
+  signup_link: "Yeni bir kullanıcı hesabına ihtiyacınız var mı?"
+  signup_login_name: "Kullanıcı adınız"
+  signup_password: Şifreniz
+  signup_success: "Kayıt Başarılı"
+  signup_success_message: "Kayıt olduğunuz için teşekkür ederiz!"
+  signup_title: "Kullanıcı Hesabınızı Yaratın"
+  slideshow_delay_input: "Her {{input_field}} saniyede güncelle"
+  small: kuçuk
+  social_change_interests: "Sosyal Değişime Dayalı İlgiler"
+  starred: işaretlenmiş
+  state: durum
+  status_pending: "bekleyen\n"
+  status_resolved: çözüldü
+  subject: Konu
+  subject_must_not_be_empty: "alan boş bırakılamaz"
+  successful_undelete_image: "Görüntü başarıyla geri alındı."
+  sucessfully_removed_image: "Görüntü başarıyla kaldırıldı! ({{undo_link}})"
+  summary: Özet
+  summary_help: "İsteğe bağlı. Özet, bu sayfanın içeriğini kısaca tanımlayan bir cümle ya da paragraftan oluşur."
+  sunday: Pazar
+  survey_design: "Anket Tasarla"
+  survey_list_all: "Tüm Cevapları Listele"
+  survey_may_rate: "Cevapları oylar mısınız?"
+  survey_may_see_ratings: "Derecelendirmeler görülebilir mi?"
+  survey_may_see_responses: "Cevaplar görülebilir mi?"
+  survey_my_response: Cevabım
+  survey_page_description: "Kişilerin cevaplaması için bir dizi soru oluşturun."
+  survey_page_display: Anket
+  survey_questions: Sorular
+  survey_rate_responses: "Cevapları Değerlendir"
+  survey_rate_this_response: "Bu Cevabı Değerlendiriniz"
+  survey_rating_enabled: "Cevapların oylanmasına izin verir misiniz?"
+  survey_response_by: "{{login}} tarafından verilen cevap"
+  survey_responses_enabled: "Yeni cevaplara olanak verecek misiniz? İşaretlendiği takdirde, kişiler anketi yapabilecekler. Anketi kapatmak için işareti kaldırın."
+  survey_take: "Anketi doldurunuz"
+  survey_your_rating_of_this_response: "Bu Cevap için Verdiğiniz Oy"
+  tags: Etiketler
+  tags_help: "İsteğe bağlı. Etiketler için, bu sayfayı en iyi tanımlayacak bir kaç kelime kullanın."
+  task_list_page_description: "Yapılacak işlerin bir listesini oluşturur. Bu sayede kendinizi ya da diğerlerini görevlendirebilirsiniz."
+  task_list_page_display: "Görev Listesi"
+  tasks: Görevler
+  thing_not_found: "{{thing}} bulunamadı"
+  thing_settings: "{{thing}} Ayarları"
+  this_is_committee: "Bu komite {{parent_group}}'in bir parçasıdır."
+  this_is_coordinating: "Bu, {{parent_group}} için<strong>coordinating council</strong> ."
+  thursday: Perşembe
+  time_zone: "Saat Dilimi"
+  title: Başlık
+  title_help: "Gerekli. Bu başlık sayfayı tanımlamak için kullanılır."
+  to: "'e"
+  toggle_selection: "Geçiş Tuşları Seçimi"
+  top_rated: "En çok beyenilen"
+  trash: "Çöp Sepeti"
+  trash_description: "Çöp kutusu, silinmiş tüm sayfalarınızın bulunduğu yerdir. Bir sayfayı {{undelete}} seçeneğini tıklayarak yeniden yükleyebilir, ya da {{destroy}} seçeneğini tıklayarak tamamen ortadan kaldırabilirsiniz."
+  try_again: "Tekrar dene"
+  tuesday: Salı
+  type_your_messages_here: "İletilerinizi buraya yazın ve enter tuşuna basın..."
+  typing: yazıyor
+  undelete_from_trash: "Geri Al"
+  undo: "Geri al"
+  unfeature_button: "Gösterimden kaldır!"
+  unknown: Bilinmeyen
+  unread: Okunmamış
+  updated: güncellendi
+  upload_attachment: "Dosya ekle"
+  upload_file_help: "Gerekli. Bu sayfaya yüklemek için bir dosya seçin."
+  upload_image: "Görüntü Yükle"
+  upload_image_help: "İsteğe bağlı. Bu sayfaya yüklemek için başlangıç olarak bir görüntü dosyası seçin."
+  upload_images: Yükle
+  upload_new_image: "Yeni görüntü yükle"
+  uploaded_image_cropped: "Yüklenen resim kesilecek ve 96 piksel kare boyutuna uyarlanacaktır."
+  usage_agreement_heading: "Kullanım Anlaşması"
+  usage_agreement_required: "Kullanıcı sözleşmesinin kabulü gerekmektedir."
+  user: Kullanıcı
+  user_or_group_name: "Kullanıcı ya da grup adı"
+  user_profile_description_allow_peers: "İşaretlendiği takdirde, ortak bir grubu paylaştığınız kişiler sizin özel profilinizi görüntüleyebilecekler."
+  user_profile_description_may_pester: "Kişilerin sizinle içerik paylaşmalarına ve size davet göndermelerine izin verin."
+  user_profile_description_may_request_contact: "Kişilere, arkadaşınız olma isteğinde bulunma izni verir."
+  user_profile_description_may_see: "İşaretlendiği takdirde, aşağıdaki profil bilgileri görünür hale gelecektir. Aksi hâlde, profiliniz bütünüyle saklanacaktır."
+  user_profile_description_may_see_contacts: "Kişilere arkadaş listenizi görme izni verir."
+  user_profile_description_may_see_groups: "Kişilere, hangi gruplara üye olduğunuzu görme izni verir."
+  username: "Kullanıcı adı"
+  users_wall: "{{user}}'in Duvarı"
+  users_world: "{{user}} 'ın Dünyası"
+  version_doesnt_exist: "{{version}} sürümü mevcut değildir."
+  version_number: versiyon
+  versions: Sürümler
+  video: Görüntü
+  video_class_description: "Başka bir site tarafından desteklenen bir video göster."
+  video_embed: yerleştir
+  video_embed_code_prompt: "Dışarıdan bir video kaynağının kodunu yerleştirin - gömün."
+  video_service_is_not_supported: "desteklenmiyor (hâlen yalnızca youtube, google video, blip.tv, ve vimeo desteklenmektedir)"
+  view_all: "Hepsini Görüntüle"
+  view_requests: "İstekleri Görüntüle"
+  view_slideshow: "Slayt gösterisini görüntüle"
+  viewed: Görüntülenmiş
+  viewer: Görüntüleyici
+  viewer_help: "<b>Viewer</b> girişi bu sayfayı görünür yapar, başka bir etkisi olmaz."
+  viewers: Görüntüleyenler
+  visibility: Görünürlük
+  wall_heading: "Genel İleti Duvarı"
+  wall_post_button: "Yeni İleti Yapıştır"
+  watch_checkbox: "Güncellemeler İçin Gözatın"
+  websites: "Websiteleri "
+  wednesday: Çarşamba
+  welcome_create_group_link: "Yeni grup oluştur"
+  welcome_create_group_text: "Yeni grup oluştur ve üye olmaları için insanları davet et. Gruplar sayesinde diğer insanlarla paylaşımda bulunabilir ve iş birliği yapabilirsiniz."
+  welcome_create_page_link: "Yeni sayfa oluştur"
+  welcome_create_page_text: "Yeni tartışma konuları, yeni viki sayfaları açabilir, resimler ve dosyalar yükleyebilir, görev listeleri başlatabilir ve daha fazlasını yapabilirsiniz..."
+  welcome_edit_profile_link: "Profilinizi duzenleyin"
+  welcome_edit_profile_text: "Açık ve özel profillerinizi düzenleyerek diğer insanların hakkınızda daha fazla bilgi sahibi olmasını sağlayın."
+  welcome_find_groups_link: "Grupları bul"
+  welcome_find_groups_text: "Üye olmak istediğiniz grupları bulmak için gruplar rehberini tarayın."
+  welcome_find_people_link: "Kişileri bul"
+  welcome_find_people_text: "Tanıdığınız insanları bulmak için kullanıcı rehberini tarayın."
+  welcome_heading: "{{site_title}} sitesine hoşgeldin, {{user_name}}!"
+  welcome_hide_link: "Hoşgeldini Sakla"
+  welcome_message: "Crabgrass, sosyal değişim örgütlerinin, işlemlerini yapmalarını, kararlar vermelerini, işbirliği yapmalarını ve ağ vasıtasıyla temasta olmalarını sağlar."
+  welcome_show_link: "Hoşgeldin'i Göster"
+  welcome_title: "{{site_title}}'a hoşgediniz "
+  welcome_upload_icon_link: "Bir kullanıcı simgesi yükle"
+  welcome_upload_icon_text: "Simgeniz olarak kullanmak üzere bir görüntü yükleyin. Bu simge yaptığınız her yorumun yanında görünecektir."
+  when_does_feature_expire: "Bu özelliğin süresi ne zaman biter?"
+  width: Genişlik
+  wiki_body_help: "İsteğe bağlı. Buraya sayfa için başlangıç metnini giriniz."
+  wiki_is_locked: "Bu viki hâlen {{user}} tarafından kilitlenmiş durumda"
+  wiki_lost_text_confirmation: "Kaydedilmemiş tüm bilgiler silinecek? Emin misiniz?"
+  wiki_page_description: "Sonradan özgür biçimde düzenlenebilecek bir metin belgesi yaratın."
+  wiki_page_display: "Viki Sayfası"
+  wiki_revert_version: "{{version}} Sürümüne Geri Dön"
+  wiki_section_edit: "Bu Bölümü Düzenle"
+  wont_be_able_to_save: "Bu sayfayı kaydedemeyeceksiniz."
+  work: İş
+  work_life: "İş Yaşamı"
+  you_are_not_member_of_any_group: "Herhangi bir grubun üyesi değilsin."
+  you_are_viewing_version: "{{user}} tarafından hazırlanan {{version}} sürümünü görüntülemektesiniz."
+  you_have_no_contacts: "Şu anda arkadaşınız yok"
+  you_have_no_groups: "Herhangı bir grupunuz yok"
+  you_have_no_peers: "Şu anda eşiniz yok."
+  your_login: Girişiniz

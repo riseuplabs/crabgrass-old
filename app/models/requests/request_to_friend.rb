@@ -15,7 +15,7 @@ class RequestToFriend < Request
       errors.add_to_base('Friendship already exists')
     end
     if RequestToFriend.appearing_as_state(state).find_by_created_by_id_and_recipient_id(created_by_id, recipient_id)
-      errors.add_to_base('Request already exists for {recipient}'[:request_exists_error, {:recipient => recipient.name}])
+      errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end
 
@@ -43,8 +43,7 @@ class RequestToFriend < Request
   end
 
   def description
-    "{user} would like to be the friend of {other_user}"[:request_to_friend_description, 
-      {:user => user_span(created_by), :other_user => user_span(recipient)}]
+    I18n.t(:request_to_friend_description, :user => user_span(created_by), :other_user => user_span(recipient))
   end
 
 end

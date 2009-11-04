@@ -1,7 +1,7 @@
 <% @title_box = capture do %>
   <h2>
     <% thing_html = content_tag(:b, MessagePage.class_display_name) %>
-    <%= "create a new {thing}"[:create_a_new_thing, {:thing => thing_html}] %>
+    <%= I18n.t(:create_a_new_thing, :thing => thing_html) %>
   </h2>
 <% end %>
 
@@ -10,30 +10,30 @@
 <% form_tag({:action => 'create'}, :multipart => true) do %>
 <table class='create'>
 <tr>
-  <td align='right'><b><%= "subject".t %></b></td>
+  <td align='right'><b><%= I18n.t(:subject) %></b></td>
   <td><%= text_field_tag 'title', params[:title], :size => 80 %></td>
 </tr>
 <tr>
-  <td align='right'><b><%= "recipients".t %></b></td>
+  <td align='right'><b><%= I18n.t(:recipients) %></b></td>
   <td>
     <% to = params[:to]+' ' if params[:to] -%>
     <%= text_field_tag 'to', to, :size => 80 %>
     <br/>
     <%= select_tag('contact_drop',
         options_for_select(
-           [["#{'contacts'.t}…",'']] +
+           [["#{I18n.t(:contacts)}…",'']] +
            current_user.contacts.sort_by{|c|c.both_names}.to_select(:both_names, :name), params[:user_ids]),
         :onchange => "$('to').value += $('contact_drop').value + ' '") %>
     <%= select_tag('peer_drop',
         options_for_select(
-           [["#{'peers'.t}…",'']] +
+           [["#{I18n.t(:peers)}…",'']] +
            current_user.peers.sort_by{|c|c.both_names}.to_select(:both_names, :name), params[:user_ids]),
         :onchange => "$('to').value += $('peer_drop').value + ' '") %>
 
   </td>
 </tr>
 <tr>
-  <td align='right'><b><%= 'message'.t %></b></td>
+  <td align='right'><b><%= I18n.t(:message) %></b></td>
   <td><%= text_area_tag 'message', params[:message], :rows => 20, :cols => 80, :id => "message-area" %></td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
   <td><input type="checkbox" name="email" value="true" /> Send email?</td>
 <tr>
   <td align='right' colspan="2">
-    <%= submit_tag "Send"[:send_button], :name => 'send' %>
+    <%= submit_tag I18n.t(:send_button), :name => 'send' %>
   </td>
 </tr>
 </table>

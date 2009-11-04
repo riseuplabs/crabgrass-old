@@ -1,17 +1,17 @@
 <%=
 Formy.tabs do |f|
   f.tab do |t|
-    t.label "Information"[:information]
+    t.label I18n.t(:information)
     t.show_tab 'information_tab'
     t.selected true
   end
   f.tab do |t|
-    t.label "Permissions"[:permissions]
+    t.label I18n.t(:permissions)
     t.show_tab 'permissions_tab'
     t.selected false
   end
   f.tab do |t|
-    t.label "Participation"[:participation]
+    t.label I18n.t(:participation)
     t.show_tab 'participation_tab'
     t.selected false
   end

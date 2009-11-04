@@ -5,6 +5,14 @@ class CronWorker < BackgrounDRb::MetaWorker
     # this method is called, when worker is loaded for the first time
   end
 
+  def send_pending_single_notifications_for_watched_pages
+    PageHistory.send_single_pending_notifications
+  end
+
+  def send_pending_digest_notifications_for_watched_pages
+    PageHistory.send_digest_pending_notifications
+  end
+
   def clean_fragment_cache
     # remove all files that have had their status changed more than three days ago.
     system("find", RAILS_ROOT+'/tmp/cache', '-ctime', '+3', '-exec', 'rm', '{}', ';')

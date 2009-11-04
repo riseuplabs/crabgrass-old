@@ -72,6 +72,11 @@ class Page < ActiveRecord::Base
   include PageExtension::Index     # page full text searching
   include PageExtension::Starring  # ???
   include PageExtension::Tracking  # page tracking views, edits and stars
+  include PageExtension::PageHistory  
+
+  # disable timestamps, we set the updated_at field through certain PageHistory subclasses
+  self.record_timestamps = false
+  before_save :save_timestamps
 
   acts_as_taggable_on :tags
   acts_as_site_limited
@@ -329,7 +334,7 @@ class Page < ActiveRecord::Base
     end
     if entity.nil?
       if Conf.ensure_page_owner?
-        raise ErrorMessage.new("Page owner cannot be empty."[:page_owner_error])
+        raise ErrorMessage.new(I18n.t(:page_owner_error))
       else
         self.owner_id = nil
         self.owner_name = nil
@@ -436,7 +441,7 @@ class Page < ActiveRecord::Base
   end
 
   # DEPRECATED
-  def self.make(function,options={})
+  def self.make_a_call(function,options={})
     PageStork.send(function, options)
   end
 
@@ -449,4 +454,9 @@ class Page < ActiveRecord::Base
     true
   end
 
+  protected
+
+  def save_timestamps
+    self.created_at = self.updated_at = Time.now if self.new_record?
+  end
 end

@@ -9,5 +9,5 @@
   <%- end -%>
 </table></div>
 <%- if logged_in? and current_user.may?(:admin, @page) -%>
-<p style='text-align:center'><%= link_to 'regenerate thumbnails'[:regenerate], page_url(@page, :action => 'regenerate'), :method => :post %></p>
+<p style='text-align:center'><%= link_to I18n.t(:regenerate), page_url(@page, :action => 'regenerate'), :method => :post %></p>
 <%- end -%>

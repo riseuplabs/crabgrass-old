@@ -2,7 +2,7 @@ class AssetAnswer < SurveyAnswer
   belongs_to :asset, :dependent => :destroy
 
   def display_value
-    "No data uploaded"[:no_data_uploaded]
+    I18n.t(:no_data_uploaded_label)
   end
 
   def value=(val)

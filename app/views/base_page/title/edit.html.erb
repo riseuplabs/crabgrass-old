@@ -5,20 +5,20 @@
 
 <div id="modal_message"></div>
 <p>
-  <%= "Title"[:title] %><br/>
+  <%= I18n.t(:title) %><br/>
   <%= text_field 'page', 'title', :style => 'width: 90%', :class => 'h1' %>
 </p>
 <p>
-  <%= "Optional unique name (used to create the URL for this page)"[:page_name_description] %><br/>
+  <%= I18n.t(:page_name_description) %><br/>
   <%= text_field 'page', 'name', :style => 'width: 90%' %>
 </p>
 <p>
-  <%= "Summary"[:summary] %><br/>
+  <%= I18n.t(:summary) %><br/>
   <%= text_area 'page', 'summary', :style => 'width: 90%', :size => '50x2' %>
 </p>
 
 <div class="buttons">
-  <%= spinner('save_title') %><%= close_modal_button(:cancel) %><%= submit_tag 'Save'[:save_button], :name => 'save' %>
+  <%= spinner('save_title') %><%= close_modal_button(:cancel) %><%= submit_tag I18n.t(:save_button), :name => 'save' %>
 </div>
 
 <% end %>

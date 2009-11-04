@@ -16,7 +16,7 @@ module Admin::ChatMessagesHelper
   end
 
   def button_to_action(action, params)
-    button_to(action.capitalize.t, :action => action, :params => params)
+    button_to(I18n.t(action.to_sym).capitalize, :action => action, :params => params)
   end
 
 end

@@ -93,7 +93,7 @@ class RequestsController < ApplicationController
 
     if @request
       if @request.state != 'pending'
-        raise_error "Invite has already been redeemed"[:invite_error_redeemed]
+        raise_error I18n.t(:invite_error_redeemed)
       elsif logged_in?
         redirect_to redeem_url
       else
@@ -109,7 +109,7 @@ class RequestsController < ApplicationController
         })
       end
     else
-      raise_not_found "Invite"[:invite]
+      raise_not_found I18n.t(:invite)
     end
   rescue Exception => exc
     render_error(exc)
@@ -121,7 +121,7 @@ class RequestsController < ApplicationController
     code  = params[:code]
     request = RequestToJoinUsViaEmail.redeem_code!(current_user, code, email)
     request.approve_by!(current_user)
-    flash_message :success => 'You have joined group {group_name}'[:join_group_success, {:group_name => request.group.name}]
+    flash_message :success => I18n.t(:join_group_success, :group_name => request.group.name)
     redirect_to current_site.login_redirect(current_user)
   rescue Exception => exc
     render_error(exc)

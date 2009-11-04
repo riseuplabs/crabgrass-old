@@ -22,11 +22,11 @@ class SurveyPageResponseController < BasePageController
       resp.user = current_user # (user_id is protected)
     end
     current_user.updated(@page)
-    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    flash_message :success => I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => "Please check your answers."[:survey_please_check]
+      flash_message :success => I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc
@@ -39,11 +39,11 @@ class SurveyPageResponseController < BasePageController
 
   def update
     @response.update_attributes!(params[:response])
-    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    flash_message :success => I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => "Please check your answers."[:survey_please_check]
+      flash_message :success => I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc

@@ -18,7 +18,7 @@ class Me::RequestsController < Me::BaseController
     @requests = Request.created_by(current_user).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:page])
 
     # let's be polite. don't tell them they are getting 'ignored'
-    @requests.each {|r| r.state = 'pending'.t} if params[:state] == 'pending'
+    @requests.each {|r| r.state = I18n.t(:pending)} if params[:state] == 'pending'
   end
 
   def to_me
@@ -37,9 +37,9 @@ class Me::RequestsController < Me::BaseController
     me_context('small')
     #add_context 'requests', url_for(:controller => 'me/requests', :action => nil)
     #if action?(:to_me)
-    #  add_context "to me".t, url_for(:controller => '/me/requests', :action => 'to_me')
+    #  add_context I18n.t(:requests_to_me), url_for(:controller => '/me/requests', :action => 'to_me')
     #elsif action?(:from_me)
-    #  add_context "from me".t, url_for(:controller => '/me/requests', :action => 'from_me')
+    #  add_context I18n.t(:requests_from_me), url_for(:controller => '/me/requests', :action => 'from_me')
     #end
   end
 

@@ -67,7 +67,7 @@ class BasePage::ParticipationController < BasePage::SidebarController
   ## however, since currently the existance of a participation means
   ## view access, then we need to destory them to remove access.
   def destroy
-    error = "The access to this page could not be removed. You cannot remove the owners access or an access that is necessary for you to administrate the page."[:remove_access_error]
+    error = I18n.t(:remove_access_error)
     upart = (UserParticipation.find(params[:upart_id]) if params[:upart_id])
     gpart = (GroupParticipation.find(params[:gpart_id]) if params[:gpart_id])
     if may_remove_participation?(upart)

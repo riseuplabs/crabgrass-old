@@ -64,7 +64,7 @@ class ExternalVideo < ActiveRecord::Base
   validate :supported
 
   def supported
-    errors.add(:media_embed, "is not supported (currently only youtube, google video, blip.tv, and vimeo)"[:video_service_is_not_supported]) unless service
+    errors.add(:media_embed, I18n.t(:video_service_is_not_supported)) unless service
   end
 
   def service

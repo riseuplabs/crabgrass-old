@@ -7,6 +7,7 @@
 
   every_minute = "0 */1 * * * * *"
   two_minutes = "0 */2 * * * * *"
+  five_minutes = "0 */5 * * * * *"
   hourly     = "0 0 * * * * *"
   daily      = "0 0 4 * * * *"       # run at 4am
   three_days = "0 0 0 */3 * * *"
@@ -31,6 +32,10 @@
   :environment: production
 :schedules:
   :cron_worker:
+    :send_pending_single_notifications_for_watched_pages:
+      :trigger_args: <%= five_minutes %>
+    :send_pending_digest_notifications_for_watched_pages:
+      :trigger_args: <%= daily %>
     :clean_fragment_cache:
       :trigger_args: <%= daily %>
     :clean_session_cache:

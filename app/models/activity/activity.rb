@@ -193,7 +193,7 @@ class Activity < ActiveRecord::Base
     if group = self.send(attribute)
       group.group_type.downcase
     elsif group_type = self.send(attribute.to_s + '_type')
-      group_type.t.downcase
+      I18n.t(group_type.downcase.to_sym).downcase
     end
   end
 
@@ -219,7 +219,7 @@ class Activity < ActiveRecord::Base
   # often, stuff that we want to report activity on has already been
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).try.name || "unknown"[:unknown]
+    name = self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
     '<span class="%s">%s</span>' % [type, name]
   end
 

@@ -79,7 +79,7 @@ class Request < ActiveRecord::Base
 
   def validate
     unless may_create?(created_by)
-      errors.add_to_base('Permission denied'.t)
+      errors.add_to_base(I18n.t(:permission_denied))
     end
   end
 
@@ -101,7 +101,7 @@ class Request < ActiveRecord::Base
     self.send(command + '!') # FSM call, eg approve!()
 
     unless self.state == newstate
-      raise PermissionDenied.new("%s is not allowed to #{command} the request.".t % user.name)
+      raise PermissionDenied.new(I18n.t(:not_allowed_to_respond_to_request, :user => user.name, :command => command))
     end
     save!
   end

@@ -1,5 +1,5 @@
 <% if @posts.empty? %>
-  <%= "No Results"[:no_search_results] %>
+  <%= I18n.t(:no_search_results) %>
 <% else %>
 <%
 
@@ -36,25 +36,25 @@
 
 <div class="messages">
 <% if today.any? -%>
-  <div class='date_heading'><%= "Today"[:date_today] -%></div>
+  <div class='date_heading'><%= I18n.t(:date_today) -%></div>
   <% today.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if yesterday.any? -%>
-  <div class='date_heading'><%= "Yesterday"[:date_yesterday] -%></div>
+  <div class='date_heading'><%= I18n.t(:date_yesterday) -%></div>
   <% yesterday.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if week.any? -%>
-  <div class='date_heading'><%= "This Past Week"[:date_this_week] -%></div>
+  <div class='date_heading'><%= I18n.t(:date_this_week) -%></div>
   <% week.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>
 <% end -%>
 <% if later.any? -%>
-  <div class='date_heading'><%= "Older"[:date_older] -%></div>
+  <div class='date_heading'><%= I18n.t(:date_older) -%></div>
   <% later.each do |post| -%>
     <%= display_post(post) -%>
   <% end -%>

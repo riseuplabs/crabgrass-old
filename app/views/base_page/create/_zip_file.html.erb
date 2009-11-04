@@ -1,6 +1,6 @@
 <%
   form.row do |r|
-    r.label 'Zip File'[:zip_file]
+    r.label I18n.t(:zip_file)
     r.label_for 'asset_zipfile'
     r.input file_field('asset', 'zipfile', :size => 29)
     r.info help(:upload_zip_file)

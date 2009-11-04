@@ -25,7 +25,7 @@ class AssetPageController < BasePageController
     asset_version.destroy
     respond_to do |format|
       format.html do
-        message(:success => "file version deleted".t)
+        message(:success => I18n.t(:file_version_deleted))
         redirect_to(page_url(@page))
       end
       format.js do
@@ -82,7 +82,7 @@ class AssetPageController < BasePageController
 
   def build_page_data
     unless params[:asset][:uploaded_data].any?
-      @page.errors.add_to_base "No data uploaded"[:no_data_uploaded]
+      @page.errors.add_to_base I18n.t(:no_data_uploaded)
       raise ActiveRecord::RecordInvalid.new(@page)
     end
 

@@ -88,7 +88,7 @@ class WikiPageVersionController < BasePageController
   def force_save_or_cancel
     if logged_in? and @wiki and @wiki.section_edited_by(current_user) == :document
       flash_message :info => "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
-        {:save_button => 'Save'[:save_button], :cancel_button => 'Cancel'[:cancel_button]}]
+        {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)}]
       redirect_to page_url(@page, :action => 'edit')
     end
   end

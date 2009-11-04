@@ -1,6 +1,6 @@
 <% @possible = PollPossible.new %>
 <div id="new_possible_link">
-  <%= link_to_function 'add new possibility'.t, 'Element.show("new_possible_form_container"); Element.hide("new_possible_link");' %> 
+  <%= link_to_function I18n.t(:add_new_possibility_link), 'Element.show("new_possible_form_container"); Element.hide("new_possible_link");' %>
 </div>
 
 <div id='new_possible_form_container' style='display:none'>
@@ -16,7 +16,7 @@
    detail:<br/>
    <%= text_area 'possible', 'description', :size => '70x4' %><br/>
    <p>
-   <%= submit_tag 'Add Possibility'.t %>
+   <%= submit_tag I18n.t(:add_possibility_button) %>
    <%= button_to_function "Done", "Element.hide('new_possible_form_container'); Element.show('new_possible_link');" %>
    <%= spinner('new_possible_loading') %>
    </p>
