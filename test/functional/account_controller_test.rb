@@ -273,11 +273,6 @@ class AccountControllerTest < ActionController::TestCase
       assert_redirected_to :controller => 'root', :action => 'index'
       assert_success_message /Already.Verified/
     end
-
-    def test_enable_digest_notifications_on_signup
-      post_signup_form
-      assert_equal "Digest", User.last.receive_notifications
-    end
   end
 
   protected
