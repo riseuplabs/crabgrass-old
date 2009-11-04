@@ -19,7 +19,8 @@ locale_paths = locale_paths.select do |path|
   end
 
   # both must be true to consider this locale valid
-  enabled_language && language_in_db
+  # for test don't need to look in the db, cause it's not ready
+  enabled_language && (language_in_db || RAILS_ENV == "test")
 end
 
 # set the load paths
