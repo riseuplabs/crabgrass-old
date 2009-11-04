@@ -21,8 +21,7 @@
         list.checkbox(:class => 'details', :hide => !@profile.may_see?) do |cb|
           cb.label I18n.t(:group_members_publicly_visible)
           cb.input check_box(:profile, :may_see_members, :onclick => '')
-          cb.info "Members are viewable by non-members at {domain}/yourgroupname. Also, the name of the group will be listed on each members profile page ({domain}/username)"[
-                :group_members_publicly_visible_description, current_site.domain, current_site.domain]
+          cb.info I18n.t(:group_members_publicly_visible_description, :domain => current_site.domain)
         end
       end
     end

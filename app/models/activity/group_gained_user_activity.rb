@@ -16,13 +16,10 @@ class GroupGainedUserActivity < Activity
   end
 
   def description(view=nil)
-    "{user} joined {group_type} {group}"[
-      :activity_user_joined_group, {
-        :user => user_span(:user),
-        :group_type => group_class(:group),
-        :group => group_span(:group)
-      }
-    ]
+    I18n.t(:activity_user_joined_group,
+                :user => user_span(:user),
+                :group_type => group_class(:group),
+                :group => group_span(:group))
   end
 
   def icon

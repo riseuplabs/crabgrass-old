@@ -334,6 +334,16 @@ en:
   successfully_verified_email_message: "Successfully Verified Email Address"
   already_verified: "Already Verified."
   already_verified_text: "You don't need to verify again."
+  email_verification_body: |
+    You have signed for {{site_title}} ({{host}})!
+
+    Before you can login you must verify that this is your email.
+
+    Click the link below or copy and paste it into your browser:
+
+      {{verify_email_link}}
+
+    If you do not wish to join, simply ignore this email.
 
   ##
   ## PASSWORD
@@ -368,6 +378,7 @@ en:
   activity_user_status: "{{user}} is now {{status}}"
   activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
   activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
+  activity_user_joined_site: "{user} has joined {group}"
   activity_user_destroyed: "{{user}} has retired"
   activity_group_created: "{{user}} created {{group_type}} {{group}}"
   activity_group_destroyed: "{{group}} was destroyed by {{user}}"
@@ -376,7 +387,8 @@ en:
   activity_unread: "You have {{count}} unread [private messages]"
   activity_unread_singular: "You have an unread [private message]"
   activity_user_left_site: "{{user}} has left {{group}}"
-
+  activity_message_received: "You received {{message_tag}} from {{other_user}}: {{title}}"
+  activity_twinkled: "{user} has starred your post \"{post}\""
 
   ##
   ## ASSETS
@@ -478,8 +490,6 @@ en:
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
-  add_star_link: "add star"
-  remove_star_link: "remove star"
 
   ##
   ## ME
@@ -689,6 +699,7 @@ en:
   group_membership_count: "{{count}} Members"
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
+  membership_leave_message: "You have been removed from {{group}}"
 
 
   # featured
