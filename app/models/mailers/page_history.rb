@@ -9,8 +9,8 @@ module Mailers::PageHistory
   end
 
   def page_history_single_notification(user, page_history)
-    @user                 = user
     @page_history         = page_history
+    @user                 = user
     @site                 = page_history.page.site
     @subject              = "#{@site.title} : #{@page_history.page.title}"
     @body[:page_history]  = @page_history
@@ -18,8 +18,8 @@ module Mailers::PageHistory
   end
 
   def page_history_single_notification_paranoid(user, page_history) 
-    @user                 = user
     @page_history         = page_history
+    @user                 = user
     @site                 = page_history.page.site
     @subject              = "{site_title} : A page has been modified"[:page_history_mailer_a_page_has_been_modified, {:site_title => @site.title}]
     @body[:page_history]  = @page_history
@@ -30,8 +30,8 @@ module Mailers::PageHistory
   end
 
   def page_history_digest_notification(user, page, page_histories)
-    @user                   = user
     @site                   = page.site
+    @user                   = user
     @subject                = "#{@site.title} : #{page.title}"
     @body[:page]            = page
     @body[:page_histories]  = page_histories
@@ -39,8 +39,8 @@ module Mailers::PageHistory
   end
 
   def page_history_digest_notification_paranoid(user, page, page_histories)
-    @user                   = user
     @site                   = page.site
+    @user                   = user
     @subject                = "{site_title} : A page has been modified"[:page_history_mailer_a_page_has_been_modified, {:site_title => @site.title}]
     @body[:page]            = page
     @body[:page_histories]  = page_histories
