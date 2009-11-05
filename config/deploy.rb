@@ -160,7 +160,7 @@ namespace :crabgrass do
 
   desc "refresh the staging database"
   task :refresh do
-    run "touch #{deploy_to}/shared/tmp/refresh.txt"
+    run "#{deploy_to}/script/sync_in.sh"
   end
 
   desc "starts the crabgrass daemons"
