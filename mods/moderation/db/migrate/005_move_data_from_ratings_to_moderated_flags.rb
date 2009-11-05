@@ -59,6 +59,7 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
       type = 'Post' if f.foreign.is_a?(Post)
       options = {:rateable_id => f.foreign_id, :rateable_type => type, :user_id => f.user_id, :created_at => f.created_at, :rating => -100 }
       Rating.create!(options)
+      f.delete
     end
   end
 
