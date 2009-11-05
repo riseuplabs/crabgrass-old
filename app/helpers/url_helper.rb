@@ -239,11 +239,12 @@ module UrlHelper
 
   # arg might be a user object, a user id, or the user's login
   def login_and_path_for_user(arg, options={})
+
     if arg.is_a? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
-      user = User.find(arg)
-      login = user.login
-      display = user.display_name
+      user = User.find_by_id(arg)
+      login = user.try.login
+      display = user.try.display_name
     elsif arg.is_a? String
       user = User.find_by_login(arg)
       login = arg
@@ -277,6 +278,8 @@ module UrlHelper
   #  :class -- override the default class of the link (name_icon)
   def link_to_user(arg, options={})
     login, path, display_name = login_and_path_for_user(arg,options)
+    return "" if login.blank?
+
     style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
