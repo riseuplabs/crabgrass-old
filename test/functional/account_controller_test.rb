@@ -31,6 +31,15 @@ class AccountControllerTest < ActionController::TestCase
     end
   end
 
+  def test_should_not_allow_signup_without_full_info
+    with_site(:local, :require_user_full_info => true) do
+      assert_no_difference 'User.count' do
+        post_signup_form
+        assert_response :success
+      end
+    end
+  end
+
   repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:closed]}) do
     def test_signup_disabled
       assert_no_difference 'User.count' do
@@ -279,6 +288,9 @@ class AccountControllerTest < ActionController::TestCase
 
   def post_signup_form(options = {})
     post(:signup, {
+      :visible_profile => {
+        :locations => [{:city => "London"}]
+      },
       :user => {
          :login => 'quire',
          :email => 'quire@localhost',
