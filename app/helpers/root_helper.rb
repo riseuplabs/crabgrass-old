@@ -42,5 +42,13 @@ module RootHelper
       link_to_with_icon 'weather_sun', "See Tips to get started"[:see_tips_to_get_started], '/?welcome_box=1'
     end
   end
+
+  def home_summary_html
+    translation=:welcome_home_message.t
+    translation.any? ?
+      format_text(translation) :
+      @group.profiles.public.summary_html
+  end
+
 end
 
