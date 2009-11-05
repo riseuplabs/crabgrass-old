@@ -9,6 +9,8 @@ class SignupTest < ActionController::IntegrationTest
     fill_in "Your login name", :with => "TheUser"
     fill_in "Your Password", :with => "passwD!2$"
     fill_in "Confirm Password", :with => "passwD!2$"
+    fill_in "Your Email", :with => 'quire@localhost'
+    fill_in "City", :with => "London"
 
     check "I accept the terms of the usage agreement"
     click_button "Sign up"

@@ -32,7 +32,13 @@ class RequestsTest < ActionController::IntegrationTest
     assert_response :success
 
     assert_difference 'User.count' do
-      post('/account/signup', {:redirect => redirect_path, :usage_agreement_accepted => "1", :user => {:login => 'stellersjay', :password => 'chirp', :password_confirmation => 'chirp'}})
+      post('/account/signup', {:redirect => redirect_path, :usage_agreement_accepted => "1",
+            :visible_profile => {:locations => [{:city => "London"}]},
+            :user => {
+              :login => 'stellersjay',
+              :email => 'quire@localhost',
+              :password => 'chirp',
+              :password_confirmation => 'chirp'}})
     end
 
     assert redirect?
