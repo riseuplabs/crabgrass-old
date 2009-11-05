@@ -14,7 +14,7 @@ class PageTest < Test::Unit::TestCase
 
   def test_page_history_order
     user = User.make
-    page = WikiPage.make :owner => user 
+    page = WikiPage.make :owner => user
     action_1 = PageHistory::AddStar.create!(:page => page, :user => user, :created_at => "2007-10-10 10:10:10")
     action_2 = PageHistory::RemoveStar.create!(:page => page, :user => user, :created_at => "2008-10-10 10:10:10")
     action_3 = PageHistory::StartWatching.create!(:page => page, :user => user, :created_at => "2009-10-10 10:10:10")
@@ -294,7 +294,7 @@ class PageTest < Test::Unit::TestCase
   end
 
   def test_update_at_updated_by_certain_fields
-    page = Page.make 
+    page = Page.make
     last_updated_at = page.updated_at
 
     page.save!
@@ -302,7 +302,7 @@ class PageTest < Test::Unit::TestCase
 
     page.update_attribute :resolved, !page.resolved
     assert_equal page.updated_at, last_updated_at
-    
+
     page.update_attribute :public, !page.public
     assert_equal page.updated_at, last_updated_at
 

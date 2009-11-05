@@ -156,12 +156,13 @@ class PageHistoryTest < Test::Unit::TestCase
     assert_equal 1, PageHistory.pending_digest_notifications_by_page.size
     assert_equal 3, PageHistory.pending_digest_notifications_by_page[@page.id].size
 
+    last_state = Conf.paranoid_emails
     Conf.paranoid_emails = true 
     PageHistory.send_digest_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
 
-    Conf.paranoid_emails = false
+    Conf.paranoid_emails = last_state
     PageHistory.send_digest_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_digest_notifications_by_page.size
@@ -204,12 +205,13 @@ class PageHistoryTest < Test::Unit::TestCase
     User.current = user_a
     UserParticipation.make_unsaved(:page => @page, :user => user_a, :watch => true).save!
 
+    last_state = Conf.paranoid_emails
     Conf.paranoid_emails = false 
     PageHistory.send_single_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
 
-    Conf.paranoid_emails = true
+    Conf.paranoid_emails = last_state 
     PageHistory.send_single_pending_notifications
     assert_equal 2, ActionMailer::Base.deliveries.count
     assert_equal 0, PageHistory.pending_notifications.size
