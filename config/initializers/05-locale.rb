@@ -2,7 +2,12 @@
 # to have another default locale (standard is :en) or more load paths.
 # All files from config/locales/*.rb,yml are added automatically.
 
-lang_codes_in_database = Language.find(:all).collect {|language| language.code.to_s}
+# the database might not be available, in that case we have no language codes
+lang_codes_in_database = begin
+  Language.find(:all).collect {|language| language.code.to_s}
+rescue
+  []
+end
 
 # glob all locales in the config/locales folder
 locale_paths = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]

@@ -73,6 +73,11 @@ it:
   name: Italiano
   code: it
 
+tr:
+  id: 24
+  name: Türkçe
+  code: tr
+
 pl:
   id: 28
   name: Polski
@@ -82,5 +87,21 @@ el:
   id: 53
   name: Ελληνικά
   code: el
+
+he:
+  id: 78
+  name: עִבְרִית
+  code: he
+  rtl: true
+
+sv:
+  id: 79
+  name: Svenska
+  code: sv
+
+da:
+  id: 104
+  name: Dansk
+  code: da
 
 
