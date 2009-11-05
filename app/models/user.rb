@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
   end
 
   def setup_profile_required_info(visible_profile, hidden_profile)
-    return unless Site.current.require_user_full_info
+    return unless Site.current.require_user_full_info?
 
     # don't duplicate validation for email
     unless self.should_validate_email

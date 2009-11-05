@@ -228,7 +228,7 @@ class AccountController < ApplicationController
     params[:redirect] = nil unless params[:redirect].any?
     if current_user.unverified?
       redirect_to :action => 'unverified'
-    elsif current_user.missing_profile_info? and current_site.require_user_full_info
+    elsif current_user.missing_profile_info? and current_site.require_user_full_info?
       redirect_to :action => 'missing_info', :redirect => params[:redirect] || current_site.login_redirect(current_user)
     else
       redirect_to(params[:redirect] || current_site.login_redirect(current_user))
