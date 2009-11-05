@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_missing_info_user
-    if logged_in? and current_user.missing_profile_info?
+    if logged_in? and current_user.missing_profile_info? and current_site.require_user_full_info
       redirect_to account_url(:action => 'missing_info')
     end
   end

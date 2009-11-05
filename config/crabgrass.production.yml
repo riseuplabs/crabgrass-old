@@ -54,6 +54,7 @@ profile_fields:
 text_editor: greencloth_only
 # text_editor: html_preferred
 
+require_user_full_info: true
 ##
 ## SITES
 ##
