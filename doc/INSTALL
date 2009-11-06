@@ -49,13 +49,28 @@ symlink in the crabgrass/vendor directory to rails:
 
 Crabgrass currently only works with mysql.
 
-Create the databases:
+* Create the database:
 
-  mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
+  mysqladmin -u root -p create crabgrass 
+
+If you are doing development, also create these databases
+crabgrass_development, crabgrass_test
+
+* Create database user/password
+
+For development work, there is not much need to create a database user
+for crabgrass. For a production deployment, however, you should do
+this (substitute your sekret password):
+
+  GRANT USAGE ON *.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
+  GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
+  flush privileges;
+
+* Setup the application database configuration file
 
 There is a sample database configuration file in the <tt>config</tt>
 directory of the crabgrass application. Use that to create a
-<tt>config/database.yml</tt> file:
+<tt>config/database.yml</tt> file, and edit it accordingly:
 
   cd crabgrass/config
   cp database.yml.example database.yml
@@ -68,36 +83,108 @@ for mysql like so: <tt>socket: /var/run/mysqld/mysqld.sock</tt>. You
 can probably figure out what socket to use by running <tt>ps -ef |
 grep mysql</tt>.
 
-The final step is to load the crabgrass schema and populate it with
-test data:
+* Populate the database with the schema and default data
+
+The final step is to load the crabgrass database schema and populate
+it with the appropriate data:
 
   cd crabgrass
-  rake db:schema:load
+  rake db:schema:load RAILS_ENV=production
+  rake cg:load_default_data RAILS_ENV=production
+
+If you are doing development, and have created the
+crabgrass_development database, you will need to specify
+RAILS_ENV=development instead. Additionally, for development, you will
+need to load the test fixture data, NOTE that this is not needed for a
+production setup:
+
   rake db:fixtures:load
-  rake cg:load_default_data
+
+If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
+of test data loaded, including users. To get started, you can login as
+user 'blue' with password 'blue'.
 
 = Configuration
 
+There are several required configuration files:
+
+First create a config/secret.txt file:
+
+  rake create_a_secret
+
+Look over the config/crabgrass.production.yml (or development)
+configuration for any additional changes. See
+CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
+
 The default configuration is probably what you want for running in
-development mode. For more details on how to configure crabgrass, see
-CONFIGURATION[link:files/doc/CONFIGURATION.html].
+development mode. 
 
 = Running Crabgrass
 
   cd crabgrass
   script/server
 
-This will run crabgrass in development mode, which is probably what
-you want. If you don’t want to use webbrick (the mini-web-server that
-comes with rails) you can install the mongrel gem or debian
-package. If installed, script/server will pick them instead.
+This will run crabgrass in development mode, if you wish to run it in
+production mode you will want to pass RAILS_ENV=production. If you
+don’t want to use webrick (the mini-web-server that comes with rails)
+you can install passenger, or mongrel along with apache. If installed,
+script/server will pick them instead. If you are running in
+production, it is highly recommended that you do not run webrick as it
+is single-threaded and quite slow, it is fine for development
+purposes.
 
 Once the server is running, just point your web browser at
 http://localhost:3000.
 
-If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
-of test data loaded, including users. To get started, you can login as
-user 'blue' with password 'blue'.
+== Running Background Tasks
+
+There are many tasks which crabgrass needs to run regularly in the
+background, including cleaning out cache files and recreating the
+sphinx index.
+
+These tasks will be run if you have backgroundrb running. You can
+configure the frequency of these tasks by editing
+config/backgroundrb.yml.
+
+To start backgroundrb, you can do one of the following:
+  
+  script/start_stop_crabgrass_daemons.rb start-bgrb
+  or
+  script/backgroundrb start -e production
+
+To see the status of the running backgroundrb processes:
+  
+  script/start_stop_crabgrass_daemons.rb status-bgrb
+
+== Running the Sphinx Search deamon
+
+Sphinx is used for searching, it must be running before crabgrass is
+started for it to be used. If sphinx searchd daemon is not detected,
+then crabgrass will not use fulltext searching.
+
+First make sure that you have an up-to-date sphinx database:
+
+  rake ts:index RAILS_ENV=production
+
+Then to start sphinx, you can do:
+
+  script/start_stop_crabgrass_daemons.rb start-sphinx
+
+you can also do this to start it:
+  rake ts:start RAILS_ENV=production
+
+To see the status of the running sphinx processes:
+
+  script/start_stop_crabgrass_daemons.rb status-sphinx
+
+For installation instructions and further details, see SPHINX[link:files/doc/SPHINX.html]
+
+== Other Tips
+
+You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
+gem is installed.
+
+There is an example capistrano deploy.rb in the config directory.
 
 = Troubleshooting
 
