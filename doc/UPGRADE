@@ -1,7 +1,7 @@
 0.4.7
 -----
 * Contains a migration that removes duplicate daily trackings.
-  Due to a bug Hourlies where counted twice for dailies. This
+  Due to a bug hourlies where counted twice for dailies. This
   migration fixes that. It only removes duplicates for the same
   page and day - so it should be a no-op if there are none.
   If you use trackings differently than on a daily basis you will
@@ -11,7 +11,22 @@
 * Contains a migration that sets the access level of status post
   activities so that they are able to be viewed by friends and 
   peers only.  This does nto have any effect on the schema.
+ 
+To perform these migrations:
+    % rake db:migrate RAILS_ENV=xxxx 
 
+0.4.6.1
+-------
+
+* the following is only necessary if you were running 0.4.6:
+    % backup your database! 
+    % run the rails console: script/console production
+    % Wiki.find(:all, :conditions => 'body RLIKE "[\r\n]{20,}"').size
+      If it returns a zero, no need to do anything more
+    % Wiki.find(:all, :conditions => 'body RLIKE "[\r\n]{20,}"').each
+      {|w| w.body.gsub!(/[\n\r]{20,}/, "\n\n\n\n"); w.raw_structure = nil;
+      w.save!}
+    % repeat the first Wiki.find procedure to make sure you get no results
 
 0.4.6
 -----

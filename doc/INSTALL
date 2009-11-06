@@ -1,113 +1,191 @@
-= Install the necessary packages
+= Install the necessary dependencies
 
-These packages are required:
+The required dependent programs and ruby libraries are detailed in the
+table below. You may either install them via the gem package manager,
+or if using Debian/Ubuntu by using the Debian package. Both names
+arelisted in the table when both are available, if only one is listed,
+then you can only install it via that mechanism.
 
-Make sure your git-core is a version => 1.5.6.5, there is a newer version available in etch-backports if you are running etch
+If you are running Debian stable, you can often pull newer versions of
+packages from [http://backports.org].
 
-  apt-get install git-core
-  apt-get install ruby1.8 ruby1.8-dev libmysql-ruby rubygems
-  apt-get install libopenssl-ruby1.8
+| gem        | debian package          | notes / required versions                     |
+|------------+-------------------------+-----------------------------------------------|
+|            | ruby1.8                 | =1.8.7                                        |
+|            | ruby1.8-dev             |                                               |
+|            | rubygems                |                                               |
+| rake       | rake                    | >=0.8.1                                       |
+| rails      | rails*                  | =2.1.0                                        |
+| mysql      | libmysql-ruby           | ruby mysql support >=5.0                      |
+|            | mysql-server            | the database server                           |
+|            | libopenssl-ruby         |                                               |
+| tzinfo     | libtzinfo-ruby          | timezone support                              |
+| RedCloth   | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
+| haml       | libhaml-ruby            | templating, generated CSS site themes >=2.2.8 |
+| hpricot    | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
+| chronic    | libchronic-ruby         | required by backgroundrb                      |
+| packet     | libpacket-ruby          | required by backgroundrb >=0.1.15             |
+| mime-types | libmime-types-ruby      | file upload bug in IE6                        |
+|            | openoffice.org          | image thumbnails/document previews (optional) |
+|            | openoffice.org-headless | image thumbnails/document previews (optional) |
+|            | msttcorefonts           | document previews (optional)                  |
+|            | graphicsmagick          | thumbnail generation (optional)               |
+|            | inkscape                | thumbnail generation (optional)               |
+|            | libcrack2               | password strength checking (optional)         |
+|            | cracklib-runtime        | password strength checking (optional)         |
+|            | libopen4-ruby           | better pipes, for latex renderer (optional)   |
+|            | ruby-debug              | for debugging running application (optional)  |
+|            | libxslt1-dev            | pre-required for nokogiri (optional)          |
+|            | libxml2-dev             | pre-required for nokogiri (optional)          |
+| nokogiri   | libnokogiri-ruby        | for webrat plugin (optional)                  |
+| launchy    |                         | for webrat plugin (optional)                  |
 
-On some systems, libopenssl-ruby1.8 is required.
 
-= Grab The Code
-
-To get a copy of the most recent code:
-
-  cd ~/development
-  git clone git://labs.riseup.net/crabgrass.git
-
-See https://labs.riseup.net/code/projects/show/crabgrass for information on releases.
-
-= Install optional packages
-
-These packages are optional, but necessary for image thumbnails and document previews.
-
-  apt-get install openoffice.org openoffice.org-headless msttcorefonts
-
-These packages are required by Nokogiri gem (used by the webrat testing pluging)
-
-  apt-get install libxslt1-dev libxml2-dev
-
-For more information on generating previews, see ASSETS[link:files/doc/ASSETS.html].
-
-= Install Gems
-
-You can use Crabgrass with the debian packages for ruby libraries, but this is difficult and unstable. It is recommended that you install the required gems using rubygems.
-
-Basic gems to get rails working:
-
-  gem install rake --no-ri --no-rdoc
-  gem install -v=2.1.0 rails --no-ri --no-rdoc
-
-These gems are required for Crabgrass:
-
-  gem install tzinfo RedCloth haml hpricot --no-ri --no-rdoc
-
-These gems are optional:
-
-  gem install ruby-debug nokogiri launchy mime-types chronic packet --no-ri --no-rdoc
-
-See GEMS[link:files/doc/GEMS.html] for a description of what these gems are used for.
-
-= Setup Mysql Database
-
-Crabgrass only works with mysql.
-
-Install mysql and create the databases:
-
-  apt-get install mysql-server
-  mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
-
-There is a sample database configuration file in the <tt>config</tt> directory of the
-crabgrass application. Use that to create a <tt>config/database.yml</tt> file:
-
-  cd ~/development/crabgrass/config
-  cp database.yml.example database.yml
-
-For development mode, the example database.yml should be good to go, unless you have a set
-a password for mysql.
-
-For some linux distributions, you may need to specify a socket file for mysql like so:
-<tt>socket: /var/run/mysqld/mysqld.sock</tt>. You can probably figure out what socket
-to use by running <tt>ps -ef | grep mysql</tt>.
-
-The final step is to load the crabgrass schema and populate it with test data:
-
-  cd ~/development/crabgrass
-  rake db:schema:load
-  rake db:fixtures:load
-  rake cg:load_default_data
-
-To upgrade the crabgrass database after pulling in new code:
-
-  cd ~/development/crabgrass
-  git pull
-  rake db:migrate
-  rake db:fixtures:load
-  rake cg:load_default_data
-
-Also, <tt>rake --version</tt> must be 0.8.1 or greater.
+NOTE: If you use the Debian rails package, you will need to install a
+symlink in the crabgrass/vendor directory to rails:
+  % ln -s /usr/share/rails vendor/rails
 
 = Configuration
 
-The default configuration is probably what you want for running in development mode. For more details on how to configure crabgrass, see CONFIGURATION[link:files/doc/CONFIGURATION.html].
+Before you go on, you must create the secret.txt file:
+
+  rake create_a_secret RAILS_ENV=production
+
+There are several required configuration files:
+
+Look over the config/crabgrass.production.yml (or development)
+configuration for any additional changes. See
+CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
+
+The default configuration is probably what you want for running in
+development mode. 
+
+= Setup Mysql Database
+
+Crabgrass currently only works with mysql.
+
+* Create the database:
+
+  mysqladmin -u root -p create crabgrass 
+
+If you are doing development, also create these databases
+crabgrass_development, crabgrass_test
+
+* Create database user/password
+
+For development work, there is not much need to create a database user
+for crabgrass. For a production deployment, however, you should do
+this (substitute your sekret password):
+
+  GRANT USAGE ON crabgrass.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
+  GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
+  flush privileges;
+
+* Setup the application database configuration file
+
+There is a sample database configuration file in the <tt>config</tt>
+directory of the crabgrass application. Use that to create a
+<tt>config/database.yml</tt> file, and edit it accordingly:
+
+  cd crabgrass/config
+  cp database.yml.example database.yml
+
+Configure database.yml with the correct information for the different
+environments you will be using, you only need to configure the ones
+you will be using.
+
+For some linux distributions, you may need to specify a socket file
+for mysql like so: <tt>socket: /var/run/mysqld/mysqld.sock</tt>. You
+can probably figure out what socket to use by running <tt>ps -ef |
+grep mysql</tt>.
+
+* Populate the database with the schema and default data
+
+The final step is to load the crabgrass database schema and populate
+it with the appropriate data:
+
+  cd crabgrass
+  rake db:schema:load RAILS_ENV=production
+  rake cg:load_default_data RAILS_ENV=production
+
+If you are doing development, and have created the
+crabgrass_development database, you will need to specify
+RAILS_ENV=development instead. Additionally, for development, you will
+need to load the test fixture data, NOTE that this is not needed for a
+production setup:
+
+  rake db:fixtures:load
+
+If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
+of test data loaded, including users. To get started, you can login as
+user 'blue' with password 'blue'.
 
 = Running Crabgrass
 
-  cd ~/development/crabgrass
-  script/server
+  cd crabgrass
+  script/server -e production
 
-This will run crabgrass in development mode, which is probably what you want. If
-you don’t want to use webbrick (the mini-web-server that comes with rails) you
-can install the mongrel gem or debian package. If installed, script/server will
-pick them instead.
+This will run crabgrass in production mode, if you wish to run it in
+development mode you can omit the -e option as development mode is the
+default. If you don’t want to use webrick (the mini-web-server that
+comes with rails) you can install passenger, or mongrel along with
+apache. If installed, script/server will pick them instead. If you are
+running in production, it is highly recommended that you do not run
+webrick as it is single-threaded and quite slow, it is fine for
+development purposes.
 
-Once the server is running, just point your web browser at http://localhost:3000.
+Once the server is running, just point your web browser at
+http://localhost:3000.
 
-If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch of test data
-loaded, including users. To get started, you can login as user 'blue' with
-password 'blue'.
+== Running Background Tasks
+
+There are many tasks which crabgrass needs to run regularly in the
+background, including cleaning out cache files and recreating the
+sphinx index.
+
+These tasks will be run if you have backgroundrb running. You can
+configure the frequency of these tasks by editing
+config/backgroundrb.yml.
+
+To start backgroundrb, you can do one of the following:
+  
+  script/start_stop_crabgrass_daemons.rb start-bgrb
+  or
+  script/backgroundrb start -e production
+
+To see the status of the running backgroundrb processes:
+  
+  script/start_stop_crabgrass_daemons.rb status-bgrb
+
+== Running the Sphinx Search deamon
+
+Sphinx is used for searching, it must be running before crabgrass is
+started for it to be used. If sphinx searchd daemon is not detected,
+then crabgrass will not use fulltext searching.
+
+First make sure that you have an up-to-date sphinx database:
+
+  rake ts:index RAILS_ENV=production
+
+Then to start sphinx, you can do:
+
+  script/start_stop_crabgrass_daemons.rb start-sphinx
+
+you can also do this to start it:
+  rake ts:start RAILS_ENV=production
+
+To see the status of the running sphinx processes:
+
+  script/start_stop_crabgrass_daemons.rb status-sphinx
+
+For installation instructions and further details, see SPHINX[link:files/doc/SPHINX.html]
+
+== Other Tips
+
+You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
+gem is installed.
+
+There is an example capistrano deploy.rb in the config directory.
 
 = Troubleshooting
 
