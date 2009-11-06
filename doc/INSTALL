@@ -62,7 +62,7 @@ For development work, there is not much need to create a database user
 for crabgrass. For a production deployment, however, you should do
 this (substitute your sekret password):
 
-  GRANT USAGE ON *.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
+  GRANT USAGE ON crabgrass.* TO 'crabgrass'@'localhost' IDENTIFIED BY 'xxxx';
   GRANT ALL PRIVILEGES ON crabgrass.* TO 'crabgrass'@'localhost';
   flush privileges;
 
@@ -75,8 +75,9 @@ directory of the crabgrass application. Use that to create a
   cd crabgrass/config
   cp database.yml.example database.yml
 
-For development mode, the example database.yml should be good to go,
-unless you have a set a password for mysql.
+Configure database.yml with the correct information for the different
+environments you will be using, you only need to configure the ones
+you will be using.
 
 For some linux distributions, you may need to specify a socket file
 for mysql like so: <tt>socket: /var/run/mysqld/mysqld.sock</tt>. You
@@ -106,11 +107,11 @@ user 'blue' with password 'blue'.
 
 = Configuration
 
+Before you go on, you must create the secret.txt file:
+
+  rake create_a_secret RAILS_ENV=production
+
 There are several required configuration files:
-
-First create a config/secret.txt file:
-
-  rake create_a_secret
 
 Look over the config/crabgrass.production.yml (or development)
 configuration for any additional changes. See
@@ -122,16 +123,16 @@ development mode.
 = Running Crabgrass
 
   cd crabgrass
-  script/server
+  script/server -e production
 
-This will run crabgrass in development mode, if you wish to run it in
-production mode you will want to pass RAILS_ENV=production. If you
-don’t want to use webrick (the mini-web-server that comes with rails)
-you can install passenger, or mongrel along with apache. If installed,
-script/server will pick them instead. If you are running in
-production, it is highly recommended that you do not run webrick as it
-is single-threaded and quite slow, it is fine for development
-purposes.
+This will run crabgrass in production mode, if you wish to run it in
+development mode you can omit the -e option as development mode is the
+default. If you don’t want to use webrick (the mini-web-server that
+comes with rails) you can install passenger, or mongrel along with
+apache. If installed, script/server will pick them instead. If you are
+running in production, it is highly recommended that you do not run
+webrick as it is single-threaded and quite slow, it is fine for
+development purposes.
 
 Once the server is running, just point your web browser at
 http://localhost:3000.
