@@ -11,16 +11,16 @@ packages from [http://backports.org].
 
 | gem        | debian package          | notes / required versions                     |
 |------------+-------------------------+-----------------------------------------------|
-|            | ruby1.8                 |                                               |
+|            | ruby1.8                 | =1.8.7                                        |
 |            | ruby1.8-dev             |                                               |
 |            | rubygems                |                                               |
 | rake       | rake                    | >=0.8.1                                       |
 | rails      | rails*                  | =2.1.0                                        |
-| mysql      | libmysql-ruby           | ruby mysql support                            |
+| mysql      | libmysql-ruby           | ruby mysql support >=5.0                      |
 |            | mysql-server            | the database server                           |
 |            | libopenssl-ruby         |                                               |
 | tzinfo     | libtzinfo-ruby          | timezone support                              |
-| RedCloth   | libredcloth-ruby        | for crabgrass markup: GreenCloth) >=4.2.2     |
+| RedCloth   | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
 | haml       | libhaml-ruby            | templating, generated CSS site themes >=2.2.8 |
 | hpricot    | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
 | chronic    | libchronic-ruby         | required by backgroundrb                      |
