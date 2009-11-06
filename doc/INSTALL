@@ -29,6 +29,8 @@ packages from [http://backports.org].
 |            | openoffice.org          | image thumbnails/document previews (optional) |
 |            | openoffice.org-headless | image thumbnails/document previews (optional) |
 |            | msttcorefonts           | document previews (optional)                  |
+|            | graphicsmagick          | thumbnail generation (optional)               |
+|            | inkscape                | thumbnail generation (optional)               |
 |            | libcrack2               | password strength checking (optional)         |
 |            | cracklib-runtime        | password strength checking (optional)         |
 |            | libopen4-ruby           | better pipes, for latex renderer (optional)   |
