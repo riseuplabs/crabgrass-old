@@ -45,6 +45,21 @@ NOTE: If you use the Debian rails package, you will need to install a
 symlink in the crabgrass/vendor directory to rails:
   % ln -s /usr/share/rails vendor/rails
 
+= Configuration
+
+Before you go on, you must create the secret.txt file:
+
+  rake create_a_secret RAILS_ENV=production
+
+There are several required configuration files:
+
+Look over the config/crabgrass.production.yml (or development)
+configuration for any additional changes. See
+CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
+
+The default configuration is probably what you want for running in
+development mode. 
+
 = Setup Mysql Database
 
 Crabgrass currently only works with mysql.
@@ -104,21 +119,6 @@ production setup:
 If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
 of test data loaded, including users. To get started, you can login as
 user 'blue' with password 'blue'.
-
-= Configuration
-
-Before you go on, you must create the secret.txt file:
-
-  rake create_a_secret RAILS_ENV=production
-
-There are several required configuration files:
-
-Look over the config/crabgrass.production.yml (or development)
-configuration for any additional changes. See
-CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
-
-The default configuration is probably what you want for running in
-development mode. 
 
 = Running Crabgrass
 
