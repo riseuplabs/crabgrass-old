@@ -187,6 +187,9 @@ module LayoutHelper
     lines << @content_for_script
     lines << localize_modalbox_strings
     lines << '</script>'
+    lines << '<!--[if IE]>'
+    lines << '<script src="/javascripts/ie/html5.js"></script>'
+    lines << '<![endif]-->'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
