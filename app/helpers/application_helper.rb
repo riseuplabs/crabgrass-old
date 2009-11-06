@@ -190,8 +190,9 @@ module ApplicationHelper
   # returns the related help string, but only if it is translated.
   def help(symbol)
     symbol = "#{symbol}_help".to_sym
-    text = ""[symbol]
-    text.any? ? text : nil
+    text = I18n.t(symbol)
+    # return nil if I18n.t says translation is missing
+    text =~ /translation missing/ ? nil : text
   end
 
   def debug_permissions

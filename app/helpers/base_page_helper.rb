@@ -114,13 +114,12 @@ module BasePageHelper
       if @upart and @upart.star?
         icon = 'star'
         add = false
-        label = I18n.t(:remove_star_link)
+        label = I18n.t(:remove_star_link, :star_count => @page.stars_count)
       else
         icon = 'star_empty_dark'
         add = true
-        label = I18n.t(:add_star_link)
+        label = I18n.t(:add_star_link, :star_count => @page.stars_count)
       end
-      label = label % {:star_count => @page.stars_count}
       url = {:controller => 'base_page/participation', :action => 'update_star',
              :add => add, :page_id => @page.id}
       link = link_to_remote_with_icon(label, :url => url, :icon => icon)
@@ -154,7 +153,7 @@ module BasePageHelper
     end
   end
 
-  def history_line 
+  def history_line
     link = link_to I18n.t(:history), page_url(@page, :action => "page_history")
     content_tag :li, link, :class => 'small_icon table_16'
   end
@@ -259,19 +258,19 @@ module BasePageHelper
 
   def share_line
     if may_share_page?
-      popup_line(:name => 'share', :label => I18n.t(:share_page_link) % {:page_class => page_class }, :icon => 'group', :controller => 'share')
+      popup_line(:name => 'share', :label => I18n.t(:share_page_link, :page_class => page_class), :icon => 'group', :controller => 'share')
     end
   end
 
   def notify_line
     if may_notify_page?
-      popup_line(:name => 'notify', :label => I18n.t(:notify_page_link) % {:page_class => page_class }, :icon => 'whistle', :controller => 'share')
+      popup_line(:name => 'notify', :label => I18n.t(:notify_page_link), :icon => 'whistle', :controller => 'share')
     end
   end
 
   def delete_line
     if may_delete_page?
-      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link) % {:page_class => page_class }, :icon => 'trash')
+      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => page_class), :icon => 'trash')
     end
   end
 
@@ -283,7 +282,7 @@ module BasePageHelper
 
   def details_line(id='details')
     if id == 'details'
-      label = I18n.t(:page_details_link)
+      label = I18n.t(:page_details_link, :page_class => page_class)
       icon = 'table'
     elsif id == 'more'
       label = I18n.t(:see_more_link)
@@ -291,7 +290,7 @@ module BasePageHelper
     end
 
     if may_show_page?
-      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link), :icon => icon, :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => page_class), :icon => icon, :controller => 'participation')
     end
   end
 

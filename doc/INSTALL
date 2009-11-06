@@ -54,9 +54,17 @@ See GEMS[link:files/doc/GEMS.html] for a description of what these gems are used
 
 Crabgrass only works with mysql.
 
-Install mysql and create the databases:
+OS X Note: usually in OS X mysql will be installed without /etc/my.cnf. You need to copy /usr/local/mysql/support-files/my-small.cnf to /etc/my.cnf. In some cases the mysql installation path might be different. Try the command `which mysql` to find it.
 
+
+Install mysql (on ubuntu/debian systems):
   apt-get install mysql-server
+
+Add these lines if they don't already exist to /etc/my.cnf (under [mysqld] section):
+  character-set-server=utf8
+  collation-server=utf8_general_ci
+
+Create the databases:
   mysqladmin -u root -p create crabgrass create crabgrass_development create crabgrass_test
 
 There is a sample database configuration file in the <tt>config</tt> directory of the
