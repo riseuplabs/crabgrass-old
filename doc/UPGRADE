@@ -13,7 +13,7 @@
   peers only.  This does nto have any effect on the schema.
  
 To perform these migrations:
-    % db:migrate RAILS_ENV=xxxx 
+    % rake db:migrate RAILS_ENV=xxxx 
 
 0.4.6.1
 -------
