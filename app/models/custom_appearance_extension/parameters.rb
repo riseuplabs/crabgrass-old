@@ -26,7 +26,7 @@ module CustomAppearanceExtension
         elsif !asset.height
           self.errors.add_to_base("Can't detect image height. Either the image is corrupted or the server has experienced an error"[:cant_detect_image_height_error])
         elsif asset.height > MASTHEAD_IMAGE_MAX_HEIGHT
-          self.errors.add_to_base("Uploaded image is too tall (%d pixels is the max height)"[:too_tall_image_error] % MASTHEAD_IMAGE_MAX_HEIGHT)
+          self.errors.add_to_base("Uploaded image is too tall ({count} pixels is the max height)"[:too_tall_image_error, {:count => MASTHEAD_IMAGE_MAX_HEIGHT}])
         else
           # all good
           # delete the old masthead asset

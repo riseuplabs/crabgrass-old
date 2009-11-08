@@ -100,7 +100,7 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language,
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
-    :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
+    :enforce_ssl, :show_exceptions, :require_user_email, :require_user_full_info, :domain, :profiles,
     :profile_fields, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
 
   def profile_field_enabled?(field)

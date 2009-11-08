@@ -34,7 +34,7 @@ class ContactController < ApplicationController
 
   def remove
     unless current_user.friend_of?(@user)
-      flash_message_now :error => 'You are not the contact of %s.'[:not_contact_of] % @user.name
+      flash_message_now :error => 'You are not the contact of {user}.'[:not_contact_of, {:user => @user.name}]
       return
     end
 
@@ -42,7 +42,7 @@ class ContactController < ApplicationController
       redirect_to url_for_user(@user)
     elsif request.post? and params[:remove]
       current_user.remove_contact!(@user)
-      flash_message_now :success => '%s has been removed from your contact list.'[:contact_removed] % @user.login
+      flash_message_now :success => '{user} has been removed from your contact list.'[:contact_removed, {:user => @user.login}]
     end
   end
 

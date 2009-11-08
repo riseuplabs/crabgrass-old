@@ -98,7 +98,7 @@ module UserExtension::Users
     ## STATUS / PUBLIC WALL
     ##
 
-    # returns the users current status by returning his latest status_posts.body
+    # returns the users current status by returning their latest status_posts.body
     def current_status
       @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
     end
@@ -186,16 +186,21 @@ module UserExtension::Users
     def relationship_to(user)
       relationships_to(user).first
     end
+
     def relationships_to(user)
       return :stranger unless user
-      (@tmp_relationships_hash ||= {})[user.login] ||= get_relationships_to(user)
+
+      @relationships_to_user_cache ||= {}
+      @relationships_to_user_cache[user.login] ||= get_relationships_to(user)
+      @relationships_to_user_cache[user.login].dup
     end
+
     def get_relationships_to(user)
       ret = []
       ret << :friend   if friend_of?(user)
       ret << :peer     if peer_of?(user)
   #   ret << :fof      if fof_of?(user)
-      ret << :stranger if ret.empty?
+      ret << :stranger
       ret
     end
 
@@ -217,7 +222,7 @@ module UserExtension::Users
       if friend_of?(user) or peer_of?(user) or profiles.visible_by(user).may_pester?
         return true
       else
-        raise PermissionDenied.new('You not allowed to share with %s'[:pester_denied] % self.name)
+        raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => self.name}])
       end
     end
 
@@ -226,6 +231,12 @@ module UserExtension::Users
     end
     def may_pester!(entity)
       entity.may_be_pestered_by! self
+    end
+  
+    def may_show_status_to?(user)
+      return true if user==self
+      return true if friend_of?(user) or peer_of?(user)
+      false
     end
 
   end # InstanceMethods

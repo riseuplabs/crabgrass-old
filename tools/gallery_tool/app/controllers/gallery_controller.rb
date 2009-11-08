@@ -251,9 +251,9 @@ class GalleryController < BasePageController
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
-      render(:text => "Successfully removed image! (:undo_link)"[:successfully_removed_image]%{
+      render(:text => "Successfully removed image! {undo_link}"[:successfully_removed_image,{
                :undo_link => undo_link
-             } + js,
+             }] + js,
              :layout => false)
     else
       redirect_to page_url(@page)

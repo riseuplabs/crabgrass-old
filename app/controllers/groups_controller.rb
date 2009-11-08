@@ -92,6 +92,7 @@ class GroupsController < Groups::BaseController
       end
     end
     if @group
+      Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
       return true
     else
       no_context

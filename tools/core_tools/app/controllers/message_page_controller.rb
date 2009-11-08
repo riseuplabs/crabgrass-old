@@ -14,7 +14,7 @@ class MessagePageController < BasePageController
       return flash_message_now(:error => 'at least one recipient is required'.t) unless users.any?
       return flash_message_now(:error => 'message must not be empty'.t) unless params[:message].any?
 
-      @page = Page.make :private_message, :to => users, :from => current_user, :title => params[:title], :body => params[:message]
+      @page = Page.make_a_call :private_message, :to => users, :from => current_user, :title => params[:title], :body => params[:message]
       if params[:email]
         @page.users.each do |u|
           Mailer.deliver_share_notice(u, 'new personal message', mailer_options) if current_user != u

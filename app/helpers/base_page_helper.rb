@@ -160,6 +160,11 @@ module BasePageHelper
     end
   end
 
+  def history_line 
+    link = link_to "History"[:history], page_url(@page, :action => "page_history")
+    content_tag :li, link, :class => 'small_icon table_16'
+  end
+
   ##
   ## SIDEBAR COLLECTIONS
   ##

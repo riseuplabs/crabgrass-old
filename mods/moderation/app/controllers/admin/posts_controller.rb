@@ -10,18 +10,8 @@ class Admin::PostsController < Admin::BaseController
     if view == 'all'
       @flagged = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
     else
-      if view == 'new'
-        # all posts that have been flagged as inappropriate have not had any admin action yet.
-        options = { :conditions => ['vetted_at IS NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
-      elsif view == 'vetted'
-        # all posts that have been marked as vetted by an admin (and are not deleted)
-        options = { :conditions => ['vetted_at IS NOT NULL AND deleted_at IS NULL'], :order => 'updated_at DESC' }
-      elsif view == 'deleted'
-        # list the pages that are 'deleted' by being hidden from view.
-        options = { :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' }
-      end
       # defined by subclasses
-      fetch_posts(options)
+      fetch_posts(view)
     end
   end
 

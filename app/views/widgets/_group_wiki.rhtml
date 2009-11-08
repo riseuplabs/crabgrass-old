@@ -1,4 +1,4 @@
-<%= header_with_more(:h2, :alert, "Wiki"[:wiki], group_search_url('type','wiki','descending', 'updated_at')) %>
+<%= header_with_more(:h2, :alert, "Wiki"[:wiki]) %>
 <% if @access == :public -%>
   <div class='wiki'>
     <%= @profile.wiki.body_html %>

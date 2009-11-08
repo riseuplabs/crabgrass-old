@@ -6,8 +6,7 @@
 
 <div id="navigation">
   <% delay_field = text_field_tag "delay", default_delay, :id => 'delay_field', :size => 1 -%>
-  <%= "Update every :input_field seconds"[:slideshow_delay_input]%{
-	:input_field => delay_field } %>
+  <%= "Update every {input_field}" seconds"[:slideshow_delay_input, {:input_field => delay_field }] %>
   <%= button_to_function "apply"[:apply_settings], "delay=$('delay_field').value;" %>
 </div>
 

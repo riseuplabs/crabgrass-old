@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090821060849) do
+ActiveRecord::Schema.define(:version => 20091105213521) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -78,6 +78,26 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
   create_table "avatars", :force => true do |t|
     t.binary  "image_file_data"
     t.boolean "public",          :default => false
+  end
+
+  create_table "bdrb_job_queues", :force => true do |t|
+    t.text     "args"
+    t.string   "worker_name"
+    t.string   "worker_method"
+    t.string   "job_key"
+    t.integer  "taken",          :limit => 11
+    t.integer  "finished",       :limit => 11
+    t.integer  "timeout",        :limit => 11
+    t.integer  "priority",       :limit => 11
+    t.datetime "submitted_at"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "archived_at"
+    t.string   "tag"
+    t.string   "submitter_info"
+    t.string   "runner_info"
+    t.string   "worker_key"
+    t.datetime "scheduled_at"
   end
 
   create_table "categories", :force => true do |t|
@@ -315,6 +335,8 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
+    t.integer  "yuck_count",  :limit => 11, :default => 0
+    t.boolean  "vetted",                    :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -323,6 +345,36 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
   end
+
+  create_table "moderated_flags", :force => true do |t|
+    t.string   "type",                         :null => false
+    t.datetime "vetted_at"
+    t.integer  "vetted_by_id",   :limit => 11
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id",  :limit => 11
+    t.string   "reason_flagged"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id",        :limit => 11
+    t.integer  "foreign_id",     :limit => 11, :null => false
+  end
+
+  create_table "page_histories", :force => true do |t|
+    t.integer  "user_id",                     :limit => 11
+    t.integer  "page_id",                     :limit => 11
+    t.string   "type"
+    t.datetime "created_at"
+    t.integer  "object_id",                   :limit => 11
+    t.string   "object_type"
+    t.datetime "notification_sent_at"
+    t.datetime "notification_digest_sent_at"
+    t.string   "details"
+  end
+
+  add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
+  add_index "page_histories", ["object_id", "object_type"], :name => "index_page_histories_on_object_id_and_object_type"
+  add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", :force => true do |t|
     t.integer  "page_id",            :limit => 11
@@ -397,12 +449,8 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
-  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
-  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
   add_index "pages", ["type"], :name => "index_pages_on_type"
   add_index "pages", ["flow"], :name => "index_pages_on_flow"
-  add_index "pages", ["public"], :name => "index_pages_on_public"
-  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
   add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
   add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
   execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
@@ -569,32 +617,33 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.string  "name"
     t.string  "domain"
     t.string  "email_sender"
-    t.integer "pagination_size",      :limit => 11
-    t.integer "super_admin_group_id", :limit => 11
+    t.integer "pagination_size",        :limit => 11
+    t.integer "super_admin_group_id",   :limit => 11
     t.text    "translators"
     t.string  "translation_group"
     t.string  "default_language"
     t.text    "available_page_types"
     t.text    "evil"
     t.boolean "tracking"
-    t.boolean "default",                            :default => false
-    t.integer "network_id",           :limit => 11
-    t.integer "custom_appearance_id", :limit => 11
-    t.boolean "has_networks",                       :default => true
+    t.boolean "default",                              :default => false
+    t.integer "network_id",             :limit => 11
+    t.integer "custom_appearance_id",   :limit => 11
+    t.boolean "has_networks",                         :default => true
     t.string  "signup_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
-    t.integer "council_id",           :limit => 11
+    t.integer "council_id",             :limit => 11
     t.string  "login_redirect_url"
     t.boolean "chat"
     t.boolean "limited"
-    t.integer "signup_mode",          :limit => 1
-    t.string  "email_sender_name",    :limit => 40
+    t.integer "signup_mode",            :limit => 1
+    t.string  "email_sender_name",      :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
-    t.integer "moderation_group_id",  :limit => 11
+    t.integer "moderation_group_id",    :limit => 11
+    t.boolean "require_user_full_info"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -745,14 +794,7 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.boolean  "inbox",                       :default => false
   end
 
-  add_index "user_participations", ["page_id"], :name => "index_user_participations_page"
-  add_index "user_participations", ["user_id"], :name => "index_user_participations_user"
-  add_index "user_participations", ["page_id", "user_id"], :name => "index_user_participations_page_user"
-  add_index "user_participations", ["viewed"], :name => "index_user_participations_viewed"
-  add_index "user_participations", ["watch"], :name => "index_user_participations_watch"
-  add_index "user_participations", ["star"], :name => "index_user_participations_star"
-  add_index "user_participations", ["resolved"], :name => "index_user_participations_resolved"
-  add_index "user_participations", ["attend"], :name => "index_user_participations_attend"
+  add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true
 
   create_table "user_settings", :force => true do |t|
     t.integer  "user_id",                    :limit => 11
@@ -808,6 +850,9 @@ ActiveRecord::Schema.define(:version => 20090821060849) do
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
+    t.string   "receive_notifications"
+    t.binary   "student_id_cache"
+    t.boolean  "encrypt_emails",                          :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

@@ -165,27 +165,28 @@ menu_link_account: "Account"
 ###
 
 group_information: ":group_type Information"
-
-redirect_to_foreign_domain: "You are trying to redirect to a foreign domain (:url) after your login. For security reasons we have removed this parameter from the URL."
-subject_must_not_be_empty: subject must not be empty
-at_least_one_recipient_is_required: at least one recipient is required
-message_must_not_be_empty: message must not be empty
-subject: subject
-message: message
-from: from
-To: To
-date: date
+redirect_to_foreign_domain: "You are trying to redirect to a foreign domain {url} after your login. For security reasons we have removed this parameter from the URL."
+subject_must_not_be_empty: "subject must not be empty"
+at_least_one_recipient_is_required: "at least one recipient is required"
+message_must_not_be_empty: "message must not be empty"
+subject: "subject"
+message: "message"
+from: "from"
+To: "To"
+date: "date"
+### not sure these are used
 request_status: "This request is: :status."
-status_resolved: resolved
-status_pending: pending
-approve_or_reject_link: approve or reject this request
-request_status: This request was :status by :user on :time
-discuss_request_link: discuss this request with :person_or_group
-small: small
-medium: medium
-large: large
-full: full
-include_full_checkbox: include link to full image
+request_status: "This request was :status by :user on :time"
+### and there are two of them!
+status_resolved: "resolved"
+status_pending: "pending"
+approve_or_reject_link: "approve or reject this request"
+discuss_request_link: "discuss this request with {person_or_group}"
+small: "small"
+medium: "medium"
+large: "large"
+full: "full"
+include_full_checkbox: "include link to full image"
 confirm_discarding_text_area: "All your unsaved work will be lost. Press {cancel} to continue editing."
 
 ##
@@ -195,7 +196,7 @@ confirm_discarding_text_area: "All your unsaved work will be lost. Press {cancel
 signup_link: "New Account"
 signup_email_info: "Optional: used if you forget your password"
 forgot_password_link: "Forgot Password"
-signup_info: Choose your login name and your password then click "{sign_up}"
+signup_info: 'Choose your login name and your password then click "{sign_up}"'
 login_failure_reason: "Username or password is incorrect."
 signup_success_message: "Thanks for signing up!"
 login_name: "Login name"
@@ -212,15 +213,15 @@ signup_email: "Your Email"
 forgot_password_text: |
   If you've forgotten the password you use to log in, we can send you an email link which will allow you to generate a new one.
 reset_password_text: |
-  Hello, %s. If you've forgotten the password you use to log in, you can set a new one here.
+  Hello, {login}. If you've forgotten the password you use to log in, you can set a new one here.
 
-forgot_password_mail_greeting: %s, to reset your password, please visit
+forgot_password_mail_greeting: "{login}, to reset your password, please visit"
 forgot_password_mail_expiry: |
   This link will remain valid for 24 hours. If you need to reset your
   password after that, you will have to visit the forgotten password page
   again to request a new link.
 
-reset_password_mail_greeting: %s, your password has been reset as you requested.
+reset_password_mail_greeting: "{login}, your password has been reset as you requested."
 reset_password_mail_warning: "If you did not request that your password be changed, please contact us."
 your_login: "Your login"
 invalid_email: "Invalid Email"
@@ -319,8 +320,10 @@ media_document: "Document"
 media_documents: "Documents"
 media_all: "Media"
 media_alls: "Media"
+### old method and don't seem to be used
 media_for_group: "%s in %s"
 media_without_group: "All %s"
+### end not used
 history: "History"
 other_formats: "Other Formats"
 file_version_deleted: "file version deleted"
@@ -340,30 +343,30 @@ version_number: "version {version}"
 ## GALLERY
 ##
 
-order_changed: Order changed.
+order_changed: "Order changed."
 error_saving_new_order: "Error saving new order: :error_message"
-sucessfully_removed_image: Successfully removed image! (:undo_link)
-image_count: Photo :number of :count
-image_count_total: ":count Photos"
-view_slideshow: View Slideshow
-show_gallery: Show Gallery
-edit_gallery: Edit Gallery
-download: Download
-download_gallery: Download Gallery
-undo: undo
-remove_from_gallery: Remove from gallery
-removing_image: Removing Image...
-move_image_left: Move image left
-move_image_right: Move image right
-successful_undelete_image: Successfully undeleted image.
-saved_new_order: Saved new order!
-error_saving_new_order: Error saving new order!
-no_title_given: (no title given)
-saving_your_changes: Saving your changes...
+successfully_removed_image: "Successfully removed image! {undo_link}"
+image_count: "Photo {number} of {count}"
+image_count_total: "{count} Photos"
+view_slideshow: "View Slideshow"
+show_gallery: "Show Gallery"
+edit_gallery: "Edit Gallery"
+download: "Download"
+download_gallery: "Download Gallery"
+undo: "undo"
+remove_from_gallery: "Remove from gallery"
+removing_image: "Removing Image..."
+move_image_left: "Move image left"
+move_image_right: "Move image right"
+successful_undelete_image: "Successfully undeleted image."
+saved_new_order: "Saved new order!"
+error_saving_new_order: "Error saving new order!"
+no_title_given: "(no title given)"
+saving_your_changes: "Saving your changes..."
 activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
-drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
-no_images_in_gallery: No images in Gallery
-add_existing_image: Add Photo
+drag_and_drop_to_rearrange_photos: "Drag &amp; Drop images to rearrange them"
+no_images_in_gallery: "No images in Gallery"
+add_existing_image: "Add Photo"
 upload_new_image: "upload new image"
 type_your_messages_here: "Type your messages here and press enter..."
 add_photo_to_gallery: "Click on a Photo to add it"
@@ -371,10 +374,10 @@ cancel_link: "cancel"
 file_must_be_image_error: "File must be an image to be part of a gallery."
 group_not_allowed_to_view_image_error: "The group that owns this page is not allowed to view this image."
 add_another_file: "Add another file"
-slideshow_delay_input: "Update every :input_field seconds"
+slideshow_delay_input: "Update every {input_field} seconds"
 add_comment: "Add Comment"
 make_album_cover: "make this image the album cover"
-image_title: "Image title: %s"
+image_title: "Image title: {title}"
 upload_zip_file_link: "Upload a ZIP-File"
 upload_images_link: "Upload Images"
 
@@ -393,7 +396,7 @@ my_dashboard: "My Dashboard"
 
 my_tasks: "Tasks"
 my_tasks_headline: "My Tasks"
-my_tasks_description: Task lists I have access to
+my_tasks_description: "Task lists I have access to"
 my_pending_tasks_link: "Pending"
 my_completed_tasks_link: "Completed"
 
@@ -402,23 +405,23 @@ my_requests_headline: "My Requests"
 private_profile: "Private Profile"
 public_profile: "Public Profile"
 
-create_task_list: create new task list
-me_search_description: Search through all pages you have access to
-inbox_description: Inbox of pages I am actively participating in or watching for changes
-toggle_selection: Toggle Selection
-remove_from_inbox: Remove from inbox
-my_settings: Settings for {user}
+create_task_list: "create new task list"
+me_search_description: "Search through all pages you have access to"
+inbox_description: "Inbox of pages I am actively participating in or watching for changes"
+toggle_selection: "Toggle Selection"
+remove_from_inbox: "Remove from inbox"
+my_settings: "Settings for {user}"
 upload_image: "Upload Image"
 uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
 select_image_file: "select image file"
 or_image_url: "or image URL"
-save_changes: Save Changes
-username: Username
-display_name: Display name
-email: Email
-language: Language
-time_zone: Time Zone
-set_status_messsage: What are you doing right now?
+save_changes: "Save Changes"
+username: "Username"
+display_name: "Display name"
+email: "Email"
+language: "Language"
+time_zone: "Time Zone"
+set_status_messsage: "What are you doing right now?"
 
 ##
 ## PROFILE
@@ -429,57 +432,57 @@ profile_public_description: |
   The information you put here is also searchable by other people.
   Use caution when adding personal information to your public profile.
 
-profile_private_description: This profile is private and is only visible to your friends.
+profile_private_description: "This profile is private and is only visible to your friends."
 profile_last_login: "Last Login"
 profile_member_since: "Member Since"
-Home: Home
-Work: Work
-School: School
-Personal: Personal
-Other: Other
-About_Me: About Me
-Social_Change_Interests: Social Change Interests
-Personal_Interests: Personal Interests
-Work_Life: Work Life
-Fax: Fax
-Mobile: Mobile
-Pager: Pager
-general_info: General Information
-first_name: first name
-middle_name: middle
-last_name: last name
-organization: organization
-organizational_role: organizational role
-descriptions: Descriptions
-add_description: Add Description
-phone_numbers: Phone Numbers
-add_phone_number: Add Phone Number
-email_addresses: Email Addresses
-add_email_address: Add Email Address
-locations: Locations
-location: Location
-add_location: Add Location
-im_addresses: IM Addresses
-add_im_address: Add IM Address
-websites: Websites
-add_websites: Add Website
-add_encryption_key: Add Encryption Key
-public_key: Public Key
-location_address: address
-location_city: city
-location_state: state/province
-location_postal_code: postal code
-location_country: country
+Home: "Home"
+Work: "Work"
+School: "School"
+Personal: "Personal"
+Other: "Other"
+About_Me: "About Me"
+Social_Change_Interests: "Social Change Interests"
+Personal_Interests: "Personal Interests"
+Work_Life: "Work Life"
+Fax: "Fax"
+Mobile: "Mobile"
+Pager: "Pager"
+general_info: "General Information"
+first_name: "first name"
+middle_name: "middle"
+last_name: "last name"
+organization: "organization"
+organizational_role: "organizational role"
+descriptions: "Descriptions"
+add_description: "Add Description"
+phone_numbers: "Phone Numbers"
+add_phone_number: "Add Phone Number"
+email_addresses: "Email Addresses"
+add_email_address: "Add Email Address"
+locations: "Locations"
+location: "Location"
+add_location: "Add Location"
+im_addresses: "IM Addresses"
+add_im_address: "Add IM Address"
+websites: "Websites"
+add_websites: "Add Website"
+add_encryption_key: "Add Encryption Key"
+public_key: "Public Key"
+location_address: "address"
+location_city: "city"
+location_state: "state/province"
+location_postal_code: "postal code"
+location_country: "country"
 
 #users_recent_activity: ":user's Recent Activity"
 #users_recent_work: ":user's Recent Work"
 recent_contributions: "Recent Contributions"
-delete_post: Delete Post
-post_message: Post Message
-top_rated: Top Rated
-most_viewed: Most Viewed
-highest_contributors: Highest Contributors
-users_world: ":user's World"
+delete_post: "Delete Post"
+post_message: "Post Message"
+top_rated: "Top Rated"
+most_viewed: "Most Viewed"
+highest_contributors: "Highest Contributors"
+users_world: "{user}'s World"
 request_friend_link: "Add To My Friends"
 remove_friend_link: "Remove From My Friends"
 edit_profile_link: "Edit Profile"
@@ -500,7 +503,7 @@ profile_option_may_see: "Profile is visible"
 user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
 user_profile_description_may_see_contacts: "Allow people to see your list of friends."
 user_profile_description_may_request_contact: "Allow people to request to be your friend."
-user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
+user_profile_description_may_pester: "Allow people who are not your friends or peers to share content with you and send you invitations."
 user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
 user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
@@ -518,7 +521,7 @@ group_profile_description_may_see: "If checked, the profile information below wi
 
 group_join_chat: "Join Chat"
 group_privacy_settings: '%s Privacy Settings'
-group_publicly_visible: 'Make %s Publicly Visible'
+group_publicly_visible: 'Make {group} Publicly Visible'
 committee_publicly_visible: 'Make Committees Publicly Visible'
 allow_membership_requests: 'Allow Membership Requests'
 group_home_headline: "{group_type} Home"
@@ -529,47 +532,47 @@ group_successfully_updated: "Group was successfully updated."
 only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
 group_successfully_created: "Group was successfully created."
 dont_understand_group_type: "Could not understand group type :type"
-dont_have_permission_to_create_committees: "You do not have permission to create committees under %s"
-group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at %s/yourgroupname.
-committee_publicly_visible_description: Committees are viewable by non-members at %s/yourgroupname
-group_members_publicly_visible: Make Members Publicly Visible
-group_members_publicly_visible_description:   Members are viewable by non-members at %s/yourgroupname. Also, the name of the group will be listed on each members profile page (%s/username)
-page_list: Page list
+dont_have_permission_to_create_committees: "You do not have permission to create committees under {group}" 
+group_publicly_visible_description: "Group appears in public directory and group <i>profile</i> is viewable by non-members at {domain}/yourgroupname."
+committee_publicly_visible_description: "Committees are viewable by non-members at {domain}/yourgroupname"
+group_members_publicly_visible: "Make Members Publicly Visible"
+group_members_publicly_visible_description:   "Members are viewable by non-members at {domain}/yourgroupname. Also, the name of the group will be listed on each members profile page ({domain}/username)"
+page_list: "Page list"
 recent_network_pages: "Recent Network Pages"
 recent_member_group_pages: "Recent Activity from Your Groups in :network"
 featured_content_header: "Featured"
 create_group_link: "create group"
-typing: typing
-away: away
-you_are_not_member_of_any_group: You are not a member of any group.
+typing: "typing"
+away: "away"
+you_are_not_member_of_any_group: "You are not a member of any group."
 upload_image: "Upload Image"
-back_to_group: back_to :group_name
-edit_featured_content_for_group: Edit Featured Content For :group_name
-mark_pages_as_featured_content_for_group: Here you can mark pages as featured content of this group.
-current_featured_content: Current Featured Content
-when_does_feature_expire: When does this feature expire?
-unfeature_button: Unfeature!
-not_featured_content: Not yet Featured Content
-expired_featured_content: Expired Featured Content
-feature_button: Feature!
-reactivate_button: Reactivate!
-no_group_named: there is no group named <b>:name</b>.
-featured_content: Featured Content
-group_wiki: Group Wiki
-rss_feed: RSS Feed
-group_has_no_public_profile: This group does not have a public profile.
-pending_tasks: pending tasks.
-no_committees: no committees
-Category: Category
-Founded: Founded
+back_to_group: "back_to {group_name}"
+edit_featured_content_for_group: "Edit Featured Content For {group_name}"
+mark_pages_as_featured_content_for_group: "Here you can mark pages as featured content of this group."
+current_featured_content: "Current Featured Content"
+when_does_feature_expire: "When does this feature expire?"
+unfeature_button: "Unfeature!"
+not_featured_content: "Not yet Featured Content"
+expired_featured_content: "Expired Featured Content"
+feature_button: "Feature!"
+reactivate_button: "Reactivate!"
+no_group_named: "there is no group named <b>{name}</b>."
+featured_content: "Featured Content"
+group_wiki: "Group Wiki"
+rss_feed: "RSS Feed"
+group_has_no_public_profile: "This group does not have a public profile."
+pending_tasks: "pending tasks."
+no_committees: "no committees"
+Category: "Category"
+Founded: "Founded"
 Language: Language
 not_set: not set
 no_members: (no members)
 new_group: "New group"
 create_group_link: "create a new group"
 create_committee: "create committee"
-group_language: "The main language of this %s."
-group_summary: "Brief information regarding this %s."
+group_language: "The main language of this {group_type}."
+group_summary: "Brief information regarding this {group_type}."
 new_network: "New network"
 group_membership_count: "{count} Members"
 
@@ -606,8 +609,6 @@ archive_filter_updated_link: "Last Date Updated"
 
 # create/edit forms
 
-group_language: "The main language of this %s."
-group_summary: "Brief information regarding this %s."
 link_name_description: "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."
 fullname: "Full Name"
 descriptive_name_for_display: "A descriptive name used for display"
@@ -631,7 +632,7 @@ this_is_committee: "This committee is part of {parent_group}."
 
 contact_request_message_label: "Tell %s why you want to be their friend."
 add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-join_request_info: You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting "%s".
+join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {link_to_requests}."
 network_invite_info: "Enter the names of the groups you would like to invite to join this network."
 remove_contact_info: "If you remove someone from your friend list, you will not be able to see when they are logged in or see their full profile. Also, removing them as a friend will mean that you are also removed from their friend list."
 approve_contact_info: "A friend request already exists from this user. Do you wish to approve it?"
@@ -650,17 +651,17 @@ incoming: "Incoming"
 outgoing: "Outgoing"
 state: "state"
 action: "action"
-request_to_friend_description: ":user would like to be the friend of :other_user"
-request_to_join_our_network_description: "group :group was invited to join network :network"
-request_to_join_us_description: ":user was invited to join :group"
-request_to_join_us_via_email_description: ":email was invited to join :group"
-request_to_join_you_description: ":user requested to join :group"
-request_to_join_your_network_description: ":group requested to join network :network"
+request_to_friend_description: "{user} would like to be the friend of {other_user}"
+request_to_join_our_network_description: "group {group} was invited to join network {network}"
+request_to_join_us_description: "{user} was invited to join {group}"
+request_to_join_us_via_email_description: "{email} was invited to join {group}"
+request_to_join_you_description: "{user} requested to join {group}"
+request_to_join_your_network_description: "{group} requested to join network {network}"
 
 send_invites_button: "Send Invites"
 send_invites_headline: "Send invitations to join {group}"
 invite_info: "Enter a list of user logins or email addresses of the people you would like to invite to join this {group_type}."
-remove_contact_confirmation: "Are you sure you wish to no longer be friends with %s?"
+remove_contact_confirmation: "Are you sure you wish to no longer be friends with {login}?"
 already_contacts_info: "You are already the friend of this person."
 try_again: "Try Again"
 invite_accept_info: "Do you already have an account on this website? Click one of the following links to accept the invitation."
@@ -1169,3 +1170,49 @@ flag_inappropriate: "flag as inappropriate"
 confirm_inappropriate_page: "Are you sure this page is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
 confirm_inappropriate_chat: "Are you sure this conversation is inappropriate? Click 'OK' only if you think this is offensive, rude or unkind. A moderator will look at it soon."
 chat_flagged_inappropriate: "Chat room successfully flagged as inappropriate."
+offensive_behavior: "Offensive Behavior"
+off_topic: "Off Topic"
+offensive_language: "Offensive Language"
+other_reason: "Other Reason"
+
+## 
+## PAGE HISTORY
+##
+
+# Detailed
+page_history_details_change_title: "From: \"{from}\" To: \"{to}\""
+
+# Short
+page_history_user_created_page: "{user_name} has created the page"
+page_history_change_title: "{user_name} has modified the page title"
+page_history_add_star: "{user_name} has added a star"
+page_history_remove_star: "{user_name} has removed a star"
+page_history_make_public: "{user_name} has made the page public"
+page_history_make_private: "{user_name} has made unchecked the option to make the page public"
+page_history_deleted_page: "{user_name} has deleted the page"
+page_history_start_watching: "{user_name} has started watching this page"
+page_history_stop_watching: "{user_name} has stop watching this page"
+page_history_updated_content: "{user_name} has updated the page content"
+page_history_granted_group_full_access: "{user_name} granted full access to the group {object_name}"
+page_history_granted_group_write_access: "{user_name} granted write access to the group {object_name}"
+page_history_granted_group_read_access: "{user_name} granted read access to the group {object_name}"
+page_history_revoked_group_access: "{user_name} revoked access to the group {object_name}"
+page_history_granted_user_full_access: "{user_name} granted full access to the user {object_name}"
+page_history_granted_user_write_access: "{user_name} granted write access to the user {object_name}"
+page_history_granted_user_read_access: "{user_name} granted read access to the user {object_name}"
+page_history_revoked_user_access: "{user_name} revoked access to the user {object_name}"
+page_history_added_comment: "{user_name} added a comment"
+page_history_updated_comment: "{user_name} updated a comment"
+page_history_destroyed_comment: "{user_name} destroyed a comment"
+
+# Emailed
+page_history_mailer_hello_user_name: "Hello {user_name}"
+page_history_the_page_you_are_watching_description: "The page you are watching \"{page_title}\" has been modified"
+page_history_mailer: "Change your email notification settings here: {page_link}"
+page_history_mailer_choose_turn_off_notifications: "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"
+
+# Emailed paranoid
+page_history_mailer_a_page_has_been_modified: "{site_title} : A page has been modified"
+page_history_mailer_a_page_you_are_watching: "A page that you are watching has been modified, you may access the page here"
+page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "A page that you are watching has been modified {histories_count} since the last notification,\nyou may access the page here:"
+page_history_mailer_expire_link: "The link will expire in {expire_time}"

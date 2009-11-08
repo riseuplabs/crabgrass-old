@@ -7,6 +7,9 @@
 <p><label for="user_email"><%= "Email"[:email] %></label><br/>
 <%= text_field 'user', 'email'  %></p>
 
+<p><label for="user_receive_notifications"><%= "Do you want to receive email notifications about changes to pages you are \"watching\"?"[:do_you_want_to_receive_email_notifications] %></label><br/>
+<%= select 'user', 'receive_notifications', [["No", ""], ["Yes: an email per change","Single"], ["Yes: just a summary email","Digest"]]   %></p>
+
 <p><label for="user_language"><%= "Language"[:language] %></label><br/>
 <%= select 'user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true }  %></p>
 

@@ -51,7 +51,8 @@ class MeControllerTest < Test::Unit::TestCase
 =end
 
   def test_edit
-    login_as(:quentin)
+    user = User.make
+    login_as(user)
     get :edit
     assert_response :success
 #    assert_template 'edit'
@@ -60,31 +61,32 @@ class MeControllerTest < Test::Unit::TestCase
     post :edit, :user => {:login => 'new_login'}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal 'new_login', User.find(users(:quentin).id).login, "login for quentin should have changed"
+    assert_equal 'new_login', User.find(user.id).login, "login for quentin should have changed"
 
     post :edit, :user => {:display_name => 'new_display'}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal 'new_display', User.find(users(:quentin).id).display_name, "display_name for quentin should have changed"
+    assert_equal 'new_display', User.find(user.id).display_name, "display_name for quentin should have changed"
 
     post :edit, :user => {:email => 'email@example.com'}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal 'email@example.com', User.find(users(:quentin).id).email, "email for quentin should have changed"
+    assert_equal 'email@example.com', User.find(user.id).email, "email for quentin should have changed"
 
     post :edit, :user => {:language => "de_DE"}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal "de_DE", User.find(users(:quentin).id).language, "language for quentin should have changed"
+    assert_equal "de_DE", User.find(user.id).language, "language for quentin should have changed"
 
     post :edit, :user => {:time_zone => 'Samoa'}
     assert_response :redirect
     assert_redirected_to :action => :edit
-    assert_equal 'Samoa', User.find(users(:quentin).id).time_zone, "time zone for quentin should have changed"
+    assert_equal 'Samoa', User.find(user.id).time_zone, "time zone for quentin should have changed"
 
     # test that things which should not change, don't
+    cp = user.crypted_password
     post :edit, :user => {:crypted_password => ""}
-    assert_equal users(:quentin).crypted_password, User.find(users(:quentin).id).crypted_password, "hackers should not be able to reset password"
+    assert_equal cp, User.find(user.id).crypted_password, "hackers should not be able to reset password"
   end
 
   # tests if deleting an avatar works

@@ -1,6 +1,6 @@
 <%= render :partial => 'survey_page/tabs' %>
 
-<%= pagination_links @responses, :params => {:action => 'list'} %>
+<%= pagination_links @responses, :params => {:action => 'response-list'} %>
 
 <table id='survey_answers' class='pretty'>
   <tr>
@@ -38,6 +38,6 @@
   <%- end -%>
 </table>
 
-<%= pagination_links @responses, :params => {:action => 'list'} %>
+<%= pagination_links @responses, :params => {:action => 'response-list'} %>
 
 <br/>

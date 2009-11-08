@@ -136,8 +136,11 @@ class Tracking < ActiveRecord::Base
     edits = things[:action] == :edit ? 1 : 0
     stars = things[:action] == :star ? 1 : 0
     stars -= things[:action] == :unstar ? 1 : 0
+    # for testing we need to be able to create old trackings...
+    time = things[:time] || Time.now.utc
+    time = connection.quote time.to_s(:db)
     thing_ids = things.values_at(:current_user, :page, :group, :user).collect{|t| quoted_id(t)}
-    thing_ids.concat [views, edits, stars, "UTC_TIMESTAMP()"]
+    thing_ids.concat [views, edits, stars, time]
   end
 
   def self.quoted_id(thing)
@@ -170,7 +173,7 @@ class Tracking < ActiveRecord::Base
   end
 
   def self.last_processed_at
-    Tracking.find(:first, :order => :tracked_at).tracked_at
+    Tracking.find(:first, :order => :tracked_at).tracked_at || Time.now - 3.month
   end
 
 end

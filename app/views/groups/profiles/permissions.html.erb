@@ -7,21 +7,22 @@
       r.label 'Visibility'[:visibility]
       r.checkboxes do |list|
         list.checkbox do |cb|
-          cb.label 'Make %s Publicly Visible'[:group_publicly_visible] % @group.group_type
+          cb.label 'Make {group} Publicly Visible'[:group_publicly_visible, {:group => @group.group_type}]
           cb.input check_box(:profile, :may_see, :onclick => 'setClassVisibility(".details", this.checked)')
-          cb.info "Group appears in public directory and group <i>profile</i> is viewable by non-members at %s/yourgroupname."[:group_publicly_visible_description] % current_site.domain
+          cb.info "Group appears in public directory and group <i>profile</i> is viewable by non-members at {domain}/yourgroupname."[:group_publicly_visible_description, {:domain => current_site.domain}]
         end
         if @group.parent_id.nil?
           list.checkbox(:class => 'details', :hide => !@profile.may_see?) do |cb|
 		        cb.label 'Make Committees Publicly Visible'[:committee_publicly_visible]
 		        cb.input check_box(:profile, :may_see_committees, :onclick => '')
-            cb.info "Committees are viewable by non-members at %s/yourgroupname"[:committee_publicly_visible_description] % current_site.domain
-		      end		    
+            cb.info "Committees are viewable by non-members at {domain}/yourgroupname"[:committee_publicly_visible_description, {:domain => current_site.domain}]
+		      end
   		  end
         list.checkbox(:class => 'details', :hide => !@profile.may_see?) do |cb|
           cb.label "Make Members Publicly Visible"[:group_members_publicly_visible]
           cb.input check_box(:profile, :may_see_members, :onclick => '')
-          cb.info "Members are viewable by non-members at %s/yourgroupname. Also, the name of the group will be listed on each members profile page (%s/username)"[:group_members_publicly_visible_description] % [current_site.domain, current_site.domain]
+          cb.info "Members are viewable by non-members at {domain}/yourgroupname. Also, the name of the group will be listed on each members profile page ({domain}/username)"[
+                :group_members_publicly_visible_description, current_site.domain, current_site.domain]
         end
       end
     end
@@ -39,7 +40,7 @@
           cb.info 'Users are immediately added to the group - request don\'t have to be approved'[:open_group_description]
         end
       end
-      
+
     end
     if may_create_council?
       f.row do |r|

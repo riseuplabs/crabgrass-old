@@ -1,0 +1,7 @@
+<%= "Hello {user_name}"[:page_history_mailer_hello_user_name, {:user_name => @user.display_name}] %>,
+
+<%= "A page that you are watching has been modified {histories_count} since the last notification,\nyou may access the page here:"[:page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times, {:histories_count => pluralize(@page_histories.count, "time")}] %>
+
+<%= "\thttp://#{@site.domain}/code/#{@code.code}" %>
+
+<%= "The link will expire in {expire_time}"[:page_history_mailer_expire_link, {:expire_time => pluralize(@code.days_left, 'day')}] %>.

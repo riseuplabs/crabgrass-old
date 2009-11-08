@@ -187,14 +187,44 @@ class TestHeadings < Test::Unit::TestCase
       'superscript' => "^superscript^\n-------------\n\n",
       'subscript' => "h2. ~subscript~\n\n",
       'code' => "@code@\n------\n\n",
-      'table' => "h2. [-table-]"
-
+      'table' => "h2. [-table-]\n\n",
+      'heading-anchor-head_anchor' => "[# Heading anchor -> head_anchor #]\n-----------------------------------\n\n",
+      'anchor-within-heading-head_anchor' => "h2. Anchor within [# heading -> head_anchor #]\n\n",
+      'dots' => "Dots ...\n--------"
     }
 
     section_markup_map.each do |section, markup|
       assert_equal markup, tree.find(section).markup
     end
   end
+
+  def test_leading_and_trailing_whitespace
+    greencloth = GreenCloth.new( in_texts(:leading_and_trailing_whitespace) )
+    tree = greencloth.green_tree
+
+    assert_equal "Clearly a Section\n===\n\n  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('clearly-a-section').markup
+
+    assert_equal "  still a section\n\n---\nmore text\n\n<code>\n  coding\n\n   not a section\n\n  ---\n  more text here\n</code>",
+      tree.find('still-a-section').markup
+
+    assert_nil tree.find('not-a-section')
+  end
+
+  def test_code_block_weirdness
+    greencloth = GreenCloth.new( in_texts(:code_block_weirdness) )
+    tree = greencloth.green_tree
+
+    assert_equal ['real-stuff'], tree.section_names
+
+
+    assert_equal "real stuff\n----\n\n<code>\n\na.. b\n-----\n\naa... bb\n-----\n\n</code>",
+      tree.find('real-stuff').markup
+
+    assert_nil tree.find('aa-bb')
+    assert_nil tree.find('a-b')
+  end
+
 
   protected
 

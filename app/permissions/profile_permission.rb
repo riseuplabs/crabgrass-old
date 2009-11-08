@@ -7,6 +7,5 @@ module ProfilePermission
       return true if logged_in? and current_user.member_of?(entity)
       return false
     end
-
   end
 end

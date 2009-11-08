@@ -11,7 +11,7 @@ class BasePageController < ApplicationController
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   permissions 'base_page', 'posts'
-  helper 'groups', 'autocomplete', 'base_page/share'
+  helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -73,6 +73,9 @@ class BasePageController < ApplicationController
     end
   end
 
+  def page_history
+  end
+
   protected
 
 
@@ -93,8 +96,8 @@ class BasePageController < ApplicationController
 
   after_filter :save_if_needed, :except => :create
   def save_if_needed
-    @upart.save if @upart and !@upart.new_record? and @upart.changed?
-    @page.save if @page and !@page.new_record? and @page.changed?
+    @upart.save if @upart and !@upart.new_record? and @upart.changed? and !@upart.readonly?
+    @page.save if @page and !@page.new_record? and @page.changed? and !@page.readonly?
     true
   end
 
