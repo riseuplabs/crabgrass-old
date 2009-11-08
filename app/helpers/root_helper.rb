@@ -8,7 +8,7 @@ module RootHelper
 
   def configure_site_link
     if may_admin_site?
-      link_to_with_icon 'wrench', "Administer Site", '/admin'
+      link_to_with_icon 'wrench', I18n.t(:administer_site), '/admin'
     end
   end
 
@@ -31,7 +31,7 @@ module RootHelper
 
   def create_group_link
     if may_create_group?
-      link_to_with_icon 'membership_add', "Create a Group", '/groups/new'
+      link_to_with_icon 'membership_add', I18n.t(:create_a_group), '/groups/new'
     end
   end
 
