@@ -10,23 +10,13 @@ Crabgrass is distributed in the hope that it will be useful, but WITHOUT ANY WAR
 
 Crabgrass includes and depends upon many third party libraries that are not licensed AGPL. These are, however, all in the public domain or compatible with a free software license.
 
-= Requirements
+= Installation
 
-* Ruby 1.8.7
-* Rails 2.1.0
-* Mysql >5.0
-* Hpricot 0.8.1
-* HAML/SASS > 2.2
-
-Optional:
-
-* Python
-* OpenOffice
-* GraphicsMagick
-* libxml/libxslt
+For details on how to install crabgrass, and its required dependencies, please see doc/INSTALL
 
 = Support
 
+* {Crabgrass project page}[http://crabgrass.riseup.net]
 * {Crabgrass code documentation}[https://labs.riseup.net/crabgrass/documentation]
 * {Code repository browser}[https://labs.riseup.net/code/repositories/show/crabgrass]
 * {Crabgrass bug tracker}[https://labs.riseup.net/code/projects/crabgrass/issues?query_id=1]
@@ -35,9 +25,8 @@ Optional:
 
 = Development
 
-* {Installing Crabgrass for local development}[link:files/doc/INSTALL.html]
-* {Development overview}[link:files/doc/DEVELOPMENT.html]
-* {Running and writing Crabgrass tests}[link:files/doc/TESTING.html]
-* {Code changes}[link:files/CHANGES.html]
-* {Running Crabgrass in production mode}[link:files/doc/PRODUCTION.html]
+* {Development overview}[link:files/doc/DEVELOPMENT]
+* {Running and writing Crabgrass tests}[link:files/doc/TESTING]
+* {Code changes}[link:files/CHANGES]
+* {Running Crabgrass in production mode}[link:files/doc/PRODUCTION]
 

@@ -260,7 +260,7 @@ See also doc/SPHINX"
     end
 
     # Run the block
-    yield
+    yield sites(site_name)
   ensure
     # restore
     if updated_site_attributes

@@ -1,4 +1,112 @@
-This is a general overview of the Crabgrass code and how to begin making contributions. 
+This is a general overview of the Crabgrass code and how to begin making contributions.
+
+Developing for Crabgrass
+========================
+
+This page describes the process for contributing to Crabgrass, it draws heavily on the Linux kernel development process for guidelines.
+
+Description of the development process (what branches are what: Master is always the development branch, where new features are worked on; how releases work, how to contribute code, etc.)
+
+Contributing fixes, feature enhancements
+----------------------------------------
+
+This can be done either in the shared gitosis repository, or in your own personal git repository. When it is ready to share, we would be happy to incorporate those changes! Please follow the below guidelines for facilitating that process.
+
+h3. guidelines
+
+When submitting a patch, or a request for a fix/feature branch to be pulled, please make sure at minimum the following are met:
+
+    * It must be tested and work
+    * It must fix only one thing
+    * It must detail clearly what it fixes in the commit message (imagine someone a year from now trying to figure out why you made this change)
+    * It should be committed with the -s option to add the sign-off
+    * It must fix a real bug (one with an issue)
+    * It can not contain any "trivial" fixes in it (spelling changes, whitespace clean up, etc.), make these separate issues.
+    * It should contain no MIME, no links, no compression, no attachments. Just plain text.
+
+h3. associate an issue with your work
+
+If you are fixing a bug, you should have an issue in Redmine associated with that bug. If there is not currently an issue, you should open one to describe the problem. Ideally, you will be better off if you then create a git branch named after the issue. For example, if you were working on issue #5266 which impacts Crabgrass version 0.45 you could create a branch for this fix called 0.45/5266 and then work on the fix there. If this is a new feature or development, you can create a feature branch, such as feature/awesome.
+
+Crabgrass' development process works off of issues database. All patches require a Redmine issue. All patches should reference the ticket number in their commit message.
+
+All tickets are Triaged (link to triage process here) which is the pivot point that determines what happens next with tickets.
+
+If a patch or fix is contained in a single commit then add details of the commit using the hash and branch. If it is in multiple commits then list each commit in the ticket.
+
+If you write the commit hash as commit:"hash" then it will become a click'able Redmine link to the commit after being pulled, for example:
+
+commit:"754129e93de4cc557e600890eab331ec9d0c3107" of branch master
+
+You can also reference issues and automatically close them in commit messages. This is done by using the refs, fixes and closes keywords in commit log messages.
+
+for example, the following message would reference issues 1 and 2 and automatically fix issue 3. After a keyword issue IDs can be separated with a space, a comma or &.
+
+<code>
+This commit refs #1, #2 and fixes #3
+</code>
+
+h3. tests
+
+All submitted code should have tests. See this page for information on writing tests for more details.
+
+If you want to increase visibility of your patches and features you should send your commits to the puppet-commit mailing list.
+Core Puppet development for developers
+
+h3. style
+
+    * We use 2 space indents. other style stuff?
+
+Work on a Branch
+----------------
+
+We recommend that you never make changes to the master or stable branch. If you always make changes on a separate branch, you always know that the master branch is representative of the last time you pulled from the Crabgrass master branch:
+
+<code>
+$ git clone git://labs.riseup.net/crabgrass.git
+$ cd crabgrass
+$ git branch featurebranchname master
+$ git checkout featurebranchname
+$ git branch
+   master
+   * featurebranchname
+$ vi bar.rb
+$ git commit -s -a
+</code>
+
+Now you can easily see your changes from master or create a set of patches:
+
+<code>
+$ git diff master featurebranch
+$ git format-patch master featurebranch
+</code>
+
+If changes have been made to the master Crabgrass repository since you started working, you can easily grab them and merge with your features. First, make sure your working tree is clean (git status should not show any changes), then:
+
+<code>
+$ git branch
+   master
+   * featurebranchname
+$ git checkout master
+$ git pull
+... updates master ...
+$ git checkout featurebranchname
+</code>
+
+You are back on your branch where you made changes, but master is now representative of the Crabgrass mainline.
+
+If you are in the process of development over a long period of time it is worth regularly rebasing your branch against the stable or development branch that it was cloned from. Note that we might ask you to rebase if it takes a lot of time to merge your commit to the master branch. You can do this using the git rebase command:
+
+<code>
+$ git rebase master featurebranchname
+</code>
+
+This will put aside any local changes, update workingbranch with any changes to master and then re-apply any local changes. You may need to resolve any conflicts this creates.
+
+Continuous Integration
+======================
+Crabgrass runs a Continuous Integration server called CruiseControl to test new code. Each new commit to the triggers automatic execution of all RSpec and Unit tests. Results are spit out to the IRC channel and can be viewed at http://labs.riseup.net:3333
+
 
 = Related Documents
 
@@ -6,7 +114,7 @@ This is a general overview of the Crabgrass code and how to begin making contrib
 
 = Coding Standards
 
-There are many people who contribute to the Crabgrass code, often for short periods of time. Few of these contributors have enough time to understand all of Crabgrass. 
+There are many people who contribute to the Crabgrass code, often for short periods of time. Few of these contributors have enough time to understand all of Crabgrass.
 
 For this reason, it is absolutely imperative that all contributions to the source code include the following:
 
@@ -20,7 +128,7 @@ Additionally, all Crabgrass contributions should follow these generally accepted
 * Variable names should be descriptive and verbose. Don't save on typing at the expense of reability and maintainability.
 * Don't be too clever: don't write something compact and tricky if it is going to be difficult for the next person to figure out.
 * In ruby, we use two spaces instead of tabs for indents. Get used to it.
-* Ruby source files should be kept small and managable. 
+* Ruby source files should be kept small and managable.
 * Class methods should be kept small and managable, ideally under 20 lines.
 * Thin controllers, fat models: as much logic as possible should be put in the models. The controllers should be light weight. Certainly, one strategy for thin controllers is REST or CRUD based controllers, but these patterns do not guarentee thin controllers, nor are thin controllers dependent on these patterns.
 * More controllers is more better: it is better to have more controllers than more lengthy controllers. As with a strict REST strategy, try to think of ways to have at least one controller for every table.
@@ -33,11 +141,11 @@ Additionally, all Crabgrass contributions should follow these generally accepted
 
 === Page
 
-A 'page' is the basic model for all content in crabgrass. examples are a wiki page, an uploaded file/image/audio/video, a poll, a task list. 
+A 'page' is the basic model for all content in crabgrass. examples are a wiki page, an uploaded file/image/audio/video, a poll, a task list.
 
 these specific page types are subclasses of Page and they have their own controller and views. In effect, every page is its own rails application.
 
-the page controller is subclass from BasePageController. it defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override. 
+the page controller is subclass from BasePageController. it defines a particular api of variables to set, callbacks to hook into, methods to implement, or methods to override.
 
 all pages are actually implemented as plugins, but plugins that live in a special folder called 'tools'
 
@@ -61,15 +169,15 @@ main relationships in crabgrass:
 
 == Basic Permissions
 
-the historical focus of crabgrass has not been social networking. it has been to allow small groups to work together on projects. 
+the historical focus of crabgrass has not been social networking. it has been to allow small groups to work together on projects.
 
 for this reason, there is a very complicated system for access to pages. any page can have :admin, :edit, :view access to a page by any group and user. what :admin, :edit, :view actually means depends on the particular page controller. things are further complicated by inherited access: if a committee has access to a page, then the committee's parent group also has the same access.
 
 the advantage of this system is total freedom in designating permissions and in collaborating on any page with any mix of users and groups.
- 
+
 the ui also shows total transparency in displaying the permissions, so you are never left wondering what the access rights are.
 
-this makes the queries very complex and slow. 
+this makes the queries very complex and slow.
 
 == Authorization and Permissions Based Links
 
