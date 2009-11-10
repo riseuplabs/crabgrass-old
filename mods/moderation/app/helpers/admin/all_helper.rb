@@ -23,13 +23,7 @@ module Admin::AllHelper
   end
 
   def flags_for_details(foreign_id, type)
-    if type == 'ModeratedPage'
-      flags = ModeratedPage.find_all_by_foreign_id(foreign_id)
-    elsif type == 'ModeratedPost'
-      flags = ModeratedPost.find_all_by_foreign_id(foreign_id)
-    else
-      return
-    end
+    ModeratedFlag.find_all_by_type_and_foreign_id(type, foreign_id)
   end
 
   def link_to_see_all_flags_by_type(obj_type)
@@ -71,7 +65,7 @@ module Admin::AllHelper
 
   def flagged_page_link(foreign_obj)
     if foreign_obj.is_a?(Page)
-       link_to foreign_obj.title, page_url(foreign_obj), {:target =>  '_blank'} 
+       link_to foreign_obj.title, page_url(foreign_obj), {:target =>  '_blank'}
     elsif foreign_obj.is_a?(Post)
        page_link(foreign_obj)
     else
@@ -80,22 +74,7 @@ module Admin::AllHelper
   end
 
   def list_created_by(foreign_obj)
-    if foreign_obj.is_a?(Page)
-      user_id = foreign_obj.created_by_id
-    elsif foreign_obj.is_a?(Post)
-      user_id = foreign_obj.user_id
-    else
-      return "n/a"
-    end
-    if user_id
-      if user = User.find_by_id(user_id)
-        h(user.login)
-      else
-        "Unknown"
-      end
-    else
-      "Unknown"
-    end
+    h(foreign_obj.created_by.try.login) || "Unknown"
   end
 
   def show_flag_details(flag)
