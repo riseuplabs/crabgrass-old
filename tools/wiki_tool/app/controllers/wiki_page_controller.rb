@@ -274,7 +274,6 @@ class WikiPageController < BasePageController
 
   ### HELPER METHODS
   def save_or_cancel_edit_lock_wiki_error_text
-    "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
-      {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)}]
+    I18n.t(:save_or_cancel_edit_lock_wiki_error, {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)})
   end
 end
