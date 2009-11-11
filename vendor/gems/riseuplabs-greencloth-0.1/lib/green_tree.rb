@@ -151,7 +151,6 @@ class GreenTree < Array
     names.compact
   end
 
-
   def prepare_markup_indexes
     if self.parent
       raise GreenClothException, "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"

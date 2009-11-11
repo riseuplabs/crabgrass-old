@@ -7,17 +7,18 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
-    when /the homepage/
+    
+    when /the home\s?page/
       '/'
-    when /the logout page/
-      account_path(:action => 'logout')
-    when /the login page/
-      login_path
-    when /my dashboard page/
-      '/me/dashboard'
+    
+    # Add more mappings here.
+    # Here is a more fancy example:
+    #
+    #   when /^(.*)'s profile page$/i
+    #     user_profile_path(User.find_by_login($1))
 
-    ## PICKLE PATHS
+    # added by script/generate pickle path
+
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
       path_to_pickle $1
 
@@ -32,13 +33,8 @@ module NavigationHelpers
 
     when /^the (.+?) page$/                                         # translate to named route
       send "#{$1.downcase.gsub(' ','_')}_path"
-
-    # Add more mappings here.
-    # Here is a more fancy example:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
-
+  
+    # end added by pickle path
 
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
