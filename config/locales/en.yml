@@ -389,7 +389,7 @@ en:
   activity_unread_singular: "You have an unread [private message]"
   activity_user_left_site: "{{user}} has left {{group}}"
   activity_message_received: "You received {{message_tag}} from {{other_user}}: {{title}}"
-  activity_twinkled: "{user} has starred your post \"{post}\""
+  activity_twinkled: "{{user}} has starred your post \"{{post}}\""
 
   ##
   ## ASSETS
