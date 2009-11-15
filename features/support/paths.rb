@@ -27,9 +27,14 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? #{capture_model}'s (.+?) page$/  # eg. the forum's post's comments page
       path_to_pickle $1, $2, :extra => $3                           #  or the forum's post's edit page
 
+    when /^#{capture_model}(?:'s)? landing page$/                     # eg. the groups's landing page
+      name = model($1).name
+      "/#{name}"
+
     when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
       path_to_pickle $1, :extra => $2                               #  or the forum's edit page
 
+    ## OTHER PATHS
     when /^the (.+?) page$/                                         # translate to named route
       send "#{$1.downcase.gsub(' ','_')}_path"
 
