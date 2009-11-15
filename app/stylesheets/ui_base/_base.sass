@@ -5,10 +5,10 @@
 //  GRID
 
 !grid_unit = "px"
-!col_width = 36px
-!gutter_width = 12px
-!side_gutter_width = 12px
-!total_cols = 16
+!col_width = 14px
+!gutter_width = 20px
+!side_gutter_width = 16px
+!total_cols = 23
 //
 //  HACKS
 //  Are you using hacks or conditional comments? Susy makes both possible.
@@ -20,7 +20,7 @@
 //  FONT-SIZE
 
 !base_font_size_px = 12
-!base_line_height_px = 18
+!base_line_height_px = 21
 
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
@@ -33,8 +33,8 @@
 =sans-family
   :font-family arial, helvetica, sans-serif
 
-=serif-family
-  :font-family Baskerville, serif 
+//=sans-family-verdana
+//  :font-family verdana, helvetica, sans-serif 
 
 // Remember to add default styles to everything!
 
@@ -52,13 +52,15 @@ a
 h1, h2, h3, h4, h5, h6
   +sans-family
   :line-height 1
+  :font-weight bold
 
 h1
-  :font-size 2.7em
+  :font-size 22px
+  :color #534741
 
 h2
-  :font-size 2.0em 
-  
+  :font-size 18px
+  :color #534741
 h3
   :font-size 1.0em
   :font-weight bold
@@ -74,6 +76,10 @@ h6
   :font-size 0.6em
 
 /* @end */
+li
+  :display inline-block
+  :float left
+  :padding 0.2em
 
 
 /* @group forms */

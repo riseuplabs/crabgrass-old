@@ -1,14 +1,17 @@
-%section#top
-  %section#title
-    %h1.site_title Site Name
-  %section#search
-    %form
-      %input{:type=>'text'}
-      %input{:type=>'hidden'}
-      %button{:type=>'submit'}
+%section#titlebar
+  %section#titlebar-container
+    %h2 Site Name
+    %section#search
+      %form
+        %input{:type=>'text'}
+        %input{:type=>'hidden'}
+        %button{:type=>'submit'}
+        %input{:type=>'checkbox'}
+        %span
+          Search this group only
 %nav.page
-  %section#menu
-    %ul
+  %section#nav-container
+    %ul#menu
       %li 
         %a{:href => "#", :onclick => "#"}  Home
       %li 
@@ -18,9 +21,8 @@
       %li  
         %a{:href => "#", :onclick => "#"}  Groups
       %li  
-        %a{:href => "#", :onclick => "#"}  Networks
-  %section#user
-    %ul
+        %a{:href => "#", :onclick => "#"}  Networks   
+    %ul#user
       %li Welcome userName
       %li  
         %a{:href => "#", :onclick => "#"}  inbox(4)
@@ -29,8 +31,9 @@
       %li  
         %a{:href => "#", :onclick => "#"}  Sign Out
 %section#breadcrumb
-  %ul
-    %li 
-      %a{:href => "#", :onclick => "#"}  Network
-    %li 
-      %a{:href => "#", :onclick => "#"}  Group Name
+  %section#breadcrumb-container
+    %ul
+      %li 
+        %a{:href => "#", :onclick => "#"}  Network
+      %li 
+        %a{:href => "#", :onclick => "#"}  Group Name

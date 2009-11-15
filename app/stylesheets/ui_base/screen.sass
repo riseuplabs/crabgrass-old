@@ -3,8 +3,9 @@
   Import this file using the following HTML or equivalent:
   <link href="/stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
 
-/* @group reset */
+/* @compass */
 @import compass/reset.sass
+@import compass/layout.sass
 @import compass/utilities.sass
 /* @end */
 
@@ -22,123 +23,188 @@
 
 body
   +susy
-#page
-  a 
-    +hover-link
   +sans-family
-  :border 1px solid #f60
-header.page
-  section#top
-    +container
-    :border 1px solid #fc0
-  section#title
-    +columns(8,16)
-    +alpha(16)
-    :background-color #eee
-  section#search
-    +columns(8,16)
-    +omega(16)
-    :text-align right
-nav.page
-  +container
-  :border 1px solid #fc0
-  #menu
-    +columns(9,16)
-    +alpha(16)
-  #user
-    +columns(7,16)
-    +omega(16)
-    :text-align right
-#breadcrumb
-  +container
-  :border 1px solid #fc0
-#content.group-home
-  +container
-  :border 1px solid #fc0
-  #group-name
-    +columns(16)
-    +full
-    :border 1px solid #f60
-  #participate
-    +columns(16)
-    +full
-    :border 1px solid #f60
-    #helpful-links
-      +columns(16,16)
-    #actions
-      +columns(16,16)
-  #main
-    +columns(16)
-    +full
-  aside.main
-    +columns(5,16)
-    +alpha(16)
-    section.group-info
-      +columns(5,5)
-      :background-color #eee
-  #group-info
-    +columns(5,5)
-  #about-group, #people, #networks, #featured
-    +columns(5,5)
-    h3 
-      +columns(4,5)
-      +alpha(4)
-    a
-      +columns(1,5)
-      +omega(1)
-  #about-group
-    p
-      +columns(5,5)
-      a
-        :white-space nowrap
-        :float none
-  #featured
-    :background-color #fc0
-    article
-      +columns(5,5)
-      h4
-      p
-        :font-size 10px
-      
-  section.main
-    +columns(11,16)
-    +omega(11)
-    #wiki, #posts 
-      +columns(11,11)
-      h3
-        +columns(9,11)
-        +alpha(9)
-      a
-        +columns(2,11)
-        +omega(2)
-        :white-space nowrap
+#page  
+  header.page
+    +clearfix
+  #titlebar
+    +clearfix 
+    height: 40px
+    border-bottom: 1px solid #d35851
+    #titlebar-container
+      +container
+      h2
+        +columns(12)
+        +alpha
+        :line-height 2.4
+      #search
+        +columns(11)
+        +omega
         :text-align right
-    #wiki, #posts
-      :background-color #fc0
-    #announcements
-      header
-        +columns(11,11)
+  nav.page
+    +clearfix
+    height: 38px
+    border-bottom: 1px solid #d35851
+    #nav-container
+      +container
+      #menu
+        +columns(14)
+        +alpha
+      #user
+        +columns(9)
+        +omega
+        :text-align right
+  #breadcrumb
+    +clearfix
+    height: 30px
+    #breadcrumb-container
+      +container
+      ul
+        +columns(23)
+        +full
+
+  #content
+    +clearfix
+    :border-bottom 1px solid #d35851
+    :background #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
+    #content-container
+      +container
+      :padding-bottom 100px
+      :background #fff url("/images/new_ui/bg-subnav-rule.png") repeat-x top
+      aside#group-info
+        +columns(7)
+        +alpha
+        #group-logo
+          +columns(7,7)
+          +clearfix
+          +replace-text("../images/new_ui/group-logo.png")
+          border: 1px solid #535741
+          :width 216px
+          :height 216px
+        #contribute
+          +columns(7,7)
+          :margin 20px 0
+          :height 20px
+          :width 196px
+          :padding 6px 10px
+          :background-color #78be63
+          :border 1px solid #448c3b
+          h2
+            :color #fff
+        #group-meta
+          +columns(7,7)
+          :width 196px
+          :padding 10px
+          :border 1px solid #ebebeb
+          #about-group, #people, #affiliations, #featured
+            +clearfix
+            :width 198px
+            img
+              :background-color #fc0
+            header
+              +clearfix
+              h3
+                :display inline
+              a
+                :display inline
+            h4
+              :width 198px
+          #about-group
+            p
+              :width 198px
+              a
+                :white-space nowrap
+                :float none
+            ul#details
+              +clearfix
+              :width 198px
+            li
+              :width 92px
+              :margin 10px 0 0 0
+          #featured
+            article
+              :width 198px
+              h4
+              p
+                :font-size 10px
+      #group-content
+        +columns(16)
+        +omega
         :background-color #eee
-      h3
-        :display inline
-      article
-        +columns(11,11)
-        h4, p
-          :padding-left 24px
-  #posts
-    nav
-      +columns(11,16)
-      +omega(11)
-    article
-      +columns(11,16)
-      +omega(11)
-    footer
-      +columns(11,16)
-      +omega(11)
-footer.page
-  +container
-  :border 1px solid #fc0
-li
-  :display inline-block
-  :float left
-  :padding 0.2em
+        header
+          +columns(16,16)
+          #group-name
+            +columns(16,16)
+            :height 50px
+            h1
+              :display inline
+            #group-action
+              :display inline
+              :float right  
+          nav#group
+            +columns(16,16)
+            :height 39px
+            :border 1px solid #534741
+            :background-color #fff
+        #helpful-links
+          +columns(16,16)
+          h4, ul
+            :display inline
+          h4
+            :float left
+        #wiki
+          +columns(16,16)
+          +clearfix
+          h4, a
+            :display inline
+          a
+            :float right
+          p
+            :float none
+        #announcements
+          +columns(16,16)
+          +clearfix
+          :border 1px solid #fc0  
+          article.first
+            +columns(8,16)
+            +alpha(16)
+          article.last
+            +columns(8,16)
+            +omega(16)
+        #pages
+          +columns(16,16)
+          h3, a
+            :display inline
+          .pagination
+            :float right
+          article
+            +columns(16,16)
+            +clearfix
+            .pages-info
+              +columns(13,16)
+              +alpha(16)
+              :width 85.8%
+              img
+                :float left
+                :width 75px
+                :height 75px
+            .pages-status
+              +columns(3,16)
+              +omega(16)
+              :width 10%
+              :float right
+              :border 1px solid #000
+              li
+                :clear both
+                :float right
+                :font-size 11px
+                :line-height 1.0
+                :padding 0.1em
+          footer
+            +columns(16,16)
+            .pagination
+              :float right
+
+  footer.page
+    +container
+
