@@ -1,14 +1,17 @@
 Given /^I am not logged in$/ do
   Given "I am on the logout page"
 end
-#
-# When /^I delete the (\d+)(?:st|nd|rd|th) authentication$/ do |pos|
-#   visit authentications_url
-#   within("table > tr:nth-child(#{pos.to_i+1})") do
-#     click_link "Destroy"
-#   end
-# end
-#
-# Then /^I should see the following authentications:$/ do |expected_authentications_table|
-#   expected_authentications_table.diff!(table_at('table').to_a)
-# end
+
+Given /^I am logged in as #{capture_model}$/ do |user|
+  user = model(user)
+
+  visit path_to("the login page")
+  fill_in "Login name", :with => user.login
+  fill_in "Password", :with => user.login
+
+  click_button "Log in"
+
+  # this assert is more important than it looks. it makes sure that in selenium
+  # mode webrat will wait for the redirect to the dashboard. this ensure that it will use response body to set the cookies
+  assert_contain "Logout #{user.display_name}"
+end

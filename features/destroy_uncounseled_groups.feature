@@ -5,15 +5,14 @@ Feature: Destroying groups that don't have a council
 
 Background:
   Given a group: "rainbow" exist with name: "Rainbow"
-  And a user: "blue" exists with name: "Blue"
-  And that user is a member of that group
+  And a user: "blue" exists with display_name: "Blue"
+  And user: "blue" is a member of that group
   And I am logged in as that user
-  And I am on that group's landing page
+  Given I am on that group's landing page
 
 Scenario: Destroying a group requires confirmation
   When I follow "Destroy Group"
-  Then I should see "Are you sure you want to destroy group 'Rainbow'?"
-  And I should see "Destroy Cancel"
+  Then I should see "Are you sure you want to delete this group?"
 
 Scenario: I am the only member so I can destroy the group
   When I follow "Destroy Group"
