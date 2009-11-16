@@ -19,8 +19,8 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-config.gem 'cucumber',    :lib => false,        :version => '>=0.4.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
-config.gem 'webrat',      :lib => false,        :version => '>=0.5.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
+config.gem 'cucumber',        :lib => false,        :version => '>=0.4.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
+config.gem 'webrat',          :lib => false,        :version => '>=0.5.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
