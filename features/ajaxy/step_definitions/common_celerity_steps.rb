@@ -75,6 +75,10 @@ Then /I should not see "(.*)"/ do |text|
   div.should be_nil
 end
 
+Then /^I should be on (.+)/ do |path|
+  path = path_to(path)
+  assert_equal path, URI.parse($browser.url).path
+end
 
 Then /^show me the page$/ do
   puts "THE PAGE IS:\n-----------"

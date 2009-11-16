@@ -3,8 +3,6 @@
 # in the future when you upgrade to a newer version of Cucumber.
 # Consider adding your own code to a new file instead of editing this one.
 
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
-
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 

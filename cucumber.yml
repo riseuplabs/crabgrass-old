@@ -1,0 +1,2 @@
+default: -r features/support/env.rb -r features/support/plain.rb -r features/common/step_definitions -r features/plain/step_definitions features/common features/plain
+culerity: -r features/support/env.rb -r features/support/ajaxy.rb -r features/common/step_definitions -r features/ajaxy/step_definitions features/common features/ajaxy

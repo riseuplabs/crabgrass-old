@@ -12,7 +12,7 @@ Scenario: User logs in
   Given a user exists with login: "green", display_name: "Green"
   And I am not logged in
   When I go to the login page
-  And I fill in "Login Name" with "green"
+  And I fill in "Login name" with "green"
   And I fill in "Password" with "green"
   And I press "Log in"
   Then I should see "Logout Green"

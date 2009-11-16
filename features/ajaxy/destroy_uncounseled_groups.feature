@@ -10,6 +10,7 @@ Background:
   And I am logged in as that user
   Given I am on that group's landing page
 
+@dev
 Scenario: Destroying a group requires confirmation
   When I follow "Destroy Group"
   Then I should see "Are you sure you want to delete this group?"
