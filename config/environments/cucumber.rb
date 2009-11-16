@@ -17,6 +17,7 @@ config.action_controller.allow_forgery_protection    = false
 # Tell Action Mailer not to deliver emails to the real world.
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
+config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :test
 
 config.gem 'cucumber',        :lib => false,        :version => '>=0.4.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
@@ -26,6 +27,8 @@ ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
 
 MIN_PASSWORD_STRENGTH = 0
+
+TEST_EMAIL_FILE = RAILS_ROOT + "/tmp/test_emails"
 
 # rails engines are way too verbose, so set engines logging to info:
 if defined? Engines

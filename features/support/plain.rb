@@ -1,3 +1,7 @@
+def delivered_emails
+  ActionMailer::Base.deliveries
+end
+
 require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
 
 require 'webrat'

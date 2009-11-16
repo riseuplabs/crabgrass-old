@@ -16,6 +16,8 @@ module NavigationHelpers
       login_path
     when /my dashboard page/
       '/me/dashboard'
+    when /the destroyed groups directory/
+      '/groups/directory/destroyed'
 
     ## PICKLE PATHS
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
