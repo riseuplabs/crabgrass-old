@@ -5,13 +5,11 @@ end
 Given /^I am logged in as #{capture_model}$/ do |user|
   user = model(user)
 
-  visit path_to("the login page")
-  fill_in "Login name", :with => user.login
-  fill_in "Password", :with => user.login
+  When "I go to the login page"
+  When "I fill in \"Login name\" with \"#{user.login}\""
+  When "I fill in \"Password\" with \"#{user.login}\""
+  When "I press \"Log in\""
 
-  click_button "Log in"
-
-  # this assert is more important than it looks. it makes sure that in selenium
-  # mode webrat will wait for the redirect to the dashboard. this ensure that it will use response body to set the cookies
-  assert_contain "Logout #{user.display_name}"
+  # make sure we really logged in
+  Then "I should see \"Logout #{user.display_name}\""
 end
