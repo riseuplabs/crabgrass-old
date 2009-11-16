@@ -71,6 +71,9 @@ class GroupsController < Groups::BaseController
   def destroy
     @group.destroyed_by = current_user  # needed for the activity
     @group.destroy
+
+    flash_message :success => true, :title => I18n.t(:group_destroyed_message, :group_type => @group.group_type)
+
     if @group.parent
       redirect_to url_for_group(@group.parent)
     else
