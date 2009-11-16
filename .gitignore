@@ -1,6 +1,7 @@
 log/*.log
 log/searchd.*
 tmp/**/*
+tmp/*
 .DS_Store
 .idea
 .AppleDouble
@@ -29,3 +30,4 @@ public/javascripts/all.js
 public/assets/*
 lang/la_US.yml
 tmp/webrat-*
+webrat-*.png
