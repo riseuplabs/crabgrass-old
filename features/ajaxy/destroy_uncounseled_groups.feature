@@ -25,4 +25,5 @@ Scenario: I am the only member so I can destroy the group
 
 Scenario: The group has many members, so I can't destroy the group
   Given that group has 5 members
+  When I go to that group's landing page
   Then I should not see "Destroy Group"
