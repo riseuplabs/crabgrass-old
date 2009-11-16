@@ -10,7 +10,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "gitosis@labs.riseup.net:unicef.git"
-set :branch, "youthportal"
+set :branch, "youthportal-0.4.7.x"
 
 stopx = false
 
