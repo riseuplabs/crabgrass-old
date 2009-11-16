@@ -1,6 +1,6 @@
 Then /^wait$/ do
   sleep 0.25
-  puts response.body
+  puts response.try.body || $browser.try.text
   sleep
 end
 
