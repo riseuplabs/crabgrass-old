@@ -38,6 +38,7 @@ class Mailer < ActionMailer::Base
   include ActionController::UrlWriter
   include Mailers::Page
   include Mailers::User
+  include Mailers::Group
   include Mailers::Request
   include Mailers::Bugreport
   include Mailers::Verification
