@@ -1,4 +1,96 @@
-0.5.0 -- in progress
+Here is the documented list of issues (features and bugs) resolved during the
+development of this version of crabgrass. Please visit the Crabgrass Issue
+Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
+complete information on any of the issues listed below.
+
+0.4.7 -- 2009 November 5
+  * Bug #488: Pages are being shown as updated when they were not
+  * Bug #975: Pages Have No Owner If Owning Group Destroyed = Headtrauma
+  * Bug #1081: Page Notify marks page has changed.
+  * Bug #1135: Public Profile shows status updates!
+  * Bug #1171: “May not pester” option not funcitonning
+  * Bug #1235: most {viewed, active, stars} for this month higher than total.
+  * Bug #1238: Super Admin: Destroy User Fails
+  * Bug #1247: Wrong Language Appears On Profile
+  * Bug #1267: StopX: Problem Editing ‘Users’ and ‘Groups’ Using Admin Panel
+  * Bug #1301: Active User and Group are not being charted in /stats
+  * Bug #1302: Survey permissions wording needs to be changed to full access, write ability, view only
+  * Bug #1325: I cant flag a comment on a page where i dont have full access.
+  * Bug #1328: Error in the “Join Network” response. Link to track-URL missing.
+  * Bug #1334: survey response pagination is broken
+  * Bug #1336: ‘Updated by’ seems incorrect
+  * Bug #1338: section editing doesnt work on some pages
+  * Bug #1342: Lots of extra white space created between sections
+  * Bug #1345: Wiki Error when saving changes
+  * Bug #1354: toc display and section editing completely buggy
+  * Bug #1357: Join on membership request not functionning
+  * Bug #1362: Inline Editing = Editing Next Section
+  * Bug #1374: Inviting a user: Cannot convert a Fixnum into a String
+  * Bug #1375: Remove old duplicates of daily trackings
+  * Bug #1376: autocomplete broken for french language settings
+  * Bug #1377: only display groups and users that should be visible
+  * Bug #1378: network letter pagination is broken
+  * Bug #1379: prevent dangling Page.created_by and updated_by after a user was deleted
+  * Bug #1380: nav language changes from english to french
+  * Bug #1381: removed all old-old style “something something %s” style translation calls from the source.
+  * Bug #1385: Cant destroy a page
+  * Bug #1391: Make Comment = Head Trauma
+  * Bug #1392: personal profile labels are in spanish
+  * Bug #1398: Dependency on haml library needs to be documented
+  * Bug #1399: can’t delete user on yp staging.
+  * Bug #1403: View History = Head Trauma
+  * Bug #1410: Delete User = Wiki Versions Headtrauma
+  * Feature #813: Email of Head Trauma Trace = Unsolved
+  * Feature #1244: Watched Pages: Email Notifications With Page Updates
+  * Feature #1257: remove “more” link next to wiki on group home page.
+  * Feature #1330: Expose version number in the UI
+  * Support #1318: How to feature an asset page (image)
+
+0.4.6.1 -- 2009 October 20
+  * Bug #1342: Wiki whitespace bug
+
+0.4.6 -- 2009 October 12
+  * Bug #727: Flagging as inappropriate - Comments on poll page
+  * Bug #836: Wiki toolbar missing in IE
+  * Bug #913: refactor wiki locks and sections
+  * Bug #955: Make Alerts much smaller!!!!
+  * Bug #1128: Page details - Group Listed bug
+  * Bug #1156: Details Modal Too Tall
+  * Bug #1173: None of the new content (or old) showing on the my.factsforlifeglobal.org Site Home
+  * Bug #1175: Flagging posts doesn't mean they show up as new flagged pages for admin
+  * Bug #1208: sharing emails sent to everyone
+  * Bug #1212: Deleted committees still appear on group home
+  * Bug #1213: Adding a task to a task list bring popup "bla"
+  * Bug #1214: Missing Pictures on Group Home with Featured Gallery
+  * Bug #1215: Wiki toolbar not appearing in group wiki
+  * Bug #1216: inserting an image into a wiki does not work
+  * Bug #1223: Multiple Messages To Moderator When Content Flagged
+  * Bug #1242: Unable to destroy group in Unite for Climate site
+  * Bug #1261: Could not send Bug Report on trauma - No development email address for we.riseup.net
+  * Bug #1263: Error message when trying to edit Group Home wiki on my.factsforlifeglobal.org
+  * Bug #1264: Bug Report not sent.
+  * Bug #1268: StopX - Admin Panel - Edit Groups - Error message
+  * Bug #1274: Group wiki doesn't allow edit by admin
+  * Bug #1278: UFC - Can't access my profile
+  * Bug #1282: comments are not displayed once there are more then 60
+  * Bug #1289: featured video not displaying image
+  * Bug #1292: moderation panel default page to flagged
+  * Bug #1293: moderation panel links open new window
+  * Bug #1310: wiki navigating away warning consistency
+  * Bug #1313: Most active groups directory displays private groups
+  * Bug #1321: Inline Editing = Section Not Found
+  * Bug #1323: Pencil Control Appearing = Bad
+  * Bug #1329: autocomplete in share not working for french language setting
+  * Feature #742: Galleries of pictures - Batch uploading
+  * Feature #888: Moderation Pop Up Changes.
+  * Feature #1107: Clarify Page Permission Langauge
+  * Feature #1126: Group Wiki - edition bar is gone
+  * Feature #1150: Chat moderation
+  * Feature #1285: Rework of Wiki navigation UI
+  * Feature #1291: column for details in moderation panel
+  * Feature #1299: Total Refactoring of wiki code - onging.
+
+0.4.3 -- 2009 August
   * site administration ui
   * private messages
   * ui enhancements: drop down menus, modal popups, autocomplete

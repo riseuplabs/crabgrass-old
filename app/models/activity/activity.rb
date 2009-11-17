@@ -130,23 +130,23 @@ class Activity < ActiveRecord::Base
   # show all activity for:
   #
   # (1) subject matches 'user'
-  #     (AND 'user' is friend of current_user)
+  #     (AND 'user' is friend of current_user) 
   #
-  # (2) subject matches 'user'
+  # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
   named_scope(:for_user, lambda do |user, current_user|
-    if(current_user and current_user.friend_of?(user) or current_user == user)
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access != ?",
-        user.id, Activity::PRIVATE
-      ]}
-    else
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access = ?",
-        user.id, Activity::PUBLIC
-      ]}
+    if (current_user and current_user.friend_of?(user) or current_user == user) 
+      restricted = Activity::PRIVATE
+    elsif current_user and current_user.peer_of?(user) 
+      restricted = Activity::DEFAULT
+    else 
+      restricted = Activity::DEFAULT
     end
+    {:conditions => [
+      "subject_type = 'User' AND subject_id = ? AND access > ?",
+      user.id, restricted 
+    ]}
   end)
 
   # for group's landing page

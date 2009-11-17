@@ -3,7 +3,6 @@ module UserFlagExtension
     lambda do
       has_many :moderated_pages, :dependent => :destroy
       has_many :moderated_posts, :dependent => :destroy
-      has_many :moderated_chat_messages, :dependent => :destroy
     end
   end
   module InstanceMethods 
@@ -12,9 +11,6 @@ module UserFlagExtension
     end
     def find_flagged_post_by_id(foreign_id)
       self.moderated_posts.find(:all, :conditions => ['foreign_id = ?', foreign_id])
-    end
-    def find_flagged_chat_message_by_id(foreign_id)
-      self.moderated_chat_messages.find(:all, :conditions => ['foreign_id = ?', foreign_id])
     end
   end
 end

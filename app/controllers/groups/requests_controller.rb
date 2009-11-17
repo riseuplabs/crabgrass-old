@@ -82,7 +82,7 @@ class Groups::RequestsController < Groups::BaseController
         end
       end
     else
-      flash_message_now :success => I18n.t(:invites_sent, :count => reqs.size)
+      flash_message_now :success => I18n.t(:invites_sent, :count => reqs.size.to_s)
       params[:recipients] = ""
     end
   rescue Exception => exc

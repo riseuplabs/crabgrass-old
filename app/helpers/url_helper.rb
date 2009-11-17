@@ -21,8 +21,25 @@ module UrlHelper
     {:controller => '/networks', :action => nil, :id => @group}.merge(options)
   end
 
+  def directory_params(options={})
+    group_type = options.delete(:group_type)
+
+    case group_type
+    when :network
+      network_directory_params(options)
+    when :group
+      group_directory_params(options)
+    else
+      raise "Bad group type #{group_type} for when building directory_params for the url"
+    end
+  end
+
   def group_directory_params(options={})
     {:controller => '/groups/directory', :action => nil}.merge(options)
+  end
+
+  def network_directory_params(options={})
+    {:controller => '/networks/directory', :action => nil}.merge(options)
   end
 
   def committees_params(options={})
@@ -222,11 +239,12 @@ module UrlHelper
 
   # arg might be a user object, a user id, or the user's login
   def login_and_path_for_user(arg, options={})
+
     if arg.is_a? Integer
       # this assumes that at some point simple id based finds will be cached in memcached
-      user = User.find(arg)
-      login = user.login
-      display = user.display_name
+      user = User.find_by_id(arg)
+      login = user.try.login
+      display = user.try.display_name
     elsif arg.is_a? String
       user = User.find_by_login(arg)
       login = arg
@@ -260,6 +278,8 @@ module UrlHelper
   #  :class -- override the default class of the link (name_icon)
   def link_to_user(arg, options={})
     login, path, display_name = login_and_path_for_user(arg,options)
+    return "" if login.blank?
+
     style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override

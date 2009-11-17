@@ -98,7 +98,7 @@ module UserExtension::Users
     ## STATUS / PUBLIC WALL
     ##
 
-    # returns the users current status by returning his latest status_posts.body
+    # returns the users current status by returning their latest status_posts.body
     def current_status
       @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
     end
@@ -231,6 +231,12 @@ module UserExtension::Users
     end
     def may_pester!(entity)
       entity.may_be_pestered_by! self
+    end
+  
+    def may_show_status_to?(user)
+      return true if user==self
+      return true if friend_of?(user) or peer_of?(user)
+      false
     end
 
   end # InstanceMethods

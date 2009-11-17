@@ -1,5 +1,5 @@
 class StatusPost < Post
-  def public?
+  def default?
     true
   end
 end
