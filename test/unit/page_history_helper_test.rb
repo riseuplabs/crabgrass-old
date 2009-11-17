@@ -12,6 +12,28 @@ class PageHistoryHelperTest < Test::Unit::TestCase
     @post = Post.build(:body => "Some nice comment", :user => @user, :page => @page).save!
   end
 
+  def test_description_with_deleted_objects
+    user_a = User.make :login => "user_a", :display_name => "User A"
+    user_b = User.make :login => "user_b", :display_name => "User B"
+    user_c = User.make :login => "user_c", :display_name => "User C"
+
+    page_history = PageHistory::PageCreated.create!(:user => user_a, :page => @page)
+    User.delete(user_a)
+    description = "Unknown/Deleted has created the page"
+    assert_equal description, description_for(page_history.reload)
+
+    page_history = PageHistory::RevokedGroupAccess.create!(:user => user_b, :page => @page, :object => @group)
+    User.delete(user_b)
+    Group.delete(@group)
+    description = "Unknown/Deleted revoked access to the group Unknown/Deleted"
+    assert_equal description, description_for(page_history.reload)
+
+    page_history = PageHistory::RevokedUserAccess.create!(:user => @user, :page => @page, :object => user_c)
+    User.delete(user_c)
+    description = "Pepe le Piu revoked access to the user Unknown/Deleted"
+    assert_equal description, description_for(page_history.reload)
+  end
+
   def test_description
     description = "Pepe le Piu has created the page"
     assert_equal description, description_for(PageHistory::PageCreated.create!(:user => @user, :page => @page))

@@ -1,6 +1,7 @@
 class MeController < Me::BaseController
 
   def index
+    flash.keep
     redirect_to :controller => '/me/dashboard'
   end
 

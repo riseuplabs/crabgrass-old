@@ -1,0 +1,2 @@
+default: -r features/support/env.rb -r features/support/plain.rb -r features/step_definitions/common -r features/step_definitions/plain --tags ~@ajaxy features/
+ajaxy: -r features/support/env.rb -r features/support/ajaxy.rb -r features/step_definitions/common -r features/step_definitions/ajaxy/ --tags @ajaxy features/

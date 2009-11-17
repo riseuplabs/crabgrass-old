@@ -52,8 +52,11 @@ class RankedVotePageController < BasePageController
     @possible = @poll.possibles.create params[:possible]
     if @poll.valid? and @possible.valid?
       @page.unresolve
-      redirect_to page_url(@page) unless request.xhr?
-      render :template => 'ranked_vote_page/add_possible'
+      if request.xhr?
+        render :template => 'ranked_vote_page/add_possible'
+      else
+        redirect_to page_url(@page)
+      end
     else
       @poll.possibles.delete(@possible)
       flash_message_now :object => @possible unless @possible.valid?

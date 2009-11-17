@@ -447,7 +447,7 @@ en:
 
   order_changed: Order changed.
   error_saving_new_order_message: "Error saving new order: {{error_message}}"
-  sucessfully_removed_image: Successfully removed image! ({{undo_link}})
+  successfully_removed_image: Successfully removed image! ({{undo_link}})
   image_count: Photo {{number}} of {{count}}
   image_count_total: "{{count}} Photos"
   view_slideshow: View Slideshow
@@ -747,6 +747,8 @@ en:
   leave_group_link: "Leave {{group_type}}"
   request_join_group_link: "Request to Join {{group_type}}"
   send_join_request: "Send request to join {{group_name}}"
+  group_destroyed_message: "{{group_type}} Destroyed"
+
 
   # results
 
@@ -1450,6 +1452,11 @@ en:
   email_notice_access: "You may access this page here:"
   email_link_expires: "This link will expire in {{days}} days."
 
+  group_destroyed_subject: "{{group_type}} {{group}} has been deleted by {{user}}!"
+  group_destroyed_email: |-
+    {{group_type}} {{group}} has been destroyed!
+
+    You can see all destroyed groups here: {{destroyed_group_directory_url}}
 
   ##
   ## PEOPLE (i.e., PeopleController)
