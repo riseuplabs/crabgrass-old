@@ -12,10 +12,8 @@ class BasePage::YuckyPostController < BasePage::SidebarController
 
   def add
     if params[:flag]
-      @rateable.ratings.find_or_create_by_user_id(current_user.id).update_attribute(:rating, YUCKY_RATING)
-      @rateable.update_attribute(:yuck_count, @rateable.ratings.with_rating(YUCKY_RATING).count)
-      moderateable = ModeratedPost.create(:post_id => params[:post_id], :reason_flagged => params[:reason])
-    end      
+      ModeratedPost.create(:post => @post, :reason_flagged => params[:reason])
+    end
     close_popup
   end
 
