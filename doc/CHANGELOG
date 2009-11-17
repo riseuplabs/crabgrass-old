@@ -3,6 +3,9 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
+0.4.7.1 -- 2009 November 16
+  * Bug #1419: wiki update permissions were not working correctly
+
 0.4.7 -- 2009 November 5
   * Bug #488: Pages are being shown as updated when they were not
   * Bug #975: Pages Have No Owner If Owning Group Destroyed = Headtrauma
