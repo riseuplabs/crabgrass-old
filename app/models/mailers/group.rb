@@ -1,12 +1,12 @@
 module Mailers::Group
   def group_destroyed_notification(user, group, options)
     setup(options)
-    setup_email(user, group)
+    setup_destroyed_email(user, group)
   end
 
   protected
 
-  def setup_email(user, group)
+  def setup_destroyed_email(user, group)
     @user = user
     @group = group
     @recipients = "#{user.email}"
