@@ -232,9 +232,9 @@ See also doc/SPHINX"
   end
 
   def enable_site_testing(site_name=nil)
-    if site_name
-      Conf.enable_site_testing(sites(site_name))
-      Site.current = sites(site_name)
+    if site=Site.find_by_name(site_name) || sites(site_name)
+      Conf.enable_site_testing(site)
+      Site.current = site
     else
       Conf.enable_site_testing()
       Site.current = Site.new
@@ -260,7 +260,7 @@ See also doc/SPHINX"
     end
 
     # Run the block
-    yield sites(site_name)
+    yield Site.find_by_name(site_name) || sites(site_name)
   ensure
     # restore
     if updated_site_attributes
