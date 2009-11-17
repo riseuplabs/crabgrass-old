@@ -447,7 +447,7 @@ en:
 
   order_changed: Order changed.
   error_saving_new_order_message: "Error saving new order: {{error_message}}"
-  sucessfully_removed_image: Successfully removed image! ({{undo_link}})
+  successfully_removed_image: Successfully removed image! ({{undo_link}})
   image_count: Photo {{number}} of {{count}}
   image_count_total: "{{count}} Photos"
   view_slideshow: View Slideshow
