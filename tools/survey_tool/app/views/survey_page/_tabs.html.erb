@@ -10,7 +10,7 @@
     if logged_in?
       if may_modify_survey?
         f.tab do |t|
-          t.label I18n.t(:survey_edit_edit)
+          t.label I18n.t(:survey_edit_tab)
           t.url page_url(@page, :action => 'edit')
           t.selected controller?(:survey_page) && action?(:edit)
         end
