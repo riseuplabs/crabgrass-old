@@ -7,9 +7,9 @@ rescue LoadError => exc
 end
 
 begin
-  require 'redgreen' unless ARGV.include? "--no-color"
+  require 'leftright'
 rescue LoadError => exc
-  # no redgreen installed
+  # no leftright installed
 end
 
 # this can speed running a single test method from 11 seconds to 3
