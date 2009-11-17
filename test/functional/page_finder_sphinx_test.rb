@@ -142,9 +142,9 @@ class PageFinderSphinxTest < ActionController::TestCase
     options = { :user_ids => [users(:blue).id], :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
 
     searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, options)
-      # require 'ruby_debug'; debugger
-      assert_equal page_ids(search_code.call), page_ids(pages), "#{search_str} should match results for user when paginated"
+      sphinx_pages = Page.find_by_path(search_str, options)
+      raw_pages = search_code.call
+      assert_equal page_ids(raw_pages), page_ids(sphinx_pages), "#{search_str} should match results for user when paginated"
     end
   end
 
