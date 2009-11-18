@@ -1,4 +1,4 @@
-@ajaxy
+@js
 Feature: Destroying groups that have a council
   In order to remove an inactive, a hijacked or an old group
   As a member of that group
@@ -27,13 +27,3 @@ Scenario: I am the only member of the council so I can destroy the group
   And I should receive an email with subject: "Group Rainbow has been deleted by Blue!"
   And I should receive an email body containing a destroyed groups directory link
 
-
-Scenario: I am the member of the council, but council has several members so I can propose to delete the group
-
-Scenario: I propose to delete the group as one of many members of the council. The group gets deleted in 1 month.
-
-Scenario: Council members can veto proposals to delete the group
-
-Scenario: non-council members can not veto proposals to delete the group
-
-Scenario: I am the only member of the council so I can delete the group even when a proposal exists to delete it.
