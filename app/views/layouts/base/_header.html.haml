@@ -1,0 +1,29 @@
+%section#titlebar
+  %section#titlebar-container
+    = custom_masthead_site_title
+    /%h2 Site Name sss
+    %section#search
+      %form
+        %input{:type=>'text'}
+        %input{:type=>'hidden'}
+        %button{:type=>'submit'}
+        %input{:type=>'checkbox'}
+        %span
+          Search this group only
+%nav.page
+  %section#nav-container
+    = render :partial => '/layouts/base/menu'
+    = render :partial => '/layouts/base/menu_user'
+
+//        %li Welcome userName
+//        %li  
+//          %a{:href => "#", :onclick => "#"}  inbox(4)
+//        %li  
+//          %a{:href => "#", :onclick => "#"}  Help
+//        %li  
+//          %a{:href => "#", :onclick => "#"}  Sign Out
+
+
+%section#breadcrumb
+  %section#breadcrumb-container
+    = link_to_breadcrumbs

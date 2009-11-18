@@ -1,0 +1,72 @@
+//
+// SAY BOX
+// 
+
+.say_box
+  padding-bottom: 1em
+  //border-bottom: 1px dotted #ccc
+  //table
+  //  margin: 0 auto
+  td
+    padding: none
+    vertical-align: top
+  img
+    margin-top: 2px
+  .submit
+    margin-left: 18px
+  .speech
+    padding: 2px
+    background: white
+    border: 2px solid #999
+    -moz-border-radius: 6px
+    position: relative
+    left: 10px
+    textarea
+      height: 1.2em
+    .textinput
+      font-size: 1em
+      font-family: monospace
+      border: 0
+      background: white
+      overflow: auto
+      &.tall
+        height: 6em
+  .triangle
+    position: absolute
+    top: 4px
+    margin-left: 3px
+    background: transparent url(/images/ui/say.gif) no-repeat 0 50%
+    height: 18px
+    width: 9px
+
+//.info_box
+//  table.columns.three_sections
+//    td.left, td.right
+//      padding-top: 1em
+
+//
+// MESSAGE LIST
+//
+
+.messages
+  .message
+    color: #333
+    // room for icon:
+    padding-left: 38px
+    background-position: 0px 4px
+    margin: 1em 0
+  //.icon
+  //  padding-right: 1em
+  .date
+    font-style: italic
+  .date_heading
+    clear: both
+    text-transform: capitalize
+    font-weight: bold
+    color= !strong_heading_color
+  .body
+    p
+      margin: 0
+    br + br
+      display: none
+

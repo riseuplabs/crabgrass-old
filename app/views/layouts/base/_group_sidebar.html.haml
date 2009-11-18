@@ -1,0 +1,64 @@
+%section#group-logo
+  %h1 group logo
+%section#contribute
+  %h2 
+    = I18n.t(:contribute_content_link)
+%section#group-meta
+  %section#about-group
+    %h3 
+      = I18n.t(:about)
+    %p
+      = text_with_more('Lorem ipsum dolor sit amet conte sectetur adipiscing elit. sodales lorem ipsum dolor sit amet, e sectetur adipiscing elitism. Duis adictum dictum justo eut duis vitae dipiscing', :class => 'hola') do
+        %a{:href => "#", :onclick => "#"} Read More
+    = render :partial => '/layouts/base/group_details_links'
+  %section#people
+    = render :partial => '/layouts/base/people'
+  %section#affiliations
+    %header
+      %h3 affiliations
+      %a{:href => "#", :onclick => "#"} 6 total
+    %h4 Networks
+    %ul#networks
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+    %h4 Committees
+    %ul#committees
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#", :onclick => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+
+  %section#featured
+    %h3 featured
+    %img{:src=>"/images/new_ui/image-198sq.png", :alt=>"featured title", :height=>"198px", :width=>"198px"}
+    %article
+      %h4 Crabgrass vs ThePoint
+      %p Dictum dictum justo eu peo lenta tesque, avec dictum dictum justo eu pelo lenta. Ut vulputate portaja aliquet. Traesent posuere nunc sed neque pharetra.
+      %ul.tags
+        %li tag name
+        %li tag name
+

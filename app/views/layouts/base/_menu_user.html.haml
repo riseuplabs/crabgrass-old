@@ -1,0 +1,18 @@
+%ul#user
+
+  - if logged_in? || true
+    %li
+      = I18n.t(:group_home_welcome)
+      = current_user.display_name
+    %li
+      = link_to I18n.t(:menu_link_logout), :controller => '/account', :action => 'logout'
+
+    = call_hook :top_right_links
+
+  - elsif !@login_form_already_rendered 
+
+    = setup_login_context
+
+    %li
+      = link_to_function(I18n.t(:login), "loginDialog(#{strings.to_json}, #{options.to_json})")
+ 
