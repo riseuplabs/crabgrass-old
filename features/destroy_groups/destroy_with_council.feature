@@ -1,3 +1,4 @@
+@ajaxy
 Feature: Destroying groups that have a council
   In order to remove an inactive, a hijacked or an old group
   As a member of that group

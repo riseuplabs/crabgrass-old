@@ -18,6 +18,24 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
 (2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
 
+
+== Fullstack and Javascript Tests
+
+To test the full stack crabgrass, you can use Celerity. Celerity use HtmlUnit, which is a browser, like Firefox, but HtmlUnit is designed specifically for automation, so it runs in the background and has no graphics output, but it runs Javascript, has sessions and otherwise acts like a browser. HtmlUnit is made in Java, so you will need a Java Runtime Environment 1.6 or later.
+
+Celerity is written in JRuby. You must install the latest JRuby from here:
+http://jruby.org/download
+
+Finally, there is Culerity which is a bridge from ruby to jruby celerity (or htmlunit) browser. This is what Cucumber loads to to drive the browser.
+
+See http://github.com/langalex/culerity for installation instructions.
+
+Once everything is installed, you can run:
+
+script/cucumber -p ajaxy <cucumber files or tags>
+
+Each Scenario or a Feature in the specified cucumber files/folders that has a @ajaxy tag will be executed with Culerity.
+
 == Integration Tests
 
 Run 'rake db:fixtures:load RAILS_ENV=test' before running integration tests. Otherwise they will not work. Instead of fixtures, integration tests expect the whole database to be ready.
