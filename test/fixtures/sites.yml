@@ -58,22 +58,3 @@ redwood:
   name: "redwood"
   title: "just a random site for redwood trees"
   limited: true
-moderation:
-  id: 101
-  name: "moderation site"
-  title: "testing site for moderation mod"
-  # the domain for the testing site must be 'test.host'
-  # this is the request domain that is used by rails when testing.
-  # this site is not used for most tests, but for some it is enabled.
-  domain: "test.host"
-  translation_group: "animals"
-  network_id: 3002
-  council_id: 2 # animals - used for the admin controllers tests.
-  # this is normally overwritten at startup by crabgrass. however,
-  # the way we enable sites for only some tests relies on their being
-  # a super_admin_group_id defined for the test site.
-  # UNCOMMENT THIS IF YOU HAVE RUN THE MODERATION MOD MIGRATIONS
-  # moderation_group_id: 1 # true levellers
-  super_admin_group_id: 4001
-  login_redirect_url: /me/dashboard
-  limited: false
