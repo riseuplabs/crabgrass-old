@@ -29,7 +29,7 @@ Sham.summary          { Faker::Lorem.paragraph }
 #
 Site.blueprint do
   # make sites available from functional tests
-  domain       "test.host"
+  domain       "www.example.com"
   email_sender "robot@$current_host"
 end
 

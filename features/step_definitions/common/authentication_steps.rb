@@ -13,3 +13,10 @@ Given /^I am logged in as #{capture_model}$/ do |user|
   # make sure we really logged in
   Then "I should see \"Logout #{user.display_name}\""
 end
+
+Given /^I am logged in as #{capture_model} on #{capture_model}$/ do |user, site|
+  site = model(site)
+
+  enable_site_testing site.name
+  When "I am logged in as #{user}"
+end
