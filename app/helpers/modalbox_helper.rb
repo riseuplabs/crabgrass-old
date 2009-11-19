@@ -182,7 +182,7 @@ module ModalboxHelper
         ok = options[:ok] || I18n.t(:ok_button)
         cancel = options[:cancel] || I18n.t(:cancel_button)
         link_to_function(name,
-              %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}", ok: "#{ok}", cancel: "#{cancel}"})],
+              %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}", ok:"#{ok}", cancel:"#{cancel}"})],
               html_options)
       else
         link_to_without_confirm(name, options, html_options)
