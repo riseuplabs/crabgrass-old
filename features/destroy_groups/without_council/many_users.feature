@@ -14,7 +14,7 @@ Background:
 Scenario: The group has many members, so I can propose to destroy the group
   Given that group has 5 members
   When I follow "Propose to destroy this group"
-  And I press "Destroy"
+  And I press "Delete"
   Then I should be on the group's page
   And I should not see "Propose to destroy this group"
   And i should see "Your proposal to destory this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed"
@@ -24,7 +24,7 @@ Scenario: The group has many members, so I can propose to destroy the group
 Scenario: I propose to destroy a group that has other people in it. That proposal takes effect after 1 month  and the group is destroyed.
   Given that group has 5 members
   When I follow "Propose to destroy this group"
-  And I press "Destroy"
+  And I press "Delete"
   And I wait 1 month
   Then that group should not exist
   And I should receive an email with subject: "Group Rainbow has been deleted by Blue!"
@@ -40,9 +40,7 @@ Scenario: I propose to destroy a group that has other people in it. That proposa
   And I go to the group page
   Then I should see "Propose to destroy this group"
 
-
-
-  Scenario: The group has many members, so I can't destroy the group
-    Given that group has 5 members
-    When I go to that group's landing page
-    Then I should not see "Destroy Group"
+Scenario: The group has many members, so I can't destroy the group
+  Given that group has 5 members
+  When I go to that group's landing page
+  Then I should not see "Destroy Group"

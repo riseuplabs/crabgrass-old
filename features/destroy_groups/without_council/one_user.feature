@@ -17,7 +17,7 @@ Scenario: Destroying a group requires confirmation
 
 Scenario: I can destroy the group
   When I follow "Destroy Group"
-  And I press "OK"
+  And I press "Delete"
   Then I should be on my dashboard page
   And I should see "Group Destroyed"
   And that group should not exist
