@@ -28,7 +28,8 @@ Sham.summary          { Faker::Lorem.paragraph }
 # Site
 #
 Site.blueprint do
-  domain       "crabgrass.org"
+  # make sites available from functional tests
+  domain       "test.host"
   email_sender "robot@$current_host"
 end
 
@@ -70,6 +71,11 @@ Committee.blueprint do
 end
 
 Council.blueprint do
+end
+
+Network.blueprint do
+  full_name       { Sham.title }
+  name            { full_name.gsub(/[^a-z]/,"") }
 end
 
 #
@@ -136,6 +142,16 @@ RateManyPage.blueprint {}
 Poll.blueprint {}
 
 Discussion.blueprint {}
+
+# requieres :page in attributes
+def Post.make_comment_to(attributes, machinist_attributes = {})
+  post = Post.make_unsaved(machinist_attributes)
+  attributes.reverse_merge!(post.attributes)
+  attributes.merge! :page => page
+  post = Page.build! attributes
+  page.save!
+  page.reload
+end
 
 Post.blueprint do
   discussion { Discussion.make }
