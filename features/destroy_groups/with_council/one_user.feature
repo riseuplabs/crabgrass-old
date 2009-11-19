@@ -2,7 +2,7 @@
 Feature: Destroying groups that have a council
   In order to remove an inactive, a hijacked or an old group
   As a member of that group
-  I want to destroy that group and I want to not be able to easily destroy groups used by other people.
+  I want destroy that group immediately
 
 Background:
   Given a group: "rainbow" exist with name: "Rainbow"

@@ -7,12 +7,22 @@ Given /^I am a member of #{capture_model}$/ do |group|
   Given "user: \"me\" is a member of #{group}"
 end
 
-Given /^#{capture_model} has (\d+) members$/ do |group, count|
+Given /^#{capture_model} has (\d+) (?:other) members$/ do |group, count|
   group = model(group)
   count.to_i.times do
     user = create_model('user').last
     group.add_user!(user)
   end
 end
+
+Given /^#{capture_model} has a council$/ do |group|
+  group = model(group)
+  council = create_model('a council').last
+
+  # true means this is a council, not just any committee
+  group.add_committee!(council, true)
+end
+
+
 
 

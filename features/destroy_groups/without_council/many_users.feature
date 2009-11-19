@@ -1,8 +1,8 @@
 @js
-Feature: Destroying groups that don't have a council
+Feature: Destroying groups that several members and no council
   In order to remove an inactive, a hijacked or an old group
-  As a member of that group
-  I want to destroy that group and I want to not be able to easily destroy groups used by other people.
+  As one of several members of that group
+  I want to be able to propose to other members to destroy the group
 
 Background:
   Given a group: "rainbow" exist with name: "Rainbow"
@@ -42,3 +42,7 @@ Scenario: I propose to destroy a group that has other people in it. That proposa
 
 
 
+  Scenario: The group has many members, so I can't destroy the group
+    Given that group has 5 members
+    When I go to that group's landing page
+    Then I should not see "Destroy Group"

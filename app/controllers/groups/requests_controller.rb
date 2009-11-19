@@ -89,6 +89,11 @@ class Groups::RequestsController < Groups::BaseController
     flash_message_now :exception => exc
   end
 
+  # create a request to destroy (aka a destroy proposal)
+  def create_destroy
+    render :text => "TODO"
+  end
+
   protected
 
   def context

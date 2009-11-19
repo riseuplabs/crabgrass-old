@@ -1,8 +1,8 @@
 @js
-Feature: Destroying groups that don't have a council
+Feature: Destroying groups that don't have a council and one remaining member
   In order to remove an inactive, a hijacked or an old group
-  As a member of that group
-  I want to destroy that group and I want to not be able to easily destroy groups used by other people.
+  As the only remaining member of that group
+  I want destroy that group immediately
 
 Background:
   Given a group: "rainbow" exist with name: "rainbow", full_name: "Rainbow"
@@ -15,7 +15,7 @@ Scenario: Destroying a group requires confirmation
   When I follow "Destroy Group"
   Then I should see "Are you sure you want to delete this group?"
 
-Scenario: I am the only member so I can destroy the group
+Scenario: I can destroy the group
   When I follow "Destroy Group"
   And I press "OK"
   Then I should be on my dashboard page
@@ -24,7 +24,3 @@ Scenario: I am the only member so I can destroy the group
   And I should receive an email with subject: "Group Rainbow has been deleted by Blue!"
   And I should receive an email with body containing the destroyed groups directory url
 
-Scenario: The group has many members, so I can't destroy the group
-  Given that group has 5 members
-  When I go to that group's landing page
-  Then I should not see "Destroy Group"
