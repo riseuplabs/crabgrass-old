@@ -232,7 +232,8 @@ See also doc/SPHINX"
   end
 
   def enable_site_testing(site_name=nil)
-    if site=Site.find_by_name(site_name) || sites(site_name)
+    if site_name
+      site=Site.find_by_name(site_name) || sites(site_name)
       Conf.enable_site_testing(site)
       Site.current = site
     else
