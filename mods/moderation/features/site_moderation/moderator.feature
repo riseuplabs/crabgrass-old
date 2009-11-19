@@ -22,7 +22,6 @@ Scenario: I can go to the moderation tab
 
 Scenario: I can see all pages
   When I follow "Moderation"
-  And I click on "See All Pages"
-  Then I should see "Title"
-  And I should see "Take Action"
+  And I follow "See All Pages"
+  Then I should see "There are no pages for this view"
 

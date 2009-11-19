@@ -62,13 +62,35 @@ def Group.make_owned_by(attributes)
 end
 
 Group.blueprint do
-  full_name       { Sham.title }
+  full_name       { Sham.display_name }
   name            { full_name.gsub(/[^a-z]/,"") }
 end
 
 Network.blueprint do
-  full_name       { Sham.title }
+  full_name       { Sham.display_name }
   name            { full_name.gsub(/[^a-z]/,"") }
+end
+
+def Committee.make_for(attributes)
+  raise "Missing keys (:group) are required for this blueprint" if !attributes.has_key?(:group)
+  group = attributes.delete :group
+  committee = Committee.make(attributes)
+  group.add_committee!(committee)
+end
+
+Committee.blueprint do
+  name       { Sham.login }
+end
+
+def Council.make_for(attributes)
+  raise "Missing keys (:group) are required for this blueprint" if !attributes.has_key?(:group)
+  group = attributes.delete :group
+  committee = Council.make(attributes)
+  group.add_committee!(committee)
+end
+
+Council.blueprint do
+  name       { Sham.login }
 end
 
 #
