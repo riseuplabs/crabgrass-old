@@ -91,7 +91,8 @@ class Groups::RequestsController < Groups::BaseController
 
   # create a request to destroy (aka a destroy proposal)
   def create_destroy
-    render :text => "TODO"
+
+    redirect_to url_for_group(@group)
   end
 
   protected
