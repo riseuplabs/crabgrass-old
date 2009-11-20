@@ -73,11 +73,13 @@ module LayoutHelper
     lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'
-    lines << themed_stylesheet_link_tag('ie6')
+    #lines << themed_stylesheet_link_tag('ie6')
+    lines << stylesheet_link_tag('ie6')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
-    lines << themed_stylesheet_link_tag('ie7')
+    lines << stylesheet_link_tag('ie7')
+    #lines << themed_stylesheet_link_tag('ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     if language_direction == "rtl"

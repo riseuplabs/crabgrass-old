@@ -5,10 +5,10 @@
 //  GRID
 
 !grid_unit = "px"
-!col_width = 14px
+!col_width = 36px
 !gutter_width = 20px
-!side_gutter_width = 16px
-!total_cols = 23
+!side_gutter_width = 18px
+!total_cols = 14
 //
 //  HACKS
 //  Are you using hacks or conditional comments? Susy makes both possible.
@@ -27,14 +27,13 @@
 
 @import susy/susy.sass
 
-// FONTS
-// Give yourself some font stacks to work with
+=sans-family-headings
+  :font-family arial, helvetica, sans-serif
+  :font-weight bold
+  :line-height 1
 
 =sans-family
-  :font-family arial, helvetica, sans-serif
-
-//=sans-family-verdana
-//  :font-family verdana, helvetica, sans-serif 
+  :font-family verdana, bitstream vera sans, helvetica, sans-serif 
 
 // Remember to add default styles to everything!
 
@@ -50,7 +49,7 @@ a
 /* @group headers */
 
 h1, h2, h3, h4, h5, h6
-  +sans-family
+  +sans-family-headings
   :line-height 1
   :font-weight bold
 
@@ -63,11 +62,10 @@ h2
   :color #534741
 h3
   :font-size 1.0em
-  :font-weight bold
+  :color #4978bc
   
 h4
   :font-size 0.9em
-  :font-weight bold
   
 h5
   :font-size 0.7em
