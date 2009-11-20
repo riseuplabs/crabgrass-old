@@ -146,6 +146,44 @@ module ApplicationHelper
     span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
+  
+  #
+  # Construct a content tag with a more link
+  #
+  # :options[:more_url] = the url for more link
+  # :options[:length] = the max lenght to display
+  # :options[:class] = any html options can be added and will be applied to the tag
+  # also you can handle the link manually passing a block
+  # text_with_more :p, my_text do 
+  #   link_to "more", more_path
+  # end
+  
+  def text_with_more(text, tag='p', options={}, &block)
+    length = options.delete(:length) || 50
+    # for the rails 2.1+ upgrade
+    if Rails::version == "2.1.0"
+      out = truncate(text, length)
+    else
+      out = truncate(text, :length => length)
+    end
+    if block_given?
+      capture_haml do
+        #
+        # TODO: update  this with rails 2.3 to:
+        # haml_tag tag, options do
+        #
+        haml_tag tag do
+          haml_concat out
+          haml_concat capture_haml(&block)
+        end
+      end
+    else
+      link = link_to(I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      capture_haml do 
+        haml_tag(tag, out + link,  options)
+      end
+    end
+  end
 
   def expand_links(description)
     description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
