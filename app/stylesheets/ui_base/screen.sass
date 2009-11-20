@@ -26,6 +26,7 @@ body
       #title
         +columns(14)
         +full
+        :width 764px
         h2
           :line-height 2.4
           :float left
@@ -42,6 +43,7 @@ body
       #nav
         +columns(14)
         +full
+        :width 764px
         #menu
           :float left
           +clearfix
@@ -64,132 +66,140 @@ body
       +container
       :padding-bottom 100px
       :background #fff url("/images/new_ui/bg-subnav-rule.png") repeat-x top
-      #group-info
-        +columns(4)
-        +alpha
-        #group-logo
-          +columns(4,4)
-          +clearfix
-          border: 1px solid #535741
-        #contribute
-          +columns(4,4)
-          :margin 20px 0
-          :height 20px
-          :width 182px
-          :padding 6px 10px
-          :background-color #78be63
-          :border 1px solid #448c3b
-          h2
-            :color #fff
-        #group-meta
-          +columns(4,4)
-          :width 182px
-          :padding 10px
-          :border 1px solid #ebebeb
-          #about-group, #people, #affiliations, #featured
-            +clearfix
-            :width 184px
-            img
-              :background-color #fc0
-            header
-              +clearfix
-              h3
-                :display inline
-              a
-                :display inline
-            h4
-              :width 184px
-          #about-group
-            p
-              :width 184px
-              a
-                :white-space nowrap
-                :float none
-            ul#details
-              +clearfix
-              :width 184px
-            li
-              :width 92px
-              :margin 10px 0 0 0
-              :padding 0
-          #featured
-            article
-              :width 184px
-              h4
-              p
-                :font-size 10px
-      #group-content
-        +columns(10)
-        +omega
-        :float right
-        header
-          +columns(10,10)
-          #group-name
-            +columns(10,10)
-            :height 50px
-            h1
-              :display inline
-            #group-action
-              :display inline
-              :float right  
-          nav#group
-            +columns(10,10)
-            :height 39px
-            :border 1px solid #534741
-            :background-color #fff
-        #helpful-links
-          +columns(10,10)
-          h4, ul
-            :display inline
-          h4
+      :float none
+      #group-content-wrap
+        +columns(14)
+        +full
+        :width 764px
+        #group-info
+          :width 204px
+          :float left
+          :margin 0 20px 0 0
+          #group-logo
+            +columns(4,4)
+            :width 204px
             :float left
-        #wiki
-          +columns(10,10)
-          +clearfix
-          h4, a
-            :display inline
-          a
-            :float right
-          p
-            :float none
-        #announcements
-          +columns(10,10)
-          +clearfix
-          :border 1px solid #fc0  
-          article.first
-            +columns(5,10)
-            +alpha(10)
-          article.last
-            +columns(5,10)
-            +omega(10)
-        #pages
-          +columns(10,10)
-          h3, a
-            :display inline
-          .pagination
-            :float right
-          article
+            :margin 0
+            :background-color #fff
+            :border 1px solid #535741
+          #contribute
+            +columns(4,4)
+            :margin 20px 0
+            :height 20px
+            :width 182px
+            :padding 6px 10px
+            :background-color #78be63
+            :border 1px solid #448c3b
+            h2
+              :color #fff
+          #group-meta
+            +columns(4,4)
+            :width 182px
+            :padding 10px
+            :border 1px solid #ebebeb
+            #about-group, #people, #affiliations, #featured
+              +clearfix
+              :width 184px
+              img
+                :background-color #fc0
+              header
+                +clearfix
+                h3
+                  :display inline
+                a
+                  :display inline
+              h4
+                :width 184px
+            #about-group
+              p
+                :width 184px
+                a
+                  :white-space nowrap
+                  :float none
+              ul#details
+                +clearfix
+                :width 184px
+              li
+                :width 92px
+                :margin 10px 0 0 0
+                :padding 0
+            #featured
+              article
+                :width 184px
+                h4
+                p
+                  :font-size 10px
+        #group-content
+          :width 540px
+          :float left
+          header
+            +columns(10,10)
+            #group-name
+              +columns(10,10)
+              :height 50px
+              h1
+                :display inline
+              #group-action
+                :display inline
+                :float right  
+            nav#group
+              +columns(10,10)
+              :height 39px
+              :border 1px solid #534741
+              :background-color #fff
+          #helpful-links
+            +columns(10,10)
+            h4, ul
+              :display inline
+            h4
+              :float left
+          #wiki
             +columns(10,10)
             +clearfix
-            .pages-info
-              +columns(9,10)
+            h4, a
+              :display inline
+            a
+              :float right
+            p
+              :float none
+          #announcements
+            +columns(10,10)
+            +clearfix
+            :border 1px solid #fc0  
+            article.first
+              +columns(5,10)
               +alpha(10)
-              :width 85.8%
-              img
-                :float left
-                :width 75px
-                :height 75px
-            .pages-status
-              +columns(1,10)
+            article.last
+              +columns(5,10)
               +omega(10)
-              :width 10%
-              :border 1px solid #000
-              li
-                :clear both
-                :float right
-                :font-size 11px
-                :line-height 1.0
-                :padding 0.1em
+          #pages
+            +columns(10,10)
+            h3, a
+              :display inline
+            .pagination
+              :float right
+            article
+              +columns(10,10)
+              +clearfix
+              .pages-info
+                +columns(9,10)
+                +alpha(10)
+                :width 85.8%
+                img
+                  :float left
+                  :width 75px
+                  :height 75px
+              .pages-status
+                +columns(1,10)
+                +omega(10)
+                :width 10%
+                :border 1px solid #000
+                li
+                  :clear both
+                  :float right
+                  :font-size 11px
+                  :line-height 1.0
+                  :padding 0.1em
           footer
             +columns(10,10)
             .pagination

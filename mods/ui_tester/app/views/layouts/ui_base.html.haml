@@ -21,9 +21,10 @@
         =render :partial => 'layouts/header'
       %section#content
         %section#content-container
-          %aside#group-info
-            =render :partial => 'layouts/group_sidebar'
-          %section#group-content
-            =render :partial => 'layouts/group_content'
+          %section#group-content-wrap
+            %aside#group-info
+              =render :partial => 'layouts/group_sidebar'
+            %section#group-content
+              =render :partial => 'layouts/group_content'
       %footer.page
         footer
