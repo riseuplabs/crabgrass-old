@@ -51,8 +51,7 @@ profile_fields:
 
 # ensure_page_owner: false
 
-#text_editor: greencloth_preferred
-text_editor: html_preferred
+text_editor: greencloth_only
 
 require_user_full_info: true
 ##
