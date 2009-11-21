@@ -1,4 +1,3 @@
-@js
 Feature: Destroying groups that several members and no council
   In order to remove an inactive, a hijacked or an old group
   As one of several members of that group
@@ -13,13 +12,13 @@ Background:
   Given I am on that group's landing page
 
 Scenario: The group has many members, so I can propose to destroy the group
-  When I follow "Propose to Destroy Group"
-  And I press "Delete"
+  When I follow and confirm "Propose to Destroy Group"
   Then I should be on the group's landing page
   And I should not see "Propose to Destroy Group"
   And I should see "Your proposal to destory this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed"
   And I should receive an email with subject: "Blue has proposed to delete group Rainbow!"
 
+@js
 Scenario: I propose to destroy a group that has other people in it. That proposal takes effect after 1 month  and the group is destroyed.
   Given that group has 5 members
   When I follow "Propose to Destroy Group"

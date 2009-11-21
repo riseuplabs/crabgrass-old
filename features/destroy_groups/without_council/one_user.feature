@@ -1,8 +1,8 @@
 @js
-Feature: Destroying groups that don't have a council and one remaining member
+Feature: Destroying groups that don't have a council and have only one remaining member
   In order to remove an inactive, a hijacked or an old group
   As the only remaining member of that group
-  I want destroy that group immediately
+  I want to be able to destroy that group immediately
 
 Background:
   Given a group: "rainbow" exist with name: "rainbow", full_name: "Rainbow"
