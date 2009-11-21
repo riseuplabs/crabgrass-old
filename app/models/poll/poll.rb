@@ -7,10 +7,7 @@ class Poll < ActiveRecord::Base
     possibles.first || possibles.build
   end
 
-  has_many :votes, :finder_sql =>
-    'SELECT votes.* FROM votes ' +
-    'JOIN possibles ON possibles.id = votes.possible_id ' +
-    'WHERE possibles.poll_id = #{id}'
+  has_many :votes, :through => :possibles
 
   def votes_by_user(user)
     ::PollVote.find_by_sql ['SELECT votes.* FROM votes ' +
