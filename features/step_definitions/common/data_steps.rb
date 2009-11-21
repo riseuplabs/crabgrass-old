@@ -2,18 +2,12 @@ Given /^#{capture_model} is a member of #{capture_model}$/ do |user, group|
   model(group).add_user!(model(user))
 end
 
+# this could be included in the previous step, but it corrupts up cucumber output a bit
 Given /^I am a member of #{capture_model}$/ do |group|
-  user=@controller.current_user
-  model(group).add_user!(user) unless user.member_of?(model(group))
+  Given "user: \"me\" is a member of #{group}"
 end
 
-Given /^I am an admin of #{capture_model}$/ do |group|
-  Given "I am a member of #{group}"
-  Given "#{group} has a council"
-  Given "I am a member of that council"
-end
-
-Given /^#{capture_model} has (\d+) members$/ do |group, count|
+Given /^#{capture_model} has (\d+) (?:other) members$/ do |group, count|
   group = model(group)
   count.to_i.times do
     user = create_model('user').last
@@ -23,6 +17,8 @@ end
 
 Given /^#{capture_model} has a council$/ do |group|
   group = model(group)
-  council = create_model('council').last
-  group.add_committee!(council)
+  council = create_model('a council').last
+
+  # true means this is a council, not just any committee
+  group.add_committee!(council, true)
 end

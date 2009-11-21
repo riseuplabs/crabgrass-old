@@ -18,7 +18,7 @@ def boolean
   rand(2) == 1 ? true : false
 end
 
-Sham.title            { Faker::Lorem.sentence }
+Sham.title            { Faker::Lorem.words(3).join(" ").capitalize }
 Sham.email            { Faker::Internet.email }
 Sham.login            { Faker::Internet.user_name.gsub(/[^a-z]/, "") }
 Sham.display_name     { Faker::Name.name }
@@ -64,6 +64,13 @@ end
 Group.blueprint do
   full_name       { Sham.display_name }
   name            { full_name.gsub(/[^a-z]/,"") }
+end
+
+Committee.blueprint do
+  name            { Sham.title.gsub(/[^a-z]/,"")[0, 10] }
+end
+
+Council.blueprint do
 end
 
 Network.blueprint do

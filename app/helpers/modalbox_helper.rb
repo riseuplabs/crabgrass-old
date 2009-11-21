@@ -179,7 +179,11 @@ module ModalboxHelper
         method ||= 'post'
         token = form_authenticity_token
         action = url_for(action) if action.is_a?(Hash)
-        link_to_function(name, %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}"})], html_options)
+        ok = options[:ok] || I18n.t(:ok_button)
+        cancel = options[:cancel] || I18n.t(:cancel_button)
+        link_to_function(name,
+              %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}", ok:"#{ok}", cancel:"#{cancel}"})],
+              html_options)
       else
         link_to_without_confirm(name, options, html_options)
       end

@@ -89,6 +89,12 @@ class Groups::RequestsController < Groups::BaseController
     flash_message_now :exception => exc
   end
 
+  # create a request to destroy (aka a destroy proposal)
+  def create_destroy
+
+    redirect_to url_for_group(@group)
+  end
+
   protected
 
   def context

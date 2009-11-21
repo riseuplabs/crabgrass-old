@@ -20,9 +20,9 @@ module Groups::BasePermission
 
   def may_destroy_group?(group = @group)
     # has a council
-    if group.council != group
+    if group.council != group and group.council.users.size == 1
       current_user.may?(:admin, group)
-    else
+    elsif group.council == group
       # no council
       group.users.size == 1 and
         current_user.member_of?(group)
