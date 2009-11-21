@@ -18,10 +18,9 @@ module NavigationHelpers
       '/me/dashboard'
     when /the destroyed groups directory/
       '/groups/directory/destroyed'
+    when /the moderation panel/
+      '/admin/pages'
 
-    when /^#{capture_model}(?:'s)? permissions page$/                     # eg. the groups's permissions page
-      name = model($1).name
-      "/groups/profile/permissions/#{name}"
 
     ## PICKLE PATHS
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
