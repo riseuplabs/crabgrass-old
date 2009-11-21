@@ -39,17 +39,23 @@ class ModeratedFlag < ActiveRecord::Base
   end
   ### end awfully repetitious
 
-  def self.display_flags(page, view)
-    if view == 'new'
-      conditions = ['vetted_at IS NULL and deleted_at IS NULL']
-    elsif view == 'vetted'
-      conditions = ['vetted_at IS NOT NULL and deleted_at IS NULL']
-    elsif view == 'deleted'
-      conditions = ['deleted_at IS NOT NULL']
-    else
-      return
+
+  def self.conditions_for_view(view)
+    case view
+    when 'new'
+      then 'moderated_flags.vetted_at IS NULL and moderated_flags.deleted_at IS NULL'
+    when 'vetted'
+      then 'moderated_flags.vetted_at IS NOT NULL and moderated_flags.deleted_at IS NULL'
+    when 'deleted'
+      then 'moderated_flags.deleted_at IS NOT NULL'
     end
-    paginate(:page => page, :select => "distinct foreign_id", :conditions => conditions, :order => 'updated_at DESC')
+  end
+
+  def self.display_flags(page, view)
+    conditions = [conditions_for_view(view)]
+    return if conditions.empty?
+    paginate(:page => page, :select => "distinct foreign_id",
+             :conditions => conditions, :order => 'updated_at DESC')
   end
 
   named_scope :by_foreign_id, lambda {|foreign_id|
