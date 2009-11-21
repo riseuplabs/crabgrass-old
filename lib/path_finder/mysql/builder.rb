@@ -200,7 +200,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_joins(conditions_string)
     joins = []
-    [:user_participations, :group_participations, :page_terms, :dailies, :hourlies].each do |j|
+    [:user_participations, :group_participations, :page_terms,
+      :dailies, :hourlies, :moderated_flags].each do |j|
       if /#{j.to_s}\./ =~ conditions_string
         joins << j
       end

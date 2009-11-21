@@ -317,6 +317,22 @@ module PathFinder::Mysql::BuilderFilters
     @order = ["user_participations.changed_at DESC"]
   end
 
+  #--
+  ## MODERATION
+  #++
+
+  def filter_public()
+    @conditions << ["pages.public = ?", true]
+  end
+
+  def filter_public_requested()
+    @conditions << ["pages.public_requested = ?", true]
+  end
+
+  def filter_moderation(state)
+    @conditions << ModeratedFlag.conditions_for_view(state)
+  end
+
 #turning RDoc comments back on.
 #++
 end
