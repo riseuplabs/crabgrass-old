@@ -1,33 +1,3 @@
-
-$: << "#{RAILS_ROOT}/lib/rubyvote/lib"
-require 'election'
-require 'positional'
-
-# add rank calculation functions to BordaResult class
-# should this go in its own function?
-class BordaResult
-
-  def rank(possible)
-    @ranks ||= calculate_ranks
-    return @ranks[possible]
-  end
-
-  private
-
-  def calculate_ranks
-  ranks = {}
-    rank = 0
-    previous_points = -1
-    ranked_candidates.each do |candidate|
-      rank += 1 if points[candidate] != previous_points
-      ranks[candidate] = rank
-      previous_points = points[candidate]
-    end
-    return ranks
-  end
-
-end
-
 class RankedVotePageController < BasePageController
   before_filter :fetch_poll
   before_filter :find_possibles, :only => [:show, :edit]
@@ -39,7 +9,7 @@ class RankedVotePageController < BasePageController
     redirect_to(page_url(@page, :action => 'edit')) unless @poll.possibles.any?
 
     array_of_votes, @who_voted_for = build_vote_arrays
-    @result = BordaVote.new( array_of_votes ).result
+    @result = BordaVote.new(array_of_votes)
     @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
   end
 
@@ -119,7 +89,7 @@ class RankedVotePageController < BasePageController
 
   def print
     array_of_votes, @who_voted_for = build_vote_arrays
-    @result = BordaVote.new( array_of_votes ).result
+    @result = BordaVote.new(array_of_votes).result
     @sorted_possibles = @result.ranked_candidates.collect { |id| @poll.possibles.find(id)}
 
     render :layout => "printer-friendly"

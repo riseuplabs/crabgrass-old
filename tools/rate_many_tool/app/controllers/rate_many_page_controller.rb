@@ -4,7 +4,7 @@ class RateManyPageController < BasePageController
   permissions 'rate_many_page'
 
   def show
-  @possibles = @poll.possibles.sort_by{|p| p.position||0 }
+    @possibles = @poll.possibles.sort_by{|p| p.position||0 }
   end
 
   # ajax or post
