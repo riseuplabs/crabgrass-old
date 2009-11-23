@@ -41,3 +41,6 @@ FORBIDDEN_NAMES = %w(account admin assets avatars chat calendar calendars contac
 
 # a time to use when displaying recent records
 RECENT_SINCE_TIME = 2.weeks.ago.freeze
+
+# caching constants
+CACHING_ENTITIES_IN_HOURS = 3

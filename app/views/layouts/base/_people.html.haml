@@ -2,9 +2,5 @@
   %h3
     = I18n.t(:people).downcase
   = totalize_with_link(@group, @group.users)
-%h4 Coordinators
-%ul#coordinators
-  = render :partial => '/avatars/entity', :collection => @group.users
-%h4 New Members
-%ul#new-members
-  = render :partial => '/avatars/entity', :collection => @group.users
+  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users, :i18n_title => :coordinators, :caching => 'members', :conditions => may_list_memberships? } 
+  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users, :i18n_title => :new_members, :caching => 'members', :conditions => may_list_memberships? }

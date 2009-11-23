@@ -1,0 +1,7 @@
+- if conditions
+  - cache(group_cache_key(@group, :what => caching, :expires_in => hours(CACHING_ENTITIES_IN_HOURS))) do
+    %h4 
+      = I18n.t(i18n_title)
+    %ul#coordinators
+      = render :partial => '/avatars/entity', :collection => collection 
+  

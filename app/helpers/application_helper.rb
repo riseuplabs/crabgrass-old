@@ -52,7 +52,7 @@ module ApplicationHelper
     when 'User' then url_for_user(entity) 
     end
   end
-
+  
   ##
   ## GENERAL UTILITY
   ##

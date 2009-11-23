@@ -1,13 +1,10 @@
-- if may_show_networks_of_group?
-  - cache(group_cache_key(@group, :what => 'networks')) do 
-    - if @group.networks.any?
-      = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:networks), :entities => @group.networks, :after => '&nbsp'}
+%header
+  %h3 
+    =I18n.t(:affiliations)
+  = totalize_with_link(@group, @group.users)
 
-- if may_show_subcommittees_of_group?
-  - cache(group_cache_key(@group, :what => 'committees')) do 
-    - committees = @group.committees_for(@access) 
-    = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:committees), :entities => committees, :after => link_line(create_committee_link), :show_empty => true}
+= render :partial => '/avatars/entity_list', :locals => { :collection => @group.networks, :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
 
-    - if @group.real_council 
-      = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:council), :entities => [@group.real_council], :show_empty => false}
+= render :partial => '/avatars/entity_list', :locals => { :collection => @group.committees_for(@access), :i18n_title => :committees, :caching => 'committees', :conditions => may_show_subcommittees_of_group? }
+
 
