@@ -1,7 +1,7 @@
 <% @sorted_possibles.each do |possible| -%>
-<% winner = 'winner' if (@result.winners.any? and @result.winners.include?possible.id) %>
+<% winner = 'winner' if (@poll.winners.any? and @poll.winners.include?possible.id) %>
 <li class='<%=winner%>'>
-  <span><%= @result.rank(possible.id) %> <%= "(" + I18n.t(:top_pick) + ")" if winner.any? %></span>
+  <span><%= @poll.rank(possible.id) %> <%= "(" + I18n.t(:top_pick) + ")" if winner.any? %></span>
   <span><%= possible.name %><span>
   <div>
     <%= possible.description_html %>
@@ -10,5 +10,5 @@
     <% end -%>
   </div>
 </li>
-<% end -%> 
+<% end -%>
 
