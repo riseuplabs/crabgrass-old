@@ -11,7 +11,7 @@ Background:
   And I am logged in as that user
   Given I am on that group's landing page
 
-Scenario: The group has many members, so I can propose to destroy the group
+Scenario: I propose to destroy the group. The becomes active and I receive an email notification.
   When I follow and confirm "Propose to Destroy Group"
   Then I should be on the group's landing page
   And I should not see "Propose to Destroy Group"
@@ -28,9 +28,8 @@ Scenario: I propose to destroy a group that has other people in it. That proposa
   And I should receive an email with subject: "Group Rainbow has been deleted by Blue!"
   And I should receive an email body containing a destroyed groups directory link
 
-
 Scenario: I propose to destroy a group that has other people in it. That proposal can be vetoed within a month.
-  Given that group has 5 members
+  Given that group has other 5 members
   And the group has been proposed for destruction
   And I am on my group destruction proposals page
   When I follow "reject"
@@ -38,7 +37,3 @@ Scenario: I propose to destroy a group that has other people in it. That proposa
   And I go to the group page
   Then I should see "Propose to Destroy Group"
 
-Scenario: The group has many members, so I can't destroy the group
-  Given that group has 5 members
-  When I go to that group's landing page
-  Then I should not see "Destroy Group"
