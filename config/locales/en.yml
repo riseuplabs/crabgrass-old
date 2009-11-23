@@ -3,7 +3,6 @@ en:
   ## TO BE DESTROYED
   ##
 
-  #permission_denied: 'Permission denied'
   #upload_attachment: "Upload Attachment"
   #rename {{upload_images}} -> {{upload}}
 
@@ -852,6 +851,7 @@ en:
   request_to_join_us_via_email_description: "{{email}} was invited to join {{group}}"
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
+  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group}}"
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"
@@ -863,6 +863,7 @@ en:
   invites_sent: "{{count}} invitations sent"
   contact_request_sent: "Friend request has been sent"
   request_to_join_sent: "Request to join has been sent"
+  request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   contact_removed: "{{user}} has been removed from your contact list."
   not_contact_of: "You are not the contact of {{user}}."
@@ -1497,7 +1498,7 @@ en:
   login_required: 'Login Required'
   login_required_description: 'Please login to perform that action.'
   permission_denied_description: 'You do not have sufficient permission to perform that action.'
-
+  permission_denied: 'Permission Denied'
   ##
   ## CHAT
   ##

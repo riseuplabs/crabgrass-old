@@ -15,7 +15,7 @@ Scenario: I propose to destroy the group. The becomes active and I receive an em
   When I follow and confirm "Propose to Destroy Group"
   Then I should be on the group's landing page
   And I should not see "Propose to Destroy Group"
-  And I should see "Your proposal to destory this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed"
+  And I should see "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   And I should receive an email with subject: "Blue has proposed to delete group Rainbow!"
 
 @js

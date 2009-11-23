@@ -65,6 +65,13 @@ class Request < ActiveRecord::Base
     {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
   }
 
+  named_scope :for_recipient, lambda { |recipient|
+    {:conditions => {:recipient_id => recipient.id}}
+  }
+  named_scope :with_requestable, lambda { |requestable|
+    {:conditions => {:requestable_id => requestable.id}}
+  }
+
   before_validation_on_create :set_default_state
   def set_default_state
     self.state = "pending" # needed despite FSM so that validations on create will work.
