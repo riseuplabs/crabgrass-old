@@ -17,7 +17,7 @@ class RequestToJoinYourNetwork < Request
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
       errors.add_to_base(I18n.t(:membership_exists_error, :member => group.name))
     end
-    if RequestToJoinYourNetwork.appearing_as_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
+    if RequestToJoinYourNetwork.having_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
       errors.add_to_base(I18n.t(:request_exists_error, :recipient => group.name))
     end
   end

@@ -51,7 +51,7 @@ class ContactController < ApplicationController
   prepend_before_filter :fetch_user
   def fetch_user
     @user = User.find_by_login params[:id] if params[:id]
-    @past_request = RequestToFriend.created_by(@user).to_user(current_user).appearing_as_state('pending')
+    @past_request = RequestToFriend.created_by(@user).to_user(current_user).having_state('pending')
     true
   end
 

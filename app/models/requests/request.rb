@@ -48,13 +48,6 @@ class Request < ActiveRecord::Base
   named_scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state]}
   }
-  named_scope :appearing_as_state, lambda { |state|
-    if state == 'pending'
-      {:conditions => "state='pending' OR state='ignored'"}
-    else
-      {:conditions => [ "requests.state = ?", state]}
-    end
-  }
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
   named_scope :by_updated_at, :order => 'updated_at DESC'
@@ -83,13 +76,12 @@ class Request < ActiveRecord::Base
     end
   end
 
-  # state one of 'approved' 'rejected' or 'ignore'
+  # state one of 'approved' or 'rejected'
   # user the person doing the change
   def set_state!(newstate, user)
     # reject unless we know the state
     commands = Hash.new('reject')
     commands['approved'] = 'approve'
-    commands['ignored'] = 'ignore'
 
     command = commands[newstate]
 
@@ -113,10 +105,6 @@ class Request < ActiveRecord::Base
 
   def reject_by!(user)
     set_state!('rejected',user)
-  end
-
-  def ignore_by!(user)
-    set_state!('ignored',user)
   end
 
   # triggered by FSM
@@ -156,19 +144,13 @@ class Request < ActiveRecord::Base
   state :pending
   state :approved, :after => :after_approval
   state :rejected
-  state :ignored
 
   event :approve do
     transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
     transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-    transitions :from => :ignored,  :to => :approved, :guard => :approval_allowed
   end
   event :reject do
     transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
-    transitions :from => :ignored,  :to => :rejected, :guard => :approval_allowed
-  end
-  event :ignore do
-    transitions :from => :pending,  :to => :ignored,  :guard => :approval_allowed
   end
 
   ##
