@@ -22,3 +22,23 @@ Given /^#{capture_model} has a council$/ do |group|
   # true means this is a council, not just any committee
   group.add_committee!(council, true)
 end
+
+Given /^#{capture_model} has admins moderate content$/ do |group|
+  group = model(group)
+  group.admins_moderate_content = true
+end
+
+# This should be changed to allow for {admin, edit, view} access.
+Given /^#{capture_model} has admin access to #{capture_model}$/ do |entity, page|
+  entity = model(entity)
+  page = model(page)
+  page.add entity, :access => 1
+  page.save
+end
+
+Given /^#{capture_model} comments #{capture_model} ?(?: with #{capture_fields})?$/ do |post, page, fields|
+  page = model(page)
+  post = create_model(post, fields).last
+  page.build_post(post, post.user)
+  page.save!
+end
