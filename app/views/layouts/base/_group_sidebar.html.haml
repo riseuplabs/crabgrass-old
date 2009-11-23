@@ -1,5 +1,5 @@
 %section#group-logo
-  %h1 group logo
+  = avatar_for @group
 %section#contribute
   %h2 
     = I18n.t(:contribute_content_link)
@@ -15,7 +15,9 @@
     = render :partial => '/layouts/base/people'
   %section#affiliations
     %header
-      %h3 affiliations
+      %h3 I18n.t(:affiliations)
+      = totalize_with_link(@group, @group.users)
+      
       %a{:href => "#"} 6 total
     %h4 Networks
     %ul#networks

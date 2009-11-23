@@ -28,9 +28,29 @@ module ApplicationHelper
     char = content_tag(:em, link_char(links))
     content_tag(:div, links.compact.join(char), :class => 'link_line')
   end
+  
   def link_span(*links)
     char = content_tag(:em, link_char(links))
     content_tag(:span, links.compact.join(char), :class => 'link_line')
+  end
+
+  #
+  # show link with totals for a collection that belongs to an object
+  #
+
+  def totalize_with_link(object, collection, controller=nil, action=nil)
+    action ||= 'list'
+    controller ||= url_for(:controller => object.class.name.pluralize.underscore, :action => action)
+    link_if_may(I18n.t(:total, :count => (collection.size).to_s) ,
+                   controller , action, object) or
+    I18n.t(:total, :count => (collection.size).to_s)
+  end
+
+  def guess_url_for_entity(entity)
+    case entity.class.name
+    when 'Group' then url_for_group(entity)
+    when 'User' then url_for_user(entity) 
+    end
   end
 
   ##

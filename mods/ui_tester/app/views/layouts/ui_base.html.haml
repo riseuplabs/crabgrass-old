@@ -18,13 +18,13 @@
   %body{:class=>language_direction}
     %section#page
       %header.page
-        =render :partial => 'layouts/header'
+        =render :partial => 'layouts/ui_header'
       %section#content
         %section#content-container
           %section#group-content-wrap
             %aside#group-info.first
-              =render :partial => 'layouts/group_sidebar'
+              =render :partial => 'layouts/ui_group_sidebar'
             %section#group-content
-              =render :partial => 'layouts/group_content'
+              =render :partial => 'layouts/ui_group_content'
       %footer.page
         footer

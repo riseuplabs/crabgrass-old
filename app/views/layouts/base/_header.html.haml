@@ -1,19 +1,21 @@
 %section#titlebar
   %section#titlebar-container
-    = custom_masthead_site_title
-    /%h2 Site Name sss
-    %section#search
-      %form
-        %input{:type=>'text'}
-        %input{:type=>'hidden'}
-        %button{:type=>'submit'}
-        %input{:type=>'checkbox'}
-        %span
-          Search this group only
+    %section#title
+      = custom_masthead_site_title
+      /%h2 Site Name sss
+      %section#search
+        %form
+          %input{:type=>'text'}
+          %input{:type=>'hidden'}
+          %button{:type=>'submit'}
+          %input{:type=>'checkbox'}
+          %span
+            Search this group only
 %nav.page
   %section#nav-container
-    = render :partial => '/layouts/base/menu'
-    = render :partial => '/layouts/base/menu_user'
+    %section#nav
+      = render :partial => '/layouts/base/menu'
+      = render :partial => '/layouts/base/menu_user'
 
 //        %li Welcome userName
 //        %li  
@@ -27,3 +29,7 @@
 %section#breadcrumb
   %section#breadcrumb-container
     = link_to_breadcrumbs
+
+
+
+

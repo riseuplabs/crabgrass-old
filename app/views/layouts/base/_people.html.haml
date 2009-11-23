@@ -1,38 +1,10 @@
 %header
-  %h3 
+  %h3
     = I18n.t(:people).downcase
-  %a{:href => "#"} 827 total
+  = totalize_with_link(@group, @group.users)
 %h4 Coordinators
 %ul#coordinators
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+  = render :partial => '/avatars/entity', :collection => @group.users
 %h4 New Members
 %ul#new-members
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %li 
-    %a{:href => "#"}
-      %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+  = render :partial => '/avatars/entity', :collection => @group.users

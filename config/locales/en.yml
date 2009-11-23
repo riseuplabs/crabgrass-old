@@ -88,6 +88,8 @@ en:
   required: "(required)"
   more: "more"
   about: "about"
+  total: "{{count}} total"
+  affiliations: "Affiliations"
 
   recent_activity: "Recent Activity"
   recent_pages: "Recent Pages"
