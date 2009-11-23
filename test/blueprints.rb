@@ -140,6 +140,8 @@ end
 RateManyPage.blueprint {}
 
 Poll.blueprint {}
+RankingPoll.blueprint {}
+RatingPoll.blueprint {}
 
 Discussion.blueprint {}
 

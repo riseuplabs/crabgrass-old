@@ -1259,7 +1259,7 @@ en:
   vote_ok: "ok"
   vote_bad: "bad"
   vote_none: "none"
-
+  vote_no: "no"
   ##
   ## SURVEY PAGE
   ##

@@ -48,12 +48,12 @@ class RankedVotePageController < BasePageController
       render :nothing => true
       return
     else
-      @poll.delete_votes_by_user(current_user)
+      @poll.votes.by_user(current_user).destroy_all
       ids = params[:sort_list_voted]
       ids.each_with_index do |id, rank|
         next unless id.to_i != 0
         possible = @poll.possibles.find(id)
-        possible.votes.create :user => current_user, :value => rank
+        @poll.votes.create! :user => current_user, :value => rank, :possible => possible
       end
       find_possibles
     end
@@ -105,14 +105,14 @@ class RankedVotePageController < BasePageController
     @possibles_unvoted = []
 
     @poll.possibles.each do |pos|
-      if pos.vote_by_user(current_user)
+      if pos.votes.by_user(current_user).first
         @possibles_voted << pos
       else
         @possibles_unvoted << pos
       end
     end
 
-    @possibles_voted = @possibles_voted.sort_by { |pos| pos.value_by_user(current_user) }
+    @possibles_voted = @possibles_voted.sort_by { |pos| pos.votes.by_user(current_user).first.try.value || -1 }
   end
 
   def setup_view
@@ -120,7 +120,7 @@ class RankedVotePageController < BasePageController
   end
 
   def build_page_data
-    Poll.new
+    RankingPoll.new
   end
 end
 
