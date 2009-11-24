@@ -18,3 +18,8 @@ end
 Given /^I am logged in$/ do
   Given "I am logged in as user: \"me\""
 end
+
+Given /^We are on #{capture_model}$/ do |site|
+  site = model(site)
+  enable_site_testing site.name
+end

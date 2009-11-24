@@ -43,3 +43,13 @@ Given /^#{capture_model} comments #{capture_model} ?(?: with #{capture_fields})?
   post.save!
   page.save!
 end
+
+Given /^(\d+) Posts comment #{capture_model}$/ do |count, page|
+  page = model(page)
+  count.to_i.times do
+    post = create_model('post').last
+    post = page.build_post(post, post.user)
+    post.save!
+  end
+  page.save!
+end
