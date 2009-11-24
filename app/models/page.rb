@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Index     # page full text searching
   include PageExtension::Starring  # ???
   include PageExtension::Tracking  # page tracking views, edits and stars
-  include PageExtension::PageHistory  
+  include PageExtension::PageHistory
 
   # disable timestamps, we set the updated_at field through certain PageHistory subclasses
   self.record_timestamps = false
@@ -193,6 +193,7 @@ class Page < ActiveRecord::Base
     self.discussion.posts << post
     post.discussion = self.discussion
     post.user = user
+    post.page_terms = self.page_terms
     association_will_change(:posts)
     return post
   end

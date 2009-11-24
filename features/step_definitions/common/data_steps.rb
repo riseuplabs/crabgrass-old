@@ -39,6 +39,7 @@ end
 Given /^#{capture_model} comments #{capture_model} ?(?: with #{capture_fields})?$/ do |post, page, fields|
   page = model(page)
   post = create_model(post, fields).last
-  page.build_post(post, post.user)
+  post = page.build_post(post, post.user)
+  post.save!
   page.save!
 end

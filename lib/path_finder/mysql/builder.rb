@@ -234,6 +234,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   end
 
   def add_flow(flow)
+    return unless @klass == Page
     if flow.instance_of? Array
       cond = []
       flow.each do |f|

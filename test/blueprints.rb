@@ -177,7 +177,7 @@ def Post.make_comment_to(attributes, machinist_attributes = {})
   post = Post.make_unsaved(machinist_attributes)
   attributes.reverse_merge!(post.attributes)
   attributes.merge! :page => page
-  post = Page.build! attributes
+  post = Post.build! attributes
   page.save!
   page.reload
 end
