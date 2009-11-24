@@ -8,6 +8,7 @@ namespace :cg do
     countries = "/countryInfo.txt"
     admin_codes = "/admin1Codes.txt"
     places = "/cities1000"
+    Dir.mkdir(path) if ! File.directory?(path)
     [countries, admin_codes, places+".zip"].each do |geofile|
       Net::HTTP.start("download.geonames.org") { |http|
         resp = http.get(uri+geofile)

@@ -1,18 +1,18 @@
 class CreateGeoData < ActiveRecord::Migration
   def self.up
     create_table :geo_countries,
-      :options => "ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
+      :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
       t.column :name, :string, :null => false
       t.column :code, :string, :limit => 3, :null => false 
     end
     create_table :geo_admin_codes,
-      :options => "ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
+      :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
       t.column :geo_country_id, :integer, :null => false
       t.column :admin1_code, :string, :limit => 10, :null => false
       t.column :name, :string, :null => false
     end
     create_table :geo_places,
-      :options => "ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
+      :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
       t.column :geo_country_id, :integer, :null => false
       t.column :geonameid, :integer, :null => false
       t.column :name, :string, :null => false
