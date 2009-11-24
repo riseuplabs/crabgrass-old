@@ -1,4 +1,4 @@
-class Admin::PagesController < Admin::BaseController
+class Admin::BaseController
 
   # to use with path_finder:
   def moderation_options
