@@ -6,7 +6,7 @@ PageClassRegistrar.add(
   :order => 30
 )
 
-apply_mixin_to_model(Asset, AssetsHaveGalleries)
+apply_mixin_to_model("Asset", "AssetsHaveGalleries")
 
 self.override_views = false
 self.load_once = false

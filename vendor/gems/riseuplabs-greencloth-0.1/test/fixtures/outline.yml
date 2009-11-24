@@ -315,18 +315,30 @@ in: |-
 
   h2. [-table-]
 
+  [# Heading anchor -> head_anchor #]
+  -----------------------------------
+
+  h2. Anchor within [# heading -> head_anchor #]
+
+  Dots ...
+  --------
+
 out: |-
   <h2 class="first"><a name="emphasis"></a><em>emphasis</em><a class="anchor" href="#emphasis">&para;</a></h2>
   <h2><a name="italicized"></a><i>italicized</i><a class="anchor" href="#italicized">&para;</a></h2>
   <h2><a name="strong"></a><strong>strong</strong><a class="anchor" href="#strong">&para;</a></h2>
   <h2><a name="bold"></a><b>bold</b><a class="anchor" href="#bold">&para;</a></h2>
   <h2><a name="citation"></a><cite>citation</cite><a class="anchor" href="#citation">&para;</a></h2>
-  <h2><a name="deleted-text"></a>-deleted text-<a class="anchor" href="#deleted-text">&para;</a></h2>
+  <h2><a name="deleted-text"></a><del>deleted text</del><a class="anchor" href="#deleted-text">&para;</a></h2>
   <h2><a name="inserted-text"></a><ins>inserted text</ins><a class="anchor" href="#inserted-text">&para;</a></h2>
   <h2><a name="superscript"></a><sup>superscript</sup><a class="anchor" href="#superscript">&para;</a></h2>
   <h2><a name="subscript"></a><sub>subscript</sub><a class="anchor" href="#subscript">&para;</a></h2>
   <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
   <h2><a name="table"></a><del>table</del><a class="anchor" href="#table">&para;</a></h2>
+  <h2><a name="heading-anchor"></a><a name="head_anchor">Heading anchor</a><a class="anchor" href="#heading-anchor">&para;</a></h2>
+  <h2><a name="anchor-within-heading"></a>Anchor within <a name="head_anchor">heading</a><a class="anchor" href="#anchor-within-heading">&para;</a></h2>
+  <h2><a name="dots"></a>Dots &#8230;<a class="anchor" href="#dots">&para;</a></h2>
+
 ---
 name: leading and trailing whitespace
 in: |-

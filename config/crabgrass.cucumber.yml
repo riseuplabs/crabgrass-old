@@ -23,9 +23,6 @@ enabled_mods:
 #  - moderation
 #  - translator
 
-email:
-  delivery_method: :sendmail
-
 translation_group: rainbow
 
 text_editor: greencloth_only

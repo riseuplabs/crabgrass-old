@@ -50,3 +50,5 @@
       :trigger_args: <%= hourly %>
     :clean_chat_channels_users:
       :trigger_args: <%= every_minute %>
+    :tally_votes:
+      :trigger_args: <%= hourly %>

@@ -19,7 +19,7 @@
         <td><%= I18n.t(request.state.to_sym) %></td>
         <%- if approvable -%>
           <td><%= request_action_links(request) %></td>
-        <%- elsif destroyable -%>
+        <%- elsif destroyable and request.may_destroy?(current_user) -%>
           <td><%= request_destroy_link(request) %></td>
         <%- end -%>
       </tr>

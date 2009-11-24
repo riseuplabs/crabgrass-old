@@ -7,9 +7,9 @@ rescue LoadError => exc
 end
 
 begin
-  require 'redgreen' unless ARGV.include? "--no-color"
+  require 'leftright'
 rescue LoadError => exc
-  # no redgreen installed
+  # no leftright installed
 end
 
 # this can speed running a single test method from 11 seconds to 3
@@ -233,8 +233,9 @@ See also doc/SPHINX"
 
   def enable_site_testing(site_name=nil)
     if site_name
-      Conf.enable_site_testing(sites(site_name))
-      Site.current = sites(site_name)
+      site=Site.find_by_name(site_name) || sites(site_name)
+      Conf.enable_site_testing(site)
+      Site.current = site
     else
       Conf.enable_site_testing()
       Site.current = Site.new
@@ -260,7 +261,7 @@ See also doc/SPHINX"
     end
 
     # Run the block
-    yield sites(site_name)
+    yield Site.find_by_name(site_name) || sites(site_name)
   ensure
     # restore
     if updated_site_attributes

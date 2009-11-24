@@ -187,8 +187,10 @@ class TestHeadings < Test::Unit::TestCase
       'superscript' => "^superscript^\n-------------\n\n",
       'subscript' => "h2. ~subscript~\n\n",
       'code' => "@code@\n------\n\n",
-      'table' => "h2. [-table-]"
-
+      'table' => "h2. [-table-]\n\n",
+      'heading-anchor-head_anchor' => "[# Heading anchor -> head_anchor #]\n-----------------------------------\n\n",
+      'anchor-within-heading-head_anchor' => "h2. Anchor within [# heading -> head_anchor #]\n\n",
+      'dots' => "Dots ...\n--------"
     }
 
     section_markup_map.each do |section, markup|

@@ -20,7 +20,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     login_as :blue
     get :edit, :page_id => pages("survey_blank").id
     assert_response :success
-    assert_active_tab "Create Survey"
+    assert_active_tab "Edit Survey"
 
     assert_not_nil assigns(:survey)
     # this will create two new questions
@@ -36,7 +36,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_redirected_to "_page_action" => "edit"
 
     get :edit, :page_id => pages("survey_blank").id
-    assert_active_tab "Create Survey"
+    assert_active_tab "Edit Survey"
     assert_response :success
 
     survey = assigns(:survey)

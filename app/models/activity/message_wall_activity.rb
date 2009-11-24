@@ -24,7 +24,8 @@ class MessageWallActivity < Activity
   before_create :set_access
   def set_access
     # all content on the wall is public anyway
-    self.access = Activity::PUBLIC
+    # except status posts
+    self.access ||= Activity::PUBLIC
   end
 
   def description(view=nil)

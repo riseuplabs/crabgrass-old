@@ -8,13 +8,11 @@ class Groups::RequestsController < Groups::BaseController
   def list
     params[:state] ||= 'pending'
 
-    @incoming = Request.to_group(@group).having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
+    @incoming = Request.to_group(@group).
+                    having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
 
-    @outgoing = Request.from_group(@group).appearing_as_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
-
-    # hide ignored states
-    # @outgoing.each {|r| r.state = 'pending'} if params[:state] == 'pending'
-    # ^^^ what the hell was this supposed to do? -e
+    @outgoing = Request.from_group(@group).
+                    having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
   end
 
   ##
@@ -82,11 +80,23 @@ class Groups::RequestsController < Groups::BaseController
         end
       end
     else
-      flash_message_now :success => I18n.t(:invites_sent, :count => reqs.size)
+      flash_message_now :success => I18n.t(:invites_sent, :count => reqs.size.to_s)
       params[:recipients] = ""
     end
   rescue Exception => exc
     flash_message_now :exception => exc
+  end
+
+  # create a request to destroy (aka a destroy proposal)
+  def create_destroy
+    begin
+      RequestToDestroyOurGroup.create! :created_by => current_user, :recipient => @group, :requestable => @group
+      flash_message :success => I18n.t(:request_to_destroy_sent)
+    rescue Exception => exc
+      flash_message :exception => exc
+    end
+
+    redirect_to url_for_group(@group)
   end
 
   protected

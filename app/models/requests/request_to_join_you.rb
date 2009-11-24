@@ -13,7 +13,7 @@ class RequestToJoinYou < Request
     if Membership.find_by_user_id_and_group_id(created_by_id, recipient_id)
       errors.add_to_base(I18n.t(:you_are_a_member_already_error))
     end
-    if RequestToJoinYou.appearing_as_state(state).find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
+    if RequestToJoinYou.having_state(state).find_by_created_by_id_and_recipient_id_and_state(created_by_id, recipient_id, state)
       errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end

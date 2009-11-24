@@ -37,7 +37,8 @@ module UserExtension::Pages
               ON users.id = user_participations.user_id
             INNER JOIN pages
               ON pages.id = user_participations.page_id AND
-              pages.site_id = #{site.id}",
+              pages.site_id = #{site.id} AND
+              pages.type != 'AssetPage'",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
           :select => "users.*, user_participations.changed_at"

@@ -9,4 +9,12 @@ module PeopleHelper
     links << link_to_active( I18n.t(:all_people_link), :controller => 'people', :action => 'directory' )
     content_tag(:div, link_line(*links), :class => 'navigation')
   end
+
+  def user_line(user, profile)
+    if profile.may_see?
+      link_to "#{user.login}", url_for_user(user)
+    else
+      h user.login
+    end
+  end
 end

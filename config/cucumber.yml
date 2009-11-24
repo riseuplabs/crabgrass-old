@@ -1,0 +1,2 @@
+default: -r features/support/env.rb -r features/support/plain.rb -r features/step_definitions/common -r features/step_definitions/plain --tags ~@js
+js: -r features/support/env.rb -r features/support/js.rb -r features/step_definitions/common -r features/step_definitions/js --tags @js

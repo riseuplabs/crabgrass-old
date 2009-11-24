@@ -16,13 +16,36 @@ module NavigationHelpers
       login_path
     when /my dashboard page/
       '/me/dashboard'
+    when /the destroyed groups directory/
+      '/groups/directory/destroyed'
 
-    
+    ## PICKLE PATHS
+    when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
+      path_to_pickle $1
+
+    when /^#{capture_model}(?:'s)? #{capture_model}(?:'s)? page$/   # eg. the forum's post's page
+      path_to_pickle $1, $2
+
+    when /^#{capture_model}(?:'s)? #{capture_model}'s (.+?) page$/  # eg. the forum's post's comments page
+      path_to_pickle $1, $2, :extra => $3                           #  or the forum's post's edit page
+
+    when /^#{capture_model}(?:'s)? landing page$/                     # eg. the groups's landing page
+      name = model($1).name
+      "/#{name}"
+
+    when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
+      path_to_pickle $1, :extra => $2                               #  or the forum's edit page
+
+    ## OTHER PATHS
+    when /^the (.+?) page$/                                         # translate to named route
+      send "#{$1.downcase.gsub(' ','_')}_path"
+
     # Add more mappings here.
     # Here is a more fancy example:
     #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
+
 
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +

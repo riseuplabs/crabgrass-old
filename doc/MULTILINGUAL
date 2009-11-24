@@ -2,7 +2,7 @@
 
 == Enable Localized User Interface
 
-All crabgrass localizations are stored in RAILS_ROOT/lang/*.yml. The
+All crabgrass localizations are stored in RAILS_ROOT/config/locales/*.yml. The
 name of the file is the code of the language. These localizations
 will not appear for the user until they are enabled in the database.
 
@@ -16,7 +16,7 @@ Then run this command:
   rake cg:load_default_data RAILS_ENV=production
 
 This will populate the languages table in the database. Now the files
-in lang/*.yml will get picked up.
+in config/locales/*.yml will get picked up.
 
 == Get multi-byte character encoding to work
 

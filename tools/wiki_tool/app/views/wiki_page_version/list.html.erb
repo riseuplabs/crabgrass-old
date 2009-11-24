@@ -12,7 +12,7 @@
   <tr class="<%= cycle('odd','even') %>">
     <td><%= link_to I18n.t(:version_number, :number => version.version), url %></td>
     <td><%= link_to full_time(version.updated_at), url %></td>
-    <td><%= link_to_user(version.user, :avatar => :xsmall) %></td>
+    <td><%= link_to_user(version.user, :avatar => :xsmall) if version.user %></td>
     <td><%= link_line(
       link_to_if(version.version > 1, I18n.t(:diff_link), page_url(@page, :action=>'version-diff', :id => "#{version.version.to_i-1}-#{version.version}")),
       link_to_iff(may_revert_wiki_version?, I18n.t(:wiki_version_revert_link), page_url(@page, :action => 'version-revert', :id => version.version)),

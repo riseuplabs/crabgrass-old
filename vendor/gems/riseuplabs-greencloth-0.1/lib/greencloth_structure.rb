@@ -7,11 +7,6 @@
 require File.dirname(__FILE__) + '/green_tree'
 
 module GreenclothStructure
-
-  def headings
-    @headings
-  end
-
   def section_names
     green_tree.section_names
   end
@@ -22,8 +17,12 @@ module GreenclothStructure
   # original!
   def green_tree
     begin
-      extract_headings unless @headings
-      @green_tree ||= convert_to_tree(@headings)
+      unless @green_tree
+        extract_headings
+        @green_tree = convert_to_tree(@headings)
+      else
+        @green_tree
+      end
     rescue GreenClothException => exc
       logger.error exc.message if defined? logger and logger.respond_to? :error
       return GreenTree.from_hash({
@@ -57,7 +56,9 @@ module GreenclothStructure
 
   # called by greencloth when [[toc]] is encountered
   def symbol_toc
-    generate_toc_html(green_tree, 1)
+    # make sure to generate the green tree from the original markup, not the filtered markup
+    @green_tree = GreenCloth.new(@original_markup).green_tree
+    generate_toc_html(@green_tree, 1)
   end
 
   private

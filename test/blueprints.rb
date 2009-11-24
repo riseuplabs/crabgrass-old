@@ -2,7 +2,7 @@ require 'machinist/active_record'
 require 'sham'
 require 'faker'
 
-# 
+#
 # Common
 #
 
@@ -18,31 +18,30 @@ def boolean
   rand(2) == 1 ? true : false
 end
 
-Sham.title            { Faker::Lorem.sentence }
+Sham.title            { Faker::Lorem.words(3).join(" ").capitalize }
 Sham.email            { Faker::Internet.email }
 Sham.login            { Faker::Internet.user_name.gsub(/[^a-z]/, "") }
 Sham.display_name     { Faker::Name.name }
-Sham.salt             { Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{Sham.login}--") }  
-Sham.crypted_password { Digest::SHA1.hexdigest("--#{Sham.salt}--#{Sham.login}--") }
 Sham.summary          { Faker::Lorem.paragraph }
 
 #
 # Site
 #
 Site.blueprint do
-  domain       "crabgrass.org"
+  # make sites available from functional tests
+  domain       "test.host"
   email_sender "robot@$current_host"
 end
 
-# 
+#
 # Users
 #
 User.blueprint do
-  login 
+  login
   display_name
   email
-  salt
-  crypted_password
+  salt              { Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") }
+  crypted_password  { Digest::SHA1.hexdigest("--#{salt}--#{login}--") }
 
   created_at        { created_date }
   last_seen_at      { updated_date }
@@ -67,12 +66,24 @@ Group.blueprint do
   name            { full_name.gsub(/[^a-z]/,"") }
 end
 
-# 
+Committee.blueprint do
+  name            { Sham.title.gsub(/[^a-z]/,"")[0, 10] }
+end
+
+Council.blueprint do
+end
+
+Network.blueprint do
+  full_name       { Sham.title }
+  name            { full_name.gsub(/[^a-z]/,"") }
+end
+
+#
 # Pages
 #
 
 # requieres :owner in attributes
-def Page.make_owned_by(attributes, machinist_attributes = {}) 
+def Page.make_owned_by(attributes, machinist_attributes = {})
   page = Page.make_unsaved(machinist_attributes)
   attributes.reverse_merge!(page.attributes)
   page = Page.build!(attributes)
@@ -123,14 +134,26 @@ Wiki.blueprint do
   user_id { User.make.id }
 end
 
-# 
+#
 # Others
 #
 RateManyPage.blueprint {}
 
 Poll.blueprint {}
+RankingPoll.blueprint {}
+RatingPoll.blueprint {}
 
 Discussion.blueprint {}
+
+# requieres :page in attributes
+def Post.make_comment_to(attributes, machinist_attributes = {})
+  post = Post.make_unsaved(machinist_attributes)
+  attributes.reverse_merge!(post.attributes)
+  attributes.merge! :page => page
+  post = Page.build! attributes
+  page.save!
+  page.reload
+end
 
 Post.blueprint do
   discussion { Discussion.make }

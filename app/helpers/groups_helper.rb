@@ -39,7 +39,18 @@ module GroupsHelper
     # eventually, this should fire a request to destroy.
     if may_destroy_group?
       link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => @group.group_type),
-                        {:confirm => I18n.t(:destroy_confirmation, :thing => @group.group_type.downcase), :url => groups_url(:action => :destroy), :method => :post})
+                        {:confirm => I18n.t(:destroy_confirmation, :thing => @group.group_type.downcase),
+                          :ok => I18n.t(:delete_button),
+                          :url => groups_url(:action => :destroy),
+                          :method => :post})
+    elsif may_create_destroy_request?
+      if RequestToDestroyOurGroup.for_group(@group).created_by(current_user).blank?
+        link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => @group.group_type),
+                          {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => @group.group_type.downcase),
+                            :ok => I18n.t(:delete_button),
+                            :url => {:controller => 'groups/requests', :action => 'create_destroy', :id => @group},
+                            :method => :post})
+      end
     end
   end
 

@@ -26,24 +26,19 @@ class Admin::PostsController < Admin::BaseController
 
   # Approves a post by marking :vetted = true
   def approve
-    ModeratedPost.update_all('vetted_at=now()',"foreign_id=#{params[:id]}")
-    Post.find(params[:id]).update_attribute(:vetted, true)
-    # get rid of all yucky associated with the post
-    #post.ratings.destroy_all
+    @mpost.approve
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # We use delete to hide a post.
   def trash
-    Post.find(params[:id]).delete
-    ModeratedPost.update_all("deleted_at=now()","foreign_id=#{params[:id]}")
+    @mpost.trash
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Undelete a hidden post in order to show it.
   def undelete
-    Post.find(params[:id]).undelete
-    ModeratedPost.update_all("deleted_at=NULL","foreign_id=#{params[:id]}")
+    @mpost.undelete
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -54,5 +49,17 @@ class Admin::PostsController < Admin::BaseController
   def authorized?
     may_moderate?
   end
+
+  private
+  prepend_before_filter :fetch_flagged
+  def fetch_flagged
+    if params[:id]
+      @mpost = ModeratedPost.find_by_foreign_id(params[:id])
+    else
+      return
+    end
+  end
+
+
 end
 

@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://labs.riseup.net/"
 
   s.authors = "Riseup Labs"
-  s.email   = ""
+  s.email   = "labs@riseup.net"
 
   s.require_paths     = ["lib"]
   s.has_rdoc          = false

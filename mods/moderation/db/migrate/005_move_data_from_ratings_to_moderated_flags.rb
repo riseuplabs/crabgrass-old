@@ -50,14 +50,16 @@ class MoveDataFromRatingsToModeratedFlags < ActiveRecord::Migration
 
   def self.down
     all_flagged = []
-    all_flagged.concat( ModeratedPages.find(:all) )
-    all_flagged.concat( ModeratedPosts.find(:all) )
-    all_flagged.concat( ModeratedChats.find(:all) )
+    all_flagged.concat( ModeratedPage.find(:all) )
+    all_flagged.concat( ModeratedPost.find(:all) )
 
     all_flagged.each do |f|
-      options = {:rateable_id => f.foreign_id, :rateable_type => f.foreign_type, :user_id => f.user_id, :created_at => f.created_at,
-                 :rating => -100 }
+      next unless f.user_id
+      type = 'Page' if f.foreign.is_a?(Page)
+      type = 'Post' if f.foreign.is_a?(Post)
+      options = {:rateable_id => f.foreign_id, :rateable_type => type, :user_id => f.user_id, :created_at => f.created_at, :rating => -100 }
       Rating.create!(options)
+      f.delete
     end
   end
 

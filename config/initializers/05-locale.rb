@@ -2,30 +2,16 @@
 # to have another default locale (standard is :en) or more load paths.
 # All files from config/locales/*.rb,yml are added automatically.
 
-# the database might not be available, in that case we have no language codes
-lang_codes_in_database = begin
-  Language.find(:all).collect {|language| language.code.to_s}
-rescue
-  []
-end
-
 # glob all locales in the config/locales folder
 locale_paths = Dir[File.join(Rails.root, 'config', 'locales', '**', '*.{rb,yml}')]
-# select only enabled locales and locales that are exist in the db in 'languages' table
-locale_paths = locale_paths.select do |path|
-  # locales not enabled in Conf
-  enabled_language = Conf.enabled_languages.blank? || Conf.enabled_languages.detect do |enabled_lang_code|
-    path.include?("#{enabled_lang_code}.yml")
-  end
 
-  # locales not in the db
-  language_in_db = lang_codes_in_database.detect do |code_in_db|
-    path.include?("#{code_in_db}.yml")
+# select only enabled locales unless no enabled locales are set
+unless Conf.enabled_languages.blank?
+  locale_paths = locale_paths.select do |path|
+    Conf.enabled_languages.detect do |enabled_lang_code|
+      path.include?("#{enabled_lang_code}.yml")
+    end
   end
-
-  # both must be true to consider this locale valid
-  # for test don't need to look in the db, cause it's not ready
-  enabled_language && (language_in_db || RAILS_ENV == "test")
 end
 
 # set the load paths
