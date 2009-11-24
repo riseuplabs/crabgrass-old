@@ -1,0 +1,6 @@
+Country: <%= country_dropdown('group','location') %>
+<br>
+State/Province: <%= select('group', 'state', '', {:include_blank => true}) %>
+<br>
+City: <%= text_field('group','city', :size => 20) %>
+

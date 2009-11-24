@@ -46,6 +46,16 @@ class Group < ActiveRecord::Base
   ## FINDERS
   ##
 
+  def location
+    return "US"
+  end
+  def city
+    return "Philadelphia"
+  end
+  def state
+    return "PA"
+  end
+
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
     group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
