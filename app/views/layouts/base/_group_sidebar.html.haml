@@ -1,5 +1,5 @@
 %section#group-logo
-  = avatar_for @group
+  = avatar_for @group, 'big'
 %section#contribute
   %h2 
     = I18n.t(:contribute_content_link)
@@ -8,7 +8,7 @@
     %h3 
       = I18n.t(:about)
     %p
-      = text_with_more('Lorem ipsum dolor sit amet conte sectetur adipiscing elit. sodales lorem ipsum dolor sit amet, e sectetur adipiscing elitism. Duis adictum dictum justo eut duis vitae dipiscing', :class => 'hola') do
+      = text_with_more( @group.profiles.public.summary_html, :class => 'hola') do
         %a{:href => "#"} Read More
     = render :partial => '/layouts/base/group_details_links'
   %section#people
