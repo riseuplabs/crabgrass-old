@@ -62,7 +62,7 @@ class Post < ActiveRecord::Base
     page.discussion ||= Discussion.create!(:page => page)
     post = page.discussion.posts.build(options)
     page.posts_count_will_change!
-    self.page_terms = page.page_terms
+    post.page_terms = page.page_terms
     return post
   end
 
