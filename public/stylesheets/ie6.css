@@ -97,5 +97,5 @@ ul.icon_boxes li:hover span {
 }
 /* new ui 11/2009*/
 #page #content #content-container #group-content-wrap #group-info { 
-	margin: 0; 
+	margin: 0 16px 0 0; 
 }
