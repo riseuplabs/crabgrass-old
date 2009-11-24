@@ -47,6 +47,21 @@ body
         #menu
           float: left
           +clearfix
+          margin-top: 9px
+          li
+            padding: 0
+            a
+              +hover-link
+              color: #998675
+              font-size: 12px
+              font-weight: bold
+              margin: 0 26px 0 0
+            a:hover
+              color: #382526
+          li.current
+            a
+              color: #382526
+              
         #user
           float: right
           +clearfix
@@ -93,6 +108,7 @@ body
               color: #fff
           #group-meta
             +columns(4,4)
+            margin: 0
             width: 182px
             padding: 10px
             border: 1px solid #ebebeb
@@ -128,29 +144,35 @@ body
                 p
                   :font-size 10px
         #group-content
-          margin-right: -70px
           width: 540px
           float: left
+          margin: 0
           display: inline
           header
             +columns(10,10)
             width: 540px
+            margin: 0
             #group-name
               +columns(10,10)
+              margin: 0
+              width: 540px
               height: 50px
               h1
                 display: inline
               #group-action
+                margin: 0
                 display: inline
                 float: right  
             nav#group
               +columns(10,10)
+              margin: 0
               width: 540px
               height: 39px
               border: 1px solid #534741
               background-color: #fff
           #helpful-links
             +columns(10,10)
+            margin: 0
             width: 540px
             h4, ul
               display: inline
@@ -158,6 +180,7 @@ body
               float: left
           #wiki
             +columns(10,10)
+            margin: 0
             width: 540px
             header
               h4, a
@@ -168,6 +191,7 @@ body
               width: 540px
           #announcements
             +columns(10,10)
+            margin: 0
             width: 540px
             border: 1px solid #fc0  
             article.first
@@ -178,6 +202,7 @@ body
               +omega(10)
           #pages
             +columns(10,10)
+            margin: 0
             width: 540px
             h3, a
               display: inline
@@ -186,9 +211,11 @@ body
             article
               +columns(10,10)
               width: 540px
+              margin: 0
               .pages-info
                 +columns(9,10)
                 +alpha(10)
+                margin: 0
                 width: 85.8%
                 img
                   float: left
@@ -197,6 +224,7 @@ body
               .pages-status
                 +columns(1,10)
                 +omega(10)
+                margin: 0
                 width: 10%
                 border: 1px solid #000
                 li
@@ -208,6 +236,7 @@ body
             footer
               +columns(10,10)
               width: 540px
+              margin: 0
               .pagination
                 float: right
 
