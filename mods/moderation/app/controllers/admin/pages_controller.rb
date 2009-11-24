@@ -12,9 +12,7 @@ class Admin::PagesController < Admin::BaseController
       @group = Group.find(params[:group])
     end
 
-    options = current_user.moderator? ?
-      {} :
-      options_for_groups(Group.with_admin(current_user).moderated)
+    options = moderation_options.merge :page => params[:page]
     @flagged = Page.paginate_by_path(path_for_view, options)
      #@pages = (@group ? @group.pages : Page).paginate(options.merge(:page => params[:page]))
      #@flagged = ModeratedPage.display_flags(params[:page], view)
