@@ -7,7 +7,7 @@ class GroupsController < Groups::BaseController
   javascript :wiki, :only => :show
   stylesheet :wiki_edit
 
-  helper 'groups', 'wiki', 'locations'
+  helper 'groups', 'wiki'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]

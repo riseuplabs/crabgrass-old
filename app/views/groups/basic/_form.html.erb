@@ -23,14 +23,6 @@
       r.info I18n.t(:group_language, :group => @group.group_type.downcase)
     end
     f.row do |r|
-      r.label 'Location'
-      r.label_for 'group_location'
-      r.input %Q{
-        #{render(:partial => 'locations/select_form')}
-      }
-      r.info I18n.t(:group_language, :group => @group.group_type.downcase)
-    end
-    f.row do |r|
       r.label I18n.t(:icon)
       r.label_for 'group_avatar_image_file'
       r.input [avatar_for(@group, 'xlarge'), file_field_tag('group[avatar][image_file]', :size => 29, :id => 'group_avatar_image_file')].compact.join('<br/><br/>')

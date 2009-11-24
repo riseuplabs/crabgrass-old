@@ -16,9 +16,12 @@
       end
     end
     f.row do |r|
-      r.label I18n.t(:location)
-      r.label_for 'profile_place'
-      r.input text_field('profile', 'place')
+      r.label 'Location'
+      r.label_for 'group_location'
+      r.input %Q{
+        #{render(:partial => 'locations/select_form')}
+      }
+      r.info I18n.t(:group_language, :group => @group.group_type.downcase)
     end
     f.heading I18n.t(:photo)
     if @profile.photo

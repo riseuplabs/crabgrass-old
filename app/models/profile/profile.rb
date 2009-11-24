@@ -52,6 +52,7 @@ Order of profile presidence (user sees the first one that matches):
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.integer  "geo_location_id",	:limit => 11
   end
 
 Applies to both groups and users: may_see, may_see_groups
@@ -82,6 +83,9 @@ class Profile < ActiveRecord::Base
     self.entity_type = 'User' if self.entity_type =~ /User/
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
+
+  ## LOCATION
+  has_one :geo_location
 
   ##
   ## CONSTANTS
