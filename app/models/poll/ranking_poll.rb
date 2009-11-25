@@ -1,9 +1,8 @@
 class RankingPoll < Poll
+  has_many :votes, :foreign_key => :votable_id, :class_name => "RankingVote", :dependent => :delete_all
+
   # TODO: uncomment in rails2.3
   # delegate :winners, :rank, ... :to => :results
-
-  has_many :votes, :as => :votable, :class_name => "RankingVote", :dependent => :delete_all
-
   def ranked_candidates
     @results.ranked_candidates
   end

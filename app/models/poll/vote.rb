@@ -1,5 +1,5 @@
 class Vote < ActiveRecord::Base
-  validates_presence_of :votable
+  validates_presence_of :votable_id
 
   belongs_to :possible
   belongs_to :user
@@ -12,4 +12,5 @@ class Vote < ActiveRecord::Base
   named_scope :for_possible, lambda { |possible|
     {:conditions => {:possible_id => possible.id}}
   }
+
 end
