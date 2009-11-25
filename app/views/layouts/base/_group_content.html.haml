@@ -1,86 +1,10 @@
 %header
-  =render :partial => 'layouts/base/group_header'
+  =render :partial => '/layouts/base/group_header'
 %section#helpful-links
-  %h4 Helpful Links
-  %ul
-    %li
-      %a{:href => "#"}
-        Link to external link
-    %li
-      %a{:href => "#"}
-        Link to external link
-    %li
-      %a{:href => "#"}
-        Link to external link
+  =render :partial => '/layouts/base/group_links'
 %section#wiki
-  %header
-    %h4 Group Wiki
-    %a{:href => "#"} 
-      Hide
-  %p 
-    Dictum dictum justo eu pellenta tesque. Duis vitae dipiscing ipsum non risus sodales lorem ipsum dolor sit amet, e sectetur adipiscing elit. Duis dictum dictum justo eu pellenta tesque. Duis vitae dipiscing ipsum non risus sodales conte litis sectetur adipiscing elit. Dictum dictum justo eu pellenta tesque. Duis vitae dopa iscing ipsum non risus sodales eu pellenta tesque.
-    %a{:href => "#"} 
-      Read More
+  =render :partial => '/layouts/base/wiki'
 %section#announcements
-  %h3 announcements
-  %article.first
-    %h4 title
-    %p 
-      Dictum dictum justo eu pellenta bela tesque, avec dictum dictum justo eu atp ellenta. Duis vitae dipiscing ipsum non risus sodales lorem ipsum dolor sit amet ectetur...
-      %a{:href => "#"} 
-        Read More
-  %article.last
-    %h4 title
-    %p
-      Dictum dictum justo eu pellenta bela tesque, avec dictum dictum justo eu atp ellenta. Duis vitae dipiscing ipsum non risus sodales lorem ipsum dolor sit amet ectetur...
-      %a{:href => "#"} 
-        Read More
+  = render :partial => '/layouts/base/announcements'
 %section#pages
-  %header
-    %h3 recent pages
-    %span.pagination
-      %span.disabled
-        %a{:href => "#"}
-          &laquo; 
-      %span.current
-        %a{:href => "#"}1 
-      %span 2 3
-      %span
-        %a{:href => "#"}
-          &raquo;
-  %article
-    %section.pages-info
-      %h3 Crabgrass vs ThePoint
-      %p Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %article
-    %section.pages-info
-      %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
-      %h3 Crabgrass vs ThePoint
-      %p Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %footer
-    %section.pagination
-      %span.disabled
-        %a{:href => "#"}
-          &laquo; 
-      %span.current
-        %a{:href => "#"}
-          1 
-      %span 2 3
-      %span
-        %a{:href => "#"}
-          &raquo;
-
+  = render :partial => '/layouts/base/pages'

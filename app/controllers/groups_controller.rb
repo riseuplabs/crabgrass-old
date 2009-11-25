@@ -37,6 +37,7 @@ class GroupsController < Groups::BaseController
     @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
+    @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
