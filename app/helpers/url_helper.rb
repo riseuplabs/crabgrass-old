@@ -80,6 +80,10 @@ module UrlHelper
     define_method(method.sub('params', 'url')) {|*args| url_for(send(method, *args))}
   end
 
+  def link_to_search_announcements
+    @group ? group_search_url('type', 'announcement') : me_search_url('type', 'announcement')
+  end
+
   # first arg is options hash, remaining args are used for the path.
   def group_search_url(*args)
     opts = {
