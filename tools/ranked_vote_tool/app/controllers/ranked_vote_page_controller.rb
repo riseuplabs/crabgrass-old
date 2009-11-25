@@ -48,7 +48,7 @@ class RankedVotePageController < BasePageController
       render :nothing => true
       return
     else
-      @poll.votes.by_user(current_user).destroy_all
+      @poll.votes.by_user(current_user).delete_all
       ids = params[:sort_list_voted]
       ids.each_with_index do |id, rank|
         next unless id.to_i != 0
