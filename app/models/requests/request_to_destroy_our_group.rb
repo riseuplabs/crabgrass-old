@@ -20,11 +20,17 @@ class RequestToDestroyOurGroup < Request
     {:include => :votes}
   }
 
+  alias_attr :group, :recipient
+
   def requestable_required?
     false
   end
 
-  def group() recipient end
+  def votable?
+    true
+  end
+
+
 
   def validate_on_create
     if RequestToDestroyOurGroup.for_group(group).created_by(created_by).find(:first)
@@ -73,9 +79,6 @@ class RequestToDestroyOurGroup < Request
     I18n.t(:request_to_destroy_our_group_description,  :group => group_span(group), :user => user_span(created_by))
   end
 
-  def votable?
-    true
-  end
 
   def self.value_for_state(state)
     state_map = {
