@@ -167,6 +167,10 @@ module ApplicationHelper
     content_tag tag, text + span, :class => klass
   end
   
+
+  
+  
+  # *NEWUI
   #
   # Construct a content tag with a more link
   #
@@ -179,13 +183,10 @@ module ApplicationHelper
   # end
   
   def text_with_more(text, tag='p', options={}, &block)
+
     length = options.delete(:length) || 50
-    # for the rails 2.1+ upgrade
-    if Rails::version == "2.1.0"
-      out = truncate(text, length)
-    else
-      out = truncate(text, :length => length)
-    end
+    out = truncate(text, :length => length)
+
     if block_given?
       capture_haml do
         #
