@@ -164,6 +164,68 @@ module PageHelper
     link_to text, hash
   end
 
+  # *NEWUI
+  #
+  # helper to show stars of an item (page or whatever that responds to stars_count)
+  #
+  def stars_for(item)
+    if item.stars_count > 0
+      content_tag(:span, "%s %s" % [icon_tag('star'), item.stars_count], :class => 'star')
+    else
+      icon_tag('star_empty')
+    end
+  end
+
+  # *NEWUI
+  #
+  # render the cover of the page if it exists
+  #
+  def cover_for(page) 
+    thumbnail_img_tag(page.cover, :medium, :scale => '96x96') if page.cover
+  end
+
+  # *NEWUI
+  #
+  # helper to show the box about last updated_by_and_stars
+  #
+  def last_updated_box_for(page, options={})
+    field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
+    is_new = field == 'updated_at'
+    label    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
+    username = link_to_user(page.updated_by_login)
+    date     = friendly_date(page.send(field))
+    capture_haml do
+      haml_tag :ul, :class => 'pages-status' do
+        [label, username, date, stars_for(page)].each do |item|
+          haml_tag(:li, item)
+        end
+      end
+    end
+  end
+  
+  
+  
+  
+  # *NEWUI
+  #
+  # 
+  #
+  def title_for(page, participation = nil)
+    title = link_to(h(page.title), page_url(page))
+
+    # this is not used for now 
+    #if participation and participation.instance_of? UserParticipation
+    #  title += " " + icon_tag("tiny_star") if participation.star?
+    #else
+    #  #title += " " + icon_tag("tiny_pending") unless page.resolved?
+    #end
+    #if page.flag[:new]
+    #  title += " <span class='newpage'>#{I18n.t(:page_list_heading_new)}</span>"
+    #end
+    return title
+  end
+  
+
   #
   # used to spit out a column value for a single row.
   # for example:

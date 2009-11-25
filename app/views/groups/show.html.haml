@@ -1,0 +1,5 @@
+- content_for :html_head do 
+  %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
+
+= render :partial => 'layouts/base/group_content'
+
