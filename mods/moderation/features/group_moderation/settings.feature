@@ -10,6 +10,13 @@ Background:
   And I am logged in
   And I am on that group's landing page
 
+Scenario: Moderation checkbox for group without council disabled
+  When I follow "Edit Settings"
+  And I follow "Permissions"
+  Then I should not see "Moderation"
+  And I should not see "Allow Admins to moderate the groups content"
+  # And that group should not have admins moderate content
+
 Scenario: Moderation for the group has not been enabled so i can not see the moderation tab
   Given that group has a council
   And I am a member of that council
@@ -21,15 +28,8 @@ Scenario: Moderation for group with council not enabled by default
   When I follow "Edit Settings"
   And I follow "Permissions"
   Then I should see "Allow Admins to moderate the groups content"
-  And that group should not have admins moderate content
-  And the "moderate content" checkbox should not be checked
-
-Scenario: Moderation checkbox for group without council disabled
-  When I follow "Edit Settings"
-  And I follow "Permissions"
-  Then I should see "Allow Admins to moderate the groups content"
-  And that group should not have admins moderate content
-  And the "moderate content" checkbox should be disabled
+  # And that group should not have admins moderate content
+  And the "Allow Admins to moderate the groups content" checkbox should not be checked
 
 Scenario: Moderation for group with council can be enabled
   Given that group has a council
@@ -38,6 +38,9 @@ Scenario: Moderation for group with council can be enabled
   And I follow "Permissions"
   And I check "Allow Admins to moderate the groups content"
   And I press "Save"
-  Then that group should have admins moderate content
-  And the "moderate content" ckeckbox should be checked
-  And I should see "Moderation"
+  Then I should see "Moderation"
+  # And that group should have admins moderate content
+  When I am on that group's landing page
+  And I follow "Edit Settings"
+  And I follow "Permissions"
+  Then the "Allow Admins to moderate the groups content" checkbox should be checked
