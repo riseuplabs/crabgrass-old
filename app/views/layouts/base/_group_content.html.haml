@@ -1,10 +1,14 @@
 %header
-  =render :partial => '/layouts/base/group_header'
+  = render :partial => '/layouts/base/group_header'
+
 %section#helpful-links
-  =render :partial => '/layouts/base/group_links'
+  = render :partial => '/layouts/base/group_links'
+
 %section#wiki
-  =render :partial => '/layouts/base/wiki'
-%section#announcements
+  = render :partial => '/layouts/base/group_wiki'
+
+- if @announcements.any?
   = render :partial => '/layouts/base/announcements'
+
 %section#pages
   = render :partial => '/layouts/base/pages'

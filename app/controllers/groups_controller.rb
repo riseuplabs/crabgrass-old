@@ -34,7 +34,7 @@ class GroupsController < Groups::BaseController
 
   def show
     @pages = Page.find_by_path(search_path, options_for_group(@group))
-    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
+    @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
     @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))

@@ -1,0 +1,6 @@
+%article
+  %h4 
+    = link_to h(announcement.title), page_url(announcement)
+  %div 
+    = truncate(announcement.wiki.body_html, 250, '... ')
+    = link_to(I18n.t(:more), page_url(announcement))
