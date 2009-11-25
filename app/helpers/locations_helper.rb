@@ -14,7 +14,7 @@ module LocationsHelper
   def city_text_field(object, method)
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'country_id='+$('group[location]').value+'&city='+value"
+      :with => "'country_id='+$('group_location').value+'&admin_code_id='+$('group_state').value+'&city='+value"
     )
     text_field(object, method, {:onblur => onblur})
   end

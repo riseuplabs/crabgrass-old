@@ -1,6 +1,9 @@
 <ul class='plain'>
 <li id='group_country'>Country: <%= country_dropdown('group','location') %></li>
 <li>State/Province: <%= select('group', 'state', '', {:include_blank => true}) %></li>
-<li>City: <%= city_text_field('group','city') %></li>
+<li>City: <%= city_text_field('group','city') %>
+<div id='city_results' style='display:none'>
+</div>
+</li>
 </ul>
 
