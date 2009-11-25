@@ -183,9 +183,9 @@ module ApplicationHelper
   # end
   
   def text_with_more(text, tag='p', options={}, &block)
-
     length = options.delete(:length) || 50
-    out = truncate(text, :length => length)
+    omission = options.delete(:omission) || "... "
+    out = truncate(text, :length => length, :omission => omission)
 
     if block_given?
       capture_haml do
