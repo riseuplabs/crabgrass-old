@@ -852,7 +852,8 @@ en:
   request_to_join_us_via_email_description: "{{email}} was invited to join {{group}}"
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
-  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group}}"
+  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group_type}} {{group}}"
+
   request_votes_tally_info: "{{approved_count}} voted to approve / {{rejected_count}} voted to reject"
 
   send_request_button: "Send Request"

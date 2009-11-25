@@ -76,7 +76,10 @@ class RequestToDestroyOurGroup < Request
   end
 
   def description
-    I18n.t(:request_to_destroy_our_group_description,  :group => group_span(group), :user => user_span(created_by))
+    I18n.t(:request_to_destroy_our_group_description,
+              :group => group_span(group),
+              :group_type => group_class(group),
+              :user => user_span(created_by))
   end
 
 

@@ -16,7 +16,7 @@ class UserProposedToDestroyGroupActivity < Activity
 
 
   def description(view=nil)
-    I18n.t(:activity_user_proposed_to_destroy_group,
+    I18n.t(:request_to_destroy_our_group_description,
               :user => user_span(:user),
               :group_type => group_class(:group),
               :group => group_span(:group))
