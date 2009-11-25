@@ -1,4 +1,4 @@
-<%= header_with_more(:h2, :alert, "Wiki"[:wiki]) %>
+<%= header_with_more(:h2, :alert, I18n.t(:wiki)) %>
 <% if @access == :public -%>
   <div class='wiki'>
     <%= @profile.wiki.body_html %>

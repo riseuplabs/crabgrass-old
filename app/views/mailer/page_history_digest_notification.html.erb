@@ -1,6 +1,6 @@
-<%= "Hello {user_name}"[:page_history_mailer_hello_user_name, {:user_name => @user.display_name}] %>,
+<%= I18n.t(:page_history_mailer_hello_user_name, :user_name => @user.display_name) %>,
 
-<%= "The page you are watching \"{page_title}\" has been modified"[:page_history_the_page_you_are_watching_description, {:page_title => @page.title}] %>:
+<%= I18n.t(:page_history_the_page_you_are_watching_description, :page_title => @page.title) %>:
 <%= "http://#{@site.domain}#{page_url(@page)}" %>
 
 <% @page_histories.each do |page_history| %>
@@ -11,7 +11,7 @@
 
 ------------
 
-<%= "Change your email notification settings here: {page_link}"[:page_history_mailer, {:page_link => "http://#{@site.domain}#{me_url(:action => 'edit')}"}] %>
-<%= "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"[:page_history_mailer_choose_turn_off_notifications] %>.
+<%= I18n.t(:page_history_mailer, :page_link => "http://#{@site.domain}#{me_url(:action => 'edit')}") %>
+<%= I18n.t(:page_history_mailer_choose_turn_off_notifications) %>.
 
 ------------

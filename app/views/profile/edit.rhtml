@@ -1,5 +1,5 @@
 <% @title_box = capture do -%>
-<h1><%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %></h1>
+<h1><%= I18n.t(:my_settings, :user => current_user.display_name) %></h1>
 <% end -%>
 <% render :partial => @tabs %>
 
@@ -14,7 +14,7 @@
 </div>
 
 <p style='text-align:right'>
-<%= submit_tag 'Save Changes'.t, :name => 'save' %>
+<%= submit_tag I18n.t(:save_changes), :name => 'save' %>
 </p>
 
 <% end -%>

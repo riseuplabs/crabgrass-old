@@ -1,6 +1,6 @@
 <% if may_create_council? && @group.council_id.nil? %>
 <p>
-  <%= link_to "Create a new {thing}"[:create_a_new_thing, 'council'.t.downcase], :controller => 'groups', :action => 'create', :id => 'council', :parent_id => @group.id %>
+  <%= link_to I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), :controller => 'groups', :action => 'create', :id => 'council', :parent_id => @group.id %>
 </p>
 <% end %>
 
@@ -11,13 +11,13 @@
 <%- if !@group.committees.empty? && may_admin_group? -%>
 <p>
   <label for="group_council_id">
-    <b><%= "Coordinating council".t.capitalize %></b><br />
-    <%= 'If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so.'[:edit_council_help_text] %>
+    <b><%= I18n.t(:coordinating_council).capitalize %></b><br />
+    <%= I18n.t(:council_help_text) %>
   </label><br />
   <%= select 'group', 'council_id', @group.committees.map{|c| [c.name, c.id]}.sort, { :include_blank => true } %>
 </p>
 <%- end -%>
-  <%= submit_tag 'Save changes'[:save_changes] if submit %>
+  <%= submit_tag I18n.t(:save_changes) if submit %>
 
 <br/>
 <br/>

@@ -75,7 +75,7 @@ class ModalboxTest < Test::Unit::TestCase
     ## what it is with modalbox helper
     ##
 
-    html = %(<a href="#" onclick="Modalbox.confirm(&quot;are you sure?&quot;, {method:&quot;post&quot;, action:&quot;/controller/action/id&quot;, token:&quot;token&quot;, title:&quot;label&quot;}); return false;">label</a>)
+    html = %(<a href="#" onclick="Modalbox.confirm(&quot;are you sure?&quot;, {method:&quot;post&quot;, action:&quot;/controller/action/id&quot;, token:&quot;token&quot;, title:&quot;label&quot;, ok:&quot;OK&quot;, cancel:&quot;Cancel&quot;}); return false;">label</a>)
     assert_dom_equal html, link_to('label', {:controller => 'controller', :action => 'action', :id => 'id'}, :confirm => 'are you sure?')
   end
 

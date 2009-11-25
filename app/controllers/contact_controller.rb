@@ -18,7 +18,7 @@ class ContactController < ApplicationController
     elsif request.post? and params[:send]
       begin
         RequestToFriend.create! :created_by => current_user, :recipient => @user
-        flash_message_now :success => 'Contact request has been sent'[:contact_request_sent]
+        flash_message_now :success => I18n.t(:contact_request_sent)
       rescue Exception => exc
         flash_message_now :exception => exc
       end
@@ -34,7 +34,7 @@ class ContactController < ApplicationController
 
   def remove
     unless current_user.friend_of?(@user)
-      flash_message_now :error => 'You are not the contact of {user}.'[:not_contact_of, {:user => @user.name}]
+      flash_message_now :error => I18n.t(:not_contact_of, :user => @user.name)
       return
     end
 
@@ -42,7 +42,7 @@ class ContactController < ApplicationController
       redirect_to url_for_user(@user)
     elsif request.post? and params[:remove]
       current_user.remove_contact!(@user)
-      flash_message_now :success => '{user} has been removed from your contact list.'[:contact_removed, {:user => @user.login}]
+      flash_message_now :success => I18n.t(:contact_removed, :user => @user.login)
     end
   end
 

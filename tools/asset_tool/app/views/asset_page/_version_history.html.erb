@@ -1,18 +1,18 @@
 <div><table class='pretty'>
   <tr>
     <th></th><th></th>
-    <th nowrap="nowrap"><%= 'version'.t %></th>
-    <th nowrap="nowrap"><%= 'updated'.t %></th>
+    <th nowrap="nowrap"><%= I18n.t(:asset_version_list_version_heading) %></th>
+    <th nowrap="nowrap"><%= I18n.t(:updated) %></th>
   </tr>
 <% @asset.versions.reverse.each do |version| -%>
   <tr class="<%= cycle('odd', 'even') %>" id="asset_<%= @asset.id %>_version_<%= version.version %>">
     <td>
-      <% if @current_user.may?(:edit, @page) and version.version < @asset.version -%>
+      <% if current_user.may?(:edit, @page) and version.version < @asset.version -%>
         <span><%= destroy_version_link(version) %></span>
       <% end -%>
     </td>
     <td><%= link_to_asset(version, :small, :crop! => '32x32') %></td>
-    <td nobreak='nobreak'><%= link_to "version :version"[:version_number] % { :version => version.version }, version.url %></td>
+    <td nobreak='nobreak'><%= link_to I18n.t(:version_number, :version => version.version), version.url %></td>
     <td><%= friendly_date(version.updated_at) %></td>
   </tr>
 <% end -%>

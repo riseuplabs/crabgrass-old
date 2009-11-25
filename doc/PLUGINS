@@ -194,7 +194,7 @@ Likewise for tools with <tt>config/tools_enabled.list</tt>.
 Additionally, your mod may need extra routes. An example might be:
 
 config/routes.rb:
-  map.from_plugin :gibberize
+  map.from_plugin :translator
 
 See the mod README to find out if a routes entry is required.
 

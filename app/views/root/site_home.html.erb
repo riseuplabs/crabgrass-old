@@ -109,7 +109,7 @@ form.mini_search table {
 <ul class="navbar">
   <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
 </ul>
-&nbsp;<%= link_to('Edit'.t, groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
+&nbsp;<%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
 <% end %>
 <% if params[:welcome_box] && logged_in? -%>
   <div id='welcome_box'>
@@ -132,26 +132,26 @@ form.mini_search table {
 <%= Formy.tabs do |f|
   if @show_featured
     f.tab do |t|
-      t.label 'Featured'
+      t.label I18n.t(:featured_content_header)
       t.show_tab 'featured_panel'
       t.default true
     end
   end
   f.tab do |t|
-    t.label 'Recent Pages'
+    t.label I18n.t(:recent_pages)
     t.show_tab 'recent_pages_panel'
     t.default !@show_featured
   end
   f.tab do |t|
-    t.label 'Most Viewed'
+    t.label I18n.t(:most_viewed)
     t.show_tab 'most_viewed_panel'
   end
   f.tab do |t|
-    t.label 'Most Active'
+    t.label I18n.t(:most_active)
     t.show_tab 'most_active_panel'
   end
   f.tab do |t|
-    t.label 'Most Stars'
+    t.label I18n.t(:most_stars)
     t.show_tab 'most_stars_panel'
   end
 end %>

@@ -3,13 +3,15 @@
 
 <% @title_box = capture do -%>
   <div class='big_icon <%= @page_class.icon%>_48'>
-    <h1><%= "Create a new {thing}"[:create_a_new_thing, {:thing => content_tag(:i, page_class.downcase)}] %></h1>
+    <h1>
+      <%= I18n.t(:create_a_new_thing, :thing => content_tag(:i, page_class.downcase)) %>
+    </h1>
   </div>
 <% end -%>
 
 <% if @group %>
   <% @info_box = capture do -%>
-    <%= "This page will be added to {group_type} {group_name}."[:page_added_to_group, {:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name)}] %>
+    <%= I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name)) %>
   <% end -%>
 <% end %>
 
@@ -21,7 +23,7 @@
     render :partial => 'base_page/create/information', :locals => {:form => form}
 
     if sections.any_in? ['file','files','external_video','body', 'image', 'event']
-      #form.header '{page_class} Data'[:create_page_data, "Page"[:page]].titlecase
+      #form.header I18n.t(:create_page_data, :page_class => I18n.t(:page)).titlecase
       sections.each do |section|
         render :partial => "base_page/create/#{section}", :locals => {:form => form}
       end
@@ -32,8 +34,8 @@
   <div class="form_buttons">
     <%# the extra submit button is needed, so that 'create' remains the default (on enter) -%>
     <%= submit_tag "hidden", :name => 'create', :style => 'display:none' %>
-    <%= submit_tag '&laquo; ' + "Back"[:back_button], :name => 'cancel' %>
-    <%= submit_tag "Create {page_class}"[:create_page_button, "Page"[:page]] + ' &raquo;', :name => 'create' %>
+    <%= submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel' %>
+    <%= submit_tag I18n.t(:create_page_button, :page_class => I18n.t(:page)) + ' &raquo;', :name => 'create' %>
   </div>
 <% end %>
 </div>

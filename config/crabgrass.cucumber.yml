@@ -20,11 +20,8 @@ title: "Crabgrass"
 enabled_mods:
 #  - design_tester
 #  - super_admin
-#  - moderation
-#  - gibberize
-
-email:
-  delivery_method: :sendmail
+  - moderation
+#  - translator
 
 translation_group: rainbow
 

@@ -1,5 +1,7 @@
-<% @title_box = content_tag :h1, "Trash"[:trash] %>
-<% @info_box = "The trash is where all your deleted pages live. You can restore a page by clicking {undelete} or permanently destroy a page by clicking {destroy}."[:trash_description, {:undelete => content_tag(:b,"Undelete"[:undelete_from_trash]), :destroy => content_tag(:b,"Destroy Immediately"[:delete_page_via_shred])}] %>
+<% @title_box = content_tag :h1, I18n.t(:trash) %>
+<% @info_box = I18n.t(:trash_description,
+        :undelete => content_tag(:b, I18n.t(:undelete_from_trash)),
+        :destroy => content_tag(:b, I18n.t(:delete_page_via_shared))) %>
 
 <% content_for(:html_head) do %>
   <%= group_search_rss %>
@@ -7,14 +9,14 @@
 
 <%= render :partial => 'pages/search', :locals => {:users => @visible_users} %>
 
-<% form_tag({:controller => 'group', :action => 'update_trash', :path => params[:path], :id => @group}, {:id => 'trash_form'}) do -%>  
-  
+<% form_tag({:controller => 'group', :action => 'update_trash', :path => params[:path], :id => @group}, {:id => 'trash_form'}) do -%>
+
   <%= render :partial => 'pages/list', :locals => {:heading => true} %>
 
   <p><%= link_line(
-    link_to_function('Toggle Selection'[:toggle_selection], "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})"),
-    submit_link('Undelete'[:undelete_from_trash], :name => 'undelete'),
-    submit_link('Destroy Immediately'[:delete_page_via_shred], :name => 'remove', :confirm => "Are you sure you want to delete this {thing}? This action cannot be undone."[:destroy_confirmation, "Page"[:page]])
-  ) %></p> 
+    link_to_function(I18n.t(:toggle_selection), "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})"),
+    submit_link(I18n.t(:undelete_from_trash), :name => 'undelete'),
+    submit_link(I18n.t(:delete_page_via_shared), :name => 'remove', :confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:page)))
+  ) %></p>
 
 <% end  -%>

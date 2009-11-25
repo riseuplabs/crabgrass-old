@@ -1,0 +1,41 @@
+<blockquote>
+<i>NOTE: when translating, leave macro names in English. Macros are enclosed in "{{}}". For example "hello {{user}}".</i>
+</blockquote>
+
+
+<ul>
+  <li>
+    <b>Key</b>:
+    <%= link_to @translation.key.name, key_url(@translation.key) %>
+    <%= hidden_field :translation, :key_id %>
+  </li>
+  <li>
+    <b>Language</b>:
+    <%= link_to( @translation.language.name, :controller => 'keys', :language => @translation.language) %>
+    <%= hidden_field :translation, :language_id %>
+  </li>
+  <li>
+    <b>Site</b>:
+    <%= sites_translation_link_list %>
+    <%= hidden_field :translation, :site_id %>
+  </li>
+
+</ul>
+
+<table>
+  <tr>
+    <td valign='top'>
+      <b>Text in <%= @translation.language.name %> <%= "(for #{@site.title})" if @site %></b><br />
+      <%= text_area :translation, :text, :cols => 60, :rows => 5 %>
+    </td>
+    <%- unless @translation.language == Language.default and @site.blank? -%>
+    <td valign='top'>
+      <b>Text in <%= Language.default.name %></b><br />
+      <%= text_area_tag '', @translation.default_text, :cols => 60, :rows => 5 %>
+    </td>
+    <%- end -%>
+  </tr>
+</table>
+
+
+

@@ -22,11 +22,11 @@ module CustomAppearanceExtension
       begin
         asset = Asset.make!({:uploaded_data => data})
         if !asset.is_image
-          self.errors.add_to_base("Uploaded data is not an image. Try png or jpeg files."[:not_an_image_error])
+          self.errors.add_to_base(I18n.t(:not_an_image_error))
         elsif !asset.height
-          self.errors.add_to_base("Can't detect image height. Either the image is corrupted or the server has experienced an error"[:cant_detect_image_height_error])
+          self.errors.add_to_base(I18n.t(:cant_detect_image_height_error))
         elsif asset.height > MASTHEAD_IMAGE_MAX_HEIGHT
-          self.errors.add_to_base("Uploaded image is too tall ({count} pixels is the max height)"[:too_tall_image_error, {:count => MASTHEAD_IMAGE_MAX_HEIGHT}])
+          self.errors.add_to_base(I18n.t(:too_tall_image_error, :count => MASTHEAD_IMAGE_MAX_HEIGHT))
         else
           # all good
           # delete the old masthead asset
@@ -51,11 +51,11 @@ module CustomAppearanceExtension
       begin
         asset = Asset.make!({:uploaded_data => data})
         if !asset.is_image
-          self.errors.add_to_base("Uploaded data is not an favicon image format. Try png, gif files."[:not_a_favicon_image_error])
+          self.errors.add_to_base(I18n.t(:not_a_favicon_image_error))
         elsif !asset.height or !asset.width
-          self.errors.add_to_base("Can't detect image height. Either the image is corrupted or the server has experienced an error"[:cant_detect_image_height_error])
+          self.errors.add_to_base(I18n.t(:cant_detect_image_height_error))
         elsif !FAVICON_DIMENSIONS.include?([asset.width, asset.height])
-          self.errors.add_to_base("Uploaded favicon image is wrong dimensions. It must be either 16x16 or 32x32"[:favicon_image_bad_dimensions_error])
+          self.errors.add_to_base(I18n.t(:favicon_image_bad_dimensions_error))
         else
           # all good
           # delete the old masthead asset

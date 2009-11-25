@@ -57,7 +57,7 @@ module ModalboxHelper
 
   # close the modal box
   def close_modal_button(label=nil)
-    button_to_function((label == :cancel ? "Cancel"[:cancel_button] : "Close"[:close_button]), 'Modalbox.hide();')
+    button_to_function((label == :cancel ? I18n.t(:cancel_button) : I18n.t(:close_button)), 'Modalbox.hide();')
   end
 
   # to be called each and every time you have programmatically changed the size
@@ -76,8 +76,8 @@ module ModalboxHelper
 
   def localize_modalbox_strings
     "Modalbox.setStrings(%s)" % {
-       :ok => "OK"[:ok_button], :cancel => "Cancel"[:cancel_button], :close => "Close"[:close_button],
-       :alert => "Alert"[:alert], :confirm => "Confirm"[:confirm], :loading => "Loading..."[:loading_progress]
+       :ok => I18n.t(:ok_button), :cancel => I18n.t(:cancel_button), :close => I18n.t(:close_button),
+       :alert => I18n.t(:alert), :confirm => I18n.t(:confirm), :loading => I18n.t(:loading_progress)
      }.to_json
   end
 
@@ -179,7 +179,11 @@ module ModalboxHelper
         method ||= 'post'
         token = form_authenticity_token
         action = url_for(action) if action.is_a?(Hash)
-        link_to_function(name, %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}"})], html_options)
+        ok = options[:ok] || I18n.t(:ok_button)
+        cancel = options[:cancel] || I18n.t(:cancel_button)
+        link_to_function(name,
+              %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{name}", ok:"#{ok}", cancel:"#{cancel}"})],
+              html_options)
       else
         link_to_without_confirm(name, options, html_options)
       end

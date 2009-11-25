@@ -1,9 +1,9 @@
 <% form_tag(:controller => 'base_page/participation', :action => 'move', :page_id => @page.id) do -%>
-  <%= "Move this page to a different group"[:move_page_to_different_group] %>:
+  <%= I18n.t(:move_page_to_different_group) %>:
   <p><%= select_tag 'group_id', options_for_page_owner(:group => @page.group) %></p>
   <div class='buttons'>
     <%= spinner('move') %>
-    <%= close_modal_button %><%= submit_tag("Move"[:move_button], :name => 'move') %>
+    <%= close_modal_button %><%= submit_tag(I18n.t(:move_button), :name => 'move') %>
   </div>
 <% end -%>
 

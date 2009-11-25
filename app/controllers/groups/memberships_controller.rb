@@ -33,7 +33,7 @@ class Groups::MembershipsController < Groups::BaseController
     return unless request.post? # show form on get
 
     @group.remove_user!(current_user)
-    flash_message :success => 'You have been removed from %s' / @group.name
+    flash_message :success => I18n.t(:membership_leave_message, :group => @group.name)
     redirect_to url_for_group(@group)
   end
 
@@ -70,7 +70,7 @@ class Groups::MembershipsController < Groups::BaseController
   def context
     @group_navigation = :membership
     super
-    add_context 'Membership'[:membership], url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
+    add_context I18n.t(:membership), url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
     #@left_column = render_to_string :partial => 'sidebar'
     @title_box = render_to_string :partial => 'title_box'
   end

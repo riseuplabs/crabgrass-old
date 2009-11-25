@@ -5,8 +5,8 @@
   if @featured_pages.any? || may_edit_featured_pages? %>
 <hr class="thick" />
 <h2 class="alert">
-  <%= "Featured"[:featured_content_header] %>
-  <%= edit_featured_link("Edit"[:edit]) %>
+  <%= I18n.t(:featured_content_header) %>
+  <%= edit_featured_link(I18n.t(:edit)) %>
 </h2>
 <%= render :partial => "groups/featured/featured_item", :collection => @featured_pages %>
 <% end %>
@@ -17,6 +17,6 @@
   options_for_group(@group))
   if false and @important_pages.any?%>
 <hr class="thick" />
-<h2 class="section"><%= "Popular".t %></h2>
+<h2 class="section"><%= I18n.t(:popular) %></h2>
 <%= render :partial => "groups/featured/featured_item", :collection => @important_pages %>
 <% end %>

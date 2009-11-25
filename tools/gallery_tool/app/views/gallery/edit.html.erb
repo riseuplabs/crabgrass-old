@@ -15,7 +15,7 @@ function sort_images(droppable, target, event) {
 
   if(new_pos == image.get('position'))
     return;
-  
+
   if(new_pos < image.get('position')) {
     images.each(function(img) {
       if(img.get('position') < image.get('position') &&
@@ -73,19 +73,20 @@ function add_image(id, position) {
 }
 
 function saving_changes_notifier() {
-  update_notifier('#{"Saving your changes..."[:saving_your_changes]}', true);
+  update_notifier('#{I18n.t(:saving_your_changes)}', true);
 }
 " %>
 
 <%= spinner('gallery') %>
 <div id="gallery_notify_area">
   <noscript>
-    <%= "Activate JavaScript to use Drag&amp;Drop to rearrange photos!"[:activate_js_to_rearrange_photos] %>
+    <%= I18n.t(:activate_js_to_rearrange_photos) %>
   </noscript>
 </div>
-<%= javascript_tag("$('gallery_notify_area').innerHTML = '"+
-"Drag &amp; Drop images to rearrange them"[:drag_and_drop_to_rearrange_photos]+
-"';") %>
+
+<%= javascript_tag("$('gallery_notify_area').innerHTML = '" +
+I18n.t(:drag_and_drop_to_rearrange_photos) + "';") %>
+
 <div class="gallery_edit">
 <% if @images.any? -%>
   <% @images.each_with_index do |image, i| -%>
@@ -95,7 +96,7 @@ function saving_changes_notifier() {
   <br style='clear:both'/>
   <%= pagination_links @images %>
 <% else %>
-  <%= "No images in gallery"[:no_images_in_gallery] %>
+  <%= I18n.t(:no_images_in_gallery) %>
 <% end %>
 </div>
 

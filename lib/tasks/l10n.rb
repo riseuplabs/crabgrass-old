@@ -1,11 +1,10 @@
 # =============================================================================
 # A set of rake tasks for Crabgrass translation.
 # =============================================================================
+$KCODE = 'UTF8'
 
 require 'fileutils'
-
-LANG_DIR = "#{RAILS_ROOT}/lang"
-CUSTOM_LANG_DIR = "#{LANG_DIR}/custom"
+LANG_DIR = "#{Rails.root}/config/locales"
 
 class String
   def pig
@@ -28,152 +27,185 @@ class String
   end
 end
 
-def load_language_file(lang_file, options={})
-  lang_code = File.basename(lang_file).split('.')[0]
-  keys_hash = YAML::load_file(lang_file)
-  language = Language.find_by_code(lang_code)
-  custom = options[:custom] == true
-  if language
-    print 'loading %s' % lang_file
-    keys_hash.each do |k,v|
-      if lang_code == "en_US"
-        key = Key.find_or_create_by_name(k)
-      else
-        key = Key.find_by_name(k)
-      end
-      if key.nil?
-        print "(skip:%s)" % k
-        next
-      end
-      if t = Translation.find_by_key_id_and_language_id(key.id,language.id)
-        if t.text == v
-          putc '.'
-        else
-          print "(update:%s)" % k
-          t.update_attributes(:text => v, :custom => custom)
-        end
-      else
-        Translation.create(:text => v, :key => key, :language => language, :custom => custom)
-        putc '*'
-      end
-      $stdout.flush
+
+def load_locale_data(language, site, dictionary)
+  site_id = site ? site.id : nil
+
+  canonical_language = Language.find_by_code("en")
+
+  dictionary.each do |k, text|
+    if (language == canonical_language) && site.nil?
+      key = Key.find_or_create_by_name(k)
+    else
+      key = Key.find_by_name(k)
     end
-    putc "\n"; $stdout.flush
-  else
-    puts "skipping language '#{lang_code}' (does not exist in the database)"
+    if key.nil?
+      print "(skip:%s)" % k
+      next
+    end
+
+    if t = Translation.find_by_key_id_and_language_id_and_site_id(key.id,language.id, site_id)
+      if t.text == text
+        putc '.'
+      else
+        print "(UPDATE:%s)" % k
+        t.update_attributes(:text => text)
+      end
+    elsif !text.blank?
+      Translation.create(:text => text, :key => key, :language => language, :site_id => site_id)
+      putc '*'
+    end
+    $stdout.flush
   end
+  putc "\n"; $stdout.flush
+end
+
+def load_locale_file(path)
+  puts "\nLoading #{path}"
+  site_specific = File.dirname(path).match(/sites\/.+$/)
+
+  data = YAML::load_file(path)
+
+  data.each do |language_code, sites_or_dictionary|
+    # language code: en, zh, el, etc.
+    language = Language.find(:first, :conditions => ["code LIKE ?", "#{language_code}%"])
+    unless language
+      puts "Warning: language #{language_code} in #{path} does not exist!"
+      next
+    end
+
+    if site_specific
+      sites_or_dictionary.each do |site_name, dictionary|
+        site = Site.find_by_name(site_name)
+        unless site
+          puts "Warning: site #{site_name} in #{path} does not exist!"
+          next
+        end
+        load_locale_data(language, site, dictionary)
+      end
+    else
+      dictionary = sites_or_dictionary
+      load_locale_data(language, nil, dictionary)
+    end
+  end
+end
+
+def dump_locale_file(langcode, sitename, dictionary)
+  if dictionary.blank?
+    puts "No dictionary for language #{langcode} on site #{sitename}"
+    return
+  end
+
+  pathparts = [LANG_DIR]
+  pathparts += ["sites", sitename] if sitename
+
+  dirpath = File.join(pathparts)
+  path = File.join(dirpath, "#{langcode}.yml")
+
+  FileUtils.mkdir_p dirpath
+
+  buffer = {}
+  if sitename
+    buffer[langcode] = {sitename => dictionary}
+  else
+    buffer[langcode] = dictionary
+  end
+
+  if buffer.any?
+    File.open(path, 'w') {|f| f.write(buffer.ya2yaml) }
+    puts "Wrote #{path}"
+  end
+end
+
+def dump_all_locales(data)
+  ### data contain each language as the top key, sites as subkeys, and dictionaries under sites
+  # {
+  #   'en' => { nil     => {"key1" => "words", "key2" => "more words"},
+  #            "site1"  =>  "key1" => "special words for site" }}
+  #   'ar' => ...
+  # }
+
+  data.each do |langcode, sites|
+    sites.each do |sitename, dictionary|
+      dump_locale_file(langcode, sitename, dictionary)
+    end
+  end
+
 end
 
 namespace :cg do
   namespace :l10n do
 
-    # This tasks extracts strings and its translation keys and dumps them
-    # on 'lang/defaults_from_source.yml'. It's a bit of a hack, so check that  file before
-    # loading the defaults into your db. If you specific FILE=filename, then only that
-    # file is scanned.
-
-=begin
- I don't think this actually works, and we shouldn't use it
-
-    desc "Extract all texts prepared to be translated from Crabgrass source"
-    task (:extract_keys) do
-      count, keys, out = 0, [], "# Localization dictionary for the 'Gibberish' plugin (#{RAILS_ROOT.split ('/').last})\n\n"
-      Dir["#{RAILS_ROOT}/app/**/*"].sort.each do |path|
-          next if ENV['FILE'] && ENV['FILE'] != File.basename(path)
-          unless ( matches = File.new(path).read.scan(/['"]([^'"]*)['"]((\.t)|\[\:([a-z1-9\_]*)(, [a-z1-9\_\.]*)*\])/)).empty?
-            print "."
-            out << "# -- #{File.basename(path)}:\n"
-            matches.each do |m|
-              m[2] = m[0].underscore.tr(' ', '_').gsub(/(\.|\!|\?)+$/, '') if m[2] == '.t'
-              out << "#{m[2].gsub(/\%s/, '').gsub(/\_\_/, '_').gsub(/^\_|\_$/, '')}: #{m[0]}\n" unless (keys.include?(m[2]) || m[2].nil? || m[2] =~ /^(\_|\+)/)
-              keys << m[2]
-            end
-            out << "\n"
-            count +=1
-          end if FileTest.file? path
-      end
-      FileUtils.mkdir_p File.join(RAILS_ROOT, 'lang') # Ensure we have lang dir
-      File.open( File.join(RAILS_ROOT, 'lang', 'defaults_from_source.yml'), "w") { |file| file << out }
-      puts "\nProcessed #{count} files and dumped YAML into #{RAILS_ROOT}/lang/defaults_from_source.yml"
-    end
-=end
-
-    # This tasks loads strings and its translation keys from 'lang/defaults_from_source.yml'.
-    # It's a bit of a hack, so check that file before running this task.
-    # Crabgrass development is in English, so this goes to the English "transation".
-
-=begin
- I don't think this should ever be used
-
-    desc "Load default values form Crabgrass source to be translated"
-    task (:load_keys => :environment) do
-      keys_hash = YAML::load_file(File.join(RAILS_ROOT, 'lang', 'defaults_from_source.yml'))
-      keys_hash.each {|k,v| Key.create(:name => k)}
-      default_language = Language.find_by_code('en_US')
-      keys_hash.each do |k,v|
-        key = Key.find_by_name(k)
-        t = Translation.create(:text => v, :key => key, :language => default_language)
-      end
-    end
-=end
-
     # This task get translations from the database and write to YAML files
     desc "Get translations from the database and write to YAML files"
     task(:extract_translations => :environment) do
-      # Language model is not being overridden by Gibberize mod.
+      # Language model is not being overridden by translator mod.
       # So we have to redefine it here.
       class Language < ActiveRecord::Base; has_many :translations; end
-
-      # Ensure we have lang dir
-      FileUtils.mkdir_p LANG_DIR
-      FileUtils.mkdir_p CUSTOM_LANG_DIR
 
       # Get all available languages
       languages = Language.find :all
 
+      # [langcode,...] => [sitename (or nil),...] => [{key => text}, ...]
+      buffer = {}
+
+      site_names = Site.all.inject({}) do |site_name_map, site|
+        site_name_map[site.id] = site.name
+        site_name_map
+      end
+
       # write a YAML file per language with the translations
       languages.each do |l|
-        ## global translations
-        if l.code != 'en_US'
-          buffer = {}
-          l.translations.each do |t|
-            buffer[t.key.name] = t.text unless t.custom?
-            # ^^ (the custom check should not be needed, but it is. why?)
+        # two letter language code ('en', 'ar', etc.)
+        langcode = l.code[0, 2]
+
+        l.translations.each do |t|
+          sitename = site_names[t.site_id]
+
+          # quit the script if can't figure out the site name
+          # don't want to drop site specific translations into general yml files
+          if !t.site_id.nil? and sitename.nil?
+            raise "Translation #{t.id} has site_id #{t.site_id}, but no such site can be found"
           end
-          if buffer.any?
-            File.open(LANG_DIR + '/' + l.code + '.yml', 'w') {|f| f.write(buffer.to_yaml) }
-          end
+
+          # store the translations in a hierarchical buffer
+          buffer[langcode] ||= {}
+          buffer[langcode][sitename] ||= {}
+          buffer[langcode][sitename][t.key.name] = t.text
         end
-        ## custom translations
-        buffer = {}
-        l.custom_translations.each do |t|
-          buffer[t.key.name] = t.text
-        end
-        if buffer.any?
-          File.open(CUSTOM_LANG_DIR + '/' + l.code + '.yml', 'w') {|f| f.write(buffer.to_yaml) }
+
+        # don't overwrite canonical translations
+        if buffer['en'] and buffer['en'][nil].is_a? Hash
+          buffer['en'].delete(nil)
         end
       end
-      puts "\nYAML files written to 'lang' directory\n"
+
+      dump_all_locales(buffer)
+      puts "\nYAML files written to 'config/locales' directory\n"
     end
 
-    # This tasks loads strings and its translation keys from 'lang/*.yml'.
+    # This tasks loads strings and its translation keys from 'config/locales/*.yml'.
     desc "Load translations from YAML files in the 'lang' directory"
     task (:load_translations => :environment) do
       if ENV["FILE"]
-        load_language_file(File.join(LANG_DIR,ENV["FILE"]), :custom => false)
+        load_locale_file(File.join(LANG_DIR, ENV["FILE"]))
       else
-        Dir["#{LANG_DIR}/*.yml"].sort.each do |lang_file|
-          load_language_file(lang_file, :custom => false)
+        canonical_file = File.join(LANG_DIR, "en.yml")
+
+        # put the canonical file first in the list
+        all_files = Dir["#{LANG_DIR}/**/*.yml"] - [canonical_file]
+        all_files.unshift(canonical_file)
+
+        all_files.each do |lang_file|
+          load_locale_file(lang_file)
         end
-        Dir["#{CUSTOM_LANG_DIR}/*.yml"].sort.each do |lang_file|
-          load_language_file(lang_file, :custom => true)
-        end
+
       end
     end
 
     desc "Create a piglatin file for testing"
     task(:create_piglatin) do
-      english = YAML::load_file(File.join(LANG_DIR, 'en_US.yml'))
+      english = YAML::load_file(File.join(LANG_DIR, 'en.yml'))
       piglatin = {}
       english.each do |k,v|
         piglatin[k] = v.split.map{|word| word.pig}.join(" ")

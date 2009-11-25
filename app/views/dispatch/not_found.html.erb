@@ -1,14 +1,14 @@
 <% 
   if params[:_page]
-    title = '{thing} not found'[:thing_not_found, 'Page'[:page]]
+    title = I18n.t(:thing_not_found, :thing => I18n.t(:page))
     thing = params[:_page]
   else
-    title = '{thing} not found'[:thing_not_found, 'Group'[:group]]
+    title = I18n.t(:thing_not_found, :thing => I18n.t(:group))
     thing = params[:_context]
   end
 %>
 <% dialog_page(:title => title, :details => '') do %>
-  <p><%= "Sorry, we were unable to locate '{thing}'"[:thing_not_found_description, thing] %></p>
+  <p><%= I18n.t(:thing_not_found_description, :thing => thing) %></p>
   <% if params[:_page] and logged_in? %>
   <ul>
    <li><%= create_page_link %></li>

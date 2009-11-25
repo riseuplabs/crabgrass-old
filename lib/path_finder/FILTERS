@@ -46,4 +46,8 @@
 === sorting
   /ascending/<column name>
   /descending/<column name>
-    
+
+=== moderation
+  /public
+  /public_requested
+  /moderation/<state>

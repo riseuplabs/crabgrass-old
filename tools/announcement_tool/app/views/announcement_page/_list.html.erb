@@ -6,12 +6,12 @@ else
   me_search_url('type', 'announcement')
 end %>
 <div class="announcements">
-  <%= header_with_more(:h2, 'bright', "Announcements"[:Announcements], url) %>
+  <%= header_with_more(:h2, 'bright', I18n.t(:announcements_page_display), url) %>
   <table><tr>
   <% announcements.each do |page| %>
     <td>
       <h3 class="alert small_icon page_notice_16"><%= link_to h(page.title), page_url(page) %></h3>
-      <p><%= truncate(page.wiki.body_html, 250, '... ' + link_to('more'.t + ARROW, page_url(page))) %></p>
+      <p><%= truncate(page.wiki.body_html, 250, '... ' + link_to(I18n.t(:more) + ARROW, page_url(page))) %></p>
     </td>
   <% end %>
   </tr></table>

@@ -51,7 +51,7 @@
 
   f.tab do |t|
     t.id       "link-tab-preview"
-    t.label    "Preview"[:preview]
+    t.label    I18n.t(:preview)
     t.class    "page_url"
     t.function "selectWikiEditorTab('%s', %s)" % [
       page_xurl(@page, :action => 'update_editors', :editor => 'preview'),
@@ -92,12 +92,12 @@ end %>
 
 <div class="wiki_buttons">
   <% if locked_for_me? -%>
-    <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+    <%= submit_tag I18n.t(:break_lock_button), :name => 'break_lock' %>
   <% else -%>
-    <%= submit_tag 'Save'[:save_button], :name => 'save' %>
+    <%= submit_tag I18n.t(:save_button), :name => 'save' %>
   <% end %>
   <% unless @wiki_is_blank %>
-    <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+    <%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %>
   <% end %>
 </div>
 

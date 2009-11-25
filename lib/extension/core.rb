@@ -142,9 +142,9 @@ class Array
   # creates an array suitable for options_for_select.
   # for use with arrays of single values where you want the
   # option shown to be localized.
-  # eg ['hi','bye'] --> [['hi'.t,'hi'],['bye'.t,'bye']]
+  # eg ['hi','bye'] --> [[I18n.t(:hi),'hi'],[I18n.t(:bye),'bye']]
   def to_localized_select
-    self.collect{|a| [a.t, a.to_s] }
+    self.collect{|a| [I18n.t(a.to_sym, :default => a.to_s), a] }
   end
 
   def any_in?(array)

@@ -6,9 +6,9 @@
       <li>
         <label class="radio">
           <%= radio_button_tag 'type', 'move_to_trash', true, :class => 'radio' %>
-          <b><%= "Move To Trash"[:destroy_page_via_trash] %></b> <br/>
+          <b><%= I18n.t(:destroy_page_via_trash) %></b> <br/>
           <span class="small">
-             <%= "This will move the page to the trash, where it can later be retrieved."[:destroy_page_via_trash_info] %>
+             <%= I18n.t(:destroy_page_via_trash_info) %>
           </span>
         </label>
       </li>
@@ -16,9 +16,9 @@
         <li>
           <label class="radio">
             <%= radio_button_tag 'type', 'shred_now', false, :class => 'radio' %>
-            <b><%= "Destroy Immediately"[:destroy_page_via_shred] %></b> <br/>
+            <b><%= I18n.t(:destroy_page_via_shared) %></b> <br/>
             <span class="small">
-              <%= "This will permanently destroy the page. This action cannot be undone."[:destroy_page_via_shred_info] %>
+              <%= I18n.t(:destroy_page_via_shared_info) %>
             </span>
           </label>
         </li>
@@ -30,7 +30,7 @@
   <div class="buttons">
     <%= spinner 'popup' %>
     <%= close_modal_button(:cancel) %>
-    <%= submit_tag "Delete"[:delete_button], :name => 'delete' %>
+    <%= submit_tag I18n.t(:delete_button), :name => 'delete' %>
   </div>
 <% end -%>
 

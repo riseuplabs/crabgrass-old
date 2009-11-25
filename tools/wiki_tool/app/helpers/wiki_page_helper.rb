@@ -14,10 +14,10 @@ module WikiPageHelper
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
       msgs = [
-        'This wiki is currently locked by :user'[:wiki_locked] % {:user => display_name},
-        'You will not be able to save this page'[:wont_be_able_to_save]
+        I18n.t(:wiki_is_locked, :user => display_name).
+        I18n.t(:wont_be_able_to_save)
       ]
-      flash_message_now :title => 'Page Locked'[:page_locked_header], :error => msgs
+      flash_message_now :title => I18n.t(:page_locked_header), :error => msgs
     end
   end
 
@@ -50,10 +50,10 @@ module WikiPageHelper
 
       link_opts = {:url => page_url(@page, :action => 'edit', :section => section), :method => 'get'}
       if show_inline_editor?
-        link_opts[:confirm] = "Any unsaved text will be lost. Are you sure?"[:wiki_lost_text_confirmation]
+        link_opts[:confirm] = I18n.t(:wiki_lost_text_confirmation)
       end
       link = link_to_remote_icon('pencil', link_opts, :class => 'edit',
-                        :title => 'Edit This Section'[:wiki_section_edit],
+                        :title => I18n.t(:wiki_section_edit),
                         :id => "#{section}_edit_link")
       heading_el.parent.insert_after(Hpricot(link), heading_el)
     end
@@ -107,7 +107,7 @@ module WikiPageHelper
           "input[name=save]",
           "input[name=cancel]",
           "input[name=ajax_cancel]"],
-          "If you leave this page without saving the wiki or canceling editing then other users will see that this wiki is locked by you and they will not be able to edit it. Also, if you don't save the wiki, you will lose your changes."[:leave_editing_wiki_page_warning]
+          I18n.t(:leave_editing_wiki_page_warning)
           )
 
   end
@@ -118,7 +118,7 @@ module WikiPageHelper
     return nil if section.nil?
     anchor = doc.at("a[@name=#{section}]")
     if anchor.nil?
-      raise WikiSectionError, "Can't find wiki section {section}"[:cant_find_wiki_section, section]
+      raise WikiSectionError, I18n.t(:cant_find_wiki_section, :section => section)
     end
 
     anchor.parent

@@ -11,7 +11,7 @@
     </td>
     <td class="right">
       <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
-      <div class='align_right'><%= link_to('More'[:more_link] + ARROW, @more_activity_url) if @more_activity_url%></div>
+      <div class='align_right'><%= link_to(I18n.t(:see_more_link) + ARROW, @more_activity_url) if @more_activity_url%></div>
     </td>
   </tr>
   </table>

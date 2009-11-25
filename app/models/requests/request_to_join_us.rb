@@ -12,10 +12,10 @@ class RequestToJoinUs < Request
 
   def validate_on_create
     if Membership.find_by_user_id_and_group_id(recipient_id, requestable_id)
-      errors.add_to_base('Membership already exists for {member}'[:membership_exists_error, {:member => recipient.name}])
+      errors.add_to_base(I18n.t(:membership_exists_error, :member => recipient.name))
     end
     if RequestToJoinUs.appearing_as_state(state).find_by_recipient_id_and_requestable_id_and_state(recipient_id, requestable_id, state)
-      errors.add_to_base('Request already exists for {recipient}'[:request_exists_error, {:recipient => recipient.name}])
+      errors.add_to_base(I18n.t(:request_exists_error, :recipient => recipient.name))
     end
   end
 
@@ -42,9 +42,7 @@ class RequestToJoinUs < Request
   end
 
   def description
-    "{user} was invited to join {group}"[:request_to_join_us_description, {
-      :user => user_span(recipient), :group => group_span(group)
-    }]
+    I18n.t(:request_to_join_us_description, :user => user_span(recipient), :group => group_span(group))
   end
 
 end

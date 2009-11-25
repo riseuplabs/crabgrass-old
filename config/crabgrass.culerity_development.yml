@@ -1,0 +1,21 @@
+# 
+# Please do not enable sites in this file.
+#
+# The problem is that some tests assume there are no sites, and some
+# assume there are sites, and you should also be able to test both situations
+# if you so desire.
+# 
+# So, you can use Conf.enable_site_testing and Conf.disable_site_testing in
+# your tests to selectively turn on and off sites.
+# 
+
+title: "Crabgrass Testing"
+sites:
+# bound to localhost:
+#  - name: site1
+#    admin_group: animals
+# bound to test.host
+#  - name: site2
+#    admin_group: superadmins
+#    chat: false
+

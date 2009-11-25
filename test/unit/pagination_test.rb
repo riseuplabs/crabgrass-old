@@ -18,7 +18,12 @@ class PaginationTest < Test::Unit::TestCase
       # last page gets only 1 view
       # lets us test that pagination sorts them properly
       (all_pages.size - index).times do
-        Tracking.insert_delayed(:current_user => user, :user => user, :group => group, :page => page, :action => :view)
+        Tracking.insert_delayed(:current_user => user,
+          :user => user,
+          :group => group,
+          :page => page,
+          :action => :view,
+          :time => Time.now - 2.days)
       end
     end
 

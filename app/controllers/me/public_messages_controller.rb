@@ -51,8 +51,8 @@ class Me::PublicMessagesController < Me::BaseController
   def context
     super
     if action?(:show)
-      add_context('Messages'[:messages], my_messages_url)
-      add_context('Public'[:public], my_public_messages_url)
+      add_context(I18n.t(:messages), my_messages_url)
+      add_context(I18n.t(:public), my_public_messages_url)
       add_context(h(@post.body[0..48]), my_public_message_path(@post))
     end
   end

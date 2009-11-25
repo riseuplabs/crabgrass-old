@@ -3,7 +3,7 @@
   flash[:hide] = true
 %>
 <% dialog_page(
-  :title => content_tag(:strong, flash[:title] || "Error"[:alert_error], :class => 'error_48 big_icon'), 
+  :title => content_tag(:strong, flash[:title] || I18n.t(:alert_error), :class => 'error_48 big_icon'), 
   :details => ""
 ) do %>
 

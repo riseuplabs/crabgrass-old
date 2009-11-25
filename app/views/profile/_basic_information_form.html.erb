@@ -2,7 +2,7 @@
   <table class="pretty">
     <tr>
       <th>
-        <h2 class="alert"><%= 'General Information'[:general_info] -%></h2>
+        <h2 class="alert"><%= I18n.t(:general_info) -%></h2>
       </th>
     </tr>
     <tr class='even'>
@@ -11,33 +11,33 @@
           <tr>
             <td>
               <%= text_field 'profile', 'first_name', 'size' => 15, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('first name') %></div>
+              <div class="input_label"><%= I18n.t(:first_name) %></div>
             </td>
             <td align="center">
               <%= text_field 'profile', 'middle_name', 'size' => 9, 'maxlength' => 100, 'style' => 'width:5em' %>
-              <div class="input_label"><%= 'middle'[:middle_name] -%></div>
+              <div class="input_label"><%= I18n.t(:middle_name) -%></div>
             </td>
             <td>
               <%= text_field 'profile', 'last_name', 'size' => 15, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= 'last'[:last_name] -%></div>
+              <div class="input_label"><%= I18n.t(:last_name) -%></div>
             </td>
           </tr>
           <tr>
             <td colspan="3">
               <%= text_field 'profile', 'organization', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('organization') -%></div>
+              <div class="input_label"><%= I18n.t(:organization) -%></div>
             </td>
           </tr>
           <tr>
             <td colspan="3">
             <%= text_field 'profile', 'role', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('organizational role') -%></div>
+              <div class="input_label"><%= I18n.t(:organizational_role) -%></div>
             </td>
           </tr>
           <tr>
             <td colspan="3">
             <%= text_field 'profile', 'place', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('location') -%></div>
+              <div class="input_label"><%= I18n.t(:location) -%></div>
             </td>
           </tr>
         </table>

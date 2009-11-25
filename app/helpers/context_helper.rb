@@ -70,7 +70,7 @@ module ContextHelper
     return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
-    add_context 'Groups'[:groups], group_directory_url
+    add_context I18n.t(:groups), group_directory_url
     if @group and !@group.new_record?
       if @group.committee? or @group.council?
         if @group.parent
@@ -94,12 +94,12 @@ module ContextHelper
       if @group == current_site.network
         site_network_context(size, update_breadcrumbs)
       else
-        add_context "Networks"[:networks], network_directory_url
+        add_context I18n.t(:networks), network_directory_url
         add_context @group.display_name, url_for_group(@group)
         set_banner "groups/navigation/banner_#{size}", @group.banner_style
       end
     else
-      add_context "Networks"[:networks], network_directory_url
+      add_context I18n.t(:networks), network_directory_url
       set_banner "groups/directory/banner", ''
     end
     breadcrumbs_from_context if update_breadcrumbs
@@ -113,7 +113,7 @@ module ContextHelper
 
   def person_context(size='large', update_breadcrumbs=true)
     @active_tab = :people
-    add_context "People"[:people], people_url
+    add_context I18n.t(:people), people_url
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style

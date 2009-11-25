@@ -381,12 +381,12 @@ module UrlHelper
   def group_search_rss
     '<link rel="alternate" href="%s" title="%s" type="application/rss+xml" />' % [
        url_for(group_search_url(:action => params[:action], :path => current_rss_path)),
-       "RSS Feed"[:rss_feed]
+       I18n.t(:rss_feed)
     ]
   end
 
   def me_rss
-    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, 'Inbox'[:inbox]]
+    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
   end
 
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...

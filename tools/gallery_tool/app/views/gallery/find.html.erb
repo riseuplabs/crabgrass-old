@@ -1,5 +1,5 @@
 <% @info_box = gallery_navigation %>
-<h2><%= "Add Photo To Gallery"[:add_photo_to_gallery] %></h2>
+<h2><%= I18n.t(:add_photo_to_gallery) %></h2>
 <ul style="list-style-type:none;">
   <% @images.each do |asset| %>
     <li style="display:inline;">
@@ -16,5 +16,5 @@
 <%= pagination_links(@images, :params => {:action => 'find'}) %>
 
 <p>
-  <%= link_to 'cancel'[:cancel_link], page_url(@page) %>
+  <%= link_to I18n.t(:cancel_link), page_url(@page) %>
 </p>

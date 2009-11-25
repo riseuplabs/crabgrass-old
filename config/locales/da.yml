@@ -1,0 +1,37 @@
+da:
+  add_contact_info: "Når en anden bruger er i din kontakt liste vil de have mulighed for at se når du er logget ind og se din fulde profil. Når du bliver en kontakt til en anden person, bliver de automatisk også din kontakt."
+  already_contacts_info: "Du er allerede i kontakt med denne person."
+  approve_contact_info: "En kontakt ansøgning findes allerede for denne bruger. Vil du godkende den?"
+  contact_request_message_label: "Fortæl {{user}} hvorfor du vil være deres kontakt."
+  forgot_password_link: "Jeg har glemt mit kodeord"
+  invite_info: "Indtast brugernavnene eller emails på dem du vil have til at tilmelde sig denne {{group_type}}"
+  join_request_info: "Du kan ikke blive medlem af denne gruppe før din anmodning er blevet godkendt. Du kan holde styr på dine anmodninger ved at besøge \"{{my_requests_url}}\"."
+  login: "Log ind"
+  login_button: "Log ind"
+  login_failed: "Kunne ikke logge ind"
+  login_failure_reason: "Brugernavn eller kodeord er forkert"
+  login_name: Brugernavn
+  login_password: Kodeord
+  logout: "Log ud"
+  logout_success: Farvel
+  logout_success_message: "Du er nu logget ud"
+  menu_groups: Grupper
+  menu_home: Hjem
+  menu_me: Mig
+  menu_networks: Netværk
+  menu_people: Mennesker
+  network_invite_info: "Indtast navnene på de grupper du har lyst til at invitere til dette netværk."
+  recipient_tip: "Adskil modtagere med kommaer, mellemrum eller nye linjer"
+  remove_contact_confirmation: "Er du sikker på at du vil fjerne kontakten til {{user}}?"
+  remove_contact_info: "Hvis du fjerner nogen fra din kontakt liste vil du ikke have mulighed for at se når de er logget ind eller se deres fulde profil. Desuden, hvis du fjerner dem som kontakt vil det betyde at du også fjerner dem fra din kontakt liste."
+  signup_button: "Opret profil"
+  signup_confirm_password: "Bekræft Kodeord"
+  signup_email: "Din Email"
+  signup_email_info: "Valgfrit: brugt hvis du glemmer dit kodeord"
+  signup_info: "Vælg dit brugernavn og kodeord, og klik så på \"{{sign_up}}\""
+  signup_link: "Brug for en ny profil?"
+  signup_login_name: "Dit brugernavn"
+  signup_password: "Dit Kodeord"
+  signup_success: "Registrering vellykket"
+  signup_success_message: "Tak for oprettelsen!"
+  signup_title: "Opret Din Profil"

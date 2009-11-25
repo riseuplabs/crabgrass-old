@@ -1,19 +1,5 @@
-<%=
-
-%(You have signed for {site_title} ({host})!
-
-Before you can login you must verify that this is your email.
-
-Click the link below or copy and paste it into your browser:
-
-  {verify_email_link}
-
-If you do not wish to join, simply ignore this email.
-)[:email_verification_body, {
-  :site_title => @site_title,
-  :host => @host,
-  :verify_email_link => @link
-}]
-
-%>
+<%= I18n.t(:email_verification_body,
+          :site_title => @site_title,
+          :host => @host,
+          :verify_email_link => @link) %>
 

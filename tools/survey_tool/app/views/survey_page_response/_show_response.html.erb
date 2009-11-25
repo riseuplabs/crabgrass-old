@@ -13,7 +13,7 @@
       <div class="question">
         <h2 class="dim question_label"><%= h question.label %>
           <% if question.private? -%>
-            <span>&bull;&nbsp;<%= "private"[:private] %></span>
+            <span>&bull;&nbsp;<%= I18n.t(:private) %></span>
           <% end -%>
         </h2>
         <br/>

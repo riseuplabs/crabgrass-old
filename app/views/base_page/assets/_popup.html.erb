@@ -1,23 +1,23 @@
-  <h2 class="first"><%= "Current Attachments"[:current_attachments] %></h2>
-  <p><%= "Use radio buttons to select the page cover"[:use_radio_buttons_to_select_page_cover] %>
+  <h2 class="first"><%= I18n.t(:current_attachments) %></h2>
+  <p><%= I18n.t(:use_radio_buttons_to_select_page_cover) %>
   <table class="styled">
     <% if @page.assets.any? -%>
       <%= asset_rows -%>
       <tr>
         <td> <%= remove_cover_asset_checkbox %></td>
-        <td> <%= "None"[:none] %>
+        <td> <%= I18n.t(:none) %>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
       </tr>
     <% else -%>
-     <tr><td>(<%='none'.t%>)</td></tr>
+     <tr><td>(<%=I18n.t(:none)%>)</td></tr>
     <% end -%>
   </table>
 
-  <h2><%= "Add New Attachment"[:add_new_attachment] %></h2>
+  <h2><%= I18n.t(:add_new_attachment) %></h2>
   <% form_for( :asset, Asset.new(), :url => {:controller => 'base_page/assets', :action => 'create', :page_id => @page.id}, :html => {:multipart => true}) do |f| -%>
-    <%= f.file_field 'uploaded_data', :size => '20' %>&nbsp;<%= submit_tag 'Upload'[:upload] %><br/>
-    <label><%= check_box_tag('use_as_cover', "1") %> <%= "Use as cover"[:use_as_cover] %></label>
+    <%= f.file_field 'uploaded_data', :size => '20' %>&nbsp;<%= submit_tag I18n.t(:upload) %><br/>
+    <label><%= check_box_tag('use_as_cover', "1") %> <%= I18n.t(:use_as_cover) %></label>
   <% end -%>
 
   <div class='buttons'>
@@ -25,7 +25,7 @@
       :url => {:controller => 'base_page/assets', :action => 'show', :page_id => @page.id},
       :loading => show_spinner('popup')) do -%>
          <%= spinner 'popup' %>
-         <%= submit_tag "Close"[:close_button], :name => 'close' %>
+         <%= submit_tag I18n.t(:close_button), :name => 'close' %>
     <% end -%>
   </div>
 

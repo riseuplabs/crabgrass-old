@@ -1,0 +1,140 @@
+he:
+  _locale_rtl: "1"
+  about_me: אודותיי
+  accept_usage_agreement: "אני מסכימ\\ה לתנאים הרשומים בהסכם השימוש"
+  access: גישה
+  action: פעולה
+  activity_contact_created: "{{user}} הוספ\\ה {{other_user}} כמשתמש\\ת"
+  activity_group_created: "{{user}} יצר\\ה {{group_type}} {{group}}"
+  activity_group_destroyed: "הקבוצה {{group}} נמחקה ע\"י {{user}}"
+  activity_user_destroyed: "המשתמש\\ת {{user}} פרש\\ה"
+  activity_user_joined_group: "המשתמש\\ת {{user}} הצטרפ\\ה לקבוצה {{group_type}} {{group}}"
+  activity_user_left_group: "המשתמש\\ת {{user}} עזב\\ה את הקבוצה {{group_type}} {{group}}"
+  activity_user_status: "המשתמש\\ת {{user}} עכשיו {{status}}"
+  activity_wall_message: "המשתמש\\ת {{author}} רשמ\\ה ל{{user}}: {{message}}"
+  add_another_file: "הוסיפי קובץ נוסף"
+  add_button: הוסיפי
+  add_comment: "הוסיפי תגובה"
+  add_contact_info: "כאשר משתמש\\ת נמצא\\ת ברשימת החברות שלך, הן יכולות לראות כאשר את\\ה מחובר\\ת והן יכולות לראות את פרופיל המשתמש\\ת המלא שלך. כאשר משתמש\\ת נעשית חבר\\ה שלך, את אוטומטית נעשית חבר\\ה שלה."
+  add_description: "הוסיפי תיאור"
+  add_email_address: "הוסיפי כתובת דואר אלקטרוני"
+  add_encryption_key: "הוסיפי מפתח הצפנה"
+  add_existing_image: "הוסיפי תמונה"
+  add_im_address: "הוסיפי כתובת מסרים מידיים (IM)"
+  add_location: "הוסיפי מיקום"
+  add_new_attachment: "הוסיפי צרופה חדשה"
+  add_one_or_more_tags: "הוסיפי תווית אחת או יותר, מופרדות באמצעות פסיקים"
+  add_phone_number: "הוסיפי מספר טלפון"
+  add_photo_to_gallery: "לחצי על תמונה על מנת להוסיפה"
+  add_star_link: "הוסיפי כוכב ({{star_count}})"
+  add_tags: "הוסיפי תגיות"
+  add_websites: "הוסיפי אתר אינטרנט"
+  admin: ניהול
+  alert_error: שגיאה
+  alert_field_errors: "קיימות בעיות עם השדות הבאים"
+  alert_not_saved: "השינויים לא יכולים להשמר"
+  alert_permission_denied: "הגישה אסורה"
+  alert_saved: "השינויים נשמרו בהצלחה"
+  all_content: "כל התוכן"
+  all_groups: "כל הקבוצות"
+  all_page_types: "כל סוגי הדפים"
+  all_people: "כל הא\\נשים"
+  all_people_link: "כל האנשים"
+  all_states: "כל המדינות"
+  allow_membership_requests: "אשר\\י בקשות הצטרפות"
+  already_contacts_info: "את\\ה כבר חבר\\ה של המשתמש\\ת."
+  announcements: הודעות
+  approval_vote: "הצבעת אישור"
+  approval_vote_class_description: "הצביעי בעד או נגד כל אפשרות."
+  approve: אשרי
+  approve_button: אשר\י
+  approve_contact_info: "בקשת חברות ממשתמש\\ת זו כבר קיימת. האם ברצונך לאשרה?"
+  approve_or_reject_link: "אשר\\י או דחי בקשה זו"
+  approved: אושר
+  archive: ארכיון
+  archive_filter_created_link: "תאריך יצירה"
+  archive_filter_updated_link: "תאריך עדכון אחרון"
+  archive_headline: ארכיון
+  article_page_description: "פוסט או כתבת חדשות."
+  article_page_display: כתבה
+  at_least_one_recipient_is_required: "לפחות נמענ\\ת אחת דרוש\\ה"
+  attachments: צרופות
+  away: מרוחק\ת
+  back_button: חזרה
+  back_to_group: "חזרה אל {{group_name}}"
+  break_lock: "פתח נעילה"
+  cancel_button: ביטול
+  cancel_link: ביטול
+  category: קטגוריה
+  close_button: סגור
+  collection: אוסף
+  collection_class_description: "דפים מיוחדים אשר מכילים דפים נוספים."
+  committee: וועדה
+  committee_publicly_visible: "הפכי את הוועדה לשקופה ציבורית"
+  committee_publicly_visible_description: |-
+      ניתן לצפות בוועדות על ידי לא-חברות ב-
+      {{domain}}/yourgroupname
+  committees: וועדות
+  comparing_changes_header: "השוואת שינויים על ידי {{user}} ב {{when}} מ {{old_version}} ל {{new_version}}"
+  confirm_new_password: "אשר\\י ססמה חדשה"
+  contact: "אשת קשר"
+  contact_request_message_label: "ספר\\י ל {{user}} למה את\\ה רוצה להיות חבר\\ה שלהם."
+  contacts: "א\\נשי קשר"
+  contribute_content_link: צור\צרי
+  coordinating_council: "וועדה מתאמת"
+  coordinator: מתאמ\ת
+  coordinators: מתאמים
+  council_help: "אם לקבוצה זו יש וועדה מתאמת, אזי רק חבר\\ה בוועדה יכול\\ה לנהל את הקבוצה. אם לא, כל חבר\\ה בקבוצה יכול\\ה לנהל אותה."
+  create_a_new_thing: "צרי {{thing}} חדש"
+  create_button: צור\צרי
+  create_committee: "צרי וועדה"
+  create_group_link: "צרי קבוצה"
+  create_page: "צרי דף"
+  create_page_button: "צרי {{page_class}}"
+  create_page_data: "{{page_class}} מידע"
+  create_page_information: "{{page_class}} מידע"
+  create_task_list: "צרי רשימת מטלות חדשה"
+  created: נוצר
+  created_by: "נוצר ע\"י"
+  created_on: "נוצר בתאריך"
+  created_when_by: "נוצר ב {{when}} ע\"י {{user}}"
+  current_attachments: "צרופות נוכחיות"
+  current_tags: "תגיות נוכחיות"
+  date: תאריך
+  date_centuries: מאות
+  date_days: ימים
+  date_hours: שעות
+  date_minutes: דקות
+  date_months: חודשים
+  date_older: "ישן יותר"
+  date_seconds: שניות
+  date_this_week: "השבוע החולף"
+  date_today: היום
+  date_weeks: שבועות
+  date_years: שנים
+  date_yesterday: אתמול
+  delete: מחק\י
+  delete_page_link: "מחק\\י {{page_class}}"
+  delete_post: "מחק\\י את הפוסט"
+  delete_this_version: "מחק\\י את הגרסה הזו"
+  delete_version_confirm: "האם את\\ה בטוח\\ה שברצונך למחוק את הגרסה הנ\"ל?"
+  description: תיאור
+  descriptions: תיאורים
+  destroy: השמידי
+  destroy_group_link: "השמידי {{group_type}}"
+  details_link: פרטים
+  directory_of_groups: "רשימת קבוצות"
+  directory_of_people: "רשימת א\\נשים"
+  discussions: דיונים
+  display_name: "שם לתצוגה"
+  download: הורדה
+  download_gallery: "הורדת גלריית תמונות"
+  drag_and_drop_to_rearrange_photos: "גררי ועזבי תמונות על מנת לסדרן מחדש"
+  edit: עריכה
+  edit_gallery: "ערכי את הגלריה"
+  fax: פקס
+  history: הסטוריה
+  home: בית
+  language: שפה
+  user: משתמש\ת
+  username: "שם משתמש\\ת"

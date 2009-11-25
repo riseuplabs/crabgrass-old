@@ -5,6 +5,20 @@ class UglifyHtmlTest < Test::Unit::TestCase
     assert_equal uglify, UglifyHtml.new(html, options).make_ugly
   end
 
+  context "add an <br/> at the end of the document if it ends with a table" do
+    test "document ending with a table" do
+      html = "<h1>header</h1><table><tr><td>col</td></tr></table>"
+      uglify = "<h1>header</h1><table><tr><td>col</td></tr></table><br/>"
+      assert_renders_uglify uglify, html
+    end
+
+    test "document not ending with a table" do
+      html = "<h1>header</h1><table><tr><td>col</td></tr></table><p>some</p>"
+      uglify = "<h1>header</h1><table><tr><td>col</td></tr></table><p>some</p>"
+      assert_renders_uglify uglify, html
+    end
+  end
+
   context "allow change only tag names for certain elements" do
     test "convert <ins> to <u> and not convert <u> to <span> later" do
       html = "<p>some text <ins>underlined</ins></p>"

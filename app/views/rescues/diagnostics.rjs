@@ -24,7 +24,7 @@ details_box = %(
   }
   </style>
 
-  <b>#{link_to_function("Close"[:close], "$('error_details').hide()")}</b>
+  <b>#{link_to_function(I18n.t(:close_link), "$('error_details').hide()")}</b>
 
   <pre>#{ h exception_detailed_message(@exception) }</pre>
   #{render(:partial => 'rescues/trace.erb') if @exception}
@@ -35,13 +35,13 @@ details_box = %(
 
 # render(:template => 'rescues/diagnostics.erb')
 
-details_link = link_to_function('Details'[:details]+ARROW, "$('error_details').toggle()")
+details_link = link_to_function(I18n.t(:details_link) + ARROW, "$('error_details').toggle()")
 
 flash_message_now(
   :type => 'error',
-  :title => "System Error"[:exception_title],
+  :title => I18n.t(:exception_title),
   :text => [
-    "Oops! We experienced an error."[:exception_headline],
+    I18n.t(:exception_headline),
      details_link,
      details_box
   ].join(' ')

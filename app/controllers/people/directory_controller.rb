@@ -4,6 +4,8 @@
 
 class People::DirectoryController < People::BaseController
 
+  helper :people
+
   before_filter :login_required, :action => 'show'
 
   def index

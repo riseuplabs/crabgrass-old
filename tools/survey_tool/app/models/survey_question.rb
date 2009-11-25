@@ -67,7 +67,7 @@ end
 ######### SHORT TEXT ###################
 class ShortTextQuestion < SurveyQuestion
   def add_question_link_text
-    "Short Answer"[:add_short_text_question_link]
+    I18n.t(:add_short_text_question_link)
   end
 end
 
@@ -75,7 +75,7 @@ end
 ######### LONG TEXT ###################
 class LongTextQuestion < SurveyQuestion
   def add_question_link_text
-    "Long Answer"[:add_long_text_question_link]
+    I18n.t(:add_long_text_question_link)
   end
 end
 
@@ -83,31 +83,22 @@ end
 ######### SELECT ONE ###################
 class SelectOneQuestion < SurveyQuestion
   def add_question_link_text
-    "Select One Answer"[:add_select_one_question_link]
+    I18n.t(:add_select_one_question_link)
   end
-  # def description
-  #   :question_description_select_one.t
-  # end
-  #
-  # def partial ; 'surveys/select_one';  end
 end
 
 
 ######### SELECT MANY ###################
 class SelectManyQuestion < SurveyQuestion
   def add_question_link_text
-    "Select Multiple Answers"[:add_select_many_question_link]
+    I18n.t(:add_select_many_question_link)
   end
-  # def description
-  #   :question_description_select_many.t
-  # end
-  # def partial ; 'surveys/select_many';  end
 end
 
 ######### IMAGE UPLOAD ###################
 class ImageUploadQuestion < SurveyQuestion
   def add_question_link_text
-    "Upload Image"[:upload_image_question_link]
+    I18n.t(:upload_image_question_link)
   end
 
   def answer_class
@@ -118,7 +109,7 @@ end
 ######### VIDEO LINK ###################
 class VideoLinkQuestion < SurveyQuestion
   def add_question_link_text
-    "Video Link"[:video_link_question_link]
+    I18n.t(:video_link_question_link)
   end
 
   def answer_class
@@ -129,9 +120,4 @@ end
 
 ######### BOOLEAN ###################
 class BooleanQuestion < SurveyQuestion
-  # def description
-  #   :question_description_boolean.t
-  # end
-
-  # def partial ; 'surveys/boolean' ; end
 end

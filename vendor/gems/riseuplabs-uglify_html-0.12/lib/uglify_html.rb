@@ -27,7 +27,11 @@ class UglifyHtml
 
     (@doc/"li ul | li ol").remove
 
-    @doc.to_html
+    html = @doc.to_html
+
+    html = html + "<br/>" if html.match(/<\/table>$/) 
+
+    html
   end
 
   private

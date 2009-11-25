@@ -62,7 +62,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   public
 
   # initializes all the arrays for conditions, aliases, clauses and so on
-  def initialize(path, options)
+  def initialize(path, options, klass)
 
     ## page_terms access clauses
     ## (within each clause, the values are OR'ed, but the clauses are AND'ed
@@ -85,6 +85,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
         :site_ids => options[:site_ids]
       ).join(' ')
     end
+
     @access_filter_clause = [] # to be used by path filters
 
     ## page stuff
@@ -106,6 +107,9 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @include     = options[:include]
     @select      = options[:select]
 
+    # klass the find/paginate/... was send to and thus of the objects we return.
+    @klass = klass
+
     # parse the path and apply each filter
     apply_filters_from_path( path )
   end
@@ -113,22 +117,22 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   def find
     options = options_for_find
     #puts "Page.find(:all, #{options.inspect})"
-    Page.find :all, options
+    @klass.find :all, options
   end
 
   def paginate
     @page ||= 1
     @per_page ||= SECTION_SIZE
-    Page.paginate options_for_find(:having => true).merge(:page => @page, :per_page => @per_page)
+    @klass.paginate options_for_find(:having => true).merge(:page => @page, :per_page => @per_page)
   end
 
   def count
     @order = nil
-    Page.count options_for_find
+    @klass.count options_for_find
   end
 
   def ids
-    Page.find_ids options_for_find.merge(:select => 'pages.id')
+    @klass.find_ids options_for_find.merge(:select => 'pages.id')
   end
 
   private
@@ -200,7 +204,8 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_joins(conditions_string)
     joins = []
-    [:user_participations, :group_participations, :page_terms, :dailies, :hourlies].each do |j|
+    [:user_participations, :group_participations, :page_terms,
+      :dailies, :hourlies, :moderated_flags].each do |j|
       if /#{j.to_s}\./ =~ conditions_string
         joins << j
       end
@@ -229,6 +234,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   end
 
   def add_flow(flow)
+    return unless @klass == Page
     if flow.instance_of? Array
       cond = []
       flow.each do |f|

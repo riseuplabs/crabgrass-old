@@ -142,7 +142,7 @@ module GroupParticipationExtension
       #
       # def raise_if_not_static
       #   if self.static != true
-      #     raise ArgumentError.new("Page is not static"[:page_is_not_static])
+      #     raise ArgumentError.new(I18n.t(:page_is_not_static))
       #   end
       # end
     end

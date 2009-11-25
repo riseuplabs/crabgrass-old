@@ -5,7 +5,7 @@
   ##
 
 %>
-<% dialog_page(:title => "Not Found"[:not_found], :details => '') do %>
-  <%= "Sorry, we could not find what you were looking for."[:not_found_description] %>
+<% dialog_page(:title => I18n.t(:not_found), :details => '') do %>
+  <%= I18n.t(:not_found_description) %>
 <% end %>
 
