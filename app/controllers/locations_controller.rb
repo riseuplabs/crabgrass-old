@@ -24,8 +24,27 @@ class LocationsController < ApplicationController
         admin_codes = geocountry.geo_admin_codes
       else
         admin_code = geocountry.geo_admin_codes.find_by_id(admin_code_id)
+        admin_codes = [admin_code]
       end
       ####
+      admin_codes.each do |ac|
+        places = ac.geo_places.find_by_name(city)
+        if places.is_a?(Array)
+          html << '<ul>'
+          places.each do |place|
+            html << "<li><input type='checkbox' value='#{place.id}' name='group[city_id]' />#{place.name}</li>"
+          end
+          html << '</ul>'
+        elsif ! places.nil?
+          html << "<input type='checkbox'  value='#{places.id}' name='group[city_id]' 'selected' />#{places.name}"
+        else
+          html << 'No results.'
+        end
+      end
+    end
+    render :update do |page|
+      page.replace_html 'city_results', html
+      page.show 'city_results'
     end
   end
 

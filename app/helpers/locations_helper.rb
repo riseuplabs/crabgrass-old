@@ -4,17 +4,17 @@ module LocationsHelper
   def country_dropdown(object, method)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'replace_admin_codes_options'},
-      :with => "'country_code='+value"
-#      :loading => add_class_name('group_country', 'spinner_icon'),
-#      :complet => remove_class_name('group_country','spinner_icon')
+      :with => "'country_code='+value",
+      :loading => add_class_name('group_country', 'spinner_icon'),
+      :complete => remove_class_name('group_country','spinner_icon')
     ) 
-    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:onchange => onchange})
+    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:id=>'group_country_id', :onchange => onchange})
   end
 
   def city_text_field(object, method)
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'country_id='+$('group_location').value+'&admin_code_id='+$('group_state').value+'&city='+value"
+      :with => "'country_id='+$('group_country_id').value+'&admin_code_id='+$('group_state').value+'&city='+value"
     )
     text_field(object, method, {:onblur => onblur})
   end

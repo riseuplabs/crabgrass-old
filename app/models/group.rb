@@ -46,7 +46,7 @@ class Group < ActiveRecord::Base
   ## FINDERS
   ##
 
-  def location
+  def country 
     return "US"
   end
   def city

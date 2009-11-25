@@ -51,8 +51,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
     t.integer  "video_id",               :limit => 11
-    t.text     "summary_html"
-    t.integer  "geo_location_id",	:limit => 11
+    t.text     "summary_html",
   end
 
 Applies to both groups and users: may_see, may_see_groups
@@ -84,8 +83,6 @@ class Profile < ActiveRecord::Base
     self.entity_type = 'Group' if self.entity_type =~ /Group/
   end
 
-  ## LOCATION
-  has_one :geo_location
 
   ##
   ## CONSTANTS
@@ -173,6 +170,10 @@ class Profile < ActiveRecord::Base
     :class_name => '::ProfileCryptKey',
     :dependent => :destroy, :order => "preferred desc"
 
+  has_many :geo_locations, 
+    :class_name => '::ProfileGeoLocation',
+    :dependent => :destroy
+
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
@@ -181,13 +182,13 @@ class Profile < ActiveRecord::Base
       "organization", "place", "may_see", "may_see_committees", "may_see_networks",
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer", "photo", "video", "summary"]
+      "may_burden", "may_spy", "peer", "photo", "video", "summary", "country","state","city"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
       'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
-      'crypt_keys'      => ::ProfileCryptKey
+      'crypt_keys'      => ::ProfileCryptKey,      'geo_locations' => ::ProfileGeoLocation
     }
 
     profile_params.stringify_keys!
