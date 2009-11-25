@@ -378,6 +378,7 @@ en:
   activity_user_status: "{{user}} is now {{status}}"
   activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
   activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
+  activity_user_proposed_to_destroy_group: "{{user}} has proposed to destroy {{group_type}} {{group}}"
   activity_user_joined_site: "{user} has joined {group}"
   activity_user_destroyed: "{{user}} has retired"
   activity_group_created: "{{user}} created {{group_type}} {{group}}"
@@ -852,6 +853,7 @@ en:
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
   request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group}}"
+  request_votes_tally_info: "{{approved_count}} voted to approve / {{rejected_count}} voted to reject"
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"

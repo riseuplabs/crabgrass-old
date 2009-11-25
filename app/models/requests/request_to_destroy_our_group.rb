@@ -9,16 +9,20 @@ class RequestToDestroyOurGroup < Request
   VOTE_DURATION = 1.month
 
   validates_format_of :recipient_type, :with => /Group/
-  validates_format_of :requestable_type, :with => /Group/
-
-  has_many :votes, :as => :votable, :class_name => "RequestVote"
 
   named_scope :for_group, lambda { |group|
-    { :conditions => {:recipient_id => group.id},
-      :conditions => {:requestable_id => group.id}}
+    { :conditions => {:recipient_id => group.id} }
   }
 
   named_scope :voting_completed, :conditions => ["state = 'pending' AND created_at < ?", VOTE_DURATION.ago]
+
+  named_scope :unvoted_by_user, lambda { |user|
+    {:include => :votes}
+  }
+
+  def requestable_required?
+    false
+  end
 
   def group() recipient end
 
@@ -43,23 +47,62 @@ class RequestToDestroyOurGroup < Request
   end
 
   def may_approve?(user)
-    user.may?(:admin, group)
+    # only the creator can approve
+    # but everyone can vote
+    # always call set_value(state, created_by)
+    created_by == user
   end
 
   def may_destroy?(user)
-    created_by == user
+    may_approve?(user)
   end
 
   def may_view?(user)
     may_create?(user) or may_approve?(user)
   end
 
+  def may_vote?(user)
+    user.may?(:admin, group) and votes.by_user(user).blank?
+  end
+
   def after_approval
-    group.destroy
+    group.destroy_by(created_by)
   end
 
   def description
     I18n.t(:request_to_destroy_our_group_description,  :group => group_span(group), :user => user_span(created_by))
+  end
+
+  def votable?
+    true
+  end
+
+  def self.value_for_state(state)
+    state_map = {
+      'rejected' => 0,
+      'approved' => 1
+    }
+
+    state_map[state]
+  end
+
+  # will update state for the request
+  def tally!
+    group_members_count = group.users.count
+
+    approve_votes_count = votes.approved.count
+    reject_votes_count = votes.rejected.count
+
+    if approve_votes_count >= (group_members_count - 1)
+      # we're near unanimous to approve destroying this group
+      set_state!('approved', created_by)
+    elsif reject_votes_count >= (group_members_count - 1)
+      # we're near unanimous to reject destroying this group
+      set_state!('rejected', created_by)
+    elsif created_at < 1.month.ago
+      state = has_winning_majority?(approve_votes_count, reject_votes_count) ? 'approved' : 'rejected'
+      set_state!(state, created_by)
+    end
   end
 
   protected
@@ -73,33 +116,19 @@ class RequestToDestroyOurGroup < Request
     }
 
     value = response_map[response]
-    votes.by_user(user).destroy_all
+    votes.by_user(user).delete_all
     votes.create!(:value => value, :user => user)
   end
 
-  # will update state for the request
-  def tally!
-    total_in_group = group.users.count
-    total_votes = votes.count
-
-    total_approved = votes.approved.count
-    total_rejected = votes.rejected.count
-
-    if total_approved >= (total_in_group - 1)
-      # we're near unanimous to approve destroying this group
-      set_state!('approved', created_by)
-    elsif created_at < 1.month.ago
-      state = has_winning_majority? ? 'approved' : 'rejected'
-      set_state!(state, created_by)
-    end
-  end
-
-  def has_winning_majority?(approve_votes, total_votes)
+  def has_winning_majority?(approve_votes, reject_votes)
     # 2/3 majority from total voters is required to win
+    total_votes = approve_votes + reject_votes
     Rational(approve_votes, total_votes) >= Rational(2, 3)
   end
 
-
+  # this should be called periodically (every hour is good)
+  # it will see if the voting period is over and will count the votes
+  # for all pending requests
   def self.tally_votes!
     tally_requests = RequestToDestroyOurGroup.voting_completed
     tally_requests.each do |request|

@@ -69,8 +69,7 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
-    @group.destroyed_by = current_user  # needed for the activity
-    @group.destroy
+    @group.destroy_by(current_user)
 
     if @group.parent
       redirect_to url_for_group(@group.parent)
