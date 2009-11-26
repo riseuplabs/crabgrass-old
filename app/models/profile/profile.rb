@@ -171,7 +171,7 @@ class Profile < ActiveRecord::Base
     :class_name => '::ProfileCryptKey',
     :dependent => :destroy, :order => "preferred desc"
 
-  belongs_to :geo_location, :dependent => :destroy
+  belongs_to :geo_location
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.

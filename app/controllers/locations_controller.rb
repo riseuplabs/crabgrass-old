@@ -27,20 +27,18 @@ class LocationsController < ApplicationController
         admin_codes = [admin_code]
       end
       ####
+      html << '<ul>'
       admin_codes.each do |ac|
         places = ac.geo_places.find_by_name(city)
         if places.is_a?(Array)
-          html << '<ul>'
           places.each do |place|
-            html << "<li><input type='checkbox' value='#{place.id}' name='profile[city_id]' />#{place.name}</li>"
+            html << "<li><input type='checkbox' value='#{place.id}' name='profile[city_id]' />#{place.name}, #{place.geo_admin_code.name}</li>"
           end
-          html << '</ul>'
         elsif ! places.nil?
-          html << "<input type='checkbox'  value='#{places.id}' name='profile[city_id]' 'selected' />#{places.name}"
-        else
-          html << 'No results.'
+          html << "<li><input type='checkbox'  value='#{places.id}' name='profile[city_id]' 'selected' />#{places.name}, #{places.geo_admin_code.name}</li>"
         end
       end
+      html << '</ul>'
     end
     render :update do |page|
       page.replace_html 'city_results', html

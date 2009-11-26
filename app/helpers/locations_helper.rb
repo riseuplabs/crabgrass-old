@@ -16,7 +16,7 @@ module LocationsHelper
       select(object, method, '', {:include_blank => true})
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id))
+      select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true})
     end
   end
 
