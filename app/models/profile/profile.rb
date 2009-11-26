@@ -52,6 +52,7 @@ Order of profile presidence (user sees the first one that matches):
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html",
+    t.integer  "geo_location_id"
   end
 
 Applies to both groups and users: may_see, may_see_groups
@@ -170,9 +171,7 @@ class Profile < ActiveRecord::Base
     :class_name => '::ProfileCryptKey',
     :dependent => :destroy, :order => "preferred desc"
 
-  has_many :geo_locations, 
-    :class_name => '::ProfileGeoLocation',
-    :dependent => :destroy
+  belongs_to :geo_location
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -182,13 +181,13 @@ class Profile < ActiveRecord::Base
       "organization", "place", "may_see", "may_see_committees", "may_see_networks",
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer", "photo", "video", "summary", "country","state","city"]
+      "may_burden", "may_spy", "peer", "photo", "video", "summary", "country_id","state_id","city_id"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
       'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
-      'crypt_keys'      => ::ProfileCryptKey,      'geo_locations' => ::ProfileGeoLocation
+      'crypt_keys'      => ::ProfileCryptKey      
     }
 
     profile_params.stringify_keys!
@@ -211,6 +210,12 @@ class Profile < ActiveRecord::Base
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
+    params['geo_location'] = GeoLocation.new(
+      :geo_country_id => params.delete('country_id'),
+      :geo_admin_code_id => params.delete('state_id'),
+      :geo_place_id => params.delete('city_id')
+    )
+
     if params['may_see'] == "0"
       %w(committees networks members groups contacts).each do |subject|
         params["may_see_#{subject}"] = "0"
@@ -224,6 +229,25 @@ class Profile < ActiveRecord::Base
 
   def cover
     self.photo || self.video
+  end
+
+  def country_id
+    return nil if self.geo_location.nil?
+    self.geo_location.geo_country_id.to_s
+  end
+  def state_id
+    return nil if self.geo_location.nil?
+    self.geo_location.geo_admin_code_id.to_s
+  end
+  def city
+    return nil if self.geo_location.nil? || self.geo_location.geo_place_id.nil?
+    geoplace = GeoPlace.find_by_id(self.geo_location.geo_place_id)
+    geoplace.name
+#    self.geo_location.geo_place.name 
+  end
+  def city_id
+    return nil if self.geo_location.nil?
+    self.geo_location.geo_place_id
   end
 
   # DEPRECATED
