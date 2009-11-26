@@ -13,6 +13,12 @@ class UiController < ApplicationController
   #stylesheet 'gallery'
   #stylesheet 'contribute'
 
+  def profile
+  end
+
+  def group
+  end
+
   def index
     data = params[:data]
     if data

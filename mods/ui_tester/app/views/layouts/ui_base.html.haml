@@ -22,9 +22,6 @@
       %div#content
         %div#content-container
           %div#group-content-wrap
-            %aside#group-info
-              =render :partial => 'layouts/ui_group_sidebar'
-            %div#group-content
-              =render :partial => 'layouts/ui_group_content'
+            = yield
       %footer.page
         footer
