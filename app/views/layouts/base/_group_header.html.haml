@@ -1,23 +1,22 @@
 %section#group-name
-  %h1 GroupName GroupNmeLong...
+  %h1
+    = @group.full_name
   %section#group-action
-    %a#chat{:href => "#"}  
-      Join Group Chat
+    - if may_join_chat?
+      = link_to(I18n.t(:group_join_chat), {:controller => 'chat', :action => 'channel', :id => @group.name})
+      
     %ul
       %li
-        %a{:href => "#"}
-          Edit Group
+        = edit_settings_link 
       %li
-        %a{:href => "#"}
-          Leave Group 
+        = leave_group_link
+
 %nav#group
   %ul
     %li
-      %a{:href => "#"}
-        HOME
+      = link_to(I18n.t(:home), url_for_group(@group))
     %li
       %a{:href => "#"}
         ALL CONTENT
     %li
-      %a{:href => "#"}
-        TASKS
+      = link_to(I18n.t(:tasks), group_search_url(:action => 'tasks'))
