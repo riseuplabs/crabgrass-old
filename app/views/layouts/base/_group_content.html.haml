@@ -7,9 +7,7 @@
 %section#wiki
   = render :partial => '/layouts/base/group_wiki'
 
-/TODO move the if to the partial
-- if @announcements.any?
-  = render :partial => '/layouts/base/announcements'
+= render :partial => '/layouts/base/announcements'
 
 %section#pages
   = render :partial => '/layouts/base/pages'
