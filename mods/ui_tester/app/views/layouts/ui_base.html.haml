@@ -16,15 +16,15 @@
     = call_hook :html_head
     = yield :html_head
   %body{:class=>language_direction}
-    %section#page
+    %div#page
       %header.page
         =render :partial => 'layouts/ui_header'
-      %section#content
-        %section#content-container
-          %section#group-content-wrap
+      %div#content
+        %div#content-container
+          %div#group-content-wrap
             %aside#group-info
               =render :partial => 'layouts/ui_group_sidebar'
-            %section#group-content
+            %div#group-content
               =render :partial => 'layouts/ui_group_content'
       %footer.page
         footer
