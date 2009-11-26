@@ -171,7 +171,7 @@ class Profile < ActiveRecord::Base
     :class_name => '::ProfileCryptKey',
     :dependent => :destroy, :order => "preferred desc"
 
-  belongs_to :geo_location
+  belongs_to :geo_location, :dependent => :destroy
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -209,12 +209,19 @@ class Profile < ActiveRecord::Base
 
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
-
-    params['geo_location'] = GeoLocation.new(
+    
+    geo_location_options = {
       :geo_country_id => params.delete('country_id'),
       :geo_admin_code_id => params.delete('state_id'),
-      :geo_place_id => params.delete('city_id')
-    )
+      :geo_place_id => params.delete('city_id'),
+      :profile_id => self.id.to_i
+    }
+    if self.geo_location.nil?
+      params['geo_location'] = GeoLocation.new(geo_location_options)
+    else
+      ### do not create new records.
+      self.geo_location.update_attributes(geo_location_options)
+    end
 
     if params['may_see'] == "0"
       %w(committees networks members groups contacts).each do |subject|
@@ -243,7 +250,6 @@ class Profile < ActiveRecord::Base
     return nil if self.geo_location.nil? || self.geo_location.geo_place_id.nil?
     geoplace = GeoPlace.find_by_id(self.geo_location.geo_place_id)
     geoplace.name
-#    self.geo_location.geo_place.name 
   end
   def city_id
     return nil if self.geo_location.nil?
