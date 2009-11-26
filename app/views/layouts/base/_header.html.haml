@@ -4,13 +4,7 @@
       = custom_masthead_site_title
       /%h2 Site Name sss
       %section#search
-        %form
-          %input{:type=>'text'}
-          %input{:type=>'hidden'}
-          %button{:type=>'submit'}
-          %input{:type=>'checkbox'}
-          %span
-            Search this group only
+        = render :partial => '/pages/mini_search'
 %nav.page
   %section#nav-container
     %section#nav
