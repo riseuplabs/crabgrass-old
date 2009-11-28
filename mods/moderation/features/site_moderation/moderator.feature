@@ -28,14 +28,14 @@ Scenario: I can see all pages
 
 Scenario: I should see moderated pages even if they are not for my group
   Given a page: "others-smell" exists with title: "Smelly Others", site: that site
-  And a moderated_page exists with page: that page
+  And a moderated_flag exists with flagged: that page
   And I am on the moderation panel
   Then I should see "Smelly Others"
 
 Scenario: I should see moderated posts even to pages of other groups/users
   Given a page: "others" exists with title: "Others Content", site: that site
   And a post: "smelly" comments that page with body: "Others Smelly Post"
-  And a moderated_post exists with post: that post
+  And a moderated_flag exists with flagged: that post
   And I am on the moderation panel
   And I follow "Comment Moderation"
   Then I should see "Others Smelly Post"

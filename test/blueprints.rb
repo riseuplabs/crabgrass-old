@@ -189,20 +189,12 @@ Post.blueprint do
 end
 
 if Conf.mod_enabled? 'moderation'
-  ModeratedPage.blueprint do
+  ModeratedFlag.blueprint do
     reason_flagged  { "language" }
     comment         { Faker::Lorem.paragraph }
     created_at      { updated_date(5) } # this should be newer than the page
     user            { User.make }
-    page            { make_a_page }
+    type            { "ModeratedFlag" }
   end
 
-
-  ModeratedPost.blueprint do
-    reason_flagged  { "language" }
-    comment    { Faker::Lorem.paragraph }
-    created_at { updated_date(5) } # this should be later than the page creation
-    user       { User.make }
-    post       { Post.make }
-  end
 end
