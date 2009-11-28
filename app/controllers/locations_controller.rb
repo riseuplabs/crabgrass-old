@@ -10,6 +10,18 @@ class LocationsController < ApplicationController
     end
   end
 
+  def show_search_admin_codes
+    html = ''
+    GeoAdminCode.with_public_profile(params[:country_id]).find(:all).each do |ac|
+      html << "<option value='#{ac.id}'>#{ac.name}</option>"
+    end
+    render :update do |page|
+      #page.replace_html 'select_state_id', html
+      #page.show 'state_dropdown'
+      page.show 'submit_loc'
+    end
+  end
+
   def city_lookup
     html = ''
     country_id = params[:country_id]

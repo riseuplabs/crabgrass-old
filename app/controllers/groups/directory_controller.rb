@@ -1,5 +1,7 @@
 class Groups::DirectoryController < Groups::BaseController
 
+  helper 'locations'
+
   before_filter :set_group_type
 
   def index
@@ -16,11 +18,18 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    @groups = Group.only_type(@group_type).visible_by(user).alphabetized(letter_page).paginate(:all, :page => params[:page])
+    if params[:country_id]
+      loc = params[:country_id]
+      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc).alphabetized(letter_page).paginate(:all, :page => params[:page])
+      groups_with_names = Group.only_type(@group_type).visible_by(user).in_location(loc).names_only
+    else
+      @groups = Group.only_type(@group_type).visible_by(user).alphabetized(letter_page).paginate(:all, :page => params[:page])
+      groups_with_names = Group.only_type(@group_type).visible_by(user).names_only
+    end
 
     # get the starting letters of all groups
-    groups_with_names = Group.only_type(@group_type).visible_by(user).names_only
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
+    @include_location_filter = true;
     render_list
   end
 
@@ -35,6 +44,8 @@ class Groups::DirectoryController < Groups::BaseController
     @groups = Group.only_type(@group_type).visible_by(user).most_visits.paginate(:all, :page => params[:page])
     render_list
   end
+
+
 
   protected
 
