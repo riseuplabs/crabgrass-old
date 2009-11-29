@@ -1,7 +1,11 @@
 <ul class='plain'>
-<li id='select_country'>Country: <%= country_dropdown('profile','country_id') %></li>
-<li id='select_state'>State/Province: <%= state_dropdown('profile','state_id', @profile.country_id) %></li>
-<li>City: <%= city_text_field('profile','city') %>
+<li id='select_country'>Country: 
+  <%= country_dropdown('profile','country_id', 'select_country_id', 'select_state_id') %>
+</li>
+<li id='select_state'>State/Province: 
+  <%= state_dropdown('profile','state_id', @profile.country_id, 'select_state_id') %>
+</li>
+<li>City: <%= city_text_field('profile','city', 'select_country_id', 'select_state_id') %>
 <div id='city_results' style='display:none'>
 </div>
 </li>

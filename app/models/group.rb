@@ -90,10 +90,18 @@ class Group < ActiveRecord::Base
 
   named_scope :names_only, :select => 'full_name, name'
 
-  named_scope :in_location, lambda { |country|
-    { :joins => "join geo_locations as gl",
-      :conditions => ["gl.profile_id = profiles.id and gl.geo_country_id=?",country]
-    }
+  named_scope :in_location, lambda { |options|
+    country_id = options[:country_id]
+    admin_code_id = options[:state_id]
+    if admin_code_id.nil?
+      { :joins => "join geo_locations as gl",
+        :conditions => ["gl.profile_id = profiles.id and gl.geo_country_id=?",country_id]
+      }
+    else
+      { :joins => "join geo_locations as gl",
+        :conditions => ["gl.profile_id = profiles.id and gl.geo_country_id=? and gl.geo_admin_code_id=?",country_id, admin_code_id]
+      }
+    end
   }
 
   ##

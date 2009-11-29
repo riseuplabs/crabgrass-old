@@ -1,10 +1,10 @@
 <%= form_tag('/groups/directory/search') %>
-Country: <%= select_search_countries %>
+Country: <%= select_search_countries('select_state_id') %>
 <div id='state_dropdown' style='display: none'>
-  State/Province: <%= state_dropdown %>
+  State/Province: <select name='state_id' id='select_state_id'></select>
 </div>
 <div id='city_text' style='display: none'>
-City: <%= city_text_field('profile','city') %>
+City: 
 </div>
 <div id='city_results' style='display:none'>
 </div>

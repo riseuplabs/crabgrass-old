@@ -19,9 +19,9 @@ class Groups::DirectoryController < Groups::BaseController
     letter_page = params[:letter] || ''
 
     if params[:country_id]
-      loc = params[:country_id]
-      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc).alphabetized(letter_page).paginate(:all, :page => params[:page])
-      groups_with_names = Group.only_type(@group_type).visible_by(user).in_location(loc).names_only
+      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id]}
+      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc_options).alphabetized(letter_page).paginate(:all, :page => params[:page])
+      groups_with_names = Group.only_type(@group_type).visible_by(user).in_location(loc_options).names_only
     else
       @groups = Group.only_type(@group_type).visible_by(user).alphabetized(letter_page).paginate(:all, :page => params[:page])
       groups_with_names = Group.only_type(@group_type).visible_by(user).names_only

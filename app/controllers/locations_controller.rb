@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
 
-  def replace_admin_codes_options
+  def all_admin_codes_options
     html = ''
     GeoCountry.find_by_id(params[:country_code]).geo_admin_codes.each do |ac|
       html << "<option value='#{ac.id}'>#{ac.name}</option>"
@@ -10,14 +10,14 @@ class LocationsController < ApplicationController
     end
   end
 
-  def show_search_admin_codes
+  def admin_codes_with_profiles_options
     html = ''
     GeoAdminCode.with_public_profile(params[:country_id]).find(:all).each do |ac|
       html << "<option value='#{ac.id}'>#{ac.name}</option>"
     end
     render :update do |page|
-      #page.replace_html 'select_state_id', html
-      #page.show 'state_dropdown'
+      page.replace_html params[:replace_id], html
+      page.show 'state_dropdown'
       page.show 'submit_loc'
     end
   end
