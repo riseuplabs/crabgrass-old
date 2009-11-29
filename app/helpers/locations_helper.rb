@@ -45,7 +45,7 @@ module LocationsHelper
   def select_search_admin_codes(select_state_id, replace_id)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
-      :with => "'admin_code_id='+value+'&replace_id=#{replace_id}'"
+      :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
     )
     select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
   end

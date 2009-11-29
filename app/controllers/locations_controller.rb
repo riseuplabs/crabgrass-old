@@ -12,8 +12,9 @@ class LocationsController < ApplicationController
 
   def admin_codes_with_profiles_options
     html = ''
-    GeoAdminCode.with_public_profile(params[:country_id]).find(:all).each do |ac|
-      html << "<option value='#{ac.id}'>#{ac.name}</option>"
+    GeoLocation.admin_codes_with_visible_profile(params[:country_id]).find(:all).each do |gl|
+      gac = GeoAdminCode.find(gl.geo_admin_code_id)
+      html << "<option value='#{gac.id}'>#{gac.name}</option>"
     end
     render :update do |page|
       page.replace_html params[:replace_id], html
@@ -24,9 +25,12 @@ class LocationsController < ApplicationController
 
   def cities_with_profiles_options
     html = ''
+    cities = []
     if params[:admin_code_id]
-      cities = GeoPlace.with_public_profile.find_by_geo_admin_code_id(params[:admin_code_id])
-      cities = [cities] unless cities.is_a?(Array)
+      options = {:country_id => params[:country_id], :admin_code_id => params[:admin_code_id]}
+      GeoLocation.cities_with_visible_profile(options).find(:all).each do |gl|
+        cities << GeoPlace.find(gl.geo_place_id)
+      end
     else
       return
     end
