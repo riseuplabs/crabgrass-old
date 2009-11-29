@@ -7,7 +7,11 @@ namespace :cg do
     uri = "/export/dump"
     countries = "/countryInfo.txt"
     admin_codes = "/admin1Codes.txt"
-    places = "/cities1000"
+    if Conf.use_full_geonames_data == true
+      places = "/allCountries"
+    else
+      places = "/cities1000"
+    end
     Dir.mkdir(path) if ! File.directory?(path)
     [countries, admin_codes, places+".zip"].each do |geofile|
       Net::HTTP.start("download.geonames.org") { |http|
