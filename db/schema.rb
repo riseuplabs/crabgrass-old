@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091105213521) do
+ActiveRecord::Schema.define(:version => 20091124133538) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -222,38 +222,41 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
   add_index "federatings", ["group_id", "network_id"], :name => "gn"
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
-  create_table :geo_countries,
-    :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
-    t.column :name, :string, :null => false
-    t.column :code, :string, :limit => 3, :null => false
+  create_table "geo_admin_codes", :force => true do |t|
+    t.integer "geo_country_id", :limit => 11, :null => false
+    t.string  "admin1_code",    :limit => 10, :null => false
+    t.string  "name",                         :null => false
   end
 
-  add_index(:geo_countries, [:name,:code], { :name => 'geo_countries_index', :unique => true })
+  add_index "geo_admin_codes", ["geo_country_id", "admin1_code"], :name => "geo_admin_codes_index", :unique => true
 
-  create_table :geo_admin_codes,
-    :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
-    t.column :geo_country_id, :integer, :null => false
-    t.column :admin1_code, :string, :limit => 10, :null => false
-    t.column :name, :string, :null => false
+  create_table "geo_countries", :force => true do |t|
+    t.string "name",              :null => false
+    t.string "code", :limit => 3, :null => false
   end
 
-  add_index(:geo_admin_codes, [:geo_country_id,:admin1_code], {:name => 'geo_admin_codes_index', :unique=>true})
+  add_index "geo_countries", ["name", "code"], :name => "geo_countries_index", :unique => true
 
-  create_table :geo_places,
-    :options => "DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci" do |t|
-    t.column :geo_country_id, :integer, :null => false
-    t.column :geonameid, :integer, :null => false
-    t.column :name, :string, :null => false
-    t.column :alternatenames, :string, :limit => 5000
-    t.column :latitude,  :decimal, :precision => 24, :scale => 20, :null => false   
-    t.column :longitude, :decimal, :precision => 24, :scale => 20, :null => false   
-    t.column :geo_admin_code_id, :integer, :null => false
+  create_table "geo_locations", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11, :null => false
+    t.integer "geo_admin_code_id", :limit => 11, :null => false
+    t.integer "geo_place_id",      :limit => 11, :null => false
+    t.integer "profile_id",        :limit => 11, :null => false
   end
 
-  add_index(:geo_places, :name)
-  add_index(:geo_places, :geo_country_id)
-  add_index(:geo_places, :geo_admin_code_id)
+  create_table "geo_places", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11,                                   :null => false
+    t.integer "geonameid",         :limit => 11,                                   :null => false
+    t.string  "name",                                                              :null => false
+    t.string  "alternatenames",    :limit => 5000
+    t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
+    t.decimal "longitude",                         :precision => 24, :scale => 20, :null => false
+    t.integer "geo_admin_code_id", :limit => 11,                                   :null => false
+  end
 
+  add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
+  add_index "geo_places", ["geo_country_id"], :name => "index_geo_places_on_geo_country_id"
+  add_index "geo_places", ["geo_admin_code_id"], :name => "index_geo_places_on_geo_admin_code_id"
 
   create_table "group_participations", :force => true do |t|
     t.integer  "group_id",          :limit => 11
@@ -332,7 +335,6 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.string  "postal_code"
     t.string  "geocode"
     t.string  "country_name"
-    t.integer "geo_place_id", :limit => 11
   end
 
   add_index "locations", ["profile_id"], :name => "locations_profile_id_index"
@@ -380,6 +382,16 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.datetime "created_at"
   end
 
+  create_table "moderated_chats", :force => true do |t|
+    t.integer  "request_id",     :limit => 11
+    t.integer  "chat_id",        :limit => 11
+    t.datetime "vetted_at"
+    t.integer  "vetted_by_id",   :limit => 11
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id",  :limit => 11
+    t.string   "reason_flagged"
+  end
+
   create_table "moderated_flags", :force => true do |t|
     t.string   "type",                         :null => false
     t.datetime "vetted_at"
@@ -390,8 +402,9 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",        :limit => 11
     t.integer  "foreign_id",     :limit => 11, :null => false
+    t.string   "foreign_type"
+    t.integer  "user_id",        :limit => 11, :null => false
   end
 
   create_table "page_histories", :force => true do |t|
@@ -580,6 +593,7 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.integer  "geo_location_id",        :limit => 11
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -885,8 +899,6 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
     t.string   "receive_notifications"
-    t.binary   "student_id_cache"
-    t.boolean  "encrypt_emails",                          :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

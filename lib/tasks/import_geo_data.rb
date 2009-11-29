@@ -64,6 +64,7 @@ namespace :cg do
       open(path+places+".txt").each do |line|
         row = line.split("\t")
         geocountry = GeoCountry.find_by_code(row[8])
+        next if geocountry.nil?
         row[10] = '00' if row[10] !~ /\S/ 
         STDERR.puts "on #{row[0]} :: #{row[10].to_s} :: #{row[8]}"
         geoadmincode = geocountry.geo_admin_codes.find_by_admin1_code(row[10])
