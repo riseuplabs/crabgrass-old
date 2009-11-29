@@ -4,16 +4,16 @@ module LocationsHelper
   def country_dropdown(object, method, select_id, replace_id)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'replace_id=#{replace_id}&country_code='+value",
-      :loading => add_class_name('geo_country_id', 'spinner_icon'),
-      :complete => remove_class_name('geo_country_id','spinner_icon')
+      :with => "'replace_id=#{replace_id}&country_code='+value"
+#      :loading => add_class_name('geo_country_id', 'spinner_icon'),
+#      :complete => remove_class_name('geo_country_id','spinner_icon')
     ) 
     select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:id => select_id, :onchange => onchange})
   end
 
   def state_dropdown(object, method, country_id, select_id)
     if country_id.nil?
-      select(object, method, '', {:include_blank => true}, {:name=>'state_id', :id=>select_id})
+      select(object, method, '', {:include_blank => true}, {:id=>select_id})
     else
       geocountry = GeoCountry.find_by_id(country_id)
       select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:id => select_id})
@@ -40,6 +40,14 @@ module LocationsHelper
       end
     end
     select(nil, nil, countries_with_groups.uniq.to_select(:name, :id), {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
+  end
+
+  def select_search_admin_codes(select_state_id, replace_id)
+    onchange = remote_function(
+      :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
+      :with => "'admin_code_id='+value+'&replace_id=#{replace_id}'"
+    )
+    select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
   end
 
 end

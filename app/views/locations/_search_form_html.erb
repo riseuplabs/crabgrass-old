@@ -1,12 +1,10 @@
 <%= form_tag('/groups/directory/search') %>
 Country: <%= select_search_countries('select_state_id') %>
 <div id='state_dropdown' style='display: none'>
-  State/Province: <select name='state_id' id='select_state_id'></select>
+  State/Province: <%= select_search_admin_codes('select_state_id','select_city_id') %>
 </div>
 <div id='city_text' style='display: none'>
-City: 
-</div>
-<div id='city_results' style='display:none'>
+City: <select name='city_id' id='select_city_id'></select> 
 </div>
 <div id='submit_loc' style='display: none'>
 <%= submit_tag('filter by location') %>

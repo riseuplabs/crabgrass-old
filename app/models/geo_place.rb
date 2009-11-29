@@ -3,6 +3,10 @@ class GeoPlace < ActiveRecord::Base
   belongs_to :geo_country
   belongs_to :geo_admin_code
 
+  named_scope :with_public_profile,
+    :joins => 'join geo_locations as gl on geo_places.id = gl.geo_place_id',
+    :select => 'geo_places.name, geo_places.id, geo_places.geo_admin_code_id'
+
   def self.with_names_matching(name, country_id, params={})
     geo_country = GeoCountry.find(country_id)
     if params[:admin_code_id]
