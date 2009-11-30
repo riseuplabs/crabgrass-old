@@ -29,7 +29,7 @@ Given /^#{capture_model} has admins moderate content$/ do |group|
 end
 
 # This should be changed to allow for {admin, edit, view} access.
-Given /^#{capture_model} has admin access to #{capture_model}$/ do |entity, page|
+Given /^#{capture_model} (?:has|have) admin access to #{capture_model}$/ do |entity, page|
   entity = model(entity)
   page = model(page)
   page.add entity, :access => 1
@@ -53,3 +53,4 @@ Given /^(\d+) Posts comment #{capture_model}$/ do |count, page|
   end
   page.save!
 end
+

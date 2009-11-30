@@ -21,6 +21,8 @@ module NavigationHelpers
     when /the moderation panel/
       '/admin/pages'
 
+    when /^the page of #{capture_model}$/          # translate to named route
+      "/page/#{model($1).friendly_url}"
 
     ## PICKLE PATHS
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
