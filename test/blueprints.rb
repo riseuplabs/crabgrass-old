@@ -113,6 +113,10 @@ DiscussionPage.blueprint do
   make_a_page
 end
 
+Gallery.blueprint do
+  make_a_page
+end
+
 Page.blueprint do
   make_a_page
 end
