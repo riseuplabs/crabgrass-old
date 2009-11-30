@@ -11,7 +11,7 @@ class LocationsController < ApplicationController
   end
 
   def countries_with_profiles_options
-    html = '<option value=''>Choose country...</option>'
+    html = '<option value="">Choose country...</option>'
     GeoLocation.countries_with_visible_profile.find(:all).each do |gl|
       gc = GeoCountry.find(gl.geo_country_id)
       html << "<option value='#{gc.id}'>#{gc.name}</option>"
@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
   end
 
   def admin_codes_with_profiles_options
-    html = ''
+    html = '<option value="">Choose State/Province...</option>'
     GeoLocation.admin_codes_with_visible_profile(params[:country_id]).find(:all).each do |gl|
       gac = GeoAdminCode.find(gl.geo_admin_code_id)
       html << "<option value='#{gac.id}'>#{gac.name}</option>"
