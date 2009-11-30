@@ -246,7 +246,7 @@ class Profile < ActiveRecord::Base
     return nil if self.geo_location.nil?
     self.geo_location.geo_admin_code_id.to_s
   end
-  def city
+  def geo_city_name
     return nil if self.geo_location.nil? || self.geo_location.geo_place_id.nil?
     geoplace = GeoPlace.find_by_id(self.geo_location.geo_place_id)
     geoplace.name
