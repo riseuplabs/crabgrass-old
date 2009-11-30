@@ -4,6 +4,7 @@ class CreateGeoLocation < ActiveRecord::Migration
       t.column :geo_country_id, :int, :limit => 11, :null => false
       t.column :geo_admin_code_id, :int, :limit => 11
       t.column :geo_place_id, :int, :limit => 11
+      t.column :profile_id, :int, :limit => 11
     end
   end
 
