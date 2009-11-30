@@ -1,10 +1,10 @@
-Then /^I should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |field, op, text|
+Then /^#{capture_model} should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |user, field, op, text|
   # option (a) ... with subject: "Subject String"
   # option (b) ... with subject containing "tring"
   # equal_op true means option (a)
   equal_op = (op == ":")
 
-  user = model("I")
+  user = model(user)
 
   found_matching = false
   values = []

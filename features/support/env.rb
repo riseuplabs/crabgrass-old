@@ -37,6 +37,8 @@ Spork.each_run do
     # make a site for this host and enable site testing
     @site = Site.make(:domain => @host)
     Conf.enable_site_testing
+
+    Sham.reset
   end
 
   # clean out the data from the database with TRUNCATE

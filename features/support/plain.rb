@@ -24,6 +24,10 @@ Before do
   # set webrat host
   header "Host", @host
   mocha_setup
+
+  # clear our variables stored in Thread
+  Thread.current[:user] = nil
+  Thread.current[:site] = nil
 end
 
 After do
