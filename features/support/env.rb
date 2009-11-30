@@ -28,6 +28,17 @@ Spork.each_run do
   require 'cucumber/rails/world'
   require 'test/blueprints.rb'
 
+  Before do
+    @host = "test.host"
+
+    # set rails host
+    host! @host
+
+    # make a site for this host and enable site testing
+    @site = Site.make(:domain => @host)
+    Conf.enable_site_testing
+  end
+
   # clean out the data from the database with TRUNCATE
   AfterConfiguration do |config|
     require 'database_cleaner'
