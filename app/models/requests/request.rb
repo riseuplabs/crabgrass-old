@@ -41,19 +41,19 @@ class Request < ActiveRecord::Base
   belongs_to :shared_discussion, :class_name => 'Discussion'
   belongs_to :private_discussion, :class_name => 'Discussion'
 
+  # most requests are non-vote based. they just need a single 'approve' action
+  # to get approved
+  # some requests (ex: RequestToDestroyOurGroup) are approved only
+  # when they get sufficient votes for approval and (in some cases)
+  # when a period of time has passed
+  has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
+
   validates_presence_of :created_by_id
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
 
   named_scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state]}
-  }
-  named_scope :appearing_as_state, lambda { |state|
-    if state == 'pending'
-      {:conditions => "state='pending' OR state='ignored'"}
-    else
-      {:conditions => [ "requests.state = ?", state]}
-    end
   }
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
@@ -72,6 +72,13 @@ class Request < ActiveRecord::Base
     {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
   }
 
+  named_scope :for_recipient, lambda { |recipient|
+    {:conditions => {:recipient_id => recipient.id}}
+  }
+  named_scope :with_requestable, lambda { |requestable|
+    {:conditions => {:requestable_id => requestable.id}}
+  }
+
   before_validation_on_create :set_default_state
   def set_default_state
     self.state = "pending" # needed despite FSM so that validations on create will work.
@@ -83,13 +90,12 @@ class Request < ActiveRecord::Base
     end
   end
 
-  # state one of 'approved' 'rejected' or 'ignore'
+  # state one of 'approved' or 'rejected'
   # user the person doing the change
   def set_state!(newstate, user)
     # reject unless we know the state
     commands = Hash.new('reject')
     commands['approved'] = 'approve'
-    commands['ignored'] = 'ignore'
 
     command = commands[newstate]
 
@@ -115,10 +121,6 @@ class Request < ActiveRecord::Base
     set_state!('rejected',user)
   end
 
-  def ignore_by!(user)
-    set_state!('ignored',user)
-  end
-
   # triggered by FSM
   def approval_allowed()
     may_approve?(approved_by)
@@ -129,11 +131,16 @@ class Request < ActiveRecord::Base
   ##
 
   def description() end
+  def votable?() false end
 
   def may_create?(user)  false end
   def may_destroy?(user) false end
   def may_approve?(user) false end
   def may_view?(user)    false end
+
+  def may_vote?(user)
+    may_approve?(user)
+  end
 
   def after_approval() end
 
@@ -156,19 +163,13 @@ class Request < ActiveRecord::Base
   state :pending
   state :approved, :after => :after_approval
   state :rejected
-  state :ignored
 
   event :approve do
     transitions :from => :pending,  :to => :approved, :guard => :approval_allowed
     transitions :from => :rejected, :to => :approved, :guard => :approval_allowed
-    transitions :from => :ignored,  :to => :approved, :guard => :approval_allowed
   end
   event :reject do
     transitions :from => :pending,  :to => :rejected, :guard => :approval_allowed
-    transitions :from => :ignored,  :to => :rejected, :guard => :approval_allowed
-  end
-  event :ignore do
-    transitions :from => :pending,  :to => :ignored,  :guard => :approval_allowed
   end
 
   ##
@@ -191,9 +192,10 @@ class Request < ActiveRecord::Base
   end
 
   # destroy all requests relating to this group
+  # except the request to destroy the group
   def self.destroy_for_group(group)
-    destroy_all ["recipient_id = ? AND recipient_type = 'Group'", group.id]
-    destroy_all ["requestable_id = ? AND requestable_type = 'Group'", group.id]
+    destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+    destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
   end
 
 end

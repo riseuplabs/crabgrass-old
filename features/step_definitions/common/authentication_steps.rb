@@ -13,3 +13,8 @@ Given /^I am logged in as #{capture_model}$/ do |user|
   # make sure we really logged in
   Then "I should see \"Logout #{user.display_name}\""
 end
+
+
+Given /^I am logged in$/ do
+  Given "I am logged in as user: \"me\""
+end

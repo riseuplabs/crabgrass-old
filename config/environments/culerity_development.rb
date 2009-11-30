@@ -11,6 +11,9 @@ config.action_view.cache_template_loading            = false
 # Disable request forgery protection in test environment
 config.action_controller.allow_forgery_protection    = false
 
+# set this to true to play with view caching:
+config.action_controller.perform_caching             = false
+
 # Tell Action Mailer not to deliver emails to the real world.
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.

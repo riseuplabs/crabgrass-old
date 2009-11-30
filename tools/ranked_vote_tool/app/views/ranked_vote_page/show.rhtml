@@ -2,9 +2,9 @@
 <ul class='possibles plain'>
 
 <% @sorted_possibles.each do |possible| -%>
-<% winner = 'winner' if (@result.winners.any? and @result.winners.include?possible.id) %>
+<% winner = 'winner' if (@poll.winners.any? and @poll.winners.include? possible.id) %>
 <li class='<%=winner%>'>
-  <div class='rank'><%= @result.rank(possible.id) %></div>
+  <div class='rank'><%= @poll.rank(possible.id) %></div>
   <span class='winner'><%= "(" + I18n.t(:top_pick) + ")" if winner.any? %></span>
   <div class='name'><%= possible_name(possible) %></div>
   <div class='indent possible_details' id="<%=details_id(possible)%>" style='display: none'>
@@ -14,7 +14,7 @@
     <% end -%>
   </div>
 	</li>
-<% end -%> 
+<% end -%>
 
 <% if logged_in? and current_user.may? :edit, @page and @possibles_unvoted.any? %>
   You have not ranked:

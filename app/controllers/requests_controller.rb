@@ -40,15 +40,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  def ignore
-    # begin
-    #   @request.ignore_by!(current_user)
-    # rescue Exception => exc
-    #   flash_message :exception => exc
-    # end
-    redirect_to referer
-  end
-
   def destroy
     begin
       @request.destroy

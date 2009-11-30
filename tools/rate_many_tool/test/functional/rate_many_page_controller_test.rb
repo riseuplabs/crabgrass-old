@@ -38,7 +38,7 @@ class RateManyPageControllerTest < ActionController::TestCase
     post :add_possible, :page_id => page_id, :possible => {:name => "new option", :description => ""}
     id = assigns(:possible).id
     post :vote_one, :page_id => page_id, :id => id, :value => "2"
-    assert_equal 2, PollPossible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
+    assert_equal 2, Possible.find(id).votes.find(:all).find { |p| p.user = users(:orange) }.value
   end
 
   def test_create_same_name

@@ -9,7 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD:db/schema.rb
 ActiveRecord::Schema.define(:version => 20091124133538) do
+=======
+ActiveRecord::Schema.define(:version => 20091123094947) do
+>>>>>>> origin/master:db/schema.rb
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -905,11 +909,14 @@ ActiveRecord::Schema.define(:version => 20091124133538) do
   add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
   create_table "votes", :force => true do |t|
-    t.integer  "possible_id", :limit => 11
-    t.integer  "user_id",     :limit => 11
+    t.integer  "possible_id",  :limit => 11
+    t.integer  "user_id",      :limit => 11
     t.datetime "created_at"
-    t.integer  "value",       :limit => 11
+    t.integer  "value",        :limit => 11
     t.string   "comment"
+    t.string   "type"
+    t.integer  "votable_id",   :limit => 11
+    t.string   "votable_type"
   end
 
   add_index "votes", ["possible_id"], :name => "index_votes_possible"

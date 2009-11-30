@@ -424,4 +424,12 @@ class Undress::GreenClothTest < Test::Unit::TestCase
       assert_renders_greencloth greencloth, html 
     end
   end
+
+  context "troubles with headings" do
+    test "with h1" do
+      html = "<h1 class='first'><a name='this-is-h1-text---this-is-h1-text'></a><span class='caps'>THIS</span> IS H1 <span class='caps'>TEXT</span> - this is h1 text<a class='anchor' href='#this-is-h1-text---this-is-h1-text'>¶</a></h1>"
+      greencloth = "THIS IS H1 TEXT - this is h1 text\n=================================\n"
+      assert_renders_greencloth greencloth, html
+    end
+  end
 end

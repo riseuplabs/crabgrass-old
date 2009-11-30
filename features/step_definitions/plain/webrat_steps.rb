@@ -22,6 +22,24 @@ When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^I follow and confirm "([^\"]*)"$/ do |link_name|
+  # ignoring demeters law at my own peril
+  link = webrat_session.current_scope.find_link link_name
+  onclick = link.element["onclick"]
+  if onclick =~ /Modalbox\.confirm/
+    if onclick =~ /method:"(.*?)", action:"(.*?)"/
+      method = $~[1]
+      url = $~[2]
+      visit(url, method.to_sym)
+    else
+      raise "no 'method' and 'action' keys found in Modalbox.confirm link #{link_name} <<#{onclick}>>"
+    end
+  else
+    raise "#{link_name} is not a Modalbox.confirm link"
+  end
+end
+
+
 When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, parent|
   click_link_within(parent, link)
 end

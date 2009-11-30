@@ -217,6 +217,11 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def destroy_by(user)
+    self.destroyed_by = user  # needed for the activity
+    self.destroy
+  end
+
   protected
 
   before_save :save_avatar_if_needed

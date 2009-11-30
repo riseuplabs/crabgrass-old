@@ -19,31 +19,83 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 (2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
 
 
-== Fullstack and Javascript Tests
+= Cucumber and Javascript Tests
 
-To test the full stack crabgrass, you can use Celerity. Celerity use HtmlUnit, which is a browser, like Firefox, but HtmlUnit is designed specifically for automation, so it runs in the background and has no graphics output, but it runs Javascript, has sessions and otherwise acts like a browser. HtmlUnit is made in Java, so you will need a Java Runtime Environment 1.6 or later.
+We can test the full stack of crabgrass (including ajax and other js) with cucumber. To write the tests you should be familiar with the tools involved
 
-Celerity is written in JRuby. You must install the latest JRuby from here:
-http://jruby.org/download
+== Requirements to Run Cucumber Features
 
-Finally, there is Culerity which is a bridge from ruby to jruby celerity (or htmlunit) browser. This is what Cucumber loads to to drive the browser.
+gems:
+  cucumber
+  webrat
+  langalex-culerity
 
-See http://github.com/langalex/culerity for installation instructions.
+packages:
+  jruby > 1.4
 
-Once everything is installed, you can run:
+jruby gems:
+  celerity
 
-script/cucumber -p ajaxy <cucumber files or tags>
+== Environments
 
-Each Scenario or a Feature in the specified cucumber files/folders that has a @ajaxy tag will be executed with Culerity.
+  Non-javascript cucumber tests run in the 'cucumber' environment.
+  Javascript cucumber tests run in the 'culerity_development' environment.
 
-== Integration Tests
+  You have to setup databases.yml to use the 'test' database for both of these environments.
+
+== Cucumber Test Data
+
+We're not using fixtures for Cucumber. We're using factories instead.
+
+Machinist - a fixture replacement, it generates model records based on rules
+Pickle    - a cucumber plugin that makes it very easy to drive machinist from cucumber steps. see: http://github.com/ianwhite/pickle
+
+== Plain (non-js) Features
+
+By default cucumber will run it's features in non-js ('simulated') mode. This is much faster than the js-mode. It uses webrat.
+
+Webrat    - a rails integration testing library. it does not run a server, it manages the session, looks up routes and calls controller actions directly
+
+
+== Javascript Features
+
+HtmlUnit  - a headless browser written in java. It is faster than a regular browser (or should be) since it doesn't render visuals, but it treats JS as if it did.
+Celerity  - a jruby wrapper on top of HtmlUnit. It loads the .jar in jruby and wrap java methods with nice ruby syntax.
+Culerity  - stars a jruby process, loads Celerity in that process and passes calls to Celerity from our test environment.
+
+
+In the javascript ('automated') mode cucumber will start a Mongrel server (in 'culerity_development' environment) and it will make HTTP requests to that server using Culerity as a browser.
+
+If you want to run the culerity_development server in the foreground so you can use ruby-debugger run:
+script/server -e culerity_development -p 3001
+
+You have to mark all features you want to be automated with Culerity with a @js tag. See http://wiki.github.com/aslakhellesoy/cucumber/tags for discussion on tags.
+
+NOTE: Because we're using @js tag to designate special test we can't use tags for anything else right now. This will be fixed in the later version of cucumber (see cucumber lighthouse ticket #504)
+
+To run javascript cucumber scenarios use this command:
+script/cucumber -p js features/path_to_my_ajax_stuff.feature
+
+
+Check out config/cucumber.yml to see what "-p js" option does.
+
+Since Celerity stays close to Watir interface in the future it could be possible to automate Internet Explorer, Firefox and other browsers.
+
+some links:
+
+http://github.com/jarib/celerity
+http://github.com/langalex/culerity
+http://jruby.org/download -- get the latest version and see the README - it's an easy install
+
+
+= Integration Tests
 
 Run 'rake db:fixtures:load RAILS_ENV=test' before running integration tests. Otherwise they will not work. Instead of fixtures, integration tests expect the whole database to be ready.
 
 If an integration test modifies the page_terms table somehow (adding new permissions to pages for example) then it should clean it up (page_terms are non-transactional) by calling 'reset_page_terms_from_fixtures' in the 'teardown' method.
 
 
-== Testings Mods
+= Testings Mods
 
 A great deal of the crabgrass code is in the form of engines-enhanced
 and crabgrass-specific plugins. See docs/MODS and docs/TOOLS for
@@ -59,7 +111,7 @@ To run the test for a particular tool or mod:
   rake test:tools:all TOOL=gallery_tool
   rake test:mods:all MOD=translator
 
-== Tests and Sites
+= Tests and Sites
 
 When running tests, the request host is 'test.host'. There is a site with this domain setup in the fixtures. Normally, it is not enabled.
 
@@ -95,7 +147,7 @@ Those methods will set the site properties and will execute the original code. '
 Instead of overriding Conf parameters for test_with_sites (like {:title => ...}), you can use 'true' (or 'false' to disable) as a value. You can use site 'nil' to generate test_title_with_site_nil for no site testing.
 
 
-== Adding a new page fixture
+= Adding a new page fixture
 
 In pages.yml copy and paste an existing page fixture. Give it a unique name and id. Set the 'data_type' and 'data_id' to point to your data model. For example 'Wiki' and 1 for a new wiki page. Set created_by and update_by fields.
 
@@ -138,6 +190,6 @@ rake cg:update_fixtures
 
 They will update page_terms.yml fixtures, which is what is actually used for resolving permissions.
 
-== Speeding Up Tests
+= Speeding Up Tests
 
 TODO: use spork
