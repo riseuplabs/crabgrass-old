@@ -378,7 +378,6 @@ en:
   activity_user_status: "{{user}} is now {{status}}"
   activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
   activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
-  activity_user_proposed_to_destroy_group: "{{user}} has proposed to destroy {{group_type}} {{group}}"
   activity_user_joined_site: "{user} has joined {group}"
   activity_user_destroyed: "{{user}} has retired"
   activity_group_created: "{{user}} created {{group_type}} {{group}}"
