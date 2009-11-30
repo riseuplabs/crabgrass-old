@@ -50,7 +50,7 @@ module LocationsHelper
     )
     countries_with_groups = []
     @groups.each do |gr|
-      if gr.profile.geo_location.nil
+      if gr.profile.geo_location
         countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
       end
     end
