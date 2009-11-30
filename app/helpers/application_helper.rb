@@ -152,6 +152,31 @@ module ApplicationHelper
     will_paginate(things, defaults.merge(options))
   end
 
+  # *NEWUI
+  #
+  # Default pagination link options:
+  #
+  #   :class        => 'pagination',
+  #   :previous_label   => '&laquo; Previous',
+  #   :next_label   => 'Next &raquo;',
+  #   :inner_window => 4, # links around the current page
+  #   :outer_window => 1, # links around beginning and end
+  #   :separator    => ' ',
+  #   :param_name   => :page,
+  #   :params       => nil,
+  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :page_links   => true,
+  #   :container    => true
+  #
+  def pagination_for(things, options={})
+    if request.xhr?
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
+    else
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
+    end
+    will_paginate(things, defaults.merge(options))
+  end
+
   def options_for_my_groups(selected=nil)
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
