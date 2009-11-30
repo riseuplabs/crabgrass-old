@@ -28,15 +28,43 @@
 @import susy/susy.sass
 
 =sans-family-headings
-  :font-family arial, helvetica, sans-serif
-  :font-weight bold
-  :line-height 1
+  font-family: arial, helvetica, sans-serif
+  font-weight: bold
+  line-height: 1
 
 =sans-family
   :font-family verdana, bitstream vera sans, helvetica, sans-serif 
 
-// Remember to add default styles to everything!
+// common styles
+=bordered-btm(!border_color= !warm_grey_border)
+  border-bottom= 1px "solid" !border_color
+  
+=bordered-top(!border_color= !warm_grey_border)
+  border-top= 1px "solid" !border_color
+  
+=bordered-top-btm(!border_color= !light_grey_border)
+  border-top= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
 
+=bordered(!border_color= !light_grey_border)
+  border= 1px "solid" !border_color
+  
+=zero
+  margin: 0
+  padding: 0
+  line-height: 1.0
+
+=spaced(!spacing= 0.09em)
+  letter-spacing= !spacing
+  
+=small-text(!font_small= 10px)
+  font-size= !font_small
+
+=medium-link(!sized= 11px)
+  +hover-link
+  color= !blue
+  font-size= !sized
+   
 /* @group links */
 
 \:focus
@@ -50,40 +78,62 @@ a
 
 h1, h2, h3, h4, h5, h6
   +sans-family-headings
-  :line-height 1
-  :font-weight bold
+  line-height: 1
+  font-weight: bold
 
 h1
-  :font-size 22px
-  :color #534741
+  font-size: 22px
+  color: #534741
 
 h2
-  :font-size 18px
-  :color #534741
+  font-size: 18px
+  color: #534741
 h3
-  :font-size 1.0em
-  :color #4978bc
+  font-size: 16px
+  color: #d35851
   
 h4
-  :font-size 0.9em
+  font-size: 13px
+  color: #777
   
 h5
-  :font-size 0.7em
+  :font-size 11px
   
 h6
-  :font-size 0.6em
+  :font-size 9px
 
 /* @end */
 li
   :display inline-block
   :float left
   :padding 0.2em
-
+.small_icon
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  .small_icon.right
+    background-position: 100% 50%
+    padding-left: 4px
+    padding-right: 20px
+  .small_icon.bullet
+    background-position: 0 2px
+    margin: 0.5em 0
+.normal
+  font-weight: normal
 
 /* @group forms */
 
 form
 
+input.checkbox
+  width: 12px
+  height: 12px
+  margin-right: 0
+  
+input.text
+  border: none
+  
 fieldset
 
 legend
