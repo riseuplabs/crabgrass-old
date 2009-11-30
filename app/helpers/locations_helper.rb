@@ -48,13 +48,13 @@ module LocationsHelper
       :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
       :with => "'country_id='+value+'&replace_id=#{replace_id}'"
     )
-    countries_with_groups = []
-    @groups.each do |gr|
-      if gr.profile.geo_location
-        countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
-      end
-    end
-    select(nil, nil, countries_with_groups.uniq.to_select(:name, :id), {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
+#    countries_with_groups = []
+#    @groups.each do |gr|
+#      if gr.profile.geo_location
+#        countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
+#      end
+#    end
+    select(nil, nil, '', {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
   end
 
   def select_search_admin_codes(select_state_id, replace_id)

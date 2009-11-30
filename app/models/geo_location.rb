@@ -4,6 +4,11 @@ class GeoLocation < ActiveRecord::Base
 
   has_one :profile
 
+  named_scope :countries_with_visible_profile, 
+    :joins => 'join profiles on geo_locations.profile_id=profiles.id',
+    :conditions => ["profiles.stranger = ? AND profiles.may_see = ?", true, true],
+    :select => 'distinct geo_locations.geo_country_id'
+
   named_scope :admin_codes_with_visible_profile, lambda {|country_id|
     {
       :joins => 'join profiles on geo_locations.profile_id=profiles.id',

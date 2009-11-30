@@ -10,6 +10,17 @@ class LocationsController < ApplicationController
     end
   end
 
+  def countries_with_profiles_options
+    html = '<option value=''>Choose country...</option>'
+    GeoLocation.countries_with_visible_profile.find(:all).each do |gl|
+      gc = GeoCountry.find(gl.geo_country_id)
+      html << "<option value='#{gc.id}'>#{gc.name}</option>"
+    end
+    render :update do |page|
+      page.replace_html params[:replace_id], html
+    end
+  end
+
   def admin_codes_with_profiles_options
     html = ''
     GeoLocation.admin_codes_with_visible_profile(params[:country_id]).find(:all).each do |gl|
