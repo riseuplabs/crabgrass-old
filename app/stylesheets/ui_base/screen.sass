@@ -14,30 +14,64 @@
 body
   +susy
   +sans-family
+  color= !almost_black
 #page  
   header.page
     +clearfix
   #titlebar
     +clearfix 
     height: 40px
-    border-bottom: 1px solid #d35851
+    +bordered-btm
     #titlebar-container
       +container
       #title
         +columns(14)
         +full
         width: 764px
+        position: relative
         h2
-          line-height: 2.4
           float: left
           display: inline
-        #search
-          text-align: right
+          margin-top: 12px
+        form#search
+          margin-top: 9px
           float: right
+          display: inline
+          text-align: right
+          color= !almost_black
+          position: relative
+          fieldset
+            display: inline
+            width: 216px
+            height: 23px
+            padding: 0
+            +bordered
+            .text
+              float: left
+              display: inline
+            .search-submit
+              +small-text
+              display: inline
+              border-left: 1px solid #ddd
+              padding: 6px 8px
+              letter-spacing: 0.05em
+              font-weight: bold
+              vertical-align: middle
+              color= !light_grey_text
+          div
+            display: inline
+            position: relative
+            vertical-align: top
+            top: 1px
+            .checkbox
+              position: relative
+            .light-small
+              +small-text
+              color= !light_grey_text
   nav.page
     +clearfix
     height: 38px
-    border-bottom: 1px solid #d35851
+    +bordered-btm
     #nav-container
       +container
       #nav
@@ -64,54 +98,95 @@ body
               
         #user
           float: right
+          margin-top: 7px
           +clearfix
+          li
+            +small-text
+            a
+              +medium-link
+              margin-left: 10px
+          li.first
+            margin-right: 4px
   #breadcrumb
     +clearfix
     height: 30px
     #breadcrumb-container
       +container
-      ul
+      div
         +columns(14)
         +full
+        margin-top: 4px
+        a
+          +hover-link
+          +small-text
+          +zero
+          text-transform: uppercase
+          color= !almost_black
+
+          
   #content
     +clearfix
-    border-bottom: 1px solid #d35851
+    +bordered-btm
+    color= !medium_grey_text
     background: #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
     #content-container
       +container
       padding-bottom: 100px
       background: #fff url("/images/new_ui/bg-subnav-rule.png") repeat-x top
-      #group-content-wrap
+      #content-wrap
         +columns(14)
         +full
         width: 764px
-        #group-info
+        #identity-info
           width: 204px
           float: left
           margin: 0 20px 0 0
-          #group-logo
+          #identity-image
             +columns(4,4)
             width: 204px
+            height: 204px
             float: left
             margin: 0
             background-color: #fff
             border: 1px solid #535741
+          #image-label            
+            +columns(4,4)
+            width: 204px
+            float: left
+            margin: 4px 0 0 0
+            line-height: 0.7
+            h3
+              color= !almost_black
+            ul
+              li
+                width: 204px
+                font-size: 11px
+                
           #contribute
             +columns(4,4)
-            margin: 20px 0
+            margin: 20px 0 0
             height: 20px
-            width: 182px
-            padding: 6px 10px
+            width: 204px
+            padding: 10px 0 6px
             background-color: #78be63
             border: 1px solid #448c3b
-            h2
+            h3
               color: #fff
-          #group-meta
+          #identity-meta
             +columns(4,4)
-            margin: 0
+            +bordered
+            margin: 20px 0 0 0
             width: 182px
-            padding: 10px
-            border: 1px solid #ebebeb
+            padding: 0 10px 10px
+            font-size: 11px
+            line-height: 1.5
+            h4
+              color= !red
+              padding: 24px 0 8px
+              margin: 0 0 10px
+              +bordered-btm(!medium_grey_border)
+            h4.first
+              padding-top: 20px
             #about-group, #people, #affiliations, #featured
               +clearfix
               width: 184px
@@ -121,15 +196,25 @@ body
                 +clearfix
                 h3, a
                   display: inline
-              h4
+                a
+                  +medium-link
+                  padding-left: 8px
+                  font-weight: normal
+              h4, h5
                 width: 182px
+                +clearfix
+              h5
+                font-weight: normal
+                font-size: 11px
+            #people, #affiliations
+              ul
+                padding: 5px 0 7px
                 +clearfix
             #about-group
               p
                 width: 184px
                 a
-                  white-space: nowrap
-                  float: none
+                  +medium-link
               ul#details
                 +clearfix
                 width: 184px
@@ -138,12 +223,43 @@ body
                 margin: 10px 0 0 0
                 padding: 0
             #featured
-              article
+              li
+                padding: 12px 0 4px
+                margin: 12px 0 0
+                +bordered-top(!light_grey_border)
+                article
+                  width: 184px
+                  h5
+                    color= !blue
+                    font-weight: bold
+                    font-size: 13px
+                    padding: 0 0 10px
+                  p
+                    padding-bottom: 6px
+                  ul.tags
+                    +clearfix
+                    +zero
+                    li
+                      border: none
+                      +zero
+                      a
+                        +medium-link(10px)
+              li.first
+                +zero
+                border: none
+            #about-profile
+              +small-text
+              line-height: 1.2
+              ul#details
+                +clearfix
                 width: 184px
-                h4
-                p
-                  :font-size 10px
-        #group-content
+              li
+                width: 164px
+                padding-top: 4px
+                
+                
+              
+        #main-content
           width: 540px
           float: left
           margin: 0
@@ -152,35 +268,94 @@ body
             +columns(10,10)
             width: 540px
             margin: 0
-            #group-name
+            #identity-name
               +columns(10,10)
               margin: 0
               width: 540px
               height: 50px
               h1
+                float: left
                 display: inline
+                line-height: 1.2
+                em.normal
+                  font-size: 18px
+                  color= !warm_grey_text
               #group-action
                 margin: 0
                 display: inline
-                float: right  
-            nav#group
+                float: right
+                a
+                  +hover-link
+                  +small-text
+                #chat
+                  margin: 0
+                  display: inline
+                  float: right
+                  color= !warm_grey_text
+                ul
+                  li
+                    +small-text
+                    +zero
+                    a
+                      color= !light_grey_text
+                      padding-left: 8px
+                      
+              
+            nav#group, #login-date
               +columns(10,10)
-              margin: 0
+              +zero
               width: 540px
-              height: 39px
-              border: 1px solid #534741
-              background-color: #fff
+              height: 37px
+              li
+                +zero
+                +bordered(!almost_black)
+                +spaced
+                height: 37px
+                border-left: none
+                background: #fff
+                font-size: 11px
+                a
+                  color= !warm_grey_text
+                  text-decoration: none
+                  font-weight: bold
+                  height: 37px
+                  line-height: 3.5
+                  padding: 8px 10px
+              li.current
+                background= !almost_black
+                a
+                  color: #fff
+              li.first
+                +bordered(!almost_black)
+
+                    
+            #last-login
+              +small-text
+              float: right
+              line-height: 1.1
+              color= !link_color
           #helpful-links
             +columns(10,10)
-            margin: 0
+            +clearfix
+            +bordered-top-btm
+            margin: 15px 0 0
+            padding: 8px 0
             width: 540px
             h4, ul
               display: inline
             h4
               float: left
+              line-height: 1.1
+            li
+              +zero
+              a
+                +medium-link
+                padding-left: 12px
           #wiki
             +columns(10,10)
-            margin: 0
+            +bordered-top-btm
+            margin: 10px 0 0
+            padding: 8px 0
             width: 540px
             header
               h4, a
@@ -189,29 +364,51 @@ body
                 float: right
             .wiki
               width: 540px
+              a
+                +medium-link
           #announcements
             +columns(10,10)
-            margin: 0
+            margin: 24px 0 0
             width: 540px
-            border: 1px solid #fc0  
+            h3
+              +bordered-btm(!medium_grey_border)
+              padding: 0 0 8px
             article
               +columns(5,10)
               +alpha(10)
+              padding-top: 10px
             article.right
               +columns(5,10)
               +omega(10)
+            h4
+              line-height: 1.4
+            a
+              +medium-link
           #pages
             +columns(10,10)
-            margin: 0
+            margin: 30px 0 0
             width: 540px
-            h3, a
+            h3
+              +bordered-btm(!medium_grey_border)
+              padding: 0 0 8px
+              float: left
               display: inline
+              width: 540px
             .pagination
+              font-weight: normal
+              font-size: 11px
+              color= !medium_grey_text
               float: right
+              display: inline
+              a
+                +medium-link
+              
             article
               +columns(10,10)
+              +bordered-btm(!light_grey_border)
               width: 540px
               margin: 0
+              padding: 10px 0
               .pages-info
                 +columns(9,10)
                 +alpha(10)
@@ -219,14 +416,31 @@ body
                 width: 85.8%
                 img
                   float: left
+                  display: inline
                   width: 75px
                   height: 75px
+                  padding: 0 4px 4px 0
+                h4
+                  float: left
+                  display: inline
+                  font-size: 14px
+                  color= !blue
+                p
+                  float: left
+                  display: inline
+                  padding-left: 20px
+                  a
+                    +medium-link
+                a   
+                  +medium-link(10px)
               .pages-status
                 +columns(1,10)
                 +omega(10)
-                margin: 0
-                width: 10%
-                border: 1px solid #000
+                +zero
+                +bordered
+                float: right
+                width: 11%
+                padding: 4px 2px
                 li
                   clear: both
                   float: right
