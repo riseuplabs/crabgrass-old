@@ -6,9 +6,9 @@ Feature: Destroying groups that don't have a council and have only one remaining
 
 Background:
   Given a group: "rainbow" exist with name: "rainbow", full_name: "Rainbow"
-  And a user: "blue" exists with display_name: "Blue"
-  And user: "blue" is a member of that group
-  And I am logged in as that user
+  And I exist with display_name: "Blue"
+  And I am a member of that group
+  And I am logged in
   Given I am on that group's landing page
 
 Scenario: Destroying a group requires confirmation
