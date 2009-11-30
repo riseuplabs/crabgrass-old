@@ -1,4 +1,7 @@
 Then /^I should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |field, op, text|
+  # option (a) ... with subject: "Subject String"
+  # option (b) ... with subject containing "tring"
+  # equal_op true means option (a)
   equal_op = (op == ":")
 
   found_matching = false
@@ -13,6 +16,8 @@ Then /^I should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |fi
     else
       found_matching = (value.to_s =~ /#{text}/)
     end
+
+    break if found_matching
   end
 
   values = values.join("\n")

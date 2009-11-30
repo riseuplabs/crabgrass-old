@@ -201,7 +201,11 @@ class Group < ActiveRecord::Base
   end
 
   def destroy_by(user)
-    self.destroyed_by = user  # needed for the activity
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+
     self.destroy
   end
 
