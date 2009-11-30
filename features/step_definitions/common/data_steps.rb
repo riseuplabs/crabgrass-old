@@ -23,6 +23,36 @@ Given /^#{capture_model} has a council$/ do |group|
   group.add_committee!(council, true)
 end
 
+Given /^#{capture_model} (?:has|have) proposed to destroy #{capture_model}$/ do |user, group|
+  user = model(user)
+  group = model(group)
+
+  RequestToDestroyOurGroup.create! :created_by => user, :recipient => group
+end
+
+When /^I wait 1 month$/ do
+  assert $browser.nil?, "Can not stub Time.now with browser javascript tests because the server is a separate process"
+
+  future_time = 1.month.from_now
+  Time.stubs(:now).returns(future_time)
+
+  Given "cron tasks have been executed"
+end
+
+When /^#{capture_model} (approve|reject)s? the proposal to destroy #{capture_model}$/ do |user, operation, group|
+  user = model(user)
+  group = model(group)
+
+  request = RequestToDestroyOurGroup.pending.for_group(group).last
+  assert request, "RequestToDestroyOurGroup has to exist to be approved or rejected"
+
+  # operation = :approve_by!
+  operation = (operation + "_by!").to_sym
+
+  request.send(operation, user)
+end
+
+
 
 
 

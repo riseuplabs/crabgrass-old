@@ -43,7 +43,7 @@ module GroupsHelper
                           :url => groups_url(:action => :destroy),
                           :method => :post})
     elsif may_create_destroy_request?
-      if RequestToDestroyOurGroup.for_group(@group).created_by(current_user).blank?
+      if RequestToDestroyOurGroup.pending.for_group(@group).created_by(current_user).blank?
         link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => @group.group_type),
                           {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => @group.group_type.downcase),
                             :ok => I18n.t(:delete_button),

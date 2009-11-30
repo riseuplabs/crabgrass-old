@@ -2,6 +2,9 @@ def delivered_emails
   ActionMailer::Base.deliveries
 end
 
+require 'mocha/standalone'
+include Mocha::Standalone
+
 require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
 
 require 'webrat'
@@ -20,4 +23,9 @@ Cucumber::Rails::World.use_transactional_fixtures = true
 Before do
   # set webrat host
   header "Host", @host
+  mocha_setup
+end
+
+After do
+  mocha_teardown
 end

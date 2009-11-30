@@ -4,6 +4,7 @@ Then /^I should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |fi
   found_matching = false
   values = []
   delivered_emails.each do |email|
+    # email.send(:subject)
     value = email.send(field.downcase.to_sym)
     values << value
 
@@ -14,7 +15,8 @@ Then /^I should receive an email with (\w+)(:|\s+containing) "([^\"]*)"$/ do |fi
     end
   end
 
-  assert found_matching, "Expected an email to have #{field}#{op} \"#{text}\". Instead found:\n#{values.join(',\n')}"
+  values = values.join("\n")
+  assert found_matching, "Expected an email to have #{field}#{op} \"#{text}\". Instead found #{field.pluralize}:\n#{values}\n"
 end
 
 Then /^I should receive an email with (\w+)(:|\s+containing) (.*) url$/ do |field, op, page_name|

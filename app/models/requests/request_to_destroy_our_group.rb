@@ -14,7 +14,10 @@ class RequestToDestroyOurGroup < Request
     { :conditions => {:recipient_id => group.id} }
   }
 
-  named_scope :voting_completed, :conditions => ["state = 'pending' AND created_at < ?", VOTE_DURATION.ago]
+  named_scope :voting_completed, lambda {
+    # use lamba here so that VOTE_DURATION.ago is evaluated freshly each time
+    {:conditions => ["state = 'pending' AND created_at <= ?", VOTE_DURATION.ago]}
+  }
 
   named_scope :unvoted_by_user, lambda { |user|
     {:include => :votes}
@@ -29,8 +32,6 @@ class RequestToDestroyOurGroup < Request
   def votable?
     true
   end
-
-
 
   def validate_on_create
     if RequestToDestroyOurGroup.for_group(group).created_by(created_by).find(:first)
@@ -78,7 +79,7 @@ class RequestToDestroyOurGroup < Request
   def description
     I18n.t(:request_to_destroy_our_group_description,
               :group => group_span(group),
-              :group_type => group_class(group),
+              :group_type => group.group_type,
               :user => user_span(created_by))
   end
 
@@ -105,7 +106,9 @@ class RequestToDestroyOurGroup < Request
     elsif reject_votes_count >= (group_members_count - 1)
       # we're near unanimous to reject destroying this group
       set_state!('rejected', created_by)
-    elsif created_at < 1.month.ago
+    elsif created_at < VOTE_DURATION.ago
+      # one months has passes, neither reject or approve is unanimous
+      # count the votes
       state = has_winning_majority?(approve_votes_count, reject_votes_count) ? 'approved' : 'rejected'
       set_state!(state, created_by)
     end
@@ -127,7 +130,10 @@ class RequestToDestroyOurGroup < Request
   end
 
   def has_winning_majority?(approve_votes, reject_votes)
-    # 2/3 majority from total voters is required to win
+    # 0 rejections are instant win
+    return true if reject_votes == 0
+
+    # 2/3 majority from total voters is required to win otherwise
     total_votes = approve_votes + reject_votes
     Rational(approve_votes, total_votes) >= Rational(2, 3)
   end

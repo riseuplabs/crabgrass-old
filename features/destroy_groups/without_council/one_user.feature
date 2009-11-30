@@ -22,5 +22,5 @@ Scenario: I can destroy the group
   And I should see "Group Destroyed"
   And that group should not exist
   And I should receive an email with subject: "Group Rainbow has been deleted by Blue!"
-  And I should receive an email with body containing the destroyed groups directory url
+  # And I should receive an email with body containing the destroyed groups directory url
 
