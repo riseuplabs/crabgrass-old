@@ -22,6 +22,9 @@
       %div#content
         %div#content-container
           %div#content-wrap
-            = yield
+            %aside#identity-info
+              = yield :sidebar
+            %div#main-content
+              = yield
       %footer.page
         footer
