@@ -1,14 +1,14 @@
 %section#titlebar
   %div#titlebar-container
     %div#title
-      %h2 Site Name
-      %div#search
-        %form
-          %input{:type=>'text'}
-          %input{:type=>'hidden'}
-          %button{:type=>'submit'}
-          %input{:type=>'checkbox'}
-          %span
+      %h2 RiseUp.net
+      %form#search
+        %fieldset
+          %input.text{:type=>'text'} 
+          %span.search-submit{:type=>'button'} Search
+        %div
+          %input.checkbox{:type=>'checkbox'}
+          %label.light-small
             Search this group only
 %nav.page
   %div#nav-container
@@ -25,17 +25,19 @@
         %li  
           %a{:href => "#"}  NETWORKS
       %ul#user
-        %li Welcome userName
+        %li.first 
+          Welcome
+          %strong Angus
         %li  
-          %a{:href => "#"}  inbox(4)
+          %a.small_icon.page_message_16{:href => "#"}  
+            %strong 4
         %li  
           %a{:href => "#"}  Help
         %li  
           %a{:href => "#"}  Sign Out
 %section#breadcrumb
   %div#breadcrumb-container
-    %ul
-      %li 
-        %a{:href => "#"}  Network
-      %li 
-        %a{:href => "#"}  Group Name 
+    %div
+      %a{:href => "#"}  Network
+      %span &raquo;
+      %a{:href => "#"}  Group Name 
