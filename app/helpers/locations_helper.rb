@@ -28,6 +28,21 @@ module LocationsHelper
     text_field(object, method, {:onblur => onblur})
   end
 
+  def city_id_field
+    html = ''
+    contents = ''
+    if @profile.city_id
+      contents << '<ul>'
+      contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' 'checked' />#{@profile.geo_city_name}</li>"
+      contents << '</ul>'
+      display = "inline"
+    else
+      display = "none"
+    end
+    html << "<div id='city_results' style='display:#{display}'>"
+    html << contents + "</div>"
+  end
+
   def select_search_countries(replace_id)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
@@ -35,7 +50,7 @@ module LocationsHelper
     )
     countries_with_groups = []
     @groups.each do |gr|
-      if gr.profile.geo_location
+      if gr.profile.geo_location.nil
         countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
       end
     end
