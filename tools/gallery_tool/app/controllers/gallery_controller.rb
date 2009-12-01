@@ -222,7 +222,7 @@ class GalleryController < BasePageController
     elsif request.post?
       params[:assets].each do |file|
         next if file.size == 0
-        asset = Asset.make(:uploaded_data => file)
+        asset = Asset.create_from_params(:uploaded_data => file)
         @page.add_image!(asset, current_user)
       end
       redirect_to page_url(@page)
@@ -287,7 +287,7 @@ class GalleryController < BasePageController
   end
 
   def build_asset_data(assets, file)
-    asset = Asset.make(:uploaded_data => file) do |asset|
+    asset = Asset.create_from_params(:uploaded_data => file) do |asset|
       asset.parent_page = @page
     end
     @assets << asset

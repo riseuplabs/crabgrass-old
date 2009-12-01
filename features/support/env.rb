@@ -48,4 +48,26 @@ Spork.each_run do
   end
 
   require File.expand_path(File.join(File.dirname(__FILE__), "paths"))
+
+  def disable_site_testing
+    Conf.disable_site_testing
+    Site.current = Site.new
+    @controller.disable_current_site if @controller
+  end
+
+  def enable_site_testing(site_name=nil)
+    if site=Site.find_by_name(site_name)
+      Conf.enable_site_testing(site)
+      Site.current = site
+    else
+      Conf.enable_site_testing()
+      Site.current = Site.new
+    end
+    @controller.enable_current_site if @controller
+  end
+
+  After { disable_site_testing }
+
 end
+
+
