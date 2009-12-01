@@ -1,6 +1,6 @@
 - if @announcements.any?
   %section#announcements
     %h3 
-      announcements
-      = link_to(I18n.t(:more), link_to_search_announcements())
+      = I18n.t(:announcements)
     = render :partial => '/layouts/base/announcement', :collection => @announcements
+
