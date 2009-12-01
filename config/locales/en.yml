@@ -378,7 +378,6 @@ en:
   activity_user_status: "{{user}} is now {{status}}"
   activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
   activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
-  activity_user_proposed_to_destroy_group: "{{user}} has proposed to destroy {{group_type}} {{group}}"
   activity_user_joined_site: "{user} has joined {group}"
   activity_user_destroyed: "{{user}} has retired"
   activity_group_created: "{{user}} created {{group_type}} {{group}}"
@@ -852,7 +851,16 @@ en:
   request_to_join_us_via_email_description: "{{email}} was invited to join {{group}}"
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
-  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group}}"
+  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group_type}} {{group}}"
+  request_to_destroy_our_group_email: |
+    The {{group_type}} '{{group}}' will be destroyed enough members approve this proposal.
+
+    If no one or one member rejects this proposal and all other members of the {{group}} it, then the {{group}} will get destroyed immediatelly.
+
+    If there are some approvals, then after one month votes will be tallied and the group will get destroyed if 2/3 or more of the votes are to approve.
+
+    Finally, for a group with a coordinating council, only the council members can vote on destroying the group.
+
   request_votes_tally_info: "{{approved_count}} voted to approve / {{rejected_count}} voted to reject"
 
   send_request_button: "Send Request"
@@ -1462,7 +1470,6 @@ en:
   group_destroyed_email: |-
     {{group_type}} {{group}} has been destroyed!
 
-    You can see all destroyed groups here: {{destroyed_group_directory_url}}
 
   ##
   ## PEOPLE (i.e., PeopleController)

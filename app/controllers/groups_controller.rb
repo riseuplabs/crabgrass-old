@@ -78,7 +78,6 @@ class GroupsController < Groups::BaseController
     end
 
     flash_message :success => true, :title => I18n.t(:group_destroyed_message, :group_type => @group.group_type)
-    Mailer.deliver_group_destroyed_notification(current_user, @group, mailer_options)
   end
 
   protected

@@ -1,6 +1,12 @@
 <%= I18n.t(:group_destroyed_email,
   :group_type => @group_type,
-  :group => @group,
-  :destroyed_group_directory_url => @destroyed_group_directory_url)
+  :group => @group)
 %>
 
+
+<% # TODO: keep destroyed groups in the directory
+  # I18n.t(:group_destroyed_email,
+  # :group_type => @group_type,
+  # :group => @group,
+  # :destroyed_group_directory_url => @destroyed_group_directory_url)
+%>
