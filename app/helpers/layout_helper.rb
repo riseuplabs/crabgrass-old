@@ -316,18 +316,20 @@ module LayoutHelper
   ##
   ## declare strings used for logins
   ##
-  def setup_login_context
-    strings = {
-      :login           => I18n.t(:login),
-      :username        => I18n.t(:username),
-      :password        => I18n.t(:password),
-      :forgot_password => I18n.t(:forgot_password_link),
-      :create_account  => I18n.t(:signup_link),
-      :redirect        => params[:redirect] || request.request_uri,
-      :token           => form_authenticity_token
-    } 
-    options = {
-      :may_signup => may_signup?
+  def login_context
+    @login_context ||={
+      :strings => {
+        :login           => I18n.t(:login),
+        :username        => I18n.t(:username),
+        :password        => I18n.t(:password),
+        :forgot_password => I18n.t(:forgot_password_link),
+        :create_account  => I18n.t(:signup_link),
+        :redirect        => params[:redirect] || request.request_uri,
+        :token           => form_authenticity_token
+      },
+      :options => {
+        :may_signup => may_signup?
+      }
     }
   end
 
