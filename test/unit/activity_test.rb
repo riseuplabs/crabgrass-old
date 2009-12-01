@@ -34,7 +34,7 @@ class ActivityTest < ActiveSupport::TestCase
 
     assert user.member_of?(group)
     groupname = group.name
-    group.destroy
+    group.destroy_by(user)
 
     acts = Activity.for_dashboard(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
