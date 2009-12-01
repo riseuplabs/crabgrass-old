@@ -1,10 +1,9 @@
-%section#group-name
-  %h1
+%section#identity-name
+  %h1 
     = @group.full_name
-  %section#group-action
+  %div#group-action
     - if may_join_chat?
-      = link_to(I18n.t(:group_join_chat), {:controller => 'chat', :action => 'channel', :id => @group.name})
-      
+      = link_to(I18n.t(:group_join_chat), {:controller => 'chat', :action => 'channel', :id => @group.name}, :class => 'chat small_icon chat2_16', :id => 'chat')
     %ul
       %li
         = edit_settings_link 
@@ -13,10 +12,11 @@
 
 %nav#group
   %ul
-    %li
+    %li.first.current
       = link_to(I18n.t(:home), url_for_group(@group))
     %li
       %a{:href => "#"}
         ALL CONTENT
     %li
       = link_to(I18n.t(:tasks), group_search_url(:action => 'tasks'))
+
