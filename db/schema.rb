@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091123094947) do
+ActiveRecord::Schema.define(:version => 20091124104449) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -492,6 +492,7 @@ ActiveRecord::Schema.define(:version => 20091123094947) do
     t.string   "type"
     t.boolean  "vetted",                      :default => false
     t.integer  "yuck_count",    :limit => 11, :default => 0
+    t.integer  "page_terms_id", :limit => 11
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
