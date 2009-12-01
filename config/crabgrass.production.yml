@@ -14,11 +14,11 @@
 ##
 
 enabled_languages:
-  - en_US
-  - es_ES
-  - pt_BR
-  - ar_EG
-  - fr_FR
+  - en
+  - es
+  - pt
+  - ar
+  - fr
 enabled_mods:
   - super_admin
   - student
