@@ -27,13 +27,13 @@ class AssetTest < Test::Unit::TestCase
 
   def test_simple_upload
    file_to_upload = upload_data('image.png')
-   @asset = Asset.make :uploaded_data => file_to_upload
+   @asset = Asset.create_from_params :uploaded_data => file_to_upload
    assert File.exists?( @asset.private_filename ), 'the private file should exist'
    assert read_file('image.png') == File.read(@asset.private_filename), 'full_filename should be the uploaded_data'
   end
 
   def test_paths
-    @asset = Asset.make :uploaded_data => upload_data('image.png')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
 
     assert_equal "%s/0000/%04d/image.png" % [@@private,@asset.id], @asset.private_filename
     assert_equal "%s/0000/%04d/image_small.png" % [@@private,@asset.id], @asset.private_thumbnail_filename(:small)
@@ -46,7 +46,7 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_single_table_inheritance
-    @asset = Asset.make :uploaded_data => upload_data('image.png')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
     assert_equal 'PngAsset', @asset.type, 'initial asset should be a png'
     assert_equal 'image/png', @asset.content_type, 'initial asset should be a png'
 
@@ -57,7 +57,7 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_versions
-    @asset = Asset.make :uploaded_data => upload_data('image.png')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('image.png')
     @id = @asset.id
     @filename_for_1 = @asset.private_filename
     assert_equal 1, @asset.version, 'should be on version 1'
@@ -130,7 +130,7 @@ class AssetTest < Test::Unit::TestCase
 
   def test_thumbnails
     start_thumb_count = Thumbnail.count
-    @asset = Asset.make :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     assert @asset.thumbdefs.any?, 'asset should have thumbdefs'
     assert @asset.thumbnails.any?, 'asset should have thumbnail objects'
 
@@ -164,7 +164,7 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_type_changes
-    @asset = Asset.make :uploaded_data => upload_data('bee.jpg')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('bee.jpg')
     assert_equal 'ImageAsset', @asset.type
     assert_equal 3, @asset.thumbnails.count
 
@@ -183,7 +183,7 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_dimensions
-    @asset = Asset.make :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     assert_equal 500, @asset.width, 'width must match file'
     assert_equal 321, @asset.height, 'height must match file'
     @asset.uploaded_data = upload_data('bee.jpg')
@@ -208,7 +208,7 @@ class AssetTest < Test::Unit::TestCase
       puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
-    @asset = Asset.make :uploaded_data => upload_data('msword.doc')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
 
@@ -220,14 +220,14 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_binary
-    @asset = Asset.make :uploaded_data => upload_data('raw_file.bin')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('raw_file.bin')
     assert_equal Asset, @asset.class, 'asset should be an Asset'
     assert_equal 'Asset', @asset.versions.earliest.versioned_type, 'version should by of type Asset'
   end
 
   def test_failure_on_corrupted_file
     Media::Process::Base.log_to_stdout_when = :never
-    @asset = Asset.make :uploaded_data => upload_data('corrupt.jpg')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('corrupt.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'
@@ -238,7 +238,7 @@ class AssetTest < Test::Unit::TestCase
   def test_failure
     Media::Process::Base.log_to_stdout_when = :never
     Media::Process::GraphicMagick.gm_override = "false" # the sh command, not the boolean value.
-    @asset = Asset.make :uploaded_data => upload_data('photo.jpg')
+    @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     @asset.generate_thumbnails
     @asset.thumbnails.each do |thumb|
       assert_equal true, thumb.failure?, 'generating the thumbnail should have failed'

@@ -130,22 +130,22 @@ class Activity < ActiveRecord::Base
   # show all activity for:
   #
   # (1) subject matches 'user'
-  #     (AND 'user' is friend of current_user) 
+  #     (AND 'user' is friend of current_user)
   #
   # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
   named_scope(:for_user, lambda do |user, current_user|
-    if (current_user and current_user.friend_of?(user) or current_user == user) 
+    if (current_user and current_user.friend_of?(user) or current_user == user)
       restricted = Activity::PRIVATE
-    elsif current_user and current_user.peer_of?(user) 
+    elsif current_user and current_user.peer_of?(user)
       restricted = Activity::DEFAULT
-    else 
+    else
       restricted = Activity::DEFAULT
     end
     {:conditions => [
       "subject_type = 'User' AND subject_id = ? AND access > ?",
-      user.id, restricted 
+      user.id, restricted
     ]}
   end)
 
@@ -194,23 +194,6 @@ class Activity < ActiveRecord::Base
       group.group_type.downcase
     elsif group_type = self.send(attribute.to_s + '_type')
       I18n.t(group_type.downcase.to_sym).downcase
-    end
-  end
-
-  ##
-  ## DYNAMIC MAGIC
-  ##
-
-  def self.alias_attr(new, old)
-    if self.method_defined? old
-      alias_method new, old
-      alias_method "#{new}=", "#{old}="
-      define_method("#{new}_id")   { read_attribute("#{old}_id") }
-      define_method("#{new}_name") { read_attribute("#{old}_name") }
-      define_method("#{new}_type") { read_attribute("#{old}_type") }
-    else
-      define_method(new) { read_attribute(old) }
-      define_method("#{new}=") { |value| write_attribute(old, value) }
     end
   end
 

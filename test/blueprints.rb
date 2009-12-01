@@ -23,13 +23,14 @@ Sham.email            { Faker::Internet.email }
 Sham.login            { Faker::Internet.user_name.gsub(/[^a-z]/, "") }
 Sham.display_name     { Faker::Name.name }
 Sham.summary          { Faker::Lorem.paragraph }
+Sham.caption          { Faker::Lorem.words(5).join(" ") }
 
 #
 # Site
 #
 Site.blueprint do
   # make sites available from functional tests
-  domain       "www.example.com"
+  domain       "test.host"
   email_sender "robot@$current_host"
 end
 
@@ -64,6 +65,7 @@ end
 Group.blueprint do
   full_name       { Sham.display_name }
   name            { full_name.gsub(/[^a-z]/,"") }
+  site            { Site.first || Site.make }
 end
 
 Committee.blueprint do
@@ -113,7 +115,7 @@ def Page.make_owned_by(attributes, machinist_attributes = {})
   page.reload
 end
 
-# By default we allways make pages with this blueprint owned by users
+# By default we always make pages with this blueprint owned by users
 # if you want make pages owned by groups or users with specific attributes
 # check out make_page_owned_by method
 def make_a_page
@@ -134,9 +136,46 @@ DiscussionPage.blueprint do
   make_a_page
 end
 
+Gallery.blueprint do
+  make_a_page
+end
+
+Showing.blueprint {}
+
 Page.blueprint do
   make_a_page
 end
+
+AssetPage.blueprint do
+  make_a_page
+end
+
+#
+# Asset
+#
+
+def make_an_asset
+  created_at    { created_date }
+  updated_at    { updated_date }
+  caption
+  version       { 1 }
+  parent_page   { AssetPage.make }
+end
+
+Asset.blueprint do
+  make_an_asset
+end
+
+ImageAsset.blueprint do
+  make_an_asset
+  content_type  { "image/jpeg" }
+  height        { 500 }
+  width         { 333 }
+  filename      { "bee.jpg" }
+  size          { 100266 }
+  is_image      { true }
+end
+
 
 #
 # UserParticipation
@@ -169,6 +208,8 @@ end
 RateManyPage.blueprint {}
 
 Poll.blueprint {}
+RankingPoll.blueprint {}
+RatingPoll.blueprint {}
 
 Discussion.blueprint {}
 

@@ -8,9 +8,9 @@
 
 <%= pagination_links(@incoming, :param_name => :in_page) %>
 
-<% unless params[:state] == 'ignored' -%>
-  <h2><%= I18n.t(:outgoing) %></h2>
-  <%= render :partial => 'groups/requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
 
-  <%= pagination_links(@outgoing, :param_name => :out_page) %>
-<% end -%>
+<h2><%= I18n.t(:outgoing) %></h2>
+<%= render :partial => 'groups/requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
+
+<%= pagination_links(@outgoing, :param_name => :out_page) %>
+
