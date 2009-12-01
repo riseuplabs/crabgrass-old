@@ -76,9 +76,10 @@ sites:
     admin_group: siteadminj8
     moderation_group: siteadminj8
     signup_mode: 2 # that is invite_only
-  - name: factsforlife
-    admin_group: siteadminffl
-    moderation_group: siteadminffl
+  - name: voiceofyouth
+    admin_group: siteadminvoy
+    moderation_group: siteadminvoy
+>>>>>>> 33018ef... add missing site config for voiceofyouth
 
 ##
 ## SITE DEFAULTS
