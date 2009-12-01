@@ -655,7 +655,7 @@ en:
   ##
   ## GROUPS
   ##
-
+  
   group_join_chat: "Join Chat"
   group_privacy_settings: '{{group}} Privacy Settings'
   group_publicly_visible: 'Make {{group}} Publicly Visible'
@@ -704,6 +704,7 @@ en:
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
   membership_leave_message: "You have been removed from {{group}}"
+  search_this_group: "Search this group only"
 
 
   # featured

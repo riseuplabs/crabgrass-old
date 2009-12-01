@@ -1,28 +1,20 @@
 %section#titlebar
-  %section#titlebar-container
-    %section#title
+  %div#titlebar-container
+    %div#title
       = custom_masthead_site_title
-      /%h2 Site Name sss
-      %section#search
-        = render :partial => '/pages/mini_search'
+      = render :partial => '/pages/mini_search'
 %nav.page
-  %section#nav-container
-    %section#nav
+  %div#nav-container
+    %div#nav
       = render :partial => '/layouts/base/menu'
       = render :partial => '/layouts/base/menu_user'
-
-//        %li Welcome userName
-//        %li  
-//          %a{:href => "#"}  inbox(4)
-//        %li  
-//          %a{:href => "#"}  Help
-//        %li  
-//          %a{:href => "#"}  Sign Out
-
-
 %section#breadcrumb
-  %section#breadcrumb-container
-    = link_to_breadcrumbs
+  %div#breadcrumb-container
+    %div
+      = link_to_breadcrumbs
+
+
+
 
 
 
