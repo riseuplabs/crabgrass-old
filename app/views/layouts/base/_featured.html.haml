@@ -1,12 +1,17 @@
--if action?(:show)
+- if action?(:show)
   - if @featured_pages.any? || may_edit_featured_pages?
     %h3 
       = I18n.t(:featured_content_header)
     %img{:src=>"/images/new_ui/image-198sq.png", :alt=>"featured title", :height=>"198px", :width=>"198px"}
-    %article
-      %h4 Crabgrass vs ThePoint
-      %p Dictum dictum justo eu peo lenta tesque, avec dictum dictum justo eu pelo lenta. Ut vulputate portaja aliquet. Traesent posuere nunc sed neque pharetra.
-      %ul.tags
-        %li tag name
-        %li tag name
-
+    - @featured_pages.each do |page|
+      %article
+        = display_page_cover(page)
+        %h4 
+          = link_to(page.title, page_url(page))
+        - if !page.summary.blank?
+          %p
+            = page.summary
+        %div.tags
+          - page_tags(page, false).each do |tag|
+            %li 
+              = tag

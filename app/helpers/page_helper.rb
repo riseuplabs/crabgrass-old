@@ -417,12 +417,13 @@ module PageHelper
     content_tag(:tr, html, :class => "page_info")
   end
 
-  def page_tags(page=@page, join="\n")
+  def page_tags(page=@page, join=nil)
+    join ||= "\n" if join.nil? 
     if page.tags.any?
       links = page.tags.collect do |tag|
         tag_link(tag, page.owner)
-      end.join(join)
-      links
+      end
+      links = (join != false) ? links.join(join) : links
     end
   end
 
