@@ -1,3 +1,4 @@
+---
 it:
   about_me: "Dico di me"
   accept_usage_agreement: "Accetto i termini di utilizzo"
@@ -33,7 +34,6 @@ it:
   add_tags: "Aggiungi Etichette"
   add_websites: "Aggiungi Siti Web"
   additional_page_access: "Accesso Addizionale"
-  admin: Amministratore
   administer_site: "Amministra Sito"
   administration: Amministrazione
   alert_error: Errore
@@ -55,8 +55,6 @@ it:
   announcement_page_description: "Un annuncio."
   announcement_page_display: Annuncio
   announcements: Annunci
-  approval_vote: "voto di approvazione"
-  approval_vote_class_description: "Approvazione o disapprovazione di ogni possibilità."
   approve: approva
   approve_button: approva
   approve_contact_info: "Esiste già una richiesta di contatto da questo utente. Vuoi approvarla?"
@@ -84,8 +82,8 @@ it:
   category: Categoria
   check_all: "Seleziona tutto"
   close_button: Chiudi
-  collection: collezione
   collection_class_description: "Pagine speciali che contengono altre pagine."
+  collection_page_display: collezione
   committee: comitato
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
   committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo {{domain}}/nomedeltuogruppo"
@@ -105,7 +103,7 @@ it:
   coordinator_help: "L'accesso di <b>Coordinatore</b> ti permetterà un accesso privo di restrizioni a questa pagina (inclusi cancellazione e condivisione)."
   coordinators: Coordinatori
   council: Consiglio
-  council_help: "Se questo gruppo ha un consiglio di coordinazione, allora solamente un membro di quel consiglio può amministrare il gruppo. Altrimenti, qualsiasi membro del gruppo può farlo."
+  council_help_text: "Se questo gruppo ha un consiglio di coordinazione, allora solamente un membro di quel consiglio può amministrare il gruppo. Altrimenti, qualsiasi membro del gruppo può farlo."
   councils: Consigli
   create_a_group: "Crea un Gruppo"
   create_a_new_thing: "Crea un nuovo {{thing}}"
@@ -144,10 +142,6 @@ it:
   date_yesterday: Ieri
   delete: Elimina
   delete_page_link: "Elimina {{page_class}}"
-  delete_page_via_shred: "Distruggi Immediatamente"
-  delete_page_via_shred_info: "Questo distruggerà definitivamente la pagina. Questa azione non può essere annullata."
-  delete_page_via_trash: "Sposta nel Cestino"
-  delete_page_via_trash_info: "Quest sposterà la pagina nel cestino, da dove potrà eventualmente essere recuperata successivamente."
   delete_post: "Elimina Post"
   delete_this_version: "cancella questa versione"
   delete_version_confirm: "Sei sicuro/a di voler eliminare questa versione?"
@@ -157,6 +151,10 @@ it:
   destroy: distruggi
   destroy_confirmation: "Sei sicuro che vuoi cancellare questo {{thing}}? Questa azione non può essere annullata."
   destroy_group_link: "distruggi {{group_type}}"
+  destroy_page_via_shred: "Distruggi Immediatamente"
+  destroy_page_via_shred_info: "Questo distruggerà definitivamente la pagina. Questa azione non può essere annullata."
+  destroy_page_via_trash: "Sposta nel Cestino"
+  destroy_page_via_trash_info: "Quest sposterà la pagina nel cestino, da dove potrà eventualmente essere recuperata successivamente."
   details_link: Dettagli
   diff_link: diff
   directory_of_groups: "Elenco dei gruppi"
@@ -176,8 +174,8 @@ it:
   edit_appearance: "Modifica Aspetto"
   edit_attachments: "Modifica allegati"
   edit_attachments_link: Modifica
-  edit_featured_content: "modifica contenuti in evidenza"
   edit_featured_content_for_group: "Modifica Contenuti in Evidenza per {{group_name}}"
+  edit_featured_content_link: "modifica contenuti in evidenza"
   edit_gallery: "Modifica Galleria"
   edit_profile_link: "Modifica Profilo"
   edit_settings: "modifica impostazioni"
@@ -229,14 +227,13 @@ it:
   gallery_class_description: "Una collezione di immagini."
   gallery_description: "Carica immagini multiple o organizza le immagini esistenti in una raccolta."
   gallery_display: galleria
+  gallery_undo_link: annulla
   general_info: "Informazioni Generali"
   grant_access: "Permetti Accesso"
   group: Gruppo
   group_administration_not_allowed: "Non puoi amministrare questo gruppo."
   group_directory: "Elenco dei Gruppi"
   group_directory_link: "Elenco dei gruppi"
-  group_discussion: "discussione di gruppo"
-  group_discussion_class_description: "Una discussione di gruppo su un particolare argomento."
   group_has_no_public_profile: "Questo gruppo non ha un profilo pubblico."
   group_home_headline: "Pagina iniziale {{group_type}}"
   group_home_welcome: Benvenut*
@@ -301,7 +298,6 @@ it:
   invite_accept_via_register: "Devo creare un nuovo account"
   invite_info: "Inserisci una lista di nomi utente o di indirizzi e-mail di persone che vorresti invitare in questo {{group_type}}."
   invite_not_found: "Invito non trovato"
-  join_chat: "entra in chat"
   join_group_link: "Entra in {{group_type}}"
   join_group_success: "Sei entrat* nel gruppo {{group_name}}"
   join_request_info: "Non diventerai un membro di questo gruppo fino a che la tua richiesta non sarà stata approvata. Puoi controllare lo stato delle tue richieste visitando \"{{my_requests_url}}\"."
@@ -333,7 +329,6 @@ it:
   login_password: Password
   login_required: "Accesso Richiesto"
   login_required_description: "Devi effettuare l'accesso prima di compiere questa azione."
-  logout: Disconnetti
   logout_success: Arrivederci
   logout_success_message: "Disconnessione effettuata con successo."
   make_album_cover: "rendi questa immagine la copertina dell'album"
@@ -359,6 +354,7 @@ it:
   member_groups_of_network: "Gruppi Membri"
   members: Membri
   membership: Iscrizione
+  menu_admin: Amministratore
   menu_chat: Chat
   menu_groups: Gruppi
   menu_home: "Pagina iniziale"
@@ -418,8 +414,8 @@ it:
   my_world_heading: "Il Mio Mondo"
   name: Nome
   network: Rete
-  network_aettings: "Impostazioni Rete"
   network_invite_info: "Inserisci i nomi dei gruppi che vorresti invitare in questa rete."
+  network_settings: "Impostazioni Rete"
   networks: reti
   new_council: "Nuovo consiglio per il gruppo {{group_name}}"
   new_group: "Nuovo gruppo"
@@ -520,8 +516,6 @@ it:
   permissions: Permessi
   personal: Personale
   personal_interests: "Interessi Personali"
-  personal_message: "messaggio personale"
-  personal_message_class_description: "Un messaggio personale inviato a diversi destinatari."
   phone_numbers: "Numeri di Telefono"
   photo: Foto
   photo_credit: "Crediti Foto"
@@ -595,8 +589,8 @@ it:
   requests_from_me: "Richieste da me"
   requests_to_me: "Richieste da me"
   reset_password: "Reimposta Password"
+  reset_password_email_sent: "Ti è stata inviata un'email contenente le istruzioni per reimpostare la tua password."
   reset_password_mail_greeting: "{{user}}, la tua password è stata reimpostata come hai richiesto."
-  reset_password_mail_sent: "Ti è stata inviata un'email contenente le istruzioni per reimpostare la tua password."
   reset_password_mail_warning: "Se non hai richiesto che la tua password fosse cambiata, contattaci."
   reset_password_text: "Ciao, {{user}}. Se hai dimenticato la password che uso per effettuare l'accesso, puoi impostarne una nuova qui."
   rss_feed: "Feed RSS"
@@ -636,7 +630,7 @@ it:
   subject: oggetto
   subject_must_not_be_empty: "l'oggetto non deve essere vuoto"
   successful_undelete_image: "Imagine recuperata con successo."
-  sucessfully_removed_image: "Immagine rimossa con successo! ({{undo_link}})"
+  successfully_removed_image: "Immagine rimossa con successo! ({{undo_link}})"
   summary: Sommario
   sunday: Domenica
   tags: Tag
@@ -650,7 +644,6 @@ it:
   try_again: "Prova di nuovo"
   tuesday: Martedì
   type_your_messages_here: "Inserisci qui il tuo messaggio e premi invio..."
-  undo: annulla
   unfeature_button: "Togli da In Evidenza!"
   unknown: sconosciuto
   unread: "non letti"
@@ -662,8 +655,6 @@ it:
   version_doesnt_exist: "Non esiste la versione {{version}}"
   version_number: "versione {{version}}"
   versions: versioni
-  video: video
-  video_class_description: "Mostra un video ospitato su un sito esterno"
   video_embed_code_prompt: "Inserisci il codice per il video esterno"
   video_service_is_not_supported: "non è supportato (al momento sono supportati solamente YouTube, Google Video, blip.tv e vimeo)"
   view_all: "vedi tutti"
@@ -700,5 +691,4 @@ it:
   work: Lavoro
   work_life: "Vita Lavorativa"
   you_are_viewing_version: "Stai vedendo la versione {{version}} di {{user}}"
-  you_have_no_groups: "Non sei membro di alcun gruppo"
   your_login: "Il tuo login"

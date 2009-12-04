@@ -1,3 +1,4 @@
+---
 ru:
   about_me: "Обо мне"
   accept_usage_agreement: "Я принимаю условия пользовательского соглашения"
@@ -33,7 +34,6 @@ ru:
   add_tags: "Добавить метки"
   add_websites: "Добавить web-сайты"
   additional_page_access: "Дополнительный доступ"
-  admin: Администрирование
   administer_site: "Управление сайтом"
   administration: Администрирование
   alert_error: Ошибка
@@ -55,8 +55,6 @@ ru:
   announcement_page_description: Извещение.
   announcement_page_display: Извещение.
   announcements: Объявления
-  approval_vote: "голосование за одобрение"
-  approval_vote_class_description: "Одобрить, или отвергнуть каждый из вариантов."
   approve: одобрить
   approve_button: Одобрить
   approve_contact_info: "Запрос на знакомство от этого пользователя уже существует. Хотите одобрить его?"
@@ -82,8 +80,8 @@ ru:
   category: Категория
   check_all: "Отметить всё"
   close_button: Закрыть
-  collection: коллекция
   collection_class_description: "Особые страницы, которые содержат другие страницы."
+  collection_page_display: коллекция
   committee: комитет
   committee_publicly_visible: "Сделать комитеты видимыми для всех"
   committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {{domain}}/yourgroupname"
@@ -103,7 +101,7 @@ ru:
   coordinator_help: "<b>Координаторский</b> доступ даёт неограниченный доступ к этой странице (включая удаление и предоставление доступа)."
   coordinators: Координаторы
   council: Совет
-  council_help: "Есди эта группа имеет координационный совет, только члены этого совета могут администрировать группу. В противном случае, любой член группы может делать это. "
+  council_help_text: "Есди эта группа имеет координационный совет, только члены этого совета могут администрировать группу. В противном случае, любой член группы может делать это. "
   councils: Советы
   create_a_group: "Создать группу"
   create_a_new_thing: "Создать {{thing}}"
@@ -142,10 +140,6 @@ ru:
   date_yesterday: Вчера
   delete: Удалить
   delete_page_link: "Удалить {{page_class}}"
-  delete_page_via_shred: "Уничтожить незамедлительно"
-  delete_page_via_shred_info: "Страница будет удалена необратимо. Это действие нельзя откатить."
-  delete_page_via_trash: "Отправить в корзину"
-  delete_page_via_trash_info: "Страница будет перемещена в корзину, откуда её можно будет восстановить впоследствии."
   delete_post: "Удалить сообщение"
   delete_this_version: "удалить эту версию"
   delete_version_confirm: "Вы действительно хотите удалить эту версию?"
@@ -155,12 +149,17 @@ ru:
   destroy: ликвидировать
   destroy_confirmation: "Вы уверены, что хотите удалить {{thing}}? Это действие нельзя откатить."
   destroy_group_link: "ликвидировать {{group_type}}"
+  destroy_page_via_shred: "Уничтожить незамедлительно"
+  destroy_page_via_shred_info: "Страница будет удалена необратимо. Это действие нельзя откатить."
+  destroy_page_via_trash: "Отправить в корзину"
+  destroy_page_via_trash_info: "Страница будет перемещена в корзину, откуда её можно будет восстановить впоследствии."
   details_link: Подробнее
   diff_link: различия
   directory_of_groups: "Каталог групп"
   directory_of_networks: "Каталог сетей"
   directory_of_people: "Каталог людей"
   discuss_request_link: "обсудить этот запрос с {{person_or_group}}"
+  discussion_page_description: "Групповое обсуждение отдельного вопроса."
   discussion_page_display: "Обсуждение группой"
   discussions: Обсуждения
   display_name: "Отображаемое имя"
@@ -173,8 +172,8 @@ ru:
   edit_appearance: "Редактировать внешний вид"
   edit_attachments: "Редактировать вложения"
   edit_attachments_link: Редактировать
-  edit_featured_content: "редактировать основное содержимое"
   edit_featured_content_for_group: "Редактировать основное содержимое для {{group_name}}"
+  edit_featured_content_link: "редактировать основное содержимое"
   edit_gallery: "Редактировать галерею"
   edit_profile_link: "Редактировать профиль"
   edit_settings: "редактировать настройки"
@@ -191,6 +190,7 @@ ru:
   email_notice_subject: "Проверьте страницу \"{{title}}\""
   empty_results: "Ничего нет"
   error_saving_new_order: "Ошибка при сохранении нового расположения!"
+  external_video_page_description: "Показать видео, размещённое на внешнем веб-узле."
   fax: Факс
   feature_button: Функция!
   featured_content: "Основной материал"
@@ -223,14 +223,13 @@ ru:
   gallery_class_description: "Коллекция изображений."
   gallery_description: "Загрузить множество изображений, или упорядочить имеющиеся изображения в набор."
   gallery_display: галерея
+  gallery_undo_link: отменить
   general_info: "Общая информация"
   grant_access: "Разрешить доступ"
   group: Группа
   group_administration_not_allowed: "Вы не можете управлять этой группой."
   group_directory: "Каталог групп"
   group_directory_link: "Список группы"
-  group_discussion: "групповое обсуждение"
-  group_discussion_class_description: "Групповое обсуждение отдельного вопроса."
   group_has_no_public_profile: "Для данной группы отсутствует общедоступный профиль."
   group_home_headline: "Домашняя страница {{group_type}}"
   group_home_welcome: "Добро пожаловать"
@@ -285,7 +284,6 @@ ru:
   invite_accept_via_register: "Мне надо зарегистрировать новый аккаунт"
   invite_info: "Введите список авторизационных имён пользователей, или адресов электронной почты людей, которых вы хотите  пригласить для присоединения к это(му/той) {{group_type}}."
   invite_not_found: "Приглашение не найдено"
-  join_chat: "войти в чат"
   join_group_link: "Вступить в {{group_type}}"
   join_group_success: "Вы вступили в группу {{group_name}}"
   join_request_info: "Вы не станете членом этой группы до тех пор, пока Ваш запрос не будет одобрен. Вы можете отслеживать статус Ваш запросов, посещая \"{{my_requests_url}}\"."
@@ -317,7 +315,6 @@ ru:
   login_password: Пароль
   login_required: "Необходимо войти"
   login_required_description: "Пожалуйста, войдите, чтобы произвести это действие. "
-  logout: Выйти
   logout_success: "До свидания"
   logout_success_message: "Вы вышли из системы."
   make_album_cover: "Сделать это изображение обложкой альбома"
@@ -342,6 +339,7 @@ ru:
   medium: средний
   members: Участники
   membership: Членство
+  menu_admin: Администрирование
   menu_chat: Чат
   menu_groups: Группы
   menu_home: Домой
@@ -401,8 +399,8 @@ ru:
   my_world_heading: "Мой мир"
   name: Имя
   network: сеть
-  network_aettings: "Настройки сети"
   network_invite_info: "Введите имена групп, которым вы хотите предложить присоединиться к данной сети. "
+  network_settings: "Настройки сети"
   networks: Сети
   new_council: "Новый консул для группы {{group_name}}"
   new_group: "Новая группа"
@@ -481,8 +479,6 @@ ru:
   permissions: Разрешения
   personal: Личное
   personal_interests: "Личные интересы"
-  personal_message: "личное сообщение"
-  personal_message_class_description: "Личное сообщение было отправлено индивидуальным получателям."
   phone_numbers: "Телефонные номера"
   photo: Фотография
   post_message: "Отправить сообщение"
@@ -509,6 +505,8 @@ ru:
   public: Публичный
   public_key: "Открытый ключ"
   public_profile: "Публичный профиль"
+  rate_many_page_description: "Одобрить, или отвергнуть каждый из вариантов."
+  rate_many_page_display: "голосование за одобрение"
   recent_activity: "Недавняя деятельность"
   recent_pages: "Свежие страницы"
   recipient_tip: "Разделяйте получателей запятыми, пробелами или переводами строки."
@@ -539,15 +537,15 @@ ru:
   requests_from_me: "Запросы от меня"
   requests_to_me: "Запросы мне"
   reset_password: "Смена пароля"
+  reset_password_email_sent: "Было отправлено электронное письмо, содержащее инструкции по смене Вашего пароля. "
   reset_password_mail_greeting: "{{user}}, по Вашему запросу пароль был изменён."
-  reset_password_mail_sent: "Было отправлено электронное письмо, содержащее инструкции по смене Вашего пароля. "
   reset_password_mail_warning: "Если Вы не запрашивали изменение этого пароля, свяжитесь с нами, пожалуйста. "
   reset_password_text: "Здравствуйте, {{user}}. Если Вы забыли пароль, используемый для авторизации, здесь Вы можете установить новый. "
   rss_feed: RSS-канал
   saturday: Суббота
   save_button: Сохранить
   save_changes: "Сохранить изменения"
-  save_survey: "Сохранить опрос"
+  save_survey_button: "Сохранить опрос"
   saved_new_order: "Новый порядок сохранён! "
   saving_your_changes: "Сохранение Ваших изменений..."
   school: Школьный
@@ -567,7 +565,6 @@ ru:
   settings: Настройки
   share: Поделиться
   share_button: Поделиться
-  share_link: "Поделиться {{page_class}}"
   share_page_email: "Отправить уведомление по email"
   share_page_link: "Поделиться {{page_class}}"
   share_page_message: "Отправить сообщение (опционально)"
@@ -597,25 +594,25 @@ ru:
   subject: тема
   subject_must_not_be_empty: "тема не должна быть пустой"
   successful_undelete_image: "Изображение успешно восстановлено."
-  sucessfully_removed_image: "Изображение успешно удалено! ({{undo_link}})"
+  successfully_removed_image: "Изображение успешно удалено! ({{undo_link}})"
   summary: Сводка
   sunday: Воскресенье
-  survey_design: "Разработать опрос"
-  survey_list_all: "Перечислить все ответы"
+  survey_edit_tab: "Разработать опрос"
+  survey_list_all_tab: "Перечислить все ответы"
   survey_may_rate: "Можно ли оценивать ответы?"
   survey_may_see_ratings: "Можно ли видеть оценки?"
   survey_may_see_responses: "Можно ли видеть ответы?"
-  survey_my_response: "Мой ответ"
+  survey_my_response_tab: "Мой ответ"
   survey_page_description: "Создайте последовательность вопросов, на которые люди должны будут ответить."
   survey_page_display: Опрос
   survey_questions: Вопросы
-  survey_rate_responses: "Оценить ответы"
-  survey_rate_this_response: "Оценить этот ответ"
+  survey_rate_responses_tab: "Оценить ответы"
+  survey_rate_this_response_heading: "Оценить этот ответ"
   survey_rating_enabled: "Разрешить оценку ответов?"
   survey_response_by: "Ответ от {{login}}"
   survey_responses_enabled: "Разрешить новые ответы? Если отмечено, люди смогут принять участие в опросе. Снимите отметку, чтобы закрыть опрос."
-  survey_take: "Принять участие в опросе"
-  survey_your_rating_of_this_response: "Ваша оценка этого ответа"
+  survey_take_tab: "Принять участие в опросе"
+  survey_your_rating_heading: "Ваша оценка этого ответа"
   tags: Метки
   task_list_page_description: "Список пунктов для выполнения."
   task_list_page_display: "список задач"
@@ -631,13 +628,11 @@ ru:
   try_again: "Попробовать ещё"
   tuesday: Вторник
   type_your_messages_here: "Напечатайте здесь своё сообщение и нажмите «enter»..."
-  undo: отменить
   unread: непрочитанные
   updated: обновлено
-  upload_attachment: "Загрузить вложенный файл"
   upload_file_help: "Помощь в загрузке файлов"
   upload_image: "Загрузить изображение"
-  upload_images: Загрузить
+  upload_images_link: Загрузить
   upload_new_image: "загрузить новое изображение"
   uploaded_image_cropped: "Загруженное изображение будет обрезано и растянуто до квадрата со стороной 96 пикселов."
   usage_agreement_heading: "Пользовательское соглашение"
@@ -655,8 +650,6 @@ ru:
   version_doesnt_exist: "Версии с номером {{version}} не существует"
   version_number: "версия {{version}}"
   versions: версии
-  video: видео
-  video_class_description: "Показать видео, размещённое на внешнем веб-узле."
   video_embed: Встроить
   video_embed_code_prompt: "Код для вставки видео из внешних источников"
   video_service_is_not_supported: "не поддерживается (в настоящее время только youtube, google video, blip.tv и vimeo)"
@@ -692,5 +685,4 @@ ru:
   you_are_not_member_of_any_group: "Вы не являетесь членом какой-либо группы. "
   you_are_viewing_version: "Вы просматриваете версию {{version}} от пользователя {{user}}"
   you_have_no_contacts: "У вас нет контактов"
-  you_have_no_groups: "Вы не принадлежите ни к одной из групп"
   your_login: "Ваше имя пользователя"
