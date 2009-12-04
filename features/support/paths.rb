@@ -16,6 +16,8 @@ module NavigationHelpers
       login_path
     when /my dashboard page/
       '/me/dashboard'
+    when /my work page/
+      '/me/work'
     when /my requests page/
       '/me/requests/to_me'
     when /the destroyed groups directory/
