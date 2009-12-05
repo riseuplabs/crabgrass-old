@@ -11,7 +11,7 @@
   <td valign='top' style='padding-left: 10px'>
   <%= link_to_function(I18n.t(:upload_image_link), "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
   <%= link_to_remote_with_icon(I18n.t(:remove_image_link), {
-    :url => avatar_url,
+    :url => my_avatar_url,
     :method => :delete,
     :update=>'user_avatar',
     :complete => "$('remove_image_link').hide()",
@@ -31,7 +31,7 @@
   </div>
   </td></tr></table>
 
-  <% form_tag(me_url(:action => 'edit')) do -%>
+  <% form_tag(me_url, :method => :put) do -%>
     <%= render :partial => 'form' %>
     <p class="form_buttons">
       <%= submit_tag I18n.t(:save_changes) %>
