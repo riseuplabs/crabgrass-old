@@ -61,10 +61,10 @@ ActionController::Routing::Routes.draw do |map|
     # This should only be index. However ajax calls seem to post not get...
     me.resources :flag_counts, :only => [:index, :create]
     me.resources :recent_pages, :only => [:index, :create]
-    me.resource :avatar, :only => :delete
+    me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
   end
 
-  map.connect 'me/:action/:id',             :controller => 'me'
+  map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
 
   ##
   ## PEOPLE

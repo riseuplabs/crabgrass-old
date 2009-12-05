@@ -159,11 +159,7 @@ module UrlHelper
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
-      if arg and arg.avatar
-        url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      else
-        url = avatar_url(:id => 0, :size => options[:avatar])
-      end
+      url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
     avatar + link_to(label, path, :class => klass, :style => style)
@@ -290,7 +286,7 @@ module UrlHelper
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
-      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
     avatar + link_to(label, path, :class => klass, :style => style)
@@ -351,7 +347,7 @@ module UrlHelper
     end
 
     if options[:avatar]
-      url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
+      url = avatar_url_for(entity, options[:avatar])
       options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
       options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
     end
