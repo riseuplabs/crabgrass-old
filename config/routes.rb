@@ -52,11 +52,16 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
+  map.connect 'me/work/*path',              :controller => 'me/work'
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
     me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
     me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+    # This should only be index. However ajax calls seem to post not get...
+    me.resources :flag_counts, :only => [:index, :create]
+    me.resources :recent_pages, :only => [:index, :create]
+    me.resource :avatar, :only => :delete
   end
 
   map.connect 'me/:action/:id',             :controller => 'me'
@@ -101,7 +106,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
-  
+
   map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
