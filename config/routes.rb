@@ -56,15 +56,14 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :messages, { :collection => { :mark => :put },
                             :member => { :next => :get, :previous => :get }} do |message|
     message.resources :posts, :namespace => 'message_'
+
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    # This should only be index. However ajax calls seem to post not get...
+    me.resources :flag_counts, :only => [:index, :create]
+    me.resources :recent_pages, :only => [:index, :create]
+    me.resource :avatar, :only => :delete
   end
-
-
-  # me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
-  map.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages',
-                    :namespace => 'me/', :path_prefix => 'me'
-
-    # me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
-  # end
 
   map.connect 'me/:action/:id',             :controller => 'me'
 

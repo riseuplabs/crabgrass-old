@@ -16,24 +16,6 @@ class MeController < Me::BaseController
     end
   end
 
-  def counts
-    return false unless request.xhr?
-    @from_me_count = 0 #Request.created_by(current_user).pending.count
-    @to_me_count   = Request.to_user(current_user).pending.count
-    @unread_count  = Page.count_by_path('unread',  options_for_inbox(:do => { :what => { :we =>  :want}}))
-    render :layout => false
-  end
-
-  def delete_avatar
-    @user.kill_avatar
-    render :text => avatar_for(@user,"x-large")
-  end
-
-  def recent_pages
-    return false unless request.xhr?
-    @recent_pages_list = current_user.pages.recent_pages
-  end
-
   protected
 
   def context
