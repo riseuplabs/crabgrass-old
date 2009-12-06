@@ -318,6 +318,24 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   #--
+  ## VIEWS
+  #++
+
+  # my work contains
+  # * pages i own
+  # * pages i contributed to
+  # * pages i am watching
+  def filter_work(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << <<EOSQL
+    ((pages.owner_type = 'User' AND pages.owner_id = #{user_id}) OR
+    (user_participations.changed_at IS NOT NULL) OR
+    (user_participations.watch))
+EOSQL
+  end
+
+  #--
   ## MODERATION
   #++
 

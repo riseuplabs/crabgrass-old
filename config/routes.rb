@@ -52,19 +52,20 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
-  map.connect 'me/work/*path',              :controller => 'me/work'
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
     me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
     me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
     # This should only be index. However ajax calls seem to post not get...
-    me.resources :flag_counts, :only => [:index, :create]
-    me.resources :recent_pages, :only => [:index, :create]
+    me.resource :flag_counts, :only => [:show, :create]
+    me.resource :recent_pages, :only => [:show, :create]
     me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
   end
 
-  map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
+  map.resource :me, :only => [:show, :edit, :update], :controller => 'me' do |me|
+    me.resource :work, :only => :show, :controller => 'me/work'
+  end
 
   ##
   ## PEOPLE
@@ -91,7 +92,10 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
-  map.resources :pages, :only => :new
+  # :create is used for search -> think: create a new view on pages.
+  map.resources :pages, :only => [:new, :create]
+  map.connect '/pages/*path', :controller => 'pages'
+
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
   #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
