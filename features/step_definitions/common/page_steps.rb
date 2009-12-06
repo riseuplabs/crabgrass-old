@@ -29,5 +29,6 @@ Given /^#{capture_model} owns #{capture_model}$/ do |owner, page|
   owner = model(owner)
   page = model(page)
   page.owner=owner
+  page.save
 end
 
