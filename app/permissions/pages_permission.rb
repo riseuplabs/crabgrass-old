@@ -3,6 +3,10 @@ module PagesPermission
     logged_in?
   end
 
+  def may_new_pages?
+    logged_in?
+  end
+
   alias_method :may_create_wiki_pages?, :may_create_pages?
 
   def may_search_pages?

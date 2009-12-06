@@ -555,17 +555,13 @@ module PageHelper
 
   def create_page_link(group=nil, options={})
     if may_create_group_page?
-      url = {:controller => '/pages', :action => 'create'}
+      url = new_page_url
       if group
-        url[:group] = group.name
+        url = new_group_page_url(group)      url = {:controller => '/pages', :action => 'create'}
       end
-      #  icon = 'page_add'
-      #  text = I18n.t(:contribute_group_content_link, :group_name => group.group_type.titlecase)
-      #  klass = 'contribute group_contribute'
       icon = 'cross'
       text = I18n.t(:contribute_content_link).upcase
       klass = options[:class] || 'contribute'
-      #klass = 'contribute' if options[:create_page_bubble]
 
       content_tag(:div,
         content_tag(:span,

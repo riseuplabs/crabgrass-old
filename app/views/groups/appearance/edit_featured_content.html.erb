@@ -1,4 +1,4 @@
-<%= link_to I18n.t(:back_to_group, :group_name => @group.display_name), group_url(:action => 'show', :id => @group)%>
+<%= link_to I18n.t(:back_to_group, :group_name => @group.display_name), group_url(@group)%>
 
 <h2 class="section">
   <%= I18n.t(:edit_featured_content_for_group, :group_name => @group.display_name) %>
