@@ -491,9 +491,9 @@ module PageHelper
   end
 
   def create_page_link(group=nil, options={})
-    url = {:controller => '/pages', :action => 'create'}
+    url = new_page_url
     if group
-      url[:group] = group.name
+      url = new_group_page_url(group)
     end
     #  icon = 'page_add'
     #  text = I18n.t(:contribute_group_content_link, :group_name => group.group_type.titlecase)

@@ -11,10 +11,10 @@ class MeController < Me::BaseController
   def update
     if @user.update_attributes(params[:user])
       flash_message :success => 'Your profile was successfully updated.'
-      redirect_to edit_me_url
     else
       flash_message_now :object => @user
     end
+    redirect_to edit_me_url
   end
 
   protected

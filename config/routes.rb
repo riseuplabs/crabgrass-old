@@ -91,6 +91,7 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
+  map.resources :pages, :only => :new
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
   #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
@@ -116,10 +117,18 @@ ActionController::Routing::Routes.draw do |map|
   map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
-  map.groups 'groups/:action/:id', :controller => 'groups'
+  map.resources :groups do |group|
+    group.resources :pages, :only => :new
+  end
+
+  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
 
-  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.resources :networks do |network|
+    network.resources :pages, :only => :new
+  end
+
+  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##

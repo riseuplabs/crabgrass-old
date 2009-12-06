@@ -1,6 +1,6 @@
 <% if may_create_council? && @group.council_id.nil? %>
 <p>
-  <%= link_to I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), :controller => 'groups', :action => 'create', :id => 'council', :parent_id => @group.id %>
+  <%= link_to I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), new_group_council(@group) %>
 </p>
 <% end %>
 

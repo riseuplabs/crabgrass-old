@@ -17,7 +17,7 @@
       <% grouping[:pages].collect do |page_class| %>
         <% link_text = [content_tag(:b, page_class.class_display_name, :class =>  "small_icon #{page_class.icon}_16"), '<br/>', page_class.class_description].join %>
         <div class="hover">
-          <%= link_to(link_text, {:controller => page_class.controller, :action => 'create', :id => page_class.url, :group => params[:group]}) %>
+          <%= link_to(link_text, {:controller => page_class.controller, :action => 'create', :id => page_class.url, :group => @group.try.name}) %>
         </div>
       <% end %>
     <% end %>
