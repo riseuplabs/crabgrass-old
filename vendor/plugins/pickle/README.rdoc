@@ -11,6 +11,8 @@ building complex givens which require a bunch of models collaborating
 
 <b>Github</b> for code: http://github.com/ianwhite/pickle
 
+<b>Gemcutter</b> for the gem: http://gemcutter.org/gems/pickle
+
 <b>API</b> docs: http://ianwhite.github.com/pickle/doc
 
 <b>Google group</b> for questions: http://groups.google.com/group/pickle-cucumber
@@ -29,7 +31,7 @@ Install pickle either as a rails plugin, or a gem
   sudo gem install pickle
 
   # gem dependency (in config/environments/cucumber.rb)
-  gem 'pickle'
+  config.gem 'pickle'
 
   # plugin
   script/plugin install git://github.com/ianwhite/pickle.git
@@ -103,7 +105,9 @@ If that doesn't solve loading issues then require your factories.rb file directl
 
 You can tell pickle to use another factory adapter (see Pickle::Adapter), or
 create mappings from english expressions to pickle model names.  You can also
-override many of the options on the Pickle::Config object if you so choose
+override many of the options on the Pickle::Config object if you so choose.
+
+In: <tt>features/support/pickle.rb</tt>
 
   require 'pickle/world'
 
