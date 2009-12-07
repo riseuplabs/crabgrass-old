@@ -13,6 +13,13 @@ class UiController < ApplicationController
   #stylesheet 'gallery'
   #stylesheet 'contribute'
 
+  #
+  # this action uses a layout without sidebar container
+  #
+  def login
+    render :action => 'login', :layout => 'ui_no_sidebar'
+  end
+
   def profile
   end
 
