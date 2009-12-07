@@ -12,6 +12,10 @@ module ScopeHelpers
       '.info_box'
     when /the page sidebar/
       '#page_sidebar'
+    when /#{capture_model}(?:'s)? row/
+      thing = model!($1)
+      model_name = thing.class.to_s.downcase
+      "tr##{model_name}_#{thing.id}"
     else
       # use the scope as it is
       scope

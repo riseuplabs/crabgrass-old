@@ -144,7 +144,8 @@ end
 Then /^I should see "([^\"]*)" within (.+)$/ do |text, scope|
   selector = selector_for(scope)
   within(selector) do |content|
-    assert content.include?(text)
+    content = content.dom.inner_text
+    assert content.include?(text), "can not see #{text} within:\n#{content}"
   end
 end
 
@@ -157,7 +158,8 @@ Then /^I should see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
   selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
-    assert content =~ regexp
+    content = content.dom.inner_text
+    assert content =~ regexp, "can not find #{regexp} within:\n#{content}"
   end
 end
 
@@ -168,7 +170,8 @@ end
 Then /^I should not see "([^\"]*)" within (.+)$/ do |text, scope|
   selector = selector_for(scope)
   within(selector) do |content|
-    assert !content.include?(text)
+    content = content.dom.inner_text
+    assert !content.include?(text), "should not see #{text} within:\n#{content}"
   end
 end
 
@@ -181,7 +184,8 @@ Then /^I should not see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
   selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
-    assert content !~ regexp
+    content = content.dom.inner_text
+    assert content !~ regexp, "should not not find #{regexp} within:\n#{content}"
   end
 end
 

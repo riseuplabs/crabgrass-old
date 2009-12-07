@@ -13,7 +13,10 @@ end
 # create models from a table
 Given(/^the following #{capture_plural_factory} exists?:?$/) do |plural_factory, table|
   name = plural_factory.singularize
-  table.hashes.each { |hash| create_model(name, hash) }
+  table.hashes.each do |hash|
+    name_with_label = extract_model_label_from_table_hash!(name, hash)
+    create_model(name_with_label, hash)
+  end
 end
 
 # find a model
@@ -29,7 +32,10 @@ end
 # find models with a table
 Then(/^the following #{capture_plural_factory} should exists?:?$/) do |plural_factory, table|
   name = plural_factory.singularize
-  table.hashes.each { |hash| find_model!(name, hash)}
+  table.hashes.each do |hash|
+    name_with_label = extract_model_label_from_table_hash!(name, hash)
+    find_model!(name_with_label, hash)
+  end
 end
 
 # find exactly n models
