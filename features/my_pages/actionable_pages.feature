@@ -6,10 +6,10 @@ Feature: The page feeds allow flagging the pages
 Background:
   Given I exist
   And I am logged in
-  And a page exists title: "Look at my own page!"
+  And a page exists with owner: the user: "me", title: "Look at my own page!"
 
 Scenario: I can mark pages read
   When I am on my work page
-  And I check the box for that page
+  And I mark that page
   And I press "Read"
   Then I should have read that page
