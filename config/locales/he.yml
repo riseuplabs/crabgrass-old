@@ -1,3 +1,4 @@
+---
 he:
   _locale_rtl: "1"
   about_me: אודותיי
@@ -29,7 +30,6 @@ he:
   add_star_link: "הוסיפי כוכב ({{star_count}})"
   add_tags: "הוסיפי תגיות"
   add_websites: "הוסיפי אתר אינטרנט"
-  admin: ניהול
   alert_error: שגיאה
   alert_field_errors: "קיימות בעיות עם השדות הבאים"
   alert_not_saved: "השינויים לא יכולים להשמר"
@@ -44,8 +44,6 @@ he:
   allow_membership_requests: "אשר\\י בקשות הצטרפות"
   already_contacts_info: "את\\ה כבר חבר\\ה של המשתמש\\ת."
   announcements: הודעות
-  approval_vote: "הצבעת אישור"
-  approval_vote_class_description: "הצביעי בעד או נגד כל אפשרות."
   approve: אשרי
   approve_button: אשר\י
   approve_contact_info: "בקשת חברות ממשתמש\\ת זו כבר קיימת. האם ברצונך לאשרה?"
@@ -67,8 +65,8 @@ he:
   cancel_link: ביטול
   category: קטגוריה
   close_button: סגור
-  collection: אוסף
   collection_class_description: "דפים מיוחדים אשר מכילים דפים נוספים."
+  collection_page_display: אוסף
   committee: וועדה
   committee_publicly_visible: "הפכי את הוועדה לשקופה ציבורית"
   committee_publicly_visible_description: |-
@@ -84,7 +82,7 @@ he:
   coordinating_council: "וועדה מתאמת"
   coordinator: מתאמ\ת
   coordinators: מתאמים
-  council_help: "אם לקבוצה זו יש וועדה מתאמת, אזי רק חבר\\ה בוועדה יכול\\ה לנהל את הקבוצה. אם לא, כל חבר\\ה בקבוצה יכול\\ה לנהל אותה."
+  council_help_text: "אם לקבוצה זו יש וועדה מתאמת, אזי רק חבר\\ה בוועדה יכול\\ה לנהל את הקבוצה. אם לא, כל חבר\\ה בקבוצה יכול\\ה לנהל אותה."
   create_a_new_thing: "צרי {{thing}} חדש"
   create_button: צור\צרי
   create_committee: "צרי וועדה"
@@ -136,5 +134,8 @@ he:
   history: הסטוריה
   home: בית
   language: שפה
+  menu_admin: ניהול
+  rate_many_page_description: "הצביעי בעד או נגד כל אפשרות."
+  rate_many_page_display: "הצבעת אישור"
   user: משתמש\ת
   username: "שם משתמש\\ת"

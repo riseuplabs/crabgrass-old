@@ -40,7 +40,8 @@ When /^I follow and confirm "([^\"]*)"$/ do |link_name|
 end
 
 
-When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, parent|
+When /^I follow "([^\"]*)" within (.+)$/ do |link, scope|
+  parent = selector_for(scope)
   click_link_within(parent, link)
 end
 
@@ -140,7 +141,8 @@ Then /^I should see "([^\"]*)"$/ do |text|
   assert_contain text
 end
 
-Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
+Then /^I should see "([^\"]*)" within (.+)$/ do |text, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
     assert content.include?(text)
   end
@@ -151,7 +153,8 @@ Then /^I should see \/([^\/]*)\/$/ do |regexp|
   assert_contain regexp
 end
 
-Then /^I should see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
+Then /^I should see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     assert content =~ regexp
@@ -162,7 +165,8 @@ Then /^I should not see "([^\"]*)"$/ do |text|
   assert_not_contain text
 end
 
-Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
+Then /^I should not see "([^\"]*)" within (.+)$/ do |text, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
     assert !content.include?(text)
   end
@@ -173,7 +177,8 @@ Then /^I should not see \/([^\/]*)\/$/ do |regexp|
   assert_not_contain regexp
 end
 
-Then /^I should not see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
+Then /^I should not see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
     assert content !~ regexp

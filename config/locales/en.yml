@@ -967,11 +967,8 @@ en:
 
   delete_page_link: "Delete {{page_class}}"
 
-  delete_page_via_shared: "Destroy Immediately"
-  delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
-
-  destroy_page_via_shared: "Destroy Immediately"
-  destroy_page_via_shared_info: "This will permanently destroy the page. This action cannot be undone."
+  destroy_page_via_shred: "Destroy Immediately"
+  destroy_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
   destroy_page_via_trash: "Move To Trash"
   destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
 

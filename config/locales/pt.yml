@@ -1,3 +1,4 @@
+---
 pt:
   about_me: "Sobre Mim"
   accept_usage_agreement: "Aceito os termos e condições de uso."
@@ -27,7 +28,6 @@ pt:
   add_photo_to_gallery: "adicionar foto a galeria: "
   add_star_link: "Adicionar estrela ({{star_count}})"
   add_websites: "Adicionar Sites Online"
-  admin: Administração
   alert_error: Erro
   alert_field_errors: "Há problemas com os campos seguintes"
   alert_not_saved: "As alterações não puderam ser salvas"
@@ -41,8 +41,6 @@ pt:
   allow_membership_requests: "Permitir Pedidos de Participação"
   already_contacts_info: "Você já é contato dessa pessoa"
   announcements: Recados
-  approval_vote: "voto de aprovação"
-  approval_vote_class_description: "aprovar ou rejeitar cada possibilidade"
   approve: aprovar
   approve_button: aprovar
   approve_contact_info: "Já existe um pedido de contato deste usuário. Você deseja aprová-lo?"
@@ -62,8 +60,8 @@ pt:
   cancel_link: cancelar
   category: Categoria
   close_button: Fechar
-  collection: coleção
   collection_class_description: "Páginas especiais contendo outras páginas."
+  collection_page_display: coleção
   committee: comitê
   committee_publicly_visible: "Tornar Públicos os Comitês"
   committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em {{domain}}/yourgroupname"
@@ -77,7 +75,7 @@ pt:
   contributed: Contrubuído
   coordinating_council: "conselho de coordenação"
   coordinator: Coordenador
-  council_help: "Se este grupo tiver um conselho coordenador, então apenas um membro desse conselho pode administrar o grupo. Caso contrário, qualquer membro do grupo pode fazê-lo."
+  council_help_text: "Se este grupo tiver um conselho coordenador, então apenas um membro desse conselho pode administrar o grupo. Caso contrário, qualquer membro do grupo pode fazê-lo."
   create_a_new_thing: "criar um(a) novo(a) {{thing}}"
   create_button: Criar
   create_committee: "criar comitê"
@@ -91,8 +89,7 @@ pt:
   created_by: "Criado por"
   created_on: "Criado em "
   created_when_by: "criado {{when}} por {{user}}"
-  csrf_error_message: |
-      Seu pedido de log in parece ser uma tentativa de hackear este site. Não se preocupe: é um erro freqüente, até no caso dos pedidos mais inocentes. Nós estamos apenas sendo excessivamente paranóicos. Você só tem que voltar a carregar a página antes de tentar fazer log in. Você pode usar este link para tentar novamente:
+  csrf_error_message: "Seu pedido de log in parece ser uma tentativa de hackear este site. Não se preocupe: é um erro freqüente, até no caso dos pedidos mais inocentes. Nós estamos apenas sendo excessivamente paranóicos. Você só tem que voltar a carregar a página antes de tentar fazer log in. Você pode usar este link para tentar novamente:\n"
   current_attachments: "Arquivos Anexos Atuais"
   current_featured_content: "Conteúdo em Destaque"
   current_video_sources: "atualmente suporta: youtube, blip.tv, google video, vimeo"
@@ -126,6 +123,8 @@ pt:
   directory_of_networks: "Diretório de redes"
   directory_of_people: "Diretório de Pessoas"
   discuss_request_link: "discutir este pedido com {{person_or_group}}"
+  discussion_page_description: "Discussão em grupo de um assunto específico."
+  discussion_page_display: "discussão em grupo "
   discussions: Discussões
   display_name: "Visualizar nome"
   dont_have_permission_to_create_committees: "Você não está autorizado para criar comitês sob {{group}}"
@@ -136,8 +135,8 @@ pt:
   edit: editar
   edit_attachments: "Editar Arquivos Anexos"
   edit_attachments_link: Editar
-  edit_featured_content: "editar conteúdo em destaque"
   edit_featured_content_for_group: "Editar conteúdo em destaque do grupo {{group_name}}"
+  edit_featured_content_link: "editar conteúdo em destaque"
   edit_gallery: "Editar Galeria"
   edit_profile_link: "Editar Perfil"
   edit_settings: "editar configurações"
@@ -150,6 +149,7 @@ pt:
   empty_results: Nenhum/a
   error_saving_new_order: "Erro ao salvar novo comando!"
   expired_featured_content: "O conteúdo em destaque caducou"
+  external_video_page_description: "Mostrar um vídeo hospedado em site externo."
   fax: Fax
   feature_button: "Pôr em Destaque!"
   featured_content: "Conteúdo em Destaque "
@@ -163,11 +163,9 @@ pt:
   folder_page_description: "Compilação de recursos."
   folder_page_display: Pasta
   forgot_password_link: "Esqueci minha senha"
-  forgot_password_mail_expiry: |
-      Este link é válido durante 24 horas. Se você precisar restabelecer sua senha depois disso, você terá de voltar a visitar a página de senha esquecida e pedir um novo link.
+  forgot_password_mail_expiry: "Este link é válido durante 24 horas. Se você precisar restabelecer sua senha depois disso, você terá de voltar a visitar a página de senha esquecida e pedir um novo link.\n"
   forgot_password_mail_greeting: "{{user}}, para restabelecer sua senha, visite"
-  forgot_password_text: |
-      Se você esqueceu sua senha para fazer log in, nós podemos enviar-lhe um e-mail que lhe permitirá criar outra.
+  forgot_password_text: "Se você esqueceu sua senha para fazer log in, nós podemos enviar-lhe um e-mail que lhe permitirá criar outra.\n"
   forgotten_email_address: "Qual foi o e-mail que você forneceu quando criou sua conta?"
   format: Formato
   formatting_reference_link: "referência de formatação"
@@ -180,14 +178,13 @@ pt:
   galleries: Galerias
   gallery_class_description: "Compilação de imagens."
   gallery_display: galeria
+  gallery_undo_link: desfazer
   general_info: "Informação geral"
   grant_access: "Conceder acesso"
   group: Grupo
   group_administration_not_allowed: "Você não tem autorização para administrar este grupo."
   group_directory: "Diretório do Grupo"
   group_directory_link: "diretório do grupo"
-  group_discussion: "discussão em grupo "
-  group_discussion_class_description: "Discussão em grupo de um assunto específico."
   group_has_no_public_profile: "Este grupo não tem um perfil público."
   group_home_headline: "Home do {{group_type}}"
   group_home_welcome: Bem-vindo/a
@@ -205,6 +202,7 @@ pt:
 
       Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
   group_invite_subject: "Convite para fazer parte do grupo \"{{group}}\""
+  group_join_chat: "entre no bate-papo"
   group_language: "Idioma principal deste {{group}}."
   group_members_publicly_visible: "Tornar Públicos os Membros"
   group_members_publicly_visible_description: "Os membros são visíveis por não membros do {{domain}}/yourgroupname. Além disso, o nome do grupo será listado na página de perfil de cada membro ({{domain}}/username)"
@@ -240,7 +238,6 @@ pt:
   invite_accept_via_register: "Eu preciso me cadastrar"
   invite_info: "Digite uma lista de identificações de usuário ou de endereços de e-mail de pessoas que você gostaria de convidar para fazerem parte deste {{group_type}}."
   invite_not_found: "Não há convite"
-  join_chat: "entre no bate-papo"
   join_request_info: "Você não será membro deste grupo enquanto seu pedido não for aprovado. Para acompanhar a evolução de seu pedido clique \"{{my_requests_url}}\"."
   joins_the_chatroom: "entra no bate-papo"
   language: Idioma
@@ -267,7 +264,6 @@ pt:
   login_password: Senha
   login_required: "Login obrigatório"
   login_required_description: "Para fazer isso é preciso antes fazer login."
-  logout: "Log off"
   logout_success: "Até mais!"
   logout_success_message: "Sessão encerrada."
   make_album_cover: "use esta foto para a capa do álbum"
@@ -292,6 +288,7 @@ pt:
   medium: intermédio
   member_groups_of_network: "Grupos Membros"
   members: Membros
+  menu_admin: Administração
   menu_chat: Bate-Papo
   menu_groups: Grupos
   menu_home: Home
@@ -301,6 +298,7 @@ pt:
   menu_networks: Redes
   menu_people: Pessoas
   message_must_not_be_empty: "a mensagem deve ter algúm conteúdo"
+  message_page_description: "Mensagem pessoal enviada a diferentes destinatários."
   message_page_display: Mensagem
   middle_name: "do meio"
   mobile: Celular
@@ -407,8 +405,6 @@ pt:
   permissions: Permissões
   personal: Pessoal
   personal_interests: "Interesses pessoais"
-  personal_message: "mensagem pessoal"
-  personal_message_class_description: "Mensagem pessoal enviada a diferentes destinatários."
   phone_numbers: Telefones
   post_message: "Publicar Mensagem"
   prev_change: "mudança anterior"
@@ -422,10 +418,11 @@ pt:
   public_checkbox: Público
   public_key: "Chave Pública"
   public_profile: "Perfil Público"
-  ranked_vote_instructions: |
-      Arraste e solte os itens da lista abaixo até organizá-los dos mais preferidos no início até os menos preferidos no fim. Ao concluir, clique confirmar para registrar seu voto.
+  ranked_vote_instructions: "Arraste e solte os itens da lista abaixo até organizá-los dos mais preferidos no início até os menos preferidos no fim. Ao concluir, clique confirmar para registrar seu voto.\n"
   ranked_vote_page_description: "Classificar as possibilidades seguindo a ordem de preferências."
   ranked_vote_page_display: "Voto classificado"
+  rate_many_page_description: "aprovar ou rejeitar cada possibilidade"
+  rate_many_page_display: "voto de aprovação"
   reactivate_button: Reativar!
   read: ler
   recent_activity: "Atividade Recente"
@@ -460,11 +457,10 @@ pt:
   requests_from_me: "Meus pedidos"
   requests_to_me: "Pedidos para mim"
   reset_password: "Restabelecer senha"
+  reset_password_email_sent: "Foi enviado um e-mail com instruções para restabelecer sua senha."
   reset_password_mail_greeting: "{{user}}, sua senha foi restabelecida conforme você pediu."
-  reset_password_mail_sent: "Foi enviado um e-mail com instruções para restabelecer sua senha."
   reset_password_mail_warning: "Se você não pediu para mudar sua senha, entre em contato conosco."
-  reset_password_text: |
-      Olá, {{user}}. Se você esqueceu sua senha, você pode criar outra aqui.
+  reset_password_text: "Olá, {{user}}. Se você esqueceu sua senha, você pode criar outra aqui.\n"
   rss_feed: "Feed RSS"
   saturday: sábado
   save_button: Salvar
@@ -487,7 +483,6 @@ pt:
   settings: Configuração
   share: Partilhar
   share_button: Partilhar
-  share_link: "Partilhar {{page_class}}"
   share_page_email: "Enviar uma notificação de e-mail"
   share_page_link: "Partilhar {{page_class}}"
   share_page_message: "Enviar uma mensagem (opcional)"
@@ -519,7 +514,7 @@ pt:
   subject: assunto
   subject_must_not_be_empty: "você deve incluir um assunto"
   successful_undelete_image: "A imagem foi recuperada."
-  sucessfully_removed_image: "A imagem foi eliminada! ({{undo_link}})"
+  successfully_removed_image: "A imagem foi eliminada! ({{undo_link}})"
   summary: Resumo
   sunday: domingo
   tags: Tags
@@ -538,14 +533,12 @@ pt:
   tuesday: terça-feira
   type_your_messages_here: "Digite suas mensagens aqui e clique entrar..."
   typing: digitando
-  undo: desfazer
   unfeature_button: "Tirar dos destacados!"
   unknown: desconhecido
   unread: "não lido"
   updated: atualizado
-  upload_attachment: "Carregar Arquivo"
   upload_image: "Carregar imagem"
-  upload_images: Carregar
+  upload_images_link: Carregar
   upload_new_image: "carregar nova imagem"
   uploaded_image_cropped: "A imagem carregada será cortada e expandida a um quadrado de 96 pixels."
   usage_agreement_heading: "Termos e Condições de Uso"
@@ -558,8 +551,6 @@ pt:
   version_doesnt_exist: "Não há nenhuma versão {{version}}"
   version_number: "versão {{version}}"
   versions: versões
-  video: vídeo
-  video_class_description: "Mostrar um vídeo hospedado em site externo."
   video_embed_code_prompt: "Código incrustado de uma fonte de vídeo externa"
   video_service_is_not_supported: "não é compatível (atualmente, apenas youtube, google video, blip.tv, e vimeo)"
   view_all: "ver todos"
@@ -580,6 +571,5 @@ pt:
   you_are_not_member_of_any_group: "Você não é membro de nenhum grupo."
   you_are_viewing_version: "Você está vendo a versão {{version}} por {{user}}"
   you_have_no_contacts: "Você não tem contatos"
-  you_have_no_groups: "Você não tem nenhum grupo"
   you_have_no_peers: "Você não tem parceiros"
   your_login: "Seu nome de usuário"

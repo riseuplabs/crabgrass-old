@@ -24,7 +24,8 @@ class Membership < ActiveRecord::Base
   named_scope :alphabetized_by_user, lambda { |letter|
     opts = {
       :joins => :user,
-      :order => 'users.login ASC'
+      :order => 'users.login ASC',
+      :select => 'memberships.*'
     }
 
     if letter == '#'
