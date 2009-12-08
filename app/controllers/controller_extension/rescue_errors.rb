@@ -92,7 +92,6 @@ module ControllerExtension::RescueErrors
 
   # renders an error message or messages
   def render_error(exception=nil)
-    require 'ruby-debug';debugger;1-1
     respond_to do |format|
       format.html do
         if exception
