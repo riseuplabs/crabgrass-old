@@ -60,11 +60,22 @@
 =small-text(!font_small= 10px)
   font-size= !font_small
 
-=medium-link(!sized= 11px)
+=blue-link(!sized= 11px)
   +hover-link
   color= !blue
   font-size= !sized
    
+/* @general */
+.left
+  float: left
+  
+.right
+  float: right
+  
+.nowrap
+  white-space: nowrap
+
+
 /* @group links */
 
 \:focus
@@ -107,20 +118,75 @@ li
   :display inline-block
   :float left
   :padding 0.2em
+
 .small_icon
+  float: left
   background-repeat: no-repeat
   background-position: 0 50%
   padding-left: 20px
   min-height: 16px
-  .small_icon.right
-    background-position: 100% 50%
-    padding-left: 4px
-    padding-right: 20px
-  .small_icon.bullet
+  .twenty
+    padding-left: 22px
+    min-height: 24px
+
+.activities li 
+  color: #333 
+  margin-bottom: 1em 
+  padding-left: 24px 
+  span.commands  
+    white-space: nowrap
+    a
+      text-transform: lowercase
+      font-size: 80%
+  .small_icon
     background-position: 0 2px
-    margin: 0.5em 0
-.normal
-  font-weight: normal
+  .label.date
+    font-style: italic
+    color: #999
+  br
+    display: none
+.name_icon_xsmall
+  float: left
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  padding: 2px 0 4px 28px
+  min-height: 24px
+
+button.icon_16
+  +zero
+  vertical-align: text-top
+  background-repeat: no-repeat
+  border: none
+  background-color: transparent
+  height: 16px
+  width: 16px
+
+.shy_parent:hover 
+  .shy:hover
+    opacity: 1
+.shy
+  opacity: 0
+  font-size: 8px
+  
+#say-box
+  position: relative
+  img
+    position: relative
+    top: 4px
+  #say
+    padding-bottom: 12px
+    position: relative
+    input.textarea
+      padding: 2px
+      position: relative
+      top: 0
+      font-family: monospace
+      overflow: auto
+      .tall
+        height: 120px
+    input.say-submit
+      position: relative
+      top: 3px
 
 /* @group forms */
 

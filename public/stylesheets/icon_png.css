@@ -3,7 +3,9 @@
 .application_view_list_16 {background-image: url(/images/png/16/application_view_list.png)}
 .archive_16 {background-image: url(/images/png/16/archive.png)}
 .arrow_down_16 {background-image: url(/images/png/16/arrow_down.png)}
+.arrow_right_16 {background-image: url(/images/png/16/arrow_right.png)}
 .arrow_up_16 {background-image: url(/images/png/16/arrow_up.png)}
+.arrow2_right_16 {background-image: url(/images/png/16/arrow2_right.png)}
 .attach_16 {background-image: url(/images/png/16/attach.png)}
 .book_open_16 {background-image: url(/images/png/16/book_open.png)}
 .cancel_16 {background-image: url(/images/png/16/cancel.png)}
@@ -83,6 +85,7 @@
 .page_survey_16 {background-image: url(/images/png/16/page_survey.png)}
 .page_tasks_16 {background-image: url(/images/png/16/page_tasks.png)}
 .page_text_16 {background-image: url(/images/png/16/page_text.png)}
+.page_text_blue_16 {background-image: url(/images/png/16/page_text_blue.png)}
 .page_video_16 {background-image: url(/images/png/16/page_video.png)}
 .page_white_copy_16 {background-image: url(/images/png/16/page_white_copy.png)}
 .page_white_world_16 {background-image: url(/images/png/16/page_white_world.png)}
@@ -161,4 +164,10 @@
 .settings_48 {background-image: url(/images/png/48/settings.png)}
 /* new UI */
 .chat2_16 {background-image: url(/images/png/16/chat2.png)}
-.arrow_right_16 {background-image: url(/images/png/16/arrow_right.png)}
+.location_20 {background-image: url(/images/png/20/location.png)}
+.created_20 {background-image: url(/images/png/20/created.png)}
+.activity_20 {background-image: url(/images/png/20/activity.png)}
+.status_20 {background-image: url(/images/png/20/status.png)}
+.updated_20 {background-image: url(/images/png/20/updated.png)}
+.tags_20 {background-image: url(/images/png/20/tags.png)}
+.generic_xsmall {background-image: url(/images/png/20/xsmall.png)}	 
