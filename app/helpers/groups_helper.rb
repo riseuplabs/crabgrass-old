@@ -115,6 +115,18 @@ module GroupsHelper
       '/groups/memberships', 'leave', @group)
   end
 
+  def destroy_membership_link(membership)
+    user, group = membership.user, membership.group
+
+    # can't remove yourself from the group this way - have to use the 'Leave Group' link
+    return if user == current_user
+    if may_destroy_memberships?(membership)
+      link_to(I18n.t(:remove), {:controller => '/groups/memberships', :action => 'destroy', :id => membership},
+            :confirm => I18n.t(:membership_destroy_confirm_message, :user => user.display_name, :group_type => group.group_type.downcase),
+            :method => :delete)
+    end
+  end
+
   ##
   ## LAYOUT
   ##

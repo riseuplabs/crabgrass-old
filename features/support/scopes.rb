@@ -18,7 +18,8 @@ module ScopeHelpers
       "tr##{model_name}_#{thing.id}"
     else
       # use the scope as it is
-      scope
+      # but with surrounding quotes removed
+      scope.to_s.gsub(/^['"]|['"]$/, '')
     end
   end
 end

@@ -8,7 +8,7 @@ table.members td {padding: 12px;}
 
 <% if current_site.tracking %>
 <b>Visits:</b>
-<%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month, 
+<%= @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") %> last month,
 <%= @group.memberships.count(:all, :conditions => "visited_at  is not null") %> all time
 <% end %>
 
@@ -28,6 +28,7 @@ table.members td {padding: 12px;}
 <!--    <th>Joined by</th> -->
     <% end %>
     <th></th>
+    <th><%= I18n.t(:buttons_list_label) %> </th>
   </tr>
   <%= render :partial => 'membership', :collection => @memberships %>
   </table>

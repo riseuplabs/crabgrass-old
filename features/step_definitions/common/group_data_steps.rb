@@ -44,3 +44,10 @@ Given /^#{capture_model} has a committee(?: with #{capture_fields})$/ do |group,
   # false means this is not a council
   group.add_committee!(committee, false)
 end
+
+Then /^#{capture_model} should not be a member of #{capture_model}$/ do |user, group|
+  group = model!(group)
+  user = model!(user)
+
+  assert !user.member_of?(group)
+end

@@ -23,8 +23,17 @@ When /^I follow "([^\"]*)"$/ do |link|
 end
 
 When /^I follow and confirm "([^\"]*)"$/ do |link_name|
-  # ignoring demeters law at my own peril
-  link = webrat_session.current_scope.find_link link_name
+  When "I follow and confirm \"#{link_name}\" within \"body\""
+end
+
+When /^I follow and confirm "([^\"]*)" within (.*)$/ do |link_name, scope|
+  parent = selector_for(scope)
+
+  link = nil
+  within(parent) do |scope|
+    link = scope.find_link link_name
+  end
+
   onclick = link.element["onclick"]
   if onclick =~ /Modalbox\.confirm/
     if onclick =~ /method:"(.*?)", action:"(.*?)"/
@@ -38,7 +47,6 @@ When /^I follow and confirm "([^\"]*)"$/ do |link_name|
     raise "#{link_name} is not a Modalbox.confirm link"
   end
 end
-
 
 When /^I follow "([^\"]*)" within (.+)$/ do |link, scope|
   parent = selector_for(scope)
@@ -169,9 +177,12 @@ end
 
 Then /^I should not see "([^\"]*)" within (.+)$/ do |text, scope|
   selector = selector_for(scope)
-  within(selector) do |content|
-    content = content.dom.inner_text
-    assert !content.include?(text), "should not see #{text} within:\n#{content}"
+  # when we don't have selector, so we don't have the content
+  if have_selector(selector).matches?(response_body)
+    within(selector) do |content|
+      content = content.dom.inner_text
+      assert !content.include?(text), "should not see #{text} within:\n#{content}"
+    end
   end
 end
 
@@ -182,10 +193,13 @@ end
 
 Then /^I should not see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
   selector = selector_for(scope)
-  within(selector) do |content|
-    regexp = Regexp.new(regexp)
-    content = content.dom.inner_text
-    assert content !~ regexp, "should not not find #{regexp} within:\n#{content}"
+  # when we don't have selector, so we don't have the content
+  if have_selector(selector).matches?(response_body)
+    within(selector) do |content|
+      regexp = Regexp.new(regexp)
+      content = content.dom.inner_text
+      assert content !~ regexp, "should not not find #{regexp} within:\n#{content}"
+    end
   end
 end
 

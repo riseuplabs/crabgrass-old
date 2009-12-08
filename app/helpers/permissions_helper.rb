@@ -53,13 +53,15 @@ module PermissionsHelper
   #   <%= link_if_may("Boldly go", :warp_drive, :enable, nil, {}, {:style => "font-weight: bold;"} %>
   def link_if_may(link_text, controller, action, object = nil, link_opts = {}, html_opts = nil)
     if may?(controller, action, object)
-      link_to(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), html_opts)
+      object_id = params_object_id(object)
+      link_to(link_text, {:controller => controller, :action => action, :id => object_id}.merge(link_opts), html_opts)
     end
   end
 
   def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
     if may?(controller, action, object)
-      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), active)
+      object_id = params_object_id(object)
+      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object_id}.merge(link_opts), active)
     end
   end
 
@@ -177,6 +179,15 @@ module PermissionsHelper
       return target.send('default_permission', *args)
     end
     return nil
+  end
+
+  # the first one that makes sense in this order: object.name, object.id, nil
+  def params_object_id(object)
+    object_id = if object.respond_to?(:name)
+      object.name
+    elsif !object.blank?
+      object.id
+    end
   end
 end
 
