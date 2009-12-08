@@ -10,9 +10,9 @@ class MessagePageController < BasePageController
         User.find_by_login name
       end.compact
 
-      return flash_message_now(:error => 'subject must not be empty'.t) unless params[:title].any?
-      return flash_message_now(:error => 'at least one recipient is required'.t) unless users.any?
-      return flash_message_now(:error => 'message must not be empty'.t) unless params[:message].any?
+      return flash_message_now(:error => I18n.t(:subject_must_not_be_empty)) unless params[:title].any?
+      return flash_message_now(:error => I18n.t(:at_least_one_recipient_is_required)) unless users.any?
+      return flash_message_now(:error => I18n.t(:message_must_not_be_empty)) unless params[:message].any?
 
       @page = Page.make_a_call :private_message, :to => users, :from => current_user, :title => params[:title], :body => params[:message]
       if params[:email]

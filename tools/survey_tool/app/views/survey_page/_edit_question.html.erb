@@ -2,8 +2,8 @@
   <% q_id = question.new_record? ? "new_NOID" : question.id %>
   <div class="question handle">
   <% fields_for "survey[new_questions_attributes][#{q_id}]", question do |qform| %>
-    <strong class="caption"><%= "Question:"[:question_label] %></strong>
-    <span class="drag_to_move small_icon change_order_16"><%= "drag to move"[:drag_to_move] %></span>
+    <strong class="caption"><%= I18n.t(:survey_question_label) %></strong>
+    <span class="drag_to_move small_icon change_order_16"><%= I18n.t(:drag_to_move_tip) %></span>
     <div class="fields">
       <%= qform.hidden_field 'type' %>
       <%= qform.hidden_field 'position', :class => 'qposition' %>

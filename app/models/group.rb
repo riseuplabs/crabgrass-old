@@ -138,7 +138,8 @@ class Group < ActiveRecord::Base
   def network?;   instance_of? Network;   end
   def normal?;    instance_of? Group;     end
   def council?;   instance_of? Council;   end
-  def group_type; self.class.name.t;      end
+
+  def group_type; I18n.t(self.class.name.downcase.to_sym); end
 
   ##
   ## PROFILE
@@ -199,11 +200,26 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def destroy_by(user)
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+
+    self.destroy
+  end
+
   protected
 
   before_save :save_avatar_if_needed
   def save_avatar_if_needed
     avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
   end
 
   ##
@@ -244,7 +260,7 @@ class Group < ActiveRecord::Base
     if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
-      raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => self.name}])
+      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
     end
   end
 

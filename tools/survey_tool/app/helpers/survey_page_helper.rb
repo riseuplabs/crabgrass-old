@@ -27,7 +27,7 @@ module SurveyPageHelper
   end
 
   def delete_question_function(question)
-    link_to_function("delete".t, :class => "delete_question") do |page|
+    link_to_function(I18n.t(:delete), :class => "delete_question") do |page|
       page.call "$(this).up('.question').remove"
       unless question.new_record?
         page.insert_html :bottom, :questions, "<input type='hidden' name='survey[new_questions_attributes][#{question.id}][deleted]' value='true'>"
@@ -36,11 +36,11 @@ module SurveyPageHelper
   end
 
   def private_question_checkbox(form)
-   content_tag :label, form.check_box(:private) + " " + "Private Question"[:private_question]
+   content_tag :label, form.check_box(:private) + " " + I18n.t(:private_question_label)
   end
 
   def their_answer_goes_here
-    "Their answer goes here..."[:their_answer_goes_here]
+    I18n.t(:their_answer_goes_here_label)
   end
 
   def respond_to_question_form(response_form, question)

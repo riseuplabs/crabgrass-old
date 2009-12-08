@@ -1,23 +1,23 @@
 <% @title_box = capture do -%>
-  <h1><%= "My Messages"[:my_messages_headline] %></h1>
+  <h1><%= I18n.t(:my_messages_headline) %></h1>
 <% end -%>
 <% @info_box_class = 'tabs' %>
 <% @info_box = capture do -%>
   <%= Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Recent'[:overview]
+      t.label I18n.t(:me_recent_messages)
       t.url my_messages_path
       t.selected controller?('me/messages')
       t.icon 'hourglass'
     end
     f.tab do |t|
-      t.label 'Public'[:public]
+      t.label I18n.t(:public)
       t.url my_public_messages_path
       t.selected controller?('me/public_messages')
       t.icon 'world'
     end
     f.tab do |t|
-      t.label 'Private'[:private]
+      t.label I18n.t(:private)
       t.url my_private_messages_path
       t.selected controller?('me/private_messages')
       t.icon 'mime_lock'

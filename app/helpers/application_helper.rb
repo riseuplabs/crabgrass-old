@@ -38,10 +38,12 @@ module ApplicationHelper
   ##
 
   # returns the first of the args where any? returns true
+  # if none has any, return last
   def first_with_any(*args)
     for str in args
       return str if str.any?
     end
+    return args.last
   end
 
   ## converts bytes into something more readable
@@ -123,9 +125,9 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
     end
     will_paginate(things, defaults.merge(options))
   end
@@ -136,13 +138,12 @@ module ApplicationHelper
 
   def options_for_language(selected=nil)
     selected ||= session[:language_code].to_s
-    selected = selected.sub(/_\w\w$/, '') # remove locale
-    options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
+    options_array = I18n.available_locales.collect {|locale| [I18n.language_for_locale(locale).try.name, locale.to_s]}
     options_for_select(options_array, selected)
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'[:see_more_link]+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 
@@ -167,7 +168,7 @@ module ApplicationHelper
 
     more_link = activity.link
     if more_link.is_a? Hash
-      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
+      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
     end
     more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
 
@@ -183,14 +184,15 @@ module ApplicationHelper
   end
 
   def formatting_reference_link
-   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % I18n.t(:formatting_reference_link)
   end
 
   # returns the related help string, but only if it is translated.
   def help(symbol)
     symbol = "#{symbol}_help".to_sym
-    text = ""[symbol]
-    text.any? ? text : nil
+    text = I18n.t(symbol)
+    # return nil if I18n.t says translation is missing
+    text =~ /translation missing/ ? nil : text
   end
 
   def debug_permissions

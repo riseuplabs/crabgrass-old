@@ -2,10 +2,10 @@
   <%= group_search_rss %>
 <% end %>
 
-<% @title_box = content_tag :h1, 'Archive'[:archive_headline] %>
+<% @title_box = content_tag :h1, I18n.t(:archive_headline) %>
 <% @info_box = link_line(
-  link_to_active('creation date'[:archive_filter_created_link], group_search_url(:action => 'archive', :path => @path.replace_keyword('updated','created')), @path.keyword?('created')),
-  link_to_active('modification date'[:archive_filter_updated_link], group_search_url(:action => 'archive', :path => @path.replace_keyword('created','updated')), @path.keyword?('updated'))
+  link_to_active(I18n.t(:archive_filter_created_link), group_search_url(:action => 'archive', :path => @path.replace_keyword('updated','created')), @path.keyword?('created')),
+  link_to_active(I18n.t(:archive_filter_updated_link), group_search_url(:action => 'archive', :path => @path.replace_keyword('created','updated')), @path.keyword?('updated'))
 ) %>
 
 <blockquote>

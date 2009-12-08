@@ -1,6 +1,6 @@
 <% @title_box = '<h1>Edit Users</h1>' %>
 
-<%= link_to '&laquo;&nbsp;'+'Back'[:back], users_path %>
+<%= link_to '&laquo;&nbsp;'+I18n.t(:back), users_path %>
 
 <% form_for(@user, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>

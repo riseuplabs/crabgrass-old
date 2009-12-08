@@ -1,9 +1,9 @@
-<% class_display_name = 'page'.t if class_display_name.nil? -%>
+<% class_display_name = I18n.t(:page) if class_display_name.nil? -%>
 <% type = 'send' if type.nil? -%>
 
 <table class='notify'>
   <tr>
-    <td colspan="2"><h2 class="first"><%= 'Recipients'[:recipients] %></h2></td>
+    <td colspan="2"><h2 class="first"><%= I18n.t(:recipients) %></h2></td>
   </tr>
   <tr>
     <td colspan="2">
@@ -14,17 +14,17 @@
 % if @page.contributors_count #> 0
   <tr class='gap'>
     <td class="check"><%= check_box 'recipients', ':contributors' %></td>
-    <td><%= label 'recipients', ':contributors', '<b>Prior Contribution:</b> notify people who have made a contribution to this page.'[:notify_contribution] %></td>
+    <td><%= label 'recipients', ':contributors', I18n.t(:notify_contribution) %></td>
   </tr>
 % end
 
   <tr class='gap'>
     <td class="check"><%= check_box 'recipients', ':participants' %></td>
-    <td><%= label 'recipients', ':participants', '<b>Current Access:</b> notify people or groups who currently have access to this page.'[:notify_current_access] %></td>
+    <td><%= label 'recipients', ':participants', I18n.t(:notify_current_access) %></td>
   </tr>
 
   <tr class='gap'>
-   <td colspan="2"><h2><%= 'Notification Message'[:notify] %></h2></td>
+   <td colspan="2"><h2><%= I18n.t(:notification_message) %></h2></td>
   </tr>
   <%= render :partial => 'notification_message_form', :locals => {:forced_send => true} %>
 

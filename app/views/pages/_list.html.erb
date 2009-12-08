@@ -49,7 +49,7 @@ end
 <div class='page_list'>
   <table>
     <%- if !any_results -%>
-      <tr><td colspan="<%= colspan %>"><%= "No Results"[:no_search_results] %></td></tr>
+      <tr><td colspan="<%= colspan %>"><%= I18n.t(:no_search_results) %></td></tr>
     <%- else -%>
     <%- if heading -%>
 
@@ -73,7 +73,7 @@ end
 
       <% if today.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tr><td class="date" colspan="<%=colspan%>"><%= "Today"[:date_today] %></td></tr>
+        <tr><td class="date" colspan="<%=colspan%>"><%= I18n.t(:date_today) %></td></tr>
         <%- today.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -81,7 +81,7 @@ end
 
       <% if yesterday.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tr><td class="date" colspan="<%=colspan%>"><%= "Yesterday"[:date_yesterday] %></td></tr>
+        <tr><td class="date" colspan="<%=colspan%>"><%= I18n.t(:date_yesterday) %></td></tr>
         <%- yesterday.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -89,7 +89,7 @@ end
 
       <% if week.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tr><td class="date" colspan="<%=colspan%>"><%= "This Past Week"[:date_this_week] %></td></tr>
+        <tr><td class="date" colspan="<%=colspan%>"><%= I18n.t(:date_this_week) %></td></tr>
         <%- week.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>
@@ -97,7 +97,7 @@ end
 
       <% if later.any? -%>
         <%- reset_cycle 'page_list_cycle' -%>
-        <tr><td class="date" colspan="<%=colspan%>"><%= "Older"[:date_older] %></td></tr>
+        <tr><td class="date" colspan="<%=colspan%>"><%= I18n.t(:date_older) %></td></tr>
         <%- later.each do |page| -%>
           <%= page_row(page, columns) %>
         <%- end -%>

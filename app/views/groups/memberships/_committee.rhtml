@@ -1,7 +1,7 @@
 <% if @group.parent.all_users.any? %>
-  <h2><%= "Dual memberships"[:dual_memberships] %></h2>
+  <h2><%= I18n.t(:dual_memberships) %></h2>
 
-  <p><%= "Members of {group_type} {group_name} who should also be in committee {committee_name}"[:dual_membership_info, {:group_type => @group.parent.group_type.downcase, :group_name => content_tag(:b,@group.parent.display_name), :committee_name => content_tag(:b,@group.display_name)}] %></p>
+  <p><%= I18n.t(:dual_membership_info, :group_type => @group.parent.group_type.downcase, :group_name => content_tag(:b,@group.parent.display_name), :committee_name => content_tag(:b,@group.display_name)) %></p>
 
   <% form_tag(:action => 'update', :id => @group) do -%>
     <%= collection_multiple_select('group', 'user_ids', @group.parent.all_users, :id, :login, :outer_class=>'plain floatlist selfclear') %>

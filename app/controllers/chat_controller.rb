@@ -154,11 +154,11 @@ class ChatController < ApplicationController
   end
 
   def user_joins_channel(user, channel)
-    ChatMessage.create(:channel => channel, :sender => user, :content => :joins_the_chatroom.t, :level => 'sys')
+    ChatMessage.create(:channel => channel, :sender => user, :content => I18n.t(:joins_the_chatroom), :level => 'sys')
   end
 
   def user_leaves_channel(user, channel)
-    ChatMessage.create(:channel => channel, :sender => user, :content => :left_the_chatroom.t, :level => 'sys')
+    ChatMessage.create(:channel => channel, :sender => user, :content => I18n.t(:left_the_chatroom), :level => 'sys')
   end
 
   def sanitize(say)

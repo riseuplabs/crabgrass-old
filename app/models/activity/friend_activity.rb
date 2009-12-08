@@ -22,10 +22,9 @@ class FriendActivity < Activity
   end
 
   def description(view=nil)
-    "{user} added {other_user} as a contact"[
-       :activity_contact_created,
-       {:user => user_span(:user), :other_user => user_span(:other_user)}
-    ]
+    I18n.t(:activity_contact_created,
+            :user => user_span(:user),
+            :other_user => user_span(:other_user))
   end
 
   def self.find_twin(user, other_user)

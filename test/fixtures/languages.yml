@@ -6,54 +6,54 @@
 zh:
   id: 1
   name: 中文
-  code: zh_CN
+  code: zh
 
 hi:
   id: 2
   name: हिंदी
-  code: hi_IN
+  code: hi
 
 es:
   id: 3
   name: Español
-  code: es_ES
+  code: es
 
 en:
   id: 4
   name: English
-  code: en_US
+  code: en
 
 ar:
   id: 5
   name: العربية
-  code: ar_EG
+  code: ar
   rtl: true
 
 pt:
   id: 6
   name: Português
-  code: pt_BR
+  code: pt
 
 #7 = bengali
 
 ru:
   id: 8
   name: Pyccĸий
-  code: ru_RU
+  code: ru
 
 #9 = japanese
 
 de:
   id: 10
   name: Deutsch
-  code: de_DE
+  code: de
 
 #11 = punjabi
 
 sw:
   id: 12
   name: Kiswahili
-  code: sw_SW
+  code: sw
 
 #13 = wu
 #14 = javanese
@@ -66,21 +66,42 @@ sw:
 fr:
   id: 20
   name: Français
-  code: fr_FR
+  code: fr
 
 it:
   id: 21
   name: Italiano
-  code: it_IT
+  code: it
+
+tr:
+  id: 24
+  name: Türkçe
+  code: tr
 
 pl:
   id: 28
   name: Polski
-  code: pl_PL
+  code: pl
 
 el:
   id: 53
   name: Ελληνικά
-  code: el_GR
+  code: el
+
+he:
+  id: 78
+  name: עִבְרִית
+  code: he
+  rtl: true
+
+sv:
+  id: 79
+  name: Svenska
+  code: sv
+
+da:
+  id: 104
+  name: Dansk
+  code: da
 
 

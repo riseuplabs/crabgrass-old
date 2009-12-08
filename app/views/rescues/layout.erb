@@ -19,7 +19,7 @@
 
 <html>
 <head>
-  <title><%= "System Error"[:exception_title] %></title>
+  <title><%= I18n.t(:exception_title) %></title>
   <style>
 
     html {
@@ -151,17 +151,17 @@
 <!--  <div class="left"><div id='image'></div></div>-->
   <div class="right">
     <div id='header'>
-      <h1><%= "Oops! We experienced an error."[:exception_headline] %></h1>
-      <p class="description"><%= "Please help us make this software better by sending us a bug report. We will get to work repairing the problem soon."[:exception_description] %></p>
+      <h1><%= I18n.t(:exception_headline) %></h1>
+      <p class="description"><%= I18n.t(:exception_description) %></p>
       <p id="links">
-        <a href="<%= get_referer %>"><%= "Go Back"[:exception_back_link]%></a> |
-        <a href="#" id='bugreport_link'><%= "Submit Bug Report"[:exception_bug_report_link]%></a> |
-        <a href="#" id="details"><%= "Details"[:details_link]%></a>
+        <a href="<%= get_referer %>"><%= I18n.t(:exception_back_link)%></a> |
+        <a href="#" id='bugreport_link'><%= I18n.t(:exception_bug_report_link)%></a> |
+        <a href="#" id="details"><%= I18n.t(:details_link)%></a>
       </p>
     </div>
     <div id='bugreport'>
        <% form_tag('/bugreport/submit') do %>
-         <p><%= "Please add a description of how you got to this page, and any additional comments"[:exception_bug_report_description] %></p>
+         <p><%= I18n.t(:exception_bug_report_description) %></p>
          <%= text_area_tag(:comments, nil, :size => "60x8") %>
          <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
          <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
@@ -169,7 +169,7 @@
          <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
          <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
          <br>
-         <p><%= submit_tag("Submit Bug Report"[:exception_bug_report_link]) %></p>
+         <p><%= submit_tag(I18n.t(:exception_bug_report_link)) %></p>
        <% end %>
     </div>
     <div id='content'>

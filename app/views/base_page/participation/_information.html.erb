@@ -1,18 +1,18 @@
 <%= Formy.form do |f|
   f.row do |r|
-    r.label 'Owner'[:page_list_heading_owner].capitalize
+    r.label I18n.t(:page_list_heading_owner).capitalize
     r.input select_page_owner
     r.info help(:page_owner)
   end
   f.row do |r|
-    r.label 'Created'[:page_list_heading_created].capitalize
+    r.label I18n.t(:page_list_heading_created).capitalize
     r.input "%s (%s)" % [link_to_user(@page.created_by_login), friendly_date(@page.created_at)]
   end
   f.row do |r|
     if @page.deleted?
-      r.label 'Deleted'[:page_list_heading_deleted].capitalize
+      r.label I18n.t(:page_list_heading_deleted).capitalize
     else
-      r.label 'Updated'[:page_list_heading_updated].capitalize
+      r.label I18n.t(:page_list_heading_updated).capitalize
     end
     r.input "%s (%s)" % [link_to_user(@page.updated_by_login), friendly_date(@page.updated_at)]
   end

@@ -23,7 +23,7 @@ module Groups::FeaturesHelper
         serviceUrl:'#{autocomplete_service_url}',
         minChars:1,
         maxHeight:500,
-        message:'#{'Enter page title...'.t}',
+        message:'#{I18n.t(:enter_page_title)}...',
         width:400,
         onSelect: #{autocomplete_item_selected_function(autocomplete_id)},
       }, '#{autocomplete_id}');
@@ -42,7 +42,6 @@ module Groups::FeaturesHelper
   end
 
   def handle_update_feature_order_javascript(container_id, spinner_id)
-    # require 'ruby-debug';debugger;1-1
     sortable_element container_id,
         :tag => 'tr',
         :handle => 'feature_drag_handle',

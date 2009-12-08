@@ -36,16 +36,16 @@ class MessageWallActivity < Activity
       user_html = user_span(:user)
       message_html = content_tag(:span, extra[:snippet],:class => 'message')
 
-      txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_html, :author => author_html, :message => message_html}]
+      txt = I18n.t(:activity_wall_message, :user => user_html, :author => author_html, :message => message_html)
     else
       author_html = user_span(:author)
       message_html = content_tag(:span,extra[:snippet], :class => 'message')
-      txt = '{author} wrote: {message}'[:activity_message, {:author => author_html, :message => message_html}]
+      txt = I18n.t(:activity_message, :author => author_html, :message => message_html)
     end
 #    if txt[-3..-1] == '...'
-#      @link = content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#      @link = content_tag(:a, I18n.t(:see_more_link), :href => "/messages/#{user_id}/show/#{post_id}")
 #    else
-#      @link = content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#      @link = content_tag(:a, I18n.t(:details_link), :href => "/messages/#{user_id}/show/#{post_id}")
 #    end
     return txt
   end

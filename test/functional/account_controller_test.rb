@@ -214,7 +214,7 @@ class AccountControllerTest < ActionController::TestCase
       confirmation_email = ActionMailer::Base.deliveries.last
       #  the email should be for the right person and the right site
       assert_equal confirmation_email.to[0], 'quire@localhost'
-      assert_equal 'Welcome to {site_title}!'[:welcome_to_site_tile, {:site_title => Site.current.title}],
+      assert_equal I18n.t(:welcome_title, :site_title => Site.current.title),
                     confirmation_email.subject
       # should have the right link
       assert_match %r[http://test.host/verify_email/#{token.value}], confirmation_email.body

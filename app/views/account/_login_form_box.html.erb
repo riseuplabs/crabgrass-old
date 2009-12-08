@@ -3,19 +3,19 @@
 <table>
 <tr>
   <td>
-    <div><label for="login"><%= "Login name"[:login_name] %></label></div>
+    <div><label for="login"><%= I18n.t(:login_name) %></label></div>
     <div><%= text_field_tag 'login' %></div>
   </td>
 </tr>
 <tr>
   <td>
-    <div><label for="password"><%= "Password"[:login_password] %></label></div>
+    <div><label for="password"><%= I18n.t(:login_password) %></label></div>
     <div><%= password_field_tag 'password' %></div>
   </td>
 </tr>
 <tr>
   <td style="text-align: right">
-     <div><%= submit_tag 'Log in'[:login_button] %></div>
+     <div><%= submit_tag I18n.t(:login_button) %></div>
   </td>
 </tr>
 <tr>
@@ -26,10 +26,10 @@
       <%= check_box_tag 'remember_me' %></p>
       <%- end -%>
       <% if may_signup? %>
-        <%= link_to 'Need a new account?'[:signup_link], { :controller => '/account', :action => 'signup', :redirect => params[:redirect] } %>
+        <%= link_to I18n.t(:signup_link), { :controller => '/account', :action => 'signup', :redirect => params[:redirect] } %>
         <br/>
       <% end %>
-      <%= link_to 'I forgot my password'[:forgot_password_link], :controller => '/account', :action => 'forgot_password' %>
+      <%= link_to I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password' %>
       <%= hidden_field_tag 'redirect', params[:redirect] %>
     </div>
   </td>

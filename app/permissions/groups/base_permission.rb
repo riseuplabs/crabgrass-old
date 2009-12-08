@@ -18,12 +18,14 @@ module Groups::BasePermission
   end
   alias_method :may_edit_group?, :may_update_group?
 
-  def may_destroy_group?(parent = @group)
-    if parent.council != parent
-      current_user.may?(:admin, parent)
-    else # no explicit council
-      parent.users.size == 1 and
-        current_user.member_of?(parent)
+  def may_destroy_group?(group = @group)
+    # has a council
+    if group.council != group and group.council.users.size == 1
+      current_user.may?(:admin, group)
+    elsif group.council == group
+      # no council
+      group.users.size == 1 and
+        current_user.member_of?(group)
     end
   end
 

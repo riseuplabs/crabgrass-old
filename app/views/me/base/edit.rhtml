@@ -1,7 +1,7 @@
 <% @avatar ||= @user.avatar -%>
 
 <% @title_box = capture do -%>
-<h1><%= "Settings for {user}"[:my_settings, {:user => current_user.display_name}] %></h1>
+<h1><%= I18n.t(:my_settings, :user => current_user.display_name) %></h1>
 <% end -%>
 
 <%= render :partial => 'profile_tabs' %>
@@ -9,31 +9,31 @@
   <table><tr>
   <td valign='top' id='user_avatar'><%= avatar_for @user, 'xlarge' %></td>
   <td valign='top' style='padding-left: 10px'>
-  <%= link_to_function('upload image'[:upload_image], "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
-  <%= link_to_remote_with_icon('remove image'[:remove_image], {
-    :url => {:action => 'delete_avatar'}, 
+  <%= link_to_function(I18n.t(:upload_image_link), "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16") %><br />
+  <%= link_to_remote_with_icon(I18n.t(:remove_image_link), {
+    :url => {:action => 'delete_avatar'},
     :update=>'user_avatar',
     :complete => "$('remove_image_link').hide()",
-    :confirm => 'Do you really want to delete your user image?'[:confirm_delete_avatar],
+    :confirm => I18n.t(:confirm_delete_avatar),
   }, :icon => "minus", :id => "remove_image_link") if @user.avatar %>
   <div id='uploadimage' style='display:none'>
-    <%= "Uploaded image will be cropped and stretched to 96 pixels square."[:uploaded_image_cropped] %><br/><br/>
+    <%= I18n.t(:uploaded_image_cropped) %><br/><br/>
     <% form_for(:image, @avatar, :url => {:controller => '/avatars', :action => 'create'}, :html => {:multipart => true}) do |f|-%>
-      <%= "select image file"[:select_image_file] %><br />
+      <%= I18n.t(:select_image_file) %><br />
       <%= f.file_field :image_file %><br /><br />
-      <%= "or image URL"[:or_image_url] %><br />
+      <%= I18n.t(:or_image_url) %><br />
       <%= f.text_field :image_file_url %><br />
       <%= hidden_field_tag 'redirect', url_for(:controller => 'me',:action=>'edit') %>
       <%= hidden_field_tag 'user_id', @user.id %>
-      <br /><%= submit_tag 'Upload Image'[:upload_image] %>
+      <br /><%= submit_tag I18n.t(:upload_image) %>
     <% end -%>
   </div>
   </td></tr></table>
-  
+
   <% form_tag(me_url(:action => 'edit')) do -%>
-    <%= render :partial => 'form' %>  
+    <%= render :partial => 'form' %>
     <p class="form_buttons">
-      <%= submit_tag 'Save changes'[:save_changes] %>
+      <%= submit_tag I18n.t(:save_changes) %>
     </p>
   <% end -%>
 

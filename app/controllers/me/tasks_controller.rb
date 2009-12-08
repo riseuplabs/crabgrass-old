@@ -37,7 +37,7 @@ class Me::TasksController < Me::BaseController
 
   def context
     super
-    add_context 'Tasks'[:me_tasks_link], url_for(:controller => '/me/tasks', :action => params[:action], :path => params[:path])
+    add_context I18n.t(:me_tasks_link), url_for(:controller => '/me/tasks', :action => params[:action], :path => params[:path])
   end
 
 end

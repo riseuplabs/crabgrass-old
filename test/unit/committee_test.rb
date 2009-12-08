@@ -25,10 +25,10 @@ class CommitteeTest < Test::Unit::TestCase
 
     assert_difference 'Group.find(%d).version'%g.id, -1 do
       assert_difference 'Group.find(%d).committees.count'%g.id, -1 do
-        c1.destroy
+        c1.destroy_by(users(:red))
       end
     end
-    g.destroy
+    g.destroy_by(users(:red))
     assert_nil Committee.find_by_name('food'), 'committee should die with group'
   end
 
@@ -36,7 +36,7 @@ class CommitteeTest < Test::Unit::TestCase
     assert_nothing_raised do
       Group.find(groups(:warm).id)
     end
-    groups(:rainbow).destroy
+    groups(:rainbow).destroy_by(users(:red))
     assert_raises ActiveRecord::RecordNotFound, 'committee should be destroyed' do
       Group.find(groups(:warm).id)
     end

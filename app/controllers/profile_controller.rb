@@ -17,7 +17,7 @@ class ProfileController < ApplicationController
     if request.post?
       @profile.save_from_params params['profile']
       if @profile.valid?
-        flash_message :success => "Your profile has been saved."[:profile_saved]
+        flash_message :success => I18n.t(:profile_saved)
         redirect_to :controller => 'profile', :action => 'edit', :id => @profile.type
       end
     end

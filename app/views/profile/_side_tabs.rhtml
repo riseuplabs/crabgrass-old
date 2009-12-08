@@ -3,19 +3,19 @@
 <% @private ||= @entity.profiles.private -%>
 <%= Formy.tabs(:class => 'left') do |f|
   f.tab do |t|
-    t.label 'Settings'.t
+    t.label I18n.t(:settings)
     t.icon 'actions/settings.png'
     t.link( @user ? me_url(:action => 'edit', :id => nil) : url_for_group(@group, :action => 'edit') )
     t.selected params[:action] == 'edit' && params[:controller] == 'me'
   end
   f.tab do |t|
-    t.label 'Public Profile'.t
+    t.label I18n.t(:public_profile)
     t.icon 'actions/profile-public.png'
     t.link url_for(:controller => 'profile', :action => 'edit', :id => @public.id)
     t.selected params[:controller] == 'profile' && params[:id] == @public.id.to_s
   end
   f.tab do |t|
-    t.label 'Private Profile'.t
+    t.label I18n.t(:private_profile)
     t.icon 'actions/profile-private.png'
     t.link url_for(:controller => 'profile', :action => 'edit', :id => @private.id)
     t.selected params[:controller] == 'profile' && params[:id] == @private.id.to_s

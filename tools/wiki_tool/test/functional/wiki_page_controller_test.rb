@@ -89,7 +89,7 @@ class WikiPageControllerTest < ActionController::TestCase
 
     # save twice, since the behavior is different if current_user has recently saved the wiki
     (1..2).each do |i|
-      str = "text %d for the wiki" / i
+      str = "text %d for the wiki" % i
       put :update, :page_id => pages(:wiki).id, :save => true, :wiki => {:body => str, :version => i}
       assert_equal str, assigns(:wiki).body
       assert_equal [:document], assigns(:wiki).sections_open_for(users(:blue)), "saving the edit should unlock wiki"

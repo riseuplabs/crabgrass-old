@@ -30,7 +30,7 @@
   <% end -%>
 
   <%- if !(tag_content = page_tags).nil? || may_update_tags? -%>
-    <h3><%= 'tags'[:tags] %></h3>
+    <h3><%= I18n.t(:tags) %></h3>
     <div class='tags'>
       <%= tag_content %>
     </div>
@@ -40,7 +40,7 @@
   <%- end -%>
 
   <%- if @page.supports_attachments and !(attachment_content = page_attachments).nil? -%>
-    <h3><%= 'attachments'[:attachments] %></h3>
+    <h3><%= I18n.t(:attachments) %></h3>
     <div class='attachments'>
       <%= attachment_content %>
     </div>
@@ -50,7 +50,7 @@
   <%- end -%>
 
   <% if @page.group_participations.any? -%>
-    <h3><%= "Groups"[:groups] %></h3>
+    <h3><%= I18n.t(:groups) %></h3>
     <ul class='side_list names'>
       <% @page.sorted_group_participations.each do |group_part| %>
         <li><%= link_to_group_participation(group_part) %></li>
@@ -63,7 +63,7 @@
 %     @more = true
 %     uparts.pop
 %   end
-    <h3><%= "People"[:people] %></h3>
+    <h3><%= I18n.t(:people) %></h3>
     <ul class='side_list names'>
 %     uparts.each do |user_part|
         <li><%= link_to_user_participation(user_part) %></li>

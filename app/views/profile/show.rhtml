@@ -2,7 +2,7 @@
 <% @profile ||= profile -%>
 <div class="profile">
 <table><tr>
-  <td style="text-align:left;">						
+  <td style="text-align:left;">
     <table><tr>
       <td>
         <%= photo @profile %>
@@ -21,9 +21,9 @@
 
 <dl>
   <% unless @profile.phone_numbers.empty? -%>
-    <dt><%= _('Phone') -%>:</dt>
+    <dt><%= I18n.t(:phone) -%>:</dt>
     <% @profile.phone_numbers.each do |phone_number| -%>
-      <dd>                                                                  
+      <dd>
           <%= h(phone_number.phone_number) %>
         <em>
           <%= h(_(phone_number.phone_number_type)) %>
@@ -32,7 +32,7 @@
     <% end -%>
   <% end -%>
   <% unless @profile.email_addresses.empty? -%>
-    <dt><%= _('Email') -%>:</dt>
+    <dt><%= I18n.t(:email) -%>:</dt>
     <% @profile.email_addresses.each do |email_address| -%>
       <dd>
         <%= link_to(h(email_address.email_address), {:controller => 'mail', :action => 'compose', :to => "#{@profile.full_name} <#{email_address.email_address}>"}, {:title => _("Compose a new email to %{i18n_email_address}")%{:i18n_email_address => "#{email_address.email_address}"}}) %>
@@ -43,7 +43,7 @@
     <% end -%>
   <% end -%>
   <% @profile.locations.each do |location| -%>
-    <dt><%= _('Location') -%>:</dt>
+    <dt><%= I18n.t(:location) -%>:</dt>
     <dd>
       <%= h(location.street) %> <em><%= h(_(location.location_type)) %></em>
       <br />
@@ -53,7 +53,7 @@
     </dd>
   <% end -%>
   <% unless @profile.im_addresses.empty? -%>
-    <dt><%= _('Instant Messaging') -%>:</dt>
+    <dt><%= I18n.t(:instant_messaging) -%>:</dt>
     <% @profile.im_addresses.each do |im| -%>
       <dd>
         <%= im.im_address %>
@@ -62,7 +62,7 @@
     <% end -%>
   <% end -%>
   <% unless @profile.websites.empty? -%>
-    <dt><%= _('Websites') -%>:</dt>
+    <dt><%= I18n.t(:websites) -%>:</dt>
     <% @profile.websites.each do |website| -%>
       <dd>
         <a target="_blank" href="<%= website.site_url %>">

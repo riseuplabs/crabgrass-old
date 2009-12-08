@@ -83,17 +83,17 @@ class Me::PrivateMessagesController < Me::BaseController
   def context
     super
     if action?(:show)
-      add_context('Messages'[:messages], my_messages_url)
-      add_context('Private'[:private], my_private_messages_url)
+      add_context(I18n.t(:messages), my_messages_url)
+      add_context(I18n.t(:private), my_private_messages_url)
       add_context(h(@recipient.display_name), my_private_message_path(@recipient))
     end
   end
 
   def create_private_message
     if @recipient.nil?
-      raise ErrorMessage.new("{thing} not found"[:thing_not_found, params[:id]])
+      raise ErrorMessage.new(I18n.t(:thing_not_found, :thing => params[:id]))
     elsif params[:post].try[:body].empty?
-      raise ErrorMessage.new("message must not be empty"[:message_must_not_be_empty])
+      raise ErrorMessage.new(I18n.t(:message_must_not_be_empty))
     end
     @discussion.increment_unread_for(@recipient)
     @post = @discussion.posts.create do |post|

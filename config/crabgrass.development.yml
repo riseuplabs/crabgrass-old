@@ -18,10 +18,10 @@
 title: "Crabgrass Development"
 
 enabled_mods:
-  - design_tester
-  - super_admin
-  - moderation
-#  - gibberize
+   - design_tester
+#  - super_admin
+#  - moderation
+#  - translator
 
 email:
   delivery_method: :sendmail

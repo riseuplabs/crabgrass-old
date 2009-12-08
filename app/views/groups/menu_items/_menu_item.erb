@@ -3,11 +3,11 @@
     <div style="float: right; width: 7em; text-align: right;">
       <% spinner_id = dom_id(menu_item, :delete_button) # id used to show the spinner %>
       <%= spinner(spinner_id) %>
-      <%= link_to_function( "edit".t, nil) do |page|
+      <%= link_to_function( I18n.t(:edit), nil) do |page|
         page.toggle(dom_id(menu_item, :show))
         page.toggle(dom_id(menu_item, :edit))
       end %><br/>
-      <%= link_to_function('delete'.t, destroy_menu_item_remote_function(menu_item, spinner_id))%>
+      <%= link_to_function(I18n.t(:delete), destroy_menu_item_remote_function(menu_item, spinner_id))%>
     </div>
     <b><%= menu_item.title %></b>
     <br/>
@@ -24,8 +24,8 @@
     ) do |f| -%>
       <div style="float: right; width: 7em; text-align: right;">
         <%= spinner(spinner_id) %>
-        <%= submit_tag 'Save'.t %>
-        <%= link_to_function('cancel'.t, nil) do |page|
+        <%= submit_tag I18n.t(:save_button) %>
+        <%= link_to_function(I18n.t(:cancel), nil) do |page|
           page.toggle(dom_id(menu_item, :show))
           page.toggle(dom_id(menu_item, :edit))
         end %>

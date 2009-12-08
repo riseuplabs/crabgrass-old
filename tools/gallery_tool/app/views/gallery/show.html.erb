@@ -10,7 +10,7 @@
     <br style='clear:both'/>
     <%= pagination_links @images %>
   <%- else -%>
-    <%= "No images in gallery"[:no_images_in_gallery] %>
+    <%= I18n.t(:no_images_in_gallery) %>
   <%- end -%>
 </div>
 

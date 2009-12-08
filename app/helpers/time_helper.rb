@@ -21,8 +21,8 @@ module TimeHelper
       # 4:30PM
       str = time.strftime("%I:%M<span>%p</span>")
     elsif today > date and (today-date) < 7
-      # Wednesday
-      str = time.strftime("%A").t
+      # I18n.t(:wednesday) => Wednesday
+      str = I18n.t(time.strftime("%A").downcase.to_sym)
     elsif date.year != today.year
       # 7/Mar/08
       str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
@@ -34,7 +34,9 @@ module TimeHelper
   end
 
   def localize_month(month)
-    month[('month_short_'+month.downcase).to_sym]
+    # for example => :month_short_january
+    month_sym = ('month_short_'+month.downcase).to_sym
+    I18n.t(month_sym)
   end
 
   # formats a time, in full detail

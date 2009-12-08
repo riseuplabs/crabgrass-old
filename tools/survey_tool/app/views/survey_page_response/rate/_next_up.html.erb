@@ -2,11 +2,11 @@
 <% responses.each do |resp| -%>
   <% if resp.user %>
     <div class="name_icon small" style="background-image: url(<%= avatar_url_for(resp.user, 'small') %>)">
-      <%= "Response by {login}"[:survey_response_by, resp.user.login] %>
+      <%= I18n.t(:survey_response_by, :login => resp.user.login) %>
     </div>
   <% else %>
     <div class="name_icon small page_survey_16">
-      <%= "Response by {login}"[:survey_response_by, (resp.name||resp.email||'unknown')] %>
+      <%= I18n.t(:survey_response_by, :login => (resp.name||resp.email||'unknown')) %>
     </div>
   <% end %>
 <% end -%>

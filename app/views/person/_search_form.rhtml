@@ -1,5 +1,5 @@
 <% form_tag({:action => "directory"},:id => "searchform") do -%>
-<%= "Search".t %>: <%= text_field_tag 'filter', @filter %>
+<%= I18n.t(:search) %>: <%= text_field_tag 'filter', @filter %>
 <% end -%>
 <%= javascript_tag "Form.focusFirstElement('searchform');" %>
 

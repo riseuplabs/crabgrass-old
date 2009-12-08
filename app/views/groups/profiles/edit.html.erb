@@ -3,69 +3,69 @@
 
 <% form_tag(groups_profiles_params(:action => :edit), :multipart => true) do %>
   <%= Formy.form do |f|
-    f.heading "Information"[:information]
+    f.heading I18n.t(:information)
     f.row do |r|
-      r.label "Summary"[:summary]
+      r.label I18n.t(:summary)
       r.label_for 'profile_summary'
       r.input text_area('profile', 'summary', :rows => 5, :cols => 40)
     end
     if @profile.summary_html.any?
       f.row do |r|
-        r.label "%s (%s)" % ["Summary"[:summary], "Preview"[:preview]]
+        r.label "%s (%s)" % [I18n.t(:summary), I18n.t(:preview)]
         r.input @profile.summary_html
       end
     end
     f.row do |r|
-      r.label "Location"[:location]
+      r.label I18n.t(:location)
       r.label_for 'profile_place'
       r.input text_field('profile', 'place')
     end
-    f.heading "Photo"[:photo]
+    f.heading I18n.t(:photo)
     if @profile.photo
       f.row do |r|
         r.input [thumbnail_img_tag(@profile.photo, :medium), submit_tag("Clear", :name => 'clear_photo')].join('<br/>')
       end
     else
       f.row do |r|
-        r.label "File"[:file]
+        r.label I18n.t(:file)
         r.label_for 'profile_photo_uploaded_data'
         r.input file_field_tag('profile[photo][uploaded_data]', :id => 'profile_photo_uploaded_data')
       end
       f.row do |r|
-        r.label "Caption"[:caption]
+        r.label I18n.t(:caption)
         r.label_for 'profile_photo_caption'
         r.input text_field_tag('profile[photo][caption]', '', :id => 'profile_photo_caption')
       end
       f.row do |r|
-        r.label "Photo Credit"[:photo_credit]
+        r.label I18n.t(:photo_credit)
         r.label_for 'profile_photo_photo'
         r.input text_field_tag('profile[photo][credit]', '', :id => 'profile_photo_photo')
       end      
     end
-    f.heading "Video"[:media_video]
+    f.heading I18n.t(:media_video)
     if video.media_embed.any?
       f.row do |r|
         r.input [display_media(@profile.video), submit_tag("Clear", :name => 'clear_video')].join('<br/>')
-        f.info "Embed code from external video source"[:video_embed_code_prompt] + ' ' + "Currently supported: youtube, blip.tv, google video, vimeo."[:current_video_sources]
+        f.info I18n.t(:video_embed_code_prompt) + ' ' + I18n.t(:current_video_sources)
 
       end
     end
     f.row do |r|
-      r.label "Embed"[:video_embed]
+      r.label I18n.t(:video_embed)
       r.label_for 'profile_video_media_embed'
       r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40, :id => 'profile_video_media_embed')
     end
     f.row do |r|
-      r.label "Height"[:height]
+      r.label I18n.t(:height)
       r.label_for 'profile_video_height'
       r.input text_field_tag('profile[video][height]', video.height, :id => 'profile_video_height')
     end
     f.row do |r|
-      r.label "Width"[:width]
+      r.label I18n.t(:width)
       r.label_for 'profile_video_width'
       r.input text_field_tag('profile[video][width]', video.width, :id => 'profile_video_width')
     end      
   end %>
-  <p class="form_buttons"><%= submit_tag "Save"[:save_button], :name => 'save' %></p>
+  <p class="form_buttons"><%= submit_tag I18n.t(:save_button), :name => 'save' %></p>
 <% end %>
 

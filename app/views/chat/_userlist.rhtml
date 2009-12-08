@@ -2,7 +2,7 @@
   <div class="user" id="c_user-<%= c_user.user.id %>">
   <%= avatar_for c_user.user, 'xsmall' %>
   <%= link_to_user c_user.user %>
-  <span id="typing-<%= c_user.user_id %>" style="display: none;"> (<%= :typing.t %>) </span>
+  <span id="typing-<%= c_user.user_id %>" style="display: none;"> (<%= I18n.t(:typing) %>) </span>
   </div>
 <% end %>
 

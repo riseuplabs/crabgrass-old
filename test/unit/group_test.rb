@@ -161,7 +161,7 @@ class GroupTest < Test::Unit::TestCase
     assert_equal page.owner, g
 
     assert_difference 'Membership.count', -2 do
-      g.destroy
+      g.destroy_by(users(:blue))
     end
 
     assert_nil page.reload.owner_id
@@ -206,7 +206,7 @@ class GroupTest < Test::Unit::TestCase
     #assert_equal 19987, group.avatar.image_file_data.size
 
     assert_difference 'Avatar.count', -1 do
-      group.destroy
+      group.destroy_by(users(:red))
     end
 
   end
