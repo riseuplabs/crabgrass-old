@@ -169,6 +169,7 @@ module ApplicationHelper
   #   :container    => true
   #
   def pagination_for(things, options={})
+    return if !@page.is_a?(WillPaginate::Collection)
     if request.xhr?
       defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
     else
