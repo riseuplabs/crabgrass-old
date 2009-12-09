@@ -1,5 +1,7 @@
-%div
-  = header_with_more(:h2, :alert, I18n.t(:recent_contributions), person_search_url(:descending => 'updated_at'))
-  %div.page_scroll
-    = render :partial => 'pages/list'
-    = link_to I18n.t(:see_more_link) + ARROW, person_search_url(:descending => :updated_at)
+%section#pages
+  %header
+    = render :partial => 'layouts/base/pages'
+
+  %footer
+    %div.pagination
+      = link_to(I18n.t(:more), person_search_url(:descending => 'updated_at'))

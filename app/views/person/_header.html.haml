@@ -1,15 +1,10 @@
-%section#identity-name
-  %h1 
-    = @user.display_name 
-    %i.normal 
-    = h(@status)
+%header
+  %section#identity-name
+    %h1 
+      = @user.display_name 
+      %i.normal 
+      = h(@status)
 
-%div#login-date
-  %time#last-login 
-    = last_login(@user)
-
-- if may_create_messages?
-  %div#say
-    = render :partial => 'common/say_form', :locals => {  :submit => I18n.t(:say_message_button), :url => person_messages_path(@user) }
-
-= render :partial => "activity"
+  %div#login-date
+    %time#last-login 
+      = last_login(@user)
