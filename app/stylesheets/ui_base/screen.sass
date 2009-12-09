@@ -114,28 +114,27 @@ body
               color= !light_grey_border
           li.first
             margin-right: 10px
-  #breadcrumb
-    +clearfix
-    height: 30px
-    #breadcrumb-container
-      +container
-      div
-        +columns(14)
-        +full
-        margin-top: 4px
-        a
-          +hover-link
-          +small-text
-          +zero
-          text-transform: uppercase
-          color= !almost_black
 
-          
   #content
     +clearfix
     +bordered-btm
     color= !medium_grey_text
     background: #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
+    #breadcrumb
+      +clearfix
+      height: 30px
+      #breadcrumb-container
+        +container
+        div
+          +columns(14)
+          +full
+          margin-top: 4px
+          a
+            +hover-link
+            +small-text
+            +zero
+            text-transform: uppercase
+            color= !almost_black
     #content-container
       +container
       padding-bottom: 100px
@@ -169,16 +168,6 @@ body
                 width: 204px
                 font-size: 11px
                 
-          #contribute
-            +columns(4,4)
-            margin: 20px 0 0
-            height: 20px
-            width: 204px
-            padding: 10px 0 6px
-            background-color: #78be63
-            border: 1px solid #448c3b
-            h3
-              color: #fff
           #identity-meta
             +columns(4,4)
             +bordered
@@ -264,12 +253,10 @@ body
               ul#details
                 +clearfix
                 width: 184px
-              li
-                width: 164px
-                padding-top: 4px
-                
-                
-              
+                li
+                  width: 164px
+                  padding-top: 4px
+     
         #main-content
           width: 540px
           float: left
@@ -283,7 +270,7 @@ body
               +columns(10,10)
               margin: 0
               width: 540px
-              height: 50px
+              height: 67px
               h1
                 float: left
                 display: inline
@@ -310,18 +297,26 @@ body
                     a
                       color= !light_grey_text
                       padding-left: 8px
-                      
-              
+                #contribute
+                  margin: 20px 0 0
+                  height: 20px
+                  width: 204px
+                  padding: 10px 0 6px
+                  background-color: #78be63
+                  border: 1px solid #448c3b
+                  h3
+                    color: #fff      
+        
             nav#group, #login-date
               +columns(10,10)
               +zero
               width: 540px
-              height: 37px
+              height: 28px
               li
                 +zero
                 +bordered(!almost_black)
                 +spaced
-                height: 37px
+                height: 28px
                 border-left: none
                 background: #fff
                 font-size: 11px
@@ -329,8 +324,8 @@ body
                   color= !warm_grey_text
                   text-decoration: none
                   font-weight: bold
-                  height: 37px
-                  line-height: 3.5
+                  height: 28px
+                  line-height: 2.5
                   padding: 8px 10px
               li.current
                 background= !almost_black
@@ -522,33 +517,7 @@ body
                   label.date
                     font-size: 9px
                     color= !lighter_grey_text
-          #contributions
-            #page-list
-              table
-                +columns(10,10)
-                +clearfix
-                width: 540px
-                th, td
-                  a
-                    +hover-link
-                th#stars
-                  width: 40px
-                th#owner
-                  width: 150px
-                th#title
-                  width: 290px
-                  padding-left: 20px
-                th#updated
-                  width: 60px
-                th
-                  +bordered-btm(!medium_grey_border)
-                  padding: 6px 4px 6px 0
-                td
-                  +bordered-btm(!light_grey_border)
-                  padding: 4px 4px 4px 0
-                  line-height: 1.2
-                td.name, td.updated
-                  font-size: 10px
+          
 
   footer.page
     +container
