@@ -160,3 +160,8 @@ Post.blueprint do
   body       { Faker::Lorem.paragraph }
   user       { User.make }
 end
+
+#
+# Locations
+#
+GeoCountry.blueprint {} 
