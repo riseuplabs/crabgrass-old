@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091105213521) do
+ActiveRecord::Schema.define(:version => 20091209100931) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -347,7 +347,6 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
   end
 
   create_table "moderated_flags", :force => true do |t|
-    t.string   "type",                         :null => false
     t.datetime "vetted_at"
     t.integer  "vetted_by_id",   :limit => 11
     t.datetime "deleted_at"
@@ -357,7 +356,8 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id",        :limit => 11
-    t.integer  "foreign_id",     :limit => 11, :null => false
+    t.integer  "flagged_id",     :limit => 11
+    t.string   "flagged_type"
   end
 
   create_table "page_histories", :force => true do |t|
@@ -546,6 +546,7 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.boolean  "admins_may_moderate"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -851,7 +852,6 @@ ActiveRecord::Schema.define(:version => 20091105213521) do
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
     t.string   "receive_notifications"
-    t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
   end
 
