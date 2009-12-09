@@ -1,0 +1,17 @@
+// TODO: Fix this shity var assignament
+- eat_enter = "return(!enterPressed(event));"
+- text = params[:post].try[:body] if text.nil? 
+- submit = 'submit' if submit.nil?
+- recipient = false if recipient.nil?
+ 
+- if logged_in?
+  = avatar_for(current_user, :xsmall)
+  - form_tag(url || '', :id => 'say') do
+    - if recipient
+      %h3 Recipient
+      = text_field_tag 'id', params[:id], :id => 'recipient_name', :onkeypress => eat_enter, :class => 'textinput'
+      = autocomplete_users_tag('recipient_name')
+      %h3 Message 
+
+    = text_area_tag 'post[body]', text, :id => 'say_text', :class => 'textarea', :onfocus => 'setRows($("say_text"), 5)', :onblur => 'setRows($("say_text"), 1)'
+    = submit_tag submit, :class => 'say-submit'
