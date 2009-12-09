@@ -14,7 +14,7 @@ module UserExtension::Moderator
     page = entity.discussion.page if entity.is_a?(Post)
     moderated_group_ids=Group.with_admin(self).moderated.map(&:id)
     return false unless moderated_group_ids.any?
-    conditions = "group_id IN #{moderated_group_ids}"
+    conditions = "group_id IN (#{moderated_group_ids})"
     page.group_participations.find(:first, :conditions => conditions)
   end
 end
