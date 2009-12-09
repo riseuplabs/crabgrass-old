@@ -58,8 +58,8 @@ class BasePage::YuckyController < BasePage::SidebarController
 
   prepend_before_filter :fetch_flag
   def fetch_flag
-    @post = Post.find(params[:post_id])
-    @page = Page.find(params[:page_id])
+    @post = Post.find(params[:post_id]) if params[:post_id]
+    @page = Page.find(params[:page_id]) if params[:page_id]
     @flagged = @post || @page
     return false unless @flagged
     @flag = @flagged.moderated_flags.find_by_user_id(current_user.id)
