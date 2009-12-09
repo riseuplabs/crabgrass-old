@@ -1598,8 +1598,8 @@ en:
 
   make_public_requested: "Make Public Requested"
   moderation: "Moderation"
-  admins_may_moderate: "Allow Admins to moderate the groups content"
-  admins_may_moderate_description: "A Moderation Menu will appear for admins of the group. It allows them to remove or approve flagged pages and comments."
+  admins_may_moderate: "Allow council members to moderate the content of the group"
+  admins_may_moderate_description: "When this option is selected, council members will have access to a moderation tool which allows them to review and remove pages and comments."
 
   ##
   ## ADMIN
