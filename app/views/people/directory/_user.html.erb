@@ -9,7 +9,7 @@
         %>
         </div>
       </td>
-      <td><%=  link_to "#{user.login}", url_for_user(user) %></td>
+      <td><%= user_line(user, profile) %></td>
       <td><%= profile.full_name %></td>
       <td><%= profile.organization %></td>
       <td>

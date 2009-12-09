@@ -17,42 +17,42 @@
 <div id="design_questions_container" class="survey_questions_container">
 
   <% form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f| %>
-    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
-    
-    <h2 class="alert"><%= "Description".t %></h2>
-    <blockquote> <%="This text will show up in the introduction tab, and will be the first thing that survey takers see."[:survey_description_explaination]%>
+    <p><%= submit_tag I18n.t(:save_survey_button), :class => "submit" %></p>
+
+    <h2 class="alert"><%= I18n.t(:survey_description_heading) %></h2>
+    <blockquote> <%=I18n.t(:survey_description_explaination)%>
       <%= f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%' %>
     </blockquote>
-        
-    <h2 class="alert"><%= "Permissions".t %></h2>
+
+    <h2 class="alert"><%= I18n.t(:permissions) %></h2>
     <blockquote>
     <table class="permissions">
       <tr>
         <th>&nbsp;</th>
-        <td><span class="small_icon wrench_16"><%= "Coordinators".t %></span></td>
-        <td><span class="small_icon pencil_16"><%= "Participants".t %></span></td>
-        <td><span class="small_icon magnifier_16"><%= "Viewers".t %></span></td>
+        <td><span class="small_icon wrench_16"><%= I18n.t(:page_access_admin) %></span></td>
+        <td><span class="small_icon pencil_16"><%= I18n.t(:page_access_edit) %></span></td>
+        <td><span class="small_icon magnifier_16"><%= I18n.t(:page_access_view) %></span></td>
       </tr>
       <tr class="odd">
-        <td class="label"><%="May create response?"[:survey_may_create_response]%></td>
+        <td class="label"><%=I18n.t(:survey_may_create_response)%></td>
         <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
         <td><%= f.check_box :edit_may_create %></td>
         <td><%= f.check_box :view_may_create %></td>
       </tr>
       <tr class="even">
-        <td class="label"><%="May see responses?"[:survey_may_see_responses]%></td>
+        <td class="label"><%=I18n.t(:survey_may_see_responses)%></td>
         <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
         <td><%= f.check_box :edit_may_see_responses %></td>
         <td><%= f.check_box :view_may_see_responses %></td>
       </tr>
       <tr class="odd">
-        <td class="label"><%="May rate responses?"[:survey_may_rate]%></td>
+        <td class="label"><%=I18n.t(:survey_may_rate)%></td>
         <td><%= f.check_box :admin_may_rate %></td>
         <td><%= f.check_box :edit_may_rate %></td>
         <td><%= f.check_box :view_may_rate %></td>
       </tr>
       <tr class="even">
-        <td class="label"><%="May see ratings?"[:survey_may_see_ratings]%></td>
+        <td class="label"><%=I18n.t(:survey_may_see_ratings)%></td>
         <td><%= check_box_tag("", "", true, {:disabled => true}) %></td>
         <td><%= f.check_box :edit_may_see_ratings %></td>
         <td><%= f.check_box :view_may_see_ratings %></td>
@@ -60,7 +60,7 @@
     </table>
     </blockquote>
 
-    <h2 class="alert"><%= "Questions"[:survey_questions] %></h2>
+    <h2 class="alert"><%= I18n.t(:survey_questions) %></h2>
     <blockquote>
     <div id="add_questions_links_bar">
       <span class="label plus_16 small_icon">Add:</span>
@@ -71,7 +71,7 @@
     </div>
     </blockquote>
 
-    <p><%= submit_tag "Save Survey".t, :class => "submit" %></p>
+    <p><%= submit_tag I18n.t(:save_survey_button), :class => "submit" %></p>
   <% end %>
 </div>
 

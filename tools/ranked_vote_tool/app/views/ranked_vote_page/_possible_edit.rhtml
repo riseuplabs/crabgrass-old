@@ -19,9 +19,9 @@ delete_click     = "Element.hide('#{possible_id}');" + remote_function(:url => d
   <br/>
   <div class='fieldset'><%= text_area 'possible', 'description', :size => '70x4' %></div>
   <p>
-    <%= submit_tag 'Save'.t %>
-    <%= button_to_function "Cancel".t, close_click %>
-    <%= button_to_function "Delete".t, delete_click %>
+    <%= submit_tag I18n.t(:save_button) %>
+    <%= button_to_function I18n.t(:cancel_button), close_click %>
+    <%= button_to_function I18n.t(:delete_button), delete_click %>
     <%= spinner(possible_edit_id) %>
   </p>
 <% end %>

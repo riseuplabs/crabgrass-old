@@ -1,15 +1,15 @@
-<% @title_box = content_tag(:h1, (@active_tab == :groups ? 'Directory of Groups'[:directory_of_groups] : 'Directory of Networks'[:directory_of_networks])) -%>
+<% @title_box = content_tag(:h1, (@active_tab == :groups ? I18n.t(:directory_of_groups) : I18n.t(:directory_of_networks))) -%>
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
 <%
   if @active_tab == :groups 
     method = :group_directory_url
-    my_groups = 'My Groups'[:my_groups]
-    all_groups = 'All Groups'[:all_groups]
+    my_groups = I18n.t(:my_groups)
+    all_groups = I18n.t(:all_groups)
   else
     method = :network_directory_url
-    my_groups = 'My Networks'[:my_networks]
-    all_groups = 'All Networks'[:all_networks]
+    my_groups = I18n.t(:my_networks)
+    all_groups = I18n.t(:all_networks)
   end
 %>
 <%= Formy.tabs do |f|
@@ -19,12 +19,12 @@
     t.selected action?(:my)
   end
   f.tab do |t|
-    t.label 'Recently Created'[:recently_created]
+    t.label I18n.t(:recently_created)
     t.url send(method, :action => :recent)
     t.selected action?(:recent)
   end
   f.tab do |t|
-    t.label 'Most Active'[:most_active]
+    t.label I18n.t(:most_active)
     t.url send(method, :action => :most_active)
     t.selected action?(:most_active)
   end

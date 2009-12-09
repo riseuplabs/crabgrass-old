@@ -1,19 +1,21 @@
 <% render :partial => 'wiki_page/tabs' %>
 
 <% unless @version %>
-  <%= :version_doesnt_exist.t % {:version => params[:version]} %>
+  <%= I18n.t(:version_doesnt_exist, :version => params[:version]) %>
 <% else %>
 
-<div style="float:right"><%= link_to "Revert To Version {version}"[:wiki_revert_version, @version.version], page_url(@page, :action => 'version-revert', :id => @version.version) %></div>
+<div style="float:right">
+  <%= link_to I18n.t(:wiki_revert_version, :version => @version.version), page_url(@page, :action => 'version-revert', :id => @version.version) %>
+</div>
 
 <div>
-<%= :you_are_viewing_version.t % {:version => @version.version, :user => link_to_user(@version.user_id) }%><br/>
+<%= I18n.t(:you_are_viewing_version, :version => @version.version, :user => link_to_user(@version.user_id) )%><br/>
 <i><%= full_time(@version.updated_at) %></i>
 </div>
 
 <div class="pagination">
-  <%= link_to(LARROW + "Previous"[:pagination_previous], page_url(@page, :action => 'version-previous', :id => @version.version)) %>
-  <%= link_to("Next"[:pagination_next] + RARROW, page_url(@page, :action => 'version-next', :id => @version.version)) %>
+  <%= link_to(LARROW + I18n.t(:pagination_previous), page_url(@page, :action => 'version-previous', :id => @version.version)) %>
+  <%= link_to(I18n.t(:pagination_next) + RARROW, page_url(@page, :action => 'version-next', :id => @version.version)) %>
 </div>
 
 <div class='wiki'><div id='wiki_html'>

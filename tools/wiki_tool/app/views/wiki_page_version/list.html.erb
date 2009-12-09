@@ -3,20 +3,20 @@
 <table class="pretty">
   <tr>
     <th></th>
-    <th><%= "created"[:created] %></th>
-    <th><%= "person"[:person] %></th>
+    <th><%= I18n.t(:created) %></th>
+    <th><%= I18n.t(:wiki_version_creator_heading) %></th>
     <th>&nbsp;</th>
   </tr>
   <% for version in @wiki.versions %>
   <% url = page_url(@page, :action => "version-show", :id => version.version) %>
   <tr class="<%= cycle('odd','even') %>">
-    <td><%= link_to "version {number}"[:version_number, version.version], url %></td>
+    <td><%= link_to I18n.t(:version_number, :number => version.version), url %></td>
     <td><%= link_to full_time(version.updated_at), url %></td>
     <td><%= link_to_user(version.user, :avatar => :xsmall) if version.user %></td>
     <td><%= link_line(
-      link_to_if(version.version > 1, "diff"[:diff_link], page_url(@page, :action=>'version-diff', :id => "#{version.version.to_i-1}-#{version.version}")),
-      link_to_iff(may_revert_wiki_version?, "revert"[:revert], page_url(@page, :action => 'version-revert', :id => version.version)),
-      link_to_iff(may_destroy_wiki_version?, "destroy"[:destroy], page_url(@page, :action => 'version-destroy', :id => version.id), {:method => :post, :confirm => "Are you sure?"[:confirmation]})
+      link_to_if(version.version > 1, I18n.t(:diff_link), page_url(@page, :action=>'version-diff', :id => "#{version.version.to_i-1}-#{version.version}")),
+      link_to_iff(may_revert_wiki_version?, I18n.t(:wiki_version_revert_link), page_url(@page, :action => 'version-revert', :id => version.version)),
+      link_to_iff(may_destroy_wiki_version?, I18n.t(:wiki_version_destroy_link), page_url(@page, :action => 'version-destroy', :id => version.id), {:method => :post, :confirm => I18n.t(:confirmation)})
      )%></td>
   </tr>
   <% end %>

@@ -1,16 +1,16 @@
 <% response_form.fields_for :answers_attributes, answer, :index => question.id do |f| %>
   <span class="small_icon mime_video_16 response_icon_label">
-    <%= 'Embed code from external video source'[:video_embed_code_prompt] %>
+    <%= I18n.t(:video_embed_code_prompt) %>
   </span>
   <blockquote><em>
-    <%= 'This is not the website address. It is a code surrounded by < and > that the video site – youtube, etc – makes available to you for putting the video on other sites.'[:video_embed_code_explain] %>
+    <%= I18n.t(:video_embed_code_description) %>
   </em></blockquote>
 
   <%= f.error_message_on :value %>
   <%= f.hidden_field :question_id %>
   <%= f.text_area(:value, :size => "72x6", :style => 'width:100%') %>
   <em>
-    <%=  '(' + 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] + ')' %>
+    <%=  '(' + I18n.t(:current_video_sources) + ')' %>
   </em>
 <% end %>
 

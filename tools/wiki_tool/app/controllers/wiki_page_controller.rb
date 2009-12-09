@@ -54,12 +54,12 @@ class WikiPageController < BasePageController
     if show_inline_editor?
       @locker = @wiki.locker_of(@editing_section)
       @locker ||= User.new :login => 'unknown'
-      @wiki_inline_error = 'This wiki is currently locked by :user'[:wiki_locked] % {:user => @locker.display_name}
+      @wiki_inline_error = I18n.t(:wiki_is_locked, :user => @locker.display_name)
     end
   rescue ActiveRecord::StaleObjectError => exc
      # this exception is created by optimistic locking.
      # it means that wiki or wiki locks has change since we fetched it from the database
-     flash_message_now :error => "locking error. can't save your data, someone else has saved new changes first."[:locking_error]
+     flash_message_now :error => I18n.t(:locking_error)
   ensure
     render :action => 'update_wiki_html' if show_inline_editor?
   end
@@ -111,7 +111,7 @@ class WikiPageController < BasePageController
   rescue ActiveRecord::StaleObjectError => exc
     # this exception is created by optimistic locking.
     # it means that wiki or wiki locks has change since we fetched it from the database
-    flash_message_now :error => "locking error. can't save your data, someone else has saved new changes first."[:locking_error]
+    flash_message_now :error => I18n.t(:locking_error)
   rescue ErrorMessage => exc
     flash_message_now :error => exc.to_s
   ensure
@@ -274,7 +274,6 @@ class WikiPageController < BasePageController
 
   ### HELPER METHODS
   def save_or_cancel_edit_lock_wiki_error_text
-    "You have locked this wiki. Other users will not be able to edit it until you click either {save_button} or {cancel_button} to stop editing."[:save_or_cancel_edit_lock_wiki_error,
-      {:save_button => 'Save'[:save_button], :cancel_button => 'Cancel'[:cancel_button]}]
+    I18n.t(:save_or_cancel_edit_lock_wiki_error, {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)})
   end
 end

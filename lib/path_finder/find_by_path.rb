@@ -38,7 +38,7 @@ module PathFinder
     # construct_finder_sql is private, but we would like to be able to use it
     # in the builders.
     def find_ids(options)
-      Page.connection.select_values construct_finder_sql(options)
+      self.connection.select_values construct_finder_sql(options)
     end
 
     private
@@ -46,7 +46,7 @@ module PathFinder
     def builder(path, options)
       query_method  = options[:method] || :mysql
       query_options = resolve_options(query_method, path, options)
-      PathFinder.get_builder(query_method).new(path, query_options)
+      PathFinder.get_builder(query_method).new(path, query_options, self)
     end
 
     def resolve_options(query_method, path, options)

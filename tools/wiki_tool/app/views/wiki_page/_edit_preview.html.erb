@@ -5,10 +5,10 @@
   <textarea name="wiki[body_preview]" style="display:none" id="greencloth_previewed_content"></textarea>
   <div>
    <% if locked_for_me? -%>
-     <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+     <%= submit_tag I18n.t(:break_lock_button), :name => 'break_lock' %>
    <% else -%>
-     <%= submit_tag 'Save'[:save_button], :name => 'save' %>
+     <%= submit_tag I18n.t(:save_button), :name => 'save' %>
    <% end -%>
-   <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
+   <%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %>
   </div>
 <% end -%>

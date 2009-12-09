@@ -1,10 +1,10 @@
 <% @title_box = capture do -%>
-<h1><%= "Create a new page"[:create_a_new_thing, "page"[:page].downcase] %></h1>
+<h1><%= I18n.t(:create_a_new_thing, :thing => I18n.t(:page).downcase) %></h1>
 <% end -%>
 
 <% if @group %>
   <% @info_box = capture do -%>
-    <%= "This page will be added to {group_type} {group_name}."[:page_added_to_group, {:group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name)}] %>
+    <%= I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b, @group.display_name)) %>
   <% end -%>
 <% end %>
 

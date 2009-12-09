@@ -14,13 +14,13 @@
 ##
 
 enabled_languages:
-  - en_US
-  - es_ES
-  - pt_BR
-  - ar_EG
-  - fr_FR
-  - ru_RU
-  - tr_TR
+  - en
+  - es
+  - pt
+  - ar
+  - fr
+  - ru
+  - tr
 enabled_mods:
   - super_admin
   - moderation
@@ -51,7 +51,7 @@ profile_fields:
 
 # ensure_page_owner: false
 
-text_editor: greencloth_only 
+text_editor: greencloth_only
 
 require_user_full_info: true
 ##
@@ -85,7 +85,7 @@ sites:
 
 title: umbrella
 pagination_size: 30
-default_language: en_US
+default_language: en
 enforce_ssl: false
 chat: false
 show_exceptions: false

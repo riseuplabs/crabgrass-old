@@ -1,22 +1,22 @@
 <%
-  #form.heading '{page_class} Information'[:create_page_information, "Page"[:page]]
+  #form.heading I18n.t(:create_page_information, :page_class => I18n.t(:page))
   form.row do |r|
-    r.label 'Title'[:title]
+    r.label I18n.t(:title)
     r.label_for 'page_title'
     r.input text_field('page', 'title', :size => 40)
     r.info help(:title)
   end
   form.row do |r|
-    r.label 'Summary'[:summary]
+    r.label I18n.t(:summary)
     r.label_for 'page_summary'
     r.input text_area('page', 'summary', :size => '40x3')
     r.info help(:summary)
   end
   form.row do |r|
-    r.label 'Tags'[:tags]
+    r.label I18n.t(:tags)
     r.label_for 'page_tag_list'
     r.input text_field('page', 'tag_list', :size => 40)
-    r.info "%s %s" % [help(:tags), 'Separate tags using commas'[:separate_tags]]
+    r.info "%s %s" % [help(:tags), I18n.t(:separate_tags)]
   end
 %>
 

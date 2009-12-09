@@ -19,10 +19,8 @@ class TwinkledActivity < Activity
   end
 
   def description(view=nil)
-    '{user} has starred your post "{post}"'[
-       :activity_twinkled,
-       {:user => user_span(:twinkler), :post => post_span(post)}
-    ]
+    I18n.t(:activity_twinkled,
+              :user => user_span(:twinkler), :post => post_span(post))
   end
 
   def post_span(post)

@@ -2,11 +2,14 @@
 # All the relationships between users and groups are managed by this controller,
 
 class Groups::MembershipsController < Groups::BaseController
-
   permissions 'groups/memberships', 'groups/requests'
-  before_filter :fetch_group, :login_required
-  verify :method => :post, :only => [:join]
 
+  before_filter :fetch_membership, :only => :destroy
+  before_filter :fetch_group, :login_required
+  skip_before_filter :fetch_group, :only => :destroy
+
+  verify :method => :post, :only => [:join]
+  verify :method => :delete, :only => [:destroy]
   ###### PUBLIC ACTIONS #########################################################
 
   # list all members of the group
@@ -33,8 +36,16 @@ class Groups::MembershipsController < Groups::BaseController
     return unless request.post? # show form on get
 
     @group.remove_user!(current_user)
-    flash_message :success => 'You have been removed from %s' / @group.name
+    flash_message :success => I18n.t(:membership_leave_message, :group => @group.name)
     redirect_to url_for_group(@group)
+  end
+
+  def destroy
+    @group = @membership.group
+    @user = @membership.user
+    @group.remove_user!(@user)
+
+    redirect_to :action => 'list', :id => @group
   end
 
   # used when you have admin access to a group that you
@@ -70,7 +81,7 @@ class Groups::MembershipsController < Groups::BaseController
   def context
     @group_navigation = :membership
     super
-    add_context 'Membership'[:membership], url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
+    add_context I18n.t(:membership), url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
     #@left_column = render_to_string :partial => 'sidebar'
     @title_box = render_to_string :partial => 'title_box'
   end
@@ -80,6 +91,10 @@ class Groups::MembershipsController < Groups::BaseController
     @page_number = params[:page] || 1
     @per_page = current_site.pagination_size
     @letter_page = params[:letter] || ''
+  end
+
+  def fetch_membership
+    @membership = Membership.find(params[:id])
   end
 
 end

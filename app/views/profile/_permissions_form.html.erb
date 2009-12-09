@@ -2,87 +2,87 @@
   <table class="pretty">
     <tr>
       <th colspan="2">
-        <h2 class="alert"><%= 'Permissions'[:profile_permissions] -%></h2>
+        <h2 class="alert"><%= I18n.t(:profile_permissions) -%></h2>
       </th>
     </tr>
     <%- if @user -%>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_groups', :class => 'checkbox' %> <%= :profile_option_may_see_groups.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_groups', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_groups) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_may_see_groups.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_may_see_groups) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_contacts', :class => 'checkbox' %> <%= :profile_option_may_see_contacts.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_contacts', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_contacts) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_may_see_contacts.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_may_see_contacts) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_request_contact', :class => 'checkbox' %> <%= :profile_option_may_request_contact.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_request_contact', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_request_contact) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_may_request_contact.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_may_request_contact) %></td>
       </tr>
       <%- if @profile.public? %> 
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_pester', :class => 'checkbox' %> <%= :profile_option_may_pester.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_pester', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_pester) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_may_pester.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_may_pester) %></td>
       </tr>
       <%- end %>
       <%- if @profile.private? %>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'peer', :class => 'checkbox' %> <%= :profile_option_allow_peers.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'peer', :class => 'checkbox' %> <%= I18n.t(:profile_option_allow_peers) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_allow_peers.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_allow_peers) %></td>
       </tr>
       <%- end -%>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see', :class => 'checkbox' %> <%= :profile_option_may_see.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see) %></label>
         </td>
-        <td class="description"><%= :user_profile_description_may_see.t %></td>
+        <td class="description"><%= I18n.t(:user_profile_description_may_see) %></td>
       </tr>
     <%- elsif @group -%>
-      <%- group_type = @group.type.t -%>
+      <%- group_type = I18n.t(((@group.type.try.downcase) || 'group').to_sym) -%>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_groups', :class => 'checkbox' %> <%= :profile_option_may_see_groups.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_groups', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_groups) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_see_groups.t % {:group_type => group_type} %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_see_groups, :group_type => group_type) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_networks', :class => 'checkbox' %> <%= :profile_option_may_see_networks.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_networks', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_networks) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_see_networks.t % {:group_type => group_type} %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_see_networks, :group_type => group_type) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_committees', :class => 'checkbox' %> <%= :profile_option_may_see_committees.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_committees', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_committees) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_see_committees.t % {:group_type => group_type} %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_see_committees, :group_type => group_type) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see_members', :class => 'checkbox' %> <%= :profile_option_may_see_members.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see_members', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see_members) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_see_members.t %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_see_members) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_request_membership', :class => 'checkbox' %> <%= :profile_option_may_request_membership.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_request_membership', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_request_membership) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_request_membership.t %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_request_membership) %></td>
       </tr>
       <tr class="<%=cycle('odd','even')%>">
         <td>
-          <label class="checkbox"><%= check_box 'profile', 'may_see', :class => 'checkbox' %> <%= :profile_option_may_see.t %></label>
+          <label class="checkbox"><%= check_box 'profile', 'may_see', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_see) %></label>
         </td>
-        <td class="description"><%= :group_profile_description_may_see.t %></td>
+        <td class="description"><%= I18n.t(:group_profile_description_may_see) %></td>
       </tr>
     <%- end -%>
   </table>

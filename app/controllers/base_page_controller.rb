@@ -186,7 +186,7 @@ class BasePageController < ApplicationController
       @user = current_user
       page_context
 
-      context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
+      context_name = I18n.t(:create_a_new_thing, :thing => get_page_type.class_display_name).titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
@@ -225,7 +225,7 @@ class BasePageController < ApplicationController
   # tools override this to build their own data objects
   def build_page_data
     # if something goes terribly wrong with the data do this:
-    # @page.errors.add_to_base "something went terrible wrong"[:terrible_wrongness]
+    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
     # raise ActiveRecord::RecordInvalid.new(@page)
 
     # return new data if everything goes well

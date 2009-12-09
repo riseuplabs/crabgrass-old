@@ -33,12 +33,12 @@ class PageClassProxy
 
   def class_display_name
     symbol = (class_name.underscore + '_display').to_sym
-    symbol.t
+    I18n.t(symbol)
   end
 
   def class_description
     symbol = (class_name.underscore + '_description').to_sym
-    symbol.t
+    I18n.t(symbol)
   end
 
   def actual_class

@@ -2,7 +2,7 @@
   <%= group_search_rss %>
 <% end %>
 
-<% @title_box = content_tag :h1, 'Discussions'[:discussions] %>
+<% @title_box = content_tag :h1, I18n.t(:discussions) %>
 
 <%= render :partial => 'pages/list', :locals => {:heading => true} %>
 

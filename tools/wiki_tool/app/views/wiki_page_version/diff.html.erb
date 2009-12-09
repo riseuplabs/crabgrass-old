@@ -1,32 +1,32 @@
 <% render :partial => 'wiki_page/tabs' %>
 
 <div>
-  <%= "Comparing changes by {user} at {when} from {old_version} to {new_version}"[:comparing_changes_header, {
+  <%= I18n.t(:comparing_changes_header,
     :user => content_tag(:b, link_to_user(@new.user_id)),
     :when => content_tag(:i, full_time(@new.updated_at)),
-    :old_version => content_tag(:del, 
-      link_to("version {version}"[:version_number, @old.version],
+    :old_version => content_tag(:del,
+      link_to(I18n.t(:version_number, :version => @old.version),
         page_url(@page, :action => 'version-show', :id => @old.version)
       ), :class => 'diffmod', :style => 'padding: 1px 4px;'
     ),
     :new_version => content_tag(:ins,
-      link_to("version {version}"[:version_number, @new.version],
+      link_to(I18n.t(:version_number, :version => @new.version),
         page_url(@page, :action => 'version-show', :id => @new.version)
       ), :class => 'diffins', :style => 'padding: 1px 4px;'
     )
-  }] %>
+  ) %>
 </div>
 
 <div class="pagination">
 <% if @old.version.to_i != 1 %>
-  <%= link_to "« #{"prev change".t}", page_url(@page, :action => 'version-diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
+  <%= link_to "« #{I18n.t(:prev_change)}", page_url(@page, :action => 'version-diff', :id => "#{@old.version.to_i-1}-#{@old.version}") %>
 <% else %>
-  <span class="disabled">« <%= "prev change".t %></span>
+  <span class="disabled">« <%= I18n.t(:prev_change) %></span>
 <% end %>
 <% if @wiki.version != @new.version %>
-  <%= link_to "#{"next change".t} »", page_url(@page, :action => 'version-diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
+  <%= link_to "#{I18n.t(:next_change)} »", page_url(@page, :action => 'version-diff', :id => "#{@new.version}-#{@new.version.to_i+1}") %>
 <% else %>
-  <span class="disabled"><%= "next change".t %> »</span>
+  <span class="disabled"><%= I18n.t(:next_change) %> »</span>
 <% end %>
 </div>
 

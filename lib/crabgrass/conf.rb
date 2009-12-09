@@ -99,7 +99,7 @@ class Conf
     # site defaults
     self.title             = 'crabgrass'
     self.pagination_size   = 30
-    self.default_language  = 'en_US'
+    self.default_language  = 'en'
     self.email_sender      = 'robot@$current_host'
     self.email_sender_name = '$site_title ($user_name)'
     self.tracking          = false

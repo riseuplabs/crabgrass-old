@@ -41,7 +41,7 @@
         <%= hidden_field_tag('from_id', params[:from_id] || params[:group_name] ) %>
         <%= hidden_field_tag('in_reply_to_id', @last_post.id) if @last_post and @last_post.user_id != current_user.id%>
 
-        <div style="float: left"><%= submit_tag "Post Message"[:post_message], :name => 'post_message' %></div>
+        <div style="float: left"><%= submit_tag I18n.t(:post_message), :name => 'post_message' %></div>
         <%= formatting_reference_link %>
       </div>
     <% end -%>

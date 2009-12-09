@@ -8,9 +8,7 @@ class UserDestroyedActivity < Activity
   alias_attr :username,   :extra
 
   def description(view=nil)
-    "{user} has retired"[
-       :activity_user_destroyed, {:user => username}
-    ]
+    I18n.t(:activity_user_destroyed, :user => username)
   end
 
   def icon

@@ -1,37 +1,37 @@
-<% @title_box = content_tag(:h1, "{thing} settings"[:thing_settings, @group.group_type].titlecase) %>
+<% @title_box = content_tag(:h1, I18n.t(:thing_settings, :thing => @group.group_type).titlecase) %>
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'Basic Settings'[:basic_settings]
+    t.label I18n.t(:basic_settings)
     t.url groups_url(:action => 'edit')
     t.selected controller?(:groups, :committees, :networks) && action?(:edit)
   end
   f.tab do |t|
-    t.label 'Permissions'[:permissions]
+    t.label I18n.t(:permissions)
     t.url groups_profiles_url(:action => :permissions)
     t.selected controller?('groups/profiles') && action?(:permissions)
   end
   f.tab do |t|
-    t.label 'Public Profile'[:public_profile]
+    t.label I18n.t(:public_profile)
     t.url groups_profiles_url(:action => :edit)
     t.selected controller?('groups/profiles') && action?(:edit)
   end
   f.tab do |t|
-    t.label 'Featured Pages'[:featured_pages]
+    t.label I18n.t(:featured_pages)
     t.url groups_features_url(:action => :index)
     t.selected controller?('groups/features') && action?(:index)
   end
   if may_edit_menu?
     f.tab do |t|
-      t.label 'Navigation Bar'[:menu_items]
+      t.label I18n.t(:menu_items)
       t.url groups_menu_items_url(:action => :index)
       t.selected controller?('groups/menu_items') && action?(:index)
     end
   end
 
 #  f.tab do |t|
-#    t.label 'Multimedia'[:page_group_media]
+#    t.label I18n.t(:page_group_media)
 #    t.url groups_profiles_url(:action => :media)
 #    t.selected controller?('groups/profiles') && action?(:media)
 #  end

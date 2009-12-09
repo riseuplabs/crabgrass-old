@@ -1,32 +1,32 @@
   <%# hidden_field_tag('id', @parent.id) if @parent %>
   <%= Formy.form do |f|
     f.row do |r|
-      r.label "Full name"[:fullname]
+      r.label I18n.t(:fullname)
       r.label_for 'group_full_name'
       r.input text_field('group', 'full_name', :size => 40, :maxlength => 100)
-      r.info "A descriptive name used for display."[:descriptive_name_for_display]
+      r.info I18n.t(:descriptive_name_for_display)
     end
     f.row do |r|
-      r.label "Link Name"[:link_name]
+      r.label I18n.t(:link_name)
       r.label_for 'group_name'
       if @parent
         r.input(@parent.name + "+" + text_field('group', 'name', :maxlength => 30))
       else
         r.input text_field('group', 'name', :size => 40, :maxlength => 40)
       end
-      r.info "This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed."[:link_name_description]
+      r.info I18n.t(:link_name_description)
     end
     f.row do |r|
-      r.label "Language"[:language]
+      r.label I18n.t(:language)
       r.label_for 'group_language'
       r.input select('group', 'language', Language.find(:all).to_select(:name, :code), {:include_blank => true})
-      r.info 'The main language of this {group_type}.'[:group_language, @group.group_type.downcase]
+      r.info I18n.t(:group_language, :group => @group.group_type.downcase)
     end
     f.row do |r|
-      r.label "Icon"[:icon]
+      r.label I18n.t(:icon)
       r.label_for 'group_avatar_image_file'
       r.input [avatar_for(@group, 'xlarge'), file_field_tag('group[avatar][image_file]', :size => 29, :id => 'group_avatar_image_file')].compact.join('<br/><br/>')
-      r.info "Uploaded image will be cropped and stretched to 96 pixels square."[:uploaded_image_cropped]
+      r.info I18n.t(:uploaded_image_cropped)
     end
   end %>
 

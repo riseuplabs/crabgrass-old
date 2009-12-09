@@ -7,12 +7,12 @@
     <table>
       <%- if crypt_key.fingerprint.any? -%>
         <tr><td>
-          <%= 'fingerprint'.t %>: <%= crypt_key.fingerprint %>
+          <%= I18n.t(:fingerprint) %>: <%= crypt_key.fingerprint %>
         </td></tr>
       <%- end -%>
       <%- if crypt_key.name.any? -%>
         <tr><td>
-          <%= 'name'.t %>: <%= h crypt_key.name %>
+          <%= I18n.t(:name) %>: <%= h crypt_key.name %>
         </td></tr>
       <%- end -%>
       <tr>

@@ -18,19 +18,19 @@ edit_click = "$('#{possible_show_id}', '#{possible_edit_id}').invoke('toggle');"
 ## LOGIC STUFF
 
 vote = possible.votes.find :first, :conditions => ["user_id = ?", current_user]
-vote ||= PollVote.new
+vote ||= RatingVote.new
 @allvotes = {}
 possible.votes.each do |v|
   (@allvotes[map(v.value)] ||= []) << v.user.login
 end
-  
+
 -%>
 <div style="background-color: #<%=possible.color%>; padding: 2px;" >
   <div id='<%=possible_show_id%>'>
     <div style="float:right; width:5em; text-align:right;">
        <%= link_to "delete", page_url(@page, :action=>'destroy_possible', :possible => possible) if current_user.may? :edit, @page%>
     </div>
-    
+
     <div class='name'>
       <h2>
         <% if possible.description.any? -%>
@@ -54,7 +54,7 @@ end
   </div>
   <!--
   <div id='<%=possible_edit_id%>' class='indent possible_edit' style='display: none'>
-    <%# spinner(spinner_edit, :show=>true) -%> <%= 'Loading...'.t %>
+    <%# spinner(spinner_edit, :show=>true) -%> <%= I18n.t(:loadingdotdotdot) %>
   </div>
   -->
 </div>

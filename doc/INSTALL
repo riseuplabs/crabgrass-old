@@ -39,6 +39,7 @@ packages from [http://backports.org].
 |            | libxml2-dev             | pre-required for nokogiri (optional)          |
 | nokogiri   | libnokogiri-ruby        | for webrat plugin (optional)                  |
 | launchy    |                         | for webrat plugin (optional)                  |
+| leftright  |                         | for better organized test output (optional)   |
 
 
 NOTE: If you use the Debian rails package, you will need to install a
@@ -58,15 +59,24 @@ configuration for any additional changes. See
 CONFIGURATION[link:files/doc/CONFIGURATION.html] for more details.
 
 The default configuration is probably what you want for running in
-development mode. 
+development mode.
 
 = Setup Mysql Database
 
 Crabgrass currently only works with mysql.
 
+OS X Note: usually in OS X mysql will be installed without /etc/my.cnf. You need to copy /usr/local/mysql/support-files/my-small.cnf to /etc/my.cnf. In some cases the mysql installation path might be different. Try the command `which mysql` to find it.
+
+* Configure mysql server character set
+
+Add these lines if they don't already exist to /etc/my.cnf (under [mysqld] section):
+
+  character-set-server=utf8
+  collation-server=utf8_general_ci
+
 * Create the database:
 
-  mysqladmin -u root -p create crabgrass 
+  mysqladmin -u root -p create crabgrass
 
 If you are doing development, also create these databases
 crabgrass_development, crabgrass_test
@@ -148,13 +158,13 @@ configure the frequency of these tasks by editing
 config/backgroundrb.yml.
 
 To start backgroundrb, you can do one of the following:
-  
+
   script/start_stop_crabgrass_daemons.rb start-bgrb
   or
   script/backgroundrb start -e production
 
 To see the status of the running backgroundrb processes:
-  
+
   script/start_stop_crabgrass_daemons.rb status-bgrb
 
 == Running the Sphinx Search deamon

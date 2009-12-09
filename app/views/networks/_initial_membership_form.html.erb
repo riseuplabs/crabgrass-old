@@ -6,7 +6,7 @@
 </h2>
 <p>
   <label for="network_membership">
-    <%= 'Choose a group to be an initial member of this network.'[:network_initial_member] %>
+    <%= I18n.t(:network_initial_member) %>
   </label><br/>
   <%= select_tag 'group_id', options_for_my_groups(params[:group_id]) %>
 </p>

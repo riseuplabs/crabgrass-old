@@ -10,7 +10,7 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
     elsif message.level == "sys"
       return
     elsif message.deleted_at
-      return content_tag :strong, "Deleted"[:deleted]
+      return content_tag :strong, I18n.t(:deleted)
     else
       #
       # WOW: THIS IS GOING TO BE INCREDIBLY SLOW
@@ -19,12 +19,12 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       if rating.nil? or rating.rating != YUCKY_RATING
         if current_user.moderator?
           icon = 'trash'
-          link_name = 'move message to trash'[:trash_message]
+          link_name = I18n.t(:trash_chat_message)
           confirm = nil
         else
           icon = 'sad_plus'
-          link_name = :flag_inappropriate.t
-          confirm = :confirm_inappropriate_page.t
+          link_name = I18n.t(:flag_inappropriate)
+          confirm = I18n.t(:confirm_inappropriate_page)
           success = nil
         end
         url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :add)
@@ -35,7 +35,7 @@ class ChatViewListener < Crabgrass::Hook::ViewListener
       elsif rating.rating == YUCKY_RATING
         url = url_for(:controller => 'yucky', :chat_message_id => message.id, :action => :remove)
         return link = link_to_remote_with_icon(
-          :flag_appropriate.t, {:url => url}, {:icon => 'sad_minus', :class => 'shy'}
+          I18n.t(:flag_appropriate), {:url => url}, {:icon => 'sad_minus', :class => 'shy'}
         )
         #content_tag(:span, link, {:class => 'small_icon sad_minus_16 shy', :id => "flag-#{context[:message].id}"})
       end

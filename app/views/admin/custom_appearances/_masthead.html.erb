@@ -1,17 +1,17 @@
 <div class='tab_content tab_area' id="masthead_tab" <%= tab_style 'masthead' %> >
   <% form_for @appearance, :html => { :multipart => true }  do |f| %>
     <%= input_selected_tab('masthead') %>
-    <p> <%= "Upload an image for the masthead. It can't be taller than 80 pixels."[:upload_masthead_image_label] %></p>
+    <p> <%= I18n.t(:upload_masthead_image_label) %></p>
     <p><%= display_masthead %></p>
 
     <p>
-      <%= f.label :masthead_asset_uploaded_data, "Select image file"[:select_image_file] %>
+      <%= f.label :masthead_asset_uploaded_data, I18n.t(:select_image_file) %>
       <br/>
       <%= f.file_field :masthead_asset_uploaded_data, :size => "73" %>
     </p>
 
     <p>
-      <%= f.label :masthead_background_parameter, "Select masthead background color"[:select_masthead_background_color]%>
+      <%= f.label :masthead_background_parameter, I18n.t(:select_masthead_background_color)%>
       <br/>
       <%= "#" %>
       <%= f.text_field :masthead_background_parameter, :id => "masthead_background_color_picker" %>
@@ -20,9 +20,9 @@
 
     <p>
       <%= f.check_box :masthead_enabled %>
-      <%= f.label :masthead_enabled, "Enable masthead?"[:enable_masthead_question]%>
+      <%= f.label :masthead_enabled, I18n.t(:enable_masthead_question)%>
     <p>
 
-    <%= submit_tag 'Update Masthead'.t, :class => "submit" %>
+    <%= submit_tag I18n.t(:update_thing, :thing => I18n.t(:masthead)), :class => "submit" %>
   <% end %>
 </div>

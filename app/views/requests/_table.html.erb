@@ -3,12 +3,12 @@
 <div>
   <table class='pretty'>
     <tr>
-      <th><%= 'created by'.t %></th>
-      <th><%= 'date'.t %></th>
-      <th><%= 'description'.t %></th>
-      <th><%= 'state'.t %></th>
+      <th><%= I18n.t(:created_by) %></th>
+      <th><%= I18n.t(:date) %></th>
+      <th><%= I18n.t(:description) %></th>
+      <th><%= I18n.t(:state) %></th>
       <%- if approvable or destroyable -%>
-        <th><%= 'action'.t %></th>
+        <th><%= I18n.t(:action) %></th>
       <%- end -%>
     </tr>
     <%- requests.each do |request| -%>
@@ -16,7 +16,7 @@
         <td><%= link_to_user(request.created_by) %></td>
         <td><%= friendly_date(request.created_at) %></td>
         <td><%= expand_links(request.description) %></td>
-        <td><%= request.state.t %></td>
+        <td><%= I18n.t(request.state.to_sym) %></td>
         <%- if approvable -%>
           <td><%= request_action_links(request) %></td>
         <%- elsif destroyable -%>

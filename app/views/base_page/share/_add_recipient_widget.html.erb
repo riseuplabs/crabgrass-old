@@ -30,17 +30,17 @@
   autocomplete_tag = autocomplete_entity_tag(
     'recipient_name',
     :onselect => after_update_function,
-    :message => 'Enter the name of a group or person.'[:entity_autocomplete_tip],
+    :message => I18n.t(:entity_autocomplete_tip),
     :container => 'autocomplete_container'
   )
 %>
 <table class='share_page_recipient_add'>
 <!--
   <tr>
-    <td><%= 'User or group name'[:user_or_group_name]%>:</td>
+    <td><%= I18n.t(:user_or_group_name)%>:</td>
     <td>&nbsp;</td>
     <%- if may_select_access_participation?-%>
-      <td><%= 'Grant Access'[:grant_access]%>:</td>
+      <td><%= I18n.t(:grant_access)%>:</td>
     <%- end -%>
     <td>&nbsp;</td>
   </tr>
@@ -65,7 +65,9 @@
 </table>
 <!--
 this does not make sense in the context of the notify page.
-<h2 class="first"><%= 'This Page will be shared with:'[:share_page_recipients_list] %></h2>
+<h2 class="first">
+  <%= I18n.t(:share_page_recipients_results, :page_class => I18n.t(:page)) %>
+</h2>
 -->
 <div class="autocomplete_results_area" id="share_page_recipient_area" style="display:none">
   <%= render :partial => 'base_page/share/list_of_recipients' %>
