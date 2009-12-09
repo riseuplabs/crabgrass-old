@@ -43,7 +43,7 @@ module GroupsHelper
                           :url => groups_url(:action => :destroy),
                           :method => :post})
     elsif may_create_destroy_request?
-      if RequestToDestroyOurGroup.for_group(@group).created_by(current_user).blank?
+      if RequestToDestroyOurGroup.pending.for_group(@group).created_by(current_user).blank?
         link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => @group.group_type),
                           {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => @group.group_type.downcase),
                             :ok => I18n.t(:delete_button),
@@ -113,6 +113,18 @@ module GroupsHelper
   def leave_group_link
     link_to_active_if_may(I18n.t(:leave_group_link, :group_type => @group.group_type),
       '/groups/memberships', 'leave', @group)
+  end
+
+  def destroy_membership_link(membership)
+    user, group = membership.user, membership.group
+
+    # can't remove yourself from the group this way - have to use the 'Leave Group' link
+    return if user == current_user
+    if may_destroy_memberships?(membership)
+      link_to(I18n.t(:remove), {:controller => '/groups/memberships', :action => 'destroy', :id => membership},
+            :confirm => I18n.t(:membership_destroy_confirm_message, :user => user.display_name, :group_type => group.group_type.downcase),
+            :method => :delete)
+    end
   end
 
   ##

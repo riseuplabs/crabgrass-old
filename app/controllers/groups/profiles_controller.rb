@@ -1,6 +1,6 @@
 class Groups::ProfilesController < Groups::BaseController
 
-  helper 'profile', 'groups', 'locations'
+  helper 'profile', 'groups', 'locations', 'groups/permissions'
   before_filter :fetch_data, :login_required
 
   def show

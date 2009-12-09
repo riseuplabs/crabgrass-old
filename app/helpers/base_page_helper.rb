@@ -141,7 +141,7 @@ module BasePageHelper
   # used in the sidebar of deleted pages
   def destroy_line
     if may_destroy_page?
-      link = link_to_with_confirm(I18n.t(:delete_page_via_shared), {:confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:page)), :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
+      link = link_to_with_confirm(I18n.t(:destroy_page_via_shred), {:confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:page)), :url => url_for(:controller => '/base_page/trash', :page_id => @page.id, :action => 'destroy')})
       content_tag :li, link, :class => 'small_icon minus_16'
     end
   end

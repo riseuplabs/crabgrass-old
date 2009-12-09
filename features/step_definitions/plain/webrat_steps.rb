@@ -23,8 +23,17 @@ When /^I follow "([^\"]*)"$/ do |link|
 end
 
 When /^I follow and confirm "([^\"]*)"$/ do |link_name|
-  # ignoring demeters law at my own peril
-  link = webrat_session.current_scope.find_link link_name
+  When "I follow and confirm \"#{link_name}\" within \"body\""
+end
+
+When /^I follow and confirm "([^\"]*)" within (.*)$/ do |link_name, scope|
+  parent = selector_for(scope)
+
+  link = nil
+  within(parent) do |scope|
+    link = scope.find_link link_name
+  end
+
   onclick = link.element["onclick"]
   if onclick =~ /Modalbox\.confirm/
     if onclick =~ /method:"(.*?)", action:"(.*?)"/
@@ -39,8 +48,8 @@ When /^I follow and confirm "([^\"]*)"$/ do |link_name|
   end
 end
 
-
-When /^I follow "([^\"]*)" within "([^\"]*)"$/ do |link, parent|
+When /^I follow "([^\"]*)" within (.+)$/ do |link, scope|
+  parent = selector_for(scope)
   click_link_within(parent, link)
 end
 
@@ -140,9 +149,11 @@ Then /^I should see "([^\"]*)"$/ do |text|
   assert_contain text
 end
 
-Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
+Then /^I should see "([^\"]*)" within (.+)$/ do |text, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
-    assert content.include?(text)
+    content = content.dom.inner_text
+    assert content.include?(text), "can not see #{text} within:\n#{content}"
   end
 end
 
@@ -151,10 +162,12 @@ Then /^I should see \/([^\/]*)\/$/ do |regexp|
   assert_contain regexp
 end
 
-Then /^I should see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
+Then /^I should see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
+  selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
-    assert content =~ regexp
+    content = content.dom.inner_text
+    assert content =~ regexp, "can not find #{regexp} within:\n#{content}"
   end
 end
 
@@ -162,9 +175,14 @@ Then /^I should not see "([^\"]*)"$/ do |text|
   assert_not_contain text
 end
 
-Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
-  within(selector) do |content|
-    assert !content.include?(text)
+Then /^I should not see "([^\"]*)" within (.+)$/ do |text, scope|
+  selector = selector_for(scope)
+  # when we don't have selector, so we don't have the content
+  if have_selector(selector).matches?(response_body)
+    within(selector) do |content|
+      content = content.dom.inner_text
+      assert !content.include?(text), "should not see #{text} within:\n#{content}"
+    end
   end
 end
 
@@ -173,10 +191,15 @@ Then /^I should not see \/([^\/]*)\/$/ do |regexp|
   assert_not_contain regexp
 end
 
-Then /^I should not see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
-  within(selector) do |content|
-    regexp = Regexp.new(regexp)
-    assert content !~ regexp
+Then /^I should not see \/([^\/]*)\/ within (.+)$/ do |regexp, scope|
+  selector = selector_for(scope)
+  # when we don't have selector, so we don't have the content
+  if have_selector(selector).matches?(response_body)
+    within(selector) do |content|
+      regexp = Regexp.new(regexp)
+      content = content.dom.inner_text
+      assert content !~ regexp, "should not not find #{regexp} within:\n#{content}"
+    end
   end
 end
 

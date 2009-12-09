@@ -34,7 +34,7 @@ class PageViewListener < Crabgrass::Hook::ViewListener
         :post_id => post.id,
         :page_id => context[:page].id
       })
-      link = link_to_modal('',{:url => popup_url, :icon => 'sad_plus',:title=>I18n.t(:flag_inappropriate)}, {})
+      link = link_to_modal('',{:url => popup_url, :icon => 'sad_plus',:title=>I18n.t(:flag_inappropriate)}, {:class=>'small_icon_button'})
     #elsif rating.rating == YUCKY_RATING
     else
       link = link_to_remote_icon('sad_minus', :url=>{:controller => 'base_page/yucky', :post_id => post.id, :action => 'remove'})

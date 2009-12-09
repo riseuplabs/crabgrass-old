@@ -28,6 +28,19 @@ Spork.each_run do
   require 'cucumber/rails/world'
   require 'test/blueprints.rb'
 
+  Before do
+    @host = "test.host"
+
+    # set rails host
+    host! @host
+
+    # make a site for this host and enable site testing
+    @site = Site.make(:domain => @host)
+    Conf.enable_site_testing
+
+    Sham.reset
+  end
+
   # clean out the data from the database with TRUNCATE
   AfterConfiguration do |config|
     require 'database_cleaner'
@@ -35,4 +48,27 @@ Spork.each_run do
   end
 
   require File.expand_path(File.join(File.dirname(__FILE__), "paths"))
+  require File.expand_path(File.join(File.dirname(__FILE__), "scopes"))
+
+  def disable_site_testing
+    Conf.disable_site_testing
+    Site.current = Site.new
+    @controller.disable_current_site if @controller
+  end
+
+  def enable_site_testing(site_name=nil)
+    if site=Site.find_by_name(site_name)
+      Conf.enable_site_testing(site)
+      Site.current = site
+    else
+      Conf.enable_site_testing()
+      Site.current = Site.new
+    end
+    @controller.enable_current_site if @controller
+  end
+
+  After { disable_site_testing }
+
 end
+
+

@@ -10,9 +10,13 @@
 # It's strongly recommended to check this file into your version control system.
 
 <<<<<<< HEAD:db/schema.rb
+<<<<<<< HEAD:db/schema.rb
 ActiveRecord::Schema.define(:version => 20091124133538) do
 =======
 ActiveRecord::Schema.define(:version => 20091123094947) do
+>>>>>>> origin/master:db/schema.rb
+=======
+ActiveRecord::Schema.define(:version => 20091124104449) do
 >>>>>>> origin/master:db/schema.rb
 
   create_table "activities", :force => true do |t|
@@ -543,6 +547,7 @@ ActiveRecord::Schema.define(:version => 20091123094947) do
     t.string   "type"
     t.boolean  "vetted",                      :default => false
     t.integer  "yuck_count",    :limit => 11, :default => 0
+    t.integer  "page_terms_id", :limit => 11
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"

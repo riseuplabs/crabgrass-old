@@ -10,7 +10,7 @@
 class PathFinder::Builder
 
   # overridden by sub classes
-  def initialize(path, options)
+  def initialize(path, options, klass)
   end
 
   # overridden by sub classes
