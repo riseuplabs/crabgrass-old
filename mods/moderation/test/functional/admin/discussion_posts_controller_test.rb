@@ -40,8 +40,10 @@ class Admin::DiscussionPostsControllerTest < ActionController::TestCase
   def assert_in_view(view, objects)
     get :index, :view => view
     assert_response :success
-    foreign_ids = assigns(:flagged).map(&:foreign_id)
-    assert_equal objects.map(&:id), foreign_ids
+    flagged_ids = assigns(:flagged).map {|f|f.flagged.id}
+    flagged_types = assigns(:flagged).map {|f|f.flagged.type}
+    assert_equal objects.map(&:id), flagged_ids
+    assert_equal objects.map(&:type), flagged_types
   end
 
   def assert_none_in_view(view)
