@@ -1,4 +1,4 @@
 - content_for :sidebar do
-  =render :partial => 'sidebar'
+  = render :partial => 'sidebar', :locals => {:profile => @profile}
 
-=render :partial => 'content'
+= render :partial => 'content'

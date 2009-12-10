@@ -1,29 +1,10 @@
 %section#identity-image
-  %img{:src=>"/images/new_ui/angus.png", :alt=>"username", :height=>"204px", :width=>"204px"} 
+  = avatar_for @user, 'xlarge'
 %div#image-label
   %ul
     %li
-      %h3 Angus
-    %li Riseup
-    %li Bora Bora
+      %h3
+        = @user.display_name
   
 %div#identity-meta
-  %section#about-profile
-    %h4 about me
-    %ul#details
-      %li Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      %li.small_icon.status_online_16 
-        %i Member since: 
-        %time 16/Mar/07 
-      %li.small_icon.mobile_16 
-        %i Phone Number (Mobile): 
-        00187344528
-      %li.small_icon.page_message_16 
-        %i E-mail (Home): 
-        virginia.wildrye@riseup.net
-      %li.small_icon.page_discussion_16
-        %i Instant Messaging (Skype):
-        anguswildrye
-      %li.small_icon.mime_html_16
-        %i Website:
-        %a{:href => "#"} anguswildrye.com
+  = render :partial => 'about_me', :locals => {:profile => profile}
