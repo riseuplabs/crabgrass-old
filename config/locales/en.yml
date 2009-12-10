@@ -90,8 +90,10 @@ en:
   about: "about"
   total: "{{count}} total"
   affiliations: "Affiliations"
+  pages: "Pages"
 
   recent_activity: "Recent Activity"
+  activity: "Activity"
   recent_pages: "Recent Pages"
   recently_created: "Recently Created"
   most_active: "Most Active"
@@ -116,6 +118,7 @@ en:
   edit: "Edit"
   upload: "Upload"
   preview: "Preview"
+  open: "Open"
   private: "Private"
   public: "Public"
   options: "Options"
@@ -156,6 +159,8 @@ en:
 
   success: "Success"
   error: "Error"
+  status: "Status"
+
 
 
   ##
@@ -818,8 +823,6 @@ en:
   may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
   open_group: "Open Group"
   open_group_description: "Users are immediately added to the group - request don't have to be approved"
-
-
 
 
   ##

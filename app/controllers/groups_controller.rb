@@ -38,6 +38,7 @@ class GroupsController < Groups::BaseController
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
     @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
