@@ -5,7 +5,7 @@ Before do
   sleep 5
   $server ||= Culerity::run_server
   $browser = Culerity::RemoteBrowserProxy.new $server, {:browser => :firefox}
-  @host = 'http://localhost:3001'
+  @host = 'http://test.host:3001'
 end
 
 at_exit do

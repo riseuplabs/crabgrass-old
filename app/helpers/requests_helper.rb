@@ -1,8 +1,21 @@
 module RequestsHelper
 
   def request_action_links(request)
-    return unless  request.state == 'pending'
+    return unless request.state == 'pending'
+    if (request.votable? and request.may_vote?(current_user)) or (!request.votable? and request.may_approve?(current_user))
+      request_approve_reject_links(request)
+    elsif request.votes.count > 0
+      request_votes_tally_info(request)
+    end
+  end
 
+  def request_votes_tally_info(request)
+    I18n.t(:request_votes_tally_info,
+              :approved_count => request.votes.approved.count,
+              :rejected_count => request.votes.rejected.count)
+  end
+
+  def request_approve_reject_links(request)
     links = []
     links << link_to(I18n.t(:approve), {:controller => '/requests', :action => 'approve', :id => request.id}, :method => :post)
     links << link_to(I18n.t(:reject), {:controller => '/requests', :action => 'reject', :id => request.id}, :method => :post)

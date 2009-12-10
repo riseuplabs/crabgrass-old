@@ -41,6 +41,13 @@ class Request < ActiveRecord::Base
   belongs_to :shared_discussion, :class_name => 'Discussion'
   belongs_to :private_discussion, :class_name => 'Discussion'
 
+  # most requests are non-vote based. they just need a single 'approve' action
+  # to get approved
+  # some requests (ex: RequestToDestroyOurGroup) are approved only
+  # when they get sufficient votes for approval and (in some cases)
+  # when a period of time has passed
+  has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
+
   validates_presence_of :created_by_id
   validates_presence_of :recipient_id,   :if => :recipient_required?
   validates_presence_of :requestable_id, :if => :requestable_required?
@@ -124,11 +131,16 @@ class Request < ActiveRecord::Base
   ##
 
   def description() end
+  def votable?() false end
 
   def may_create?(user)  false end
   def may_destroy?(user) false end
   def may_approve?(user) false end
   def may_view?(user)    false end
+
+  def may_vote?(user)
+    may_approve?(user)
+  end
 
   def after_approval() end
 
@@ -180,9 +192,10 @@ class Request < ActiveRecord::Base
   end
 
   # destroy all requests relating to this group
+  # except the request to destroy the group
   def self.destroy_for_group(group)
-    destroy_all ["recipient_id = ? AND recipient_type = 'Group'", group.id]
-    destroy_all ["requestable_id = ? AND requestable_type = 'Group'", group.id]
+    destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+    destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
   end
 
 end

@@ -47,7 +47,11 @@ class Admin::PostsController < Admin::BaseController
   end
 
   def authorized?
-    may_moderate?
+    if action?(:index)
+      may_see_moderation_panel?
+    else
+      may_moderate?
+    end
   end
 
   private

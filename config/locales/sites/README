@@ -1,5 +1,7 @@
 Each site has it's own folder here. That folder multiple yml files, one file per language.
 
+The name of the folder should be the name of the site. The folder should never contain a '.' (period) symbol! This will confuse the i18n module.
+
 I18n module will look in here first for a translation key and if nothing is found, it will default to locales/lang.yml file.
 
 Example structure:

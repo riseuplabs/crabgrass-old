@@ -4,6 +4,7 @@ class GroupObserver < ActiveRecord::Observer
     key = rand(Time.now)
     group.users.each do |recipient|
       GroupDestroyedActivity.create!(:groupname => group.name, :recipient => recipient, :destroyed_by => group.destroyed_by, :key => key)
+      Mailer.deliver_group_destroyed_notification(recipient, group)
     end
   end
 

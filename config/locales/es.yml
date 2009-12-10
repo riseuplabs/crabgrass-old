@@ -1,3 +1,4 @@
+---
 es:
   about_me: "Acerca de mí"
   accept_usage_agreement: "Accepto el acuerdo de términos de uso"
@@ -33,7 +34,6 @@ es:
   add_tags: "Añadir Etiqueta"
   add_websites: "Agregar Sitios Web"
   additional_page_access: "Acceso Adicional"
-  admin: Admin
   administer_site: "Administrar Sitio"
   administration: "Administración "
   alert_error: Error
@@ -55,8 +55,6 @@ es:
   announcement_page_description: "Un anuncio."
   announcement_page_display: Anuncio
   announcements: Anuncios
-  approval_vote: "voto de aprobación"
-  approval_vote_class_description: "Aprueba o desaprueba cada posibilidad"
   approve: aprobar
   approve_button: aprueba
   approve_contact_info: "Una petición de contacto ya existe de esta/e usuario. ¿Quieres aprobarla?"
@@ -84,8 +82,8 @@ es:
   category: Categoría
   check_all: "Marcar todo"
   close_button: Cerrar
-  collection: colección
   collection_class_description: "Páginas especiales que tienen otras páginas."
+  collection_page_display: colección
   committee: Comité
   committee_publicly_visible: "Hacer comités públicos"
   committee_publicly_visible_description: "Los comités pueden ser vistos por aquellos que no son miembros en {{domain}}/yourgroupname"
@@ -105,7 +103,7 @@ es:
   coordinator_help: "<b>Coordinador</b> acceso concederá libre acceso a esta página (incluyendo la eliminación y el intercambio)."
   coordinators: Coordinadores
   council: Consejo
-  council_help: "Si este grupo tiene un consejo de coordinación, entonces sólo un miembro de ese Consejo podrá administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
+  council_help_text: "Si este grupo tiene un consejo de coordinación, entonces sólo un miembro de ese Consejo podrá administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
   councils: Consejos
   create_a_group: "Crear un Grupo"
   create_a_new_thing: "Crear un nuevo {{thing}}"
@@ -144,10 +142,6 @@ es:
   date_yesterday: Ayer
   delete: Borrar
   delete_page_link: "Borrar {{page_class}}"
-  delete_page_via_shred: "Destruir immediatamente"
-  delete_page_via_shred_info: "Esto destruira permanentemente la página. Esta acción no se puede deshacer."
-  delete_page_via_trash: "Mueve al cesto"
-  delete_page_via_trash_info: "Esto movera la página a el cesto, donde puede ser recuperado más tarde."
   delete_post: "Borrar anuncio"
   delete_this_version: "borrar esta versión"
   delete_version_confirm: "¿Estás seguro de que desea eliminar esta versión?"
@@ -157,6 +151,10 @@ es:
   destroy: destruir
   destroy_confirmation: "¿Estás seguro de que deseas eliminar esta/o {{thing}}? Esta acción no se puede anular."
   destroy_group_link: "eliminar {{group_type}}"
+  destroy_page_via_shred: "Destruir immediatamente"
+  destroy_page_via_shred_info: "Esto destruira permanentemente la página. Esta acción no se puede deshacer."
+  destroy_page_via_trash: "Mueve al cesto"
+  destroy_page_via_trash_info: "Esto movera la página a el cesto, donde puede ser recuperado más tarde."
   details_link: Detalles
   diff_link: diff
   directory_of_groups: "Directorio de grupos"
@@ -176,8 +174,8 @@ es:
   edit_appearance: "Editar Apariencia"
   edit_attachments: "Editar archivos adjuntos"
   edit_attachments_link: Editar
-  edit_featured_content: "editar contenido destacado"
   edit_featured_content_for_group: "Editar contenido destacado para {{group_name}}"
+  edit_featured_content_link: "editar contenido destacado"
   edit_gallery: "Revisar Álbum de Fotos"
   edit_profile_link: "Editar Perfil"
   edit_settings: "editar los ajustes"
@@ -229,14 +227,13 @@ es:
   gallery_class_description: "Una colección de fotos."
   gallery_description: "Subir imágenes múltiples u organizar las imágenes existentes en un conjunto."
   gallery_display: álbum
+  gallery_undo_link: deshacer
   general_info: "Información General"
   grant_access: "Conceder el acceso"
   group: Grupo
   group_administration_not_allowed: "Usted no puede administrar este grupo."
   group_directory: "Directorio del grupo"
   group_directory_link: "directorio de group"
-  group_discussion: debate
-  group_discussion_class_description: "Un debate de grupo sobre un tema específico."
   group_has_no_public_profile: "Este grupo no tiene un perfil público."
   group_home_headline: "{{group_type}} Inicio"
   group_home_welcome: Bienvenido
@@ -300,7 +297,6 @@ es:
   invite_accept_via_register: "Tengo que registrar una nueva cuenta"
   invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustaría que se uniera a este/a {{group_type}}"
   invite_not_found: "No hay invitación  "
-  join_chat: "Únete a la charla"
   join_group_link: "Unirse {{group_type}}"
   join_group_success: "Te has unido al grupo {{group_name}}"
   join_request_info: "No serás miembro de este grupo hasta que tu solicitud sea aprobada. Puedes seguir la trayectoria de tus solicitudes visitando \"{{my_requests_url}}\"."
@@ -332,7 +328,6 @@ es:
   login_password: Contraseña
   login_required: "Se requiere ingresar"
   login_required_description: "Inicie sesión para realizar esa acción."
-  logout: Desconectar
   logout_success: Adios
   logout_success_message: "Has salido."
   make_album_cover: "hacer esta foto la portada del álbum"
@@ -358,6 +353,7 @@ es:
   member_groups_of_network: "Miembros de los grupos"
   members: Miembros
   membership: Composición
+  menu_admin: Admin
   menu_chat: Charla
   menu_groups: Grupos
   menu_home: Inicio
@@ -417,8 +413,8 @@ es:
   my_world_heading: "Mi Mundo"
   name: Nombre
   network: Red
-  network_aettings: "Configuración de Red"
   network_invite_info: "Ingresa el nombre de los grupos que te gustaría invitar a esta red."
+  network_settings: "Configuración de Red"
   networks: Redes
   new_council: "Nuevo consejo de coordinación para el grupo {{group_name}}"
   new_group: "Nuevo Grupo"
@@ -487,8 +483,7 @@ es:
   page_locked_header: "Página bloqueada"
   page_not_part_of_group: "Esta página no forma parte de este grupo"
   page_notice_message: "página enviada {{user}} el {{date}}"
-  page_owner_help: |
-      Opcional. El propietario de la página es la persona o grupo con la responsabilidad primordial de esta página. Puede elegirse a usted mismo, o cualquiera de los grupos que pertenezca.
+  page_owner_help: "Opcional. El propietario de la página es la persona o grupo con la responsabilidad primordial de esta página. Puede elegirse a usted mismo, o cualquiera de los grupos que pertenezca.\n"
   page_with_message: "con mensaje"
   pager: Paginador
   pagination_next: próxima
@@ -520,8 +515,6 @@ es:
   permissions: Permisos
   personal: Personal
   personal_interests: "Intereses personales"
-  personal_message: "mensaje personal"
-  personal_message_class_description: "Un mensaje personal enviado a los distintos recipientes."
   phone_numbers: "Números Telefónicos"
   photo: Foto
   photo_credit: "Crédito de la foto"
@@ -601,8 +594,8 @@ es:
   requests_to_me: "Peticiones para mi"
   required: (requerido)
   reset_password: "Restablecer la contraseña"
+  reset_password_email_sent: "Un mensaje de correo electrónico ha sido enviado con instrucciones para restablecer su contraseña."
   reset_password_mail_greeting: "{{user}}, su contraseña fue restablecida como lo solicito."
-  reset_password_mail_sent: "Un mensaje de correo electrónico ha sido enviado con instrucciones para restablecer su contraseña."
   reset_password_mail_warning: "Si no ha solicitado que su contraseña sea cambiada, póngase en contacto con nosotros."
   reset_password_text: "Hola, {{user}}. Si ha olvidado la contraseña que utiliza para acceder, puede establecer una nueva aquí. "
   return_link: Regresar
@@ -610,7 +603,7 @@ es:
   saturday: sabado
   save_button: Guardar
   save_changes: "Guardar Cambios"
-  save_survey: "Guardar Encuesta"
+  save_survey_button: "Guardar Encuesta"
   saved_new_order: "Nueva orden guardada!"
   saving_your_changes: "Guardar tus cambios..."
   say_message_button: Di
@@ -632,7 +625,6 @@ es:
   settings: configuración
   share: Compartir
   share_button: Compartir
-  share_link: "Compartir {{page_class}}"
   share_page_email: "Enviar notificación por correo electrónico"
   share_page_link: "Compartir {{page_class}}"
   share_page_message: "Enviar un mensaje (opcional)"
@@ -665,28 +657,26 @@ es:
   subject: tema
   subject_must_not_be_empty: "el tema no debe estar vacío"
   successful_undelete_image: "La foto ha sido recuperada exitosamente"
-  sucessfully_removed_image: "Foto ha sido exitosamente eliminada! ({{undo_link}})"
+  successfully_removed_image: "Foto ha sido exitosamente eliminada! ({{undo_link}})"
   summary: Resumen
   summary_help: "Opcional. El resumen es una frase o párrafo en el que se describe brevemente el contenido de esta página."
   sunday: Domingo
-  survey_design: "Diseñar encuesta"
-  survey_list_all: "Catalogar todas las respuestas"
+  survey_edit_tab: "Diseñar encuesta"
+  survey_list_all_tab: "Catalogar todas las respuestas"
   survey_may_rate: "¿Puede calificar respuestas?"
-  survey_may_see_ratings: |
-      ¿Puede ver puntuaciones?
-  survey_may_see_responses: |
-      ¿Puede ver las respuestas?
-  survey_my_response: "Mi Respuesta"
+  survey_may_see_ratings: "¿Puede ver puntuaciones?\n"
+  survey_may_see_responses: "¿Puede ver las respuestas?\n"
+  survey_my_response_tab: "Mi Respuesta"
   survey_page_description: "Crear una serie de preguntas para las personas responder."
   survey_page_display: Encuestas
   survey_questions: Preguntas
-  survey_rate_responses: "Calificar respuestas"
-  survey_rate_this_response: "Calificar esta respuesta"
+  survey_rate_responses_tab: "Calificar respuestas"
+  survey_rate_this_response_heading: "Calificar esta respuesta"
   survey_rating_enabled: "Permitir la calificación de las respuestas?"
   survey_response_by: "Respuesta de {{login}}"
   survey_responses_enabled: "¿Permite nuevas respuestas? Si está marcada, la gente puede tomar la encuesta. Elimine la marca para cerrar la encuesta."
-  survey_take: "Tome la encuesta"
-  survey_your_rating_of_this_response: "Su Calificación a Esta Respuesta"
+  survey_take_tab: "Tome la encuesta"
+  survey_your_rating_heading: "Su Calificación a Esta Respuesta"
   tags: Etiquetas
   tags_help: "Opcional. Para las etiquetas, use algunas palabras que mejor describan esta página."
   task_list_page_description: "Una lista de las cosas pendientes."
@@ -710,16 +700,14 @@ es:
   type_your_messages_here: "Escriba aquí sus mensajes y pulse ENTER ..."
   typing: escribiendo
   undelete_from_trash: Anular
-  undo: deshacer
   unfeature_button: "Dejar de destacar"
   unknown: desconocido
   unread: "No leído"
   updated: actualizado
-  upload_attachment: "Cargar archivo adjunto"
   upload_file_help: "Requerido. Seleccione un archivo para subir a esta página."
   upload_image: "Cargar foto"
   upload_image_help: "Opcional. Seleccione un archivo de imagen para subir a esta página."
-  upload_images: Cargar
+  upload_images_link: Cargar
   upload_new_image: "cargar nueva imagen"
   uploaded_image_cropped: "La foto cargada será recortada y estirada a 96 píxeles cuadrados."
   usage_agreement_heading: "Acuerdo de uso "
@@ -738,8 +726,6 @@ es:
   version_doesnt_exist: "No hay versión {{version}}"
   version_number: "versión {{version}}"
   versions: versiones
-  video: video
-  video_class_description: "Mostrar un vídeo alojado en un sitio web externo."
   video_embed: Insertado
   video_embed_code_prompt: "Código incrustado en el video procedente de fuente externa"
   video_service_is_not_supported: "no es compatible (en la actualidad sólo con YouTube, Google Video, blip.tv, y vimeo)"
@@ -788,6 +774,5 @@ es:
   you_are_not_member_of_any_group: "No eres miembro de ningún grupo. "
   you_are_viewing_version: "Usted está viendo la versión {{version}} by {{usuario}}"
   you_have_no_contacts: "Usted no tiene contactos"
-  you_have_no_groups: "Usted no pertenece en ningún grupo"
   you_have_no_peers: "Usted no tiene compañeros"
   your_login: "Tu nombre de usuario"
