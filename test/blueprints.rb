@@ -245,3 +245,5 @@ end
 #
 GeoCountry.blueprint {}
 
+GeoAdminCode.blueprint {}
+

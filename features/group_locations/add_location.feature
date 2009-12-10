@@ -7,14 +7,16 @@ Feature: Adding a location to a group
 Background:
   Given a group: "rainbow" exist with name: "Rainbow"
   And a user: "blue" exists with display_name: "Blue"
+  And geo data exists
   And that user is a member of that group
   And I am logged in as that user
-  And I am on that group's edit profile page 
-  And a geocountry: "US" exist with name: "United States"
+  And I am on that group's landing page
+  And I follow "Edit Settings"
+  And I follow "Public Profile"
 
 Scenario: Adding a country only
   Then I should see "Location"
-  When I select "United States" from "profile[country_id]"
+  When I set the country "United States"
   And I press "Save"
   Then I should see "Changes saved"
-
+  And I should see that group's country selected
