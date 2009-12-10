@@ -13,12 +13,7 @@
       // content wrapper
       //
       %div#content
-        %section#breadcrumb
-          %div#breadcrumb-container
-            %div
-              %a{:href => "#"}  Network
-              %span &raquo;
-              %a{:href => "#"}  Group Name
+        = render :partial => 'layouts/ui_breadcrumb'
         %div#content-container
           %div#content-wrap
             %aside#identity-info
