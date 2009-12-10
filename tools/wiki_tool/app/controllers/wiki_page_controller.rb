@@ -1,31 +1,28 @@
 class WikiPageController < BasePageController
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
-  
-  stylesheet 'wiki_edit', :action => :edit
-  javascript 'wiki_edit', :action => :edit
+  include ControllerExtension::WikiPopup
+
+  helper_method :current_locked_section, :desired_locked_section, :has_some_locked_section?,
+                  :has_wrong_locked_section?, :has_desired_locked_section?, :show_inline_editor?
+
+
+  stylesheet 'wiki_edit'
+  javascript :wiki, :action => :edit
+
   helper :wiki # for wiki toolbar stuff
+  helper_method :save_or_cancel_edit_lock_wiki_error_text
 
-  ##
-  ## ACCESS: no restriction
-  ##
+  permissions 'wiki_page'
 
-  def create
-    @page_class = WikiPage
-    if params[:cancel]
-      return redirect_to(create_page_url(nil, :group => params[:group]))
-    elsif request.post?
-      begin
-        @page = create_new_page!(@page_class)
-        @page.update_attribute(:data, Wiki.create(:user => current_user))
-        return redirect_to(page_url(@page, :action => 'edit'))
-      rescue Exception => exc
-        @page = exc.record
-        flash_message_now :exception => exc
-      end
-    end
-    render :template => 'base_page/create'
-  end
+  before_filter :setup_wiki_rendering
+  before_filter :find_last_seen, :only => :show
+  before_filter :force_save_or_cancel, :only => [:show, :print]
+
+  before_filter :ensure_desired_locked_section_exists, :only => [:edit, :update]
+  # if we have some section locked, but we don't need it. we should drop the lock
+  before_filter :release_old_locked_section!, :only => [:edit, :update]
+
+  before_render :setup_title_box
 
   ##
   ## ACCESS: public or :view
@@ -33,196 +30,250 @@ class WikiPageController < BasePageController
 
   def show
     if @wiki.body.empty?
-      redirect_to page_url(@page,:action=>'edit')
-      return
-    elsif @upart and !@upart.viewed? and @wiki.version > 1
-      @last_seen = @wiki.first_since( @upart.viewed_at )
+      # we have no body to show, edit instead
+      redirect_to_edit
+    elsif current_locked_section
+      @editing_section = current_locked_section
     end
-    # render if needed
-    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    #@wiki_html = generate_wiki_html_for_user(@wiki, current_user)
-    # ^^ i would like to populate the edit links using js on the client instead, 
-    # why? i am not sure i have a great reason. i like the idea of keeping the markup
-    # unaltered. eventually, this could be useful for caching.
-  end
-
-  def version
-    @version = @wiki.versions.find_by_version(params[:id])
-  end
-
-  def versions
-  end
-  
-  def diff
-    old_id, new_id = params[:id].split('-')
-    @old = @wiki.versions.find_by_version(old_id)
-    @old.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @new = @wiki.versions.find_by_version(new_id)
-    @new.render_html{|body| render_wiki_html(body, @page.owner_name)} # render if needed
-
-    @old_markup = @old.body_html || ''
-    @new_markup = @new.body_html || ''
-    @difftext = HTMLDiff.diff( @old_markup , @new_markup)
-
-    # output diff html only for ajax requests
-    render :text => @difftext if request.xhr?
   end
 
   def print
-    # render if needed
-    @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
     render :layout => "printer-friendly"
   end
 
-  ##
-  ## ACCESS: :edit
-  ##
+  # GET
+  # plain - clicked edit tab, section = nil.  render edit ui with tabs and full markup
+  # XHR - clicked pencil, section = 'someheading'. replace #wiki_html with inline editor
   def edit
-    if params[:cancel]
-      cancel
-    elsif params[:break_lock]
-      unlock
-      lock
-      @wiki.body = params[:wiki][:body]
-    elsif request.post? and params[:save]
-      # update
-      save
-      # render only the section if saving fails
-      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
-    elsif request.get?
-      lock
-      @wiki.body = @wiki.sections[@section.to_i] unless (@section.blank? or @section == :all)
+    @editing_section = desired_locked_section
+
+    @wiki.unlock!(desired_locked_section, current_user, :break => true) if params[:break_lock]
+    acquire_desired_locked_section!
+  rescue WikiLockError => exc
+    # we couldn't acquire a lock. do nothing here for document edit. user will see 'break lock' button
+    if show_inline_editor?
+      @locker = @wiki.locker_of(@editing_section)
+      @locker ||= User.new :login => 'unknown'
+      @wiki_inline_error = I18n.t(:wiki_is_locked, :user => @locker.display_name)
     end
+  rescue ActiveRecord::StaleObjectError => exc
+     # this exception is created by optimistic locking.
+     # it means that wiki or wiki locks has change since we fetched it from the database
+     flash_message_now :error => I18n.t(:locking_error)
+  ensure
+    render :action => 'update_wiki_html' if show_inline_editor?
   end
 
-  def cancel
-    unlock if @wiki.locked_by_id(@section) == current_user.id
-    redirect_to page_url(@page, :action => 'show')
+  # PUT
+  # plain - clicked save/cancel/break lock on edit tab, section = nil. redirect to show on save, render edit on break lock
+  # xhr - clicked save/cancel on inline editor, section = 'somesection'.  rjs replace #wiki_html with wiki.body_html
+  def update
+    # no RESTful routing for now unfortunately
+    if request.get?
+      redirect_to_show
+      return
+    end
+
+    @editing_section = desired_locked_section
+
+    # setup the updated data from visual editor if needed
+    if params[:wiki]
+      params[:wiki][:body] = html_to_greencloth(params[:wiki][:body_html]) if params[:wiki][:body_html].any?
+    end
+
+    if params[:break_lock]
+      @wiki.unlock!(desired_locked_section, current_user, :break => true) if params[:break_lock]
+      acquire_desired_locked_section!
+    elsif params[:cancel]
+      release_current_locked_section!
+      @update_completed = true
+    else
+      # update wiki body data
+      # get the lock we need if we don't have it
+      acquire_desired_locked_section!
+
+      # no version checking for sections
+      version = (current_locked_section == :document) ? params[:wiki][:version] : nil
+
+      # do the update (will either create a new version or will update the latest version with new data)
+      @wiki.update_section!(current_locked_section, current_user, version, params[:wiki][:body])
+
+      current_user.updated(@page)
+
+      # everything went well
+      # drop whatever lock we have
+      release_current_locked_section!
+      # no errors
+      @update_completed = true
+    end
+
+  rescue WikiLockError => exc
+  rescue ActiveRecord::StaleObjectError => exc
+    # this exception is created by optimistic locking.
+    # it means that wiki or wiki locks has change since we fetched it from the database
+    flash_message_now :error => I18n.t(:locking_error)
+  rescue ErrorMessage => exc
+    flash_message_now :error => exc.to_s
+  ensure
+    render_update_outcome unless request.get?
   end
 
-  # TODO: make post only
-  def break_lock
-    # will unlock all sections
-    @wiki.unlock
-    redirect_to page_url(@page, :action => 'edit', :section => @section)
+
+  # Handle the switch between Greencloth wiki a editor and Wysiwyg wiki editor
+  def update_editors
+    return unless @wiki.document_open_for?(current_user)
+    render :json => update_editor_data(:editor => params[:editor], :wiki => params[:wiki])
   end
 
   ##
-  ## INLINE WIKI EDITING
+  ## PROTECTED
   ##
-
-  def edit_inline
-    heading = params[:id]    
-    greencloth = GreenCloth.new(@wiki.body)
-    text_to_edit = greencloth.get_text_for_heading(heading)
-    form = render_to_string :partial => 'edit_inline', :locals => {:text => text_to_edit, :heading => heading}
-    next_heading = greencloth.heading_tree.successor(heading)
-    next_heading = next_heading ? next_heading.name : nil
-    wiki_plus_form = replace_section_with_form(@wiki.body_html, heading, next_heading, form)
-    render :update do |page|
-      page.replace_html(:wiki_html, wiki_plus_form)
-    end
-  end
-
-  def save_inline
-    if params[:save]
-      heading = params[:id]
-      body = params[:body]
-      greencloth = GreenCloth.new(@wiki.body)
-      greencloth.set_text_for_heading(heading, body)
-      @wiki.body = greencloth.to_s
-      @wiki.save
-      @wiki.render_html{|body| render_wiki_html(body, @page.owner_name)}
-    end
-    render :update do |page|
-      page.replace_html(:wiki_html, :partial => 'show_rendered_wiki')
-    end
-  end
-
   protected
 
-  def save
-    begin
-      @wiki.smart_save!( params[:wiki].merge(:user => current_user, :section => @section) )
-      # unlock if we have the lock
-      unlock if @wiki.locked_by_id(@section) == current_user.id
-      current_user.updated(@page)
-      #@page.save
-      redirect_to page_url(@page, :action => 'show')
-    rescue ActiveRecord::StaleObjectError
-      # this exception is created by optimistic locking. 
-      # it means that @wiki has change since we fetched it from the database
-      flash_message_now :error => "locking error. can't save your data, someone else has saved new changes first."[:locking_error]
-    rescue ErrorMessage => exc
-      flash_message_now :error => exc.to_s
-    end
-  end
-
-  def unlock
-    @wiki.unlock(@section)
-  end
-
-  def lock
-    if @wiki.editable_by? current_user, @section
-      # @locked_for_me = false # not locked for ourselves
-      @wiki.lock(Time.zone.now, current_user, @section)
-    end
-  end
-
-  # called early in filter chain
-  def fetch_data
-    @section = :all
-    return true unless @page
-
-    @wiki = @page.data
-
-    # get up to date section index
-    # because the user submitted index might refer to a wrong section
-    # if sections were split or merged
-    @section = @wiki.resolve_updated_section_index(params[:section], current_user)
-  end
-
-  # before filter
-  def setup_view
-    @show_attach = true
-    unless @wiki.nil? or @wiki.editable_by?(current_user, @section)
-      @title_addendum = render_to_string(:partial => 'locked_notice')
-    end
-  end
-
-  def authorized?
-    if @page
-      if %w(show print diff version versions).include? params[:action]
-        @page.public? or current_user.may?(:view, @page)
-      elsif %w(edit break_lock upload).include? params[:action]
-        current_user.may?(:edit, @page)
-      else
-        current_user.may?(:admin, @page)
-      end
+  def render_update_outcome
+    if @update_completed
+      @editing_section = nil
     else
-      true
+      @wiki.body = params[:wiki][:body] if params[:wiki]
+      @editing_section = desired_locked_section
     end
+
+    render_or_redirect_to_updated_wiki_html
   end
 
-  # Takes some html and a section (defined from heading_start to heading_end)
-  # and replaces the section with the form. This is pretty crude, and might not
-  # work in all cases.
-  def replace_section_with_form(html, heading_start, heading_end, form)
-    index_start = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_start)}">/
-    if heading_end
-      index_end = html.index /^<h[1-4]><a name="#{Regexp.escape(heading_end)}">/
-      index_end -= 1
-    else
-      index_end = -1
-    end
-    html[index_start..index_end] = form
-    return html
-  end
 
   # which images should be displayed in the image upload popup
   def image_popup_visible_images
     Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
-end
 
+  # called during BasePage::create
+  def build_page_data
+    Wiki.new(:user => current_user, :body => "")
+  end
+
+  ### REDIRECTS
+  def redirect_to_edit
+    redirect_to page_url(@page, :action => 'edit')
+  end
+
+  def redirect_to_show
+    redirect_to page_url(@page, :action => 'show')
+  end
+
+  ### RENDERS
+  def render_or_redirect_to_updated_wiki_html
+    if request.xhr?
+      render :action => 'update_wiki_html'
+    elsif @update_completed
+      redirect_to_show
+    else
+      render :action => 'edit'
+    end
+  end
+
+  ### FILTERS
+  def prepare_wiki_body_html
+    if current_locked_section and current_locked_section != :document
+      @wiki.body_html = body_html_with_form(current_locked_section)
+    end
+  end
+  # called early in filter chain
+  def fetch_data
+    return true unless @page
+    @wiki = @page.wiki
+    @wiki_is_blank = @wiki.body.blank?
+  end
+
+  def setup_wiki_rendering
+    return unless @wiki
+    @wiki.render_body_html_proc {|body| render_wiki_html(body, @page.owner_name)}
+  end
+
+  def find_last_seen
+    if @upart and !@upart.viewed? and @wiki.version > 1
+      @last_seen = @wiki.first_version_since( @upart.viewed_at )
+    end
+  end
+
+  def setup_view
+    @show_attach = true
+  end
+
+  def setup_title_box
+    unless @wiki.nil? or @wiki.document_open_for?(current_user)
+      @title_addendum = render_to_string(:partial => 'locked_notice')
+      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title')
+    end
+  end
+
+  # if the user has a section locked, redirect them to edit
+  def force_save_or_cancel
+    if current_locked_section == :document
+      flash_message :info => save_or_cancel_edit_lock_wiki_error_text
+      redirect_to_edit
+    end
+  end
+
+  def ensure_desired_locked_section_exists
+    begin
+      @wiki.get_body_for_section(desired_locked_section)
+    rescue Exception => exc
+      flash_message_now :error => exc.to_s
+      @wiki_inline_error = exc.to_s
+      @editing_section = nil
+      @update_completed = true
+      render_or_redirect_to_updated_wiki_html
+      return false
+    end
+  end
+
+  ### LOCKS
+  # if we're trying to update some section, but we have a lock for a different
+  # section so we should drop the different section
+  def release_old_locked_section!
+    release_current_locked_section! if has_wrong_locked_section?
+  end
+
+  # unlock the current section we have locked  (if we have something locked)
+  def release_current_locked_section!
+    @wiki.unlock!(current_locked_section, current_user) if current_locked_section
+  end
+
+  # if we're trying to edit or update a particular section, this will try to gain the lock
+  # unless we already have it
+  def acquire_desired_locked_section!
+    @wiki.lock!(desired_locked_section, current_user) unless has_desired_locked_section?
+  end
+
+  # returns the section for which which the current_user has a lock (or nil)
+  def current_locked_section
+    @wiki.section_edited_by(current_user) if logged_in? && @wiki
+  end
+
+  # returns the section the current user needs to acquire (trying to update or edit)
+  def desired_locked_section
+    params[:section] || :document
+  end
+
+  # returns true if user has the lock they need to modify the section they want to modify
+  def has_desired_locked_section?
+    current_locked_section == desired_locked_section
+  end
+
+  # returns true only if user has some lock, which happens to be the wrong lock
+  def has_wrong_locked_section?
+    current_locked_section && (current_locked_section != desired_locked_section)
+  end
+
+  # returns true if the user desires to edit some section
+  # which is not :document
+  def show_inline_editor?
+    @editing_section && @editing_section != :document
+  end
+
+  ### HELPER METHODS
+  def save_or_cancel_edit_lock_wiki_error_text
+    I18n.t(:save_or_cancel_edit_lock_wiki_error, {:save_button => I18n.t(:save_button), :cancel_button => I18n.t(:cancel_button)})
+  end
+end

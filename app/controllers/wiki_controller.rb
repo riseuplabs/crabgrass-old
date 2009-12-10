@@ -11,32 +11,32 @@
 
 class WikiController < ApplicationController
   helper :wiki
+  permissions 'wiki'
 
   include ControllerExtension::WikiRenderer
-  include ControllerExtension::WikiImagePopup
-  
-  before_filter :login_required, :except => [:show]
+  include ControllerExtension::WikiPopup
+
+  before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload]
   before_filter :fetch_wiki
-  
+  before_filter :setup_wiki_rendering
+
   # show the rendered wiki
   def show
-    @wiki.render_html{|body| render_wiki_html(body, @group.name)}
   end
-  
+
   # show the entire edit form
   def edit
     if @public and @private
-      @private.lock(Time.now, current_user)
-      @public.lock(Time.now, current_user)
+      @private.lock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.lock!(:document, current_user) if @public.document_open_for?(current_user)
     else
-      @wiki.lock(Time.now, current_user)
+      @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
     end
   end
 
+  # show a wiki body from an old version
   def old_version
     # XHR
-
-    @wiki.lock(Time.now, current_user)
     @showing_old_version = @wiki.versions[params[:old_version].to_i - 1]
 
     @wiki.body = @showing_old_version.body
@@ -48,40 +48,68 @@ class WikiController < ApplicationController
   # a re-edit called from preview, just one area.
   def edit_area
     return render(:action => 'done') if params[:close]
+    @wiki.lock!(:document, current_user) if @wiki.document_open_for?(current_user)
   end
-  
+
   # save the wiki show the preview
   def save
-    return render(:action => 'done') if params[:cancel]
+    return cancel if params[:cancel]
+    return break_lock if params[:break_lock]
+
     begin
-      @wiki.smart_save!(:body => params[:body], 
-        :user => current_user, :version => params[:version])
-      @wiki.unlock if @wiki.locked_by?(current_user)
-      @wiki.render_html{|body| render_wiki_html(body, @group.name)}
+      @wiki.update_document!(current_user, params[:version], params[:body])
+      unlock_for_current_user
     rescue Exception => exc
       @message = exc.to_s
       return render(:action => 'error')
     end
   end
-  
+
   # unlock everything and show the rendered wiki
   def done
+    unlock_for_current_user
     if @public and @private
-      @private.unlock if @private.locked_by?(current_user)
-      @public.unlock if @public.locked_by?(current_user)
       if @private.body.nil? or @private.body == ''
         @wiki = @public
       else
         @wiki = @private
       end
-    else
-      @wiki.unlock if @wiki.locked_by?(current_user)
     end
   end
 
   protected
-  
+
+  def break_lock
+    if @public and @private
+      @private.unlock!(:document, current_user, :force => true)
+      @public.unlock!(:document, current_user, :force => true)
+
+      @private.lock!(:document, current_user)
+      @public.lock!(:document, current_user)
+    else
+      @wiki.unlock!(:document, current_user, :force => true)
+      @wiki.lock!(:document, current_user)
+    end
+
+    render(:action => 'edit')
+  end
+
+  def cancel
+    unlock_for_current_user
+    render :action => 'done'
+  end
+
+  def unlock_for_current_user
+    if @public and @private
+      @private.unlock!(:document, current_user) if @private.document_open_for?(current_user)
+      @public.unlock!(:document, current_user) if @public.document_open_for?(current_user)
+    else
+      @wiki.unlock!(:document, current_user) if @wiki.document_open_for?(current_user)
+    end
+  end
+
   def fetch_wiki
+    @group ||= Group.find(params[:group_id])
     if params[:wiki_id] and !params[:profile_id]
       profile = @group.profiles.find_by_wiki_id(params[:wiki_id])
       @wiki = profile.wiki || profile.create_wiki(:user => current_user)
@@ -89,19 +117,24 @@ class WikiController < ApplicationController
       @profile = @group.profiles.find(params[:profile_id])
       @public = @group.profiles.public.wiki || @group.profiles.public.create_wiki(:user => current_user)
       @private = @group.profiles.private.wiki || @group.profiles.private.create_wiki(:user => current_user)
-      
+
       @wiki = @public if params[:wiki_id] == @public.id.to_s
       @wiki = @private if params[:wiki_id] == @private.id.to_s
-    end 
+    end
   end
 
-  def authorized?
-    @group = Group.find(params[:group_id])
-    logged_in? and current_user.member_of?(@group)
+  def setup_wiki_rendering
+    return unless @wiki
+    @wiki.render_body_html_proc {|body| render_wiki_html(body, @group.name)}
   end
 
   # which images should be displayed in the image upload popup
   def image_popup_visible_images
     Asset.visible_to(current_user, @group).media_type(:image).most_recent.find(:all, :limit=>20)
+  end
+
+  def authorized?
+    @group = Group.find(params[:group_id])
+    may_action?(params[:action], @group)
   end
 end

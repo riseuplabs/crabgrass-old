@@ -27,12 +27,12 @@
 # * the format of the values in access_ids is thus:
 #   * user ids are prefixed with 1
 #   * group ids are prefixed with 8
-#   * every id is at least four characters in length, 
+#   * every id is at least four characters in length,
 #     padded with zeros if necessary.
 #   * if page is public, id 0001 is present.
 #
 # So, suppose the current user was id 1, and they were
-# members of groups 1 and 2. 
+# members of groups 1 and 2.
 #
 # To find all the pages of group 1 that current_user may access:
 #
@@ -62,7 +62,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   public
 
   # initializes all the arrays for conditions, aliases, clauses and so on
-  def initialize(path, options)
+  def initialize(path, options, klass)
 
     ## page_terms access clauses
     ## (within each clause, the values are OR'ed, but the clauses are AND'ed
@@ -85,10 +85,10 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
         :site_ids => options[:site_ids]
       ).join(' ')
     end
+
     @access_filter_clause = [] # to be used by path filters
 
     ## page stuff
-    @path        = cleanup_path(path)
     @conditions  = []
     @values      = []
     @order       = []
@@ -105,57 +105,79 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @limit       = nil
     @offset      = nil
     @include     = options[:include]
+    @select      = options[:select]
+
+    # klass the find/paginate/... was send to and thus of the objects we return.
+    @klass = klass
 
     # parse the path and apply each filter
-    apply_filters_from_path( @path )
+    apply_filters_from_path( path )
   end
 
   def find
     options = options_for_find
     #puts "Page.find(:all, #{options.inspect})"
-    Page.find :all, options
+    @klass.find :all, options
   end
 
   def paginate
     @page ||= 1
     @per_page ||= SECTION_SIZE
-    Page.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
+    @klass.paginate options_for_find(:having => true).merge(:page => @page, :per_page => @per_page)
   end
 
   def count
     @order = nil
-    Page.count options_for_find
+    @klass.count options_for_find
   end
 
   def ids
-    Page.find_ids options_for_find.merge(:select => 'pages.id')
+    @klass.find_ids options_for_find.merge(:select => 'pages.id')
   end
 
   private
 
-  def options_for_find
+  # :having - when true will split off "HAVING" clause from GROUP BY into a :having key
+  # not compatible with rails 2.1, but needed by will_paginate
+  def options_for_find(opts = {})
     fulltext_filter = [@access_me_clause, @access_target_clause,
       @access_site_clause, @access_filter_clause, @tags].flatten.compact
 
     if fulltext_filter.any?
-      # it is absolutely vital that we MATCH against both access_ids and tags, 
+      # it is absolutely vital that we MATCH against both access_ids and tags,
       # because this is how the index is specified.
       @conditions << " MATCH(page_terms.access_ids, page_terms.tags) AGAINST (? IN BOOLEAN MODE)"
-      @values << fulltext_filter.join(' ') 
+      @values << fulltext_filter.join(' ')
     end
 
     conditions = sql_for_conditions
     order      = sql_for_order
 
     # make the hash
-    return {
+    find_opts = {
       :conditions => conditions,
       :joins => sql_for_joins(conditions),
       :limit => @limit,         # \ manual offset or limit
-      :offset => @offset,       # /   
+      :offset => @offset,       # /
       :order => order,
-      :include => @include
+      :include => @include,
+      :select => @select,
     }
+
+    find_opts[:group] = sql_for_group(order)
+
+    having = sql_for_having(order)
+    # either append HAVING clause to GROUP BY string
+    # or set a new :having key
+    unless having.blank?
+      if opts[:having]
+        find_opts[:having] = having
+      elsif !having.blank?
+        find_opts[:group] << " HAVING #{having} "
+      end
+    end
+
+    return find_opts
   end
 
   # the argument is an array, each element assumed to be a
@@ -182,27 +204,37 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_joins(conditions_string)
     joins = []
-    
-    if /user_participations\./ =~ conditions_string
-      joins << :user_participations
+    [:user_participations, :group_participations, :page_terms,
+      :dailies, :hourlies, :moderated_flags].each do |j|
+      if /#{j.to_s}\./ =~ conditions_string
+        joins << j
+      end
     end
-    if /group_participations\./ =~ conditions_string
-      joins << :group_participations
-    end
-    if /page_terms\./ =~ conditions_string
-      joins << :page_terms
-    end
-    
     return joins
   end
-    
+
+  # TODO: make this more generall so it works with all aggregation functions.
+  def sql_for_group(order_string)
+    if match = /SUM\(.*\)/.match(order_string)
+      "pages.id"
+    end
+  end
+
+  # TODO: make this more generall so it works with all aggregation functions.
+  def sql_for_having(order_string)
+    if match = /SUM\(.*\)/.match(order_string)
+      "#{match} > 0"
+    end
+  end
+
   def sql_for_order
     return nil if @order.nil?
-    filter_descending('updated_at') unless @order.any?   
+    filter_descending('updated_at') unless @order.any?
     @order.reject(&:blank?).join(', ')
   end
-    
+
   def add_flow(flow)
+    return unless @klass == Page
     if flow.instance_of? Array
       cond = []
       flow.each do |f|
@@ -226,12 +258,12 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   def sql_for_conditions()
     add_flow( @flow )
-    
+
     # grab the remaining open clauses
     @or_clauses << @conditions if @conditions.any?
     @and_clauses << @or_clauses
     @and_clauses.reject!(&:blank?)
-    Page.public_sanitize_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
-  end    
+    Page.quote_sql( [sql_for_boolean_tree(@and_clauses)] + @values )
+  end
 end
 

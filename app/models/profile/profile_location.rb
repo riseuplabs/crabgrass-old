@@ -29,7 +29,7 @@ class ProfileLocation < ActiveRecord::Base
     longitude = self.geocode.split(',').last
     longitude.blank? ? nil : longitude.to_f
   end
-  
+
   def url_encoded_geocode_address
     ERB::Util.url_encode(geocode_address)
   end
@@ -37,7 +37,7 @@ class ProfileLocation < ActiveRecord::Base
   def self.options
     [:Home, :Work, :School, :Other].to_localized_select
   end
-  
+
   def icon
     'world'
   end
@@ -58,7 +58,7 @@ class ProfileLocation < ActiveRecord::Base
     location = response.body.split(',')[0..1]
     location
   end
-  
+
   def set_geocode
     self.geocode = get_geocode_address.join(',') if @@geocode_addresses
   end

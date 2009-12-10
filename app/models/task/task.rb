@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
-  
+
   belongs_to :task_list
 #  has_and_belongs_to_many :users, :foreign_key => 'task_id'
   has_many :task_participations, :dependent => :destroy
@@ -20,8 +20,8 @@ class Task < ActiveRecord::Base
     true
   end
 
-  def group_name
-    task_list.page.group_name if task_list.page
+  def owner_name
+    task_list.page.owner_name if task_list.page
   end
 
   def completed=(is_completed)
@@ -41,5 +41,5 @@ class Task < ActiveRecord::Base
     !completed? && due_at && due_at.to_date < Date.today
   end
   alias :overdue? :past_due?
-  
+
 end

@@ -122,7 +122,6 @@ class Me::InfovizController < Me::BaseController
     end
 
 
-    #require 'ruby-debug'; debugger
     # :use can be %w(dot neato twopi circo fdp)
     out_str = g.output(:use => 'fdp', :output => format)
 

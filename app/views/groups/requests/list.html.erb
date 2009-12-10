@@ -1,0 +1,16 @@
+<% @title_box = capture do -%>
+  <h1><%= I18n.t(:requests) %></h1>
+<% end -%>
+<% @info_box = request_tabs -%>
+
+<h2><%= I18n.t(:incoming) %></h2>
+<%= render :partial => 'groups/requests/table', :locals => {:requests => @incoming} %>
+
+<%= pagination_links(@incoming, :param_name => :in_page) %>
+
+
+<h2><%= I18n.t(:outgoing) %></h2>
+<%= render :partial => 'groups/requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true} %>
+
+<%= pagination_links(@outgoing, :param_name => :out_page) %>
+

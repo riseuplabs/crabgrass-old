@@ -13,7 +13,6 @@ create_table "groups", :force => true do |t|
   t.string   "style"
   t.string   "language",   :limit => 5
   t.integer  "version",    :limit => 11, :default => 0
-  t.boolean  "is_council",               :default => false
   t.integer  "min_stars",  :limit => 11, :default => 1
   t.integer  "site_id",    :limit => 11
 end
@@ -35,34 +34,39 @@ class Group < ActiveRecord::Base
 
   acts_as_site_limited
 
-  # DEPRECATED
-  def belongs_to_network?(network)
-    ( self.networks.include?(network) or 
-      self == network )
-  end
-    
-  attr_accessible :name, :full_name, :short_name, :summary, :language
+  attr_accessible :name, :full_name, :short_name, :summary, :language, :avatar
 
   # not saved to database, just used by activity feed:
   attr_accessor :created_by, :destroyed_by
 
+  # group <--> chat channel relationship
+  has_one :chat_channel
+
   ##
   ## FINDERS
-  ## 
+  ##
 
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
     group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
-    joins = "LEFT OUTER JOIN profiles ON profiles.entity_id = groups.id AND profiles.entity_type = 'Group'"
     # The grouping serves as a distinct.
     # A DISTINCT term in the select seems to get striped of by rails.
     # The other way to solve duplicates would be to put profiles.friend = true
     # in other side of OR
-    {:joins => joins, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
+    {:include => :profiles, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
 
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
+
+  named_scope(:only_type, lambda do |group_type|
+    group_type = group_type.to_s.capitalize
+    if group_type == 'Group'
+      {:conditions => 'groups.type IS NULL'}
+    else
+      {:conditions => ['groups.type = ?', group_type]}
+    end
+  end)
 
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
@@ -100,7 +104,7 @@ class Group < ActiveRecord::Base
     if t_name
       write_attribute(:name, t_name.downcase)
     end
-    
+
     t_name = read_attribute(:full_name)
     if t_name
       write_attribute(:full_name, t_name.gsub(/[&<>]/,''))
@@ -114,9 +118,6 @@ class Group < ActiveRecord::Base
     Group.find(:first, :conditions => ['groups.name = ?', name.gsub(' ','+')])
   end
 
-  belongs_to :avatar
-  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
-  
   # name stuff
   def to_param; name; end
   def display_name; full_name.any? ? full_name : name; end
@@ -131,21 +132,107 @@ class Group < ActiveRecord::Base
   def banner_style
     @style ||= Style.new(:color => "#eef", :background_color => "#1B5790")
   end
-   
+
+  # type of group
   def committee?; instance_of? Committee; end
-  def network?; instance_of? Network; end
-  def normal?; instance_of? Group; end  
-  def display_type() self.class.to_s.downcase; end
- 
+  def network?;   instance_of? Network;   end
+  def normal?;    instance_of? Group;     end
+  def council?;   instance_of? Council;   end
+
+  def group_type; I18n.t(self.class.name.downcase.to_sym); end
+
+  ##
+  ## PROFILE
+  ##
+
+  has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+
+  def profile
+    self.profiles.visible_by(User.current)
+  end
+
+  ##
+  ## MENU_ITEMS
+  ##
+
+  has_many :menu_items, :dependent => :destroy, :order => :position do
+
+    def update_order(menu_item_ids)
+      menu_item_ids.each_with_index do |id, position|
+        # find the menu_item with this id
+        menu_item = self.find(id)
+        menu_item.update_attribute(:position, position)
+      end
+      self
+    end
+  end
+
+  # creates a menu item for the group and returns it.
+  def add_menu_item(params)
+    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
+  end
+
+
+  # TODO: add visibility to menu_items so they can be visible to members only.
+  # def menu_items
+  #   self.menu_items.visible_by(User.current)
+  # end
+
+  ##
+  ## AVATAR
+  ##
+
+  public
+
+  belongs_to :avatar, :dependent => :destroy
+
+  alias_method 'avatar_equals', 'avatar='
+  def avatar=(data)
+    if data.is_a? Avatar
+      avatar_equals data
+    elsif data.is_a? Hash
+      if avatar_id
+        avatar.image_file = data[:image_file]
+        avatar.image_file_data_will_change!
+      else
+        avatar_equals Avatar.new(data)
+      end
+    end
+  end
+
+  def destroy_by(user)
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+
+    self.destroy
+  end
+
+  protected
+
+  before_save :save_avatar_if_needed
+  def save_avatar_if_needed
+    avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
+  end
+
   ##
   ## RELATIONSHIP TO ASSOCIATED DATA
-  ## 
+  ##
+
+  protected
 
   after_destroy :destroy_requests
   def destroy_requests
     Request.destroy_for_group(self)
   end
-  
+
   after_destroy :update_networks
   def update_networks
     self.networks.each do |network|
@@ -158,6 +245,8 @@ class Group < ActiveRecord::Base
   ## PERMISSIONS
   ##
 
+  public
+
   def may_be_pestered_by?(user)
     begin
       may_be_pestered_by!(user)
@@ -165,12 +254,13 @@ class Group < ActiveRecord::Base
       false
     end
   end
-  
+
+  ## TODO: change may_see? to may_pester?
   def may_be_pestered_by!(user)
-    if user.member_of?(self) or publicly_visible_group or (parent and parent.publicly_visible_committees and parent.may_be_pestered_by?(user))
+    if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
-      raise PermissionDenied.new('You are not allowed to share with %s'[:pester_denied] % self.name)
+      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
     end
   end
 
@@ -183,8 +273,6 @@ class Group < ActiveRecord::Base
       ok = user.member_of?(self) || user.member_of?(self.council)
     elsif access == :view
       ok = user.member_of?(self) || profiles.public.may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || self.has_access!(:admin,user) || profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
@@ -194,43 +282,12 @@ class Group < ActiveRecord::Base
   rescue PermissionDenied
     return false
   end
-  
-  ##
-  ## temp stuff for profile transition
-  ## should be removed eventually
-  ##
-
-  def publicly_visible_group
-    profiles.public.may_see?
-  end
-  def publicly_visible_group=(val)
-    profiles.public.update_attribute :may_see, val
-  end
-
-  def publicly_visible_committees
-    profiles.public.may_see_committees?
-  end
-  def publicly_visible_committees=(val)
-    profiles.public.update_attribute :may_see_committees, val
-  end
-
-  def publicly_visible_members
-    profiles.public.may_see_members?
-  end
-  def publicly_visible_members=(val)
-    profiles.public.update_attribute :may_see_members, val
-  end
-
-  def accept_new_membership_requests
-    profiles.public.may_request_membership?
-  end
-  def accept_new_membership_requests=(val)
-    profiles.public.update_attribute :may_request_membership, val
-  end
 
   ##
   ## GROUP SETTINGS
   ##
+
+  public
 
   has_one :group_setting
   # can't remember the way to do this automatically
@@ -239,7 +296,7 @@ class Group < ActiveRecord::Base
     self.group_setting = GroupSetting.new
     self.group_setting.save
   end
-  
+
   #Defaults!
   def tool_allowed(tool)
     group_setting.allowed_tools.nil? or group_setting.allowed_tools.index(tool)
@@ -250,23 +307,24 @@ class Group < ActiveRecord::Base
     template_data = (group_setting || GroupSetting.new).template_data || {"section1" => "group_wiki", "section2" => "recent_pages"}
     template_data[section]
   end
-  
+
   protected
-  
-  after_save :update_name
-  def update_name
-    if name_changed?
-      update_group_name_of_pages  # update cached group name in pages
+
+  after_save :update_name_copies
+
+  # if our name has changed, ensure that denormalized references
+  # to it also get changed
+  def update_name_copies
+    if name_changed? and !name_was.nil?
+      Page.update_owner_name(self)
       Wiki.clear_all_html(self)   # in case there were links using the old name
       # update all committees (this will also trigger the after_save of committees)
-      committees.each {|c| c.parent_name_changed }
+      committees.each {|c|
+        c.parent_name_changed
+        c.save if c.name_changed?
+      }
       User.increment_version(self.user_ids)
     end
   end
-   
-  def update_group_name_of_pages
-    Page.connection.execute "UPDATE pages SET `group_name` = '#{self.name}' WHERE pages.group_id = #{self.id}"
-    Page.connection.execute "UPDATE pages SET `owner_name` = '#{self.name}' WHERE pages.owner_id = #{self.id} AND pages.owner_type = 'Group'"
-  end
-    
+
 end

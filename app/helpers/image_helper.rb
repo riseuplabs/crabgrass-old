@@ -1,6 +1,6 @@
 =begin
 
-Here in lies all the helpers for displaying icons, avatars, spinners, 
+Here in lies all the helpers for displaying icons, avatars, spinners,
 and various images.
 
 =end
@@ -13,49 +13,17 @@ module ImageHelper
   ## Some links have icons. Rather than use img tags, which can cause all
   ## kinds of trouble with the layout, crabgrass generally uses background
   ## images for the icon.
-  ## 
+  ##
 
   # for example icon_tag('pencil')
   def icon_tag(icon, size = 16)
     content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}"
   end
 
-  def pushable_icon_tag(icon, size = 16)
-    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer'
-  end
-  
-  ##
-  ## DEPRECATED ::: WE ARE NOW USING CLASS BASED ICONS
-  ##
-  
-  ## allows you to change the icon style of an element.
-  ## for example, can be used to change the icon of a link
-  ## to be a spinner.
-  ## TODO: get rid of this, use class based icons instead
-  def set_icon_style(element_id, icon, position="0% 50%")
-    unless element_id.is_a? String
-      element_id = dom_id(element_id)
-    end
-    if icon == 'spinner'
-      icon_path = '/images/spinner.gif'
-    else
-      icon_path = "/images/#{icon}"
-    end
-    "$('%s').style.background = '%s'" % [element_id, "url(#{icon_path}) no-repeat #{position}"]
-  end
+#  def pushable_icon_tag(icon, size = 16, id = nil)
+#    content_tag :button, '', :class => "icon_#{size} #{icon}_#{size}", :style=>'cursor:pointer', :id => id
+#  end
 
-  ## creates an <a> tag with an icon via a background image.
-  def link_to_icon(text, icon, path={}, options={})
-    link_to text, path, options.merge(:style => icon_style(icon))
-  end
-
-  ## return the style css text need to put the icon on the background
-  def icon_style(icon)
-    size = 16
-    url = "/images/#{icon}"
-    "background: url(#{url}) no-repeat 0% 50%; padding-left: #{size+8}px;"
-  end
-  
   ##
   ## AVATARS
   ##
@@ -64,35 +32,33 @@ module ImageHelper
 
   ## creates an img tag based avatar
   def avatar_for(viewable, size='medium', options={})
+    return nil if viewable.new_record?
     image_tag(
       avatar_url_for(viewable, size),
       :alt => 'avatar', :size => Avatar.pixels(size),
       :class => (options[:class] || "avatar avatar_#{size}")
     )
   end
-  
+
   ## returns the url for the user's or group's avatar
   def avatar_url_for(viewable, size='medium')
     #avatar_url(:id => (viewable.avatar_id||0), :size => size)
     '/avatars/%s/%s.jpg?%s' % [viewable.avatar_id||0, size, viewable.updated_at.to_i]
   end
 
+  def avatar_style(viewable, size='medium')
+    "background-image: url(%s);" % avatar_url_for(viewable, size)
+  end
+
   ##
   ## PAGES
   ##
-  ## every page has an icon. 
+  ## every page has an icon.
   ##
 
   ## returns the img tag for the page's icon
   def page_icon(page)
     content_tag :div, '&nbsp;', :class => "page_icon #{page.icon}_16"
-#    image_tag "pages/#{page.icon}", :size => "22x22"
-  end
-  
-  ## returns css style text to display the page's icon
-  def page_icon_style(icon)
-   # XXX
-   "background: url(/images/pages/#{icon}.png) no-repeat 0% 50%; padding-left: 26px;"
   end
 
   ##
@@ -100,12 +66,12 @@ module ImageHelper
   ##
   ## spinners are animated gifs that are used to show progress.
   ## see JavascriptHelper for showing and hiding spinners.
-  ## 
+  ##
 
   def spinner(id, options={})
     display = ("display:none;" unless options[:show])
-    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;"}.merge(options)
-    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' />"
+    options = {:spinner=>"spinner.gif", :style=>"#{display} vertical-align:middle;", :class => 'spin'}.merge(options)
+    "<img src='/images/#{options[:spinner]}' style='#{options[:style]}' id='#{spinner_id(id)}' alt='spinner' class='#{options[:class]}' />"
   end
   def spinner_id(id)
     if id.is_a? ActiveRecord::Base
@@ -114,35 +80,116 @@ module ImageHelper
       "#{id.to_s}_spinner"
     end
   end
-  
-  ##
-  ## LINKS WITH ICONS
-  ## 
 
-  # eg:
-  # 
-  def link_to_remote_with_icon(label, options)
-    #id = "link_id_#{rand(10000000)}"
-    link_to_remote(
-      label, 
-      { :url => options[:url],
-        :loading => "replace_class_name(event.target, '#{options[:icon]}_16', 'spinner_icon')",
-        :complete => "replace_class_name(event.target, 'spinner_icon', '#{options[:icon]}_16')",
-        :with => options[:with]},
-      { :class => "small_icon #{options[:icon]}_16" }
-    )
+  def spinner_icon_on(icon, id)
+    target = id ? "$('#{id}')" : 'eventTarget(event)'
+    "replaceClassName(#{target}, '#{icon}_16', 'spinner_icon')"
   end
 
-  def link_to_remote_icon(icon, options, html_options={})
+  def spinner_icon_off(icon, id)
+    target = id ? "$('#{id}')" : 'eventTarget(event)'
+    "replaceClassName(#{target}, 'spinner_icon', '#{icon}_16')"
+  end
+
+  def big_spinner()
+    content_tag :div, '', :style => "background: white url(/images/spinner-big.gif) no-repeat 50% 50%; height: 5em;", :class => 'spin'
+  end
+
+  # we can almost do this to trick ie into working with event.target,
+  # which would eliminate the need for random ids.
+  #
+  # but it doesn't quite work, because for :complete of ajax, window.event
+  # is not right
+  #
+  #  function eventTarget(event) {
+  #    event = event || window.event; // IE doesn't pass event as argument.
+  #    return(event.target || event.srcElement); // IE doesn't use .target
+  #  }
+  #
+  # however, this can be used for non-ajax js.
+
+  ##
+  ## LINKS WITH ICONS
+  ##
+
+  # makes a cool link with an icon. if you click the link, some ajax
+  # thing happens, and the icon is set to a spinner. The icon is
+  # restored when the ajax request completes.
+  def link_to_remote_with_icon(label, options, html_options={})
+    icon = options.delete(:icon) || html_options.delete(:icon)
+    id = html_options[:id] || 'link%s'%rand(1000000)
+    if options[:confirm]
+      icon_options = {} # don't bother with spinner for confirm links
+    else
+      icon_options = {
+        :loading => [spinner_icon_on(icon, id), options[:loading]].combine(';'),
+        :complete => [spinner_icon_off(icon, id), options[:complete]].combine(';')
+      }
+    end
+    html_options[:class] = ["small_icon", "#{icon}_16", html_options[:class]].combine
+    html_options[:id] ||= id
     link_to_remote(
-      pushable_icon_tag(icon), {
-        :url => options[:url],
-        :loading => "event.target.blur(); replace_class_name(event.target, '#{icon}_16', 'spinner_icon')",
-        :complete => "event.target.blur(); replace_class_name(event.target, 'spinner_icon', '#{icon}_16')",
-      }, 
+      label,
+      options.merge(icon_options),
       html_options
     )
   end
+
+  def link_to_function_with_icon(label, function, options={})
+    icon = options.delete(:icon)
+    options[:class] = ['small_icon', "#{icon}_16", options[:class]].combine
+    link_to_function(label, function, options)
+  end
+
+  def link_to_remote_icon(icon, options={}, html_options={})
+    html_options[:class] = [html_options[:class], 'small_icon_button'].combine
+    html_options[:icon] = icon
+    link_to_remote_with_icon('', options, html_options)
+  end
+
+  def link_to_function_icon(icon, function, options={})
+    link_to_function_with_icon(' ', function, options.merge(:icon=>icon, :class => "small_icon_button #{icon}_16"))
+  end
+
+  def link_to_with_icon(icon, label, url, options={})
+    options=options.merge(:class => "small_icon #{icon}_16 #{options[:class]}")
+    if url
+      link_to label, url, options
+    else
+      content_tag :a, label, options
+    end
+  end
+
+  def link_to_icon(icon, url, options={})
+    link_to_with_icon(icon, '', url, options)
+  end
+
+  def link_to_toggle(label, id)
+    function = "linkToggle(eventTarget(event), '#{id}')"
+    link_to_function_with_icon label, function, :icon => 'right'
+  end
+
+#  # makes an icon button to a remote action. when you click on the icon, it turns
+#  # into a spinner. when done, the icon returns. any id passed to html_options
+#  # is passed on the icon, and not the <a> tag.
+#  def link_to_remote_icon(icon, options={}, html_options={})
+#    icon_options = {
+#      :loading => "event.target.blur();" + spinner_icon_on(icon),
+#      :complete => "event.target.blur();" + spinner_icon_off(icon)
+#    }
+#    link_to_remote(
+#      pushable_icon_tag(icon,16,html_options.delete(:id)),
+#      options.merge(icon_options),
+#      html_options
+#    )
+#  end
+#  def link_to_function_icon(icon, function, html_options={})
+#    link_to_function(
+#      pushable_icon_tag(icon),
+#      function,
+#      html_options
+#    )
+#  end
 
   ##
   ## ASSET THUMBNAILS
@@ -152,19 +199,21 @@ module ImageHelper
   # creates an img tag for a thumbnail, optionally scaling the image or cropping
   # the image to meet new dimensions (using html/css, not actually scaling/cropping)
   #
-  # eg: thumbnail_img_tag(thumb, :crop => '22x22')
-  # 
+  # eg: thumbnail_img_tag(asset, :medium, :crop => '22x22')
+  #
+  # thumbnail_name: one of :small, :medium, :large
+  #
   # options:
   #  * :crop   -- the img is first scaled, then cropped to allow it to
   #               optimally fit in the cropped space.
-  #  * :scale  -- the img is scaled, preserving proportions 
+  #  * :scale  -- the img is scaled, preserving proportions
   #  * :crop!  -- crop, even if there is no known height and width
   #
   # note: if called directly, thumbnail_img_tag does not actually do the
-  #       cropping. rather, it generate a correct img tag for use with 
+  #       cropping. rather, it generate a correct img tag for use with
   #       link_to_asset.
   #
-  def thumbnail_img_tag(asset, thumbnail_name,options={}, html_options={})
+  def thumbnail_img_tag(asset, thumbnail_name, options={}, html_options={})
     thumbnail = asset.thumbnail(thumbnail_name)
     if thumbnail and thumbnail.height and thumbnail.width
       options[:crop] ||= options[:crop!]
@@ -212,12 +261,13 @@ module ImageHelper
       target_height = thumbnail.height
     else
       target_width = 32;
-      target_height = 32;     
-    end  
-    style = "height:#{target_height}px;width:#{target_width}px"
-    klass = options[:class] || 'thumbnail'
-    url   = options[:url] || asset.url
-    link_to img, url, :class => klass, :title => asset.filename, :style => style
+      target_height = 32;
+    end
+    style   = "height:#{target_height}px;width:#{target_width}px"
+    klass   = options[:class] || 'thumbnail'
+    url     = options[:url] || asset.url
+    method  = options[:method] || 'get'
+    link_to img, url, :class => klass, :title => asset.filename, :style => style, :method => method
   end
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
@@ -239,4 +289,31 @@ module ImageHelper
       image_tag "/images/png/16/#{asset.small_icon}.png", :style => "margin: #{(height-22)/2}px #{(width-22)/2}px;"
     end
   end
+
+  ##
+  ## AGNOSTIC MEDIA
+  ##
+
+  def display_media(media, size=:medium)
+    if media.respond_to?(:is_image?) and media.is_image?
+      if media.respond_to?(:thumbnail)
+        thumbnail = media.thumbnail(size)
+        if thumbnail.nil? or thumbnail.failure?
+          dims = case size
+            when :small  : '64x64'
+            when :medium : '200x200'
+            when :large  : '500x500'
+          end
+          image_tag('/images/ui/corrupted/corrupted.png', :size => dims)
+        else
+          image_tag(thumbnail.url, :height => thumbnail.height, :width => thumbnail.width)
+        end
+      else
+        # not sure what we are trying to display
+      end
+    elsif media.respond_to?(:is_video?) and media.is_video?
+      media.build_embed
+    end
+  end
+
 end

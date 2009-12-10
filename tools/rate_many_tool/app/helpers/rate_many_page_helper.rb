@@ -9,8 +9,8 @@ module RateManyPageHelper
   def map(value)
     @@map[value]
   end
-  
-  
+
+
   # value a string, one of 'good', 'ok', 'bad', 'no'
   def button_row(possible, vote, value)
     voters_list = @allvotes[value].to_sentence if @allvotes[value]
@@ -20,13 +20,15 @@ module RateManyPageHelper
       value == map(vote.value), # checked?
       :disabled => !current_user.may?(:edit, @page),
       :onclick => remote_function(
-        :url => page_xurl(@page,:action => 'vote_one', :id => possible.id, :value => map(value)),
+        :url => page_xurl(@page, :action => 'vote_one', :id => possible.id, :value => map(value)),
         :loading => show_spinner("possible_%s" % possible.id)
        )
     )
+
+    translated_value = I18n.t("vote_#{value}".to_sym)
     %Q+
     <tr>
-      <td><label class='not_handle'>#{button}#{value.t}</label></td>
+      <td><label class='not_handle'>#{button}#{translated_value}</label></td>
       <td><span>&mdash;</span> #{voters_list}</td>
     </tr>
     +

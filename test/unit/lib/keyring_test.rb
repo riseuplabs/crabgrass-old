@@ -2,8 +2,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 require 'keyring'
 
 class KeyringTest < Test::Unit::TestCase
-     
-  def test_creation_and_encryption
+
+  def disabled_test_creation_and_encryption
     tmp = Tempfile.new('key_ring_test')
     tmp.close
     keyring = Keyring.create(public_key_data, tmp.path)

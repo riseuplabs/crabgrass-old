@@ -16,14 +16,18 @@
   /name/<page name>
   /changed
   /text/<page text>
+  /most_views/<num>/{days,hours}
+  /most_edits/<num>/{days,hours}
+  /most_stars/<num>/{days,hours}
     
 === associations
   /person/<user id>
   /group/<group id>
-  /created_by/<user name>
-  /not_created_by/<user name>
-  /contributed/<user name>
-  /featured_by/<group name>
+  /created_by/<user id>
+  /not_created_by/<user id>
+  /contributed/<user id>
+  /featured_by/<group is>
+  /admin/<user id>
     
 === date
   /month/MM
@@ -42,4 +46,8 @@
 === sorting
   /ascending/<column name>
   /descending/<column name>
-    
+
+=== moderation
+  /public
+  /public_requested
+  /moderation/<state>

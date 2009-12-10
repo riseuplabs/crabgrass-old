@@ -1,13 +1,10 @@
 class ExternalVideoPage < Page
+  include PageExtension::RssData
 
-  #def icon
-  #  'page_video'
-  #end
-  
   alias_method(:external_video, :data)
   alias_method(:external_video=, :data=)
-  
-  def cover
-    external_video.thumbnail_url
+
+  def external_cover_url
+    external_video.thumbnail_url if external_video
   end
 end

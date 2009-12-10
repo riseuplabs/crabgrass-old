@@ -3,12 +3,12 @@
 # to an email address and not a user.
 #
 # email: send the request to this address.
-# recipient: set once the code is redeemed. 
+# recipient: set once the code is redeemed.
 # requestable: the group
 # created_by: person who sent the invite
 #
 class RequestToJoinUsViaEmail < Request
-  
+
   validates_format_of :requestable_type, :with => /Group/
   validates_presence_of :email
   validates_as_email :email
@@ -41,9 +41,7 @@ class RequestToJoinUsViaEmail < Request
   end
 
   def description
-    ":email was invited to join :group"[:request_to_join_us_via_email_description] % {
-      :email => email, :group => group_span(group)
-    }
+    I18n.t(:request_to_join_us_via_email_description, :email => email, :group => group_span(group))
   end
 
   ##
@@ -54,13 +52,13 @@ class RequestToJoinUsViaEmail < Request
     request = find_by_code_and_email(code,email)
     if request
       if request.state != 'pending'
-        raise Exception.new('you can only redeem a pending request')
+        raise ErrorMessage.new(I18n.t(:invite_error_redeemed))
       end
       request.recipient = user
       request.save!
       return request
     else
-      return false
+      raise ErrorNotFound.new(I18n.t(:invite))
     end
   end
 

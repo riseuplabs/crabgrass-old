@@ -7,7 +7,7 @@ class FriendActivity < Activity
 
   alias_attr :user,       :subject
   alias_attr :other_user, :object
-  
+
   before_create :set_access
   def set_access
     # this has a weird side effect of creating public and private
@@ -21,11 +21,10 @@ class FriendActivity < Activity
     end
   end
 
-  def description(options={})
-    "{user} added {other_user} as a contact"[
-       :activity_contact_created, 
-       {:user => user_span(:user), :other_user => user_span(:other_user)}
-    ]
+  def description(view=nil)
+    I18n.t(:activity_contact_created,
+            :user => user_span(:user),
+            :other_user => user_span(:other_user))
   end
 
   def self.find_twin(user, other_user)

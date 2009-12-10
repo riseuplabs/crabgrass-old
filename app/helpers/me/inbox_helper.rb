@@ -14,7 +14,7 @@ module Me::InboxHelper
     else
       klass = ''
     end
-    
+
     text = folder_icon(image) + " " + text if image
     link_to text, url_for(:controller => 'inbox', :action => 'index', :path => path), :class => klass
   end

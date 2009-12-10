@@ -38,7 +38,7 @@
 #  * crypt_key
 #
 # VISIBILITY
-# 
+#
 # Profiles can be made visible to different groups being:
 #  * noone (deactivated)
 #  * everyone (everyone who visits the site)
@@ -74,9 +74,9 @@
 =end
 
 module SiteProfileMethods
-  
+
   def self.included(base)
-    base.class_eval do 
+    base.class_eval do
       def setup_profile_methods
         if !self.profiles
           raise Exception.new("Your site configuration is not up to date. You need to provide profile settings.")
@@ -87,44 +87,44 @@ module SiteProfileMethods
       end
     end
   end
-  
+
   module ProfilesMethods
-    def public? 
+    def public?
       public.enabled?
     end
-    
+
     def private?
       private.enabled?
     end
-    
+
     def public
       self['public']
     end
-    
+
     def private
       self['private']
     end
-    
+
     def general_info?
       (self['general_info'] && self['general_info'] != 'false')
     end
   end
-  
+
   module InstanceMethods
     def enabled?
       !visible_to?('noone')
     end
-    
+
     def elements
       self['elements'].to_a
     end
-    
+
     def visible_to
       self['visible_to'].to_a
     end
-    
+
     def visible_to?(vis_group)
-      alternatives = { 
+      alternatives = {
         'users' => ['everyone'],
         'peers' => ['everyone','users'],
         'friends' => ['everyone','users']
@@ -139,12 +139,12 @@ module SiteProfileMethods
       end
       return ret
     end
-    
+
     def element?(element)
       self.elements.include?(element) ||
         self.multiple?(element)
     end
-    
+
     def multiple?(element)
       self.elements.include?(element.pluralize)
     end

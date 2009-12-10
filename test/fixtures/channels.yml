@@ -1,0 +1,17 @@
+true_levellers:
+  id: 1
+  name: the-true-levellers
+  group_id: 1
+  public: false
+
+animals:
+  id: 2
+  name: animals
+  group_id: 2
+  public: false
+
+rainbow:
+  id: 3
+  name: rainbow
+  group_id: 3
+  public: false

@@ -1,0 +1,27 @@
+<h2>Sign Up</h2>
+
+<% form_for current_site, :url => {:action => 'update'} do |f| %>
+<%= f.error_messages %>
+<span>
+  <b>Signup Mode:</b>
+</span>
+<br />
+<span>
+  <%= f.check_box :signup_mode, :value => 1 %><%= label :default, 'default' %>
+</span>
+<br />
+<span>
+  <%= f.check_box :signup_mode, :value => 2 %><%= label :closed, 'closed' %>
+</span>
+<br />
+<span>
+  <%= f.check_box :signup_mode, :value => 3 %><%= label :invite_only, 'invite_only' %>
+</span>
+<br />
+<span>
+  <%= f.check_box :require_user_email %><%= label :require_user_email, 'require_user_email' %>
+</span>
+<br /><br />
+<span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
+<br /><br />
+<% end %>

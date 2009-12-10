@@ -11,12 +11,14 @@ class PageClassProxy
 
   attr_accessor :controller, :model, :icon, :class_group
   attr_accessor :class_name, :full_class_name, :internal, :order, :short_class_name
-  
+
+  ORDER = ['text', 'media', 'vote', 'planning']
+
 #  cattr_accessor :quiet
 
   def initialize(arg=nil)
     raise 'error' unless arg.is_a? Hash
-    
+
     if arg[:class_name]
       arg.each do |key,value|
         method = key.to_s + '='
@@ -31,14 +33,12 @@ class PageClassProxy
 
   def class_display_name
     symbol = (class_name.underscore + '_display').to_sym
-    default_text = short_class_name
-    default_text[symbol]
+    I18n.t(symbol)
   end
 
   def class_description
     symbol = (class_name.underscore + '_description').to_sym
-    default_text = "(%s not yet translated)" % symbol
-    default_text[symbol]
+    I18n.t(symbol)
   end
 
   def actual_class
@@ -56,6 +56,10 @@ class PageClassProxy
 
   def create!(hash, &block)
     actual_class.create!(hash, &block)
+  end
+
+  def build!(hash, &block)
+    actual_class.build!(hash, &block)
   end
 
   def to_s

@@ -12,7 +12,7 @@ module Crabgrass #:nodoc:
     def self.listener_classes
       @@listener_classes
     end
-    
+
     class << self
       # Adds a listener class.
       # Automatically called when a class inherits from Crabgrass::Hook::Listener.
@@ -21,29 +21,29 @@ module Crabgrass #:nodoc:
         @@listener_classes << klass
         clear_listeners_instances
       end
-      
+
       # Returns all the listerners instances.
       def listeners
         @@listeners ||= @@listener_classes.collect {|listener| listener.instance}
       end
- 
+
       # Returns the listeners instances for the given hook.
       def hook_listeners(hook)
         @@hook_listeners[hook] ||= listeners.select {|listener| listener.respond_to?(hook)}
       end
-      
+
       # Clears all the listeners.
       def clear_listeners
         @@listener_classes = []
         clear_listeners_instances
       end
-      
+
       # Clears all the listeners instances.
       def clear_listeners_instances
         @@listeners = nil
         @@hook_listeners = {}
       end
-      
+
       # Calls a hook.
       # Returns the listeners response.
       def call_hook(hook, context={})
@@ -77,7 +77,7 @@ module Crabgrass #:nodoc:
         super
       end
     end
-    
+
     class ViewListener < Listener
     end
 
@@ -85,7 +85,7 @@ module Crabgrass #:nodoc:
     # in views like this:
     #   <%= call_hook(:some_hook) %>
     #   <%= call_hook(:another_hook, :foo => 'bar' %>
-    # 
+    #
     # Current project is automatically added to the call context.
     module Helper
       def call_hook(hook, context={})

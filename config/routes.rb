@@ -4,85 +4,145 @@
 # or a new root path route. This way, group and user handles will not be created for those
 # (group name or user login are used as the :context in the default route, so it can't collide
 # with any of our other routes).
-# 
+#
 
-ActionController::Routing::Routes.draw do |map|  
+ActionController::Routing::Routes.draw do |map|
 
-  ##### PLUGIN ROUTES ######################################
+  # total hackety magic:
+  map.filter 'crabgrass_routing_filter'
+
+  ##
+  ## PLUGINS
+  ##
 
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
-  map.from_plugin :gibberize   rescue NameError
+  map.from_plugin :translator   rescue NameError
+  map.from_plugin :moderation  rescue NameError
 
-  ##### ASSET ROUTES ######################################
-  
+  map.namespace :admin do |admin|
+    admin.resources :announcements
+    admin.resources :email_blasts
+    admin.resources :users, :only => [:new, :create]
+    admin.resources :groups, :only => [:new, :create]
+    admin.resources :custom_appearances, :only => [:edit, :update]
+    admin.sites 'sites/:action', :controller => 'sites'
+    admin.root :controller  => 'base'
+  end
+
+  ##
+  ## ASSET
+  ##
+
   map.connect '/assets/:action/:id',                :controller => 'assets', :action => /create|destroy/
   map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
   map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
 
-  map.avatar 'avatars/:id/:size.jpg', :action => 'show', :controller => 'avatars'
+  map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
-  map.favicon '/favicon.:format', :controller => 'custom_appearances', :action => 'favicon'
+  ##
+  ## ME
+  ##
 
-  ##### REGULAR ROUTES ####################################
-  
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
-  map.connect 'me/search/*path',    :controller => 'me/search', :action => 'index'
+  map.connect 'me/search/*path',            :controller => 'me/search', :action => 'index'
   map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
-  map.connect 'me/infoviz.:format',     :controller => 'me/infoviz', :action => 'visualize'
-  map.me      'me/:action/:id', :controller => 'me/base'
-  
-  map.people  'people/:action/:id', :controller => 'people'
+  map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
+  map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
+
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+  end
+
+  map.connect 'me/:action/:id',             :controller => 'me'
+
+  ##
+  ## PEOPLE
+  ##
+
+  map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
+
+  map.with_options(:namespace => 'people/') do |people_space|
+    people_space.resources :people do |people|
+      people.resources :messages
+    end
+  end
+
   map.connect 'person/:action/:id/*path', :controller => 'person'
-  map.connect 'messages/:user/:action/:id', :controller => 'messages', :action => 'index', :id => nil
 
-  map.groups   'groups/:action/:id', :controller => 'groups'
-  map.group    'group/:action/:id', :controller => 'group'
-  map.networks 'networks/:action/:id', :controller => 'networks'
-  map.network  'network/:action/:id', :controller => 'network'
-  map.connect  ':controller/:action/:id/*path', :controller => /group|network/, :action => /tags|archive|calendar|search|discussions/
+  ##
+  ## EMAIL
+  ##
 
-  map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
-            
-  map.connect '', :controller => 'root'
-  map.login   'account/login',   :controller => 'account',   :action => 'login'
-  map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
+  map.connect '/invites/:action/*path', :controller => 'requests', :action => /accept/
+  map.connect '/code/:id', :controller => 'codes', :action => 'jump'
 
-  # routes in emails:
-  map.connection '/invites/:action/*path', :controller => 'requests', :action => /accept/
-  map.connection '/code/:id', :controller => 'codes', :action => 'jump'
+  ##
+  ## PAGES
+  ##
 
-  map.connect 'feeds/assets/:media',        :controller => 'feeds', :action => 'index', :type => 'assets', :requirements => { :media => /all|image|audio|video|document/ }
-  map.connect 'feeds/assets/:group/:media', :controller => 'feeds', :action => 'index', :type => 'assets', :media => nil
-  map.connect 'feeds/:type/:group', :controller => 'feeds', :action => 'index', :group => nil
-
-  map.resources :custom_appearances, :only => [:edit, :update]
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
+  #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
 
-  # typically, this is the default route
-  map.connect ':controller/:action/:id'
-  # This default route was added in Rails 1.2, but we did not add it then;
-  # Do we want it?
-  # map.connect ':controller/:action/:id.:format'
+  ##
+  ## OTHER
+  ##
 
+  map.login 'account/login',   :controller => 'account',   :action => 'login'
+  #map.resources :custom_appearances, :only => [:edit, :update]
+  map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
+  map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
+  map.account '/account/:action/:id', :controller => 'account'
 
-  ##### DISPATCHER ROUTES ###################################
+  map.connect '', :controller => 'root'
   
-  # our default route is sent to the dispatcher
+  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
+
+  ##
+  ## GROUP
+  ##
+
+  map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
+  map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
+
+  map.groups 'groups/:action/:id', :controller => 'groups'
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
+
+  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
+
+  ##
+  ## CHAT
+  ##
+  map.chat 'chat/:action/:id', :controller => 'chat'
+  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
+#  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
+  ##
+  ## DEFAULT ROUTE
+  ##
+
+  map.connect ':controller/:action/:id'
+
+
+  ##
+  ## DISPATCHER
+  ##
+
   map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+
   map.connect ':_context', :controller => 'dispatch', :action => 'dispatch', :_page => nil
+
   # i am not sure what this was for, but it breaks routes for committees. this
   # could be fixed by adding \+, but i am just commenting it out for now. -e
   # :_context => /[\w\.\@\s-]+/
 
 end
 
-# debug routes
-#ActionController::Routing::Routes.routes.each do |route|
-#  puts route
-#end

@@ -1,0 +1,34 @@
+<% @title_box = '<h1>Edit Announcements</h1>' %>
+
+<% @info_box = link_to_with_icon 'plus', 'Create Announcement', {:controller => '/announcement_page', :action => 'create', :id => 'announcement', :group => (current_site.network ? current_site.network.name : nil)} %>
+
+<div id="pages-listing">
+<table class="pretty">
+  <tr>
+    <th>Title</th>
+    <th>Created At</th>
+    <th>Created By</th>
+    <th></th>
+  </tr>
+  <% if @pages.any? %>
+    <% @pages.each do |page| %>
+      <tr class="<%=cycle('row_0', 'row_1')%>">
+	<td><%= link_to page.title, page_url(page) %></td>
+	<td><%= friendly_date page.created_at %></td>
+	<td><%= link_to_user page.created_by_login %></td>
+	<td colspan="2" style="padding-left:0em; padding-right:0em;">
+	  <span class="actions">
+	    <%= link_to 'Edit', page_url(page, :action => 'edit') %>
+	    <%= link_to 'Destroy', announcement_url(page), :confirm => 'Are you sure?', :method => :delete %>
+	  </span>
+	</td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr><td colspan="4"><i>No Match</i></td></tr>
+  <% end -%>
+</table>
+</div>
+
+
+

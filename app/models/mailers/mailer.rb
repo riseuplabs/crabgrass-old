@@ -12,19 +12,19 @@ Mailer options
 --------------
 
 There are various tricks you can use to get around the fact that mailers
-are models and don't have access to the request or the session. 
+are models and don't have access to the request or the session.
 
 In our case, we can't use these: the mailer needs to know that request and
 sessiond data, because there might be multiple sites, each with their own
-domain, running on the same instances of rails. 
+domain, running on the same instances of rails.
 
 So, we have ApplicationController#mailer_options(). This bundles up everything
 from the session that is needed for the mailer to get the domain and the
-protocol right. 
+protocol right.
 
 Every call to deliver should include as its last argument the mailer_options.
 For example:
-   
+
    Mailer::Page.deliver_page_notice(user, message, mailer_options)
 
 Then, every mailer method should do this as its first line:
@@ -38,7 +38,11 @@ class Mailer < ActionMailer::Base
   include ActionController::UrlWriter
   include Mailers::Page
   include Mailers::User
+  include Mailers::Group
   include Mailers::Request
+  include Mailers::Bugreport
+  include Mailers::Verification
+  include Mailers::PageHistory
 
   protected
 
@@ -55,7 +59,10 @@ class Mailer < ActionMailer::Base
     @user = options[:user]
     @current_user = options[:current_user]
     @page = options[:page]
+    @site = options[:site]
     @from_address = options[:from_address]
+    @from_name = options[:from_name]
+    @from = "%s <%s>" % [@from_name, @from_address]
 
     @host = default_url_options[:host] = options[:host]
     @port = default_url_options[:port] = options[:port] if options[:port]

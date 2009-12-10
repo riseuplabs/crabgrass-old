@@ -1,0 +1,23 @@
+---
+name: toc without [:outline] option should pass through.
+in: |-
+  [[toc]]
+
+  h1. hi
+out: |-
+  <p>[[toc]]</p>
+
+  <h1 class="first">hi</h1>
+
+#---
+#name: bad macro
+#in: |-
+#  [[this_macro_does_not_exist]]
+#out: |-
+#  <p>[[this_macro_does_not_exist]]</p>
+
+
+
+
+
+

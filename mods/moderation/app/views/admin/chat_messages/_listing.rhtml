@@ -1,0 +1,29 @@
+<%= pagination_links @messages %>
+
+<table>
+  <tr>
+    <th>Message</th>
+    <th>Channel</th>
+    <th>Created By</th>
+    <th>Created At</th>
+  </tr>
+  <% @messages.each do |m| %>
+  <% url = "/chat/archive/#{m.channel.name}/date/#{m.created_at.strftime('%Y-%m-%d')}##{m.id}" %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
+      <td style=" width:300px"><%= link_to truncate(m.content), url %></td>
+      <td style=" width:120px"><%=h m.channel.name %></td>
+      <td style=" width:120px"><%=h m.sender_name %></td>
+      <td style=" width:120px"><%=h m.created_at.strftime("%d %b, %Y - %R ") %></td>
+      <% params = {:id => m.id, :view => @current_view} %>
+      <% if actions=actions_for(@current_view) %>
+          <% actions.each do |action| %>
+            <td style=" width:120px">
+              <%= button_to_action(action, params) %>
+            </td>
+        <% end %>
+      <%end%>
+    </tr>
+  <% end %>
+</table>
+
+<%= pagination_links(@messages) %>

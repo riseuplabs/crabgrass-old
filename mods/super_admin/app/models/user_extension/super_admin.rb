@@ -1,20 +1,32 @@
-module UserExtension
-  module SuperAdmin
-    def self.included(base)
-      base.instance_eval do
-        alias_method_chain :member_of?, :superadmin
-        alias_method_chain :direct_member_of?, :superadmin
-        alias_method_chain :friend_of?, :superadmin
-        alias_method_chain :peer_of?, :superadmin
-        alias_method_chain :may!, :superadmin
+module UserExtension::SuperAdmin
+
+  def self.included(base)
+    base.extend(ClassMethods)
+    base.instance_eval do
+      include InstanceMethods
+      alias_method_chain :member_of?, :superadmin
+      alias_method_chain :direct_member_of?, :superadmin
+      alias_method_chain :friend_of?, :superadmin
+      alias_method_chain :peer_of?, :superadmin
+      alias_method_chain :may!, :superadmin
+    end
+  end
+
+  module ClassMethods
+    # Removes the superadmins from some user-lists
+    def inactive_user_ids
+      if Site.current.super_admin_group
+        Site.current.super_admin_group.user_ids
+      else
+        false
       end
     end
-    
-    # Returns true if self is a super admin. If self is the current_user
-    # then no arguments are required. However, to test superadmin? on any
-    # other user requires a site argument.
-    def superadmin?(site=nil)
-      site ||= self.current_site
+  end
+
+  module InstanceMethods
+    # Returns true if self is a super admin on site. Defaults to the
+    # current site.
+    def superadmin?(site=Site.current)
       if site
         self.group_ids.include?(site.super_admin_group_id)
       else
@@ -34,12 +46,12 @@ module UserExtension
     end
 
     def friend_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return friend_of_without_superadmin?(user)
     end
 
     def peer_of_with_superadmin?(user)
-      return true if superadmin?
+      return true if (superadmin? or user.superadmin?)
       return peer_of_without_superadmin?(user)
     end
 
@@ -47,6 +59,7 @@ module UserExtension
       return true if superadmin?
       return may_without_superadmin!(perm, object)
     end
-  end 
+  end
+
 end
 

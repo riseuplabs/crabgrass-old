@@ -1,0 +1,12 @@
+<% popup(I18n.t(:make_public_requested), :id => 'details_popup', :width => "40em") do -%>
+  <%= I18n.t(:a_request_was_sent_to_admin_to_make_this_page_public_message) %>
+  <p>
+    <% form_remote_tag(
+		       :url => {:controller => 'participation', :action => 'close_public_requested', :page_id => @page.id},
+		       :loading => show_spinner('popup')) do -%>
+      <%= submit_tag 'Close', :name => 'cancel' %>
+      <%= spinner 'popup' %>
+    <% end -%>
+  </p>
+
+<% end -%>

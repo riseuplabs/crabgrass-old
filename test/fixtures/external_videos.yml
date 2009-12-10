@@ -1,0 +1,6 @@
+beauty_is_in_the_street_video:
+  id: 1
+  media_embed: '<object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/nmylN5f2f74&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/nmylN5f2f74&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>'
+  height: 200
+  width: 300
+

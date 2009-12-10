@@ -1,0 +1,21 @@
+<%
+group_id = group[0].id
+group_name = group[0].name
+if group[0].committee?
+  display_name = "#{group[0].parent.display_name}: #{group[0].display_name}"
+else
+  display_name = group[0].display_name
+end -%>
+<div class='group_entry'>
+  <table><tr><td>
+  <%= link_to avatar_for(group[0], 'medium'),
+              :controller => 'chat', :action => 'channel', :id => group_name -%>
+  </td><td>
+  <%= link_to "#{display_name} #{num_active_in_channel group_id}",
+              :controller => 'chat', :action => 'channel', :id => group_name -%>
+  </td></tr>
+  <tr>
+  <td></td>
+  </table>
+  <br style='clear:left' />
+</div>

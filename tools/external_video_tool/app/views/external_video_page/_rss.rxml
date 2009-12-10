@@ -1,0 +1,10 @@
+xml.content :encoded do
+  xml.cdata! item.data.build_embed
+end
+xml.media :content, :medium => 'video' do
+  xml.media :player, :url => page_url
+  xml.media :thumbnail, :url => item.data.thumbnail_url if item.data.thumbnail_url
+end
+if item.data.thumbnail_url
+  xml.enclosure :url => item.data.thumbnail_url, :length => 1, :type => 'image/jpeg'
+end

@@ -24,25 +24,38 @@ class MessageWallActivity < Activity
   before_create :set_access
   def set_access
     # all content on the wall is public anyway
-    self.access = Activity::PUBLIC
+    # except status posts
+    self.access ||= Activity::PUBLIC
   end
 
-  def description(options={})
-    commands = []
+  def description(view=nil)
     if extra[:type] == "status"
       txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
+    elsif user_id != author_id
+      author_html = user_span(:author)
+      user_html = user_span(:user)
+      message_html = content_tag(:span, extra[:snippet],:class => 'message')
+
+      txt = I18n.t(:activity_wall_message, :user => user_html, :author => author_html, :message => message_html)
     else
-      txt = '{author} wrote to {user}: {message}'[:activity_wall_message, {:user => user_span(:user), :author => user_span(:author), :message => content_tag(:span,extra[:snippet],:class => 'message')}]
+      author_html = user_span(:author)
+      message_html = content_tag(:span,extra[:snippet], :class => 'message')
+      txt = I18n.t(:activity_message, :author => author_html, :message => message_html)
     end
-    if txt[-3..-1] == '...'
-      commands << content_tag(:a, 'more'[:see_more_link], :href => "/messages/#{user_id}/show/#{post_id}")
+#    if txt[-3..-1] == '...'
+#      @link = content_tag(:a, I18n.t(:see_more_link), :href => "/messages/#{user_id}/show/#{post_id}")
+#    else
+#      @link = content_tag(:a, I18n.t(:details_link), :href => "/messages/#{user_id}/show/#{post_id}")
+#    end
+    return txt
+  end
+
+  def link
+    if user == User.current
+      {:controller => '/me/public_messages', :id => post_id, :action => 'show'}
     else
-      commands << content_tag(:a, 'details'[:details_link], :href => "/messages/#{user_id}/show/#{post_id}")
+      {:controller => '/people/messages', :person_id => user, :id => post_id, :action => 'show'}
     end
-    #if options[:current_user] and options[:current_user].id == user_id
-    #  commands << content_tag(:a, 'delete'[:delete], :href => "/messages/#{user_id}/destroy/#{post_id}")
-    #end
-    txt + BULLET + content_tag(:span, commands.join(BULLET), :class => 'commands')
   end
 
   def icon
@@ -51,6 +64,11 @@ class MessageWallActivity < Activity
     else
       'comment'
     end
+  end
+
+  def style
+    url = '/avatars/%s/%s.jpg?%s' % [author.try.avatar_id||0, 'tiny', author.try.updated_at.to_i]
+    "background-image: url(#{url});"
   end
 
 end

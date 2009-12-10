@@ -4,16 +4,19 @@
   # time trigger:
   # sec[0,59] min[0,59], hour[0,23], day[1,31], month[1,12], weekday[0,6], year
   #
-  
+
+  every_minute = "0 */1 * * * * *"
+  two_minutes = "0 */2 * * * * *"
+  five_minutes = "0 */5 * * * * *"
   hourly     = "0 0 * * * * *"
   daily      = "0 0 4 * * * *"       # run at 4am
   three_days = "0 0 0 */3 * * *"
 
 #  OTHER OPTIONS
-#  :backgroundrb: 
+#  :backgroundrb:
 #    :log: foreground      # foreground mode,print log messages on console
 #    :debug_log: false     # disable log workers and other logging
-#    :persistent_disabled: false 
+#    :persistent_disabled: false
 #       # false: we use a database to keep a persistent job queue
 #       # true: the job queue is kept only in memory and might be lost
 #    :persistent_delay: 10
@@ -21,21 +24,31 @@
 #       # database for enqueued tasks
 %>
 ---
-:backgroundrb: 
-  :ip: localhost
+:backgroundrb:
+  :ip: 127.0.0.1
   :port: 11006
   :persistent_disabled: true
   :debug_log: true
+  :environment: production
 :schedules:
   :cron_worker:
+    :send_pending_single_notifications_for_watched_pages:
+      :trigger_args: <%= five_minutes %>
+    :send_pending_digest_notifications_for_watched_pages:
+      :trigger_args: <%= daily %>
     :clean_fragment_cache:
       :trigger_args: <%= daily %>
     :clean_session_cache:
       :trigger_args: <%= daily %>
     :clean_codes:
       :trigger_args: <%= daily %>
-    :update_trackings:
+    :update_dailies:
+      :trigger_args: <%= daily %>
+    :process_trackings:
       :trigger_args: <%= hourly %>
     :reindex_sphinx:
       :trigger_args: <%= hourly %>
-
+    :tally_votes:
+       :trigger_args: <%= hourly %>
+    :clean_chat_channels_users:
+      :trigger_args: <%= every_minute %>

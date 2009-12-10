@@ -1,0 +1,38 @@
+<%= pagination_links @posts %>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Comment</th>
+    <th>Created</th>
+    <th></th>
+  </tr>
+  <% @posts.each do |post| %>
+    <% page_link_tag = page_link(post); post_link_tag = post_link(post) %>
+    <tr class="<%=cycle('row_0', 'row_1')%>">
+      <td><%= page_link_tag %></td>
+      <td><%= post_link_tag %></td>
+      <td><%=h post.created_at.strftime("%d %b, %Y ") %></td>
+      <td colspan="2" style="padding-right:0em;">
+        <% if @current_view == 'pending' %>
+          <span class="actions">
+          <%= link_to "This Post Is OK", { :action => 'approve', :id => post.id, :view => @current_view }, :method => :post %>
+          <%#= button_to "This Post Is OK", :action => "approve", :params => {:id => post.id, :view => @current_view} %>
+          <%= link_to "Trash This Post", { :action => 'trash', :id => post.id, :view => @current_view }, :method => :post %>
+          <%#= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
+          </span>
+        <% else %>
+          <span class="actions">
+            <% if post.deleted_at.nil? -%>
+              <%= link_to "Trash This Post", { :action => "trash", :id => post.id, :view => @current_view }, :method => :post %>
+              <%#= button_to "Trash This Post", :action => "trash", :params => {:id => post.id, :view => @current_view} %>
+            <% else -%>
+              <%= link_to "Undelete", { :action => 'undelete', :id => post.id, :view => @current_view }, :method => :post %>
+              <%#= button_to "Undelete", :action => "undelete", :params => {:id => post.id, :view => @current_view} %>
+            <% end -%>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= pagination_links @posts %>

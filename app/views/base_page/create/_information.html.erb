@@ -1,19 +1,22 @@
-<table>
-  <tr>
-    <td class='label'><%= 'Title'.t %></td>
-    <td><%= text_field 'page', 'title', :size => 38 %></td>
-    <%= javascript_tag %( $("page_title").focus() ) %>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Summary'.t %></td>
-    <td><%= text_area 'page', 'summary', :size => '38x3' %></td>
-  </tr>
-  <tr>
-    <td class='label'><%= 'Tags'.t %></td>
-    <td>
-      <%= text_field 'page', 'tag_list', :size => 38 %><br/>
-      <i>(<%= 'separate tags using commas'[:separate_tags]%>)</i>
-    </td>
-  </tr>
-</table>
+<%
+  #form.heading I18n.t(:create_page_information, :page_class => I18n.t(:page))
+  form.row do |r|
+    r.label I18n.t(:title)
+    r.label_for 'page_title'
+    r.input text_field('page', 'title', :size => 40)
+    r.info help(:title)
+  end
+  form.row do |r|
+    r.label I18n.t(:summary)
+    r.label_for 'page_summary'
+    r.input text_area('page', 'summary', :size => '40x3')
+    r.info help(:summary)
+  end
+  form.row do |r|
+    r.label I18n.t(:tags)
+    r.label_for 'page_tag_list'
+    r.input text_field('page', 'tag_list', :size => 40)
+    r.info "%s %s" % [help(:tags), I18n.t(:separate_tags)]
+  end
+%>
 

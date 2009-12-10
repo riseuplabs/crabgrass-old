@@ -1,7 +1,9 @@
 log/*.log
 log/searchd.*
 tmp/**/*
+tmp/*
 .DS_Store
+.idea
 .AppleDouble
 :2eDS_Store
 :2e_*
@@ -22,6 +24,11 @@ public/avatars/*/*
 !public/avatars/0/*
 public/stylesheets/all.css
 public/stylesheets/themes
+.sass-cache
+.sass-cache/*
 public/javascripts/all.js
 public/assets/*
 lang/la_US.yml
+tmp/webrat-*
+webrat-*.png
+webrat-*.html

@@ -25,7 +25,7 @@ for list in @task_lists
   next unless tasks.any?
   tasks = tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]}
 -%>
-  <ul><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_group(@page.group_name, :action => 'tasks')})" if @page.group_name %></ul>
+  <ul><b><%= link_to @page.title, page_url(@page) %></b> <%= "(#{link_to_entity(@page.owner, :action => 'tasks')})" if @page.owner %></ul>
   <ul id='<%#sort_list_id%>' class='task_list'>
     <%= render :partial => 'task_list_page/task', :collection => tasks, :locals => {:sortable => false} %>
   </ul>

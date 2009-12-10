@@ -17,7 +17,7 @@ module UserExtension
         :uniq => true} do
           # TODO: We should ask ejabberd which users are online
           def online
-            find( :all, 
+            find( :all,
               :conditions => ['users.last_seen_at > ?',10.minutes.ago],
               :order => 'users.last_seen_at DESC' )
           end
@@ -27,7 +27,7 @@ module UserExtension
 
   module InstanceMethods
     def create_user_roster_and_group_roster(contact)
-      
+
       user_roster_data  = { :username     => self.login,
                             :jid          => "#{contact.login}@#{DOMAIN}",
                             :subscription => 'B',

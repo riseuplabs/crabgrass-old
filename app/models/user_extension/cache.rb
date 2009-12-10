@@ -1,7 +1,7 @@
 =begin
 
 Caching IDs
- 
+
 The idea here is that every user in a social networking universe
 has a lot of relationships to other entities that might be expensive
 to discover. For example, a list of all your peers or a list of all
@@ -40,10 +40,10 @@ Columns
 --------
 
   version -- increments when any of the id caches are changed
- 
+
   id caches -- there are many columns to cache our relationships,
     because they are used very frequently and take time to calculate.
-    The names of the cache attributes end with "_cache". 
+    The names of the cache attributes end with "_cache".
 
 =end
 
@@ -95,14 +95,14 @@ module UserExtension
     # object, follow this call with reload()
     def clear_cache
        self.class.connection.execute(%Q[
-         UPDATE users SET 
+         UPDATE users SET
          tag_id_cache = NULL, direct_group_id_cache = NULL, foe_id_cache = NULL,
          peer_id_cache = NULL, friend_id_cache = NULL, all_group_id_cache = NULL,
          admin_for_group_id_cache = NULL
          WHERE id = #{self.id}
        ])
     end
-    
+
     # called whenever an empty self.friend_id_cache is accessed
     # or directly when a new contact is added
     def update_contacts_cache()
@@ -111,7 +111,7 @@ module UserExtension
         :friend_id_cache => friend,
         :foe_id_cache    => foe
     end
-      
+
     # include direct memberships, committees, and networks
     def get_group_ids
       if self.id
@@ -127,7 +127,7 @@ module UserExtension
         committee = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
           WHERE groups.parent_id IN (#{direct.join(',')})
-          AND groups.is_council = 0
+          AND groups.type = 'Committee'
         ])
         network = Group.connection.select_values(%Q[
           SELECT groups.id FROM groups
@@ -144,7 +144,7 @@ module UserExtension
           committee += Group.connection.select_values(%Q[
             SELECT groups.id FROM groups
             WHERE groups.parent_id IN (#{network.join(',')})
-            AND groups.is_council = 0
+            AND groups.type = 'Committee'
           ])
         end
         admin_for = Group.connection.select_values(%Q[
@@ -182,13 +182,13 @@ module UserExtension
     def get_contact_ids()
       return [[],[]] unless self.id
       foe = [] # no foes yet.
-      friend = Contact.connection.select_values( %Q[
-        SELECT contacts.contact_id FROM contacts
-        WHERE contacts.user_id = #{self.id}
+      friend = Relationship.connection.select_values( %Q[
+        SELECT relationships.contact_id FROM relationships
+        WHERE relationships.type = 'Friendship' AND relationships.user_id = #{self.id}
       ])
       [friend,foe]
     end
-    
+
     def update_tag_cache
       # this query sucks and should be optimized
       # see http://dev.mysql.com/doc/refman/5.0/en/in-subquery-optimization.html
@@ -217,7 +217,7 @@ module UserExtension
       def clear_membership_cache(ids)
         return unless ids.any?
         self.connection.execute(%Q[
-          UPDATE users SET 
+          UPDATE users SET
           direct_group_id_cache = NULL, all_group_id_cache = NULL,
           admin_for_group_id_cache = NULL
           WHERE id IN (#{ ids.join(',') })
@@ -233,12 +233,12 @@ module UserExtension
       def increment_version(ids)
         return unless ids.any?
         self.connection.execute(
-          public_sanitize_sql(
+          quote_sql(
             ["UPDATE `users` SET version=version+1 WHERE id IN (?)", ids]
           )
         )
       end
-      
+
       ## serialize_as
       ## ---------------------------------
       ##
@@ -268,7 +268,7 @@ module UserExtension
           end_eval
         end
       end
-      
+
       ## initialized_by
       ## ---------------------------------
       ##

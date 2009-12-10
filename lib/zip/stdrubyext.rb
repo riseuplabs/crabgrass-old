@@ -51,20 +51,20 @@ class String  #:nodoc:all
 end
 
 class Time  #:nodoc:all
-  
+
   #MS-DOS File Date and Time format as used in Interrupt 21H Function 57H:
-  # 
+  #
   # Register CX, the Time:
   # Bits 0-4  2 second increments (0-29)
   # Bits 5-10 minutes (0-59)
   # bits 11-15 hours (0-24)
-  # 
+  #
   # Register DX, the Date:
   # Bits 0-4 day (1-31)
   # bits 5-8 month (1-12)
   # bits 9-15 year (four digit year minus 1980)
-  
-  
+
+
   def to_binary_dos_time
     (sec/2) +
       (min  << 5) +
@@ -84,9 +84,9 @@ class Time  #:nodoc:all
 
   def self.parse_binary_dos_format(binaryDosDate, binaryDosTime)
     second = 2 * (       0b11111 & binaryDosTime)
-    minute = (     0b11111100000 & binaryDosTime) >> 5 
+    minute = (     0b11111100000 & binaryDosTime) >> 5
     hour   = (0b1111100000000000 & binaryDosTime) >> 11
-    day    = (           0b11111 & binaryDosDate) 
+    day    = (           0b11111 & binaryDosDate)
     month  = (       0b111100000 & binaryDosDate) >> 5
     year   = ((0b1111111000000000 & binaryDosDate) >> 9) + 1980
     begin
@@ -97,8 +97,8 @@ end
 
 class Module  #:nodoc:all
   def forward_message(forwarder, *messagesToForward)
-    methodDefs = messagesToForward.map { 
-      |msg| 
+    methodDefs = messagesToForward.map {
+      |msg|
       "def #{msg}; #{forwarder}(:#{msg}); end"
     }
     module_eval(methodDefs.join("\n"))

@@ -1,37 +1,94 @@
+
+//
+// CRABGRASS HELPERS
+//
+
+// shows the 'notice' message (ie errors and success)
+// if there is a popup currently open, then the messages shows up there.
+// set msg to "" in order to hide it.
+function showNoticeMessage(msg) {
+  Autocomplete.hideAll();
+  if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
+    $('modal_message').update(msg);
+  } else if ($('message')) {
+    $('message').update(msg);
+    if (msg)
+      window.location.hash = "message";
+  }
+  $$('.spin').invoke('hide');
+}
+
+// opens the greencloth editing reference.
 function quickRedReference() {
-  window.open( 
+  window.open(
     "/static/greencloth",
     "redRef",
     "height=600,width=750/inv,channelmode=0,dependent=0," +
     "directories=0,fullscreen=0,location=0,menubar=0," +
     "resizable=0,scrollbars=1,status=1,toolbar=0"
   );
-}
-
-function show_tab(tab_link, tab_content) {
-  tabset = tab_link.parentNode.parentNode
-  $$('ul.tabset a').each( function(elem) {
-    if (tabset == elem.parentNode.parentNode) {
-      elem.removeClassName('active');
-    }
-  })
-  $$('.tab-content').each( function(elem) {
-    elem.hide();
-  })
-  tab_link.addClassName('active');
-  tab_content.show();
-  tab_link.blur();
   return false;
 }
 
-// submits a form, from the onclick of a link. 
-// use like <a href='' onclick='submit_form(this,"bob")'>bob</a>
-function submit_form(link, name, value) {
-  e = link;
-  while(e = e.parentNode){if(e.tagName == 'FORM'){break}}
-  if (e) {
-    form = e;
-    input = document.createElement("input");
+//
+// CSS UTILITY
+//
+
+function replaceClassName(element, old_class, new_class) {element.removeClassName(old_class); element.addClassName(new_class)}
+
+function setClassVisibility(selector, visibility) {
+  $$(selector).each(function(element){
+    visibility ? element.show() : element.hide();
+  })
+}
+
+//
+// FORM UTILITY
+//
+
+// Toggle the visibility of another element based on if a checkbox is checked or
+// not. Additionally, sets the focus to the first input or textarea that is visible.
+function checkboxToggle(checkbox, element) {
+  if (checkbox.checked) {
+    $(element).show();
+    var focusElm = $(element).select('input[type=text]), textarea').first();
+    var isVisible = focusElm.visible() && !focusElm.ancestors().find(function(e){return !e.visible()});
+    if (focusElm && isVisible) {
+      focusElm.focus();
+    }
+  } else {
+    $(element).hide();
+  }
+}
+
+// Toggle the visibility of another element using a link with an
+// expanding/contracting arrow.
+function linkToggle(link, element) {
+  if (link) {
+    link = Element.extend(link);
+    link.toggleClassName('right_16');
+    link.toggleClassName('sort_down_16');
+    $(element).toggle();
+  }
+}
+
+// toggle all checkboxes of a particular css selector, based on the
+// checked status of the checkbox passed in.
+function toggleAllCheckboxes(checkbox, selector) {
+  $$(selector).each(function(cb) {cb.checked = checkbox.checked})
+}
+
+// submits a form, from the onclick of a link.
+// use like <a href='' onclick='submitForm(this,"bob")'>bob</a>
+// value is optional.
+function submitForm(form_element, name, value) {
+  var e = form_element;
+  var form = null;
+  do {
+    if(e.tagName == 'FORM'){form = e; break}
+  } while(e = e.parentNode)
+  if (form) {
+    var input = document.createElement("input");
     input.name = name;
     input.type = "hidden";
     input.value = value;
@@ -44,63 +101,69 @@ function submit_form(link, name, value) {
   }
 }
 
-function replace_class_name(element, old_class, new_class) {
-  element.removeClassName(old_class);
-  element.addClassName(new_class);
+function setRows(elem, rows) {
+  elem.rows = rows;
+  elem.toggleClassName('tall');
 }
 
-/** editing textareas **/
+// starts watching the textarea
+// when window.onbeforeunload event happens it will ask the user if they want to leave the unsaved form
+// everything that matches savingSelectors will permenantly disable the confirm message when clicked
+// this a way to exclude "Save" and "Cancel" buttons from raising the "Do you want to discard this?" dialog
+function confirmDiscardingTextArea(textAreaId, discardingMessage, savingSelectors) {
+  var confirmActive = true;
 
-/* element is a textarea object. value is some text */
-function insertAtCursor(element_id, value) {
-  var element = $(element_id);
-  element.focus();
-  if (document.selection) {
-    //IE support
-    sel = document.selection.createRange();
-    sel.text = value;
-  } else if (element.selectionStart || element.selectionStart == '0') {
-    //Mozilla/Firefox/Netscape 7+ support
-    var startPos = element.selectionStart;
-    var endPos   = element.selectionEnd;
-    element.value = element.value.substring(0, startPos) + value + element.value.substring(endPos, element.value.length);
-    element.setSelectionRange(endPos+value.length, endPos+value.length);
-  } else {
-    element.value += value;
-  }
+  // setup confirmation
+  // Event.observe(window, 'beforeunload', function(ev) {
+  //   if(confirmActive) {
+  //     ev.returnValue = discardingMessage;
+  //   }
+  // })
+
+  window.onbeforeunload = function(ev) {
+    if(confirmActive) {
+      return discardingMessage;
+    }
+  };
+
+  // toggle off the confirmation when saving or explicitly discarding the text area (clicking 'cancel' for example)
+  savingSelectors.each(function(savingSelector) {
+    var savingElements = $$(savingSelector);
+    savingElements.each(function(savingElement) {
+      savingElement.observe('click', function() {
+        // user clicked 'save', 'cancel' or something similar
+        // we should no longer display confirmation when leaving page
+        confirmActive = false;
+      })
+    });
+  });
 }
 
+//
+// EVENTS
+//
 
-/** menu navigation **/
-/*
-var SubMenu = Class.create({
-  initialize: function(li) {
-    if(!$(li)) return;
-    this.trigger = $(li).down('em');
-    if(!this.trigger) return;
-    this.menu = $(li).down('ul');
-    this.trigger.observe('click', this.respondToClick.bind(this));
-    document.observe('click', function(){ this.menu.hide()}.bind(this));
-  },
-  
-  respondToClick: function(event) {
-    event.stop();
-    $$('ul.submenu').without(this.menu).invoke('hide');
-    this.menu.toggle()
-  }
-});
+// returns true if the enter key was pressed
+function enterPressed(event) {
+  if(event.which) { return(event.which == 13); }
+  else { return(event.keyCode == 13); }
+}
 
+function eventTarget(event) {
+  event = event || window.event;            // IE doesn't pass event as argument.
+  return(event.target || event.srcElement); // IE doesn't use .target
+}
 
-document.observe('dom:loaded', function() {
-  new SubMenu("menu-me");
-  new SubMenu("menu-people");
-});
-*/
+//
+// POSITION
+//
 
-/** finding position **/
-
+//
+// this should be replaced with element.cumulativeOffset()
+//
 function absolutePosition(obj) {
-  var curleft = curtop = 0;
+  var curleft = 0;
+  var curtop = 0;
   if (obj.offsetParent) {
     do {
       curleft += obj.offsetLeft;
@@ -110,8 +173,141 @@ function absolutePosition(obj) {
   return [curleft,curtop];
 }
 function absolutePositionParams(obj) {
-  obj_dims = absolutePosition(obj);
-  page_dims = document.viewport.getDimensions();
+  var obj_dims = absolutePosition(obj);
+  var page_dims = document.viewport.getDimensions();
   return 'position=' + obj_dims.join('x') + '&page=' + page_dims.width + 'x' + page_dims.height
 }
 
+//
+// DYNAMIC TABS
+// naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
+//
+
+function evalAttributeOnce(element, attribute) {
+  if (element.readAttribute(attribute)) {
+    eval(element.readAttribute(attribute));
+    element.writeAttribute(attribute, "");
+  }
+}
+
+function showTab(tabLink, tabContent, hash) {
+  tabLink = $(tabLink);
+  tabContent = $(tabContent);
+  var tabset = tabLink.up('.tabset');
+  if (tabset) {
+    tabset.select('a').invoke('removeClassName', 'active');
+    $$('.tab_content').invoke('hide');
+    tabLink.addClassName('active');
+    tabContent.show();
+    evalAttributeOnce(tabContent, 'onclick');
+    tabLink.blur();
+    if (hash) {window.location.hash = hash}
+  }
+  return false;
+}
+
+var defaultHash = null;
+
+function showTabByHash() {
+  var hash = window.location.hash || defaultHash;
+  if (hash) {
+    hash = hash.replace(/^#/, '').replace(/-/g, '_');
+    showTab(hash+'_link', hash+'_panel')
+  }
+}
+
+// returns true if the element is in a tab content area that is visible.
+function isTabVisible(elem) {
+  return $(elem).ancestors().find(function(e){return e.hasClassName('tab_content') && e.visible();})
+}
+
+//
+// TOP MENUS
+//
+
+var DropMenu = Class.create({
+  initialize: function(menu_id) {
+    this.timeout = null;
+    if(!$(menu_id)) return;
+    this.trigger = $(menu_id);
+    if(!this.trigger) return;
+    this.menu = $(menu_id).down('.menu_items');
+    if(!this.menu) return;
+    this.trigger.observe('mouseover', this.showMenu.bind(this));
+    this.trigger.observe('mouseout', this.hideMenu.bind(this));
+    //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
+  },
+
+  menuIsOpen: function() {
+    return($$('.menu_items').detect(function(e){return e.visible()}) != null);
+  },
+
+  clearEvents: function(event) {
+    event.stop();
+    $$('.menu_items').without(this.menu).invoke('hide');
+  },
+
+  showMenu: function(event) {
+    evalAttributeOnce(this.menu, 'onclick');
+    if (this.timeout) window.clearTimeout(this.timeout);
+    if (this.menuIsOpen()) {
+      this.menu.show();
+      this.clearEvents(event);
+    } else {
+      this.timeout = Element.show.delay(.3,this.menu);
+      this.clearEvents(event);
+    }
+  },
+
+  hideMenu: function(event) {
+    this.clearEvents(event);
+    if (this.timeout) window.clearTimeout(this.timeout);
+    this.timeout = Element.hide.delay(.3, this.menu);
+  }
+
+});
+
+document.observe('dom:loaded', function() {
+  new DropMenu("menu_me");
+  new DropMenu("menu_people");
+  new DropMenu("menu_groups");
+  new DropMenu("menu_networks");
+});
+
+//
+// DEAD SIMPLE AJAX HISTORY
+// allow location.hash change to trigger a callback event.
+//
+
+var onHashChanged = null; // called whenever location.hash changes
+var currentHash = '##';
+function pollHash() {
+  if ( window.location.hash != currentHash ) {
+    currentHash = window.location.hash;
+    onHashChanged();
+  }
+}
+document.observe("dom:loaded", function() {
+  if (onHashChanged) {setInterval("pollHash()", 100)}
+});
+
+//
+// COMMON MODAL DIALOGS
+//
+
+function loginDialog(txt,options) {
+  var form = '' +
+  '<form class="login_dialog" method="post" action="/account/login">' +
+  '  <input type="hidden" value="#{token}" name="authenticity_token" id="redirect"/>' +
+  '  <input type="hidden" value="#{redirect}" name="redirect" id="redirect"/>' +
+  '  <label>#{username}</label><input type="text" name="login" id="login" tabindex="1"/>' +
+  '  <label>#{password}</label><input type="password" name="password" id="password" tabindex="2"/>' +
+  '  <input type="submit" value="#{login}" tabindex="3"/>' +
+  '  <span class="small">'
+  if (options['may_signup'])
+     form += '<a href="/account/signup">#{create_account}</a> | '
+  form += '<a href="/account/forgot_password">#{forgot_password}</a></span>' +
+  '</form>'
+  form = form.interpolate(txt);
+  Modalbox.show(form, {title:txt.login, width:350});
+}

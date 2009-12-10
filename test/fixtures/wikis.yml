@@ -10,18 +10,30 @@ second:
   
 multi_section:
   id: 3
+  version: 3
   body: |-
-    h2. section one header
-       
+    h1. Top Oversection
+    
+    
+    section one
+    -----------
+    
     s1 text 1
     s1 text 2
     
-    h3. section TWO header
+    h2. section two
+    
+    h3. subsection for section two
     
     s2 text #1
     s2 more text
     
-    h2. final section THREE headers
+    h3. a blank subsection. just the title
+    
+    Second Oversection
+    =================
+    
+    h2. section three
     
     s3 text first line
     s3 last lime
@@ -42,3 +54,13 @@ malformed:
     
     s3 text 1
     s3 text 2
+
+announcement:
+  id: 5
+  body: there is a new video online now...
+  version: 1
+
+for_public:
+  id: 6
+  body: the body of the wiki, which is text suitable for running through green cloth
+  version: 1

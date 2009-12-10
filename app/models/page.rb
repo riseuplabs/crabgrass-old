@@ -4,31 +4,100 @@ PAGE.RB
 
 A Page is the main content class. All actual content is a subclass of this class.
 
-denormalization:
-all the relationship between a page and its groups is stored in the group_participations table. however, we denormalize some of it: group_name and group_id are used to store the info for the 'primary group'. what does this mean? the primary group is what is show when listing pages and it is the default group when linking from a wiki.
+denormalization
+---------------
 
+  * updated_by_login
+  * created_by_login
+  * owner_name
+
+Upon further investigation, I am not sure that these are needed.
+
+schema
+--------
+
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "resolved",                         :default => true
+    t.boolean  "public"
+    t.integer  "created_by_id",      :limit => 11
+    t.integer  "updated_by_id",      :limit => 11
+    t.text     "summary"
+    t.string   "type"
+    t.integer  "message_count",      :limit => 11, :default => 0
+    t.integer  "data_id",            :limit => 11
+    t.string   "data_type"
+    t.integer  "contributors_count", :limit => 11, :default => 0
+    t.integer  "posts_count",        :limit => 11, :default => 0
+    t.string   "name"
+    t.string   "updated_by_login"
+    t.string   "created_by_login"
+    t.integer  "flow",               :limit => 11
+    t.integer  "stars",              :limit => 11, :default => 0
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "owner_id",           :limit => 11
+    t.string   "owner_type"
+    t.string   "owner_name"
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.integer  "site_id",            :limit => 11
+    t.datetime "happens_at"
+  end
+
+  add_index "pages", ["name","owner_id"], :name => "index_pages_on_name"
+  add_index "pages", ["created_by_id"], :name => "index_page_created_by_id"
+  add_index "pages", ["updated_by_id"], :name => "index_page_updated_by_id"
+  add_index "pages", ["type"], :name => "index_pages_on_type"
+  add_index "pages", ["flow"], :name => "index_pages_on_flow"
+  add_index "pages", ["public"], :name => "index_pages_on_public"
+  add_index "pages", ["resolved"], :name => "index_pages_on_resolved"
+  add_index "pages", ["created_at"], :name => "index_pages_on_created_at"
+  add_index "pages", ["updated_at"], :name => "index_pages_on_updated_at"
+  execute "CREATE INDEX owner_name_4 ON pages (owner_name(4))"
+
+  Yeah, so, there are way too many indices on the pages table.
 =end
 
 class Page < ActiveRecord::Base
   extend PathFinder::FindByPath
-  include PageExtension::Users
-  include PageExtension::Groups
-  include PageExtension::Create
-  include PageExtension::Subclass
-  include PageExtension::Index
-#  include PageExtension::Linking
-  include PageExtension::Static
+  include PageExtension::Users     # page <> users relationship
+  include PageExtension::Groups    # page <> group relationship
+  include PageExtension::Assets    # page <> asset relationship
+  include PageExtension::Create    # page creation
+  include PageExtension::Subclass  # page subclassing
+  include PageExtension::Index     # page full text searching
+  include PageExtension::Starring  # ???
+  include PageExtension::Tracking  # page tracking views, edits and stars
+  include PageExtension::PageHistory
+
+  # disable timestamps, we set the updated_at field through certain PageHistory subclasses
+  self.record_timestamps = false
+  before_save :save_timestamps
 
   acts_as_taggable_on :tags
   acts_as_site_limited
+  attr_protected :owner
 
-  #######################################################################
+  ##
+  ## NAMES SCOPES
+  ##
+
+  named_scope :only_public, :conditions => {:public => true}
+  named_scope :only_images, :conditions => {:is_image => true}
+  named_scope :only_videos, :conditions => {:is_video => true}
+
+  ##
   ## PAGE NAMING
-  
+  ##
+
   def validate
-    if (name_changed? or group_id_changed?) and name_taken?
+    if (name_changed? or owner_id_changed? or groups_changed) and name_taken?
       errors.add 'name', 'is already taken'
-    elsif name_changed?
+    elsif name_changed? and name.any?
       errors.add 'name', 'name is invalid' if name != name.nameize
     end
   end
@@ -36,9 +105,9 @@ class Page < ActiveRecord::Base
   def name_url
     name.any? ? name : friendly_url
   end
-  
+
   def flow= flow
-    if flow.kind_of? Integer
+    if flow.kind_of?(Integer) || flow.nil?
       write_attribute(:flow, flow)
     elsif flow.kind_of?(Symbol) && FLOW[flow]
       write_attribute(:flow, FLOW[flow])
@@ -46,7 +115,21 @@ class Page < ActiveRecord::Base
       raise TypeError.new("Flow needs to be an integer or one of [#{FLOW.keys.join(', ')}]")
     end
   end
-  
+
+  def delete
+    self.flow=:deleted
+    self.save
+  end
+
+  def undelete
+    write_attribute(:flow, nil)
+    self.save
+  end
+
+  def deleted?
+    flow == FLOW[:deleted]
+  end
+
   def friendly_url
     s = title.nameize
     s = s[0..40].sub(/-([^-])*$/,'') if s.length > 42     # limit name length, and remove any half-cut trailing word
@@ -57,31 +140,31 @@ class Page < ActiveRecord::Base
   # best guess uri string, sans protocol/host/port.
   # ie /rainbows/what-a-fine-page+5234
   def uri
-   return [group_name, name_url].path if group_name
-   return [created_by_login, friendly_url].path if created_by_login
-   return ['page', friendly_url].path
+    owner_name.any? ? [owner_name, name_url].path : ['page', friendly_url].path
   end
 
   # returns true if self's unique page name is already in use.
   # what pages are in the namespace? all pages connected to all
   # groups connected to this page (include the group's committees too).
+  # it also includes the user owner of this page
   def name_taken?
     return false unless self.name.any?
     p = Page.find(:first,
       :conditions => ['pages.name = ? and group_participations.group_id IN (?)', self.name, self.namespace_group_ids],
       :include => :group_participations
     )
+    p ||= Page.find_by_name_and_owner_id(self.name, self.owner.id) if self.owner_type == 'User'
     return false if p.nil?
     return self != p
   end
 
-  #######################################################################
+  ##
   ## RELATIONSHIP TO PAGE DATA
-  
+  ##
+
   belongs_to :data, :polymorphic => true, :dependent => :destroy
   has_one :discussion, :dependent => :destroy
-  has_many :assets, :dependent => :destroy
-      
+
   validates_presence_of :title
   validates_associated :data
   validates_associated :discussion
@@ -96,7 +179,7 @@ class Page < ActiveRecord::Base
     end
     self.resolved=value
     save
-  end  
+  end
 
   def build_post(post,user)
     # this looks like overkill, but it seems to be needed
@@ -110,6 +193,7 @@ class Page < ActiveRecord::Base
     self.discussion.posts << post
     post.discussion = self.discussion
     post.user = user
+    post.page_terms = self.page_terms
     association_will_change(:posts)
     return post
   end
@@ -140,109 +224,78 @@ class Page < ActiveRecord::Base
   before_save :update_posts_count
   def update_posts_count
     if posts_count_changed?
-      self.posts_count = self.discussion.posts_count
+      self.posts_count = self.discussion.posts_count if self.discussion
     end
   end
 
-  # sets the default media flags. can be overridden by the subclasses.
-  before_save :update_media_flags
-  def update_media_flags
-    if self.data
-      self.is_image = self.data.is_image? if self.data.respond_to?('is_image?')
-      self.is_audio = self.data.is_audio? if self.data.respond_to?('is_audio?')
-      self.is_video = self.data.is_video? if self.data.respond_to?('is_video?')
-      self.is_document = self.data.is_document? if self.data.respond_to?('is_document?')
-    end
-    true
-  end
-  
-  #######################################################################
+
+  ##
   ## PAGE ACCESS CONTROL
-  
-  ## update attachment permissions
-  after_save :update_access
-  def update_access
-    if public_changed?
-      assets.each { |asset| asset.update_access }
-    end
-    true
-  end
-#
-# SITES
-#
-#############################  
-  
-  # returns true if self is part of given network
-  # -- TODO
-  #   i don't think this does what it is supposed to do.
-  #   this code would be better:
-  #     self.group_ids.any_in?(network.group_ids + [network.id])
-  #   this does a big intersection, slow but not that slow on the limited size of the arrays.
-  #   -elijah
-  # --
-  def belongs_to_network?(network)
-    groups = self.groups_with_access(:view)
-    groups | self.groups_with_access(:edit)
-    groups | self.groups_with_access(:admin)
-    groups | self.groups_with_access(:comment)
-    
-    groups.include?(network) ? true : false 
-    true
-  end
+  ##
 
-####  
-  
-  
+  public
+
   # This method should never be called directly. It should only be called
   # from User#may?()
   #
-  # basic permissions:
+  # possible permissions:
   #   :view  -- user can see the page.
   #   :edit  -- user can participate.
   #   :admin -- user can destroy the page, change access.
-  # conditional permissions:
-  #   :comment -- sometimes viewers can comment and sometimes only participates can.
-  #   (NOT SUPPORTED YET)
+  #   :none  -- always returns false
   #
   # :view should only return true if the user has access to view the page
   # because of participation objects, NOT because the page is public.
   #
+  # DEPRECATED BEHAVIOR:
+  # :edit should return false for deleted pages.
+  #
   def has_access!(perm, user)
-    perm = comment_access if perm == :comment
-    upart = self.participation_for_user(user)
-    if perm == :delete
-      gparts = self.participation_for_groups(user.admin_for_group_ids)
-      perm = :admin
+
+    ########################################################
+    ## THESE ARE TEMPORARY HACKS...
+    return false if tmp_hack_for_deleted_pages?(perm)
+    ## END TEMP HACKS
+    #########################################################
+
+    asked_access_level = ACCESS[perm] || ACCESS[:view]
+    participation = most_privileged_participation_for(user)
+    allowed = if participation.nil?
+      false
     else
-      gparts = self.participation_for_groups(user.all_group_ids)
+      actual_access_level = participation.access || ACCESS[:view]
+      asked_access_level >= actual_access_level
     end
-    allowed = false
-    if upart or gparts.any?
-      parts = []
-      parts += gparts if gparts.any?
-      parts += [upart] if upart
-      part_with_best_access = parts.min {|a,b|
-        (a.access||100) <=> (b.access||100)
-      }
-      # allow :view if the participation exists at all
-      allowed = ( part_with_best_access.access || ACCESS[:view] ) <= ACCESS[perm]
-    end
-    if allowed
-      return true
-    else
-      raise PermissionDenied.new
-    end
+
+    allowed ? true : raise(PermissionDenied.new)
   end
 
-  # by default, if a user can edit the page, they can comment.
-  # this can be overridden by subclasses.
-  def comment_access
-    :view
+  # returns the participation object for entity with the highest access level.
+  # If no participation exists, we return nil.
+  def most_privileged_participation_for(entity)
+    parts = []
+    if entity.is_a? User
+      parts << participation_for_user(entity)
+      parts.concat participation_for_groups(entity.all_group_ids)
+    elsif entity.is_a? Group
+      parts << participation_for_group(entity)
+    end
+    parts.compact.min {|a,b| (a.access||100) <=> (b.access||100) }
   end
 
-  #######################################################################
+  protected
+
+  # do not allow comments or editing of deleted pages:
+  def tmp_hack_for_deleted_pages?(perm)
+    self.deleted? and (perm == :edit)
+  end
+
+  ##
   ## RELATIONSHIP TO ENTITIES (GROUPS OR USERS)
-    
+  ##
+
+  public
+
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be added to pages!
@@ -255,11 +308,11 @@ class Page < ActiveRecord::Base
       entity.add_page(self,attributes)
     end
   end
-      
+
   # Remove a group or user from this page (by destroying the corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be removed from pages!
-  def remove(entity)    
+  def remove(entity)
     if entity.is_a? Enumerable
       entity.each do |e|
         e.remove_page(self)
@@ -270,65 +323,102 @@ class Page < ActiveRecord::Base
     entity
   end
 
-  # The owner may be a user or a group.
+  # The owner may be a user or a group, or their name.
+  # this attr is protected from mass assignment.
   def owner=(entity)
-    raise ArgumentError.new("owner= can't be nil") if entity.nil?
-    self.owner_id = entity.id
-    self.owner_name = entity.name
-    if entity.is_a? Group
-      self.owner_type = "Group"
-      self.group_name = self.owner_name
-      self.group_id = self.owner_id
-    elsif entity.is_a? User
-      self.owner_type = "User"
-    else
-      raise Exception.new('must be user or group')
+    if entity.is_a? String
+      if entity.empty?
+        entity = nil
+      else
+        entity = User.find_by_login(entity) || Group.find_by_name(entity)
+      end
     end
-    self.add(entity, :access => :admin) unless entity.may?(:admin, self)
+    if entity.nil?
+      if Conf.ensure_page_owner?
+        raise ErrorMessage.new(I18n.t(:page_owner_error))
+      else
+        self.owner_id = nil
+        self.owner_name = nil
+        self.owner_type = nil
+      end
+    elsif self.owner_name != entity.name
+      self.owner_id = entity.id
+      self.owner_name = entity.name
+      if entity.is_a? Group
+        self.owner_type = "Group"
+      elsif entity.is_a? User
+        self.owner_type = "User"
+      else
+        raise Exception.new('must be user or group')
+      end
+      part = most_privileged_participation_for(entity)
+      self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
+      return self.owner(true)
+    end
   end
 
-  before_create :ensure_owner
+  # updates the denormalized copies of owner name
+  def self.update_owner_name(owner)
+    Page.connection.execute(quote_sql([
+      "UPDATE pages SET `owner_name` = ? WHERE pages.owner_id = ? AND pages.owner_type = ?",
+      owner.name,
+      owner.id,
+      owner.class.class_name
+    ]))
+    if owner.is_a? User
+      Page.connection.execute(quote_sql([
+        "UPDATE pages SET updated_by_login = ? WHERE pages.updated_by_id = ?",
+        owner.login, owner.id
+      ]))
+      Page.connection.execute(quote_sql([
+        "UPDATE pages SET created_by_login = ? WHERE pages.created_by_id = ?",
+        owner.login, owner.id
+      ]))
+    end
+  end
+
+  # returns the appropriate user_participation or group_participation record.
+  # it would be better to use OOP, but this allows page to cache the results.
+  def participation_for(entity)
+    entity.is_a?(User) ? participation_for_user(entity) : participation_for_group(entity)
+  end
+
+  protected
+
+  before_save :ensure_owner
   def ensure_owner
-    if gp = self.group_participations.detect{|gp|gp.access == ACCESS[:admin]}
-      self.owner = gp.group
-    elsif self.created_by
-      self.owner = self.created_by
-    else
-      # in real life, we should not get here. but in tests, we make pages a lot
-      # that don't have a group or user.
+    if Conf.ensure_page_owner?
+      if owner_id
+        ## do nothing!
+      elsif gp = group_participations.detect{|gp|gp.access == ACCESS[:admin]}
+        self.owner = gp.group
+      elsif self.created_by
+        self.owner = self.created_by
+      else
+        # in real life, we should not get here. but in tests, we make pages a lot
+        # that don't have a group or user.
+      end
     end
+    return true
   end
 
-  # a list of people and groups that have admin access to this page
-  def admins
-    # sometimes the owner is not in the list, this is a grave error, but
-    # we ensure that the owner is included in the list of admins.
-    groups = group_participations.select{|p|p.access_sym == :admin}.collect{|p|p.group}
-    users = user_participations.select{|p|p.access_sym == :admin}.collect{|p|p.user}
-    if owner
-      groups.unshift(owner) if owner.is_a? Group and !groups.include?(owner)
-      users.unshift(owner) if owner.is_a? User and !users.include?(owner)
-    end
-    return groups + users
-  end
-  
-  #######################################################################
+  ##
   ## DENORMALIZATION
+  ##
+
+  protected
 
   # denormalize hack follows:
   before_save :denormalize
   def denormalize
-    if self.owner_type != "Group" and self.group_name.empty? and group_participations.any?
-      group = group_participations.first.group
-      self.group_name = group.name
-      self.group_id = group.id
-    end
     if updated_by_id_changed?
       self.updated_by_login = (updated_by.login if updated_by)
     end
     true
   end
-  
+
+  public
+
   # used to mark stuff that has been changed.
   # so that we know we need to update other stuff when saving.
   def dirty(what)
@@ -340,25 +430,34 @@ class Page < ActiveRecord::Base
     @dirty[what]
   end
 
-  #######################################################################
+  ##
   ## MISC. HELPERS
+  ##
+
+  public
 
   # tmp in-memory storage used by views
   def flag
     @flags ||= {}
   end
 
-  def self.make(function,options={})
+  # DEPRECATED
+  def self.make_a_call(function,options={})
     PageStork.send(function, options)
   end
 
   def class_display_name
     self.class.class_display_name
   end
-  
+
   # override this in subclasses…
   def supports_attachments
     true
   end
-  
+
+  protected
+
+  def save_timestamps
+    self.created_at = self.updated_at = Time.now if self.new_record?
+  end
 end

@@ -1,0 +1,37 @@
+<%= render :partial => '/widgets/mini_search' %>
+
+<div class="sidebox dark">
+  <h2 class="first"><%= I18n.t(:have_your_say) %></h2>
+  <ul class="side_list">
+    <li>
+      <%= [contribute_link, create_group_link, welcome_box_link].join('<li></li>') %>
+    </li>
+  </ul>
+</div>
+
+
+<div class="sidebox">
+
+<h2 class=alert><%= I18n.t(:members) %></h2>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_members), :entities => most_active_users() } %>   
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_members), :entities => recently_active_users() , :after => link_to(I18n.t(:view_all), people_directory_index_path)} %>
+
+<br class='clear'/>
+
+
+
+<h2 class=alert><%= I18n.t(:groups) %></h2>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_groups), :entities => most_active_groups() } %>
+
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_groups), :entities => recently_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_params(:action => 'most_active')) } %>
+
+<br class='clear'/>
+
+</div>
+
+<p>
+  <%= [configure_site_network_link, configure_site_link, configure_site_appearance_link].compact.join('</p><p>') %>
+</p>

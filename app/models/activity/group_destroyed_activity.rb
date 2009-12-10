@@ -8,11 +8,10 @@ class GroupDestroyedActivity < Activity
   alias_attr :destroyed_by,  :object
   alias_attr :groupname,     :extra
 
-  def description(options={})
-    "{group} was destroyed by {user}"[:activity_group_destroyed, {
+  def description(view=nil)
+    I18n.t(:activity_group_destroyed,
        :user => user_span(:destroyed_by),
-       :group => groupname
-    }]
+       :group => groupname)
   end
 
   def icon

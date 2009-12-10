@@ -16,7 +16,7 @@ class Keyring
     key_file = Tempfile.new('crabgrass_public_key')
     key_file.write(public_key_data)
     key_file.close
-    
+
     FileUtils.mkdir_p(File.dirname(path)) unless File.exists?(File.dirname(path))
 
     keyring = Keyring.new(path)
@@ -28,7 +28,7 @@ class Keyring
 
   # extract information from a keyring that has one key in it.
   # the information includes: fingerprint, email
-  def extract_info   
+  def extract_info
     fingerprint = nil
     email = nil
 

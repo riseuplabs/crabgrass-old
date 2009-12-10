@@ -11,7 +11,7 @@ module PathFinder
       when :sphinx: PathFinder::Sphinx::Options
     end
   end
-  
+
   def self.get_builder(sym)
     case sym
       when :mysql:  PathFinder::Mysql::Builder

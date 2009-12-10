@@ -1,10 +1,9 @@
-<tr>
-  <td class='label'>
-    <%= 'Embed'.t %>
-  </td>
-  <td>
-    <%= 'Embed code from external video source'[:video_embed_code_prompt] %><br/>
-    <%= text_area 'external_video', 'media_embed', :size => '38x3' %><br />
-    <i>(<%= 'currently supported: youtube, blip.tv, google video, vimeo'[:current_video_sources] %>)</i>
-  </td>
-</tr>
+<%
+  form.row do |r|
+    r.label I18n.t(:video_embed)
+    r.label_for 'external_video_media_embed'
+    r.input text_area('external_video', 'media_embed', :size => '40x3')
+    r.info I18n.t(:video_embed_code_prompt) + " (" + I18n.t(:current_video_sources) + ")"
+  end
+%>
+

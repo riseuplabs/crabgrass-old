@@ -1,0 +1,14 @@
+<div class="wiki" id="wiki_preview-<%= @wiki.id %>"></div>
+
+<% form_tag(page_xurl(@page, :action => 'edit'), :onsubmit => "$('greencloth_previewed_content').setValue($('#{wiki_body_id(@wiki)}').getValue())") do -%>
+  <%= hidden_field 'wiki', 'version' %>
+  <textarea name="wiki[body_preview]" style="display:none" id="greencloth_previewed_content"></textarea>
+  <div>
+   <% if locked_for_me? -%>
+     <%= submit_tag I18n.t(:break_lock_button), :name => 'break_lock' %>
+   <% else -%>
+     <%= submit_tag I18n.t(:save_button), :name => 'save' %>
+   <% end -%>
+   <%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %>
+  </div>
+<% end -%>

@@ -1,0 +1,9 @@
+Let a moderator know if you think this is offensive, rude, off-topic or unkind. We will look at it soon.
+
+% form_remote_tag(:url => form_url, :loading => show_spinner('popup'), :html => {:id => 'yucky_page_form'}) do
+<%= render :partial => 'yucky_options' %>
+  <div class='buttons'>
+    <%= spinner 'popup' %><%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %><%= submit_tag I18n.t(:flag_button), :name => 'flag' %>
+  </div>
+% end
+

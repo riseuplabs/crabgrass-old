@@ -1,0 +1,9 @@
+<ul class="plain">
+<li><input type='radio' name='reason' value='language'> <%= I18n.t(:offensive_language) %></li>
+<li><input type='radio' name='reason' value='behavior'> <%= I18n.t(:offensive_behavior) %></li>
+<li><input type='radio' name='reason' value='topic'> <%= I18n.t(:off_topic) %></li>
+<li><input type='radio' name='reason' value='other'> <%= I18n.t(:other_reason) %></li>
+</ul>
+
+<%= I18n.t(:add_comment) %>:<br>
+<textarea name="comment" rows="2" cols="40"> </textarea>

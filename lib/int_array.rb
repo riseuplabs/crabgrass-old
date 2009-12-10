@@ -9,7 +9,7 @@
 # four bytes are used. For example:
 #
 #   IntArray.new([2097151]).to_s.size == 3
-# 
+#
 # So, to store 100 numbers below 268 million would take at most 400
 # bytes (4 * 100).
 #

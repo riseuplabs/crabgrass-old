@@ -4,7 +4,7 @@
   <% form_for :response, @response, :url => page_url(@page, :action => 'response-make', :id => @response.id), :html => { :multipart => true } do |f| %>
 
     <%= render :partial => 'response_form', :locals => {:form => f} %>
-    <%= submit_tag "Respond"[:respond_to_survey], :class => "submit" %>
+    <%= submit_tag I18n.t(:survey_respond_button), :class => "submit" %>
   <% end %>
 </div>
 

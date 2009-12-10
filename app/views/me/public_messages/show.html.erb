@@ -1,0 +1,12 @@
+<%
+##
+## TODO: create a detailed UI for a message. Allow you to reply, perhaps. Allow you to edit, 
+## allow you to see if it has been modified, etc.
+##
+%>
+
+<% render :partial => 'me/messages/tabs' %>
+
+<div class="messages">
+<%= render :partial => 'messages/post', :locals => {:post => @post} %>
+</div>

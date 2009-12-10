@@ -1,9 +1,8 @@
-<tr>
-  <td class='label'>
-    <%= 'Body'.t %>
-  </td>
-  <td>
-    <%= text_area_tag 'body', params[:body], :size => '40x10' %>
-  </td>
-</tr>
-
+<%
+  form.row do |r|
+    r.label I18n.t(:body)
+    r.label_for 'body'
+    r.input text_area_tag('body', params[:body], :size => '40x6')
+    r.info help(:wiki_body)
+  end
+%>

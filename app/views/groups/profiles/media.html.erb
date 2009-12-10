@@ -1,0 +1,63 @@
+<%= settings_tabs %>
+<% video = @profile.video || ExternalVideo.new %>
+
+<% form_tag(groups_profiles_params(:action => :media), :multipart => true) do %>
+  <h1>Photo</h1>
+  <blockquote>
+
+  <% if @profile.photo %>
+
+    <%= thumbnail_img_tag(@profile.photo, :medium) %>
+    <p><%= submit_tag "Clear", :name => 'clear_photo' %></p>
+
+  <% else %>
+
+    <%= Formy.form do |f|
+			f.row do |r|
+				r.label "Image File"
+				r.input file_field_tag('profile[photo][uploaded_data]')
+			end
+			f.row do |r|
+				r.label "Caption"
+				r.input text_field_tag('profile[photo][caption]', '')
+			end
+			f.row do |r|
+				r.label "Photo Credit"
+				r.input text_field_tag('profile[photo][credit]', '')
+			end
+    end %>
+    <p><%= submit_tag "Upload", :name => 'upload' %></p>
+
+  <% end %>
+
+  </blockquote>
+<% end %>
+
+
+<% form_tag(groups_profiles_params(:action => :media), :multipart => false) do %>
+  <h1>Video</h1>
+  <blockquote>
+
+  <% if @profile.video %>
+    <%= display_media(@profile.video) %>
+  <% end %>
+
+  <%= Formy.form do |f|
+    f.row do |r|
+      r.label "Embed"
+      r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40)
+    end
+    f.row do |r|
+      r.label "Height"
+      r.input text_field_tag('profile[video][height]', video.height)
+    end
+    f.row do |r|
+      r.label "Width"
+      r.input text_field_tag('profile[video][width]', video.width)
+    end
+  end %>
+  <p><%= submit_tag "Clear", :name => 'clear_video' if video.media_embed %> <%= submit_tag "Save", :name => 'save' %></p>
+
+  </blockquote>
+<% end %>
+

@@ -1,0 +1,16 @@
+<td>
+<a class='tooltip'><img src='/images/gif/16/spacer.gif' class="small_icon info_16" />
+<span>
+  <% details = flags_for_details(@page.id, obj_type) %>
+  <% details.each do |detail| %>
+    <strong>Flagged By:</strong> <%= detail.user_login %>  <strong>Reason:</strong> <%=h detail.reason_flagged %><br>
+    <% unless detail.comment.empty? %>
+      <%= "<strong>Comment:</strong> #{detail.comment}" %>
+    <% end %>
+    <% unless detail == details.last %>
+      <%= '<hr>' %>
+    <% end %>
+  <% end %>
+</span>
+</a>
+</td>

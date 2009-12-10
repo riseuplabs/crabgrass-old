@@ -1,26 +1,26 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
 class SurveyPageControllerTest < ActionController::TestCase
-    
+
   fixtures :users, :pages, :groups, :user_participations, :survey_questions,
     :surveys, :survey_responses, :survey_answers
-  
+
   def test_create_survey
     login_as :blue
     post :create, :page => {:title => "a little survey for you"}, :id=>"survey"
     page = assigns(:page)
-    
+
     post :edit, :page_id => page.id, :survey => {:description => 'description'}
     assert assigns(:survey).valid?
     assert assigns(:page).valid?
     assert_not_nil Page.find(assigns(:page).id).data
   end
-  
+
   def test_save_survey
     login_as :blue
     get :edit, :page_id => pages("survey_blank").id
     assert_response :success
-    assert_active_tab "Design Survey"
+    assert_active_tab "Edit Survey"
 
     assert_not_nil assigns(:survey)
     # this will create two new questions
@@ -36,7 +36,7 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_redirected_to "_page_action" => "edit"
 
     get :edit, :page_id => pages("survey_blank").id
-    assert_active_tab "Design Survey"
+    assert_active_tab "Edit Survey"
     assert_response :success
 
     survey = assigns(:survey)
@@ -49,17 +49,32 @@ class SurveyPageControllerTest < ActionController::TestCase
     assert_equal false, survey.edit_may_create?
   end
 
-  def test_destroy
-    login_as :blue
-    
-    assert_difference 'Survey.count', -1 do
-      post :destroy, :page_id => pages(:survey1).id
+  def test_create_same_name
+    login_as :gerrard
+
+    data_ids, page_ids, page_urls = [],[],[]
+    3.times do
+      post 'create', :page => {:title => "dupe", :summary => ""}, :id => SurveyPage.param_id
+      page = assigns(:page)
+
+      assert_equal "dupe", page.title
+      assert_not_nil page.id
+
+      # check that we have:
+      # a new page
+      assert !page_ids.include?(page.id)
+      # a new url
+      assert !page_urls.include?(page.name_url)
+
+      # remember the values we saw
+      page_ids << page.id
+      page_urls << page.name_url
     end
   end
-  
+
   protected
-  
-  def assert_active_tab(tab_text)    
+
+  def assert_active_tab(tab_text)
     assert_select ".tabset" do
       assert_select "a.active", {:text => tab_text}
     end

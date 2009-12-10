@@ -17,7 +17,7 @@ class CollectionTest < Test::Unit::TestCase
       coll.add_child!(p2)
     end
 
-    # note: oddly, coll.children.include?() fails, 
+    # note: oddly, coll.children.include?() fails,
     # but coll.child_pages.include?() and coll.child_ids.include?()
     # both work.
 
@@ -49,7 +49,7 @@ class CollectionTest < Test::Unit::TestCase
     coll.links.last.move_to_top
 
     new_positions = coll.children(true).collect{|page| page.id}
-    assert_equal correct_new_positions, new_positions    
+    assert_equal correct_new_positions, new_positions
   end
 
 
@@ -65,7 +65,7 @@ class CollectionTest < Test::Unit::TestCase
   def test_associations
     assert check_associations(Link)
     assert check_associations(Collection)
-  end  
+  end
 =end
 
 end

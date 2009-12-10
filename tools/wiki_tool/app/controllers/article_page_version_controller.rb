@@ -1,0 +1,2 @@
+class ArticlePageVersionController < WikiPageVersionController
+end

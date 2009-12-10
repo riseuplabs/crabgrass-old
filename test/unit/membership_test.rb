@@ -15,7 +15,7 @@ class MembershipTest < Test::Unit::TestCase
     oldversion = g.version
 
     g.add_user! u
-    assert oldcount < g.users.count, "group should have more users after add user"   
+    assert oldcount < g.users.count, "group should have more users after add user"
     assert_nothing_raised("group.users.find should return user") do
       g.users.find(u.id)
     end
@@ -38,7 +38,7 @@ class MembershipTest < Test::Unit::TestCase
 
     membership1 = g.add_user! u1
     membership2 = g.add_user! u2
-    
+
     assert_difference 'groups(:animals).version' do
       g.remove_user! u1
       assert !u1.member_of?(g), 'user1 must NOT be a member_of? group'
@@ -48,13 +48,13 @@ class MembershipTest < Test::Unit::TestCase
   def test_duplicate_memberships
     u = create_user :login => 'harry-potter'
     g = Group.create :name => 'hogwarts-academy'
-    
+
     g.add_user! u
     assert_raises(AssociationError) do
       g.add_user! u
     end
   end
-  
+
   def test_group_membership_caching
     u = create_user :login => 'hermione'
     assert_equal [], u.group_ids, 'should be no group (id)'
@@ -76,7 +76,7 @@ class MembershipTest < Test::Unit::TestCase
     u.all_groups.reload
     assert_equal [g], u.all_groups, 'should be one group (all)'
   end
-  
+
   def test_group_membership_caching_with_a_committee
     u = create_user :login => 'ron'
 
@@ -91,15 +91,15 @@ class MembershipTest < Test::Unit::TestCase
 
     c = Committee.new :name => 'dumbledores-army'
     g.add_committee!(c)
-    
+
     assert_equal [g.id], u.group_ids, 'should be one direct group (id)'
 
     # u.groups has not been cached, so doesn't need manually refreshed
     # u.groups.reload
     assert_equal [g], u.groups, 'should be one direct group'
-   
+
     # for the indirect membership values to be correct,
-    # we must clear the cache and reload the options.  
+    # we must clear the cache and reload the options.
     assert_equal [g.id], u.all_group_ids, 'should be one group before cache refresh (all id)'
     assert_equal [g], u.all_groups, 'should be one group before cache refresh (all)'
 
@@ -138,7 +138,7 @@ class MembershipTest < Test::Unit::TestCase
         g[i].add_user! u
       end
     end
-    
+
     assert_equal to_join.collect{ |i| g[i].id}, u.group_ids.sort,
                  'wrong groups (id)'
     assert_equal to_join.collect { |i| g[i].id}, u.all_group_ids.sort,
@@ -153,7 +153,7 @@ class MembershipTest < Test::Unit::TestCase
     u = create_user
     max_committees_per_group = 3
     max_groups = 10
-    correct_group_ids = []    
+    correct_group_ids = []
     correct_all_group_ids = []
     groups = []
 
@@ -165,7 +165,7 @@ class MembershipTest < Test::Unit::TestCase
         group.add_committee! Committee.create( :name => ('subgroup-%d-%d' % [i, j]) )
       end
     end
-    
+
     ## create memberships
     groups.each do |group|
       if rand(2)==0
@@ -205,7 +205,7 @@ class MembershipTest < Test::Unit::TestCase
     )
 
   end
-  
+
   protected
     def create_user(options = {})
       user = User.new({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))

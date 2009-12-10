@@ -1,0 +1,36 @@
+<% form_remote_tag(
+  :url => {:controller => '/base_page/trash', :action => 'update', :page_id => @page.id},
+  :loading => show_spinner('popup')) do -%>
+
+    <ul class='plain'>
+      <li>
+        <label class="radio">
+          <%= radio_button_tag 'type', 'move_to_trash', true, :class => 'radio' %>
+          <b><%= I18n.t(:destroy_page_via_trash) %></b> <br/>
+          <span class="small">
+             <%= I18n.t(:destroy_page_via_trash_info) %>
+          </span>
+        </label>
+      </li>
+      <%- if may_destroy_page? %>
+        <li>
+          <label class="radio">
+            <%= radio_button_tag 'type', 'shred_now', false, :class => 'radio' %>
+            <b><%= I18n.t(:destroy_page_via_shred) %></b> <br/>
+            <span class="small">
+              <%= I18n.t(:destroy_page_via_shred_info) %>
+            </span>
+          </label>
+        </li>
+      <%- end %>
+      <%# trash_page_line %>
+      <%# destroy_page_line %>
+    </ul>
+
+  <div class="buttons">
+    <%= spinner 'popup' %>
+    <%= close_modal_button(:cancel) %>
+    <%= submit_tag I18n.t(:delete_button), :name => 'delete' %>
+  </div>
+<% end -%>
+

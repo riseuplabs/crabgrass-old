@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveSupport::TestCase
   fixtures :users, :sites, :groups
- 
+
   def setup
     Conf.enable_site_testing
   end

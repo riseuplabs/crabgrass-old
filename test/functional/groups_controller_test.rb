@@ -1,52 +1,60 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'groups_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class GroupsController; def rescue_action(e) raise e end; end
 
-class GroupsControllerTest < Test::Unit::TestCase
+class GroupsControllerTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
             :group_participations, :user_participations, :tasks, :page_terms
 
   include UrlHelper
 
   def setup
-    @controller = GroupsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     Conf.disable_site_testing
   end
 
-  def test_my
-    login_as :gerrard
-    get :my
-    assert_response :success
-    assert_not_nil assigns(:groups)
-  end
-
-  def test_directory
-    login_as :gerrard
-    get :directory
-    assert_response :success
-    assert_not_nil assigns(:groups)
-  end
-
-  def test_directory_letter
+  def test_tasks
     login_as :blue
-    get :directory, :letter => 'r'
+    get :tasks, :id => groups(:rainbow).to_param
     assert_response :success
-
-    assert_equal 1, assigns(:groups).size
-    assert_equal "rainbow", assigns(:groups)[0].name
   end
 
-  def test_index
+  def test_discussions
+    login_as :blue
+    get :discussions, :id => groups(:rainbow).to_param
+    assert_response :success
+  end
+
+  def test_archive
+    login_as :blue
+    get :archive, :id => groups(:rainbow).to_param, :path => ['created']
+    assert_response :success
+  end
+
+  def test_create_group
+    get :new
+    assert_login_required
+
     login_as :gerrard
-    get :index
+    get :new
     assert_response :success
-    assert_not_nil assigns(:groups)
+
+    assert_no_difference 'Group.count' do
+      post :create, :group => {:name => ''}
+      assert_error_message
+    end
+
+    assert_no_difference 'Group.count' do
+      post :create, :group => {:name => 'animals'}
+      assert_error_message
+    end
+
+    assert_difference 'Group.count' do
+      post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!"}
+      assert_response :redirect
+      group = Group.find_by_name 'test-create-group'
+      assert_redirected_to url_for_group(group, :action => 'edit')
+    end
   end
 
+=begin
   def test_get_create
     login_as :gerrard
     get :create
@@ -55,33 +63,21 @@ class GroupsControllerTest < Test::Unit::TestCase
     assert_select "form#createform"
   end
 
-  def test_create_group
-    login_as :gerrard
-    assert_difference 'Group.count' do
-      post :create, :group => {:name => 'test-create-group', :full_name => "Group for Testing Group Creation!", :summary => "None."}
-      assert_response :redirect
-      group = Group.find_by_name 'test-create-group'
-      assert_redirected_to url_for_group(group, :action => 'show')
-      assert_equal assigns(:group).name, 'test-create-group'
-      assert_equal group.name, 'test-create-group'
-    end
-  end
 
-  # This is currently not available from the ui. Testing anyway.
-  def test_create_group_with_council
-    login_as :gerrard
-    assert_difference 'Group.count', 2 do
-      post :create, :group => {:name => 'group-with-council', :full_name => "Group for Testing Group Creationi with council!", :summary => "None."}, :add_council => "true"
-      assert_response :redirect
-      group = Group.find_by_name 'group-with-council'
-      assert_redirected_to url_for_group(group, :action => 'show')
-      assert_equal assigns(:group).name, 'group-with-council'
-      assert_equal group.name, 'group-with-council'
-      council = Group.find_by_name 'group-with-council+group-with-council_admin'
-      assert council.is_council
-      assert_equal council.id, group.council.id
-    end
-  end
+#  def test_create_group_with_council
+#    login_as :gerrard
+#    assert_difference 'Group.count', 2 do
+#      post :create, :group => {:name => 'group-with-council', :full_name => "Group for Testing Group Creationi with council!", :summary => "None."}, :add_council => "true"
+#      assert_response :redirect
+#      group = Group.find_by_name 'group-with-council'
+#      assert_redirected_to url_for_group(group, :action => 'show')
+#      assert_equal assigns(:group).name, 'group-with-council'
+#      assert_equal group.name, 'group-with-council'
+#      council = Group.find_by_name 'group-with-council+group-with-council_admin'
+#      assert council.council?
+#      assert_equal council.id, group.council.id
+#    end
+#  end
 
   def test_create_committee
     login_as :gerrard
@@ -89,10 +85,10 @@ class GroupsControllerTest < Test::Unit::TestCase
     num_committees = Committee.count
     # simulate user creating a committee:
     #    first a get request to get the page with the committee creation form
-    get :create, :parent_id => groups(:true_levellers).id
+    get :create, :parent_id => groups(:true_levellers).id, :id => 'committee'
     assert_equal num_committees, Committee.count, "should not be an additional committee yet"
     #    then a post request to submit the committee creation form
-    post :create, :parent_id => groups(:true_levellers).id, :group => {:name => 'committee', :full_name => "committee!", :summary => ""}
+    post :create, :parent_id => groups(:true_levellers).id, :group => {:name => 'committee', :full_name => "committee!", :summary => ""}, :id => 'committee'
     assert_equal num_committees + 1, Committee.count, "should be an additional committee now"
     assert_equal num_groups + 1, Group.count, "the new committee should also be counted as a new group"
   end
@@ -101,11 +97,11 @@ class GroupsControllerTest < Test::Unit::TestCase
     login_as :gerrard
 
     assert_difference 'Committee.count', 1, "should create a new committee" do
-      post :create, :parent_id => groups(:true_levellers).id, :group => {:short_name => 'committee', :full_name => "committee!", :summary => ""}
+      post :create, :parent_id => groups(:true_levellers).id, :group => {:short_name => 'committee', :full_name => "committee!", :summary => ""}, :id => 'committee'
     end
 
     assert_no_difference 'Committee.count', "should not create a new committee, since gerrard is not in rainbow group" do
-      post :create, :parent_id => groups(:rainbow).id, :group => {:short_name => 'committee', :full_name => "committee!", :summary => ""}
+      post :create, :parent_id => groups(:rainbow).id, :group => {:short_name => 'committee', :full_name => "committee!", :summary => ""}, :id => 'committee'
     end
   end
 
@@ -123,5 +119,7 @@ class GroupsControllerTest < Test::Unit::TestCase
       post :create, :group => {:name => users(:gerrard).login}
     end
   end
+
+=end
 
 end

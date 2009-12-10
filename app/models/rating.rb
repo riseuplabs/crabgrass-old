@@ -4,9 +4,9 @@
 
 class Rating < ActiveRecord::Base
   belongs_to :rateable, :polymorphic => true
-  
+
   belongs_to :user
-  
+
   # Helper class method to lookup all ratings assigned
   # to all rateable types for a given user.
   def self.find_ratings_by_user(user)

@@ -1,11 +1,10 @@
 class PostsController < ApplicationController
 
-  before_filter :login_required
-  
-  def create    
+  permissions 'posts'
+  before_filter :fetch_data, :login_required
+
+  def create
     begin
-      @page = Page.find params[:page_id]
-      current_user.may!(:comment, @page)
       @post = Post.build params[:post].merge(:user => current_user, :page => @page)
       @post.save!
       current_user.updated(@page)
@@ -36,10 +35,10 @@ class PostsController < ApplicationController
       }
     end
   end
- 
+
   def edit
   end
-  
+
   def save
     if params[:save]
       @post.update_attribute('body', params[:body])
@@ -48,8 +47,8 @@ class PostsController < ApplicationController
       return(render :action => 'destroy')
     end
   end
-  
-  def twinkle   
+
+  def twinkle
     if rating = @post.ratings.find_by_user_id(current_user.id)
       rating.update_attribute(:rating, 1)
     else
@@ -58,7 +57,7 @@ class PostsController < ApplicationController
 
     # this should be in an observer, but oddly it doesn't work there.
     TwinkledActivity.create!(
-      :user => @post.user, :twinkler => current_user, 
+      :user => @post.user, :twinkler => current_user,
       :post => {:id => @post.id, :snippet => @post.body[0..30]}
     )
   end
@@ -74,17 +73,10 @@ class PostsController < ApplicationController
   end
 
   protected
-    
-  def authorized?
-    @post = Post.find(params[:id]) if params[:id]
-    return true unless @post
 
-    if %w[twinkle untwinkle].include? params[:action]
-      return current_user.may?(:comment, @post.discussion.page)
-    else
-      return @post.editable_by?(current_user)
-    end
+  def fetch_data
+    @post = Post.find(params[:id]) if params[:id]
+    @page = Page.find params[:page_id] if params[:page_id]
   end
 
 end
-

@@ -1,25 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'group_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < Test::Unit::TestCase
-  fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages,
-            :group_participations, :user_participations, :tasks, :page_terms, :sites,
-            :federatings
 
-  include UrlHelper
+=begin
 
-  def setup
-    @controller = GroupController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
+this is kept around only because there might be some tests which have not yet been converted to groups/*
 
-  def teardown
-   disable_site_testing
-  end
 
   def test_show_when_logged_in
     login_as :red
@@ -179,6 +165,51 @@ class GroupControllerTest < Test::Unit::TestCase
     post :search, :id => groups(:public_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
     assert_redirected_to "group/search/#{groups(:public_group).name}/text/e"
+  end
+
+  def test_trash
+    login_as :red
+
+    get :trash, :id => groups(:rainbow).name
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "rainbow should have some page in the trash."
+
+    get :trash, :id => groups(:rainbow).name, :path => 'type/discussion'
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "rainbow should have some discussion in the trash"
+
+    post :trash, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
+    assert_response :redirect
+    assert_redirected_to 'group/trash/rainbow/text/e'
+    assert_not_nil assigns(:pages)
+    assert assigns(:pages).length > 0, "should have some search results when filter for text"
+  end
+
+  def test_trash_not_allowed
+    login_as :kangaroo
+    get :trash, :id => groups(:private_group).name
+    assert_response :missing
+    assert_equal nil, assigns(:pages)
+    post :trash, :id => groups(:private_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
+    assert_response :missing
+    assert_equal nil, assigns(:pages)
+  end
+
+  def test_trash_undelete
+    login_as :red
+    get :trash, :id => groups(:rainbow).name
+    assert_response :success
+    assert assigns(:pages).any?, "should find a deleted page"
+    id = assigns(:pages).first.id
+    assert_equal id, 207, "expecting page 207 as deleted page for rainbow"
+    post :update_trash, :page_checked=>{"207"=>"checked"}, :path=>[], :undelete=>"Undelete", :id => groups(:rainbow).name
+    assert_response :redirect
+    assert_redirected_to 'group/trash/rainbow'
+    get :trash
+    assert_response :success
+    assert assigns(:pages).empty?, "should not find a deleted page after undeleting"
   end
 
   def test_tags
@@ -377,7 +408,7 @@ class GroupControllerTest < Test::Unit::TestCase
     @controller.stubs(:logged_in?).returns(true)
     @controller.instance_variable_set(:@group, c)
     assert u.may_admin?(c)
-    assert @controller.may_admin_group?
+    assert @controller.may?(:group,:admin)
 
     get :show
     assert_response :success
@@ -429,53 +460,53 @@ class GroupControllerTest < Test::Unit::TestCase
     assert_select "tr.even"
 
   end
-  
+
   # tests for group & network home
   def test_edit_layout
     login_as :blue
     get :edit_layout, :id => groups(:rainbow).name
-    
+
     assert_response :success
-    
+
     @group = Group.find_by_name(groups(:rainbow).name)
     assert @group, 'group should exist'
     @network = Network.find_by_name('fau')
     assert @network
-    
+
     # test to change the default order for a group and a network
     [@group, @network].each do |group|
       # by default the groups first section should be the 'group_wiki'
       assert_equal group.layout('section1'), 'group_wiki'
-      
+
       # call the groups home, and check if it is in the default order
       get :show, :id => group.name
       assert_response :success
-      
+
       assert_select '.section' do |sections|
         assert_select sections.first, 'div#wiki-area'
       end
-      
+
       params = { :id => group.name,  :section1 => 'recent_pages', :section2 => 'group_wiki', :section4 => '' }
       params.merge!({:section3 => 'recent_group_pages'}) if group.network?
       post :edit_layout, params
       assert_redirected_to 'group/edit/'+group.name
-      
+
       # call the group home again, and make sure that the order changed
       get :show, :id => group.name
       assert_response :success
-      
+
       assert_select '.section' do |sections|
         assert_select sections.first, 'div.page_list'
       end
-      
+
       group.reload
-      
-      assert_equal group.layout('section1'), 'recent_pages'    
+
+      assert_equal group.layout('section1'), 'recent_pages'
     end
   end
 
 #  def test_xxx
-#    enable_site_testing do 
+#    enable_site_testing do
 #      assert true
 #      get :show, :id => 1
 #      debugger
@@ -487,5 +518,7 @@ class GroupControllerTest < Test::Unit::TestCase
 #  end
 
 # TODO: test featuring already featured content, expiring features and so on.
+
+=end
 
 end

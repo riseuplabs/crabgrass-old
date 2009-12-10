@@ -21,7 +21,7 @@ context "Worker Proxy in general" do
   specify "should let you invoke sync task  methods" do
     actual_conn = mock()
     actual_conn.expects(:server_info).returns("localhost:11008")
-    actual_conn.expects(:send_request).returns(20)
+    actual_conn.expects(:send_request).returns({ :data => 20, :result_flag => "ok",:result => true, :type => :response})
     @cluster_conn.expects(:choose_server).returns(actual_conn)
     a = @worker_proxy.hello_world(:args => "sucks")
     a.should == 20
@@ -75,6 +75,27 @@ context "Worker Proxy in general" do
     @worker_proxy.enq_foobar(:arg => :hello,:job_key => "catz")
   end
 
+
+  specify "should run enqueued tasks in order if they have priorites" do
+
+    BdrbJobQueue = mock() unless Object.const_defined?(:BdrbJobQueue)
+
+    [2,4,10].each do |priority|
+      BdrbJobQueue.expects(:insert_job).with() { |value|
+        value[:worker_name].should == "hello_worker"
+        value[:worker_method].should == "foobar"
+        value[:scheduled_at].should.not == nil
+        value[:job_key] == priority.to_s
+        value[:priority] == priority
+      }.once
+    end
+    
+    @worker_proxy.enq_foobar(:job_key => '4', :priority => 4, :arg => :hello)
+    @worker_proxy.enq_foobar(:job_key => '2', :priority => 2, :arg => :hello)
+    @worker_proxy.enq_foobar(:job_key => '10', :priority => 10, :arg => :hello)
+  end
+
+
   specify "for removing tasks from the queue" do
     BdrbJobQueue = mock() unless Object.const_defined?(:BdrbJobQueue)
     BdrbJobQueue.expects(:remove_job).with() do |value|
@@ -97,5 +118,13 @@ context "Worker Proxy in general" do
   end
 
   specify "should switch connections if invoke fails on chosen one" do
+  end
+
+  specify "Should allow method with empty params to work" do
+    actual_conn = mock()
+    actual_conn.expects(:server_info).returns("localhost:11211")
+    actual_conn.expects(:ask_work).with(:worker => :hello_worker,:worker_method => 'foobar').returns(nil)
+    @cluster_conn.expects(:choose_server).returns(actual_conn)
+    @worker_proxy.async_foobar
   end
 end

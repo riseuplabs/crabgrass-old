@@ -2,40 +2,42 @@ module AuthenticatedSystem
 
   # Accesses the current user from the session.
   def current_user
-    @current_user ||= (session[:user] && load_user(session[:user])) || UnauthenticatedUser.new
+    @current_user ||= begin
+      user = load_user(session[:user]) if session[:user]
+      user ||= UnauthenticatedUser.new
+      User.current = user
+      user
+    end
   end
 
   def load_user(id)
-    update_last_seen_at(id)
     user = User.find_by_id(id)
-    user.current_site = current_site if user
+    if user
+      user.seen!
+      user.current_site = current_site
+    end
     return user
   end
-  
+
   # Returns true or false if the user is logged in.
   # Preloads @current_user with the user model if they're logged in.
   def logged_in?
     current_user.is_a?(UserExtension::AuthenticatedUser)
   end
-  
+
   def logged_in_since
     session[:logged_in_since]
   end
 
-  protected 
+  protected
 
-    def update_last_seen_at(user_id)
-      User.update_all ['last_seen_at = ?', Time.now], ['id = ?', user_id] 
-      #current_user.last_seen_at = Time.now
-    end
-    
     # Store the given user in the session.
     def current_user=(new_user)
       session[:user] = (new_user.nil? || new_user.is_a?(Symbol)) ? nil : new_user.id
       session[:logged_in_since] = Time.now
       @current_user = new_user
     end
-    
+
     # Check if the user is authorized.
     #
     # Override this method in your controllers if you want to restrict access
@@ -72,7 +74,7 @@ module AuthenticatedSystem
       User.current = current_user
       logged_in? && authorized? ? true : access_denied
     end
-    
+
     # Redirect as appropriate when an access request fails.
     #
     # The default action is to redirect to the login screen.
@@ -82,49 +84,23 @@ module AuthenticatedSystem
     # to access the requested action.  For example, a popup window might
     # simply close itself.
     def access_denied
-      if logged_in?
-        flash_message :title => :permission_denied.t,
-          :error => :permission_denied_description.t
-      else
-        flash_message :title => :login_required.t,
-          :success => :login_required_description.t
-      end
+      raise PermissionDenied
+    end
 
-      respond_to do |format|
-        # rails defaults to first format if params[:format] is not set
-        format.html do
-          redirect_to :controller => '/account', :action => 'login',
-            :redirect => request.request_uri
-        end
-        format.js do 
-          render :update do |page|
-            page.replace_html 'message', display_messages
-          end
-        end
-        format.xml do
-          headers["Status"]           = "Unauthorized"
-          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => "Could not authenticate you", :status => '401 Unauthorized'
-        end
-      end
-
-      false
-    end  
-    
     # Store the URI of the current request in the session.
     #
     # We can return to this location by calling #redirect_back_or_default.
     def store_location
       session[:return_to] = (request.request_uri unless request.xhr?)
     end
-    
+
     # Redirect to the URI stored by the most recent store_location call or
     # to the passed default.
     def redirect_back_or_default(default)
       session[:return_to] ? redirect_to_url(session[:return_to]) : redirect_to(default)
       session[:return_to] = nil
     end
-    
+
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)
@@ -145,11 +121,13 @@ module AuthenticatedSystem
     end
 
   private
-    @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
-    # gets BASIC auth info
-    def get_auth_data
-      auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
-      auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
-      return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil] 
-    end
+
+  @@http_auth_headers = %w(X-HTTP_AUTHORIZATION HTTP_AUTHORIZATION Authorization)
+  # gets BASIC auth info
+  def get_auth_data
+    auth_key  = @@http_auth_headers.detect { |h| request.env.has_key?(h) }
+    auth_data = request.env[auth_key].to_s.split unless auth_key.blank?
+    return auth_data && auth_data[0] == 'Basic' ? Base64.decode64(auth_data[1]).split(':')[0..1] : [nil, nil]
+  end
+
 end

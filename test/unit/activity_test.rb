@@ -7,7 +7,7 @@ class ActivityTest < ActiveSupport::TestCase
     u1 = users(:kangaroo)
     u2 = users(:iguana)
 
-    u1.add_contact!(u2)
+    u1.add_contact!(u2, :friend)
 
     act = FriendActivity.for_dashboard(u1).find(:first)
     assert act, 'there should be a friend activity created'
@@ -34,7 +34,7 @@ class ActivityTest < ActiveSupport::TestCase
 
     assert user.member_of?(group)
     groupname = group.name
-    group.destroy
+    group.destroy_by(user)
 
     acts = Activity.for_dashboard(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
@@ -46,8 +46,7 @@ class ActivityTest < ActiveSupport::TestCase
     user = users(:green)
     notified_user = users(:kangaroo)
     group = Group.create!(:name => "plants",
-                          :fullname =>"All the plants",
-                          :summary =>"the plants can party tooo!" ) do |group|
+                          :fullname =>"All the plants") do |group|
       group.avatar = Avatar.new
       group.created_by = user
     end
@@ -108,7 +107,7 @@ class ActivityTest < ActiveSupport::TestCase
     ##
 
     group.remove_user!(user)
-  
+
     act = GroupLostUserActivity.for_dashboard(notified_user).last
     assert_activity_for_user_group(act, user, group)
 
@@ -123,7 +122,7 @@ class ActivityTest < ActiveSupport::TestCase
     u1 = users(:kangaroo)
     u2 = users(:iguana)
 
-    u1.add_contact!(u2)
+    u1.add_contact!(u2, :friend)
     act = FriendActivity.for_dashboard(u1).find(:first)
     u2.destroy
 
@@ -135,18 +134,6 @@ class ActivityTest < ActiveSupport::TestCase
 
   def test_associations
     assert check_associations(Activity)
-  end
-
-  def test_message_page
-    u1 = users(:kangaroo)
-    u2 = users(:iguana)
-
-    @page = Page.make :private_message, :to => [u2], :from => u1, :title => "testing message_page activity", :body => "test message body"
-
-    act = MessagePageActivity.for_dashboard(u2).find(:first)
-    assert_equal u2, act.user
-    assert_equal u1, act.other_user
-    assert_equal @page.id, act.message_id
   end
 
   def assert_activity_for_user_group(act, user, group)

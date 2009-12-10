@@ -8,7 +8,11 @@ class AddMediaFlagsToPages < ActiveRecord::Migration
     begin
       Page.reset_column_information
       AssetPage.find(:all).each do |page|
-        page.update_media_flags
+        asset = Asset.connection.select_all('SELECT * FROM assets WHERE id = %s' % page.data_id).first
+        page.is_image = asset['is_image']
+        page.is_audio = asset['is_audio']
+        page.is_video = asset['is_video']
+        page.is_document = asset['is_document']
         if page.changed?
           for field in ['is_image', 'is_audio', 'is_video', 'is_document']
             Page.connection.execute "UPDATE pages SET pages.#{field} = 1 WHERE pages.id = #{page.id}" if page.send(field)

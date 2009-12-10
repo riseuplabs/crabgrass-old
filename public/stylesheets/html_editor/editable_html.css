@@ -1,0 +1,68 @@
+/* this is the css for the iframe inside the html editor. */
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word; }
+  pre code {
+    display: block;
+    background: #FFF6DD;
+    border: solid 1px;
+    border-color: #FFE8A9;
+    padding: 0.5em; }
+
+h1 {
+  font-size: 24pt;
+  line-height: 1.25em;
+  color: #666;
+  border-bottom: 2px dotted #999; }
+  h1:first-child, h1.first {
+    margin-top: 0; }
+
+h2 {
+  font-size: 14pt;
+  line-height: 1.25em;
+  border-bottom: 1px dashed #ccc; }
+  h2:first-child, h2.first {
+    margin-top: 0; }
+
+h3 {
+  font-size: 1.1em;
+  margin-top: 0.75em; }
+
+span.caps {
+  font-size: 80%; }
+
+p.left {
+  margin: 0; }
+  p.left img {
+    margin-right: 1em; }
+p.right {
+  margin: 0; }
+  p.right img {
+    margin-left: 1em; }
+
+table {
+  border-collapse: collapse; }
+
+td {
+  padding: 4px;
+  border: 1px solid #CCC; }
+
+th {
+  padding: 4px;
+  border: 1px solid #CCC;
+  background: #ddd; }
+
+tr.odd {
+  background-color: #F2F2F2; }
+tr.even {
+  background-color: white; }
+
+blockquote {
+  border-left: 6px solid #ddd;
+  margin-left: 0;
+  padding-left: 1.5em;
+  font-style: italic; }

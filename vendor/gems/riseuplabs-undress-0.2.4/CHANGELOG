@@ -1,0 +1,23 @@
+* Fix spaces and <br> inside table cells
+
+0.2.3
+
+* Add Hpricot style extension
+* Move hpricot extensions from undress.rb to a single file
+* Convert to Textile single formatted letters inside a word
+
+0.2.2
+
+* Adding a \n after [[toc]] in greencloth parser
+
+0.2.1
+
+* <span> with more than one styling bold|italic|underline|line-through
+* <p> styling Italics, Underlines, Lines thorough and Bold are converted.
+
+0.2
+
+* Fix on removing new lines, tabs and spaces on element and tag nodes.
+* xhtmlize! method added with:
+** Invalid nested <ul> and <ol> lists are converted.
+** <span> styling Italics, Underlines, Lines thorough and Bold are converted.

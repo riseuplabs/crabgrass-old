@@ -1,0 +1,25 @@
+<% if may_create_council? && @group.council_id.nil? %>
+<p>
+  <%= link_to I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), :controller => 'groups', :action => 'create', :id => 'council', :parent_id => @group.id %>
+</p>
+<% end %>
+
+
+<%-
+# Show the coordinating council selection form iff we are editing a group with at least one committee
+-%>
+<%- if !@group.committees.empty? && may_admin_group? -%>
+<p>
+  <label for="group_council_id">
+    <b><%= I18n.t(:coordinating_council).capitalize %></b><br />
+    <%= I18n.t(:council_help_text) %>
+  </label><br />
+  <%= select 'group', 'council_id', @group.committees.map{|c| [c.name, c.id]}.sort, { :include_blank => true } %>
+</p>
+<%- end -%>
+  <%= submit_tag I18n.t(:save_changes) if submit %>
+
+<br/>
+<br/>
+
+

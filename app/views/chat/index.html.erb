@@ -1,0 +1,8 @@
+<% if @groups.any? %>
+  <%= render :partial => 'group', :collection => @group_array %>
+<% else %>
+  <p><%= I18n.t(:no_search_results) %></p>
+<% end %>
+
+
+

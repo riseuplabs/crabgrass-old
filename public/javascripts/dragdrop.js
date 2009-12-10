@@ -1,3 +1,5 @@
+// script.aculo.us dragdrop.js v1.8.2, Tue Nov 18 18:30:58 +0100 2008
+
 // Copyright (c) 2005-2008 Thomas Fuchs (http://script.aculo.us, http://mir.aculo.us)
 //           (c) 2005-2008 Sammi Williams (http://www.oriontransfer.co.nz, sammi@oriontransfer.co.nz)
 //

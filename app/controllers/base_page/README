@@ -1,0 +1,23 @@
+
+
+The naming scheme for page controllers has evolved higgildy piggildy over time.
+
+So, this should be cleaned up. For now, this is what it is like:
+
+
+pages_controller -- doesn't do much of anything.
+
+base_page_controller -- all the page subclasses derive from this.
+
+base_page/sidebar_controller -- all the sidebar page controllers derive from this
+
+The sidebar/popups controllers
+  base_page/assets_controller -- for attachments
+  base_page/participation_controller -- things relating to page <> user
+  base_page/share_controller -- for notify/share
+  base_page/tags_controller -- for editing tags
+  base_page/title_controller -- for editing the title
+  base_page/trash_controller -- for deleting
+  base_page/sidebar_controller -- not sure if this is actually used
+
+

@@ -1,6 +1,6 @@
 class UnauthenticatedUser
   def login
-   'anonymous'.t
+   I18n.t(:anonymous)
   end
   alias :name :login
   alias :display_name :login
@@ -24,4 +24,10 @@ class UnauthenticatedUser
   def method_missing(method)
     raise PermissionDenied
   end
+
+  # authenticated users are real, we are not.
+  def real?
+    false
+  end
+
 end

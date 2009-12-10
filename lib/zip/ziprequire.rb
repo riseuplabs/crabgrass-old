@@ -1,15 +1,15 @@
 # With ziprequire you can load ruby modules from a zip file. This means
 # ruby's module include path can include zip-files.
 #
-# The following example creates a zip file with a single entry 
-# <code>log/simplelog.rb</code> that contains a single function 
-# <code>simpleLog</code>: 
+# The following example creates a zip file with a single entry
+# <code>log/simplelog.rb</code> that contains a single function
+# <code>simpleLog</code>:
 #
 #   require 'zip/zipfilesystem'
-#   
+#
 #   Zip::ZipFile.open("my.zip", true) {
-#     |zf| 
-#     zf.file.open("log/simplelog.rb", "w") { 
+#     |zf|
+#     zf.file.open("log/simplelog.rb", "w") {
 #       |f|
 #       f.puts "def simpleLog(v)"
 #       f.puts '  Kernel.puts "INFO: #{v}"'
@@ -18,8 +18,8 @@
 #   }
 #
 # To use the ruby module stored in the zip archive simply require
-# <code>zip/ziprequire</code> and include the <code>my.zip</code> zip 
-# file in the module search path. The following command shows one 
+# <code>zip/ziprequire</code> and include the <code>my.zip</code> zip
+# file in the module search path. The following command shows one
 # way to do this:
 #
 #   ruby -rzip/ziprequire -Imy.zip  -e " require 'log/simplelog'; simpleLog 'Hello world' "
@@ -38,11 +38,11 @@ class ZipList #:nodoc:all
     @zipFileList.each {
       |zfName|
       Zip::ZipFile.open(zfName) {
-	|zf|
-	begin
-	  return zf.get_input_stream(entry, &aProc) 
-	rescue Errno::ENOENT
-	end
+  |zf|
+  begin
+    return zf.get_input_stream(entry, &aProc)
+  rescue Errno::ENOENT
+  end
       }
     }
     raise Errno::ENOENT,
@@ -61,9 +61,9 @@ module Kernel #:nodoc:all
 
   def zip_require(moduleName)
     return false if already_loaded?(moduleName)
-    get_resource(ensure_rb_extension(moduleName)) { 
-      |zis| 
-      eval(zis.read); $" << moduleName 
+    get_resource(ensure_rb_extension(moduleName)) {
+      |zis|
+      eval(zis.read); $" << moduleName
     }
     return true
   rescue Errno::ENOENT => ex

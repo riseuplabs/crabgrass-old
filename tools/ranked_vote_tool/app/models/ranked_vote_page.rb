@@ -1,10 +1,6 @@
 class RankedVotePage < Page
-    
-  def initialize(*args)
-    super(*args)
-    self.data = Poll.new
-  end
-  
+  validates_presence_of :data, :on => :create, :message => "can't be blank"
+
   # Return string of all poll possibilities, for the full text search index
   def body_terms
     return "" unless data and data.possibles

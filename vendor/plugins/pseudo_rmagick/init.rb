@@ -5,9 +5,8 @@
 begin
   require 'RMagick'
 rescue MissingSourceFile => e
-  puts %{FYI: minimagick is simulating rmagick}
+  #puts %{FYI: minimagick is simulating rmagick}
   
   require 'mini_magick'
   require 'image_temp_file'
-
 end

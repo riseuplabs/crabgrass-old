@@ -1,11 +1,30 @@
 
+
+require 'yaml'
+
+# this Hash hack taken from:
+# http://snippets.dzone.com/posts/show/5811
+class Hash
+  # Replacing the to_yaml function so it'll serialize hashes sorted (by their keys)
+  # Original function is in /usr/lib/ruby/1.8/yaml/rubytypes.rb
+  def to_sorted_yaml( opts = {} )
+    YAML::quick_emit( object_id, opts ) do |out|
+      out.map( taguri, to_yaml_style ) do |map|
+        sort.each do |k, v|   # <-- here's my addition (the 'sort')
+          map.add( k, v )
+        end
+      end
+    end
+  end
+end
+
 namespace :cg do
 
   #  For thinking_sphinx / sphinxsearch to index pages in crabgrass, we need to have
   #  a page_terms table with an entry for each page.  This rake task makes sure that
   #  each page has an up-to-date page_terms entry.
 
-  desc "update page_terms for each page."  
+  desc "update page_terms for each page."
   task :update_page_terms => :environment do
     val = ThinkingSphinx.deltas_enabled?
     ThinkingSphinx.deltas_enabled = false
@@ -31,16 +50,16 @@ namespace :cg do
         file.write data.inject({}) { |hash, record|
           hash["#{table_name}_#{i.succ!}"] = record
           hash
-        }.to_yaml
+        }.to_sorted_yaml
       end
     end
   end
 
   # A task for mysql tuning that cannot be done in schema.rb.
   # This should also be set in environment.rb:
-  # 
-  #     config.active_record.schema_format = :sql 
-  # 
+  #
+  #     config.active_record.schema_format = :sql
+  #
   # That way, the changes we make here are not lost in schema.rb,
   # instead they are captured in development_structure.sql.
 

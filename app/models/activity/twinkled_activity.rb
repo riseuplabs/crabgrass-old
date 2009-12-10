@@ -6,7 +6,7 @@ class TwinkledActivity < Activity
   validates_presence_of :subject_id
   validates_presence_of :object_id
   validates_presence_of :extra
-  
+
   serialize :extra
 
   alias_attr :user,       :subject
@@ -18,11 +18,9 @@ class TwinkledActivity < Activity
     self.access = Activity::PRIVATE
   end
 
-  def description(options={})
-    '{user} has starred your post "{post}"'[
-       :activity_twinkled, 
-       {:user => user_span(:twinkler), :post => post_span(post)}
-    ]
+  def description(view=nil)
+    I18n.t(:activity_twinkled,
+              :user => user_span(:twinkler), :post => post_span(post))
   end
 
   def post_span(post)

@@ -1,9 +1,14 @@
 class Admin::UsersController < Admin::BaseController
+
+  before_filter :fetch_user_by_login, :only => [ :show, :edit, :update, :destroy ]
+
+  permissions 'admin/super'
+
   # GET /users
   # GET /users.xml
   def index
-    @users = User.paginate(:page => params[:page])
-
+    @letter = (params[:letter] || '')
+    @users = User.on(current_site).alphabetized(@letter).paginate(:page => params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
@@ -13,8 +18,6 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find_by_login(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
@@ -25,7 +28,6 @@ class Admin::UsersController < Admin::BaseController
   # GET /users/new.xml
   def new
     @user = User.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @user }
@@ -34,13 +36,17 @@ class Admin::UsersController < Admin::BaseController
 
   # GET /users/1/edit
   def edit
-    @user = User.find_by_login(params[:id])
   end
 
   # POST /users
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @user.save!
+
+    # save avatar
+    avatar = Avatar.create(params[:image])
+    @user.avatar = avatar
 
     respond_to do |format|
       if @user.save
@@ -52,12 +58,25 @@ class Admin::UsersController < Admin::BaseController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  rescue Exception => exc
+    render :action => 'new'
   end
 
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    @user = User.find_by_login(params[:id])
+
+    # save or update avatar
+    if @user.avatar
+      for size in %w(xsmall small medium large xlarge)
+        expire_page :controller => 'static', :action => 'avatar', :id => @user.avatar.id, :size => size
+      end
+      @user.avatar.image_file = params[:image][:image_file]
+      @user.avatar.save!
+    else
+      avatar = Avatar.create(params[:image])
+      @user.avatar = avatar
+    end
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -74,7 +93,6 @@ class Admin::UsersController < Admin::BaseController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @user = User.find_by_login(params[:id])
     @user.destroy
 
     respond_to do |format|
@@ -83,4 +101,8 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  private
+  def fetch_user_by_login
+    @user = User.find_by_login(params[:id])
+  end
 end

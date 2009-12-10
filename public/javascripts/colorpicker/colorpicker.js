@@ -17,6 +17,11 @@ Control.ColorPicker.CONTROL;
  */
 Control.ColorPicker.prototype = {
   initialize : function(field, options) {
+    Prototype.Browser.IE6 = Prototype.Browser.IE && parseInt(navigator.userAgent.substring(navigator.userAgent.indexOf("MSIE")+5)) == 6;
+    // no love for the ie6 here
+    if(Prototype.Browser.IE6) {
+      return false;
+    }
     var colorPicker = this;
     Control.colorPickers.push(colorPicker);
     this.field = $(field);

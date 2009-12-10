@@ -1,20 +1,35 @@
-<h1>Listing groups</h1>
+<% @title_box = '<h1>Edit Groups</h1>' %>
 
-<table>
+<i>Total number of groups:</i> <%= @groups.size %><br /><br />
+
+<%= alphabetical_filter(:controller => 'admin/groups') %>
+
+<table class="pretty">
   <tr>
     <th>Name</th>
     <th>Created at</th>
+    <th>&nbsp;</th>
   </tr>
 
-<% for group in @groups %>
-  <tr>
-    <td><%= link_to_group group %></td>
-    <td><%= friendly_date group.created_at %></td>
-    <td><%= link_to 'Show', group %></td>
-    <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% if @groups.any? -%>
+    <% @groups.each do |group| %>
+      <tr class="<%=cycle('row_0', 'row_1')%>">
+        <td><%= link_to_group group %></td>
+        <td><%= friendly_date group.created_at %></td>
+        <td style="padding-right:0em;">
+          <span class="actions">
+            <%= link_to 'Show', group %>
+            <%= link_to 'Edit', edit_group_path(group) %>
+            <%= link_to 'Destroy', group_path(group),
+                :confirm => "Are you sure you want to delete group '#{group.name}'?",
+                :method => :delete %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  <% else -%>
+    <tr><td colspan="4"><i>No Match</i></td></tr>
+  <% end -%>
 </table>
 
 <br />

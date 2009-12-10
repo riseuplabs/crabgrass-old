@@ -11,6 +11,12 @@ module PathFinder::Mysql::Options
     options
   end
 
+  def self.options_for_mentor(path, options)
+    options.merge({
+      :user_ids => options[:user_ids]+options[:current_user].student_ids
+    })
+  end
+
   def self.options_for_public(path, options)
     options.merge({
       :public => true

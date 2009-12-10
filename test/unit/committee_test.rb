@@ -20,17 +20,15 @@ class CommitteeTest < Test::Unit::TestCase
     assert_difference 'Group.find(%d).version'%g.id do
       g.add_committee!(c2)
     end
-
     g.reload
-    assert_equal 2, g.committees.count, 'there should be two committees'
     assert_equal g, c1.parent, "committee's parent should match group"
-    version = g.version
-    g.remove_committee!(c1)
-    c1.destroy
-    assert_equal 1, g.committees.count, 'now there should be one committee'
-    assert_equal version+1, g.version, 'parent version should increment on committee destroy'
 
-    g.destroy
+    assert_difference 'Group.find(%d).version'%g.id, -1 do
+      assert_difference 'Group.find(%d).committees.count'%g.id, -1 do
+        c1.destroy_by(users(:red))
+      end
+    end
+    g.destroy_by(users(:red))
     assert_nil Committee.find_by_name('food'), 'committee should die with group'
   end
 
@@ -38,7 +36,7 @@ class CommitteeTest < Test::Unit::TestCase
     assert_nothing_raised do
       Group.find(groups(:warm).id)
     end
-    groups(:rainbow).destroy
+    groups(:rainbow).destroy_by(users(:red))
     assert_raises ActiveRecord::RecordNotFound, 'committee should be destroyed' do
       Group.find(groups(:warm).id)
     end
@@ -96,20 +94,22 @@ class CommitteeTest < Test::Unit::TestCase
     user = users(:gerrard)
     other_user = users(:blue)
     c.add_user!(user)
+    c.add_user!(other_user)
     c.save
+    g.add_user!(other_user)
+    g.save
 
     assert user.may?(:admin, c)
 
     group_page = Page.create! :title => 'a group page',
       :public => false,
-      :user => other_user
-    group_page.add(g, :access => :admin)
+      :user => other_user,
+      :share_with => g, :access => :admin
     group_page.save
     committee_page = Page.create! :title => 'a committee page',
       :public => false,
-      :group => c,
-      :user => other_user
-    committee_page.add(c, :access => :admin)
+      :user => other_user,
+      :share_with => c, :access => :admin
     committee_page.save
 
     assert user.may?(:view, committee_page), "should be able to view committee page"
@@ -117,7 +117,7 @@ class CommitteeTest < Test::Unit::TestCase
   end
 
   def test_cant_pester_private_committee
-    g = Group.create :name => 'riseup', :publicly_visible_committees => false
+    g = Group.create :name => 'riseup'
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
@@ -129,8 +129,8 @@ class CommitteeTest < Test::Unit::TestCase
 
   def test_can_pester_public_committee
     g = Group.create :name => 'riseup'
-    g.publicly_visible_group = true
-    g.publicly_visible_committees = true
+    g.profiles.public.update_attribute(:may_see, true)
+    g.profiles.public.update_attribute(:may_see_committees, true)
     c = Committee.create :name => 'outreach'
     g.add_committee!(c)
 
@@ -139,5 +139,19 @@ class CommitteeTest < Test::Unit::TestCase
     assert c.may_be_pestered_by?(u), 'should be able to be pestered by user'
     assert u.may_pester?(c), 'should be able to pester committee of group with public committees'
   end
+
+  def test_add_council
+    network = groups(:cnt)
+    council = Council.create!(:name => 'council')
+    network.add_committee!(council)
+    network.reload
+    council.reload
+    assert_equal 'Network', network.type
+    assert_equal 'Council', council.type
+    assert_equal council.id, network.council_id
+    assert_equal council, network.council
+    assert_equal network.id, council.parent_id
+  end
+
 end
 

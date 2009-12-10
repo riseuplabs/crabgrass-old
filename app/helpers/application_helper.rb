@@ -1,15 +1,27 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def link_char(links)
-    if links.first.is_a? Symbol
-      char = links.shift
-      return ' &bull; ' if char == :bullet
-      return ' | '
-    else
-      return ' | '
+  ##
+  ## HTML CONTENT HELPERS
+  ##
+
+  def content_tag_if(tag, content, options={})
+    if content.any?
+      content_tag(tag, content, options)
     end
   end
+
+  def option_empty(label='')
+    %(<option value=''>#{label}</option>)
+  end
+
+  def format_text(str)
+    str.any? ? GreenCloth.new(str).to_html() : ''
+  end
+
+  ##
+  ## LINK HELPERS
+  ##
 
   ## makes this: link | link | link
   def link_line(*links)
@@ -21,14 +33,20 @@ module ApplicationHelper
     content_tag(:span, links.compact.join(char), :class => 'link_line')
   end
 
+  ##
+  ## GENERAL UTILITY
+  ##
+
   # returns the first of the args where any? returns true
+  # if none has any, return last
   def first_with_any(*args)
     for str in args
       return str if str.any?
     end
+    return args.last
   end
-  
-  ## coverts bytes into something more readable 
+
+  ## converts bytes into something more readable
   def friendly_size(bytes)
     return unless bytes
     if bytes > 1.megabyte
@@ -39,19 +57,15 @@ module ApplicationHelper
       '%s B' % bytes
     end
   end
-   
+
   def once?(key)
     @called_before ||= {}
     return false if @called_before[key]
     @called_before[key]=true
   end
-  
+
   def logged_in_since
     session[:logged_in_since] || Time.now
-  end
-
-  def option_empty(label='')
-    %(<option value=''>#{label}</option>)
   end
 
   # from http://www.igvita.com/2007/03/15/block-helpers-and-dry-views-in-rails/
@@ -63,6 +77,10 @@ module ApplicationHelper
     options.merge!(:body => capture(&block))
     concat(render(:partial => partial_name, :locals => options), block.binding)
   end
+
+  ##
+  ## CRABGRASS SPECIFIC
+  ##
 
   def mini_search_form(options={})
     unless params[:action] == 'search' or params[:controller] =~ /search|inbox/
@@ -90,11 +108,11 @@ module ApplicationHelper
                                     }
   end
 
-  # 
+  #
   # Default pagination link options:
-  # 
+  #
   #   :class        => 'pagination',
-  #   :prev_label   => '&laquo; Previous',
+  #   :previous_label   => '&laquo; Previous',
   #   :next_label   => 'Next &raquo;',
   #   :inner_window => 4, # links around the current page
   #   :outer_window => 1, # links around beginning and end
@@ -106,31 +124,58 @@ module ApplicationHelper
   #   :container    => true
   #
   def pagination_links(things, options={})
-    defaults = {:renderer => DispatchLinkRenderer, :prev_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next]}
+    if request.xhr?
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
+    else
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
+    end
     will_paginate(things, defaults.merge(options))
   end
-  
+
   def options_for_my_groups(selected=nil)
     options_for_select([['','']] + current_user.groups.sort_by{|g|g.name}.to_select(:name), selected)
   end
-  
+
   def options_for_language(selected=nil)
     selected ||= session[:language_code].to_s
-    options_for_select(LANGUAGES.to_select(:name, :code), selected)
+    options_array = I18n.available_locales.collect {|locale| [I18n.language_for_locale(locale).try.name, locale.to_s]}
+    options_for_select(options_array, selected)
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'[:see_more_link]+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 
-  # converts span tags from a model (request or activity) and inserts links
-  def expand_links(text)
-    text.gsub(/<span class="user">(.*?)<\/span>/) do |match|
-      link_to_user($1)
-    end.gsub(/<span class="group">(.*?)<\/span>/) do |match|
-      link_to_group($1)
+  def expand_links(description)
+    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
+      case $1
+        when "user": link_to_user($2)
+        when "group": link_to_group($2)
+      end
     end
+  end
+
+  def display_activity(activity)
+    return unless activity
+
+    description = activity.safe_description(self)
+    return unless description
+
+    description = expand_links(description)
+
+    created_at = (friendly_date(activity.created_at) if activity.created_at)
+
+    more_link = activity.link
+    if more_link.is_a? Hash
+      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
+    end
+    more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
+
+    css_class = "small_icon #{activity.icon}_16 shy_parent"
+    css_style = activity.style
+
+    content_tag :li, [description, more_link].combine, :class => css_class, :style => css_style
   end
 
   def side_list_li(options)
@@ -138,25 +183,38 @@ module ApplicationHelper
      content_tag(:li, link_to_active(options[:text], options[:url], active), :class => "small_icon #{options[:icon]}_16 #{active ? 'active' : ''}")
   end
 
-  def edit_site_custom_appearance_link(site)
-    if site.custom_appearance and logged_in? and current_user.may?(:admin, site)
-      link_to "edit custom appearance"[:edit_custom_appearance], edit_custom_appearance_url(site.custom_appearance)
+  def formatting_reference_link
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % I18n.t(:formatting_reference_link)
+  end
+
+  # returns the related help string, but only if it is translated.
+  def help(symbol)
+    symbol = "#{symbol}_help".to_sym
+    text = I18n.t(symbol)
+    # return nil if I18n.t says translation is missing
+    text =~ /translation missing/ ? nil : text
+  end
+
+  def debug_permissions
+    if RAILS_ENV == 'development'
+      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+      permission_methods.collect do |section|
+        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      end
     end
   end
 
-  # Tests to see if this site has a custom translation defined for +key+.
-  # If it doesn't, then we fall back to the normal translation.
-#  def site_string(key)
-#    site_key = "#{key}_for_site_#{current_site.name}"
-#    if Gibberish.translations[site_key]
-#      # NOTE: ^^^ this relies on a hack to Gibberish which turns
-#      # Gibberish.translations[x] from a Hash to a HashWithIndifferentAccess
-#      # (we don't want to create a bunch of symbols that are never
-#      # going to be used)
-#      site_key.t
-#    else
-#      key.t
-#    end
-#  end
+  private
+
+  def link_char(links)
+    if links.first.is_a? Symbol
+      char = links.shift
+      return ' &bull; ' if char == :bullet
+      return ' ' if char == :none
+      return ' | '
+    else
+      return ' | '
+    end
+  end
 
 end

@@ -12,13 +12,9 @@ class PageTermsTest < Test::Unit::TestCase
     assert_equal Page.access_ids_for(:user_ids => [user.id]).first, page.page_terms.access_ids
   end
 
-  def test_tagging_with_odd_characters   
+  def test_tagging_with_odd_characters
     name = 'test page'
-    page = WikiPage.new do |p|
-      p.title = name.titleize
-      p.name = name.nameize
-    end
-    page.save
+    page = WikiPage.make :title => name.titleize, :name => name.nameize
     page.tag_list = "^&#, +, **, %, ə"
     page.save!
 
@@ -28,7 +24,7 @@ class PageTermsTest < Test::Unit::TestCase
       assert_equal page.id, found.id, 'the page ids should match for tag %s' % char
     end
   end
-  
+
   protected
-    
+
 end

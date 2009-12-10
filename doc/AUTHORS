@@ -1,0 +1,67 @@
+Copyright © 2007-2009 Riseup Labs
+
+Crabgrass is free software; you can redistribute it and/or modify
+it under the terms of the Affero General Public License as published by
+the Free Software Foundation or Affero Inc.
+
+Crabgrass is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+Affero General Public License for more details.
+
+You should have received a copy of the Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+= Crabgrass Authors
+
+Abie Flaxman
+Daniel Scott
+Elijah Saxon
+Jessi Berkelhammer
+Seth Walker
+Micah Anderson
+Juozas Gaigalas
+
+= Authors of Included Software
+
+Crabgrass includes many libraries and images created by third parties
+and distributed under various licenses.
+
+None of these are AGPL, although all are free licenses as determined by the
+Free Software Foundation. You may modify these libaries and files without
+redistributing your changes.
+
+== icons and css
+
+tango icons
+  http://tango.freedesktop.org
+  Creative Commons Attribution ShareAlike 2.5
+  http://creativecommons.org/licenses/by-sa/2.5/
+
+famfamfam silk icons
+  http://www.famfamfam.com/lab/icons/silk/
+  Creative Commons Attribution 2.5 License
+
+gnome icon theme
+  GNU General Public License, Version 2
+
+Whatever:hover
+  (c) 2005 - Peter Nederlof http://www.xs4all.nl/~peterned
+  GNU Lesser General Public v2.1 or >
+
+== javascript
+
+Prototype.js
+  http://www.prototypejs.org/
+  "MIT-style license" whatever that means. I guess, any MIT compatible license.
+
+Ajax Autocomplete for Prototype
+  http://www.devbridge.com/projects/autocomplete/
+  Same as prototype.js
+
+== plugins
+
+* sphinx search
+* BackgroundDB
+
+

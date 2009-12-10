@@ -1,12 +1,12 @@
 <%= if logged_in? and current_user.may? :edit, @page
   Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Show results'.t
+      t.label I18n.t(:show_results_tab)
       t.url page_url(@page, :action => 'show')
       t.selected params[:action] == 'show'
     end
     f.tab do |t|
-      t.label 'Edit my vote'.t
+      t.label I18n.t(:edit_my_vote_tab)
       t.url page_url(@page, :action => 'edit')
       t.selected params[:action] == 'edit'
     end

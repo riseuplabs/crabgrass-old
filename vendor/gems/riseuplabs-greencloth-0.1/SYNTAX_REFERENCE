@@ -1,0 +1,151 @@
+=== PARAGRAPHS AND LINE BREAKS =============
+
+Paragraphs
+===========
+
+Paragraphs are separated by a blank line. This is the first paragraph. Only put returns (enter key) in a paragraph if you want to force a line break.
+
+Here is another paragraph, but shorter than the first.
+
+Line breaks
+-----------
+
+Paragraphs will
+contain line breaks
+everywhere you type return.
+
+
+=== LISTS ==================================
+
+* rainbows
+** are difficult to touch
+** make me happy
+* ninjas are cool
+* crows are smart
+
+# first, be the change you want to see in the world.
+# then, relax.
+
+# or perhaps take a nap instead.
+
+
+=== BLOCKQUOTES ============================
+
+Blockquotes are used to inset a block of quoted text.
+
+bq. This is a blockquote.
+
+> this is also a blockquote
+> in 'email' style.
+
+You can extend blockquotes for multiple paragraphs by using bq.. (note the double dots):
+
+bq.. "There's a time when the operation of the machine becomes so odious, makes you so sick at heart, that you can't take part, you can't even passively take part, and you've got to put your bodies upon the gears and upon the wheels, upon the levers, upon all the apparatus, and you've got to make it stop!
+
+And you've got to indicate to the people who run it, to the people who own it, that unless you're free, the machine will be prevented from working at all!"
+
+p. Multiple paragraph blockquotes are ended with p.
+
+
+=== FORMATTING =============================
+
+_emphasis_, __italicized__, *strong*, **bold**, ??citation??, -deleted text-, +inserted text+, ^superscript^, ~subscript~, @code@, %(classname)span%
+
+[_emphasis_], [__italicized__], [*strong*], [**bold**], [??citation??], [-deleted text-], [+inserted text+], [^superscript^], [~subscript~], [@code@]
+
+
+=== LINKS ==================================
+
+URLs become links http://riseup.net
+
+Text [in brackets] is assumed to be a page name.
+
+You can also point to a [different page -> trees].
+
+Or to another [site->http://riseup.net].
+
+To specify a different group:
+* [fruit/orange] is different from [colors/orange]
+* [my orange -> fruit/orange] is different from [my orange -> colors/orange]
+
+Instead of the page name, you can use the page id number: [oranges -> +342]. It is always safe to link to a page id: it will never change.
+
+If you want a square bracket in your text, you can disable linking \\[like so\\].
+
+
+=== ANCHORS ================================
+
+You can create anchors in text:
+
+* a flock of crows is a [# murder #]
+* but a flock of ravens is [# called a congress -> congress #]
+
+And also link to these anchors:
+
+* jump to [ crows -> static/greencloth #murder]
+* or, more simply: [#congress]
+
+
+=== HEADINGS ===============================
+
+h1. Top level
+
+h2. Second level
+
+h3. Third level
+
+Top Level
+=========
+
+Second Level
+------------
+
+=== TABLES =================================
+
+| bird      | color  | locomotion  |
+| macaw     | red    | fly  |
+| kakapo    | green  | walk |
+| penguin   | black  | swim |
+
+Tables can be built with tabs instead of "|" and they can have headers:
+
+	_. bird	_. color	_. locomotion
+	macaw	red	fly
+	kakapo	green	walk
+	penguin	black	swim
+
+
+=== PREFORMATTED CODE ======================
+
+Here is some @inline code that is *not* processed@ for formatting.
+
+<pre>
+this paragraph is
+    preformatted
+         with some really impressive text.
+</pre>
+
+<code>
+def fibonacci(max)
+  i1, i2 = 1, 1
+  while i1 <= max
+    yield i1
+    i1, i2 = i2, i1+i2
+  end
+end
+</code>
+
+/-- another way to
+   make code blocks
+\\--
+
+@@ a single code block line
+
+
+=== MACROS =================================
+
+There are a few macros which generate special content:
+
+[[toc]] -- table of contents
+
+

@@ -1,0 +1,15 @@
+xml.enclosure :url => (url_for(:controller => object.url, :only_path => false)), :length => object.size, :type => object.content_type
+instances = [object] + object.thumbnails.select{|i| i.exists?}
+
+case instances.size
+when 0
+  # shouldn't ever happen
+when 1
+  xml << render(:partial => 'asset_page/rss_media_content', :locals => {:instance => instances[0], :asset => object})
+else
+  xml.media :group do
+    instances.each do |instance|
+      xml << render(:partial => 'asset_page/rss_media_content', :locals => {:instance => instance, :asset => object})
+    end
+  end
+end

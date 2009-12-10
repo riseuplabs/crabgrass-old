@@ -1,23 +1,26 @@
       <table>
         <tr>
-          <td align='right'><b><%= 'Created by'.t %>:</b></td>
+          <td align='right'><b><%= I18n.t(:created_by) %>:</b></td>
           <td>&nbsp;</td>
           <td><%= link_to_user(@page.created_by, :avatar => 'xsmall') if @page.created_by %></td>
         </tr>
         <tr>
-          <td align='right'><b><%= 'Created on'.t %>:</b></td>
+          <td align='right'><b><%= I18n.t(:created_on) %>:</b></td>
           <td>&nbsp;</td>
           <td><%= friendly_date(@page.created_at) %></td>
         </tr>
         <tr>
-          <td align='right'><b><%= 'File size'.t %>:</b></td>
+          <td align='right'><b><%= I18n.t(:file_size) %>:</b></td>
           <td>&nbsp;</td>
           <td><%= friendly_size(@asset.size) %></td>
         </tr>
         <tr>
-          <td align='right'><b><%= 'Format'.t %>:</b></td>
+          <td align='right'><b><%= I18n.t(:format) %>:</b></td>
           <td>&nbsp;</td>
-          <td><%= @asset.format_description.t %> (<%=@asset.ext%>)</td>
+          <td>
+            <%= I18n.t(@asset.format_description.to_sym, :default => @asset.format_description) %>
+            (<%= @asset.ext %>)
+          </td>
         </tr>
       </table>
 

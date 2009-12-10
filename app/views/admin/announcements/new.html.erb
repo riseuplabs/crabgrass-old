@@ -1,0 +1,6 @@
+<h2>Create Announcement</h2>
+<% form_tag({:controller => '/announcement_page', :action => 'create', :id => 'announcement'}) do -%>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Create" %>
+<% end -%>
+

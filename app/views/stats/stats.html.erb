@@ -1,0 +1,30 @@
+<% @title_box = content_tag(:h1, 'Statistics') %>
+<%= render :partial => 'tabs' %>
+
+
+<% partials = [] %>
+
+<% Dir.glob(File.dirname(__FILE__)+'/sections/*.erb').each do |file| %>
+  <% content = render(:partial => 'stats/sections/'+File.basename(file).sub(/^_/,'')) %>
+  <% partials << {:content => content, :order => @order} %>
+<% end %>
+
+<% partials.sort!{|a,b| a[:order] <=> b[:order] } %>
+
+<ul>
+<% @toc.each do |section| %>
+  <li><%= link_to section[:title], '#'+section[:name] %></li>
+  <% if section[:children] %>
+    <ul>
+    <% section[:children].each do |subsection| %>
+      <li><%= link_to subsection[:title], '#'+subsection[:name] %></li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+</ul>
+
+<% partials.each do |partial| %>
+  <%= partial[:content] %>
+<% end %>
+

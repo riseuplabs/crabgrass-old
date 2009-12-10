@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title><%=h title_from_context %></title>
+  <style>
+    a.anchor {display:none;}
+  </style>
 </head>
 <body>
 
@@ -12,11 +15,11 @@
 </div>
 
 <%= yield %>
-  
-<h2>Comments</h2>  
+
+<h2>Comments</h2>
 <%- for post in @posts do -%>
    <%= render :partial => 'posts/post_printer_friendly', :locals => {:post => post} %>
-<%- end -%>  
+<%- end -%>
 
 </body>
 </html>

@@ -1,8 +1,9 @@
 module LayoutHelper
 
-  ##########################################
-  # DISPLAYING BREADCRUMBS and CONTEXT
-  
+  ##
+  ## DISPLAYING BREADCRUMBS and CONTEXT
+  ##
+
   def link_to_breadcrumbs(min_length = 3)
     if @breadcrumbs and @breadcrumbs.length >= min_length
       content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
@@ -10,14 +11,15 @@ module LayoutHelper
       ""
     end
   end
-  
+
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
   end
 
-  #########################################
-  # TITLE
-  
+  ##
+  ## TITLE
+  ##
+
   def title_from_context
     (
       [@html_title] +
@@ -25,10 +27,11 @@ module LayoutHelper
       [current_site.title]
     ).compact.join(' - ')
   end
-      
-  ###########################################
-  # STYLESHEET
-  
+
+  ##
+  ## STYLESHEET
+  ##
+
   # CustomAppearances model allows administrators to override the default css values
   # this method will link to the appropriate overriden css
   def themed_stylesheet_link_tag(path)
@@ -39,7 +42,7 @@ module LayoutHelper
   end
 
   # custom stylesheet
-  # rather than include every stylesheet in every request, some stylesheets are 
+  # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
   def optional_stylesheet_tag
     stylesheet = controller.class.stylesheet || {}
@@ -77,25 +80,21 @@ module LayoutHelper
     lines << stylesheet_link_tag('ie/ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
+    if language_direction == "rtl"
+      lines << themed_stylesheet_link_tag('rtl')
+    end
     lines.join("\n")
   end
 
   def favicon_link
-    %q[<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="/favicon.png" type="image/x-icon" />]
-  end
+    icon_urls = if current_appearance and current_appearance.favicon
+      [current_appearance.favicon.url] * 2
+    else
+      ['/favicon.ico', '/favicon.png']
+    end
 
-  # support for holygrail layout:
-  
-  # returns the style elements need in the <head> for the holygrail layouts. 
-  def holygrail_stylesheets
-    lines = []
-    lines << stylesheet_link_tag('holygrail/common')
-    lines << stylesheet_link_tag('holygrail/' + type_of_column_layout)
-    lines << '<!--[if lt IE 7]>
-<style media="screen" type="text/css">.col1 {width:100%;}</style>
-<![endif]-->' # this line is important!
-    lines.join("\n")
+    %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
+  <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
   def type_of_column_layout
@@ -109,28 +108,84 @@ module LayoutHelper
       'right'
     end
   end
-  
-  ############################################
-  # JAVASCRIPT
 
-  def optional_javascript_tag
-    scripts = controller.class.javascript || {}
-    js_files = [scripts[:all], scripts[params[:action].to_sym]].flatten.compact
-    return unless js_files.any?
-    extra = js_files.delete(:extra)
-    js_files = js_files.collect{|i| "as_needed/#{i}" }
-    if extra
-      js_files += ['effects', 'dragdrop', 'controls', 'builder', 'slider']
+  def language_direction
+    @language_direction ||= if I18n.language_for_locale(session[:language_code]).try.rtl
+      "rtl"
+    else
+      "ltr"
     end
-    javascript_include_tag(*js_files)
   end
-  
+
+  ##
+  ## JAVASCRIPT
+  ##
+
+  # Core js that we always need.
+  # Currently, effects.js and controls.js are required for autocomplete.js.
+  # However, autocomplete uses very little of the controls.js code, which in turn
+  # should not need the effects.js at all. So, with a little effort, effects and
+  # controls could be moved to extra.
+  MAIN_JS = {:main => ['prototype', 'application', 'modalbox', 'effects', 'controls', 'autocomplete']}
+
+  # extra js that we might sometimes need
+  EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
+
+  # needed whenever we want controls for editing a wiki
+  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
+
+  JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
+
+  JS_BUNDLE_LOAD_ORDER = JS_BUNDLES.collect{|b|b.keys.first}
+
+  # eg: {:main => [...], :extra => [...]}
+  JS_BUNDLES_COMBINED = JS_BUNDLES.inject({}){|a,b|a.merge(b)}
+
+  # eg: {'dragdrop' => :extra, 'modalbox' => :main, ...}
+  JS_BUNDLE_MAP = Hash[*JS_BUNDLES_COMBINED.collect{|k,v|v.collect{|u|[u,k]}}.flatten]
+
+  # Includes the correct javascript tags for the current request.
+  # See ApplicationController#javascript for details.
+  #
+  # In brief: the correct javascript is loaded for a particular controller and a
+  # particular action. Some javascripts are defined in bundles. A bundle gets
+  # activated if called by name (ie :extra) or if a file in the bundle is
+  # included (ie 'dragdrop')
+  def javascript_include_tags
+    scripts = controller.class.javascript || {}
+    files = [:main, scripts[:all], scripts[params[:action].to_sym]].flatten.compact
+    return unless files.any?
+
+    bundles = {}
+    as_needed = {}
+    includes = []
+
+    files.each do |file|
+      if JS_BUNDLE_MAP[file.to_s]                    # if a file in a bundle is specified
+        bundles[JS_BUNDLE_MAP[file.to_s]] = true     # include the whole bundle
+      elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
+        bundles[file.to_sym] = true                  # include the whole bundle
+      else
+        as_needed["as_needed/#{file}"] = true        # otherwise, include one file.
+      end
+    end
+
+    bundles = JS_BUNDLE_LOAD_ORDER & bundles.keys    # sort the bundles
+    bundles.each do |bundle|
+      args = JS_BUNDLES_COMBINED[bundle] + [{:cache => bundle.to_s}]  # ie ['dragdrop', 'builder', {:cache => 'extra'}]
+      includes << javascript_include_tag(*args)
+    end
+    if as_needed.any?
+      includes << javascript_include_tag(*as_needed.keys)
+    end
+    return includes
+  end
+
   def crabgrass_javascripts
-    lines = []
-    lines << javascript_include_tag('prototype', 'application', :cache => true)
-    lines << optional_javascript_tag
+    lines = javascript_include_tags
     lines << '<script type="text/javascript">'
     lines << @content_for_script
+    lines << localize_modalbox_strings
     lines << '</script>'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
@@ -138,16 +193,23 @@ module LayoutHelper
       # prevent flicker on background images in ie6
       lines << '<script>try {document.execCommand("BackgroundImageCache", false, true);} catch(err) {}</script>'
     lines << '<![endif]-->'
+    # run firebug lite in dev mode for ie
+    if false and RAILS_ENV == 'development'
+      lines << '<!--[if IE]>'
+      lines << "<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>"
+      lines << '<![endif]-->'
+    end
     lines.join("\n")
   end
-  
-  ############################################
-  # BANNER
+
+  ##
+  ## BANNER
+  ##
 
   # banner stuff
   def banner_style
     "background: #{@banner_style.background_color}; color: #{@banner_style.color};" if @banner_style
-  end  
+  end
   def banner_background
     @banner_style.background_color if @banner_style
   end
@@ -155,9 +217,10 @@ module LayoutHelper
     @banner_style.color if @banner_style
   end
 
-  ############################################
-  # CONTEXT STYLES
-  
+  ##
+  ## CONTEXT STYLES
+  ##
+
   def background_color
     "#ccc"
   end
@@ -179,34 +242,54 @@ module LayoutHelper
     style.join("\n")
   end
 
-  ###########################################
-  # LAYOUT STRUCTURE
+  ##
+  ## LAYOUT STRUCTURE
+  ##
 
   # builds and populates a table with the specified number of columns
-  def column_layout(cols, items)
+  def column_layout(cols, items, options = {}, &block)
     lines = []
     count = items.size
     rows = (count.to_f / cols).ceil
-    lines << '<table>'
+    if options[:balanced]
+      width= (100.to_f/cols.to_f).to_i
+    end
+    lines << "<table class='#{options[:class]}'>" unless options[:skip_table_tag]
+    if options[:header]
+      lines << options[:header]
+    end
     for r in 1..rows
       lines << ' <tr>'
       for c in 1..cols
          cell = ((r-1)*cols)+(c-1)
          next unless items[cell]
-         lines << "  <td valign='top'>"
-         lines << '  %s' % items[cell]
+         lines << "  <td valign='top' #{"style='width:#{width}%'" if options[:balanced]}>"
+         if block
+           lines << yield(items[cell])
+         else
+           lines << '  %s' % items[cell]
+         end
          #lines << "r%s c%s i%s" % [r,c,cell]
          lines << '  </td>'
       end
       lines << ' </tr>'
     end
-    lines << '</table>'
+    lines << '</table>' unless options[:skip_table_tag]
     lines.join("\n")
   end
 
+  ##
+  ## PARTIALS
+  ##
 
-  ############################################
-  # CUSTOMIZED STUFF
+  def dialog_page(options = {}, &block)
+    block_to_partial('common/dialog_page', options, &block)
+  end
+
+
+  ##
+  ## CUSTOMIZED STUFF
+  ##
 
   # build a masthead, using a custom image if available
   def custom_masthead_site_title
@@ -214,7 +297,7 @@ module LayoutHelper
     if appearance and appearance.masthead_asset
       # use an image
       content_tag :div, :id => 'site_logo_wrapper' do
-        content_tag :a, :href => '/', :alt => current_site.title do 
+        content_tag :a, :href => '/', :alt => current_site.title do
           image_tag(appearance.masthead_asset.url, :id => 'site_logo')
         end
       end

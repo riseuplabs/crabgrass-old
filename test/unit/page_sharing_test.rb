@@ -32,12 +32,11 @@ class PageSharingTest < Test::Unit::TestCase
   def test_share_page_with_owner
     user = users(:kangaroo)
     group = groups(:animals)
-    
     page = Page.create(:title => 'fun fun', :user => user, :share_with => group, :access => :admin)
     assert page.valid?, 'page should be valid: %s' % page.errors.full_messages.to_s
     assert group.may?(:admin, page), 'group be able to admin group'
 
-    assert_nothing_raised do 
+    assert_nothing_raised do
       user.share_page_with!(page, "animals", :message => 'hey you', :grant_access => :view)
     end
 
@@ -54,7 +53,7 @@ class PageSharingTest < Test::Unit::TestCase
     #user.share_page_with!(page, recipients, :access => :view)
 
     assert group.may?(:view, page), 'group must have view access'
-    assert !group.may?(:admin, page), 'group must not have admin access'   
+    assert !group.may?(:admin, page), 'group must not have admin access'
   end
 
   def test_share_inbox_rules
@@ -69,8 +68,8 @@ class PageSharingTest < Test::Unit::TestCase
     page = Page.create!(:title => 'an unkindness of ravens', :user => user, :share_with => group, :access => :view)
 
     assert_nil page.user_participations.find_by_user_id(other_user.id), 'just adding access should not create a user participation record for users in the group'
-    
-    user.share_page_with!(page, other_user, :access => :admin, :notify => true)
+
+    user.share_page_with!(page, other_user, :access => :admin, :send_notice => true)
     assert_equal true, page.user_participations.find_by_user_id(other_user.id).inbox?, 'should be in other users inbox'
     assert_equal false, page.user_participations.find_by_user_id(other_user.id).viewed?, 'should be marked unread'
     assert_equal true, other_user.may?(:admin, page), 'should have admin access'
@@ -81,7 +80,7 @@ class PageSharingTest < Test::Unit::TestCase
     assert user_in_other_group.may?(:view, page)
     assert_nil page.user_participations.find_by_user_id(user_in_other_group.id)
 
-    user.share_page_with!(page, other_group, :notify => :true)
+    user.share_page_with!(page, other_group, :send_notice => true)
     page.save!
     assert_not_nil page.user_participations.find_by_user_id(user_in_other_group.id)
     assert_equal true, page.user_participations.find_by_user_id(user_in_other_group.id).inbox?
@@ -89,15 +88,16 @@ class PageSharingTest < Test::Unit::TestCase
   end
 
   def test_add_page
-    user = users(:kangaroo)
+    user = User.make
+  
     page = nil
     assert_nothing_raised do
-      page = Page.create!(:title => 'fun fun')
+      page = Page.make(:title => 'fun fun')
     end
 
     page.add(user, :access => :edit)
-    
-    # sadly, page.users is not updated yet.    
+
+    # sadly, page.users is not updated yet.
     assert !page.users.include?(user), 'it would be nice if we could do this'
 
     assert_nothing_raised do
@@ -105,11 +105,11 @@ class PageSharingTest < Test::Unit::TestCase
     end
     assert page.users.include?(user), 'page.users should be updated'
 
-    assert_raises PermissionDenied do 
+    assert_raises PermissionDenied do
       user.may!(:admin, page)
-    end 
+    end
   end
-  
+
   def test_page_update
     page = pages(:wiki)
     user = users(:blue)
@@ -129,11 +129,125 @@ class PageSharingTest < Test::Unit::TestCase
     end
   end
 
+  def test_share_hash
+    user = users(:kangaroo)
+    group = groups(:animals)
+    user2 = users(:red)
+
+    page = Page.create(:title => 'x', :user => user, :access => :admin)
+    user.share_page_with!(page, {:animals => {:access => "edit"}, :red => {:access => "edit"}}, {})
+
+    assert group.may?(:edit, page)
+    assert !group.may?(:admin, page)
+    assert user2.may?(:edit, page)
+    assert !user2.may?(:admin, page)
+  end
+
+  def test_notify_groups
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create!(:title => 'title', :user => creator, :share_with => ['red', 'rainbow', 'animals'], :access => :admin)
+
+    creator.share_page_with!(page, ['red', 'rainbow', 'animals'], :send_notice => true, :send_message => 'hi')
+    page.save!
+    page.reload
+
+    all_users = (groups(:animals).users + groups(:rainbow).users).uniq.select do |user|
+      creator.may_pester?(user)
+    end
+
+    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+  end
+
+  def test_notify_with_hash
+    creator = users(:kangaroo)
+    red = users(:red)
+    rainbow = groups(:rainbow)
+
+    page = Page.create!(:title => 'title', :user => creator,
+     :share_with => {"rainbow"=>{"access"=>"admin"}, "red"=>{"access"=>"admin"}},
+     :access => :view)
+    assert rainbow.may?(:admin, page)
+
+    creator.share_page_with!(
+      page,
+      {"rainbow"=>{"send_notice"=>"1"}, "red"=>{"send_notice"=>"1"}},
+      {"send_notice"=>true, "send_message"=>"", "send_email"=>false}
+    )
+    page.save!
+    page.reload
+
+    all_users = (groups(:rainbow).users).uniq.select do |user|
+      creator.may_pester?(user)
+    end
+    all_users << creator
+    assert_equal all_users.collect{|user|user.name}.sort, page.users.collect{|user|user.name}.sort
+  end
+
+  def test_notify_group
+    creator = users(:kangaroo)
+    page = Page.create!(:title => 'title', :user => creator, :share_with => 'animals', :access => 'admin')
+    creator.share_page_with!(page, 'animals', :send_notice => true, :send_message => 'hi')
+    page.save!
+    page.reload
+    assert_equal groups(:animals).users.count, page.user_participations.count
+    page.user_participations.each do |upart|
+      assert upart.inbox
+    end
+  end
+
+  def test_only_send_notify_message_to_the_recipient
+    creator = users(:blue)
+    users = [users(:dolphin), users(:penguin), users(:iguana)]
+    additional_user = users(:kangaroo)
+
+    page = Page.create!(:title => 'title', :user => creator, :share_with => users, :access => 'admin')
+
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 1, 'should only send to 1 user') do
+      creator.share_page_with!(page, additional_user, :send_notice => true, :send_message => 'hi')
+      page.save!
+    end
+  end
+
+  # share with a committee you are a member of, but you are not a member of the parent group.
+  def test_share_with_committee
+    owner = users(:penguin)
+    page = Page.create!(:title => 'title', :user => owner)
+    committee = groups(:cold)
+    assert owner.member_of?(committee)
+    assert_nothing_raised do
+      owner.share_page_with!(page, 'rainbow+the-cold-colors', {})
+    end
+  end
+
+  # send notification to special symbols :participants or :contributors
+  def test_notify_special
+    owner = users(:kangaroo)
+    userlist = [users(:dolphin), users(:penguin), users(:iguana)]
+    page = Page.create!(:title => 'title', :user => owner, :share_with => userlist, :access => :edit)
+
+    # send notice to participants
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 4) do
+      owner.share_page_with!(page, ':participants', :send_notice => true)
+    end
+
+    # send notice to contributors
+    page.add(users(:penguin),:changed_at => Time.now) # simulate contribution
+    page.add(users(:kangaroo),:changed_at => Time.now)
+    page.save
+    UserParticipation.update_all :inbox => false
+    assert_difference('UserParticipation.count(:all, :conditions => {:inbox => true})', 2) do
+      owner.share_page_with!(page, ':contributors', :send_notice => true)
+    end
+  end
+
   protected
-  
+
   def create_page(options = {})
     defaults = {:title => 'untitled page', :public => false}
     Page.create(defaults.merge(options))
   end
-  
+
 end

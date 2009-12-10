@@ -1,5 +1,5 @@
 class EventPage < Page
 
-    
+
 end
 

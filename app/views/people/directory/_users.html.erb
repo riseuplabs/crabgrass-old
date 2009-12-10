@@ -1,0 +1,11 @@
+<table class='pretty'>
+    <tr>
+      <th></th>
+      <th><%= I18n.t(:login) %></th>
+      <th><%= I18n.t(:name) %></th>
+      <th><%= I18n.t(:organization) %></th>
+      <th><%= I18n.t(:location) %></th>
+      <th><%= I18n.t(:last_seen) %></th>
+    </tr>
+<%= render :partial => 'user', :collection => users %>
+</table>

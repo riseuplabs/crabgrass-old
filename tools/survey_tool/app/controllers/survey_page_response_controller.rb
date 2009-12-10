@@ -7,28 +7,26 @@ class SurveyPageResponseController < BasePageController
   javascript :extra
   javascript 'survey'
   helper 'survey_page'
+  permissions 'survey_page'
 
   verify :method => :post, :only => [:make, :update, :destroy]
 
-  include SurveyPagePermissionsHelper
-  helper 'survey_page_permissions'
-
   def new
-    @response = SurveyResponse.new 
+    @response = SurveyResponse.new
   end
 
-  # this should be 'create', but that is currently used by BasePageController. 
+  # this should be 'create', but that is currently used by BasePageController.
   # grrr. that breaks our nice CRUD.
   def make
     @response = @survey.responses.create!(params[:response]) do |resp|
       resp.user = current_user # (user_id is protected)
     end
     current_user.updated(@page)
-    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    flash_message :success => I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => "Please check your answers."[:survey_please_check]
+      flash_message :success => I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc
@@ -41,11 +39,11 @@ class SurveyPageResponseController < BasePageController
 
   def update
     @response.update_attributes!(params[:response])
-    flash_message :success => "Thank you for submitting your response."[:survey_thanks_submit]
+    flash_message :success => I18n.t(:survey_thanks_submit_message)
     if may_rate_survey_response?
-      flash_message :success => "Please check your answers and rate other peoples responses."[:survey_please_check_and_rate]
+      flash_message :success => I18n.t(:survey_please_check_and_rate_message)
     else
-      flash_message :success => "Please check your answers."[:survey_please_check]
+      flash_message :success => I18n.t(:survey_please_check_message)
     end
     redirect_to page_url(@page, :action => 'response-show', :id => @response.id)
   rescue Exception => exc
@@ -117,31 +115,11 @@ class SurveyPageResponseController < BasePageController
 
   protected
 
-  def authorized?
-    return true if @page.nil?
-    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
-
-    if action?(:new, :make)
-      may_create_survey_response?
-    elsif action?(:update, :edit)
-      may_modify_survey_response?(@response)
-    elsif action?(:destroy, :edit)
-      may_destroy_survey_response?(@response)
-    elsif action?(:show)
-      may_view_survey_response?(@response)
-    elsif action?(:list)
-      may_view_survey_response?
-    elsif action?(:rate)
-      may_rate_survey_response?(@response)
-    else
-      current_user.may?(:admin,@page)
-    end
-  end
-
   # called early in filter chain
   def fetch_data
     return true unless @page
     @survey = @page.data || Survey.new
+    @response = @survey.responses.find_by_id(params[:id]) if params[:id]
   end
 
   def setup_view

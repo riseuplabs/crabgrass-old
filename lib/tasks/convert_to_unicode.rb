@@ -2,9 +2,9 @@
 # Even though database.yml and the migrations and schema.rb say utf8, this
 # forced convert to unicode seems to be required to get certain languages to work
 # (like multi-byte languages).
-# 
+#
 # This task should only need to be run once. However, running it again won't hurt.
-# 
+#
 
 namespace :cg do
   desc "converts mysql tables to use unicode. specifying utf8 in database.yml is not enough."

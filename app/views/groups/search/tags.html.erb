@@ -1,0 +1,14 @@
+<% content_for(:html_head) do %>
+  <%= group_search_rss %>
+<% end %>
+
+<% @title_box = content_tag :h1, 'tags' %>
+
+<p><%= render :partial => 'groups/search/tags' %></p>
+
+<div>
+  <% if @pages.any? %>
+    <%= render :partial => 'pages/list', :locals => {:heading => false} %>
+  <% end %>
+</div>
+

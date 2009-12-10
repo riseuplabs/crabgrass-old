@@ -7,15 +7,12 @@ class UserCreatedGroupActivity < Activity
 
   alias_attr :user,  :subject
   alias_attr :group, :object
-  
-  def description(options={})
-    "{user} created {group_type} {group}"[
-      :activity_group_created, {
+
+  def description(view=nil)
+    I18n.t(:activity_group_created,
         :user => user_span(:user),
         :group_type => group_class(:group),
-        :group => group_span(:group)
-      }
-    ]
+        :group => group_span(:group))
   end
 
   def icon

@@ -1,0 +1,75 @@
+h1. Introduction
+
+GreenCloth is derived from RedCloth, the defacto text to html converter for ruby.
+
+The purpose of GreenCloth is to add a bunch of new features to RedCloth that make
+it more suited for wiki markup.
+
+GreenCloth requires that RedCloth version > 4.0 is installed and that prior
+versions are NOT installed.
+
+h1. Changes from RedCloth
+
+New markup:
+
+* Crabgrass style links (eg <code>[riseup -> http://riseup.net]</code>)
+* Autolinks
+* Markdown blockquotes (>)
+* Setext headers
+  (h1 is formed by under line with @====@, h2 underline with @----@)
+* Allow embedded video tags, and sanitize these embeds.
+* Tables can use tabs in addition to pipes (|)
+* Insert table of contents with @[[toc]]@
+* Add unique clickable anchors to each heading (if to_html is passed option :outline)
+* Pass an optional callback block for rendering links (allows for dead link rendering)
+* Additional way to specify code blocks
+
+See SYNTAX_REFERENCE for more information.
+
+h1. Usage
+
+h2. Example usage
+
+You can use greencloth like so:
+
+bc. greencloth = GreenCloth.new(body, context_name, [:outline])
+greencloth.to_html
+
+Greencloth.new takes three argument:
+
+* The raw greencloth markup text
+* The context name for resolving links. The path for links are prefixed with this context.
+* an array of greencloth options. useful options include:
+** @:outline@ -- turn on the generation of outline data and markup.
+** @:lite_mode@ -- disable blocks, only allow some markup.
+
+h2. Passing a block to to_html()
+
+Greencloth.to_html can take a block. The block is passed data regarding every link
+that it encounteres while processing links.
+
+You can use this to do custom rendering of links. For example:
+
+bc. html = GreenCloth.new(test_text,'mygroup').to_html() do |link_data|
+  process_link(link_data)
+end
+
+@process_link@ should return either nil or an @<a>@ tag. If nil, then the greencloth
+default is used.
+
+link_date is a hash that might include: url, label, context_name, page_name
+
+h1. Testing
+
+To run the all the tests:
+
+bc. rake test
+
+Or to test the markup from a specific fixture:
+
+bc. ruby test/markup_test.rb test/fixtures/images.yml
+
+h1. TODO
+
+sometimes the header detection for editing inline fails.
+

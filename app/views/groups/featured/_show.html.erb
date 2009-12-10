@@ -1,0 +1,22 @@
+<% @featured_pages = Page.find_by_path(
+  [ 'featured_by', @group.id],
+  options_for_group(@group).merge(
+    :flow => [nil]))
+  if @featured_pages.any? || may_edit_featured_pages? %>
+<hr class="thick" />
+<h2 class="alert">
+  <%= I18n.t(:featured_content_header) %>
+  <%= edit_featured_link(I18n.t(:edit)) %>
+</h2>
+<%= render :partial => "groups/featured/featured_item", :collection => @featured_pages %>
+<% end %>
+
+<% @important_pages = Page.find_by_path(
+  [ 'stars',@group.min_stars,
+    'limit',7],
+  options_for_group(@group))
+  if false and @important_pages.any?%>
+<hr class="thick" />
+<h2 class="section"><%= I18n.t(:popular) %></h2>
+<%= render :partial => "groups/featured/featured_item", :collection => @important_pages %>
+<% end %>

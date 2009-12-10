@@ -1,0 +1,37 @@
+<%= javascript_tag(%(
+  var editor = new HtmlEditor(#{wiki.id});
+  var link = editor.selectedAnchor();
+  if (link) {
+    $('link_label').value = editor.selectedAnchor().innerHTML.stripTags();
+    $('link_url').value = editor.selectedAnchor().getAttribute('href');
+    $('update_link_buttons').show();
+  } else {
+    $('link_label').value = (editor.selectedContent() || '').stripTags();
+    $('new_link_buttons').show();
+  }
+)) %>
+
+<%= Formy.form do |f|
+  f.row do |r|
+    r.label 'Label Text'
+    r.input text_field_tag('link_label')
+  end
+  f.row do |r|
+    r.label 'Link URL'
+    r.input text_field_tag('link_url')
+    r.info 'Enter a URL or the name of a page.'
+  end
+  #f.row do |r|
+  #  r.label 'Recent Pages'
+  #  r.input current_user.pages.recent_pages.collect{|page|page.title}.join(', ')
+  #  r.info 'Alternately, you may choose one of these pages to link to.'
+  #end
+end %>
+
+<div id="new_link_buttons" class="buttons" style="display:none">
+  <%= close_modal_button(:cancel) %><%= button_to_function I18n.t(:create_link_button), update_link_function(wiki,:create)+close_modal_function() %>
+</div>
+<div id="update_link_buttons" class="buttons" style="display:none">
+  <%= close_modal_button(:cancel) %><%= button_to_function I18n.t(:clear_link_button), update_link_function(wiki, :clear)+close_modal_function() %><%= button_to_function I18n.t(:update_link_button), update_link_function(wiki, :update)+close_modal_function() %>
+</div>
+

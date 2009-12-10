@@ -4,7 +4,7 @@
         <div class="question">
           <h2 class="question_label"><%= h question.label %>
             <% if question.private? -%>
-              <span>&bull;&nbsp;<%= "private"[:private] %></span>
+              <span>&bull;&nbsp;<%= I18n.t(:private) %></span>
             <% end -%>
           </h2>
           <% with_error_proc method(:wrap_error_html).to_proc do %>

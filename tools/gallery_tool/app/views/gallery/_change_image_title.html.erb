@@ -20,8 +20,8 @@ cancel_action = "$('change_title_form').hide();$('detail_image_title').show();"
 <div id="change_title_form" style='display:none' class='p'>
 <% form_tag(form_options) do -%>
   <%= text_field_tag :title, image.page.title %>
-  <input type="submit", value="<%= :save.t %>" />
-  <%= button_to_function :cancel.t, cancel_action %>
+  <input type="submit", value="<%= I18n.t(:save_button) %>" />
+  <%= button_to_function I18n.t(:cancel), cancel_action %>
   <%# spinner('change_title') %>
 <% end -%>
 </div>

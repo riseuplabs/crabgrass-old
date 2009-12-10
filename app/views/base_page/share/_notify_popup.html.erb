@@ -1,0 +1,13 @@
+<%- form_url = {:controller => 'base_page/share', :action => 'notify', :page_id => @page.id} -%>
+  <% form_remote_tag(
+    :url => form_url,
+    :loading => show_spinner('popup'),
+    :html => {:id => 'notify_page_form'}) do -%>
+
+    <%= render :partial => 'base_page/share/notify_form' %>
+
+    <div class='buttons'>
+      <%= spinner 'popup' %> &nbsp;
+      <%= close_modal_button(:cancel) %><%= submit_tag I18n.t(:notify_page_link), :name => 'notify' %>
+    </div>
+  <% end -%>

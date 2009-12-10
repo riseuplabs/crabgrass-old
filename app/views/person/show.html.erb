@@ -1,31 +1,42 @@
 <%#
 ### TITLE BOX
-#%> 
+#%>
 
 <%- @title_box = capture do -%>
 <p style="float:right; margin:20px; color:#999;"><%= last_login(@user) %></p>
 <h1>
   <%= @user.display_name %>
-  <em class='status'><%= h(@user.current_status) if @user.current_status %></em>
+  <em class='status'><%= h(@status) || ''  %></em>
 </h1>
 <%- end -%>
 
 <%#
 ### INFO BOX
-#%> 
+#%>
 
+<% @message_box = render(
+  :partial => 'common/say_form',
+  :locals => {
+    :submit => I18n.t(:say_message_button),
+    :url => person_messages_path(@user)
+  }
+) %>
 <%- @info_box = capture do -%>
   <%- length = @activities.size -%>
-  <table class="columns">
+  <%- half = (length/2.0).ceil -%>
+  <table class="columns three_sections">
+    <%- if may_create_messages? -%>
+    <tr>
+       <td colspan="2" class="say_box"><%= @message_box %></td>
+    </tr>
+    <%- end -%>
     <tr>
       <td class="left">
-        <%= header_with_more :h3, :dim, "Recent Activity".t %>
-        <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..((length+2)/2-1)]} %>
+        <%# header_with_more :h3, :dim, I18n.t(:recent_activity) %>
+        <%= render :partial => 'activity/list', :locals => {:activities => @activities[0..(half-1)]} %>
       </td>
       <td class="right">
-        <%= render :partial => 'activity/list', :locals => {:activities => @activities[((length+2)/2)..(length-1)]} %>
-        <%= header_with_more :h3, :dim, "Public Message Wall"[:wall_heading] %>
-        <%= render :partial => 'messages/form' %>
+        <%= render :partial => 'activity/list', :locals => {:activities => @activities[(half)..(length-1)]} %>
       </td>
     </tr>
   </table>
@@ -36,10 +47,10 @@
 #%>
 
 <div class='section'>
-  <%= header_with_more(:h2, :alert, "Recent Contributions".t, person_search_url('descending', 'updated_at')) %>
+  <%= header_with_more(:h2, :alert, I18n.t(:recent_contributions), person_search_url(:descending => 'updated_at')) %>
   <div class='page_scroll'>
     <%= render :partial => 'pages/list' %>
     <br/>
-    <%= link_to :more.t + ARROW, person_search_url('descending', 'updated_at') %>
+    <%= link_to I18n.t(:see_more_link) + ARROW, person_search_url(:descending => :updated_at) %>
   </div>
 </div>

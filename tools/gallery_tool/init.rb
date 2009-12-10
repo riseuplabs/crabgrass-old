@@ -2,11 +2,11 @@ PageClassRegistrar.add(
   'Gallery',
   :controller => 'gallery',
   :icon => 'page_gallery',
-  :class_group => ['media:image', 'collection'],
-  :order => 31
+  :class_group => ['media', 'media:image', 'collection'],
+  :order => 30
 )
 
-apply_mixin_to_model(Asset, AssetsHaveGalleries)
+apply_mixin_to_model("Asset", "AssetsHaveGalleries")
 
 self.override_views = false
 self.load_once = false

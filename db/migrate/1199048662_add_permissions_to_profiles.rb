@@ -116,7 +116,7 @@ class AddPermissionsToProfiles < ActiveRecord::Migration
         group.write_attribute(:publicly_visible_members, profile.may_see_members?)
         group.write_attribute(:accept_new_membership_requests, profile.may_request_membership?)
         if profile.wiki and !group.committee?
-          page = Page.make :wiki, :group => group, :name => 'public home', :body => profile.wiki.body
+          page = Page.make_a_call :wiki, :group => group, :name => 'public home', :body => profile.wiki.body
           page.save!
           group.public_home_id = page.data_id
         end
@@ -126,7 +126,7 @@ class AddPermissionsToProfiles < ActiveRecord::Migration
       profile = group.profiles.private
       if profile
         if profile.wiki and !group.committee?
-          page = Page.make :wiki, :group => group, :name => 'private home', :body => profile.wiki.body
+          page = Page.make_a_call :wiki, :group => group, :name => 'private home', :body => profile.wiki.body
           page.save!
           group.private_home_id = page.data_id
         end

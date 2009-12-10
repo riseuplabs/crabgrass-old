@@ -37,10 +37,10 @@ module AuthenticatedTestHelper
   #      # ...
   #    end
   #  end
-  # 
+  #
 
   # Assert the block redirects to the login
-  # 
+  #
   #   assert_requires_login(:bob) { |c| c.get :edit, :id => 1 }
   #
   def assert_requires_login(login = nil, host = nil)
@@ -73,11 +73,11 @@ class BaseLoginProxy
     def authenticated
       raise NotImplementedError
     end
-    
+
     def check(method)
       raise NotImplementedError
     end
-    
+
     def method_missing(method, *args)
       @controller.reset!
       authenticate
@@ -92,7 +92,7 @@ class HttpLoginProxy < BaseLoginProxy
       @controller.login_as @login if @login
       @controller.select_host @host if @host
     end
-    
+
     def check(method,*args)
       @controller.assert_redirected_to({:controller => 'account', :action => 'login'}, "%s: %s(%s) did not require a login" % [@controller, method, args.collect{|a|a.inspect}.join(', ')])
     end
@@ -104,7 +104,7 @@ class XmlLoginProxy < BaseLoginProxy
       @controller.accept 'application/xml'
       @controller.authorize_as @login if @login
     end
-    
+
     def check(method)
       @controller.assert_response 401
     end

@@ -1,4 +1,4 @@
-page.replace_html 'message', display_messages
+page.replace_html 'popup_message', display_messages(:small)
 page.select('input[type=submit]').each do |submit|
   submit.disabled = false
 end
@@ -6,9 +6,9 @@ page.hide('popup_spinner')
 
 # push the popup down to make room for the error message...
 # (i can't believe this actually works, although it is slightly off alignment in ie)
-page << [
-  "holder = $('popup_holder');",
-  "holder.originalHeight = holder.originalHeight || holder.offsetTop;",
-  "holder.setStyle('top:' + ($('message').clientHeight+holder.originalHeight) + 'px');"
-].join("\n")
+#page << [
+#  "holder = $('popup_holder');",
+#  "holder.originalHeight = holder.originalHeight || holder.offsetTop;",
+#  "holder.setStyle('top:' + ($('message').clientHeight+holder.originalHeight) + 'px');"
+#].join("\n")
 

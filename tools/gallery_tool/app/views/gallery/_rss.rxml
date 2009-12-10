@@ -1,0 +1,14 @@
+content_html = ''
+
+item.images.each do |image|
+  xml << render(:partial => 'asset_page/rss_asset_tags', :locals => {:object => image})
+  content_html << content_tag(:p,
+    image_tag(url_for(:controller => image.url, :only_path => false), :width => image.width, :height => image.height, :alt => image.page.nil? ? "" : image.page.title) +
+      (image.page.nil? ? "" : "<br />" + content_tag(:strong, image.page.title.to_s) +
+      "<br />" + image.page.summary.to_s)
+    )
+end
+
+xml.content :encoded do
+  xml.cdata! content_html
+end

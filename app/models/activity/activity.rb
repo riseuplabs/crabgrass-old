@@ -1,4 +1,5 @@
 # = Activity
+#
 # Activities are used to populate the recent activity list on the dashboard.
 # They are usually created by Observers on the corresponding object.
 # Activities will show up on the subjects landing page.
@@ -28,9 +29,9 @@
 
 class Activity < ActiveRecord::Base
 
-  # activity access:
+  # activity access (relative to self.subject):
   PRIVATE = 1  # only you can see it
-  DEFAULT = 2  # your friends can see it activity for you
+  DEFAULT = 2  # your friends can see this activity for you
   PUBLIC  = 3  # anyone can see it.
 
   belongs_to :subject, :polymorphic => true
@@ -51,28 +52,55 @@ class Activity < ActiveRecord::Base
     self.object_name  ||= self.object.name if self.object and self.object.respond_to?(:name)
   end
 
-  # to be defined by subclases
-  def icon() end
+  ##
+  ## ACTIVITY DISPLAY
+  ##
 
-  # to be defined by subclases
-  def description(options={}) end
+  # to be defined by subclasses
+  def icon()
+    'exclamation'
+  end
 
-  #--
+  # to be defined by subclasses
+  def style()
+  end
+
+  # to be defined by subclasses
+  def description(view) end
+
+  # to be defined by subclasses
+  def link() end
+
+  # calls description, and if there is any problem, then we self destruct.
+  # why? because activities hold pointers to all kinds of objects. These can be
+  # deleted at any time. So if there is an error, it is probably because we
+  # tried to reference a deleted record.
+  #
+  # (normally, groups and users will not cause a problem, because most the time
+  # we cache their name's at the time of the activity's creation)
+  def safe_description(view=nil)
+    description(view)
+  rescue
+    self.destroy
+    nil
+  end
+
+  ##
   ## FINDERS
-  #++
+  ##
 
-  named_scope :newest, {:order => 'created_at DESC', :limit => 10}
+  named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
 
   ### I DON'T THINK THIS IS NEEDED
   ### you should be able to resolve this when the activity is created.
-  named_scope :only_visible_groups, 
+  named_scope :only_visible_groups,
     {:joins => "LEFT JOIN profiles ON
       object_type <=> 'Group' AND
-      profiles.entity_type <=> 'Group' AND 
+      profiles.entity_type <=> 'Group' AND
       profiles.entity_id <=> object_id AND
-      profiles.stranger = TRUE", 
+      profiles.stranger = TRUE",
     :conditions => "NOT profiles.may_see <=> FALSE",
     :select => "activities.*",
   }
@@ -85,7 +113,7 @@ class Activity < ActiveRecord::Base
   # (2) subject is friend of current_user
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  named_scope :for_dashboard, lambda {|user|
+  named_scope(:for_dashboard, lambda do |user|
     {:conditions => [
       "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
@@ -95,7 +123,7 @@ class Activity < ActiveRecord::Base
       Activity::PRIVATE,
       user.all_group_id_cache]
     }
-  }
+  end)
 
   # for user's landing page
   #
@@ -104,22 +132,22 @@ class Activity < ActiveRecord::Base
   # (1) subject matches 'user'
   #     (AND 'user' is friend of current_user)
   #
-  # (2) subject matches 'user'
+  # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
-  named_scope :for_user, lambda {|user, current_user|
-   if(current_user and current_user.friend_of?(user) or current_user == user)
-     {:conditions => [
-       "subject_type = 'User' AND subject_id = ? AND access != ?",
-       user.id, Activity::PRIVATE
-     ]}
-   else
-     {:conditions => [
-       "subject_type = 'User' AND subject_id = ? AND access = ?",
-       user.id, Activity::PUBLIC
-     ]}
-   end
-  }
+  named_scope(:for_user, lambda do |user, current_user|
+    if (current_user and current_user.friend_of?(user) or current_user == user)
+      restricted = Activity::PRIVATE
+    elsif current_user and current_user.peer_of?(user)
+      restricted = Activity::DEFAULT
+    else
+      restricted = Activity::DEFAULT
+    end
+    {:conditions => [
+      "subject_type = 'User' AND subject_id = ? AND access > ?",
+      user.id, restricted
+    ]}
+  end)
 
   # for group's landing page
   #
@@ -131,7 +159,7 @@ class Activity < ActiveRecord::Base
   # (2) subject matches 'group'
   #     (and activity.public == true)
   #
-  named_scope :for_group, lambda {|group, current_user|
+  named_scope(:for_group, lambda do |group, current_user|
     if current_user and current_user.member_of?(group)
       {:conditions => [
         "subject_type = 'Group' AND subject_id IN (?)",
@@ -143,57 +171,39 @@ class Activity < ActiveRecord::Base
         group.group_and_committee_ids, Activity::PUBLIC
       ]}
     end
-  }
+  end)
 
   ##
   ## DISPLAY HELPERS
   ##
+  ## used by the description() method of Activity subclasses
+  ##
 
-  # used by subclass's description()
-  # if you change this to display_name, make sure to escape it!
-
-  def thing_span(thing, type)
-    object = self.send(thing)
-    if object
-      name = object.name
-#      name = object.respond_to?("display_name") ?
-#        object.display_name :
-#        object.name
-    else
-      name = self.send(thing.to_s + '_name')
-      name ||= 'unknown'.t
-    end
-    '<span class="%s">%s</span>' % [type,name]
-  end
+  # a safe way to reference a group, even if the group has been deleted.
   def group_span(attribute)
     thing_span(attribute, 'group')
   end
+
+  # a safe way to reference a user, even if the group has been deleted.
   def user_span(attribute)
     thing_span(attribute, 'user')
   end
+
   def group_class(attribute)
     if group = self.send(attribute)
-      group.display_type().t
+      group.group_type.downcase
     elsif group_type = self.send(attribute.to_s + '_type')
-      group_type.downcase.t
+      I18n.t(group_type.downcase.to_sym).downcase
     end
   end
 
-  ##
-  ## DYNAMIC MAGIC
-  ##
+  private
 
-  def self.alias_attr(new, old)
-    if self.method_defined? old
-      alias_method new, old
-      alias_method "#{new}=", "#{old}="
-      define_method("#{new}_id")   { read_attribute("#{old}_id") }
-      define_method("#{new}_name") { read_attribute("#{old}_name") }
-      define_method("#{new}_type") { read_attribute("#{old}_type") }
-    else
-      define_method(new) { read_attribute(old) }
-      define_method("#{new}=") { |value| write_attribute(old, value) }
-    end
+  # often, stuff that we want to report activity on has already been
+  # destroyed. so, if the thing responds to :name, we cache the name.
+  def thing_span(thing, type)
+    name = self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
+    '<span class="%s">%s</span>' % [type, name]
   end
 
 end

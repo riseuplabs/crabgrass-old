@@ -1,35 +1,23 @@
-<% popup('Page Details'[:page_details], :id => 'details_popup', :width => "40em") do -%>
+<%= render :partial => 'base_page/participation/details_tabs' -%>
 
-    <table class='fieldset plain'>
-    <tr>
-      <td><b><%= 'Owner'[:page_list_heading_owner] %></b></td>
-      <td><%= select_page_owner(_erbout) %></td>
-    </tr>
-    <tr>
-      <td><b><%= 'Created'[:page_list_heading_created] %></b></td>
-      <td><%= link_to_user @page.created_by_login %> (<%=friendly_date(@page.created_at)%>)</td>
-    <tr>
-      <td><b><%= 'Updated'[:page_list_heading_updated] %></b></td>
-      <td><%= link_to_user @page.updated_by_login %> (<%=friendly_date(@page.updated_at)%>)</td>
-    </tr>
-    </table><br/>
+<div class='tab_content tab_area' id='information_tab'>
+  <%= render :partial => 'base_page/participation/information' %>
+</div>
 
-    <%= render :partial => 'base_page/participation/details_tabs' -%>
-    <div class='tab-content tab-area' id='permissions_tab'>
-      <%= render :partial => 'base_page/participation/permissions' %>
-    </div>
-    <div class='tab-content tab-area' id='participation_tab' style='display:none'>
-      <%= render :partial => 'base_page/participation/participation' %>
-    </div>
+<div class='tab_content tab_area' id='permissions_tab' style='display:none'>
+  <%= render :partial => 'base_page/participation/permissions' %>
+</div>
 
-    <p>
-      <% form_remote_tag(
-      :url => {:controller => 'participation', :action => 'close_details', :page_id => @page.id},
-      :loading => show_spinner('popup')) do -%>
+<div class='tab_content tab_area' id='participation_tab' style='display:none'>
+  <%= render :partial => 'base_page/participation/participation' %>
+</div>
 
-       <%= submit_tag :close_button.t, :name => 'cancel' %>
-       <%= spinner 'popup' %>
-      <% end -%>
-    </p>
+<div class='buttons'>
+  <% form_remote_tag(
+  :url => {:controller => 'participation', :action => 'show', :page_id => @page.id},
+  :loading => show_spinner('popup')) do -%>
+   <%= spinner 'popup' %>
+   <%= submit_tag I18n.t(:close_button), :name => 'cancel' %>
+  <% end -%>
+</div>
 
-<% end -%>

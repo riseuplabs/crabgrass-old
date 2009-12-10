@@ -69,3 +69,22 @@ div
 //del
 //  text-decoration: line-through
 
+// Enable self-clearing floats
+.selfclear:after 
+  content: "."
+  display: block
+  height: 0
+  clear: both
+  visibility: hidden
+
+// IE7
+.selfclear
+  display: inline-block
+
+.selfclear
+  display: block
+
+// IE < 7
+* html .selfclear
+  height: 1px
+

@@ -62,6 +62,7 @@ end
 class Bundle < ActiveRecord::Base
   has_many :things
   has_many :conditional_things, :class_name => "Thing", :conditions => "name = 'b'"
+  has_many :things_by_sql, :class_name => "Thing", :finder_sql => 'SELECT things.* FROM things WHERE /*SITE_LIMITED*/'
 end
 
 ##
@@ -158,6 +159,16 @@ class ActsAsSiteLimitedTest < Test::Unit::TestCase
 
     Site.current = Site.find_by_name(1)
     assert_equal 'z', Thing.by_name.first.name
+  end
+
+  def test_sql_finder
+    Site.current = Site.find_by_name(1)
+    bundle = Bundle.create!
+    bundle.things.create! :name => 'a'
+    bundle.things.create! :name => 'b'
+    
+    assert_equal 2, bundle.things_by_sql.count
+    assert_equal 'a', bundle.things_by_sql.first.name
   end
 
 end

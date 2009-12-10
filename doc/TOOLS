@@ -27,3 +27,6 @@ have bundled this controller in the tool under:
 
   tools/wiki_tool/app/controllers/wiki_page_controller.rb
 
+Tools page controllers should not override BasePageController#create method,
+instead override BasePageController#build_page_data and
+BasePageController#destroy_page_data methods.

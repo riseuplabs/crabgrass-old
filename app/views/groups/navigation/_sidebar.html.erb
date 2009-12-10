@@ -1,0 +1,8 @@
+<%= create_page_link(@group) if may_create_group_page? %>
+
+<%= render :partial => 'groups/navigation/side_links' %>
+
+<% if action?(:show) %>
+  <%= render :partial => 'groups/featured/show' %>
+<% end %>
+

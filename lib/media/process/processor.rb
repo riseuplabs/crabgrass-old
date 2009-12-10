@@ -30,10 +30,10 @@ module Media::Process
 
     def run!(options)
       unless run(options)
-        raise "failed to run #{self.class} processor with options #{options.inspect}" 
+        raise "failed to run #{self.class} processor with options #{options.inspect}"
       end
     end
-    
+
   end
 end
 

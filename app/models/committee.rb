@@ -1,18 +1,13 @@
 class Committee < Group
-  before_destroy :eliminate_councilship
-  
-  def eliminate_councilship
-    if g = Group.find(:first, :conditions => { :council_id => self.id })
-      g.council_id = nil
-      g.save!
-    end
-  end
 
-  # NAMING
-  # the name of a committee includes the name of the parent, 
+  ##
+  ## NAMING
+  ##
+
+  # the name of a committee includes the name of the parent,
   # so the committee names are unique. however, for display purposes
   # we want to just display the committee name without the parent name.
-  
+
   # parent name + committee name
   def full_name
     read_attribute(:name)
@@ -21,26 +16,19 @@ class Committee < Group
   def short_name
     (read_attribute(:name)||'').sub(/^.*\+/,'')
   end
-  
+
   # what we show to the user
   def display_name
-    read_attribute(:full_name) || short_name
+    if read_attribute(:full_name).any?
+      read_attribute(:full_name)
+    else
+      short_name
+    end
   end
-
-  ## TODO: i do not like this. there is no attribute display_name.
-  def display_name=(name)
-    write_attribute(:display_name, name)
-  end
-  #has_many :delegations, :dependent => :destroy
-  #has_many :groups, :through => :delegations
-  #def group()
-  #  groups.first if groups.any?
-  #end
 
   # called when the parent's name has change
   def parent_name_changed
     self.name = short_name
-    self.save
   end
 
   # custom name setter so that we can ensure that the parent's
@@ -54,10 +42,28 @@ class Committee < Group
     end
   end
   alias_method :short_name=, :name=
-  
+
+  ##
+  ## ORGANIZATIONAL
+  ##
+
+  private
+
+  before_destroy :remove_from_parent
+  def remove_from_parent
+    parent.remove_committee!(self)
+    true
+  end
+
   def parent=(p)
     raise 'call group.add_committee! instead'
   end
+
+  ##
+  ## PERMISSIONS
+  ##
+
+  public
 
   # if user has +access+ to group, return true.
   # otherwise, raise PermissionDenied
@@ -68,29 +74,22 @@ class Committee < Group
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
     elsif access == :view
       ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
-    elsif access == :view_membership
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:view_membership, user) || self.profiles.visible_by(user).may_see_members?
     end
     ok or raise PermissionDenied.new
   end
 
-#
-# SITES
-#
-#############################  
+  def may_be_pestered_by!(user)
+    if user.member_of?(self)
+      true  # members may pester
+    elsif user.member_of?(self.parent)
+      true  # members of parents may pester
+    elsif profile.may_see? and parent.profile.may_see_committees?
+      true  # strangers may pester if they can see self, and parent thinks that is ok.
+            # TODO: i think it would be better for us to ensure that if the parent forbits
+            # seeing committee, that all the subcommittees just have may_see set to false.
+    else
+      false
+    end
+  end
 
-  # returns true if self is part of given network
-  def belongs_to_network?(network)
-    self.parent.networks.include?(network)
-  end
-  
-  
-  ####################################################################
-  ## relationships to users
-  def may_be_pestered_by?(user)
-    return true if user.member_of?(self)
-    return true if parent and parent.publicly_visible_committees
-    return false
-  end
-  
 end

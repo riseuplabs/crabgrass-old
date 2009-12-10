@@ -1,15 +1,20 @@
 #serialize_to and initialized_by were moved to lib/social_user.rb
 
 ActiveRecord::Base.class_eval do
-  
+
   # used to automatically apply greencloth to a field and store it in another field.
   # for example:
-  # 
+  #
   #    format_attribute :description
   #
   # Will save an html copy in description_html. This other column must exist
   #
-  def self.format_attribute(attr_name)
+  #    format_attribute :summary, :options => [:lite_mode]
+  #
+  # Will pass :lite_mode as an option to GreenCloth.
+  #
+  def self.format_attribute(attr_name, flags={})
+    flags[:options] ||= []
     #class << self; include ActionView::Helpers::TagHelper, ActionView::Helpers::TextHelper, WhiteListHelper; end
     define_method(:body)       { read_attribute attr_name }
     define_method(:body_html)  { read_attribute "#{attr_name}_html" }
@@ -18,10 +23,10 @@ ActiveRecord::Base.class_eval do
     define_method(:format_body) {
       if body.any? and (body_html.empty? or (send("#{attr_name}_changed?") and !send("#{attr_name}_html_changed?")))
         body.strip!
-        if respond_to?('group_name')
-          self.body_html = GreenCloth.new(body,group_name).to_html
+        if respond_to?('owner_name')
+          self.body_html = GreenCloth.new(body, owner_name, flags[:options]).to_html
         else
-          self.body_html = GreenCloth.new(body).to_html
+          self.body_html = GreenCloth.new(body, 'page', flags[:options]).to_html
         end
       end
     }
@@ -39,12 +44,31 @@ ActiveRecord::Base.class_eval do
   def dom_id
     [self.class.name.downcase.pluralize.dasherize, id] * '-'
   end
-  
+
   # make sanitize_sql public so we can use it ourselves
-  def self.public_sanitize_sql(condition)
+  def self.quote_sql(condition)
     sanitize_sql(condition)
   end
-  
+  def quote_sql(condition)
+    self.class.quote_sql(condition)
+  end
+
+
+  # used by STI models to name fields appropriately
+  # alias_attr :user, :object
+  def self.alias_attr(new, old)
+    if self.method_defined? old
+      alias_method new, old
+      alias_method "#{new}=", "#{old}="
+      define_method("#{new}_id")   { read_attribute("#{old}_id") }
+      define_method("#{new}_name") { read_attribute("#{old}_name") }
+      define_method("#{new}_type") { read_attribute("#{old}_type") }
+    else
+      define_method(new) { read_attribute(old) }
+      define_method("#{new}=") { |value| write_attribute(old, value) }
+    end
+  end
+
   # class_attribute()
   #
   # Used by Page in order to allow subclasses (ie Tools) to define themselves
@@ -79,7 +103,7 @@ ActiveRecord::Base.class_eval do
   end
 
   # see http://blog.evanweaver.com/articles/2006/12/26/hacking-activerecords-automatic-timestamps/
-  # only works because rails is not thread safe. 
+  # only works because rails is not thread safe.
   # but a thread safe version could be written.
   def without_timestamps
     self.class.record_timestamps = false
@@ -89,7 +113,7 @@ ActiveRecord::Base.class_eval do
 
 end
 
-# 
+#
 # What is going on here!?
 # Crabgrass requires MyISAM for certain tables and the ability to add fulltext
 # indexes. Additionally, since we are tied to mysql, we might as well be able
@@ -98,7 +122,7 @@ end
 # These are not possible in the normal schema.rb file, so this little hack
 # will insert the correct raw MySQL specific SQL commands into schema.rb
 # in the following cases:
-# 
+#
 #  * if the index name matches /fulltext/, then the index is created as a
 #    fulltext index and table is converted to be MyISAM.
 #  * if the index name ends with a number, we assume this is the length of
@@ -112,6 +136,7 @@ module ActiveRecord
     def indexes(table, stream)
       if table == 'page_views' or table == 'trackings'
         stream.puts %(  execute "ALTER TABLE #{table} ENGINE = MyISAM")
+        stream.puts
       end
       indexes = @connection.indexes(table)
       indexes.each do |index|

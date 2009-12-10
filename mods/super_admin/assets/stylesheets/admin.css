@@ -14,7 +14,7 @@ pre {
 
 a { color: #000; }
 a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a:hover { text-decoration: underline; }
 a.active {
   background: #666;
   color: white;
@@ -59,23 +59,142 @@ a.active {
 /**** super admin styles ****/
 
 body {
-  background:#ccc;
-  padding: 20px;
+  padding: 5px;
 }
-#container {
-  background: #fafafa;
-  border-right: 4px solid #aaa;
-  border-bottom: 4px solid #aaa;
+
+table#container {
+  min-width:960px;
+  border-spacing:0px;
+  border-collapse:collapse;
+  border:solid 0.2em grey;
+  padding:0px;
 }
+
 #header {
  color: #999;
- background: #dfd;
- padding: 10px;
+ background-color:lightgrey;
+ border:solid 0.2em grey;
+ padding:0.2em;
+ padding-top:0.5em !important;
+ padding-left:0.5em !important;
 }
+
+#header a {
+  text-decoration:none;
+  color:black;
+  font-weight:normal;
+}
+
+#header a:hover {
+  text-decoration:underline;
+  background:none;
+}
+
 #header h1 {
- font-size: 1.5em;
+ font-size:1.5em;
+ margin:0;
+ padding:0;
 }
+
+
+
+.toplink {float: right; padding:0.2em;}
+
+#navigation {
+  background-color:lightgrey;
+  border:0.2em solid grey;
+  height:100%;
+  width:14.1em;
+  vertical-align:top;
+  padding-right:0em;
+  padding-left:0em;
+}
+
+#navigation ul {
+  list-style:none;
+  margin:0em;
+  padding:0em;
+  width:100%;
+}
+
+#navigation h4 {
+ margin-top:1em;
+ margin-bottom:0em;
+ padding-left:0.5em;
+}
+#navigation ul li {
+  list-style:none;
+  margin:0px;
+  padding:0px;
+  padding-left:1em;
+  width:94.2%;
+}
+
+#navigation ul a {
+  color:black;
+  text-decoration:none;
+}
+
+#navigation ul li.active {
+  background:white;
+  border-top:0.2em solid grey;
+  border-bottom:0.2em solid grey;
+}
+
 #content {
-  padding: 20px;
+  height:100%;
+  padding-top:1em;
+  padding-left:3em;
+  vertical-align:top;
 }
-.toplink {float: right; padding:4px;}
+
+table tr th {
+  text-decoration:underline;
+  font-weight:normal;
+  text-align:left;
+  font-size:1.1em;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+table tr td { line-height:1.7em; padding-left:0.5em; padding-right:1em; vertical-align:top;}
+
+table tr.row_0 { background:#ddd; }
+table tr.row_1 { background:#fff; }
+
+/* show/edit/become/destroy links */
+table tr td span.actions { border:solid 0.15em #333; font-size: 0.8em; padding:0.3em; margin:0.3em; }
+table tr td span.actions a { text-decoration:none; margin-right:0.5em; }
+
+span.alphabetical_filter {
+  text-align:center;
+}
+span.alphabetical_filter a {
+  font-size:1.1em;
+  font-weight:bold;
+  color:#bbb;
+  text-decoration:none;
+}
+
+a.alphabetical_filter_letter.inverted { background:#333; color:#ddd; }
+
+label {
+  font-weight:bold;
+  text-align:right;
+}
+
+table.form tr td input, table.form tr td select, table.form tr td textarea {
+    width:15em;
+    font-size:1em;
+}
+
+div#moderation_navigation {
+    border:1px solid grey;
+    padding:0.1em;
+    padding-left:1em;
+    padding-right:1em;
+    margin-bottom:1em;
+}
+
+ul.tabset { list-style-type:none; }
+ul.tabset li { display:inline; }

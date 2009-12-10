@@ -7,7 +7,7 @@ class GroupGainedUserActivity < Activity
 
   alias_attr :group, :subject
   alias_attr :user,  :object
-  
+
   before_create :set_access
   def set_access
     if user.profiles.public.may_see_groups? and group.profiles.public.may_see_members?
@@ -15,14 +15,11 @@ class GroupGainedUserActivity < Activity
     end
   end
 
-  def description(options={})
-    "{user} joined {group_type} {group}"[
-      :activity_user_joined_group, {
-        :user => user_span(:user),
-        :group_type => group_class(:group),
-        :group => group_span(:group)
-      }
-    ]
+  def description(view=nil)
+    I18n.t(:activity_user_joined_group,
+                :user => user_span(:user),
+                :group_type => group_class(:group),
+                :group => group_span(:group))
   end
 
   def icon

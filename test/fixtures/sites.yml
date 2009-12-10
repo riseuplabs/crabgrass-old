@@ -2,6 +2,9 @@
 # if you change the ideas of these sites, change the method 'enable_site_testing'
 # in conf.rb. 
 #
+# also, you can only set the super_admin_group_id to a group that actually has
+# has site_id set to the same site.
+#
 
 --- 
 local:
@@ -14,12 +17,12 @@ local:
   network_id: 3001
   council_id: 1 # true levellers
   login_redirect_url: /me/dashboard
-  limited: true
+  limited: false
 test:
   id: 2
   name: "site2"
   title: "testing site"
-  # the domain for the testing site must be 'test.host'
+  # the domain for all testing sites must be 'test.host'
   # this is the request domain that is used by rails when testing.
   # this site is not used for most tests, but for some it is enabled.
   domain: "test.host"
@@ -37,10 +40,17 @@ limited:
   domain: "limited"
   title: "a limited site"
   limited: true
+# this site is used for admin controller tests
+# It has a council and a network but it is unlimited
+# so it does not depend on the groups and users site_ids
+# to be set to this site.
 unlimited:
   id: 4
   name: "unlimited"
-  domain: "unlimited"
+  # the domain for all testing sites must be 'test.host'
+  domain: "test.host"
+  network_id: 3002
+  council_id: 2 # animals - used for the admin controllers tests.
   title: "an unlimited site"
   limited: false
 redwood:
@@ -48,4 +58,3 @@ redwood:
   name: "redwood"
   title: "just a random site for redwood trees"
   limited: true
-

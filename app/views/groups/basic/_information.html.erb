@@ -1,0 +1,14 @@
+<%- if @group && @group.council? && !@parent.nil? -%>
+<p>
+  <%= I18n.t(:this_is_coordinating, :parent_group => link_to_group(@parent)) %>
+</p>
+<%- elsif !@parent.nil? -%>
+<p>
+  <%= I18n.t(:this_is_committee, :parent_group => link_to_group(@parent)) %>
+</p>
+<% elsif @group.network? %>
+<!-- This is a network of multiple groups. -->
+<% elsif @group.normal? %>
+<!-- This is an autonomous group -->
+<% end -%>
+

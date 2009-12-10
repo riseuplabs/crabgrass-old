@@ -1,0 +1,38 @@
+<%
+##
+## This partial is for displaying an expanded 'blog-style' page list.
+## Each page is displayed over several lines, with additional information:
+##
+## 1) cover image, if present
+## 2) summary text
+## 3) tags
+## 4) number of comments
+## 5) number of stars
+## 6) date of last change
+## 7) last change by
+##
+##
+
+pages ||= @pages
+
+%>
+
+<div class="page_list expanded">
+% for page in pages do
+  <div class="page_row">
+   <div class="title small_icon <%=page.icon%>_16"><%= page_list_title(page, :title) %></div>
+   <div class="info"><%= link_line(:bullet, page_list_posts_count(page), page_list_updated_or_created(page, :type => :oneline)) %></div>
+   <div class="summary">
+%    if page.cover
+     <div class="cover"><%= thumbnail_img_tag(page.cover, :medium, :scale => '96x96')%></div>
+%    end
+     <%=h page.summary %>
+   </div>
+%  if tag_content = page_tags(page, ', ')
+     <div class="tags"><%= tag_content %></div>
+%  end
+    <div style="clear:both"></div>
+  </div>
+% end
+</div>
+

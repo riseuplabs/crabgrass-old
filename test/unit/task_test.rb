@@ -39,5 +39,5 @@ class TaskTest < Test::Unit::TestCase
     t.completed = true
     assert_equal true, t.completed
   end
-  
+
 end

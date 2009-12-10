@@ -1,0 +1,27 @@
+<% render :partial => 'wiki_page/tabs' %>
+
+<% unless @version %>
+  <%= I18n.t(:version_doesnt_exist, :version => params[:version]) %>
+<% else %>
+
+<div style="float:right">
+  <%= link_to I18n.t(:wiki_revert_version, :version => @version.version), page_url(@page, :action => 'version-revert', :id => @version.version) %>
+</div>
+
+<div>
+<%= I18n.t(:you_are_viewing_version, :version => @version.version, :user => link_to_user(@version.user_id) )%><br/>
+<i><%= full_time(@version.updated_at) %></i>
+</div>
+
+<div class="pagination">
+  <%= link_to(LARROW + I18n.t(:pagination_previous), page_url(@page, :action => 'version-previous', :id => @version.version)) %>
+  <%= link_to(I18n.t(:pagination_next) + RARROW, page_url(@page, :action => 'version-next', :id => @version.version)) %>
+</div>
+
+<div class='wiki'><div id='wiki_html'>
+  <%= @version.body_html %>
+</div></div>
+
+
+<% end %>
+

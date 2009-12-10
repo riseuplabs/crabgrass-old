@@ -103,14 +103,14 @@ module Crypt
         m2.update(final)
       end
 
-      if (i % 3) != 0 
+      if (i % 3) != 0
         m2.update(salt)
       end
-      if (i % 7) != 0 
+      if (i % 7) != 0
         m2.update(password)
       end
 
-      if (i & 1) != 0 
+      if (i & 1) != 0
         m2.update(final)
       else
         m2.update(password)
@@ -189,12 +189,12 @@ end
         ['____seventeen____', '$1$NaH5na7J$j7y8Iss0hcRbu3kzoJs5V.'],
         ['__________thirty-three___________', '$1$HO7Q6vzJ$yGwp2wbL5D7eOVzOmxpsy.'],
         ['apache', '$apr1$J.w5a/..$IW9y6DR0oO/ADuhlMF5/X1']
-      ] 
+      ]
       array_test(a, :md5)
     end
 
     def test_bad_algo
-      assert_raise(ArgumentError) do 
+      assert_raise(ArgumentError) do
         Crypt.crypt("qsdf", :qsdf)
       end
     end

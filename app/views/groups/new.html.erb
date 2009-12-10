@@ -1,0 +1,27 @@
+<%
+  if @group.committee?
+    headline = I18n.t(:new_committee, :group_name => @parent.name)
+    url = committees_url(:action => :create, :id => @parent)
+  elsif @group.council?
+    headline = I18n.t(:new_council, :group_name => @parent.name)
+    url = councils_url(:action => :create, :id => @parent)
+  elsif @group.network?
+    headline = I18n.t(:new_network)
+    url = networks_url(:action => "create")
+  elsif @group.normal?
+    headline = I18n.t(:new_group)
+    url = groups_url(:action => :create)
+  end
+%>
+
+<% @title_box = content_tag(:h1, headline)-%>
+
+<% form_tag(url,:id => "createform", :multipart => true) do %>
+  <%= render(:partial => 'groups/basic/form', :locals => {:submit => false}) %>
+  <%= render(:partial => 'networks/initial_membership_form') if @group.network? %>
+  <div class='form_buttons'>
+    <%= submit_tag I18n.t(:create_button) %>
+  </div>
+<% end %>
+<%= javascript_tag "Form.focusFirstElement('createform');" %>
+

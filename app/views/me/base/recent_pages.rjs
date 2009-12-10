@@ -1,0 +1,2 @@
+page.replace_html 'recent_pages_dropdown', :partial => 'pages/list_title_only', :locals => {:pages => @recent_pages_list, :ul_class=>'recent_pages'} 
+

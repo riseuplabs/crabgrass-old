@@ -1,0 +1,74 @@
+<%
+  action = 'update' if action.nil?     # either 'update' or 'notify'
+
+  add_button_id = 'add_recipient_button'
+
+  access_value = may_select_access_participation? ? "$('recipient[access]').value" : "'#{Conf.default_page_access}'"
+
+  # the remote action that is triggered when the 'add' button is pressed (or
+  # the popup item is selected).
+  add_action = {
+    :url => {:controller => 'base_page/share', :action => action, :page_id => @page.id, :add => true},
+    :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}},
+    :loading => spinner_icon_on('plus', add_button_id),
+    :complete => spinner_icon_off('plus', add_button_id)
+  }
+
+  # (1) submit the form when the enter key is pressed in the text box
+  # (2) don't submit the form if the recipient name field is empty
+  # (3) eat the event by returning false on a enter key so that the form
+  #     is not submitted.
+  eat_enter = "return(!enterPressed(event));"
+  only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
+  key_pressed_function = remote_function(add_action.merge(:condition => only_on_enter_press)) + eat_enter;
+
+  # this is called after an item in the popup has been selected.
+  # it makes it so selecting an item is like hitting the add button
+  # we clear the recipient_name field so that we don't get a double submit
+  after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
+
+  autocomplete_tag = autocomplete_entity_tag(
+    'recipient_name',
+    :onselect => after_update_function,
+    :message => I18n.t(:entity_autocomplete_tip),
+    :container => 'autocomplete_container'
+  )
+%>
+<table class='share_page_recipient_add'>
+<!--
+  <tr>
+    <td><%= I18n.t(:user_or_group_name)%>:</td>
+    <td>&nbsp;</td>
+    <%- if may_select_access_participation?-%>
+      <td><%= I18n.t(:grant_access)%>:</td>
+    <%- end -%>
+    <td>&nbsp;</td>
+  </tr>
+-->
+  <tr>
+    <td style='width:100%' id='autocomplete_container'>
+      <%= text_field_tag 'recipient_name', '', :style => 'width:100%', :onkeypress => key_pressed_function %>
+      <%= autocomplete_tag %>
+    </td>
+    <td>&nbsp;</td>
+    <td>
+%     if action == 'update' and may_select_access_participation?
+        <%= select_page_access 'recipient[access]', :blank => false %>
+%     else
+        <%= hidden_field_tag 'recipient[access]' %>
+%     end
+    </td>
+    <td>
+      <%= link_to_remote_icon('plus', add_action, :id => add_button_id) %>
+    </td>
+  </tr>
+</table>
+<!--
+this does not make sense in the context of the notify page.
+<h2 class="first">
+  <%= I18n.t(:share_page_recipients_results, :page_class => I18n.t(:page)) %>
+</h2>
+-->
+<div class="autocomplete_results_area" id="share_page_recipient_area" style="display:none">
+  <%= render :partial => 'base_page/share/list_of_recipients' %>
+</div>

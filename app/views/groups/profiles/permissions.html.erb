@@ -1,0 +1,33 @@
+<%= settings_tabs %>
+
+<% form_tag(groups_profiles_params(:action => :permissions), :multipart => false) do %>
+
+  <%= Formy.form do |f|
+    f.row do |r|
+      r.label I18n.t(:visibility)
+      r.checkboxes do |list|
+        publicly_visible_checkbox(list)
+        committee_publicly_visible_checkbox(list) if @group.parent_id.nil?
+        group_members_publicly_visible_checkbox(list)
+      end
+    end
+    f.row do |r|
+      r.label I18n.t(:membership)
+      r.checkboxes do |list|
+        allow_membership_requests_checkbox(list)
+        open_membership_policy_checkbox(list)
+      end
+    end
+    if may_create_council?
+      f.row do |row|
+        row.label I18n.t(:administration)
+        council_field(row)
+      end
+    end
+    call_hook :group_permissions, :form=>f, :group => @group
+  end %>
+
+  <p class="form_buttons"><%= submit_tag I18n.t(:save_button), :name => 'save' %></p>
+
+<% end %>
+

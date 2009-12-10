@@ -2,7 +2,7 @@ module TimeHelper
 
   # Our goal here it to automatically display the date in the way that
   # makes the most sense. Elusive, i know. If an array of times is passed in
-  # we display the newest one. 
+  # we display the newest one.
   # Here are the current options:
   #   4:30PM    -- time was today
   #   Wednesday -- time was within the last week.
@@ -16,13 +16,13 @@ module TimeHelper
     time  = times.compact.max
     today = Time.zone.today
     date  = time.to_date
-    
+
     if date == today
       # 4:30PM
       str = time.strftime("%I:%M<span>%p</span>")
     elsif today > date and (today-date) < 7
-      # Wednesday
-      str = time.strftime("%A").t
+      # I18n.t(:wednesday) => Wednesday
+      str = I18n.t(time.strftime("%A").downcase.to_sym)
     elsif date.year != today.year
       # 7/Mar/08
       str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
@@ -32,21 +32,23 @@ module TimeHelper
     end
     "<label class='date' title='#{ full_time(time) }'>#{str}</label>"
   end
-  
+
   def localize_month(month)
-    month[('month_short_'+month.downcase).to_sym]
+    # for example => :month_short_january
+    month_sym = ('month_short_'+month.downcase).to_sym
+    I18n.t(month_sym)
   end
 
   # formats a time, in full detail
-  # for example: Sunday July/3/2007 2:13PM PST
+  # for example: Sunday 2007/July/3 2:13PM PST
   def full_time(time)
-    time.strftime('%a %b %d %H:%M:%S %Z %Y')
+    time.strftime('%A %Y/%b/%d %I:%M%p')
   end
 
 #  def to_local(time)
 #    Time.zone.utc_to_local(time)
 #  end
-    
+
   def to_utc(time)
     Time.zone.local_to_utc(time)
   end
@@ -58,7 +60,7 @@ module TimeHelper
   def after_day_start?(time)
     local_now.at_beginning_of_day < time
   end
-  
+
   def after_yesterday_start?(time)
     local_now.yesterday.at_beginning_of_day < time
   end
@@ -77,16 +79,16 @@ module TimeHelper
   ## after three hours, which is just as good so long as you have an external
   ## job that cleans up after old files.
   ##
-  
+
   def hours(num)
     (Time.now.to_i / num.hour).floor
   end
-  
+
   def days(num)
     (Time.now.to_i / num.days).floor
   end
-  
-  
+
+
   ##############################################
   ## UI helpers
 

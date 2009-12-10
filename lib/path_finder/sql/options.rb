@@ -48,14 +48,14 @@ module PathFinder::Sql::Options
       :inbox => true
     })
   end
-  
+
   def self.options_for_public(path, options)
     options.merge({
       :conditions => "(pages.public = ?)",
       :values     => [true]
     })
   end
-  
+
   def self.options_for_user(path, options)
     user = options[:callback_arg_user]
     user_id = user.is_a?(User) ? user.id : user.to_i
@@ -75,7 +75,7 @@ module PathFinder::Sql::Options
   def self.options_for_group(path, options)
     group = options[:callback_arg_group]
     group_id = group.is_a?(Group) ? group.id : group.to_i
-    
+
     if options[:current_user]
       # the group's pages that current_user also has access to
       # this means: the group must have a group participation and one of the following

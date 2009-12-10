@@ -7,8 +7,8 @@ Assets use a lot of classes to manage a particular uploaded file:
   Asset::Version -- all the past and present versions of the main asset.
   Thumbnail      -- a processed representation of an Asset (usually a small image)
 
-  Every asset has many versions. Each asset, and each version, also 
-  have many thumbnails. 
+  Every asset has many versions. Each asset, and each version, also
+  have many thumbnails.
 
   Additionally, three modules are included by Asset:
     AssetExtension::Upload      -- handles uploading data
@@ -28,6 +28,50 @@ TODO:
     or should only get one thumbnail if the format differs. It is a waste of space
     to keep four copies of the same image! (albeit, a very tiny image)
 
+  create_table "asset_versions", :force => true do |t|
+    t.integer  "asset_id",       :limit => 11
+    t.integer  "version",        :limit => 11
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",           :limit => 11
+    t.integer  "width",          :limit => 11
+    t.integer  "height",         :limit => 11
+    t.integer  "page_id",        :limit => 11
+    t.datetime "created_at"
+    t.string   "versioned_type"
+    t.datetime "updated_at"
+  end
+
+  add_index "asset_versions", ["asset_id"], :name => "index_asset_versions_asset_id"
+  add_index "asset_versions", ["version"], :name => "index_asset_versions_version"
+  add_index "asset_versions", ["page_id"], :name => "index_asset_versions_page_id"
+
+  create_table "assets", :force => true do |t|
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size",          :limit => 11
+    t.integer  "width",         :limit => 11
+    t.integer  "height",        :limit => 11
+    t.integer  "page_id",       :limit => 11
+    t.datetime "created_at"
+    t.integer  "version",       :limit => 11
+    t.string   "type"
+    t.integer  "page_terms_id", :limit => 11
+    t.boolean  "is_attachment",               :default => false
+    t.boolean  "is_image"
+    t.boolean  "is_audio"
+    t.boolean  "is_video"
+    t.boolean  "is_document"
+    t.datetime "updated_at"
+    t.string   "caption"
+    t.datetime "taken_at"
+    t.string   "credit"
+  end
+
+  add_index "assets", ["version"], :name => "index_assets_version"
+  add_index "assets", ["page_id"], :name => "index_assets_page_id"
+  add_index "assets", ["page_terms_id"], :name => "pterms"
+
 =end
 
 class Asset < ActiveRecord::Base
@@ -37,54 +81,47 @@ class Asset < ActiveRecord::Base
   # it always picks "Asset". So, we hardcode what the query should be:
   POLYMORPH_AS_PARENT = 'SELECT * FROM thumbnails WHERE parent_id = #{self.id} AND parent_type = "#{self.type_as_parent}"'
 
+  # fields in assets table not in asset_versions
+  NON_VERSIONED = %w(page_terms_id is_attachment is_image is_audio is_video is_document caption taken_at credit)
+
   # This is included here because Asset may take new attachment file data, but
   # Asset::Version and Thumbnail don't need to.
   include AssetExtension::Upload
   validates_presence_of :filename
 
-  
+
   ##
   ## ACCESS
   ##
-  
+
   # checks wether the given `user' has permission `perm' on this Asset.
-  # Permission to an Asset will be granted in any of the following ways:
-  #  * The Asset belongs to an AssetPage and the given `user' is given 
-  #    access to it
-  #  * The Asset is part of a Gallery with access for `user'
-  #  * The Asset is an attachment of a Page `user' may access.
+  #
+  # there is only one way that a user may have access to an asset:
+  #
+  #    if the user also has access to the asset's page
+  #
+  # not all assets have a page. for them, this test will fail.
+  # (for example, assets that are part of profiles).
+  #
+  # Adding an asset to a gallery does not confir any special access.
+  # If you have access to the gallery, but not an asset in the gallery, then
+  # you are not able to see the asset.
+  #
   # Return value:
   #   returns always true
   #   raises PermissionDenied if the user has no access.
-  # Note: This method is normally called through User#may! or the 
-  #       weaker User#may?
-  def has_access! perm, user
-    raise PermissionDenied unless self.page
-    p = self.page.has_access!(perm, user)
-  rescue PermissionDenied
-    ##
-    ## I think there is a much better way to do this -elijah
-    ##
-    Gallery rescue nil # assure load_missing_constant loads this if possible
-    unless defined?(Gallery) &&
-        self.galleries.any? &&
-        self.galleries.select {|g| user.may?(perm, g) ? g : nil}.any?
-      raise PermissionDenied
+  #
+  # has_access! is called by User.may?
+  #
+  def has_access!(perm, user)
+    # If the perm is :view, use the quick visibility check
+    if perm == :view
+      return true if self.visible?(user)
     end
-    true
+    raise PermissionDenied unless self.page
+    self.page.has_access!(perm, user)
   end
- 
-#
-# SITES
-#
-#############################  
-  
-  # returns true if self is part of the given network
-  # [TODO] make this work with assets without page
-  def belongs_to_network?(network)
-    return true if self.page && self.page.groups.include?(network)
-  end
-  
+
   def participation_for_groups ids
     gparts = self.page.participation_for_groups(ids)
     if(self.galleries.any?)
@@ -93,11 +130,11 @@ class Asset < ActiveRecord::Base
     return gparts.flatten
   end
 
-  
+
   ##
   ## FINDERS
   ##
-  
+
   # Returns true if this Asset is currently the cover of the given `gallery'.
   # A Gallery can only have one cover at a time.
   def is_cover_of? gallery
@@ -116,9 +153,9 @@ class Asset < ActiveRecord::Base
 
   ##
   ## METHODS COMMON TO ASSET AND ASSET::VERSION
-  ## 
+  ##
 
-  acts_as_versioned do 
+  acts_as_versioned do
     def self.included(base)
       base.send :include, AssetExtension::Storage
       base.send :include, AssetExtension::Thumbnails
@@ -143,14 +180,17 @@ class Asset < ActiveRecord::Base
     def format_description
       Media::MimeType.description_from_mime_type(content_type)
     end
+
+    def content_type
+      read_attribute('content_type') || 'application/octet-stream'
+    end
   end
-  self.non_versioned_columns << 'page_terms_id' << 'is_attachment' <<
-     'is_image' << 'is_audio' << 'is_video' << 'is_document'
+  self.non_versioned_columns.concat NON_VERSIONED
 
   ##
   ## DEFINE THE CLASS Asset::Version
   ##
-    
+
   # to be overridden in Asset::Version
   def version_path; []; end
   def is_version?; false; end
@@ -171,8 +211,8 @@ class Asset < ActiveRecord::Base
 
     # this object is a version, not the main asset
     def is_version?; true; end
-    
-    # delegate call to thumbdefs to our original Asset subclass. 
+
+    # delegate call to thumbdefs to our original Asset subclass.
     # eg: Asset::Version#thumbdefs --> ImageAsset.thumbdefs
     def thumbdefs
       versioned_type.constantize.class_thumbdefs if versioned_type
@@ -206,7 +246,7 @@ class Asset < ActiveRecord::Base
     page = page_id ? parent_page : pages.first
     return page
   end
-  
+
   # some asset subclasses (like AudioAsset) will display using flash
   # they should override this method to say which partial will render this code
   def embedding_partial
@@ -217,14 +257,14 @@ class Asset < ActiveRecord::Base
   def update_is_attachment
     if page_id_changed?
       self.is_attachment = true if page_id
-      self.page_terms = (page.page_terms if page_id)
+      self.page_terms = (page.page_terms if page)
     end
   end
-  
+
   ##
   ## ACCESS
   ##
-  
+
   def update_access
     public? ? add_symlink : remove_symlink
   end
@@ -232,37 +272,37 @@ class Asset < ActiveRecord::Base
   def public?
     page.nil? or page.public?
   end
-  
+
   ##
   ## ASSET CREATION
   ##
 
   # Auto-determine the appropriate Asset class from the file_data, and calls
   # create on that class.
-  # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
+  # eg. Asset.create_from_params(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
-  # if attributes[:page] is given, an AssetPage is created with the given 
+  # if attributes[:page] is given, an AssetPage is created with the given
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
-  def self.make(attributes = nil)
+  def self.create_from_params(attributes = nil, &block)
     begin
-      return self.make!(attributes)
+      return self.create_from_params!(attributes, &block)
     rescue Exception => exc
       return nil
     end
   end
-  
-  def self.make!(attributes = nil)
+
+  def self.create_from_params!(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.create!(attributes)
+    asset_class.create!(attributes, &block)
   end
 
-  # like make(), but builds the asset in memory and does not save it.
-  def self.build(attributes = nil)
+  # like create_from_attributes(), but builds the asset in memory and does not save it.
+  def self.build(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
-    asset_class.new(attributes)
+    asset_class.new(attributes, &block)
   end
-  
+
   # eg: 'image/jpg' --> ImageAsset
   def self.class_for_mime_type(mime)
     if mime
@@ -291,7 +331,7 @@ class Asset < ActiveRecord::Base
 
   before_save :reset_media_flags
   def reset_media_flags
-    if content_type_changed? 
+    if content_type_changed?
       is_audio = false
       is_video = false
       is_image = false
@@ -302,19 +342,24 @@ class Asset < ActiveRecord::Base
 
   # to be overridden by subclasses
   def update_media_flags() end
-  
-  
+
+
   after_save :update_galleries
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
   # download_gallery action to find out if it's cached zips are up to date.
+  #
+  # hmm... i don't think this is a good idea. it will result in the Gallery page
+  # being marked as updated in the recent pages feed, even when it has not been.
+  # -elijah
+  #
   def update_galleries
     if galleries.any?
       galleries.each { |g| g.save }
     end
   end
 
-  # returns either :landscape or :portrait, depending on the format of the 
+  # returns either :landscape or :portrait, depending on the format of the
   # image.
   def image_format
     raise TypeError unless self.respond_to?(:width) && self.respond_to?(:height)

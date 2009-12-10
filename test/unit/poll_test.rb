@@ -10,7 +10,7 @@ class PollTest < Test::Unit::TestCase
     possibles = poll.possibles.find(:all, :include => {:votes => :user})
     assert_equal 2, possibles.size, 'there should be two possibles'
   end
-  
+
   def test_associations
     assert check_associations(Poll)
   end

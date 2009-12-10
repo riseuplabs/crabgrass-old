@@ -61,7 +61,7 @@ class SurveyResponse < ActiveRecord::Base
       end
     end
   end
-  
+
   def display_name
     if self.user_id
       self.user.display_name

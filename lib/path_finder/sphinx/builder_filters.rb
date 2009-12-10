@@ -1,7 +1,7 @@
 # = PathFinder::Sql::BuilderFilters
 # This contains all the filters for the different path elements.
 # It gets included from the Builder.
-#  
+#
 
 module PathFinder::Sphinx::BuilderFilters
 
@@ -14,7 +14,7 @@ module PathFinder::Sphinx::BuilderFilters
   def filter_pending
     @conditions[:resolved] = 0
   end
-  
+
   def filter_interesting
     raise Exception.new("sphinx cannot search for interesting")
   end
@@ -38,75 +38,75 @@ module PathFinder::Sphinx::BuilderFilters
   def filter_changed
     raise Exception.new("sphinx cannot search for changed")
   end
-    
+
   #--
   ### Time finders
   # dates in database are UTC
   # we assume the values pass to the finder are local
   #++
 
-  def filter_starts
-    @date_field = :starts_at
-  end
+  # def filter_starts
+  #   @date_field = :created_at
+  # end
+  #
+  # def filter_after(date)
+  #   if date == 'now'
+  #      date = Time.zone.now
+  #   else
+  #      if date == 'today'
+  #         date = to_utc(local_now.at_beginning_of_day)
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date, date+100.years)
+  # end
+  #
+  # def filter_before(date)
+  #   if date == 'now'
+  #      date = Time.now
+  #   else
+  #      if date == 'today'
+  #         date = Time.zone.now.to_date
+  #      else
+  #         year, month, day = date.split('-')
+  #         date = to_utc Time.in_time_zone(year, month, day)
+  #      end
+  #   end
+  #   @conditions[@date_field] = range(date-100.years, date)
+  # end
+  #
+  # def filter_upcoming
+  #   @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
+  #   @order << 'pages.starts_at DESC'
+  # end
 
-  def filter_after(date)
-    if date == 'now'
-       date = Time.zone.now
-    else
-       if date == 'today'
-          date = to_utc(local_now.at_beginning_of_day)
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date, date+100.years)
-  end
-
-  def filter_before(date)
-    if date == 'now'
-       date = Time.now
-    else
-       if date == 'today'
-          date = Time.zone.now.to_date
-       else
-          year, month, day = date.split('-')
-          date = to_utc Time.in_time_zone(year, month, day)
-       end
-    end
-    @conditions[@date_field] = range(date-100.years, date)
-  end
-
-  def filter_upcoming
-    @conditions[:starts_at] = range(Time.zone.now, Time.zone.now + 100.years)
-    @order << 'pages.starts_at DESC'
-  end
-  
   def filter_ago(near,far)
     @conditions[:page_updated_at] = range(far.to_i.days.ago, near.to_i.days.ago)
   end
-  
+
   def filter_created_after(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
     @conditions[:page_created_at] = range(date, date + 100.years)
   end
-  
+
   def filter_created_before(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
     @conditions[:page_created_at] = range(date - 100.years, date)
   end
- 
-  def filter_month(month)
-    year = Time.zone.now.year
-    @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
-  end
 
-  def filter_year(year)
-    @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
-  end
-  
+  # def filter_month(month)
+  #   year = Time.zone.now.year
+  #   @conditions[@date_field] = range(Time.in_time_zone(year,month), Time.in_time_zone(year,month+1))
+  # end
+  #
+  # def filter_year(year)
+  #   @conditions[:date_field] = range(Time.in_time_zone(year), Time.in_time_zone(year+1))
+  # end
+
   ####
 
   # filter on page type or types, and maybe even media flag too!
@@ -131,15 +131,19 @@ module PathFinder::Sphinx::BuilderFilters
       @conditions[:page_type] = Page.param_id_to_class_name(page_type)
     elsif page_group
       @conditions[:page_type] = Page.class_group_to_class_names(page_group).join('|')
+    else
+      # we didn't find either a type or a group for arg
+      # just search for arg. this should return an empty set
+      @conditions[:page_type] = arg.dup
     end
   end
-  
+
   def filter_person(id)
-    @with[access_ids_key] = Page.access_ids_for(:user_ids => [id])
+    @with << ['access_ids', Page.access_ids_for(:user_ids => [id])]
   end
-  
+
   def filter_group(id)
-    @with[access_ids_key] = Page.access_ids_for(:group_ids => [id])
+    @with << ['access_ids', Page.access_ids_for(:group_ids => [id])]
   end
 
   def filter_created_by(id)
@@ -151,12 +155,12 @@ module PathFinder::Sphinx::BuilderFilters
     @without[:created_by_id] ||= ""
     @without[:created_by_id] += " #{id}"
   end
-  
+
   def filter_tag(tag_name)
     @conditions[:tags] ||= ""
     @conditions[:tags] += " #{tag_name}"
   end
-  
+
   def filter_name(name)
     @conditions[:name] ||= ""
     @conditions[:name] += " #{name}"
@@ -169,38 +173,38 @@ module PathFinder::Sphinx::BuilderFilters
   def filter_starred
     filter_stars(1)
   end
-  
+
   #--
   #### sorting  ####
   #++
-  
+
   def filter_ascending(sortkey)
     if sortkey == 'updated_at' or sortkey == 'created_at'
       sortkey = 'page_' + sortkey
     end
     @order << " #{sortkey} ASC"
   end
-  
+
   def filter_descending(sortkey)
     if sortkey == 'updated_at' or sortkey == 'created_at'
       sortkey = 'page_' + sortkey
     end
     @order << " #{sortkey} DESC"
   end
-  
+
   #--
   ### LIMIT ###
   #++
-  
+
   def filter_limit(limit)
     offset = 0
-    if limit.instance_of? String 
+    if limit.instance_of? String
       limit, offset = limit.split('-')
     end
     @per_page = limit.to_i if limit
     @page = ((offset.to_f/limit.to_f) + 1).floor.to_i if @per_page > 0
   end
-  
+
   def filter_text(text)
     @search_text += " #{text}"
   end

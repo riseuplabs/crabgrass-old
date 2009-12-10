@@ -5,46 +5,38 @@
 =end
 
 require File.dirname(__FILE__) + '/../test_helper'
-require 'account_controller'
 require 'set'
 
-# Re-raise errors caught by the controller.
-class AccountController; def rescue_action(e) raise e end; end
-
-class PageFinderSphinxTest < Test::Unit::TestCase
+class PageFinderSphinxTest < ActionController::TestCase
+  # it doesn't matter which controller, really.
+  tests AccountController
   fixtures :groups, :users, :memberships, :pages, :page_terms,
    :user_participations, :group_participations, :taggings, :tags
-  
-  def setup
-    @controller = AccountController.new # it doesn't matter which controller, really.
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   ##############################################
   ### Tests for various search parameters
 
   def try_many_sphinx_searches(user)
-    searches = [ 
+    searches = [
       ['/pending', Proc.new {|p| p.resolved == false}  ],
-
-      ['/type/discussion', Proc.new {|p| p.type == "DiscussionPage"} ],
-      ['/type/event',      Proc.new {|p| p.type == "EventPage"} ],
-      ['/type/message',    Proc.new {|p| p.type == "MessagePage"} ],
-      ['/type/poll',       Proc.new {|p| p.type == "RateManyPage"} ],
-      ['/type/task',       Proc.new {|p| p.type == "TaskListPage"} ],
-      ['/type/vote',       Proc.new {|p| p.type == "RankedVotePage"} ],
-      ['/type/wiki',       Proc.new {|p| p.type == "WikiPage"} ],
-
+      ['/type/discussion', Proc.new {|p| (p['type'] == "DiscussionPage" || p['type'] == "MessagePage")} ],
+      ['/type/event',      Proc.new {|p| p['type'] == "EventPage"} ],
+      ['/type/message',    Proc.new {|p| p['type'] == "MessagePage"} ],
+      ['/type/rate-many',       Proc.new {|p| p['type'] == "RateManyPage"} ],
+      ['/type/not-real-type',   Proc.new {|p| false }],
+      ['/type/task',       Proc.new {|p| p['type'] == "TaskListPage"} ],
+      ['/type/vote',       Proc.new {|p| (p['type'] == "RankedVotePage" || p['type'] == "RateManyPage") || p['type'] == "SurveyPage"} ],
+      ['/type/wiki',       Proc.new {|p| p['type'] == "WikiPage"} ],
+      #
       ['/person/1', Proc.new {|p| User.find(1).may?(:view,p)} ],
-
+      #
       ['/group/1', Proc.new {|p| Group.find(1).may?(:view,p)} ],
-
+      #
       ['/created_by/4',     Proc.new {|p| p.created_by_id == 4} ],
       ['/created_by/1',     Proc.new {|p| p.created_by_id == 1} ],
-
+      #
       ['/not_created_by/1', Proc.new {|p| p.created_by_id != 1} ],
-
+      # #
       ['/tag/pale', Proc.new {|p| p.tag_list.include? "pale"} ],
       ['/tag/pale/tag/imperial', Proc.new {|p| p.tag_list.include? "pale" and p.tag_list.include? "imperial"} ],
       ['/name/task', Proc.new {|p| p.name and p.name.include? "task"} ],
@@ -88,10 +80,10 @@ class PageFinderSphinxTest < Test::Unit::TestCase
 
   def test_sphinx_searches
     return unless sphinx_working?(:test_sphinx_searches)
-    
+
     login(:blue)
     user = users(:blue)
-    
+
     try_many_sphinx_searches user
 
 =begin
@@ -108,21 +100,31 @@ class PageFinderSphinxTest < Test::Unit::TestCase
     try_many_sphinx_searches user
 =end
 
-  end  
+  end
+
+  def test_sphinx_searches_different_user
+    return unless sphinx_working?(:test_sphinx_searches)
+
+    # orange has access to different pages (some vote pages, etc.)
+    login(:orange)
+    user = users(:orange)
+
+    try_many_sphinx_searches user
+  end
 
   def test_sphinx_search_text_doc
-    return unless sphinx_working?(:test_sphinx_search_text_doc)
-    
+    # return unless sphinx_working?(:test_sphinx_search_text_doc)
+
     # TODO: write this test
   end
-  
+
   def test_sphinx_with_pagination
     return unless sphinx_working?(:test_sphinx_with_pagination)
 
     login(:blue)
     user = users(:blue)
-    
-    searches = [ 
+
+    searches = [
       ['/descending/updated_at/limit/10', Proc.new {
         Page.find(:all, :order => "updated_at DESC").select{|p| user.may?(:view, p)}[0,10]
       }],
@@ -140,9 +142,9 @@ class PageFinderSphinxTest < Test::Unit::TestCase
     options = { :user_ids => [users(:blue).id], :group_ids => users(:blue).all_group_ids, :controller => @controller, :method => :sphinx }
 
     searches.each do |search_str, search_code|
-      pages = Page.find_by_path(search_str, options)
-      # require 'ruby_debug'; debugger
-      assert_equal page_ids(search_code.call), page_ids(pages), "#{search_str} should match results for user when paginated"
+      sphinx_pages = Page.find_by_path(search_str, options)
+      raw_pages = search_code.call
+      assert_equal page_ids(raw_pages), page_ids(sphinx_pages), "#{search_str} should match results for user when paginated"
     end
   end
 
@@ -152,7 +154,7 @@ class PageFinderSphinxTest < Test::Unit::TestCase
     login_as user
     get :index
   end
-  
+
   def dont_login
     get :index
   end
