@@ -20,7 +20,7 @@ module CustomAppearanceExtension
     def masthead_asset_uploaded_data=(data)
       return if data == ""
       begin
-        asset = Asset.make!({:uploaded_data => data})
+        asset = Asset.create_from_params!({:uploaded_data => data})
         if !asset.is_image
           self.errors.add_to_base(I18n.t(:not_an_image_error))
         elsif !asset.height
@@ -49,7 +49,7 @@ module CustomAppearanceExtension
     def favicon_uploaded_data=(data)
       return if data == ""
       begin
-        asset = Asset.make!({:uploaded_data => data})
+        asset = Asset.create_from_params!({:uploaded_data => data})
         if !asset.is_image
           self.errors.add_to_base(I18n.t(:not_a_favicon_image_error))
         elsif !asset.height or !asset.width

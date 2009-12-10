@@ -193,7 +193,17 @@ module ApplicationHelper
     content_tag tag, text + span, :class => klass
   end
   
-
+  # *NEWUI
+  #
+  # returns the kind of profile open or closed/private
+  #
+  def open_or_private(profile)
+    if profile.may_see?
+      t(:open)
+    else
+      t(:private)
+    end
+  end
   
   
   # *NEWUI

@@ -22,7 +22,7 @@ module Groups::RequestsPermission
   end
 
   def may_list_requests?(group=@group)
-    current_user.may?(:admin, group);
+    current_user.may?(:admin, group)
   end
 
 end

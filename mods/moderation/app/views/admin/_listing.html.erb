@@ -12,11 +12,7 @@
     </tr>
 
   <% @flagged.each do |flag| %>
-    <% if (@current_view == 'all' or @current_view =~ /^public/) %>
-      <% @page = flag %>
-    <% else %>
-      <% @page = flag.foreign %>
-    <% end %>
+    <% @page = flag %>
     <% next if @page.nil? %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
       <td><%= flagged_page_link(@page) %></td>

@@ -59,7 +59,7 @@ module Groups::Search
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
     else
       @pages = []
-      @tags  = Page.tags_for_group(:group => @group, :current_user => (current_user if logged_in?))
+      @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
     search_template('tags')
   end

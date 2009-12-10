@@ -76,7 +76,12 @@ class PathFinder::ParsedPath < Array
 
     # pseudo keywords (used to make forms easier)
     # ie {:page_state => 'unread'}
-    'page_state' => 1
+    'page_state' => 1,
+
+    # moderation
+    'public' => 0,
+    'public_requested' => 0,
+    'moderation' => 1
   }.freeze
 
   # path keyword => order weight
@@ -89,6 +94,9 @@ class PathFinder::ParsedPath < Array
     'year' => 2,
     'person' => 5,
     'group' => 5,
+    'public' => 7,
+    'public_requested' => 7,
+    'moderation' => 8,
     'default' => 10,
     'descending' => 20,
     'ascending' => 20,

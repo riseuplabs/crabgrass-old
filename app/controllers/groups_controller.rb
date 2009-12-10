@@ -33,11 +33,12 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group)) 
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE}) ) 
     @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
     @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
@@ -70,8 +71,7 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
-    @group.destroyed_by = current_user  # needed for the activity
-    @group.destroy
+    @group.destroy_by(current_user)
 
     if @group.parent
       redirect_to url_for_group(@group.parent)
@@ -80,7 +80,6 @@ class GroupsController < Groups::BaseController
     end
 
     flash_message :success => true, :title => I18n.t(:group_destroyed_message, :group_type => @group.group_type)
-    Mailer.deliver_group_destroyed_notification(current_user, @group, mailer_options)
   end
 
   protected

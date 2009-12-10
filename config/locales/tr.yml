@@ -1,3 +1,4 @@
+---
 tr:
   about_me: Hakkımda
   accept_usage_agreement: "Kullanım anlaşmasını kabul ediyorum"
@@ -30,7 +31,6 @@ tr:
   add_tags: "Etiket ekle"
   add_websites: "Web Sitesi Ekle"
   additional_page_access: "Ek erişim"
-  admin: Yönetici
   administration: Yönetim
   alert_error: Hata
   alert_field_errors: "Bu alanlarda problemler var"
@@ -48,8 +48,6 @@ tr:
   announcement_page_description: "Duyuru ekle."
   announcement_page_display: Duyuru
   announcements: Duyurular
-  approval_vote: "onay oyu"
-  approval_vote_class_description: "Her olasılığı onayla ya da geri çevir"
   approve: onay
   approve_button: Onayla
   approve_contact_info: "Bu kullancı tarafından size gönderilmiş bir arkadaşlık talebi zaten var. Onaylıyor musunuz?"
@@ -77,8 +75,8 @@ tr:
   category: Kategori
   check_all: "Hepsini Kontrol Et"
   close_button: Kapat
-  collection: koleksiyon
   collection_class_description: "Diğer sayfaları tutan özel sayfalar."
+  collection_page_display: koleksiyon
   committee: Komite
   committee_publicly_visible: "Komiteleri Herkese Görünür Yap"
   committee_publicly_visible_description: "Komiteler {{domain}}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
@@ -97,7 +95,7 @@ tr:
   coordinator_help: "<b>Koordinatör</b> girişi bu sayfaya sınırsız ulaşım sağlamaktadır (silme ve paylaşma fonksiyonları dahil)."
   coordinators: Koordinatörler
   council: Konsey
-  council_help: "Eğer bu grubun bir koordinasyon konseyi varsa, yalnızca bu konseyin üyesi olan bir kullanıcı grubu yönetebilir. Aksi halde, grubun herhangi bir üyesi yönetici olabilir. "
+  council_help_text: "Eğer bu grubun bir koordinasyon konseyi varsa, yalnızca bu konseyin üyesi olan bir kullanıcı grubu yönetebilir. Aksi halde, grubun herhangi bir üyesi yönetici olabilir. "
   councils: Konseyler
   create_a_new_thing: "Yeni bir {{thing}} oluştur"
   create_button: Oluştur
@@ -133,10 +131,6 @@ tr:
   date_yesterday: Dün
   delete: Sil
   delete_page_link: "{{page_class}} 'ı Sil"
-  delete_page_via_shred: "Derhal Yok Et"
-  delete_page_via_shred_info: "Bu sayfayı kalıcı olarak yok edeceksiniz. Bu eylem geri alınamaz."
-  delete_page_via_trash: "Çöp Sepetine Taşı"
-  delete_page_via_trash_info: "Sayfa çöp sepetine taşınıyor. Daha sonra sayfayı oradan geri alabilirsiniz."
   delete_post: "Gonderiyi sil"
   delete_this_version: "bu versiyonu sil"
   delete_version_confirm: "Bu versiyonu silmek istediğinizden emin misiniz?"
@@ -146,6 +140,10 @@ tr:
   destroy: "yok et"
   destroy_confirmation: "Bunu silmek istediğinizden emin misiniz? Bu eylem geri alınamaz."
   destroy_group_link: "{{group_type}} Yok Et"
+  destroy_page_via_shred: "Derhal Yok Et"
+  destroy_page_via_shred_info: "Bu sayfayı kalıcı olarak yok edeceksiniz. Bu eylem geri alınamaz."
+  destroy_page_via_trash: "Çöp Sepetine Taşı"
+  destroy_page_via_trash_info: "Sayfa çöp sepetine taşınıyor. Daha sonra sayfayı oradan geri alabilirsiniz."
   details_link: Ayrıntılar
   diff_link: "değişiklikleri incele"
   directory_of_groups: "Grupler Dizini"
@@ -164,8 +162,8 @@ tr:
   edit: Düzenleme
   edit_attachments: "Eklentileri Düzenle"
   edit_attachments_link: Düzenle
-  edit_featured_content: "gösterilen içeriği değiştir"
   edit_featured_content_for_group: "{{group_name}} Grubu için Gösterilen İçeriği Düzenle"
+  edit_featured_content_link: "gösterilen içeriği değiştir"
   edit_gallery: "Galeriyi Düzenle"
   edit_profile_link: "Profili Düzenle"
   edit_settings: "Ayarları Değiştir"
@@ -217,14 +215,13 @@ tr:
   gallery_class_description: "Resimlerden oluşan koleksiyon"
   gallery_description: "Çoklu resimler yükleyin ya da varolan resimleri tek bir dizi olarak organize edin"
   gallery_display: Galeri
+  gallery_undo_link: "Geri al"
   general_info: "Genel Bilgiler"
   grant_access: "Giriş İzni Ver"
   group: Grup
   group_administration_not_allowed: "Bu grubu yönetme yetkiniz yok."
   group_directory: "Grup Dizini"
   group_directory_link: "Grup Rehberi"
-  group_discussion: tartışma
-  group_discussion_class_description: "Belirli bir konu üzerine grup tartışması."
   group_has_no_public_profile: "Bu grubun profili herkes tarafından görüntülenemez"
   group_home_headline: "{{group_type}} Anasayfa"
   group_home_welcome: Hoşgeldiniz
@@ -280,7 +277,6 @@ tr:
   invite_accept_via_register: "Yeni bir kullanıcı hesabı açmam gerek"
   invite_info: "{{group_type}} grubuna davet etmek istediğiniz kişilerin email adreslerini ya da kullanıcı girişlerini listeler. "
   invite_not_found: "Davet bulunamadı"
-  join_chat: "sohbete katıl"
   join_group_link: "Katıl {{group_type}}"
   join_group_success: "{{group_name}} grubuna katıldınız"
   join_request_info: "Başvurunuz kabul edilene kadar bu grubun üyesi olamazsınız. Başvurunuzun durumunu \"{{my_requests_url}}\" bölümünü ziyaret ederek görüntüleyebilirsiniz."
@@ -311,7 +307,6 @@ tr:
   login_password: Şifre
   login_required: "Kullancı girişi gerekli"
   login_required_description: "Bunu yapmak için lütfen kullanıcı girişi yapın."
-  logout: "Oturumu kapat"
   logout_success: "Güle güle"
   logout_success_message: "Oturumunuz kapatıldı."
   make_album_cover: "bu görüntüyü albüm kapağı yap"
@@ -337,6 +332,7 @@ tr:
   member_groups_of_network: "Üye Gruplar"
   members: Üyeler
   membership: Üyelik
+  menu_admin: Yönetici
   menu_chat: Sohbet
   menu_groups: Gruplar
   menu_home: Anasayfa
@@ -494,8 +490,6 @@ tr:
   permissions: İzinler
   personal: Kişisel
   personal_interests: "Kişisel İlgiler"
-  personal_message: "kişisel mesaj"
-  personal_message_class_description: "Birseysel alıcılara birer kişisel mesaj gönderildi."
   phone_numbers: "Telefon Numaraları"
   photo: Fotoğraf
   photo_credit: Kaynak
@@ -572,8 +566,8 @@ tr:
   requests_to_me: bana
   required: (gerekli)
   reset_password: "Şifreyi Sıfırla"
+  reset_password_email_sent: "Şifrenizi sıfırlamak için gereken yönergeleri içeren email gönderildi."
   reset_password_mail_greeting: "{{user}}, isteğinize uygun olarak şifreniz sıfırlandı."
-  reset_password_mail_sent: "Şifrenizi sıfırlamak için gereken yönergeleri içeren email gönderildi."
   reset_password_mail_warning: "Eğer şifrenizin değişmesini istemiyorsanız, lütfen bizimle bağlantı kurun"
   reset_password_text: "Merhaba, {{user}}. Eğer girişte kullandığınız şifrenizi unuttuysanız, buradan yeni bir tane ayarlayabilirsiniz."
   return_link: "Geri dön"
@@ -581,7 +575,7 @@ tr:
   saturday: Cumartesi
   save_button: Kaydet
   save_changes: "Değişiklikler kaydet"
-  save_survey: "Kaydet Anket"
+  save_survey_button: "Kaydet Anket"
   saved_new_order: "Yeni talimat kaydedildi!"
   saving_your_changes: "Değişiklikleriniz kaydediliyor..."
   school: Okul
@@ -601,7 +595,6 @@ tr:
   settings: Ayarlar
   share: Paylaş
   share_button: Paylaş
-  share_link: "Paylaş {{page_class}} "
   share_page_email: "E-mail yoluyla bildir"
   share_page_link: "Paylaş {{page_class}}"
   share_page_message: "Bir ileti gönderin (isteğe bağlı)"
@@ -634,26 +627,26 @@ tr:
   subject: Konu
   subject_must_not_be_empty: "alan boş bırakılamaz"
   successful_undelete_image: "Görüntü başarıyla geri alındı."
-  sucessfully_removed_image: "Görüntü başarıyla kaldırıldı! ({{undo_link}})"
+  successfully_removed_image: "Görüntü başarıyla kaldırıldı! ({{undo_link}})"
   summary: Özet
   summary_help: "İsteğe bağlı. Özet, bu sayfanın içeriğini kısaca tanımlayan bir cümle ya da paragraftan oluşur."
   sunday: Pazar
-  survey_design: "Anket Tasarla"
-  survey_list_all: "Tüm Cevapları Listele"
+  survey_edit_tab: "Anket Tasarla"
+  survey_list_all_tab: "Tüm Cevapları Listele"
   survey_may_rate: "Cevapları oylar mısınız?"
   survey_may_see_ratings: "Derecelendirmeler görülebilir mi?"
   survey_may_see_responses: "Cevaplar görülebilir mi?"
-  survey_my_response: Cevabım
+  survey_my_response_tab: Cevabım
   survey_page_description: "Kişilerin cevaplaması için bir dizi soru oluşturun."
   survey_page_display: Anket
   survey_questions: Sorular
-  survey_rate_responses: "Cevapları Değerlendir"
-  survey_rate_this_response: "Bu Cevabı Değerlendiriniz"
+  survey_rate_responses_tab: "Cevapları Değerlendir"
+  survey_rate_this_response_heading: "Bu Cevabı Değerlendiriniz"
   survey_rating_enabled: "Cevapların oylanmasına izin verir misiniz?"
   survey_response_by: "{{login}} tarafından verilen cevap"
   survey_responses_enabled: "Yeni cevaplara olanak verecek misiniz? İşaretlendiği takdirde, kişiler anketi yapabilecekler. Anketi kapatmak için işareti kaldırın."
-  survey_take: "Anketi doldurunuz"
-  survey_your_rating_of_this_response: "Bu Cevap için Verdiğiniz Oy"
+  survey_take_tab: "Anketi doldurunuz"
+  survey_your_rating_heading: "Bu Cevap için Verdiğiniz Oy"
   tags: Etiketler
   tags_help: "İsteğe bağlı. Etiketler için, bu sayfayı en iyi tanımlayacak bir kaç kelime kullanın."
   task_list_page_description: "Yapılacak işlerin bir listesini oluşturur. Bu sayede kendinizi ya da diğerlerini görevlendirebilirsiniz."
@@ -677,16 +670,14 @@ tr:
   type_your_messages_here: "İletilerinizi buraya yazın ve enter tuşuna basın..."
   typing: yazıyor
   undelete_from_trash: "Geri Al"
-  undo: "Geri al"
   unfeature_button: "Gösterimden kaldır!"
   unknown: Bilinmeyen
   unread: Okunmamış
   updated: güncellendi
-  upload_attachment: "Dosya ekle"
   upload_file_help: "Gerekli. Bu sayfaya yüklemek için bir dosya seçin."
   upload_image: "Görüntü Yükle"
   upload_image_help: "İsteğe bağlı. Bu sayfaya yüklemek için başlangıç olarak bir görüntü dosyası seçin."
-  upload_images: Yükle
+  upload_images_link: Yükle
   upload_new_image: "Yeni görüntü yükle"
   uploaded_image_cropped: "Yüklenen resim kesilecek ve 96 piksel kare boyutuna uyarlanacaktır."
   usage_agreement_heading: "Kullanım Anlaşması"
@@ -705,8 +696,6 @@ tr:
   version_doesnt_exist: "{{version}} sürümü mevcut değildir."
   version_number: versiyon
   versions: Sürümler
-  video: Görüntü
-  video_class_description: "Başka bir site tarafından desteklenen bir video göster."
   video_embed: yerleştir
   video_embed_code_prompt: "Dışarıdan bir video kaynağının kodunu yerleştirin - gömün."
   video_service_is_not_supported: "desteklenmiyor (hâlen yalnızca youtube, google video, blip.tv, ve vimeo desteklenmektedir)"
@@ -755,6 +744,5 @@ tr:
   you_are_not_member_of_any_group: "Herhangi bir grubun üyesi değilsin."
   you_are_viewing_version: "{{user}} tarafından hazırlanan {{version}} sürümünü görüntülemektesiniz."
   you_have_no_contacts: "Şu anda arkadaşınız yok"
-  you_have_no_groups: "Herhangı bir grupunuz yok"
   you_have_no_peers: "Şu anda eşiniz yok."
   your_login: Girişiniz

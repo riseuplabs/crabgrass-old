@@ -1,4 +1,4 @@
-<tr>
+<tr id="<%= dom_id(membership.user) %>">
   <td><%= link_to_user membership.user, :avatar => 'small' %></td>
   <td><%= friendly_date membership.created_at %></td>
   <% if current_site.tracking %>
@@ -7,5 +7,6 @@
   <% end %>
 <!--  <td><%= membership.join_method %></td> -->
   <td><%= membership.user.may?(:admin,@group) ? I18n.t(:coordinator) : '' %></td>
+  <td><%= destroy_membership_link(membership) %>
 </tr>
 

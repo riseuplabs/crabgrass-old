@@ -2,7 +2,7 @@ module RequestsPermission
 
   def may_update_request?(req=@request)
     logged_in? and
-    req.may_approve?(current_user)
+    req.may_approve?(current_user) || req.may_vote?(current_user)
   end
 
   %w(approve reject).each{ |action|

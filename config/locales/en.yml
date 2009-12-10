@@ -90,8 +90,10 @@ en:
   about: "about"
   total: "{{count}} total"
   affiliations: "Affiliations"
+  pages: "Pages"
 
   recent_activity: "Recent Activity"
+  activity: "Activity"
   recent_pages: "Recent Pages"
   recently_created: "Recently Created"
   most_active: "Most Active"
@@ -116,6 +118,7 @@ en:
   edit: "Edit"
   upload: "Upload"
   preview: "Preview"
+  open: "Open"
   private: "Private"
   public: "Public"
   options: "Options"
@@ -156,6 +159,8 @@ en:
 
   success: "Success"
   error: "Error"
+  status: "Status"
+
 
 
   ##
@@ -705,6 +710,7 @@ en:
   you_are_a_member_already_error: "You are a member already"
   membership_leave_message: "You have been removed from {{group}}"
   search_this_group: "Search this group only"
+  membership_destroy_confirm_message: "Are you sure you want to remove '{{user}}' from the {{group_type}}?"
 
 
   # featured
@@ -820,8 +826,6 @@ en:
   open_group_description: "Users are immediately added to the group - request don't have to be approved"
 
 
-
-
   ##
   ## REQUESTS
   ##
@@ -856,7 +860,17 @@ en:
   request_to_join_us_via_email_description: "{{email}} was invited to join {{group}}"
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
-  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group}}"
+  request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group_type}} {{group}}"
+  request_to_destroy_our_group_email: |
+    The {{group_type}} '{{group}}' will be destroyed enough members approve this proposal.
+
+    If no one or one member rejects this proposal and all other members of the {{group}} it, then the {{group}} will get destroyed immediatelly.
+
+    If there are some approvals, then after one month votes will be tallied and the group will get destroyed if 2/3 or more of the votes are to approve.
+
+    Finally, for a group with a coordinating council, only the council members can vote on destroying the group.
+
+  request_votes_tally_info: "{{approved_count}} voted to approve / {{rejected_count}} voted to reject"
 
   send_request_button: "Send Request"
   send_invites_button: "Send Invites"
@@ -962,11 +976,8 @@ en:
 
   delete_page_link: "Delete {{page_class}}"
 
-  delete_page_via_shared: "Destroy Immediately"
-  delete_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
-
-  destroy_page_via_shared: "Destroy Immediately"
-  destroy_page_via_shared_info: "This will permanently destroy the page. This action cannot be undone."
+  destroy_page_via_shred: "Destroy Immediately"
+  destroy_page_via_shred_info: "This will permanently destroy the page. This action cannot be undone."
   destroy_page_via_trash: "Move To Trash"
   destroy_page_via_trash_info: "This will move the page to the trash, where it can later be retrieved."
 
@@ -1465,7 +1476,6 @@ en:
   group_destroyed_email: |-
     {{group_type}} {{group}} has been destroyed!
 
-    You can see all destroyed groups here: {{destroyed_group_directory_url}}
 
   ##
   ## PEOPLE (i.e., PeopleController)
@@ -1593,6 +1603,9 @@ en:
   inappropriate_content: "Inappropriate content"
 
   make_public_requested: "Make Public Requested"
+  moderation: "Moderation"
+  admins_may_moderate: "Allow Admins to moderate the groups content"
+  admins_may_moderate_description: "A Moderation Menu will appear for admins of the group. It allows them to remove or approve flagged pages and comments."
 
   ##
   ## ADMIN

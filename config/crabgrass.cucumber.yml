@@ -26,19 +26,3 @@ enabled_mods:
 translation_group: rainbow
 
 text_editor: greencloth_only
-
-##
-## SITES
-##
-
-sites:
-
-# bound to localhost:
-  - name: site1
-    admin_group: rainbow
-#    moderation_group: rainbow
-
-# bound to test.host
-#  - name: site2
-#    admin_group: superadmins
-

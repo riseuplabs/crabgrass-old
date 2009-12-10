@@ -44,7 +44,7 @@ class RateManyPageController < BasePageController
   def vote_one
     new_value = params[:value].to_i
     @possible = @poll.possibles.find(params[:id])
-    @poll.votes.by_user(current_user).for_possible(@possible).destroy_all
+    @poll.votes.by_user(current_user).for_possible(@possible).delete_all
     @poll.votes.create! :user => current_user, :value => new_value, :possible => @possible
     current_user.updated(@page, :resolved => true)
   end
@@ -53,7 +53,7 @@ class RateManyPageController < BasePageController
     new_votes = params[:vote] || {}
 
     # destroy previous votes
-    @poll.votes.by_user(current_user).destroy_all
+    @poll.votes.by_user(current_user).delete_all
 
     # create new votes
     @poll.possibles.each do |possible|
