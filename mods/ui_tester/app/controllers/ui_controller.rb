@@ -25,6 +25,10 @@ class UiController < ApplicationController
 
   def group
   end
+  
+  def tasks
+    render :action => 'tasks', :layout => 'ui_no_sidebar'
+  end
 
   def index
     data = params[:data]
