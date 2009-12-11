@@ -245,5 +245,3 @@ end
 #
 GeoCountry.blueprint {}
 GeoAdminCode.blueprint {}
-GeoLocation.blueprint {}
-

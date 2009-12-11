@@ -19,4 +19,4 @@ Scenario: Adding a country only
   When I set the country "Netherlands"
   And I press "Save"
   Then I should see "Changes saved"
-  And I should see that group's country selected
+  And country Netherlands should be selected
