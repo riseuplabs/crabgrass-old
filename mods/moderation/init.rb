@@ -20,4 +20,6 @@ Dispatcher.to_prepare do
   apply_mixin_to_model(Site, ModerationSiteExtension)
   apply_mixin_to_model(User, UserFlagExtension)
   apply_mixin_to_model(Page, PageFlagExtension)
+  apply_mixin_to_model(Post, PostFlagExtension)
+  apply_mixin_to_model(Group, GroupModerationExtension)
 end

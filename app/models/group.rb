@@ -233,6 +233,12 @@ class Group < ActiveRecord::Base
     avatar.save if avatar and avatar.changed?
   end
 
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
+  end
+
   ##
   ## RELATIONSHIP TO ASSOCIATED DATA
   ##

@@ -76,7 +76,7 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
@@ -101,7 +101,7 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
@@ -118,7 +118,7 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
 
     login_as :penguin

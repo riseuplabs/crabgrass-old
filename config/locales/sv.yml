@@ -1,3 +1,4 @@
+---
 sv:
   about_me: "Om mig"
   accept_usage_agreement: "Jag accepterar användningsavtalet"
@@ -24,7 +25,6 @@ sv:
   add_photo_to_gallery: "Lägg till ett foto till ett galleri:"
   add_star_link: "Stjärna ({{star_count}})"
   add_websites: "Lägg till webbsajter"
-  admin: Admin
   alert_error: Fel
   alert_field_errors: "Något är fel med följande fält"
   alert_not_saved: "Det gick inte att spara förändringarna"
@@ -35,8 +35,6 @@ sv:
   all_people: "alla personer"
   all_states: "alla tillstånd"
   already_contacts_info: "Du är redan den här personens kontakt."
-  approval_vote: bifallsomröstning
-  approval_vote_class_description: "Bifall eller inte om varje möjlighet."
   approve: bifall
   approve_button: bifall
   approve_contact_info: "Det finns redan en kontaktansökan från den här användaren. Vill du godkänna den?"
@@ -53,8 +51,8 @@ sv:
   cancel_link: avbryt
   category: Kategori
   close_button: Stäng
-  collection: samling
   collection_class_description: "Speciella sidor som innehåller andra sidor."
+  collection_page_display: samling
   committee: kommitté
   committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {{domain}}/gruppnamn"
   committees: Kommittéer
@@ -76,8 +74,7 @@ sv:
   created_by: "Skapades av"
   created_on: Skapad
   created_when_by: "skapad {{when}} av {{user}}"
-  csrf_error_message: |
-      Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:
+  csrf_error_message: "Din inloggning liknar ett försök att hacka sajten. Ta det lugnt: det händer ofta även för oskyldiga försök. Vi är bara extra paranoida. Allt du behöver göra är ladda om sidan innan du försöker logga in. Du kan följa den här länken för att försöka igen:\n"
   current_video_sources: "stöds för närvarande: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Datan för den här sidan saknas."
   date: datum
@@ -104,6 +101,8 @@ sv:
   diff_link: diff
   directory_of_groups: "Katalog över grupper"
   discuss_request_link: "diskutera den här begäran med {{person_or_group}}"
+  discussion_page_description: "En gruppdiskussion i ett särskilt ämne."
+  discussion_page_display: gruppdiskussion
   discussions: Diskussioner
   display_name: Visningsnamn
   dont_have_permission_to_create_committees: "Du har inga rättigheter att skapa kommittéer under {{group}}"
@@ -155,8 +154,6 @@ sv:
   group: Grupp
   group_administration_not_allowed: "Du kan inte administrera den här gruppen."
   group_directory: Gruppkatalog
-  group_discussion: gruppdiskussion
-  group_discussion_class_description: "En gruppdiskussion i ett särskilt ämne."
   group_has_no_public_profile: "Den här gruppen har ingen offentlig profil."
   group_home_headline: "{{group_type}} hem"
   group_home_welcome: Välkommen
@@ -168,6 +165,7 @@ sv:
 
         {{accept_invite_link}}
   group_invite_subject: "Inbjudan till \"{{group}}\""
+  group_join_chat: "delta i chatten"
   group_members_publicly_visible: "Gör medlemmar synliga offentligt"
   group_members_publicly_visible_description: "Medlemmar syns av icke-medlemmar på {{domain}}/gruppnamn. Dessutom syns gruppens namn i en lista på varje medlems profilsida ({{domain}}/användarnamn)"
   group_not_allowed_to_view_image_error: "Gruppen som äger sidan har inte tillåtelse att se den här bilden."
@@ -194,7 +192,6 @@ sv:
   invalid_token: "Ogiltig symbol"
   invalid_token_text: "Länken du angivit för att återställa ett lösenord är ogiltig. Den har förmodligen redan använts, eller så har den gått ut."
   invite_info: "Ange en lista med användarnamn eller e-postadresser till folk som du vill bjuda in till denna {{group_type}}."
-  join_chat: "delta i chatten"
   join_request_info: "Du kommer inte att bli medlem i den här gruppen förrän din begäran har accepterats. Du kan följa statusen för varje begäran genom \"{{my_requests_url}}\"."
   language: Språk
   large: stor
@@ -215,7 +212,6 @@ sv:
   login_failure_reason: "Användarnamnet eller lösenordet stämmer inte."
   login_name: Användarnamn
   login_password: Lösenord
-  logout: "Logga ut"
   logout_success: Hejdå
   logout_success_message: "Du är utloggad."
   make_album_cover: "gör denna bild till albumomslag"
@@ -239,6 +235,7 @@ sv:
   medium: mellan
   member_groups_of_network: Medlemsgrupper
   members: Medlemmar
+  menu_admin: Admin
   menu_chat: Chatt
   menu_groups: Grupper
   menu_home: Hem
@@ -280,3 +277,5 @@ sv:
   my_tasks_description: "Listor på uppgifter som jag har tillgång till"
   my_tasks_headline: "Mina uppgifter"
   my_world_heading: "Min värld"
+  rate_many_page_description: "Bifall eller inte om varje möjlighet."
+  rate_many_page_display: bifallsomröstning

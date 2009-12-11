@@ -1,3 +1,4 @@
+---
 ar:
   about_me: معلوماتي
   accept_usage_agreement: "أوافق على تعليمات اتفاقية الإستخدام"
@@ -33,7 +34,6 @@ ar:
   add_tags: "أضف العلامات"
   add_websites: "أضف موقع ويب"
   additional_page_access: "وصول إضافي"
-  admin: "مدير الموقع"
   administer_site: "إدارة الموقع"
   administration: إدارة
   alert_error: خطأ
@@ -55,8 +55,6 @@ ar:
   announcement_page_description: إعلان.
   announcement_page_display: إعلان
   announcements: إعلانات
-  approval_vote: "أوافق على التصويت"
-  approval_vote_class_description: "الموافقة أو عدم الموافقة على كل احتمالية"
   approve: موافق
   approve_button: موافق
   approve_contact_info: "لقد طلب هذا الشخص أن تكون من ضمن قائمة اتصاله، هل توافق؟"
@@ -84,8 +82,8 @@ ar:
   category: تصنيف
   check_all: "اختر الكل"
   close_button: إغلاق
-  collection: مجموعة
   collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
+  collection_page_display: مجموعة
   committee: لجنة
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
   committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {{domain}}/yourgroupname"
@@ -105,7 +103,7 @@ ar:
   coordinator_help: "يمنح وصول <b>المنسق</b> صلاحيات غير محدودة لهذه الصفحة (بما فيها صلاحيات الحدف و المشاركة)"
   coordinators: منسقون
   council: مجلس
-  council_help: "إذا كان لهذه المجموعة مجلس تنسيق، فلن يستطيع إدارة هذه المجموعة إلا أعضاء ذلك المجلس. إن لم يكن للمجموعة مجلس تنسيق، سيصير بإمكان أي عضو إدارتها."
+  council_help_text: "إذا كان لهذه المجموعة مجلس تنسيق، فلن يستطيع إدارة هذه المجموعة إلا أعضاء ذلك المجلس. إن لم يكن للمجموعة مجلس تنسيق، سيصير بإمكان أي عضو إدارتها."
   councils: مجالس
   create_a_group: "انشاء مجموعة"
   create_a_new_thing: "إنشاء جديد للـ {{thing}}"
@@ -121,8 +119,7 @@ ar:
   created_by: "أٌنشئ بواسطة"
   created_on: "أُنشئ في"
   created_when_by: "أُنشئ في {{when}} بواسطة {{user}}"
-  csrf_error_message: |
-      يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط
+  csrf_error_message: "يبدو من طلب تسجيل الدخول أنَّك تحاول اختراق هذا الموقع. لا تقلق: هذا الخطأ يحصل بشكل متكرر حتى مع طلبات التسجيل العادية. نحنُ فقط نهتم بشكل كبير بالقضايا الأمنية. الرجاء إعادة تحميل الصفحة قبل أن تحاول الدخول مرة أخرى. لإعادة المحاولةيمكنك التقر على هذا الرابط\n"
   current_attachments: "المرفقات الحالية"
   current_featured_content: "المحتوى المُختار حالياً"
   current_tags: "العلامات الحالية"
@@ -145,10 +142,6 @@ ar:
   date_yesterday: البارحة
   delete: حذف
   delete_page_link: "حذف {{page_class}}"
-  delete_page_via_shred: "دمر حالا"
-  delete_page_via_shred_info: "ستدمر هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء."
-  delete_page_via_trash: "انقل إلى المهملات"
-  delete_page_via_trash_info: "ستنقل الصفحة إلى المهملات، حيث يمكن استعادتها لاحقا."
   delete_post: "حذف المشاركة"
   delete_this_version: "حذف هذه النُسخة"
   delete_version_confirm: "هل أنت متأكد أنك تريد حذف هذه النسخة؟"
@@ -158,6 +151,10 @@ ar:
   destroy: الغاء
   destroy_confirmation: "هل أنت متأكد أنك راغب في حذف هذا/هذه {{thing}}؟ لا يمكن الرجوع عن هذه النشاط."
   destroy_group_link: "دمر {{group_type}}"
+  destroy_page_via_shred: "دمر حالا"
+  destroy_page_via_shred_info: "ستدمر هذه الصفحة للأبد. لن يمكنك الرجوع عن هذا الإجراء."
+  destroy_page_via_trash: "انقل إلى المهملات"
+  destroy_page_via_trash_info: "ستنقل الصفحة إلى المهملات، حيث يمكن استعادتها لاحقا."
   details_link: التفاصيل
   diff_link: "معرفة الإختلاف"
   directory_of_groups: "دليل المجموعات"
@@ -177,19 +174,17 @@ ar:
   edit_appearance: "تحرير الشكل"
   edit_attachments: "تحرير المرفقات"
   edit_attachments_link: تحرير
-  edit_featured_content: "تحرير المحتوى المُختار"
   edit_featured_content_for_group: "تحرير المحتوى المُختار لِـ {{group_name}}"
+  edit_featured_content_link: "تحرير المحتوى المُختار"
   edit_gallery: "تحرير معرض الصور"
   edit_profile_link: "تحرير الملف "
   edit_settings: "تحرير الاعدادات"
   edit_tags: "تحرير العلامات"
   edit_tags_link: تحرير
-  edit_title: |
-      تحرير العنوان
+  edit_title: "تحرير العنوان\n"
   edit_underlined_e: <u>تحرير</u>
   email: "البريد الالكتروني"
-  email_addresses: |
-      عنوان البريد الإلكتروني
+  email_addresses: "عنوان البريد الإلكتروني\n"
   email_link_expires: "هذا الرابط شوف تنتهي صلاحيته في {{days}} أيام."
   email_notice_access: "بإمكانك الوصول لهذه الصفحة هنا:"
   email_notice_hello: "مرحبا، أرسل لك {{from}} صفحة وب."
@@ -250,14 +245,13 @@ ar:
   gallery_class_description: "مجموعة من الصور."
   gallery_description: "ارفع عددا من الصور أو نظم صورا موجودة في مجموعة."
   gallery_display: "معرض الصور"
+  gallery_undo_link: تراجع
   general_info: "معلومات عامة"
   grant_access: "صلاحيات الدخول"
   group: مجموعة
   group_administration_not_allowed: "لا يمكنك ان تكون مديراَ على هذه المجموعة."
   group_directory: "دليل المجموعة"
   group_directory_link: "دليل المجموعة"
-  group_discussion: المناقشة
-  group_discussion_class_description: "نقاش المجموعة حول موضوع معين."
   group_has_no_public_profile: "هذه المجموعة لا يوجد لديها ملف عام."
   group_home_headline: "الصفحة الرئيسية لِـ{{group_type}}"
   group_home_welcome: "مرحباً بك"
@@ -322,7 +316,6 @@ ar:
   invite_accept_via_register: "أريد التسجيل بحساب جديد"
   invite_info: "أدخل قائمة باسماء دخول المستخدمين او عنوان البريد الالكتروني للمشتركين الذين ترغب في دعوتهم للانضمام لهذه {{group_type}}"
   invite_not_found: "الدعوة غير موجودة"
-  join_chat: "انضم للدردشة"
   join_group_link: "انضم ل{{group_type}}"
   join_group_success: "لقد انضممت إلى مجموعة {{group_name}}"
   join_request_info: "لن تصبح عضو في هذه المجموعة حتى يتم الموافقة على طلبك. يمكنك تتبع حالة طلبك من خلال زيارة \"{{my_requests_url}}\"."
@@ -354,7 +347,6 @@ ar:
   login_password: "كلمة المرور"
   login_required: "الدخول مطلوب"
   login_required_description: "الرجاء الدخول للقيا بهذا النشاط"
-  logout: خروج
   logout_success: وداعاً
   logout_success_message: "تم تسجيل الخروج بنجاح."
   make_album_cover: "إجعل هذه الصورة غلاف للألبوم"
@@ -380,6 +372,7 @@ ar:
   member_groups_of_network: "أعضاء المجموعات"
   members: الأعضاء
   membership: عضوية
+  menu_admin: "مدير الموقع"
   menu_chat: دردشة
   menu_groups: المجموعات
   menu_home: "الصفحة الرئيسية"
@@ -439,9 +432,8 @@ ar:
   my_world_heading: عالمي
   name: الإسم
   network: شبكة
-  network_aettings: "إعدادات الشبكة"
-  network_invite_info: |
-      أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة
+  network_invite_info: "أدخل أسماء المجموعات التي ترغب في دعوتها للانضمام إلى هذه الشبكة\n"
+  network_settings: "إعدادات الشبكة"
   networks: الشبكات
   new_council: "مجلس جديد لمجموعة {{group_name}}"
   new_group: "مجموعة جديدة"
@@ -493,8 +485,7 @@ ar:
   page_group_media_image: الصور
   page_group_media_video: الفيديوهات
   page_group_planning: "أدوات التخطيط"
-  page_group_task: |
-      المهام
+  page_group_task: "المهام\n"
   page_group_text: "النص والمناقشات"
   page_group_vote: "استطلاعات الرأي والتصويت"
   page_is_not_static: "صفحة ليست ثابتة"
@@ -543,8 +534,6 @@ ar:
   permissions: صلاحيات
   personal: شخصي
   personal_interests: "اهتمامات شخصية"
-  personal_message: "رسالة شخصية"
-  personal_message_class_description: "رسالة شخصية أُرسلت لمستقبلين معينين"
   phone_numbers: "أرقام الهاتف"
   photo: صورة
   photo_credit: "رصيد الصور"
@@ -577,8 +566,7 @@ ar:
   public_checkbox_help: "إذا أختير , بإمكان أي أحد أن يستعرض هذه الصفحة."
   public_key: "المفتاح العمومي"
   public_profile: "ملفي العام"
-  ranked_vote_instructions: |
-      اسحب وافلت العناصر في القائمة حتى يتم ترتيبها، بحيث تجعل العناصر المفضّلة بالأعلى والأقل تفضيلاً بالأسفل. عندما تنتهي اضغط موافق لتسجبل التصويت
+  ranked_vote_instructions: "اسحب وافلت العناصر في القائمة حتى يتم ترتيبها، بحيث تجعل العناصر المفضّلة بالأعلى والأقل تفضيلاً بالأسفل. عندما تنتهي اضغط موافق لتسجبل التصويت\n"
   ranked_vote_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص للتصنيف حسب الأفضلية."
   ranked_vote_page_display: "صوت مصنف"
   rate_many_page_description: "أنشىء قائمة من الخيارات المتاحة للأشخاص من أجل الموافقة أو عدم الموافقة."
@@ -625,8 +613,8 @@ ar:
   requests_to_me: "إلي أنا"
   required: (مطلوب)
   reset_password: "تغيير كلمة المرور"
+  reset_password_email_sent: "تم إرسال بريد إلكتروني لك يحتوي تعليمات حوا تغيير كلمة المرور"
   reset_password_mail_greeting: "{{user}}, تم تغيير كلمة المرور حسب طلبك."
-  reset_password_mail_sent: "تم إرسال بريد إلكتروني لك يحتوي تعليمات حوا تغيير كلمة المرور"
   reset_password_mail_warning: "الرجاء الإتصال بنا إذا لم تطلب تغيير كلمة المرور"
   reset_password_text: "مرحباً، {{user}}. إذا كنت نست كلمة المرور، يمكنك تعريف كلمة مرور جديدة من هنا."
   return_link: العودة
@@ -634,7 +622,7 @@ ar:
   saturday: السبت
   save_button: حفظ
   save_changes: "حفظ التغييرات"
-  save_survey: "حفظ  دراسة"
+  save_survey_button: "حفظ  دراسة"
   saved_new_order: "تم تخزين الترتيب الجديد!"
   saving_your_changes: "جاري حفظ التغييرات..."
   say_message_button: عبّر
@@ -656,7 +644,6 @@ ar:
   settings: الإعدادات
   share: مشاركة
   share_button: مشاركة
-  share_link: "شارك{{page_class}}"
   share_page_email: "أرسل تذكير بالبريد الإلكتروني"
   share_page_link: "شارك {{page_class}}"
   share_page_message: "أرسل رسالة  (إختياري)"
@@ -689,26 +676,26 @@ ar:
   subject: الموضوع
   subject_must_not_be_empty: "الرجاء ادخال الموضوع"
   successful_undelete_image: "تمَّ الغاء حذف الصورة"
-  sucessfully_removed_image: "تمت إزالة الصورة! ({{undo_link}})"
+  successfully_removed_image: "تمت إزالة الصورة! ({{undo_link}})"
   summary: الخلاصة
   summary_help: "اختياري. الخلاصة هي أن الجملة أو الفقرة تقدم  وصفا موجزا لمضمون هذه الصفحة."
   sunday: الأحد
-  survey_design: "تصميم الدراسة"
-  survey_list_all: "قائمة جميع الردود"
+  survey_edit_tab: "تصميم الدراسة"
+  survey_list_all_tab: "قائمة جميع الردود"
   survey_may_rate: "ممكن تقييم الردود؟"
   survey_may_see_ratings: "ممكن تقييم الردود؟"
   survey_may_see_responses: "ممكن مشاهدة الردود؟"
-  survey_my_response: ردي
+  survey_my_response_tab: ردي
   survey_page_description: "إنشاء سلسة من الأسئلة للناس للإجابة "
   survey_page_display: " دراسة"
   survey_questions: الأسئلة
-  survey_rate_responses: "قيًم الردود"
-  survey_rate_this_response: "قيًم هذا الرد"
+  survey_rate_responses_tab: "قيًم الردود"
+  survey_rate_this_response_heading: "قيًم هذا الرد"
   survey_rating_enabled: "السماح بتقييم الردود؟"
   survey_response_by: "تم الرد من قبل {{login}}"
   survey_responses_enabled: "السماح بالردود الجديدة؟اذا تم الاختيار,يمكن للناس ان يشاهدوا الدراسة.اذا لم يتم الإختيار أغلق هذه الدراسة."
-  survey_take: "اتخاذ الدراسة"
-  survey_your_rating_of_this_response: "تقييمك لهذا الرد"
+  survey_take_tab: "اتخاذ الدراسة"
+  survey_your_rating_heading: "تقييمك لهذا الرد"
   tags: علامات
   tags_help: "اختياري. للعلامات ، إستخدم كلمات قليلة التي تقدم أفضل وصف لهذه الصفحة."
   task_list_page_description: "أنشىء قائمة بالأشياء التي يجب عملها وأسند المهام لك أو للأخرين."
@@ -732,16 +719,14 @@ ar:
   type_your_messages_here: "أدخل رسالتك هنا ثم اضغط على مفتاح ادخال (enter) في لوحة المفاتيح..."
   typing: الطباعة
   undelete_from_trash: "عدم الحذف"
-  undo: تراجع
   unfeature_button: "غير مختارة!"
   unknown: "غير معروف"
   unread: "غير مقروء"
   updated: "تم التعديل"
-  upload_attachment: "تحميل المرفقات"
   upload_file_help: "مطلوب. إختيار ملف للتحميل على هذه الصفحة."
   upload_image: "تحميل صورة"
   upload_image_help: "اختياري. اختر  ملف صورة أولية للتحميل على هذه الصفحة."
-  upload_images: تحميل
+  upload_images_link: تحميل
   upload_new_image: "حمِّل صورة جديدة"
   uploaded_image_cropped: "سوف يتم قص وتمديد الصور المحمّلة إلى 96 بكسل مُربّع"
   usage_agreement_heading: "اتفاقية الإستخدام"
@@ -750,8 +735,7 @@ ar:
   user: المستخدم
   user_or_group_name: "المستخدم أو إسم المجموعة"
   user_profile_description_allow_peers: "الموافقة على هذا الخيار يعني أنك تسمح للمستخدمين المشتركين معك بنفس المجموعة أن يشاهدوا ملفك الخاص"
-  user_profile_description_may_pester: |
-      السماح للمشتركين بتشارك المحتوى معك وان يرسلوا لك الدعوات
+  user_profile_description_may_pester: "السماح للمشتركين بتشارك المحتوى معك وان يرسلوا لك الدعوات\n"
   user_profile_description_may_request_contact: "السماح للمشتركين بأن يطلبوا أن يكونوا من ضمن قائمة إتصالك الشخصية"
   user_profile_description_may_see: "اذا أُختير, معلومات الملف الشخصي التي بالأسفل ستكون مرئية, وإلا ، سيتم اخفاء ملفك الشخصي تماماً."
   user_profile_description_may_see_contacts: "السماح للمشتركين بمشاهدة قائمة اتصالاتك الشخصية"
@@ -762,8 +746,6 @@ ar:
   version_doesnt_exist: "لا يوجدنسخة {{version}}"
   version_number: "نسخة رقم {{version}}"
   versions: النُسخ
-  video: فيديو
-  video_class_description: "أظهر الفيديوالموجود على موقع الكتروني خارجي "
   video_embed: تضمين
   video_embed_code_prompt: "تضمين الكود من مصدر فيديو خارجي"
   video_service_is_not_supported: "غير مدعوم(في الوقت الحالي فقط youtube, google video, blip.tv, and vimeo)"
@@ -819,6 +801,5 @@ ar:
   you_are_not_member_of_any_group: "لم تعد عضوا في أي مجموعة"
   you_are_viewing_version: "انت تستعرض النسخة {{version}} by {{user}}"
   you_have_no_contacts: "لا يوجد أشخاص في قائمة اتصالاتك"
-  you_have_no_groups: "انت لست عضواً في اي مجموعة"
   you_have_no_peers: "لا يوجد لديك أقران"
   your_login: "معلومات الدخول"

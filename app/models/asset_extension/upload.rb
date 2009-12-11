@@ -6,7 +6,7 @@ end
 
 
 ## can be used to create assets from a script instead of uploaded from a browser:
-## asset = Asset.make :uploaded_data => FileData.new('/path/to/file')
+## asset = Asset.create_from_params :uploaded_data => FileData.new('/path/to/file')
 class FileData < String
   attr_accessor :size, :original_filename, :content_type
   def initialize(filename)

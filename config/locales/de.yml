@@ -1,3 +1,4 @@
+---
 de:
   about_me: "&Uuml;ber mich"
   accept_usage_agreement: "Ich akzeptiere die Benutzungsbedingungen"
@@ -33,7 +34,6 @@ de:
   add_tags: "Tags hinzufügen"
   add_websites: "Webseiten hinzufügen"
   additional_page_access: "Weitere Zugriffe"
-  admin: Admin
   administration: Administration
   alert_error: Error
   alert_field_errors: "Es gibt Probleme mit den folgenden Feldern"
@@ -54,8 +54,6 @@ de:
   announcement_page_description: "Eine Ank&uuml;ndigung"
   announcement_page_display: Ank&uuml;ndigung
   announcements: Ankündigungen
-  approval_vote: Befürwortungsabstimmung
-  approval_vote_class_description: "Zustimmung oder Ablehnung von jeder Möglichkeit"
   approve: zustimmen
   approve_button: zustimmen
   approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. Möchtest du diese annehmen?"
@@ -82,8 +80,8 @@ de:
   category: Kategorie
   check_all: "Alles ausw&auml;hlen"
   close_button: Schließen
-  collection: Sammlung
   collection_class_description: "Spezialseiten, die andere Seiten enthalten."
+  collection_page_display: Sammlung
   committee: Arbeitsgruppe
   committee_publicly_visible: "Arbeitsgruppen öffentlich sichtbar machen"
   committee_publicly_visible_description: "Arbeitsgruppen können von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
@@ -99,7 +97,7 @@ de:
   coordinating_council: "Koordinierendes Gremium"
   coordinator: Koordinator
   coordinators: Koordinatoren
-  council_help: "Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun."
+  council_help_text: "Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun."
   create_a_group: "Eine Gruppe erstellen"
   create_a_new_thing: "Neue {{thing}} erstellen"
   create_button: Erstellen
@@ -163,8 +161,8 @@ de:
   edit_appearance: "Bearbeite erscheinen"
   edit_attachments: "Anhänge bearbeiten"
   edit_attachments_link: Bearbeiten
-  edit_featured_content: "Aktuelle Inhalte bearbeiten"
   edit_featured_content_for_group: "Ausgewählte Inhalte von {{group_name}} bearbeiten"
+  edit_featured_content_link: "Aktuelle Inhalte bearbeiten"
   edit_gallery: "Gallerie bearbeiten"
   edit_profile_link: "Profil bearbeiten"
   edit_settings: "Einstellungen bearbeiten"
@@ -216,14 +214,13 @@ de:
   gallery_class_description: "Eine Bilder-Sammlung."
   gallery_description: "Eine geordnete Bilder-Kollektion"
   gallery_display: Galerie
+  gallery_undo_link: r&uuml;ckg&auml;ngig
   general_info: "Generelle Infos"
   grant_access: "Zugang gewähren"
   group: Gruppe
   group_administration_not_allowed: "Du kannst diese Gruppe nicht administrieren."
-  group_directory: "Gruppen-Verzeichnis"
+  group_directory: Gruppen-Verzeichnis
   group_directory_link: Gruppen-Verzeichnis
-  group_discussion: Diskussion
-  group_discussion_class_description: "Eine Gruppendiskussion zu einem bestimmten Thema."
   group_has_no_public_profile: "Diese Gruppe hat kein öffentlich einsehbares Profil."
   group_home_headline: "{{group_type}} Home"
   group_home_welcome: Willkommen
@@ -287,7 +284,6 @@ de:
   invite_accept_via_register: "Ich will einen neuen Zugang anmelden."
   invite_info: "Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser {{group_type}} beizutreten, ein."
   invite_not_found: "Einladung nicht gefunden"
-  join_chat: "am schwatz teilnehmen"
   join_group_link: "Join {{group_type}}"
   join_group_success: "Du hast dich der Gruppe {{group_name}} angeschlossen."
   join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage überprüfen, indem Du \"{{my_requests_url}}\" besuchst."
@@ -318,7 +314,6 @@ de:
   login_password: Passwort
   login_required: "Login erforderlich"
   login_required_description: "Für diese Aktion logge Dich bitte ein."
-  logout: Abmelden
   logout_success: "auf Wiedersehn"
   logout_success_message: "Du hast dich abgemeldet."
   make_album_cover: "dieses Bild als Albumcover auswählen"
@@ -344,6 +339,7 @@ de:
   member_groups_of_network: "Gruppen im Netzwerk"
   members: BenutzerInnen
   membership: Mitgliedschaft
+  menu_admin: Admin
   menu_chat: Chat
   menu_groups: Gruppen
   menu_home: Start
@@ -400,8 +396,8 @@ de:
   my_world_heading: "Meine Welt"
   name: Name
   network: Netzwerk
-  network_aettings: Netzwerkeinstellungen
   network_invite_info: "Gib die Namen der Gruppen ein, welche du in dieses Netzwerk einladen willst."
+  network_settings: Netzwerkeinstellungen
   networks: Netzwerke
   new_group: "Neue Gruppe"
   new_network: "Neues Netzwerk"
@@ -499,8 +495,6 @@ de:
   permissions: Rechte
   personal: Persönlich
   personal_interests: "Persönliche Interessen"
-  personal_message: "Persönliche Nachricht"
-  personal_message_class_description: "Eine persönliche Nachricht an individuelle Empfänger."
   phone_numbers: Telefonnummern
   photo: Foto
   post_message: "Poste Nachricht"
@@ -578,8 +572,8 @@ de:
   requests_to_me: "An mich"
   required: (benötigt)
   reset_password: "Setze Passwort zurück"
+  reset_password_email_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zurücksetzen deines Passworts enthält."
   reset_password_mail_greeting: "{{user}}, dein Passwort wurde auf deine Anfrage zurückgesetzt."
-  reset_password_mail_sent: "Eine E-Mail wurde gesendet, welche eine Anleitung zum Zurücksetzen deines Passworts enthält."
   reset_password_mail_warning: "Wenn du keine Anfrage, dein Passwort zurückzusetzen, gestellt hast, kontaktiere uns bitte."
   reset_password_text: "Hallo {{user}}. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen."
   return_link: Zur&uuml;ck
@@ -587,7 +581,7 @@ de:
   saturday: Samstag
   save_button: Speichern
   save_changes: "Speichere Änderungen"
-  save_survey: "Umfrage Speichern"
+  save_survey_button: "Umfrage Speichern"
   saved_new_order: "Neue Reihenfolge gespeichert!"
   saving_your_changes: "&Auml;nderungen werden gespeichert..."
   say_message_button: Schreien
@@ -609,7 +603,6 @@ de:
   settings: Einstellungen
   share: Teile
   share_button: Teile
-  share_link: "Teile {{page_class}}"
   share_page_email: "Sende eine E-Mailbenachrichtigung"
   share_page_link: "Teile {{page_class}}"
   share_page_message: "Sende eine Nachricht (optional)"
@@ -642,26 +635,26 @@ de:
   subject: Betreff
   subject_must_not_be_empty: "Betreff darf nicht leer sein"
   successful_undelete_image: "L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht."
-  sucessfully_removed_image: "Bild erfolgreich entfernt ({{undo_link}})"
+  successfully_removed_image: "Bild erfolgreich entfernt ({{undo_link}})"
   summary: Zusammenfassung
   summary_help: "Optional. Die Zusammenfassung kann ein Satz oder ein Absatz sein, welcher kurz den Inhalt der Seite beschreibt."
   sunday: Sonntag
-  survey_design: "Gestalte Diese Umfrage"
-  survey_list_all: "Zeige alle Antworten"
+  survey_edit_tab: "Gestalte Diese Umfrage"
+  survey_list_all_tab: "Zeige alle Antworten"
   survey_may_rate: "Sollen Antworten in einer Abstimmung bewertet werden k&ouml;nnen?"
   survey_may_see_ratings: "Soll die Abstimmung &ouml;ffentlich einsehbar sein?"
   survey_may_see_responses: "Antworten &ouml;ffentlich machen?"
-  survey_my_response: "Meine Antworten"
+  survey_my_response_tab: "Meine Antworten"
   survey_page_description: "Stelle Fragen und warte auf Antworten."
   survey_page_display: Umfrage
   survey_questions: Fragen
-  survey_rate_responses: Abstimmung
-  survey_rate_this_response: "Gib deine Stimme ab"
+  survey_rate_responses_tab: Abstimmung
+  survey_rate_this_response_heading: "Gib deine Stimme ab"
   survey_rating_enabled: "Erm&ouml;gliche das Abstimmen &uuml;ber Antworten?"
   survey_response_by: "Antworten von {{login}}"
   survey_responses_enabled: "Offen f&uuml;r Antworten? Wenn ausgew&auml;hlt k&ouml;nnen Leute Antworten geben. Deaktiviere dies um die Umfrage zu beenden."
-  survey_take: "Nimm Teil"
-  survey_your_rating_of_this_response: "Deine Stimme f&uuml; diese Antwort"
+  survey_take_tab: "Nimm Teil"
+  survey_your_rating_heading: "Deine Stimme f&uuml; diese Antwort"
   tags: Tags
   tags_help: "Optional. Benutze am besten ein paar verschiedene Wörter um den Inhalt der Seite zu beschreiben."
   task_list_page_description: "Eine Liste an To-Do-Einträgen."
@@ -685,16 +678,14 @@ de:
   type_your_messages_here: "Tippe deine Nachricht hier und drücke Enter..."
   typing: tippt
   undelete_from_trash: Wiederherstellen
-  undo: r&uuml;ckg&auml;ngig
   unfeature_button: Defeature!
   unknown: unbekannt
   unread: ungelesen
   updated: aktualisiert
-  upload_attachment: "Lade Anhang hoch"
   upload_file_help: "Benötigt. Wähle eine Datei, welche du hochladen willst."
   upload_image: "Lade Bild hoch"
   upload_image_help: "Optional. Wähle ein erstes Bild um es hochzuladen."
-  upload_images: Hochladen
+  upload_images_link: Hochladen
   upload_new_image: "Neues Bild hochladen"
   uploaded_image_cropped: "Hochgeladenes Bild wird auf 96x96 Pixel zugeschnitten/gestreckt."
   usage_agreement_heading: Nutzungsvereinbarung
@@ -713,8 +704,6 @@ de:
   version_doesnt_exist: "Es gibt keine Version {{version}}"
   version_number: "Version {{version}}"
   versions: Versionen
-  video: Video
-  video_class_description: "Zeige ein Video, welches auf einer externen Seite gespeichert ist."
   video_embed: Eingebettet
   video_embed_code_prompt: "Embedcode eines externen Videos"
   video_service_is_not_supported: "wird nicht unterstützt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
@@ -757,11 +746,10 @@ de:
   wiki_revert_version: "Rückgängig zu Version {{version}}"
   wiki_section_edit: "bearbeite diesen Abschnitt"
   wont_be_able_to_save: "Du wirst diese Seite nicht speichern können"
-  work: "Arbeit"
+  work: Arbeit
   work_life: Arbeitsleben
   you_are_not_member_of_any_group: "Du bist bei keiner Gruppe Mitglied."
   you_are_viewing_version: "Du betrachtest Version {{version}} von {{user}}"
   you_have_no_contacts: "Du hast keine Kontakte"
-  you_have_no_groups: "Du hast keine Gruppen"
   you_have_no_peers: "Du hast keine Peers"
   your_login: "Dein Login"

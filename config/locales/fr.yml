@@ -1,3 +1,4 @@
+---
 fr:
   about_me: "Mes Informations"
   accept_usage_agreement: "J'accepte les termes des conditions d'utilisation"
@@ -33,7 +34,6 @@ fr:
   add_tags: "Ajouter étiquettes"
   add_websites: "Ajouter des sites web"
   additional_page_access: "Accès Additionnel"
-  admin: Administrer
   administer_site: "Administrer Site"
   administration: Administration
   alert: Alerte
@@ -56,8 +56,6 @@ fr:
   announcement_page_description: "Une annonce."
   announcement_page_display: Annonce
   announcements: Annonces
-  approval_vote: "vote par approbation"
-  approval_vote_class_description: "approuver ou désapprouver chaque proposition"
   approve: approuver
   approve_button: Approuver
   approve_contact_info: "Cet-te utilisat-rice-eur vous a déjà demandé-e comme ami-e. Voulez-vous l'accepter ?"
@@ -85,8 +83,8 @@ fr:
   category: Catégorie
   check_all: "Tout Sélectionner"
   close_button: Fermer
-  collection: collection
   collection_class_description: "Page spéciale qui comprend les autres pages"
+  collection_page_display: collection
   committee: Commission
   committee_publicly_visible: "Publier les commissions"
   committee_publicly_visible_description: "Les commissions sont visibles de tou-te-s à {{domain}}/yourgroupname"
@@ -109,7 +107,7 @@ fr:
   coordinator_help: "<b>Coordinateur</b> Cet accès confère un pouvoir complet a cette page (y compris effacer et partager)."
   coordinators: coordinateurs
   council: Conseil
-  council_help: "Si ce groupe possède un conseil, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
+  council_help_text: "Si ce groupe possède un conseil, alors seul un membre de ce conseil peut administrer ce groupe. Sinon, n'importe quel membre peut s'en occuper."
   councils: Conseils
   create_a_group: "Créer un Groupe"
   create_a_new_thing: "Créer un-e nouvel-le {{thing}}"
@@ -147,10 +145,6 @@ fr:
   date_yesterday: Hier
   delete: Supprimer
   delete_page_link: "Supprimer {{page_class}}"
-  delete_page_via_shred: "Détruire Immédiatement"
-  delete_page_via_shred_info: "Ceci supprimera définitivement la page. Cette action ne peut être annulée."
-  delete_page_via_trash: "Déplacer à la Poubelle"
-  delete_page_via_trash_info: "Ceci déplacera la page dans la poubelle, d'où elle pourra être récupérée si nécessaire."
   delete_post: "Supprimer le message"
   delete_this_version: "effacer cette version"
   delete_version_confirm: "Êtes-vous certain de vouloir supprimer cette version ?"
@@ -160,6 +154,10 @@ fr:
   destroy: détruire
   destroy_confirmation: "Êtes vous certain de vouloir effacer ce {{thing}}? Cette opération est définitive."
   destroy_group_link: "Détruire {{group_type}}"
+  destroy_page_via_shred: "Détruire Immédiatement"
+  destroy_page_via_shred_info: "Ceci supprimera définitivement la page. Cette action ne peut être annulée."
+  destroy_page_via_trash: "Déplacer à la Poubelle"
+  destroy_page_via_trash_info: "Ceci déplacera la page dans la poubelle, d'où elle pourra être récupérée si nécessaire."
   details_link: Détails
   diff_link: "voir les différences"
   directory_of_groups: "Répertoire des Groupes"
@@ -179,8 +177,8 @@ fr:
   edit_appearance: "Modifier l'Apparence"
   edit_attachments: "Modifier les fichiers joints"
   edit_attachments_link: Modifier
-  edit_featured_content: "modifier le contenu important"
   edit_featured_content_for_group: "Modifier le Contenu Important du Groupe {{group_name}}"
+  edit_featured_content_link: "modifier le contenu important"
   edit_gallery: "Modifier la galerie"
   edit_profile_link: "Modifier le Profil"
   edit_settings: "Modifier les Paramètres"
@@ -234,14 +232,13 @@ fr:
   gallery_class_description: "Une collection d'images."
   gallery_description: "Envoyer des images ou organiser les images existantes."
   gallery_display: Galerie
+  gallery_undo_link: défaire
   general_info: "Informations générales"
   grant_access: "Donner accès"
   group: Groupe
   group_administration_not_allowed: "Vous ne pouvez administrer ce groupe."
   group_directory: "Répertoire des Groupes"
   group_directory_link: "Répertoire des Groupes"
-  group_discussion: discussion
-  group_discussion_class_description: "Une discussion sur un sujet particulier."
   group_has_no_public_profile: "Ce groupe n'a pas de profil public."
   group_home_headline: "Page d'Accueil du {{group_type}}"
   group_home_welcome: Bienvenue
@@ -306,7 +303,6 @@ fr:
   invite_accept_via_register: "Je dois ouvrir un compte"
   invite_info: "Entrez la liste des noms d'utilisateur ou des adresses mail des personnes que vous voulez inviter à rejoindre ce {{group_type}}."
   invite_not_found: "Invitation non trouvée"
-  join_chat: "rejoindre le salon de discussion"
   join_group_link: "Rejoindre {{group_type}}"
   join_group_success: "Vous avez rejoint le groupe {{group_name}}"
   join_request_info: "Vous ne serez pas membre de ce groupe avant qu'elle ne soit approuvée. Vous pouvez en vérifier l'état en visitant \"{{my_requests_url}}\"."
@@ -338,7 +334,6 @@ fr:
   login_password: "Mot de passe"
   login_required: "Connexion Requise"
   login_required_description: "Merci de vous connecter pour effectuer cette action."
-  logout: Déconnecter
   logout_success: "Au revoir"
   logout_success_message: "Vous avez été déconnecté."
   make_album_cover: "Faire de cette image la couverture de l'album"
@@ -364,6 +359,7 @@ fr:
   member_groups_of_network: "Groupes membres"
   members: Membres
   membership: Adhésion
+  menu_admin: Administrer
   menu_chat: "Salon de Discussion"
   menu_groups: Groupes
   menu_home: Accueil
@@ -423,8 +419,8 @@ fr:
   my_world_heading: "Mon Univers"
   name: Nom
   network: Réseau
-  network_aettings: "Paramètres Du Réseau"
   network_invite_info: "Écrivez les noms des groupes que vous désirez inviter à rejoindre ce réseau."
+  network_settings: "Paramètres Du Réseau"
   networks: Réseaux
   new_council: "Nouveau conseil pour le groupe {{group_name}}"
   new_group: "Nouveau groupe"
@@ -525,8 +521,6 @@ fr:
   permissions: Autorisations
   personal: Personnel
   personal_interests: "Intérêts personnels"
-  personal_message: "message personnel"
-  personal_message_class_description: "Un message personnel envoyé à des destinataires individuels."
   phone_numbers: "Numéros de téléphone"
   photo: Photo
   photo_credit: "Crédit photo"
@@ -608,8 +602,8 @@ fr:
   requests_to_me: "à mon intention"
   required: (requis)
   reset_password: "Réinitialiser le mot de passe"
+  reset_password_email_sent: "Un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé."
   reset_password_mail_greeting: "{{user}}, votre mot de passe a été réinitialisé à votre demande."
-  reset_password_mail_sent: "Un mail contenant les instructions de réinitialisation du mot de passe vous a été envoyé."
   reset_password_mail_warning: "Si vous n'avez pas demandé à réinitialiser votre mot de passe, merci de nous contacter."
   reset_password_text: "Bonjour, {{user}}. Si vous avez oublié votre mot de passe pour vous connecter, vous pouvez en définir un ici."
   return_link: Retour
@@ -617,7 +611,7 @@ fr:
   saturday: Samedi
   save_button: Sauvegarder
   save_changes: "Sauvegarder les modifications"
-  save_survey: "Sauvegarder l'enquête"
+  save_survey_button: "Sauvegarder l'enquête"
   saved_new_order: "Nouvel arrangement enregistré !"
   saving_your_changes: "Sauvegarde de vos modifications..."
   say_message_button: Parle
@@ -639,7 +633,6 @@ fr:
   settings: Paramètres
   share: Partager
   share_button: Partager
-  share_link: "Partager {{page_class}}"
   share_page_email: "Envoyer une notification par mail"
   share_page_link: "Partager {{page_class}}"
   share_page_message: "Envoyer un message (optionnel)"
@@ -672,26 +665,26 @@ fr:
   subject: sujet
   subject_must_not_be_empty: "Le sujet ne doit pas être vide"
   successful_undelete_image: "Récupération de l'image réussie"
-  sucessfully_removed_image: "Image retirée ! ({{undo_link}})"
+  successfully_removed_image: "Image retirée ! ({{undo_link}})"
   summary: Sommaire
   summary_help: "Optionnel. Le sommaire est une phrase ou un paragraphe qui décrit brièvement le contenu de cette page."
   sunday: Dimanche
-  survey_design: "Définition de l'enquête"
-  survey_list_all: "Lister toutes les réponses"
+  survey_edit_tab: "Définition de l'enquête"
+  survey_list_all_tab: "Lister toutes les réponses"
   survey_may_rate: "Possibilité d'évaluation des réponses ?"
   survey_may_see_ratings: "Possibilité de voir les réponses ?"
   survey_may_see_responses: "Possibilité de voir les réponses ?"
-  survey_my_response: "Ma réponse"
+  survey_my_response_tab: "Ma réponse"
   survey_page_description: "Créer une série de questions à répondre."
   survey_page_display: Enquête
   survey_questions: Questions
-  survey_rate_responses: "Évaluer les réponses"
-  survey_rate_this_response: "Évaluer cette réponse"
+  survey_rate_responses_tab: "Évaluer les réponses"
+  survey_rate_this_response_heading: "Évaluer cette réponse"
   survey_rating_enabled: "Activer l'évaluation des réponses ?"
   survey_response_by: "Réponse de {{login}}"
   survey_responses_enabled: "Autoriser de nouvelles réponses ? Si coché, les utilisateurs peuvent répondre à l'enquête. Décocher pour clore l'enquête."
-  survey_take: "Répondre à l'enquête"
-  survey_your_rating_of_this_response: "Votre évaluation de cette réponse"
+  survey_take_tab: "Répondre à l'enquête"
+  survey_your_rating_heading: "Votre évaluation de cette réponse"
   tags: Étiquettes
   tags_help: "Optionnel. Utilisez comme étiquette quelques mots qui décrivent cette page."
   task_list_page_description: "Créer une liste de choses à faire et à assigner à vous-même ou à d'autres."
@@ -715,16 +708,14 @@ fr:
   type_your_messages_here: "Écrivez votre message ici et validez avec la touche Entrée..."
   typing: écrit
   undelete_from_trash: Récupérer
-  undo: défaire
   unfeature_button: "Supprimer l'importance !"
   unknown: Inconnu
   unread: "marquer comme non lu"
   updated: "mis à jour"
-  upload_attachment: "Joindre un fichier"
   upload_file_help: "Obligatoire. Choisissez un fichier à envoyer sur cette page."
   upload_image: "Télécharger une image"
   upload_image_help: "Optionnel. Choisissez une première image à envoyer sur cette page."
-  upload_images: Télécharger
+  upload_images_link: Télécharger
   upload_new_image: "télécharger une nouvelle image"
   uploaded_image_cropped: "Les images téléchargées seront réduites à un carré de 96 pixels de côté."
   usage_agreement_heading: "Condition d'utilisation"
@@ -743,8 +734,6 @@ fr:
   version_doesnt_exist: "Il n'y a pas de version {{version}}"
   version_number: "version {{version}}"
   versions: Versions
-  video: vidéo
-  video_class_description: "Affiche une vidéo hébergée sur un site extérieur."
   video_embed: Embed
   video_embed_code_prompt: "Code importé depuis une source vidéo extérieure."
   video_service_is_not_supported: "n'est pas supporté (actuellement seulement youtube, google video, blip.tv et vimeo)"
@@ -801,6 +790,5 @@ fr:
   you_are_not_member_of_any_group: "Vous n'êtes membre d'aucun groupe."
   you_are_viewing_version: "Vous regardez la version {{version}} de {{user}}"
   you_have_no_contacts: "Vous n'avez aucun-e ami-e"
-  you_have_no_groups: "Vous n'avez aucun groupe"
   you_have_no_peers: "Vous n'avez pas de pair"
   your_login: "Votre identifiant"

@@ -68,6 +68,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       keys.delete(key)
 
       options[:scope] = keys
+      options[:locale] = locale
 
       # try the same key but without site scope
       return  I18n.translate_without_site_scope(key, options)

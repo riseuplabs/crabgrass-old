@@ -5,6 +5,7 @@ class MakeSayPostsPrivate < ActiveRecord::Migration
     status_posts = StatusPost.find(:all)
     status_posts.each do |spost|
       wall_msg = MessageWallActivity.find_by_related_id(spost.id)
+      next if wall_msg.nil?
       wall_msg.update_attributes!(:access => 2)
     end
   end

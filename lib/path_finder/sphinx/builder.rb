@@ -9,9 +9,10 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
 
   include PathFinder::Sphinx::BuilderFilters
 
-  def initialize(path, options)
+  def initialize(path, options, klass)
     @original_path = path
     @original_options = options
+    @klass = klass #What are we searching Pages or Posts?
 
     # filter on access_ids:
     @with = []
@@ -79,13 +80,13 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
   def find
     search
   rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options).find     # fall back to mysql
+    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).find     # fall back to mysql
   end
 
   def paginate
     search # sphinx search *always* paginates
   rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options).paginate     # fall back to mysql
+    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).paginate     # fall back to mysql
   end
 
   def count
@@ -93,6 +94,6 @@ class PathFinder::Sphinx::Builder < PathFinder::Builder
       :conditions => @conditions, :page => @page, :per_page => @per_page,
       :order => @order, :include => :page).size
   rescue ThinkingSphinx::ConnectionError
-    PathFinder::Mysql::Builder.new(@original_path, @original_options).count        # fall back to mysql
+    PathFinder::Mysql::Builder.new(@original_path, @original_options, @klass).count        # fall back to mysql
   end
 end

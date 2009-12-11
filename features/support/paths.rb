@@ -16,10 +16,17 @@ module NavigationHelpers
       login_path
     when /my dashboard page/
       '/me/dashboard'
+    when /my work page/
+      '/me/work'
     when /my requests page/
       '/me/requests/to_me'
     when /the destroyed groups directory/
       '/groups/directory/destroyed'
+    when /the moderation panel/
+      '/admin/pages'
+
+    when /^the page of #{capture_model}$/          # translate to named route
+      "/page/#{model($1).friendly_url}"
 
     ## PICKLE PATHS
     when /^#{capture_model}(?:'s)? page$/                           # eg. the forum's page
@@ -38,6 +45,10 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? edit profile page$/                     # eg. the groups's edit page
       name = model($1).name
       "/groups/profiles/edit/#{name}"
+
+    when /^#{capture_model}(?:'s)? membership list page$/                     # eg. the groups's membership list page
+      name = model($1).name
+      "/groups/memberships/list/#{name}"
 
     when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
       path_to_pickle $1, :extra => $2                               #  or the forum's edit page

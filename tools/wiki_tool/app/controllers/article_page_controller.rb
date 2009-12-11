@@ -4,7 +4,8 @@ class ArticlePageController < WikiPageController
   # called during BasePage::create
   def build_page_data
     if params[:asset][:uploaded_data].any?
-      @asset = Asset.make!(params[:asset].merge(:parent_page => @page))
+      asset_params= params[:asset].merge(:parent_page => @page)
+      @asset = Asset.create_from_params! asset_params
 
       raise ActiveRecord::RecordInvalid.new(@asset) unless @asset.valid?
       if @asset.thumbnail(:medium)

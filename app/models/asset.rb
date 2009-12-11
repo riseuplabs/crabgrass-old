@@ -279,25 +279,25 @@ class Asset < ActiveRecord::Base
 
   # Auto-determine the appropriate Asset class from the file_data, and calls
   # create on that class.
-  # eg. Asset.make(attributes) ---> ImageAsset.create(attributes)
+  # eg. Asset.create_from_params(attributes) ---> ImageAsset.create(attributes)
   #     if attributes contains an image file.
   # if attributes[:page] is given, an AssetPage is created with the given
   # attributes. The page's title defaults to the original filename of the
   # uploaded asset.
-  def self.make(attributes = nil, &block)
+  def self.create_from_params(attributes = nil, &block)
     begin
-      return self.make!(attributes, &block)
+      return self.create_from_params!(attributes, &block)
     rescue Exception => exc
       return nil
     end
   end
 
-  def self.make!(attributes = nil, &block)
+  def self.create_from_params!(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
     asset_class.create!(attributes, &block)
   end
 
-  # like make(), but builds the asset in memory and does not save it.
+  # like create_from_attributes(), but builds the asset in memory and does not save it.
   def self.build(attributes = nil, &block)
     asset_class = Asset.class_for_mime_type( mime_type_from_data(attributes[:uploaded_data]) )
     asset_class.new(attributes, &block)
