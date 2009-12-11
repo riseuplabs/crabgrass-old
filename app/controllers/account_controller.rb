@@ -22,7 +22,7 @@ class AccountController < ApplicationController
       redirect_to params and return
     end
     unless request.post?
-      render :action => 'login', :layout => 'base_no_sidebar'
+      render :action => 'login', :layout => 'base_for_login'
       return 
     end
     previous_language = session[:language_code]

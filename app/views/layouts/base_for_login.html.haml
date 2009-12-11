@@ -1,8 +1,8 @@
 !!!
 %html{:dir=>language_direction}
 
-  = render :partial => '/layouts/base/head'
-  
+  = render :partial => 'layouts/base/head'
+
   %body{:class=>language_direction}
     %div#page
       %header.page
@@ -10,15 +10,11 @@
         = render :partial => 'layouts/base/header'
 
       //
-      // header
+      // content wrapper
       //
-
-      = render :partial => 'layouts/base/no_sidebar_header'
-
-      //
-      // content
-      //
-
-      = yield 
+      %div#content.login
+        %div#content-container.login
+          %div#content-wrap
+            = yield 
 
       = render :partial => 'layouts/base/footer'
