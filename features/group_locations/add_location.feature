@@ -16,7 +16,7 @@ Background:
 
 Scenario: Adding a country only
   Then I should see "Location"
-  When I set the country "United States"
+  When I set the country "Netherlands"
   And I press "Save"
   Then I should see "Changes saved"
   And I should see that group's country selected

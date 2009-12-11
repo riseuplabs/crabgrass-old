@@ -10,7 +10,7 @@ Given /set the country "([^\"]*)"$/ do |country|
   Given "I select \"#{country}\" from \"profile[country_id]\""
 end
 
-Given /should see #{capture_model} country selected$/ do |group|
+Given /should see #{capture_model}(?:'s)? country selected$/ do |group|
   group = model!(group)
-  Given "the \"profile[country_id]\" select field should have \"#{group.geo_location.geo_country_id}\" selected"
+  Given "the \"profile[country_id]\" select field should have \"#{group.profile.geo_location.country_id}\" selected"
 end

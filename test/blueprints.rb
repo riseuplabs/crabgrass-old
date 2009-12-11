@@ -244,6 +244,6 @@ end
 # Locations
 #
 GeoCountry.blueprint {}
-
 GeoAdminCode.blueprint {}
+GeoLocation.blueprint {}
 
