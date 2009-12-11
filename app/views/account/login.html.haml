@@ -1,0 +1,7 @@
+= render :partial => 'account/login/form'
+
+%div#welcome 
+  %h1
+    = h I18n.t(:welcome_title, :site_title => current_site.title)
+  %p 
+    = format_text first_with_any(I18n.t(:welcome_login_message), I18n.t(:welcome_message))
