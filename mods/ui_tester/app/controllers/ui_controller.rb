@@ -17,7 +17,7 @@ class UiController < ApplicationController
   # this action uses a layout without sidebar container
   #
   def login
-    render :action => 'login', :layout => 'ui_no_sidebar'
+    render :action => 'login', :layout => 'ui_base_login'
   end
 
   def profile

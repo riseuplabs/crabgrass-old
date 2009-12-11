@@ -12,8 +12,9 @@
       //
       // content wrapper
       //
-      = render :partial => 'layouts/ui_no_sidebar_header'
-
-      = yield 
+      %div#content.login
+        %div#content-container.login
+          %div#content-wrap
+            = yield 
 
       = render :partial => 'layouts/ui_footer'
