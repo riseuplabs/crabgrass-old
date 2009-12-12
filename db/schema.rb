@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# This file is auto-generated from the current state of the database. Instead of editing this file,
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091124104449) do
+ActiveRecord::Schema.define(:version => 20091122090007) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -335,8 +335,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
-    t.integer  "yuck_count",  :limit => 11, :default => 0
-    t.boolean  "vetted",                    :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -344,20 +342,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
 
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
-  end
-
-  create_table "moderated_flags", :force => true do |t|
-    t.string   "type",                         :null => false
-    t.datetime "vetted_at"
-    t.integer  "vetted_by_id",   :limit => 11
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id",  :limit => 11
-    t.string   "reason_flagged"
-    t.string   "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",        :limit => 11
-    t.integer  "foreign_id",     :limit => 11, :null => false
   end
 
   create_table "page_histories", :force => true do |t|
@@ -433,7 +417,7 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
     t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -444,9 +428,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
-    t.boolean  "public_requested",                 :default => false
-    t.boolean  "vetted",                           :default => false
-    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -490,9 +471,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
-    t.boolean  "vetted",                      :default => false
-    t.integer  "yuck_count",    :limit => 11, :default => 0
-    t.integer  "page_terms_id", :limit => 11
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -643,7 +621,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.string  "email_sender_name",      :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
-    t.integer "moderation_group_id",    :limit => 11
     t.boolean "require_user_full_info"
   end
 
@@ -852,7 +829,6 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
     t.string   "receive_notifications"
-    t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
   end
 
@@ -860,14 +836,11 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
   add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
   create_table "votes", :force => true do |t|
-    t.integer  "possible_id",  :limit => 11
-    t.integer  "user_id",      :limit => 11
+    t.integer  "possible_id", :limit => 11
+    t.integer  "user_id",     :limit => 11
     t.datetime "created_at"
-    t.integer  "value",        :limit => 11
+    t.integer  "value",       :limit => 11
     t.string   "comment"
-    t.string   "type"
-    t.integer  "votable_id",   :limit => 11
-    t.string   "votable_type"
   end
 
   add_index "votes", ["possible_id"], :name => "index_votes_possible"

@@ -8,7 +8,8 @@ def setup_site_with_moderation
     @mods = Group.make_owned_by :user=>@mod
     @mods.add_user! @mod
     @site = Site.make :moderation_group => @mods,
-      :name => "moderation"
+      :name => "moderation",
+      :domain => "test.host"
     @mods.site = @site
 end
 
