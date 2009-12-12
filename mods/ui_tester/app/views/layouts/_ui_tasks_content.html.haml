@@ -1,11 +1,21 @@
-%h1 wooooo
-
-
-tasks content here
-
-%p That action will require a template that needs to be located at /mods/ui_tester/app/views/ui/dashboard.html.haml
-
-by default the layout used will be ui_base.html.haml located at /mods/ui_tester/app/views/layouts
-A view template¶
-
-The code of a view template for dashboard should look like:
+%header.no-sidebar
+  %section#identity
+    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+      %div.left
+        %h1 the woohoo! group
+        %a{:href => "#"} 
+          Edit Group
+      %div.right 
+        %a.button{:href => "#"} 
+          Create New Task
+%nav.no-sidebar
+  %ul
+    %li.first.current
+      %a{:href => "#"}
+        HOME
+    %li
+      %a{:href => "#"}
+        ALL CONTENT
+    %li
+      %a{:href => "#"}
+        TASKS

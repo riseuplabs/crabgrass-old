@@ -166,6 +166,47 @@ body
         +columns(14)
         +full
         width: 764px
+        
+        header.no-sidebar
+          +clearfix
+          #identity
+            +clearfix
+            height: 67px
+            width: 764px
+          img
+            padding-right: 40px
+          a
+            +hover-link
+            +small-text
+            float: left
+            clear: left
+            color= !light_grey_text
+        nav.no-sidebar
+          +zero
+          width: 764px
+          height: 28px
+          li
+            +zero
+            +bordered(!almost_black)
+            +spaced
+            height: 28px
+            border-left: none
+            background: #fff
+            font-size: 11px
+            a
+              color= !warm_grey_text
+              text-decoration: none
+              font-weight: bold
+              height: 28px
+              line-height: 2.5
+              padding: 8px 10px
+          li.current
+            background= !almost_black
+            a
+              color: #fff
+          li.first
+            +bordered(!almost_black)  
+          
         #identity-info
           width: 204px
           float: left
