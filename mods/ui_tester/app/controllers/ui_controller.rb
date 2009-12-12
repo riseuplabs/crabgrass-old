@@ -27,6 +27,7 @@ class UiController < ApplicationController
   end
   
   def tasks
+    render :action => 'tasks', :layout => 'ui_no_sidebar'
   end
 
   def index
