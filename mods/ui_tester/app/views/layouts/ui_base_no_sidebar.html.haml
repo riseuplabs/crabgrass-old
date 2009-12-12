@@ -10,15 +10,12 @@
         = render :partial => 'layouts/ui_header'
 
       //
-      // header
-      //
-
-      = render :partial => 'layouts/ui_no_sidebar_header'
-
-      //
       // content
       //
+      %div#content
+        = render :partial => 'layouts/ui_breadcrumb'
+        %div#content-container
+          %div#content-wrap
 
-      = yield 
 
       = render :partial => 'layouts/ui_footer'
