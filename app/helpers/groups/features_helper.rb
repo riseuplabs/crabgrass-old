@@ -42,7 +42,6 @@ module Groups::FeaturesHelper
   end
 
   def handle_update_feature_order_javascript(container_id, spinner_id)
-    # require 'ruby-debug';debugger;1-1
     sortable_element container_id,
         :tag => 'tr',
         :handle => 'feature_drag_handle',

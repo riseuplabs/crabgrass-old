@@ -1,6 +1,10 @@
-class ModeratedPage < ModeratedFlag 
+#
+# DEPRECATED: This class is going away and be replaced with
+#             moderated_flags which are polymorphic.
 
-  belongs_to :page, :foreign_key=>'foreign_id'
+class ModeratedPage < ModeratedFlag
+
+  belongs_to :page, :foreign_key=>'flagged_id'
 
   def foreign
     self.page

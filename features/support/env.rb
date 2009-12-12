@@ -48,6 +48,7 @@ Spork.each_run do
   end
 
   require File.expand_path(File.join(File.dirname(__FILE__), "paths"))
+  require File.expand_path(File.join(File.dirname(__FILE__), "scopes"))
 
   def disable_site_testing
     Conf.disable_site_testing

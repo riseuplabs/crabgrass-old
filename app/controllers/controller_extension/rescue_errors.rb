@@ -124,7 +124,11 @@ module ControllerExtension::RescueErrors
   def rescue_action_locally(exception)
     respond_to do |format|
       format.html do
-        super(exception)
+        if RAILS_ENV == "production" or RAILS_ENV == "development"
+          super(exception)
+        else
+          render :text => exception
+        end
       end
       format.js do
         add_variables_to_assigns
