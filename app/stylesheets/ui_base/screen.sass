@@ -116,7 +116,21 @@ body
               color= !light_grey_border
           li.first
             margin-right: 10px
-
+  #breadcrumb
+    +clearfix
+    height: 30px
+    #breadcrumb-container
+      +container
+      div
+        +columns(14)
+        +full
+        margin-top: 4px
+        a
+          +hover-link
+          +small-text
+          +zero
+          text-transform: uppercase
+          color= !almost_black
   #content.login
     background: #fdfbf9 url("/images/new_ui/bg-gradient-noborder.png") repeat-x top
   #content
@@ -124,21 +138,7 @@ body
     +bordered-btm
     color= !medium_grey_text
     background: #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
-    #breadcrumb
-      +clearfix
-      height: 30px
-      #breadcrumb-container
-        +container
-        div
-          +columns(14)
-          +full
-          margin-top: 4px
-          a
-            +hover-link
-            +small-text
-            +zero
-            text-transform: uppercase
-            color= !almost_black
+    
             
     #content-container.login
       background-image: none

@@ -6,14 +6,14 @@
   %body{:class=>language_direction}
     %div#page
       %header.page
-
         = render :partial => 'layouts/ui_header'
-
+        
+      %section#breadcrumb
+        = render :partial => 'layouts/ui_breadcrumb'
       //
       // content
       //
       %div#content
-        = render :partial => 'layouts/ui_breadcrumb'
         %div#content-container
           %div#content-wrap
             = yield
