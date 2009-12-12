@@ -11,7 +11,11 @@ Transform /^country \w+$/ do |step_arg|
 end
 
 When /set the country "([^\"]*)"$/ do |country|
-  Given "I select \"#{country}\" from \"profile[country_id]\""
+  Given "I select \"#{country}\" from select list named \"profile[country_id]\""
+end
+
+When /set the county "([^\"]*)"$/ do |county|
+  Given "I select \"#{county}\" from select list named \"profile[state_id]\""
 end
 
 

@@ -30,7 +30,7 @@ Sham.caption          { Faker::Lorem.words(5).join(" ") }
 #
 Site.blueprint do
   # make sites available from functional tests
-  domain       "test.host"
+  domain       "localhost"
   email_sender "robot@$current_host"
 end
 
