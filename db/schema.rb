@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091209100931) do
+ActiveRecord::Schema.define(:version => 20091208164140) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -335,8 +335,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
-    t.integer  "yuck_count",  :limit => 11, :default => 0
-    t.boolean  "vetted",                    :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -344,20 +342,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
 
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
-  end
-
-  create_table "moderated_flags", :force => true do |t|
-    t.datetime "vetted_at"
-    t.integer  "vetted_by_id",   :limit => 11
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id",  :limit => 11
-    t.string   "reason_flagged"
-    t.string   "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",        :limit => 11
-    t.integer  "flagged_id",     :limit => 11
-    t.string   "flagged_type"
   end
 
   create_table "page_histories", :force => true do |t|
@@ -433,7 +417,7 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
     t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -444,9 +428,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
-    t.boolean  "public_requested",                 :default => false
-    t.boolean  "vetted",                           :default => false
-    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -490,8 +471,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
-    t.boolean  "vetted",                      :default => false
-    t.integer  "yuck_count",    :limit => 11, :default => 0
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -546,7 +525,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
-    t.boolean  "admins_may_moderate"
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -643,7 +621,6 @@ ActiveRecord::Schema.define(:version => 20091209100931) do
     t.string  "email_sender_name",      :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
-    t.integer "moderation_group_id",    :limit => 11
     t.boolean "require_user_full_info"
   end
 
