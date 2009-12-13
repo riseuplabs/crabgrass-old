@@ -1,8 +1,9 @@
 @js
-Feature: Expanding location fields in a form
-  In order to set a country, state, and city
-  I first choose a country and the state options are updated
-  I can then choose a city and matching cities are returned
+Feature: Setting group location 
+  In order to set a location
+  as an administrator of a group
+  I choose a country and optionally choose a state and city
+  and I see the changes saved.
 
 Background:
   Given a group: "rainbow" exist with name: "Rainbow"
@@ -14,10 +15,10 @@ Background:
   And I follow "Edit Settings"
   And I follow "Public Profile"
 
-Scenario: Expanding the state/provinces list
+Scenario: Setting country and county
   When I set the country "Netherlands"
   And I wait for the AJAX call to finish
   And I set the county "Utrecht"
   And I press "Save"
   Then I should see "Changes saved"
-  And country Netherlands should be selected
+  And county Utrecht in country Netherlands should be selected
