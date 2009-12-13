@@ -245,3 +245,8 @@ end
 #
 GeoCountry.blueprint {}
 GeoAdminCode.blueprint {}
+GeoPlace.blueprint {
+  latitude { 1.0 }
+  longitude { 1.0 }
+  geonameid { 2 }
+}

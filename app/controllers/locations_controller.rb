@@ -70,7 +70,7 @@ class LocationsController < ApplicationController
         html << '<ul>'
         @places.each do |place|
           next if place.nil?
-          html << "<li><input type='checkbox' value='#{place.id}' name='profile[city_id]' />#{place.name}, #{place.geo_admin_code.name}</li>"
+          html << "<li><input type='checkbox' value='#{place.id}' name='profile[city_id]' id='city_with_id_#{place.id}' />#{place.name}, #{place.geo_admin_code.name}</li>"
         end
         html << '</ul>'
       end

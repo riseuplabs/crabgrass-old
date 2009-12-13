@@ -33,7 +33,7 @@ module LocationsHelper
     contents = ''
     if @profile.city_id
       contents << '<ul>'
-      contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' 'checked' />#{@profile.geo_city_name}</li>"
+      contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' id='city_with_id_#{@profile.city_id}' 'checked' />#{@profile.geo_city_name}</li>"
       contents << '</ul>'
       display = "inline"
     else

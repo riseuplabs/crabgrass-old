@@ -15,10 +15,20 @@ Background:
   And I follow "Edit Settings"
   And I follow "Public Profile"
 
-Scenario: Setting country and county
+Scenario: Setting country and state 
   When I set the country "Netherlands"
   And I wait for the AJAX call to finish
   And I set the state "Utrecht"
   And I press "Save"
   Then I should see "Changes saved"
   And state Utrecht in country Netherlands should be selected
+
+Scenario: Setting country and state and city where the city exists
+  When I set the country "Netherlands"
+  And I wait for the AJAX call to finish
+  And I set the state "Utrecht"
+  And I set the city "Utrecht"
+  And I press "Save"
+  Then I should see "Changes saved"
+  And state Utrecht in country Netherlands should be selected
+  And the city should be set to "Utrecht"
