@@ -10,20 +10,19 @@ Transform /^country \w+$/ do |step_arg|
   GeoCountry.find_by_name /(\w+)$/.match(step_arg)[0]
 end
 
-Transform /^county \w+ in country \w+$/ do |step_arg|
+Transform /^state \w+ in country \w+$/ do |step_arg|
   country =  GeoCountry.find_by_name /country (\w+)$/.match(step_arg)[1] 
-  county = country.geo_admin_codes.find_by_name /^county (\w+) in/.match(step_arg)[1]
-  [country, county]
+  state = country.geo_admin_codes.find_by_name /^state (\w+) in/.match(step_arg)[1]
+  [country, state]
 end
 
 When /set the country "([^\"]*)"$/ do |country|
   Given "I select \"#{country}\" from select list named \"profile[country_id]\""
 end
 
-When /set the county "([^\"]*)"$/ do |county|
-  Given "I select \"#{county}\" from select list named \"profile[state_id]\""
+When /set the state "([^\"]*)"$/ do |state|
+  Given "I select \"#{state}\" from select list named \"profile[state_id]\""
 end
-
 
 Then /^(country \w+) should be selected$/ do |country|
   Then "country id #{country.id} should be selected"
@@ -33,7 +32,7 @@ Then /^country id (\d+) should be selected$/ do |country_id|
   Then "the \"profile[country_id]\" select field should have \"#{country_id}\" selected"
 end
 
-Then /^(county \w+ in country \w+) should be selected$/ do |res|
+Then /^(state \w+ in country \w+) should be selected$/ do |res|
   Then "the \"profile[state_id]\" select field should have \"#{res[1].id}\" selected"
   Then "country id #{res[0].id} should be selected"
 end

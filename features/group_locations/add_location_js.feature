@@ -18,7 +18,7 @@ Background:
 Scenario: Setting country and county
   When I set the country "Netherlands"
   And I wait for the AJAX call to finish
-  And I set the county "Utrecht"
+  And I set the state "Utrecht"
   And I press "Save"
   Then I should see "Changes saved"
-  And county Utrecht in country Netherlands should be selected
+  And state Utrecht in country Netherlands should be selected
