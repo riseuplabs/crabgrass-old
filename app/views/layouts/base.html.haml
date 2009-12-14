@@ -5,14 +5,15 @@
     %div#page
       %header.page
         =render :partial => '/layouts/base/header'
+      %section#breadcrumb
+        = render :partial => '/layouts/base/breadcrumb'
       %div#content
         %div#content-container
           %div#content-wrap
-            %aside#identity-info
-              = yield :sidebar
+            - if yield :sidebar
+              %aside#identity-info
+                = yield :sidebar
             %div#main-content
               = yield
-      %footer.page
-        footer
-
+      = render :partial => 'layouts/base/footer'
           

@@ -11,12 +11,6 @@
         = leave_group_link
 
 %nav#group
-  %ul
-    %li.first.current
-      = link_to(I18n.t(:home), url_for_group(@group))
-    %li
-      %a{:href => "#"}
-        ALL CONTENT
-    %li
-      = link_to(I18n.t(:tasks), group_search_url(:action => 'tasks'))
+  = render :partial => '/groups/navigation/menu'
+
 

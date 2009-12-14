@@ -33,7 +33,7 @@ class Avatar < ActiveRecord::Base
       when 'xsmall'; '22x22'
       when 'small' ; '32x32'
       when 'medium'; '48x48'
-      when 'large' ; '64x64'
+      when 'large' ; '60x60'
       when 'big' ; '202x202'
       else; '202x202'
     end

@@ -206,6 +206,8 @@ module ApplicationHelper
   end
   
   
+
+  
   # *NEWUI
   #
   # Construct a content tag with a more link
@@ -292,9 +294,11 @@ module ApplicationHelper
 
   def debug_permissions
     if RAILS_ENV == 'development'
-      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
-      permission_methods.collect do |section|
-        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      content_tag :div, :class =>'debug' do
+        permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+        permission_methods.collect do |section|
+          content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+        end
       end
     end
   end
