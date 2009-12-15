@@ -1,8 +1,6 @@
 class GeoLocation < ActiveRecord::Base
 
-  validates_presence_of :geo_country_id, :profile_id
-
-  has_one :profile
+  validates_presence_of :geo_country_id
 
   named_scope :countries_with_visible_profile, 
     :joins => 'join profiles on geo_locations.profile_id=profiles.id',
