@@ -507,6 +507,13 @@ en:
 
   my_pages: "My Pages"
   my_dashboard: "My Dashboard"
+  my_work_headline: "My Work"
+  watched_pages: "My Watched Pages"
+  editor_pages: "My Page Edits"
+  owner_pages: "Pages I Own"
+  unread_pages: "Unread Pages"
+  view_label: "View"
+  select_view_button: "Select View"
 
   my_tasks: "Tasks"
   my_tasks_headline: "My Tasks"

@@ -46,17 +46,19 @@ class PagesController < ApplicationController
     @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : current_site.available_page_types)
   end
 
-  # display a list of pages when the url is ambiguous about which one to show.
-  # login is not required.
-  def search
-  end
-
   # Posts are interpreted as create by the restful side of things
   # So we turn them into a path.
   # Think: This creates a new view on the collection of pages.
   def create
     path = parse_filter_path(params[:search])
     redirect_to pages_url + path
+  end
+
+  # This is a workaround as long as we do not have :only => :index for resources.
+  # Then the /pages/single_item_path routes would point to index anyway.
+  def show
+    @path=params[:id]
+    index
   end
 
   def index

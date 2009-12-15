@@ -81,6 +81,11 @@ class PathFinder::ParsedPath < Array
     # views - we have a number of special views on ones pages
     # we have to hand over the user_id via one field.
     'work' => 1,
+    'unread' => 1,
+    'read' => 1,
+    'owner' => 1,
+    'editor' => 1,
+    'watched' => 1,
     'notifications' => 1,
 
     # moderation

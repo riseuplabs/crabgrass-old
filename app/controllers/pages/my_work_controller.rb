@@ -2,6 +2,14 @@ class Pages::MyWorkController < ApplicationController
 
   before_filter :login_required
 
+
+  def update
+    @view = params[:my_work_view]
+    path = parse_filter_path("/#{@view}/#{current_user.id}")
+    @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
+    render :action => :show
+  end
+
   def show
     path = parse_filter_path("/work/#{current_user.id}")
     @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
