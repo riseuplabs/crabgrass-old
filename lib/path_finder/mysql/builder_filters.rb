@@ -335,6 +335,36 @@ module PathFinder::Mysql::BuilderFilters
 EOSQL
   end
 
+  def filter_owner(user_id)
+    @conditions << 'pages.owner_type = "User" AND pages.owner_id = ?'
+    @values << user_id.to_i
+  end
+
+  def filter_unread(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(!user_participations.viewed)'
+  end
+
+  def filter_read(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.viewed)'
+  end
+
+  def filter_watched(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.watch)'
+  end
+
+  def filter_editor(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.changed_at IS NOT NULL)'
+    @order = ['user_participations.changed_at DESC']
+  end
+
   #--
   ## MODERATION
   #++

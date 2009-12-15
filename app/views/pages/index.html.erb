@@ -19,11 +19,3 @@
   <%= render :partial => 'pages/list_expanded', :locals => {:checkbox => true} %>
 <% end %>
 
-<% form_tag(my_work_path, :method => :put) do -%>
-  <div id='view_selector'>
-    <%= label 'my_work', 'view', I18n.t(:view_label) %>
-    <%= select_tag 'my_work_view', options_for_select(my_work_views) %>
-    <%= submit_tag I18n.t(:select_view_button), :name => 'select' %>
-  </div>
-<% end %>
-
