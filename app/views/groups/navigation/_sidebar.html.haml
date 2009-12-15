@@ -5,7 +5,7 @@
     %h4.first
       = I18n.t(:about)
     %p 
-      = text_with_more( @group.profiles.public.summary_html, :class => 'hola') do
+      = text_with_more( @group.profiles.public.summary_html) do
         %a{:href => "#"} Read More
     = render :partial => '/layouts/base/group_details_links'
 

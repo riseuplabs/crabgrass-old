@@ -33,7 +33,7 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE}) ) 
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) ) 
     @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()

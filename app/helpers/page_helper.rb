@@ -210,7 +210,7 @@ module PageHelper
   #
   # 
   #
-  def title_for(page, participation = nil)
+  def title_with_link_for(page, participation = nil)
     title = link_to(h(page.title), page_url(page))
 
     # this is not used for now 
@@ -224,7 +224,7 @@ module PageHelper
     #end
     return title
   end
-  
+
 
   #
   # used to spit out a column value for a single row.
