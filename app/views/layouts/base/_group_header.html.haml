@@ -1,14 +1,16 @@
 %section#identity-name
-  %h1 
-    = @group.full_name
+  %div.left
+    %h1
+      = @group.full_name
+    = edit_settings_link 
+
   %div#group-action
+    = create_page_link
     - if may_join_chat?
-      = link_to(I18n.t(:group_join_chat), {:controller => 'chat', :action => 'channel', :id => @group.name}, :class => 'chat small_icon chat2_16', :id => 'chat')
-    %ul
-      %li
-        = edit_settings_link 
-      %li
-        = leave_group_link
+      %a#chat.small_icon.chat2_16{:href => url_for({:controller => 'chat', :action => 'channel', :id => @group.name})}  
+        %strong
+          = I18n.t(:group_join_chat)
+    = leave_group_link
 
 %nav#group
   = render :partial => '/groups/navigation/menu'

@@ -13,6 +13,7 @@ class AccountController < ApplicationController
     if logged_in?
       redirect_to me_url
     end
+    render :action => 'login', :layout => 'base_for_login'
   end
 
   def login
