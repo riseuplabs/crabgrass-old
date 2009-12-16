@@ -111,13 +111,22 @@ class StatsController < ApplicationController
       when :week:  1.week.seconds
       when :month: 1.month.seconds
     end
-    model.connection.select_rows("
-       SELECT UNIX_TIMESTAMP(#{table}.#{field}), count(*)
+    rows=model.connection.select_rows("
+       SELECT #{time_frame} * (UNIX_TIMESTAMP(#{table}.#{field}) DIV #{time_frame}), count(*)
        FROM #{table}
        #{where}
        GROUP BY (#{now} - UNIX_TIMESTAMP(#{table}.#{field})) DIV #{time_frame}
        ORDER BY #{table}.#{field}
     ")
+    hash=Hash.new
+    start = Time.at(rows.first.first.to_i) if start == 0
+    rows.each {|r| hash[r.first.to_i]=r[1].to_i}
+    clean_start=(start.utc.to_i / time_frame.to_i) * time_frame.to_i
+    no_steps=(Time.now.utc.to_i - clean_start) / time_frame.to_i
+    (0..no_steps).to_a.map do |n|
+      time=clean_start+n*time_frame
+      [time, hash[time] || 0]
+    end
   end
 
   # takes the results of a time series data and sums up the counts
