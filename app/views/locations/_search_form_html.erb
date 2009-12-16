@@ -1,12 +1,9 @@
-<%= form_tag('/groups/directory/search') %>
-<div id='country_dropdown'>Country: <%= country_dropdown %></div>
-<div id='state_dropdown' style='display: none'>
-  State/Province: <select id='select_state_id' name='state_id'></select>
-</div>
-<div id='city_text' style='display: none'>
-City: <input name='city_name' id='select_city'>
-<br> 
-<%= submit_tag('filter by location') %>
-</div>
-</form>
+<ul class='plain'>
+<li id='select_country'>Country: 
+  <%= country_dropdown %>
+</li>
+<%= state_dropdown %>
+<%= city_text_field %>
+<%= city_id_field %>
+</ul>
 

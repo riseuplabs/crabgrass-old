@@ -13,22 +13,28 @@ module LocationsHelper
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, select_id='select_state_id')
+    display = _display_value
+    html = "<li id='state_dropdown' style='display: #{display}'>State/Province:"
     name = _field_name('state_id', object, method)
     if country_id.nil?
-      select(object, method, '', {:include_blank => true}, {:id=>select_id})
+      html << select(object, method, '', {:include_blank => true}, {:id=>select_id})
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => select_id})
+      html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => select_id})
     end
+    html << '</li>'
   end
 
   def city_text_field(object=nil, method=nil, country_select_id='select_country_id', state_select_id='select_state_id')
+    display = _display_value
+    html = "<li id='city_text' style='display: #{display}'>City: "
     name = _field_name('city_id', object, method)
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
       :with => "'country_id='+$('#{country_select_id}').value+'&admin_code_id='+$('#{state_select_id}').value+'&city='+value"
     )
-    text_field(object, method, {:onblur => onblur, :name => name})
+    html << text_field(object, method, {:onblur => onblur, :name => name})
+    html << '</li>'
   end
 
   def city_id_field
@@ -42,8 +48,8 @@ module LocationsHelper
     else
       display = "none"
     end
-    html << "<div id='city_results' style='display:#{display}'>"
-    html << contents + "</div>"
+    html << "<li id='city_results' style='display:#{display}'>"
+    html << contents + "</li>"
   end
 
 #####
@@ -81,5 +87,13 @@ module LocationsHelper
       altname
     end
   end
+
+  def _display_value
+    if @profile and @profile.country_id
+      'inline'
+    else
+      'none'
+    end
+  end 
 
 end
