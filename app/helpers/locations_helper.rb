@@ -1,31 +1,34 @@
 module LocationsHelper
 
   # <%= select('group','location', GeoCountry.find(:all).to_select(:name, :code), {:include_blank => true}) %>
-  def country_dropdown(object, method, select_id, replace_id)
+  def country_dropdown(object=nil, method=nil, select_id='select_country_id', replace_id='select_state_id')
+    name = _field_name('country_id', object, method)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
       :with => "'replace_id=#{replace_id}&country_code='+value"
 #      :loading => add_class_name('geo_country_id', 'spinner_icon'),
 #      :complete => remove_class_name('geo_country_id','spinner_icon')
     ) 
-    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:id => select_id, :onchange => onchange})
+    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => select_id, :onchange => onchange})
   end
 
-  def state_dropdown(object, method, country_id, select_id)
+  def state_dropdown(object=nil, method=nil, country_id=nil, select_id='select_state_id')
+    name = _field_name('state_id', object, method)
     if country_id.nil?
       select(object, method, '', {:include_blank => true}, {:id=>select_id})
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:id => select_id})
+      select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => select_id})
     end
   end
 
-  def city_text_field(object, method, country_select_id, state_select_id)
+  def city_text_field(object=nil, method=nil, country_select_id='select_country_id', state_select_id='select_state_id')
+    name = _field_name('city_id', object, method)
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
       :with => "'country_id='+$('#{country_select_id}').value+'&admin_code_id='+$('#{state_select_id}').value+'&city='+value"
     )
-    text_field(object, method, {:onblur => onblur})
+    text_field(object, method, {:onblur => onblur, :name => name})
   end
 
   def city_id_field
@@ -63,6 +66,14 @@ module LocationsHelper
       :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
     )
     select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
+  end
+
+  def _field_name(altname, object=nil, method=nil)
+    if !object.nil? and !method.nil?
+      object + "[#{method}]"
+    else
+      altname
+    end
   end
 
 end

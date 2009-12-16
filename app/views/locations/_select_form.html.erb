@@ -1,11 +1,11 @@
 <ul class='plain'>
 <li id='select_country'>Country: 
-  <%= country_dropdown('profile','country_id', 'select_country_id', 'select_state_id') %>
+  <%= country_dropdown('profile','country_id') %>
 </li>
 <li id='select_state'>State/Province: 
-  <%= state_dropdown('profile','state_id', @profile.country_id, 'select_state_id') %>
+  <%= state_dropdown('profile','state_id', @profile.country_id) %>
 </li>
-<li>City: <%= city_text_field('profile','geo_city_name', 'select_country_id', 'select_state_id') %>
+<li>City: <%= city_text_field('profile','geo_city_name') %>
 <%= city_id_field %>
 </li>
 </ul>
