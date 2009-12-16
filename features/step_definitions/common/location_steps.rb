@@ -18,11 +18,23 @@ Transform /^state \w+ in country \w+$/ do |step_arg|
 end
 
 When /set the country "([^\"]*)"$/ do |country|
-  Given "I select \"#{country}\" from select list named \"profile[country_id]\""
+  When "I select \"#{country}\" from select list named \"profile[country_id]\""
 end
 
+When /search by country "([^\"]*)"$/ do |country|
+  When "I select \"#{country}\" from select list named \"country_id\""
+end
+
+#When /select country "([^\"]*)" from select list "([^\"]*)"$/ do |country, select_name|
+#  When "I select \"#{country}\" from select list named \"#{select_name}\""
+#end
+
 When /set the state "([^\"]*)"$/ do |state|
-  Given "I select \"#{state}\" from select list named \"profile[state_id]\""
+  When "I select \"#{state}\" from select list named \"profile[state_id]\""
+end
+
+When /search by state "([^\"]*)"$/ do |state|
+  When "I select \"#{state}\" from select list named \"state_id\""
 end
 
 When /set the city "([^\"]*)"$/ do |city|

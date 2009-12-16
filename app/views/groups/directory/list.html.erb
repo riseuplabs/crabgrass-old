@@ -19,7 +19,7 @@
 <% end %>
 </div>
 
-<% if @include_location_filter %>
+<% if @include_location_filter_DEPRECATED %>
   <%= javascript_tag remote_function(:url => {:controller=>'/locations', :action=>'countries_with_profiles_options', :replace_id => 'select_country_id'}) %>
 <% end %>
 

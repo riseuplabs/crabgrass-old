@@ -24,6 +24,8 @@ module NavigationHelpers
       '/groups/directory/destroyed'
     when /the moderation panel/
       '/admin/pages'
+    when /the group directory/
+      '/groups/directory/search'
 
     when /^the page of #{capture_model}$/          # translate to named route
       "/page/#{model($1).friendly_url}"

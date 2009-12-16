@@ -46,6 +46,9 @@ module LocationsHelper
     html << contents + "</div>"
   end
 
+#####
+##### should be removed if we end up not limiting dropdown in directory search to countries/states with profiles
+#####
   def select_search_countries(replace_id)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
@@ -67,6 +70,9 @@ module LocationsHelper
     )
     select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
   end
+#####
+##### end should be removed
+#####
 
   def _field_name(altname, object=nil, method=nil)
     if !object.nil? and !method.nil?
