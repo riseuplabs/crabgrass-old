@@ -1,7 +1,7 @@
 class UpdateSiteDomains < ActiveRecord::Migration
   def self.up
     Site.all.each do |site|
-      site.domain.sub!(/^(?:my\.)?(\w*)\.mruyouth/, "my.#{$1}")
+      site.domain.sub!(/^(\w+)\.mruyouth/, 'my.\1')
       site.save!
     end
   end
