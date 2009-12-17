@@ -15,6 +15,7 @@
   - if @group
     %h1
       = I18n.t(:create_a_new_thing, :thing => I18n.t(:page).downcase)
+    = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b, @group.display_name)) 
 
   - items = []
 
