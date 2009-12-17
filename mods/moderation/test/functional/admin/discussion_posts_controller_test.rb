@@ -40,8 +40,8 @@ class Admin::DiscussionPostsControllerTest < ActionController::TestCase
   def assert_in_view(view, objects)
     get :index, :view => view
     assert_response :success
-    foreign_ids = assigns(:flagged).map(&:foreign_id)
-    assert_equal objects.map(&:id), foreign_ids
+    assert_equal objects.map(&:id), assigns(:flagged).map(&:id)
+    assert_equal objects.map(&:type), assigns(:flagged).map(&:type)
   end
 
   def assert_none_in_view(view)
@@ -51,6 +51,6 @@ class Admin::DiscussionPostsControllerTest < ActionController::TestCase
   end
 
   def make_yucky(comment, reason = 'language')
-    ModeratedPost.create(:post => comment, :reason_flagged => reason)
+    ModeratedFlag.create(:flagged => comment, :reason_flagged => reason)
   end
 end

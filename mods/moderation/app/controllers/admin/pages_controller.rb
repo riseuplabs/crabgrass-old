@@ -14,15 +14,12 @@ class Admin::PagesController < Admin::BaseController
 
     options = moderation_options.merge :page => params[:page]
     @flagged = Page.paginate_by_path(path_for_view, options)
-     #@pages = (@group ? @group.pages : Page).paginate(options.merge(:page => params[:page]))
-     #@flagged = ModeratedPage.display_flags(params[:page], view)
   end
 
   # for vetting:       params[:page][:vetted] == true
   # for hiding:        params[:page][:flow]   == FLOW[:deleted]
   # for making public: params[:page][:public] == true
   def update
-    @page = Page.find(params[:id])
     @page.update_attributes(params[:page])
     redirect_to :action => 'index', :view => params[:view]
   end
@@ -34,33 +31,31 @@ class Admin::PagesController < Admin::BaseController
 
   # Approves a page by marking :vetted = true
   def approve
-    @mpage.approve
+    @flag.approve
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Reject a page by setting flow=FLOW[:deleted], the page will now be 'deleted'(hidden)
   def trash
-    @mpage.trash
+    @flag.trash
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # undelete a page by setting setting flow=nil, the page will now be 'undeleted'(unhidden)
   def undelete
-    @mpage.undelete
+    @flag.undelete
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # set page.public = true for a page which has its flag public_requested = true
   def update_public
-    page = Page.find params[:id]
-    page.update_attributes({:public => params[:public], :public_requested => false})
+    @page.update_attributes({:public => params[:public], :public_requested => false})
     redirect_to :action => 'index', :view => params[:view]
   end
 
 # set page.public = false
   def remove_public
-    page = Page.find params[:id]
-    page.update_attributes({:public => false, :public_requested => true})
+    @page.update_attributes({:public => false, :public_requested => true})
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -98,12 +93,9 @@ class Admin::PagesController < Admin::BaseController
 
   prepend_before_filter :fetch_flagged
   def fetch_flagged
-    if params[:id]
-      @mpage = ModeratedPage.find_by_foreign_id(params[:id])
-      @page = Page.find params[:id]
-    else
-      return
-    end
+    return unless params[:id]
+    @page = Page.find params[:id]
+    @flag = @page.try.moderated_flags.first
   end
 
 end

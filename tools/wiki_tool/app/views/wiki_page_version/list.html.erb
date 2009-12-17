@@ -10,7 +10,7 @@
   <% for version in @wiki.versions %>
   <% url = page_url(@page, :action => "version-show", :id => version.version) %>
   <tr class="<%= cycle('odd','even') %>">
-    <td><%= link_to I18n.t(:version_number, :number => version.version), url %></td>
+    <td><%= link_to I18n.t(:version_number, :version => version.version), url %></td>
     <td><%= link_to full_time(version.updated_at), url %></td>
     <td><%= link_to_user(version.user, :avatar => :xsmall) if version.user %></td>
     <td><%= link_line(

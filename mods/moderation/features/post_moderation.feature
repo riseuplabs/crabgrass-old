@@ -32,7 +32,7 @@ Scenario: I should see all posts on the "all" tab with pagination
 
 Scenario: I should only see new moderated posts in new
   Given a post: "smelly" comments that page with body: "Smelly Post"
-  And a moderated_post exists with post: that post
+  And a moderated_flag exists with flagged: that post
   When I follow "Comment Moderation"
   Then I should see "Smelly Post"
   When I follow "vetted"
