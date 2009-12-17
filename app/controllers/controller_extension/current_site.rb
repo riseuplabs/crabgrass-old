@@ -16,7 +16,7 @@ module ControllerExtension::CurrentSite
         host = request.host.sub(/^staging\./, '')
         site = Site.for_domain(host).find(:first)
         host = host.sub(/^www\./, 'my.')
-        host = host.sub(/^(?:my\.)?(\w+)\.mruyouth/, "my.\1")
+        host = host.sub(/^(?:my\.)?(\w+)\.mruyouth/, 'my.\1')
         site ||= Site.for_domain(host).find(:first)
         site ||= Site.default
         site ||= Site.new(:domain => host)
