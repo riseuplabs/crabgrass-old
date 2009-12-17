@@ -12,13 +12,18 @@
 
 %section#main-content.no-sidebar
 
+  .big_icon{ :class => "#{@page_class.icon}_48"}
+    %h1
+      = I18n.t(:create_a_new_thing, :thing => content_tag(:i, page_class))
+
+  - if @group
+    = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
+
+    
   - sections = [] if sections.nil?
   - multipart = sections.grep 'file'
 
-  - @title_box = capture do 
-    .big_icon{ :class => "#{@page_class.icon}_48"}
-      %h1
-        = I18n.t(:create_a_new_thing, :thing => content_tag(:i, page_class.downcase))
+  - #@title_box = capture do 
 
   - if @group
     - @info_box = capture do
@@ -36,10 +41,10 @@
             = render :partial => "base_page/create/#{section}", :locals => {:form => form}
 
         = render :partial => 'base_page/create/sharing', :locals => {:form => form}
-    .form_buttons
-      = submit_tag "hidden", :name => 'create', :style => 'display:none'
-      = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'
-      = submit_tag I18n.t(:create_page_button, :page_class => I18n.t(:page)) + ' &raquo;', :name => 'create'
+      .form_buttons
+        = submit_tag "hidden", :name => 'create', :style => 'display:none'
+        = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'
+        = submit_tag I18n.t(:create_page_button, :page_class => I18n.t(:page)) + ' &raquo;', :name => 'create'
 
   = javascript_tag %( $("page_title").focus() )
 

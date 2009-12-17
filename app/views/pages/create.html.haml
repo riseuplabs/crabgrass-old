@@ -15,15 +15,17 @@
   - if @group
     %h1
       = I18n.t(:create_a_new_thing, :thing => I18n.t(:page).downcase)
-    
-    = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b, @group.display_name))
 
   - items = []
+
   .create_page
+
     - tree_of_page_types(@available_tools, {:simple => true}).collect do |grouping|
       - items << capture_haml do
+
         %h2.dark
           = grouping[:display]
+
         - grouping[:pages].collect do |page_class|
           - link_text = [content_tag(:b, page_class.class_display_name, :class =>  "small_icon #{page_class.icon}_16"), '<br/>', page_class.class_description].join
           .hover
