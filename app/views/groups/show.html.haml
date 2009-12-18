@@ -2,8 +2,19 @@
   %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
 
 - content_for :sidebar do
-  = render :partial => 'layouts/base/groups/sidebar'
+  = render :partial => 'groups/navigation/sidebar'
 
 
-= render :partial => 'layouts/base/group_content'
+%header
+  = render :partial => '/layouts/base/group_header'
+
+%section#helpful-links
+  = render :partial => '/layouts/base/group_links'
+
+%section#wiki
+  = render :partial => '/layouts/base/group_wiki'
+
+= render :partial => '/layouts/base/announcements'
+
+= render :partial => '/pages/list'
 

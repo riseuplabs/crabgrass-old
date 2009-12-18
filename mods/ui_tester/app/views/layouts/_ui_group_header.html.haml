@@ -1,15 +1,17 @@
 %section#identity-name
-  %h1 GroupName GroupNmeLong...
+  %div.left
+    %h1 GroupName GroupNmeLong...
+    %a{:href => "#"} 
+      Edit Group
   %div#group-action
+    %div#contribute
+      %span.small_icon.cross_20
+        %a{:href => "#"} 
+          CONTRIBUTE
     %a#chat.small_icon.chat2_16{:href => "#"}  
       %strong Join Group Chat
-    %ul
-      %li
-        %a{:href => "#"}
-          Edit Group
-      %li
-        %a{:href => "#"}
-          Leave Group 
+    %a{:href => "#"} 
+      Leave Group 
 %nav#group
   %ul
     %li.first.current

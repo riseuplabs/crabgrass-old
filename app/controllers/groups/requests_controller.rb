@@ -90,7 +90,7 @@ class Groups::RequestsController < Groups::BaseController
   # create a request to destroy (aka a destroy proposal)
   def create_destroy
     begin
-      RequestToDestroyOurGroup.create! :created_by => current_user, :recipient => @group, :requestable => @group
+      RequestToDestroyOurGroup.create! :created_by => current_user, :recipient => @group
       flash_message :success => I18n.t(:request_to_destroy_sent)
     rescue Exception => exc
       flash_message :exception => exc

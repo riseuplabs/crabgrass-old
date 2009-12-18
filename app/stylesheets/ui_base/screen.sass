@@ -9,6 +9,8 @@
 @import ui_base/base.sass
 @import ui_base/colors.sass
 @import ui_base/fonts.sass
+@import ui_base/modalbox.sass
+@import ui_base/oldcss_to_be_updated.sass
 /* end */
 
 body
@@ -107,10 +109,13 @@ body
           li
             +small-text
             a
-              +medium-link
-              margin-left: 10px
+              +blue-link
+              margin-left: 4px
+            span
+              margin-left: 2px
+              color= !light_grey_border
           li.first
-            margin-right: 4px
+            margin-right: 10px
   #breadcrumb
     +clearfix
     height: 30px
@@ -126,13 +131,32 @@ body
           +zero
           text-transform: uppercase
           color= !almost_black
-
-          
+  #content.login
+    background: #fdfbf9 url("/images/new_ui/bg-gradient-noborder.png") repeat-x top
   #content
     +clearfix
     +bordered-btm
     color= !medium_grey_text
     background: #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
+    
+            
+    #content-container.login
+      background-image: none
+      background-color: #fff
+      padding-top: 40px
+      #content-wrap
+        form#entry
+          +columns(5,14)
+          +alpha(14)
+          div
+            label, a
+              display: block
+        div#welcome
+          +columns(8,14)
+          +omega(14)
+          p
+            margin-top: 14px
+  
     #content-container
       +container
       padding-bottom: 100px
@@ -141,6 +165,48 @@ body
         +columns(14)
         +full
         width: 764px
+        header.no-sidebar
+          +clearfix
+          #identity
+            +clearfix
+            height: 67px
+            width: 764px
+          img
+            padding-right: 40px
+          a
+            +hover-link
+            +small-text
+            float: left
+            clear: left
+            color= !light_grey_text
+        nav.no-sidebar
+          +zero
+          width: 764px
+          height: 28px
+          li
+            +zero
+            +bordered(!almost_black)
+            +spaced
+            height: 28px
+            border-left: none
+            background: #fff
+            font-size: 11px
+            a
+              color= !warm_grey_text
+              text-decoration: none
+              font-weight: bold
+              height: 28px
+              line-height: 2.5
+              padding: 8px 10px
+          li.current
+            background= !almost_black
+            a
+              color: #fff
+          li.first
+            +bordered(!almost_black)  
+        #main-content.no-sidebar
+          width: 764px
+          margin-top: 14px
         #identity-info
           width: 204px
           float: left
@@ -166,16 +232,6 @@ body
                 width: 204px
                 font-size: 11px
                 
-          #contribute
-            +columns(4,4)
-            margin: 20px 0 0
-            height: 20px
-            width: 204px
-            padding: 10px 0 6px
-            background-color: #78be63
-            border: 1px solid #448c3b
-            h3
-              color: #fff
           #identity-meta
             +columns(4,4)
             +bordered
@@ -201,7 +257,7 @@ body
                 h3, a
                   display: inline
                 a
-                  +medium-link
+                  +blue-link(10px)
                   padding-left: 8px
                   font-weight: normal
               h4, h5
@@ -218,15 +274,24 @@ body
               p
                 width: 184px
                 a
-                  +medium-link
+                  +blue-link(10px)
               ul#details
                 +clearfix
                 width: 184px
-              li
-                width: 92px
-                margin: 10px 0 0 0
-                padding: 0
-            #featured
+                li
+                  +spaced
+                  border: none
+                  width: 68px
+                  margin: 10px 0 0 0
+                  padding: 0 0 0 24px
+                  min-height: 24px
+                  font-size: 9px
+                  line-height: 1
+                  color: !medium-grey-text
+                  span
+                    letter-spacing: normal
+                    font-size: 8px
+              #featured
               li
                 padding: 12px 0 4px
                 margin: 12px 0 0
@@ -240,14 +305,9 @@ body
                     padding: 0 0 10px
                   p
                     padding-bottom: 6px
-                  ul.tags
-                    +clearfix
-                    +zero
-                    li
-                      border: none
-                      +zero
-                      a
-                        +medium-link(10px)
+                  span.tags
+                    a
+                      +blue-link(10px)
               li.first
                 +zero
                 border: none
@@ -257,12 +317,10 @@ body
               ul#details
                 +clearfix
                 width: 184px
-              li
-                width: 164px
-                padding-top: 4px
-                
-                
-              
+                li
+                  width: 164px
+                  padding-top: 4px
+     
         #main-content
           width: 540px
           float: left
@@ -276,7 +334,7 @@ body
               +columns(10,10)
               margin: 0
               width: 540px
-              height: 50px
+              height: 67px
               h1
                 float: left
                 display: inline
@@ -284,37 +342,54 @@ body
                 i.normal
                   font-size: 18px
                   color= !warm_grey_text
+              a
+                +hover-link
+                +small-text
+                float: left
+                clear: left
+                color= !light_grey_text
               #group-action
-                margin: 0
+                +zero
+                width: 120px
                 display: inline
                 float: right
+                text-align: right
                 a
                   +hover-link
                   +small-text
+                  color= !light_grey_text
                 #chat
-                  margin: 0
-                  display: inline
-                  float: right
+                  margin: 10px 0 2px
                   color= !warm_grey_text
-                ul
-                  li
-                    +small-text
-                    +zero
+                #contribute
+                  +zero
+                  float: right
+                  height: 24px
+                  width: 120px
+                  padding-top: 4px
+                  background-color: #78be63
+                  border: 1px solid #448c3b
+                  .small_icon
+                    margin-left: 4px
+                    height: 20px
                     a
-                      color= !light_grey_text
-                      padding-left: 8px
-                      
-              
+                      +spaced
+                      +clearfix
+                      padding: 5px 0 0 2px
+                      font-weight: bold
+                      font-size: 11px
+                      color: #fff      
+        
             nav#group, #login-date
               +columns(10,10)
               +zero
               width: 540px
-              height: 37px
+              height: 28px
               li
                 +zero
                 +bordered(!almost_black)
                 +spaced
-                height: 37px
+                height: 28px
                 border-left: none
                 background: #fff
                 font-size: 11px
@@ -322,8 +397,8 @@ body
                   color= !warm_grey_text
                   text-decoration: none
                   font-weight: bold
-                  height: 37px
-                  line-height: 3.5
+                  height: 28px
+                  line-height: 2.5
                   padding: 8px 10px
               li.current
                 background= !almost_black
@@ -347,14 +422,21 @@ body
             width: 540px
             h4, ul
               display: inline
+            ul
+              +clearfix
             h4
               float: left
               line-height: 1.1
+              margin-right: 2px
             li
               +zero
+              line-height: 1.3
+              margin-left: 6px
               a
-                +medium-link
-                padding-left: 12px
+                +blue-link
+                padding-left: 2px
+              span
+                color= !light_grey_border
           #wiki
             +columns(10,10)
             +bordered-top-btm
@@ -369,7 +451,7 @@ body
             .wiki
               width: 540px
               a
-                +medium-link
+                +blue-link
           #announcements
             +columns(10,10)
             margin: 24px 0 0
@@ -387,8 +469,8 @@ body
             h4
               line-height: 1.4
             a
-              +medium-link
-          #pages
+              +blue-link
+          #pages, #contributions
             +columns(10,10)
             margin: 30px 0 0
             width: 540px
@@ -405,8 +487,9 @@ body
               float: right
               display: inline
               a
-                +medium-link
+                +blue-link
               
+          #pages
             article
               +columns(10,10)
               +bordered-btm(!light_grey_border)
@@ -423,20 +506,25 @@ body
                   display: inline
                   width: 75px
                   height: 75px
-                  padding: 0 4px 4px 0
+                  padding: 0 6px 6px 0
                 h4
                   float: left
                   display: inline
                   font-size: 14px
+                  margin-bottom: 2px
                   color= !blue
                 p
                   float: left
                   display: inline
                   padding-left: 20px
                   a
-                    +medium-link
-                a   
-                  +medium-link(10px)
+                    +blue-link
+                  .tags
+                    +clearfix
+                    a   
+                      +blue-link(10px)
+                p.img
+                  width: 360px
               .pages-status
                 +columns(1,10)
                 +omega(10)
@@ -457,6 +545,56 @@ body
               margin: 0
               .pagination
                 float: right
+          #info-box 
+            +columns(10,10)
+            +clearfix
+            padding: 0 0 8px
+            width: 540px
+          #info-box  
+            #say-box
+              +columns(10,10)
+              +clearfix
+              width: 540px
+              img
+                float: left
+                margin: 0 6px
+              #say
+                input.textarea
+                  display: inline
+                  border: 1px solid #ccc
+                  width: 300px
+                  height: 16px
+            #activities
+              +bordered-btm(!light_grey_border)
+              +columns(10,10)
+              +clearfix
+              width: 540px
+              margin: 20px 0 0
+              .left
+                +columns(5,10)
+                +alpha(10)
+                +clearfix
+              .right
+                +columns(5,10)
+                +omega(10)
+                +clearfix 
+              ul
+                a
+                  +hover-link
+                li
+                  margin-bottom: 4px
+                  line-height: 1.4
+                  img
+                    float: left
+                    padding: 6px 6px 6px 0
+                  label.date
+                    font-size: 9px
+                    color= !lighter_grey_text
+
+
+
+
+
 
   footer.page
     +container
@@ -465,3 +603,13 @@ body
       +full
       li
         color: #f60
+    div.debug
+      ul
+        padding: 0.1em 0 0.1em 1em
+        list-style-position: inside
+        list-style-type: disc
+        li
+          display: list-item
+          padding: 0.1em 0 0.1em 1em
+          float: none
+          

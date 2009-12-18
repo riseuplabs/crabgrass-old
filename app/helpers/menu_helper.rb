@@ -37,36 +37,39 @@ module MenuHelper
   ##
   ## MENUS
   ##
-  def menu(id, label, url, options={})
+  def menu(label, url, options={})
+    active = options[:active] || (url_for(url) == request.path)
+    selected_class = active ? (options[:selected_class] || 'current') : ''
     content_tag(:li,
-      link_to_active(label.upcase, url, options[:active]),
-      :class => [(options[:active] && 'active')].combine,
-      :id => id
+      link_to(label.upcase, url, options),
+      options.merge(
+        { :class => [options[:class], selected_class].join(' ')})
     )
   end
 
   def home_option
     menu(
-      'menu_home',
       I18n.t(:menu_home),
       '/',
-      :active => @active_tab == :home
+      {
+        :active => @active_tab == :home,
+        :id => 'menu_home'
+      }
     )
   end
 
   def me_option
     menu(
-      "menu_me",
       I18n.t(:menu_me),
       "/me/dashboard",
       :active => @active_tab == :me,
-      :menu_items => menu_items('me')
+      :menu_items => menu_items('me'),
+      :id => 'menu_me'
     )
   end
 
   def people_option
     menu(
-      "menu_people",
       I18n.t(:menu_people),
       people_directory_url(:friends),
       :active => @active_tab == :people,
@@ -75,13 +78,13 @@ module MenuHelper
         :heading  => I18n.t(:my_contacts),
         :see_all_url => people_directory_url(:friends),
         :submenu => 'people'
-      })
+      }),
+      :id => 'menu_people'
     )
   end
 
   def groups_option
     menu(
-      "menu_groups",
       I18n.t(:menu_groups),
       group_directory_url,
       :active => @active_tab == :groups,
@@ -90,31 +93,32 @@ module MenuHelper
         :heading => I18n.t(:my_groups),
         :see_all_url => group_directory_url(:action => 'my'),
         :submenu => 'groups'
-      })
+      }),
+      :id => 'menu_groups'
     )
   end
 
   def networks_option
     menu(
-      "menu_networks",
       I18n.t(:menu_networks),
-      network_directory_url,
+      network_directory_url, 
       :active => @active_tab == :networks,
       :menu_items => menu_items('boxes', {
         :entities => current_user.primary_networks.most_active,
         :heading => I18n.t(:my_networks),
         :see_all_url => network_directory_url(:action => 'my'),
         :submenu => 'networks'
-      })
+      }),
+      :id => 'menu_networks'
     )
   end
 
   def chat_option
-    menu "menu_chat", I18n.t(:menu_chat), '/chat', :active => @active_tab == :chat
+    menu I18n.t(:menu_chat), '/chat', :active => @active_tab == :chat, :id => 'menu_chat'
   end
 
   def admin_option
-    menu "menu_admin", I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin
+    menu I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin, :id => 'menu_admin'
   end
 
   ##

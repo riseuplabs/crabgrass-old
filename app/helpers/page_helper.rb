@@ -210,7 +210,7 @@ module PageHelper
   #
   # 
   #
-  def title_for(page, participation = nil)
+  def title_with_link_for(page, participation = nil)
     title = link_to(h(page.title), page_url(page))
 
     # this is not used for now 
@@ -224,7 +224,7 @@ module PageHelper
     #end
     return title
   end
-  
+
 
   #
   # used to spit out a column value for a single row.
@@ -554,21 +554,28 @@ module PageHelper
   end
 
   def create_page_link(group=nil, options={})
-    url = {:controller => '/pages', :action => 'create'}
-    if group
-      url[:group] = group.name
+    if may_create_group_page?
+      url = {:controller => '/pages', :action => 'create'}
+      if group
+        url[:group] = group.name
+      end
+      #  icon = 'page_add'
+      #  text = I18n.t(:contribute_group_content_link, :group_name => group.group_type.titlecase)
+      #  klass = 'contribute group_contribute'
+      icon = 'cross'
+      text = I18n.t(:contribute_content_link).upcase
+      klass = options[:class] || 'contribute'
+      #klass = 'contribute' if options[:create_page_bubble]
+
+      content_tag(:div,
+        content_tag(:span,
+            link_to(text, url ),
+          :class => "small_icon #{icon}_20"),
+        :class => klass, :id => 'contribute'
+      )
+    else
+      ""
     end
-    #  icon = 'page_add'
-    #  text = I18n.t(:contribute_group_content_link, :group_name => group.group_type.titlecase)
-    #  klass = 'contribute group_contribute'
-    icon = 'plus'
-    text = I18n.t(:contribute_content_link)
-    klass = options[:class] || 'contribute'
-    #klass = 'contribute' if options[:create_page_bubble]
-    content_tag(:div,
-      link_to(text, url, :class => "small_icon #{icon}_16"),
-      :class => klass
-    )
   end
 
   #  group -- what group we are creating the page for

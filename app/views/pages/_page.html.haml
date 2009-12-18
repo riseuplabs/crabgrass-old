@@ -1,0 +1,8 @@
+%article
+  %section.pages-info
+    = cover_for page
+    %h4.small_icon.page_text_blue_16 
+      = page.title
+    = text_with_more(page.summary, :p, :more_url=> page_url(page), :length => 300)
+  = last_updated_box_for page
+    

@@ -6,52 +6,25 @@
     f.row do |r|
       r.label I18n.t(:visibility)
       r.checkboxes do |list|
-        list.checkbox do |cb|
-          cb.label I18n.t(:group_publicly_visible, :group => @group.group_type)
-          cb.input check_box(:profile, :may_see, :onclick => 'setClassVisibility(".details", this.checked)')
-          cb.info I18n.t(:group_publicly_visible_description, :domain => current_site.domain)
-        end
-        if @group.parent_id.nil?
-          list.checkbox(:class => 'details', :hide => !@profile.may_see?) do |cb|
-		        cb.label I18n.t(:committee_publicly_visible)
-		        cb.input check_box(:profile, :may_see_committees, :onclick => '')
-            cb.info I18n.t(:committee_publicly_visible_description, :domain => current_site.domain)
-		      end
-  		  end
-        list.checkbox(:class => 'details', :hide => !@profile.may_see?) do |cb|
-          cb.label I18n.t(:group_members_publicly_visible)
-          cb.input check_box(:profile, :may_see_members, :onclick => '')
-          cb.info I18n.t(:group_members_publicly_visible_description, :domain => current_site.domain)
-        end
+        publicly_visible_checkbox(list)
+        committee_publicly_visible_checkbox(list) if @group.parent_id.nil?
+        group_members_publicly_visible_checkbox(list)
       end
     end
     f.row do |r|
       r.label I18n.t(:membership)
-      r.checkboxes do |cbs|
-        cbs.checkbox do |cb|
-          cb.label I18n.t(:allow_membership_requests)
-          cb.input check_box(:profile, :may_request_membership, :onclick => '')
-          cb.info I18n.t(:may_request_membership_description)
-        end
-        cbs.checkbox do |cb|
-          cb.label I18n.t(:open_group)
-          cb.input check_box(:profile, :membership_policy, {:onclick => ''}, Profile::MEMBERSHIP_POLICY[:open], Profile::MEMBERSHIP_POLICY[:approval])
-          cb.info I18n.t(:open_group_description)
-        end
+      r.checkboxes do |list|
+        allow_membership_requests_checkbox(list)
+        open_membership_policy_checkbox(list)
       end
-
     end
     if may_create_council?
-      f.row do |r|
-        r.label I18n.t(:administration)
-        if @group.council_id
-          r.input link_to_group(@group.council, :avatar => :small)
-        else
-          r.input link_to(I18n.t(:create_a_new_thing, :thing => I18n.t(:council).downcase), councils_url(:action => 'new'))
-        end
-        r.info help('council')
+      f.row do |row|
+        row.label I18n.t(:administration)
+        council_field(row)
       end
     end
+    call_hook :group_permissions, :form=>f, :group => @group
   end %>
 
   <p class="form_buttons"><%= submit_tag I18n.t(:save_button), :name => 'save' %></p>

@@ -224,13 +224,13 @@ module PathFinder::Mysql::BuilderFilters
   def filter_ascending(sortkey)
     sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    @order << "pages.%s ASC" % sortkey
+    @order << "%s.%s ASC" % [@klass.table_name, sortkey]
   end
 
   def filter_descending(sortkey)
     sortkey = 'views_count' if sortkey == 'views'
     sortkey.gsub!(/[^[:alnum:]]+/, '_')
-    @order << "pages.%s DESC" % sortkey
+    @order << "%s.%s DESC" % [@klass.table_name, sortkey]
   end
 
   def filter_most(what, num, unit)
@@ -315,6 +315,22 @@ module PathFinder::Mysql::BuilderFilters
     @conditions << 'user_participations.user_id IN (?) AND user_participations.changed_at IS NOT NULL'
     @values << Group.find(group_id).user_ids
     @order = ["user_participations.changed_at DESC"]
+  end
+
+  #--
+  ## MODERATION
+  #++
+
+  def filter_public()
+    @conditions << "pages.public = TRUE"
+  end
+
+  def filter_public_requested()
+    @conditions << "pages.public_requested = TRUE"
+  end
+
+  def filter_moderation(state)
+    @conditions << ModeratedFlag.conditions_for_view(state)
   end
 
 #turning RDoc comments back on.

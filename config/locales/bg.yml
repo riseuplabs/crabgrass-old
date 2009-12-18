@@ -1,0 +1,840 @@
+---
+bg:
+  about_me: "За мен"
+  accept_usage_agreement: "Приемам условията на Споразумението За Ползване"
+  access: Достъп
+  action: действие
+  activate_js_to_rearrange_photos: "Активиране на JavaScript, позволяващо използването на Drag&amp;Drop за пренареждане на снимки!"
+  activity_contact_created: "{{user}} добави {{other_user}} като приятел"
+  activity_group_created: "{{user}} създаде {{group_type}} {{group}}"
+  activity_group_destroyed: "{{group}} беше унищожена от {{user}}"
+  activity_message: "{{author}} написа: {{message}}"
+  activity_unread: "Имате {{count}} непрочетени [private messages]"
+  activity_unread_singular: "Имате непрочетено [private message]"
+  activity_user_destroyed: "{{user}} се оттегли"
+  activity_user_joined_group: "{{user}} се присъедини към {{group_type}} {{group}}"
+  activity_user_left_group: "{{user}} напусна {{group_type}} {{group}}"
+  activity_user_status: "{{user}} е {{status}}"
+  activity_wall_message: "{{author}} написа на {{user}}: {{message}}"
+  add_another_file: "Добавете друг документ"
+  add_button: Добави
+  add_comment: "Добавете коментар"
+  add_contact_info: "Когато някой от потребителите е Ваш приятел, той е способен да вижда, кога сте в системата и има достъп за разглеждане на пълния Ви профил. Ако станете приятел на някой, той също ви става приятел."
+  add_description: "Добавете описание"
+  add_email_address: "Добавете пощенски адрес"
+  add_encryption_key: "Добавете ключ за криптиране"
+  add_existing_image: "Добавете снимка"
+  add_im_address: "Добавете IM адрес"
+  add_location: "Добавете местонахождение"
+  add_new_attachment: "Добавяне на нова притурка"
+  add_one_or_more_tags: "Добавете един или повече етикети, разделени със запетаи"
+  add_phone_number: "Добавете телефонен номер"
+  add_photo_to_gallery: "Натиснете върху снимката, за да я добавите"
+  add_star_link: "Добавяне на звезда ({{star_count}})"
+  add_tags: "Добавяне на етикети"
+  add_websites: "Добавете интернет страница"
+  additional_page_access: "Настройки за допълнителен достъп"
+  administer_site: "Административна страница"
+  administration: Администрация
+  alert: Внимание
+  alert_error: Грешка
+  alert_field_errors: "Има проблеми в следните области:"
+  alert_not_saved: "Промените не бяха запазени"
+  alert_permission_denied: "Достъпът е отказан"
+  alert_permission_denied_details: "Извинете. Нямате възможност да изпълните това действие."
+  alert_saved: "Промените са запазени"
+  all: Всички
+  all_content: "Пълно съдържание"
+  all_groups: "Всички групи"
+  all_networks: "Всички мрежи"
+  all_page_types: "всички типове станици"
+  all_people: "Всички хора"
+  all_people_link: "всички хора"
+  all_states: "Всички състояния"
+  allow_membership_requests: "Позволяване на заявки за участие"
+  already_contacts_info: "Вие вече сте приятел с този човек."
+  announcement_page_description: "Обяви, известия, съобщения."
+  announcement_page_display: Обява
+  announcements: Съобщения
+  approve: Одобрете
+  approve_button: Одобри
+  approve_contact_info: "Вече съществува изпратена приятелска заявка от този потребител. Желаете ли да я одобрите?"
+  approve_or_reject_link: "Одобрете или откажете тази заявка."
+  approved: Одобрени
+  archive: Архив
+  archive_filter_created_link: "Дата на създаване"
+  archive_filter_updated_link: "Последно обновяване"
+  archive_headline: Архив
+  article_page_description: "Създаване на блог публикаця или новинарска статия."
+  article_page_display: Статия
+  asset_page_description: "Качване на изображение, документ, таблица, презентация или други видове данни."
+  asset_page_display: Документ
+  at_least_one_recipient_is_required: "изисква се да има поне един получател"
+  attachments: Притурки
+  away: отсъства
+  back_button: Назад
+  back_to_group: "Назад към {{group_name}}"
+  basic_settings: "Основни настройки"
+  break_lock: Отключване
+  break_lock_button: Отключете
+  cancel_button: Прекъсни
+  cancel_link: Отмени
+  caption: Заглавие
+  category: Категория
+  chat_flagged_inappropriate: "Стаята за беседи е успешно маркирана като неподходяща."
+  check_all: "Проверка/Маркиране на всичко"
+  close_button: Затвори
+  committee: комитет
+  committee_publicly_visible: "Направете комитетите достъпни за разглеждане"
+  committee_publicly_visible_description: "Комитетите са достъпни за разглеждане от външни за групата потребители."
+  committees: Комитети
+  comparing_changes_header: "Сравняване на промени от {{user}}, направени на {{when}} между {{old_version}} и {{new_version}}"
+  confirm: Потвърди
+  confirm_discarding_text_area: "Незапазените Ви промени, ще бъдат загубени. Натиснете {{cancel}}, за да продължите да редактирате."
+  confirm_inappropriate_chat: "Сигурни ли сте, че разговорът е неподходящ? Натиснете 'ОК' само ако смятате, че той е обиден, груб или неприятен. Оператор скоро ще извърши проверка."
+  confirm_inappropriate_page: "Сигурни ли сте, че страницата е неподходяща? Натиснете 'ОК', само ако смятате, че тя съдържа, обидно, грубо или неприятно съдържание. Ръководителят на страницата, скоро ще извърши проверка."
+  confirm_new_password: "Потвърдете новата парола"
+  confirmation: "Сигурни ли сте?"
+  contact: Контакт
+  contact_request_message_label: "Кажете причината да искате да бъдете техен приятел."
+  contacts: Контакти
+  contribute_content_link: "Нова страница"
+  contribute_group_content_link: "Добавяне на страница към {{group}}"
+  contribute_to_site: "Създаване на страница"
+  contributed: Споделен/Участие/Contributed
+  coordinating_council: "Координиращ съвет"
+  coordinator: Координатор
+  coordinator_help: "<b>Пълен достъп</b> осигурява неограничена възможност за модифициране на страницата(включително изтриване и споделяне с други потребители и групи)."
+  coordinators: Координатори
+  council: Съвет
+  council_help_text: "Ако тази група има координиращ съвет, тогава членовете само на този съвет могат да администрират групата, иначе всеки член на групата може да го прави."
+  councils: Съвети
+  create_a_group: "Създаване на група"
+  create_a_new_thing: "Създаване на {{thing}}"
+  create_button: Създай
+  create_committee: "създаване на комитет"
+  create_group_link: "Създайте нова група"
+  create_page: "Създане на страница"
+  create_page_button: Създаване
+  create_page_data: "Данни за/на {{page_class}}"
+  create_page_information: "Информация за/на {{page_class}}"
+  create_task_list: "Създаване на нов списък със задачи"
+  created: създадена
+  created_by: "Създаден/а от"
+  created_on: "Създаден на/Created on"
+  created_when_by: "създадена created {{when}} от {{user}}"
+  csrf_error_message: "Заявката Ви за регистрация прилича на опит за разбиване на защитата на системата. Не се притеснявайте. Тази грешка се появява често дори при невинни заявки. Ние сме просто малко по-загрижени. Всичко, което трябва да направите е да презаредите отново страницата преди нов опит за регистрация. Натиснете връзката, за да опитате отново."
+  current_attachments: "Текущи притурки"
+  current_featured_content: "Текущо подбрано съдържание"
+  current_tags: "Текущ етикет"
+  current_video_sources: "В момента се поддържат: youtube, blip.tv, google video, vimeo."
+  data_for_page_missing: "Данните за тази страница липсват."
+  date: дата
+  date_all_time: "All Time"
+  date_centuries: векове
+  date_days: дни
+  date_hours: часове
+  date_minutes: минути
+  date_months: месеци
+  date_older: По-стари
+  date_seconds: секунди
+  date_this_month: "Този месец"
+  date_this_week: "Тази седмица"
+  date_today: Днес
+  date_weeks: седмици
+  date_years: години
+  date_yesterday: Вчера
+  delete: Изтриване
+  delete_page_link: "Изтрийте {{page_class}}"
+  delete_post: "Изтрийте публикация"
+  delete_this_version: "изтрививане на тази версия"
+  delete_version_confirm: "Сигурни ли Сте, че желаете да изтриете тази версия?"
+  deleted: Изтрит
+  description: Описание
+  descriptions: Описания
+  descriptive_name_for_display: "Описателно име, за идентификация"
+  destroy: Унищожете
+  destroy_confirmation: "Сигурни ли сте, че искате да изтриете this {{thing}}? Действието е окончателно."
+  destroy_group_link: "Премахнете {{group_type}}"
+  destroy_page_via_shred: "Унищожете веднага"
+  destroy_page_via_shred_info: "Така страницата ще бъде изцяло унищожена. Това действие е крайно и не може да се възстанови."
+  destroy_page_via_trash: "Преместете в кошчето за отпадъци"
+  destroy_page_via_trash_info: "Така ще преместите страницата в кошчето за отпадъци, от където по-късно може да бъде възстановена."
+  details_link: Детаили
+  diff_link: "Преглеждане на промените"
+  directory_of_groups: "Списък на групите"
+  directory_of_networks: "Списък на мрежите"
+  directory_of_people: "Списък с хора"
+  discuss_request_link: "обсъдете тази заявка с {{person_or_group}}"
+  discussion_page_description: "Дискусия по определена тема, в която могат да участват както цели групи, така и отделни потребители."
+  discussion_page_display: "Групова дискусия"
+  discussions: Дискусия
+  display_name: "Показване на име"
+  dont_have_permission_to_create_committees: "Нямате права за създаване на комитети под {{group}}"
+  dont_understand_group_type: "Неизвестен групов тип {{type}}"
+  download: Сваляне
+  download_gallery: "Свалете галерията"
+  drag_and_drop_to_rearrange_photos: "Drag &amp; Drop, за да ги пренаредите"
+  edit: Редактиране
+  edit_appearance: "Редактиране на изглед"
+  edit_attachments: "Редактиране на притурки"
+  edit_attachments_link: Редактиране
+  edit_featured_content_for_group: "Редактиране на подбраното съдържание в/за {{group_name}}"
+  edit_gallery: "Редактирайте галерията"
+  edit_profile_link: "Редактиране на профил"
+  edit_settings: "Редактиране на настройки"
+  edit_tags: "Редактиране на етикети"
+  edit_tags_link: Редактиране
+  edit_title: "редактиране на заглавие"
+  edit_underlined_e: <u>Р</u>едактиране
+  edited: Редактирана
+  email: "Пощенски адрес"
+  email_addresses: "Пощенски адреси"
+  email_link_expires: "Валидността на връзката ще изтече след {{days}} дни."
+  email_notice_access: "Може да приемете страницата тук:"
+  email_notice_hello: "Здравейте, {{from}} Ви изпрати уеб страница."
+  email_notice_hello_with_message: "Здравейте, {{from}} Ви изпрати уеб страница със следното съобщение: {{message}}"
+  email_notice_subject: "Проверете страница \"{{title}}\""
+  empty_results: Няма
+  entity_autocomplete_tip: "Въведете името на група или личност."
+  error_saving_new_order: "Грешка при запис на новата подредба!"
+  exception_back_link: "Връщане назад"
+  exception_bug_report_description: "Моля опишете как стигнахте до тази страница. Всеки допълнителен коментар е добре дошъл."
+  exception_bug_report_link: "Изпращане на съобщение за грешка"
+  exception_description: "Моля помогнете ни да подобрим приложението, като ни изпратите съобщение при откриване на грешка. Ние ще се постараем да оправим проблема възможно най-скоро."
+  exception_headline: "Опа! Грешка в приложението."
+  exception_title: "Системна грешка"
+  expired_featured_content: "Подбраното съдържание е загубило валидност"
+  external_video_page_description: "Показване на видео, намиращо се на външна уеб страница."
+  external_video_page_display: "Външно видео"
+  fax: Факс
+  feature_button: Отличи!
+  featured_content: "Подбрано съдържание"
+  featured_content_header: Отличени/Любими/Подбрани/Featured
+  file: Документ
+  file_must_be_image_error: "Документът трябва да е изображение, за да стане част от галерията."
+  file_size: "Размер на документа"
+  file_version_deleted: "версията на документа е изтрита"
+  files: Документи
+  first_name: Име
+  flag_appropriate: "Маркиране като подходящта"
+  flag_inappropriate: "Маркиране като неподходяща"
+  folder_class_description: "Създаване на папка за организиране на други страници."
+  folder_display: Папка
+  forgot_password_link: "Забравена парола"
+  forgot_password_mail_expiry: |
+      Този линк ще е валиден 24 часа. Ако желате да промените паролата си след
+      изтичане на срока, ще трябва да подадете нова заявка в страницата за
+      забравена парола.
+  forgot_password_mail_greeting: "{{user}}, за да промените паролата си, посететеf"
+  forgot_password_text: "Ако сте забравили паролата си, можем да Ви изпратим писмо с връзка, която ще ви позвли да генерирате нова.\n"
+  forgotten_email_address: "Каква поща ни предоставихте, когато създадохте регистрацията си?"
+  format: Формат
+  formatting_reference_link: "Помощ при редактиране"
+  founded: Създадено/а/и
+  friday: Петък
+  friends: Приятели
+  from: От
+  full: пълно/а/и
+  fullname: "Пълно име"
+  galleries: Галерии
+  gallery_description: "Прехвърляне на множество изображения или групиране на съществуващи изображения по признак."
+  gallery_display: Галерия
+  gallery_undo_link: възстановете
+  general_info: "Основна информация"
+  grant_access: "Разрешаване на достъп"
+  group: група
+  group_administration_not_allowed: "Не можете да администрирате тази група."
+  group_directory: "Папка на групите"
+  group_directory_link: "Групова папка"
+  group_has_no_public_profile: "Тази група няма публичен профил."
+  group_home_headline: "Начална страница на {{group_type}}"
+  group_home_welcome: "Добре дошли"
+  group_information: "{{group_type}} Информация"
+  group_invite_email: |
+      {{from_user}} Ви кани да се приседините към група "{{group}}".
+
+      Ако желаете да се присъедините към групата, натиснете тук:
+
+        {{accept_invite_link}}
+
+      Началната страница на групата може да бъде намерена тук:
+
+        {{group_home_link}}
+
+      Ако не желаете да се присъедините към групата, просто игнорирайте това писмо.
+  group_invite_subject: "Покана за пръсъединяване към група \"{{group}}\""
+  group_join_chat: "Към беседа"
+  group_language: "Основен език на {{group}}."
+  group_members_publicly_visible: "Направете членовете на групата достъпни за разглеждане"
+  group_members_publicly_visible_description: "Списък с членовете на групата е достъпен за разглеждане от външни хора. Също така, в профилите на всеки един от тях, ще бъдат вписани имената на достъпните за разглеждане групи, в които членуват."
+  group_membership_count: "{{count}} Участници"
+  group_not_allowed_to_view_image_error: "Групата собственик на тази страница, няма права да отвори изображението."
+  group_privacy_settings: "{{group}} Лични настройки"
+  group_profile_description_may_request_membership: "Ако опцията е маркирана, позволявате на външни хора да подават заявки за членство в тази {{group_type}}."
+  group_profile_description_may_see: "Ако опцията е маркирана, информацията в профила, ще бъде достъпна за разглеждане, иначе ще бъде скрита за {{group_type}}."
+  group_profile_description_may_see_committees: "Ако опцията е маркирана, позволявате на външни хора да видят, какви комитети притежава тази {{group_type}}."
+  group_profile_description_may_see_groups: "Ако опцията е маркирана, позволявате на външни хора да видят групите, които са част от {{group_type}}."
+  group_profile_description_may_see_members: "Ако опцията е маркирана, позволявате на външни хора да видят списъка с членовете на {{group_type}}."
+  group_profile_description_may_see_networks: "Ако опцията е маркирана, позволявате на wyn[ni хора да видят в какви мрежи {{group_type}} участвате."
+  group_publicly_visible: "{{group}} Разрешен достъп за разглеждане"
+  group_publicly_visible_description: "Появява се в публичния регистър и <i>профила</i> е достъпен за разглеждане не само от членовете на тази група."
+  group_successfully_created: "Групата беше създадена успешно."
+  group_successfully_updated: "Групата беше успешно обновена."
+  group_summary: "Кратка информация за {{group}}."
+  group_wiki: "Wiki на групата"
+  groups: Групи
+  have_your_say: "Вие сте на ход!"
+  height: "Височина на видео рамката"
+  highest_contributors: "Най-активни сътрудници"
+  history: История
+  home: Местоживеене
+  icon: Икона
+  im_addresses: "IM адреси"
+  image_count: "Снимка {{number}} от {{count}}"
+  image_count_total: "{{count}} Снимки"
+  image_title: "Заглавие на изображение: {{title}}"
+  inbox_description: "Списък със страници, в които активно участвам или следя за промени"
+  include_full_checkbox: "добавяне на връзка към пълното/цялото изображение"
+  incoming: Входящи
+  information: Информация
+  insert_image_heading: "Въмкване на изображение"
+  invalid_email: "Невалиден пощенски адрес"
+  invalid_email_text: "Дадената от Вас електронна поща е невалидна."
+  invalid_token: "Невалиден символ/Invalid Token"
+  invalid_token_text: "Връзката за преустановяване на паролата, която сте подали, е невалидна. Възможно е вече да е била използвана или да е с изтекъл срок."
+  invite: Покана
+  invite_accept_headline: "Приемете поканата за присъединяване към група \"{{group_name}}\""
+  invite_accept_info: "Имате ли вече регистрация на тази уеб страница? Изберете една от следващите връзки, за да приемете поканата."
+  invite_accept_via_existing_account: "Вече имам регистрация"
+  invite_accept_via_register: "Трябва да се регистрирам"
+  invite_error_already_member: "Вие вече сте член на тази група."
+  invite_error_redeemed: "Поканата вече е изпратена."
+  invite_info: "Въведете списък от потребителски имена или пощенски адреси на хора, които бихте искали да поканите да се присъединят към {{group_type}}."
+  invite_not_found: "Поканата не е намерена"
+  join_group_link: "Присъединете се {{group_type}}"
+  join_group_success: "Вие се присъединихте към {{group_name}}"
+  join_request_info: "Ще станете член на тази група, само след като заявката Ви бъде одобрена. Може да следите състоянията на заявките си, посещавайки \"{{link_to_requests}}\"."
+  joins_the_chatroom: "се присъединява към стаята за беседи"
+  language: Език
+  large: голямо/а/и
+  last_change: "Последна промяна"
+  last_name: Фамилия
+  last_seen: "видян за последно"
+  leave_editing_wiki_page_warning: "Ако напуснете страницата без да запазите или откажете промените, другите потребители ще видят, че вие сте заключили това wiki и няма да могат да го редактират. Ако не запазите промените, те ще бъдат загубени."
+  leave_group_link: "Напуснете {{group_type}}"
+  left_the_chatroom: "напуска стаята за беседи"
+  link_name: "Име на връзката"
+  link_name_description: "Име на връзката ще се използва за изграждане на връзки, насочващи към тази група. То може да съдържа само цифри и букви без празни пространства между тях."
+  loading_progress: Зареждане...
+  location: Местонахождение
+  location_address: адрес
+  location_city: град
+  location_country: държава
+  location_postal_code: "пощенски код"
+  location_state: щат/област
+  locations: Местонахождения
+  locked_by_user: "Заключена от {{user}}"
+  locking_error: "Грешка при заключване. Не е възможно данните да бъдат запазени, някой друг вече е запазил нови промени."
+  login: Вход
+  login_button: Влезте
+  login_failed: "Неуспешен вход"
+  login_failure_reason: "Потребителското име или паролата са невярни."
+  login_name: "Потребителско име"
+  login_password: Парола
+  login_required: "Изисква се регистрация"
+  login_required_description: "Моля регистрирайте се, за да изпълните това действие."
+  logout_success: "До скоро"
+  logout_success_message: "Бяхте изключен."
+  make_album_cover: "Направете изображението обложка на албума"
+  mark_pages_as_featured_content_for_group: "Тук може да изберате кои страници да попаднат в специално отличените за тази група."
+  me_dashboard_link: Табло
+  me_inbox_link: "Пощенска кутия"
+  me_search_description: "Търсене във всички достъпни за Вас страници."
+  me_search_link: Търси
+  me_tasks_link: Задачи
+  media_all: Медия
+  media_alls: Медии
+  media_audio: "Звуков запис"
+  media_audios: "Звукови записи"
+  media_document: "Медиен документ"
+  media_documents: "Медийни документи"
+  media_for_group: "{{media_type}} в {{group}}"
+  media_image: Изображение
+  media_images: Изображения
+  media_video: Видео
+  media_videos: Видея
+  media_without_group: "Всички {{media_type}}"
+  medium: средно/а/и
+  member_groups_of_network: "Групи участници"
+  members: Членове
+  membership: Членство
+  menu_chat: Беседа
+  menu_groups: Групи
+  menu_home: Начало
+  menu_link_account: Регистрация
+  menu_link_logout: Изход
+  menu_me: "Лична страница"
+  menu_networks: Мрежи
+  menu_people: Потребители
+  message: съобщение
+  message_must_not_be_empty: "съобщението не трябва да е празно"
+  message_page_description: "Изпращане на лично съобщение до индивидуален получател."
+  message_page_display: "Лично съобщение"
+  middle_name: "Бащино име"
+  mobile: "Мобилен телефон"
+  monday: Понеделник
+  month_short_april: Апр
+  month_short_august: Авг
+  month_short_december: Дек
+  month_short_february: Фев
+  month_short_january: Ян
+  month_short_july: Юли
+  month_short_june: Юни
+  month_short_march: Март
+  month_short_may: Май
+  month_short_november: Ноем
+  month_short_october: Окт
+  month_short_september: Сеп
+  more_information: "Повече информация"
+  most_active: Най-активни
+  most_active_groups: "Най-активните групи"
+  most_active_members: "Най-активните членове"
+  most_viewed: Най-преглеждани
+  move_button: Премести
+  move_image_left: "Преместване на изображението наляво"
+  move_image_right: "Преместване на изображението надясно"
+  move_page_link: "Местене на {{page_class}}"
+  move_page_to_different_group: "Преместване на страницата в различна група"
+  move_this_page: "Преместване на тази страница"
+  my_completed_tasks_link: Завършени
+  my_contacts: Приятели
+  my_contacts_link: Приятели
+  my_dashboard: "Лично табло"
+  my_groups: "Лични групи"
+  my_groups_link: "Лични групи"
+  my_pages: "Лични страници"
+  my_peers: "Съратници в групите"
+  my_peers_description: "потребители, с които участвам в група"
+  my_peers_explain: "Потребители, с които членуваме в група"
+  my_peers_link: Съратници
+  my_pending_tasks_link: Висящи
+  my_requests_headline: "Лични заявки"
+  my_settings: "Настройки за/на {{user}}"
+  my_status_heading: "Текущото Ви състояние"
+  my_tasks: Задачи
+  my_tasks_description: "Списък със задачи, до които имам достъп"
+  my_tasks_headline: "Лични задачи"
+  my_world_heading: "Лично пространство"
+  name: Име
+  name_or_email_not_found: "\"{{name}}\" не съвпада с името на потребител или група и не е валиден пощенски адрес."
+  network: мрежа
+  network_invite_info: "Въведете имената на групите, които бихте искали да поканите да се присъедният към тази мрежа."
+  network_settings: Настройки
+  networks: Мрежи
+  new_council: "Нов съвет за група {{group_name}}"
+  new_group: "Нова група"
+  new_network: "Нова мрежа"
+  new_password: "Нова парола"
+  new_people: "Нови хора"
+  new_people_link: "нови хора"
+  next_change: "Следваща промяна"
+  no_change: "без промяна"
+  no_committees: "липсват комитети"
+  no_contacts_msg: "Нямате приятели."
+  no_group_named: "няма група с име <b>{{name}}</b>."
+  no_images_in_gallery: "Няма изображения в галерията"
+  no_members: "(липсват членове)"
+  no_peers_msg: "Нямате съратници в групата/You have no peers."
+  no_public_profiles: "Все още няма публични профили..."
+  no_search_results: "Без резултат"
+  no_tags: "Липсват етикети"
+  no_title_given: "(липсва заглавие)"
+  none: Няма
+  not_featured_content: "Все още не отличено съдържание"
+  not_found: "Няма намерен"
+  not_set: "not set"
+  notify_contribution: "<b>Принос:</b> уведомяване на хората, които са дали своя <b>принос</b> към тази страница."
+  notify_current_access: "<b>Текущ достъп:</b> уведомяване на хората или групите, които имат достъп до тази страница."
+  notify_new_access: "<b>Позволение за достъп:</b> споделяне на страницата с нови хора или групи и ги уведомява."
+  notify_no_access_error: "За съжаление, \"{{name}}\" няма достъп до тази страница."
+  notify_page_link: "Изпращане на известие"
+  off_topic: "Извън темата."
+  offensive_behavior: "Обидно поведение."
+  offensive_language: "Обиден език"
+  ok_button: OK
+  only_last_menber_can_delete_group: "Не можете да изтриете група, в която сте последен член."
+  only_me: Аз
+  options: Опции
+  or_image_url: "или линк с избражение"
+  order_changed: "Подредбата е променена."
+  organization: Организация
+  organizational_role: "Позиция в организацията"
+  other: "Друга информация"
+  other_formats: "Други форамти"
+  other_reason: "Друга причина"
+  outgoing: Изходящи
+  page: Станица
+  page_added_to_group: "Тази страница ще бъде добавена в {{group_type}} {{group_name}}."
+  page_create_owner: "Собственик на страница"
+  page_details: "Подробности за страницата"
+  page_details_link: "Подробности за {{page_class}}"
+  page_group_collection: Сбирки
+  page_group_discussion: Дискусии
+  page_group_event: Събития
+  page_group_media: Мултимедия
+  page_group_media_audio: Аудио
+  page_group_media_document: Документи
+  page_group_media_image: Изображения
+  page_group_media_video: Видео
+  page_group_planning: "Инструменти за планиране"
+  page_group_task: Задачи
+  page_group_text: "Текстове и Дискусии"
+  page_group_vote: "Избори и Гласуване"
+  page_is_not_static: "Страницата не е статична"
+  page_list: "Списък със страници"
+  page_list_heading_created: създадени
+  page_list_heading_created_by: "създадени от"
+  page_list_heading_last_updated: "последно обновени"
+  page_list_heading_owner: собственост
+  page_list_heading_posts: публикации
+  page_list_heading_stars: звезди
+  page_list_heading_title: заглавие
+  page_list_heading_updated: обновени
+  page_list_heading_updated_by: "обновени от"
+  page_locked_header: "Страницате е заключена"
+  page_name_description: "Незадължително уникално име (използва се за създаване на URL за тази страница)"
+  page_not_part_of_group: "Страницата не е част от тази група"
+  page_notice_message: "страница изпратена от {{user}} на {{date}}"
+  page_owner_error: "Полето за собственик на страница не може да бъде празно."
+  page_owner_help: "Собственикът на страницата е личност или група, изцяло отговарящ за нея. Създателят избира дали той самият или някоя от групите, в които членува, да стане собственик на страницата."
+  page_with_message: "със съобщение"
+  pager: Пейджер
+  pagination_next: Следваща
+  pagination_previous: Предишна
+  participant: Участник
+  participant_help: "<b>Достъп за модифициране</b> позволява радактиране на страницата."
+  participants: Участници
+  participation: Участие/я
+  password: Парола
+  password_confirmation: "Потвърждаване на парола"
+  password_error_confirmation: "Потвърдената парола не пасва."
+  password_error_default: "не е достатъчно добра."
+  password_error_too_common: "е неприемлива, базирана е на речникова дума."
+  password_error_too_short: "е неприемлива, прекалено е къса."
+  password_error_too_similar: "е неприемлива, не съдържа состатъчно различаващи се символи."
+  password_error_too_simple: "е неприемлива, прекалено е проста и е предсказуема."
+  password_error_username: "е неприемлива, базирана е на потребителското Ви име."
+  password_error_whitespace: "е неприемлива, празна парола."
+  password_ok: "e OK."
+  password_reset: "Паролата е променена"
+  password_reset_ok_text: "Паролата ви беше променена успешно. Вече имате достъп с вече променената парола."
+  password_was_reset: "Паролата ви беше променена"
+  peers: Peers
+  pending: Чакащи
+  pending_tasks: "Чакащи задачи."
+  people: Хора
+  permission_denied_description: "Нямате достатъчно права, за да изпълните това действие."
+  permissions: "Права за достъп"
+  personal: "Лична информация"
+  personal_interests: "Лични интереси"
+  phone_numbers: "Телефонен номер"
+  photo: Снимка
+  photo_credit: "Информация за снимката"
+  post_message: "Публикувайте съобщение"
+  prev_change: "Предишна промяна"
+  preview: Преглед
+  print_underlined_p: <u>О</u>тпечатване
+  private: Частен
+  private_profile: "Личен профил"
+  profile_last_login: "Последно регистриран/Последна регистрация"
+  profile_member_since: "Член от"
+  profile_option_allow_peers: "Профилът е видим за членовете на групи"
+  profile_option_may_pester: "Разрешение за получаване на заявки"
+  profile_option_may_request_contact: "Позволение за получаване на заявки за приятелства към Вас"
+  profile_option_may_request_membership: "Позволяване на заявки за членство"
+  profile_option_may_see: "Профилът е достъпен за преглед"
+  profile_option_may_see_committees: "Показване на комитетите"
+  profile_option_may_see_contacts: "Показване на Вашите приятели"
+  profile_option_may_see_groups: "Показване на Вашите членства в групи"
+  profile_option_may_see_members: "Показване на членовете на група"
+  profile_option_may_see_networks: "Показване на мрежите"
+  profile_private_description: "Този профил е личен и е видим само от ваши приятели."
+  profile_public_description: |
+      Този профил е публичен и ще бъде достъпен до всеки посетител в системата.
+      Информацията, която сте добавили тук, е достъпна за търсене от други хора.
+      Бъдете внимателни, когато предлагате лична информация във публичния си профил.
+  profile_saved: "Вашия профил беше запазен."
+  public: Публичен
+  public_checkbox: "Премахване на звезда"
+  public_checkbox_help: "Ако опцията е избрана, всеки може да разглежда тази страница."
+  public_key: "Публичен ключ"
+  public_profile: "Публичен профил"
+  ranked_vote_instructions: |
+      Пренаредете възможностите в списъка, докато не бъдат подредени по предпочитание отгоре надолу.
+      Когато приключите, натиснете бутона за потвърждение, за да запишете избора си.
+  ranked_vote_page_description: "Създаване на списък с варианти, които хората подреждат според предпочитанията си."
+  ranked_vote_page_display: "Избор по лично предпочитание/Ranked Vote"
+  rate_many_page_description: "Създаване на списък с варианти, които хората могат да одобрят или не."
+  rate_many_page_display: "Oдобрение чрез гласуване/Approval Poll"
+  reactivate_button: "Активирайте отново!"
+  read: прочетена
+  recent_activity: "Скорошна активност"
+  recent_contributions: Принос
+  recent_member_group_pages: "Последна активност на Вашата група в {{network}}"
+  recent_network_pages: "Последни страници на/от/в мрежата"
+  recent_pages: "Последни страници"
+  recent_wall_posts: "Последни публикации на стената"
+  recently_active_groups: "Последно активните групи"
+  recently_active_members: "Последно активните членове"
+  recently_created: "Последно създадени"
+  recipient_tip: "Разделянето на получателите става с запети, интервали или нови редове."
+  recipients: Получатели
+  redirect_to_foreign_domain: "След като сте се регистрирали се опитвате да пренасочите сесията към друг домейн ({{url}}). За ваша сигурност премахнахме този параметър от URL адреса."
+  regenerate: "пресъздаване  на thumbnail изображенията"
+  reject: Отхвърлете
+  reject_button: Откажи
+  rejected: Отхвърлени
+  remove: Премахване
+  remove_contact_confirmation: "Сигурни ли сте, че не желаете вече да поддържате приятелство с {{user}}?"
+  remove_contact_info: "Ако премахнете някой от списъка си с приятели, няма да виждате, кога е влязъл в системата, а също и личният му профил. Това означава, че Вие също ще бъдете изтрит, от неговия списък с приятели."
+  remove_friend_link: "Премахване от списъка с приятели"
+  remove_from_gallery: "Премахнете от галерията"
+  remove_from_inbox: "Премахнете от пощенската кутия"
+  remove_last_access_error: "Не можете да ограничите, последната възможност за достъп до тази страница."
+  remove_star_link: "Премахване на звезда ({{star_count}})"
+  removing_image: "Премахване на изображение..."
+  request_friend_link: "Добавяне към списъка с приятели"
+  request_join_group_link: "Заявка за присъединяване {{group_type}}"
+  request_status: "Тази заявка беше {{status}} от {{user}} в {{time}}"
+  request_to_friend_description: "{{user}} би искал да се сприятели с {{other_user}}"
+  request_to_join_our_network_description: "Група {{group}} е поканена да се присъедини към {{network}} мрежата"
+  request_to_join_us_description: "{{user}} е поканен/а да се присъедини към {{group}}"
+  request_to_join_us_via_email_description: "{{email}} е поканен/а да се присъедини към {{group}}"
+  request_to_join_you_description: "{{user}} прояви желание да се присъедини към {{group}}"
+  request_to_join_your_network_description: "{{group}} прояви желание да се присъедини към {{network}}"
+  requested_forgot_password: "Подали сте заявка за промяна на паролата"
+  requests: Заявки
+  requests_from_me: "от мен"
+  requests_to_me: "към мен"
+  required: (required)
+  reset_password: "Промяна на парола"
+  reset_password_email_sent: "Изпратена Ви е поща, съдържаща инструкции как да установите отново паролата си."
+  reset_password_mail_greeting: "{{user}}, Паролата ви беше променена/reset както заявихте."
+  reset_password_mail_warning: "Ако не сте подали заявка за промяна на паролата, моля свържете се с нас."
+  reset_password_text: "Привет, {{user}}. Ако сте забравили паролата си, тук може да регистрирате нова.\n"
+  return_link: Връщане
+  rss_feed: "RSS Feed"
+  saturday: Събота
+  save_button: Запази
+  save_changes: "Запазете промените"
+  save_or_cancel_edit_lock_wiki_error: "Вие зкалчихте това wiki. Други потребители няма да могат да редактират, докато не натиснете или {{save_button}} или {{cancel_button}}, за да спрете да редактирате."
+  save_survey_button: "Запазете проучването"
+  saved_new_order: "Новата подреба е запазена!"
+  saving_your_changes: "Запазване на промените..."
+  say_message_button: Кажи
+  school: Училище
+  search: Търси
+  search_headline: Търси
+  see_all_link: "Виж всички"
+  see_more_link: Още
+  see_tips_to_get_started: "Полезни съвети"
+  select_image_file: "Изберете изображение"
+  send_button: Изпрати
+  send_invites: "Изпращане на покана"
+  send_invites_button: "Изпращане на поканите"
+  send_invites_headline: "Изпращане на покани за присъедняване към {{group}}"
+  send_message_link: "Изпращане на съобщение"
+  separate_tags: "Разделете етикетите със запети"
+  set_status_button: "Обновяване на състоянието"
+  set_status_messsage: "Какво правите сега?"
+  settings: Настройки
+  share: Споделяне
+  share_already_exists_error: "\"{{name}}\" вече има достъп до тази страница."
+  share_button: Сподели
+  share_page_email: "Изпращане на известие по пощата"
+  share_page_link: "Споделяне на {{page_class}}"
+  share_page_message: "Изпращане на съобщение (незадължително)"
+  share_page_options: "Избор на опции/възможности"
+  share_page_recipients: "Споделете {{page_class}}"
+  share_page_recipients_results: "Тази {{page_class}} ще бъде споделена с"
+  share_page_recipients_sections: "Изберете с кого да споделите от групите или приятелите си"
+  share_page_recipients_selection: Изберете
+  share_pester_error: "За съжаление не Ви е позволено да споделяте с \"{{name}}\"."
+  sharing_help: "Незадължително поле. Страницата може да бъде споделена с множество други получатели(както потребители така и групи)."
+  show_gallery: "Покажете галерията"
+  signup_button: "Регистрирайте се"
+  signup_confirm_password: "Потвърдете паролата"
+  signup_email: "Електронна поща"
+  signup_email_info: "Незадължително: Използва се при забравена парола"
+  signup_info: "Попълнете потребителско име и парола, след това натиснете бутона \"{{sign_up}}\""
+  signup_link: "Нова регистрация"
+  signup_login_name: "Вашето потребителско име"
+  signup_password: "Вашата парола"
+  signup_success: "Регистрацията е успешна"
+  signup_success_message: "Благодаря ви, че се регистрирахте!"
+  signup_title: "Създайте си регистрация"
+  slideshow_delay_input: "Обновете на всеки {{input_field}} seconds"
+  small: малко/а/и
+  social_change_interests: "Интереси за социална промяна"
+  starred: "Наградена със звезда"
+  state: състояние
+  statistics: Статистика
+  status_pending: нерешен/висящ
+  status_resolved: разрешен
+  subject: тема
+  subject_must_not_be_empty: "темата не трябва да е празна"
+  successful_undelete_image: "Изображението е възстановено успешно."
+  successfully_removed_image: "Изображението е премахнато успешно! ({{undo_link}})"
+  summary: "Кратко описание"
+  summary_help: "Незадължително поле. Това е изречение или параграф, описващи на кратко съдържанието на новата страница."
+  sunday: Неделя
+  survey_edit_tab: "Създайте проучване"
+  survey_list_all_tab: "Показважете всчики отговори"
+  survey_may_rate: "Отговорите достъпни ли са за оценяване?"
+  survey_may_see_ratings: "Оценките достъпни ли са за преглед?"
+  survey_may_see_responses: "Отговорите достъпни ли са за преглед?"
+  survey_my_response_tab: "Личен отговор"
+  survey_page_description: "Създаване на серия от въпроси към потребителите."
+  survey_page_display: Проучвания
+  survey_questions: Въпроси
+  survey_rate_responses_tab: "Оценете отговорите"
+  survey_rate_this_response_heading: "Оценка на този отговор"
+  survey_rating_enabled: "Позволявате ли оценяване на отговорите?"
+  survey_response_by: "Отговор от {{login}}"
+  survey_responses_enabled: "Позволете нов отговор? Ако опцията е маркирана, хората могат да си изберат проучване. Премахване на маркировката, закрива проучването."
+  survey_take_tab: "Избете проучване"
+  survey_your_rating_heading: "Вашата оценка за този отговор"
+  tags: Етикети
+  tags_help: "Незадължително поле. Етикетите са думи, синтезиращи съдържанието на страницата."
+  task_list_page_description: "Създаване на списък с дейности за решаване на даден проблем и разпределянето им между участниците в групата."
+  task_list_page_display: "списък със задачи"
+  tasks: Задачи
+  thing_not_found: "{{thing}} не съществува"
+  thing_settings: "{{thing}} настройки"
+  this_is_committee: "Този комитет е част от {{parent_group}}."
+  this_is_coordinating: "Това е <strong>коодиниращият съвет</strong> за {{parent_group}}."
+  thursday: Четвъртък
+  time_zone: "Времева зона"
+  title: Заглавие
+  title_help: "Задължително поле. Заглавието се използва за идентифициране на тази страница."
+  to: До
+  toggle_selection: "Прикрепяне на избора/Toggle Selection"
+  top_rated: Най-оценявани
+  trash: "Кофа за отпадъци"
+  trash_description: "Кофата за отпадъци е място, където се намират всички вече изтрити страници. Те могат да се възстановят, при натискане на {{undelete}} или да бъдат изцяло премахвани при натискане на {{destroy}}."
+  try_again: "Опитайте отново"
+  tuesday: Вторник
+  type_your_messages_here: "Напишете съобщението си тук и натиснете бутона enter..."
+  typing: пише
+  undelete_from_trash: Възстановяване
+  unfeature_button: "Премахни от групата на отличените!"
+  unknown: Неизвестен
+  unread: непрочетена
+  updated: обновена
+  upload: Каване
+  upload_file_help: "Задължително поле. Изберете документ за записване в страницата."
+  upload_image: "Качи изображение"
+  upload_image_help: "Незадължително поле. Изберете изображение за записване в страницата."
+  upload_images_link: "Качете изображения"
+  upload_new_image: "Качете ново изображение"
+  upload_zip_file_help: "Незадължително поле. Изберете ZIP архив(колекция от изображения) за записване в страницата."
+  upload_zip_file_link: "Качете архивиран ZIP документ"
+  uploaded_image_cropped: "Каченото изображение ще бъде изрязано и трансформирано до квадрат с размер 96 пиксела."
+  usage_agreement_heading: "Споразумение за ползване"
+  usage_agreement_required: "Съгласието Ви със Споразуменивто За Ползване е задължително"
+  usage_agreement_text: |
+      Услугите в тази уеб страница са предоставени ВЪВ ВИДА В КОЙТО СА. Вие разбирате и приемате, че ОПЕРАТАТОРЪТ на тази уеб страница не носи отговорност за всякакви технически прекъсвания, за неналичността на определени характеристики на услугите, както и за невъзможността да използвате цялостните или част от нашите услуги. Освен това Вие разбирате и приемате, че ОПЕРАТОРЪТ не поема отговорност за изтриване, загуба или погрешно доставяне на информация, зпаметена или доставена с помощта на нашите услуги. ОПЕРАТОРЪТ на тази уеб страница не дава каквито и да е гаранции и права.
+
+      Използвайки тази услуга, Вие се съгласявате със следните условия:
+
+      Приемате и сте съгласни да не продавате, препродавате или да се възползвате от употребата на нашите услуги или всякакво друго съдържание, достъпно чрез наши услуги, с комерсиални цели, с изключение на използването на такава информация или съдържание с цел регистрирането на наша услуга в търсачка или други услуги, насочващи потребители към нашата страница.
+
+      Съгласни сте също да не използвате нашите услуги с цел да:
+
+      * да упражнявате тормоз над други хора;
+      * да наранявате или се възползвате от малолетни;
+      * да се представяте или въвеждате други в заблуда, че сте друга личност;
+      * да изпращате на нежелани съобщения;
+      * да събирате лични данни от потребители на тези услуги без тяхното изрично съгласие;
+      * да се намесвате в работата или да повреждате нашите, тези на нашите потребители или на други хора, услуги;
+
+      Съгласни сте и:
+
+      * да избягвате използването на услугите извън тяхното предназначение;
+      * да съхранявате данните на Вашите регистрации и пароли, защитени.
+      * да отговаряте за действията на всеки, който използва ваша регистрация или парола, за да получи достъп до системите ни;
+      * да ни уведомявате незабавно и по всяко време за, каквото и да е неупълномощено от Вас използване на Ваша регистрация или за други пробиви в защитата, свързани с някоя от Вашите регистации.
+
+      ОПЕРАТОРЪТ не предявява претенции за собственост на съдържание, което качвате или предавате с помощта на наши сървъри или мрежи.
+
+      В случай, че не изпълнявате Вашите задължения според това Споразумение или подтиквате други да нарушат техните споразумения с ОПЕРАТОРА, ИЛИ ПО НЯКАКВА ДРУГА ПРИЧИНА, ИЛИ БЕЗ ЯВНА ПРИЧИНА, по лична преценка на ОПЕРАТОРА и без да ограничава собствените си средства, ОПЕРАТОРЪТ може да прекрати достъпа Ви до част или до всички наши услуги. Забавена реакциа от наша страна по отношение на нарушение, направено от Вас или други, не отнема правото ни да действаме съобразно следващи и прозиводни нарушения.
+  user: Потребител
+  user_or_group_name: "Име на потребител или група"
+  user_profile_description_allow_peers: "Ако опцията е маркирана, външни хората, с които членувате в група, ще могат да разглеждат Вашия личен профил."
+  user_profile_description_may_pester: "Ако опцията е маркирана, позволявате на външни хора да споделят с Вас информация и да Ви изпращат покани."
+  user_profile_description_may_request_contact: "Ако опцията е маркирана, позволявате на външни хора да Ви изпращат заявка за приятелство с Вас."
+  user_profile_description_may_see: "Ако опцията е маркирана, информацията в профила, ще бъде достъпна за разглеждане, иначе профилът Ви ще бъде изцяло скрит."
+  user_profile_description_may_see_contacts: "Ако опцията е маркирана, позволявате на външни хора да видят списъка с приятелите Ви."
+  user_profile_description_may_see_groups: "Ако опцията е маркирана, позволявате на външни хора да видят в кои групи членувате."
+  username: "Потребителско име"
+  users: Потребители
+  users_wall: "Информационна стена на {{user}}"
+  users_world: "Потребителско пространство на {{user}}"
+  version_doesnt_exist: "Версия {{version}} не съществува"
+  version_number: "версия {{version}}"
+  versions: Версии
+  video_embed: "HTML код за вграждане на външно видео"
+  video_embed_code_prompt: "Вграждане на html код, за показване на видео от външен източник."
+  video_service_is_not_supported: "не се поддържа(в момента само youtube, google video, blip.tv, и vimeo)"
+  view_all: "Преглед на всичките"
+  view_requests: "Преглед на заявки"
+  view_slideshow: "Преглед в slideshow режим"
+  viewed: Прегледана
+  viewer: Наблюдател
+  viewer_help: "<b>Достъп за Четене</b> позволява само разглеждане на страницата."
+  viewers: Наблюдатели
+  visibility: Достъпност
+  wall_heading: "Публично информационна стена"
+  wall_post_button: "Публикуване на ново съобщение"
+  watch_checkbox: "Следене за обновления"
+  websites: "Интернет страница"
+  wednesday: Сряда
+  welcome_create_group_link: "Създаване на нова група"
+  welcome_create_group_text: "В новата група може да поканите хора, с които да споделяте информация или да си сътрудничите по решаването на определен проблем."
+  welcome_create_page_link: "Създаване на нова страница"
+  welcome_create_page_text: "Страницата може да се използва като пространство за нови дискусии, wiki страници, галерии, архив за документи, организатор на задачи за изпълнение и много други..."
+  welcome_edit_profile_link: "Редактиране на профил"
+  welcome_edit_profile_text: "Редактирайки профила си, позволявате на интересуващите се хора да разберат нещо повече за Вас."
+  welcome_find_groups_link: "Търсене на група"
+  welcome_find_groups_text: "Прегледайте списъка с групи, за да намерите такива, към които бихте се присъединили."
+  welcome_find_people_link: "Търсене на хора"
+  welcome_find_people_text: "В списъка с потребители може да намерите познати."
+  welcome_heading: "Добре дошли в {{site_title}}, {{user_name}}!"
+  welcome_hide_link: "Скриване на приветственото съобщение"
+  welcome_login_message: ""
+  welcome_message: "Крабграс позволява на организациите за социална промяна преди всичко да извършват работа и още да представят идеите си пред по-широк кръг от хора, да си сътрудничат и да изграждат по между си социални комуникационни мрежи."
+  welcome_show_link: "Показване на приветственото съобщение"
+  welcome_title: "Добре дошли в {{site_title}}"
+  welcome_upload_icon_link: "Зареждане на потребителска снимка"
+  welcome_upload_icon_text: "Изображението допълнително ще Ви идентифицира.То ще стои до всеки Ваш коментар."
+  when_does_feature_expire: "Кога подбраното съдържание губи валидност?"
+  width: "Ширина на видео рамката"
+  wiki_body_help: "Незадължително поле. Въведете текст, служещ за тяло на страницата."
+  wiki_editor: Редактор
+  wiki_is_locked: "Това wiki в момента е заключено от {{user}}"
+  wiki_lost_text_confirmation: "Всеки незапазен текст ще бъде загубен. Сигурни ли сте?"
+  wiki_page_description: "Създаване на текстов документ със свободна форма и с възможност за редактиране."
+  wiki_page_display: "Wiki страница"
+  wiki_plain_editor: "Обикновен редактор"
+  wiki_revert_version: "Връщане към версия {{version}}"
+  wiki_section_edit: "Редактиране на този раздел"
+  wiki_visual_editor: "Визуален редактор"
+  wont_be_able_to_save: "Не бихте могли да запишете тази страница"
+  work: Работа
+  work_life: Опит
+  you_are_not_member_of_any_group: "Не сте член на никоя група."
+  you_are_viewing_version: "Наблюдавата версия {{version}} от {{user}}"
+  you_have_no_contacts: "Нямате приятели"
+  you_have_no_peers: "Нямате съратници в групата"
+  your_login: "Вашето потребителско име"

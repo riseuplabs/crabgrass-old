@@ -26,19 +26,19 @@ class Admin::PostsController < Admin::BaseController
 
   # Approves a post by marking :vetted = true
   def approve
-    @mpost.approve
+    @flag.approve
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # We use delete to hide a post.
   def trash
-    @mpost.trash
+    @flag.trash
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Undelete a hidden post in order to show it.
   def undelete
-    @mpost.undelete
+    @flag.undelete
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -47,17 +47,19 @@ class Admin::PostsController < Admin::BaseController
   end
 
   def authorized?
-    may_moderate?
+    if action?(:index)
+      may_see_moderation_panel?
+    else
+      may_moderate?
+    end
   end
 
   private
   prepend_before_filter :fetch_flagged
   def fetch_flagged
-    if params[:id]
-      @mpost = ModeratedPost.find_by_foreign_id(params[:id])
-    else
-      return
-    end
+    return unless params[:id]
+    @post = Post.find params[:id]
+    @flag = @post.moderated_flags.first
   end
 
 

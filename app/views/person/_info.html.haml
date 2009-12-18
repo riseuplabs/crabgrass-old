@@ -1,0 +1,7 @@
+%section#info-box
+  %div#say-box
+    - if may_create_messages?
+      = render :partial => 'common/say_form', :locals => {  :submit => I18n.t(:say_message_button), :url => person_messages_path(@user) }
+
+  %div#activities
+    = render :partial => "activities"

@@ -200,11 +200,26 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def destroy_by(user)
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+
+    self.destroy
+  end
+
   protected
 
   before_save :save_avatar_if_needed
   def save_avatar_if_needed
     avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
   end
 
   ##

@@ -1,0 +1,10 @@
+%header.no-sidebar
+  %section#identity
+    = avatar_for @group,'large', :class => 'left'
+    %div.left
+      %h1 
+        = @group.full_name
+      = edit_settings_link
+    %div.right 
+      = typed_create_page_link(TaskListPage, @group) if may_create_group_page?
+      

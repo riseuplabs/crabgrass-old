@@ -1,4 +1,47 @@
-== master
+== 0.2.1 - 1 Dec 2009
+
+* 2 minor improvements
+  * Allow nil as field value [#14]
+  * Added negative email step for delivered to
+
+
+== 0.2.0 - 24 Nov 2009
+
+* 4 major improvements
+  * Added support for finding models using tables
+    Example:
+      Then the following users should exist:
+        | name  |
+        | Fred  |
+        | Ethel |
+      And the 1st user should be male
+      And the 2nd user should be female
+      
+  * tables now support pickle refs in cells (see features/pickle/create_from_factory_girl.rb#37)
+  
+  * features/support/email.rb adds an email helper for mapping names to email addresses (similar to NavigationHelper in paths.rb)
+  
+  * Added ability for path_to_pickle to handle arbitrary segments
+    Example:
+      path_to_pickle('account', 'the enquiry') => account_enquiry_path(<enquiry>)
+
+* 2 minor improvements
+  * fail faster in pickle steps when a pickle ref can't be found, by using model! in most places
+
+  * generated pickle steps are less picky about possessives so that pickle mappings accepted in more places
+    e.g. when you have
+        config.map 'my', 'I', 'myself', :to => 'user: "me"'
+      you can now do
+        Given I exist
+        ...
+        Then the project should be one of my assigned projects
+
+
+== 0.1.23 - 22 Nov 2009
+
+* 1 major improvement
+  * script/generate pickle now adds its own pickle.rb support file, making it easier to regenerate cucumber
+    when a new release of cucumber appears [schlick, ianwhite]
 
 * 1 minor improvement
   * docs: more links

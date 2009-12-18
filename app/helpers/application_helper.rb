@@ -169,6 +169,7 @@ module ApplicationHelper
   #   :container    => true
   #
   def pagination_for(things, options={})
+    return if !things.is_a?(WillPaginate::Collection)
     if request.xhr?
       defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
     else
@@ -192,8 +193,20 @@ module ApplicationHelper
     content_tag tag, text + span, :class => klass
   end
   
-
+  # *NEWUI
+  #
+  # returns the kind of profile open or closed/private
+  #
+  def open_or_private(profile)
+    if profile.may_see?
+      t(:open)
+    else
+      t(:private)
+    end
+  end
   
+  
+
   
   # *NEWUI
   #
@@ -210,9 +223,8 @@ module ApplicationHelper
   def text_with_more(text, tag='p', options={}, &block)
     length = options.delete(:length) || 50
     omission = options.delete(:omission) || "... "
-    out = truncate(text, :length => length, :omission => omission)
-
     if block_given?
+      out = truncate(text, :length => length, :omission => omission + capture_haml(&block))
       capture_haml do
         #
         # TODO: update  this with rails 2.3 to:
@@ -220,13 +232,13 @@ module ApplicationHelper
         #
         haml_tag tag do
           haml_concat out
-          haml_concat capture_haml(&block)
         end
       end
     else
-      link = link_to(I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      out = truncate(text, :length => length, :omission => omission + link)
       capture_haml do 
-        haml_tag(tag, out + link,  options)
+        haml_tag(tag, out,  options)
       end
     end
   end
@@ -281,9 +293,11 @@ module ApplicationHelper
 
   def debug_permissions
     if RAILS_ENV == 'development'
-      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
-      permission_methods.collect do |section|
-        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      content_tag :div, :class =>'debug' do
+        permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+        permission_methods.collect do |section|
+          content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+        end
       end
     end
   end

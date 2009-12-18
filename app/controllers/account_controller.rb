@@ -13,6 +13,7 @@ class AccountController < ApplicationController
     if logged_in?
       redirect_to me_url
     end
+    render :action => 'login', :layout => 'base_for_login'
   end
 
   def login
@@ -21,7 +22,10 @@ class AccountController < ApplicationController
       :error => I18n.t(:redirect_to_foreign_domain, :url => params.delete(:redirect)))
       redirect_to params and return
     end
-    return unless request.post?
+    unless request.post?
+      render :action => 'login', :layout => 'base_for_login'
+      return 
+    end
     previous_language = session[:language_code]
 
     self.current_user = User.authenticate(params[:login], params[:password])

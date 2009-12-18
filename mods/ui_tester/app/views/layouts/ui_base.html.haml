@@ -1,24 +1,17 @@
 !!!
 %html{:dir=>language_direction}
-  %head
-    %meta{ :name=>"description", :content=>""}
-    %meta{ :name=>"keywords", :content=>""}
-    %meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
-    =favicon_link
-    %title
-      =h title_from_context
-    / begin styling 
-    = crabgrass_stylesheets("ui_base")
-    / end styling
-    / begin scripts
-    = crabgrass_javascripts
-    / end scripts
-    = call_hook :html_head
-    = yield :html_head
+
+  = render :partial => 'layouts/ui_base_head'
+
   %body{:class=>language_direction}
     %div#page
       %header.page
-        =render :partial => 'layouts/ui_header'
+        = render :partial => 'layouts/ui_header'
+      %section#breadcrumb
+        = render :partial => 'layouts/ui_breadcrumb'
+      //
+      // content wrapper
+      //
       %div#content
         %div#content-container
           %div#content-wrap
@@ -26,6 +19,6 @@
               = yield :sidebar
             %div#main-content
               = yield
-      %footer.page
-        footer
+
+      = render :partial => 'layouts/ui_footer'
         

@@ -12,6 +12,7 @@ class SetPollAndVoteTypes < ActiveRecord::Migration
       next if poll.nil?
 
       poll.update_attribute('type', 'RankingPoll')
+      poll.reload
       update_type_for_poll_votes(poll, 'RankingVote')
     end
   end
@@ -22,6 +23,7 @@ class SetPollAndVoteTypes < ActiveRecord::Migration
       next if poll.nil?
 
       poll.update_attribute('type', 'RatingPoll')
+      poll.reload
       update_type_for_poll_votes(poll, 'RatingVote')
     end
   end

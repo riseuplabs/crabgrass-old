@@ -1,0 +1,16 @@
+%section#identity-image
+  = avatar_for @group, 'big'
+%div#identity-meta
+  %section#about-group
+    %h4.first
+      = I18n.t(:about)
+    %p 
+      = text_with_more( @group.profiles.public.summary_html) do
+        %a{:href => "#"} Read More
+    = render :partial => '/layouts/base/group_details_links'
+
+  %section#people
+    = render :partial => '/layouts/base/people'
+  %section#affiliations
+  %section#featured
+    = render :partial => '/layouts/base/featured'

@@ -177,7 +177,7 @@ class Profile < ActiveRecord::Base
       "organization", "place", "may_see", "may_see_committees", "may_see_networks",
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
-      "may_burden", "may_spy", "peer", "photo", "video", "summary"]
+      "may_burden", "may_spy", "peer", "photo", "video", "summary", "admins_may_moderate"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,

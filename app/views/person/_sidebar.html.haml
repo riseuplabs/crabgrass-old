@@ -1,0 +1,10 @@
+%section#identity-image
+  = avatar_for @user, 'xlarge'
+%div#image-label
+  %ul
+    %li
+      %h3
+        = @user.display_name
+  
+%div#identity-meta
+  = render :partial => 'about_me', :locals => {:profile => profile}

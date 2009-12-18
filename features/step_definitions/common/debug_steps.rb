@@ -7,3 +7,7 @@ end
 Then /^print response$/ do
   puts response.body
 end
+
+Then /^debug$/ do
+  require 'ruby-debug';debugger;1-1
+end
