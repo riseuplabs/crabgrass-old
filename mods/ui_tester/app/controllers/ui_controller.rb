@@ -30,6 +30,14 @@ class UiController < ApplicationController
     render :action => 'tasks', :layout => 'ui_no_sidebar'
   end
   
+  def messages
+    render :action => 'messages', :layout => 'ui_no_sidebar'
+  end 
+  
+  def messages_thread
+    render :action => 'messages_thread', :layout => 'ui_no_sidebar'
+  end
+  
   def settings
     render :action => 'settings', :layout => 'ui_no_sidebar'
   end

@@ -128,7 +128,11 @@ li
   .twenty
     padding-left: 22px
     min-height: 24px
-
+td.reply
+  background-repeat: no-repeat
+  background-position: 0 50%
+  width: 24px
+  height: 24px
 .activities li 
   color: #333 
   margin-bottom: 1em 
@@ -167,7 +171,13 @@ button.icon_16
 .shy
   opacity: 0
   font-size: 8px
-  
+.pagination
+  font-weight: normal
+  font-size: 11px
+  color= !medium_grey_text
+  float: right
+  a
+    +blue-link  
 #say-box
   position: relative
   img
@@ -198,6 +208,26 @@ nav#tabs
     display: block
     #group_avatar_image_file
       display: block
+#select-bar
+  +clearfix
+  +bordered-top-btm
+  width: 764px
+table#messages
+  width: 764px
+  tr
+    td
+      +bordered-btm(!light_grey_border)
+      padding: 6px
+    td.reply
+      
+  tr.unread
+    td
+      font-weight: bold
+table#messages.thread
+  tr
+    td
+      padding: 6px
+
 /* @group forms */
 
 form
