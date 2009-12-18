@@ -223,9 +223,8 @@ module ApplicationHelper
   def text_with_more(text, tag='p', options={}, &block)
     length = options.delete(:length) || 50
     omission = options.delete(:omission) || "... "
-    out = truncate(text, :length => length, :omission => omission)
-
     if block_given?
+      out = truncate(text, :length => length, :omission => omission + capture_haml(&block))
       capture_haml do
         #
         # TODO: update  this with rails 2.3 to:
@@ -233,13 +232,13 @@ module ApplicationHelper
         #
         haml_tag tag do
           haml_concat out
-          haml_concat capture_haml(&block)
         end
       end
     else
-      link = link_to(I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      out = truncate(text, :length => length, :omission => omission + link)
       capture_haml do 
-        haml_tag(tag, out + link,  options)
+        haml_tag(tag, out,  options)
       end
     end
   end
