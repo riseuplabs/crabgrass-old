@@ -1,0 +1,10 @@
+= render :partial => '/groups/navigation/header_small'
+
+%nav.no-sidebar
+  = render :partial => '/groups/navigation/menu'
+
+%section#main-content.no-sidebar
+  %h3 Group Settings
+  = render :partial => '/groups/profiles/tabs'
+
+  = render :partial => '/groups/basic/form'
