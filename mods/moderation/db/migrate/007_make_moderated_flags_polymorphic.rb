@@ -16,9 +16,9 @@ class MakeModeratedFlagsPolymorphic < ActiveRecord::Migration
 
   def self.down
     rename_column :moderated_flags, :flagged_id, :foreign_id
-    ModeratedFlag.update_all "flagged_id = foreign_id, type='ModeratedPage'",
+    ModeratedFlag.update_all "type='ModeratedPage'",
       "flagged_type LIKE '%Page' OR flagged_type = 'Gallery'"
-    ModeratedFlag.update_all "flagged_id = foreign_id, type='ModeratedPost'",
+    ModeratedFlag.update_all "type='ModeratedPost'",
       "flagged_type LIKE '%Post'"
     remove_column :moderated_flags, :flagged_type
   end
