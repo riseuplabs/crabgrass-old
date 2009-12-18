@@ -1,11 +1,12 @@
--# @title_box = content_tag :h1, I18n.t(:tasks)
-
 = render :partial => '/groups/navigation/header_small'
 
 %nav.no-sidebar
   = render :partial => '/groups/navigation/menu'
 
 %section#main-content.no-sidebar
+  %h3 Pending Tasks
+  %p
+    = typed_create_page_link(TaskListPage, @group) if may_create_group_page?
 
-
-
+  %section#tasks
+    = render :partial => 'tasks/list'
