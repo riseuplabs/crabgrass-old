@@ -5,7 +5,7 @@ class GeoPlace < ActiveRecord::Base
 
   def self.with_names_matching(name, country_id, params={})
     geo_country = GeoCountry.find(country_id)
-    if params[:admin_code_id]
+    if params[:admin_code_id] =~ /\d+/
       geo_admin_code = geo_country.geo_admin_codes.find(params[:admin_code_id])
       admin_codes = [geo_admin_code]
     else

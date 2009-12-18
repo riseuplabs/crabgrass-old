@@ -215,7 +215,6 @@ class Profile < ActiveRecord::Base
       :geo_country_id => params.delete('country_id'),
       :geo_admin_code_id => params.delete('state_id'),
       :geo_place_id => params.delete('city_id'),
-      :profile_id => self.id.to_i
     }
     if self.geo_location.nil?
       params['geo_location'] = GeoLocation.new(geo_location_options)

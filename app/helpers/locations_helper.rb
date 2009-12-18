@@ -1,55 +1,57 @@
 module LocationsHelper
 
   # <%= select('group','location', GeoCountry.find(:all).to_select(:name, :code), {:include_blank => true}) %>
-  def country_dropdown(object=nil, method=nil, select_id='select_country_id', replace_id='select_state_id')
+  def country_dropdown(object=nil, method=nil, options={})
     name = _field_name('country_id', object, method)
+    show_submit = options[:show_submit] || false 
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'replace_id=#{replace_id}&country_code='+value"
+      :with => "'show_submit=#{show_submit}&country_code='+value"
 #      :loading => add_class_name('geo_country_id', 'spinner_icon'),
 #      :complete => remove_class_name('geo_country_id','spinner_icon')
     ) 
-    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => select_id, :onchange => onchange})
+    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => 'select_country_id', :onchange => onchange})
   end
 
-  def state_dropdown(object=nil, method=nil, country_id=nil, select_id='select_state_id')
+  def state_dropdown(object=nil, method=nil, country_id=nil, options={})
     display = _display_value
     html = "<li id='state_dropdown' style='display: #{display}'>State/Province:"
     name = _field_name('state_id', object, method)
     if country_id.nil?
-      html << select(object, method, '', {:include_blank => true}, {:id=>select_id})
+      html << select(object, method, '', {:include_blank => true}, {:id=>'select_state_id'})
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => select_id})
+      html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => 'select_state_id'})
     end
     html << '</li>'
   end
 
-  def city_text_field(object=nil, method=nil, country_select_id='select_country_id', state_select_id='select_state_id')
+  def city_text_field(object=nil, method=nil, options = {})
     display = _display_value
-    html = "<li id='city_text' style='display: #{display}'>City: "
-    name = _field_name('city_id', object, method)
+    name = _field_name('city_name', object, method)
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'country_id='+$('#{country_select_id}').value+'&admin_code_id='+$('#{state_select_id}').value+'&city='+value"
+      :with => "'city_id_field=#{object}&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value"
     )
+    html = "<li id='city_text' style='display: #{display}'>City: "
     html << text_field(object, method, {:onblur => onblur, :name => name})
     html << '</li>'
   end
 
-  def city_id_field
+  def city_id_field(object=nil, method=nil)
     html = ''
     contents = ''
-    if @profile.city_id
+    if !@profile.nil? and @profile.city_id
       contents << '<ul>'
       contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' id='city_with_id_#{@profile.city_id}' 'checked' />#{@profile.geo_city_name}</li>"
       contents << '</ul>'
       display = "inline"
     else
+      contents << 'test'
       display = "none"
     end
     html << "<li id='city_results' style='display:#{display}'>"
-    html << contents + "</li>"
+    html << "#{contents}</li>"
   end
 
 #####
