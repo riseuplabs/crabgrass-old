@@ -1,8 +1,6 @@
 <%= form_tag('/groups/directory/search') %>
 <ul class='plain'>
-<li id='select_country'>Country: 
-  <%= country_dropdown(nil, nil, {:show_submit => true}) %>
-</li>
+<%= country_dropdown(nil, nil, {:show_submit => true}) %>
 <%= state_dropdown %>
 <%= city_text_field %>
 <%= city_id_field %>

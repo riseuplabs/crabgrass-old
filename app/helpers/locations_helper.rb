@@ -6,16 +6,18 @@ module LocationsHelper
     show_submit = options[:show_submit] || false 
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'show_submit=#{show_submit}&country_code='+value"
-#      :loading => add_class_name('geo_country_id', 'spinner_icon'),
-#      :complete => remove_class_name('geo_country_id','spinner_icon')
+      :with => "'show_submit=#{show_submit}&country_code='+value",
+      :loading => show_spinner('country'),
+      :complete => hide_spinner('country')
     ) 
-    select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => 'select_country_id', :onchange => onchange})
+    html = '<li id="select_country">'+I18n.t(:location_country).capitalize+': '
+    html << select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => 'select_country_id', :onchange => onchange}).to_s
+    html << spinner('country')+"</li>"
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
     display = _display_value
-    html = "<li id='state_dropdown' style='display: #{display}'>State/Province:"
+    html = "<li id='state_dropdown' style='display: #{display}'>"+I18n.t(:location_state).capitalize+": "
     name = _field_name('state_id', object, method)
     if country_id.nil?
       html << select(object, method, '', {:include_blank => true}, {:id=>'select_state_id'})
@@ -29,13 +31,16 @@ module LocationsHelper
   def city_text_field(object=nil, method=nil, options = {})
     display = _display_value
     name = _field_name('city_name', object, method)
+    spinner = options[:spinner]
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'city_id_field=#{object}&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value"
+      :with => "'city_id_field=#{object}&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
+      :loading => show_spinner('city'),
+      :complete => hide_spinner('city')
     )
-    html = "<li id='city_text' style='display: #{display}'>City: "
+    html = "<li id='city_text' style='display: #{display}'>"+I18n.t(:location_city).capitalize+": "
     html << text_field(object, method, {:onblur => onblur, :name => name})
-    html << '</li>'
+    html << spinner('city')+"</li>"
   end
 
   def city_id_field(object=nil, method=nil)

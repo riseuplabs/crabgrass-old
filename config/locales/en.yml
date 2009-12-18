@@ -694,6 +694,7 @@ en:
   no_members: (no members)
   new_group: "New group"
   group_language: "The main language of this {{group}}."
+  group_location: "The main location of this {{group}}."
   group_summary: "Brief information regarding this {{group}}."
   new_network: "New network"
   group_membership_count: "{{count}} Members"

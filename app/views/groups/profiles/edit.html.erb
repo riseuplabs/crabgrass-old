@@ -21,7 +21,7 @@
       r.input %Q{
         #{render(:partial => 'locations/select_form')}
       }
-      r.info I18n.t(:group_language, :group => @group.group_type.downcase)
+      r.info I18n.t(:group_location, :group => @group.group_type.downcase)
     end
     f.heading I18n.t(:photo)
     if @profile.photo
