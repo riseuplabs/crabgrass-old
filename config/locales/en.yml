@@ -538,7 +538,7 @@ en:
   toggle_selection: Toggle Selection
   remove_from_inbox: Remove from inbox
   my_settings: Settings for {{user}}
-  uploaded_image_cropped: "Uploaded image will be cropped and stretched to 96 pixels square."
+  uploaded_image_cropped: "Uploaded image will be cropped and stretched to 202 pixels square."
   select_image_file: "select image file"
   or_image_url: "or image URL"
   upload_image_link: "upload image"
