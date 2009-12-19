@@ -43,6 +43,10 @@ module RootHelper
     end
   end
 
+  def home_sidebar_link_hook
+    call_hook :home_sidebar
+  end
+
   def home_summary_html
     translation=:welcome_home_message.t
     translation.any? ?
