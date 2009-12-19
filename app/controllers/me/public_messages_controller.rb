@@ -13,17 +13,17 @@ class Me::PublicMessagesController < Me::BaseController
   # display a list of recent message activity
   #
   def index
-    @posts = current_user.discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
+    @posts = current_user.wall_discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
   end
 
   def show
-    @post = current_user.discussion.posts.find_by_id(params[:id])
+    @post = current_user.wall_discussion.posts.find_by_id(params[:id])
     return render_not_found unless @post
   end
 
   def destroy
     post = Post.find params[:id]
-    if post.discussion == current_user.discussion
+    if post.discussion == current_user.wall_discussion
       post.destroy
       redirect_to my_public_messages_url
     else
@@ -35,7 +35,7 @@ class Me::PublicMessagesController < Me::BaseController
     @post = StatusPost.create do |post|
       post.body = params[:post][:body]
       post.body = post.body[0..140] if post.body
-      post.discussion = current_user.discussion
+      post.discussion = current_user.wall_discussion
       post.user = current_user
       post.recipient = current_user
       post.body_html = post.lite_html

@@ -43,9 +43,7 @@ module UserExtension::Users
       end)
 
       ## USER'S STATUS / PUBLIC WALL
-
-      has_one :discussion, :as => :commentable, :dependent => :destroy
-      alias_method_chain :discussion, :auto_create
+      has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
 
       ## RELATIONSHIPS
 
@@ -101,14 +99,6 @@ module UserExtension::Users
     # returns the users current status by returning their latest status_posts.body
     def current_status
       @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
-    end
-
-    def discussion_with_auto_create(*args)
-      discussion_without_auto_create(*args) or begin
-        self.discussion = Discussion.create do |d|
-          d.commentable = self
-        end
-      end
     end
 
     ##
@@ -232,7 +222,7 @@ module UserExtension::Users
     def may_pester!(entity)
       entity.may_be_pestered_by! self
     end
-  
+
     def may_show_status_to?(user)
       return true if user==self
       return true if friend_of?(user) or peer_of?(user)
