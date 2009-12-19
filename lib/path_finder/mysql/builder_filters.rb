@@ -358,6 +358,13 @@ EOSQL
     @conditions << '(user_participations.watch)'
   end
 
+  def filter_notified(user_id)
+    #TODO: implement this one with persistent notifications!
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.inbox)'
+  end
+
   def filter_editor(user_id)
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i

@@ -94,13 +94,12 @@ ActionController::Routing::Routes.draw do |map|
   # so we have to put my_work above the pages resource so
   # /pages/my_work does not get resolved as Pages#show :id=>"my_work"
   map.with_options(:namesspace => 'pages/', :path_prefix => 'pages') do |pages|
-    pages.resource :my_work, :only => [:show, :update] :controller => 'pages/my_work'
+    pages.resource :my_work, :only => [:show, :update], :controller => 'pages/my_work'
     pages.resource :notifications, :only => :show, :controller => 'pages/notifications'
     pages.resource :page_flags, :as => 'flags', :only => :update, :controller => 'pages/flags'
   end
 
-  # :create is used for search -> think: create a new view on pages.
-  map.resources :pages, :only => [:new, :update]
+  map.resources :pages, :only => [:new, :update, :index]
 
   map.connect '/pages/*path', :controller => 'pages'
 
