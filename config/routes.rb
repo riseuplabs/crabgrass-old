@@ -53,10 +53,16 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
-  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
-    me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
-    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
-    me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
+    me.resources :discussions, {:collection => { :unread => :get, :mark => :put },
+                    :member => { :next => :get, :previous => :get }} do |discussion|
+        discussion.resources :posts, :namespace => 'me/discussion_'
+    end
+
+
+    # me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
+    # me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    # me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
   end
 
   map.connect 'me/:action/:id',             :controller => 'me'
@@ -101,7 +107,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
-  
+
   map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
