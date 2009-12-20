@@ -1,12 +1,4 @@
 - inside_layout 'base' do 
-
-  - if @title_box.any?
-    .title_box{:class => @title_box_class}
-      = link_to_breadcrumbs
-      = @title_box
-  - if @info_box.any?
-    .info_box{:class => @info_box_class}
-      = @info_box
   
   = yield
 

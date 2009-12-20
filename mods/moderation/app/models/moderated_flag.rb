@@ -55,7 +55,7 @@ class ModeratedFlag < ActiveRecord::Base
   def self.display_flags(page, view)
     conditions = [conditions_for_view(view)]
     return if conditions.empty?
-    paginate(:page => page, :select => "distinct foreign_id",
+    paginate(:page => page, :select => "distinct flagged_id",
              :conditions => conditions, :order => 'updated_at DESC')
   end
 

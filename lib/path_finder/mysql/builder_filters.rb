@@ -322,11 +322,11 @@ module PathFinder::Mysql::BuilderFilters
   #++
 
   def filter_public()
-    @conditions << ["pages.public = ?", true]
+    @conditions << "pages.public = TRUE"
   end
 
   def filter_public_requested()
-    @conditions << ["pages.public_requested = ?", true]
+    @conditions << "pages.public_requested = TRUE"
   end
 
   def filter_moderation(state)

@@ -22,8 +22,8 @@ module Admin::AllHelper
     button_to(action.capitalize, :action => action, :params => params)
   end
 
-  def flags_for_details(foreign_id, type)
-    ModeratedFlag.find_all_by_type_and_foreign_id(type, foreign_id)
+  def flags_for_details(flagged_id, type)
+    ModeratedFlag.find_all_by_type_and_flagged_id(type, flagged_id)
   end
 
   def link_to_see_all_flags_by_type(obj_type)
@@ -53,34 +53,34 @@ module Admin::AllHelper
     return "Comment" if obj_type == 'posts'
   end
 
-  def listing_custom_column_content(foreign_obj, view)
-    if foreign_obj.is_a?(Post)
-      post_link(foreign_obj)
-    elsif foreign_obj.is_a?(Page)
-      h(foreign_obj.type)
+  def listing_custom_column_content(flagged_obj, view)
+    if flagged_obj.is_a?(Post)
+      post_link(flagged_obj)
+    elsif flagged_obj.is_a?(Page)
+      h(flagged_obj.type)
     else
       "n/a"
     end
   end
 
-  def flagged_page_link(foreign_obj)
-    if foreign_obj.is_a?(Page)
-       link_to foreign_obj.title, page_url(foreign_obj), {:target =>  '_blank'}
-    elsif foreign_obj.is_a?(Post)
-       page_link(foreign_obj)
+  def flagged_page_link(flagged_obj)
+    if flagged_obj.is_a?(Page)
+       link_to flagged_obj.title, page_url(flagged_obj), {:target =>  '_blank'}
+    elsif flagged_obj.is_a?(Post)
+       page_link(flagged_obj)
     else
       "n/a"
     end
   end
 
-  def list_created_by(foreign_obj)
-    h(foreign_obj.created_by.try.login) || "Unknown"
+  def list_created_by(flagged_obj)
+    h(flagged_obj.created_by.try.login) || "Unknown"
   end
 
   def show_flag_details(flag)
     flag_type = flag.class.to_s
     return unless flag_type =~ /^Moderated/
-    render :partial => '/admin/show_details', :locals => {:foreign_id => flag.foreign_id, :obj_type => flag_type }
+    render :partial => '/admin/show_details', :locals => {:flagged_id => flag.flagged_id, :obj_type => flag_type }
   end
 
 end
