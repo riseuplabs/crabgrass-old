@@ -6,30 +6,6 @@ module FlashMessageHelper
   ## GENERATING NOTICES
   ##
 
-  # DEPRECATED
-  # DEPRECATED
-  def message(opts)
-    if opts[:success]
-      flash[:notice] = opts[:success]
-    elsif opts[:error]
-      flash[:type] = 'error'
-      if opts[:later]
-        flash[:error] = opts[:error].to_s
-      else
-        flash.now[:error] = opts[:error].to_s
-      end
-    elsif opts[:object]
-      object = opts[:object]
-      unless object.errors.empty?
-        flash.now[:error] = I18n.t(:alert_not_saved)
-        flash.now[:text] ||= ""
-        flash.now[:text] += content_tag "p", I18n.t(:alert_field_errors) + ":"
-        flash.now[:text] += content_tag "ul", object.errors.full_messages.collect { |msg| content_tag("li", msg) }
-        flash.now[:errors] = object.errors
-      end
-    end
-  end
-
   #
   # Direct manipulation of the message display:
   #
