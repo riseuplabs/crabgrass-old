@@ -41,7 +41,7 @@
   <% active = show_active && controller?('me/messages', 'me/public_messages', 'me/private_messages') %>
   <li class="small_icon page_message_16"><%= link_to_active(
     I18n.t(:messages),
-    my_messages_path,
+    me_discussions_path,
     active
   ) %></li>
 
