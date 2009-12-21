@@ -58,6 +58,7 @@ class GroupsController < Groups::BaseController
 
   def edit
     update if request.post?
+    render :template => 'groups/edit'
   end
 
   def update
