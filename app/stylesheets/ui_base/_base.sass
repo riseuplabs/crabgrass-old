@@ -164,7 +164,29 @@ button.icon_16
   background-color: transparent
   height: 16px
   width: 16px
-
+#sidebar
+  +bordered
+  width: 204px
+  float: right
+  margin: 0
+  ul
+    +clearfix
+    li
+      clear: both
+ul#groups, ul#people
+  li
+    clear: none
+#wiki-content
+  article
+    +clearfix
+    width: 540px
+    padding-top: 16px
+#comments
+  +clearfix
+  padding-top: 30px
+  tr
+    td
+      padding: 8px 8px 8px 0 
 .shy_parent:hover 
   .shy:hover
     opacity: 1
@@ -227,7 +249,11 @@ table#messages.thread
   tr
     td
       padding: 6px
-
+#wiki-content
+  article
+    h2
+      width: 540px
+      clear: both
 /* @group forms */
 
 form

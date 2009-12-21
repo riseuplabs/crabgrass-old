@@ -22,7 +22,7 @@
     = I18n.t(:activity).upcase
     %br
     %span
-      = @pages.total_entries
+      = @pages.total_entries if @pages.is_a?(WillPaginate)
       = I18n.t(:pages)
   %li.small_icon.tags_20
     = I18n.t(:tags).upcase
