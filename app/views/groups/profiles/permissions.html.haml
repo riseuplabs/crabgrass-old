@@ -5,7 +5,7 @@
 
 %section#main-content.no-sidebar
   = render :partial => '/groups/navigation/settings_tabs'
-  - form_tag(groups_path(:action => 'edit', :id => @group), :multipart => true) do
-    = render :partial => '/groups/basic/form'
+  - form_tag(groups_profiles_params(:action => :permissions), :multipart => false) do
+    = render :partial => '/groups/profiles/permissions_form'
     %p.form_buttons= submit_tag I18n.t(:save_button), :name => 'save'
-  - call_hook :group_edit
+  - call_hook :group_permissions
