@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
-  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
+  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'my_') do |me|
     me.resources :discussions, {:collection => { :unread => :get, :mark => :put },
                     :member => { :next => :get, :previous => :get }} do |discussion|
         discussion.resources :posts, :namespace => 'me/discussion_'
@@ -61,7 +61,8 @@ ActionController::Routing::Routes.draw do |map|
 
 
     # me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
-    # me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages', :name_prefix => nil
+
     # me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
   end
 
