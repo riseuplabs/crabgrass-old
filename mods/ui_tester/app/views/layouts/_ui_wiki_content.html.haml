@@ -1,0 +1,169 @@
+%header.no-sidebar
+  %section#identity
+    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+    %div.left
+      %h1 the woohoo! group
+      %a{:href => "#"}
+        Edit Group
+    %div.right
+      %a.button{:href => "#"}
+        Create New Task
+%nav.no-sidebar
+  %ul
+    %li.first
+      %a{:href => "#"}
+        HOME
+    %li.current
+      %a{:href => "#"}
+        ALL CONTENT
+    %li
+      %a{:href => "#"}
+        TASKS
+
+%div#main-content
+  %section#wiki-content
+    %h3 WIKI TITLE limited to 2 lines of characters vestibulum, quam dictum condimentum ullamcorper
+    %p 3 lines max of summary donec consequat pulvinar velit, eu consectetur turpis hendrerit sit amet. Fusce fermentum laoreet lacus sit amet porttitor. Pellentesque sed lectus ipsum, a sollicitudin urna.
+    %ul
+      %li.first.current
+        %a{:href => "#"}
+          SHOW
+      %li
+        %a{:href => "#"}
+          EDIT
+      %li
+        %a{:href => "#"}
+          VERSION
+      %li
+        %a{:href => "#"}
+          LAST CHANGE
+      %li
+        %a{:href => "#"}
+          PRINT
+    %article
+      %h2 First Headline
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus. Nullam id orci at urna luctus rutrum. Vestibulum imperdiet, justo sed consequat hendrerit, metus velit accumsan tortor, ac dignissim odio nunc non diam.
+    %article
+      %h2 First Headline
+      %h3 Secondary Headline
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus. Nullam id orci at urna luctus rutrum. Vestibulum imperdiet, justo sed consequat hendrerit, metus velit accumsan tortor, ac dignissim odio nunc non diam.
+      %h4 Tertiary Headline
+      %h5 Bolded Text
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus.
+      
+  %section#comments
+    %h4 Comments
+    %table
+      %tr
+        %td
+          %a{:href => "#"} elijah
+          %span Yesterday
+        %td
+          %a{:href => "#"}
+            %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+        %td
+          %p.comment
+            Fusce fermentum laoreet lacus sit amet porttitor. Pellentesque sed lectus ipsum, a sollicitudin urna cras elementum.
+      %tr
+        %td
+          %a{:href => "#"} azul
+          %span Yesterday
+        %td
+          %a{:href => "#"}
+            %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+        %td
+          %p.comment
+            Nunc interdum neque vel magna lobortis ac gravida velit pretium. Phasellus mattis dolor ut arcu vehicula quis pulvinar urna convallis. Donec eu neque in arcuem.
+      %tr
+        %td
+          %a{:href => "#"} kclair
+        %td
+          %a{:href => "#"}
+            %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+        %td
+          %form#comment
+            %textarea{:type=>'text'} Write your comment here
+            %input{:type=>'submit', :value=>'Post Message'}
+            %a{:href => "#"} Formatting Reference
+%aside#sidebar
+  %ul.side_list.commands
+    %li#watch_li.small_icon
+      %input#watch_checkbox.check{:type => 'checkbox'} Watch For Updates
+    %li#star_li
+      %a.small_icon.star_empty_dark_16 Add Star
+  %ul.side_list.commands.rule
+    %li#share_li
+      %a.small_icon.group_16{:href => "#"} Share Wiki page
+    %li#notify_li
+      %a.small_icon.whistle_16{:href => "#"} Send Notification
+    %li#public_li.small_icon
+      %input#public_checkbox.check{:type => 'checkbox'} Public
+  %ul.side_list.commands.rule
+    %li#trash_li
+      %a.small_icon.trash_16{:href => "#"} Delete
+    %li#details_li
+      %a.small_icon.table_16{:href => "#"} Details
+    %li.small_icon.table_16
+      %a{:href => "#"} History
+    %li.small_icon.printer_16
+      %a{:href => "#"} Printable
+  %section#tags 
+    %h4 Tags
+    %div.tags
+      %a.tag2{:href => "#"} test
+      %a.tag2{:href => "#"} wiki
+  %section#contributors
+    %h4 contributors
+    %h5 Groups
+    %ul#groups
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+    %h5 People
+    %ul#people
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+      %li 
+        %a{:href => "#"}
+          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+    %section#attachments
+      %h4 attachments
+      %ul 
+        %li
+          %a{:href => "#"}
+            %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+            %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
+            %span filenamelongish.png
+        %li
+          %a{:href => "#"}
+            %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+            %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
+            %span shorterone.png
+        
+      
+
+
+  
+  
