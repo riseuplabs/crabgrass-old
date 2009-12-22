@@ -57,7 +57,8 @@ class AccountController < ApplicationController
       flash_message_now :title => I18n.t(:login_failed),
       :error => I18n.t(:login_failure_reason)
     end
-
+    render :action => 'login', :layout => 'base_for_login'
+    
   end
 
   def signup
