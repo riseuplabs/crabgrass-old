@@ -235,7 +235,7 @@ module ApplicationHelper
         end
       end
     else
-      link = link_to(' '+I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
       out = truncate(text, :length => length, :omission => omission + link)
       capture_haml do 
         haml_tag(tag, out,  options)

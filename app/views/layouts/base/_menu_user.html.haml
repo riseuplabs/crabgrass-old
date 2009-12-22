@@ -2,7 +2,8 @@
   - if logged_in?
     %li.first
       = I18n.t(:group_home_welcome)
-      = current_user.display_name
+      
+      = link_to(current_user.display_name, :controller => '/me', :action => 'edit')
 
     %li  
       %a.small_icon.page_message_16{:href => "#"}  
