@@ -155,7 +155,9 @@ td.reply
   background-position: 1px 50%
   padding: 2px 0 4px 28px
   min-height: 24px
-
+#browse-content
+  +clearfix
+  width: 764px
 button.icon_16
   +zero
   vertical-align: text-top
@@ -164,7 +166,7 @@ button.icon_16
   background-color: transparent
   height: 16px
   width: 16px
-#sidebar
+#sidebar, #sidebar-browse
   +bordered
   width: 204px
   float: right
@@ -256,8 +258,6 @@ table#messages.thread
       clear: both
 /* @group forms */
 
-form
-
 input.checkbox
   width: 12px
   height: 12px
@@ -265,6 +265,11 @@ input.checkbox
   
 input.text
   border: none
+  
+form#search-browse
+  +bordered
+  input.text
+    +bordered
   
 fieldset
 
