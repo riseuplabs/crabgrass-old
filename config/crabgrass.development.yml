@@ -31,6 +31,8 @@ translation_group: rainbow
 
 text_editor: greencloth_only
 
+#use_full_geonames_data: true
+
 ##
 ## SITES
 ##
