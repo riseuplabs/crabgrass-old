@@ -58,6 +58,10 @@ module ContextHelper
     @banner_style = style
   end
 
+  def set_header(partial)
+    @partial_for_header = partial 
+  end
+
   ############################################################
   ## CONTEXT MACROS
 
@@ -78,9 +82,11 @@ module ContextHelper
         end
       end
       add_context @group.display_name, url_for_group(@group, :action => 'show')
-      set_banner "groups/navigation/banner_#{size}", @group.banner_style
+      set_header "groups/group_header_no_sidebar"
+      set_banner "groups/group_header_no_sidebar", @group.banner_style
     elsif @parent
       add_context @parent.display_name, url_for_group(@parent, :action => 'show')
+      set_header "groups/navigation/header_small"
       set_banner "groups/navigation/banner_#{size}", @parent.banner_style
     else
       set_banner "groups/directory/banner", ''
@@ -97,10 +103,12 @@ module ContextHelper
         add_context I18n.t(:networks), network_directory_url
         add_context @group.display_name, url_for_group(@group)
         set_banner "groups/navigation/banner_#{size}", @group.banner_style
+        set_header "groups/navigation/header_small"
       end
     else
       add_context I18n.t(:networks), network_directory_url
       set_banner "groups/directory/banner", ''
+      set_header "groups/directory/header"
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -117,6 +125,7 @@ module ContextHelper
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
       set_banner "person/banner_#{size}", @user.banner_style
+      set_header "person/header_small"
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -127,6 +136,7 @@ module ContextHelper
     @active_tab = :me
     add_context 'me', me_url
     set_banner 'me/banner', current_user.banner_style
+    set_header "me/banner"
     breadcrumbs_from_context if update_breadcrumbs
   end
 

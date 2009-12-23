@@ -26,6 +26,10 @@ class UiController < ApplicationController
   def group
   end
   
+  def group_browse
+    render :action => 'group_browse', :layout => 'ui_no_sidebar'
+  end
+  
   def wiki
     render :action => 'wiki', :layout => 'ui_no_sidebar'
   end

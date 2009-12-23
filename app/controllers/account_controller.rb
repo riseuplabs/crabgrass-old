@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
+  layout 'base_for_login'
 
   before_filter :view_setup
 
@@ -13,7 +14,7 @@ class AccountController < ApplicationController
     if logged_in?
       redirect_to me_url
     end
-    render :action => 'login', :layout => 'base_for_login'
+    render :action => 'login'
   end
 
   def login
@@ -22,10 +23,7 @@ class AccountController < ApplicationController
       :error => I18n.t(:redirect_to_foreign_domain, :url => params.delete(:redirect)))
       redirect_to params and return
     end
-    unless request.post?
-      render :action => 'login', :layout => 'base_for_login'
-      return 
-    end
+    return unless request.post?
     previous_language = session[:language_code]
 
     self.current_user = User.authenticate(params[:login], params[:password])
@@ -57,7 +55,7 @@ class AccountController < ApplicationController
       flash_message_now :title => I18n.t(:login_failed),
       :error => I18n.t(:login_failure_reason)
     end
-
+    
   end
 
   def signup
