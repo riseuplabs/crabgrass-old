@@ -10,14 +10,14 @@ module LocationsHelper
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
-    html = '<li id="select_country">'+I18n.t(:location_country).capitalize+': '
+    html = '<div id="select_country">'+I18n.t(:location_country).capitalize+': '
     html << select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => 'select_country_id', :onchange => onchange}).to_s
-    html << spinner('country')+"</li>"
+    html << spinner('country')+"</div>"
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
     display = _display_value
-    html = "<li id='state_dropdown' style='display: #{display}'>"+I18n.t(:location_state).capitalize+": "
+    html = "<div id='state_dropdown' style='display: #{display}'>"+I18n.t(:location_state).capitalize+": "
     name = _field_name('state_id', object, method)
     if country_id.nil?
       html << select(object, method, '', {:include_blank => true}, {:id=>'select_state_id'})
@@ -25,7 +25,7 @@ module LocationsHelper
       geocountry = GeoCountry.find_by_id(country_id)
       html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => 'select_state_id'})
     end
-    html << '</li>'
+    html << '</div>'
   end
 
   def city_text_field(object=nil, method=nil, options = {})
@@ -38,9 +38,9 @@ module LocationsHelper
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
-    html = "<li id='city_text' style='display: #{display}'>"+I18n.t(:location_city).capitalize+": "
+    html = "<div id='city_text' style='display: #{display}'>"+I18n.t(:location_city).capitalize+": "
     html << text_field(object, method, {:onblur => onblur, :name => name})
-    html << spinner('city')+"</li>"
+    html << spinner('city')+"</div>"
   end
 
   def city_id_field(object=nil, method=nil)
@@ -51,12 +51,9 @@ module LocationsHelper
       contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' id='city_with_id_#{@profile.city_id}' 'checked' />#{@profile.geo_city_name}</li>"
       contents << '</ul>'
       display = "inline"
-    else
-      contents << 'test'
-      display = "none"
     end
-    html << "<li id='city_results' style='display:#{display}'>"
-    html << "#{contents}</li>"
+    html << "<div id='city_results' style='display:#{display}'>"
+    html << "#{contents}</div>"
   end
 
 #####
