@@ -1,4 +1,4 @@
-0.5.0
+0.5.0 - in progress
 -----
 * Locations have been added!
   Locations require an import of data files from Geonames (geonames.org).
