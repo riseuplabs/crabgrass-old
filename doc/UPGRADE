@@ -4,13 +4,13 @@
   Locations require an import of data files from Geonames (geonames.org).
   By default, a smaller data set will be imported, consisting of cities 
   with a population greater than 1000 people.
-  To enable the full Geonames data set, add the following option to 
-  the config file:
-    % use_full_geonames_data = true
 
   Locations require a migration and a rake task:
     % rake db:migrate
     % rake cg:import_geo_data
+
+  Please note that the cg:import_geo_data rake task could take a bit of 
+  time to run and will add a large-ish data set to mysql.
 
 
 0.4.7
