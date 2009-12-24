@@ -24,6 +24,8 @@ module NavigationHelpers
       '/groups/directory/destroyed'
     when /the moderation panel/
       '/admin/pages'
+    when /the group directory/
+      '/groups/directory/search'
 
     when /^the page of #{capture_model}$/          # translate to named route
       "/page/#{model($1).friendly_url}"
@@ -41,6 +43,10 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? landing page$/                     # eg. the groups's landing page
       name = model($1).name
       "/#{name}"
+
+    when /^#{capture_model}(?:'s)? edit profile page$/                     # eg. the groups's edit page
+      name = model($1).name
+      "/groups/profiles/edit/#{name}"
 
     when /^#{capture_model}(?:'s)? membership list page$/                     # eg. the groups's membership list page
       name = model($1).name

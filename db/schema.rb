@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091124104449) do
+ActiveRecord::Schema.define(:version => 20091124133538) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -221,6 +221,41 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
 
   add_index "federatings", ["group_id", "network_id"], :name => "gn"
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
+
+  create_table "geo_admin_codes", :force => true do |t|
+    t.integer "geo_country_id", :limit => 11, :null => false
+    t.string  "admin1_code",    :limit => 10, :null => false
+    t.string  "name",                         :null => false
+  end
+
+  add_index "geo_admin_codes", ["geo_country_id", "admin1_code"], :name => "geo_admin_codes_index", :unique => true
+
+  create_table "geo_countries", :force => true do |t|
+    t.string "name",              :null => false
+    t.string "code", :limit => 3, :null => false
+  end
+
+  add_index "geo_countries", ["name", "code"], :name => "geo_countries_index", :unique => true
+
+  create_table "geo_locations", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11, :null => false
+    t.integer "geo_admin_code_id", :limit => 11, :null => false
+    t.integer "geo_place_id",      :limit => 11, :null => false
+  end
+
+  create_table "geo_places", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11,                                   :null => false
+    t.integer "geonameid",         :limit => 11,                                   :null => false
+    t.string  "name",                                                              :null => false
+    t.string  "alternatenames",    :limit => 5000
+    t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
+    t.decimal "longitude",                         :precision => 24, :scale => 20, :null => false
+    t.integer "geo_admin_code_id", :limit => 11,                                   :null => false
+  end
+
+  add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
+  add_index "geo_places", ["geo_country_id"], :name => "index_geo_places_on_geo_country_id"
+  add_index "geo_places", ["geo_admin_code_id"], :name => "index_geo_places_on_geo_admin_code_id"
 
   create_table "group_participations", :force => true do |t|
     t.integer  "group_id",          :limit => 11
@@ -526,6 +561,7 @@ ActiveRecord::Schema.define(:version => 20091124104449) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.integer  "geo_location_id",        :limit => 11
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"

@@ -165,12 +165,12 @@ body
         +columns(14)
         +full
         width: 764px
-        header.no-sidebar
+        header#header-full
           +clearfix
           #identity
             +clearfix
-            height: 67px
             width: 764px
+            height: 67px
           img
             padding-right: 40px
           a
@@ -179,32 +179,34 @@ body
             float: left
             clear: left
             color= !light_grey_text
-        nav.no-sidebar
-          +zero
-          width: 764px
-          height: 28px
-          li
-            +zero
-            +bordered(!almost_black)
-            +spaced
+          nav#nav-full
+            width: 764px
             height: 28px
-            border-left: none
-            background: #fff
-            font-size: 11px
-            a
-              color= !warm_grey_text
-              text-decoration: none
-              font-weight: bold
-              height: 28px
-              line-height: 2.5
-              padding: 8px 10px
-          li.current
-            background= !almost_black
-            a
-              color: #fff
-          li.first
-            +bordered(!almost_black)  
-        #main-content.no-sidebar
+            ul
+              +clearfix
+              li
+                +zero
+                +bordered(!almost_black)
+                +spaced
+                height: 28px
+                border-left: none
+                background: #fff
+                font-size: 11px
+                a
+                  color= !warm_grey_text
+                  text-decoration: none
+                  font-weight: bold
+                  height: 28px
+                  line-height: 1.3
+                  padding: 8px 10px
+              li.current
+                background= !almost_black
+                a
+                  color: #fff
+              li.first
+                +bordered(!almost_black) 
+             
+        #main-content-full
           width: 764px
           margin-top: 14px
         #identity-info
@@ -321,7 +323,12 @@ body
                   width: 164px
                   padding-top: 4px
      
-        #main-content
+        #alpha10
+          width: 540px
+          float: left
+          margin: 0
+          display: inline
+        #omega10
           width: 540px
           float: left
           margin: 0
@@ -413,183 +420,118 @@ body
               float: right
               line-height: 1.1
               color= !link_color
-          #helpful-links
-            +columns(10,10)
+          #main-content
             +clearfix
-            +bordered-top-btm
-            margin: 15px 0 0
-            padding: 8px 0
             width: 540px
-            h4, ul
-              display: inline
-            ul
-              +clearfix
-            h4
-              float: left
-              line-height: 1.1
-              margin-right: 2px
-            li
-              +zero
-              line-height: 1.3
-              margin-left: 6px
-              a
-                +blue-link
-                padding-left: 2px
-              span
-                color= !light_grey_border
-          #wiki
-            +columns(10,10)
-            +bordered-top-btm
-            margin: 10px 0 0
-            padding: 8px 0
-            width: 540px
-            header
-              h4, a
-                display: inline
-              a
-                float: right
-            .wiki
-              width: 540px
-              a
-                +blue-link
-          #announcements
-            +columns(10,10)
-            margin: 24px 0 0
-            width: 540px
-            h3
-              +bordered-btm(!medium_grey_border)
-              padding: 0 0 8px
-            article
-              +columns(5,10)
-              +alpha(10)
-              padding-top: 10px
-            article.right
-              +columns(5,10)
-              +omega(10)
-            h4
-              line-height: 1.4
-            a
-              +blue-link
-          #pages, #contributions
-            +columns(10,10)
-            margin: 30px 0 0
-            width: 540px
-            h3
-              +bordered-btm(!medium_grey_border)
-              padding: 0 0 8px
-              float: left
-              display: inline
-              width: 540px
-            .pagination
-              font-weight: normal
-              font-size: 11px
-              color= !medium_grey_text
-              float: right
-              display: inline
-              a
-                +blue-link
-              
-          #pages
-            article
+            #helpful-links
               +columns(10,10)
-              +bordered-btm(!light_grey_border)
+              +clearfix
+              +bordered-top-btm
+              margin: 15px 0 0
+              padding: 8px 0
               width: 540px
-              margin: 0
-              padding: 10px 0
-              .pages-info
-                +columns(9,10)
+              h4, ul
+                display: inline
+              ul
+                +clearfix
+              h4
+                float: left
+                line-height: 1.1
+                margin-right: 2px
+              li
+                +zero
+                line-height: 1.3
+                margin-left: 6px
+                a
+                  +blue-link
+                  padding-left: 2px
+                span
+                  color= !light_grey_border
+            #wiki
+              +columns(10,10)
+              +bordered-top-btm
+              margin: 10px 0 0
+              padding: 8px 0
+              width: 540px
+              header
+                h4, a
+                  display: inline
+                a
+                  float: right
+              .wiki
+                width: 540px
+                a
+                  +blue-link
+            #announcements
+              +columns(10,10)
+              margin: 24px 0 0
+              width: 540px
+              h3
+                +bordered-btm(!medium_grey_border)
+                padding: 0 0 8px
+              article
+                +columns(5,10)
                 +alpha(10)
+                padding-top: 10px
+              article.right
+                +columns(5,10)
+                +omega(10)
+              h4
+                line-height: 1.4
+              a
+                +blue-link
+
+              footer
+                +columns(10,10)
+                width: 540px
                 margin: 0
-                width: 85.8%
+                .pagination
+                  float: right
+            #info-box 
+              +columns(10,10)
+              +clearfix
+              padding: 0 0 8px
+              width: 540px
+            #info-box  
+              #say-box
+                +columns(10,10)
+                +clearfix
+                width: 540px
                 img
                   float: left
-                  display: inline
-                  width: 75px
-                  height: 75px
-                  padding: 0 6px 6px 0
-                h4
-                  float: left
-                  display: inline
-                  font-size: 14px
-                  margin-bottom: 2px
-                  color= !blue
-                p
-                  float: left
-                  display: inline
-                  padding-left: 20px
-                  a
-                    +blue-link
-                  .tags
-                    +clearfix
-                    a   
-                      +blue-link(10px)
-                p.img
-                  width: 360px
-              .pages-status
-                +columns(1,10)
-                +omega(10)
-                +zero
-                +bordered
-                float: right
-                width: 11%
-                padding: 4px 2px
-                li
-                  clear: both
-                  float: right
-                  font-size: 11px
-                  line-height: 1.0
-                  padding: 0.1em
-            footer
-              +columns(10,10)
-              width: 540px
-              margin: 0
-              .pagination
-                float: right
-          #info-box 
-            +columns(10,10)
-            +clearfix
-            padding: 0 0 8px
-            width: 540px
-          #info-box  
-            #say-box
-              +columns(10,10)
-              +clearfix
-              width: 540px
-              img
-                float: left
-                margin: 0 6px
-              #say
-                input.textarea
-                  display: inline
-                  border: 1px solid #ccc
-                  width: 300px
-                  height: 16px
-            #activities
-              +bordered-btm(!light_grey_border)
-              +columns(10,10)
-              +clearfix
-              width: 540px
-              margin: 20px 0 0
-              .left
-                +columns(5,10)
-                +alpha(10)
+                  margin: 0 6px
+                #say
+                  input.textarea
+                    display: inline
+                    border: 1px solid #ccc
+                    width: 300px
+                    height: 16px
+              #activities
+                +bordered-btm(!light_grey_border)
+                +columns(10,10)
                 +clearfix
-              .right
-                +columns(5,10)
-                +omega(10)
-                +clearfix 
-              ul
-                a
-                  +hover-link
-                li
-                  margin-bottom: 4px
-                  line-height: 1.4
-                  img
-                    float: left
-                    padding: 6px 6px 6px 0
-                  label.date
-                    font-size: 9px
-                    color= !lighter_grey_text
+                width: 540px
+                margin: 20px 0 0
+                .left
+                  +columns(5,10)
+                  +alpha(10)
+                  +clearfix
+                .right
+                  +columns(5,10)
+                  +omega(10)
+                  +clearfix 
+                ul
+                  a
+                    +hover-link
+                  li
+                    margin-bottom: 4px
+                    line-height: 1.4
+                    img
+                      float: left
+                      padding: 6px 6px 6px 0
+                    label.date
+                      font-size: 9px
+                      color= !lighter_grey_text
 
 
 

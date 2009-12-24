@@ -51,3 +51,14 @@ Then /^#{capture_model} should not be a member of #{capture_model}$/ do |user, g
 
   assert !user.member_of?(group)
 end
+
+Given /^#{capture_model}(?:'s)? country is "([^\"]+)"$/ do |group, country|
+  group = model!(group)
+  public_profile = group.profiles.find_by_stranger(true)
+  gl = GeoLocation.new({
+      :geo_country_id => 2,
+      :profile_id => group.profile.id.to_i
+  })
+  public_profile.update_attributes(:geo_location => gl) 
+  ### this would be a good place for directly manipulating the db.
+end

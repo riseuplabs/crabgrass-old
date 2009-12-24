@@ -1,0 +1,12 @@
+- color = cycle('shade-odd', 'shade-even')
+%tr
+  %td
+    = link_to_user post.user
+    %span= created_modified_date(post.created_at, post.updated_at)
+  %td
+    %a{:href => "#"}
+      %img{:src=> avatar_url_for(post.user, 'small')}
+    = call_hook :author_info, {:post => post}
+  %td
+    = render :partial => 'posts/post_body', :locals => {:post => post}
+

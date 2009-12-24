@@ -4,9 +4,13 @@
     = render :partial => @partial_for_header
 
   %div#main-content
+    = link_to_breadcrumbs(2)
     %section#wiki-content
-      %h3 WIKI TITLE limited to 2 lines of characters vestibulum, quam dictum condimentum ullamcorper
-      %p 3 lines max of summary donec consequat pulvinar velit, eu consectetur turpis hendrerit sit amet. Fusce fermentum laoreet lacus sit amet porttitor. Pellentesque sed lectus ipsum, a sollicitudin urna.
+      - if @title_box.any?
+        = render :partial => @title_box
+      - if @info_box.any?
+        %div.info_box
+          = @info_box
       %ul
         %li.first.current
           %a{:href => "#"}
@@ -24,50 +28,12 @@
           %a{:href => "#"}
             PRINT
       %article
-        %h2 First Headline
-        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus. Nullam id orci at urna luctus rutrum. Vestibulum imperdiet, justo sed consequat hendrerit, metus velit accumsan tortor, ac dignissim odio nunc non diam.
-      %article
-        %h2 First Headline
-        %h3 Secondary Headline
-        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus. Nullam id orci at urna luctus rutrum. Vestibulum imperdiet, justo sed consequat hendrerit, metus velit accumsan tortor, ac dignissim odio nunc non diam.
-        %h4 Tertiary Headline
-        %h5 Bolded Text
-        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper faucibus vehicula. Aenean hendrerit turpis in massa pretium luctus.
+        %div.content_box
+          = yield
+          = @content_box 
       
     %section#comments
-      %h4 Comments
-      %table
-        %tr
-          %td
-            %a{:href => "#"} elijah
-            %span Yesterday
-          %td
-            %a{:href => "#"}
-              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-          %td
-            %p.comment
-              Fusce fermentum laoreet lacus sit amet porttitor. Pellentesque sed lectus ipsum, a sollicitudin urna cras elementum.
-        %tr
-          %td
-            %a{:href => "#"} azul
-            %span Yesterday
-          %td
-            %a{:href => "#"}
-              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-          %td
-            %p.comment
-              Nunc interdum neque vel magna lobortis ac gravida velit pretium. Phasellus mattis dolor ut arcu vehicula quis pulvinar urna convallis. Donec eu neque in arcuem.
-        %tr
-          %td
-            %a{:href => "#"} kclair
-          %td
-            %a{:href => "#"}
-              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-          %td
-            %form#comment
-              %textarea{:type=>'text'} Write your comment here
-              %input{:type=>'submit', :value=>'Post Message'}
-              %a{:href => "#"} Formatting Reference
+      = render :partial => 'posts/list' if @show_posts
   %aside#sidebar
     %ul.side_list.commands
       %li#watch_li.small_icon
