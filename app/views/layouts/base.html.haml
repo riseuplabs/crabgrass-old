@@ -10,12 +10,52 @@
       %div#content
         %div#content-container
           %div#content-wrap
-            - if yield :sidebar
+
+            /
+            / extended sidebar for landing pages (optional)
+            /
+            - if yield :extended_sidebar
               %aside#identity-info
-                = yield :sidebar
+                = yield :extended_sidebar
+
+            /
+            / banner placeholder
+            /
+            - if yield :banner
+              = yield :banner
+
+            /
+            / same as banner?
+            /
+            - if yield :content_header
+              = yield :content_header
+
+            /
+            / secondary nav (always required?)
+            /
+            - if yield :secondary_nav
+              = yield :secondary_nav
+
+
+            /
+            / left sidebar (optional)
+            /
+            - if yield :left_sidebar
+              %aside#sidebar
+                = yield :left_sidebar
+
+            /
+            / main content here
+            /
             %div#main-content
-              - if yield :banner
-                = yield :banner
               = yield
+
+            /
+            / right sidebar
+            /
+            - if yield :right_sidebar
+              %aside#sidebar
+                = yield :right_sidebar
+            
       = render :partial => 'layouts/base/footer'
           

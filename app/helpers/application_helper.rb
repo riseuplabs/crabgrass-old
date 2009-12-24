@@ -302,6 +302,22 @@ module ApplicationHelper
     end
   end
 
+  #
+  # *NEWUI
+  #
+  # provides a block for main container
+  # 
+  # content_starts_here do 
+  #   %h1 my page
+  #
+  def content_starts_here(&block)
+    capture_haml do
+      haml_tag :div, :id =>'main-content' do
+        haml_concat capture_haml(&block)
+      end
+    end
+  end
+
   private
 
   def link_char(links)

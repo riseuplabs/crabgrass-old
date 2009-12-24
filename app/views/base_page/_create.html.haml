@@ -1,14 +1,17 @@
-%header.no-sidebar
-  %section#identity
-    = avatar_for @group, 'large', :class => 'left'
-    %div.left
-      %h1 
-        = @group.full_name
-    %div.right 
-      = yield :touchstone_actions
+- content_for :content_header do
+  %header.no-sidebar
+    %section#identity
+      = avatar_for @group, 'large', :class => 'left'
+      %div.left
+        %h1 
+          = @group.full_name
+      %div.right 
+        = yield :touchstone_actions
 
-%nav.no-sidebar
-  = render :partial => '/groups/navigation/menu'
+- content_for :secondary_nav do
+  %nav.no-sidebar
+    = render :partial => '/groups/navigation/menu'
+
 
 %section#main-content.no-sidebar
 

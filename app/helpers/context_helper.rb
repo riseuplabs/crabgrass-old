@@ -54,7 +54,7 @@ module ContextHelper
   end
 
   def set_banner(partial, style)
-    @banner = render_to_string :partial => partial
+    #@banner = render_to_string :partial => partial
     @banner_style = style
   end
 
