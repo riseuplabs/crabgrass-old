@@ -16,25 +16,28 @@
       %li
         %a{:href => "#"}
           TASKS
-%section#browse-content
-  %nav
-    %ul
-      %li.first.current
-        %a{:href => "#"}
-          ALL
-      %li
-        %a{:href => "#"}
-          CONTENT VIEWS
-    %a.right
-      Trash
-  %section#group-browse
+%div#main-content-full
+  %section#browse-content
+    %nav
+      %ul
+        %li.first.current
+          %a{:href => "#"}
+            ALL
+        %li
+          %a{:href => "#"}
+            CONTENT VIEWS
+      %a.right
+        Trash
     %form#search-browse
       %fieldset
         %label Search all content
         %input.text{:type=>'text'} 
         %input.search-submit{:type=>'button', :value=>'Search'}
-%div#main-content        
-  %section#pages
+
+
+  %section#group-browse
+    
+  %section#pages-full
     %header
       %h3 
         group pages
@@ -131,14 +134,6 @@
           %a{:href => "#"}
             &raquo;
 
- 
-%aside#sidebar-browse
-  %p 
-    SIDEBAR DESIGN
-    %br NOT FINALIZED
-    %br GROUP BROWSE
-        
-      
 
 
   

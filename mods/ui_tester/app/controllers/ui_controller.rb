@@ -17,7 +17,6 @@ class UiController < ApplicationController
   # this action uses a layout without sidebar container
   #
   def login
-    render :action => 'login', :layout => 'ui_base_login'
   end
 
   def profile
@@ -27,27 +26,24 @@ class UiController < ApplicationController
   end
   
   def group_browse
-    render :action => 'group_browse', :layout => 'ui_no_sidebar'
+  end
+  
+  def group_types
   end
   
   def wiki
-    render :action => 'wiki', :layout => 'ui_no_sidebar'
   end
   
   def tasks
-    render :action => 'tasks', :layout => 'ui_no_sidebar'
   end
   
   def messages
-    render :action => 'messages', :layout => 'ui_no_sidebar'
   end 
   
   def messages_thread
-    render :action => 'messages_thread', :layout => 'ui_no_sidebar'
   end
   
   def settings
-    render :action => 'settings', :layout => 'ui_no_sidebar'
   end
 
   def index
