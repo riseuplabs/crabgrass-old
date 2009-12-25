@@ -1,189 +1,194 @@
-%header
-  =render :partial => 'layouts/ui_profile_header'
-%section#info-box
-  %div#say-box
-    %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"22px", :width=>"22px"}
-    %form#say
-      %input.textarea{:type=>'text'} 
-      %input.say-submit{:type=>'button', :value=>'say'}
-  %div#activities
-    %div.left
-      %ul
-        %li.small_icon.membership_add_16.shy_parent
-          %a.name_icon{:href => "#"}jeffrey 
-          has joined group 
-          %a.name_icon{:href => "#"}learn ruby
-          %span.commands
-            %label.date today 
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}kimmie
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message then we must sew you a nudie suit! perhaps we can start a nudie suit group on crabgrass. you know, so we can get shit done.
-          %span.commands
-            %label.date yesterday 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date Saturday 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-    %div.right
-      %ul
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}qa-test 
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message what is this: a écrit à!
-          %span.commands
-            %label.date 23/Sep 
-            %a.shy{:href => "#"} details &raquo;
-        %li.small_icon.comment_16.shy_parent
-          %a.name_icon{:href => "#"}kimmie
-          wrote to 
-          %a.name_icon{:href => "#"}jeffrey:
-          %span.message then we must sew you a nudie suit! perhaps we can start a nudie suit group on crabgrass. you know, so we can get shit done.
-          %span.commands
-            %label.date yesterday 
-            %a.shy{:href => "#"} details &raquo;
-%section#pages
+%aside#identity-info
+  = render :partial => 'layouts/ui_profile_sidebar'
+
+%div#omega10
   %header
-    %h3 
-      recent contributions
-      %span.pagination
-        %span.disabled
-          %a{:href => "#"}
-            &laquo; 
-        %span.current
-          %a{:href => "#"}1 
-        %span 2 3
-        %span
-          %a{:href => "#"}
-            &raquo;
-  %article
-    %section.pages-info
-      %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-      %p 
-        Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-        %a{:href => "#"}
-          Read More
-        %span.tags
-          %a{:href => "#"}TagNamePages,
-          %a{:href => "#"} TagNamePages
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %article
-    %section.pages-info
-      %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
-      %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-      %p.img 
-        Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-        %a{:href => "#"}
-          Read More
-        %span.tags
-          %a{:href => "#"}TagName,
-          %a{:href => "#"} TagName
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %article
-    %section.pages-info
-      %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-      %p 
-        Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-        %a{:href => "#"}
-          Read More
-        %span.tags
-          %a{:href => "#"}TagNamePages,
-          %a{:href => "#"} TagNamePages
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %article
-    %section.pages-info
-      %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
-      %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-      %p.img 
-        Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-        %a{:href => "#"}
-          Read More
-        %span.tags
-          %a{:href => "#"}TagName,
-          %a{:href => "#"} TagName
-    %ul.pages-status
-      %li New
-      %li 
-        %a{:href => "#"}
-          Daniel
-      %li 3:45 pm
-      %li star
-  %footer
-    %div.pagination
-      %span.disabled
-        %a{:href => "#"}
-          &laquo; 
-      %span.current
-        %a{:href => "#"}
-          1 
-      %span 2 3
-      %span
-        %a{:href => "#"}
-          &raquo;
+    =render :partial => 'layouts/ui_profile_header'
+  %div#main-content
+    %section#info-box
+      %div#say-box
+        %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"22px", :width=>"22px"}
+        %form#say
+          %input.textarea{:type=>'text'} 
+          %input.say-submit{:type=>'button', :value=>'say'}
+      %div#activities
+        %div.left
+          %ul
+            %li.small_icon.membership_add_16.shy_parent
+              %a.name_icon{:href => "#"}jeffrey 
+              has joined group 
+              %a.name_icon{:href => "#"}learn ruby
+              %span.commands
+                %label.date today 
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}kimmie
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message then we must sew you a nudie suit! perhaps we can start a nudie suit group on crabgrass. you know, so we can get shit done.
+              %span.commands
+                %label.date yesterday 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date Saturday 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+        %div.right
+          %ul
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}qa-test 
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message what is this: a écrit à!
+              %span.commands
+                %label.date 23/Sep 
+                %a.shy{:href => "#"} details &raquo;
+            %li.small_icon.comment_16.shy_parent
+              %a.name_icon{:href => "#"}kimmie
+              wrote to 
+              %a.name_icon{:href => "#"}jeffrey:
+              %span.message then we must sew you a nudie suit! perhaps we can start a nudie suit group on crabgrass. you know, so we can get shit done.
+              %span.commands
+                %label.date yesterday 
+                %a.shy{:href => "#"} details &raquo;
+    %section#pages
+      %header
+        %h3 
+          recent contributions
+          %span.pagination
+            %span.disabled
+              %a{:href => "#"}
+                &laquo; 
+            %span.current
+              %a{:href => "#"}1 
+            %span 2 3
+            %span
+              %a{:href => "#"}
+                &raquo;
+      %article
+        %section.pages-info
+          %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+          %p 
+            Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+            %a{:href => "#"}
+              Read More
+            %span.tags
+              %a{:href => "#"}TagNamePages,
+              %a{:href => "#"} TagNamePages
+        %ul.pages-status
+          %li New
+          %li 
+            %a{:href => "#"}
+              Daniel
+          %li 3:45 pm
+          %li star
+      %article
+        %section.pages-info
+          %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+          %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+          %p.img 
+            Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+            %a{:href => "#"}
+              Read More
+            %span.tags
+              %a{:href => "#"}TagName,
+              %a{:href => "#"} TagName
+        %ul.pages-status
+          %li New
+          %li 
+            %a{:href => "#"}
+              Daniel
+          %li 3:45 pm
+          %li star
+      %article
+        %section.pages-info
+          %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+          %p 
+            Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+            %a{:href => "#"}
+              Read More
+            %span.tags
+              %a{:href => "#"}TagNamePages,
+              %a{:href => "#"} TagNamePages
+        %ul.pages-status
+          %li New
+          %li 
+            %a{:href => "#"}
+              Daniel
+          %li 3:45 pm
+          %li star
+      %article
+        %section.pages-info
+          %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+          %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+          %p.img 
+            Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+            %a{:href => "#"}
+              Read More
+            %span.tags
+              %a{:href => "#"}TagName,
+              %a{:href => "#"} TagName
+        %ul.pages-status
+          %li New
+          %li 
+            %a{:href => "#"}
+              Daniel
+          %li 3:45 pm
+          %li star
+      %footer
+        %div.pagination
+          %span.disabled
+            %a{:href => "#"}
+              &laquo; 
+          %span.current
+            %a{:href => "#"}
+              1 
+          %span 2 3
+          %span
+            %a{:href => "#"}
+              &raquo;
 
  

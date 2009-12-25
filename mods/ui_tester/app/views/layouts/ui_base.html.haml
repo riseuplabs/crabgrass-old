@@ -15,10 +15,7 @@
       %div#content
         %div#content-container
           %div#content-wrap
-            %aside#identity-info
-              = yield :sidebar
-            %div#main-content
-              = yield
+            = yield
 
       = render :partial => 'layouts/ui_footer'
         

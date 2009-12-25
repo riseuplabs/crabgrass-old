@@ -1,4 +1,4 @@
-%header.no-sidebar
+%header#header-full
   %section#identity
     %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
       %div.left
@@ -19,27 +19,28 @@
           %li
             %a{:href => "#"} 
               2 new requests              
-%nav.no-sidebar
-  %ul
-    %li.first
-      %a{:href => "#"}
-        PAGES
-    %li
-      %a{:href => "#"}
-        SOCIAL ACTIVITY
-    %li.current
-      %a{:href => "#"}
-        MESSAGES
-    %li
-      %a{:href => "#"}
-        REQUESTS
+  %nav#nav-full
+    %ul
+      %li.first
+        %a{:href => "#"}
+          PAGES
+      %li
+        %a{:href => "#"}
+          SOCIAL ACTIVITY
+      %li.current
+        %a{:href => "#"}
+          MESSAGES
+      %li
+        %a{:href => "#"}
+          REQUESTS
         
-%div#main-content.no-sidebar
-  %div#message-form.say-box
-    %fieldset
-      %input{:type=>'text', :value=>'To: Type Name'}
-      %textarea{:type=>'text'} expanding "say-box" type textarea
-      %input{:type=>'submit', :value=>'Send'} 
+
+%div#message-form.say-box
+  %fieldset
+    %input{:type=>'text', :value=>'To: Type Name'}
+    %textarea{:type=>'text'} expanding "say-box" type textarea
+    %input{:type=>'submit', :value=>'Send'} 
+%div#main-content-full      
   %div#message-from-form.right
     %label Messages from
     %input{:type=>'text', :value=> 'auto-complete?'}
