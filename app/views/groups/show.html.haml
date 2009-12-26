@@ -1,11 +1,12 @@
 - content_for :html_head do 
   %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
 
-- content_for :sidebar do
+- content_for :extended_sidebar do
   = render :partial => 'groups/navigation/sidebar'
 
-%header
-  = render :partial => 'group_header'
+- content_for :content_header do
+  %header
+    = render :partial => 'group_header'
 
 %section#helpful-links
   = render :partial => 'group_links'
