@@ -1,13 +1,9 @@
-#
-#
-#
-#
-
+# my wall discussion posts
 class Me::PublicMessagesController < Me::BaseController
+  permissions 'public_messages'
 
-  helper 'messages'
+  helper 'wall_posts'
   stylesheet 'messages'
-  permissions 'messages'
 
   #
   # display a list of recent message activity
