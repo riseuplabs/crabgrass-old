@@ -1,0 +1,14 @@
+%aside#identity-info
+  = yield :extended_sidebar
+
+/
+/ container for pages that has extended sidebar
+/ 
+%div#omega10
+  = yield :content_header
+
+  /
+  / main content here
+  /
+  %div#main-content
+    = yield

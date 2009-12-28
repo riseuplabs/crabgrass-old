@@ -10,12 +10,20 @@
       %div#content
         %div#content-container
           %div#content-wrap
-            - if yield :sidebar
-              %aside#identity-info
-                = yield :sidebar
-            %div#main-content
-              - if yield :banner
-                = yield :banner
-              = yield
+
+            /
+            / extended sidebar for landing pages 
+            /
+            - unless yield :extended_sidebar
+              /
+              / full content width pages 
+              /
+              = render :partial => '/layouts/base/full_width_content'
+
+            - else
+              = render :partial => '/layouts/base/content_with_extended_sidebar'
+
+            
       = render :partial => 'layouts/base/footer'
           
+

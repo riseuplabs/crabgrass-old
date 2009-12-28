@@ -1,4 +1,4 @@
-%header.no-sidebar
+- content_for :full_content_header do
   %section#identity
     = avatar_for @group, 'large', :class => 'left'
     %div.left
@@ -7,30 +7,29 @@
     %div.right 
       = yield :touchstone_actions
 
-%nav.no-sidebar
+- content_for :secondary_nav do
   = render :partial => '/groups/navigation/menu'
 
-%section#main-content.no-sidebar
 
-  - if @group
-    %h1
-      = I18n.t(:create_a_new_thing, :thing => I18n.t(:page).downcase)
-    = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b, @group.display_name)) 
+- if @group
+  %h1
+    = I18n.t(:create_a_new_thing, :thing => I18n.t(:page).downcase)
+  = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b, @group.display_name)) 
 
-  - items = []
+- items = []
 
-  .create_page
+.create_page
 
-    - tree_of_page_types(@available_tools, {:simple => true}).collect do |grouping|
-      - items << capture_haml do
+  - tree_of_page_types(@available_tools, {:simple => true}).collect do |grouping|
+    - items << capture_haml do
 
-        %h2.dark
-          = grouping[:display]
+      %h2.dark
+        = grouping[:display]
 
-        - grouping[:pages].collect do |page_class|
-          - link_text = [content_tag(:b, page_class.class_display_name, :class =>  "small_icon #{page_class.icon}_16"), '<br/>', page_class.class_description].join
-          .hover
-            = link_to(link_text, {:controller => page_class.controller, :action => 'create', :id => page_class.url, :group => params[:group]})
-    = column_layout 2, items, :class => 'page_types'
+      - grouping[:pages].collect do |page_class|
+        - link_text = [content_tag(:b, page_class.class_display_name, :class =>  "small_icon #{page_class.icon}_16"), '<br/>', page_class.class_description].join
+        .hover
+          = link_to(link_text, {:controller => page_class.controller, :action => 'create', :id => page_class.url, :group => params[:group]})
+  = column_layout 2, items, :class => 'page_types'
 
 

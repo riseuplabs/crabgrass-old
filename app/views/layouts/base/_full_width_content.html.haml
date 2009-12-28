@@ -1,0 +1,28 @@
+/
+/ full content width
+/
+%header#header-full
+  = yield :full_content_header
+  /
+  / secondary nav (always required?)
+  /
+  - if yield :secondary_nav
+    %nav#nav-full
+      = yield :secondary_nav
+  /
+  / misc placeholder
+  /
+  - if yield :misc_header
+    = yield :misc_header
+
+- if yield :right_sidebar
+
+  %div#alpha10
+    %div#main-content
+      = yield
+  %aside#sidebar
+    = yield :right_sidebar
+- else
+  %div#main-content-full
+    = yield
+

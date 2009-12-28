@@ -235,7 +235,7 @@ module ApplicationHelper
         end
       end
     else
-      link = link_to(' '+I18n.t(:see_more_link)+ARROW,options.delete(:more_url))
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
       out = truncate(text, :length => length, :omission => omission + link)
       capture_haml do 
         haml_tag(tag, out,  options)
@@ -298,6 +298,22 @@ module ApplicationHelper
         permission_methods.collect do |section|
           content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
         end
+      end
+    end
+  end
+
+  #
+  # *NEWUI
+  #
+  # provides a block for main container
+  # 
+  # content_starts_here do 
+  #   %h1 my page
+  #
+  def content_starts_here(&block)
+    capture_haml do
+      haml_tag :div, :id =>'main-content' do
+        haml_concat capture_haml(&block)
       end
     end
   end
