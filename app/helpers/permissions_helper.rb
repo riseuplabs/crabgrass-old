@@ -148,7 +148,6 @@ module PermissionsHelper
   # the permissions without a controller name is attempted (ie 'may_eat_soup?)
   #
   def permission_for_controller(controller, action, *args)
-    require 'ruby-debug';debugger;1-1
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
