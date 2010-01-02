@@ -74,7 +74,7 @@ function linkToggle(link, element) {
 
 // toggle all checkboxes of a particular css selector, based on the
 // checked status of the checkbox passed in.
-function toggleAllCheckboxes(checkbox, selector) {
+function toggleAllCheckboxesToMatch(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked})
 }
 
