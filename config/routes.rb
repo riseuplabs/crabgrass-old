@@ -54,8 +54,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
   map.resources :messages, { :collection => { :mark => :put },
-                            :member => { :next => :get, :previous => :get }} do |message|
+                             :member => { :next => :get, :previous => :get }} do |message|
     message.resources :posts, :namespace => 'message_'
+  end
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'

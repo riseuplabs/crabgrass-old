@@ -180,7 +180,7 @@ module PageHelper
   #
   # render the cover of the page if it exists
   #
-  def cover_for(page) 
+  def cover_for(page)
     thumbnail_img_tag(page.cover, :medium, :scale => '96x96') if page.cover
   end
 
@@ -202,18 +202,18 @@ module PageHelper
       end
     end
   end
-  
-  
-  
-  
+
+
+
+
   # *NEWUI
   #
-  # 
+  #
   #
   def title_with_link_for(page, participation = nil)
     title = link_to(h(page.title), page_url(page))
 
-    # this is not used for now 
+    # this is not used for now
     #if participation and participation.instance_of? UserParticipation
     #  title += " " + icon_tag("tiny_star") if participation.star?
     #else
@@ -418,7 +418,7 @@ module PageHelper
   end
 
   def page_tags(page=@page, join=nil)
-    join ||= "\n" if join.nil? 
+    join ||= "\n" if join.nil?
     if page.tags.any?
       links = page.tags.collect do |tag|
         tag_link(tag, page.owner)
@@ -557,7 +557,7 @@ module PageHelper
     if may_create_group_page?
       url = new_page_url
       if group
-        url = new_group_page_url(group)      url = {:controller => '/pages', :action => 'create'}
+        url = new_group_page_url(group)
       end
       icon = 'cross'
       text = I18n.t(:contribute_content_link).upcase
