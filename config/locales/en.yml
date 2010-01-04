@@ -75,6 +75,7 @@ en:
   contact: "Friend"
   member_groups_of_network: "Member Groups"
   peers: "Peers"
+  all: "All"
   none: "None"
   contacts: "Friends"
   my_contacts: "My Friends"
@@ -197,6 +198,7 @@ en:
   ok_button: "OK"
   done_button: "Done"
   delete_button: "Delete"
+  show_button : "Show"
   confirm: "Confirm"
   alert: "Alert"
   loading_progress: "Loading..."
@@ -556,6 +558,18 @@ en:
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
+  messages_from_label: "Messages from"
+  messages_select_label: "Select:"
+  messages_mark_as_label: "Mark as:"
+  messages_view_label: "View:"
+
+  messages_select_all_link: "All"
+  messages_select_none_link: "None"
+  messages_select_unread_link: "Unread"
+
+  messages_mark_as_read_link: "Read"
+  messages_mark_as_unread_link: "Unread"
+
   ##
   ## PROFILE
   ##
@@ -660,7 +674,7 @@ en:
   ##
   ## GROUPS
   ##
-  
+
   group_join_chat: "Join Chat"
   group_privacy_settings: '{{group}} Privacy Settings'
   group_publicly_visible: 'Make {{group}} Publicly Visible'
@@ -1483,7 +1497,6 @@ en:
   ##
 
   last_seen: "last seen"
-  all: "All"
 
   directory_of_people: Directory of People
   no_contacts_msg: You have no friends.

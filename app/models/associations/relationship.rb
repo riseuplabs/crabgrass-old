@@ -19,6 +19,6 @@ class Relationship < ActiveRecord::Base
       end
     end
 
-    self.update_attribute!(:unread_count, new_unread_count) if new_unread_count
+    self.update_attribute(:unread_count, new_unread_count) if new_unread_count
   end
 end

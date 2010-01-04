@@ -50,7 +50,7 @@ class Discussion < ActiveRecord::Base
   # ex: current_user.discussions.from_user(User.first)
   # where user has many dicussions through relationships
   named_scope :from_user, lambda { |user|
-    user ? { :conditions => ['relationships.contact_id = ?', user.id] } : {}
+    user.blank? ? {} : { :conditions => ['relationships.contact_id = ?', user.id] }
   }
 
   # user with relationships like the above scope
@@ -70,22 +70,22 @@ class Discussion < ActiveRecord::Base
   end
 
   # this discussion is between 2 people
-  # takes a user and returns what should be seen as the 'head' post for their counterpart user
-  # used in a context when listing all private discussions between some user and all their friends
-  # for each friend some post should be the head posts
+  # takes the current user and returns what should be seen as the 'head' post for that user in this discussion
+  # the head post will be the last post by the other user (current user's "partner") in this discussion
   #
   # head post is the post which stands in for the whole discussion - like a heading on on a story
   # it should be the last unread posts from the other user, since the current user cares the most about that
   def head_post_for(user)
     @head_posts ||= {}
 
-    other_user = discussion.user_talking_to(user)
+    other_user = self.user_talking_to(user)
     last_post_by_other_user = self.posts.find_by_user_id(other_user.id, :order => 'created_at DESC')
 
     # cache the find
     # has to be a hash, since there are 2 people in this discussion
     @head_posts[user] = (last_post_by_other_user || self.last_post)
   end
+
 
   # each pair of users (if they are contacts)
   # shares a discussion. a single user has a list of discussions, one per friend.
@@ -113,9 +113,13 @@ class Discussion < ActiveRecord::Base
     relationships.for_user(user).try.increment!(:unread_count)
   end
 
+  def unread_by?(user)
+    relationships.for_user(user).unread_count > 0
+  end
+
   # mark as either :read or :under
-  def mark!(as, marker)
-    relationships.for_user(user).try.mark!(as)
+  def mark!(as, marking_user)
+    relationships.for_user(marking_user).try.mark!(as)
   end
 
   ##

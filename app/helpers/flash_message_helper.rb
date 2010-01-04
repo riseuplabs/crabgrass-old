@@ -227,7 +227,7 @@ module FlashMessageHelper
           message << "   "
         end
         message << ("%4d" % n)
-        message << code[n]
+        message << code[n].to_s
       end
     end
     message

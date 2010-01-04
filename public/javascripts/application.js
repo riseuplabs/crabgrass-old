@@ -75,7 +75,12 @@ function linkToggle(link, element) {
 // toggle all checkboxes of a particular css selector, based on the
 // checked status of the checkbox passed in.
 function toggleAllCheckboxesToMatch(checkbox, selector) {
-  $$(selector).each(function(cb) {cb.checked = checkbox.checked})
+  $$(selector).each(function(cb) {cb.checked = checkbox.checked});
+}
+
+// toggle all checkboxes of a particular css selector to checked boolean parameter
+function toggleAllCheckboxes(checked, selector) {
+  $$(selector).each(function(cb) {cb.checked = checked});
 }
 
 // submits a form, from the onclick of a link.
@@ -100,6 +105,30 @@ function submitForm(form_element, name, value) {
     }
   }
 }
+
+// submit a form which updates a nested resource where the parent resource can be selected by the user
+// since the parent resource is part of the form action path, the form action attribute has to be dynamically updated
+//
+// resource_url_template looks like /message/__ID__/posts
+// resource_id_field is the DOM id for the input element which has the value for the resource id (the __ID__ value)
+// (for example resource_id_field with DOM id 'user_name' has value 'gerrard'. 'gerrard' is the resource id)
+// if ignore_default_value is true, then form will not get submited unless resource_id_field was changed by the user
+// from the time the page was loaded
+// dont_submit_default_value is useful for putting help messages into the field. if the user does not edit the field
+// the help message should not be submitted as the resource id
+function submitNestedResourceForm(resource_id_field, resource_url_template, dont_submit_default_value) {
+  var input = $(resource_id_field);
+  // we can submit the default value
+  // or the value has changed and isn't blank
+  if(dont_submit_default_value == false || (input.value != '' && input.value != input.defaultValue)) {
+    var form = input.form;
+
+    var resource_id = input.value;
+    form.action = resource_url_template.gsub('__ID__', resource_id);
+    form.submit();
+  }
+}
+
 
 function setRows(elem, rows) {
   elem.rows = rows;
