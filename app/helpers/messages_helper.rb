@@ -1,12 +1,16 @@
 module MessagesHelper
-  def recipient_name_text_field_tag
-    text_field_tag('id', params[:id], :id => 'recipient_name', :class => 'textinput', :value => 'To: Type Name',
-                                      :onkeypress => eat_enter, :onfocus => hide_default_value, :onblur => show_default_value)
+  def recipient_name_text_field_tag(recipient_name = nil)
+    default_value =  recipient_name.blank? ? I18n.t(:message_recipient_name_input_caption) : recipient_name
+    text_field_tag('id', params[:id], :id => 'recipient_name', :class => 'textinput',
+                                        :value => default_value,
+                                        :onkeypress => eat_enter,
+                                        :onfocus => hide_default_value,
+                                        :onblur => show_default_value)
   end
 
-  def send_message_function
+  def send_message_function(default_recipient_name = nil)
     submit_url = message_posts_path("__ID__")
-    "submitNestedResourceForm('recipient_name', '#{submit_url}', true)"
+    "submitNestedResourceForm('recipient_name', '#{submit_url}', #{default_recipient_name.blank?})"
   end
 
   def message_html_attributes(message)

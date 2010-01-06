@@ -20,7 +20,11 @@ class MessagePostsController < ApplicationController
   end
 
   def authorized?
-    current_user != @recipient and @recipient.profile.may_pester?
+    if current_user == @recipient
+      flash_message :error => I18n.t(:message_to_self_error)
+      redirect_to messages_path
+    end
+    @recipient.profile.may_pester?
   end
 
 end

@@ -42,23 +42,44 @@ class MessagesController < ApplicationController
 
   # GET /messages/penguin
   def show
-    @posts = @discussion.posts.paginate(page_params)
+    # show the last page if page param is not set
+    # instead of the usual first page
+    default_page = nil
+    if params[:page].blank?
+      total_entries = @discussion.posts.count
+      total_pages = (total_entries.to_f / @discussion.posts.per_page).ceil
+      # total_pages is 0 when total_entries is 0
+      total_pages = 1 if total_pages == 0
+      default_page = total_pages
+    end
+
+    # not so RESTful modifying the record on a GET request
+
+    @discussion.mark!(:read, current_user)
+    @posts = @discussion.posts.paginate(page_params(default_page, 10))
   end
 
   ### REDIRECT ACTIONS ###
 
   def next
-    redirect_to @discussion.next_for(current_user) || :index
+    next_recipient = @discussion.next_for(current_user).try.user_talking_to(current_user)
+    redirect_to_message(next_recipient)
   end
 
   def previous
-    redirect_to @discussion.previous_for(current_user) || :index
+    previous_recipient = @discussion.previous_for(current_user).try.user_talking_to(current_user)
+    redirect_to_message(previous_recipient)
   end
 
   protected
 
+  def redirect_to_message(recipient)
+    redirect_direction = recipient.blank? ? {:action => :index} : message_path(recipient.login)
+    redirect_to redirect_direction
+  end
+
   def authorized?
-    # only working on current_user.discussions
+    # controller only manipulates current_user.discussions objects
     logged_in?
   end
 
@@ -84,15 +105,17 @@ class MessagesController < ApplicationController
 
   def fetch_discussion
     @user = User.find_by_login(params[:id])
-    @discussion = current_user.discussions.with_user(@user)
+    @discussion = current_user.discussions.from_user(@user).first
   end
 
   def fetch_recipient
     @recipient = @discussion.user_talking_to(current_user)
   end
 
-  def page_params
-    {:page => params[:page]}
+  # default page when no page param is present can be nil
+  # in some cases, it should be the last page
+  def page_params(default_page = nil, per_page = nil)
+    {:page => params[:page] || default_page, :per_page => per_page}
   end
 
 end
