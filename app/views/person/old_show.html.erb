@@ -25,7 +25,7 @@
   <%- length = @activities.size -%>
   <%- half = (length/2.0).ceil -%>
   <table class="columns three_sections">
-    <%- if may_create_messages? -%>
+    <%- if may_create_public_messages? -%>
     <tr>
        <td colspan="2" class="say_box"><%= @message_box %></td>
     </tr>

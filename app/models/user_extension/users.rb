@@ -50,7 +50,8 @@ module UserExtension::Users
       has_many :relationships, :dependent => :destroy do
         def with(user) find_by_contact_id(user.id) end
       end
-      has_many :discussions, :through => :relationships
+
+      has_many :discussions, :through => :relationships, :order => 'discussions.replied_at DESC'
       has_many :contacts,    :through => :relationships
 
       has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
@@ -114,10 +115,11 @@ module UserExtension::Users
     # This method can be used to either add a new relationship or to update an
     # an existing one
     #
+    # RelationshipObserver creates a new Discussion that is shared between the two relationship objects
+    #
     # RelationshipObserver creates a new FriendActivity when a friendship is created.
     # As a side effect, this will create a profile for 'self' if it does not
     # already exist.
-    #
     def add_contact!(other_user, type=nil)
       type = 'Friendship' if type == :friend
 
@@ -157,6 +159,25 @@ module UserExtension::Users
          other_user.update_contacts_cache
       end
     end
+
+    # ensure a relationship between this and the other user exists
+    # add a new post to the private discussion shared between this and the other_user
+    # +in_reply_to+ is a post the new posts will be replying this
+    # this is not stored, but used to generate a more informative notification on the user's wall.
+    def send_message_to!(other_user, body, in_reply_to = nil)
+      relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
+      discussion = relationship.discussion
+
+      discussion.increment_unread_for!(other_user)
+      post = discussion.posts.create do |post|
+        post.body = body
+        post.user = self
+        post.in_reply_to = in_reply_to
+        post.type = "PrivatePost"
+        post.recipient = other_user
+      end
+    end
+
 
     def stranger_to?(user)
       !peer_of?(user) and !contact_of?(user)

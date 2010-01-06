@@ -14,15 +14,15 @@ class MeControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_index_not_logged_in
-    get :index
+  def test_show_me_not_logged_in
+    get :show
     assert_response :redirect, "shouldn't reach index if not logged in"
     assert_redirected_to({:controller => 'account', :action => 'login'}, "should redirect to account/login")
   end
 
-  def test_index
+  def test_show_me
     login_as :quentin
-    get :index
+    get :show
     assert_response :redirect, "should redirect"
     assert_redirected_to({:controller => 'me/dashboard'}, "should redirect to dashboard")
   end
@@ -58,34 +58,34 @@ class MeControllerTest < Test::Unit::TestCase
 #    assert_template 'edit'
 
     # test that things which should change, do
-    post :edit, :user => {:login => 'new_login'}
+    post :update, :user => {:login => 'new_login'}
     assert_response :redirect
     assert_redirected_to :action => :edit
     assert_equal 'new_login', User.find(user.id).login, "login for quentin should have changed"
 
-    post :edit, :user => {:display_name => 'new_display'}
+    post :update, :user => {:display_name => 'new_display'}
     assert_response :redirect
     assert_redirected_to :action => :edit
     assert_equal 'new_display', User.find(user.id).display_name, "display_name for quentin should have changed"
 
-    post :edit, :user => {:email => 'email@example.com'}
+    post :update, :user => {:email => 'email@example.com'}
     assert_response :redirect
     assert_redirected_to :action => :edit
     assert_equal 'email@example.com', User.find(user.id).email, "email for quentin should have changed"
 
-    post :edit, :user => {:language => "de_DE"}
+    post :update, :user => {:language => "de_DE"}
     assert_response :redirect
     assert_redirected_to :action => :edit
     assert_equal "de_DE", User.find(user.id).language, "language for quentin should have changed"
 
-    post :edit, :user => {:time_zone => 'Samoa'}
+    post :update, :user => {:time_zone => 'Samoa'}
     assert_response :redirect
     assert_redirected_to :action => :edit
     assert_equal 'Samoa', User.find(user.id).time_zone, "time zone for quentin should have changed"
 
     # test that things which should not change, don't
     cp = user.crypted_password
-    post :edit, :user => {:crypted_password => ""}
+    post :update, :user => {:crypted_password => ""}
     assert_equal cp, User.find(user.id).crypted_password, "hackers should not be able to reset password"
   end
 

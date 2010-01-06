@@ -9,7 +9,7 @@ table.pretty td {vertical-align: top;}
 <%= render(
   :partial => 'common/say_form',
   :locals => {
-    :submit => I18n.t(:send_message_link), 
+    :submit => I18n.t(:send_message_link),
     :url => my_private_messages_path,
     :recipient => true
   }
@@ -32,7 +32,7 @@ table.pretty td {vertical-align: top;}
     <td>
       <%= relationship.unread_count %>/<%= discussion.posts_count %> <%= I18n.t(:unread) %>
     </td>
-    <% if post = (discussion.last_post_by(other_user) || discussion.last_post) %>
+    <% if post = discussion.head_post_for(current_user)) %>
       <td>
         <i><%= friendly_date(post.created_at) %>
         <%= h(post.user.display_name) %></i>

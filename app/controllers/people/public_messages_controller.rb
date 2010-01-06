@@ -1,21 +1,17 @@
-#
-#
-#
-#
-
-class People::MessagesController < People::BaseController
+# these are posts on a persons wall discussion
+class People::PublicMessagesController < People::BaseController
+  permissions 'public_messages'
 
   before_filter :fetch_post, :login_required
 
-  permissions 'messages'
-  helper 'messages'
+  helper 'wall_posts'
   stylesheet 'messages'
 
   #
   # display a list of recent message activity
   #
   def index
-    @posts = @user.discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
+    @posts = @user.wall_discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
   end
 
   def update
@@ -38,7 +34,7 @@ class People::MessagesController < People::BaseController
   def create
     @post = PublicPost.create do |post|
       post.body = params[:post][:body]
-      post.discussion = @user.discussion
+      post.discussion = @user.wall_discussion
       post.user = current_user
       post.recipient = @user
       post.body_html = post.lite_html
@@ -52,7 +48,7 @@ class People::MessagesController < People::BaseController
   protected
 
   def fetch_post
-    @post = @user.discussion.posts.find_by_id(params[:id]) if params[:id]
+    @post = @user.wall_discussion.posts.find_by_id(params[:id]) if params[:id]
   end
 
   def context

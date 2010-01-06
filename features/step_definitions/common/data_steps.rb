@@ -37,6 +37,7 @@ Given /^#{capture_model} comments #{capture_model} ?(?: with #{capture_fields})?
   page = model!(page)
   post = create_model(post, fields).last
   post = page.build_post(post, post.user)
+  post.user.updated(page)
   post.save!
   page.save!
 end

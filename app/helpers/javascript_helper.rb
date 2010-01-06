@@ -65,5 +65,20 @@ module JavascriptHelper
     ]
   end
 
+  # add to text area or input field onkeypress attribute
+  # to keep Enter key from submiting the form
+  def eat_enter
+    "return(!enterPressed(event));"
+  end
+
+  # used with text input elements that have some value set which acts like help text
+  # it disappears when user focues on the input
+  def show_default_value
+    "if(this.value=='') this.value=this.defaultValue;"
+  end
+
+  def hide_default_value
+    "if(this.value==this.defaultValue) this.value='';"
+  end
 end
 

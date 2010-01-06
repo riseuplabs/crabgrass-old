@@ -33,22 +33,22 @@
   line-height: 1
 
 =sans-family
-  :font-family verdana, bitstream vera sans, helvetica, sans-serif 
+  :font-family verdana, bitstream vera sans, helvetica, sans-serif
 
 // common styles
 =bordered-btm(!border_color= !warm_grey_border)
   border-bottom= 1px "solid" !border_color
-  
+
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
-  
+
 =bordered-top-btm(!border_color= !light_grey_border)
   border-top= 1px "solid" !border_color
   border-bottom= 1px "solid" !border_color
 
 =bordered(!border_color= !light_grey_border)
   border= 1px "solid" !border_color
-  
+
 =zero
   margin: 0
   padding: 0
@@ -56,7 +56,7 @@
 
 =spaced(!spacing= 0.09em)
   letter-spacing= !spacing
-  
+
 =small-text(!font_small= 10px)
   font-size= !font_small
 
@@ -64,14 +64,14 @@
   +hover-link
   color= !blue
   font-size= !sized
-   
+
 /* @general */
 .left
   float: left
-  
+
 .right
   float: right
-  
+
 .nowrap
   white-space: nowrap
 
@@ -102,14 +102,14 @@ h2
 h3
   font-size: 16px
   color: #d35851
-  
+
 h4
   font-size: 13px
   color: #777
-  
+
 h5
   :font-size 11px
-  
+
 h6
   :font-size 9px
 
@@ -133,11 +133,11 @@ td.reply
   background-position: 0 50%
   width: 24px
   height: 24px
-.activities li 
-  color: #333 
-  margin-bottom: 1em 
-  padding-left: 24px 
-  span.commands  
+.activities li
+  color: #333
+  margin-bottom: 1em
+  padding-left: 24px
+  span.commands
     white-space: nowrap
     a
       text-transform: lowercase
@@ -169,7 +169,7 @@ button.icon_16
   background-color: transparent
   height: 16px
   width: 16px
-  
+
 #identity-info
   width: 204px
   float: left
@@ -182,7 +182,7 @@ button.icon_16
     margin: 0
     background-color: #fff
     border: 1px solid #535741
-  #image-label            
+  #image-label
     +columns(4,4)
     width: 204px
     float: left
@@ -194,7 +194,7 @@ button.icon_16
       li
         width: 204px
         font-size: 11px
-        
+
   #identity-meta
     +columns(4,4)
     +bordered
@@ -334,7 +334,7 @@ nav#nav-full
       a
         color: #fff
     li.first
-      +bordered(!almost_black)  
+      +bordered(!almost_black)
 #pages, #contributions
   +columns(10,10)
   margin: 30px 0 0
@@ -387,7 +387,7 @@ nav#nav-full
           +blue-link
         .tags
           +clearfix
-          a   
+          a
             +blue-link(10px)
       p.img
         width: 550px
@@ -437,7 +437,7 @@ nav#nav-full
           +blue-link
         .tags
           +clearfix
-          a   
+          a
             +blue-link(10px)
       p.img
         width: 360px
@@ -478,8 +478,8 @@ ul#groups, ul#people
   padding-top: 30px
   tr
     td
-      padding: 8px 8px 8px 0 
-.shy_parent:hover 
+      padding: 8px 8px 8px 0
+.shy_parent:hover
   .shy:hover
     opacity: 1
 .shy
@@ -491,7 +491,7 @@ ul#groups, ul#people
   color= !medium_grey_text
   float: right
   a
-    +blue-link  
+    +blue-link
 #say-box
   position: relative
   img
@@ -521,7 +521,7 @@ nav#tabs
     display: block
     #group_avatar_image_file
       display: block
-#select-bar
+#message-filters-bar
   +clearfix
   +bordered-top-btm
   width: 764px
@@ -532,7 +532,7 @@ table#messages
       +bordered-btm(!light_grey_border)
       padding: 6px
     td.reply
-      
+
   tr.unread
     td
       font-weight: bold
@@ -551,15 +551,15 @@ input.checkbox
   width: 12px
   height: 12px
   margin-right: 0
-  
+
 input.text
   border: none
-  
+
 form#search-browse
   +bordered
   input.text
     +bordered
-  
+
 fieldset
 
 legend

@@ -1,0 +1,15 @@
+%div#send-message.say-box
+  = render :partial => 'send_form'
+%div
+  %div#select-messages-from.right
+    = render :partial => 'select_from_form'
+  %br
+  - form_remote_tag :url => mark_messages_path, :method => 'put', :update => 'main-content-full', :html => { :id => 'mark_messages_form' }, :loading => show_spinner('messages_mark_as'), :complete => hide_spinner('messages_mark_as') do
+    = hidden_field_tag 'as', '', :id => 'mark_messages_as'
+    %div#message-filters-bar
+      = render :partial => 'message_filters_bar'
+    %table#messages{:summary => 'messages'}
+      = render :partial => 'message', :collection => @discussions
+
+  %footer
+    = will_paginate(@discussions)

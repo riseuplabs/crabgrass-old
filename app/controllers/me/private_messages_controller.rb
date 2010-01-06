@@ -19,7 +19,7 @@ class Me::PrivateMessagesController < Me::BaseController
 
   # GET /my/messages/private
   def index
-    @discussions = current_user.discussions.paginate(:page => params[:page], :order => 'replied_at DESC', :include => :relationships)
+    @discussions = current_user.discussions.paginate(:page => params[:page], :include => :relationships)
   end
 
   # GET /my/messages/private/<username>
@@ -58,18 +58,6 @@ class Me::PrivateMessagesController < Me::BaseController
 
   protected
 
-  def authorized?
-    if current_user == @recipient
-      raise ErrorMessage.new("cannot send messages to yourself", :redirect => my_private_messages_url)
-    end
-
-    if action?(:update, :create)
-      may_create_private_message?(@recipient)
-    else
-      true
-    end
-  end
-
   def fetch_data
     if params[:id]
       @recipient = User.find_by_login(params[:id])
@@ -95,14 +83,8 @@ class Me::PrivateMessagesController < Me::BaseController
     elsif params[:post].try[:body].empty?
       raise ErrorMessage.new(I18n.t(:message_must_not_be_empty))
     end
-    @discussion.increment_unread_for(@recipient)
-    @post = @discussion.posts.create do |post|
-      post.body = params[:post][:body]
-      post.user = current_user
-      post.type = "PrivatePost"
-      post.in_reply_to = Post.find_by_id(params[:in_reply_to_id])
-      post.recipient = @recipient
-    end
+
+
     redirect_to my_private_message_url(@recipient)
   end
 

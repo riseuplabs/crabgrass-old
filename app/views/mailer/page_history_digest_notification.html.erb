@@ -10,8 +10,7 @@
 
 
 ------------
-
-<%= I18n.t(:page_history_mailer, :page_link => "http://#{@site.domain}#{me_url(:action => 'edit')}") %>
+<%= I18n.t(:page_history_mailer, :page_link => "http://#{edit_me_url(:host => @site.domain)}") %>
 <%= I18n.t(:page_history_mailer_choose_turn_off_notifications) %>.
 
 ------------

@@ -1,0 +1,13 @@
+%table#messages.thread{:summary => 'message thread'}
+  = render :partial => 'message_post', :collection => @posts
+
+%div#send-message.say-box
+  = render :partial => 'send_form', :locals => {:recipient_name => @recipient.login}
+
+%footer
+  = will_paginate(@posts)
+  %br
+  %br
+  .pagination{:style => "float:none;"}
+    =link_to "« " + I18n.t(:pagination_previous), previous_message_path
+    =link_to I18n.t(:pagination_next) + " »", next_message_path, :class => "right"

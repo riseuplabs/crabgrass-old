@@ -75,6 +75,7 @@ en:
   contact: "Friend"
   member_groups_of_network: "Member Groups"
   peers: "Peers"
+  all: "All"
   none: "None"
   contacts: "Friends"
   my_contacts: "My Friends"
@@ -197,6 +198,7 @@ en:
   ok_button: "OK"
   done_button: "Done"
   delete_button: "Delete"
+  show_button : "Show"
   confirm: "Confirm"
   alert: "Alert"
   loading_progress: "Loading..."
@@ -516,6 +518,13 @@ en:
 
   my_pages: "My Pages"
   my_dashboard: "My Dashboard"
+  my_work_headline: "My Work"
+  watched_pages: "My Watched Pages"
+  editor_pages: "My Page Edits"
+  owner_pages: "Pages I Own"
+  unread_pages: "Unread Pages"
+  view_label: "View"
+  select_view_button: "Select View"
 
   my_tasks: "Tasks"
   my_tasks_headline: "My Tasks"
@@ -556,6 +565,20 @@ en:
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
+  messages_from_label: "Messages from"
+  messages_select_label: "Select:"
+  messages_mark_as_label: "Mark as:"
+  messages_view_label: "View:"
+
+  messages_select_all_link: "All"
+  messages_select_none_link: "None"
+  messages_select_unread_link: "Unread"
+
+  messages_mark_as_read_link: "Read"
+  messages_mark_as_unread_link: "Unread"
+
+  message_recipient_name_input_caption: 'To: Type Name'
+  message_to_self_error: "Can't talk to yourself"
   ##
   ## PROFILE
   ##
@@ -660,7 +683,7 @@ en:
   ##
   ## GROUPS
   ##
-  
+
   group_join_chat: "Join Chat"
   group_privacy_settings: '{{group}} Privacy Settings'
   group_publicly_visible: 'Make {{group}} Publicly Visible'
@@ -1122,6 +1145,18 @@ en:
   page_history_mailer_expire_link: "The link will expire in {{expire_time}}"
   page_history_mailer_choose_turn_off_notifications: "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"
 
+  ##
+  ## PAGE FLAGS
+  ##
+
+  mark_as_read: "Read"
+  mark_as_unread: "Unread"
+  mark_as_watched: "Watched"
+  mark_as_unwatched: "Unwatched"
+
+  all_selection: "All"
+  none_selection: "None"
+  unread_selection: "Unread"
 
   ##
   ## PAGE TYPES
@@ -1483,7 +1518,6 @@ en:
   ##
 
   last_seen: "last seen"
-  all: "All"
 
   directory_of_people: Directory of People
   no_contacts_msg: You have no friends.
