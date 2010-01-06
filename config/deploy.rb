@@ -11,7 +11,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "ssh://git@193.138.105.69:123/crabgrass.git"
-set :branch, "unido"
+set :branch, "unido-0.4.7.x"
 
 ## TODO: setup the deploy host once it is ready.
 deploy_host = "193.138.105.70"
