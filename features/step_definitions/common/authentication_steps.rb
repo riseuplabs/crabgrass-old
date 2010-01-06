@@ -11,7 +11,7 @@ Given /^I am logged in as #{capture_model}$/ do |user|
   When "I press \"Log in\""
 
   # make sure we really logged in
-  Then "I should see \"Logout #{user.display_name}\""
+  Then "I should see \"menu link logout\" translated"
 end
 
 
