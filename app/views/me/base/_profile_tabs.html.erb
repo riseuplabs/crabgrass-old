@@ -3,7 +3,7 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label I18n.t(:user_preferences)
-    t.url me_url(:action => 'edit', :id => nil)
+    t.url edit_me_url
     t.selected controller?(:me) && action?(:edit)
   end
   if current_site.profile_enabled?(:public)

@@ -11,7 +11,7 @@
    <%= f.file_field :image_file %><br /><br />
    <%= I18n.t(:or_image_url) %><br />
    <%= f.text_field :image_file_url %><br />
-   <%= hidden_field_tag 'redirect', group_url(:action=>'edit',:id=>@group) %>
+   <%= hidden_field_tag 'redirect', edit_group_url(@group) %>
    <%= hidden_field_tag 'group_id', @group.id %>
    <br /><%= submit_tag I18n.t(:upload_image) %>
 <% end -%></p>

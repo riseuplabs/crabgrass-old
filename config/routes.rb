@@ -9,7 +9,7 @@
 ActionController::Routing::Routes.draw do |map|
 
   # total hackety magic:
-  map.filter 'crabgrass_routing_filter'
+#  map.filter 'crabgrass_routing_filter'
 
   ##
   ## PLUGINS
@@ -54,19 +54,19 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
   map.resources :messages, { :collection => { :mark => :put },
-                            :member => { :next => :get, :previous => :get }} do |message|
+                             :member => { :next => :get, :previous => :get }} do |message|
     message.resources :posts, :namespace => 'message_'
   end
 
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
+    # This should only be index. However ajax calls seem to post not get...
+    me.resource :flag_counts, :only => [:show, :create]
+    me.resource :recent_pages, :only => [:show, :create]
+    me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
+  end
 
-  # me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
-  map.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages',
-                    :namespace => 'me/', :path_prefix => 'me'
-
-    # me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
-  # end
-
-  map.connect 'me/:action/:id',             :controller => 'me'
+  map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
 
   ##
   ## PEOPLE
@@ -93,6 +93,20 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
+  # RAILS 2.1 does not support the :only option in resource routing
+  # so we have to put my_work above the pages resource so
+  # /pages/my_work does not get resolved as Pages#show :id=>"my_work"
+  map.with_options(:namesspace => 'pages/', :path_prefix => 'pages') do |pages|
+    pages.resource :my_work, :only => [:show, :update], :controller => 'pages/my_work'
+    pages.resource :notifications, :only => :show, :controller => 'pages/notifications'
+    pages.resource :page_flags, :as => 'flags', :only => :update, :controller => 'pages/flags'
+  end
+
+  # :create is used for search -> think: create a new view on pages.
+  map.resources :pages, :only => [:new, :update]
+
+  map.connect '/pages/*path', :controller => 'pages'
+
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
   #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
@@ -118,10 +132,18 @@ ActionController::Routing::Routes.draw do |map|
   map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
-  map.groups 'groups/:action/:id', :controller => 'groups'
+  map.resources :groups do |group|
+    group.resources :pages, :only => :new
+  end
+
+  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
 
-  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.resources :networks do |network|
+    network.resources :pages, :only => :new
+  end
+
+  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##

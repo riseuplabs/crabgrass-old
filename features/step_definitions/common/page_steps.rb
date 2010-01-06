@@ -29,5 +29,12 @@ Given /^#{capture_model} owns #{capture_model}$/ do |owner, page|
   owner = model(owner)
   page = model(page)
   page.owner=owner
+  page.save
 end
 
+Given /^#{capture_model} (?:has|have) (not |)read #{capture_model}$/ do |reader, neg, page|
+  user = model(reader)
+  page = model(page)
+  upart = page.add(user, :viewed => neg.empty?)
+  upart.save!
+end

@@ -17,7 +17,7 @@ module NavigationHelpers
     when /my dashboard page/
       '/me/dashboard'
     when /my work page/
-      '/me/work'
+      '/pages/my_work'
     when /my requests page/
       '/me/requests/to_me'
     when /the destroyed groups directory/
