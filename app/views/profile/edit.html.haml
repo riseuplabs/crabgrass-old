@@ -1,0 +1,21 @@
+- @avatar ||= @user.avatar
+
+= render :partial => '/me/navigation/header_small'
+
+%nav.no-sidebar
+
+%section#main-content.no-sidebar
+
+  %h1= I18n.t(:my_settings, :user => current_user.display_name)
+
+  = render :partial => @tabs
+
+  - form_tag(:action => 'edit') do 
+    %p= profile_description
+
+    %div.profile
+      = render :partial => 'permissions_form'
+      = render :partial => 'form' 
+
+  %p.form_buttons= submit_tag I18n.t(:save_button), :name => 'save'
+

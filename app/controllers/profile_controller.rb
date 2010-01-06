@@ -12,7 +12,7 @@ class ProfileController < ApplicationController
 
   def edit
     if @user
-      @tabs = 'me/base/profile_tabs'
+      @tabs = 'me/navigation/profile_tabs'
     end
     if request.post?
       @profile.save_from_params params['profile']
