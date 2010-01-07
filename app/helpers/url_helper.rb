@@ -169,6 +169,33 @@ module UrlHelper
     avatar + link_to(label, path, :class => klass, :style => style)
   end
 
+  # see function name_and_path_for_group for description of options
+  def link_to_group_avatar(arg, options={})
+    if arg.is_a? Integer
+      @group_cache ||= {}
+      # hacky fix for error when a page persists after it's group is deleted --af
+      # what is this trying to do? --e
+      if not @group_cache[arg]
+        if Group.exists?(arg)
+          @group_cache[arg] = Group.find(arg)
+        else
+          return ""
+        end
+      end
+      # end hacky fix
+      arg = @group_cache[arg]
+    end
+
+    display_name, path = name_and_url_for_group(arg,options)
+    style = options[:style] || ""
+    label = options[:label] || display_name
+    klass = options[:class] || 'name_icon'
+    options[:title] ||= display_name
+    options[:alt] ||= display_name
+    link_to(avatar_for(arg, options[:avatar], options), path, :class => klass,  :style => style)
+  end
+
+
 
   # if you pass options[:full_name] = true, committees will have the string
   # "group+committee" (default does not include leading "group+")
@@ -295,6 +322,29 @@ module UrlHelper
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
+
+  # creates a link to a user, with or without the avatar.
+  # avatars are displayed as background images, with padding
+  # set on the <a> tag to make room for the image.
+  # accepts:
+  #  :avatar => [:small | :medium | :large]
+  #  :label -- override display_name as the link text
+  #  :style -- override the default style
+  #  :class -- override the default class of the link (name_icon)
+  def link_to_user_avatar(arg, options={})
+    login, path, display_name = login_and_path_for_user(arg,options)
+    return "" if login.blank?
+
+    style = options[:style] || ""                   # allow style override
+    label = options[:login] ? login : display_name  # use display_name for label by default
+    label = options[:label] || label                # allow label override
+    klass = options[:class] || 'name_icon'
+    options[:title] ||= display_name
+    options[:alt] ||= display_name
+    
+    avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
+  end
+
 
   ##
   ## GENERIC PERSON OR GROUP

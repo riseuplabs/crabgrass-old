@@ -38,8 +38,8 @@ module BasePageHelper
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = content_tag :span, upart.user.display_name, :class => klass
-    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
+    label = '' #content_tag :span, upart.user.display_name, :class => klass
+    link_to_user_avatar(upart.user, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
   end
 
   def link_to_group_participation(gpart)
@@ -48,8 +48,8 @@ module BasePageHelper
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = content_tag :span, gpart.group.display_name, :class => klass
-    link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
+    label = '' #content_tag :span, gpart.group.display_name, :class => klass
+    link_to_group_avatar(gpart.group, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
   end
 
   ##
@@ -175,10 +175,10 @@ module BasePageHelper
 
   def page_attachments
     if @page.assets.any?
-      items = @page.assets.collect do |asset|
+      @page.assets.collect do |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
       end
-      content_tag :div, column_layout(3, items), :class => 'side_indent'
+      #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_create_assets?
       ''
     end
