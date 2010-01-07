@@ -1,4 +1,7 @@
 - text = params[:post].try[:body] if text.nil?
+- if !defined? recipient_name
+  - recipient_name = nil
+
 - form_tag do
   = recipient_name_text_field_tag(recipient_name)
   = autocomplete_users_tag('recipient_name')
