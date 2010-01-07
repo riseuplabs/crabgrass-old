@@ -1,76 +1,73 @@
-%ul.side_list.commands
-  %li#watch_li.small_icon
-    %input#watch_checkbox.check{:type => 'checkbox'} Watch For Updates
-  %li#star_li
-    %a.small_icon.star_empty_dark_16 Add Star
-%ul.side_list.commands.rule
-  %li#share_li
-    %a.small_icon.group_16{:href => "#"} Share Wiki page
-  %li#notify_li
-    %a.small_icon.whistle_16{:href => "#"} Send Notification
-  %li#public_li.small_icon
-    %input#public_checkbox.check{:type => 'checkbox'} Public
-%ul.side_list.commands.rule
-  %li#trash_li
-    %a.small_icon.trash_16{:href => "#"} Delete
-  %li#details_li
-    %a.small_icon.table_16{:href => "#"} Details
-  %li.small_icon.table_16
-    %a{:href => "#"} History
-  %li.small_icon.printer_16
-    %a{:href => "#"} Printable
-%section#tags 
-  %h4 Tags
+- if logged_in?
+  - if @page.deleted?
+    %ul.side_list.commands
+      %ul.side_list.commands
+        = undelete_line
+        = destroy_line
+        = details_line 
+        = history_line
+  - else
+    %ul.side_list.commands
+      = watch_line
+      = star_line
+    - if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any?
+      %ul.side_list.commands.rule
+        = access_changing_commands
+    %ul.side_list.commands.rule
+      = delete_line
+      -# move_line
+      = details_line
+      = history_line
+      = view_line
+  = call_hook :page_sidebar_actions
+
+
+- if !(tag_content = page_tags).nil? || may_update_tags?
+  %h4= I18n.t(:tags)
   %div.tags
-    %a.tag2{:href => "#"} test
-    %a.tag2{:href => "#"} wiki
-%section#contributors
-  %h4 contributors
-  %h5 Groups
-  %ul#groups
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-  %h5 People
-  %ul#people
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-    %li 
-      %a{:href => "#"}
-        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+    = tag_content
+  %ul.side_list.commands
+    = edit_tags_line
+
+- if @page.group_participations.any? or @page.user_participations.any?
+  %section#contributors
+    %h4= I18n.t(:contributors)
+    - if @page.group_participations.any?
+      %h5= I18n.t(:groups)
+      %ul#groups
+        - @page.sorted_group_participations.each do |participation| 
+          %li 
+            = link_to_group_participation(participation)
+    - if @page.user_participations.any?
+      %h5= I18n.t(:people)
+      %ul#people
+        - @page.sorted_user_participations.each do |participation| 
+          %li 
+            = link_to_user_participation(participation)
+
+
+
+- if @page.supports_attachments and !(attachment_content = page_attachments).nil?
   %section#attachments
-    %h4 attachments
-    %ul 
-      %li
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-          %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
-          %span filenamelongish.png
-      %li
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-          %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
-          %span shorterone.png
+    %h4= I18n.t(:attachments)
+    .attachments
+      = attachment_content
+    %ul
+      = edit_attachments_line
+
+
+
+//%section#attachments
+//  %h4 attachments
+//  %ul 
+//    %li
+//      %a{:href => "#"}
+//        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+//        %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
+//        %span filenamelongish.png
+//    %li
+//      %a{:href => "#"}
+//        %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+//        %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"10px", :width=>"10px"}
+//        %span shorterone.png
       
