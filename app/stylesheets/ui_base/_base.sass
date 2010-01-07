@@ -41,6 +41,11 @@
 
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
+  
+=bordered-tab(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
 
 =bordered-top-btm(!border_color= !light_grey_border)
   border-top= 1px "solid" !border_color
@@ -114,11 +119,14 @@ h6
   :font-size 9px
 
 /* @end */
-li
-  :display inline-block
-  :float left
-  :padding 0.2em
 
+li
+  display: inline-block
+  float: left
+  padding: 0.2em
+footer.page
+  background: #fff
+  height: 65px
 .small_icon
   float: left
   background-repeat: no-repeat
@@ -465,6 +473,8 @@ nav#nav-full
     +clearfix
     li
       clear: both
+.space
+  height: 30px
 ul#groups, ul#people
   li
     clear: none

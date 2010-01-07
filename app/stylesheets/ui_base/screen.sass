@@ -17,16 +17,18 @@ body
   +susy
   +sans-family
   color= !almost_black
+  background: #efefef
 #page  
   header.page
     +clearfix
-  #titlebar
+  #masthead
     +clearfix 
     height: 40px
-    +bordered-btm
-    #titlebar-container
+    #masthead-container
       +container
-      #title
+      height: 40px
+      background: #fffde9
+      #masthead-name
         +columns(14)
         +full
         width: 764px
@@ -77,10 +79,11 @@ body
   nav.page
     +clearfix
     height: 38px
-    +bordered-btm
-    #nav-container
+    #global-nav-container
       +container
-      #nav
+      height: 38px
+      background: #fff
+      #global-nav
         +columns(14)
         +full
         width: 764px
@@ -121,6 +124,8 @@ body
     height: 30px
     #breadcrumb-container
       +container
+      height: 30px
+      background: #fff
       div
         +columns(14)
         +full
@@ -132,12 +137,10 @@ body
           text-transform: uppercase
           color= !almost_black
   #content.login
-    background: #fdfbf9 url("/images/new_ui/bg-gradient-noborder.png") repeat-x top
+    
   #content
     +clearfix
-    +bordered-btm
     color= !medium_grey_text
-    background: #fdfbf9 url("/images/new_ui/bg-gradient-top.png") repeat-x top
     
             
     #content-container.login
@@ -159,8 +162,8 @@ body
   
     #content-container
       +container
+      background: #fff
       padding-bottom: 100px
-      background: #fff url("/images/new_ui/bg-subnav-rule.png") repeat-x top
       #content-wrap
         +columns(14)
         +full
@@ -387,17 +390,15 @@ body
                       font-size: 11px
                       color: #fff      
         
-            nav#group, #login-date
+            nav#second-level, #login-date
               +columns(10,10)
               +zero
               width: 540px
               height: 28px
               li
                 +zero
-                +bordered(!almost_black)
                 +spaced
                 height: 28px
-                border-left: none
                 background: #fff
                 font-size: 11px
                 a
@@ -408,11 +409,10 @@ body
                   line-height: 2.5
                   padding: 8px 10px
               li.current
-                background= !almost_black
                 a
-                  color: #fff
+                  color= !almost_black
               li.first
-                +bordered(!almost_black)
+                +bordered-tab(!almost_black)
 
                     
             #last-login
