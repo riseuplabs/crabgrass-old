@@ -1,9 +1,8 @@
 - text = params[:post].try[:body] if text.nil?
-
 - form_tag do
-  = recipient_name_text_field_tag
+  = recipient_name_text_field_tag(recipient_name)
   = autocomplete_users_tag('recipient_name')
 
   = text_area_tag 'post[body]', text, :id => 'say_text', :class => 'textarea', :rows => '1', :onfocus => 'setRows($("say_text"), 5)', :onblur => 'setRows($("say_text"), 1)'
-  = button_to_function I18n.t(:send_button), send_message_function, :class => 'say-submit'
+  = button_to_function I18n.t(:send_button), send_message_function(recipient_name), :class => 'say-submit'
 
