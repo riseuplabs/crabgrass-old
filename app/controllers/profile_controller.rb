@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
-  helper 'me/base'
+  helper 'me/base', 'locations'
   #permissions 'profiles'
   verify :method => :post, :only => :update
 
@@ -25,9 +25,9 @@ class ProfileController < ApplicationController
 
   # ajax
   def add_location
-    multiple = params[:multiple]
+    #multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => ProfileLocation.new, :multiple => multiple}
+      page.insert_html :bottom, 'profile_locations', :partial => '/locations/select_form'
     end
   end
 
