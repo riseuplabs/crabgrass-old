@@ -1,23 +1,15 @@
 - @avatar ||= @user.avatar
 
-%header.no-sidebar
-  %section#identity
-    = avatar_for @user, 'large', :class => 'left'
-    %div.left
-      %h1 
-        = @user.display_name
-    %div.right 
-      = yield :touchstone_actions
+= render :partial => '/me/navigation/header_small'
 
 %nav.no-sidebar
-  = render :partial => '/groups/navigation/menu'
 
 %section#main-content.no-sidebar
 
   %h1
     = I18n.t(:my_settings, :user => current_user.display_name)
 
-  = render :partial => 'profile_tabs'
+  = render :partial => '/me/navigation/profile_tabs'
 
   %table
     %tr

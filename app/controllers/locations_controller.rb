@@ -1,12 +1,12 @@
 class LocationsController < ApplicationController
 
   def all_admin_codes_options
-    html = '<option value="">Choose State/Province...</option>'
+    html = '<option value="" selected>Choose State/Province...</option>'
     GeoCountry.find_by_id(params[:country_code]).geo_admin_codes.each do |ac|
       html << "<option value='#{ac.id}'>#{ac.name}</option>"
     end
     render :update do |page|
-      page.replace_html 'select_state_id', html 
+      page.insert_html :top, 'select_state_id', html 
       page.show 'state_dropdown' 
       page.show 'city_text'
       page.show 'submit_loc' if params[:show_submit] == 'true' 

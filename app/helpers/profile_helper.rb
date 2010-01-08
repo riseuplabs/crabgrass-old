@@ -12,8 +12,8 @@ module ProfileHelper
     "<span class='remove'>%s</span>" % link_to_function(I18n.t(:remove), "Element.remove($('#{dom_id}'))")
   end
 
-  def add_row_link(title,action)
-    link_to_remote title, :url => {:action => action}
+  def add_row_link(title,action,options={})
+    link_to_remote title, :url => {:action => action, :id => options[:id]}
   end
 
 

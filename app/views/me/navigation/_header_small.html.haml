@@ -1,0 +1,9 @@
+%header.no-sidebar
+  %section#identity
+    = avatar_for @user, 'large', :class => 'left'
+    %div.left
+      %h1
+        = @user.display_name
+    %div.right
+      = yield :touchstone_actions
+
