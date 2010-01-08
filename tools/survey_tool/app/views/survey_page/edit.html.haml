@@ -16,7 +16,8 @@
 
 
 %section#wiki-page
-  = render :partial => 'tabs'
+  .info_box.tabs
+    = render :partial => 'tabs'
   #design_questions_container.survey_questions_container
 
     - form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f|
