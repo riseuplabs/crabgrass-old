@@ -236,6 +236,7 @@ ul.tabset
   list-style: none
   li
     display: inline
+    float: none
 
 ul.tabset.top
   margin: 0
@@ -271,6 +272,7 @@ ul.tabset.top
 
 ul.tabset.simple
   margin-top: 0
+  margin-bottom: 13px
 
 //
 // INFO_BOX
@@ -307,3 +309,71 @@ ul.tabset.simple
   line-height: 1.6em
   letter-spacing: 1px
   word-spacing: 2px
+
+//
+// UI ELEMENTS
+//
+
+
+.handle
+  cursor: move
+.not_handle
+  cursor: default
+
+//
+// CONTENT BOX
+//
+.content_box
+  padding: 1em
+  background: #FFFFFF none repeat scroll 0 0
+  
+
+//
+// FORMATTED TABLES
+//
+
+table.pretty
+  border-collapse: collapse
+  width: 100%
+  & > tbody > tr
+    &.even
+      background-color: #F2F2F2
+    &.odd
+      background-color: white
+    &.unread
+      font-weight: bold
+    & > td
+      padding: 0.5em
+      border-bottom: 1px solid #e6e6e6
+      img
+        vertical-align: bottom
+    & > th
+      padding: 0.5em
+      text-align: left
+      background: #FFF4E8
+      color: #F28367
+      text-transform: capitalize
+      font-weight: bold
+      border-bottom: 1px solid #ccc
+  & > tbody > tr.heading > th
+    img
+      vertical-align: bottom
+    a
+      color: #333
+    &.selected
+      background: #888
+      a
+        color: white
+  a
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+
+table.plain
+  border-collapse: collapse
+  width: 100%
+  td
+    padding: 0.5em
+    &.label
+      text-align: right
+      font-weight: bold
