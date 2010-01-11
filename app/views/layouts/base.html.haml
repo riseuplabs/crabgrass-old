@@ -11,20 +11,18 @@
       %section#breadcrumb
         = render :partial => '/layouts/base/breadcrumb'
       #content
-        #content-container
-          #content-wrap
 
-            /
-            / extended sidebar for landing pages 
-            /
-            - unless yield :extended_sidebar
-              /
-              / full content width pages 
-              /
-              = render :partial => '/layouts/base/full_width_content'
+        /
+        / extended sidebar for landing pages 
+        /
+        - unless yield :extended_sidebar
+          /
+          / full content width pages 
+          /
+          = render :partial => '/layouts/base/full_width_content'
 
-            - else
-              = render :partial => '/layouts/base/content_with_extended_sidebar'
+        - else
+          = render :partial => '/layouts/base/content_with_extended_sidebar'
 
       .space
       = render :partial => 'layouts/base/footer'
