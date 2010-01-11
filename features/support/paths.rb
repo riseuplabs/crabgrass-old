@@ -18,6 +18,8 @@ module NavigationHelpers
       '/me/dashboard'
     when /my work page/
       '/pages/my_work'
+    when /my notifications page/
+      '/pages/notifications'
     when /my requests page/
       '/me/requests/to_me'
     when /the destroyed groups directory/

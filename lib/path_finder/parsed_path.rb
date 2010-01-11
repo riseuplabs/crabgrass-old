@@ -86,7 +86,7 @@ class PathFinder::ParsedPath < Array
     'owner' => 1,
     'editor' => 1,
     'watched' => 1,
-    'notifications' => 1,
+    'notified' => 1,
 
     # moderation
     'public' => 0,
