@@ -3,18 +3,17 @@
   - content_for :banner do
     = render :partial => @partial_for_header
 
-  %div#main-content
-    = link_to_breadcrumbs(2)
-    %section#wiki-content
-      - if @title_box.any?
-        .title_box
-          = render :partial => @title_box
-      - if @info_box.any?
-        .info_box.tabs
-          = @info_box
-      %article
-        %div.content_box
-          = yield
+  = link_to_breadcrumbs(2)
+  %section#wiki-content
+    - if @title_box.any?
+      .title_box
+        = render :partial => @title_box
+    - if @info_box.any?
+      .info_box{:class => @info_box_class}
+        = @info_box
+    %article
+      %div.content_box
+        = yield
       
     %section#posts
       = render :partial => 'posts/list' if @show_posts

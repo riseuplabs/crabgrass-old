@@ -11,11 +11,14 @@
 
 
 ul
+  clear: both
   &.possible_list li
-    :margin 0 3em 0 3em
-    :padding 4px 16px
-    :cursor move
-    :line-height 24px
+    display: list-item
+    float: none
+    margin: 0 3em 0 3em
+    padding: 4px 16px
+    cursor: move
+    line-height: 24px
 
     &:hover
       :background= !box1_bg_color
@@ -54,14 +57,14 @@ li#add_possible_link
 
 div
   &.name
-    :font-weight bold
+    font-weight: bold
 
   &.possible_details
-    :margin 6px
-    :color #666
+    margin: 6px
+    color: #666
 
 
 span.winner
-  :display block
-  :float right
+  display: block
+  float: right
 

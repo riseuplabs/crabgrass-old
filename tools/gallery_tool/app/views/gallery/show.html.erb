@@ -4,6 +4,10 @@
   <%# link_to_asset(@cover, :large, :url => page_url(@page, :action => 'detail_view', :id => @cover.id)) %>
 </div> -->
 
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
 <div class="swatches">
   <%- if @images.any? -%>
     <%= render :partial => 'image', :collection => @images %>
