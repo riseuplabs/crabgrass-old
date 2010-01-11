@@ -192,7 +192,7 @@ module ApplicationHelper
     span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
-  
+ 
   # *NEWUI
   #
   # returns the kind of profile open or closed/private
@@ -204,10 +204,7 @@ module ApplicationHelper
       t(:private)
     end
   end
-  
-  
 
-  
   # *NEWUI
   #
   # Construct a content tag with a more link

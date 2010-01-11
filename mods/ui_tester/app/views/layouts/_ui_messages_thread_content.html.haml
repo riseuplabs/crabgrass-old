@@ -1,77 +1,80 @@
-%header#header-full
-  %section#identity
-    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
-      %div.left
-        %h1 the woohoo! group
-        %a{:href => "#"}
-          View Profile
-      %div.right
-        %ul
-          %li
+%div#content-container
+  %div#banner-container
+    %header#banner
+      %section#identity
+        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+          %div.left
+            %h1 the woohoo! group
             %a{:href => "#"}
-              3 pending tasks
-          %li
+              View Profile
+          %div.right
+            %ul
+              %li
+                %a{:href => "#"}
+                  3 pending tasks
+              %li
+                %a{:href => "#"}
+                  10 new page feeds
+              %li
+                %a{:href => "#"}
+                  3 new messages
+              %li
+                %a{:href => "#"}
+                  2 new requests
+  %div#second-level-container
+    %nav#second-level
+      %ul
+        %li.first
+          %a{:href => "#"}
+            PAGES
+        %li
+          %a{:href => "#"}
+            SOCIAL ACTIVITY
+        %li.current
+          %a{:href => "#"}
+            MESSAGES
+        %li
+          %a{:href => "#"}
+            REQUESTS
+  %div#content-wrap
+    %div#main-content-full
+      %table#messages.thread{:summary => 'message thread'}
+        %tr
+          %td.avatar
             %a{:href => "#"}
-              10 new page feeds
-          %li
+              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"40px", :width=>"40px"}
+          %td.name
+            %a.from{:href => "#"} meghana
+            %span.date 16/Dec
+          %td.message
+            %a{:href => "#"} Ut gravida, odio ut aliquet feugiat, nulla nibh mollis erat, nec venenatis sapien lacus in nisi. In gravida nisl leo, sit amet euismod mauris. Phasellus vel nibh eget eros aliquet semper at at dolor.
+        %tr
+          %td.avatar
             %a{:href => "#"}
-              3 new messages
-          %li
-            %a{:href => "#"}
-              2 new requests
-  %nav#nav-full
-    %ul
-      %li.first
-        %a{:href => "#"}
-          PAGES
-      %li
-        %a{:href => "#"}
-          SOCIAL ACTIVITY
-      %li.current
-        %a{:href => "#"}
-          MESSAGES
-      %li
-        %a{:href => "#"}
-          REQUESTS
+              %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"40px", :width=>"40px"}
+          %td.name
+            %a.from{:href => "#"} jonathon
+            %span.date 16/Dec
+          %td.message
+            %a{:href => "#"} Aliquam commodo aliquam neque, et placerat nulla eleifend et. Duis et venenatis mi. Donec dignissim orci eget nunc blandit vestibulum. Donec ut vestibulum lectus. Phasellus ultrices ligula porttitor nunc tincidunt imperdiet.
 
-%div#main-content-full
-  %table#messages.thread{:summary => 'message thread'}
-    %tr
-      %td.avatar
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"40px", :width=>"40px"}
-      %td.name
-        %a.from{:href => "#"} meghana
-        %span.date 16/Dec
-      %td.message
-        %a{:href => "#"} Ut gravida, odio ut aliquet feugiat, nulla nibh mollis erat, nec venenatis sapien lacus in nisi. In gravida nisl leo, sit amet euismod mauris. Phasellus vel nibh eget eros aliquet semper at at dolor.
-    %tr
-      %td.avatar
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-198sq.png", :alt=>" ", :height=>"40px", :width=>"40px"}
-      %td.name
-        %a.from{:href => "#"} jonathon
-        %span.date 16/Dec
-      %td.message
-        %a{:href => "#"} Aliquam commodo aliquam neque, et placerat nulla eleifend et. Duis et venenatis mi. Donec dignissim orci eget nunc blandit vestibulum. Donec ut vestibulum lectus. Phasellus ultrices ligula porttitor nunc tincidunt imperdiet.
+      %footer
+        %div.pagination
+          %span.disabled
+            %a{:href => "#"}
+              &laquo;
+          %span.current
+            %a{:href => "#"}
+              1
+          %span 2 3
+          %span
+            %a{:href => "#"}
+              &raquo;
 
-  %footer
-    %div.pagination
-      %span.disabled
-        %a{:href => "#"}
-          &laquo;
-      %span.current
-        %a{:href => "#"}
-          1
-      %span 2 3
-      %span
-        %a{:href => "#"}
-          &raquo;
-
-%div#message-form.say-box
-  %fieldset
-    %textarea{:type=>'text'} expanding "say-box" type textarea
-    %input{:type=>'submit', :value=>'Send'}
+    %div#message-form.say-box
+      %fieldset
+        %textarea{:type=>'text'} expanding "say-box" type textarea
+        %input{:type=>'submit', :value=>'Send'}
 
 
 

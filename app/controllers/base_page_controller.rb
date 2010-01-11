@@ -7,7 +7,7 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   include BasePageHelper
-  layout 'base'
+  layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   permissions 'base_page', 'posts'

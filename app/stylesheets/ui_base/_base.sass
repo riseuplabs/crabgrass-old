@@ -41,6 +41,11 @@
 
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
+  
+=bordered-tab(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
 
 =bordered-top-btm(!border_color= !light_grey_border)
   border-top= 1px "solid" !border_color
@@ -114,11 +119,16 @@ h6
   :font-size 9px
 
 /* @end */
+i.normal
+  font-size: 18px
+  color= !warm_grey_text
 li
-  :display inline-block
-  :float left
-  :padding 0.2em
-
+  display: inline-block
+  float: left
+  padding: 0.2em
+footer.page
+  background: #fff
+  height: 65px
 .small_icon
   float: left
   background-repeat: no-repeat
@@ -335,7 +345,7 @@ nav#nav-full
         color: #fff
     li.first
       +bordered(!almost_black)
-#pages, #contributions
+#pages, #contributions, #group-wiki
   +columns(10,10)
   margin: 30px 0 0
   width: 540px
@@ -465,6 +475,8 @@ nav#nav-full
     +clearfix
     li
       clear: both
+.space
+  height: 30px
 ul#groups, ul#people
   li
     clear: none
@@ -494,6 +506,7 @@ ul#groups, ul#people
     +blue-link
 #say-box
   position: relative
+  padding-top: 10px
   img
     position: relative
     top: 4px

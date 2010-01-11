@@ -16,7 +16,8 @@
 
 
 %section#wiki-page
-  = render :partial => 'tabs'
+  .info_box.tabs
+    = render :partial => 'tabs'
   #design_questions_container.survey_questions_container
 
     - form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f|
@@ -85,13 +86,13 @@
         = I18n.t(:survey_questions)
       %blockquote
         #add_questions_links_bar
-          %span.label.plus_16.small_icon
+          %span.label.plus_16.small_icon.link_line
             Add:
             = add_questions_links
-        #questions
+        #questions{:style => "display:inline-block;"}
           = render :partial => 'edit_questions'
 
       %p
         = submit_tag I18n.t(:save_survey_button), :class => "submit"
 
-= javascript_tag "surveyDesignerEnableSorting();"
+/= javascript_tag "surveyDesignerEnableSorting();"
