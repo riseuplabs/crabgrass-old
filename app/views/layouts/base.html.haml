@@ -2,14 +2,17 @@
 %html{:dir=>language_direction}
   = render :partial => '/layouts/base/head'
   %body{:class=>language_direction}
-    %div#page
+    #page
+      .space
       %header.page
         =render :partial => '/layouts/base/header'
+      .space
+
       %section#breadcrumb
         = render :partial => '/layouts/base/breadcrumb'
-      %div#content
-        %div#content-container
-          %div#content-wrap
+      #content
+        #content-container
+          #content-wrap
 
             /
             / extended sidebar for landing pages 
@@ -23,7 +26,7 @@
             - else
               = render :partial => '/layouts/base/content_with_extended_sidebar'
 
-            
+      .space
       = render :partial => 'layouts/base/footer'
-          
+      .space
 
