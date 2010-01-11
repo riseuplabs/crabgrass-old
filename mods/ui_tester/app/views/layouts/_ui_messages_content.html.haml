@@ -1,120 +1,123 @@
-%header#header-full
-  %section#identity
-    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
-      %div.left
-        %h1 the woohoo! group
-        %a{:href => "#"}
-          View Profile
-      %div.right
-        %ul
-          %li
+%div#content-container
+  %div#banner-container
+    %header#banner
+      %section#identity
+        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+          %div.left
+            %h1 the woohoo! group
             %a{:href => "#"}
-              3 pending tasks
-          %li
-            %a{:href => "#"}
-              10 new page feeds
-          %li
-            %a{:href => "#"}
-              3 new messages
-          %li
-            %a{:href => "#"}
-              2 new requests
-  %nav#nav-full
-    %ul
-      %li.first
-        %a{:href => "#"}
-          PAGES
-      %li
-        %a{:href => "#"}
-          SOCIAL ACTIVITY
-      %li.current
-        %a{:href => "#"}
-          MESSAGES
-      %li
-        %a{:href => "#"}
-          REQUESTS
-
-
-%div#message-form.say-box
-  %fieldset
-    %input{:type=>'text', :value=>'To: Type Name'}
-    %textarea{:type=>'text'} expanding "say-box" type textarea
-    %input{:type=>'submit', :value=>'Send'}
-%div#main-content-full
-  %div#message-from-form.right
-    %label Messages from
-    %input{:type=>'text', :value=> 'auto-complete?'}
-    %input{:type=>'submit', :value=>'Show'}
-  %div#message-filters-bar
-    %div#select-bar
-      %h5.left Select
+              View Profile
+          %div.right
+            %ul
+              %li
+                %a{:href => "#"}
+                  3 pending tasks
+              %li
+                %a{:href => "#"}
+                  10 new page feeds
+              %li
+                %a{:href => "#"}
+                  3 new messages
+              %li
+                %a{:href => "#"}
+                  2 new requests
+  %div#second-level-container
+    %nav#second-level
       %ul
+        %li.first
+          %a{:href => "#"}
+            PAGES
         %li
-          %a{:href => "#"} All
-          %a{:href => "#"} None
-          %a{:href => "#"} Unread
-    %div
-      %h5.left Mark as:
-      %ul
+          %a{:href => "#"}
+            SOCIAL ACTIVITY
+        %li.current
+          %a{:href => "#"}
+            MESSAGES
         %li
-          %a{:href => "#"} Read
-          %a{:href => "#"} Unread
-    %select.right
-      %option All
-      %option Unread
-  %table#messages{:summary => 'messages'}
-    %tr.unread
-      %td.check
-        %input.message_check_box{:type =>'checkbox'}
-      %td
-      %td.avatar
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-      %td.name
-        %a.from{:href => "#"} meghana
-      %td.message
-        %a{:href => "#"} Let's meet at noon for lunch. I'll be...
-      %td.date
-        %span.date 16/Dec
-    %tr.message
-      %td.check
-        %input.message_check_box{:type =>'checkbox'}
-      %td.reply
-      %td.avatar
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-      %td.name.unread
-        %a.from{:href => "#"} micah
-      %td.message.unread
-        %a{:href => "#"} Tomorrow would work for me. Can you call Daniel?
-      %td.date.unread
-        %span.date 14/Dec
-    %tr.message
-      %td.check
-        %input.message_check_box{:type =>'checkbox'}
-      %td
-      %td.avatar
-        %a{:href => "#"}
-          %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
-      %td.name.unread
-        %a.from{:href => "#"} gilles
-      %td.message.unread
-        %a{:href => "#"} Could you let me know about your plans for the...
-      %td.date.unread
-        %span.date 12/Dec
+          %a{:href => "#"}
+            REQUESTS
 
-  %footer
-    %div.pagination
-      %span.disabled
-        %a{:href => "#"}
-          &laquo;
-      %span.current
-        %a{:href => "#"}
-          1
-      %span 2 3
-      %span
-        %a{:href => "#"}
-          &raquo;
+  %div#content-wrap   
+    %div#message-form.say-box
+      %fieldset
+        %input{:type=>'text', :value=>'To: Type Name'}
+        %textarea{:type=>'text'} expanding "say-box" type textarea
+        %input{:type=>'submit', :value=>'Send'}
+    %div#main-content-full
+      %div#message-from-form.right
+        %label Messages from
+        %input{:type=>'text', :value=> 'auto-complete?'}
+        %input{:type=>'submit', :value=>'Show'}
+      %div#message-filters-bar
+        %div#select-bar
+          %h5.left Select
+          %ul
+            %li
+              %a{:href => "#"} All
+              %a{:href => "#"} None
+              %a{:href => "#"} Unread
+        %div
+          %h5.left Mark as:
+          %ul
+            %li
+              %a{:href => "#"} Read
+              %a{:href => "#"} Unread
+        %select.right
+          %option All
+          %option Unread
+      %table#messages{:summary => 'messages'}
+        %tr.unread
+          %td.check
+            %input.message_check_box{:type =>'checkbox'}
+          %td
+          %td.avatar
+            %a{:href => "#"}
+              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+          %td.name
+            %a.from{:href => "#"} meghana
+          %td.message
+            %a{:href => "#"} Let's meet at noon for lunch. I'll be...
+          %td.date
+            %span.date 16/Dec
+        %tr.message
+          %td.check
+            %input.message_check_box{:type =>'checkbox'}
+          %td.reply
+          %td.avatar
+            %a{:href => "#"}
+              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+          %td.name.unread
+            %a.from{:href => "#"} micah
+          %td.message.unread
+            %a{:href => "#"} Tomorrow would work for me. Can you call Daniel?
+          %td.date.unread
+            %span.date 14/Dec
+        %tr.message
+          %td.check
+            %input.message_check_box{:type =>'checkbox'}
+          %td
+          %td.avatar
+            %a{:href => "#"}
+              %img{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"32px", :width=>"32px"}
+          %td.name.unread
+            %a.from{:href => "#"} gilles
+          %td.message.unread
+            %a{:href => "#"} Could you let me know about your plans for the...
+          %td.date.unread
+            %span.date 12/Dec
+
+      %footer
+        %div.pagination
+          %span.disabled
+            %a{:href => "#"}
+              &laquo;
+          %span.current
+            %a{:href => "#"}
+              1
+          %span 2 3
+          %span
+            %a{:href => "#"}
+              &raquo;
 
 
 

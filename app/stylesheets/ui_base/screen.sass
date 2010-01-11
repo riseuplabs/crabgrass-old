@@ -141,7 +141,104 @@ body
   #content
     +clearfix
     color= !medium_grey_text
-    
+    #banner-container
+      +container
+      height: 67px
+      background: #fff
+      header#banner-no-avatar
+        +columns(14)
+        +full
+        width: 540px
+        padding-left: 224px
+      header#banner
+        +columns(14)
+        +full
+        width: 764px
+        padding-left: 0
+        div.left
+          padding-left: 20px
+        
+        #identity-name
+          +columns(14,14)
+          width: 540px
+          height: 67px
+          margin: 0
+          h1
+            float: left
+            display: inline
+            line-height: 1.2
+          a
+            +hover-link
+            +small-text
+            float: left
+            clear: left
+            color= !light_grey_text
+          #group-action
+            +zero
+            width: 120px
+            display: inline
+            float: right
+            text-align: right
+            a
+              +hover-link
+              +small-text
+              color= !light_grey_text
+            #chat
+              margin: 10px 0 2px
+              color= !warm_grey_text
+            #contribute
+              +zero
+              float: right
+              height: 24px
+              width: 120px
+              padding-top: 4px
+              background-color: #78be63
+              border: 1px solid #448c3b
+              .small_icon
+                margin-left: 4px
+                height: 20px
+                a
+                  +spaced
+                  +clearfix
+                  padding: 5px 0 0 2px
+                  font-weight: bold
+                  font-size: 11px
+                  color: #fff
+    #second-level-container
+      +container
+      height: 29px
+      nav#second-level-aside, nav#second-level
+        +columns(14)
+        +full
+        +bordered-btm(!almost_black)
+        height: 28px
+        width: 540px
+        padding-left: 224px
+        li
+          +zero
+          +spaced
+          height: 28px
+          background: #fff
+          font-size: 11px
+          a
+            color= !warm_grey_text
+            text-decoration: none
+            font-weight: bold
+            height: 28px
+            line-height: 2.5
+            padding: 8px 10px
+        li.current
+          +bordered-tab(!almost_black)
+          +bordered-btm(!white_border)
+          height: 28px
+          a
+            color= !almost_black
+        #last-login
+          font-size: 10px
+      nav#second-level
+        width: 684px
+        padding-left: 80px
+            
             
     #content-container.login
       background-image: none
@@ -168,6 +265,8 @@ body
         +columns(14)
         +full
         width: 764px
+
+            
         header#header-full
           +clearfix
           #identity
@@ -203,11 +302,10 @@ body
                   line-height: 1.3
                   padding: 8px 10px
               li.current
-                background= !almost_black
+                +bordered(!almost_black)
                 a
-                  color: #fff
-              li.first
-                +bordered(!almost_black) 
+                  color= !almost_black
+                 
              
         #main-content-full
           width: 764px
@@ -215,7 +313,7 @@ body
         #identity-info
           width: 204px
           float: left
-          margin: 0 20px 0 0
+          margin: -95px 20px 0 0
           #identity-image
             +columns(4,4)
             width: 204px
@@ -224,6 +322,7 @@ body
             margin: 0
             background-color: #fff
             border: 1px solid #535741
+            z-index: 99
           #image-label            
             +columns(4,4)
             width: 204px
@@ -335,91 +434,9 @@ body
           width: 540px
           float: left
           margin: 0
+          padding-top: 20px
           display: inline
-          header
-            +columns(10,10)
-            width: 540px
-            margin: 0
-            #identity-name
-              +columns(10,10)
-              margin: 0
-              width: 540px
-              height: 67px
-              h1
-                float: left
-                display: inline
-                line-height: 1.2
-                i.normal
-                  font-size: 18px
-                  color= !warm_grey_text
-              a
-                +hover-link
-                +small-text
-                float: left
-                clear: left
-                color= !light_grey_text
-              #group-action
-                +zero
-                width: 120px
-                display: inline
-                float: right
-                text-align: right
-                a
-                  +hover-link
-                  +small-text
-                  color= !light_grey_text
-                #chat
-                  margin: 10px 0 2px
-                  color= !warm_grey_text
-                #contribute
-                  +zero
-                  float: right
-                  height: 24px
-                  width: 120px
-                  padding-top: 4px
-                  background-color: #78be63
-                  border: 1px solid #448c3b
-                  .small_icon
-                    margin-left: 4px
-                    height: 20px
-                    a
-                      +spaced
-                      +clearfix
-                      padding: 5px 0 0 2px
-                      font-weight: bold
-                      font-size: 11px
-                      color: #fff      
-        
-            nav#second-level, #login-date
-              +columns(10,10)
-              +zero
-              width: 540px
-              height: 28px
-              li
-                +zero
-                +spaced
-                height: 28px
-                background: #fff
-                font-size: 11px
-                a
-                  color= !warm_grey_text
-                  text-decoration: none
-                  font-weight: bold
-                  height: 28px
-                  line-height: 2.5
-                  padding: 8px 10px
-              li.current
-                a
-                  color= !almost_black
-              li.first
-                +bordered-tab(!almost_black)
-
-                    
-            #last-login
-              +small-text
-              float: right
-              line-height: 1.1
-              color= !link_color
+          
           #main-content
             +clearfix
             width: 540px
@@ -447,7 +464,7 @@ body
                   padding-left: 2px
                 span
                   color= !light_grey_border
-            #wiki
+            #group-wiki
               +columns(10,10)
               +bordered-top-btm
               margin: 10px 0 0
