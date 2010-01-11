@@ -69,6 +69,7 @@
   +hover-link
   color= !blue
   font-size= !sized
+  font-weight: normal
 
 /* @general */
 .left
@@ -355,14 +356,17 @@ nav#nav-full
     float: left
     display: inline
     width: 540px
-  .pagination
-    font-weight: normal
-    font-size: 11px
-    color= !medium_grey_text
-    float: right
-    display: inline
-    a
-      +blue-link
+    span
+      a
+        +blue-link
+
+.pagination
+  font-weight: normal
+  font-size: 11px
+  color= !medium_grey_text
+  display: inline
+  a
+    +blue-link
 #pages-full
   +clearfix
   width: 764px
@@ -415,7 +419,7 @@ nav#nav-full
         font-size: 11px
         line-height: 1.0
         padding: 0.1em
-#pages
+#pages, #group-wiki
   article
     +columns(10,10)
     +bordered-btm(!light_grey_border)
@@ -423,10 +427,9 @@ nav#nav-full
     margin: 0
     padding: 10px 0
     .pages-info
-      +columns(9,10)
+      +columns(8,10)
       +alpha(10)
       margin: 0
-      width: 85.8%
       img
         float: left
         display: inline
@@ -445,26 +448,25 @@ nav#nav-full
         padding-left: 20px
         a
           +blue-link
-        .tags
-          +clearfix
-          a
-            +blue-link(10px)
+
       p.img
-        width: 360px
+        width: 320px
     .pages-status
-      +columns(1,10)
+      +columns(2,10)
       +omega(10)
       +zero
       +bordered
       float: right
-      width: 11%
-      padding: 4px 2px
+      padding: 4px 2px 4px 0
       li
         clear: both
         float: right
-        font-size: 11px
-        line-height: 1.0
+        font-size: 9px
+        line-height: 1.2
         padding: 0.1em
+        white-space: no-wrap
+        a
+          +blue-link
 
 #sidebar, #sidebar-browse
   +bordered
