@@ -119,7 +119,9 @@ h6
   :font-size 9px
 
 /* @end */
-
+i.normal
+  font-size: 18px
+  color= !warm_grey_text
 li
   display: inline-block
   float: left
@@ -343,7 +345,7 @@ nav#nav-full
         color: #fff
     li.first
       +bordered(!almost_black)
-#pages, #contributions
+#pages, #contributions, #group-wiki
   +columns(10,10)
   margin: 30px 0 0
   width: 540px
@@ -504,6 +506,7 @@ ul#groups, ul#people
     +blue-link
 #say-box
   position: relative
+  padding-top: 10px
   img
     position: relative
     top: 4px

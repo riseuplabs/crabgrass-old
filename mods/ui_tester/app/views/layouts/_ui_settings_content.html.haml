@@ -1,61 +1,64 @@
-%header#header-full
-  %section#identity
-    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
-      %div.left
-        %h1 the woohoo! group
-        %a{:href => "#"} 
-          Edit Group
-      %div.right 
-        %a.button{:href => "#"} 
-          Create New Task
-  %nav#nav-full
-    %ul
-      %li.first
-        %a{:href => "#"}
-          HOME
-      %li.current
-        %a{:href => "#"}
-          ALL CONTENT
-      %li
-        %a{:href => "#"}
-          TASKS
-        
-%div#main-content-full
-  %section#settings-form
-    %h3 Group Settings
-    %nav#tabs
+%div#content-container
+  %div#banner-container
+    %header#banner
+      %section#identity
+        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+          %div.left
+            %h1 the woohoo! group
+            %a{:href => "#"} 
+              Edit Group
+          %div.right 
+            %a.button{:href => "#"} 
+              Create New Task
+  %div#second-level-container
+    %nav#second-level
       %ul
+        %li.first
+          %a{:href => "#"}
+            HOME
+        %li.current
+          %a{:href => "#"}
+            ALL CONTENT
         %li
-          %a{:href => "#"} Basic Settings
-        %li
-          %a{:href => "#"} Permissions
-        %li
-          %a{:href => "#"} Public Profile
-        %li
-          %a{:href => "#"} Featured Pages
-    %div
-      %label Full Name
-      %input#name{:type=>'text'}
-      %p A descriptive name used for display. 
-    %div
-      %label Link Name
-      %input#link{:type=>'text'}
-      %p This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed. 
-    %div
-      %label Language
-      %select#language{:type=>'select'}
-        %option 
-        %option English
-        %option Español
-        %option Français
-        %option Dansk
-      %p The main language of this network.
-    %div
-      %label Icon
-      %img.avatar.avatar_xxxlarge{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"204px", :width=>"204px"}
-      %input#group_avatar_image_file{:type=>'file', :name=>'group[avatar][image_file]'}
-      %p Uploaded image will be cropped and stretched to 204 pixels square.
-    %input.form_buttons.right{:type=>'submit', :value=>'save'}
+          %a{:href => "#"}
+            TASKS
+  %div#content-wrap     
+    %div#main-content-full
+      %section#settings-form
+        %h3 Group Settings
+        %nav#tabs
+          %ul
+            %li
+              %a{:href => "#"} Basic Settings
+            %li
+              %a{:href => "#"} Permissions
+            %li
+              %a{:href => "#"} Public Profile
+            %li
+              %a{:href => "#"} Featured Pages
+        %div
+          %label Full Name
+          %input#name{:type=>'text'}
+          %p A descriptive name used for display. 
+        %div
+          %label Link Name
+          %input#link{:type=>'text'}
+          %p This name is how you will refer to this group in links and URLs. It must only contain alphanumeric characters, no spaces allowed. 
+        %div
+          %label Language
+          %select#language{:type=>'select'}
+            %option 
+            %option English
+            %option Español
+            %option Français
+            %option Dansk
+          %p The main language of this network.
+        %div
+          %label Icon
+          %img.avatar.avatar_xxxlarge{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"204px", :width=>"204px"}
+          %input#group_avatar_image_file{:type=>'file', :name=>'group[avatar][image_file]'}
+          %p Uploaded image will be cropped and stretched to 204 pixels square.
+        %input.form_buttons.right{:type=>'submit', :value=>'save'}
 
       
           

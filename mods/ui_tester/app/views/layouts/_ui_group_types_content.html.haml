@@ -1,138 +1,142 @@
-%header#header-full
-  %section#identity
-    %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
-    %div.left
-      %h1 the woohoo! group
-      %a{:href => "#"}
-        Edit Group
-  %nav#nav-full
-    %ul
-      %li.first
-        %a{:href => "#"}
-          HOME
-      %li.current
-        %a{:href => "#"}
-          ALL CONTENT
-      %li
-        %a{:href => "#"}
-          TASKS
-%div#main-content-full
-  %section#browse-content
-    %nav
-      %ul
-        %li.first.current
+%div#content-container
+  %div#banner-container
+    %header#banner
+      %section#identity
+        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+        %div.left
+          %h1 the woohoo! group
           %a{:href => "#"}
-            ALL
+            Edit Group
+  %div#second-level-container
+    %nav#second-level
+      %ul
+        %li.first
+          %a{:href => "#"}
+            HOME
+        %li.current
+          %a{:href => "#"}
+            ALL CONTENT
         %li
           %a{:href => "#"}
-            CONTENT VIEWS
-      %a.right
-        Trash
-    %form#search-browse
-      %fieldset
-        %label Search all content
-        %input.text{:type=>'text'} 
-        %input.search-submit{:type=>'button', :value=>'Search'}
+            TASKS
+  %div#content-wrap           
+    %div#main-content-full
+      %section#browse-content
+        %nav
+          %ul
+            %li.first.current
+              %a{:href => "#"}
+                ALL
+            %li
+              %a{:href => "#"}
+                CONTENT VIEWS
+          %a.right
+            Trash
+        %form#search-browse
+          %fieldset
+            %label Search all content
+            %input.text{:type=>'text'} 
+            %input.search-submit{:type=>'button', :value=>'Search'}
 
 
-  %section#group-browse
+      %section#group-browse
     
-  %section#pages-full
-    %header
-      %h3 
-        group pages
-        %span.pagination
-          %span.disabled
-            %a{:href => "#"}
-              &laquo; 
-          %span.current
-            %a{:href => "#"}1 
-          %span 2 3
-          %span
-            %a{:href => "#"}
-              &raquo;
-    %article
-      %section.pages-info
-        %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-        %p 
-          Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-          %a{:href => "#"}
-            Read More
-          %span.tags
-            %a{:href => "#"}TagNamePages,
-            %a{:href => "#"} TagNamePages
-      %ul.pages-status
-        %li New
-        %li 
-          %a{:href => "#"}
-            Daniel
-        %li 3:45 pm
-        %li star
-    %article
-      %section.pages-info
-        %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
-        %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-        %p.img 
-          Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-          %a{:href => "#"}
-            Read More
-          %span.tags
-            %a{:href => "#"}TagName,
-            %a{:href => "#"} TagName
-      %ul.pages-status
-        %li New
-        %li 
-          %a{:href => "#"}
-            Daniel
-        %li 3:45 pm
-        %li star
-    %article
-      %section.pages-info
-        %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-        %p 
-          Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-          %a{:href => "#"}
-            Read More
-          %span.tags
-            %a{:href => "#"}TagNamePages,
-            %a{:href => "#"} TagNamePages
-      %ul.pages-status
-        %li New
-        %li 
-          %a{:href => "#"}
-            Daniel
-        %li 3:45 pm
-        %li star
-    %article
-      %section.pages-info
-        %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
-        %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
-        %p.img 
-          Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
-          %a{:href => "#"}
-            Read More
-          %span.tags
-            %a{:href => "#"}TagName,
-            %a{:href => "#"} TagName
-      %ul.pages-status
-        %li New
-        %li 
-          %a{:href => "#"}
-            Daniel
-        %li 3:45 pm
-        %li star
-    %footer
-      %div.pagination
-        %span.disabled
-          %a{:href => "#"}
-            &laquo; 
-        %span.current
-          %a{:href => "#"}
-            1 
-        %span 2 3
-        %span
-          %a{:href => "#"}
-            &raquo;
+      %section#pages-full
+        %header
+          %h3 
+            group pages
+            %span.pagination
+              %span.disabled
+                %a{:href => "#"}
+                  &laquo; 
+              %span.current
+                %a{:href => "#"}1 
+              %span 2 3
+              %span
+                %a{:href => "#"}
+                  &raquo;
+        %article
+          %section.pages-info
+            %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+            %p 
+              Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+              %a{:href => "#"}
+                Read More
+              %span.tags
+                %a{:href => "#"}TagNamePages,
+                %a{:href => "#"} TagNamePages
+          %ul.pages-status
+            %li New
+            %li 
+              %a{:href => "#"}
+                Daniel
+            %li 3:45 pm
+            %li star
+        %article
+          %section.pages-info
+            %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+            %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+            %p.img 
+              Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+              %a{:href => "#"}
+                Read More
+              %span.tags
+                %a{:href => "#"}TagName,
+                %a{:href => "#"} TagName
+          %ul.pages-status
+            %li New
+            %li 
+              %a{:href => "#"}
+                Daniel
+            %li 3:45 pm
+            %li star
+        %article
+          %section.pages-info
+            %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+            %p 
+              Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+              %a{:href => "#"}
+                Read More
+              %span.tags
+                %a{:href => "#"}TagNamePages,
+                %a{:href => "#"} TagNamePages
+          %ul.pages-status
+            %li New
+            %li 
+              %a{:href => "#"}
+                Daniel
+            %li 3:45 pm
+            %li star
+        %article
+          %section.pages-info
+            %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+            %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+            %p.img 
+              Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+              %a{:href => "#"}
+                Read More
+              %span.tags
+                %a{:href => "#"}TagName,
+                %a{:href => "#"} TagName
+          %ul.pages-status
+            %li New
+            %li 
+              %a{:href => "#"}
+                Daniel
+            %li 3:45 pm
+            %li star
+        %footer
+          %div.pagination
+            %span.disabled
+              %a{:href => "#"}
+                &laquo; 
+            %span.current
+              %a{:href => "#"}
+                1 
+            %span 2 3
+            %span
+              %a{:href => "#"}
+                &raquo;
 
 
 
