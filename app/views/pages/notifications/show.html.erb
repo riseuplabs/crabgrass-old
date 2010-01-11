@@ -16,6 +16,6 @@
       "$$('.page_check').each(function(cb) {cb.checked = (cb.class == 'unread')})" %> &nbsp;&nbsp;
   </div>
   <%# Make sure to check out the expanded list css in root/site_home.html.erb %>
-  <%= render :partial => 'pages/list_expanded', :locals => {:checkbox => true} %>
+  <%= render :partial => 'pages/list', :locals => {:checkbox => true} %>
 <% end %>
 
