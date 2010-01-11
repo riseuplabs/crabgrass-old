@@ -363,6 +363,7 @@ EOSQL
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
     @conditions << '(user_participations.inbox)'
+    @selects << 'user_participations.notice AS notice'
   end
 
   def filter_editor(user_id)
