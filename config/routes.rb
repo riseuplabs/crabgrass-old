@@ -102,8 +102,7 @@ ActionController::Routing::Routes.draw do |map|
     pages.resource :page_flags, :as => 'flags', :only => :update, :controller => 'pages/flags'
   end
 
-  # :create is used for search -> think: create a new view on pages.
-  map.resources :pages, :only => [:new, :update]
+  map.resources :pages, :only => [:new, :update, :index]
 
   map.connect '/pages/*path', :controller => 'pages'
 

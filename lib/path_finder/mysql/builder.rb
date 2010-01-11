@@ -95,6 +95,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     @tags        = []
     @or_clauses  = []
     @and_clauses = []
+    @selects     = []
     @flow        = options[:flow]
     @date_field  = 'created_at'
 
@@ -109,6 +110,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
     # klass the find/paginate/... was send to and thus of the objects we return.
     @klass = klass
+    @selects <<  @klass.table_name + ".*"
 
     # parse the path and apply each filter
     apply_filters_from_path( path )
@@ -161,7 +163,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
       :offset => @offset,       # /
       :order => order,
       :include => @include,
-      :select => @select,
+      :select => @select || @selects.join(", "),
     }
 
     find_opts[:group] = sql_for_group(order)
