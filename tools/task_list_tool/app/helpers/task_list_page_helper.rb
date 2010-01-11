@@ -3,15 +3,15 @@ module TaskListPageHelper
   ##
   ## show tasks
   ##
-  
+
   def list_for_task(list, options)
     case options[:status]
-    when 'created'
-      tasks = list.tasks.select { |t| t.created_by_id == @show_user.id }
+    when 'pending'
+      tasks = list.tasks.select { |t| t.completed == false }
+    when 'completed'
+      tasks = list.tasks.select { |t| t.completed == true }
     else
-      tasks = list.tasks.select do |t|
-        (options[:all_users] || t.user_ids.include?(options[:user].id)) && (options[:all_states] || t.completed? == options[:completed])
-      end
+      list.tasks
     end
     tasks.any? == true ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
   end

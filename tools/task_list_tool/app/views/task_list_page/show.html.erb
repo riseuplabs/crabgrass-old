@@ -1,3 +1,8 @@
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
+
 <h2>Pending tasks</h2>
 <ul id='sort_list_pending' class='task_list'>
   <%= render(:partial => 'task', :collection => @list.pending) %>

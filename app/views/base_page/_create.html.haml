@@ -1,15 +1,3 @@
-- content_for :full_content_header do
-  %section#identity
-    = avatar_for @group, 'large', :class => 'left'
-    %div.left
-      %h1 
-        = @group.full_name
-    %div.right 
-      = yield :touchstone_actions
-
-- content_for :secondary_nav do
-  = render :partial => '/groups/navigation/menu'
-
 .big_icon{ :class => "#{@page_class.icon}_48"}
   %h1
     = I18n.t(:create_a_new_thing, :thing => content_tag(:i, page_class))
