@@ -1,7 +1,8 @@
 %section#pages
   %header
-    %h3 
-      = I18n.t(:recent_pages)
+    - if (defined?(title) != nil && !title.nil? && !title.blank?)
+      %h3
+        = title
     %span.pagination
       = pagination_for(@pages)
 
