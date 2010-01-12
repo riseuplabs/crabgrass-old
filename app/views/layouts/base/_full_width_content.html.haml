@@ -1,28 +1,35 @@
 /
 / full content width
 /
-%header#header-full
-  = yield :full_content_header
-  /
-  / secondary nav (always required?)
-  /
-  - if yield :secondary_nav
-    %nav#nav-full
-      = yield :secondary_nav
-  /
-  / misc placeholder
-  /
-  - if yield :misc_header
-    = yield :misc_header
+#content-container
+  #banner-container
+    %header#banner
+      %section#identity
+        = yield :full_content_header
 
-- if yield :right_sidebar
+    /
+    / secondary nav (always required?)
+    /
+    - if yield :secondary_nav
+      #second-level-container
+        %nav#second-level
+          = yield :secondary_nav
+    /
+    / misc placeholder
+    /
+    - if yield :misc_header
+      = yield :misc_header
 
-  %div#alpha10
-    %div#main-content
-      = yield
-  %aside#sidebar
-    = yield :right_sidebar
-- else
-  %div#main-content-full
-    = yield
+  #content-wrap
+
+    - if yield :right_sidebar
+
+      %div#alpha10
+        #main-content
+          = yield
+      %aside#sidebar
+        = yield :right_sidebar
+    - else
+      #main-content-full
+        = yield
 
