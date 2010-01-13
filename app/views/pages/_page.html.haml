@@ -1,15 +1,5 @@
 %article
   %section.pages-info
-    - if local_assigns[:checkbox]
-      .checkbox
-        = check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
-    = cover_for page
-    %a{:href=> page_url(page)}
-      %h4.small_icon.page_text_blue_16 
-        = page.title
-    = text_with_more(page.summary, :p, :more_url=> page_url(page), :length => 300)
-    - if page.respond_to?(:notice)
-      .notice
-        = page.notice
+    - layout ||= '/pages/cover'
+    = render :partial => '/pages/core', :layout => layout, :locals => {:page => page}
   = last_updated_box_for page
-    
