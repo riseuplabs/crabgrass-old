@@ -4,7 +4,8 @@
 - content_for :banner do
   = render :partial => '/groups/navigation/header_small'
 
-%nav.no-sidebar
+- content_for :secondary_nav do
+  = render :partial => '/groups/navigation/menu'
 
 %section#settings-form
 

@@ -6,18 +6,18 @@
     %header#banner
       = yield :banner
 
-    /
-    / secondary nav (always required?)
-    /
-    - if yield :secondary_nav
-      #second-level-container
-        %nav#second-level
-          = yield :secondary_nav
-    /
-    / misc placeholder
-    /
-    - if yield :misc_header
-      = yield :misc_header
+  /
+  / secondary nav (always required?)
+  /
+  - if yield :secondary_nav
+    #second-level-container
+      %nav#second-level
+        = yield :secondary_nav
+  /
+  / misc placeholder
+  /
+  - if yield :misc_header
+    = yield :misc_header
 
   #content-wrap
 
