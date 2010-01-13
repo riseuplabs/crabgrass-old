@@ -162,10 +162,6 @@ body
           padding-left: 20px
         
         #identity-name
-          +columns(14,14)
-          width: 540px
-          height: 67px
-          margin: 0
           h1
             float: left
             display: inline
@@ -241,7 +237,39 @@ body
       nav#second-level
         width: 684px
         padding-left: 80px
-            
+    #third-level-container
+      +container
+      height: 56px
+      nav#third-level
+        +columns(14)
+        +full
+        +bordered-top(!light_grey_border)
+        margin-top: 28px
+        height: 29px
+        width: 684px
+        padding-left: 80px
+        li
+          +zero
+          +spaced
+          height: 28px
+          background: #fff
+          font-size: 11px
+          margin-top: -14px
+          a
+            color= !warm_grey_text
+            text-decoration: none
+            font-weight: bold
+            height: 28px
+            line-height: 2.5
+            padding: 8px 10px
+        li.current
+          height: 29px
+          a
+            color= !almost_black
+        
+      nav#second-level
+        width: 684px
+        padding-left: 80px         
             
     #content-container.login
       background-image: none
