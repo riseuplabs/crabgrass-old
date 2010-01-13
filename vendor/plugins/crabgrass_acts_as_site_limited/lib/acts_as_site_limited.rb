@@ -31,7 +31,7 @@ module ActsAsSiteLimited
         def self.count(*args)
           # patch the sql statement to avoid things like
           # count (pages*)
-          args[0][:select].gsub!(/(.*\.)/i,'') if args[0][:select]
+          args[0][:select].gsub!(/(.*\.)/i,'') if args[0] && args[0][:select]
           super(*prepare_site_limited_options(*args))
         end
 
