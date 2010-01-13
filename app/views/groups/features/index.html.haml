@@ -1,26 +1,30 @@
-= render :partial => '/groups/group_header_no_sidebar'
+- content_for :banner do
+  = render :partial => '/groups/navigation/header_small'
+
+- content_for :secondary_nav do
+  = render :partial => '/groups/navigation/menu'
 
 %section#main-content.no-sidebar
   = render :partial => '/groups/navigation/settings_tabs'
 
-<!-- table for some pretty formatting -->
-%table.form
-  %tr 
-    %td.label
-      Pages
-    %td 
-      %blockquote
-        = render :partial => 'features_form'
+  <!-- table for some pretty formatting -->
+  %table.form
+    %tr 
+      %td.label
+        Pages
+      %td 
+        %blockquote
+          = render :partial => 'features_form'
 
-  %tr 
-    %td 
-    %td
-      %div.info
-        = I18n.t(:updating_this_list_will_update_featured_pages)
-        - form_tag(groups_params(:action => 'show'), :method => :get, :multipart => false) do
-          %p.form_buttons= submit_tag I18n.t(:done_button), :name => nil
-  %tr 
-    %td 
-    %td 
-      %div.buttons
-        = spinner 'features' 
+    %tr 
+      %td 
+      %td
+        %div.info
+          = I18n.t(:updating_this_list_will_update_featured_pages)
+          - form_tag(groups_params(:action => 'show'), :method => :get, :multipart => false) do
+            %p.form_buttons= submit_tag I18n.t(:done_button), :name => nil
+    %tr 
+      %td 
+      %td 
+        %div.buttons
+          = spinner 'features' 
