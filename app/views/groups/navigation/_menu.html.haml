@@ -1,8 +1,9 @@
 %ul
   = menu(I18n.t(:home), url_for_group(@group), :class => 'first')
-  %li.current
+  %li
     %a{:href => "#"}
       ALL CONTENT
   = menu(I18n.t(:tasks), group_search_url(:action => 'tasks'))
+  = menu(I18n.t(:administration), group_search_url(:action => 'edit'))
 
 

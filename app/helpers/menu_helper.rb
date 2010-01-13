@@ -38,7 +38,7 @@ module MenuHelper
   ## MENUS
   ##
   def menu(label, url, options={})
-    active = options[:active] || (url_for(url) == request.path)
+    active = options[:active] || (url_for(url) =~ /#{request.path}/i)
     selected_class = active ? (options[:selected_class] || 'current') : ''
     content_tag(:li,
       link_to(label.upcase, url, options),
