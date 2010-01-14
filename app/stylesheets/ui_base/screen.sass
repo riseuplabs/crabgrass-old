@@ -146,7 +146,7 @@ body
     color= !medium_grey_text
     #banner-container
       +container
-      height: 67px
+      height: 90px
       background: #fff
       header#banner-no-avatar
         +columns(14)
@@ -158,8 +158,10 @@ body
         +full
         width: 764px
         padding-left: 0
+        img
+          margin-bottom: -20px
         div.left
-          padding-left: 20px
+          padding-left: 10px
         
         #identity-name
           h1
@@ -203,14 +205,11 @@ body
                   font-weight: bold
                   font-size: 11px
                   color: #fff
-    #second-level-container
-      +container
-      height: 29px
       nav#second-level-aside, nav#second-level
         +columns(14)
         +full
         +bordered-btm(!almost_black)
-        height: 28px
+        height: 29px
         width: 540px
         padding-left: 224px
         li
@@ -236,7 +235,7 @@ body
           font-size: 10px
       nav#second-level
         width: 684px
-        padding-left: 80px
+        padding-left: 90px
     #third-level-container
       +container
       height: 56px

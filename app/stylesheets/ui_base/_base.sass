@@ -465,7 +465,31 @@ nav#nav-full
         white-space: nowrap
         a
           +blue-link
-
+nav#second-level-aside, nav#second-level
+  +bordered-btm(!almost_black)
+  height: 29px
+  width: 540px
+  li
+    +zero
+    +spaced
+    height: 28px
+    background: #fff
+    font-size: 11px
+    a
+      color= !warm_grey_text
+      text-decoration: none
+      font-weight: bold
+      height: 28px
+      line-height: 2.5
+      padding: 8px 10px
+  li.current
+    +bordered-tab(!almost_black)
+    +bordered-btm(!white_border)
+    height: 28px
+    a
+      color= !almost_black
+  #last-login
+    font-size: 10px
 #sidebar, #sidebar-nav, #sidebar-browse
   +bordered
   width: 204px
