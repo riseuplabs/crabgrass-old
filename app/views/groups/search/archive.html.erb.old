@@ -8,6 +8,11 @@
   link_to_active(I18n.t(:archive_filter_updated_link), group_search_url(:action => 'archive', :path => @path.replace_keyword('created','updated')), @path.keyword?('updated'))
 ) %>
 
+
+<% content_for(:right_sidebar) do %>
+  <%= render :partial => 'groups/search/tags' %>
+<% end %>
+
 <blockquote>
 <% unless @months.empty? -%>
   <table class='archive_calendar'>

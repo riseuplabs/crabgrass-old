@@ -1,0 +1,11 @@
+- content_for(:html_head) do
+  = group_search_rss
+
+- content_for :right_sidebar do
+  = render :partial => 'groups/search/tags'
+
+= render :partial => '/groups/group_header_no_sidebar'
+
+= render :partial => 'pages/search'
+
+= drop_down("View:", group_all_content_view_options, group_all_content_view_selected)
