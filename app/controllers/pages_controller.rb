@@ -17,7 +17,7 @@ The index() action can be triggered through restful routing as in
  /pages
 or through the seperate routing with paths as in
  /pages/tag/important
-Some paths will be caught by their own controllers before hand though. For
+Some paths will be taken care of by collections before hand though. For
 example
  /pages/my_work
 
@@ -43,7 +43,7 @@ class PagesController < ApplicationController
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool).
   def new
-    @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : current_site.available_page_types)
+    @available_tools = current_site.tools_for(@group)
   end
 
   # Posts are interpreted as create by the restful side of things
@@ -55,21 +55,37 @@ class PagesController < ApplicationController
   end
 
   # This is a workaround as long as we do not have :only => :index for resources.
-  # Then the /pages/single_item_path routes would point to index anyway.
   def show
     @path=params[:id]
     index
   end
 
   def index
+    if @path
+      all
+    else
+      my_work
+    end
+  end
+
+  def all
     @path.default_sort('updated_at')
-    @pages = Page.paginate_by_path(@path, options_for_me(:page => params[:page]))
+    fetch_pages_for @path
     add_user_participations(@pages)
-    handle_rss(
-      :title => current_user.name + ' ' + I18n.t(:my_work_link),
-      :link => my_work_path,
-      :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
-    ) or render(:action => 'list')
+    rss_for_collection(all_pages_path, :all_pages_link)
+  end
+
+  def my_work
+    @view = params[:my_work_view] || "work"
+    path = parse_filter_path("/#{@view}/#{current_user.id}")
+    fetch_pages_for path
+    rss_for_collection(my_work_pages_path, :my_work_link)
+  end
+
+  def notification
+    path = parse_filter_path("/notified/#{current_user.id}")
+    fetch_pages_for path
+    rss_for_collection(notification_pages_path, :notification_pages_link)
   end
 
   protected
@@ -86,4 +102,16 @@ class PagesController < ApplicationController
     true
   end
 
+  def fetch_pages_for(path)
+    @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
+  end
+
+  def rss_for_collection(link, title)
+    title=I18n.t(title) if title.is_a?(Symbol)
+    handle_rss(
+      :title => current_user.name + ' ' + title,
+      :link => link,
+      :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+    )
+  end
 end

@@ -1,6 +1,6 @@
 <% @title_box = content_tag :h1, I18n.t(:my_work_headline) %>
 <% @info_box = I18n.t(:my_work_description) %>
-<% form_tag(page_flags_path, :method => :put) do -%>
+<% form_tag(flag_pages_path, :method => :put) do -%>
   <div id='page_buttons'>
     Mark as:
     <%= submit_link I18n.t(:mark_as_read), :name => 'read' %>
@@ -16,6 +16,14 @@
       "$$('.page_check').each(function(cb) {cb.checked = (cb.class == 'unread')})" %> &nbsp;&nbsp;
   </div>
   <%# Make sure to check out the expanded list css in root/site_home.html.erb %>
-  <%= render :partial => 'pages/list', :locals => {:checkbox => true} %>
+  <%= render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox'} %>
+<% end %>
+
+<% form_tag(my_work_pages_path, :method => :put) do -%>
+  <div id='view_selector'>
+    <%= label 'my_work', 'view', I18n.t(:view_label) %>
+    <%= select_tag 'my_work_view', options_for_select(my_work_views) %>
+    <%= submit_tag I18n.t(:select_view_button), :name => 'select' %>
+  </div>
 <% end %>
 
