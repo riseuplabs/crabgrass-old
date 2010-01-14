@@ -170,7 +170,7 @@ class Site < ActiveRecord::Base
     if group && group.group_setting.allowed_tools
       group.group_setting.allowed_tools
     else
-      current_site.available_page_types
+      available_page_types
     end
   end
 
