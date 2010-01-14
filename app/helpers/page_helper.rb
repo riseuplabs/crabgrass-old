@@ -502,7 +502,7 @@ module PageHelper
     page_groupings = []
     available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      next if page_class.internal
+      next if page_class.nil? or page_class.internal
       if options[:simple]
         page_groupings << page_class.class_group.to_a.first
       else
