@@ -1,12 +1,12 @@
 %section#pages
   %header
-    - if (defined?(title) != nil && !title.nil? && !title.blank?)
+    - if local_assigns[:title] && !title.blank?
       %h3
         = title
     %span.pagination
       = pagination_for(@pages)
 
-  = render :partial => '/pages/page', :collection => @pages
+  = render :partial => '/pages/page', :collection => @pages, :locals => page_locals(local_assigns)
 
   %footer
     %span.pagination

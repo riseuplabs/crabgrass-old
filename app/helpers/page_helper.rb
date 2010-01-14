@@ -226,6 +226,16 @@ module PageHelper
   end
 
 
+  # *NEWUI
+  #
+  #
+  # The list partial hands all local vars down to the page partial
+  # that are in the list of allowed locals.
+  def page_locals(locals)
+    allowed_locals= [:layout]
+    locals.reject { |key,_| !allowed_locals.include? key }
+  end
+
   #
   # used to spit out a column value for a single row.
   # for example:
@@ -591,5 +601,24 @@ module PageHelper
 #    ret += "</form>"
 #    #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)
 #  end
+
+
+  #
+  #
+  # NEW UI
+  #
+  # Elements Used in the Layouts
+  #
+  # checkbox for selecting the page in a list of pages.
+  def checkbox_for(page)
+    check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+  end
+
+  def owner_image(page)
+    return unless page.owner
+    link_to "#{avatar_for page.owner, 'small'}",
+      url_for_entity(page.owner),:class=>'imglink'
+  end
+
 
 end

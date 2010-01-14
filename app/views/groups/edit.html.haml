@@ -1,6 +1,10 @@
-= render :partial => '/groups/group_header_no_sidebar'
+- content_for :banner do
+  = render :partial => '/groups/navigation/header_small'
 
-%section#main-content.no-sidebar
+- content_for :secondary_nav do
+  = render :partial => '/groups/navigation/menu'
+
+%section#form-settings
   = render :partial => '/groups/navigation/settings_tabs'
   - form_tag(groups_path(@group),:method => :put, :multipart => true) do
     = render :partial => '/groups/basic/form'

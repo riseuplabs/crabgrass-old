@@ -505,6 +505,23 @@ en:
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
 
   ##
+  ## ACTION BAR
+  ##
+
+  select_label: "Select"
+  mark_as_label: "Mark as"
+  view_label: "View"
+
+  select_all: "All"
+  select_none: "None"
+  select_unread: "Unread"
+
+  mark_as_read: "Read"
+  mark_as_unread: "Unread"
+  mark_as_watched: "Watched"
+  mark_as_unwatched: "Unwatched"
+
+  ##
   ## ME
   ##
 
@@ -521,11 +538,11 @@ en:
   my_pages: "My Pages"
   my_dashboard: "My Dashboard"
   my_work_headline: "My Work"
-  watched_pages: "My Watched Pages"
-  editor_pages: "My Page Edits"
-  owner_pages: "Pages I Own"
-  unread_pages: "Unread Pages"
-  view_label: "View"
+  view_my_work_pages_option: "All My Work Pages"
+  view_watched_pages_option: "My Watched Pages"
+  view_editor_pages_option: "My Page Edits"
+  view_owner_pages_option: "Pages I Own"
+  view_unread_pages_option: "Unread Pages"
   select_view_button: "Select View"
 
   my_tasks: "Tasks"
@@ -1146,19 +1163,6 @@ en:
   page_history_the_page_you_are_watching_description: "The page you are watching \"{{page_title}}\" has been modified"
   page_history_mailer_expire_link: "The link will expire in {{expire_time}}"
   page_history_mailer_choose_turn_off_notifications: "You can choose to turn off email notifications, receive a summary of changes, or get an email each time the page is changed"
-
-  ##
-  ## PAGE FLAGS
-  ##
-
-  mark_as_read: "Read"
-  mark_as_unread: "Unread"
-  mark_as_watched: "Watched"
-  mark_as_unwatched: "Unwatched"
-
-  all_selection: "All"
-  none_selection: "None"
-  unread_selection: "Unread"
 
   ##
   ## PAGE TYPES

@@ -1,0 +1,6 @@
+%ul
+  %li
+    - marks.each do |mark|
+      - key = "mark_as_#{mark.to_s}".to_sym
+      = link_to_function I18n.t(key), mark_function(mark)
+    = spinner 'mark_as'

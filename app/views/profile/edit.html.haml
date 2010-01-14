@@ -1,10 +1,10 @@
 - @avatar ||= @user.avatar
 
-= render :partial => '/me/navigation/header_small'
 
-%nav.no-sidebar
+- content_for :banner do
+  = render :partial => '/me/navigation/header_small'
 
-%section#main-content.no-sidebar
+%section#settings-form
 
   %h1= I18n.t(:my_settings, :user => current_user.display_name)
 

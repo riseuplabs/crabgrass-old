@@ -146,7 +146,7 @@ body
     color= !medium_grey_text
     #banner-container
       +container
-      height: 67px
+      height: 90px
       background: #fff
       header#banner-no-avatar
         +columns(14)
@@ -158,14 +158,12 @@ body
         +full
         width: 764px
         padding-left: 0
+        img
+          margin-bottom: -20px
         div.left
-          padding-left: 20px
+          padding-left: 10px
         
         #identity-name
-          +columns(14,14)
-          width: 540px
-          height: 67px
-          margin: 0
           h1
             float: left
             display: inline
@@ -207,14 +205,11 @@ body
                   font-weight: bold
                   font-size: 11px
                   color: #fff
-    #second-level-container
-      +container
-      height: 29px
       nav#second-level-aside, nav#second-level
         +columns(14)
         +full
         +bordered-btm(!almost_black)
-        height: 28px
+        height: 29px
         width: 540px
         padding-left: 224px
         li
@@ -240,8 +235,40 @@ body
           font-size: 10px
       nav#second-level
         width: 684px
+        padding-left: 90px
+    #third-level-container
+      +container
+      height: 56px
+      nav#third-level
+        +columns(14)
+        +full
+        +bordered-top(!light_grey_border)
+        margin-top: 28px
+        height: 29px
+        width: 684px
         padding-left: 80px
-            
+        li
+          +zero
+          +spaced
+          height: 28px
+          background: #fff
+          font-size: 11px
+          margin-top: -14px
+          a
+            color= !warm_grey_text
+            text-decoration: none
+            font-weight: bold
+            height: 28px
+            line-height: 2.5
+            padding: 8px 10px
+        li.current
+          height: 29px
+          a
+            color= !almost_black
+        
+      nav#second-level
+        width: 684px
+        padding-left: 80px         
             
     #content-container.login
       background-image: none

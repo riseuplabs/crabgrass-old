@@ -96,7 +96,9 @@ form.mini_search table {
 <% end %>
 
 
-<% @right_column = capture do %>
+
+
+<% content_for :extended_sidebar do %>
   <%= render :partial => 'sidebar' %>
 <% end %>
 
