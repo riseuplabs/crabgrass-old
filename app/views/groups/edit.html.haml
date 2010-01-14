@@ -4,6 +4,10 @@
 - content_for :secondary_nav do
   = render :partial => '/groups/navigation/menu'
 
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/settings_tabs'
+
+
 %section#form-settings
   = render :partial => '/groups/navigation/settings_tabs'
   - form_tag(groups_path(@group),:method => :put, :multipart => true) do
