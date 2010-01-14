@@ -620,4 +620,5 @@ module PageHelper
       url_for_entity(page.owner),:class=>'imglink'
   end
 
+
 end

@@ -31,6 +31,7 @@ class PagesController < ApplicationController
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
   permissions 'pages'
+  helper 'action_bar'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -69,6 +70,7 @@ class PagesController < ApplicationController
   end
 
   def all
+    @tab = :all
     @path.default_sort('updated_at')
     fetch_pages_for @path
     add_user_participations(@pages)
@@ -76,6 +78,7 @@ class PagesController < ApplicationController
   end
 
   def my_work
+    @tab = :my_work
     @view = params[:my_work_view] || "work"
     path = parse_filter_path("/#{@view}/#{current_user.id}")
     fetch_pages_for path
@@ -111,7 +114,7 @@ class PagesController < ApplicationController
     handle_rss(
       :title => current_user.name + ' ' + title,
       :link => link,
-      :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+      :image => avatar_url(:id => @user.try.avatar_id||0, :size => 'huge')
     )
   end
 end

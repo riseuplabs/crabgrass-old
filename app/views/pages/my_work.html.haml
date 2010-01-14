@@ -1,0 +1,7 @@
+-content_for :full_content_header do
+  = render :partial => 'me/dashboard/header_identity'
+- content_for :secondary_nav do
+  = render :partial => 'me/dashboard/tabs'
+
+= render :partial => 'common/action_bar', :locals => {:mark_path => mark_pages_path, :view_path => my_work_pages_path}
+= render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox'}

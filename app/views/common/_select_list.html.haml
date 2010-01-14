@@ -1,0 +1,5 @@
+%ul
+  %li
+    - selections.each do |selection|
+      - key = "select_#{selection.to_s}".to_sym
+      = link_to_function I18n.t(key), select_function(selection)
