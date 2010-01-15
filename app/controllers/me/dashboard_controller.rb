@@ -3,7 +3,7 @@ class Me::DashboardController < Me::BaseController
   stylesheet 'messages'
 
   def index
-    @activities = Activity.for_dashboard(current_user).only_visible_groups.newest.unique.find(:all, :limit => 12)
+    @activities = Activity.social_activities_for_groups_and_friends(current_user).only_visible_groups.newest.unique.find(:all, :limit => 12)
     fetch_data
   end
 

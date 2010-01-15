@@ -58,8 +58,9 @@ ActionController::Routing::Routes.draw do |map|
     message.resources :posts, :namespace => 'message_'
   end
 
+  map.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
-    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
     me.resource :recent_pages, :only => [:show, :create]
@@ -96,7 +97,7 @@ ActionController::Routing::Routes.draw do |map|
   # RAILS 2.1 does not support the :only option in resource routing
   # so we have to put my_work above the pages resource so
   # /pages/my_work does not get resolved as Pages#show :id=>"my_work"
-  map.with_options(:namesspace => 'pages/', :path_prefix => 'pages') do |pages|
+  map.with_options(:namespace => 'pages/', :path_prefix => 'pages') do |pages|
     pages.resource :my_work, :only => [:show, :update], :controller => 'pages/my_work'
     pages.resource :notifications, :only => :show, :controller => 'pages/notifications'
     pages.resource :page_flags, :as => 'flags', :only => :update, :controller => 'pages/flags'

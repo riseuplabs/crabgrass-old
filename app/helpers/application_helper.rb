@@ -28,7 +28,7 @@ module ApplicationHelper
     char = content_tag(:em, link_char(links))
     content_tag(:div, links.compact.join(char), :class => 'link_line')
   end
-  
+
   def link_span(*links)
     char = content_tag(:em, link_char(links))
     content_tag(:span, links.compact.join(char), :class => 'link_line')
@@ -49,10 +49,10 @@ module ApplicationHelper
   def guess_url_for_entity(entity)
     case entity.class.name
     when 'Group' then url_for_group(entity)
-    when 'User' then url_for_user(entity) 
+    when 'User' then url_for_user(entity)
     end
   end
-  
+
   ##
   ## GENERAL UTILITY
   ##
@@ -192,7 +192,7 @@ module ApplicationHelper
     span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
- 
+
   # *NEWUI
   #
   # returns the kind of profile open or closed/private
@@ -213,10 +213,10 @@ module ApplicationHelper
   # :options[:length] = the max lenght to display
   # :options[:class] = any html options can be added and will be applied to the tag
   # also you can handle the link manually passing a block
-  # text_with_more :p, my_text do 
+  # text_with_more :p, my_text do
   #   link_to "more", more_path
   # end
-  
+
   def text_with_more(text, tag='p', options={}, &block)
     length = options.delete(:length) || 50
     omission = options.delete(:omission) || "... "
@@ -234,14 +234,14 @@ module ApplicationHelper
     else
       link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
       out = truncate(text, :length => length, :omission => omission + link)
-      capture_haml do 
+      capture_haml do
         haml_tag(tag, out,  options)
       end
     end
   end
 
   def expand_links(description)
-    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
+    description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
         when "user": link_to_user($2)
         when "group": link_to_group($2)
@@ -249,10 +249,13 @@ module ApplicationHelper
     end
   end
 
-  def display_activity(activity)
-    return unless activity
+  def linked_activity_description(activity)
+    description = activity.try.safe_description(self)
+    expand_links(description)
+  end
 
-    description = activity.safe_description(self)
+  def display_activity(activity)
+    description = activity.try.safe_description(self)
     return unless description
 
     description = expand_links(description)
@@ -303,8 +306,8 @@ module ApplicationHelper
   # *NEWUI
   #
   # provides a block for main container
-  # 
-  # content_starts_here do 
+  #
+  # content_starts_here do
   #   %h1 my page
   #
   def content_starts_here(&block)
