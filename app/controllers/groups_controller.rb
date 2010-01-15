@@ -10,7 +10,7 @@ class GroupsController < Groups::BaseController
   helper 'groups', 'wiki', 'base_page'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
-  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
+  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :all_content]
   verify :method => :post, :only => [:create, :update, :destroy]
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 

@@ -2,7 +2,7 @@
   %div#banner-container
     %header#banner
       %section#identity
-        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
+        %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"80px", :width=>"80px"}
           %div.left
             %h1 the woohoo! group
             %a{:href => "#"} 
@@ -10,32 +10,48 @@
           %div.right 
             %a.button{:href => "#"} 
               Create New Task
-  %div#second-level-container
     %nav#second-level
       %ul
-        %li.first
+        %li
           %a{:href => "#"}
             HOME
-        %li.current
+        %li
           %a{:href => "#"}
             ALL CONTENT
         %li
           %a{:href => "#"}
             TASKS
-  %div#content-wrap     
-    %div#main-content-full
+        %li.current
+          %a{:href => "#"}
+            ADMIN
+  %div#third-level-container
+    %nav#third-level
+      %ul
+        %li.current
+          %a{:href => "#"}
+            SETTINGS
+        %li
+          %a{:href => "#"}
+            MEMBERS
+        %li
+          %a{:href => "#"}
+            REQUESTS
+        
+  %div#content-wrap
+    %aside#sidebar-nav
+      %nav
+        %ul
+          %li
+            %a{:href => "#"} Basic Settings
+          %li
+            %a{:href => "#"} Permissions
+          %li
+            %a{:href => "#"} Public Profile
+          %li
+            %a{:href => "#"} Featured Pages
+    %div#main-content-right
       %section#settings-form
         %h3 Group Settings
-        %nav#tabs
-          %ul
-            %li
-              %a{:href => "#"} Basic Settings
-            %li
-              %a{:href => "#"} Permissions
-            %li
-              %a{:href => "#"} Public Profile
-            %li
-              %a{:href => "#"} Featured Pages
         %div
           %label Full Name
           %input#name{:type=>'text'}

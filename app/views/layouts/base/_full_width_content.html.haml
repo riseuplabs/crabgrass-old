@@ -4,21 +4,27 @@
 #content-container
   #banner-container
     %header#banner
-      %section#identity
-        = yield :full_content_header
-
+      = yield :banner
     /
     / secondary nav (always required?)
     /
     - if yield :secondary_nav
-      #second-level-container
-        %nav#second-level
-          = yield :secondary_nav
-    /
-    / misc placeholder
-    /
-    - if yield :misc_header
-      = yield :misc_header
+      %nav#second-level
+        = yield :secondary_nav
+
+  /
+  / secondary nav (always required?)
+  /
+  - if yield :third_nav
+    #third-level-container
+      %nav#third-level
+        = yield :third_nav
+
+  /
+  / misc placeholder
+  /
+  - if yield :misc_header
+    = yield :misc_header
 
   #content-wrap
 
@@ -29,7 +35,15 @@
           = yield
       %aside#sidebar
         = yield :right_sidebar
+
+    - elsif yield :left_sidebar
+
+      = yield :left_sidebar
+      #main-content-right
+        = yield
+
     - else
+
       #main-content-full
         = yield
 

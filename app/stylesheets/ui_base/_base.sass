@@ -91,7 +91,7 @@ a
 /* @end */
 
 
-/* @group headers */
+/* headers */
 
 h1, h2, h3, h4, h5, h6
   +sans-family-headings
@@ -120,7 +120,7 @@ h6
   :font-size 9px
 
 /* @end */
-i.normal
+#identity-name i
   font-size: 18px
   color= !warm_grey_text
 li
@@ -130,15 +130,10 @@ li
 footer.page
   background: #fff
   height: 65px
-.small_icon
-  float: left
-  background-repeat: no-repeat
-  background-position: 0 50%
-  padding-left: 20px
-  min-height: 16px
-  .twenty
-    padding-left: 22px
-    min-height: 24px
+.space
+  height: 30px
+  
+  
 td.reply
   background-repeat: no-repeat
   background-position: 0 50%
@@ -185,120 +180,123 @@ button.icon_16
   width: 204px
   float: left
   margin: 0 20px 0 0
-  #identity-image
-    +columns(4,4)
-    width: 204px
-    height: 204px
-    float: left
-    margin: 0
-    background-color: #fff
-    border: 1px solid #535741
-  #image-label
-    +columns(4,4)
-    width: 204px
-    float: left
-    margin: 4px 0 0 0
-    line-height: 0.7
-    h3
-      color= !almost_black
-    ul
-      li
-        width: 204px
-        font-size: 11px
+#identity-image
+  +columns(4,4)
+  width: 204px
+  height: 204px
+  float: left
+  margin: 0
+  background-color: #fff
+  border: 1px solid #535741
+#image-label
+  +columns(4,4)
+  width: 204px
+  float: left
+  margin: 4px 0 0 0
+  line-height: 0.7
+  h3
+    color= !almost_black
+  ul
+    li
+      width: 204px
+      font-size: 11px
 
-  #identity-meta
-    +columns(4,4)
-    +bordered
-    margin: 20px 0 0 0
+#identity-meta
+  +columns(4,4)
+  +bordered
+  margin: 20px 0 0 0
+  width: 182px
+  padding: 0 10px 10px
+  font-size: 11px
+  line-height: 1.5
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+#about-group, #people, #affiliations, #featured
+  +clearfix
+  width: 184px
+  img
+    background-color: #fc0
+  header
+    +clearfix
+    h3, a
+      display: inline
+    a
+      +blue-link(10px)
+      padding-left: 8px
+      font-weight: normal
+  h4, h5
     width: 182px
-    padding: 0 10px 10px
+    +clearfix
+  h5
+    font-weight: normal
     font-size: 11px
-    line-height: 1.5
-    h4
-      color= !red
-      padding: 24px 0 8px
-      margin: 0 0 10px
-      +bordered-btm(!medium_grey_border)
-    h4.first
-      padding-top: 20px
-    #about-group, #people, #affiliations, #featured
-      +clearfix
+#people, #affiliations
+  ul
+    padding: 5px 0 7px
+    +clearfix
+#about-group
+  p
+    width: 184px
+    a
+      +blue-link(10px)
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      +spaced
+      border: none
+      width: 68px
+      margin: 10px 0 0 0
+      padding: 0 0 0 24px
+      min-height: 24px
+      font-size: 9px
+      line-height: 1
+      color: !medium-grey-text
+      span
+        letter-spacing: normal
+        font-size: 8px
+#featured
+  li
+    padding: 12px 0 4px
+    margin: 12px 0 0
+    +bordered-top(!light_grey_border)
+    article
       width: 184px
-      img
-        background-color: #fc0
-      header
-        +clearfix
-        h3, a
-          display: inline
-        a
-          +blue-link(10px)
-          padding-left: 8px
-          font-weight: normal
-      h4, h5
-        width: 182px
-        +clearfix
       h5
-        font-weight: normal
-        font-size: 11px
-    #people, #affiliations
-      ul
-        padding: 5px 0 7px
-        +clearfix
-    #about-group
+        color= !blue
+        font-weight: bold
+        font-size: 13px
+        padding: 0 0 10px
       p
-        width: 184px
+        padding-bottom: 6px
+      span.tags
         a
           +blue-link(10px)
-      ul#details
-        +clearfix
-        width: 184px
-        li
-          +spaced
-          border: none
-          width: 68px
-          margin: 10px 0 0 0
-          padding: 0 0 0 24px
-          min-height: 24px
-          font-size: 9px
-          line-height: 1
-          color: !medium-grey-text
-          span
-            letter-spacing: normal
-            font-size: 8px
-      #featured
-      li
-        padding: 12px 0 4px
-        margin: 12px 0 0
-        +bordered-top(!light_grey_border)
-        article
-          width: 184px
-          h5
-            color= !blue
-            font-weight: bold
-            font-size: 13px
-            padding: 0 0 10px
-          p
-            padding-bottom: 6px
-          span.tags
-            a
-              +blue-link(10px)
-      li.first
-        +zero
-        border: none
-    #about-profile
-      +small-text
-      line-height: 1.2
-      ul#details
-        +clearfix
-        width: 184px
-        li
-          width: 164px
-          padding-top: 4px
-
-#main-content
+  li.first
+    +zero
+    border: none
+#about-profile
+  +small-text
+  line-height: 1.2
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      width: 164px
+      padding-top: 4px
+#last-login
+  font-size: 10px
+#main-content,#main-content-right
   +columns(10,14)
   width: 540px
   margin: 0
+#main-content-right
+  float: right
 
 #main-content.full
   width: 764px
@@ -464,11 +462,35 @@ nav#nav-full
         font-size: 9px
         line-height: 1.2
         padding: 0.1em
-        white-space: no-wrap
+        white-space: nowrap
         a
           +blue-link
-
-#sidebar, #sidebar-browse
+nav#second-level-aside, nav#second-level
+  +bordered-btm(!almost_black)
+  height: 29px
+  width: 540px
+  li
+    +zero
+    +spaced
+    height: 28px
+    background: #fff
+    font-size: 11px
+    a
+      color= !warm_grey_text
+      text-decoration: none
+      font-weight: bold
+      height: 28px
+      line-height: 2.5
+      padding: 8px 10px
+  li.current
+    +bordered-tab(!almost_black)
+    +bordered-btm(!white_border)
+    height: 28px
+    a
+      color= !almost_black
+  #last-login
+    font-size: 10px
+#sidebar, #sidebar-nav, #sidebar-browse
   +bordered
   width: 204px
   float: right
@@ -477,8 +499,23 @@ nav#nav-full
     +clearfix
     li
       clear: both
-.space
-  height: 30px
+#sidebar-nav 
+  float: left
+  width: 184px
+  padding: 10px
+  
+.small_icon
+  float: left
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  .twenty
+    padding-left: 22px
+    min-height: 24px
+
+   
+
 ul#groups, ul#people
   li
     clear: none
@@ -526,16 +563,17 @@ ul#groups, ul#people
     input.say-submit
       position: relative
       top: 3px
+      
 nav#tabs
   +clearfix
   display: block
 #settings-form
   +clearfix
-  width: 720px
   div
     display: block
     #group_avatar_image_file
       display: block
+      
 #message-filters-bar
   +clearfix
   +bordered-top-btm

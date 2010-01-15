@@ -1,4 +1,4 @@
-- content_for :html_head do 
+- content_for :html_head do
   %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
 
 - content_for :extended_sidebar do
@@ -8,11 +8,10 @@
   %header
     = render :partial => 'group_header'
 
-
 %section#wiki
   = render :partial => 'group_wiki'
 
 = render :partial => '/announcement_page/announcements'
 
-= render :partial => '/pages/list'
+= render :partial => '/pages/list', :locals => {:title => I18n.t(:recent_pages)}
 

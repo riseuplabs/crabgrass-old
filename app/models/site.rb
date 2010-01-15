@@ -165,6 +165,15 @@ class Site < ActiveRecord::Base
       self.network.group_ids
   end
 
+
+  def tools_for(group)
+    if group && group.group_setting.allowed_tools
+      group.group_setting.allowed_tools
+    else
+      available_page_types
+    end
+  end
+
   ##
   ## CUSTOM STRINGS
   ##
