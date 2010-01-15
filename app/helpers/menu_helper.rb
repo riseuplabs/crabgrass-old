@@ -61,7 +61,7 @@ module MenuHelper
   def me_option
     menu(
       I18n.t(:menu_me),
-      "/me/dashboard",
+      "/pages/my_work",
       :active => @active_tab == :me,
       :menu_items => menu_items('me'),
       :id => 'menu_me'
@@ -101,7 +101,7 @@ module MenuHelper
   def networks_option
     menu(
       I18n.t(:menu_networks),
-      network_directory_url, 
+      network_directory_url,
       :active => @active_tab == :networks,
       :menu_items => menu_items('boxes', {
         :entities => current_user.primary_networks.most_active,

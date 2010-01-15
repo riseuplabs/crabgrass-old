@@ -95,7 +95,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pages,
     :only => [:new, :update, :index],
-    :collection => {:my_work => :get, :notification => :get, :mark => :put}
+    :collection => {:my_work => :get, :all => :get, :notification => :get, :mark => :put}
 
   map.connect '/pages/*path', :controller => 'pages'
 
