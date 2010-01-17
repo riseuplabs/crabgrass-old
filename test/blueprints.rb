@@ -235,7 +235,6 @@ if Conf.mod_enabled? 'moderation'
     comment         { Faker::Lorem.paragraph }
     created_at      { updated_date(5) } # this should be newer than the page
     user            { User.make }
-    type            { "ModeratedFlag" }
   end
 
 end

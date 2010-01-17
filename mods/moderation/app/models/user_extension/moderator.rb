@@ -5,7 +5,7 @@ module UserExtension::Moderator
   end
 
   def moderates?(site=Site.current)
-    moderator? or Group.with_admin(self).moderated.any?
+    moderator? or self.groups.moderating.any?
   end
 
   def may_moderate?(entity)

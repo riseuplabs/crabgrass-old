@@ -2,8 +2,13 @@ module GroupModerationExtension
 
   def self.add_to_class_definition
     lambda do
-      named_scope :moderated,
+      named_scope :moderating,
         :include => :profiles,
+        :conditions => ["profiles.admins_may_moderate = (?)", true]
+      named_scope :moderated,
+        :joins => 'JOIN profiles ON profiles.entity_id = groups.council_id AND
+          profiles.entity_type = "Group"',
+        :select => 'groups.*',
         :conditions => ["profiles.admins_may_moderate = (?)", true]
     end
   end

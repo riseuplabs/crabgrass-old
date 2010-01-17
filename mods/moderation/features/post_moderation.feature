@@ -7,9 +7,9 @@ Feature: Moderation for posts workflow
 Background:
   Given I exist
   And a group exists
-  And that group has admins moderate content
   And I am a member of that group
   And that group has a council
+  And that council has admins moderate content
   And I am a member of that council
   And I am logged in
   And I am on the moderation panel
