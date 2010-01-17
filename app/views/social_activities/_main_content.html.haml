@@ -1,10 +1,5 @@
 %section#activities
   %header
-    %h3
-      Friends
-    %span.pagination
-      = pagination_for(@activities)
-
   = render :partial => 'activity', :collection => @activities
 
   %footer

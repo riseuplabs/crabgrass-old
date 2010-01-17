@@ -49,6 +49,7 @@ en:
   ## GENERIC TERMS
   ##
 
+  at: "at"
   access: "Access"
   name: "Name"
   user: "User"
@@ -554,6 +555,9 @@ en:
   my_search_headline: "Search"
 
   my_messages_headline: "My Messages"
+
+  my_social_activity_friends_tab: "Friend Activity"
+  my_social_activity_peers_tab: "Peer Activity"
 
   my_requests_headline: "My Requests"
 
