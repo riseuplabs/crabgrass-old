@@ -1,9 +1,5 @@
 %ul
-  %li.first
-    =link_to 'PAGES', pages_path
-  %li
-    =link_to 'SOCIAL ACTIVITY', '#' #activity_path
-  %li.current
-    =link_to 'MESSAGES', messages_path
-  %li
-    =link_to 'REQUESTS', '#' #requests_path
+  =tab_li :pages
+  =tab_li :activity
+  =tab_li :messages
+  =tab_li :requests, :controller => 'me/requests', :action => 'to_me'

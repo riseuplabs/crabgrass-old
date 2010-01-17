@@ -224,6 +224,15 @@ en:
   menu_admin: "Admin"
   menu_moderation: "Moderation"
 
+  pages_tab: "Pages"
+  activity_tab: "Social Activity"
+  messages_tab: "Messages"
+  requests_tab: "Requests"
+
+  my_work_tab: "My Work"
+  all_pages_tab: "All Pages"
+  notification_tab: "Notifications"
+
   ###
   ### TO BE SORTED
   ###

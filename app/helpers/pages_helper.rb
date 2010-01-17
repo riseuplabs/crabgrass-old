@@ -19,9 +19,9 @@ module PagesHelper
   end
 
   def views
-    if @tab = :my_work
+    if @tab == :my_work
       [:my_work, :watched, :editor, :owner, :unread]
-    elsif @tab = :all
+    elsif @tab == :all
       [:public, :networks, :groups]
     end
   end

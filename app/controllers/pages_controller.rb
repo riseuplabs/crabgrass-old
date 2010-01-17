@@ -31,7 +31,7 @@ class PagesController < ApplicationController
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
   permissions 'pages'
-  helper 'action_bar'
+  helper 'action_bar', 'tab_bar'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -62,10 +62,10 @@ class PagesController < ApplicationController
   end
 
   def index
-    if @path
-      all
+    if @path.empty?
+      redirect_to my_work_pages_url
     else
-      my_work
+      all
     end
   end
 
@@ -73,8 +73,8 @@ class PagesController < ApplicationController
     @tab = :all
     @path.default_sort('updated_at')
     fetch_pages_for @path
-    add_user_participations(@pages)
     rss_for_collection(all_pages_path, :all_pages_link)
+    render :action => "all"  #now it also works for the index action
   end
 
   def my_work
@@ -100,13 +100,34 @@ class PagesController < ApplicationController
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user
     page_context
-    context_name = I18n.t(:create_a_new_thing, :thing => I18n.t(:page)).titleize
-    add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
+    context_name = context_name_for_action
+    add_context(context_name,
+      :controller => 'pages', :action => params[:action], :group => params[:group])
     true
+  end
+
+  def context_name_for_action
+    case params[:action]
+    when 'new'
+      I18n.t(:create_a_new_thing, :thing => I18n.t(:page)).titleize
+    else
+      key = 'pages_' + params[:action] + '_context'
+      I18n.t(key).titleize
+    end
   end
 
   def fetch_pages_for(path)
     @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
+    add_user_participations(@pages) if logged_in?
+  end
+
+  def add_user_participations(pages)
+    pages_by_id = {}
+    pages.each{|page|pages_by_id[page.id] = page}
+    uparts = UserParticipation.find(:all, :conditions => ['user_id = ? AND page_id IN (?)',current_user.id,pages_by_id.keys])
+    uparts.each do |part|
+      pages_by_id[part.page_id].flag[:user_participation] = part
+    end
   end
 
   def rss_for_collection(link, title)

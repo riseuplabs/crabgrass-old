@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper CommonHelper
   helper PathFinder::Options
   helper Formy
+  helper 'tab_bar'
   permissions 'application'
 
   # TODO: remove these, access via self.view() instead.

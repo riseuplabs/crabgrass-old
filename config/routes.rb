@@ -105,7 +105,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pages, :only => [:new, :update, :index]
 
-
   map.connect '/pages/*path', :controller => 'pages'
 
   # handle all the namespaced base_page controllers:
