@@ -94,16 +94,10 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
-  # RAILS 2.1 does not support the :only option in resource routing
-  # so we have to put my_work above the pages resource so
-  # /pages/my_work does not get resolved as Pages#show :id=>"my_work"
-  map.with_options(:namespace => 'pages/', :path_prefix => 'pages') do |pages|
-    pages.resource :my_work, :only => [:show, :update], :controller => 'pages/my_work'
-    pages.resource :notifications, :only => :show, :controller => 'pages/notifications'
-    pages.resource :page_flags, :as => 'flags', :only => :update, :controller => 'pages/flags'
-  end
 
-  map.resources :pages, :only => [:new, :update, :index]
+  map.resources :pages,
+    :only => [:new, :update, :index],
+    :collection => {:my_work => :get, :notification => :get, :mark => :put}
 
   map.connect '/pages/*path', :controller => 'pages'
 
