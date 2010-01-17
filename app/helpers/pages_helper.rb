@@ -4,7 +4,8 @@ module PagesHelper
   # some definitions for the action bar.
   #
   def selections
-    [:all, :none, :unread]
+    []
+    # [:all, :none, :unread]
   end
 
   def selectors
@@ -15,12 +16,13 @@ module PagesHelper
   end
 
   def marks
-    [:read, :unread, :watched, :unwatched]
+    []
+    # [:read, :unread, :watched, :unwatched]
   end
 
   def views
     if @tab == :my_work
-      [:my_work, :watched, :editor, :owner, :unread]
+      [:work, :watched, :editor, :owner, :unread]
     elsif @tab == :all
       [:public, :networks, :groups]
     end
