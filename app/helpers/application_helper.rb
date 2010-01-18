@@ -49,7 +49,7 @@ module ApplicationHelper
       content_tag :option, title, {:value => value, :id => option_id}.merge(selected)
     end.join("\n")
 
-    content_tag(:div, text_label + select_tag(select_id, options, :onchange => "javascript: eval(this.options[this.selectedIndex].value)"), :id => "all_content_view")
+    content_tag(:div, text_label + select_tag(select_id, options, :onchange => "javascript: eval(this.options[this.selectedIndex].value)"), :id => "pages_view")
   end
 
   def drop_down_action(perform)

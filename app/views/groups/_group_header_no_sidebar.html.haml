@@ -1,4 +1,12 @@
+- content_for :banner do
+  %section#identity-name
+    = avatar_for @group, 'medium', :class => "left"
+    %div.left
+      %h1
+        = @group.full_name
+      = edit_settings_link
 
-%nav.no-sidebar
+    %div#group-action
+
+- content_for :secondary_nav do
   = render :partial => '/groups/navigation/menu'
-
