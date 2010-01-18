@@ -1,0 +1,19 @@
+- inside_layout 'base' do
+
+  - content_for :banner do
+    = render :partial => @partial_for_header
+
+  %section#admin-content
+    %table#container
+      %tr
+        %td#header{:colspan => 2}
+          %div.toplink
+            = link_to "exit admin", :controller => '/me'
+            = link_to "logout"+' '+current_user.display_name, :controller => '/account', :action => 'logout'
+          %h1
+            %a{:href=>'/admin'}Crabgrass Administration Panel
+      %tr
+        %td#navigation
+          = render :partial => '/admin/base/navigation'
+        %td#content
+          = yield
