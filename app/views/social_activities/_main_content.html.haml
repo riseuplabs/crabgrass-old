@@ -1,0 +1,7 @@
+%section#activities
+  %header
+  = render :partial => 'activity', :collection => @activities
+
+  %footer
+    %span.pagination
+      = pagination_for(@activities)

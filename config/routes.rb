@@ -58,8 +58,9 @@ ActionController::Routing::Routes.draw do |map|
     message.resources :posts, :namespace => 'message_'
   end
 
+  map.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
-    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
     me.resource :recent_pages, :only => [:show, :create]
@@ -93,9 +94,14 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
+
   map.resources :pages,
     :only => [:new, :update, :index],
-    :collection => {:my_work => :get, :all => :get, :notification => :get, :mark => :put}
+    :collection => {
+      :my_work => :get,
+      :notification => :get,
+      :all => :get,
+      :mark => :put}
 
   map.connect '/pages/*path', :controller => 'pages'
 
@@ -128,8 +134,8 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :pages, :only => :new
   end
 
-  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|all_content/
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|all_content/
+  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
 
   map.resources :networks do |network|
     network.resources :pages, :only => :new

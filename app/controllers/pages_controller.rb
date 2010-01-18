@@ -79,8 +79,8 @@ class PagesController < ApplicationController
 
   def my_work
     @tab = :my_work
-    @view = params[:my_work_view] || "work"
-    path = parse_filter_path("/#{@view}/#{current_user.id}")
+    params[:view] ||= 'work'
+    path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
     fetch_pages_for path
     rss_for_collection(my_work_pages_path, :my_work_link)
   end

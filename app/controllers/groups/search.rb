@@ -106,10 +106,10 @@ module Groups::Search
     options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
   end
 
-  def all_content
+  def pages
     @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) )
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
-    search_template('all_content')
+    search_template('pages')
   end
 
   private

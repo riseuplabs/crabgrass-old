@@ -1,0 +1,5 @@
+%ul
+  %li{:class => action?(:index) ? "current" : ""}
+    = link_to I18n.t(:my_social_activity_friends_tab).upcase, :action => :index
+  %li{:class => action?(:peers) ? "current" : ""}
+    = link_to I18n.t(:my_social_activity_peers_tab).upcase, :action => :peers

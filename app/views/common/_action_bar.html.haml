@@ -1,13 +1,16 @@
 - form_remote_tag :url => mark_path, :method => 'put', :update => 'main-content-full', :html => { :id => 'mark_form' }, :loading => show_spinner('mark_as'), :complete => hide_spinner('mark_as') do
   = hidden_field_tag 'as', '', :id => 'mark_as'
   %div#action-bar
-    %div#select-bar
-      %h5.left= I18n.t(:select_label)
-      = render :partial => '/common/select_list'
-    %div#mark-as-bar
-      %h5.left= I18n.t(:mark_as_label)
-      = render :partial => '/common/mark_as_list'
-    %div.right
-      %h5.left= I18n.t(:view_label)
-      = view_filter_select
-      = observe_field 'view_filter_select', :function => %Q[window.location.href = "#{view_path}" + "?view=" + value]
+    -if respond_to? :selections and selections.any?
+      %div#select-bar
+        %h5.left= I18n.t(:select_label)
+        = render :partial => '/common/select_list'
+    -if respond_to? :marks and marks.any?
+      %div#mark-as-bar
+        %h5.left= I18n.t(:mark_as_label)
+        = render :partial => '/common/mark_as_list'
+    -if respond_to? :views and views.any?
+      %div.right
+        %h5.left= I18n.t(:view_label)
+        = view_filter_select
+        = observe_field 'view_filter_select', :function => %Q[window.location.href = "#{view_path}" + "?view=" + value]
