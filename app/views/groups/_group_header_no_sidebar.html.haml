@@ -1,18 +1,12 @@
 - content_for :banner do
   %section#identity-name
+    = avatar_for @group, 'medium', :class => "left"
     %div.left
-      = avatar_for @group, 'small'
       %h1
         = @group.full_name
       = edit_settings_link
 
     %div#group-action
-      = create_page_link(@group)
-      - if may_join_chat?
-        %a#chat.small_icon.chat2_16{:href => url_for({:controller => 'chat', :action => 'channel', :id => @group.name})}
-          %strong
-            = I18n.t(:group_join_chat)
-      = leave_group_link
 
 - content_for :secondary_nav do
   = render :partial => '/groups/navigation/menu'
