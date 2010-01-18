@@ -27,6 +27,9 @@
     = yield :misc_header
 
   #content-wrap
+    - if yield :browse_content
+      %section#browse-content
+        = yield :browse_content
 
     - if yield :right_sidebar
 

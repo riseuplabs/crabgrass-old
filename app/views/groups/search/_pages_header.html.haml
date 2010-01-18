@@ -6,8 +6,13 @@
 
 = render :partial => '/groups/group_header_no_sidebar'
 
-- content_for :third_nav do
+- content_for :browse_content do
+  %nav
+  - if may_trash_group?
+    %a.right{:href => "#{url_for(group_search_url(:action => 'trash'))}"}
+      = I18n.t(:trash)
+
   = render :partial => 'pages/search'
 
 %div.right
-  = drop_down("View:", group_all_content_view_options, group_all_content_view_selected)
+  = drop_down("View:", group_pages_view_options, group_pages_view_selected)

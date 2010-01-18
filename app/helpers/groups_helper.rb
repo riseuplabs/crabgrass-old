@@ -128,15 +128,15 @@ module GroupsHelper
   end
 
   ## all content views
-  def group_all_content_view_options
+  def group_pages_view_options
     {
-      "By Date" => group_search_url(:action => 'all_content'),
+      "By Date" => group_search_url(:action => 'pages'),
       "Calendar View" => group_search_url(:action => 'archive')
     }
   end
 
-  def group_all_content_view_selected
-    return 0 if params[:controller] == "groups" && params[:action] == "all_content"
+  def group_pages_view_selected
+    return 0 if params[:controller] == "groups" && params[:action] == "pages"
     return 1 if params[:controller] == "groups" && params[:action] == "archive"
   end
 
