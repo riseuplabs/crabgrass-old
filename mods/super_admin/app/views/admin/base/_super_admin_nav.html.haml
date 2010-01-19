@@ -1,6 +1,6 @@
 %br
 %h2.alert Super Admin Powers
-%ul.side_list
+%ul.admin_nav
   %li{:class => "small_icon user_add_16"}
     = link_to_active 'Create User', new_admin_user_path, controller?('admin/users') && action?(:new)
   %li{:class=>"small_icon user_16"}
