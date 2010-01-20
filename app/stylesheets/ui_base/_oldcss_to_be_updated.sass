@@ -377,3 +377,36 @@ table.plain
     &.label
       text-align: right
       font-weight: bold
+
+//
+// used in admin pages
+//
+div.side_list
+  padding: 0
+  margin: 0
+  list-style: none
+  margin-bottom: 0.5em
+  clear: both
+  width: 100%
+  a, .a
+    text-decoration: none
+    display: block
+    padding-top: 4px
+    padding-bottom: 4px
+    &.active
+    &.visited
+    &:hover
+      text-decoration: underline
+  &.commands a
+    text-transform: capitalize
+  span 
+    &.active, &:hover
+    &.small_icon
+      padding-left: 19px
+      background-position: 0 50%
+
+td.left_column
+  background-color: !left_column_bg_color
+  width: !left_column_width
+  border-right: 0
+  padding: !left_column_margin

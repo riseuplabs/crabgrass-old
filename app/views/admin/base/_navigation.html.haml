@@ -1,16 +1,22 @@
 - if current_user.may?(:admin, current_site)
   %h2.alert Site Administration
-  %ul.admin_nav
-    %li{:class => "small_icon settings_16"}
+  %div.side_list
+    %span{:class => "small_icon settings_16"}
       = link_to_active 'Basic Settings', admin_sites_path(:action => 'basic'), (@admin_active_tab == 'sites_basic')
-    %li{:class=>"small_icon profile_16"}
+    %br
+    %span{:class=>"small_icon profile_16"}
       = link_to_active 'Profile Settings', admin_sites_path(:action => 'profile'), (@admin_active_tab == 'sites_profile')
-    %li{:class=>"small_icon user_icon_16"}
+    %br
+    %span{:class=>"small_icon user_icon_16"}
       = link_to_active 'Sign Up Settings', admin_sites_path(:action => 'signup'), (@admin_active_tab == 'sites_signup')
-    %li{:classs=>"small_icon color_wheel_16"}
+    %br
+    %span{:classs=>"small_icon color_wheel_16"}
       = link_to_active 'Appearance', admin_custom_appearances_path, (@admin_active_tab == 'custom_appearances_edit')
-    %li{:class=>"small_icon page_notice_16"}
+    %br
+    %span{:class=>"small_icon page_notice_16"}
       = link_to_active 'Announcements', announcements_path, (@admin_active_tab == 'announcements_index')
-    %li{:class=>"small_icon page_message_16"}
+    %br
+    %span{:class=>"small_icon page_message_16"}
       = link_to_active 'Email Blasts', email_blasts_path, (@admin_active_tab == 'email_blasts_index')
+    %br
 = call_hook(:admin_nav)

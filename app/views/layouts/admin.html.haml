@@ -4,16 +4,15 @@
     = render :partial => @partial_for_header
 
   %section#admin-content
-    %table#container
+    %table.left_layout
       %tr
-        %td#header{:colspan => 2}
-          %div.toplink
-            = link_to "exit admin", :controller => '/me'
-            = link_to "logout"+' '+current_user.display_name, :controller => '/account', :action => 'logout'
-          %h1
-            %a{:href=>'/admin'}Crabgrass Administration Panel
-      %tr
-        %td#navigation
+        %td.left_column
           = render :partial => '/admin/base/navigation'
         %td#content
+          - if @title_box.any?
+            .title_box
+              = @title_box
+          - if @info_box.any?
+            .info_box{:class => @info_box_class}
+              = @info_box
           = yield
