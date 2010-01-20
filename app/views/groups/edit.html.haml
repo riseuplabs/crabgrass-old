@@ -9,7 +9,6 @@
 
 
 %section#form-settings
-  = render :partial => '/groups/navigation/settings_tabs'
   - form_tag(groups_path(@group),:method => :put, :multipart => true) do
     = render :partial => '/groups/basic/form'
     %p.form_buttons= submit_tag I18n.t(:save_button), :name => 'save'

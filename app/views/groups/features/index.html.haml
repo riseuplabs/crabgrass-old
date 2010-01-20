@@ -4,9 +4,10 @@
 - content_for :secondary_nav do
   = render :partial => '/groups/navigation/menu'
 
-%section#main-content.no-sidebar
+- content_for :third_nav do
   = render :partial => '/groups/navigation/settings_tabs'
 
+%section#main-content.no-sidebar
   <!-- table for some pretty formatting -->
   %table.form
     %tr 
