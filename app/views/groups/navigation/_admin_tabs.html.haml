@@ -1,0 +1,4 @@
+%ul
+  = side_list_li :text => (I18n.t(:settings)).upcase, :url => groups_url(:action => 'edit', :id => @group), :active => (@group_navigation == :settings), :icon => 'settings'
+  = side_list_li :text => (I18n.t(:members)).upcase, :url => {:controller => 'groups/memberships', :action => 'list', :id => @group}, :active => (@group_navigation == :membership), :icon => 'membership_add'
+  = side_list_li :text => (I18n.t(:requests)).upcase, :url => {:controller => 'groups/requests', :action => :list, :id => @group}, :active => (@group_navigation == :requests), :icon => 'info'
