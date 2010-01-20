@@ -4,8 +4,7 @@ module PagesHelper
   # some definitions for the action bar.
   #
   def selections
-    []
-    # [:all, :none, :unread]
+    [:all, :none, :unread]
   end
 
   def selectors
@@ -16,8 +15,7 @@ module PagesHelper
   end
 
   def marks
-    []
-    # [:read, :unread, :watched, :unwatched]
+    [:read, :unread, :watched, :unwatched]
   end
 
   def views
