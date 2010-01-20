@@ -1,7 +1,4 @@
-<% @title_box = capture do -%>
-  <h1><%= I18n.t(:requests) %></h1>
-<% end -%>
-<% @info_box = request_tabs -%>
+<%= render :partial => '/groups/admin_header' %>
 
 <h2><%= I18n.t(:incoming) %></h2>
 <%= render :partial => 'groups/requests/table', :locals => {:requests => @incoming} %>
