@@ -1,7 +1,7 @@
 class Groups::RequestsController < Groups::BaseController
 
   helper 'requests'
-  permissions 'groups/requests', 'requests'
+  permissions 'groups/requests', 'requests', 'groups/memberships'
   before_filter :fetch_group
   before_filter :login_required
 
