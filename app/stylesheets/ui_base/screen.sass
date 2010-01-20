@@ -244,29 +244,39 @@ body
       nav#third-level
         +columns(14)
         +full
-        +bordered-top(!light_grey_border)
+        +bordered-top(!almost_black)
         margin-top: 28px
-        height: 29px
-        width: 684px
-        padding-left: 80px
-        li
-          +zero
-          +spaced
-          height: 28px
-          background: #fff
-          font-size: 11px
+        height: 25px
+        width: 764px
+        ul
+          display: block
+          position: relative
+          text-align: center
+          height: 25px
+          width: 764px
           margin-top: -14px
-          a
-            color= !warm_grey_text
-            text-decoration: none
-            font-weight: bold
-            height: 28px
-            line-height: 2.5
-            padding: 8px 10px
-        li.current
-          height: 29px
-          a
-            color= !almost_black
+          li
+            +bordered-block(!almost_black)
+            +zero
+            +spaced
+            height: 24px
+            background: #fff
+            font-size: 11px
+            a
+              color= !warm_grey_text
+              display: inline-block
+              text-decoration: none
+              font-weight: bold
+              height: 8px
+              line-height: 0.9
+              padding: 8px 10px
+          li.current
+            height: 24px
+            background= !almost_black
+            a
+              color= !white_text
+          li.first
+            +bordered-block(!almost_black)
         
       nav#second-level
         width: 684px

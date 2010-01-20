@@ -1,16 +1,13 @@
 - subject = activity.subject
 - object = activity.object
-%article
 
-  %span.avatars
+  %td.avatar
     = link_to avatar_for(subject), url_for_entity(subject) unless subject.blank?
+  %td.avatar_xsmall
     = link_to avatar_for(object, 'xsmall'), url_for_entity(object) unless object.blank?
-  %span.description
+  %td.description
     = linked_activity_description(activity)
-  %ul.pages-status
-    %li
+  %td.date
       = friendly_date(activity.created_at)
       = I18n.t(:at)
-    %li= activity.created_at.to_s(:time)
-    %li
-      &nbsp;
+    %br= activity.created_at.to_s(:time)

@@ -41,11 +41,19 @@
 
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
-
+  
+=bordered2-top(!border_color= !warm_grey_border)
+  border-top= 1px "double" !border_color
+  
 =bordered-tab(!border_color= !almost_black)
   border-top= 1px "solid" !border_color
   border-left= 1px "solid" !border_color
   border-right= 1px "solid" !border_color
+  
+=bordered-block(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
 
 =bordered-top-btm(!border_color= !light_grey_border)
   border-top= 1px "solid" !border_color
@@ -127,6 +135,7 @@ li
   display: inline-block
   float: left
   padding: 0.2em
+
 footer.page
   background: #fff
   height: 65px
@@ -175,11 +184,12 @@ button.icon_16
   background-color: transparent
   height: 16px
   width: 16px
-
+  
 #identity-info
   width: 204px
   float: left
-  margin: 0 20px 0 0
+  margin: 0 20px 0 0 
+  
 #identity-image
   +columns(4,4)
   width: 204px
@@ -188,6 +198,7 @@ button.icon_16
   margin: 0
   background-color: #fff
   border: 1px solid #535741
+  
 #image-label
   +columns(4,4)
   width: 204px
@@ -578,6 +589,21 @@ nav#tabs
   +clearfix
   +bordered-top-btm
   width: 764px
+
+table
+  tr
+    td.date
+      font-size: 10px
+      
+table#activity
+  width: 764px
+  tr
+    td
+      +bordered-btm(!light_grey_border)
+      padding: 6px
+    td.date
+      font-size: 10px
+      
 table#messages
   width: 764px
   tr
@@ -585,14 +611,19 @@ table#messages
       +bordered-btm(!light_grey_border)
       padding: 6px
     td.reply
-
   tr.unread
     td
       font-weight: bold
+  tr
+    td.date
+      font-size: 10px
+      
 table#messages.thread
   tr
     td
       padding: 6px
+
+
 #tag-cloud
   text-align: center
   li

@@ -45,6 +45,9 @@ class UiController < ApplicationController
   
   def settings
   end
+  
+  def social_activities
+  end
 
   def index
     data = params[:data]
