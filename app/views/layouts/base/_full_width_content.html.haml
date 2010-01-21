@@ -42,7 +42,8 @@
 
     - elsif yield :left_sidebar
 
-      = yield :left_sidebar
+      %aside#sidebar-nav
+        = yield :left_sidebar
       #main-content-right
         = yield
 

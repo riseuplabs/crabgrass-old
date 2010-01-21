@@ -1,12 +1,7 @@
-- content_for :banner do
-  = render :partial => '/groups/navigation/header_small'
+= render :partial => '/groups/admin_header'
 
-- content_for :secondary_nav do
-  = render :partial => '/groups/navigation/menu'
-
-- content_for :third_nav do
-  = render :partial => '/groups/navigation/settings_tabs'
-
+- content_for :left_sidebar do
+  = render :partial => '/groups/navigation/settings_sidelinks'
 
 %section#main-content.no-sidebar
   - form_tag(groups_profiles_params(:action => :permissions), :multipart => false) do

@@ -23,6 +23,10 @@ class Groups::CommitteesController < GroupsController
     true
   end
 
+  def context
+    group_settings_context if action_name == "new" || action_name == "create"
+  end
+
   def get_parent
     parent = Group.find_by_name(params[:id])
     unless may_create_subcommittees?(parent)

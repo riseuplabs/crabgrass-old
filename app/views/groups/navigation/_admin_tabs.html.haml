@@ -1,0 +1,4 @@
+%ul
+  = menu((I18n.t(:settings)).upcase, edit_group_path(@parent || @group))
+  = menu((I18n.t(:members)).upcase, :controller => 'groups/memberships', :action => 'list', :id => @group)
+  = menu((I18n.t(:requests)).upcase, :controller => 'groups/requests', :action => :list, :id => @group)
