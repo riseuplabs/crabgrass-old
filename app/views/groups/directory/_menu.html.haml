@@ -1,4 +1,3 @@
 %ul
-  = menu(name_for_directory(@active_tab, 'search'), url_for_directory(@active_tab, 'search'))
-  = menu(name_for_directory(@active_tab, 'my'), url_for_directory(@active_tab, 'my'))
-
+  = menu(name_for_directory(@active_tab, 'search'), url_for_directory(@active_tab, 'search'), active_tab_for_second_nav(@second_nav, 'all'))
+  = menu(name_for_directory(@active_tab, 'my'), url_for_directory(@active_tab, 'my'), active_tab_for_second_nav(@second_nav, 'my'))
