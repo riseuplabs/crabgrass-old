@@ -2,4 +2,4 @@
   = menu(I18n.t(:home), url_for_group(@parent || @group))
   = menu(I18n.t(:pages), group_search_url(:action => 'pages'))
   = menu(I18n.t(:tasks), group_search_url(:action => 'tasks'))
-  = menu(I18n.t(:administration), group_search_url(:action => 'edit'))
+  = menu(I18n.t(:administration), group_search_url(:action => 'edit'), active_tab_for_nav(@second_nav, 'administration'))
