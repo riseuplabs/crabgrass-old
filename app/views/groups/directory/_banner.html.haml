@@ -1,0 +1,6 @@
+%header.no-sidebar
+  %div.left
+    %h1= @active_tab == :groups ? I18n.t(:directory_of_groups) : I18n.t(:directory_of_networks)
+  %div.right
+    = create_group_link
+
