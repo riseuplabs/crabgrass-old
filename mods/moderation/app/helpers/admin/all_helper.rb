@@ -23,7 +23,7 @@ module Admin::AllHelper
   end
 
   def flags_for_details(flagged_id, type)
-    ModeratedFlag.find_all_by_type_and_flagged_id(type, flagged_id)
+    ModeratedFlag.find_all_by_flagged_type_and_flagged_id(type, flagged_id)
   end
 
   def link_to_see_all_flags_by_type(obj_type)
@@ -78,9 +78,9 @@ module Admin::AllHelper
   end
 
   def show_flag_details(flag)
-    flag_type = flag.class.to_s
-    return unless flag_type =~ /^Moderated/
-    render :partial => '/admin/show_details', :locals => {:flagged_id => flag.flagged_id, :obj_type => flag_type }
+    flag_type = flag.class.to_s.sub!(/^\w*(Page|Post)$/, '\1')
+    #return '<td>Unknown</td>' unless flag_type =~ /^Moderated/
+    render :partial => '/admin/show_details', :locals => {:obj_type => flag_type }
   end
 
 end

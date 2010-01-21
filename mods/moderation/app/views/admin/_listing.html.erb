@@ -3,9 +3,7 @@
   <table width='100%'>
     <tr>
       <th>Title</th>
-<!--
       <%= '<th>Details</th>' unless (@current_view=='all' or @current_view =~ /^public/) %>
--->
       <th><%= listing_custom_column_header(obj_type, @current_view) %></th>
       <th>Created At</th>
       <th>Created By</th>

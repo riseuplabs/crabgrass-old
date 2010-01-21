@@ -252,6 +252,27 @@ module UrlHelper
     [display_name, url]
   end
 
+  def name_for_directory(active_tab, action)
+    if active_tab == :groups
+      my_groups = I18n.t(:my_groups)
+      all_groups = I18n.t(:all_groups)
+    else
+      my_groups = I18n.t(:my_networks)
+      all_groups = I18n.t(:all_networks)
+    end
+    return my_groups if action == 'my'
+    return all_groups if action == 'search'
+  end
+
+  def url_for_directory(active_tab, action)
+    if active_tab == :groups
+      group_type = :group
+    else
+      group_type = :network
+    end
+    directory_params(:group_type => group_type, :action => action)
+  end
+
   #def group_search_url(*path)
   #  url_for_group(@group, :action => 'search', :path => path)
   #end

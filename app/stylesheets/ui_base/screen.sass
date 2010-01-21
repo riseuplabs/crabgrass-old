@@ -248,35 +248,45 @@ body
         margin-top: 28px
         height: 25px
         width: 764px
-        ul
-          display: block
+        #centered-nav
+          float: left
+          width: 100%
           position: relative
-          text-align: center
           height: 25px
-          width: 764px
-          margin-top: -14px
-          li
-            +bordered-block(!almost_black)
-            +zero
-            +spaced
-            height: 24px
-            background: #fff
-            font-size: 11px
-            a
-              color= !warm_grey_text
-              display: inline-block
-              text-decoration: none
-              font-weight: bold
-              height: 8px
-              line-height: 0.9
-              padding: 8px 10px
-          li.current
-            height: 24px
-            background= !almost_black
-            a
-              color= !white_text
-          li.first
-            +bordered-block(!almost_black)
+          ul
+            clear: left
+            float: left
+            height: 25px
+            margin-top: -14px
+            position: relative
+            left: 50%
+            text-align: center
+            li
+              +bordered-block(!almost_black)
+              +zero
+              +spaced
+              height: 24px
+              background: #fff
+              font-size: 11px
+              display: block
+              float: left
+              position: relative
+              right: 50%
+              a
+                color= !warm_grey_text
+                display: block
+                text-decoration: none
+                font-weight: bold
+                height: 8px
+                line-height: 0.9
+                padding: 8px 10px
+            li.current
+              height: 24px
+              background= !almost_black
+              a
+                color= !white_text
+            li.first
+              +bordered-block(!almost_black)
         
       nav#second-level
         width: 684px

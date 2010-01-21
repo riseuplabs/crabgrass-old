@@ -1,59 +1,60 @@
-- if logged_in?
-  - if @page.deleted?
-    %ul.side_list.commands
+%div#page_sidebar
+  - if logged_in?
+    - if @page.deleted?
       %ul.side_list.commands
-        = undelete_line
-        = destroy_line
-        = details_line 
-        = history_line
-  - else
-    %ul.side_list.commands
-      = watch_line
-      = star_line
-    - if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any?
+        %ul.side_list.commands
+          = undelete_line
+          = destroy_line
+          = details_line 
+          = history_line
+    - else
+      %ul.side_list.commands
+        = watch_line
+        = star_line
+      - if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any?
+        %ul.side_list.commands.rule
+          = access_changing_commands
       %ul.side_list.commands.rule
-        = access_changing_commands
-    %ul.side_list.commands.rule
-      = delete_line
-      -# move_line
-      = details_line
-      = history_line
-      = view_line
-  = call_hook :page_sidebar_actions
+        = delete_line
+        -# move_line
+        = details_line
+        = history_line
+        = view_line
+    = call_hook :page_sidebar_actions
 
 
-- if !(tag_content = page_tags).nil? || may_update_tags?
-  %h4= I18n.t(:tags)
-  %div.tags
-    = tag_content
-  %ul.side_list.commands
-    = edit_tags_line
+  - if !(tag_content = page_tags).nil? || may_update_tags?
+    %h4= I18n.t(:tags)
+    %div.tags
+      = tag_content
+    %ul.side_list.commands
+      = edit_tags_line
 
-- if @page.group_participations.any? or @page.user_participations.any?
-  %section#contributors
-    %h4= I18n.t(:contributors)
-    - if @page.group_participations.any?
-      %h5= I18n.t(:groups)
-      %ul#groups
-        - @page.sorted_group_participations.each do |participation| 
-          %li 
-            = link_to_group_participation(participation)
-    - if @page.user_participations.any?
-      %h5= I18n.t(:people)
-      %ul#people
-        - @page.sorted_user_participations.each do |participation| 
-          %li 
-            = link_to_user_participation(participation)
+  - if @page.group_participations.any? or @page.user_participations.any?
+    %section#contributors
+      %h4= I18n.t(:contributors)
+      - if @page.group_participations.any?
+        %h5= I18n.t(:groups)
+        %ul#groups
+          - @page.sorted_group_participations.each do |participation| 
+            %li 
+              = link_to_group_participation(participation)
+      - if @page.user_participations.any?
+        %h5= I18n.t(:people)
+        %ul#people
+          - @page.sorted_user_participations.each do |participation| 
+            %li 
+              = link_to_user_participation(participation)
 
 
 
-- if @page.supports_attachments and !(attachment_content = page_attachments).nil?
-  %section#attachments
-    %h4= I18n.t(:attachments)
-    .attachments
-      = attachment_content
-    %ul
-      = edit_attachments_line
+  - if @page.supports_attachments and !(attachment_content = page_attachments).nil?
+    %section#attachments
+      %h4= I18n.t(:attachments)
+      .attachments
+        = attachment_content
+      %ul
+        = edit_attachments_line
 
 
 
