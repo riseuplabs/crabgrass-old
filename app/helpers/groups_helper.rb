@@ -20,9 +20,10 @@ module GroupsHelper
     render :partial => 'groups/navigation/settings_tabs'
   end
 
-  def edit_settings_link
+  def edit_settings_link(group = nil)
+    group = group.nil? ? @group : group
     if may_edit_group?
-      link_to I18n.t(:edit_settings), groups_url(:action => 'edit', :id => @group)
+      link_to I18n.t(:edit_settings), groups_url(:action => 'edit', :id => group)
     end
   end
 
@@ -35,21 +36,22 @@ module GroupsHelper
     end
   end
 
-  def destroy_group_link
+  def destroy_group_link(group = nil)
+    group = group.nil? ? @group : group
     if may_destroy_group?
-      link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => @group.group_type),
-                        {:confirm => I18n.t(:destroy_confirmation, :thing => @group.group_type.downcase),
+      link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => group.group_type),
+                        {:confirm => I18n.t(:destroy_confirmation, :thing => group.group_type.downcase),
                           :ok => I18n.t(:delete_button),
                           :url => groups_url(:action => :destroy),
                           :method => :post})
-    elsif may_create_destroy_request?
-      if RequestToDestroyOurGroup.pending.for_group(@group).created_by(current_user).blank?
-        link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => @group.group_type),
-                          {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => @group.group_type.downcase),
+    elsif may_create_destroy_request?(group)
+      if RequestToDestroyOurGroup.pending.for_group(group).created_by(current_user).blank?
+        link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => group.group_type),
+                          {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => group.group_type.downcase),
                             :ok => I18n.t(:delete_button),
                             # :title => "Destroy Group"
-                            :title => I18n.t(:destroy_group_link, :group_type => @group.group_type),
-                            :url => {:controller => 'groups/requests', :action => 'create_destroy', :id => @group},
+                            :title => I18n.t(:destroy_group_link, :group_type => group.group_type),
+                            :url => {:controller => 'groups/requests', :action => 'create_destroy', :id => group},
                             :method => :post})
       end
     end
@@ -61,7 +63,7 @@ module GroupsHelper
 
   def create_committee_link
     if may_create_subcommittees?
-      link_to I18n.t(:create_button), committees_params(:action => :new)
+      link_to I18n.t(:create_committee), committees_params(:action => :new)
     end
   end
 

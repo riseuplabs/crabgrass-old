@@ -1,6 +1,6 @@
 %ul
   %li
-    %a{:href => "#{groups_url(:action => 'edit')}"}=  I18n.t(:basic_settings)
+    = link_to I18n.t(:basic_settings), edit_group_path(@parent || @group)
   %li
     %a{:href => "#{groups_profiles_url(:action => :permissions)}"}= I18n.t(:permissions)
   %li
@@ -8,6 +8,6 @@
   %li
     %a{:href => "#{groups_features_url(:action => :index)}"}= I18n.t(:featured_pages)
   %li
-    = destroy_group_link
+    = destroy_group_link(@parent || @group)
   %li
     = create_committee_link
