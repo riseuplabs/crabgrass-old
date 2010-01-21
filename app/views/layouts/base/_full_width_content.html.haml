@@ -13,12 +13,13 @@
         = yield :secondary_nav
 
   /
-  / third nav (always required?)
+  / third nav (not always required)
   /
   - if yield :third_nav
     #third-level-container
       %nav#third-level
-        = yield :third_nav
+        #centered-nav
+          = yield :third_nav
 
   /
   / misc placeholder
