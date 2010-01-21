@@ -1,0 +1,4 @@
+%div{:id=>'city_text', :style=>"display: #{display}"}
+  = I18n.t(:location_city).capitalize
+  = text_field(object, method, {:onblur => onblur, :name => name})
+  = spinner('city')

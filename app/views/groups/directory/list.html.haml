@@ -8,6 +8,10 @@
   - content_for :third_nav do
     = render :partial => '/groups/directory/all_groups_tabs'
 
+- if @misc_header
+  - content_for :misc_header do
+    = render :partial => @misc_header
+
 %section#group_listing
   - if @second_nav == 'all'
     %div#filter_by_location
@@ -15,8 +19,9 @@
 
   %div#group_directory_list
     - if @groups.any?
-      = letter_pagination_links(directory_params(:group_type => @group_type, :action => 'search'), :available_letters => @pagination_letters) if @pagination_letters 
-      = pagination_links(@groups)
+      %div{:align=>'center'}
+        = letter_pagination_links(directory_params(:group_type => @group_type, :action => 'search'), :available_letters => @pagination_letters) if @pagination_letters 
+        = pagination_links(@groups)
       = render :partial => 'group', :collection => @groups, :locals => { :show_committees => @show_committees }
       = pagination_links(@groups)
     - else

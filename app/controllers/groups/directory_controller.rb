@@ -12,6 +12,7 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
     @second_nav = 'all'
+    @misc_header = '/groups/directory/discover_header'
     render_list
   end
 
@@ -31,6 +32,7 @@ class Groups::DirectoryController < Groups::BaseController
     # get the starting letters of all groups
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
     @second_nav = 'all'
+    @misc_header = '/groups/directory/browse_header'
     render_list
   end
 
