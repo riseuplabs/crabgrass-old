@@ -48,12 +48,8 @@ module MenuHelper
   end
 
   # returns :active option for menu() above
-  def active_tab_for_second_nav(second_nav, action)
-    if (second_nav == action)
-      {:active => true}
-    else
-      {:active => false}
-    end
+  def active_tab_for_nav(level_nav, action)
+    level_nav == action ? {:active => true} : {:active => false}
   end
 
   def home_option
