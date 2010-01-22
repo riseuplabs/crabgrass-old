@@ -166,7 +166,6 @@ en:
   status: "Status"
 
 
-
   ##
   ## MEDIA
   ##
@@ -518,7 +517,7 @@ en:
   ## ACTION BAR
   ##
 
-  select_label: "Select"
+  select_filter_label: "Select:"
   mark_as_label: "Mark as"
   view_label: "View"
 
@@ -526,10 +525,6 @@ en:
   select_none: "None"
   select_unread: "Unread"
 
-  mark_as_read: "Read"
-  mark_as_unread: "Unread"
-  mark_as_watched: "Watched"
-  mark_as_unwatched: "Unwatched"
 
   ##
   ## ME
@@ -600,7 +595,6 @@ en:
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
   messages_from_label: "Messages from"
-  messages_select_label: "Select:"
   messages_mark_as_label: "Mark as:"
   messages_view_label: "View:"
 
@@ -903,6 +897,7 @@ en:
   destroy: "destroy"
   approve: "approve"
   reject: "reject"
+  ignore: "ignore"
   pending: "pending"
   rejected: "rejected"
   approved: "approved"
@@ -971,6 +966,11 @@ en:
   starred: "Starred"
   viewed: "Viewed"
   edited: "Edited"
+
+  read: "Read"
+  unread: "Unread"
+  watched: "Watched"
+  unwatched: "Unwatched"
 
   all_page_types: "all page types"
   edit_title: "edit title"
