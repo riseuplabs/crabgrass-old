@@ -30,8 +30,8 @@ class PagesController < ApplicationController
 
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
-  permissions 'pages'
-  helper 'action_bar', 'tab_bar'
+  permissions 'pages', 'groups/base'
+  helper 'action_bar', 'tab_bar', 'groups'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -45,6 +45,7 @@ class PagesController < ApplicationController
   # BasePageController (or overridden by the particular tool).
   def new
     @available_tools = current_site.tools_for(@group)
+    @second_nav = 'pages'
   end
 
   # Posts are interpreted as create by the restful side of things
