@@ -44,7 +44,8 @@ module MessagesHelper
   end
 
   # as is either :read or :unread
-  def mark_selected_messages(as)
+  # updates a hidden form field and submits the form
+  def mark_selected_messages_function(as)
     "$('mark_messages_as').value = '#{as}';this.up('form#mark_messages_form').onsubmit()"
   end
 

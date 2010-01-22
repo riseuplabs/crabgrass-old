@@ -1,0 +1,7 @@
+- action_bar_form(mark_requests_path, requests_path, action_bar_settings) do
+  %div
+    %table#requests.pretty
+      = render :partial => 'request', :collection => @requests
+
+%footer
+  = pagination_links(@requests)
