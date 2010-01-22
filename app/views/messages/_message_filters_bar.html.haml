@@ -1,5 +1,5 @@
 %div#select-bar
-  %h5.left= I18n.t(:messages_select_label)
+  %h5.left= I18n.t(:select_filter_label)
   %ul
     %li
       = link_to_function I18n.t(:messages_select_all_link), select_messages_function(:all)
@@ -10,8 +10,8 @@
   %h5.left= I18n.t(:messages_mark_as_label)
   %ul
     %li
-      = link_to_function I18n.t(:messages_mark_as_read_link), mark_selected_messages(:read)
-      = link_to_function I18n.t(:messages_mark_as_unread_link), mark_selected_messages(:unread)
+      = link_to_function I18n.t(:messages_mark_as_read_link), mark_selected_messages_function(:read)
+      = link_to_function I18n.t(:messages_mark_as_unread_link), mark_selected_messages_function(:unread)
       = spinner 'messages_mark_as'
 
 %div.right

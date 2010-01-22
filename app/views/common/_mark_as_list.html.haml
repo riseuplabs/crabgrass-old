@@ -1,6 +1,6 @@
 %ul
   %li
-    - marks.each do |mark|
-      - key = "mark_as_#{mark.to_s}".to_sym
-      = link_to_function I18n.t(key), mark_function(mark)
+    - settings[:mark].each do |mark|
+      - caption = I18n.t(mark[:translation]).capitalize
+      = link_to_function caption, action_bar_submit_mark_function(mark[:name])
     = spinner 'mark_as'

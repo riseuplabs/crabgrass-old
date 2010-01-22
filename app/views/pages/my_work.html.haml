@@ -5,5 +5,6 @@
 
 %nav
   = render :partial => 'pages/tabs'
-= render :partial => 'common/action_bar', :locals => {:mark_path => mark_pages_path, :view_path => my_work_pages_path}
-= render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox'}
+
+- action_bar_form(mark_pages_path, my_work_pages_path, action_bar_settings) do
+  = render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox'}
