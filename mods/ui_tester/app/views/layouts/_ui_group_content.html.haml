@@ -1,0 +1,119 @@
+%div#content-container
+  %div#banner-container
+    %header#banner-no-avatar
+      =render :partial => 'layouts/ui_group_header'
+    %nav#second-level-aside
+      %ul
+        %li.current
+          %a{:href => "#"}
+            HOME
+        %li
+          %a{:href => "#"}
+            ALL CONTENT
+        %li
+          %a{:href => "#"}
+            TASKS
+        %li
+          %a{:href => "#"}
+            ADMIN
+
+  %div#content-wrap
+    %aside#identity-info
+      = render :partial => 'layouts/ui_group_sidebar'
+    %div#omega10
+      %div#main-content
+        %section#group-wiki
+          %header
+            %h3 
+              group wiki
+              %span.right
+                %a.small_icon.pencil_16
+                  Edit Group Wiki
+                %a.small_icon
+                  Hide
+          %article 
+            Dictum dictum justo eu pellenta tesque. Duis vitae dipiscing ipsum non risus sodales lorem ipsum dolor sit amet, e sectetur adipiscing elit. Duis dictum dictum justo eu pellenta tesque. Duis vitae dipiscing ipsum non risus sodales conte litis sectetur adipiscing elit. Dictum dictum justo eu pellenta tesque. Duis vitae dopa iscing ipsum non risus sodales eu pellenta tesque...
+            %a{:href => "#"} 
+              See all
+            
+        %section#pages
+          %header
+            %h3 
+              recent public pages
+              %span.right.pagination
+                %span.disabled
+                  %a{:href => "#"}
+                    &laquo; 
+                %span.current
+                  %a{:href => "#"}1 
+                %span 2 3
+                %span
+                  %a{:href => "#"}
+                    &raquo;
+          %article
+            %section.pages-info
+              %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint justo eu pellenta tesque avec dictum justo eu pellenta tesque avec dictum
+              %p 
+                Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+                %a{:href => "#"}
+                  Read More
+
+            %ul.pages-status
+              %li 
+                %a{:href => "#"}
+                  Daniel Hola
+              %li Updated &bull; 12:45p
+          %article
+            %section.pages-info
+              %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+              %h4.cover.small_icon.page_text_blue_16 Crabgrass vs ThePoint justo eu pellenta tesque avec dictum justo eu pellenta tesque avec dictum
+              %p.cover 
+                Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam qjusto eu pellenta tesque avec dictum tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+                %a{:href => "#"}
+                  Read More
+
+            %ul.pages-status
+              %li 
+                %a{:href => "#"}
+                  Daniel Hola
+              %li Updated &bull; 3:45p
+          %article
+            %section.pages-info
+              %h4.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+              %p 
+                Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+                %a{:href => "#"}
+                  Read More
+
+            %ul.pages-status
+              %li 
+                %a{:href => "#"}
+                  Daniel Hola
+              %li Updated &bull; 3:45p
+          %article
+            %section.pages-info
+              %img{:src=>"/images/new_ui/image-75sq.png", :alt=>" ", :height=>"75px", :width=>"75px"}
+              %h4.cover.small_icon.page_text_blue_16 Crabgrass vs ThePoint
+              %p.cover
+                Dictum dictum justo eu pellenta tesque avec dictum Vestibulum innme. Aliquam quis leo eu nisl tempus blandit. Nunc hendrerit sagittis orci at consectetur...
+                %a{:href => "#"}
+                  Read More
+
+            %ul.pages-status
+              %li 
+                %a{:href => "#"}
+                  Daniel Hola
+              %li Updated &bull; 3:45p
+          %footer
+            %div.pagination
+              %span.disabled
+                %a{:href => "#"}
+                  &laquo; 
+              %span.current
+                %a{:href => "#"}
+                  1 
+              %span 2 3
+              %span
+                %a{:href => "#"}
+                  &raquo;
+  

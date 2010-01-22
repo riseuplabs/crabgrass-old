@@ -43,16 +43,15 @@ module UserExtension::Users
       end)
 
       ## USER'S STATUS / PUBLIC WALL
-
-      has_one :discussion, :as => :commentable, :dependent => :destroy
-      alias_method_chain :discussion, :auto_create
+      has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
 
       ## RELATIONSHIPS
 
       has_many :relationships, :dependent => :destroy do
         def with(user) find_by_contact_id(user.id) end
       end
-      has_many :discussions, :through => :relationships
+
+      has_many :discussions, :through => :relationships, :order => 'discussions.replied_at DESC'
       has_many :contacts,    :through => :relationships
 
       has_many :friends, :through => :relationships, :conditions => "relationships.type = 'Friendship'", :source => :contact do
@@ -98,17 +97,9 @@ module UserExtension::Users
     ## STATUS / PUBLIC WALL
     ##
 
-    # returns the users current status by returning his latest status_posts.body
+    # returns the users current status by returning their latest status_posts.body
     def current_status
       @current_status ||= self.discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
-    end
-
-    def discussion_with_auto_create(*args)
-      discussion_without_auto_create(*args) or begin
-        self.discussion = Discussion.create do |d|
-          d.commentable = self
-        end
-      end
     end
 
     ##
@@ -124,10 +115,11 @@ module UserExtension::Users
     # This method can be used to either add a new relationship or to update an
     # an existing one
     #
+    # RelationshipObserver creates a new Discussion that is shared between the two relationship objects
+    #
     # RelationshipObserver creates a new FriendActivity when a friendship is created.
     # As a side effect, this will create a profile for 'self' if it does not
     # already exist.
-    #
     def add_contact!(other_user, type=nil)
       type = 'Friendship' if type == :friend
 
@@ -167,6 +159,25 @@ module UserExtension::Users
          other_user.update_contacts_cache
       end
     end
+
+    # ensure a relationship between this and the other user exists
+    # add a new post to the private discussion shared between this and the other_user
+    # +in_reply_to+ is a post the new posts will be replying this
+    # this is not stored, but used to generate a more informative notification on the user's wall.
+    def send_message_to!(other_user, body, in_reply_to = nil)
+      relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
+      discussion = relationship.discussion
+
+      discussion.increment_unread_for!(other_user)
+      post = discussion.posts.create do |post|
+        post.body = body
+        post.user = self
+        post.in_reply_to = in_reply_to
+        post.type = "PrivatePost"
+        post.recipient = other_user
+      end
+    end
+
 
     def stranger_to?(user)
       !peer_of?(user) and !contact_of?(user)
@@ -222,7 +233,7 @@ module UserExtension::Users
       if friend_of?(user) or peer_of?(user) or profiles.visible_by(user).may_pester?
         return true
       else
-        raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => self.name}])
+        raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
       end
     end
 
@@ -231,6 +242,12 @@ module UserExtension::Users
     end
     def may_pester!(entity)
       entity.may_be_pestered_by! self
+    end
+
+    def may_show_status_to?(user)
+      return true if user==self
+      return true if friend_of?(user) or peer_of?(user)
+      false
     end
 
   end # InstanceMethods

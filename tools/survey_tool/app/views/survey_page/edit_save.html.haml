@@ -1,0 +1,98 @@
+- content_for :right_sidebar do
+  = render :partial => 'base_page/sidebar'
+
+- content_for :full_content_header do
+  %section#identity
+    = avatar_for @group, 'large', :class => 'left'
+    %div.left
+      %h1 
+        = @group.full_name
+    %div.right 
+      = yield :touchstone_actions
+
+- content_for :secondary_nav do
+  = render :partial => '/groups/navigation/menu'
+
+
+
+%section#wiki-page
+  .info_box.tabs
+    = render :partial => 'tabs'
+  #design_questions_container.survey_questions_container
+
+    - form_for :survey, @survey, :url => page_url(@page, :action => :edit) do |f|
+      %p
+        = submit_tag I18n.t(:save_survey_button), :class => "submit"
+
+      %h2.alert
+        = I18n.t(:survey_description_heading)
+      %blockquote
+        = I18n.t(:survey_description_explaination)
+        = f.text_area :description, :cols => 72, :rows => 3, :style => 'width:99%'
+
+      %h2.alert
+        = I18n.t(:permissions)
+      %blockquote
+        %table.permissions
+          %tr
+            %th &nbsp;
+            %td
+              %span.small_icon.wrench_16
+                = I18n.t(:page_access_admin)
+            %td
+              %span.small_icon.pencil_16
+                = I18n.t(:page_access_edit)
+            %td
+              %span.small_icon.magnifier_16
+                = I18n.t(:page_access_view)
+          %tr.odd
+            %td.label
+              = I18n.t(:survey_may_create_response)
+            %td 
+              = check_box_tag("", "", true, {:disabled => true})
+            %td
+              = f.check_box :edit_may_create
+            %td
+              = f.check_box :view_may_create 
+          %tr.even
+            %td.label
+              = I18n.t(:survey_may_see_responses)
+            %td
+              = check_box_tag("", "", true, {:disabled => true})
+            %td
+              = f.check_box :edit_may_see_responses
+            %td
+              = f.check_box :view_may_see_responses
+          %tr.odd
+            %td.label
+              = I18n.t(:survey_may_rate)
+            %td
+              = f.check_box :admin_may_rate
+            %td
+              = f.check_box :edit_may_rate
+            %td
+              = f.check_box :view_may_rate
+          %tr.even
+            %td.label
+              = I18n.t(:survey_may_see_ratings)
+            %td
+              = check_box_tag("", "", true, {:disabled => true})
+            %td
+              = f.check_box :edit_may_see_ratings
+            %td
+              = f.check_box :view_may_see_ratings
+
+      %h2.alert
+        = I18n.t(:survey_questions)
+      %blockquote
+        #add_questions_links_bar
+          %span.label.plus_16.small_icon.link_line
+            Add:
+            = add_questions_links
+        #questions{:style => "display:inline-block;"}
+          = render :partial => 'edit_questions'
+
+      %p
+        = submit_tag I18n.t(:save_survey_button), :class => "submit"
+
+/= javascript_tag "surveyDesignerEnableSorting();"

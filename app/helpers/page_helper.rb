@@ -164,6 +164,78 @@ module PageHelper
     link_to text, hash
   end
 
+  # *NEWUI
+  #
+  # helper to show stars of an item (page or whatever that responds to stars_count)
+  #
+  def stars_for(item)
+    if item.stars_count > 0
+      content_tag(:span, "%s %s" % [icon_tag('star'), item.stars_count], :class => 'star')
+    else
+      icon_tag('star_empty')
+    end
+  end
+
+  # *NEWUI
+  #
+  # render the cover of the page if it exists
+  #
+  def cover_for(page)
+    thumbnail_img_tag(page.cover, :medium, :scale => '96x96') if page.cover
+  end
+
+  # *NEWUI
+  #
+  # helper to show the box about last updated_by_and_stars
+  #
+  def last_updated_box_for(page, options={})
+    field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
+    is_new = field == 'updated_at'
+    label    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
+    username = link_to_user(page.updated_by_login)
+    date     = friendly_date(page.send(field))
+    capture_haml do
+      haml_tag :ul, :class => 'pages-status' do
+        [label, username, date, stars_for(page)].each do |item|
+          haml_tag(:li, item)
+        end
+      end
+    end
+  end
+
+
+
+
+  # *NEWUI
+  #
+  #
+  #
+  def title_with_link_for(page, participation = nil)
+    title = link_to(h(page.title), page_url(page))
+
+    # this is not used for now
+    #if participation and participation.instance_of? UserParticipation
+    #  title += " " + icon_tag("tiny_star") if participation.star?
+    #else
+    #  #title += " " + icon_tag("tiny_pending") unless page.resolved?
+    #end
+    #if page.flag[:new]
+    #  title += " <span class='newpage'>#{I18n.t(:page_list_heading_new)}</span>"
+    #end
+    return title
+  end
+
+
+  # *NEWUI
+  #
+  #
+  # The list partial hands all local vars down to the page partial
+  # that are in the list of allowed locals.
+  def page_locals(locals)
+    allowed_locals= [:layout]
+    locals.reject { |key,_| !allowed_locals.include? key }
+  end
+
   #
   # used to spit out a column value for a single row.
   # for example:
@@ -219,7 +291,7 @@ module PageHelper
       page.posts_count
     elsif column == :last_post
       if page.discussion
-        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to('view'[:view], page_url(page)+"#posts-#{page.discussion.last_post_id}")]
+        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to(I18n.t(:view_posts_link), page_url(page)+"#posts-#{page.discussion.last_post_id}")]
       end
     else
       page.send(column)
@@ -238,7 +310,7 @@ module PageHelper
   def page_list_updated_or_created(page, options={})
     options[:type] ||= :twolines
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     separator = options[:type]==:twolines ? '<br/>' : '&bull;'
@@ -247,7 +319,7 @@ module PageHelper
 
   def page_list_contribution(page)
     field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, 'updated'.t) : content_tag(:span, 'new'.t, :class=>'new')
+    label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
     content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
@@ -262,7 +334,7 @@ module PageHelper
       #title += " " + icon_tag("tiny_pending") unless page.resolved?
     end
     if page.flag[:new]
-      title += " <span class='newpage'>#{'new'.t}</span>"
+      title += " <span class='newpage'>#{I18n.t(:page_list_heading_new)}</span>"
     end
     return title
   end
@@ -270,7 +342,7 @@ module PageHelper
   def page_list_posts_count(page)
     if page.posts_count > 1
       # i am not sure if this is very kosher in other languages:
-      "%s %s" % [page.posts_count, "posts"[:page_list_heading_posts]]
+      "%s %s" % [page.posts_count, I18n.t(:page_list_heading_posts)]
     end
   end
 
@@ -278,37 +350,37 @@ module PageHelper
     if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
       "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
     elsif column == :updated_by or column == :updated_by_login
-      list_heading 'updated by'[:page_list_heading_updated_by], 'updated_by_login', options
+      list_heading I18n.t(:page_list_heading_updated_by), 'updated_by_login', options
     elsif column == :created_by or column == :created_by_login
-      list_heading 'created by'[:page_list_heading_created_by], 'created_by_login', options
+      list_heading I18n.t(:page_list_heading_created_by), 'created_by_login', options
     elsif column == :deleted_by or column == :deleted_by_login
-      list_heading 'deleted by'[:page_list_heading_deleted_by], 'updated_by_login', options
+      list_heading I18n.t(:page_list_heading_deleted_by), 'updated_by_login', options
     elsif column == :updated_at
-      list_heading 'updated'[:page_list_heading_updated], 'updated_at', options
+      list_heading I18n.t(:page_list_heading_updated), 'updated_at', options
     elsif column == :created_at
-      list_heading 'created'[:page_list_heading_created], 'created_at', options
+      list_heading I18n.t(:page_list_heading_created), 'created_at', options
     elsif column == :deleted_at
-      list_heading 'deleted'[:page_list_heading_deleted], 'updated_at', options
+      list_heading I18n.t(:page_list_heading_deleted), 'updated_at', options
     elsif column == :posts
-      list_heading 'posts'[:page_list_heading_posts], 'posts_count', options
+      list_heading I18n.t(:page_list_heading_posts), 'posts_count', options
     elsif column == :happens_at
-      list_heading 'happens'.t, 'happens_at', options
+      list_heading I18n.t(:page_list_heading_happens), 'happens_at', options
     elsif column == :contributors_count or column == :contributors
       list_heading image_tag('ui/person-dark.png'), 'contributors_count', options
     elsif column == :last_post
-      list_heading 'last post'[:page_list_heading_last_post], 'updated_at', options
+      list_heading I18n.t(:page_list_heading_last_post), 'updated_at', options
     elsif column == :stars or column == :stars_count
-      list_heading 'stars'[:page_list_heading_stars], 'stars_count', options
+      list_heading I18n.t(:page_list_heading_stars), 'stars_count', options
     elsif column == :views or column == :views_count
-      list_heading 'views'[:page_list_heading_views], 'views', options
+      list_heading I18n.t(:page_list_heading_views), 'views', options
     elsif column == :owner_with_icon || column == :owner
-      list_heading "owner"[:page_list_heading_owner], 'owner_name', options
+      list_heading I18n.t(:page_list_heading_owner), 'owner_name', options
     elsif column == :last_updated
-      list_heading "last updated"[:page_list_heading_last_updated], 'updated_at', options
+      list_heading I18n.t(:page_list_heading_last_updated), 'updated_at', options
     elsif column == :contribution
-      list_heading "contribution"[:page_list_heading_contribution], 'updated_at', options
+      list_heading I18n.t(:page_list_heading_contribution), 'updated_at', options
     elsif column
-      list_heading column.to_s.t, column.to_s, options
+      list_heading I18n.t(column.to_sym, :default => column.to_s), column.to_s, options
     end
   end
 
@@ -346,20 +418,22 @@ module PageHelper
 
   def page_notice_row(notice, column_size)
     html = "<td class='excerpt', colspan='#{column_size}'>"
-    html += "page sent by {user} on {date}"[:page_notice_message, {:user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time])}]
+    html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
     if notice[:message].any?
-      html += ' '+'with message'.t + " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
     end
     html += "</td>"
     content_tag(:tr, html, :class => "page_info")
   end
 
-  def page_tags(page=@page, join="\n")
+  def page_tags(page=@page, join=nil)
+    join ||= "\n" if join.nil?
     if page.tags.any?
       links = page.tags.collect do |tag|
         tag_link(tag, page.owner)
-      end.join(join)
-      links
+      end
+      links = (join != false) ? links.join(join) : links
     end
   end
 
@@ -420,7 +494,7 @@ module PageHelper
   ##
 
   def display_page_class_grouping(group)
-    "page_group_#{group.gsub(':','_')}".to_sym.t
+    I18n.t("page_group_#{group.gsub(':','_')}".to_sym)
   end
 
   def tree_of_page_types(available_page_types=nil, options={})
@@ -428,7 +502,7 @@ module PageHelper
     page_groupings = []
     available_page_types.each do |page_class_string|
       page_class = Page.class_name_to_class(page_class_string)
-      next if page_class.internal
+      next if page_class.nil? or page_class.internal
       if options[:simple]
         page_groupings << page_class.class_group.to_a.first
       else
@@ -460,7 +534,7 @@ module PageHelper
        end
        menu_items.concat sub_items if sub_items.size > 1
     end
-    options_for_select([['all page types'.t,'']] + menu_items, default_selected)
+    options_for_select([[I18n.t(:all_page_types),'']] + menu_items, default_selected)
   end
 
   ## Creates options useable in a select() for the various states
@@ -490,27 +564,30 @@ module PageHelper
   end
 
   def create_page_link(group=nil, options={})
-    url = {:controller => '/pages', :action => 'create'}
-    if group
-      url[:group] = group.name
+    if may_create_group_page?
+      url = new_page_url
+      if group
+        url = new_group_page_url(group)
+      end
+      icon = 'cross'
+      text = I18n.t(:contribute_content_link).upcase
+      klass = options[:class] || 'contribute'
+
+      content_tag(:div,
+        content_tag(:span,
+            link_to(text, url ),
+          :class => "small_icon #{icon}_20"),
+        :class => klass, :id => 'contribute'
+      )
+    else
+      ""
     end
-    #  icon = 'page_add'
-    #  text = "Add Page To {group_name}"[:contribute_group_content_link, group.group_type.titlecase]
-    #  klass = 'contribute group_contribute'
-    icon = 'plus'
-    text = "Create Page"[:contribute_content_link]
-    klass = options[:class] || 'contribute'
-    #klass = 'contribute' if options[:create_page_bubble]
-    content_tag(:div,
-      link_to(text, url, :class => "small_icon #{icon}_16"),
-      :class => klass
-    )
   end
 
   #  group -- what group we are creating the page for
   #  type -- the page class we are creating
   def typed_create_page_link(page_type, group=nil)
-    link_to "Create a New {thing}"[:create_a_new_thing, page_type.class_display_name] + ARROW, create_page_url(page_type, :group => @group)
+    link_to I18n.t(:create_a_new_thing, :thing => page_type.class_display_name) + ARROW, create_page_url(page_type, :group => @group)
   end
 
 #  def create_page_link(text,options={})
@@ -524,5 +601,24 @@ module PageHelper
 #    ret += "</form>"
 #    #link_to(text, {:controller => '/pages', :action => 'create'}.merge(options), :method => :post)
 #  end
+
+
+  #
+  #
+  # NEW UI
+  #
+  # Elements Used in the Layouts
+  #
+  # checkbox for selecting the page in a list of pages.
+  def checkbox_for(page)
+    check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+  end
+
+  def owner_image(page)
+    return unless page.owner
+    link_to "#{avatar_for page.owner, 'small'}",
+      url_for_entity(page.owner),:class=>'imglink'
+  end
+
 
 end

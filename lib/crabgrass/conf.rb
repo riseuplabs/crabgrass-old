@@ -41,6 +41,7 @@ class Conf
   cattr_accessor :enforce_ssl
   cattr_accessor :show_exceptions
   cattr_accessor :require_user_email
+  cattr_accessor :require_user_full_info
   cattr_accessor :domain
   cattr_accessor :translation_group
   cattr_accessor :chat
@@ -67,6 +68,7 @@ class Conf
   cattr_accessor :ensure_page_owner
   cattr_accessor :default_page_access
   cattr_accessor :text_editor
+  cattr_accessor :use_full_geonames_data
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -98,7 +100,7 @@ class Conf
     # site defaults
     self.title             = 'crabgrass'
     self.pagination_size   = 30
-    self.default_language  = 'en_US'
+    self.default_language  = 'en'
     self.email_sender      = 'robot@$current_host'
     self.email_sender_name = '$site_title ($user_name)'
     self.tracking          = false
@@ -121,6 +123,7 @@ class Conf
     self.ensure_page_owner = true
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
+    self.use_full_geonames_data = false
   end
 
   def self.load(filename)

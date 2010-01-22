@@ -8,34 +8,34 @@
     [ content_tag(:strong, [h(profile.first_name), h(profile.middle_name), h(profile.last_name)].join(' ')),
       h(profile.organization),
       h(profile.place)
-    ].select{|i|i.any?}.join('<br/>') 
+    ].select{|i|i.any?}.join('<br/>')
   %>
-  <h2 class="alert"><%= :Info.t %></h2>
+  <h2 class="alert"><%= I18n.t(:information) %></h2>
   <%= member_since_line(profile) if profile.user %>
   <% unless profile.phone_numbers.empty? -%>
     <% profile.phone_numbers.each do |phone_number| -%>
       <div class='small_icon <%=phone_number.icon%>_16'>
-	<em><%= 'Phone Number'.t%> (<%= h(phone_number.phone_number_type.to_sym.t) %>)</em>: <%= h(phone_number.phone_number) %>
+        <em><%= I18n.t(:phone_number)%> (<%= h(I18n.t(phone_number.phone_number_type.to_sym)) %>)</em>: <%= h(phone_number.phone_number) %>
       </div>
     <% end -%>
   <% end -%>
   <% unless profile.email_addresses.empty? -%>
     <% profile.email_addresses.each do |email_address| -%>
       <div class='small_icon <%=email_address.icon%>_16'>
-	<em><%= 'Email Address'.t%> (<%= h(email_address.email_type.to_sym.t) %>)</em>: <%= h(email_address.email_address) %>
+        <em><%= I18n.t(:email_address)%> (<%= h(I18n.t(email_address.email_type.to_sym)) %>)</em>: <%= h(email_address.email_address) %>
       </div>
     <% end -%>
   <% end -%>
   <% profile.locations.each do |location| -%>
     <div class='small_icon <%=location.icon%>_16'>
-    <em><%= 'Location'.t%>:</em>
+    <em><%= I18n.t(:location)%>:</em>
     <%= h(location.country_name) %>
     </div>
   <% end -%>
   <% unless profile.im_addresses.empty? -%>
     <% profile.im_addresses.each do |im| -%>
       <div class='small_icon <%=im.icon -%>_16'>
-	<em><%= 'Instant Messaging'.t -%> (<%= h(im.im_type) %>):</em>
+        <em><%= I18n.t(:instant_messaging) -%> (<%= h(im.im_type) %>):</em>
         <%= im.im_address %>
       </div>
     <% end -%>
@@ -43,7 +43,7 @@
   <% unless profile.websites.empty? -%>
     <% profile.websites.each do |website| -%>
       <div class='small_icon <%=website.icon -%>_16'>
-	<em><%= 'Website'.t -%>:</em>
+        <em><%= I18n.t(:website) -%>:</em>
         <a target="_blank" href="<%= website.site_url %>">
           <%= h(website.site_title.length > 0 ? website.site_title : website.site_url) %>
         </a>
@@ -53,10 +53,9 @@
   <% unless profile.notes.empty? -%>
     <% profile.notes.each do |note| -%>
       <div class='small_icon <%=note.icon -%>_16'>
-	<em><%= note.note_type ? note.note_type.to_sym.t : :About_Me.t -%>:</em>
+        <em><%= note.note_type ? I18n.t(note.note_type.to_sym) : I18n.t(:about_me) -%>:</em>
         <%=h note.body %>
       </div>
     <% end -%>
   <% end -%>
-
 </div>

@@ -1,0 +1,117 @@
+
+
+#add_questions_links_bar
+  .label
+    color= !add_new_item_color
+  span.link_background
+    background-color= !box1_bg_color
+    padding: 0.5em
+
+#respond_to_questions_container
+  .question
+    padding: 1em
+    .answer_choice
+      margin: 0px
+    .formError
+      color= !error_color
+      padding: 1em
+    .fieldWithErrors
+      padding: 0
+      margin: 0
+    .response_icon_label
+      line-height: 3em
+
+.survey_questions_container
+  h2
+    border-bottom: 2px dotted #ccc
+  blockquote
+    margin: 1em
+  #survey_settings
+    margin-top: 0.5em
+    background-color= !draggable_item_bg_color
+    border= !draggable_item_border
+    padding: 1em
+//    #rating_details
+//      label.disabled
+//        color= !draggable_item_bg_label_color
+//      margin-left: 1em
+  .question_label
+    font-size: 1em
+    color: black
+    font-weight: bold
+    margin-top: 0
+  .question
+    background-color= !draggable_item_bg_color
+    border= !draggable_item_border
+    margin: 1em 0
+    padding: 1em
+//  .delete_question
+//    float: right
+//    padding-right: 0.5em
+  .question
+    .drag_to_move
+      color= !draggable_item_bg_label_color
+      float: left
+      margin-left: 13.5em
+      background-position: 0 100%
+    .fields
+      textarea, input
+        margin-bottom: 1em
+        width: 99%
+      .caption
+        margin-top: 1.5em
+    .private_question
+      label
+        font-size: 0.8em
+      top: 0px
+      left: 0px
+      position: absolute
+    .caption
+      float: left
+      margin-bottom: 0.5em
+  input.fake_select
+    margin-left: 0px
+    margin-right: 1em
+  input[type=checkbox]
+    vertical-align: top
+
+.rate_bar
+  // background: url(/images/background/rate_bar.png) repeat-x
+  background-color: #FFF2D0
+  padding: 0.3em 0.5em
+  margin-top: 0.5em
+  margin-bottom: 0.5em
+  border-style: solid
+  border-width: 1px
+  border-color: #cfae45
+  input.rate_button
+    vertical-align: sub
+  label
+    font-weight: bold
+  td
+    vertical-align:top
+    padding: 0.3em
+  img
+    vertical-align: middle
+  
+#rate_survey
+  .current_response
+    padding-top: 2em
+  #response
+    .answers
+      margin: 1em
+
+table.permissions
+  width: 100%
+  tr.odd
+    background: #f6f6f6
+  tr.even
+    background: #eee
+  td, th
+    text-align: center
+    border-bottom: 1px solid #ccc
+    &.label
+      text-align: right
+
+.more
+  float: right

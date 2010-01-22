@@ -1,6 +1,6 @@
       <p>
         <label for="usage_agreement_accepted" class="checkbox">
         <%= check_box_tag 'usage_agreement_accepted', "1", params['usage_agreement_accepted'], :class => "checkbox" %>
-        <%= "I accept the terms of the usage agreement"[:accept_usage_agreement] %>
+        <%= I18n.t(:accept_usage_agreement) %>
         </label>
       </p>  

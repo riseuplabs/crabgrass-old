@@ -4,7 +4,7 @@ class RateManyPageController < BasePageController
   permissions 'rate_many_page'
 
   def show
-  @possibles = @poll.possibles.sort_by{|p| p.position||0 }
+    @possibles = @poll.possibles.sort_by{|p| p.position||0 }
   end
 
   # ajax or post
@@ -13,8 +13,11 @@ class RateManyPageController < BasePageController
     @possible = @poll.possibles.create params[:possible]
     if @poll.valid? and @possible.valid?
       @page.unresolve # update modified_at, auto_summary, and make page unresolved for other participants
-      redirect_to page_url(@page) unless request.xhr?
-      render :template => 'rate_many_page/add_possible'
+      if request.xhr?
+        render :template => 'rate_many_page/add_possible'
+      else
+        redirect_to page_url(@page)
+      end
     else
       @poll.possibles.delete(@possible)
       flash_message_now :object => @possible unless @possible.valid?
@@ -41,8 +44,8 @@ class RateManyPageController < BasePageController
   def vote_one
     new_value = params[:value].to_i
     @possible = @poll.possibles.find(params[:id])
-    @poll.delete_votes_by_user_and_possible(current_user,@possible)
-    @possible.votes.create :user => current_user, :value => new_value
+    @poll.votes.by_user(current_user).for_possible(@possible).delete_all
+    @poll.votes.create! :user => current_user, :value => new_value, :possible => @possible
     current_user.updated(@page, :resolved => true)
   end
 
@@ -50,12 +53,12 @@ class RateManyPageController < BasePageController
     new_votes = params[:vote] || {}
 
     # destroy previous votes
-    @poll.votes_by_user(current_user).each{|v| v.destroy}
+    @poll.votes.by_user(current_user).delete_all
 
     # create new votes
     @poll.possibles.each do |possible|
       weight = new_votes[possible.id.to_s]
-      possible.votes.create :user => current_user, :value => weight if weight
+      @poll.votes.create! :user => current_user, :value => weight, :possible => possible if weight
     end
     current_user.updated(@page, :resolved => true)
     redirect_to page_url(@page, :action => 'show')
@@ -97,6 +100,6 @@ class RateManyPageController < BasePageController
   end
 
   def build_page_data
-    Poll.new
+    RatingPoll.new
   end
 end

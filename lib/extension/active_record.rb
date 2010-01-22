@@ -53,6 +53,22 @@ ActiveRecord::Base.class_eval do
     self.class.quote_sql(condition)
   end
 
+
+  # used by STI models to name fields appropriately
+  # alias_attr :user, :object
+  def self.alias_attr(new, old)
+    if self.method_defined? old
+      alias_method new, old
+      alias_method "#{new}=", "#{old}="
+      define_method("#{new}_id")   { read_attribute("#{old}_id") }
+      define_method("#{new}_name") { read_attribute("#{old}_name") }
+      define_method("#{new}_type") { read_attribute("#{old}_type") }
+    else
+      define_method(new) { read_attribute(old) }
+      define_method("#{new}=") { |value| write_attribute(old, value) }
+    end
+  end
+
   # class_attribute()
   #
   # Used by Page in order to allow subclasses (ie Tools) to define themselves

@@ -1,6 +1,6 @@
 #
-# This is the main global crabgrass configuration. 
-# 
+# This is the main global crabgrass configuration.
+#
 # Most of the time, no other configuration should be required other than the
 # options in this file. Unusual options might be configured elsewhere.
 #
@@ -14,10 +14,10 @@
 ##
 
 enabled_languages:
-  - en_US
-  - es_ES
-  - pt_BR
-  - ar_EG
+  - en
+  - es
+  - pt
+  - ar
 enabled_mods:
 #  - super_admin
 enabled_tools:
@@ -48,8 +48,8 @@ email:
 ##
 
 sites:
-  - name: blue 
-    admin_group: blueadmins 
+  - name: blue
+    admin_group: blueadmins
   - name: red
     admin_group: redadmins
 
@@ -58,7 +58,7 @@ sites:
 ##
 
 pagination_size: 30
-default_language: en_US
+default_language: en
 enforce_ssl: false
 show_exceptions: false
 email_sender: "robot@$current_host"

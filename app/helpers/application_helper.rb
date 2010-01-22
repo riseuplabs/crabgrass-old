@@ -19,6 +19,47 @@ module ApplicationHelper
     str.any? ? GreenCloth.new(str).to_html() : ''
   end
 
+  # DROP DOWN LIST
+  #
+  # use this as:
+  #
+  # drop_down("Title", {"Option 1" => some_place_path, "Option 2" => "js: alert('hello')"}, optionally_index_for_selected_option)
+  #
+  # <label for="select_id">Title</label>
+  # <select id="select_id">
+  #   <option value="/some/place">Option 1</option>
+  #   <option value="alert('hello')">Option 2</option>
+  # </select>
+  #
+  # Actions happen on the onchange event
+  #
+  def drop_down(select_title, items, selected_index = 0)
+
+    select_id = "select_#{select_title.gsub(/[^a-zA-Z]+/, '')}"
+
+    text_label = content_tag(:label, I18n.t(:view_label), :for => select_id) if !select_title.nil? && !select_title.blank?
+
+    current_index = 0
+    options = items.map do |title, perform|
+      selected = selected_index == current_index ? {:selected => "selected"} : {}
+      current_index += 1
+      perform = url_for(perform) if perform.is_a?(Hash)
+      option_id = "option_#{title.gsub(/[^a-zA-Z]+/, '')}"
+      value = drop_down_action(perform)
+      content_tag :option, title, {:value => value, :id => option_id}.merge(selected)
+    end.join("\n")
+
+    content_tag(:div, text_label + select_tag(select_id, options, :onchange => "javascript: eval(this.options[this.selectedIndex].value)"), :id => "pages_view")
+  end
+
+  def drop_down_action(perform)
+    if perform.match(/^js\:/)
+      perform.gsub(/^js\:/, '')
+    else
+      "window.location = '#{perform}';"
+    end
+  end
+
   ##
   ## LINK HELPERS
   ##
@@ -28,9 +69,29 @@ module ApplicationHelper
     char = content_tag(:em, link_char(links))
     content_tag(:div, links.compact.join(char), :class => 'link_line')
   end
+
   def link_span(*links)
     char = content_tag(:em, link_char(links))
     content_tag(:span, links.compact.join(char), :class => 'link_line')
+  end
+
+  #
+  # show link with totals for a collection that belongs to an object
+  #
+
+  def totalize_with_link(object, collection, controller=nil, action=nil)
+    action ||= 'list'
+    controller ||= url_for(:controller => object.class.name.pluralize.underscore, :action => action)
+    link_if_may(I18n.t(:total, :count => (collection.size).to_s) ,
+                   controller , action, object) or
+    I18n.t(:total, :count => (collection.size).to_s)
+  end
+
+  def guess_url_for_entity(entity)
+    case entity.class.name
+    when 'Group' then url_for_group(entity)
+    when 'User' then url_for_user(entity)
+    end
   end
 
   ##
@@ -38,10 +99,12 @@ module ApplicationHelper
   ##
 
   # returns the first of the args where any? returns true
+  # if none has any, return last
   def first_with_any(*args)
     for str in args
       return str if str.any?
     end
+    return args.last
   end
 
   ## converts bytes into something more readable
@@ -123,9 +186,35 @@ module ApplicationHelper
   #
   def pagination_links(things, options={})
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "prev"[:pagination_previous], :next_label => "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
     else
-      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % "prev"[:pagination_previous], :next_label => "%s &raquo;" % "next"[:pagination_next], :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
+    end
+    will_paginate(things, defaults.merge(options))
+  end
+
+  # *NEWUI
+  #
+  # Default pagination link options:
+  #
+  #   :class        => 'pagination',
+  #   :previous_label   => '&laquo; Previous',
+  #   :next_label   => 'Next &raquo;',
+  #   :inner_window => 4, # links around the current page
+  #   :outer_window => 1, # links around beginning and end
+  #   :separator    => ' ',
+  #   :param_name   => :page,
+  #   :params       => nil,
+  #   :renderer     => 'WillPaginate::LinkRenderer',
+  #   :page_links   => true,
+  #   :container    => true
+  #
+  def pagination_for(things, options={})
+    return if !things.is_a?(WillPaginate::Collection)
+    if request.xhr?
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
+    else
+      defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
     end
     will_paginate(things, defaults.merge(options))
   end
@@ -136,18 +225,64 @@ module ApplicationHelper
 
   def options_for_language(selected=nil)
     selected ||= session[:language_code].to_s
-    selected = selected.sub(/_\w\w$/, '') # remove locale
-    options_array = LANGUAGES.collect {|code, lang| [lang.name, code.to_s]}
+    options_array = I18n.available_locales.collect {|locale| [I18n.language_for_locale(locale).try.name, locale.to_s]}
     options_for_select(options_array, selected)
   end
 
   def header_with_more(tag, klass, text, more_url=nil)
-    span = more_url ? " " + content_tag(:span, "&bull; " + link_to('more'[:see_more_link]+ARROW, more_url)) : ""
+    span = more_url ? " " + content_tag(:span, "&bull; " + link_to(I18n.t(:see_more_link)+ARROW, more_url)) : ""
     content_tag tag, text + span, :class => klass
   end
 
+  # *NEWUI
+  #
+  # returns the kind of profile open or closed/private
+  #
+  def open_or_private(profile)
+    if profile.may_see?
+      t(:open)
+    else
+      t(:private)
+    end
+  end
+
+  # *NEWUI
+  #
+  # Construct a content tag with a more link
+  #
+  # :options[:more_url] = the url for more link
+  # :options[:length] = the max lenght to display
+  # :options[:class] = any html options can be added and will be applied to the tag
+  # also you can handle the link manually passing a block
+  # text_with_more :p, my_text do
+  #   link_to "more", more_path
+  # end
+
+  def text_with_more(text, tag='p', options={}, &block)
+    length = options.delete(:length) || 50
+    omission = options.delete(:omission) || "... "
+    if block_given?
+      out = truncate(text, :length => length, :omission => omission + capture_haml(&block))
+      capture_haml do
+        #
+        # TODO: update  this with rails 2.3 to:
+        # haml_tag tag, options do
+        #
+        haml_tag tag do
+          haml_concat out
+        end
+      end
+    else
+      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
+      out = truncate(text, :length => length, :omission => omission + link)
+      capture_haml do
+        haml_tag(tag, out,  options)
+      end
+    end
+  end
+
   def expand_links(description)
-    description.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
+    description.to_s.gsub(/<span class="(user|group)">(.*?)<\/span>/) do |match|
       case $1
         when "user": link_to_user($2)
         when "group": link_to_group($2)
@@ -155,10 +290,13 @@ module ApplicationHelper
     end
   end
 
-  def display_activity(activity)
-    return unless activity
+  def linked_activity_description(activity)
+    description = activity.try.safe_description(self)
+    expand_links(description)
+  end
 
-    description = activity.safe_description(self)
+  def display_activity(activity)
+    description = activity.try.safe_description(self)
     return unless description
 
     description = expand_links(description)
@@ -167,7 +305,7 @@ module ApplicationHelper
 
     more_link = activity.link
     if more_link.is_a? Hash
-      more_link = link_to('details'[:details_link] + ARROW, more_link, :class => 'shy')
+      more_link = link_to(I18n.t(:details_link) + ARROW, more_link, :class => 'shy')
     end
     more_link = content_tag(:span, [created_at, more_link].combine, :class => 'commands')
 
@@ -183,21 +321,40 @@ module ApplicationHelper
   end
 
   def formatting_reference_link
-   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % "formatting reference"[:formatting_reference_link]
+   %Q{<div class='formatting_reference'><a class="small_icon help_16" href="/static/greencloth" onclick="quickRedReference(); return false;">%s</a></div>} % I18n.t(:formatting_reference_link)
   end
 
   # returns the related help string, but only if it is translated.
   def help(symbol)
     symbol = "#{symbol}_help".to_sym
-    text = ""[symbol]
-    text.any? ? text : nil
+    text = I18n.t(symbol)
+    # return nil if I18n.t says translation is missing
+    text =~ /translation missing/ ? nil : text
   end
 
   def debug_permissions
     if RAILS_ENV == 'development'
-      permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
-      permission_methods.collect do |section|
-        content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+      content_tag :div, :class =>'debug' do
+        permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+        permission_methods.collect do |section|
+          content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
+        end
+      end
+    end
+  end
+
+  #
+  # *NEWUI
+  #
+  # provides a block for main container
+  #
+  # content_starts_here do
+  #   %h1 my page
+  #
+  def content_starts_here(&block)
+    capture_haml do
+      haml_tag :div, :id =>'main-content' do
+        haml_concat capture_haml(&block)
       end
     end
   end

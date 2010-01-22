@@ -1,0 +1,21 @@
+- options = options_for_task_list
+
+%ul.tasks
+  - @task_lists.each do |task|
+
+    - if !(@tasks = list_for_task(task, options)).empty?
+      %li.task
+
+        %p
+          = link_to task.page.title, page_url(task.page)
+          = "(#{link_to_entity(task.page.owner, :action => 'tasks')})" if task.page.owner
+
+        %ul.task_list
+          = render :partial => 'task_list_page/task', :collection => @tasks, :locals => {:sortable => false}
+
+- # this is just here so that we don't get an ajax error when a task is marked completed or pending
+%ul(id="sort_list_completed" style="display:none")
+  %li(id="no_completed_tasks")
+
+%ul(id="sort_list_pending" style="display:none")
+  %li(id="no_pending_tasks")

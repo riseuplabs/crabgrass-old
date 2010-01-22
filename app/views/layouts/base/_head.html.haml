@@ -1,0 +1,15 @@
+%head
+  %meta{ :name=>"description", :content=>""}
+  %meta{ :name=>"keywords", :content=>""}
+  %meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
+  =favicon_link
+  %title
+    =h title_from_context
+  / begin styling 
+  = crabgrass_stylesheets("ui_base")
+  / end styling
+  / begin scripts
+  = crabgrass_javascripts
+  / end scripts
+  = call_hook :html_head
+  = yield :html_head

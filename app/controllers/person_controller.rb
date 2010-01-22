@@ -13,7 +13,7 @@ class PersonController < ApplicationController
   helper 'task_list_page', 'profile'
   stylesheet 'tasks', :action => :tasks
   stylesheet 'messages', :action => :show
-  permissions 'contact', 'profile', 'messages'
+  permissions 'contact', 'profile', 'public_messages'
 
   def initialize(options={})
     super()
@@ -31,6 +31,9 @@ class PersonController < ApplicationController
     @columns = [:stars, :owner_with_icon, :icon, :title, :last_updated]
     options = options_for_user(@user, :page => params[:page])
     @pages = Page.find_by_path params[:path], options
+    if logged_in? and @user.may_show_status_to?(current_user)
+      @status = @user.current_status
+    end
   end
 
   def search

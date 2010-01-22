@@ -100,7 +100,7 @@ class Site < ActiveRecord::Base
 
   proxy_to_conf :name, :title, :pagination_size, :default_language,
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
-    :enforce_ssl, :show_exceptions, :require_user_email, :domain, :profiles,
+    :enforce_ssl, :show_exceptions, :require_user_email, :require_user_full_info, :domain, :profiles,
     :profile_fields, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
 
   def profile_field_enabled?(field)
@@ -163,6 +163,15 @@ class Site < ActiveRecord::Base
     self.network.nil? ?
       Group.find(:all, :select => :id).collect{|group| group.id} :
       self.network.group_ids
+  end
+
+
+  def tools_for(group)
+    if group && group.group_setting.allowed_tools
+      group.group_setting.allowed_tools
+    else
+      available_page_types
+    end
   end
 
   ##

@@ -1,24 +1,24 @@
-<% @title_box = content_tag(:h1, "Directory of People"[:directory_of_people]) -%>
+<% @title_box = content_tag(:h1, I18n.t(:directory_of_people)) -%>
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
 <%= Formy.tabs do |f|
   f.tab do |t|
-    t.label 'my friends'[:my_contacts]
+    t.label I18n.t(:my_contacts)
     t.url people_directory_url(:friends)
     t.selected id?(:friends)
   end
   f.tab do |t|
-    t.label 'my peers'[:my_peers]
+    t.label I18n.t(:my_peers)
     t.url people_directory_url(:peers)
     t.selected id?(:peers)
   end
   f.tab do |t|
-    t.label 'new people'[:new_people]
+    t.label I18n.t(:new_people)
     t.url people_directory_index_url
     t.selected action?(:index)
   end
   f.tab do |t|
-    t.label 'all people'[:all_people]
+    t.label I18n.t(:all_people)
     t.url people_directory_url(:browse)
     t.selected id?(:browse)
   end

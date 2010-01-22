@@ -4,12 +4,11 @@
 
 //  GRID
 
-!grid_unit = "em"
-!total_cols = 12
-!col_width = 5
-!gutter_width = 1
-!side_gutter_width = 1
-
+!grid_unit = "px"
+!col_width = 36px
+!gutter_width = 20px
+!side_gutter_width = 18px
+!total_cols = 14
 //
 //  HACKS
 //  Are you using hacks or conditional comments? Susy makes both possible.
@@ -21,23 +20,75 @@
 //  FONT-SIZE
 
 !base_font_size_px = 12
-!base_line_height_px = 18
+!base_line_height_px = 21
 
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
 
 @import susy/susy.sass
 
-// FONTS
-// Give yourself some font stacks to work with
+=sans-family-headings
+  font-family: arial, helvetica, sans-serif
+  font-weight: bold
+  line-height: 1
 
 =sans-family
-  :font-family Futura, sans-serif
+  :font-family verdana, bitstream vera sans, helvetica, sans-serif
 
-=serif-family
-  :font-family Baskerville, serif 
+// common styles
+=bordered-btm(!border_color= !warm_grey_border)
+  border-bottom= 1px "solid" !border_color
 
-// Remember to add default styles to everything!
+=bordered-top(!border_color= !warm_grey_border)
+  border-top= 1px "solid" !border_color
+
+=bordered2-top(!border_color= !warm_grey_border)
+  border-top= 1px "double" !border_color
+
+=bordered-tab(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+
+=bordered-block(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
+
+=bordered-top-btm(!border_color= !light_grey_border)
+  border-top= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
+
+=bordered(!border_color= !light_grey_border)
+  border= 1px "solid" !border_color
+
+=zero
+  margin: 0
+  padding: 0
+  line-height: 1.0
+
+=spaced(!spacing= 0.09em)
+  letter-spacing= !spacing
+
+=small-text(!font_small= 10px)
+  font-size= !font_small
+
+=blue-link(!sized= 11px)
+  +hover-link
+  color= !blue
+  font-size= !sized
+  font-weight: normal
+
+/* @general */
+.left
+  float: left
+
+.right
+  float: right
+
+.nowrap
+  white-space: nowrap
+
 
 /* @group links */
 
@@ -48,16 +99,600 @@ a
 /* @end */
 
 
-/* @group headers */
+/* headers */
 
 h1, h2, h3, h4, h5, h6
+  +sans-family-headings
+  line-height: 1
+  font-weight: bold
+
+h1
+  font-size: 22px
+  color: #534741
+
+h2
+  font-size: 18px
+  color: #534741
+h3
+  font-size: 16px
+  color: #d35851
+
+h4
+  font-size: 13px
+  color: #777
+
+h5
+  :font-size 11px
+
+h6
+  :font-size 9px
+
+/* @end */
+
+/* lists */
+li
+  display: inline-block
+  float: left
+  padding: 0.2em
+
 
 /* @end */
 
 
+/* groups page feed, me-section page feed, group landing/wiki section */
+
+#pages, #group-wiki
+  +columns(10,10)
+  margin: 30px 0 0
+  width: 540px
+  h3
+    +bordered-btm(!medium_grey_border)
+    padding: 0 0 8px
+    float: left
+    display: inline
+    width: 540px
+    span
+      a
+        +blue-link
+
+#pages, #group-wiki, #activities
+  article
+    +columns(10,10)
+    +bordered-btm(!light_grey_border)
+    width: 540px
+    margin: 0
+    padding: 10px 0
+    .pages-info
+      +columns(8,10)
+      +alpha(10)
+      margin: 0
+      img
+        float: left
+        display: inline
+        width: 75px
+        height: 75px
+        padding: 0 6px 6px 0
+      h4
+        float: left
+        display: inline
+        font-size: 14px
+        margin-bottom: 2px
+        line-height: 1.3
+        color= !blue
+      p
+        float: left
+        display: inline
+        padding-left: 20px
+        a
+          +blue-link
+      p.cover, h4.cover
+        width: 320px
+      .checkbox
+        padding-right: 10px
+
+    .pages-status
+      +columns(2,10)
+      +omega(10)
+      +zero
+      +bordered
+      float: right
+      padding: 4px 2px 4px 0
+      li
+        clear: both
+        float: right
+        font-size: 9px
+        line-height: 1.2
+        padding: 0.1em
+        white-space: nowrap
+        a
+          +blue-link
+
+#pages.full
+  +columns(14,14)
+  margin: 30px 0 0
+  width: 764px
+  h3
+    +bordered-btm(!medium_grey_border)
+    padding: 0 0 8px
+    float: left
+    display: inline
+    width: 764px
+  .pagination
+    font-weight: normal
+    font-size: 11px
+    color= !medium_grey_text
+    float: right
+    display: inline
+    a
+      +blue-link
+
+
+#pages.full
+  +clearfix
+  width: 764px
+  article
+    +columns(14,14)
+    +bordered-btm(!light_grey_border)
+    width: 764px
+    margin: 0
+    padding: 10px 0
+    .pages-info
+      +columns(13,14)
+      +alpha(14)
+      margin: 0
+      width: 85.8%
+      img
+        float: left
+        width: 75px
+        height: 75px
+        padding: 0 6px 6px 0
+      h4
+        float: left
+        display: inline
+        font-size: 14px
+        margin-bottom: 2px
+        color= !blue
+      p
+        float: left
+        display: inline
+        padding-left: 20px
+        a
+          +blue-link
+        .tags
+          +clearfix
+          a
+            +blue-link(10px)
+      p.cover, h4.cover
+        width: 480px
+      .checkbox
+        padding: 26px 10px 0 0
+
+    .pages-status
+      +columns(2,14)
+      +omega(14)
+      +zero
+      +bordered
+      float: right
+      padding: 4px 2px 4px 0
+      li
+        clear: both
+        float: right
+        font-size: 11px
+        line-height: 1.0
+        padding: 0.1em
+
+
+/* @end */
+
+
+
+#identity-name i
+  font-size: 18px
+  color= !warm_grey_text
+
+
+footer.page
+  background: #fff
+  height: 65px
+.space
+  height: 30px
+
+
+td.reply
+  background-repeat: no-repeat
+  background-position: 0 50%
+  width: 24px
+  height: 24px
+.activities li
+  color: #333
+  margin-bottom: 1em
+  padding-left: 24px
+  span.commands
+    white-space: nowrap
+    a
+      text-transform: lowercase
+      font-size: 80%
+  .small_icon
+    background-position: 0 2px
+  .label.date
+    font-style: italic
+    color: #999
+  br
+    display: none
+.name_icon_xsmall
+  float: left
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  padding: 2px 0 4px 28px
+  min-height: 24px
+#browse-content
+  +clearfix
+  width: 764px
+  nav
+    +clearfix
+    width: 764px
+button.icon_16
+  +zero
+  vertical-align: text-top
+  background-repeat: no-repeat
+  border: none
+  background-color: transparent
+  height: 16px
+  width: 16px
+
+#identity-info
+  width: 204px
+  float: left
+  margin: 0 20px 0 0
+
+#identity-image
+  +columns(4,4)
+  width: 204px
+  height: 204px
+  float: left
+  margin: 0
+  background-color: #fff
+  border: 1px solid #535741
+
+#image-label
+  +columns(4,4)
+  width: 204px
+  float: left
+  margin: 4px 0 0 0
+  line-height: 0.7
+  h3
+    color= !almost_black
+  ul
+    li
+      width: 204px
+      font-size: 11px
+
+#identity-meta
+  +columns(4,4)
+  +bordered
+  margin: 20px 0 0 0
+  width: 182px
+  padding: 0 10px 10px
+  font-size: 11px
+  line-height: 1.5
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+#about-group, #people, #affiliations, #featured
+  +clearfix
+  width: 184px
+  img
+    background-color: #fc0
+  header
+    +clearfix
+    h3, a
+      display: inline
+    a
+      +blue-link(10px)
+      padding-left: 8px
+      font-weight: normal
+  h4, h5
+    width: 182px
+    +clearfix
+  h5
+    font-weight: normal
+    font-size: 11px
+#people, #affiliations
+  ul
+    padding: 5px 0 7px
+    +clearfix
+#about-group
+  p
+    width: 184px
+    a
+      +blue-link(10px)
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      +spaced
+      border: none
+      width: 68px
+      margin: 10px 0 0 0
+      padding: 0 0 0 24px
+      min-height: 24px
+      font-size: 9px
+      line-height: 1
+      color: !medium-grey-text
+      span
+        letter-spacing: normal
+        font-size: 8px
+#featured
+  li
+    padding: 12px 0 4px
+    margin: 12px 0 0
+    +bordered-top(!light_grey_border)
+    article
+      width: 184px
+      h5
+        color= !blue
+        font-weight: bold
+        font-size: 13px
+        padding: 0 0 10px
+      p
+        padding-bottom: 6px
+      span.tags
+        a
+          +blue-link(10px)
+  li.first
+    +zero
+    border: none
+#about-profile
+  +small-text
+  line-height: 1.2
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      width: 164px
+      padding-top: 4px
+#last-login
+  font-size: 10px
+#main-content,#main-content-right
+  +columns(10,14)
+  width: 540px
+  margin: 0
+#main-content-right
+  float: right
+
+#main-content.full
+  width: 764px
+
+
+
+nav#nav-full
+  width: 764px
+  height: 28px
+  ul
+    +clearfix
+    li
+      +zero
+      +bordered(!almost_black)
+      +spaced
+      height: 28px
+      border-left: none
+      background: #fff
+      font-size: 11px
+      a
+        color= !warm_grey_text
+        text-decoration: none
+        font-weight: bold
+        height: 28px
+        line-height: 1.3
+        padding: 8px 10px
+    li.current
+      background= !almost_black
+      a
+        color: #fff
+    li.first
+      +bordered(!almost_black)
+
+
+.pagination
+  font-weight: normal
+  font-size: 11px
+  color= !medium_grey_text
+  display: inline
+  a
+    +blue-link
+
+nav#second-level-aside, nav#second-level
+  +bordered-btm(!almost_black)
+  height: 29px
+  width: 540px
+  li
+    +zero
+    +spaced
+    height: 28px
+    background: #fff
+    font-size: 11px
+    a
+      color= !warm_grey_text
+      text-decoration: none
+      font-weight: bold
+      height: 28px
+      line-height: 2.5
+      padding: 8px 10px
+  li.current
+    +bordered-tab(!almost_black)
+    +bordered-btm(!white_border)
+    height: 28px
+    a
+      color= !almost_black
+  #last-login
+    font-size: 10px
+#sidebar, #sidebar-nav, #sidebar-browse
+  +bordered
+  width: 204px
+  float: right
+  margin: 0
+  ul
+    +clearfix
+    li
+      clear: both
+#sidebar-nav
+  float: left
+  width: 184px
+  padding: 10px
+
+.small_icon
+  float: left
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  .twenty
+    padding-left: 22px
+    min-height: 24px
+
+
+
+ul#groups, ul#people
+  li
+    clear: none
+#wiki-page
+  article
+    +clearfix
+    width: 540px
+    padding-top: 16px
+#comments
+  width: 540px
+  padding-top: 30px
+  tr
+    td
+      padding: 8px 8px 8px 0
+.shy_parent:hover
+  .shy:hover
+    opacity: 1
+.shy
+  opacity: 0
+  font-size: 8px
+.pagination
+  font-weight: normal
+  font-size: 11px
+  color= !medium_grey_text
+  float: right
+  a
+    +blue-link
+#say-box
+  position: relative
+  padding-top: 10px
+  img
+    position: relative
+    top: 4px
+  #say
+    padding-bottom: 12px
+    position: relative
+    input.textarea
+      padding: 2px
+      position: relative
+      top: 0
+      font-family: monospace
+      overflow: auto
+      .tall
+        height: 120px
+    input.say-submit
+      position: relative
+      top: 3px
+
+nav#tabs
+  +clearfix
+  display: block
+#settings-form
+  +clearfix
+  div
+    display: block
+    #group_avatar_image_file
+      display: block
+
+#action-bar
+  +clearfix
+  +bordered-top-btm
+  width: 764px
+
+table
+  tr
+    td.date
+      font-size: 10px
+
+table#activity
+  width: 764px
+  tr
+    td
+      +bordered-btm(!light_grey_border)
+      padding: 6px
+    td.date
+      font-size: 10px
+
+table#messages
+  width: 764px
+  tr
+    td
+      +bordered-btm(!light_grey_border)
+      padding: 6px
+    td.reply
+  tr.unread
+    td
+      font-weight: bold
+  tr
+    td.date
+      font-size: 10px
+
+table#messages.thread
+  tr
+    td
+      padding: 6px
+
+
+#tag-cloud
+  text-align: center
+  li
+    display: inline-block
+    float: none
+    padding: 4px
+    text-align: center
+    a
+      +hover-link
+  .tag1
+    font-size: 20px
+  .tag2
+    font-size: 18px
+  .tag3
+    font-size: 16px
+  .tag4
+    font-size: 14px
+  .tag5
+    font-size: 12px
+  .tag6
+    font-size: 10px
+#wiki-content
+  article
+    h2
+      width: 540px
+      clear: both
 /* @group forms */
 
-form
+input.checkbox
+  width: 12px
+  height: 12px
+  margin-right: 0
+
+input.text
+  border: none
+
+form#search-browse
+  +bordered
+  input.text
+    +bordered
 
 fieldset
 
@@ -98,25 +733,6 @@ td
 /* @group block tags */
 
 p
-
-=list-default(!ol = false)
-  @if !ol
-    :list-style decimal
-    :margin 0 1.5em 1.5em 1.5em
-  @else
-    :list-style disc
-    :margin 0 1.5em 1.5em 1.5em
-
-=no-style-list
-  +no-bullets
-  :margin 0
-  :padding 0
-
-ol
-  +list-default("ol")
-
-ul
-  +list-default
 
 blockquote
 

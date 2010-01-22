@@ -1,0 +1,20 @@
+!!!
+%html{:dir=>language_direction}
+
+  = render :partial => 'layouts/base/head'
+
+  %body{:class=>language_direction}
+    %div#page
+      %header.page
+
+        = render :partial => 'layouts/base/header'
+
+      //
+      // content wrapper
+      //
+      %div#content.login
+        %div#content-container.login
+          %div#content-wrap
+            = yield 
+
+      = render :partial => 'layouts/base/footer'

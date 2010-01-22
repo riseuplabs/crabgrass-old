@@ -7,9 +7,9 @@ rescue LoadError => exc
 end
 
 begin
-  require 'redgreen' unless ARGV.include? "--no-color"
+  require 'leftright'
 rescue LoadError => exc
-  # no redgreen installed
+  # no leftright installed
 end
 
 # this can speed running a single test method from 11 seconds to 3
@@ -25,6 +25,8 @@ ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
 require 'webrat'
 Webrat.configure do |config|
@@ -68,6 +70,7 @@ def mailer_options
 end
 
 class Test::Unit::TestCase
+  setup { Sham.reset }
 
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -230,8 +233,9 @@ See also doc/SPHINX"
 
   def enable_site_testing(site_name=nil)
     if site_name
-      Conf.enable_site_testing(sites(site_name))
-      Site.current = sites(site_name)
+      site=Site.find_by_name(site_name) || sites(site_name)
+      Conf.enable_site_testing(site)
+      Site.current = site
     else
       Conf.enable_site_testing()
       Site.current = Site.new
@@ -257,7 +261,7 @@ See also doc/SPHINX"
     end
 
     # Run the block
-    yield
+    yield Site.find_by_name(site_name) || sites(site_name)
   ensure
     # restore
     if updated_site_attributes
@@ -373,6 +377,15 @@ See also doc/SPHINX"
   ##
   ## AUTHENTICATION
   ##
+  def login_as(user)
+    user = case user
+      when Symbol then users(user)
+      when User   then user
+      else             nil
+    end
+    @controller.stubs(:current_user).returns(user)
+    @request.session[:user] = user
+  end
 
   # the normal acts_as_authenticated 'login_as' does not work for integration tests
   def login(user)

@@ -1,1 +1,1 @@
-<%= "there is no group named <b>{name}</b>."[:no_group_named, {:name => params[:id]}] %>
+<%= I18n.t(:no_group_named, :name => {:name => params[:id)}] %>

@@ -2,7 +2,7 @@
 
 <tr id='add_file_field'>
   <td align='right' colspan="2">
-    <%= link_to_remote('Add another file'[:add_another_file], :url => {:controller => 'asset_page', :action => 'add_file_field'},
+    <%= link_to_remote(I18n.t(:add_another_file), :url => {:controller => 'asset_page', :action => 'add_file_field'},
 		       :html => {:style => 'display:none', :id => 'add_file_field_link'}) %>
 
     <%= javascript_tag "$('add_file_field_link').show();"%>

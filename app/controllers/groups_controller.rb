@@ -7,10 +7,10 @@ class GroupsController < Groups::BaseController
   javascript :wiki, :only => :show
   stylesheet :wiki_edit
 
-  helper 'groups', 'wiki'
+  helper 'groups', 'wiki', 'base_page'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
-  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
+  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
   verify :method => :post, :only => [:create, :update, :destroy]
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
@@ -33,10 +33,12 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.find_by_path(search_path, options_for_group(@group))
-    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) ) 
+    @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
+    @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
@@ -56,6 +58,7 @@ class GroupsController < Groups::BaseController
 
   def edit
     update if request.post?
+    render :template => 'groups/edit'
   end
 
   def update
@@ -69,13 +72,15 @@ class GroupsController < Groups::BaseController
   end
 
   def destroy
-    @group.destroyed_by = current_user  # needed for the activity
-    @group.destroy
+    @group.destroy_by(current_user)
+
     if @group.parent
       redirect_to url_for_group(@group.parent)
     else
       redirect_to me_url
     end
+
+    flash_message :success => true, :title => I18n.t(:group_destroyed_message, :group_type => @group.group_type)
   end
 
   protected
@@ -139,7 +144,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, @path.title],
+        :title => "%s :: %s :: %s" % [@group.display_name, I18n.t(params[:action].to_sym), @path.title],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')

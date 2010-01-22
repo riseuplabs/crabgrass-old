@@ -36,12 +36,18 @@ module Groups::MembershipsPermission
     current_user.may?(:admin, group) and group.committee?
   end
 
-  def may_destroy_memberships?(group = @group)
+  def may_leave_memberships?(group = @group)
     logged_in? and
     current_user.direct_member_of?(group) and
     (group.network? or group.users.uniq.size > 1)
   end
 
-  alias_method :may_leave_memberships?, :may_destroy_memberships?
+  def may_destroy_memberships?(membership = @membership)
+    group = membership.group
+
+    # has to have a council
+    group.council != group and
+    current_user.may?(:admin, group)
+  end
 
 end

@@ -6,7 +6,7 @@ module LayoutHelper
 
   def link_to_breadcrumbs(min_length = 3)
     if @breadcrumbs and @breadcrumbs.length >= min_length
-      content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
+      content_tag(:section, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
       ""
     end
@@ -73,11 +73,13 @@ module LayoutHelper
     lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'
-    lines << stylesheet_link_tag('ie/ie6')
+    #lines << themed_stylesheet_link_tag('ie6')
+    lines << stylesheet_link_tag('ie6')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
-    lines << stylesheet_link_tag('ie/ie7')
+    lines << stylesheet_link_tag('ie7')
+    #lines << themed_stylesheet_link_tag('ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     if language_direction == "rtl"
@@ -110,7 +112,7 @@ module LayoutHelper
   end
 
   def language_direction
-    @language_direction ||= if LANGUAGES[session[:language_code]].try.rtl
+    @language_direction ||= if I18n.language_for_locale(session[:language_code]).try.rtl
       "rtl"
     else
       "ltr"
@@ -187,6 +189,9 @@ module LayoutHelper
     lines << @content_for_script
     lines << localize_modalbox_strings
     lines << '</script>'
+    lines << '<!--[if IE]>'
+    lines << '<script src="/javascripts/ie/html5.js"></script>'
+    lines << '<![endif]-->'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
@@ -303,9 +308,29 @@ module LayoutHelper
       end
     else
       # no image
-      content_tag :h1, current_site.title, :id => 'site_title'
-      # <h1 id='site_title'><%= current_site.title %></h1>
+      content_tag :h2, current_site.title, :class => 'site_title'
+      # <h2><%= current_site.title %></h2>
     end
+  end
+  
+  ##
+  ## declare strings used for logins
+  ##
+  def login_context
+    @login_context ||={
+      :strings => {
+        :login           => I18n.t(:login),
+        :username        => I18n.t(:username),
+        :password        => I18n.t(:password),
+        :forgot_password => I18n.t(:forgot_password_link),
+        :create_account  => I18n.t(:signup_link),
+        :redirect        => params[:redirect] || request.request_uri,
+        :token           => form_authenticity_token
+      },
+      :options => {
+        :may_signup => may_signup?
+      }
+    }
   end
 
 end

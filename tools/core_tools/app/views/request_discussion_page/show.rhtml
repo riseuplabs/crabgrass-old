@@ -3,16 +3,15 @@
 
 <p>
 <% if @link -%>
-<%= "This request is: :status.".t[:request_status] % {
-  :status => content_tag(:b, @link.resolved? ? 'resolved'[:status_resolved] : 'pending'[:status_pending])} -%>
-}
+<% status_html = content_tag(:b, @link.resolved? ? I18n.t(:status_resolved) : I18n.t(:status_pending))} %>
+<%= I18n.t(:request_status, :status =>  status_html) -%>
 <% end -%>
 </p>
 
 
 <p>
 <% if @link and current_user.may?(:admin, @link) -%>
-<%= link_to 'approve or reject this request'[:approve_or_reject_link], page_url(@link) -%>
+<%= link_to I18n.t(:approve_or_reject_link), page_url(@link) -%>
 <% end -%>
 </p>
 

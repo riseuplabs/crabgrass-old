@@ -1,0 +1,5 @@
+%article
+  %section.pages-info
+    - layout ||= '/pages/cover'
+    = render :partial => '/pages/core', :layout => layout, :locals => {:page => page}
+  = last_updated_box_for page

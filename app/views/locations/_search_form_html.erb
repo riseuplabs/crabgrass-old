@@ -1,0 +1,11 @@
+<%= form_tag('/groups/directory/search') %>
+<ul class='plain'>
+<%= country_dropdown(nil, nil, {:show_submit => true}) %>
+<%= state_dropdown %>
+<%= city_text_field %>
+<%= city_id_field %>
+<li id='submit_loc' style='display: none'>
+<%= submit_tag('filter by location') %>
+</li>
+</ul>
+</form>

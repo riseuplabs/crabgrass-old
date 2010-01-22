@@ -1,11 +1,11 @@
 
-<h2> <%= link_to_remote "Upload Images"[:upload_images_link],
+<h2> <%= link_to_remote I18n.t(:upload_images_link),
     { :url => page_url(@page, :action => 'upload'), :update => 'target_for_upload'}
 %> | 
-  <%= "Upload ZIP - File"[:upload_a_zip_file_link] %></h2>
+  <%= I18n.t(:upload_a_zip_file_link) %></h2>
 <% form_tag page_url(@page, :action => 'upload_zip'), :method => :post, :multipart => true do -%>
   <%= spinner('upload') %>
   <input type="file" size="38" name="zipfile" /><br />
-  <%= submit_tag "upload".t, :onClick => "$('upload_spinner').show();" %>
-  <%= button_to_function "cancel".t, "new Effect.SlideUp($('target_for_upload'));" %>
+  <%= submit_tag I18n.t(:upload), :onClick => "$('upload_spinner').show();" %>
+  <%= button_to_function I18n.t(:cancel), "new Effect.SlideUp($('target_for_upload'));" %>
 <% end -%>

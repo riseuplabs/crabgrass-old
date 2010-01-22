@@ -4,7 +4,7 @@ class Admin::BaseController < ApplicationController
   include FlashMessageHelper
   include AuthenticatedSystem
 
-  #layout 'admin'
+  layout 'admin'
 
   #stylesheet('admin')
 

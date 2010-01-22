@@ -9,19 +9,29 @@ or one of the many subclasses of this controller (one for each page type).
 This controller, on the other hand, is for cases when we don't have an actual
 page or you don't know the page type in question.
 
-For example, there are two create() actions, one in PagesControllers
-and one in BasePageController. The one in PagesController handles the first
-step where you choose a page type. The one in BasePageController handles the
-next step where you enter in data. This step is handled by BasePageController
-so that each tool can define their own method of creation.
+For example, the new() action in PagesControllers handles the first step where
+you choose a page type. The next step where you enter in data is handled by
+BasePageController so that each tool can define their own method of creation.
+
+The index() action can be triggered through restful routing as in
+ /pages
+or through the seperate routing with paths as in
+ /pages/tag/important
+Some paths will be taken care of by collections before hand though. For
+example
+ /pages/my_work
+
+Restful routing interprets posts as create action. This controller turns them
+into paths and then redirects.
 
 =end
 
 class PagesController < ApplicationController
 
   before_filter :login_required, :except => [:search]
-  stylesheet 'page_creation', :action => :create
+  stylesheet 'page_creation', :action => :new
   permissions 'pages'
+  helper 'action_bar', 'tab_bar'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.
@@ -33,44 +43,99 @@ class PagesController < ApplicationController
   # a simple form to allow the user to select which type of page
   # they want to create. the actual create form is handled by
   # BasePageController (or overridden by the particular tool).
-  def create
-    @available_tools = (@group && @group.group_setting.allowed_tools ? @group.group_setting.allowed_tools : current_site.available_page_types)
+  def new
+    @available_tools = current_site.tools_for(@group)
   end
 
-  # for quickly creating a wiki
-  #def create_wiki
-  #  group = Group.find_by_name(params[:group])
-  #  if group.nil? or !current_user.member_of?(group)
-  #    flash_message_now :error => "Group does not exist or you do not have permission to create a page for that group"
-  #    render :text => '', :layout => 'default'
-  #  elsif page = group.pages.find_by_name(params[:name])
-  #    redirect_to page_url(page)
-  #  elsif params[:name].any?
-  #    raise PermissionDenied.new unless current_user.may_pester!(group)
-  #    name = params[:name]
-  #    page = WikiPage.create!(:title => name.titleize, :name => name.nameize,
-  #      :data => Wiki.create(:user => current_user), :user => current_user, :owner => group)
-  #    redirect_to page_url(page)
-  #  end
-  #end
+  # Posts are interpreted as create by the restful side of things
+  # So we turn them into a path.
+  # Think: This creates a new view on the collection of pages.
+  def create
+    path = parse_filter_path(params[:search])
+    redirect_to pages_url + path
+  end
 
-  # display a list of pages when the url is ambiguous about which one to show.
-  # login is not required.
-  def search
+  # This is a workaround as long as we do not have :only => :index for resources.
+  def show
+    @path=params[:id]
+    index
+  end
+
+  def index
+    if @path.empty?
+      redirect_to my_work_pages_url
+    else
+      all
+    end
+  end
+
+  def all
+    @tab = :all
+    @path.default_sort('updated_at')
+    fetch_pages_for @path
+    rss_for_collection(all_pages_path, :all_pages_link)
+    render :action => "all"  #now it also works for the index action
+  end
+
+  def my_work
+    @tab = :my_work
+    params[:view] ||= 'work'
+    path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
+    fetch_pages_for path
+    rss_for_collection(my_work_pages_path, :my_work_link)
+  end
+
+  def notification
+    path = parse_filter_path("/notified/#{current_user.id}")
+    fetch_pages_for path
+    rss_for_collection(notification_pages_path, :notification_pages_link)
   end
 
   protected
 
   def context
     return true unless request.get? # skip the context on posts, it won't be shown anyway
-    @group ||= Group.find_by_id(params[:group_id]) if params[:group_id]
+    @group ||= Group.find_by_name(params[:group_id]) if params[:group_id]
     @group ||= Group.find_by_name(params[:group]) if params[:group]
     @user ||= User.find_by_id(params[:user_id]) if params[:user_id]
     @user ||= current_user
     page_context
-    context_name = "Create a new {thing}"[:create_a_new_thing, "Page"[:page]].titleize
-    add_context(context_name, :controller => 'pages', :action => 'create', :group => params[:group])
+    context_name = context_name_for_action
+    add_context(context_name,
+      :controller => 'pages', :action => params[:action], :group => params[:group])
     true
   end
 
+  def context_name_for_action
+    case params[:action]
+    when 'new'
+      I18n.t(:create_a_new_thing, :thing => I18n.t(:page)).titleize
+    else
+      key = 'pages_' + params[:action] + '_context'
+      I18n.t(key).titleize
+    end
+  end
+
+  def fetch_pages_for(path)
+    @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
+    add_user_participations(@pages) if logged_in?
+  end
+
+  def add_user_participations(pages)
+    pages_by_id = {}
+    pages.each{|page|pages_by_id[page.id] = page}
+    uparts = UserParticipation.find(:all, :conditions => ['user_id = ? AND page_id IN (?)',current_user.id,pages_by_id.keys])
+    uparts.each do |part|
+      pages_by_id[part.page_id].flag[:user_participation] = part
+    end
+  end
+
+  def rss_for_collection(link, title)
+    title=I18n.t(title) if title.is_a?(Symbol)
+    handle_rss(
+      :title => current_user.name + ' ' + title,
+      :link => link,
+      :image => avatar_url(:id => @user.try.avatar_id||0, :size => 'huge')
+    )
+  end
 end

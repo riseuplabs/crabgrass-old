@@ -1,0 +1,8 @@
+%header.no-sidebar
+  %section#identity
+    = avatar_for( (@parent || @group), 'large', :class => 'left')
+    %div.left
+      %h1
+        = (@parent || @group).full_name
+      = edit_settings_link(@parent || @group)
+    %div.right

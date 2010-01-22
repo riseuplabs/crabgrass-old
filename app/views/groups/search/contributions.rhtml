@@ -1,9 +1,9 @@
 
 <% content_for :html_head do %>
-  <link rel="alternate" href="/group/search/<%= @group.name %>/rss" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" />
+  <link rel="alternate" href="/group/search/<%= @group.name %>/rss" title="<%= I18n.t(:rss_feed) %>" type="application/rss+xml" />
 <% end %>
 
 <div class='landing'>
-<%= header_with_more(:h2, :alert, "Recent Contributions of Group Members".t) %>
+<%= header_with_more(:h2, :alert, I18n.t(:recent_contributions_of_group_members)) %>
 <%= render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:stars, :owner_with_icon, :icon, :title, :contribution]} %>
 </div>

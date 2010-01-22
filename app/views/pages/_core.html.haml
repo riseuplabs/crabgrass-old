@@ -1,0 +1,4 @@
+%a{:href=> page_url(page)}
+  %h4.cover.small_icon.page_text_blue_16 
+    = page.title
+= text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)

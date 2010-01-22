@@ -1,0 +1,7 @@
+%section#pages
+  %header
+    = render :partial => 'pages/list'
+
+  %footer
+    %div.pagination
+      = link_to(I18n.t(:more), person_search_url(:descending => 'updated_at'))

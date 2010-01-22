@@ -107,23 +107,31 @@ class Activity < ActiveRecord::Base
 
   # for user's dashboard
   #
+  named_scope(:social_activities_for_groups_and_friends, lambda do |user|
+    {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
+  end)
+
+  named_scope(:social_activities_for_groups_and_peers, lambda do |user|
+    {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
+  end)
+
+  # +other_users_ids_list+ should be an array of user ids whose
+  # social activity should be retrieved
   # show all activity for:
   #
   # (1) subject is current_user
-  # (2) subject is friend of current_user
+  # (2) subject belongs to the +other_users_ids_list+ (a list of current_user's friends or peers)
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  named_scope(:for_dashboard, lambda do |user|
-    {:conditions => [
-      "(subject_type = 'User'  AND subject_id = ?) OR
+  def self.social_activities_scope_conditions(user, other_users_ids_list)
+    [ "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?)) ",
       user.id,
-      user.friend_id_cache,
+      other_users_ids_list,
       Activity::PRIVATE,
       user.all_group_id_cache]
-    }
-  end)
+  end
 
   # for user's landing page
   #
@@ -132,21 +140,21 @@ class Activity < ActiveRecord::Base
   # (1) subject matches 'user'
   #     (AND 'user' is friend of current_user)
   #
-  # (2) subject matches 'user'
+  # (3) subject matches 'user'
   #     (AND activity.public == true)
   #
   named_scope(:for_user, lambda do |user, current_user|
-    if(current_user and current_user.friend_of?(user) or current_user == user)
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access != ?",
-        user.id, Activity::PRIVATE
-      ]}
+    if (current_user and current_user.friend_of?(user) or current_user == user)
+      restricted = Activity::PRIVATE
+    elsif current_user and current_user.peer_of?(user)
+      restricted = Activity::DEFAULT
     else
-      {:conditions => [
-        "subject_type = 'User' AND subject_id = ? AND access = ?",
-        user.id, Activity::PUBLIC
-      ]}
+      restricted = Activity::DEFAULT
     end
+    {:conditions => [
+      "subject_type = 'User' AND subject_id = ? AND access > ?",
+      user.id, restricted
+    ]}
   end)
 
   # for group's landing page
@@ -193,24 +201,7 @@ class Activity < ActiveRecord::Base
     if group = self.send(attribute)
       group.group_type.downcase
     elsif group_type = self.send(attribute.to_s + '_type')
-      group_type.t.downcase
-    end
-  end
-
-  ##
-  ## DYNAMIC MAGIC
-  ##
-
-  def self.alias_attr(new, old)
-    if self.method_defined? old
-      alias_method new, old
-      alias_method "#{new}=", "#{old}="
-      define_method("#{new}_id")   { read_attribute("#{old}_id") }
-      define_method("#{new}_name") { read_attribute("#{old}_name") }
-      define_method("#{new}_type") { read_attribute("#{old}_type") }
-    else
-      define_method(new) { read_attribute(old) }
-      define_method("#{new}=") { |value| write_attribute(old, value) }
+      I18n.t(group_type.downcase.to_sym).downcase
     end
   end
 
@@ -219,7 +210,7 @@ class Activity < ActiveRecord::Base
   # often, stuff that we want to report activity on has already been
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).try.name || "unknown"[:unknown]
+    name = self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
     '<span class="%s">%s</span>' % [type, name]
   end
 

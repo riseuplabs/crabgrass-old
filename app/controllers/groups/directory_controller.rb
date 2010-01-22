@@ -1,5 +1,7 @@
 class Groups::DirectoryController < Groups::BaseController
 
+  helper 'locations'
+
   before_filter :set_group_type
 
   def index
@@ -9,6 +11,7 @@ class Groups::DirectoryController < Groups::BaseController
   def recent
     user = logged_in? ? current_user : nil
     @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+    @second_nav = 'all'
     render_list
   end
 
@@ -16,17 +19,25 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    @groups = Group.only_type(@group_type).visible_by(user).alphabetized(letter_page).paginate(:all, :page => params[:page])
+    if params[:country_id]
+      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc_options).alphabetized(letter_page).paginate(:all, :page => params[:page])
+      groups_with_names = Group.only_type(@group_type).visible_by(user).in_location(loc_options).names_only
+    else
+      @groups = Group.only_type(@group_type).visible_by(user).alphabetized(letter_page).paginate(:all, :page => params[:page])
+      groups_with_names = Group.only_type(@group_type).visible_by(user).names_only
+    end
 
     # get the starting letters of all groups
-    groups_with_names = Group.only_type(@group_type).visible_by(user).names_only
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
+    @second_nav = 'all'
     render_list
   end
 
   def my
     @groups = current_user.primary_groups.alphabetized('').paginate(:all, :page => params[:page])
     @show_committees = true
+    @second_nav = 'my'
     render_list
   end
 
@@ -35,6 +46,8 @@ class Groups::DirectoryController < Groups::BaseController
     @groups = Group.only_type(@group_type).visible_by(user).most_visits.paginate(:all, :page => params[:page])
     render_list
   end
+
+
 
   protected
 

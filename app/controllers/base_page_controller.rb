@@ -7,11 +7,11 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   include BasePageHelper
-  layout :choose_layout
+  layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
   permissions 'base_page', 'posts'
-  helper 'groups', 'autocomplete', 'base_page/share'
+  helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -71,6 +71,9 @@ class BasePageController < ApplicationController
         flash_message_now :exception => exc
       end
     end
+  end
+
+  def page_history
   end
 
   protected
@@ -183,14 +186,14 @@ class BasePageController < ApplicationController
       @user = current_user
       page_context
 
-      context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
+      context_name = I18n.t(:create_a_new_thing, :thing => get_page_type.class_display_name).titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
-      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
-      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
-        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
-      end
+      @title_box = 'base_page/title/title' if @title_box.nil? && @page
+#      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+ #       @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+ #     end
     end
     true
   end
@@ -222,7 +225,7 @@ class BasePageController < ApplicationController
   # tools override this to build their own data objects
   def build_page_data
     # if something goes terribly wrong with the data do this:
-    # @page.errors.add_to_base "something went terrible wrong"[:terrible_wrongness]
+    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
     # raise ActiveRecord::RecordInvalid.new(@page)
 
     # return new data if everything goes well

@@ -1,0 +1,18 @@
+- inside_layout 'base' do
+
+  - content_for :banner do
+    = render :partial => '/admin/base/banner' 
+
+  %section#admin-content
+    %table.left_layout
+      %tr
+        %td.left_column
+          = render :partial => '/admin/base/navigation'
+        %td#content
+          - if @title_box.any?
+            .title_box
+              = @title_box
+          - if @info_box.any?
+            .info_box{:class => @info_box_class}
+              = @info_box
+          = yield

@@ -1,0 +1,23 @@
+%ul#user
+  - if logged_in?
+    %li.first
+      = I18n.t(:group_home_welcome)
+      
+      = link_to(current_user.display_name, :controller => '/me', :action => 'edit')
+
+    %li  
+      %a.small_icon.page_message_16{:href => "#"}  
+        %strong 4    
+    %li  
+      %a{:href => "#"}  Help
+
+    %li  
+      = link_to(I18n.t(:menu_link_logout), :controller => '/account', :action => 'logout')
+
+    = call_hook :top_right_links
+
+  - elsif !@login_form_already_rendered
+
+    %li
+      = link_to_function( I18n.t(:login), "loginDialog(#{login_context[:strings].to_json}, #{login_context[:options].to_json})")
+ 

@@ -26,18 +26,18 @@
         <td />
         <td colspan="2">
           <input id="profile_locations_<%= index %>_street" size="40" value="<%=h location.street %>" type="text" maxlength="100" name="profile[locations][<%= index %>][street]" class="textInput" style="width:275px;" />
-          <div class="input_label"><%= 'street address'[:location_address] -%></div>
+          <div class="input_label"><%= I18n.t(:location_address) -%></div>
         </td>
       </tr>
       <tr>
         <td />
         <td>
           <input id="profile_locations_<%= index %>_city" size="40" value="<%=h location.city %>" type="text" maxlength="100" name="profile[locations][<%= index %>][city]" class="textInput" style="width:133px;" />
-          <div class="input_label"><%= 'city'[:location_city] -%></div>
+          <div class="input_label"><%= I18n.t(:location_city) -%></div>
         </td>
         <td>
           <input id="profile_locations_<%= index %>_state" size="40" value="<%=h location.state %>" type="text" maxlength="100" name="profile[locations][<%= index %>][state]" class="textInput" style="width:136px;" />
-          <div class="input_label"><%= 'state/province'[:location_state] -%></div>
+          <div class="input_label"><%= I18n.t(:location_state) -%></div>
         </td>
         <td />
       </tr>
@@ -45,11 +45,11 @@
         <td />
         <td>
           <input id="profile_locations_<%= index %>_postal_code" size="40" value="<%=h location.postal_code %>" type="text" maxlength="100" name="profile[locations][<%= index %>][postal_code]" class="textInput" style="width:133px;" />
-          <div class="input_label"><%= 'postal code'[:location_postal_code] -%></div>
+          <div class="input_label"><%= I18n.t(:location_postal_code) -%></div>
         </td>
         <td>
           <input id="profile_locations_<%= index %>_country_name" size="40" value="<%=h location.country_name %>" type="text" maxlength="100" name="profile[locations][<%= index %>][country_name]" class="textInput" style="width:136px;" />
-          <div class="input_label"><%= 'country'[:location_country] -%></div>
+          <div class="input_label"><%= I18n.t(:location_country) -%></div>
         </td>
         <td />
       </tr>

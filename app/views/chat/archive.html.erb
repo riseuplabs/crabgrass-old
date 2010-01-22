@@ -2,7 +2,7 @@
 ymd = "#{@year}-#{@month}"
 ymd += "-#{@day}" unless @day.empty?
 
-@title_box = content_tag :h1, 'Chat Archive'[:chat_archive_headline] + " - #{ymd}"  %>
+@title_box = content_tag :h1, I18n.t(:chat_archive_headline) + " - #{ymd}"  %>
 
 <% if !@months.empty? and !@messages -%>
 <blockquote>

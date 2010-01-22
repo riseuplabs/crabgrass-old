@@ -1,0 +1,9 @@
+= render :partial => '/groups/group_header_no_sidebar'
+
+%section#main-content.no-sidebar
+  %h3 Pending Tasks
+  %p
+    = typed_create_page_link(TaskListPage, @group) if may_create_group_page?
+
+  %section#tasks
+    = render :partial => 'tasks/list'

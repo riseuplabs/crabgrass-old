@@ -13,6 +13,42 @@ class UiController < ApplicationController
   #stylesheet 'gallery'
   #stylesheet 'contribute'
 
+  #
+  # this action uses a layout without sidebar container
+  #
+  def login
+  end
+
+  def profile
+  end
+
+  def group
+  end
+  
+  def group_browse
+  end
+  
+  def group_types
+  end
+  
+  def wiki
+  end
+  
+  def tasks
+  end
+  
+  def messages
+  end 
+  
+  def messages_thread
+  end
+  
+  def settings
+  end
+  
+  def social_activities
+  end
+
   def index
     data = params[:data]
     if data

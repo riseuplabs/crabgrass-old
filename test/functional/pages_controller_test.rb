@@ -17,9 +17,9 @@ class PagesControllerTest < Test::Unit::TestCase
   def teardown
   end
 
-  def test_create
+  def test_new
     login_as :quentin
-    get :create
+    get :new
     assert_response :success
   end
 

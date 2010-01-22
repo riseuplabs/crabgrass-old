@@ -22,7 +22,7 @@ class Me::InboxController < Me::BaseController
     @pages = Page.paginate_by_path(@path, options_for_inbox(:page => params[:page]))
     add_user_participations(@pages)
     handle_rss(
-      :title => current_user.name + ' ' + 'Inbox'[:inbox],
+      :title => current_user.name + ' ' + I18n.t(:me_inbox_link),
       :link => '/me/inbox',
       :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
     ) or render(:action => 'list')
@@ -76,7 +76,7 @@ class Me::InboxController < Me::BaseController
 
   def context
     super
-    add_context 'Inbox'[:me_inbox_link], url_for(:controller => '/me/inbox', :action => params[:action], :path => params[:path])
+    add_context I18n.t(:me_inbox_link), url_for(:controller => '/me/inbox', :action => params[:action], :path => params[:path])
   end
 
 end

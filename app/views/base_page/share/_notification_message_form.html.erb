@@ -14,27 +14,35 @@
 
   <tr>
     <td><%= check_box :notification, :send_notice, check_box_options %></td>
-    <td style="width:100%"><label for='notification_send_notice'><%= 'Send notification to inbox'[:share_send_notification]%></label></td>
+    <td style="width:100%">
+      <label for='notification_send_notice'>
+        <%= I18n.t(:share_send_notification)%>
+      </label>
+    </td>
   </tr>
   <tbody id='notification_details' style='<%= 'display:none' unless send_notice %>'>
   <tr>
     <td></td>
     <td>
-      <%= 'Send additional notification via'[:share_additional_notification] %>:
-      <label><%= check_box :notification, :send_email, :checked => send_email %> <%= 'Email'[:email] %></label>
+      <%= I18n.t(:share_additional_notification) %>:
+      <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:email) %></label>
 <!--
 these are not supported yet.
-      <label><%= check_box :notification, :send_sms %> <%= 'Text Message'[:text_message] %></label>
-      <label><%= check_box :notification, :send_xmpp %> <%= 'Chat'[:chat] %></label>
+      <label><%= check_box :notification, :send_sms %> <%= I18n.t(:text_message) %></label>
+      <label><%= check_box :notification, :send_xmpp %> <%= I18n.t(:chat) %></label>
       <br/>
-      <label><%= check_box :notification, :send_encrypted %> <%= 'Send only if encrypted distribution is possible'[:send_only_with_encryption] %></label>
+      <label><%= check_box :notification, :send_encrypted %> <%= I18n.t(:send_only_with_encryption) %></label>
 
 -->
     </td>
   </tr>
   <tr>
     <td><%= check_box :ignored, :include_message, :checked => include_message, :onClick => "checkboxToggle(this, 'share_message_holder');" + resize_modal %></td>
-    <td><label for='ignored_include_message'><%= 'Include a custom message'[:share_include_message] %></label></td>
+    <td>
+      <label for='ignored_include_message'>
+        <%= I18n.t(:share_include_message) %>
+      </label>
+    </td>
   </tr>
   <tr>
     <td></td>

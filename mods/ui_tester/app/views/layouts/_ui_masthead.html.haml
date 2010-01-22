@@ -1,0 +1,39 @@
+%section#masthead
+  %div#masthead-container
+    %div#masthead-name
+      %h2 RiseUp.net
+      %form#search
+        %fieldset
+          %input.text{:type=>'text'} 
+          %input.search-submit{:type=>'button', :value=>'Search'}
+        %div
+          %input.checkbox{:type=>'checkbox'}
+          %label.light-small
+            Search this group only
+%nav.page
+  %div#global-nav-container
+    %div#global-nav
+      %ul#menu
+        %li 
+          %a{:href => "#"}  HOME
+        %li 
+          %a{:href => "#"}  ME
+        %li  
+          %a{:href => "#"}  PEOPLE
+        %li.current  
+          %a{:href => "#"}  GROUPS
+        %li  
+          %a{:href => "#"}  NETWORKS
+      %ul#user
+        %li.first 
+          Welcome
+          %strong Angus
+        %li  
+          %a.small_icon.page_message_16{:href => "#"}  
+            %strong 4
+          %span &bull;
+        %li  
+          %a{:href => "#"}  Help
+          %span &bull;
+        %li  
+          %a{:href => "#"}  Sign Out

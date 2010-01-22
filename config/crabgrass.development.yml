@@ -18,18 +18,20 @@
 title: "Crabgrass Development"
 
 enabled_mods:
-  - ui_tester
-  - design_tester
-  - super_admin
-  - moderation
-#  - gibberize
+   - design_tester
+   - super_admin
+   # - moderation
+   - translator
+   - ui_tester
 
 email:
   delivery_method: :sendmail
 
-translation_group: rainbow
+translation_group: rainbow 
 
 text_editor: greencloth_only
+
+#use_full_geonames_data: true
 
 ##
 ## SITES

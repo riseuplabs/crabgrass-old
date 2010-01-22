@@ -1,0 +1,31 @@
+%ul#details
+  %li.small_icon.location_20
+    = I18n.t(:location).upcase
+    %br
+    %span Local-Turkey
+  %li.small_icon.status_20
+    = I18n.t(:status).upcase
+    %br
+    %span
+      = open_or_private @group.profile
+  %li.small_icon.created_20
+    = I18n.t(:created).upcase
+    %br
+    %span 
+      = friendly_date(@group.created_at)
+  %li.small_icon.updated_20
+    = I18n.t(:updated).upcase
+    %br
+    %span 
+      = friendly_date(@group.updated_at)
+  %li.small_icon.activity_20
+    = I18n.t(:activity).upcase
+    %br
+    %span
+      = @pages.total_entries if @pages.is_a?(WillPaginate)
+      = I18n.t(:pages)
+  %li.small_icon.tags_20
+    = I18n.t(:tags).upcase
+    %br
+    %span
+      = link_to(@tags, groups_url(:action => 'tags') + '/')

@@ -2,7 +2,7 @@
   @message_box ||= render(
     :partial => 'common/say_form',
     :locals => {
-      :submit => "Send Message"[:send_message_link],
+      :submit => I18n.t(:send_message_link),
       :url => url_for(:controller => '/conversations', :action => 'update'),
       :autocomplete => true
     }

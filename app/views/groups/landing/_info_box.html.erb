@@ -2,9 +2,9 @@
 <tr>
   <td class="left">
     <%= render :partial => 'groups/landing/info_box_cover_media', :locals => {:media => @group.profiles.public.cover} %>
-    <h2 class='dim'><%= "Welcome"[:group_home_welcome] %></h2>
+    <h2 class='dim'><%= I18n.t(:group_home_welcome) %></h2>
     <% if @group.council? -%>
-      <p><%= 'Coordinating Council'[:coordinating_council] %></p>
+      <p><%= I18n.t(:coordinating_council) %></p>
     <% end -%>
     <p class="description"><%= @group.profiles.public.summary_html %></p>
     <div class="clear"><%= link_span(:bullet, join_group_link, edit_settings_link, leave_group_link, destroy_group_link) %></div>

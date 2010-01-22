@@ -1,25 +1,25 @@
 <% @title_box = capture do -%>
-<h1><%= 'Edit Layout'.t %></h1>
+<h1><%= I18n.t(:edit_layout_heading) %></h1>
 <% end %>
 
-<div><%= "Select the widgets visible on your group's front page"[:select_visible_group_widgets]%><p/></div>
+<div><%= I18n.t(:select_visible_group_widgets)%><p/></div>
 
 <%- form_tag(:controller => '/group', :action => 'edit_layout', :id => @group) do -%>
 
-  <b><%= "Widget 1"[:widget_1]%>:</b> <%= select_tag("section1", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section1'))) %>
+  <b><%= I18n.t(:widget_index, :index => 1) %>:</b> <%= select_tag("section1", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section1'))) %>
 <p/>
-  <b><%= "Widget 2"[:widget_2]%>:</b> <%= select_tag("section2", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section2'))) %>
-  
-  <%- if @widgets.size >= 3 %>  
-    <p/>  
-    <b><%= "Widget 3"[:widget_3]%>:</b> <%= select_tag("section3", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section3'))) %>   
+  <b><%= I18n.t(:widget_index, :index => 2) %>:</b> <%= select_tag("section2", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section2'))) %>
+
+  <%- if @widgets.size >= 3 %>
+    <p/>
+    <b><%= I18n.t(:widget_index, :index => 3) %>:</b> <%= select_tag("section3", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section3'))) %>
   <%- end %>
-  
+
   <%- if @widgets.size >= 4 %>
      <p/>
-    <b><%= "Widget 4"[:widget_4]%>:</b> <%= select_tag("section4", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section4'))) %>
+    <b><%= I18n.t(:widget_index, :index => 4) %>:</b> <%= select_tag("section4", options_for_select(@widgets.map {|w| [w.last,w.last]}, @group.layout('section4'))) %>
   <%- end %>
-  
+
   <p/>
   <br/>
   <input type="submit" value="Save Changes">

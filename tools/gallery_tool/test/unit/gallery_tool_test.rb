@@ -35,7 +35,7 @@ class GalleryToolTest < Test::Unit::TestCase
   def test_adding_attachment
     user = users(:blue)
     gal = Gallery.create! :title => 'kites', :user => user
-    asset = Asset.make(:uploaded_data => upload_data('image.png'))
+    asset = Asset.create_from_params(:uploaded_data => upload_data('image.png'))
 
     assert_nothing_raised do
       gal.add_image!(asset, user)

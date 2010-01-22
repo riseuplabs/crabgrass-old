@@ -1,0 +1,10 @@
+= render :partial => '/groups/admin_header'
+
+- content_for :left_sidebar do
+  = render :partial => '/groups/navigation/settings_sidelinks'
+
+%section#main-content.no-sidebar
+  - form_tag(groups_profiles_params(:action => :permissions), :multipart => false) do
+    = render :partial => '/groups/profiles/permissions_form'
+    %p.form_buttons= submit_tag I18n.t(:save_button), :name => 'save'
+  - call_hook :group_permissions

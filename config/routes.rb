@@ -9,7 +9,7 @@
 ActionController::Routing::Routes.draw do |map|
 
   # total hackety magic:
-  map.filter 'crabgrass_routing_filter'
+#  map.filter 'crabgrass_routing_filter'
 
   ##
   ## PLUGINS
@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # optionally load these plugin routes, if they happen to be loaded
   map.from_plugin :super_admin rescue NameError
-  map.from_plugin :gibberize   rescue NameError
+  map.from_plugin :translator   rescue NameError
   map.from_plugin :moderation  rescue NameError
 
   map.namespace :admin do |admin|
@@ -46,20 +46,29 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
-  map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
+  # map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
   map.connect 'me/search/*path',            :controller => 'me/search', :action => 'index'
   map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
-  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
-    me.resources :my_private_messages, :as => 'messages/private', :controller => 'private_messages'
-    me.resources :my_public_messages,  :as => 'messages/public',  :controller => 'public_messages'
-    me.resources :my_messages,         :as => 'messages',         :controller => 'messages'
+  map.resources :messages, { :collection => { :mark => :put },
+                             :member => { :next => :get, :previous => :get }} do |message|
+    message.resources :posts, :namespace => 'message_'
   end
 
-  map.connect 'me/:action/:id',             :controller => 'me'
+  map.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+  map.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }, :controller => 'me/requests'}
+
+  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+    # This should only be index. However ajax calls seem to post not get...
+    me.resource :flag_counts, :only => [:show, :create]
+    me.resource :recent_pages, :only => [:show, :create]
+    me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
+  end
+
+  map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
 
   ##
   ## PEOPLE
@@ -69,7 +78,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.with_options(:namespace => 'people/') do |people_space|
     people_space.resources :people do |people|
-      people.resources :messages
+      people.resources :messages, :as => 'messages/public', :controller => 'public_messages'
     end
   end
 
@@ -86,6 +95,17 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
+
+  map.resources :pages,
+    :only => [:new, :update, :index],
+    :collection => {
+      :my_work => :get,
+      :notification => :get,
+      :all => :get,
+      :mark => :put}
+
+  map.connect '/pages/*path', :controller => 'pages'
+
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
   #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
@@ -101,7 +121,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account '/account/:action/:id', :controller => 'account'
 
   map.connect '', :controller => 'root'
-  
+
   map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
@@ -111,10 +131,18 @@ ActionController::Routing::Routes.draw do |map|
   map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
-  map.groups 'groups/:action/:id', :controller => 'groups'
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash/
+  map.resources :groups do |group|
+    group.resources :pages, :only => :new
+  end
 
-  map.networks 'networks/:action/:id', :controller => 'networks'
+  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
+
+  map.resources :networks do |network|
+    network.resources :pages, :only => :new
+  end
+
+  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##

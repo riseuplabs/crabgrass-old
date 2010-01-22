@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091023194253) do
+ActiveRecord::Schema.define(:version => 20100106094441) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -222,6 +222,41 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
   add_index "federatings", ["group_id", "network_id"], :name => "gn"
   add_index "federatings", ["network_id", "group_id"], :name => "ng"
 
+  create_table "geo_admin_codes", :force => true do |t|
+    t.integer "geo_country_id", :limit => 11, :null => false
+    t.string  "admin1_code",    :limit => 10, :null => false
+    t.string  "name",                         :null => false
+  end
+
+  add_index "geo_admin_codes", ["geo_country_id", "admin1_code"], :name => "geo_admin_codes_index", :unique => true
+
+  create_table "geo_countries", :force => true do |t|
+    t.string "name",              :null => false
+    t.string "code", :limit => 3, :null => false
+  end
+
+  add_index "geo_countries", ["name", "code"], :name => "geo_countries_index", :unique => true
+
+  create_table "geo_locations", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11, :null => false
+    t.integer "geo_admin_code_id", :limit => 11, :null => false
+    t.integer "geo_place_id",      :limit => 11, :null => false
+  end
+
+  create_table "geo_places", :force => true do |t|
+    t.integer "geo_country_id",    :limit => 11,                                   :null => false
+    t.integer "geonameid",         :limit => 11,                                   :null => false
+    t.string  "name",                                                              :null => false
+    t.string  "alternatenames",    :limit => 5000
+    t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
+    t.decimal "longitude",                         :precision => 24, :scale => 20, :null => false
+    t.integer "geo_admin_code_id", :limit => 11,                                   :null => false
+  end
+
+  add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
+  add_index "geo_places", ["geo_country_id"], :name => "index_geo_places_on_geo_country_id"
+  add_index "geo_places", ["geo_admin_code_id"], :name => "index_geo_places_on_geo_admin_code_id"
+
   create_table "group_participations", :force => true do |t|
     t.integer  "group_id",          :limit => 11
     t.integer  "page_id",           :limit => 11
@@ -334,8 +369,6 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.integer  "sender_id",   :limit => 11
     t.string   "sender_name"
     t.string   "level"
-    t.integer  "yuck_count",  :limit => 11, :default => 0
-    t.boolean  "vetted",                    :default => false
     t.datetime "deleted_at"
   end
 
@@ -346,19 +379,21 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.datetime "created_at"
   end
 
-  create_table "moderated_flags", :force => true do |t|
-    t.string   "type",                         :null => false
-    t.datetime "vetted_at"
-    t.integer  "vetted_by_id",   :limit => 11
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id",  :limit => 11
-    t.string   "reason_flagged"
-    t.string   "comment"
+  create_table "page_histories", :force => true do |t|
+    t.integer  "user_id",                     :limit => 11
+    t.integer  "page_id",                     :limit => 11
+    t.string   "type"
     t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",        :limit => 11
-    t.integer  "foreign_id",     :limit => 11, :null => false
+    t.integer  "object_id",                   :limit => 11
+    t.string   "object_type"
+    t.datetime "notification_sent_at"
+    t.datetime "notification_digest_sent_at"
+    t.string   "details"
   end
+
+  add_index "page_histories", ["user_id"], :name => "index_page_histories_on_user_id"
+  add_index "page_histories", ["object_id", "object_type"], :name => "index_page_histories_on_object_id_and_object_type"
+  add_index "page_histories", ["page_id"], :name => "index_page_histories_on_page_id"
 
   create_table "page_terms", :force => true do |t|
     t.integer  "page_id",            :limit => 11
@@ -417,7 +452,7 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
     t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -428,9 +463,6 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
-    t.boolean  "public_requested",                 :default => false
-    t.boolean  "vetted",                           :default => false
-    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -474,8 +506,7 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
-    t.boolean  "vetted",                      :default => false
-    t.integer  "yuck_count",    :limit => 11, :default => 0
+    t.integer  "page_terms_id", :limit => 11
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
@@ -530,6 +561,7 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.integer  "geo_location_id",        :limit => 11
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -601,53 +633,35 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.string  "name"
     t.string  "domain"
     t.string  "email_sender"
-    t.integer "pagination_size",      :limit => 11
-    t.integer "super_admin_group_id", :limit => 11
+    t.integer "pagination_size",        :limit => 11
+    t.integer "super_admin_group_id",   :limit => 11
     t.text    "translators"
     t.string  "translation_group"
     t.string  "default_language"
     t.text    "available_page_types"
     t.text    "evil"
     t.boolean "tracking"
-    t.boolean "default",                            :default => false
-    t.integer "network_id",           :limit => 11
-    t.integer "custom_appearance_id", :limit => 11
-    t.boolean "has_networks",                       :default => true
+    t.boolean "default",                              :default => false
+    t.integer "network_id",             :limit => 11
+    t.integer "custom_appearance_id",   :limit => 11
+    t.boolean "has_networks",                         :default => true
     t.string  "signup_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
-    t.integer "council_id",           :limit => 11
+    t.integer "council_id",             :limit => 11
     t.string  "login_redirect_url"
     t.boolean "chat"
     t.boolean "limited"
-    t.integer "signup_mode",          :limit => 1
-    t.string  "email_sender_name",    :limit => 40
-    t.integer "moderation_group_id",  :limit => 11
+    t.integer "signup_mode",            :limit => 1
+    t.string  "email_sender_name",      :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
+    t.boolean "require_user_full_info"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
-
-  create_table "skill_involvements", :force => true do |t|
-    t.integer "user_id",     :limit => 11
-    t.integer "skill_id",    :limit => 11
-    t.boolean "learn_flag"
-    t.integer "learn_level", :limit => 11
-    t.boolean "can_flag"
-    t.integer "can_level",   :limit => 11
-    t.boolean "teach_flag"
-    t.integer "teach_level", :limit => 11
-  end
-
-  create_table "skills", :force => true do |t|
-    t.string "name"
-    t.text   "description"
-    t.string "language_code"
-    t.string "count_cache"
-  end
 
   create_table "survey_answers", :force => true do |t|
     t.integer  "question_id",       :limit => 11
@@ -745,19 +759,6 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
   end
 
   add_index "tasks_users", ["user_id", "task_id"], :name => "index_tasks_users_ids"
-
-  create_table "taxonomies", :force => true do |t|
-    t.string "name"
-    t.text   "description"
-  end
-
-  create_table "taxonomy_items", :force => true do |t|
-    t.integer "lft",         :limit => 11
-    t.integer "rgt",         :limit => 11
-    t.integer "skill_id",    :limit => 11
-    t.integer "parent_id",   :limit => 11
-    t.integer "taxonomy_id", :limit => 11
-  end
 
   create_table "thumbnails", :force => true do |t|
     t.integer "parent_id",    :limit => 11
@@ -864,17 +865,22 @@ ActiveRecord::Schema.define(:version => 20091023194253) do
     t.string   "language",                  :limit => 5
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
+    t.string   "receive_notifications"
+    t.boolean  "encrypt_emails",                          :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
   create_table "votes", :force => true do |t|
-    t.integer  "possible_id", :limit => 11
-    t.integer  "user_id",     :limit => 11
+    t.integer  "possible_id",  :limit => 11
+    t.integer  "user_id",      :limit => 11
     t.datetime "created_at"
-    t.integer  "value",       :limit => 11
+    t.integer  "value",        :limit => 11
     t.string   "comment"
+    t.string   "type"
+    t.integer  "votable_id",   :limit => 11
+    t.string   "votable_type"
   end
 
   add_index "votes", ["possible_id"], :name => "index_votes_possible"

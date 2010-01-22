@@ -32,8 +32,7 @@ module FormHelper
   # if the user clicks an element maching a saving_selector, the confirmation dialog
   # will get disabled until the page is reloaded
   def confirm_discarding_text_area(text_area_id, saving_selectors, message = nil)
-    message ||= "All your unsaved work will be lost. Press {cancel} to continue editing."[:confirm_discarding_text_area,
-        {:cancel => "Cancel"[:cancel]}]
+    message ||= I18n.t(:confirm_discarding_text_area, :cancel => I18n.t(:cancel))
 
     %Q[confirmDiscardingTextArea("#{text_area_id}", "#{message}", #{saving_selectors.inspect})]
   end
