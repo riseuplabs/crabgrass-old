@@ -80,5 +80,11 @@ module JavascriptHelper
   def hide_default_value
     "if(this.value==this.defaultValue) this.value='';"
   end
+
+  # toggle all checkboxes off and then toggle a subset of them on
+  # selectors are css expressions
+  def checkboxes_subset_function(all_selector, subset_selector)
+    "toggleAllCheckboxes(false, '#{all_selector}'); toggleAllCheckboxes(true, '#{subset_selector}')"
+  end
 end
 
