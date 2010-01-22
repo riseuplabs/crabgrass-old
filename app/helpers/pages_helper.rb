@@ -41,6 +41,6 @@ module PagesHelper
               {:name => :unread, :translation => :unread},
               {:name => :watched, :translation => :watched},
               {:name => :unwatched, :translation => :unwatched}],
-      :view => view_options }
+      :view => view_settings }
   end
 end
