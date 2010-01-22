@@ -1,4 +1,4 @@
-= form_tag('/groups/directory/search')
+= form_tag(@request_path)
 = country_dropdown(nil, nil, {:show_submit => true})
 = state_dropdown
 = city_text_field

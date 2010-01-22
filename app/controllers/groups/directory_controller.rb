@@ -10,9 +10,15 @@ class Groups::DirectoryController < Groups::BaseController
 
   def recent
     user = logged_in? ? current_user : nil
-    @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+    if params[:country_id]
+      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc_options).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+    else
+      @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+    end
     @second_nav = 'all'
     @misc_header = '/groups/directory/discover_header'
+    @request_path = '/groups/directory/recent'
     render_list
   end
 
@@ -33,6 +39,7 @@ class Groups::DirectoryController < Groups::BaseController
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
     @second_nav = 'all'
     @misc_header = '/groups/directory/browse_header'
+    @request_path = '/groups/directory/search'
     render_list
   end
 
