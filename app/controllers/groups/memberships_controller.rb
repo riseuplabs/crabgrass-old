@@ -16,13 +16,17 @@ class Groups::MembershipsController < Groups::BaseController
   def list
     # disabled for the sites mode - do we want membership by site?
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-   @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-   @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @second_nav = 'administration'
+    @third_nav = 'members'
   end
 
   # list groups belonging to a network
   def groups
     @federatings = @group.federatings.alphabetized_by_group
+    @second_nav = 'administration'
+    @third_nav = 'members'
   end
 
   # edit committee settings (add/remove users) or admin a group (currently n/a)

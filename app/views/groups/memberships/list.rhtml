@@ -4,9 +4,9 @@
 table.members td {padding: 12px;}
 <% end -%>
 
-<%= render :partial => 'members_tabs', :locals => {:group => @group } -%>
-
-<%= invite_link %>
+<% content_for :left_sidebar do %>
+  <%= render :partial => 'members_sidelinks', :locals => {:group => @group } -%>
+<% end %>
 
 <% if current_site.tracking %>
 <b>Visits:</b>

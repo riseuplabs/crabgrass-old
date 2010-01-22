@@ -18,6 +18,8 @@ class Groups::FeaturesController < Groups::BaseController
   verify :only => :update, :method => :put, :redirect_to => {:action => :index}
 
   def index
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   def create

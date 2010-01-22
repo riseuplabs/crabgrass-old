@@ -1,0 +1,26 @@
+= render :partial => '/groups/admin_header'
+
+- content_for :left_sidebar do
+  %ul
+    %li
+      = link_to I18n.t(:pending), {:state => "pending", :controller => "groups/requests", :action => "list", :id => @group}
+    %li
+      = link_to I18n.t(:approved), {:state => "approved", :controller => "groups/requests", :action => "list", :id => @group}
+    %li
+      = link_to I18n.t(:rejected), {:state => "rejected", :controller => "groups/requests", :action => "list", :id => @group}
+
+%h2
+  = I18n.t(:incoming)
+
+= render :partial => 'groups/requests/table', :locals => {:requests => @incoming}
+
+= pagination_links(@incoming, :param_name => :in_page)
+
+
+%h2
+  = I18n.t(:outgoing)
+
+= render :partial => 'groups/requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true}
+
+= pagination_links(@outgoing, :param_name => :out_page)
+

@@ -13,6 +13,8 @@ class Groups::RequestsController < Groups::BaseController
 
     @outgoing = Request.from_group(@group).
                     having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
+    @second_nav = 'administration'
+    @third_nav = 'requests'
   end
 
   ##
@@ -33,6 +35,9 @@ class Groups::RequestsController < Groups::BaseController
   end
 
   def create_invite
+    @second_nav = 'administration'
+    @third_nav = 'members'
+
     if request.get?
       store_back_url and return
     else

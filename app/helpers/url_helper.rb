@@ -51,7 +51,7 @@ module UrlHelper
   end
 
   def groups_profiles_params(options={})
-    {:controller => '/groups/profiles', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/profiles', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def groups_memberships_params(options={})
@@ -59,7 +59,7 @@ module UrlHelper
   end
 
   def groups_features_params(options={})
-    {:controller => '/groups/features', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/features', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def groups_menu_items_params(options={})
