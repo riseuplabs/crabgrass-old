@@ -54,27 +54,27 @@ module LocationsHelper
 #####
 ##### should be removed if we end up not limiting dropdown in directory search to countries/states with profiles
 #####
-  def select_search_countries(replace_id)
-    onchange = remote_function(
-      :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
-      :with => "'country_id='+value+'&replace_id=#{replace_id}'"
-    )
+#  def select_search_countries(replace_id)
+#    onchange = remote_function(
+#      :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
+#      :with => "'country_id='+value+'&replace_id=#{replace_id}'"
+#    )
 #    countries_with_groups = []
 #    @groups.each do |gr|
 #      if gr.profile.geo_location
 #        countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
 #      end
 #    end
-    select(nil, nil, '', {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
-  end
-
-  def select_search_admin_codes(select_state_id, replace_id)
-    onchange = remote_function(
-      :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
-      :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
-    )
-    select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
-  end
+#    select(nil, nil, '', {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
+#  end
+#
+#  def select_search_admin_codes(select_state_id, replace_id)
+#    onchange = remote_function(
+#      :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
+#      :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
+#    )
+#    select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
+#  end
 #####
 ##### end should be removed
 #####
