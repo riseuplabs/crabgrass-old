@@ -10,9 +10,19 @@ class Groups::DirectoryController < Groups::BaseController
 
   def recent
     user = logged_in? ? current_user : nil
-    @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
-    @second_nav = 'all'
-    render_list
+    if params[:country_id]
+      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+      @groups = Group.only_type(@group_type).visible_by(user).in_location(loc_options).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+      render :update do |page|
+        page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
+      end
+    else
+      @groups = Group.only_type(@group_type).visible_by(user).paginate(:all, :order => 'groups.created_at DESC', :page => params[:page])
+      @second_nav = 'all'
+      @misc_header = '/groups/directory/discover_header'
+      @request_path = '/groups/directory/recent'
+      render_list
+    end
   end
 
   def search
@@ -30,8 +40,16 @@ class Groups::DirectoryController < Groups::BaseController
 
     # get the starting letters of all groups
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
-    @second_nav = 'all'
-    render_list
+    if params[:country_id]
+      render :update do |page|
+        page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
+      end
+    else
+      @second_nav = 'all'
+      @misc_header = '/groups/directory/browse_header'
+      @request_path = '/groups/directory/search'
+      render_list
+    end
   end
 
   def my

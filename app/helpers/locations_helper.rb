@@ -10,14 +10,12 @@ module LocationsHelper
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
-    html = '<div id="select_country">'+I18n.t(:location_country).capitalize+': '
-    html << select(object,method, GeoCountry.find(:all).to_select(:name, :id), {:include_blank => true},{:name => name, :id => 'select_country_id', :onchange => onchange}).to_s
-    html << spinner('country')+"</div>"
+    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name}
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
     display = _display_value
-    html = "<div id='state_dropdown' style='display: #{display}'>"+I18n.t(:location_state).capitalize+": "
+    html = ""
     name = _field_name('state_id', object, method)
     if country_id.nil?
       html << select(object, method, '', {:include_blank => true}, {:id=>'select_state_id'})
@@ -25,7 +23,7 @@ module LocationsHelper
       geocountry = GeoCountry.find_by_id(country_id)
       html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => 'select_state_id'})
     end
-    html << '</div>'
+    render :partial => '/locations/state_dropdown', :locals => {:select_html => html, :display => display}
   end
 
   def city_text_field(object=nil, method=nil, options = {})
@@ -38,13 +36,11 @@ module LocationsHelper
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
-    html = "<div id='city_text' style='display: #{display}'>"+I18n.t(:location_city).capitalize+": "
-    html << text_field(object, method, {:onblur => onblur, :name => name})
-    html << spinner('city')+"</div>"
+    render :partial => '/locations/city_text_field', :locals => {:display => display, :name => name, :onblur => onblur, :object=>object, :method=>method}
   end
 
   def city_id_field(object=nil, method=nil)
-    html = ''
+    display = ''
     contents = ''
     if !@profile.nil? and @profile.city_id
       contents << '<ul>'
@@ -52,34 +48,33 @@ module LocationsHelper
       contents << '</ul>'
       display = "inline"
     end
-    html << "<div id='city_results' style='display:#{display}'>"
-    html << "#{contents}</div>"
+    render :partial => '/locations/city_id_field', :locals => {:display => display, :contents => contents}
   end
 
 #####
 ##### should be removed if we end up not limiting dropdown in directory search to countries/states with profiles
 #####
-  def select_search_countries(replace_id)
-    onchange = remote_function(
-      :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
-      :with => "'country_id='+value+'&replace_id=#{replace_id}'"
-    )
+#  def select_search_countries(replace_id)
+#    onchange = remote_function(
+#      :url => {:controller => '/locations', :action => 'admin_codes_with_profiles_options'},
+#      :with => "'country_id='+value+'&replace_id=#{replace_id}'"
+#    )
 #    countries_with_groups = []
 #    @groups.each do |gr|
 #      if gr.profile.geo_location
 #        countries_with_groups.push(GeoCountry.find(gr.profile.geo_location.geo_country_id))
 #      end
 #    end
-    select(nil, nil, '', {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
-  end
-
-  def select_search_admin_codes(select_state_id, replace_id)
-    onchange = remote_function(
-      :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
-      :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
-    )
-    select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
-  end
+#    select(nil, nil, '', {:include_blank=>true}, {:name=>'country_id', :id=> 'select_country_id', :onchange => onchange})
+#  end
+#
+#  def select_search_admin_codes(select_state_id, replace_id)
+#    onchange = remote_function(
+#      :url => {:controller => '/locations', :action => 'cities_with_profiles_options'},
+#      :with => "'country_id='+$('select_country_id').value+'&admin_code_id='+value+'&replace_id=#{replace_id}'"
+#    )
+#    select(nil, nil, '', {:include_blank => true}, {:id => select_state_id, :onchange => onchange})
+#  end
 #####
 ##### end should be removed
 #####

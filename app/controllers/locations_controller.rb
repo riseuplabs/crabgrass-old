@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
 
   def all_admin_codes_options
-    html = '<option value="" selected>Choose State/Province...</option>'
+    html = '<option value="" selected>'+I18n.t(:location_state).capitalize+'</option>'
     GeoCountry.find_by_id(params[:country_code]).geo_admin_codes.each do |ac|
       html << "<option value='#{ac.id}'>#{ac.name}</option>"
     end
