@@ -54,11 +54,12 @@ module BasePage::ShareHelper
     end
 
     html = []
+
     items.collect do |item|
       selected = ('selected' if item[:value] == selected_item)
       html << content_tag(
         :option,
-        h(truncate(item[:label],40)),
+        h(truncate(item[:label], :length => 40)),
         :value => item[:value],
         :class => 'spaced',
         :selected => selected,
@@ -69,7 +70,7 @@ module BasePage::ShareHelper
           selected = ('selected' if committee.name == selected_item)
           html << content_tag(
             :option,
-            h(truncate(committee.short_name,40)),
+            h(truncate(committee.short_name, :length => 40)),
             :value => committee.name,
             :class => 'indented',
             :selected => selected
