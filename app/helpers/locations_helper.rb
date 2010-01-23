@@ -6,7 +6,7 @@ module LocationsHelper
     show_submit = options[:show_submit] || false 
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'show_submit=#{show_submit}&country_code='+value",
+      :with => "'select_state_name='+$('select_state_id').name+'&show_submit=#{show_submit}&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
@@ -18,12 +18,12 @@ module LocationsHelper
     html = ""
     name = _field_name('state_id', object, method)
     if country_id.nil?
-      html << select(object, method, '', {:include_blank => true}, {:id=>'select_state_id'})
+      geo_admin_codes = []
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      html << select(object, method, geocountry.geo_admin_codes.find(:all).to_select(:name, :id), {:include_blank=>true}, {:name => name, :id => 'select_state_id'})
+      geo_admin_codes = geocountry.geo_admin_codes.find(:all)
     end
-    render :partial => '/locations/state_dropdown', :locals => {:select_html => html, :display => display}
+    render :partial => '/locations/state_dropdown', :locals => {:geo_admin_codes => geo_admin_codes, :display => display, :name => name}
   end
 
   def city_text_field(object=nil, method=nil, options = {})
@@ -49,6 +49,11 @@ module LocationsHelper
       :url => {:controller => '/locations', :action => 'select_city_id'},
       :with => "'city_id=#{place.id}'"
     )
+  end
+
+  def selected_admin_code(ac_id, profile=nil)
+    return false if profile.nil?
+    true if profile.state_id == ac_id.to_s
   end
 
 #####
