@@ -1,3 +1,2 @@
-%div{:id=>'city_results', :style=>"display:#{display}"}
-   = contents
-
+%div{:id=>'city_results'}
+   %input{:type=>'hidden', :value=>"#{city_id}", :name=>'profile[city_id]', :id=>"city_with_id_#{city_id}"} 

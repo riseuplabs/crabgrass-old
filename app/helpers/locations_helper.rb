@@ -40,15 +40,15 @@ module LocationsHelper
   end
 
   def city_id_field(object=nil, method=nil)
-    display = ''
-    contents = ''
-    if !@profile.nil? and @profile.city_id
-      contents << '<ul>'
-      contents << "<li><input type='checkbox' value='#{@profile.city_id}' name='profile[city_id]' id='city_with_id_#{@profile.city_id}' 'checked' />#{@profile.geo_city_name}</li>"
-      contents << '</ul>'
-      display = "inline"
-    end
-    render :partial => '/locations/city_id_field', :locals => {:display => display, :contents => contents}
+    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : ''
+    render :partial => '/locations/city_id_field', :locals => {:city_id => city_id}
+  end
+
+  def link_to_city_id(place)
+    link_to_city_id = link_to_remote(place.name+', '+place.geo_admin_code.name, 
+      :url => {:controller => '/locations', :action => 'select_city_id'},
+      :with => "'city_id=#{place.id}'"
+    )
   end
 
 #####

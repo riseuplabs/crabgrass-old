@@ -15,7 +15,6 @@ class LocationsController < ApplicationController
 
   def city_lookup
     city = params[:city]
-    return if city.empty?
     country_id = params[:country_id]
     admin_code_id = params[:admin_code_id]
     if params[:city_id_field] =~ /\S+/
@@ -24,24 +23,41 @@ class LocationsController < ApplicationController
       name = 'city_id'
     end
     html = ''
-    if country_id.empty? 
-      html << 'Country is required.'
+    if city.empty?
+      # this should reset the state dropdown
+      return
+    end
+    return if country_id.empty? 
+    @places = GeoPlace.with_names_matching(city, country_id, params)
+    if @places.empty?
+      render :update do |page|
+        page.replace_html 'city_results_box', "No cities matching '#{city}' found."
+        page.show 'city_results_box'
+      end
+    elsif @places.size == 1
+      return_single_city(@places[0])
     else
-      @places = GeoPlace.with_names_matching(city, country_id, params)
-      if @places.empty?
-        html << 'No matching cities found.'
-      else
-        html << '<ul>'
-        @places.each do |place|
-          next if place.nil?
-          html << "<li><input type='checkbox' value='#{place.id}' name='#{name}' id='city_with_id_#{place.id}' />#{place.name}, #{place.geo_admin_code.name}</li>"
-        end
-        html << '</ul>'
+      render :update do |page|
+        page.replace_html 'city_results_box', :partial => '/locations/link_to_city_id'
+        page.show 'city_results_box'
       end
     end
+  end
+
+  def select_city_id
+    city_id = params[:city_id]
+    return_single_city(GeoPlace.find(city_id))
+  end
+
+  private
+
+  def return_single_city(geoplace)
+    html_for_text_box = geoplace.name.capitalize+', '+geoplace.geo_admin_code.name.capitalize
+    html = "<input type='hidden' value='#{geoplace.id}' name='profile[city_id]' id='city_with_id_#{geoplace.id}' />"
     render :update do |page|
+      page['city_text_field'].value = html_for_text_box
       page.replace_html 'city_results', html
-      page.show 'city_results'
+      page.hide 'city_results_box'
     end
   end
 
