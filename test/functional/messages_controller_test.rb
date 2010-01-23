@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
-class Me::PrivateMessagesControllerTest < ActionController::TestCase
+class MessagesControllerTest < ActionController::TestCase
   fixtures :users, :relationships
 
   def test_should_get_index
