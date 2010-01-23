@@ -1,3 +1,5 @@
-%h3 Browse Groups
+- groups_type = directory_groups_type(@active_tab)
 
-Below is an alphabetized list of all Groups. You can filter this list by location to find Groups near you.
+%h3= I18n.t(:browse_groups, :groups_type => groups_type)
+
+= I18n.t(:browse_groups_desc, :groups_type => groups_type)
