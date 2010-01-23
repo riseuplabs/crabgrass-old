@@ -7,6 +7,7 @@ class LocationsController < ApplicationController
       page.show 'state_dropdown' 
       page.show 'city_text'
       page['city_text_field'].value = '' 
+      page['city_id_field'].value = ''
       page.show 'submit_loc' if params[:show_submit] == 'true' 
     end
   end
@@ -22,7 +23,9 @@ class LocationsController < ApplicationController
     end
     html = ''
     if city.empty?
-      # this should reset the state dropdown
+      render :update do |page|
+        page["city_id_field"].value=''
+      end
       return
     end
     return if country_id.empty? 
@@ -36,7 +39,7 @@ class LocationsController < ApplicationController
       return_single_city(@places[0])
     else
       render :update do |page|
-        page.replace_html 'city_results_box', :partial => '/locations/link_to_city_id'
+        page.replace_html 'city_results_box', :partial => '/locations/link_to_city_id', :locals => {:name => params[:city_id_name]}
         page.show 'city_results_box'
       end
     end
@@ -51,7 +54,7 @@ class LocationsController < ApplicationController
 
   def return_single_city(geoplace)
     html_for_text_box = geoplace.name.capitalize
-    html = "<input type='hidden' value='#{geoplace.id}' name='profile[city_id]' id='city_with_id_#{geoplace.id}' />"
+    html = "<input type='hidden' value='#{geoplace.id}' name='#{params[:city_id_name]}' id='city_id_field' />"
     render :update do |page|
       page["admin_code_#{geoplace.geo_admin_code.id}"].selected = true
       page['city_text_field'].value = html_for_text_box

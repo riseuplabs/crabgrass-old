@@ -95,11 +95,11 @@ class Group < ActiveRecord::Base
     admin_code_id = options[:state_id]
     city_id = options[:city_id]
     conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if ! admin_code_id.nil?
+    if admin_code_id =~ /\d+/
       conditions[0] << " and gl.geo_admin_code_id=?"
       conditions << admin_code_id
     end
-    if ! city_id.nil?
+    if city_id =~ /\d+/
       conditions[0] << " and gl.geo_place_id=?"
       conditions << city_id
     end

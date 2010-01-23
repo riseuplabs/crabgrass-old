@@ -32,7 +32,7 @@ module LocationsHelper
     spinner = options[:spinner]
     onblur = remote_function(
       :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'city_id_field=#{object}&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
+      :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
@@ -40,14 +40,15 @@ module LocationsHelper
   end
 
   def city_id_field(object=nil, method=nil)
+    name = _field_name('city_id', object, method)
     city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : ''
-    render :partial => '/locations/city_id_field', :locals => {:city_id => city_id}
+    render :partial => '/locations/city_id_field', :locals => {:city_id => city_id, :name => name}
   end
 
-  def link_to_city_id(place)
+  def link_to_city_id(place, city_id_name)
     link_to_city_id = link_to_remote(place.name+', '+place.geo_admin_code.name, 
       :url => {:controller => '/locations', :action => 'select_city_id'},
-      :with => "'city_id=#{place.id}'"
+      :with => "'city_id=#{place.id}&city_id_name=#{city_id_name}'"
     )
   end
 

@@ -1,5 +1,5 @@
 %ul
 - @places.each do |place|
   - next if place.nil? 
-  %li= link_to_city_id(place)
+  %li= link_to_city_id(place, name)
   %br
