@@ -83,18 +83,12 @@ class RelationshipsTest < Test::Unit::TestCase
   def test_relationship_discussion
     a = users(:red)
     b = users(:green)
-    a.add_contact!(b)
 
-    assert_no_difference 'Discussion.count' do
-      a.relationships.with(b)
-    end
-
-    discussion = nil
     assert_difference 'Discussion.count' do
-      discussion = a.relationships.with(b).discussion
+      a.add_contact!(b)
     end
 
-    assert discussion
+    discussion = a.relationships.with(b).discussion
     assert_no_difference 'Discussion.count' do
       assert_equal discussion, b.relationships.with(a).discussion
     end
