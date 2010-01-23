@@ -1,5 +1,4 @@
 %ul
-  %li
-    %a{:href=>'/groups/directory/recent'} Discover
-  %li
-    %a{:href=>'/groups/directory/search'} Browse
+  = menu((I18n.t(:discover)).upcase, {:controller=>'groups/directory', :action=>'recent'})
+  = menu((I18n.t(:browse)).upcase, {:controller => 'groups/directory', :action => 'search'})
+
