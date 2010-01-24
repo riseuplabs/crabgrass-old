@@ -141,7 +141,7 @@ body
           text-transform: uppercase
           color= !almost_black
   #content.login
-    
+    margin-top: 0px /* FIXME: this is just something to get rid of the warning */
   #content
     +clearfix
     color= !medium_grey_text
@@ -449,6 +449,7 @@ body
                     letter-spacing: normal
                     font-size: 8px
               #featured
+                margin-top: 0px /* FIXME: this is just something to get rid of the warning */
               li
                 padding: 12px 0 4px
                 margin: 12px 0 0
@@ -598,6 +599,7 @@ body
     +container
     ul#crabgrass
       columns(10)
+        margin-top: 0px /* FIXME: this is just something to get rid of the warning */
       +full
       li
         color: #f60
