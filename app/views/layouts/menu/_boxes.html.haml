@@ -3,21 +3,20 @@
 -# This markup and css may seem odd, but it works in all browsers.
 - ul_class = '' if ul_class.nil?
 - entities = [] if entities.nil?
-- columns = split_entites_into_columns(entities)
+- columns = split_entities_into_columns(entities)
 
 - if not entities.empty?
   - cache(menu_cache_key(:submenu => submenu)) do
     %div{:class=>"menu_items", :style=>"display: none"}
       %h3.dim
         = heading 
-        \&nbsp;&nbsp;
         %span.see_all= link_to I18n.t(:see_all_link) + ARROW, see_all_url 
-    %div.leftcol
-      %ul
-        - for entity in columns[:left_col]
-        %li= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines)
-   - if not columns[:right_col].empty? 
-    %div.rightcol
-      %ul
-        - for entity in columns[:right_col]
-          %li= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines, :link => true)
+      %div.leftcol
+        %ul
+          - for entity in columns[:left_col]
+            %li= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines)
+      - if not columns[:right_col].empty? 
+        %div.rightcol
+          %ul
+            - for entity in columns[:right_col]
+              %li= display_entity(entity, :tag => :a, :avatar => 'small', :format => :twolines, :link => true)
