@@ -201,4 +201,19 @@ module MenuHelper
   def menu_admin
     top_menu "menu_admin", I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin
   end
+
+  def split_entities_into_columns(entities)
+    entities.sort! {|a,b| a.name <=> b.name}
+    cols = {}
+    if entities.size > 3
+      half = entities.size/2.round
+      cols[:right_col] = entities.slice!(-half, half)
+      cols[:left_col] = entities
+    else
+      cols[:left_col] = entities
+      cols[:right_col] = []
+    end
+    return cols
+  end
+
 end
