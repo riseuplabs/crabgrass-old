@@ -94,13 +94,15 @@ class RelationshipsTest < Test::Unit::TestCase
     end
 
     relationships = discussion.relationships.sort_by {|r|r.id}
+    assert_equal relationships[0], discussion.relationships.for_user(b)
+    assert_equal relationships[1], discussion.relationships.for_user(a)
     assert_equal a, relationships[1].user
     assert_equal b, relationships[1].contact
     assert_equal b, relationships[0].user
     assert_equal a, relationships[0].contact
 
-    assert_equal a, discussion.relationships.contact_of(b)
-    assert_equal b, discussion.relationships.contact_of(a)
+    assert_equal a, discussion.user_talking_to(b)
+    assert_equal b, discussion.user_talking_to(a)
   end
 
   def test_relationship_discussion_auto_create
