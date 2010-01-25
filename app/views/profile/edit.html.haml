@@ -1,14 +1,10 @@
 - @avatar ||= @user.avatar
 
-
-- content_for :banner do
-  = render :partial => '/me/navigation/header_small'
+= render :partial => 'me/navigation/banner_and_nav_for_settings'
 
 %section#settings-form
 
   %h1= I18n.t(:my_settings, :user => current_user.display_name)
-
-  = render :partial => @tabs
 
   - form_tag(:action => 'edit') do 
     %p= profile_description

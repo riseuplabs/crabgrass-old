@@ -1,8 +1,4 @@
-%nav#tabs
-  %ul
-    %li
-      %a{:href => "#{edit_me_url}"}=  I18n.t(:user_preferences)
-    %li
-      %a{:href => "#{url_for(:controller => '/profile', :action => 'edit', :id => 'public')}"}= I18n.t(:public_profile)
-    %li
-      %a{:href => "#{url_for(:controller => '/profile', :action => 'edit', :id => 'private')}"}= I18n.t(:private_profile)
+%ul
+  = menu(I18n.t(:user_preferences), edit_me_url)
+  = menu(I18n.t(:public_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'public'))
+  = menu(I18n.t(:private_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'private'))
