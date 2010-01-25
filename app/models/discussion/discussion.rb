@@ -31,11 +31,8 @@ class Discussion < ActiveRecord::Base
 
   # if we are a private discussion (or 'messages')
   has_many :relationships do
-    def contact_of(user)
-      self.select {|relationship| return relationship.contact if relationship.user_id == user.id}
-    end
     def for_user(user)
-      self.select {|relationship| return relationship if relationship.user_id == user.id}
+      self.detect {|relationship| relationship.user_id == user.id}
     end
   end
 
@@ -54,7 +51,7 @@ class Discussion < ActiveRecord::Base
   }
 
   # user with relationships like the above scope
-  # ex: current_user.discusssions.unread
+  # ex: current_user.discussions.unread
   named_scope :unread, :conditions => ['relationships.unread_count > 0']
   named_scope :all # used same as :unread, but with nothing to filter
 

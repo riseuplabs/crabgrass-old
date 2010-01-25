@@ -1,4 +1,6 @@
 - form_remote_tag :url => @request_path, :loading => show_spinner('submit_search'), :complete => hide_spinner('submit_search') do
+  Show Groups in
+  %br
   = country_dropdown(nil, nil, {:show_submit => true})
   = state_dropdown
   = city_text_field

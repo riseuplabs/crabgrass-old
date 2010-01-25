@@ -111,14 +111,14 @@ class Test::Unit::TestCase
 
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
-  def assert_permission_denied(message='missing "permission denied" message')
+  def assert_permission_denied(failure_message='missing "permission denied" message')
     if flash[:type]
-      assert_equal 'error', flash[:type], message
-      assert_equal 'Permission Denied', flash[:title], message
+      assert_equal 'error', flash[:type], failure_message
+      assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failed_message
       assert_response :redirect
       assert_redirected_to :controller => :account, :action => :login
     else
-      assert_select "div.title_box h1", "Permission Denied", message
+      assert_select "div#main-content-full blockquote", "Sorry. You do not have the ability to perform that action.", failure_message
     end
   end
 

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class People::MessagesControllerTest < ActionController::TestCase
+class People::PublicMessagesControllerTest < ActionController::TestCase
   fixtures :users, :discussions, :posts, :profiles
 
   def test_index
@@ -67,7 +67,7 @@ class People::MessagesControllerTest < ActionController::TestCase
   def create_post(opts)
     PublicPost.create do |post|
       post.body = 'x'
-      post.discussion = opts[:to].discussion
+      post.discussion = opts[:to].wall_discussion
       post.user = opts[:from]
       post.recipient = opts[:to]
       post.body_html = post.lite_html

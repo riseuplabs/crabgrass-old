@@ -5,9 +5,10 @@
 #
 module MenuHelper
 
-  def top_menu(id, label, url, options={})
+  def top_menu(label, url, options={})
+    id = options.delete(:id)
     menu_heading = content_tag(:span,
-      link_to_active(label, url, options[:active]),
+      link_to_active(label.upcase, url, options[:active]),
       :class => 'topnav'
     )
     content_tag(:li,
@@ -64,7 +65,7 @@ module MenuHelper
   end
 
   def me_option
-    menu(
+    top_menu(
       I18n.t(:menu_me),
       "/pages/my_work",
       :active => @active_tab == :me,
@@ -74,7 +75,7 @@ module MenuHelper
   end
 
   def people_option
-    menu(
+    top_menu(
       I18n.t(:menu_people),
       people_directory_url(:friends),
       :active => @active_tab == :people,
@@ -89,7 +90,7 @@ module MenuHelper
   end
 
   def groups_option
-    menu(
+    top_menu(
       I18n.t(:menu_groups),
       group_directory_url,
       :active => @active_tab == :groups,
@@ -104,7 +105,7 @@ module MenuHelper
   end
 
   def networks_option
-    menu(
+    top_menu(
       I18n.t(:menu_networks),
       network_directory_url,
       :active => @active_tab == :networks,
@@ -201,4 +202,19 @@ module MenuHelper
   def menu_admin
     top_menu "menu_admin", I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin
   end
+
+  def split_entities_into_columns(entities)
+    entities.sort! {|a,b| a.name <=> b.name}
+    cols = {}
+    if entities.size > 3
+      half = entities.size/2.round
+      cols[:right_col] = entities.slice!(-half, half)
+      cols[:left_col] = entities
+    else
+      cols[:left_col] = entities
+      cols[:right_col] = []
+    end
+    return cols
+  end
+
 end

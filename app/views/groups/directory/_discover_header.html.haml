@@ -1,3 +1,5 @@
-%h3 Discover Groups
+- groups_type = directory_groups_type(@active_tab)
 
-Below is a list of recently created Groups. You can filter this list by location to find Groups near you.
+%h3= I18n.t(:discover_groups, :groups_type => groups_type)
+
+= I18n.t(:discover_groups_desc, :groups_type => groups_type)

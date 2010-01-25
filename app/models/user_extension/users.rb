@@ -166,7 +166,7 @@ module UserExtension::Users
     # this is not stored, but used to generate a more informative notification on the user's wall.
     def send_message_to!(other_user, body, in_reply_to = nil)
       relationship = self.relationships.with(other_user) || self.add_contact!(other_user)
-      discussion = relationship.discussion
+      discussion = relationship.get_or_create_discussion
 
       discussion.increment_unread_for!(other_user)
       post = discussion.posts.create do |post|

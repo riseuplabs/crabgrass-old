@@ -1,5 +1,6 @@
+- dir_controller = (@active_tab == :groups) ? 'groups/directory' : 'networks/directory'
+
 %ul
-  %li
-    %a{:href=>'/groups/directory/recent'} Discover
-  %li
-    %a{:href=>'/groups/directory/search'} Browse
+  = menu((I18n.t(:discover)).upcase, {:controller=> dir_controller, :action=>'recent'})
+  = menu((I18n.t(:browse)).upcase, {:controller => dir_controller, :action => 'search'})
+

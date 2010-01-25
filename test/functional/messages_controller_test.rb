@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../../test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
-class Me::PrivateMessagesControllerTest < ActionController::TestCase
+class MessagesControllerTest < ActionController::TestCase
   fixtures :users, :relationships
 
   def test_should_get_index
@@ -10,24 +10,6 @@ class Me::PrivateMessagesControllerTest < ActionController::TestCase
     login_as :blue
     get :index
     assert_response :success
-  end
-
-  def test_should_create_message
-    login_as :blue
-
-    assert_no_difference 'Post.count' do
-      post :create, :id => 'blue', :post => {:body => 'hi'}
-      assert_error_message
-    end
-
-    assert_no_difference 'Post.count' do
-      post :create, :id => 'green', :post => {:body => ''}
-      assert_error_message
-    end
-
-    assert_difference 'Post.count' do
-      post :create, :id => 'green', :post => {:body => 'hi'}
-    end
   end
 
   def test_should_show_conversation
