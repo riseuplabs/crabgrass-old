@@ -16,130 +16,16 @@
 @import ui_base/locations.sass
 
 /* end */
-
+/* basic page layout */
 body
   +susy
   +sans-family
   color= !almost_black
-  background: #efefef
-#page  
-  header.page
-    +clearfix
-  #masthead
-    +clearfix 
-    height: 40px
-    #masthead-container
-      +container
-      height: 40px
-      background: #fffde9
-      #masthead-name
-        +columns(14)
-        +full
-        width: 764px
-        position: relative
-        h2
-          float: left
-          display: inline
-          margin-top: 12px
-        form#search
-          margin-top: 9px
-          float: right
-          display: inline
-          text-align: right
-          color= !almost_black
-          position: relative
-          fieldset
-            display: inline
-            width: 226px
-            height: 23px
-            padding: 0
-            +bordered
-            .text
-              float: left
-              display: inline
-              font-size: 12px
-              padding: 4px 0 0 2px
-            .search-submit
-              +small-text
-              display: inline
-              border: none
-              padding: 0 4px 2px 0
-              background-color: #fff
-              letter-spacing: 0.05em
-              font-weight: bold
-              font-size: 12px
-              vertical-align: middle
-              color= !light_grey_text
-          div
-            display: inline
-            position: relative
-            vertical-align: top
-            top: 1px
-            .checkbox
-              position: relative
-            .light-small
-              +small-text
-              color= !light_grey_text
-  nav.page
-    +clearfix
-    height: 38px
-    #global-nav-container
-      +container
-      height: 38px
-      background: #fff
-      #global-nav
-        +columns(14)
-        +full
-        width: 764px
-        #menu
-          float: left
-          +clearfix
-          margin-top: 9px
-          li
-            padding: 0
-            a
-              +hover-link
-              color: #998675
-              font-size: 12px
-              font-weight: bold
-              margin: 0 26px 0 0
-            a:hover
-              color: #382526
-          li.current
-            a
-              color: #382526
-              
-        #user
-          float: right
-          margin-top: 7px
-          +clearfix
-          li
-            +small-text
-            a
-              +blue-link
-              margin-left: 4px
-            span
-              margin-left: 2px
-              color= !light_grey_border
-          li.first
-            margin-right: 10px
-  #breadcrumb
-    +clearfix
-    height: 30px
-    #breadcrumb-container
-      +container
-      height: 30px
-      background: #fff
-      div
-        +columns(14)
-        +full
-        margin-top: 4px
-        a
-          +hover-link
-          +small-text
-          +zero
-          text-transform: uppercase
-          color= !almost_black
+  background= !background_color
+  #page  
+    header.page
+      +clearfix
+    
   #content.login
     
   #content
@@ -147,8 +33,10 @@ body
     color= !medium_grey_text
     #banner-container
       +container
-      height: 97px
-      background: #fff
+      +bordered-btm(!almost_black)
+      height: 96px
+      background= !test
+      overflow: visible
       header#banner-no-avatar
         +columns(14)
         +full
@@ -208,44 +96,14 @@ body
                   font-weight: bold
                   font-size: 11px
                   color: #fff
-      nav#second-level-aside, nav#second-level
-        +columns(14)
-        +full
-        +bordered-btm(!almost_black)
-        height: 29px
-        width: 540px
-        padding-left: 224px
-        li
-          +zero
-          +spaced
-          height: 28px
-          background: #fff
-          font-size: 11px
-          a
-            color= !warm_grey_text
-            text-decoration: none
-            font-weight: bold
-            height: 28px
-            line-height: 2.5
-            padding: 8px 10px
-        li.current
-          +bordered-tab(!almost_black)
-          +bordered-btm(!white_border)
-          height: 28px
-          a
-            color= !almost_black
-        #last-login
-          font-size: 10px
-      nav#second-level
-        width: 674px
-        padding-left: 90px
+      
     #third-level-container
       +container
       height: 56px
       nav#third-level
         +columns(14)
         +full
-        +bordered-top(!almost_black)
+        border-top= 3px "solid" !almost_black
         margin-top: 28px
         height: 25px
         width: 764px

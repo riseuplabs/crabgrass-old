@@ -89,7 +89,15 @@
 .nowrap
   white-space: nowrap
 
-
+.small_icon
+  float: left
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  .twenty
+    padding-left: 22px
+    min-height: 24px
 /* @group links */
 
 \:focus
@@ -100,7 +108,6 @@ a
 
 
 /* headers */
-
 h1, h2, h3, h4, h5, h6
   +sans-family-headings
   line-height: 1
@@ -126,19 +133,199 @@ h5
 
 h6
   :font-size 9px
+/* @end */
+
+/* top menu - logout */
+#top-menu
+  +clearfix
+  height: 30px
+  #top-menu-container
+    +container
+    height: 30px
+    #account-links
+      width: 320px
+      float: right
+      background= !background_white
+      height: 30px
+#user
+  float: right
+  margin: 5px 8px 0 0
+  +clearfix
+  
+  li
+    +inline-list
+    +small-text
+    margin-right: 10px
+    a
+      +blue-link
+  li.first
+    float: left
+    margin: 1px 16px 0 0
+  li.last
+    margin-right: 0
+  a.mail
+    margin-right: 12px
+
+/* @end */
+    
+/* masthead with logout */
+#masthead
+  +clearfix 
+  height: 40px
+  #masthead-container
+    +container
+    height: 40px
+    background= !background_white
+    overflow: visible
+    #masthead-name
+      +columns(14)
+      +full
+      width: 764px
+      position: relative
+      h2
+        float: left
+        display: inline
+        margin-top: 12px
+      form#search
+        margin-top: 9px
+        float: right
+        display: inline
+        text-align: right
+        color= !almost_black
+        position: relative
+        fieldset
+          +bordered
+          display: inline
+          width: 226px
+          height: 23px
+          padding: 0
+          background: #fff
+          .text
+            float: left
+            display: inline
+            font-size: 12px
+            padding: 4px 0 0 2px
+          .search-submit
+            +small-text
+            display: inline
+            border: none
+            padding: 0 4px 2px 0
+            background-color: #fff
+            letter-spacing: 0.05em
+            font-weight: bold
+            font-size: 12px
+            vertical-align: middle
+            color= !light_grey_text
+        div
+          display: inline
+          position: relative
+          vertical-align: top
+          top: 1px
+          .checkbox
+            position: relative
+          .light-small
+            +small-text
+            color= !light_grey_text
+/* @end */
+
+
+/* global nav in masthead */
+nav.page
+  +clearfix
+  height: 38px
+  #global-nav-container
+    +container
+    +bordered-top(!light_grey_border)
+    height: 38px
+    background= !background_white
+    #global-nav
+      +columns(14)
+      +full
+      width: 764px
+      #menu
+        float: left
+        +clearfix
+        margin-top: 9px
+        li
+          +inline-list
+          padding: 0
+          a
+            +hover-link
+            color: #998675
+            font-size: 12px
+            font-weight: bold
+            margin: 0 26px 0 0
+          a:hover
+            color: #382526
+        li.current
+          a
+            color: #382526
 
 /* @end */
 
-/* lists */
-li
-  display: inline-block
-  float: left
-  padding: 0.2em
 
-
+/* breadcrumb */
+#breadcrumb
+  +clearfix
+  height: 30px
+  #breadcrumb-container
+    +container
+    height: 30px
+    background= !test
+    div
+      +columns(14)
+      +full
+      margin-top: 4px
+      a
+        +hover-link
+        +small-text
+        +zero
+        text-transform: uppercase
+        color= !almost_black
 /* @end */
 
+/* content container */
 
+/* @end */      
+      
+/* second-level nav */
+nav#second-level-aside, nav#second-level
+  +columns(14)
+  +full
+  height: 29px
+  width: 540px
+  padding-left: 224px
+  li
+    +inline-list
+    +spaced
+    display: inline-block
+    height: 28px
+    font-size: 11px
+    margin-right: 5px
+    background= !test
+    a
+      color= !warm_grey_text
+      background= !test
+      text-decoration: none
+      font-weight: bold
+      display: inline-block
+      height: 28px
+      line-height: 2.8
+      padding: 0 10px 0 11px
+  li.current
+    +bordered-tab(!almost_black)
+    +bordered-btm(!white_border)
+    background: #fff
+    a
+      color= !almost_black
+      background: #fff
+  #last-login
+    font-size: 10px
+nav#second-level
+  width: 674px
+  padding-left: 90px
+/* @end */ 
+     
 /* groups page feed, me-section page feed, group landing/wiki section */
 
 #pages, #group-wiki
@@ -237,10 +424,10 @@ li
     margin: 0
     padding: 10px 0
     .pages-info
-      +columns(13,14)
+      +columns(12,14)
       +alpha(14)
       margin: 0
-      width: 85.8%
+      width: 83%
       img
         float: left
         width: 75px
@@ -272,6 +459,7 @@ li
       +omega(14)
       +zero
       +bordered
+      width: 120px
       float: right
       padding: 4px 2px 4px 0
       li
@@ -281,9 +469,11 @@ li
         line-height: 1.0
         padding: 0.1em
 
-
 /* @end */
-
+#contributors
+  ul
+    li
+      +inline-list
 
 
 #identity-name i
@@ -295,8 +485,9 @@ footer.page
   background: #fff
   height: 65px
 .space
-  height: 30px
-
+  height: 22px
+.small-space
+  height: 10px
 
 td.reply
   background-repeat: no-repeat
@@ -405,6 +596,8 @@ button.icon_16
   ul
     padding: 5px 0 7px
     +clearfix
+    li
+      +inline-list
 #about-group
   p
     width: 184px
@@ -463,7 +656,6 @@ button.icon_16
   margin: 0
 #main-content-right
   float: right
-
 #main-content.full
   width: 764px
 
@@ -505,31 +697,7 @@ nav#nav-full
   a
     +blue-link
 
-nav#second-level-aside, nav#second-level
-  +bordered-btm(!almost_black)
-  height: 29px
-  width: 540px
-  li
-    +zero
-    +spaced
-    height: 28px
-    background: #fff
-    font-size: 11px
-    a
-      color= !warm_grey_text
-      text-decoration: none
-      font-weight: bold
-      height: 28px
-      line-height: 2.5
-      padding: 8px 10px
-  li.current
-    +bordered-tab(!almost_black)
-    +bordered-btm(!white_border)
-    height: 28px
-    a
-      color= !almost_black
-  #last-login
-    font-size: 10px
+
 #sidebar, #sidebar-nav, #sidebar-browse
   +bordered
   width: 204px
@@ -544,26 +712,16 @@ nav#second-level-aside, nav#second-level
   width: 184px
   padding: 10px
 
-.small_icon
-  float: left
-  background-repeat: no-repeat
-  background-position: 0 50%
-  padding-left: 20px
-  min-height: 16px
-  .twenty
-    padding-left: 22px
-    min-height: 24px
 
 
-
-ul#groups, ul#people
-  li
-    clear: none
 #wiki-page
   article
     +clearfix
     width: 540px
     padding-top: 16px
+  ul
+    li
+      +inline-list
 #comments
   width: 540px
   padding-top: 30px

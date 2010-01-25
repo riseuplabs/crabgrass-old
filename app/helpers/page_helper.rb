@@ -194,13 +194,7 @@ module PageHelper
     label    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    capture_haml do
-      haml_tag :ul, :class => 'pages-status' do
-        [label, username, date, stars_for(page)].each do |item|
-          haml_tag(:li, item)
-        end
-      end
-    end
+    render :partial => 'pages/last_updated', :locals => {:label => label, :username => username, :date => date}
   end
 
 

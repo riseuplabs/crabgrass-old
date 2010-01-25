@@ -1,3 +1,20 @@
+%nav#top-menu
+  %div#top-menu-container
+    %div#account-links
+      %ul#user
+        %li.first
+          Welcome
+          %strong Angus
+        %li.mail  
+          %a.small_icon.page_message_16.mail{:href => "#"}  
+            %strong 4
+        %li  
+          %a{:href => "#"}  Settings
+        %li.last  
+          %a{:href => "#"}  Sign Out
+
+%div.small-space
+
 %section#masthead
   %div#masthead-container
     %div#masthead-name
@@ -24,16 +41,5 @@
           %a{:href => "#"}  GROUPS
         %li  
           %a{:href => "#"}  NETWORKS
-      %ul#user
-        %li.first 
-          Welcome
-          %strong Angus
-        %li  
-          %a.small_icon.page_message_16{:href => "#"}  
-            %strong 4
-          %span &bull;
-        %li  
-          %a{:href => "#"}  Help
-          %span &bull;
-        %li  
-          %a{:href => "#"}  Sign Out
+
+      
