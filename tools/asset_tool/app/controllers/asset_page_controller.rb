@@ -77,7 +77,7 @@ class AssetPageController < BasePageController
 
   def setup_view
     @show_attach = false
-    @show_posts = true
+    @show_posts = true unless action_name == 'create'
   end
 
   def build_page_data
