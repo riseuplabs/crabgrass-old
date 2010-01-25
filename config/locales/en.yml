@@ -94,6 +94,8 @@ en:
   total: "{{count}} total"
   affiliations: "Affiliations"
   pages: "Pages"
+  browse: "Browse"
+  discover: "Discover"
 
   recent_activity: "Recent Activity"
   activity: "Activity"
@@ -796,6 +798,11 @@ en:
 
   new_people_in_weeks: "new people in last 2 weeks"
 
+  discover_groups: "Discover {{groups_type}}"
+  browse_groups: "Browse {{groups_type}}"
+
+  browse_groups_desc: "Below is an alphabetized list of all {{groups_type}}. You can filter this list by location to find {{groups_type}} near you."
+  discover_groups_desc: "Below is a list of recently created {{groups_type}}. You can filter this list by location to find {{groups_type}} near you."
 
   # commands
 

@@ -50,6 +50,7 @@ class BasePageController < ApplicationController
   def create
     @page_class = get_page_type
     @page = build_new_page(@page_class)
+    @second_nav = 'pages'
 
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))

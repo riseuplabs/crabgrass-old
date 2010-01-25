@@ -13,7 +13,7 @@
 
 <%= create_page_link(nil) unless inline_create_page %>
 
-<ul class='side_list'>
+<ul class='menu_me_left'>
 
   <% if inline_create_page %>
     <% active = show_active && controller?(:pages) && action?(:create) %>
@@ -90,7 +90,7 @@
     ) %></li>
 
     <% active = show_active && controller?('me/trash') %>
-    <li id="<%='trash_line' unless skip_ids %>" class="small_icon trash_16"><%= link_to_active(
+    <li class="small_icon trash_16"><%= link_to_active(
       I18n.t(:trash),
       {:controller => '/me/trash'},
       active

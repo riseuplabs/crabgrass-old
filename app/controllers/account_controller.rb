@@ -13,8 +13,9 @@ class AccountController < ApplicationController
   def index
     if logged_in?
       redirect_to me_url
+    else
+      render :action => 'login'
     end
-    render :action => 'login'
   end
 
   def login
@@ -55,7 +56,7 @@ class AccountController < ApplicationController
       flash_message_now :title => I18n.t(:login_failed),
       :error => I18n.t(:login_failure_reason)
     end
-    
+
   end
 
   def signup
