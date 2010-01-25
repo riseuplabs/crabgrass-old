@@ -13,7 +13,7 @@ module MenuHelper
     )
     content_tag(:li,
       [menu_heading, options[:menu_items]].combine("\n"),
-      :class => ['menu', (options[:active] && 'active')].combine,
+      :class => ['menu', (options[:active] && 'current')].combine,
       :id => id
     )
   end
@@ -54,7 +54,7 @@ module MenuHelper
   end
 
   def home_option
-    menu(
+    top_menu(
       I18n.t(:menu_home),
       '/',
       {
@@ -124,7 +124,7 @@ module MenuHelper
   end
 
   def admin_option
-    menu I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin, :id => 'menu_admin'
+    top_menu I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin, :id => 'menu_admin'
   end
 
   ##
