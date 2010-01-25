@@ -232,7 +232,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals= [:layout]
+    allowed_locals= [:layout, :checkeable]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 

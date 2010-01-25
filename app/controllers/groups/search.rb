@@ -72,6 +72,7 @@ module Groups::Search
   end
 
   def trash
+    @second_nav = 'pages'
     if request.post?
       path = parse_filter_path(params[:search])
       redirect_to url_for_group(@group, :action => 'trash', :path => path)
