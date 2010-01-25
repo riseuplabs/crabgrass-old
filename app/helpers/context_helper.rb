@@ -82,8 +82,7 @@ module ContextHelper
         end
       end
       add_context @group.display_name, url_for_group(@group, :action => 'show')
-      set_header "groups/group_header_no_sidebar"
-      set_banner "groups/group_header_no_sidebar", @group.banner_style
+      set_header "groups/navigation/header_small"
     elsif @parent
       add_context @parent.display_name, url_for_group(@parent, :action => 'show')
       set_header "groups/navigation/header_small"
