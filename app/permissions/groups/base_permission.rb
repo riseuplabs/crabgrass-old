@@ -103,6 +103,10 @@ module Groups::BasePermission
     end
   end
 
+  def may_show_affiliations?(group = @group)
+    return true if (may_show_networks_of_group?(group) or may_show_subcommittees_of_group?(group) or group.real_council)
+  end
+
   ##
   ## EXTRA
   ##
