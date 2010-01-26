@@ -13,10 +13,9 @@ class CachingTest < ActionController::IntegrationTest
 
   def test_joining_group_council_updates_group_info_box
     login 'red'
-    visit '/rainbow'
+    visit '/groups/rainbow/edit'
     # should save the fragment
-    assert_contain "Send Invites"
-    assert_contain "View Requests"
+    assert_contain "ADMINISTRATION"
 
     # create a council
     login 'blue'
@@ -36,16 +35,14 @@ class CachingTest < ActionController::IntegrationTest
     login 'red'
     visit '/rainbow'
 
-    assert_contain 'Indigo Council'
-    assert_not_contain "Send Invites"
-    assert_not_contain "View Requests"
+    assert_contain 'Council'
+    assert_not_contain "ADMINISTRATION"
 
     # blue should see the right links too if cache was expired
     login 'blue'
     visit '/rainbow'
 
-    assert_contain 'Indigo Council'
-    assert_contain "Send Invites"
-    assert_contain "View Requests"
+    assert_contain 'Council'
+    assert_contain "ADMINISTRATION"
   end
 end
