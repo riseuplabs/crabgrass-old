@@ -1,10 +1,12 @@
-- if may_edit_title?
-  %div{:style => 'float: right'}
-    = link_to_modal(I18n.t(:edit_title), {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:icon => 'pencil'}) 
-%h3
-  = icon_for @asset if @asset
-  = h @page.title 
-  = content_tag(:span,@title_addendum) if @title_addendum 
-%p.summary
-  = h @page.summary 
+%div#title
 
+  - if may_edit_title?
+    %div{:style => 'float: right'}
+      = link_to_modal(I18n.t(:edit_title), {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:icon => 'pencil'})
+
+  %h3
+    = icon_for @asset if @asset
+    = h @page.title
+    = content_tag(:span,@title_addendum) if @title_addendum
+  %p.summary
+    = h @page.summary
