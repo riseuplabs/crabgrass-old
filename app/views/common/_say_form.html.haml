@@ -2,10 +2,11 @@
 - text = params[:post].try[:body] if text.nil?
 - submit = 'submit' if submit.nil?
 - recipient = false if recipient.nil?
+- url = '' if url.nil?
 
 - if logged_in?
   = avatar_for(current_user, :xsmall) unless @user == current_user
-  - form_tag(url || '', :id => 'say') do
+  - form_tag(url, :id => 'say') do
     - if recipient
       %h3 Recipient
       = text_field_tag 'id', params[:id], :id => 'recipient_name', :onkeypress => eat_enter, :class => 'textinput'
