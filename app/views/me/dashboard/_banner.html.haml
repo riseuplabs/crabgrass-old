@@ -2,12 +2,13 @@
   %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
     %div.left
       %h1= current_user.display_name
+      = render :partial => 'common/say_form'
       %a{:href => url_for_user(current_user)}
         View Profile
     %div.right
       %ul
         %li
-          %a{:href => "#"}
+          %a{:href => "/me/tasks/pending"}
             3 pending tasks
         %li
           %a{:href => my_work_pages_path}
