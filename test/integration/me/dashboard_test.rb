@@ -45,47 +45,16 @@ class Me::DashboardTest < ActionController::IntegrationTest
     assert_contain 'Request to join has been sent'
 
     login 'blue'
-    visit '/me/dashboard'
-    click_link 'Requests'
+    visit '/requests'
     assert_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
     click_link 'approve' # will click the first one
     assert_not_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
-    login 'aaron'
-    visit '/me/dashboard'
-
-    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
+#    login 'aaron'
+#    visit '/me/dashboard'
+#
+#    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
   end
 
-  def test_joining_group_updates_dashboard
-    login 'aaron'
-
-    visit '/animals'
-
-    # EXAMPLE: save_and_open
-    # this command will open up a browser and show what webrat sees
-    # useful for debugging
-    ##
-    ## save_and_open_page
-    ##
-
-    click_link 'Request to Join Group'
-    click_button 'Send Request'
-
-    assert_contain 'Request to join has been sent'
-
-
-    login 'dolphin'
-    visit '/me/dashboard'
-    click_link 'Requests'
-    assert_contain 'Aaron! requested to join animals'
-
-    click_link 'approve' # will click the first one
-    assert_not_contain 'Aaron! requested to join animals'
-
-    login 'aaron'
-    visit '/me/dashboard'
-    assert_contain %r{Groups\s*animals}
-  end
 end
