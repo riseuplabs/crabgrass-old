@@ -11,7 +11,7 @@ class GroupsController < Groups::BaseController
 
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
-  verify :method => :post, :only => [:create, :update, :destroy]
+  verify :method => [:post, :put], :only => [:create, :update, :destroy]
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
@@ -57,8 +57,6 @@ class GroupsController < Groups::BaseController
   end
 
   def edit
-    update if request.post?
-    render :template => 'groups/edit'
   end
 
   def update
@@ -69,6 +67,7 @@ class GroupsController < Groups::BaseController
       @group.reload if @group.name.empty?
       flash_message_now :object => @group
     end
+    render :template => 'groups/edit'
   end
 
   def destroy
