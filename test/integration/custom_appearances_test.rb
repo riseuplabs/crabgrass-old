@@ -14,7 +14,7 @@ class CustomAppearancesTest < ActionController::IntegrationTest
     assert_select "link[rel='stylesheet'][href=?]", /.*as_needed.*account.css.*/ do |links|
       assert_equal 1, links.size
       stylesheet_url = links.first.attributes["href"]
-      assert links.first.attributes["href"] =~ %r{/stylesheets/themes/\d+/\d+/as_needed/account.css\?\d+}
+      assert links.first.attributes["href"] =~ %r{/stylesheets/compiled/ui_base/themes/\d+/\d+/as_needed/account.css\?\d+}
     end
 
     # get the stylesheet
