@@ -553,7 +553,7 @@ module PageHelper
       id = page_class.param_id
       "/#{controller}/create/#{id}" + build_query_string(options)
     else
-      url_for(options.merge(:controller => '/pages', :action => 'create'))
+      new_page_url
     end
   end
 

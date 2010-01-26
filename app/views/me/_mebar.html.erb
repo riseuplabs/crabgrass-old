@@ -16,10 +16,10 @@
 <ul class='menu_me_left'>
 
   <% if inline_create_page %>
-    <% active = show_active && controller?(:pages) && action?(:create) %>
+    <% active = show_active && controller?(:pages) && action?(:new) %>
     <li class='small_icon plus_16'><%= link_to_active(
       I18n.t(:contribute_content_link),
-      {:controller => '/pages', :action => 'create'},
+      new_page_url,
       active
     ) %></li>
   <% end %>

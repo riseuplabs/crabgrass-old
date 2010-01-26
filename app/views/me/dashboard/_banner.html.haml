@@ -1,8 +1,8 @@
 %section#identity
   %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"60px", :width=>"60px"}
     %div.left
-      %h1 the woohoo! group
-      %a{:href => "#"}
+      %h1= current_user.display_name
+      %a{:href => url_for_user(current_user)}
         View Profile
     %div.right
       %ul
@@ -10,11 +10,11 @@
           %a{:href => "#"}
             3 pending tasks
         %li
-          %a{:href => "#"}
+          %a{:href => my_work_pages_path}
             10 new page feeds
         %li
-          %a{:href => "#"}
+          %a{:href => messages_path}
             3 new messages
         %li
-          %a{:href => "#"}
+          %a{:href => requests_path}
             2 new requests
