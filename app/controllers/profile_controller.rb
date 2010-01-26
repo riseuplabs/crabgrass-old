@@ -28,6 +28,7 @@ class ProfileController < ApplicationController
     #multiple = params[:multiple]
     render :update do |page|
       page.insert_html :bottom, 'profile_locations', :partial => '/locations/select_form'
+      page.hide 'add_location_link'
     end
   end
 
