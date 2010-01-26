@@ -3,7 +3,6 @@
     %div.left
       %h1
         = @group.full_name
-      = edit_settings_link 
 
     %div#group-action
       = create_page_link(@group)
@@ -12,6 +11,7 @@
           %strong
             = I18n.t(:group_join_chat)
       = leave_group_link
+      = join_group_link
 
 - content_for :info_box do
   %nav#group
