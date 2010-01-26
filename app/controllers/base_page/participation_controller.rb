@@ -99,7 +99,7 @@ class BasePage::ParticipationController < BasePage::SidebarController
   ##
 
   def update_public
-    @page.public = params[:add]
+    @page.public = params[:public]
     @page.updated_by = current_user
     @page.save
     render :template => 'base_page/participation/reset_public_line'
