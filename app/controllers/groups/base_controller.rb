@@ -4,7 +4,7 @@
 class Groups::BaseController < ApplicationController
 
   stylesheet 'groups'
-  helper 'groups'
+  helper 'groups', 'locations'
   permissions 'groups/base'
 
   protected

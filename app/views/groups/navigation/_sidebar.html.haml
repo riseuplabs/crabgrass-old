@@ -6,9 +6,11 @@
       = I18n.t(:about)
     = text_with_more(@group.profiles.public.summary_html, :p, :length => 200, :more_url => '#')
     = render :partial => '/layouts/base/group_details_links'
-
-  %section#people
-    = render :partial => '/layouts/base/people'
-  %section#affiliations
+  - if may_list_memberships?
+    %section#people
+      = render :partial => '/layouts/base/people'
+  - if may_show_affiliations?
+    %section#affiliations
+      = render :partial => '/layouts/base/group_affiliations'
   %section#featured
     = render :partial => '/layouts/base/featured'

@@ -2,7 +2,7 @@
   %li.small_icon.location_20
     = I18n.t(:location).upcase
     %br
-    %span Local-Turkey
+    %span= friendly_location(@group) || 'n/a' # Local-Turkey
   %li.small_icon.status_20
     = I18n.t(:status).upcase
     %br
