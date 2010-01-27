@@ -91,7 +91,7 @@ class Discussion < ActiveRecord::Base
   #
   # @current_discussion.next_for(current_user) returns the next discussion in that list
   def next_for(user)
-    all_discussions = user.discussions.find(:all)
+    all_discussions = user.discussions.with_some_posts.find(:all)
     current_index = all_discussions.index(self)
     all_discussions[current_index + 1] # next discussion or nil
   end

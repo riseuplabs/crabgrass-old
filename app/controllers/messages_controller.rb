@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
     end
 
     @discussions = current_user.discussions.with_some_posts.paginate(page_params)
-    render :partial => 'main_content'
+    render :partial => 'messages_main_content'
   end
 
   # GET /messages/penguin
@@ -96,7 +96,7 @@ class MessagesController < ApplicationController
   # ether when trying to create a new discussion or trying to update an existing one
   def invalid_discussion(exception)
     flash_message :exception => exception
-    redirect_to :index
+    redirect_to :action => :index
   end
 
   def fetch_from_user
@@ -106,6 +106,7 @@ class MessagesController < ApplicationController
   def fetch_discussion
     @user = User.find_by_login(params[:id])
     @discussion = current_user.discussions.from_user(@user).first
+    redirect_to :action => :index if @discussion.blank?
   end
 
   def fetch_recipient
