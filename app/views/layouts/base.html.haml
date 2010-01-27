@@ -8,10 +8,13 @@
         =render :partial => '/layouts/base/header'
       .space
 
+      %section#flash_messages
+        = render :partial => 'layouts/messages'
+
       %section#breadcrumb
         = render :partial => '/layouts/base/breadcrumb'
+
       #content
-        = render :partial => 'layouts/messages'
         /
         / extended sidebar for landing pages 
         /
