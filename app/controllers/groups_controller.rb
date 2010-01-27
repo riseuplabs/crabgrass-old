@@ -11,7 +11,8 @@ class GroupsController < Groups::BaseController
 
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
-  verify :method => [:post, :put], :only => [:create, :update, :destroy]
+  verify :method => [:post, :put], :only => [:create, :update]
+  verify :method => :delete, :only => :destroy
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
@@ -33,7 +34,7 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) ) 
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) )
     @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
