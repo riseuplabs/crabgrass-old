@@ -89,6 +89,7 @@
 .nowrap
   white-space: nowrap
 
+// NOTE: duplication of .small_icon in global nav for nested li
 .small_icon
   float: left
   background-repeat: no-repeat
@@ -229,7 +230,7 @@ h6
 /* @end */
 
 
-/* global nav in masthead */
+/* global nav in masthead *note: duplication of .small_icon here (nested) */
 nav.page
   +clearfix
   height: 38px
@@ -248,7 +249,6 @@ nav.page
         margin-top: 9px
         li
           +inline-list
-          padding: 0
           a
             +hover-link
             color: #998675
@@ -260,15 +260,47 @@ nav.page
         li.current
           a
             color: #382526
+          .menu_items
+            li.small_icon 
+              float: left
+              background-repeat: no-repeat
+              background-position: 0 50%
+              padding-left: 20px
+              min-height: 16px
+            
+            
+        
+
 
 /* @end */
 
 /* flash message */
 #message
-  #message-container
-    +container
-    background= !test
-
+  +container
+  background= !test
+  #test
+    +columns(14)
+    +full
+#message-container
+  width: 764px
+.small_notice
+  padding: 0.5em 0
+  .text
+    padding-left: 20px
+  p, ul
+    margin: 0.25em
+  ul
+    padding-left: 1em
+.error
+  border: 1px solid red
+  background: #fcc
+.success
+  border: 1px solid green
+  background: #cfc
+.info
+  border: 1px solid blue
+  background: #cdf
+    
 /* @end */
 /* breadcrumb */
 #breadcrumb
