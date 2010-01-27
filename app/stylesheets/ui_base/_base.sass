@@ -172,11 +172,11 @@ h6
 /* masthead with logout */
 #masthead
   +clearfix 
-  height: 40px
+  height: 46px
   #masthead-container
     +container
-    height: 40px
-    background= !background_white
+    height: 46px
+    background= !masthead_header_bg
     overflow: visible
     #masthead-name
       +columns(14)
@@ -184,11 +184,14 @@ h6
       width: 764px
       position: relative
       h2
+        color= !white_text
+        font-weight: normal
+        font-size: 24px
         float: left
         display: inline
         margin-top: 12px
       form#search
-        margin-top: 9px
+        margin-top: 10px
         float: right
         display: inline
         text-align: right
@@ -226,19 +229,18 @@ h6
             position: relative
           .light-small
             +small-text
-            color= !light_grey_text
+            color= !white_text
 /* @end */
 
 
 /* global nav in masthead *note: duplication of .small_icon here (nested) */
 nav.page
   +clearfix
-  height: 38px
+  height: 30px
   #global-nav-container
     +container
-    +bordered-top(!light_grey_border)
-    height: 38px
-    background= !background_white
+    height: 30px
+    background= !global_nav_bg
     #global-nav
       +columns(14)
       +full
@@ -246,12 +248,12 @@ nav.page
       #menu
         float: left
         +clearfix
-        margin-top: 9px
+        margin-top: 5px
         li
           +inline-list
           a
             +hover-link
-            color: #998675
+            color= !white_text
             font-size: 12px
             font-weight: bold
             margin: 0 26px 0 0
@@ -309,7 +311,7 @@ nav.page
   #breadcrumb-container
     +container
     height: 30px
-    background= !test
+    background= !banner_bg
     div
       +columns(14)
       +full
@@ -343,7 +345,7 @@ nav#second-level-aside, nav#second-level
     background= !test
     a
       color= !warm_grey_text
-      background= !test
+      background= !banner_bg
       text-decoration: none
       font-weight: bold
       display: inline-block

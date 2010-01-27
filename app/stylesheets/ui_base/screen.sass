@@ -27,8 +27,6 @@ body
     header.page
       +clearfix
     
-  #content.login
-    margin-top: 0px /* FIXME: this is just something to get rid of the warning */
   #content
     +clearfix
     color= !medium_grey_text
@@ -36,7 +34,7 @@ body
       +container
       +bordered-btm(!almost_black)
       height: 96px
-      background= !test
+      background= !banner_bg
       overflow: visible
       header#banner-no-avatar
         +columns(14)
@@ -104,7 +102,7 @@ body
       nav#third-level
         +columns(14)
         +full
-        border-top= 3px "solid" !almost_black
+        border-top= 3px "double" !almost_black
         margin-top: 28px
         height: 25px
         width: 764px
@@ -308,26 +306,25 @@ body
                     letter-spacing: normal
                     font-size: 8px
               #featured
-                margin-top: 0px /* FIXME: this is just something to get rid of the warning */
-              li
-                padding: 12px 0 4px
-                margin: 12px 0 0
-                +bordered-top(!light_grey_border)
-                article
-                  width: 184px
-                  h5
-                    color= !blue
-                    font-weight: bold
-                    font-size: 13px
-                    padding: 0 0 10px
-                  p
-                    padding-bottom: 6px
-                  span.tags
-                    a
-                      +blue-link(10px)
-              li.first
-                +zero
-                border: none
+                li
+                  padding: 12px 0 4px
+                  margin: 12px 0 0
+                  +bordered-top(!light_grey_border)
+                  article
+                    width: 184px
+                    h5
+                      color= !blue
+                      font-weight: bold
+                      font-size: 13px
+                      padding: 0 0 10px
+                    p
+                      padding-bottom: 6px
+                    span.tags
+                      a
+                        +blue-link(10px)
+                li.first
+                  +zero
+                  border: none
             #about-profile
               +small-text
               line-height: 1.2
@@ -457,8 +454,7 @@ body
   footer.page
     +container
     ul#crabgrass
-      columns(10)
-        margin-top: 0px /* FIXME: this is just something to get rid of the warning */
+      +columns(10)
       +full
       li
         color: #f60
