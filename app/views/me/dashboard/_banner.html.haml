@@ -5,17 +5,3 @@
       = render :partial => 'common/say_form'
       %a{:href => url_for_user(current_user)}
         View Profile
-    %div.right
-      %ul
-        %li
-          %a{:href => "/me/tasks/pending"}
-            3 pending tasks
-        %li
-          %a{:href => my_work_pages_path}
-            10 new page feeds
-        %li
-          %a{:href => messages_path}
-            3 new messages
-        %li
-          %a{:href => requests_path}
-            2 new requests
