@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class People::PublicMessagesControllerTest < ActionController::TestCase
-  fixtures :users, :discussions, :posts, :profiles
+  fixtures :users, :discussions, :posts, :profiles, :relationships
 
   def test_index
     login_as :red
@@ -47,7 +47,6 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
     # both blue and red should be able to destroy blue's post to red's wall
     [:blue, :red].each do |user|
       post = create_post( :from => users(:blue), :to => users(:red) )
-
       login_as :yellow
       assert_no_difference 'Post.count', '+0 post' do
         delete :destroy, :person_id => 'red', :id => post.id
