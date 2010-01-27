@@ -23,8 +23,11 @@ class MessagePostsController < ApplicationController
     if current_user == @recipient
       flash_message :error => I18n.t(:message_to_self_error)
       redirect_to messages_path
+    elsif !@recipient.may_be_pestered_by?(current_user)
+      flash_message :error => I18n.t(:message_cant_perster_error, :user => @recipient.name)
+      redirect_to messages_path
     end
-    @recipient.profile.may_pester?
-  end
 
+    true
+  end
 end

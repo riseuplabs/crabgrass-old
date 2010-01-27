@@ -100,8 +100,6 @@ class MessagesControllerTest < ActionController::TestCase
     # getting next on last item should redirect to index
     get :next, :id => users(:green).to_param
     assert_redirected_to :action => :index
-
-
   end
 
 

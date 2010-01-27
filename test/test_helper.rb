@@ -114,7 +114,7 @@ class Test::Unit::TestCase
   def assert_permission_denied(failure_message='missing "permission denied" message')
     if flash[:type]
       assert_equal 'error', flash[:type], failure_message
-      assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failed_message
+      assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
       assert_response :redirect
       assert_redirected_to :controller => :account, :action => :login
     else

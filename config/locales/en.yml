@@ -609,6 +609,7 @@ en:
 
   message_recipient_name_input_caption: 'To: Type Name'
   message_to_self_error: "Can't talk to yourself"
+  message_cant_perster_error: "Only friends may send messages to {{user}}"
   ##
   ## PROFILE
   ##

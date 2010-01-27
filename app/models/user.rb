@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :if => :should_validate_email
 
   before_validation :validates_receive_notifications
-  
+
   def validates_receive_notifications
     self.receive_notifications = nil if ! ['Single', 'Digest'].include?(self.receive_notifications)
   end
