@@ -85,20 +85,30 @@ class MessagesControllerTest < ActionController::TestCase
 
     login_as :blue
 
-    ### for user 'orange' (first in the list)
-    # getting previous on earliest message goes to index
-    get :previous, :id => users(:orange).to_param
+
+
+    all_discussions = @blue.discussions.with_some_posts
+    first, middle, last = *all_discussions
+
+    # get username that identifies this discussion for blue
+    first_id = first.user_talking_to(@blue).to_param
+    middle_id = middle.user_talking_to(@blue).to_param
+    last_id = last.user_talking_to(@blue).to_param
+
+
+    # asking for next while on last item
+    # or for previous while on first item
+    # should return you to index
+    get :previous, :id => first_id
     assert_redirected_to :action => :index
 
-    get :next, :id => users(:orange).to_param
-    assert_redirected_to :action => :show, :id => 'red'
+    get :next, :id => first_id
+    assert_redirected_to :action => :show, :id => middle_id
 
-    ### for user 'green' (last in the list)
-    get :previous, :id => users(:green).to_param
-    assert_redirected_to :action => :show, :id => 'red'
+    get :previous, :id => last_id
+    assert_redirected_to :action => :show, :id => middle_id
 
-    # getting next on last item should redirect to index
-    get :next, :id => users(:green).to_param
+    get :next, :id => last_id
     assert_redirected_to :action => :index
   end
 
