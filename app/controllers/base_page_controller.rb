@@ -39,6 +39,7 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
+    @second_nav = 'pages'
   end
 
   ##
@@ -50,7 +51,6 @@ class BasePageController < ApplicationController
   def create
     @page_class = get_page_type
     @page = build_new_page(@page_class)
-    @second_nav = 'pages'
 
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))
