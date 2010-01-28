@@ -10,6 +10,8 @@ class People::DirectoryController < People::BaseController
 
   def index
     @users = User.on(current_site).recent.paginate :page => params[:page]
+    @second_nav = 'all'
+    @third_nav = 'discover'
   end
 
   def show
@@ -27,6 +29,7 @@ class People::DirectoryController < People::BaseController
 
     # what letters can be used for pagination
     @pagination_letters = (User.friends_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @second_nav = 'my'
   end
 
   def peers
@@ -39,6 +42,8 @@ class People::DirectoryController < People::BaseController
     @users = User.on(current_site).alphabetized(@letter_page).paginate :page => params[:page]
     # what letters can be used for pagination
     @pagination_letters = (User.on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @second_nav = 'all'
+    @third_nav = 'browse'
   end
 
   protected
