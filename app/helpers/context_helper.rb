@@ -135,7 +135,7 @@ module ContextHelper
     @active_tab = :me
     add_context 'me', me_url
     set_banner 'me/banner', current_user.banner_style
-    set_header "me/banner"
+    set_header "me/navigation/header_small"
     breadcrumbs_from_context if update_breadcrumbs
   end
 
