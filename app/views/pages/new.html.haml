@@ -1,11 +1,5 @@
 - content_for :banner do
-  - if @group
-    = render :partial => '/groups/navigation/header_small'
-  - else
-    = render :partial => '/me/dashboard/banner'
-
-- content_for :secondary_nav do
-  = render :partial => '/groups/navigation/menu'
+  = render :partial => @partial_for_header
 
 - if @group
   %h1
