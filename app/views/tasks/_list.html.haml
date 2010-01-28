@@ -1,14 +1,14 @@
 - options = options_for_task_list
 
 %ul.tasks
-  - @task_lists.each do |task|
+  - @task_lists.each do |list|
 
-    - if !(@tasks = list_for_task(task, options)).empty?
+    - if !(@tasks = list_for_task(list, options)).empty?
       %li.task
 
         %p
-          = link_to task.page.title, page_url(task.page)
-          = "(#{link_to_entity(task.page.owner, :action => 'tasks')})" if task.page.owner
+          = link_to list.page.title, page_url(list.page)
+          = "(#{link_to_entity(list.page.owner, :action => 'tasks')})" if list.page.owner
 
         %ul.task_list
           = render :partial => 'task_list_page/task', :collection => @tasks, :locals => {:sortable => false}

@@ -1,4 +1,6 @@
-<%= settings_tabs %>
+<% content_for :left_sidebar do %>
+  <%= render :partial => '/groups/navigation/settings_sidelinks' %>
+<% end %>
 
 <!-- table for some pretty formatting -->
 <table class='form'>
@@ -24,7 +26,7 @@
   <p class="form_buttons"><%= submit_tag I18n.t(:done_button), :name => nil %></p>
 <% end %>
 
-  
+
   <tr>
     <td></td>
     <td>

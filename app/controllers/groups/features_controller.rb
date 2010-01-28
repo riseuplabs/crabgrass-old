@@ -2,8 +2,6 @@
 # this is a CRUD controller for Features resources
 # a Feature resource is modeled as a GroupParticipation object with 'static' property
 class Groups::FeaturesController < Groups::BaseController
-  permissions 'groups/requests'
-
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
   helper 'groups'
   before_filter :fetch_data, :login_required

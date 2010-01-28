@@ -16,10 +16,6 @@ module GroupsHelper
   ## NAVIGATION
   ##
 
-  def settings_tabs
-    render :partial => 'groups/navigation/settings_tabs'
-  end
-
   def edit_settings_link(group = nil)
     group = group.nil? ? @group : group
     if may_edit_group?

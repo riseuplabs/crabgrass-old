@@ -2,7 +2,7 @@
 # All the relationships between users and groups are managed by this controller,
 
 class Groups::MembershipsController < Groups::BaseController
-  permissions 'groups/memberships', 'groups/requests'
+  permissions 'groups/memberships'
 
   before_filter :fetch_membership, :only => :destroy
   before_filter :fetch_group, :login_required
