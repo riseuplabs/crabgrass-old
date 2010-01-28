@@ -35,7 +35,7 @@
 =sans-family
   :font-family verdana, bitstream vera sans, helvetica, sans-serif
 
-// common styles
+// common styles/mixins
 =bordered-btm(!border_color= !warm_grey_border)
   border-bottom= 1px "solid" !border_color
 
@@ -99,6 +99,7 @@
   .twenty
     padding-left: 22px
     min-height: 24px
+    
 /* @group links */
 
 \:focus
@@ -146,7 +147,7 @@ h6
     #account-links
       width: 320px
       float: right
-      background= !background_white
+      background= !white_bg
       height: 30px
 #user
   float: right
@@ -233,7 +234,7 @@ h6
 /* @end */
 
 
-/* global nav in masthead *note: duplication of .small_icon here (nested) */
+/* global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance) */
 nav.page
   +clearfix
   height: 30px
@@ -269,17 +270,13 @@ nav.page
               background-position: 0 50%
               padding-left: 20px
               min-height: 16px
-            
-            
-        
-
 
 /* @end */
 
 /* flash message */
 #message
   +container
-  background= !test
+  background= !page_bg
   #test
     +columns(14)
     +full
@@ -304,6 +301,7 @@ nav.page
   background: #cdf
     
 /* @end */
+
 /* breadcrumb */
 #breadcrumb
   +clearfix
@@ -349,6 +347,7 @@ nav.page
     +hover-link
     +small-text
     color= !light_grey_text
+    padding: 4px 0 0 8px
 #chat
   margin: 10px 0 2px
   color= !warm_grey_text
@@ -363,6 +362,7 @@ nav.page
   a
     color= !white_text
     font-size: 11px
+    padding: 0
     
 /* @end */      
       
@@ -402,9 +402,62 @@ nav#second-level-aside, nav#second-level
     font-size: 10px
 nav#second-level
   width: 674px
-  padding-left: 90px
+  padding-left: 80px
 /* @end */ 
-     
+
+/* third-level nav */
+#third-level-container
+  +container
+  height: 56px
+  nav#third-level
+    +columns(14)
+    +full
+    border-top= 3px "double" !third_nav_border
+    margin-top: 28px
+    height: 25px
+    width: 764px
+    #centered-nav
+      float: left
+      width: 100%
+      position: relative
+      height: 25px
+      ul
+        clear: left
+        float: left
+        height: 23px
+        margin-top: -14px
+        position: relative
+        left: 50%
+        text-align: center
+        li
+          +bordered-block(!third_nav_border)
+          +spaced
+          background= !third_nav_bg
+          height: 22px          
+          font-size: 12px
+          display: block
+          float: left
+          position: relative
+          right: 50%
+          a
+            color= !third_nav_text
+            display: block
+            text-decoration: none
+            font-weight: normal
+            height: 8px
+            line-height: 0.9
+            padding: 6px 10px
+        li.current
+          height: 22px
+          background= !third_nav_current_bg
+          a
+            color= !third_nav_current_text
+            font-weight: bold
+        li.first
+          +bordered(!third_nav_border)
+/* @end */ 
+
+
 /* groups page feed, me-section page feed, group landing/wiki section */
 
 #pages, #group-wiki
@@ -617,12 +670,13 @@ button.icon_16
 
 #identity-image
   +columns(4,4)
+  +bordered(!almost_black)
   width: 204px
   height: 204px
   float: left
   margin: 0
-  background-color: #fff
-  border: 1px solid #535741
+  background: !white_bg
+
 
 #image-label
   +columns(4,4)

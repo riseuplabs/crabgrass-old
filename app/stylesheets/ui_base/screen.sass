@@ -22,7 +22,7 @@ body
   +susy
   +sans-family
   color= !almost_black
-  background= !background_color
+  background= !page_bg
   #page  
     header.page
       +clearfix
@@ -52,62 +52,8 @@ body
           margin-bottom: -20px
         div.left
           padding-left: 10px
-        
-        
-      
-    #third-level-container
-      +container
-      height: 56px
-      nav#third-level
-        +columns(14)
-        +full
-        border-top= 3px "double" !almost_black
-        margin-top: 28px
-        height: 25px
-        width: 764px
-        #centered-nav
-          float: left
-          width: 100%
-          position: relative
-          height: 25px
-          ul
-            clear: left
-            float: left
-            height: 25px
-            margin-top: -14px
-            position: relative
-            left: 50%
-            text-align: center
-            li
-              +bordered-block(!almost_black)
-              +zero
-              +spaced
-              height: 24px
-              background: #fff
-              font-size: 11px
-              display: block
-              float: left
-              position: relative
-              right: 50%
-              a
-                color= !warm_grey_text
-                display: block
-                text-decoration: none
-                font-weight: bold
-                height: 8px
-                line-height: 0.9
-                padding: 8px 10px
-            li.current
-              height: 24px
-              background= !almost_black
-              a
-                color= !white_text
-            li.first
-              +bordered-block(!almost_black)
-        
-      nav#second-level
-        width: 684px
-        padding-left: 80px         
+
+              
             
     #content-container.login
       background-image: none
@@ -183,15 +129,7 @@ body
           width: 204px
           float: left
           margin: -95px 20px 0 0
-          #identity-image
-            +columns(4,4)
-            width: 204px
-            height: 204px
-            float: left
-            margin: 0
-            background-color: #fff
-            border: 1px solid #535741
-            z-index: 99
+   
           #image-label            
             +columns(4,4)
             width: 204px

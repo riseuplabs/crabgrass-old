@@ -1,4 +1,5 @@
-= render :partial => '/groups/group_header_no_sidebar'
+- content_for :banner do
+  = render :partial => '/groups/header_without_sidebar'
 
 %section#main-content.no-sidebar
   %h3 Pending Tasks

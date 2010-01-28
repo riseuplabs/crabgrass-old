@@ -10,7 +10,7 @@ class BasePageController < ApplicationController
   layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  permissions 'base_page', 'posts'
+  permissions 'base_page', 'posts', 'groups/memberships'
   helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
@@ -39,6 +39,7 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
+    @second_nav = 'pages'
   end
 
   ##
@@ -50,7 +51,6 @@ class BasePageController < ApplicationController
   def create
     @page_class = get_page_type
     @page = build_new_page(@page_class)
-    @second_nav = 'pages'
 
     if params[:cancel]
       return redirect_to(create_page_url(nil, :group => params[:group]))

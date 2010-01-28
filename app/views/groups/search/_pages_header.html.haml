@@ -4,7 +4,8 @@
 - content_for :right_sidebar do
   = render :partial => 'groups/search/tags'
 
-= render :partial => '/groups/group_header_no_sidebar'
+- content_for :banner do
+  = render :partial => '/groups/header_without_sidebar'
 
 - content_for :browse_content do
   %nav

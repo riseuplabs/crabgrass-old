@@ -4,9 +4,8 @@
 - content_for :extended_sidebar do
   = render :partial => 'groups/navigation/sidebar'
 
-- content_for :content_header do
-  %header
-    = render :partial => 'group_header'
+- content_for :banner do
+  = render :partial => 'header_with_sidebar'
 
 %section#group-wiki
   = render :partial => 'group_wiki'
