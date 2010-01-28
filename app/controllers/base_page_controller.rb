@@ -10,7 +10,7 @@ class BasePageController < ApplicationController
   layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  permissions 'base_page', 'posts'
+  permissions 'base_page', 'posts', 'groups/memberships'
   helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
