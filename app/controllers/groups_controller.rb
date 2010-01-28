@@ -40,6 +40,7 @@ class GroupsController < Groups::BaseController
     @wiki = private_or_public_wiki()
     @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
+    @second_nav = 'home'
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
@@ -58,6 +59,8 @@ class GroupsController < Groups::BaseController
   end
 
   def edit
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   def update

@@ -68,6 +68,7 @@ module Groups::Search
   def tasks
     @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
+    @second_nav = 'tasks'
     search_template('tasks')
   end
 
@@ -110,6 +111,7 @@ module Groups::Search
   def pages
     @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) )
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
+    @second_nav = 'pages'
     search_template('pages')
   end
 
