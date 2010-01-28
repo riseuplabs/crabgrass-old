@@ -1,4 +1,53 @@
 module SiteTestHelper
+
+  def self.included(base)
+    base.instance_eval do
+      # takes collections of sites and a block. runs all the tests defined in the block
+      # for each site.
+      # +sites+ is a hash, each key is a site name. values can be _true_, _false_ (don't test the site)
+      # or a hash of site attributes to override
+      #
+      # Example:
+      # with_site(:site1 => {:profiles => ['private']}, :site2 => true) {
+      #   def test_something;
+      #     assert_something
+      #   end
+      # }
+      def self.repeat_with_sites(sites = {})
+        return unless block_given?
+
+        # yield will define some new methods, some of which are tests
+        old_methods = self.instance_methods
+        yield
+        new_methods = self.instance_methods
+        # methods defined in the yielded block that start with 'test'
+        new_test_methods = (new_methods - old_methods).grep /^test/
+
+        new_test_methods.each do |test_method_name|
+          aliased_test_method_name = "do_#{test_method_name}".to_sym
+          test_method_name = test_method_name.to_sym
+
+          # alias do_test_something for test_something
+          self.class_eval "alias :#{aliased_test_method_name} :#{test_method_name}"
+          # delete test_something (so it's not get executed)
+          self.class_eval "undef :#{test_method_name}"
+
+          sites.keys.each do |site_name|
+            site_attributes = sites[site_name]
+            next unless site_attributes
+            site_name = "nil" if site_name.nil?
+            site_method_name = "#{test_method_name}_with_site_#{site_name}"
+
+            define_method site_method_name do
+              with_site(site_name, site_attributes) {send(aliased_test_method_name)}
+            end
+          end
+        end
+      end
+    end
+  end
+
+
   def disable_site_testing
     Conf.disable_site_testing
     Site.current = Site.new
@@ -45,49 +94,6 @@ module SiteTestHelper
     disable_site_testing
     Conf.enabled_site_ids = old_enabled_site_ids
     Site.current = old_site
-  end
-
-  # takes collections of sites and a block. runs all the tests defined in the block
-  # for each site.
-  # +sites+ is a hash, each key is a site name. values can be _true_, _false_ (don't test the site)
-  # or a hash of site attributes to override
-  #
-  # Example:
-  # with_site(:site1 => {:profiles => ['private']}, :site2 => true) {
-  #   def test_something;
-  #     assert_something
-  #   end
-  # }
-  def self.repeat_with_sites(sites = {})
-    return unless block_given?
-
-    # yield will define some new methods, some of which are tests
-    old_methods = self.instance_methods
-    yield
-    new_methods = self.instance_methods
-    # methods defined in the yielded block that start with 'test'
-    new_test_methods = (new_methods - old_methods).grep /^test/
-
-    new_test_methods.each do |test_method_name|
-      aliased_test_method_name = "do_#{test_method_name}".to_sym
-      test_method_name = test_method_name.to_sym
-
-      # alias do_test_something for test_something
-      self.class_eval "alias :#{aliased_test_method_name} :#{test_method_name}"
-      # delete test_something (so it's not get executed)
-      self.class_eval "undef :#{test_method_name}"
-
-      sites.keys.each do |site_name|
-        site_attributes = sites[site_name]
-        next unless site_attributes
-        site_name = "nil" if site_name.nil?
-        site_method_name = "#{test_method_name}_with_site_#{site_name}"
-
-        define_method site_method_name do
-          with_site(site_name, site_attributes) {send(aliased_test_method_name)}
-        end
-      end
-    end
   end
 
   def enable_unlimited_site_testing(site_name=nil)
