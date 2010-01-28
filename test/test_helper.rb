@@ -1,21 +1,19 @@
 require 'rubygems'
 
 begin
-  require 'ruby-debug'
-rescue LoadError => exc
-  # no ruby debug installed
-end
-
-begin
   require 'leftright'
 rescue LoadError => exc
   # no leftright installed
 end
 
-ENV["RAILS_ENV"] = "test"
 
+# load the environment
+ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+
+# test_help.rb from rails
+# loads test::unit and rails specific test classes like ActionController::IntegrationTest
 require 'test_help'
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
@@ -27,31 +25,10 @@ end
 
 require 'shoulda/rails'
 
-module Tool; end
-
 
 # require all helpers
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
-# This is a testable class that emulates an uploaded file
-# Even though this is exactly like a ActionController::TestUploadedFile
-# i can't get the tests to work unless we use this.
-class MockFile
-  attr_reader :path
-  def initialize(path); @path = path; end
-  def size; 1; end
-  def original_filename; @path.split('/').last; end
-  def read; File.open(@path) { |f| f.read }; end
-  def rewind; end
-end
-
-class ParamHash < HashWithIndifferentAccess
-end
-
-def mailer_options
-  {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
-  :protocol => 'http://', :port => '3000', :page => @page}
-end
 
 class Test::Unit::TestCase
   setup { Sham.reset }
