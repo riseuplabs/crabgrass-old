@@ -1,9 +1,6 @@
-<%= render :partial => '/groups/admin_header' %>
-
 <% content_for :style do -%>
 table.members td {padding: 12px;}
 <% end -%>
-
 
 <% content_for :left_sidebar do %>
   <%= render :partial => 'members_sidelinks', :locals => {:group => @group } -%>

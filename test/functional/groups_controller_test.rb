@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :profiles, :pages, :sites,
-            :group_participations, :user_participations, :tasks, :page_terms
+            :group_participations, :user_participations, :tasks, :page_terms, :task_lists
 
   include UrlHelper
 

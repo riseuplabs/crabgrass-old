@@ -1,0 +1,43 @@
+- content_for :style do
+  table.members td {padding: 12px;}
+
+- content_for :banner do
+  = render :partial => '/groups/header_without_sidebar'
+
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => 'members_sidelinks', :locals => {:group => @group }
+
+- if current_site.tracking
+  %b
+    Visits:
+  = @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") + "last month,"
+  = @group.memberships.count(:all, :conditions => "visited_at  is not null") + "all time"
+
+%p
+= letter_pagination_links(groups_memberships_params(:action => 'list'), :available_letters => @pagination_letters)
+
+%div
+  - if @memberships.any?
+    %table.members.pretty
+      %tr
+        %th
+          User
+        %th
+          Joined
+        - if current_site.tracking
+          %th
+            Last Visit
+          %th
+            Total Visits
+          / %th
+          /   Joined by
+        %th
+        %th
+          = I18n.t(:buttons_list_label)
+      = render :partial => 'membership', :collection => @memberships
+    %br
+
+= pagination_links(@memberships)
