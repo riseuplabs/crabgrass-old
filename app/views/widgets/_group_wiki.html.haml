@@ -1,0 +1,10 @@
+- if @access == :public
+
+  %h3
+    Wiki
+  %div.wiki
+    = @profile.wiki.body_html
+
+- else
+
+  = render :partial => 'wiki/show', :locals => {:title => "Wiki"}
