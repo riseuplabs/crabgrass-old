@@ -59,8 +59,7 @@ class GroupsController < Groups::BaseController
   end
 
   def edit
-    @second_nav = 'administration'
-    @third_nav = 'settings'
+    active_admin_tabs
   end
 
   def update
@@ -71,6 +70,7 @@ class GroupsController < Groups::BaseController
       @group.reload if @group.name.empty?
       flash_message_now :object => @group
     end
+    active_admin_tabs
     render :template => 'groups/edit'
   end
 
@@ -155,6 +155,11 @@ class GroupsController < Groups::BaseController
     else
       render(:template => 'groups/search/%s' % template)
     end
+  end
+
+  def active_admin_tabs
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   #def provide_rss
