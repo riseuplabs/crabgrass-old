@@ -4,7 +4,7 @@
 <div class="menu_items" style="display: none" onclick="<%= remote_function(:url => recent_pages_url) %>">
   <div class="leftcol menu_me">
     <% cache(menu_cache_key(:submenu=>'me_sidebar')) do %>
-      <%= render :partial => 'me/mebar', :locals => {:menu_mode => true}  %>
+      <%= render :partial => '/layouts/menu/me_left_column' %>
     <% end %>
   </div>
   <div class="rightcol">

@@ -1,0 +1,6 @@
+- content_for :banner do
+  = render :partial => 'me/navigation/header_small' 
+
+= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups}
+%br
+= render :partial => 'pages/list', :locals => {:heading => true}
