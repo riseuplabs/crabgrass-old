@@ -21,8 +21,9 @@ module TabBarHelper
       target = options
     end
     li_class = current ? 'current' : ''
+    li_class += " #{options[:class]}" if !options[:class].nil?
     content_tag(:li, :class => li_class) do
-      link_to I18n.t(key).upcase, target
+      options[:upcase] == true ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key), target)
     end
   end
 
