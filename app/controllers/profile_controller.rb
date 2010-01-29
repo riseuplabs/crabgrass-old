@@ -11,9 +11,6 @@ class ProfileController < ApplicationController
   end
 
   def edit
-    if @user
-      @tabs = 'me/navigation/profile_tabs'
-    end
     if request.post?
       @profile.save_from_params params['profile']
       if @profile.valid?
