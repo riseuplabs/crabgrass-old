@@ -47,19 +47,22 @@
         %label Messages from
         %input{:type=>'text', :value=> 'auto-complete?'}
         %input{:type=>'submit', :value=>'Show'}
-      %div#message-filters-bar
-        %div#select-bar
+      %div#action-bar
+        %div#select-bar.left
           %h5.left Select
           %ul
             %li
               %a{:href => "#"} All
+            %li
               %a{:href => "#"} None
+            %li
               %a{:href => "#"} Unread
-        %div
+        %div#mark-as-bar.left
           %h5.left Mark as:
           %ul
             %li
               %a{:href => "#"} Read
+            %li
               %a{:href => "#"} Unread
         %select.right
           %option All

@@ -1,8 +1,8 @@
 %div#action-bar
-  %div#select-bar
+  %div#select-bar.left
     %h5.left= I18n.t(:select_filter_label)
     = render :partial => '/common/select_list', :locals => {:settings => settings}
-  %div#mark-as-bar
+  %div#mark-as-bar.left
     %h5.left= I18n.t(:mark_as_label)
     = render :partial => '/common/mark_as_list', :locals => {:settings => settings}
   %div.right
