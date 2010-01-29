@@ -15,6 +15,7 @@ module TabBarHelper
     key = options.delete :translate
     key ||= (thing + '_tab').to_sym
     named_path = (thing + '_path').to_sym
+    uppercase = options.delete :upcase
     if options.empty? and respond_to?(named_path)
       target = send named_path
     else
@@ -23,7 +24,7 @@ module TabBarHelper
     li_class = current ? 'current' : ''
     li_class += " #{options[:class]}" if !options[:class].nil?
     content_tag(:li, :class => li_class) do
-      options[:upcase] == true ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key), target)
+      uppercase ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key), target)
     end
   end
 
