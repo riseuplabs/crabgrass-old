@@ -1,6 +1,6 @@
 %ul
-  =tab_li(:pages, :current => (@second_nav == 'pages') ? true : false)
-  =tab_li :activity
-  =tab_li :messages
-  =tab_li :requests, :controller => 'me/requests'
-  =tab_li :tasks, :controller => 'me/tasks', :action => 'pending', :translate => :tasks
+  =tab_li(:pages, :current => ((@second_nav == 'pages') ? true : false), :upcase => true)
+  =tab_li :activity, :upcase => true
+  =tab_li :messages, :upcase => true
+  =tab_li :requests, :controller => 'me/requests', :upcase => true
+  =tab_li :tasks, :controller => 'me/tasks', :action => 'pending', :translate => :tasks, :upcase => true

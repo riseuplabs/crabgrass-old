@@ -1,13 +1,7 @@
 %ul
-  %li
-    = link_to I18n.t(:basic_settings), edit_group_path(@parent || @group)
-  %li
-    %a{:href => "#{groups_profiles_url(:action => :permissions)}"}= I18n.t(:permissions)
-  %li
-    %a{:href => "#{groups_profiles_url(:action => :edit)}"}= I18n.t(:public_profile)
-  %li
-    %a{:href => "#{groups_features_url(:action => :index)}"}= I18n.t(:featured_pages)
-  %li
-    = destroy_group_link(@parent || @group)
-  %li
-    = create_committee_link
+  = menu I18n.t(:basic_settings), edit_group_path(@parent || @group)
+  = menu I18n.t(:permissions), groups_profiles_url(:action => :permissions)
+  = menu I18n.t(:public_profile), groups_profiles_url(:action => :edit)
+  = menu I18n.t(:featured_pages), groups_features_url(:action => :index)
+  %li= destroy_group_link(@parent || @group)
+  %li= create_committee_link

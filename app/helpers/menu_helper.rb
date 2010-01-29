@@ -8,7 +8,7 @@ module MenuHelper
   def top_menu(label, url, options={})
     id = options.delete(:id)
     menu_heading = content_tag(:span,
-      link_to_active(label.upcase, url, options[:active]),
+      link_to_active(label.capitalize, url, options[:active]),
       :class => 'topnav'
     )
     content_tag(:li,
@@ -42,7 +42,7 @@ module MenuHelper
     active = options.has_key?(:active) ? options[:active] : (url_for(url) =~ /#{request.path}/i)
     selected_class = active ? (options[:selected_class] || 'current') : ''
     content_tag(:li,
-      link_to(label.upcase, url, options),
+      link_to(label, url, options),
       options.merge(
         { :class => [options[:class], selected_class].join(' ')})
     )
