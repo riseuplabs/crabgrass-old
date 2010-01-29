@@ -16,27 +16,29 @@ class Me::RequestsController < Me::BaseController
 
   # pending requests
   def index
-    @requests = Request.created_by(current_user).paginate(page_params)
+    # view_filter = :created_by | :to_user
+    @requests = Request.having_state(:pending).send(view_filter, current_user).paginate(page_params)
   end
 
   def approved
+    @requests = Request.having_state(:approved).send(view_filter, current_user).paginate(page_params)
     render :action => :index
   end
 
   def rejected
+    @requests = Request.having_state(:rejected).send(view_filter, current_user).paginate(page_params)
     render :action => :index
   end
 
-
-  def from_me
-    @requests = Request.created_by(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
-  end
-
-  def to_me
-    @requests = Request.to_user(current_user).having_state(params[:state]).by_created_at.paginate(:page => params[:page])
-  end
-
   protected
+
+  # returns a named scope to view
+  # named scope takes one argument - current_user
+  def view_filter
+    # return :created_by if view is :from_me
+    # return :to_user otherwise (could be :to_me or blank)
+    params[:view].to_sym == :from_me ? :created_by : :to_user
+  end
 
   def context
     super

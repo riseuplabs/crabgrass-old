@@ -9,13 +9,15 @@ module ActionBarHelper
   def action_bar_view_filter_select(settings)
     options_hash = {}
     settings[:view].try.each do |view|
-      text = I18n.t(view[:translation])
+      text = I18n.t(view[:translation]).capitalize
 
       # ex: options_hash["My Watched Pages"] = "watched"
       options_hash[text] = view[:name].to_s
     end
 
-    options = options_for_select(options_hash, params[:view])
+    # the first one in the settings list should be selected if no view param given
+    selected = params[:view].blank? ? settings[:view].try.first.try[:name].to_s : params[:view]
+    options = options_for_select(options_hash, selected)
     select_tag 'view_filter_select', options
   end
 

@@ -53,7 +53,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :requestable_id, :if => :requestable_required?
 
   named_scope :having_state, lambda { |state|
-    {:conditions => [ "requests.state = ?", state]}
+    {:conditions => [ "requests.state = ?", state.to_s]}
   }
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'

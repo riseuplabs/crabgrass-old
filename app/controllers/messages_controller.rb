@@ -6,7 +6,7 @@
 # and the user green
 # for example: 'GET /messages/green' request gets the whole private discussion between current_user and user green
 class MessagesController < ApplicationController
-  helper 'autocomplete', 'javascript'
+  helper 'autocomplete', 'javascript', 'action_bar'
 
   before_filter :login_required
   before_filter :fetch_from_user, :only => :index
@@ -18,9 +18,6 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    # view only :all or :unread messages
-    view_filter = params[:view].blank? ? :all : params[:view].to_sym
-
     @discussions = current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(page_params)
 
     # used by the new message ajax partial
@@ -72,6 +69,11 @@ class MessagesController < ApplicationController
   end
 
   protected
+
+  def view_filter
+    # view only :all or :unread messages
+    params[:view].blank? ? :all : params[:view].to_sym
+  end
 
   def redirect_to_message(recipient)
     redirect_direction = recipient.blank? ? {:action => :index} : message_path(recipient.login)

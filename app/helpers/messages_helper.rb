@@ -26,32 +26,25 @@ module MessagesHelper
       {}
     end
   end
-
-  # target is :all, :none or :unread
-  def select_messages_function(target)
-    selectors = {
-      :all => "tr.message .message_check_box",
-      :unread => "tr.message.unread .message_check_box",
-      :none => ''
-    }
-
-    uncheck_selector = selectors[:all]
-    check_selector = selectors[target]
-
-    # first, unselect all checkboxes
-    # then, select target subset of checkboxes
-    "toggleAllCheckboxes(false, '#{uncheck_selector}'); toggleAllCheckboxes(true, '#{check_selector}')"
+  def action_bar_settings
+    { :select =>
+            [ {:name => :all,
+               :translation => :select_all,
+               :function => checkboxes_subset_function("tr.message .message_check_box", "tr.message .message_check_box")},
+              {:name => :none,
+                :translation => :select_none,
+                :function => checkboxes_subset_function("tr.message .message_check_box", "")},
+              {:name => :unread,
+               :translation => :select_unread,
+               :function => checkboxes_subset_function("tr.message .message_check_box", "tr.message.unread .message_check_box")}],
+      :mark =>
+            [ {:name => :read, :translation => :read},
+              {:name => :unread, :translation => :unread}],
+      :view =>
+            [ {:name => :all, :translation => :all},
+              {:name => :unread, :translation => :unread}] }
   end
 
-  # as is either :read or :unread
-  # updates a hidden form field and submits the form
-  def mark_selected_messages_function(as)
-    "$('mark_messages_as').value = '#{as}';this.up('form#mark_messages_form').onsubmit()"
-  end
 
-  def view_filter_select
-    options = options_for_select({I18n.t(:messages_select_all_link) => 'all',
-                                  I18n.t(:messages_select_unread_link) => 'unread'}, params[:view])
-    select_tag 'view_filter_select', options
-  end
+
 end
