@@ -1,6 +1,3 @@
-- content_for :banner do
-  = render :partial => @partial_for_header
-
 - if @group.committee?
   - headline = I18n.t(:new_committee, :group_name => @parent.name)
   - url = committees_url(:action => :create, :id => @parent)
@@ -12,9 +9,15 @@
 - elsif @group.network?
   - headline = I18n.t(:new_network)
   - url = networks_url(:action => "create")
+  - header = '/groups/directory/banner'
 - elsif @group.normal?
   - headline = I18n.t(:new_group)
   - url = groups_url(:action => :create)
+  - header = '/groups/directory/banner'
+
+- header ||= '/groups/header_without_sidebar'
+- content_for :banner do
+  = render :partial => header
 
 = content_tag(:h3, headline)
 

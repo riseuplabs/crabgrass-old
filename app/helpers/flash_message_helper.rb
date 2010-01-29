@@ -89,7 +89,7 @@ module FlashMessageHelper
           flash[:title] = I18n.t(:alert_saved)                  if flash[:type] == 'success'
         end
         notice_contents = build_notice_area(flash[:type], flash[:title], flash[:text])
-        content_tag(:div, notice_contents, :id => 'message-container', :class => "small_notice #{flash[:type]}")
+        content_tag(:div, notice_contents, :id => 'status-message', :class => "small_notice #{flash[:type]}")
       end
     end
   end

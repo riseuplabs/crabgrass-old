@@ -40,7 +40,6 @@ class MessagesControllerTest < ActionController::TestCase
     get :show, :id => users(:blue).to_param
     assert_response :success
     assert_equal relationship.discussion, assigns(:discussion)
-
   end
 
 
@@ -70,13 +69,12 @@ class MessagesControllerTest < ActionController::TestCase
     login_as :blue
 
     get :index, :view => :unread
-    assert_equal [@blue_red_discussion, @blue_green_discussion], assigns(:discussions)
+    assert_same_elements [@blue_red_discussion, @blue_green_discussion], assigns(:discussions)
 
     get :index, :view => :all
-    assert_equal [@blue_orange_discussion.reload, @blue_red_discussion.reload, @blue_green_discussion.reload],
+    assert_same_elements [@blue_orange_discussion.reload, @blue_red_discussion.reload, @blue_green_discussion.reload],
                   assigns(:discussions)
   end
-
 
 
 
@@ -84,8 +82,6 @@ class MessagesControllerTest < ActionController::TestCase
     make_messages_for_blue
 
     login_as :blue
-
-
 
     all_discussions = @blue.discussions.with_some_posts
     first, middle, last = *all_discussions

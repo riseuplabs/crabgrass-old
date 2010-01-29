@@ -36,8 +36,8 @@
   :font-family verdana, bitstream vera sans, helvetica, sans-serif
 
 // common styles/mixins
-=bordered-btm(!border_color= !warm_grey_border)
-  border-bottom= 1px "solid" !border_color
+=bordered-btm(!border_color= !warm_grey_border, !border_style= "solid")
+  border-bottom= 1px !border_style !border_color
 
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
@@ -277,19 +277,24 @@ nav.page
 #message
   +container
   background= !page_bg
-  #test
+  #message-container
     +columns(14)
     +full
-#message-container
-  width: 764px
+#status-message
+  width: 744px
+  margin-bottom: 10px
 .small_notice
-  padding: 0.5em 0
+  padding: 6px 10px
   .text
     padding-left: 20px
   p, ul
-    margin: 0.25em
+    margin: 0
+    clear: left
   ul
-    padding-left: 1em
+    margin-left: 30px
+  li
+    list-style-type: disc
+  
 .error
   border: 1px solid red
   background: #fcc
@@ -488,8 +493,6 @@ nav#second-level
       img
         float: left
         display: inline
-        width: 75px
-        height: 75px
         padding: 0 6px 6px 0
       h4
         float: left
@@ -551,7 +554,7 @@ nav#second-level
   width: 764px
   article
     +columns(14,14)
-    +bordered-btm(!light_grey_border)
+    +bordered-btm(!light_grey_border, "dotted")
     width: 764px
     margin: 0
     padding: 10px 0
@@ -562,9 +565,7 @@ nav#second-level
       width: 83%
       img
         float: left
-        width: 75px
-        height: 75px
-        padding: 0 6px 6px 0
+        padding: 0 10px 10px 0
       h4
         float: left
         display: inline
@@ -584,7 +585,7 @@ nav#second-level
       p.cover, h4.cover
         width: 480px
       .checkbox
-        padding: 26px 10px 0 0
+        padding: 0 10px 0 0
 
     .pages-status
       +columns(2,14)
@@ -909,7 +910,15 @@ nav#tabs
   +clearfix
   +bordered-top-btm
   width: 764px
-
+  #select-bar, #mark-as-bar
+    ul
+      display: inline
+      li
+        +inline-list
+        a
+          +hover-link
+  
+  
 table
   tr
     td.date
