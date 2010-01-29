@@ -277,19 +277,24 @@ nav.page
 #message
   +container
   background= !page_bg
-  #test
+  #message-container
     +columns(14)
     +full
-#message-container
-  width: 764px
+#status-message
+  width: 744px
+  margin-bottom: 10px
 .small_notice
-  padding: 0.5em 0
+  padding: 6px 10px
   .text
     padding-left: 20px
   p, ul
-    margin: 0.25em
+    margin: 0
+    clear: left
   ul
-    padding-left: 1em
+    margin-left: 30px
+  li
+    list-style-type: disc
+  
 .error
   border: 1px solid red
   background: #fcc
@@ -905,7 +910,15 @@ nav#tabs
   +clearfix
   +bordered-top-btm
   width: 764px
-
+  #select-bar, #mark-as-bar
+    ul
+      display: inline
+      li
+        +inline-list
+        a
+          +hover-link
+  
+  
 table
   tr
     td.date
