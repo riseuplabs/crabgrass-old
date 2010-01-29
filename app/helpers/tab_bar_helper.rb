@@ -24,7 +24,7 @@ module TabBarHelper
     li_class = current ? 'current' : ''
     li_class += " #{options[:class]}" if !options[:class].nil?
     content_tag(:li, :class => li_class) do
-      uppercase ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key), target)
+      uppercase ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key).capitalize, target)
     end
   end
 
