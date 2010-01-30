@@ -52,24 +52,25 @@ module ControllerExtension::RescueErrors
 
   # handles suspected "cross-site request forgery" errors
   def render_csrf_error(exception=nil)
-    render :template => 'account/csrf_error'
+    render :template => 'account/csrf_error', :layout => 'default'
   end
 
   # shows a generic not found page
   def render_not_found(exception=nil)
     @skip_context = true
-    render :template => 'common/not_found', :status => :not_found
+    render :template => 'common/not_found', :status => :not_found, :layout => 'default'
   end
 
   # show a permission denied page, or prompt for login
   def render_permission_denied(exception=nil)
     @skip_context = true
+    debugger
 
     respond_to do |format|
       # rails defaults to first format if params[:format] is not set
       format.html do
         if logged_in?
-          render :template => 'common/permission_denied'
+          render :template => 'common/permission_denied', :layout => 'default'
         else
           flash_auth_error(:later)
           redirect_to :controller => '/account', :action => 'login',
@@ -104,7 +105,7 @@ module ControllerExtension::RescueErrors
           end
         end
         @skip_context = true
-        render :template => 'common/error', :status => exception.try(:status)
+        render :template => 'common/error', :status => exception.try(:status), layout => 'default'
       end
       format.js do
         if exception
