@@ -104,7 +104,7 @@ module ControllerExtension::RescueErrors
           end
         end
         @skip_context = true
-        render :template => 'common/error', :status => exception.try(:status), layout => 'default'
+        render :template => 'common/error', :status => exception.try(:status), :layout => 'default'
       end
       format.js do
         if exception
