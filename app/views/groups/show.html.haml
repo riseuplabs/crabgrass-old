@@ -2,10 +2,7 @@
   %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
 
 - content_for :extended_sidebar do
-  = render :partial => 'groups/navigation/sidebar'
-
-- content_for :banner do
-  = render :partial => 'header_with_sidebar'
+  = render :partial => '/groups/navigation/sidebar'
 
 %section#group-wiki
   = render :partial => 'widgets/group_wiki'

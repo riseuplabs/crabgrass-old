@@ -15,9 +15,9 @@
   - url = groups_url(:action => :create)
   - header = '/groups/directory/banner'
 
-- header ||= '/groups/header_without_sidebar'
-- content_for :banner do
-  = render :partial => header
+- if header
+  - content_for :banner do
+    = render :partial => header
 
 = content_tag(:h3, headline)
 

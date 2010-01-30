@@ -1,7 +1,7 @@
 class Groups::DirectoryController < Groups::BaseController
 
   helper 'locations'
-
+  layout 'base'
   before_filter :set_group_type
 
   def index

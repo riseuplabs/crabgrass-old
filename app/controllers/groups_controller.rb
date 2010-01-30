@@ -42,10 +42,12 @@ class GroupsController < Groups::BaseController
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
     @second_nav = 'home'
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+    render :layout => 'group_sidebar'
   end
 
   def new
     @group = Group.new
+    render :layout => 'base'
   end
 
   def create
