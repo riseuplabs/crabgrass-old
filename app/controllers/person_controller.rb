@@ -13,6 +13,7 @@ class PersonController < ApplicationController
   helper 'task_list_page', 'profile'
   stylesheet 'tasks', :action => :tasks
   stylesheet 'messages', :action => :show
+  layout 'people'
   permissions 'contact', 'profile', 'public_messages'
 
   def initialize(options={})
@@ -34,6 +35,7 @@ class PersonController < ApplicationController
     if logged_in? and @user.may_show_status_to?(current_user)
       @status = @user.current_status
     end
+    render :layout => 'people_sidebar'
   end
 
   def search

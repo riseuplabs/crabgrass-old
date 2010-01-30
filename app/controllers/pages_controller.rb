@@ -30,6 +30,7 @@ class PagesController < ApplicationController
 
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
+  layout :layout_for_active_tab
   permissions 'pages', 'groups/base'
   helper 'action_bar', 'tab_bar', 'groups'
 
@@ -105,6 +106,14 @@ class PagesController < ApplicationController
     add_context(context_name,
       :controller => 'pages', :action => params[:action], :group => params[:group])
     true
+  end
+
+  def layout_for_active_tab
+    if @active_tab
+      @active_tab.to_s
+    else
+      'base'
+    end
   end
 
   def context_name_for_action
