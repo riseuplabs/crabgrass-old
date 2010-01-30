@@ -6,7 +6,7 @@ class Groups::BaseController < ApplicationController
   stylesheet 'groups'
   helper 'groups', 'locations'
   permissions 'groups/base', 'groups/requests'
-  layout 'header'
+  layout proc{ |c| c.request.xhr? ? false : 'header' }
 
   protected
 
