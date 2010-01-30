@@ -1,0 +1,12 @@
+- inside_layout 'base' do
+  - content_for :banner do
+    %section#identity-name
+      = avatar_for((@parent || @group || @user), 'medium', :class => "left")
+      - banner = @active_tab.to_s + '/navigation/banner'
+      = render :partial => banner
+
+  - content_for :secondary_nav do
+    - menu = @active_tab.to_s + '/navigation/menu'
+    = render :partial => menu
+  = yield
+

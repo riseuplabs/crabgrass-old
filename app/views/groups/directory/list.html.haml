@@ -1,9 +1,3 @@
-- content_for :banner do
-  = render :partial => '/groups/directory/banner'
-
-- content_for :secondary_nav do
-  = render :partial => '/groups/directory/menu'
-
 - if @second_nav == 'all'
   - content_for :third_nav do
     = render :partial => '/groups/directory/all_groups_tabs'

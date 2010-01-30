@@ -1,8 +1,5 @@
-- inside_layout 'base' do
+- inside_layout 'header' do
   
-  - content_for :banner do
-    = render :partial => @partial_for_header
-
   %section#wiki-content
     - if @title_box.any?
       .title_box

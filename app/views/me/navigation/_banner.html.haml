@@ -1,0 +1,5 @@
+%div.left
+  %h1= current_user.display_name
+  = render :partial => 'common/say_form'
+  %a{:href => url_for_user(current_user)}
+    View Profile

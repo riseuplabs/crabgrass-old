@@ -4,17 +4,15 @@ Context
 -------------------
 
 Context is the general term for information on where we are and how we got here.
-This includes breadcrumbs and banner, although each work differently.
-
-The banner is based on the context. For example, the context might be 'groups >
-rainbow > my nice page'.
+This includes breadcrumbs. Banners nowerdays are set by including the corresponding
+partials from the layouts.
 
 Sometimes the breadcrumbs are based on the context, and sometimes they are not.
 Typically, breadcrumbs are based on the context for non-page controllers. For a
 page controller (ie tool) the breadcrumbs are based on the breadcrumbs of the
 referer (if it exists) or on the primary creator/owner of the page (otherwise).
 Breadcrumbs based on the referer let us show how we got to a page, and also show
-a canonical context for the page (via the banner).
+a canonical context for the page.
 
 The breadcrumbs of the referer are stored in the session. This might result in
 bloated session data, but I think that a typical user will have a pretty finite
@@ -53,15 +51,6 @@ module ContextHelper
     @breadcrumbs = hash.to_a
   end
 
-  def set_banner(partial, style)
-    #@banner = render_to_string :partial => partial
-    @banner_style = style
-  end
-
-  def set_header(partial)
-    @partial_for_header = partial
-  end
-
   ############################################################
   ## CONTEXT MACROS
 
@@ -82,13 +71,9 @@ module ContextHelper
         end
       end
       add_context @group.display_name, url_for_group(@group, :action => 'show')
-      set_header "groups/navigation/header_without_sidebar"
     elsif @parent
       add_context @parent.display_name, url_for_group(@parent, :action => 'show')
-      set_header "groups/navigation/header_without_sidebar"
-      set_banner "groups/navigation/banner_#{size}", @parent.banner_style
     else
-      set_banner "groups/directory/banner", ''
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -101,21 +86,15 @@ module ContextHelper
       else
         add_context I18n.t(:networks), network_directory_url
         add_context @group.display_name, url_for_group(@group)
-        set_banner "groups/navigation/banner_#{size}", @group.banner_style
-        set_header "groups/navigation/header_without_sidebar"
       end
     else
       add_context I18n.t(:networks), network_directory_url
-      set_banner "groups/directory/banner", ''
-      set_header "groups/directory/header"
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
 
   def site_network_context(size='large', update_breadcrumbs=true)
     @active_tab = :home
-    @banner = nil
-    @banner_style = nil
   end
 
   def person_context(size='large', update_breadcrumbs=true)
@@ -123,8 +102,6 @@ module ContextHelper
     add_context I18n.t(:people), people_url
     if @user
       add_context @user.display_name, url_for_user(@user, :action => 'show')
-      set_banner "person/banner_#{size}", @user.banner_style
-      set_header "person/header_small"
     end
     breadcrumbs_from_context if update_breadcrumbs
   end
@@ -134,8 +111,6 @@ module ContextHelper
     @user ||= current_user
     @active_tab = :me
     add_context 'me', me_url
-    set_banner 'me/banner', current_user.banner_style
-    set_header "me/dashboard/banner"
     breadcrumbs_from_context if update_breadcrumbs
   end
 
@@ -155,8 +130,6 @@ module ContextHelper
         end
       else
         # not sure what tab should be active when there is no page owner...
-        @banner = nil
-        @banner_style = nil
       end
       if logged_in? and referer_has_crumbs?(@page)
         breadcrumbs_from_referer(@page)
@@ -180,8 +153,6 @@ module ContextHelper
 
   def no_context
     @context = []
-    @banner = ''
-    @banner_style = nil
     @left_column = nil
     @active_tab = nil
   end

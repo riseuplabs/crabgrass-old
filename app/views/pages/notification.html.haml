@@ -1,2 +1,4 @@
-= render :partial => 'pages/banner_and_nav'
+- content_for :third_nav do
+  = render :partial => 'pages/tabs'
+- action_bar_form(mark_pages_path, my_work_pages_path, action_bar_settings) do
 = render :partial => 'pages/list', :locals => {:layout => '/pages/notice', :full_width => true}

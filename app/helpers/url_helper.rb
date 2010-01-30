@@ -22,15 +22,27 @@ module UrlHelper
   end
 
   def directory_params(options={})
-    group_type = options.delete(:group_type)
+    type = options.delete(:type)
 
-    case group_type
+    case type
     when :network
       network_directory_params(options)
     when :group
       group_directory_params(options)
+    when :people
+      id=id_for_people(options.delete(:action))
+      people_directory_url(id, options)
     else
-      raise "Bad group type #{group_type} for when building directory_params for the url"
+      raise "Bad type #{type} for when building directory_params for the url"
+    end
+  end
+
+  def id_for_people(action)
+    case action
+    when 'search'
+      :browse
+    when 'my'
+      :friends
     end
   end
 
@@ -254,23 +266,26 @@ module UrlHelper
 
   def name_for_directory(active_tab, action)
     if active_tab == :groups
-      my_groups = I18n.t(:my_groups)
-      all_groups = I18n.t(:all_groups)
+      my = I18n.t(:my_groups)
+      all = I18n.t(:all_groups)
+    elsif active_tab == :people
+      my = I18n.t(:my_contacts)
+      all = I18n.t(:all_people)
     else
-      my_groups = I18n.t(:my_networks)
-      all_groups = I18n.t(:all_networks)
+      my = I18n.t(:my_networks)
+      all = I18n.t(:all_networks)
     end
-    return my_groups if action == 'my'
-    return all_groups if action == 'search'
+    return my if action == 'my'
+    return all if action == 'search'
   end
 
   def url_for_directory(active_tab, action)
-    if active_tab == :groups
-      group_type = :group
-    else
-      group_type = :network
+    type = case active_tab
+           when :groups then :group
+           when :people then :people
+           else :network
     end
-    directory_params(:group_type => group_type, :action => action)
+    directory_params(:type => type, :action => action)
   end
 
   #def group_search_url(*path)
@@ -362,7 +377,7 @@ module UrlHelper
     klass = options[:class] || 'name_icon'
     options[:title] ||= display_name
     options[:alt] ||= display_name
-    
+
     avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
   end
 

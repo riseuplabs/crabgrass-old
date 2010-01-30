@@ -106,7 +106,7 @@ label}</a></span>)
   end
 
 
-  
+
 
   # just like link_to, but sets the <a> tag to have class 'active'
   # if last argument is true or if the url is in the form of a hash
@@ -120,7 +120,7 @@ label}</a></span>)
   #
   # *NEWUI
   #
-  # return class if strings match the current action. 
+  # return class if strings match the current action.
   # the default class current
   # used in groups/navigation/_menu
   #
@@ -157,6 +157,23 @@ label}</a></span>)
       break unless selected
     end
     selected
+  end
+
+  ##
+  ## CREATION
+  ##
+
+  # returns a link to the create action for the type given.
+  def link_to_create(type)
+    if type == :groups
+      if may_create_group?
+        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:group).downcase), groups_url(:action => 'new'))
+      end
+    elsif type == :networks
+      if may_create_network?
+        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:network).downcase), networks_url(:action => 'new'))
+      end
+    end
   end
 
   private

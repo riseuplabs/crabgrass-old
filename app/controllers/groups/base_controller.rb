@@ -6,7 +6,7 @@ class Groups::BaseController < ApplicationController
   stylesheet 'groups'
   helper 'groups', 'locations'
   permissions 'groups/base', 'groups/requests'
-  layout 'groups'
+  layout 'header'
 
   protected
 

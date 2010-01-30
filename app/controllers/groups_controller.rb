@@ -47,7 +47,7 @@ class GroupsController < Groups::BaseController
 
   def new
     @group = Group.new
-    render :layout => 'base'
+    render :layout => 'directory'
   end
 
   def create
