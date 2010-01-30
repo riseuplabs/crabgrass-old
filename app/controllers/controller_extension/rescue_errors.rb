@@ -64,7 +64,6 @@ module ControllerExtension::RescueErrors
   # show a permission denied page, or prompt for login
   def render_permission_denied(exception=nil)
     @skip_context = true
-    debugger
 
     respond_to do |format|
       # rails defaults to first format if params[:format] is not set
