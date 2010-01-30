@@ -312,7 +312,7 @@ module LayoutHelper
       # <h2><%= current_site.title %></h2>
     end
   end
-  
+
   ##
   ## declare strings used for logins
   ##
@@ -333,4 +333,17 @@ module LayoutHelper
     }
   end
 
+  def banner_partial_for(toplevel_tab)
+    case toplevel_tab
+    when :people then 'people/navigation/banner'
+    else 'groups/navigation/banner'
+    end
+  end
+
+  def menu_partial_for(toplevel_tab)
+    case toplevel_tab
+    when :people then 'people/navigation/menu'
+    else 'groups/navigation/menu'
+    end
+  end
 end
