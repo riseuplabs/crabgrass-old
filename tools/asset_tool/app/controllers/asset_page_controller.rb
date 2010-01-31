@@ -25,7 +25,7 @@ class AssetPageController < BasePageController
     asset_version.destroy
     respond_to do |format|
       format.html do
-        message(:success => I18n.t(:file_version_deleted))
+        flash_message(:success => I18n.t(:file_version_deleted))
         redirect_to(page_url(@page))
       end
       format.js do
