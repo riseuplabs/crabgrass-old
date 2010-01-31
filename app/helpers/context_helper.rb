@@ -130,6 +130,12 @@ module ContextHelper
         end
       else
         # not sure what tab should be active when there is no page owner...
+        if current_site.network
+          @group = current_site.network
+          @active_tab = :home
+        else
+          @active_tab = :me
+        end
       end
       if logged_in? and referer_has_crumbs?(@page)
         breadcrumbs_from_referer(@page)
