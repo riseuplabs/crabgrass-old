@@ -1,11 +1,11 @@
 - inside_layout 'base' do
   - content_for :banner do
     %section#identity-name
-      - banner = @active_tab.to_s + '/navigation/banner'
+      - banner = banner_partial_for(@active_tab)
       = render :partial => banner
 
   - content_for :info_box do
-    - menu = @active_tab.to_s + '/navigation/menu'
+    - menu = menu_partial_for(@active_tab)
     = render :partial => menu
   = yield
 
