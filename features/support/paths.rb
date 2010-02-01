@@ -46,6 +46,13 @@ module NavigationHelpers
       name = model($1).name
       "/#{name}"
 
+    when /^#{capture_model}(?:'s)? administration page$/                     # eg. the groups's landing page
+      object = model($1)
+      name = object.name
+      # NOTE: this will only work for groups right now
+      controller_name = object.class.table_name
+      "#{controller_name}/#{name}/edit"
+
     when /^#{capture_model}(?:'s)? edit profile page$/                     # eg. the groups's edit page
       name = model($1).name
       "/groups/profiles/edit/#{name}"

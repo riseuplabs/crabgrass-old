@@ -136,7 +136,7 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"$/ do |path, field|
   attach_file(field, path, type)
 end
 
-Then /^I should see "([^\"]*)"$/ do |text|
+Then /^(?:|I )should see "([^\"]*)"$/ do |text|
   assert_contain text
 end
 
