@@ -45,7 +45,7 @@ class Me::DashboardTest < ActionController::IntegrationTest
     assert_contain 'Request to join has been sent'
 
     login 'blue'
-    visit '/requests'
+    visit '/me/requests'
     assert_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
     request_id = Request.last.id
@@ -55,13 +55,13 @@ class Me::DashboardTest < ActionController::IntegrationTest
     submit_form("mark_form")
 
 
-    visit '/requests'
+    visit '/me/requests'
     assert_not_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
     login 'aaron'
-    visit '/me/dashboard'
+    visit '/cnt'
 
-    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
+    assert_not_contain 'Request to Join Network'
   end
 
 end
