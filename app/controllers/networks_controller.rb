@@ -13,6 +13,7 @@ class NetworksController < GroupsController
 
   def new
     @group = Network.new
+    render :layout => 'directory'
   end
 
   def create

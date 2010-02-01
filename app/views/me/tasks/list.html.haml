@@ -1,6 +1,3 @@
-- content_for :banner do
-  = render :partial => @partial_for_header
-
 = link_to I18n.t(:create_task_list) + ARROW, create_page_url(TaskListPage)
 = link_line(link_to_active(I18n.t(:my_pending_tasks_link), :controller => '/me/tasks', :action => 'pending'), link_to_active(I18n.t(:my_completed_tasks_link), :controller => '/me/tasks', :action => 'completed'))
 

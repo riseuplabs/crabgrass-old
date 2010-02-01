@@ -1,4 +1,11 @@
-<%= render :partial => '/groups/admin_header' %>
+<%- content_for :third_nav do %>
+  <%= render :partial => '/groups/navigation/admin_tabs' %>
+<% end %>
+
+<%- content_for :left_sidebar do %>
+  <%= render :partial => '/groups/memberships/members_sidelinks', :locals => {:group => @group } %>
+<% end %>
+
 
 <h3><%=h I18n.t(:send_invites_headline, :group => @group.display_name) %></h3>
 

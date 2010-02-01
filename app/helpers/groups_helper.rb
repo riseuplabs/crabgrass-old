@@ -155,22 +155,6 @@ module GroupsHelper
   end
 
   ##
-  ## CREATION
-  ##
-
-  def create_group_link
-    if @active_tab == :groups
-      if may_create_group?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:group).downcase), groups_url(:action => 'new'))
-      end
-    elsif @active_tab == :networks
-      if may_create_network?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:network).downcase), networks_url(:action => 'new'))
-      end
-    end
-  end
-
-  ##
   ## TAGGING
   ##
 
