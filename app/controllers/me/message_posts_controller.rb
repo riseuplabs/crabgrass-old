@@ -1,4 +1,4 @@
-class MessagePostsController < ApplicationController
+class Me::MessagePostsController < Me::BaseController
   before_filter :fetch_recipient
   before_filter :login_required
 

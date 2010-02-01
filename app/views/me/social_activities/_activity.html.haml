@@ -1,6 +1,7 @@
 - subject = activity.subject
 - object = activity.object
 
+%tr
   %td.avatar
     = link_to avatar_for(subject), url_for_entity(subject) unless subject.blank?
   %td.avatar_xsmall
@@ -8,6 +9,7 @@
   %td.description
     = linked_activity_description(activity)
   %td.date
-      = friendly_date(activity.created_at)
-      = I18n.t(:at)
-    %br= activity.created_at.to_s(:time)
+    = friendly_date(activity.created_at)
+    = I18n.t(:at)
+    %br
+    = activity.created_at.to_s(:time)
