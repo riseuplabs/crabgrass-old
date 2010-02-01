@@ -12,4 +12,4 @@
     = friendly_date(activity.created_at)
     = I18n.t(:at)
     %br
-    = activity.created_at.to_s(:time)
+    = activity.created_at.try.to_formatted_s(:time)
