@@ -12,7 +12,7 @@ module Me::RequestsHelper
 
   def action_bar_settings
     # only render action bar for pending requests
-    return nil unless action?(:index)
+    return nil unless action?(:index) || action?(:mark)
     { :select =>
             [ {:name => :all,
                :translation => :select_all,

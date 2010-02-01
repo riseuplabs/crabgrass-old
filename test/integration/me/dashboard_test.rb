@@ -52,17 +52,16 @@ class Me::DashboardTest < ActionController::IntegrationTest
 
     check field_with_id("request_checkbox_#{request_id}")
     fill_in "mark_as", :with => 'approve'
-    sleep 10
     submit_form("mark_form")
 
 
     visit '/requests'
     assert_not_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
-#    login 'aaron'
-#    visit '/me/dashboard'
-#
-#    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
+    login 'aaron'
+    visit '/me/dashboard'
+
+    assert_contain %r{My World\s*Networks\s*Confederación Nacional del Trabajo \(cnt\)}
   end
 
 end
