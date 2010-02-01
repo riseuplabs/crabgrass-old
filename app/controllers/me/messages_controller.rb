@@ -22,6 +22,7 @@ class Me::MessagesController < Me::BaseController
 
     # used by the new message ajax partial
     @discussion = current_user.discussions.build
+    @active_tab=:me
   end
 
   # PUT /messages/mark
@@ -54,6 +55,7 @@ class Me::MessagesController < Me::BaseController
 
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.paginate(page_params(default_page, 10))
+    @active_tab=:people
   end
 
   ### REDIRECT ACTIONS ###
