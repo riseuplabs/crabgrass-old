@@ -7,9 +7,11 @@ Spork.prefork do
   # Sets up the Rails environment for Cucumber
   ENV["RAILS_ENV"] = "cucumber"
   require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
-  require 'cucumber/rails/world'
-  require 'cucumber'
+
   require 'cucumber/formatter/unicode'
+  require 'cucumber/rails/world'
+  require 'cucumber/rails/active_record'
+  require 'cucumber/web/tableish'
 
   require 'pickle/world'
   Pickle.configure do |config|
