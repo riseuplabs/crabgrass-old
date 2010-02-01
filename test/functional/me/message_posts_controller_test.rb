@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../../test_helper'
 
-class MessagePostsControllerTest < ActionController::TestCase
+class Me::MessagePostsControllerTest < ActionController::TestCase
   fixtures :users, :relationships, :discussions
 
 
