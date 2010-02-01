@@ -47,6 +47,7 @@ Spork.each_run do
   AfterConfiguration do |config|
     require 'database_cleaner'
     DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.strategy = :truncation
   end
 
   require File.expand_path(File.join(File.dirname(__FILE__), "paths"))

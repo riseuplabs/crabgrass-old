@@ -22,6 +22,12 @@ When /I check the checkbox with id "(.*)"/ do |id|
   $browser.check_box(:id, id).set(true)
 end
 
+Then /^I should see "([^\"]*)" translated(?: with #{capture_fields})?$/ do |key, fields|
+  key=key.gsub(' ','_').to_sym
+  substitutions = parse_fields(fields)
+  Then "I should see \"#{I18n.t(key, substitutions)}\""
+end
+
 # for debugging 
 Then /^show me the div with id \"([^\"]+)\"$/ do |id|
   puts "CONTENT FOR div #{id} is:\n----------------"
