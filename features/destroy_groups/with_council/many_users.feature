@@ -15,12 +15,11 @@ Background:
 
 
   Given I am logged in
-  And I am on the group's landing page
+  And I am on the group's administration page
 
 Scenario: I propose to destroy the group
   When I follow and confirm "Propose to Destroy Group"
   Then I should be on the group's landing page
-  And I should not see "Propose to Destroy Group"
   And I should see "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   And I should receive an email with subject: "Blue has proposed to destroy group Rainbow!"
 

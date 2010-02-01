@@ -9,7 +9,7 @@ Background:
   And I am a member of that group
   And that group has 5 other members
   And I am logged in
-  Given I am on that group's landing page
+  Given I am on that group's administration page
 
 @js
 Scenario: Proposing to destroy the group requires confirmation
