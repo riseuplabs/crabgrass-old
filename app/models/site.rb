@@ -193,7 +193,7 @@ class Site < ActiveRecord::Base
     elsif self.network
       '/'
     else
-      {:controller =>'/me/dashboard'}
+      {:controller => '/pages/my_work'}
      end
   end
 
