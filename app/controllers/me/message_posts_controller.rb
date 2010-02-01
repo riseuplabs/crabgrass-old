@@ -1,6 +1,5 @@
 class Me::MessagePostsController < Me::BaseController
-  before_filter :fetch_recipient
-  before_filter :login_required
+  prepend_before_filter :fetch_recipient
 
   def create
     in_reply_to = Post.find_by_id(params[:in_reply_to_id])
