@@ -59,13 +59,15 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
-  map.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }, :controller => 'me/requests'}
+
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
     me.resource :recent_pages, :only => [:show, :create]
     me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
+
+    me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
   end
 
   map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
