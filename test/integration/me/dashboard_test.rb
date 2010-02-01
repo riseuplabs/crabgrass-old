@@ -37,7 +37,7 @@ class Me::DashboardTest < ActionController::IntegrationTest
     assert_contain %r{Staying orange here}
   end
 
-  def test_joining_network_updates_dashboard
+  def test_joining_network_updates_requests
     login 'aaron'
     visit '/cnt'
     click_link 'Request to Join Network'
@@ -48,7 +48,15 @@ class Me::DashboardTest < ActionController::IntegrationTest
     visit '/requests'
     assert_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
-    click_link 'approve' # will click the first one
+    request_id = Request.last.id
+
+    check field_with_id("request_checkbox_#{request_id}")
+    fill_in "mark_as", :with => 'approve'
+    sleep 10
+    submit_form("mark_form")
+
+
+    visit '/requests'
     assert_not_contain 'Aaron! requested to join Confederación Nacional del Trabajo'
 
 #    login 'aaron'
