@@ -28,13 +28,13 @@ Groups:
     The Animals:
       outside_nav:true
       path: /animals
-      Home:
+      HOME:
         path: /animals
-      Pages:
+      PAGES:
         path: /groups/pages/animals
-      Tasks:
+      TASKS:
         path: /groups/tasks/animals
-      Administration:
+      ADMINISTRATION:
         path: /groups/animals/edit
         Settings:
           settings: ## this is 4th level nav now

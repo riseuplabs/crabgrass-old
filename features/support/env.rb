@@ -29,6 +29,7 @@ Spork.each_run do
 
   require 'cucumber/rails/world'
   require 'test/blueprints.rb'
+  require 'lib/crabgrass/navigation.rb'
 
   Before do
     @host = "test.host"
