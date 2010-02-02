@@ -1,0 +1,53 @@
+Me:
+  Pages:
+    My Work:
+    All Pages:
+    Trash:
+  Social Activity:
+    Friend Activity:
+    Peer Activity:
+  Messages:
+  Tasks:
+    Pending:  
+      outside_nav: true
+    Completed: 
+      outside_nav: true
+  Requests:
+    Pending:
+    Approved:
+    Rejected:
+  Edit:
+    outside_nav: true
+People:
+  My Friends:
+  All:
+    Stranger:
+      path: /stranger
+Groups:
+  My:
+    The Animals:
+      outside_nav:true
+      path: /animals
+      Home:
+        path: /animals
+      Pages:
+        path: /groups/pages/animals
+      Tasks:
+        path: /groups/tasks/animals
+      Administration:
+        path: /groups/animals/edit
+        Settings:
+          settings: ## this is 4th level nav now
+            path: /groups/animals/edit
+          profile:
+            path: /groups/profiles/edit/animals
+          permissions:
+            path: /groups/permissions/edit/animals
+          features:
+        Members:
+        Requests:
+  All:  
+Networks:
+  Directory:
+    My:
+    All:
