@@ -1,10 +1,8 @@
-/ locals: wiki, title
+/ locals: wiki
 
 %h3
-  - if defined?(title) && !title.nil?
-    = title
+  = I18n.t(:wiki)
   %span.right
     = wiki_edit_link(wiki.id)
 %div.wiki
   = wiki.body_html
-%div.edit-tab
