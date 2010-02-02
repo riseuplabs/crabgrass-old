@@ -10,7 +10,7 @@
           = affiliations_count
 
   - if @networks.any?
-    = render :partial => '/avatars/entity_list', :locals => { :collection => @networks, :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
+    = render :partial => '/avatars/entity_list', :locals => { :collection => @networks.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
 
   - if @committees.any?
-    = render :partial => '/avatars/entity_list', :locals => { :collection => @committees, :i18n_title => :committees, :caching => 'committees', :conditions => may_show_subcommittees_of_group? }
+    = render :partial => '/avatars/entity_list', :locals => { :collection => @committees.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :committees, :caching => 'committees', :conditions => may_show_subcommittees_of_group? }
