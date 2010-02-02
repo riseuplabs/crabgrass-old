@@ -63,7 +63,9 @@ ActionController::Routing::Routes.draw do |map|
     me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
 
     me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
-    me.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+    # for now removing peers option until we work on fixing friends/peers distinction
+    #me.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+    me.resources :social_activities, :as => 'social-activities', :only => :index
     me.resources :messages, { :collection => { :mark => :put },
                                :member => { :next => :get, :previous => :get }} do |message|
       message.resources :posts, :namespace => 'message_'
