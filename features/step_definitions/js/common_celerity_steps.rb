@@ -59,7 +59,7 @@ When /I wait for the AJAX call to finish/ do
   $browser.wait
 end
 
-Then /I should see "(.*)"/ do |text|
+Then /I should see "(.*)"$/ do |text|
   # if we simply check for the browser.html content we don't find content that has been added dynamically, e.g. after an ajax call
   div = $browser.div(:text, /#{text}/)
   begin

@@ -1,7 +1,0 @@
-%section#identity-name
-  %img.left{:src=>"/images/new_ui/image-32sq.png", :alt=>" ", :height=>"64px", :width=>"64px"}
-    %div.left
-      %h1= current_user.display_name
-      = render :partial => 'common/say_form'
-      %a{:href => url_for_user(current_user)}
-        View Profile

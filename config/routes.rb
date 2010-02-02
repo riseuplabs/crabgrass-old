@@ -53,19 +53,22 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
-  map.resources :messages, { :collection => { :mark => :put },
-                             :member => { :next => :get, :previous => :get }} do |message|
-    message.resources :posts, :namespace => 'message_'
-  end
 
-  map.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
-  map.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }, :controller => 'me/requests'}
+
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
     me.resource :recent_pages, :only => [:show, :create]
     me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
+
+    me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
+    me.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+    me.resources :messages, { :collection => { :mark => :put },
+                               :member => { :next => :get, :previous => :get }} do |message|
+      message.resources :posts, :namespace => 'message_'
+    end
+
   end
 
   map.resource :me, :only => [:show, :edit, :update], :controller => 'me'

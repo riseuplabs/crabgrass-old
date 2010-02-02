@@ -4,6 +4,7 @@
 
 class People::DirectoryController < People::BaseController
 
+  layout 'directory'
   helper :people
 
   before_filter :login_required, :action => 'show'

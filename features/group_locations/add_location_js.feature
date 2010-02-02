@@ -12,7 +12,7 @@ Background:
   And that user is a member of that group
   And I am logged in as that user
   And I am on that group's landing page
-  And I follow "Edit Settings"
+  And I follow "ADMINISTRATION"
   And I follow "Public Profile"
 
 Scenario: Setting country and state 

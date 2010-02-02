@@ -42,7 +42,7 @@ When /set the city "([^\"]*)"$/ do |city|
   And "I fire the \"blur\" event on the element named \"profile[geo_city_name]\""
   And "I wait for the AJAX call to finish"
   ## this needs work to dynamically find the id, though if we're using exact matching city names it should just work
-  And "I check the checkbox with id \"city_with_id_1\""
+  #And "I check the checkbox with id \"city_with_id_1\""
 end
 
 Then /should see matching city results$/ do

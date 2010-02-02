@@ -10,7 +10,7 @@ Given /^I am logged in as #{capture_model}$/ do |user|
   When "I fill in \"Password\" with \"#{user.login}\""
   When "I press \"Log in\""
 
-  # make sure we really logged in
+  # make sure we really logged in 
   Then "I should see \"menu link logout\" translated"
 end
 

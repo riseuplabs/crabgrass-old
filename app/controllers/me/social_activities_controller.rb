@@ -1,4 +1,4 @@
-class SocialActivitiesController < ApplicationController
+class Me::SocialActivitiesController < Me::BaseController
 
   # GET /social-activities
   def index

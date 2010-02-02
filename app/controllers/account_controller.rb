@@ -12,7 +12,7 @@ class AccountController < ApplicationController
 
   def index
     if logged_in?
-      redirect_to me_url
+      redirect_to "/#{current_user.login}"
     else
       render :action => 'login'
     end

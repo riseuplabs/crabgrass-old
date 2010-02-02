@@ -7,7 +7,7 @@ Feature: Request to join a group
   And a group administrator should see a request in their requests
 
 Background:
-  Given a group: "rainbow" exist with name: "Rainbow"
+  Given a group: "rainbow" exists with name: "Rainbow"
   And that group's join policy is by request
   And a user: "aubergine" exists with display_name: "Aubergine"
   And a user "blue" exists with display_name "Blue!"
@@ -21,9 +21,9 @@ Scenario: View My Request
   Then I should see "Request to join has been sent"
   When I view my requests
   Then I should see "Aubergine requests to join Rainbow"
-  Then I log out.
+  Then I log out
 
 Scenario: View admin request
   When I am logged in as "blue"
   And I view my requests
-  Then I should see "Aubergine requested to join Rainbow" 
+  Then I should see "Aubergine requested to join Rainbow"

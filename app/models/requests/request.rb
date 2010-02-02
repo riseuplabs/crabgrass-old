@@ -46,6 +46,7 @@ class Request < ActiveRecord::Base
   # some requests (ex: RequestToDestroyOurGroup) are approved only
   # when they get sufficient votes for approval and (in some cases)
   # when a period of time has passed
+  # 'ignore' is another vote that
   has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
 
   validates_presence_of :created_by_id
@@ -112,6 +113,18 @@ class Request < ActiveRecord::Base
     save!
   end
 
+  # alias for approve_by!, reject_by!
+  # same interface as Discussion#mark!
+  def mark!(as, user)
+    # TODO: support :ignore
+    if as == :approve
+      approve_by!(user)
+    elsif as == :reject
+      reject_by!(user)
+    elsif as == :destroy and created_by == user
+      destroy
+    end
+  end
 
   def approve_by!(user)
     set_state!('approved',user)
@@ -196,6 +209,21 @@ class Request < ActiveRecord::Base
   def self.destroy_for_group(group)
     destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
     destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+  end
+
+
+  protected
+
+  def add_vote!(response, user)
+    response_map = {
+      'reject' => 0,
+      'approve' => 1,
+      'ignore' => 2
+    }
+
+    value = response_map[response]
+    votes.by_user(user).delete_all
+    votes.create!(:value => value, :user => user)
   end
 
 end

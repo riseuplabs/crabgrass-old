@@ -4,8 +4,8 @@
 # The message is specified by the :id parameter which is here the login name of another user
 # and the message with :id => 'green' identifies the discussion (with many posts) between the current user
 # and the user green
-# for example: 'GET /messages/green' request gets the whole private discussion between current_user and user green
-class MessagesController < ApplicationController
+# for example: 'GET /me/messages/green' request gets the whole private discussion between current_user and user green
+class Me::MessagesController < Me::BaseController
   helper 'autocomplete', 'javascript', 'action_bar'
 
   before_filter :login_required
@@ -22,6 +22,7 @@ class MessagesController < ApplicationController
 
     # used by the new message ajax partial
     @discussion = current_user.discussions.build
+    @active_tab=:me
   end
 
   # PUT /messages/mark
@@ -54,6 +55,7 @@ class MessagesController < ApplicationController
 
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.paginate(page_params(default_page, 10))
+    @active_tab=:people
   end
 
   ### REDIRECT ACTIONS ###

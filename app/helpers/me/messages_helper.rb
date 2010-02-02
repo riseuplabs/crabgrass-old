@@ -1,4 +1,4 @@
-module MessagesHelper
+module Me::MessagesHelper
   def recipient_name_text_field_tag(recipient_name = nil)
     default_value =  recipient_name.blank? ? I18n.t(:message_recipient_name_input_caption) : recipient_name
     text_field_tag('id', params[:id], :id => 'recipient_name', :class => 'textinput',

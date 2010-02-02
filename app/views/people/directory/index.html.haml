@@ -1,9 +1,3 @@
-- content_for :banner do
-  = render :partial => 'banner'
-
-- content_for :secondary_nav do
-  = render :partial => 'menu'
-
 - if @second_nav == 'all'
   - content_for :third_nav do
     = render :partial => 'browse_people_tabs'

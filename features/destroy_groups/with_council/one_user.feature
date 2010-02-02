@@ -12,7 +12,7 @@ Background:
   And I am a member of that group
   And I am a member of that council
   And I am logged in
-  And I am on the group's landing page
+  And I am on the group's administration page
 
 Scenario: I am the only member of the council so I can destroy the group
   When I follow "Destroy Group"

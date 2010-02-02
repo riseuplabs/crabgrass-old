@@ -18,11 +18,11 @@
 title: "Crabgrass Development"
 
 enabled_mods:
-   - design_tester
-   - super_admin
+   # - design_tester
+   # - super_admin
    # - moderation
-   - translator
-   - ui_tester
+   # - translator
+   # - ui_tester
 
 email:
   delivery_method: :sendmail

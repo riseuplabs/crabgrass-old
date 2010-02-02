@@ -116,19 +116,6 @@ class RequestToDestroyOurGroup < Request
 
   protected
 
-  attr_reader :winning_vote
-
-  def add_vote!(response, user)
-    response_map = {
-      'reject' => 0,
-      'approve' => 1
-    }
-
-    value = response_map[response]
-    votes.by_user(user).delete_all
-    votes.create!(:value => value, :user => user)
-  end
-
   def has_winning_majority?(approve_votes, reject_votes)
     # 0 rejections are instant win
     return true if reject_votes == 0

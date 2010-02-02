@@ -32,6 +32,7 @@ class PagesController < ApplicationController
   stylesheet 'page_creation', :action => :new
   permissions 'pages', 'groups/base'
   helper 'action_bar', 'tab_bar', 'groups'
+  layout 'header'
 
   # if this controller is called by DispatchController,
   # then we may be passed some objects that are already loaded.

@@ -30,6 +30,18 @@ class Me::RequestsController < Me::BaseController
     render :action => :index
   end
 
+  def mark
+    mark_as = params[:as].to_sym
+    # load requests to mark
+    requests = params[:requests].blank? ? [] : Request.having_state(:pending).to_user(current_user).find(params[:requests])
+    requests.each do |request|
+      request.mark!(mark_as, current_user)
+    end
+
+    @requests = Request.having_state(:pending).send(view_filter, current_user).paginate(page_params)
+    render :partial => 'main_content'
+  end
+
   protected
 
   # returns a named scope to view
@@ -44,7 +56,6 @@ class Me::RequestsController < Me::BaseController
     super
     me_context('small')
   end
-
 
   def page_params(default_page = nil, per_page = nil)
     {:page => params[:page] || default_page, :per_page => nil}
