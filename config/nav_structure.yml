@@ -24,26 +24,24 @@ People:
     Stranger:
       path: /stranger
 Groups:
-  My:
+  My Groups:
     The Animals:
       outside_nav:true
       path: /animals
-      HOME:
-        path: /animals
       PAGES:
         path: /groups/pages/animals
-      TASKS:
-        path: /groups/tasks/animals
       ADMINISTRATION:
         path: /groups/animals/edit
         Settings:
-          settings: ## this is 4th level nav now
+          Basic Settings:
             path: /groups/animals/edit
-          profile:
-            path: /groups/profiles/edit/animals
-          permissions:
+          Permissions:
             path: /groups/permissions/edit/animals
-          features:
+          Public Profile:
+            path: /groups/profiles/edit/animals
+          Featured Pages:
+          Destroy Group:
+          Create Committee:
         Members:
         Requests:
   All:  
