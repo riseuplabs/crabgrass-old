@@ -1,12 +1,16 @@
-%header
-  %h3 
-    =I18n.t(:affiliations)
-  = totalize_with_link(@group, @group.users)
+- @networks = @group.networks
+- @committees = @group.committees_for(@access) || []
 
-- if @group.networks and @group.networks.size > 0
-  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.networks, :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
+- if((affiliations_count = @networks.size + @committees.size) > 0)
+  %header
+    %h4
+      = I18n.t(:affiliations)
+      %span
+        %a
+          = affiliations_count
 
-- if @group.committees_for(@access) and @group.committees_for(@access).size > 0
-  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.committees_for(@access), :i18n_title => :committees, :caching => 'committees', :conditions => may_show_subcommittees_of_group? }
+  - if @networks.any?
+    = render :partial => '/avatars/entity_list', :locals => { :collection => @networks.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
 
-= render :partial => '/avatars/entity_list', :locals => { :collection => [@group.real_council], :i18n_title => :council, :caching => 'council', :conditions => @group.real_council }
+  - if @committees.any?
+    = render :partial => '/avatars/entity_list', :locals => { :collection => @committees.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :committees, :caching => 'committees', :conditions => may_show_subcommittees_of_group? }

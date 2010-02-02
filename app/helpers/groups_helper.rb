@@ -97,10 +97,11 @@ module GroupsHelper
     link_to_active_if_may(I18n.t(:see_all_link), '/groups/memberships', 'list', @group)
   end
 
-  def membership_count_link
-    link_if_may(I18n.t(:group_membership_count, :count=>(@group.users.size).to_s) + ARROW,
+  def membership_count_link(options = nil)
+    options[:text] ||= :group_membership_count
+    link_if_may(I18n.t(options[:text], :count=>(@group.users.size).to_s) + ARROW,
                    '/groups/memberships', 'list', @group) or
-    I18n.t(:group_membership_count, :count=>(@group.users.size).to_s)
+    I18n.t(options[:text], :count=>(@group.users.size).to_s)
   end
 
 
