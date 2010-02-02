@@ -1,12 +1,11 @@
 - if action?(:show)
   - if @featured_pages.any? || may_edit_featured_pages?
-    %h3 
+    %h4
       = I18n.t(:featured_content_header)
-    %img{:src=>"/images/new_ui/image-198sq.png", :alt=>"featured title", :height=>"198px", :width=>"198px"}
     - @featured_pages.each do |page|
       %article
         = display_page_cover(page)
-        %h4 
+        %h4
           = link_to(page.title, page_url(page))
         - if !page.summary.blank?
           %p

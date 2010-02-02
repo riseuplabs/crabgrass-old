@@ -1,6 +1,8 @@
 %header
-  %h3
+  %h4
     = I18n.t(:people).downcase
-  = totalize_with_link(@group, @group.users)
-  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users, :i18n_title => :coordinators, :caching => 'members', :conditions => may_list_memberships? } 
-  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users, :i18n_title => :new_members, :caching => 'members', :conditions => may_list_memberships? }
+    %span
+      = membership_count_link(:text => :total)
+
+  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :coordinators, :caching => 'members', :conditions => may_list_memberships? }
+  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users.reverse[0..4], :i18n_title => :new_members, :caching => 'members', :conditions => may_list_memberships? }
