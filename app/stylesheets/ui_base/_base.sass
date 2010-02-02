@@ -238,24 +238,31 @@ h6
 nav.page
   +clearfix
   height: 30px
+  overflow: visible
   #global-nav-container
     +container
-    height: 30px
     background= !global_nav_bg
+    height: 30px
+    overflow: visible
     #global-nav
       +columns(14)
       +full
       width: 764px
-
+      overflow: visible
+//     
 // list-items from global nav
-#menu
+//
+#menu li.menu
   float: left
+  margin: 0
+  position: relative
+
+#menu  
   +clearfix
+  float: left
+  overflow: visible
   margin-top: 5px
-  li
-    li
-      a
-        color: #382526
+
   li
     +inline-list
     a
@@ -269,18 +276,19 @@ nav.page
   li.current
     a
       color: #382526
-    .menu_items
-      li.small_icon
-        float: left
-        background-repeat: no-repeat
-        background-position: 0 50%
-        padding-left: 20px
-        min-height: 16px          
-    
+              
+#menu .menu_items
+  li.small_icon
+    float: left
+    background-repeat: no-repeat
+    background-position: 0 50%
+    padding-left: 20px
+    min-height: 16px  
+    a
+      color: !warm_grey_text
+      font-weight: normal
+      
 
-// dropdowns from global nav
-
-/* @end */
 
 /* flash message */
 #message
