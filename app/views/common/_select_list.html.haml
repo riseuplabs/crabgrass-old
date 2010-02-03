@@ -1,4 +1,5 @@
 %ul
-  %li
-    - settings[:select].try.each do |selection|
-      = link_to_function I18n.t(selection[:translation]), selection[:function]
+  - settings[:select].try.each_index do |index|
+    %li
+      - selection = settings[:select].fetch(index)
+      = link_to_function I18n.t(selection[:translation]), selection[:function], :class => "#{ index == 0 ? 'first' : '' }"
