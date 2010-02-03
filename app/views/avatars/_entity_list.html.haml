@@ -1,4 +1,4 @@
-- if conditions
+- if conditions && collection.any?
   - cache(group_cache_key(@group, :what => caching, :expires_in => hours(CACHING_ENTITIES_IN_HOURS))) do
     %h5
       = I18n.t(i18n_title)
