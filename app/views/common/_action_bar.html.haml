@@ -1,11 +1,8 @@
 %div#action-bar
   %div#select-bar.left
-    %h5.left= I18n.t(:select_filter_label)
+    %h4.left= I18n.t(:select_filter_label)
     = render :partial => '/common/select_list', :locals => {:settings => settings}
   %div#mark-as-bar.left
-    %h5.left= I18n.t(:mark_as_label)
+    %h4.left= I18n.t(:mark_as_label)
     = render :partial => '/common/mark_as_list', :locals => {:settings => settings}
-  %div.right
-    %h5.left= I18n.t(:view_label)
-    = action_bar_view_filter_select(settings)
-    = observe_field 'view_filter_select', :function => %Q[window.location.href = "#{view_path}" + "?view=" + value]
+  

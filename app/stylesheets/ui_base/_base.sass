@@ -928,12 +928,25 @@ nav#tabs
   +bordered-top-btm
   width: 764px
   #select-bar, #mark-as-bar
+    h4
+      font-weight: normal
+      line-height: 1.7
+      margin-right: 10px
     ul
       display: inline
+      margin-right: 20px
+      background: url(/images/action-bar/action-bar-bg.png) repeat-x bottom
+      padding: 4px 0
       li
-        +inline-list
+        +inline-list 
         a
           +hover-link
+          color= !blue
+          display: inline-block
+          padding: 0 6px
+          border-right: 1px solid #ddd
+        a.first
+          border-left: 1px solid #ddd
   
   
 table
