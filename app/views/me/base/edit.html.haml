@@ -1,5 +1,8 @@
 - @avatar ||= @user.avatar
 
+- content_for :third_nav do
+  = render :partial => '/me/navigation/profile_tabs'
+
 %section#main-content.no-sidebar
 
   %h1

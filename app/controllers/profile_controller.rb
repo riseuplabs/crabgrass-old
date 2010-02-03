@@ -6,6 +6,7 @@ class ProfileController < ApplicationController
   helper 'me/base', 'locations'
   #permissions 'profiles'
   verify :method => :post, :only => :update
+  layout 'header'
 
   def show
   end
