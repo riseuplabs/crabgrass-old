@@ -12,6 +12,8 @@ module TabBarHelper
     thing = thing.to_s if thing.is_a?(Symbol)
     current = options.delete :current
     current ||= controller.controller_name == thing
+    li_class = current ? 'current' : ''
+    li_class += " #{options.delete(:class)}" if !options[:class].nil?
     key = options.delete :translate
     key ||= (thing + '_tab').to_sym
     named_path = (thing + '_path').to_sym
@@ -21,8 +23,6 @@ module TabBarHelper
     else
       target = options
     end
-    li_class = current ? 'current' : ''
-    li_class += " #{options[:class]}" if !options[:class].nil?
     content_tag(:li, :class => li_class) do
       uppercase ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key).capitalize, target)
     end
