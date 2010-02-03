@@ -3,8 +3,7 @@
     = render :partial => '/groups/directory/all_groups_tabs'
 
 - if @misc_header
-  - content_for :misc_header do
-    = render :partial => @misc_header
+  = render :partial => @misc_header
 
 %section#group_listing
   - if @second_nav == 'all'
