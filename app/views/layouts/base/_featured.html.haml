@@ -1,7 +1,7 @@
 - if action?(:show)
   - if @featured_pages.any?
     %h4
-      = I18n.t(:featured_content_header)
+      = I18n.t(:featured_content_header).downcase
     - @featured_pages.each do |page|
       %article
         = display_page_cover(page)
