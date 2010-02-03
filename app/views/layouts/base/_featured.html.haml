@@ -1,5 +1,5 @@
 - if action?(:show)
-  - if @featured_pages.any? || may_edit_featured_pages?
+  - if @featured_pages.any?
     %h4
       = I18n.t(:featured_content_header)
     - @featured_pages.each do |page|
