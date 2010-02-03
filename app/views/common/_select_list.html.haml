@@ -1,4 +1,4 @@
 %ul
-  %li
+  %li.first
     - settings[:select].try.each do |selection|
       = link_to_function I18n.t(selection[:translation]), selection[:function]

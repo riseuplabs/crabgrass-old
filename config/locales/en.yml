@@ -520,7 +520,7 @@ en:
   ##
 
   select_filter_label: "Select:"
-  mark_as_label: "Mark as"
+  mark_as_label: "Mark as:"
   view_label: "View"
 
   select_all: "All"

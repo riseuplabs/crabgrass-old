@@ -1,5 +1,5 @@
 %ul
-  %li
+  %li.first
     - settings[:mark].try.each do |mark|
       - caption = I18n.t(mark[:translation]).capitalize
       = link_to_function caption, action_bar_submit_mark_function(mark[:name])
