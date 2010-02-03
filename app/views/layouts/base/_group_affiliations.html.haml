@@ -5,9 +5,6 @@
   %header
     %h4
       = I18n.t(:affiliations).downcase
-      %span
-        %a
-          = affiliations_count
 
   - if @networks.any?
     = render :partial => '/avatars/entity_list', :locals => { :collection => @networks.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :networks, :caching => 'networks', :conditions => may_show_networks_of_group? }
