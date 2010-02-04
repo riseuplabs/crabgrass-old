@@ -30,6 +30,7 @@ class PagesController < ApplicationController
 
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
+  stylesheet 'messages'
   permissions 'pages', 'groups/base'
   helper 'action_bar', 'tab_bar', 'groups'
   layout 'header'

@@ -1,9 +1,12 @@
 - @avatar ||= @user.avatar
 
+- content_for :third_nav do
+  = render :partial => '/me/navigation/profile_tabs'
+
 %section#settings-form
 
   %h1= I18n.t(:my_settings, :user => current_user.display_name)
-
+  
   - form_tag(:action => 'edit') do 
     %p= profile_description
 

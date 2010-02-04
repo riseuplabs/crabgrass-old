@@ -2,31 +2,28 @@
 // SAY BOX
 // 
 
-.say_box
+#say_box
   padding-bottom: 1em
+  position: relative
   //border-bottom: 1px dotted #ccc
   //table
   //  margin: 0 auto
-  td
-    padding: none
-    vertical-align: top
   img
     margin-top: 2px
   .submit
-    margin-left: 18px
+    position: relative
   .speech
+    //border: 2px solid #999
+    //-moz-border-radius: 6px
     padding: 2px
-    background: white
-    border: 2px solid #999
-    -moz-border-radius: 6px
     position: relative
     left: 10px
+    overflow: visible
+    height: 1.4em
     textarea
-      height: 1.2em
+      border: 2px solid #999
     .textinput
-      font-size: 1em
-      font-family: monospace
-      border: 0
+      height: 1.2em
       background: white
       overflow: auto
       &.tall

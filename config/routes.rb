@@ -70,6 +70,7 @@ ActionController::Routing::Routes.draw do |map|
                                :member => { :next => :get, :previous => :get }} do |message|
       message.resources :posts, :namespace => 'message_'
     end
+    me.resources :public_messages, :only => [:show, :create, :destroy]
 
   end
 

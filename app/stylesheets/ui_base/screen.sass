@@ -8,13 +8,15 @@
 @import compass/utilities.sass
 @import ui_base/colors.sass
 @import ui_base/base.sass
+@import ui_base/header_masthead_global-nav.sass
+@import ui_base/breadcrumb_banner_2nd-nav.sass
 @import ui_base/fonts.sass
 @import ui_base/modalbox.sass
 @import ui_base/oldcss_to_be_updated.sass
 @import ui_base/page.sass
 @import ui_base/wiki.sass
 @import ui_base/locations.sass
-@import ui_base/top_menu.sass
+
 
 /* end */
 /* basic page layout */
@@ -31,30 +33,7 @@ body
   #content
     +clearfix
     color= !medium_grey_text
-    #banner-container
-      +container
-      +bordered-btm(!second_nav_border)
-      height: 96px
-      background= !banner_bg
-      overflow: visible
-      header#banner-no-avatar
-        +columns(14)
-        +full
-        height: 71px
-        width: 540px
-        padding-left: 224px
-      header#banner
-        +columns(14)
-        +full
-        width: 764px
-        height: 71px
-        padding-left: 0
-        img
-          margin-bottom: -20px
-        div.left
-          padding-left: 10px
-        
-            
+       
     #content-container.login
       background-image: none
       background-color: #fff
@@ -348,20 +327,4 @@ body
 
 
 
-  footer.page
-    +container
-    ul#crabgrass
-      +columns(10)
-      +full
-      li
-        color: #f60
-    div.debug
-      ul
-        padding: 0.1em 0 0.1em 1em
-        list-style-position: inside
-        list-style-type: disc
-        li
-          display: list-item
-          padding: 0.1em 0 0.1em 1em
-          float: none
-          
+  
