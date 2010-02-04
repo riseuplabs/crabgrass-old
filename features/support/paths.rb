@@ -21,7 +21,7 @@ module NavigationHelpers
     when /my notifications page/
       '/pages/notifications'
     when /my requests page/
-      '/me/requests/to_me'
+      '/me/requests'
     when /the destroyed groups directory/
       '/groups/directory/destroyed'
     when /the moderation panel/

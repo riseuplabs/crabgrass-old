@@ -23,12 +23,14 @@ Scenario: I propose to destroy the group. The proposal becomes active and I get 
   And I should see "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
   And I should receive an email with subject: "Blue has proposed to destroy group Rainbow!"
 
+@wip
 Scenario: The proposal can be vetoed (rejected) within a month.
   Given I have proposed to destroy that group
   And I am on my requests page
-  When I follow "reject"
+  Then show me the page
+  And I follow "Reject"
   And I wait 1 month
-  And I go to that group's landing page
+  And I go to that group's administration page
   Then I should see "Propose to Destroy Group"
 
 Scenario: No one rejects the proposal within one month. The group gets deleted.
@@ -44,7 +46,7 @@ Scenario: Less than 2/3 of votes are approvals for the proposal within one month
   And the 2nd user rejects the proposal to destroy that group
   And the 3rd user rejects the proposal to destroy that group
   And I wait 1 month
-  And I go to that group's landing page
+  And I go to that group's administration page
   Then I should see "Propose to Destroy Group"
 
 Scenario: More than 2/3 of votes are approvals for the proposal within one month. The group gets deleted.

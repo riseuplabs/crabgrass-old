@@ -13,7 +13,6 @@ Background:
   And that council has 3 members
   And I am a member of that council
 
-
   Given I am logged in
   And I am on the group's administration page
 
@@ -38,7 +37,7 @@ Scenario: Non-council members can not vote on the proposal
   And user: "red" is a member of that group
   And I am logged in as that user
   And I go to my requests page
-  Then I should not see /Blue has proposed to destroy group Rainbow\s*pending\s*approve \| reject/
+  Then I should not see "Blue has proposed to destroy group Rainbow"
 
 Scenario: Council members can vote on the proposal
   Given I have proposed to destroy that group
@@ -47,7 +46,7 @@ Scenario: Council members can vote on the proposal
   And that user is a member of that council
   And I am logged in as that user
   And I go to my requests page
-  Then I should see /Blue has proposed to destroy group Rainbow\s*pending\s*approve \| reject/
+  Then I should see "Blue has proposed to destroy group Rainbow"
 
 Scenario: Non-council members should receive proposal and deletion notification emails
   Given user: "red" exists
