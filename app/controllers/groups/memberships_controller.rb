@@ -45,6 +45,10 @@ class Groups::MembershipsController < Groups::BaseController
   end
 
   def destroy
+    # disabled until release 0.5.1
+    redirect_to :action => 'list', :id => @group
+    return
+
     @group = @membership.group
     @user = @membership.user
     @group.remove_user!(@user)
