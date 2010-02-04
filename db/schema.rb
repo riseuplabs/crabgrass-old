@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100106094441) do
+ActiveRecord::Schema.define(:version => 20100203133636) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
   add_index "assets", ["page_terms_id"], :name => "pterms"
 
   create_table "avatars", :force => true do |t|
-    t.binary  "image_file_data"
-    t.boolean "public",          :default => false
+    t.binary  "image_file_data", :limit => 2147483647
+    t.boolean "public",                                :default => false
   end
 
   create_table "bdrb_job_queues", :force => true do |t|
@@ -239,8 +239,8 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
 
   create_table "geo_locations", :force => true do |t|
     t.integer "geo_country_id",    :limit => 11, :null => false
-    t.integer "geo_admin_code_id", :limit => 11, :null => false
-    t.integer "geo_place_id",      :limit => 11, :null => false
+    t.integer "geo_admin_code_id", :limit => 11
+    t.integer "geo_place_id",      :limit => 11
   end
 
   create_table "geo_places", :force => true do |t|
@@ -370,6 +370,8 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
+    t.integer  "yuck_count",  :limit => 11, :default => 0
+    t.boolean  "vetted",                    :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -377,6 +379,20 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
 
   create_table "migrations_info", :force => true do |t|
     t.datetime "created_at"
+  end
+
+  create_table "moderated_flags", :force => true do |t|
+    t.string   "type",                         :null => false
+    t.datetime "vetted_at"
+    t.integer  "vetted_by_id",   :limit => 11
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id",  :limit => 11
+    t.string   "reason_flagged"
+    t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id",        :limit => 11
+    t.integer  "foreign_id",     :limit => 11, :null => false
   end
 
   create_table "page_histories", :force => true do |t|
@@ -452,7 +468,7 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
     t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,    :null => false
+    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -463,6 +479,9 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
+    t.boolean  "public_requested",                 :default => false
+    t.boolean  "vetted",                           :default => false
+    t.integer  "yuck_count",         :limit => 11, :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -506,6 +525,8 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
+    t.boolean  "vetted",                      :default => false
+    t.integer  "yuck_count",    :limit => 11, :default => 0
     t.integer  "page_terms_id", :limit => 11
   end
 
@@ -561,6 +582,7 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html"
+    t.boolean  "admins_may_moderate"
     t.integer  "geo_location_id",        :limit => 11
   end
 
@@ -658,6 +680,7 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.string  "email_sender_name",      :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
+    t.integer "moderation_group_id",    :limit => 11
     t.boolean "require_user_full_info"
   end
 
@@ -866,6 +889,7 @@ ActiveRecord::Schema.define(:version => 20100106094441) do
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
     t.string   "receive_notifications"
+    t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
   end
 
