@@ -1,7 +1,7 @@
 module ActionBarHelper
 
   def action_bar_submit_mark_function(as)
-    "$('mark_as').value = '#{as}';this.up('form#mark_form').onsubmit()"
+    "$('mark_as').value = '#{as}';$('mark_form').onsubmit()"
   end
 
   # view_options is a hash where each is a value to be submitted with the form
@@ -29,17 +29,12 @@ module ActionBarHelper
   # &block - the extra stuff inside the form like a list of items with checkboxes for example
   def action_bar_form(mark_path, view_path, settings, &block)
     data_content = capture(&block)
-    action_bar_content = settings.blank? ? "" : capture do
-      render :partial => 'common/action_bar',
-        :locals => {:mark_path => mark_path, :view_path => view_path, :settings => settings}
-    end
 
     # _method hidden field is not needed for the ajax form, but can be used if
     # form is submitted without ajax
     form_contents = %Q[
       #{hidden_field_tag('_method', 'put')}
       #{hidden_field_tag('as', '', :id => 'mark_as')}
-      #{action_bar_content}
       #{data_content}
     ]
 

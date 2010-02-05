@@ -1,3 +1,5 @@
+= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings}
+
 - action_bar_form(mark_requests_path, requests_path, action_bar_settings) do
   %div
     %table#requests.pretty
