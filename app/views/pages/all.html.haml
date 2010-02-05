@@ -1,4 +1,5 @@
 - content_for :third_nav do
   = render :partial => 'pages/tabs'
+= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings}
 - action_bar_form(mark_pages_path, my_work_pages_path, action_bar_settings) do
   = render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox', :full_width => true}
