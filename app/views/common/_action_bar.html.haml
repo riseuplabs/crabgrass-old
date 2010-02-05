@@ -1,10 +1,13 @@
 %div#title-box-full
+  %h3 My Work Pages
 %div#info-box-full
-  %div#action-bar
-    %div#select-bar.left
-      %h4.left= I18n.t(:select_filter_label)
-      = render :partial => '/common/select_list', :locals => {:settings => settings}
-    %div#mark-as-bar.left
-      %h4.left= I18n.t(:mark_as_label)
-      = render :partial => '/common/mark_as_list', :locals => {:settings => settings}
+  %span 
+    Pages that you own, participated in, or are watching.
+%div#action-bar
+  %div#select-bar.left
+    %h4.left= I18n.t(:select_filter_label)
+    = render :partial => '/common/select_list', :locals => {:settings => settings}
+  %div#mark-as-bar.left
+    %h4.left= I18n.t(:mark_as_label)
+    = render :partial => '/common/mark_as_list', :locals => {:settings => settings}
   

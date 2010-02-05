@@ -226,31 +226,38 @@ h6
 #title-box-full, #info-box-full
   +columns(14,14)
   width: 764px
-  height: 30px
-  margin: 0  
-
+  height: 16px
+  margin: 0 
+  h3
+    font-size: 15px
+    font-weight: normal
+    color: #993333
+#info-box-full
+  margin-bottom: 15px
+  span
+    color= !almost_black
 
 /* third-level nav */
 #third-level-container
   +container
-  height: 56px
+  height: 51px
   nav#third-level
     +columns(14)
     +full
     border-top= 3px "double" !third_nav_border
     margin-top: 28px
-    height: 25px
+    height: 20px
     width: 764px
     #centered-nav
       float: left
       width: 100%
       position: relative
-      height: 25px
+      height: 20px
       ul
         clear: left
         float: left
-        height: 23px
-        margin-top: -14px
+        height: 20px
+        margin-top: -13px
         position: relative
         left: 50%
         text-align: center
@@ -258,8 +265,7 @@ h6
           +bordered-block(!third_nav_border)
           +spaced
           background= !third_nav_bg
-          height: 22px          
-          font-size: 12px
+          height: 20px          
           display: block
           float: left
           position: relative
@@ -268,12 +274,10 @@ h6
             color= !third_nav_text
             display: block
             text-decoration: none
-            font-weight: normal
             height: 8px
-            line-height: 0.9
+            line-height: 0.5
             padding: 6px 10px
         li.current
-          height: 22px
           background= !third_nav_current_bg
           a
             color= !third_nav_current_text
@@ -350,8 +354,6 @@ h6
           +blue-link
 
 #pages.full
-  +columns(14,14)
-  margin: 30px 0 0
   width: 764px
   h3
     +bordered-btm(!medium_grey_border)
@@ -707,10 +709,10 @@ nav#tabs
       display: block
 
 #action-bar
-  +clearfix
   +bordered-top-btm
+  clear: both
   width: 764px
-  height: 20px
+  height: 21px
   #select-bar, #mark-as-bar
     h4
       color= !almost_black
