@@ -21,26 +21,27 @@
       top: 3px
 
 // this is for the me header and for the say box on another user's page
+#say
+  clear: both
 #say_box
-  padding-bottom: 1em
   position: relative
   //border-bottom: 1px dotted #ccc
   //table
   //  margin: 0 auto
-  img
-    margin-top: 2px
   .submit
     position: relative
+    vertical-align: top
+    margin-top: 2px
   .speech
     //border: 2px solid #999
     //-moz-border-radius: 6px
-    padding: 2px
+    padding: 2px 2px 2px 0
     position: relative
-    left: 10px
     overflow: visible
     height: 1.4em
     textarea
-      border: 2px solid #999
+      +bordered(!warm_grey_border)
+      overflow: visible
     .textinput
       height: 1.2em
       background: white
