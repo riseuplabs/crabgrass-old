@@ -269,7 +269,7 @@ module BasePageHelper
 
   def share_line
     if may_share_page?
-      popup_line(:name => 'share', :label => I18n.t(:share_page_link, :page_class => page_class), :icon => 'group', :controller => 'share')
+      popup_line(:name => 'share', :label => I18n.t(:share_page_link, :page_class => this_page_class), :icon => 'group', :controller => 'share')
     end
   end
 
@@ -281,19 +281,19 @@ module BasePageHelper
 
   def delete_line
     if may_delete_page?
-      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => page_class), :icon => 'trash')
+      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => this_page_class), :icon => 'trash')
     end
   end
 
 #  def move_line
 #    if may_move_page?
-#      popup_line(:name => 'move', :label => I18n.t(:move_page_link) % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
+#      popup_line(:name => 'move', :label => I18n.t(:move_page_link) % {:page_class => this_page_class }, :icon => 'lorry', :controller => 'participation')
 #    end
 #  end
 
   def details_line(id='details')
     if id == 'details'
-      label = I18n.t(:page_details_link, :page_class => page_class)
+      label = I18n.t(:page_details_link, :page_class => this_page_class)
       icon = 'table'
     elsif id == 'more'
       label = I18n.t(:see_more_link)
@@ -301,7 +301,7 @@ module BasePageHelper
     end
 
     if may_show_page?
-      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => page_class), :icon => icon, :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => this_page_class), :icon => icon, :controller => 'participation')
     end
   end
 
@@ -309,7 +309,7 @@ module BasePageHelper
   ## MISC HELPERS
   ##
 
-  def page_class
+  def this_page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
   end
 
