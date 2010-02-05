@@ -60,6 +60,19 @@ class AutocompleteController < ApplicationController
     render_entities_to_json(friends)
   end
 
+  # recipients for direct messages from current user
+  def recipients
+    if params[:query] == ""
+      recipients = User.friends_of(current_user)
+      recipients +=  current_user.peers
+    else
+      # already preloaded
+      recipients = []
+    end
+
+    render_entities_to_json(recipients)
+  end
+
   private
 
   def render_entities_to_json(entities)
