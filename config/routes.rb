@@ -68,7 +68,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :social_activities, :as => 'social-activities', :only => :index
     me.resources :messages, { :collection => { :mark => :put },
                                :member => { :next => :get, :previous => :get }} do |message|
-      message.resources :posts, :namespace => 'message_'
+      message.resources :posts, :controller => 'message_posts'
     end
     me.resources :public_messages, :only => [:show, :create, :destroy]
 

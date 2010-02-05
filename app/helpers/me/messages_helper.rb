@@ -1,4 +1,19 @@
 module Me::MessagesHelper
+
+  def recipient_field(recipient_name)
+    if recipient_name.blank?
+      # input field
+      recipient_name_text_field_tag(nil) + "\n" +
+      # autocomplete js
+      autocomplete_entity_tag('recipient_name', :url => '/autocomplete/recipients')
+    else
+      # show a label
+      label_tag 'say_text', I18n.t(:message_recipient_name_caption, :user => recipient_name) + "\n" +
+      # add a hidden the preset form field
+      hidden_field_tag('id', recipient_name, :id => 'recipient_name')
+    end
+  end
+
   def recipient_name_text_field_tag(recipient_name = nil)
     default_value =  recipient_name.blank? ? I18n.t(:message_recipient_name_input_caption) : recipient_name
     text_field_tag('id', params[:id], :id => 'recipient_name', :class => 'textinput',
@@ -26,6 +41,7 @@ module Me::MessagesHelper
       {}
     end
   end
+
   def action_bar_settings
     { :select =>
             [ {:name => :all,
@@ -44,7 +60,4 @@ module Me::MessagesHelper
             [ {:name => :all, :translation => :all},
               {:name => :unread, :translation => :unread}] }
   end
-
-
-
 end
