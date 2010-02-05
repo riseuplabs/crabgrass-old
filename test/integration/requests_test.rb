@@ -43,7 +43,7 @@ class RequestsTest < ActionController::IntegrationTest
 
     assert redirect?
     follow_redirect!
-    assert_equal "/me/dashboard", path
+    assert_equal "/pages/my_work", path
   end
 
   def test_redeem_login
@@ -61,7 +61,7 @@ class RequestsTest < ActionController::IntegrationTest
     end
     assert redirect?
     follow_redirect!
-    assert_equal "/me/dashboard", path
+    assert_equal "/pages/my_work", path
   end
 
 end
