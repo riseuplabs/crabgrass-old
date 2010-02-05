@@ -31,11 +31,9 @@ class AutocompleteController < ApplicationController
         :limit => 20)
       recipients = recipients.sort_by{|r|r.name}[0..19]
     end
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
+
+
+    render_entities_to_json(recipients)
   end
 
   def people
@@ -47,14 +45,30 @@ class AutocompleteController < ApplicationController
         :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
         :limit => 20)
     end
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
+
+    render_entities_to_json(recipients)
+  end
+
+  def friends
+    if params[:query] == ""
+      friends = User.friends_of(current_user)
+    else
+      # already preloaded
+      friends = []
+    end
+
+    render_entities_to_json(friends)
   end
 
   private
+
+  def render_entities_to_json(entities)
+    render :json => {
+      :query => params[:query],
+      :suggestions => entities.collect{|entity|display_on_two_lines(entity)},
+      :data => entities.collect{|e|e.avatar_id||0}
+    }
+  end
 
   # this should be in a helper somewhere, but i don't know how to generate
   # json response in the view.
