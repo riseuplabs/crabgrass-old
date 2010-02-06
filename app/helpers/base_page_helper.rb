@@ -111,7 +111,7 @@ module BasePageHelper
     if may_public_page?
       li_id = 'public_li'
       checkbox_id = 'public_checkbox'
-      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :add => !@page.public?}
+      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => !@page.public?}
       checkbox_line = sidebar_checkbox(I18n.t(:public_checkbox), @page.public?, url, li_id, checkbox_id, :title => I18n.t(:public_checkbox_help))
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     else
