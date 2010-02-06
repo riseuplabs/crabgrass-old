@@ -125,6 +125,13 @@ class Me::MessagesControllerTest < ActionController::TestCase
     @orange.send_message_to!(@blue, "orange: hi blue")
     @red.send_message_to!(@blue, "red: hi blue")
     @green.send_message_to!(@blue, "green: hi blue")
+
+    # fix timestamps for deterministic sorting
+    all_discussions = @blue.discussions.with_some_posts
+    time = Time.now
+    all_discussions.reverse.each_with_index do |discussion, index|
+      discussion.update_attribute(:replied_at, time - index)
+    end
   end
 
 end
