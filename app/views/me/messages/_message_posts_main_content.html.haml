@@ -1,5 +1,5 @@
 %table#messages.thread{:summary => 'message thread'}
-  = render :partial => 'message_post', :collection => @posts
+  = render :partial => 'message_post', :collection => @posts, :locals => {:last_post => @posts.last}
 
 %div#send-message.say-box
   = render :partial => 'send_form', :locals => {:recipient_name => @recipient.login}

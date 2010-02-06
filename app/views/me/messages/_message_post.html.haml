@@ -5,4 +5,6 @@
     = link_to_user message_post.user, :label => message_post.user.try.login
     %span.date= friendly_date(message_post.try.created_at)
   %td.message
+    - if message_post == last_post
+      %a(name="last")
     = message_post.body_html
