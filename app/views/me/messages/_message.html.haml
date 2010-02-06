@@ -7,6 +7,6 @@
   %td.avatar
     = display_entity(other_user, :avatar => :small, :format => :short)
   %td.message
-    = link_to post.body_html, message_path(other_user.login)
+    = link_to truncate(post.body_html, :length => 300), message_path(other_user.login)
   %td.date
     %span.date= friendly_date(post.try.created_at)
