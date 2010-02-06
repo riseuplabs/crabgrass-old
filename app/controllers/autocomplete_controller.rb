@@ -73,6 +73,19 @@ class AutocompleteController < ApplicationController
     render_entities_to_json(recipients)
   end
 
+
+  # senders of direct messages to current user
+  def senders
+    if params[:query] == ""
+      senders = current_user.discussions.with_some_posts.collect {|discussion| discussion.user_talking_to(current_user)}
+    else
+      # already preloaded
+      senders = []
+    end
+
+    render_entities_to_json(senders)
+  end
+
   private
 
   def render_entities_to_json(entities)
