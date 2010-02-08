@@ -101,7 +101,8 @@ module PageExtension::Users
   end
 
   def unread_by?(user)
-    !participation_for_user(user).try(:viewed?)
+    part = participation_for_user(user)
+    part and not part.viewed?
   end
 
   # Returns the user participation object for +user+.
