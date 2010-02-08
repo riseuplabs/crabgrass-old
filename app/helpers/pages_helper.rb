@@ -43,4 +43,5 @@ module PagesHelper
               {:name => :unwatched, :translation => :unwatched}],
       :view => view_settings }
   end
+
 end

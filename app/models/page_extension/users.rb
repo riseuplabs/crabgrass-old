@@ -100,6 +100,10 @@ module PageExtension::Users
     participation_for_user(user).try(:changed_at)
   end
 
+  def unread_by?(user)
+    !participation_for_user(user).try(:viewed?)
+  end
+
   # Returns the user participation object for +user+.
   # This method is almost always called on the current user.
   def participation_for_user(user)

@@ -614,5 +614,10 @@ module PageHelper
       url_for_entity(page.owner),:class=>'imglink'
   end
 
+  def page_html_attributes(page)
+    classes = %w(cover small_icon page_text_blue_16)
+    classes << 'unread' if page.unread_by?(current_user)
+    { :class => classes.join(' ') }
+  end
 
 end

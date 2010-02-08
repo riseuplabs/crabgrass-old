@@ -17,6 +17,10 @@ class UnauthenticatedUser
     end
   end
 
+  def current_status
+    ""
+  end
+
   def member_of?(group)
     false
   end

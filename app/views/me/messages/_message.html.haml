@@ -5,8 +5,8 @@
     = check_box_tag 'messages[]', message.id, false, :id =>"message_checkbox_#{message.id}", :class => 'message_check_box'
   %td{message_reply_html_attributes(message)}
   %td.avatar
-    = display_entity(other_user, :avatar => :small, :format => :short)
-  %td.message
-    = link_to post.body_html, message_path(other_user.login)
+    = display_entity(other_user, :avatar => :small, :format => :short, :link => true)
+  %td.message.clickable{:onclick => 'window.location.pathname="' + message_path(other_user.login, :anchor => 'last') + '"'}
+    = truncate(post.body_html, :length => 300)
   %td.date
     %span.date= friendly_date(post.try.created_at)
