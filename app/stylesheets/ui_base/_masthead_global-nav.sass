@@ -52,46 +52,24 @@
         float: left
         display: inline
         margin-top: 12px
-      form#search
-        margin-top: 10px
-        float: right
+      form
         display: inline
-        text-align: right
-        color= !almost_black
-        position: relative
+        float: right
         fieldset
-          +bordered
-          display: inline
-          width: 226px
-          height: 23px
-          padding: 0
-          background: #fff
-          .text
-            float: left
+          input.text
+            padding-top: 4px
+            height: 10px
+            width: 200px
+          div
             display: inline
-            font-size: 12px
-            padding: 4px 0 0 2px
-          .search-submit
-            +small-text
-            display: inline
-            border: none
-            padding: 0 4px 2px 0
-            background-color: #fff
-            letter-spacing: 0.05em
-            font-weight: bold
-            font-size: 12px
-            vertical-align: middle
-            color= !light_grey_text
-        div
-          display: inline
-          position: relative
-          vertical-align: top
-          top: 1px
-          .checkbox
             position: relative
-          .light-small
-            +small-text
-            color= !white_text
+            vertical-align: top
+            top: 1px
+            .checkbox
+              position: relative
+            .light-small
+              +small-text
+              color= !white_text
 /* @end */
 
 
