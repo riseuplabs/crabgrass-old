@@ -67,6 +67,10 @@
   margin: 0
   padding: 0
   line-height: 1.0
+  
+=inline-middle
+  display: inline
+  vertical-align: middle
 
 =spaced(!spacing= 0.09em)
   letter-spacing= !spacing
@@ -231,13 +235,14 @@ h6
     font-size: 15px
     font-weight: normal
     color: #993333
-  form
+  form#search-my-work
     position: relative
     input.text
-      padding-top: 4px
-      height: 10px
+      height: 14px
       width: 200px
-    
+    input.search-submit
+      +inline-middle
+      margin-top: -2px
     
       
 #info-box-full
