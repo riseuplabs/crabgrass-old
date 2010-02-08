@@ -298,19 +298,35 @@ module LayoutHelper
 
   # build a masthead, using a custom image if available
   def custom_masthead_site_title
-    appearance = current_site.custom_appearance
-    if appearance and appearance.masthead_asset
-      # use an image
-      content_tag :div, :id => 'site_logo_wrapper' do
-        content_tag :a, :href => '/', :alt => current_site.title do
-          image_tag(appearance.masthead_asset.url, :id => 'site_logo')
-        end
-      end
-    else
+ #   appearance = current_site.custom_appearance
+ #   if appearance and appearance.masthead_asset
+ #     # use an image
+ #     content_tag :div, '', :id => 'site_logo_wrapper' do
+ #       content_tag :a, :href => '/', :alt => current_site.title do
+ #         image_tag(appearance.masthead_asset.url, :id => 'site_logo')
+ #       end
+ #     end
+ #   else
       # no image
       content_tag :h2, current_site.title, :class => 'site_title'
       # <h2><%= current_site.title %></h2>
+ #   end
+  end
+  
+  def masthead_container
+    locals = {}
+    appearance = current_site.custom_appearance
+    if appearance and appearance.masthead_asset
+      height = appearance.masthead_asset.height
+      locals[:section_style] = "height: #{height}px"
+      locals[:style] = "background-image: url(#{appearance.masthead_asset.url}); height: #{height}px;"
+      locals[:render_title] = false
+    else
+      locals[:section_style] = ''
+      locals[:style] = ''
+      locals[:render_title] = true
     end
+    render :partial => 'layouts/base/masthead', :locals => locals
   end
 
   ##

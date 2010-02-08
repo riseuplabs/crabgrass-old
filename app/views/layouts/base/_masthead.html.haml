@@ -1,0 +1,6 @@
+%section{:id => 'masthead', :style => section_style}
+  %div{:id => 'masthead-container', :style => "#{style}"}
+    #masthead-name
+      - if render_title
+        = custom_masthead_site_title
+      = render :partial => '/pages/mini_search' 
