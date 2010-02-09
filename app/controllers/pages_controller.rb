@@ -66,7 +66,7 @@ class PagesController < ApplicationController
 
   def index
     if @path.empty?
-      redirect_to my_work_pages_url
+      redirect_to my_work_me_pages_url
     else
       all
     end
@@ -75,7 +75,7 @@ class PagesController < ApplicationController
   def all
     @path.default_sort('updated_at')
     fetch_pages_for @path
-    rss_for_collection(all_pages_path, :all_pages_tab)
+    rss_for_collection(all_me_pages_path, :all_pages_tab)
     render :action => "all"  #now it also works for the index action
   end
 
@@ -83,13 +83,13 @@ class PagesController < ApplicationController
     params[:view] ||= 'work'
     path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
     fetch_pages_for path
-    rss_for_collection(my_work_pages_path, :my_work_tab)
+    rss_for_collection(my_work_me_pages_path, :my_work_tab)
   end
 
   def notification
     path = parse_filter_path("/notified/#{current_user.id}")
     fetch_pages_for path
-    rss_for_collection(notification_pages_path, :notification_tab)
+    rss_for_collection(notification_me_pages_path, :notification_tab)
   end
 
   protected

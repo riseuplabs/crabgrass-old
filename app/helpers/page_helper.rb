@@ -553,13 +553,13 @@ module PageHelper
       id = page_class.param_id
       "/#{controller}/create/#{id}" + build_query_string(options)
     else
-      new_page_url
+      new_me_page_url
     end
   end
 
   def create_page_link(group=nil, options={})
     if may_create_group_page?
-      url = new_page_url
+      url = new_me_page_url
       if group
         url = new_group_page_url(group)
       end

@@ -3,7 +3,7 @@
 
 = render :partial => 'common/title_box'
 = render :partial => 'common/info_box'
-= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_path => my_work_pages_path}
+= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_path => my_work_me_pages_path}
 
-- action_bar_form(mark_pages_path, my_work_pages_path, action_bar_settings) do
+- action_bar_form(mark_me_pages_path, my_work_me_pages_path, action_bar_settings) do
   = render :partial => 'pages/list', :locals => {:layout => '/pages/checkbox', :full_width => true}
