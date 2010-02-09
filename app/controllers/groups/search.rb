@@ -62,6 +62,7 @@ module Groups::Search
       @pages = []
       @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
+    @second_nav = 'pages'
     search_template('tags')
   end
 
