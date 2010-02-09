@@ -9,10 +9,4 @@
         %td.left_column
           = render :partial => '/admin/base/navigation'
         %td#content
-          - if @title_box.any?
-            .title_box
-              = @title_box
-          - if @info_box.any?
-            .info_box{:class => @info_box_class}
-              = @info_box
           = yield

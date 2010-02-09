@@ -316,7 +316,7 @@ module LayoutHelper
   def masthead_container
     locals = {}
     appearance = current_site.custom_appearance
-    if appearance and appearance.masthead_asset
+    if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
       height = appearance.masthead_asset.height
       locals[:section_style] = "height: #{height}px"
       locals[:style] = "background-image: url(#{appearance.masthead_asset.url}); height: #{height}px;"
