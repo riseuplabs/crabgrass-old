@@ -54,8 +54,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
 
 
-
-
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
@@ -74,7 +72,8 @@ ActionController::Routing::Routes.draw do |map|
 
     # HACK: pretend resources :path_names options works for :collection's and not just :member's
     # won't have to pretend anymore with rails 2.3.5
-    me.my_work_pages '/pages/my-work', :action => "my_work", :controller => "pages", :conditions => {:method => :get}
+    # this doesn't work - it tries to use the controller me/pages
+    #me.my_work_pages '/pages/my-work', :action => "my_work", :controller => "pages", :conditions => {:method => :get}
 
     me.resources :pages,
       :only => [:new, :update, :index],
@@ -83,9 +82,9 @@ ActionController::Routing::Routes.draw do |map|
         :notification => :get,
         :all => :get,
         :mark => :put}
-
-
   end
+  # this is a fix for the above HACK for now.
+  map.connect 'me/pages/my-work', :controller => 'pages', :action => 'my_work', :conditions => {:method => :get}
 
   map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
 
