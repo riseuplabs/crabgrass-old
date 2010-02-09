@@ -2,9 +2,10 @@
 / full content width
 /
 #content-container
-  #banner-container
-    %header#banner
-      = yield :banner
+  - if yield :banner
+    #banner-container
+      %header#banner
+        = yield :banner
     /
     / secondary nav (always required?)
     /
