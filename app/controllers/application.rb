@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
   def essential_initialization
     current_site
     @path = parse_filter_path(params[:path])
+    @skip_context = false
   end
 
   def header_hack_for_ie6

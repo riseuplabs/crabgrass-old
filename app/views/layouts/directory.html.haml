@@ -1,7 +1,7 @@
 - inside_layout 'base' do
   - content_for :banner do
     %div.left
-      - key = 'directory_of_' + @active_tab.to_s
+      - key = "directory_of_#{@active_tab}"
       %h1= I18n.t(key.to_sym)
     %div.right
       = link_to_create(@active_tab)
