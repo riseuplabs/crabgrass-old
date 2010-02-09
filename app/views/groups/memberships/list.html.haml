@@ -10,8 +10,8 @@
 - if current_site.tracking
   %b
     Visits:
-  = @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30") + "last month,"
-  = @group.memberships.count(:all, :conditions => "visited_at  is not null") + "all time"
+  = @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30").to_s + " last month, "
+  = @group.memberships.count(:all, :conditions => "visited_at  is not null").to_s + " all time"
 
 %p
 = letter_pagination_links(groups_memberships_params(:action => 'list'), :available_letters => @pagination_letters)
