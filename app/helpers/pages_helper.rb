@@ -18,9 +18,9 @@ module PagesHelper
   end
 
   def view_settings
-    if @tab == :my_work
+    if action?(:my_work)
       my_work_view_settings
-    elsif @tab == :all
+    elsif action?(:all)
       all_view_settings
     end
   end

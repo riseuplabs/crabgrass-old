@@ -73,25 +73,23 @@ class PagesController < ApplicationController
   end
 
   def all
-    @tab = :all
     @path.default_sort('updated_at')
     fetch_pages_for @path
-    rss_for_collection(all_pages_path, :all_pages_link)
+    rss_for_collection(all_pages_path, :all_pages_tab)
     render :action => "all"  #now it also works for the index action
   end
 
   def my_work
-    @tab = :my_work
     params[:view] ||= 'work'
     path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
     fetch_pages_for path
-    rss_for_collection(my_work_pages_path, :my_work_link)
+    rss_for_collection(my_work_pages_path, :my_work_tab)
   end
 
   def notification
     path = parse_filter_path("/notified/#{current_user.id}")
     fetch_pages_for path
-    rss_for_collection(notification_pages_path, :notification_pages_link)
+    rss_for_collection(notification_pages_path, :notification_tab)
   end
 
   protected
@@ -113,9 +111,10 @@ class PagesController < ApplicationController
     case params[:action]
     when 'new'
       I18n.t(:create_a_new_thing, :thing => I18n.t(:page)).titleize
-    else
-      key = 'pages_' + params[:action] + '_context'
-      I18n.t(key).titleize
+    when 'index'; I18n.t(:all_pages_tab)
+    when 'all'; I18n.t(:all_pages_tab)
+    when 'my_work'; I18n.t(:my_work_tab)
+    when 'notification'; I18n.t(:notification_tab)
     end
   end
 
