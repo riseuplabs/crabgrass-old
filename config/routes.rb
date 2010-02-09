@@ -72,6 +72,19 @@ ActionController::Routing::Routes.draw do |map|
     end
     me.resources :public_messages, :only => [:show, :create, :destroy]
 
+    # HACK: pretend resources :path_names options works for :collection's and not just :member's
+    # won't have to pretend anymore with rails 2.3.5
+    me.my_work_pages '/pages/my-work', :action => "my_work", :controller => "pages", :conditions => {:method => :get}
+
+    me.resources :pages,
+      :only => [:new, :update, :index],
+      :collection => {
+        :my_work => :get,
+        :notification => :get,
+        :all => :get,
+        :mark => :put}
+
+
   end
 
   map.resource :me, :only => [:show, :edit, :update], :controller => 'me'
@@ -101,14 +114,6 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
-
-  map.resources :pages,
-    :only => [:new, :update, :index],
-    :collection => {
-      :my_work => :get,
-      :notification => :get,
-      :all => :get,
-      :mark => :put}
 
   map.connect '/pages/*path', :controller => 'pages'
 
