@@ -102,6 +102,10 @@ form.mini_search table {
   <%= render :partial => 'sidebar' %>
 <% end %>
 
+<% content_for :misc_header do %>
+  This is the misc_header!
+<% end %>
+
 <% @title_box = capture do %>
 <table>
 <tr>
