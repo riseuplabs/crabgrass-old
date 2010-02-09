@@ -1,5 +1,5 @@
 %ul
-  =tab_li(:pages, :current => ((@second_nav == 'pages') ? true : false), :upcase => true)
+  =tab_li(:pages, :controller => 'pages', :action => 'my-work', :current => ((@second_nav == 'pages') ? true : false), :upcase => true)
   =tab_li :social_activities, :upcase => true
   =tab_li :messages, :upcase => true
   - tasks_current = (@second_nav == 'tasks') ? true : false
