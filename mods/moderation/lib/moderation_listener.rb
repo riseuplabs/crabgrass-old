@@ -11,6 +11,7 @@ class ModerationListener < Crabgrass::Hook::ViewListener
 
   def group_permissions(context)
     return if context[:group].council_id.nil?
+    return if context[:form].nil?
     f=context[:form]
     f.row do |r|
       r.label I18n.t(:moderation)
