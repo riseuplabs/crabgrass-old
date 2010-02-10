@@ -25,7 +25,6 @@ class Conf
 
   # Site attributes that can only be specified in crabgrass.*.yml.
   cattr_accessor :name
-  cattr_accessor :admin_group
 
   # Default values for site objects. If a site does not have
   # a value defined for one of these, we use the default in
