@@ -13,3 +13,17 @@ Scenario: I can mark pages read
   And I mark that page
   And I press "Read"
   Then I should have read that page
+
+Scenario: Multiple Selectors on My Pages
+  When I am on my work page
+  Then I should see "Select:"
+  And I should see "All"
+  And I should see "None"
+  And I should see "Unread"
+
+Scenario: Multiple Markers on My Pages
+  When I am on my work page
+  Then I should see "Mark as:"
+  And I should see "Read"
+  And I should see "Unread"
+  And I should see "Unwatched"

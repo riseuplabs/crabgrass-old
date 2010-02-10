@@ -34,12 +34,11 @@ module PagesHelper
                :translation => :select_none,
                :function => checkboxes_subset_function(".page_check", "")},
               {:name => :unread,
-               :translation => :select_none,
-               :function => checkboxes_subset_function(".page_check", "section.pages_info.unread .page_check")}],
+               :translation => :select_unread,
+               :function => checkboxes_subset_function(".page_check", "section.pages-info.unread .page_check")}],
       :mark =>
             [ {:name => :read, :translation => :read},
               {:name => :unread, :translation => :unread},
-              {:name => :watched, :translation => :watched},
               {:name => :unwatched, :translation => :unwatched}],
       :view => view_settings }
   end

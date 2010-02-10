@@ -620,4 +620,10 @@ module PageHelper
     { :class => classes.join(' ') }
   end
 
+  def section_html_attributes(page)
+    classes = %w(pages-info)
+    classes << 'unread' if page.unread_by?(current_user)
+    { :class => classes.join(' ') }
+  end
+
 end
