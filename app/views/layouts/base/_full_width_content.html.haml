@@ -22,13 +22,15 @@
         #centered-nav
           = yield :third_nav
 
-  /
-  / misc placeholder
-  /
-  - if yield :misc_header
-    = yield :misc_header
 
   #content-wrap
+    /
+    / misc placeholder
+    /
+    - if yield :misc_header
+      = yield :misc_header
+  
+  
     - if yield :browse_content
       %section#browse-content
         = yield :browse_content

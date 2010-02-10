@@ -24,11 +24,8 @@ table.entities td {
   padding: 1em;
 }
 
-.sidebox.dark {
-  background: #ccc;
-  color: white;
-  border: 1px solid #999;
-  margin: 1em 0;
+.margin {
+  margin: 0 0 1em;
 }
 .sidebox.dark a {
   color: #333;
@@ -102,8 +99,21 @@ form.mini_search table {
   <%= render :partial => 'sidebar' %>
 <% end %>
 
-<% content_for :misc_header do %>
-  This is the misc_header!
+<% content_for :misc_header do %> 
+  <div id="welcome-container" class='full-width'>
+    <ul id="welcome-links"class='full-width'>
+      <li>
+        <%= [ welcome_box_link, create_group_link, contribute_link ].join('<li></li>') %>
+      </li>
+    </ul>
+    <% if params[:welcome_box] && logged_in? -%>
+      <div id='welcome_box'>
+        <div class="inset_box round">
+          <%= render :partial => '/me/dashboard/welcome_box_content' %>
+        </div>
+      </div>
+    <% end -%>
+  </div>
 <% end %>
 
 <% @title_box = capture do %>
@@ -122,13 +132,7 @@ form.mini_search table {
 </ul>
 &nbsp;<%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
 <% end %>
-<% if params[:welcome_box] && logged_in? -%>
-  <div id='welcome_box'>
-    <div class="inset_box round">
-      <%= render :partial => '/me/dashboard/welcome_box_content' %>
-    </div>
-  </div>
-<% end -%>
+
 
 <%- if @announcements.any? %>
   <div class='section'>
