@@ -211,7 +211,6 @@ class BasePageController < ApplicationController
 
   def build_new_page(page_class)
     params[:page] ||= HashWithIndifferentAccess.new
-    params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
     params[:page][:access] = case params[:access]
       when 'admin' then :admin
@@ -219,7 +218,11 @@ class BasePageController < ApplicationController
       when 'view'  then :view
       else Conf.default_page_access
     end
-    page_class.build!( params[:page].dup )
+    # adding a real object to params makes the debug output
+    # fail. so we only add user to a the local page_params.
+    page_params=params[:page].dup
+    page_params[:user] = current_user
+    page_class.build!( page_params )
   end
 
   # returns a new data object for page initialization
