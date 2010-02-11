@@ -510,6 +510,7 @@ en:
   upload_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload Images"
   too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
+  too_wide_image_error: "Uploaded image must be exactly  {{count}} pixels wide"
   cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
