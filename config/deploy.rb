@@ -9,18 +9,18 @@
 set :application, "crabgrass"
 set :user, "crabgrass"
 
-set :repository, "labs.riseup.net/crabgrass.git"
+set :repository, "git://labs.riseup.net/crabgrass.git"
 set :branch, "master"
 
 deploy_host = "xxxxxx"
-staging_host = "xxxxxx"
+staging_host = "munia.riseup.net"
 
 staging = ENV['TARGET'] != 'production'
 
 set :app_db_host, 'localhost'
 set :app_db_user, 'crabgrass'
-set :app_db_pass, 'xxxxxxxxx'
-set :secret,  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+set :app_db_pass, 'oahoh0Ae'
+set :secret,  "0704c166845573a8a5b5ab4cec0766a81f16a5c2a6dd6a32d479ff3d9db267a0561b9d494fa9a37d95a68e17b754680b0a74b995b35ad4663548206e87a91bf9"
 
 ##
 ## Items you should probably leave alone
