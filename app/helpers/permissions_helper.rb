@@ -148,6 +148,10 @@ module PermissionsHelper
   # the permissions without a controller name is attempted (ie 'may_eat_soup?)
   #
   def permission_for_controller(controller, action, *args)
+    # keep a record of which permissions were tried and which one exists
+    @tried_permssions = []
+    @found_permission = nil
+
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
@@ -172,12 +176,21 @@ module PermissionsHelper
       methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
       methods << "may_#{action}?" if action =~ /_/
       methods.each do |method|
-        return target.send(method, *args) if target.respond_to?(method)
+        @tried_permssions << method
+        if target.respond_to?(method)
+          @found_permission = method
+          return target.send(method, *args)
+        end
       end
     end
     if target.respond_to?('default_permission')
+      @tried_permssions << 'default_permission'
+      @found_permission = 'default_permission'
+
       return target.send('default_permission', *args)
     end
+
+    @found_permission = 'none'
     return nil
   end
 

@@ -339,14 +339,9 @@ module ApplicationHelper
     text == symbol.to_s.humanize ? nil : text
   end
 
-  def debug_permissions
+  def debug_info
     if RAILS_ENV == 'development'
-      content_tag :div, :class =>'debug' do
-        permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
-        permission_methods.collect do |section|
-          content_tag(:ul, content_tag(:li, section[0]) + content_tag(:ul, section[1].collect{|meth| content_tag(:li, meth)}))
-        end
-      end
+      render :partial => 'layouts/base/debug_info'
     end
   end
 

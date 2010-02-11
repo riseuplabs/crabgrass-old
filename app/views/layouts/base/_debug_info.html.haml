@@ -1,0 +1,26 @@
+%div.debug(style="text-align: left; margin-left:1em")
+  %h3 Params
+  = params.to_json
+  %br/
+  %br/
+
+  %h3 Deciding
+  = @found_permission
+  %br/
+  %br/
+
+  %h3 Attempted
+  %ul
+    - @tried_permssions.try.each do |method|
+      %li= method
+  %br/
+
+  %h3 All
+  - permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+  - permission_methods.each do |section|
+    %ul
+      %li(style="font-weight:bold")
+        = section[0]
+      - section[1].each do |method|
+        %li= method
+    %br/
