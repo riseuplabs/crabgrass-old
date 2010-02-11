@@ -1,9 +1,10 @@
 class Me::TrashController < Me::BaseController
 
+  helper :action_bar
   def search
     if request.post?
       path = parse_filter_path(params[:search])
-      redirect_to url_for(:controller => '/me/trash', :action => 'search', :path => nil) + path
+      redirect_to url_for(:controller => '/me/pages/trash', :action => 'search', :path => nil) + path
     else
       list
     end
@@ -15,11 +16,12 @@ class Me::TrashController < Me::BaseController
 
   def list
     @path.default_sort('updated_at')
-    full_url = url_for(:controller => '/me/trash', :action => 'search', :path => @path)
+    full_url = url_for(:controller => '/me/pages/trash', :action => 'search', :path => @path)
 
     @pages = Page.paginate_by_path(@path.merge(:admin => current_user.id), options_for_me(:page => params[:page], :flow => :deleted))
     @columns = [:admin_checkbox, :icon, :title, :owner, :deleted_by, :deleted_at, :contributors_count]
 
+    @second_nav = 'pages'
     handle_rss(
       :link => full_url,
       :title => 'Crabgrass Trash',
@@ -64,7 +66,7 @@ class Me::TrashController < Me::BaseController
 
   def context
     super
-    add_context I18n.t(:me_trash_link), url_for(:controller => '/me/trash', :action => 'search', :path => params[:path])
+    add_context I18n.t(:me_trash_link), url_for(:controller => '/me/pages/trash', :action => 'search', :path => params[:path])
   end
 
 end

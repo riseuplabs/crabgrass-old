@@ -51,7 +51,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
-  map.connect 'me/trash/:action/*path',     :controller => 'me/trash'
+  map.connect 'me/pages/trash/:action/*path',     :controller => 'me/trash'
+  map.connect 'me/pages/trash',                   :controller => 'me/trash'
 
 
   map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
@@ -81,7 +82,7 @@ ActionController::Routing::Routes.draw do |map|
     me.resources :pages,
       :only => [:new, :update, :index],
       :collection => {
-        :notification => :get,
+  #      :notification => :get,
         :all => :get,
         :mark => :put}
   end
@@ -111,8 +112,7 @@ ActionController::Routing::Routes.draw do |map|
   ## PAGES
   ##
 
-
-  map.connect '/pages/*path', :controller => 'pages'
+  map.connect '/me/pages/*path', :controller => 'pages'
 
   # handle all the namespaced base_page controllers:
   map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/

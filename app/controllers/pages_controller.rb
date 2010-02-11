@@ -55,7 +55,7 @@ class PagesController < ApplicationController
   # Think: This creates a new view on the collection of pages.
   def create
     path = parse_filter_path(params[:search])
-    redirect_to pages_url + path
+    redirect_to me_pages_url + path
   end
 
   # This is a workaround as long as we do not have :only => :index for resources.
