@@ -605,7 +605,8 @@ module PageHelper
   #
   # checkbox for selecting the page in a list of pages.
   def checkbox_for(page)
-    check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+    # check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+    check_box_tag 'pages[]', page.id, false, :id =>"page_checkbox_#{page.id}", :class => 'page_check_box'
   end
 
   def owner_image(page)

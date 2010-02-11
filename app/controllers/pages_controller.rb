@@ -86,6 +86,16 @@ class PagesController < ApplicationController
     rss_for_collection(my_work_me_pages_path, :my_work_tab)
   end
 
+  def mark
+    mark_as = params[:as].to_sym
+    Page.flag_all(params[:pages], :as => mark_as, :by => current_user)
+    params[:view] ||= 'work'
+    path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
+    fetch_pages_for path
+    render :action => :my_work, :layout => false
+  end
+
+
   def notification
     path = parse_filter_path("/notified/#{current_user.id}")
     fetch_pages_for path
