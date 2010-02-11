@@ -2,7 +2,7 @@ class MeController < Me::BaseController
 
   def show
     flash.keep
-    redirect_to :controller => '/me/dashboard'
+    redirect_to :controller => '/me/pages'
   end
 
   def edit
