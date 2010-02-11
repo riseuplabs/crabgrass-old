@@ -24,7 +24,7 @@ class MeControllerTest < Test::Unit::TestCase
     login_as :quentin
     get :show
     assert_response :redirect, "should redirect"
-    assert_redirected_to({:controller => 'me/dashboard'}, "should redirect to dashboard")
+    assert_redirected_to({:controller => 'me/pages'}, "should redirect to pages")
   end
 
 =begin

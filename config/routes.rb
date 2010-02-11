@@ -45,10 +45,10 @@ ActionController::Routing::Routes.draw do |map|
   ## ME
   ##
 
-  map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
+  # map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   # map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
   map.connect 'me/search/*path',            :controller => 'me/search', :action => 'index'
-  map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
+  # map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
   map.connect 'me/pages/trash/:action/*path',     :controller => 'me/trash'

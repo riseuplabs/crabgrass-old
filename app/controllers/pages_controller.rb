@@ -60,11 +60,12 @@ class PagesController < ApplicationController
 
   # This is a workaround as long as we do not have :only => :index for resources.
   def show
-    @path=params[:id]
+    @path = parse_filter_path(params[:id])
     index
   end
 
   def index
+    @path = parse_filter_path(params[:path])
     if @path.empty?
       redirect_to my_work_me_pages_url
     else
