@@ -84,6 +84,15 @@
   font-size= !sized
   font-weight: normal
 
+=full-width
+  +columns(14,14)
+  width: 764px
+  
+=partial-width
+  +columns(10,10)
+  width: 540px
+
+
 /* @general */
 .left
   float: left
@@ -147,8 +156,7 @@ h6
 //misc
 //
 .full-width
-  +columns(14,14)
-  width: 764px
+  +full-width
 
 
 
@@ -201,8 +209,7 @@ h6
 //
 
 #title-box-full, #info-box-full
-  +columns(14,14)
-  width: 764px
+  +full-width
   height: 16px
   h3
     font-size: 15px
@@ -276,9 +283,8 @@ h6
 /* groups page feed, me-section page feed, group landing/wiki section */
 
 #pages, #group-wiki
-  +columns(10,10)
+  +partial-width
   margin: 30px 0 0
-  width: 540px
   h3
     +bordered-btm(!medium_grey_border)
     padding: 0 0 8px
@@ -291,9 +297,8 @@ h6
 
 #pages, #group-wiki, #activities
   article
-    +columns(10,10)
+    +partial-width
     +bordered-btm(!light_grey_border)
-    width: 540px
     margin: 0
     padding: 10px 0
     .pages-info
@@ -343,13 +348,13 @@ h6
           +blue-link
 
 #pages.full
-  width: 764px
+  +full-width
   h3
     +bordered-btm(!medium_grey_border)
+    +full-width
     padding: 0 0 8px
     float: left
     display: inline
-    width: 764px
   .pagination
     font-weight: normal
     font-size: 11px
@@ -362,11 +367,10 @@ h6
 
 #pages.full
   +clearfix
-  width: 764px
+  +full-width
   article
-    +columns(14,14)
+    +full-width
     +bordered-btm(!light_grey_border, "dotted")
-    width: 764px
     margin: 0
     padding: 10px 0
     .pages-info
@@ -426,7 +430,7 @@ h6
 
 
 footer.page
-  background: #fff
+  background= !white_bg
   height: 65px
 .space
   height: 22px
@@ -462,10 +466,10 @@ td.reply
   min-height: 24px
 #browse-content
   +clearfix
-  width: 764px
+  +full-width
   nav
     +clearfix
-    width: 764px
+    +full-width
 button.icon_16
   +zero
   vertical-align: text-top
@@ -607,7 +611,7 @@ button.icon_16
 
 
 nav#nav-full
-  width: 764px
+  +full-width
   height: 28px
   ul
     +clearfix
@@ -642,33 +646,40 @@ nav#nav-full
   a
     +blue-link
 
-
-#sidebar, #sidebar-nav, #sidebar-browse
+#sidebar
   +bordered
-  width: 204px
+  width: 184px
+  padding: 10px
   float: right
   margin: 0
   ul
     +clearfix
+  ul#nav4
     li
-      clear: both
-#sidebar-nav
+      +bordered-btm(!medium_grey_border,"dotted")
+      a
+        color= !blue
+        text-decoration: none
+    li.current
+      a
+        font-weight: bold
+
+#sidebar.left
   float: left
-  width: 184px
-  padding: 10px
-
-
+  
+#sidebar.no-border
+  border: none
 
 #wiki-page
   article
     +clearfix
-    width: 540px
+    +partial-width
     padding-top: 16px
   ul
     li
       +inline-list
 #comments
-  width: 540px
+  +partial-width
   padding-top: 30px
   tr
     td
@@ -699,8 +710,8 @@ nav#tabs
 
 #action-bar
   +bordered-top-btm
+  +full-width
   clear: both
-  width: 764px
   height: 21px
   h4
     color= !almost_black
@@ -737,7 +748,7 @@ table
       font-size: 10px
 
 table#activity
-  width: 764px
+  +full-width
   tr
     td
       +bordered-btm(!light_grey_border)
@@ -746,7 +757,7 @@ table#activity
       font-size: 10px
 
 table#messages
-  width: 764px
+  +full-width
   tr
     td
       +bordered-btm(!light_grey_border)
@@ -789,7 +800,7 @@ table#messages.thread
 #wiki-content
   article
     h2
-      width: 540px
+      +partial-width
       clear: both
       
 /* footer */
