@@ -4,7 +4,7 @@ class GalleryTest < ActionController::IntegrationTest
   def test_create_gallery_with_images
     login 'purple'
 
-    visit '/me/dashboard'
+    visit '/me/pages'
     click_link 'Contribute'
     click_link 'Gallery'
 
