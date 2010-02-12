@@ -257,7 +257,7 @@ module UrlHelper
     if action == 'show'
       url = "/#{name}"
     else
-      controller ||= 'groups'
+      controller ||= '/groups'
       url = {:controller => controller, :action => action, :id => name}
       url[:path] = path if path
     end
