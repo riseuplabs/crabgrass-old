@@ -1,4 +1,4 @@
 %ul
-  =action_tab_li :my_work, :class => 'first'
-  =action_tab_li :all, :translate => :all_pages_tab
-  =action_tab_li :trash, :translate => :trash
+  =action_tab_li :my_work, :controller => '/pages', :class => 'first'
+  =action_tab_li :all, :controller => '/pages', :translate => :all_pages_tab
+  =tab_li :trash, :controller => '/me/trash', :translate => :trash

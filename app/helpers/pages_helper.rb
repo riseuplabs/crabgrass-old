@@ -9,11 +9,19 @@ module PagesHelper
     ]
   end
 
+  def title_key_for(view)
+    ('view_'+view.to_s+'_pages_option').to_sym
+  end
+
+  def description_key_for(view)
+    ('view_'+view.to_s+'_pages_description').to_sym
+  end
+
   def all_view_settings
    [
-     {:name => :public, :translation => :public},
-     {:name => :networks, :translation => :networks},
-     {:name => :groups, :translation => :groups}
+     {:name => :public, :translation => :view_public_pages_option},
+     {:name => :networks, :translation => :view_networks_pages_option},
+     {:name => :groups, :translation => :view_groups_pages_option}
     ]
   end
 

@@ -546,6 +546,7 @@ en:
   my_pages: "My Pages"
   my_dashboard: "My Dashboard"
   my_work_headline: "My Work"
+
   view_work_pages_option: "All My Work Pages"
   view_watched_pages_option: "My Watched Pages"
   view_editor_pages_option: "My Page Edits"
@@ -554,6 +555,15 @@ en:
   view_public_pages_option: "The World"
   view_networks_pages_option: "My World"
   view_groups_pages_option: "My Groups and Me"
+
+  view_work_pages_description: "Pages that you own, participated in, or are watching."
+  view_watched_pages_description: "Pages that you are watching."
+  view_editor_pages_description: "Pages you participated in."
+  view_owner_pages_description: "Pages you own."
+  view_unread_pages_description: "Unread pages that you own, participated in, or are watching."
+  view_public_pages_description: "All pages that you have access too, including public pages."
+  view_networks_pages_description: "All pages of your groups and networks and those shared with all users."
+  view_groups_pages_description: "All pages of your groups and your own pages."
 
   my_tasks: "Tasks"
   my_tasks_headline: "My Tasks"
