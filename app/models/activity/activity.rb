@@ -211,10 +211,10 @@ class Activity < ActiveRecord::Base
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
     # if it's a group, try to get the group name directly from the reference object
-    if thing.to_s == 'group'
-      name = self.object.try.name
-    end
-    name ||= self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
+    #if thing.to_s == 'group'
+    #  name = self.object.try.name
+    #end
+    name = self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
     '<span class="%s">%s</span>' % [type, name]
   end
 
