@@ -3,10 +3,10 @@
   = render :partial => '/layouts/base/head'
   %body{:class=>language_direction}
     #page
-      .space
+      / .space
       %header.page
         =render :partial => '/layouts/base/header'
-      .space
+      / .space
 
       %section#flash_messages
         = render :partial => 'layouts/messages'
@@ -27,7 +27,7 @@
         - else
           = render :partial => '/layouts/base/content_with_extended_sidebar'
 
-      .space
+      / .space
       = render :partial => 'layouts/base/footer'
-      .space
+      / .space
 
