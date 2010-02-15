@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ProfileTest < Test::Unit::TestCase
+class ProfileTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :profiles, :external_videos
 
@@ -8,7 +8,7 @@ class ProfileTest < Test::Unit::TestCase
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
-    Time.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
     #Media::Process::Base.log_to_stdout_when = :always

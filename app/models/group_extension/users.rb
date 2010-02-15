@@ -7,6 +7,7 @@ module GroupExtension::Users
 
   def self.included(base)
     base.instance_eval do
+      attr :users_before_destroy
       before_destroy :destroy_memberships
 #      before_create :set_created_by
 
@@ -99,6 +100,9 @@ module GroupExtension::Users
   protected
 
   def destroy_memberships
+    # save users before destroying memberships
+    # so that we still have them to create GroupDestroyedActivities for them
+    @users_before_destroy = users.dup
     user_names = []
     self.memberships.each do |membership|
       user = membership.user

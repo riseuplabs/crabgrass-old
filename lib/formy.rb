@@ -150,7 +150,7 @@ module Formy
 
   class Element
     include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::JavascriptHelper
+    include ActionView::Helpers::JavaScriptHelper
 
     def initialize(form,options={})
       @base = form

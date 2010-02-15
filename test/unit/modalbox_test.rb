@@ -45,7 +45,7 @@ class DummyController
   end
 end
 
-class ModalboxTest < Test::Unit::TestCase
+class ModalboxTest < ActiveSupport::TestCase
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::TextHelper

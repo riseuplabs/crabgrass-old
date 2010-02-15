@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TrackingTest < Test::Unit::TestCase
+class TrackingTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :memberships, :relationships, :pages
 

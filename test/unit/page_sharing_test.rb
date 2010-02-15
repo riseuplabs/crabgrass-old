@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PageSharingTest < Test::Unit::TestCase
+class PageSharingTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships, :user_participations
 

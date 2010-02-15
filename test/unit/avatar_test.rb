@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AvatarTest < Test::Unit::TestCase
+class AvatarTest < ActiveSupport::TestCase
 #  fixtures :avatars
 
   # Replace this with your real tests.

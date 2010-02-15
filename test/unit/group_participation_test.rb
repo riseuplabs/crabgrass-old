@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class GroupParticipationTest < Test::Unit::TestCase
+class GroupParticipationTest < ActiveSupport::TestCase
   fixtures :groups, :users, :memberships, :group_participations
 
   def test_name_change

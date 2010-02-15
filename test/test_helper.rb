@@ -1,5 +1,8 @@
 require 'rubygems'
 
+gem 'mocha'
+require 'mocha'
+
 begin
   require 'leftright'
 rescue LoadError => exc
@@ -30,7 +33,7 @@ require 'shoulda/rails'
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
   setup { Sham.reset }
 
   # Transactional fixtures accelerate your tests by wrapping each test method

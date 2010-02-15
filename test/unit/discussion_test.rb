@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class DiscussionTest < Test::Unit::TestCase
+class DiscussionTest < ActiveSupport::TestCase
   fixtures :users, :pages
 
   def test_creation

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class CollectionTest < Test::Unit::TestCase
+class CollectionTest < ActiveSupport::TestCase
   #fixtures :users, :pages
 
 =begin

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ChatMessageTest < Test::Unit::TestCase
+class ChatMessageTest < ActiveSupport::TestCase
   fixtures :users, :groups, :channels, :channels_users, :messages
   set_fixture_class :channels => ChatChannel
   set_fixture_class :channels_users => ChatChannelsUser

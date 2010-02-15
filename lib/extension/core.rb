@@ -77,6 +77,10 @@ class Object
     false
   end
 
+end
+
+require 'active_support' # make sure Object#try has been defined already, so we can override it.
+module SilentNilObjectExtension
   #
   # Object#try() has been added to rails 2.3. It allows you to call a method on
   # an object in safe way that will not bomb out if the object is nil or the
@@ -118,7 +122,7 @@ class Object
   #
   # I heart syntax sugar.
   #
-  def try(method=nil, *args)
+  def try_with_crabgrass(method=nil, *args)
     if method.nil?
       self.nil? ? SilentNil.instance : self
     elsif respond_to? method
@@ -129,7 +133,15 @@ class Object
     end
   end
 
+  def self.included(base)
+    base.instance_eval do
+      alias_method_chain :try, :crabgrass
+    end
+  end
 end
+
+Object.send(:include, SilentNilObjectExtension)
+NilClass.send(:include, SilentNilObjectExtension)
 
 class Array
   # creates an array suitable for options_for_select

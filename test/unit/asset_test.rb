@@ -1,7 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AssetTest < Test::Unit::TestCase
+class AssetTest < ActiveSupport::TestCase
   fixtures :groups, :users, :page_terms, :assets, :pages, :group_participations
+
+  # fixes fixture_file_upload for Rails 2.3
+  include ActionController::TestProcess
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"

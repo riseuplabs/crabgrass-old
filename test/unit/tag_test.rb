@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'set'
 
-class TagTest < Test::Unit::TestCase
+class TagTest < ActiveSupport::TestCase
   fixtures :pages
   def setup
     @obj = Page.find(:first)

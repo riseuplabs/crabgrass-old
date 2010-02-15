@@ -5,7 +5,7 @@ class UserObserver < ActiveRecord::Observer
   end
 
   def before_destroy(user)
-    (user.peers + user.contacts).each do |recipient|
+    (user.peers_before_destroy + user.contacts_before_destroy).each do |recipient|
       UserDestroyedActivity.create!(:username => user.name, :recipient => recipient)
     end
   end

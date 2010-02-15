@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PageTrackingObserverTest < Test::Unit::TestCase
+class PageTrackingObserverTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all

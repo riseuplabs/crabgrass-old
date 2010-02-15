@@ -26,6 +26,8 @@ ActionController::Base.class_eval do
   end
 end
 
+# FIXME: figure out how to do this in Rails 2.3
+=begin
 ActionView::PartialTemplate.class_eval do
   private
   def partial_pieces(view, partial_path)
@@ -47,6 +49,7 @@ ActionView::PartialTemplate.class_eval do
     end
   end
 end
+=end
 
 ###
 ### MULTIPLE SUBMIT BUTTONS
@@ -115,7 +118,11 @@ ActionController::Base.class_eval do
   # and apply them considering permissions for the current controller and views.
   def self.permissions(*class_names)
     for class_name in class_names
-      permission_class = "#{class_name}_permission".camelize.constantize
+      begin
+        permission_class = "#{class_name}_permission".camelize.constantize
+      rescue NameError # permissions 'groups' => Groups::BasePermission
+        permission_class = "#{class_name}/base_permission".camelize.constantize
+      end
       include(permission_class)
       add_template_helper(permission_class)
 
