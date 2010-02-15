@@ -1,15 +1,15 @@
 /* floating top nav block - logout */
-#top-nav
-  +clearfix
+// WAS FOR FLOATING CONTAINER
+// #top-nav
+//  +clearfix
+//  height: 30px
+//  #top-nav-container
+//    +container
+//    height: 30px
+#account-links
+  width: 280px
+  float: right
   height: 30px
-  #top-nav-container
-    +container
-    height: 30px
-    #account-links
-      width: 280px
-      float: right
-      background= !white_bg
-      height: 30px
 #user
   float: right
   margin: 5px 8px 0 0
@@ -32,10 +32,10 @@
 #masthead
   +clearfix 
   height: 46px
+  background= !masthead_header_bg
   #masthead-container
     +container
     height: 46px
-    background= !masthead_header_bg
     overflow: visible
     #masthead-name
       +columns(14)
@@ -86,10 +86,10 @@
 nav.page
   +clearfix
   height: 30px
+  background= !global_nav_bg
   overflow: visible
   #global-nav-container
-    +container
-    background= !global_nav_bg
+    +container    
     height: 30px
     overflow: visible
     #global-nav
