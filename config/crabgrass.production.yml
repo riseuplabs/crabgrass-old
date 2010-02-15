@@ -19,7 +19,7 @@ enabled_languages:
   - pt
   - ar
 enabled_mods:
-#  - super_admin
+  - super_admin
 enabled_tools:
   - asset_tool
   - core_tools
@@ -48,10 +48,10 @@ email:
 ##
 
 sites:
-  - name: blue
-    admin_group: blueadmins
-  - name: red
-    admin_group: redadmins
+  - name: site1 
+    admin_group: rainbow 
+#  - name: red
+#    admin_group: redadmins
 
 ##
 ## SITE DEFAULTS
