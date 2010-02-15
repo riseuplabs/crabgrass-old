@@ -2,7 +2,7 @@
 - @page ||= post.discussion.page 
 
 %div.post-body{:id => "post-body-#{post.id}"}
-  %p.comment= post.body_html
+  = post.body_html
   = edit_post_action(post)
   = star_post_action(post) 
   = call_hook :post_actions, {:post => post}
