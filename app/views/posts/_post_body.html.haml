@@ -1,7 +1,7 @@
 - edit_loading_id = "spinner-#{post.id}"
 - @page ||= post.discussion.page 
 
-%div{:id => "post-body-#{post.id}"}
+%div.post-body{:id => "post-body-#{post.id}"}
   %p.comment= post.body_html
   = edit_post_action(post)
   = star_post_action(post) 
