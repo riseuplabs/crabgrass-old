@@ -8,8 +8,6 @@
 <%= render :partial => 'common/title_box', :locals => {:title => I18n.t(:trash)} %>
 <%= render :partial => 'common/info_box', :locals => {:description => description} %>
 
-<%= render :partial => 'pages/search', :locals => {:users => @user.friends, :groups => @user.groups, :url => url_for(:action => 'search')} %><br/>
-
 <br/>
 
 <% form_tag({:controller => 'me/trash', :action => 'update', :path => params[:path]}, {:id => 'trash_form'}) do -%>
