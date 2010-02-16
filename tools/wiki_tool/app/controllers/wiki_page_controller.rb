@@ -203,7 +203,6 @@ class WikiPageController < BasePageController
   def setup_title_box
     unless @wiki.nil? or @wiki.document_open_for?(current_user)
       @title_addendum = render_to_string(:partial => 'locked_notice')
-      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title')
     end
   end
 
