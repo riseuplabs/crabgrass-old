@@ -1,0 +1,110 @@
+--- !ruby/object:Gem::Specification
+name: riseuplabs-undress
+version: !ruby/object:Gem::Version
+  version: 0.2.4
+platform: ruby
+authors:
+- "Nicol\xC3\xA1s Sanguinetti"
+autorequire:
+bindir: bin
+cert_chain: []
+
+date: 2009-07-29 00:00:00 +02:00
+default_executable:
+dependencies:
+- !ruby/object:Gem::Dependency
+  name: hpricot
+  type: :runtime
+  version_requirement:
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: "0"
+    version:
+- !ruby/object:Gem::Dependency
+  name: sr-mg
+  type: :development
+  version_requirement:
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: "0"
+    version:
+- !ruby/object:Gem::Dependency
+  name: contest
+  type: :development
+  version_requirement:
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: "0"
+    version:
+- !ruby/object:Gem::Dependency
+  name: redgreen
+  type: :development
+  version_requirement:
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ">="
+      - !ruby/object:Gem::Version
+        version: "0"
+    version:
+description: Simply translate HTML to Textile, Markdown, or whatever other markup format you need
+email: contacto@nicolassanguinetti.info
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files:
+- LICENSE
+- CHANGELOG
+- README.rdoc
+- Rakefile
+- undress.gemspec
+- lib/undress.rb
+- lib/hpricot_ext.rb
+- lib/undress/grammar.rb
+- lib/undress/textile.rb
+- lib/undress/greencloth.rb
+- lib/core_ext/object.rb
+- test/test_helper.rb
+- test/test_grammar.rb
+- test/test_textile.rb
+- test/test_greencloth.rb
+- test/test_hpricot_ext.rb
+has_rdoc: true
+homepage: http://undress.rubyforge.org
+licenses: []
+
+post_install_message:
+rdoc_options: []
+
+require_paths:
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - ">="
+    - !ruby/object:Gem::Version
+      version: "0"
+  version:
+required_rubygems_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - ">="
+    - !ruby/object:Gem::Version
+      version: "0"
+  version:
+requirements: []
+
+rubyforge_project: undress
+rubygems_version: 1.3.5
+signing_key:
+specification_version: 3
+summary: Convert HTML into other markup languages
+test_files: []
+
+
