@@ -1,6 +1,5 @@
 class StaticController < ActionController::Base
 
-  session :off
   caches_page :avatar
 
   def avatar

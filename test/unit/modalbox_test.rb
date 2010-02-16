@@ -51,7 +51,7 @@ class ModalboxTest < ActiveSupport::TestCase
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::FormHelper
   include ActionView::Helpers::CaptureHelper
-
+  include ActionController::Assertions::DomAssertions
   include ModalboxHelper
   include ModalboxHelper::ActionViewExtension
 

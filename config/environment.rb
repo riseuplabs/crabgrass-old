@@ -116,6 +116,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'mocha'
 
+  config.action_controller.session = { :key => '_crabgrass_session', :secret => Conf.secret }
+
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
   #

@@ -73,7 +73,7 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       # try the same key but without site scope
       return  I18n.translate_without_site_scope(key, options)
     elsif locale == :en
-      if RAILS_ENV != "production"
+      if RAILS_ENV != "production" && (RAILS_ENV == 'test' ? Conf.raise_i18n_exceptions : true )
         raise exception
       else
         return key.to_s.humanize

@@ -81,6 +81,9 @@ class Conf
   # used for error reporting
   cattr_accessor :configuration_filename
 
+  # used to run the tests even though the translations are messed up
+  cattr_accessor :raise_i18n_exceptions
+
   # cattr_accessor doesn't work with ?
   def self.chat?; self.chat; end
   def self.limited?; self.limited; end

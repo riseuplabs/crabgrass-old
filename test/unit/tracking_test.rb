@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TrackingTest < ActiveSupport::TestCase
+  # otherwise transactions fail
+  self.use_transactional_fixtures = false
 
   fixtures :users, :groups, :memberships, :relationships, :pages
 

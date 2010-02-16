@@ -33,10 +33,13 @@ class ApplicationController < ActionController::Base
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
   before_render :context_if_appropriate
+  before_filter :enforce_ssl_if_needed
 
-  session :session_secure => Conf.enforce_ssl
-  # ^^ TODO: figure out how to use current_site.enforce_ssl instead
-  protect_from_forgery :secret => Conf.secret
+  def enforce_ssl_if_needed
+    request.session_options[:secure] = current_site.enforce_ssl
+  end
+
+  protect_from_forgery
 
   # no layout for HTML responses to ajax requests
   layout proc{ |c| c.request.xhr? ? false : 'default' }
