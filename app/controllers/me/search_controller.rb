@@ -4,32 +4,48 @@ class Me::SearchController < Me::BaseController
 
   def index
     if request.post?
-      redirect_to( me_url(:action => 'search') + parse_filter_path(params[:search]) )
+      # form was POSTed with search query
+      # let's redirect to nice GET search url like /me/search/text/abracadabra/person/2
+      redirect_to_search_results
     else
-      @path.default_sort('updated_at') if @path.search_text.empty?
-      @pages = Page.paginate_by_path(@path, options_for_me(:method => :sphinx, :page => params[:page]))
-
-      # if there was a text string in the search, generate extracts for the results
-      if @path.search_text and @pages.any?
-        begin
-          add_excerpts_to_pages(@pages)
-        rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
-          RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
-        end
-      end
-
-      if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
-        @columns = [:icon, :title, :owner, :created_by, :created_at, :contributors_count]
-      else
-        @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors_count]
-      end
-      full_url = me_url(:action => 'search') + @path
-      handle_rss :title => full_url, :link => full_url,
-                 :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+      render_search_results
     end
   end
 
   protected
+
+  def redirect_to_search_results
+    # delete context information if "Search in this (user|group) only" is unchecked
+    path_params = params[:search].clone
+
+    path_params.delete :group if(path_params[:use_group] and path_params[:use_group] != "1")
+    path_params.delete :person if(path_params[:use_person] and path_params[:use_person] != "1")
+
+    redirect_to(me_url(:action => 'search') + parse_filter_path(path_params))
+  end
+
+  def render_search_results
+    @path.default_sort('updated_at') if @path.search_text.empty?
+    @pages = Page.paginate_by_path(@path, options_for_me(:method => :sphinx, :page => params[:page]))
+
+    # if there was a text string in the search, generate extracts for the results
+    if @path.search_text and @pages.any?
+      begin
+        add_excerpts_to_pages(@pages)
+      rescue Errno::ECONNREFUSED, Riddle::VersionError, Riddle::ResponseError => err
+        RAILS_DEFAULT_LOGGER.warn "failed to extract keywords from sphinx search: #{err}."
+      end
+    end
+
+    if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
+      @columns = [:icon, :title, :owner, :created_by, :created_at, :contributors_count]
+    else
+      @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors_count]
+    end
+    full_url = me_url(:action => 'search') + @path
+    handle_rss :title => full_url, :link => full_url,
+               :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
+  end
 
   def context
     super

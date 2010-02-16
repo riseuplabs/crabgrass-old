@@ -9,16 +9,24 @@ module PagesHelper
     ]
   end
 
+  def title_key_for(view)
+    ('view_'+view.to_s+'_pages_option').to_sym
+  end
+
+  def description_key_for(view)
+    ('view_'+view.to_s+'_pages_description').to_sym
+  end
+
   def all_view_settings
    [
-     {:name => :public, :translation => :public},
-     {:name => :networks, :translation => :networks},
-     {:name => :groups, :translation => :groups}
+     {:name => :public, :translation => :view_public_pages_option},
+     {:name => :networks, :translation => :view_networks_pages_option},
+     {:name => :groups, :translation => :view_groups_pages_option}
     ]
   end
 
   def view_settings
-    if action?(:my_work)
+    if action?(:my_work) or action?(:mark)
       my_work_view_settings
     elsif action?(:all)
       all_view_settings
@@ -29,13 +37,13 @@ module PagesHelper
     { :select =>
             [ {:name => :all,
                :translation => :select_all,
-               :function => checkboxes_subset_function(".page_check", ".page_check")},
+               :function => checkboxes_subset_function(".page_check_box", ".page_check_box")},
               {:name => :none,
                :translation => :select_none,
-               :function => checkboxes_subset_function(".page_check", "")},
+               :function => checkboxes_subset_function(".page_check_box", "")},
               {:name => :unread,
                :translation => :select_unread,
-               :function => checkboxes_subset_function(".page_check", "section.pages-info.unread .page_check")}],
+               :function => checkboxes_subset_function(".page_check_box", "section.pages-info.unread .page_check_box")}],
       :mark =>
             [ {:name => :read, :translation => :read},
               {:name => :unread, :translation => :unread},

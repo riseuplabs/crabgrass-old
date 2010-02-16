@@ -1,7 +1,7 @@
 %tr
   %td.post-author
     %a{:href => "#"}
-      %img{:src=> avatar_url_for(post.user, 'tiny')}
+      %img.right{:src=> avatar_url_for(post.user, 'small')}
     = call_hook :author_info, {:post => post}
     = link_to_user post.user
     

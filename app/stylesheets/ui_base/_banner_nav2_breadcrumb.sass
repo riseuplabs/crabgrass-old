@@ -4,10 +4,10 @@
 #breadcrumb
   +clearfix
   height: 30px
+  background= !banner_bg
   #breadcrumb-container
     +container
     height: 30px
-    background= !banner_bg
     div
       +columns(14)
       +full
@@ -23,30 +23,32 @@
 //
 //banner
 //
-#banner-container
-  +container
+.banner
   +bordered-btm(!second_nav_border)
-  height: 90px
   background= !banner_bg
-  overflow: visible
-  header#banner-no-avatar
-    +columns(14)
-    +full
-    height: 67px
-    width: 540px
-    padding-left: 224px
-  header#banner
-    +columns(14)
-    +full
-    width: 764px
-    height: 67px
-    padding-left: 0
-    div.left
-      padding-left: 17px
-    img
-      +bordered
-      background= !white_bg
-      padding: 2px
+  #banner-container
+    +container
+    height: 90px
+    background= !banner_bg
+    overflow: visible
+    header#banner-no-avatar
+      +columns(14)
+      +full
+      height: 67px
+      width: 540px
+      padding-left: 224px
+    header#banner
+      +columns(14)
+      +full
+      width: 764px
+      height: 67px
+      padding-left: 0
+      div.left
+        padding-left: 17px
+      img
+        +bordered
+        background= !white_bg
+        padding: 2px
       
 
 //
@@ -85,5 +87,5 @@ nav#second-level-aside, nav#second-level
   #last-login
     font-size: 10px
 nav#second-level
-  width: 674px
+  width: 680px
   padding-left: 84px

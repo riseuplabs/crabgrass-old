@@ -34,7 +34,7 @@
     <%= content_tag 'p', h(flash[:bad_reply]), :class => 'notice' if flash[:bad_reply] %>
     <%- form_for(:post, :url => url, :html => html) do |f| -%>
       <div class='fieldset'>
-        <%= f.text_area :body, :rows => 8, :class => 'post_body', :cols => 55 %>
+        <%= f.text_area :body, :rows => 8, :class => 'post_body', :cols => 53 %>
         <%= hidden_field_tag('page_id', @page.id) if @page %>
         <%= hidden_field_tag('paging', @discussion.last_page) %>
         <%= hidden_field_tag('from', params[:from] || 'groups' ) %>

@@ -1,3 +1,4 @@
+/ see permissions_helper for the source of this data
 %div.debug(style="text-align: left; margin-left:1em")
   %h3 Params
   = params.to_json
@@ -5,14 +6,30 @@
   %br/
 
   %h3 Deciding
-  = @found_permission
+  %ul
+    - permission_log.each do |key, info|
+      %li
+        - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
+        %span{:style => ([controller_path, key[1]] == [params[:controller], params[:action]] ? "border:1px solid black" : "")}
+          = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json} => <b>#{info[:decided]}</b>"
+        %br/
+        %br/
   %br/
   %br/
 
   %h3 Attempted
   %ul
-    - @tried_permssions.try.each do |method|
-      %li= method
+    - permission_log.each do |key, info|
+      %li
+        %ul
+          %li
+            - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
+            = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json}"
+          - info[:attempted].each do |attempted|
+            %li
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              = attempted
+          %br/
   %br/
 
   %h3 All

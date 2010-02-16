@@ -20,22 +20,27 @@ div
 #posts
   background= !white_bg
   margin-bottom: 15px
+  width: 540px
   .post-author
+    width: 100px
     font-size: 10px
     text-align: right
     padding: 10px
     color: #6E6E6C
     line-height: 1.3
     & img
-      padding-left: 40px
+      padding-left: 8px
+  .post-body
+    p
+      padding: 10px
   h4
-    +bordered-btm(!medium_grey_border)
+    +bordered-btm(!light_grey_border)
     line-height: 1.6
 
       
 
 table.posts
-  width: 100%
+  width: 540px
   tr.post td
     vertical-align: top
   tr.post-spacer-bottom td
@@ -45,10 +50,12 @@ table.posts
     line-height: 10px
   textarea
     margin-bottom: 5px
+    width: 100%
   td.post-body
     border-left: 1px solid #ccc
     padding: 0 10px
     // the first and last <p> should not have an outer margin
+    
     p:first-child
       margin-top: 0
     p:last-child
@@ -96,39 +103,6 @@ div.title_box
 
 div.sub_menu
   width: 200px
-
-
-table.posts
-  width: 100%
-  border-top: 1px solid #ccc
-  .shade-even
-    background-color: #fff
-  .shade-odd
-    //background-color= !post_bg_color
-  tr.post td
-    vertical-align: top
-  tr.post-spacer-bottom td
-    line-height: 10px
-    border-bottom: 1px solid #ccc
-  tr.post-spacer-top td
-    line-height: 10px
-  textarea
-    margin-bottom: 5px
-  td.post-body
-    border-left: 1px solid #ccc
-    padding: 0 10px
-    // the first and last <p> should not have an outer margin
-    p:first-child
-      margin-top: 0
-    p:last-child
-      margin-bottom: 0
-  td:hover .post_action_icon
-    display: block
-  td .post_action_icon
-    position: absolute
-    right: 0
-    bottom: 0
-    display: none
 
 //
 // TITLE_BOX

@@ -5,6 +5,7 @@
     %li
       %h3
         = @user.display_name
+    %li= friend_link
   
 %div#identity-meta
   = render :partial => 'about_me', :locals => {:profile => profile}

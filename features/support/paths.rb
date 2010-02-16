@@ -1,4 +1,5 @@
 module NavigationHelpers
+  include PageHelper
   # Maps a name to a path. Used by the
   #
   #   When /^I go to (.+)$/ do |page_name|
@@ -45,6 +46,9 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? landing page$/                     # eg. the groups's landing page
       name = model($1).name
       "/#{name}"
+
+    when /^#{capture_model}(?:'s)? (edit|show) tab$/                      # eg. that wikis pages's edit tab
+      page_url(model($1), :action => $2)
 
     when /^#{capture_model}(?:'s)? administration page$/                     # eg. the groups's landing page
       object = model($1)

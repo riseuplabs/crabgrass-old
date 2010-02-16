@@ -257,7 +257,7 @@ module UrlHelper
     if action == 'show'
       url = "/#{name}"
     else
-      controller ||= 'groups'
+      controller ||= '/groups'
       url = {:controller => controller, :action => action, :id => name}
       url[:path] = path if path
     end
@@ -287,14 +287,6 @@ module UrlHelper
     end
     directory_params(:type => type, :action => action)
   end
-
-  #def group_search_url(*path)
-  #  url_for_group(@group, :action => 'search', :path => path)
-  #end
-  #
-  #def group_trash_url(*path)
-  #  url_for_group(@group, :action => 'trash', :path => path)
-  #end
 
   ##
   ## USERS

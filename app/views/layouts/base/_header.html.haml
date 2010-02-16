@@ -1,7 +1,7 @@
-%nav#top-nav
-  %div#top-nav-container
-    %div#account-links= render :partial => '/layouts/base/menu_user'
-%div.small-space
+/%nav#top-nav
+/  %div#top-nav-container
+/    %div#account-links= render :partial => '/layouts/base/menu_user'
+/ %div.small-space
 
 = masthead_container
 
@@ -9,6 +9,7 @@
   #global-nav-container
     #global-nav
       = render :partial => '/layouts/base/menu'
+      %div#account-links= render :partial => '/layouts/base/menu_user'
 
 
 

@@ -1,8 +1,8 @@
 - edit_loading_id = "spinner-#{post.id}"
 - @page ||= post.discussion.page 
 
-%div{:id => "post-body-#{post.id}"}
-  %p.comment= post.body_html
+%div.post-body{:id => "post-body-#{post.id}"}
+  = post.body_html
   = edit_post_action(post)
   = star_post_action(post) 
   = call_hook :post_actions, {:post => post}

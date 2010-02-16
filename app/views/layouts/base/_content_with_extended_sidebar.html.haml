@@ -1,19 +1,23 @@
-#content-container
+
+%div.banner
   #banner-container
     %header#banner-no-avatar
       = yield :banner
     %nav#second-level-aside
       = yield :info_box
-  #content-wrap
-    %aside#identity-info
-      = yield :extended_sidebar
-    /
-    / container for pages that has extended sidebar
-    / 
+    
+#content
+  #content-container
+    #content-wrap
+      %aside#identity-info
+        = yield :extended_sidebar
+      /
+      / container for pages that has extended sidebar
+      / 
   
-    %div#omega10
-      /
-      / main content here
-      /
-      #main-content
-        = yield
+      %div#omega10
+        /
+        / main content here
+        /
+        #main-content
+          = yield
