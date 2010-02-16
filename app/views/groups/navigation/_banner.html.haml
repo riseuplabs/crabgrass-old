@@ -2,7 +2,7 @@
 %div.left
   %h1
     = group.full_name
-  = leave_group_link
+  = leave_group_link unless @no_leave_group_link
 
 %div#group-action
   = join_group_link
