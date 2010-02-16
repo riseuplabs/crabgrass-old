@@ -110,7 +110,11 @@ en:
   not_found_description: "Sorry, we could not find what you were looking for."
   unknown: "Unknown"
   loadingdotdotdot: "Loading..."
+
   search_headline: "Search"
+  search_this_group: "Search this group only"
+  search_this_person: "Search this person only"
+
   see_more_link: "More"
   see_all_link: "See All"
   details_link: "Details"
@@ -776,7 +780,6 @@ en:
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
   membership_leave_message: "You have been removed from {{group}}"
-  search_this_group: "Search this group only"
   membership_destroy_confirm_message: "Are you sure you want to remove '{{user}}' from the {{group_type}}?"
 
 
