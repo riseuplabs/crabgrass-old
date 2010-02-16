@@ -9,7 +9,7 @@ module Mailers::Request
 
     recipients request.email
     subject I18n.t(:group_invite_subject, :group => request.group.display_name)
-    body({ :from => @current_user, :group => request.group, :link => accept_link,
+    body({ :from_user => @current_user, :group => request.group, :link => accept_link,
        :group_home => group_home })
   end
 
