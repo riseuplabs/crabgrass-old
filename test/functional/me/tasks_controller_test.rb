@@ -4,7 +4,7 @@ require 'me/tasks_controller'
 # Re-raise errors caught by the controller.
 class Me::TasksController; def rescue_action(e) raise e end; end
 
-class MeTasksControllerTest < Test::Unit::TestCase
+class MeTasksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :tasks, :task_participations, :task_lists

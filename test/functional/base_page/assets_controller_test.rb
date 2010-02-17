@@ -4,7 +4,7 @@ require 'base_page/assets_controller'
 # Re-raise errors caught by the controller.
 class BasePage::AssetsController; def rescue_action(e) raise e end; end
 
-class BasePage::AssetsControllerTest < Test::Unit::TestCase
+class BasePage::AssetsControllerTest < ActionController::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,

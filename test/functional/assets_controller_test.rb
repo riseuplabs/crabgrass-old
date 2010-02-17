@@ -4,7 +4,7 @@ require 'assets_controller'
 # Re-raise errors caught by the controller.
 class AssetsController; def rescue_action(e) raise e end; end
 
-class AssetsControllerTest < Test::Unit::TestCase
+class AssetsControllerTest < ActionController::TestCase
   fixtures :users, :pages, :user_participations, :assets, :sites
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"

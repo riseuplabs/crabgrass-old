@@ -53,7 +53,8 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
     assert_not_nil appearance=assigns(:appearance)
     assert_equal({}, appearance.parameters)
     assert_response :redirect
-    assert_redirected_to :action => 'edit'
+    # FIXME: check if this is right -- wr
+    assert_redirected_to :controller => 'admin/custom_appearances', :action => 'edit'
     post :update, :id => @current_site.custom_appearance.id,
       :custom_appearance => {:parameters => {:bla=>""}}
     assert_not_nil appearance=assigns(:appearance)

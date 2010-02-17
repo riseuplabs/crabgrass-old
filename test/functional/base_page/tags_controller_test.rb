@@ -4,7 +4,7 @@ require 'base_page/tags_controller'
 # Re-raise errors caught by the controller.
 class BasePage::TagsController; def rescue_action(e) raise e end; end
 
-class BasePage::TagsControllerTest < Test::Unit::TestCase
+class BasePage::TagsControllerTest < ActionController::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,

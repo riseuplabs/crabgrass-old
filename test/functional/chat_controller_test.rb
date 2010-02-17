@@ -4,7 +4,7 @@ require 'chat_controller'
 # Re-raise errors caught by the controller.
 class ChatController; def rescue_action(e) raise e end; end
 
-class ChatControllerTest < Test::Unit::TestCase
+class ChatControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :sites
 
   def setup

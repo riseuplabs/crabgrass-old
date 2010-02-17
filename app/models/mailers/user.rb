@@ -20,6 +20,7 @@ module Mailers::User
     @from         = "%s <%s>" % [I18n.t(:reset_password), @from_address]
     @subject      = @site.title + ": "
     @sent_on      = Time.now
+    @user ||= user
     @body[:user]  = user
   end
 

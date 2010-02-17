@@ -37,8 +37,10 @@ class Admin::AnnouncementsControllerTest < ActionController::TestCase
 
   def test_new
     login_as :penguin
-    get :new
-    assert_permission_denied
+    # assert_permission_denied doesn't work here because we are re-raising errors above
+    assert_raises PermissionDenied do
+      get :new
+    end
   end
 
   def test_edit

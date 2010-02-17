@@ -64,7 +64,7 @@ end
 
 # TODO: transfer the old inbox controller tests that have not been transfered yet.
 #
-#class InboxControllerTest < Test::Unit::TestCase
+#class InboxControllerTest < ActionController::TestCase
 #  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites
 #
 #  def test_rss

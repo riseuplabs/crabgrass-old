@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class GroupControllerTest < Test::Unit::TestCase
+class GroupControllerTest < ActionController::TestCase
 
 =begin
 

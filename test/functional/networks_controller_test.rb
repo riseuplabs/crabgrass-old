@@ -4,7 +4,7 @@ require 'networks_controller'
 # Re-raise errors caught by the controller.
 class NetworksController; def rescue_action(e) raise e end; end
 
-class NetworksControllerTest < Test::Unit::TestCase
+class NetworksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :federatings
 
   def setup

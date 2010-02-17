@@ -4,7 +4,7 @@ require 'avatars_controller'
 # Re-raise errors caught by the controller.
 class AvatarsController; def rescue_action(e) raise e end; end
 
-class AvatarsControllerTest < Test::Unit::TestCase
+class AvatarsControllerTest < ActionController::TestCase
   fixtures :avatars
 
   def setup

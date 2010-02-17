@@ -4,7 +4,7 @@ require 'dispatch_controller'
 # Re-raise errors caught by the controller.
 class DispatchController; def rescue_action(e) raise e end; end
 
-class DispatchControllerTest < Test::Unit::TestCase
+class DispatchControllerTest < ActionController::TestCase
 
   fixtures :pages, :users, :user_participations, :sites
 

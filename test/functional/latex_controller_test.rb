@@ -6,7 +6,7 @@ require 'base64'
 # Re-raise errors caught by the controller.
 class LatexController; def rescue_action(e) raise e end; end
 
-class LatexControllerTest < Test::Unit::TestCase
+class LatexControllerTest < ActionController::TestCase
 #  fixtures :users, :memberships, :assets
 
   def setup
