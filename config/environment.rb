@@ -114,6 +114,8 @@ Rails::Initializer.run do |config|
   #config.gem "chriseppstein-compass", :lib => "compass"
   #config.gem "ericam-compass-susy-plugin", :lib => "susy"
 
+  config.gem 'cucumber' unless ['development', 'production'].include? RAILS_ENV
+
   config.gem 'mocha'
 
   config.action_controller.session = { :key => '_crabgrass_session', :secret => Conf.secret }

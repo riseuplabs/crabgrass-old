@@ -120,19 +120,19 @@ module Wiki::LockingTest
 
           context "for that user" do
             test_open_sections = [:document, 'top-oversection',
-              'section-two', 'subsection-for-section-two', 'section-one', 'second-oversection']
+                                  'section-two', 'subsection-for-section-two', 'section-one', 'second-oversection']
 
-              test_open_sections.each { |section_heading|
-                should "have the #{section_heading.inspect} section open" do
-                  assert @wiki.sections_open_for(@user).include?(section_heading)
-                  assert !@wiki.sections_locked_for(@user).include?(section_heading)
-                end
+            test_open_sections.each { |section_heading|
+              should "have the #{section_heading.inspect} section open" do
+                assert @wiki.sections_open_for(@user).include?(section_heading)
+                assert !@wiki.sections_locked_for(@user).include?(section_heading)
+              end
 
 
-                should "raise no errors when unlocking #{section_heading.inspect} section" do
-                  assert_nothing_raised {@wiki.unlock! section_heading, @user}
-                end
-              }
+              should "raise no errors when unlocking #{section_heading.inspect} section" do
+                assert_nothing_raised {@wiki.unlock! section_heading, @user}
+              end
+            }
 
           end
 
@@ -206,12 +206,12 @@ module Wiki::LockingTest
             setup {@wiki.unlock! :document, @user}
 
             should "appear that no user is a locker_of document" do
-               assert_nil @wiki.locker_of(:document)
-             end
+              assert_nil @wiki.locker_of(:document)
+            end
 
-             should "appear that no user is a locker_of a subsection" do
-               assert_nil @wiki.locker_of('section-one')
-             end
+            should "appear that no user is a locker_of a subsection" do
+              assert_nil @wiki.locker_of('section-one')
+            end
 
             should "appear the same to that user and to a different user" do
               assert_same_elements @wiki.sections_open_for(@user), @wiki.sections_open_for(@different_user)

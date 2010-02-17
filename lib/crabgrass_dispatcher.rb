@@ -11,7 +11,7 @@ module CrabgrassDispatcher
       # (3) the handle does not collide with our routes or controllers
       #
       def validates_handle(*attr_names)
-        configuration = { :message => ActiveRecord::Errors.default_error_messages[:invalid], :on => :save, :with => nil }
+        configuration = { :message => I18n.translate('activerecord.errors.messages.invalid'), :on => :save, :with => nil }
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|

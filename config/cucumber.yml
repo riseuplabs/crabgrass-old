@@ -1,2 +1,7 @@
-default: -r features/support/env.rb -r features/support/plain.rb -r features/step_definitions/common -r features/step_definitions/plain --tags ~@js
-js: -r features/support/env.rb -r features/support/js.rb -r features/step_definitions/common -r features/step_definitions/js --tags @js
+<%
+rerun = File.file?('rerun.txt') ? IO.read('rerun.txt') : ""
+rerun_opts = rerun.to_s.strip.empty? ? "--format progress features" : "--format #{ENV['CUCUMBER_FORMAT'] || 'pretty'} #{rerun}"
+std_opts = "#{rerun_opts} --format rerun --out rerun.txt --strict --tags ~@wip"
+%>
+default: <%= std_opts %>
+wip: --tags @wip:3 --wip features

@@ -136,7 +136,7 @@ module ApplicationHelper
   # 3. Render the partial with the given options hash. Just like calling the partial directly.
   def block_to_partial(partial_name, options = {}, &block)
     options.merge!(:body => capture(&block))
-    concat(render(:partial => partial_name, :locals => options), block.binding)
+    concat(render(:partial => partial_name, :locals => options))
   end
 
   ##

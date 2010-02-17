@@ -24,6 +24,20 @@ ActionController::Base.class_eval do
       return default_template_name(action_name, klass.superclass)
     end
   end
+
+  #
+  # these were deprecated in Rails 2.3
+  #
+
+  def template_exists?(path)
+    self.view_paths.find_template(path, response.template.template_format)
+  rescue ActionView::MissingTemplate
+    false
+  end
+
+  def template_public?(template_name = default_template_name)
+    @template.file_public?(template_name)
+  end
 end
 
 # FIXME: figure out how to do this in Rails 2.3

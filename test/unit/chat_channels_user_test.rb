@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class ChatChannelsUserTest < ActiveSupport::TestCase
   fixtures :users, :groups, :channels, :channels_users, :messages
@@ -6,7 +6,7 @@ class ChatChannelsUserTest < ActiveSupport::TestCase
   set_fixture_class :channels_users => ChatChannelsUser
   set_fixture_class :messages => ChatMessage
 
- 
+
   def test_associations
     assert check_associations(ChatChannelsUser)
   end
