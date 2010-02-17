@@ -1,7 +1,7 @@
 module Me::RequestsHelper
 
   def action_bar_view_base_path
-    if action?(:mark)
+    if action?(:index, :mark)
       requests_path
     else
       url_for(:controller => params[:controller], :action => params[:action])
