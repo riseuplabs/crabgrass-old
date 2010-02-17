@@ -20,6 +20,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 module FilterHasBeforeRender
+  ##
+  # Add default behavior to be overwritten in subclass
+  #
   def before_render?
     false
   end

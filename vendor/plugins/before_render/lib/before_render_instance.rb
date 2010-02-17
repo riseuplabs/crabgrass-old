@@ -19,26 +19,22 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+##
+# These methods get mixed into instances of ActionController::Base (by init.rb)
+#
 module BeforeRenderInstance
   def self.included kls
     kls.send :alias_method_chain, :render, :before_render_filter
-    kls.send :alias_method_chain, :render_to_string, :before_render_filter
   end
 
-  def render_with_before_render_filter(options = nil, extra_options = {}, &block)
+  ##
+  # This rewrites the vanilla render() call to run all callbacks registered
+  # with before_render method before actually rendering.
+  #
+  def render_with_before_render_filter *opts, &blk
     run_before_render_filters
-    rv = render_without_before_render_filter(options, extra_options, &block)
+    rv = render_without_before_render_filter(*opts, &blk)
     return rv
-  end
-
-  # CRABGRASS:
-  # skip filter on render_to_string 
-  def render_to_string_with_before_render_filter(options=nil, &block)
-    render_without_before_render_filter(options, &block)
-  ensure
-    erase_render_results
-    forget_variables_added_to_assigns
-    reset_variables_added_to_assigns
   end
 
   private

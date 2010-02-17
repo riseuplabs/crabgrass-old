@@ -19,7 +19,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# desc "Explaining what the task does"
-# task :before_render do
-#   # Task goes here
-# end
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+namespace :before_render do
+  Rake::TestTask.new(:test) do |t|
+    t.ruby_opts << "-r#{RAILS_ROOT}/test/test_helper"
+    t.libs << File.join(File.dirname(__FILE__), '..', 'lib')
+    t.pattern = File.join(File.dirname(__FILE__), '..', 'test/**/*_test.rb')
+    t.verbose = true
+  end
+end

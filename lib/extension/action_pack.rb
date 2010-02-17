@@ -181,7 +181,7 @@ class ActionView::Base
     if Rails::version == "2.1.0"
       truncate_without_compatible_code(text, length, omission)
     else
-      truncate_wihtout_compatible_code(text, options)
+      truncate_without_compatible_code(text, options)
     end
   end
 
