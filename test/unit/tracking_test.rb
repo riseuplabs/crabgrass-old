@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class TrackingTest < ActiveSupport::TestCase
-  # otherwise transactions fail
+  # otherwise transactions fail because UNLOCK TABLES implicitly commits the transaction
   self.use_transactional_fixtures = false
 
   fixtures :users, :groups, :memberships, :relationships, :pages

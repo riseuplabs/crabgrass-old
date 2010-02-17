@@ -63,4 +63,28 @@ module FunctionalTestHelper
     url = ActionController::UrlRewriter.new(@request, nil)
     url.rewrite(options)
   end
+
+  # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
+  def assert_redirected_to_with_partial_hash(options={ }, message=nil)
+    clean_backtrace do
+      assert_response(:redirect, message)
+      return true if options == @response.redirected_to
+
+      if options.is_a?(Hash) && @response.redirected_to.is_a?(Hash)
+        if options.all? { |(key, value)| @response.redirected_to[key] == value }
+          return true
+        end
+      elsif @response.redirected_to.is_a?(String)
+        url = options.kind_of?(Hash) ? url_for(options.merge(:only_path => true)) : options
+        assert_equal url, @response.redirected_to[0..(url.size - 1)], (message || "Excpected response to be redirected to a url beginning with <#{url}>, but was a redirect to <#{@response.redirected_to}>")
+      end
+    end
+    assert_redirected_to_without_partial_hash(options, message)
+  end
+
+  def self.included(base)
+    base.instance_eval do
+      alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
+    end
+  end
 end

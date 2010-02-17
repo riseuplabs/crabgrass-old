@@ -92,13 +92,13 @@ class Admin::AnnouncementsControllerTest < ActionController::TestCase
 
   def assert_must_login(message="")
     get :index
-    assert_login_required(message)
+    assert_login_required
     get :new
-    assert_login_required(message)
+    assert_login_required
     post :update
-    assert_login_required(message)
+    assert_login_required
     get :destroy, :id => 260
-    assert_login_required(message)
+    assert_login_required
   end
 
 end

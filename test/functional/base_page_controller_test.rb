@@ -6,10 +6,10 @@ class BasePageControllerTest < ActionController::TestCase
   def test_create_without_login
     get :create, :id => WikiPage.param_id
     assert_response :redirect
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'login', :redirect => '/base_page/create/wiki'
 
     post :create, :id => WikiPage.param_id
-    assert_redirected_to :controller => 'account', :action => 'login'
+    assert_redirected_to :controller => 'account', :action => 'login', :redirect => '/base_page/create/wiki'
   end
 
   def test_create_with_login

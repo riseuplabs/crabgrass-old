@@ -37,8 +37,9 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
 
     assert_no_difference 'Post.count', '+0 post' do
       assert_no_difference 'MessageWallActivity.count', '+0 activity' do
-        post :create, :post => {:body => 'h1. *hi*'}, :person_id => 'blue'
-        assert_permission_denied
+        assert_permission_denied do
+          post :create, :post => {:body => 'h1. *hi*'}, :person_id => 'blue'
+        end
       end
     end
   end

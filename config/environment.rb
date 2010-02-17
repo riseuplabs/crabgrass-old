@@ -54,6 +54,17 @@ end
 #  attr_accessor :action_web_service
 #end
 
+gem 'actionpack', "=#{RAILS_GEM_VERSION}"
+require 'action_view'
+# enable trim-mode (as config.action_view.erb_trim_mode= is broken, see below)
+# this is required to run *before* the initializer block because afterwards the class is frozen.
+class ActionView::TemplateHandlers::ERB
+  def erb_trim_mode
+    '%-'
+  end
+end
+
+
 Rails::Initializer.run do |config|
   ###
   ### (2) CONFIG BLOCK
@@ -123,8 +134,8 @@ Rails::Initializer.run do |config|
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
   #
-  # FIXME: Uncommented for Rails 2.3 (Reason: can't modify frozen class/module)
-#  config.action_view.erb_trim_mode = '%-'
+  # FIXME: this is broken in Rails 2.3 (https://rails.lighthouseapp.com/projects/8994/tickets/2553-actionviewtemplatehandlerserberb_trim_mode-broken)
+  #config.action_view.erb_trim_mode = '%-'
 
   # See Rails::Configuration for more options
 

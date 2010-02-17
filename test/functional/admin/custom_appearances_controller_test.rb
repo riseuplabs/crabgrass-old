@@ -54,7 +54,7 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
     assert_equal({}, appearance.parameters)
     assert_response :redirect
     # FIXME: check if this is right -- wr
-    assert_redirected_to :controller => 'admin/custom_appearances', :action => 'edit'
+    assert_redirected_to :controller => 'admin/custom_appearances', :action => 'edit', :tab => 'masthead'
     post :update, :id => @current_site.custom_appearance.id,
       :custom_appearance => {:parameters => {:bla=>""}}
     assert_not_nil appearance=assigns(:appearance)
@@ -77,15 +77,19 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
     # Currently this assertion crashes for no_site and it gives a
     # irritating error message.
     # this should be prohibided by permissions if we have no site instead.
-    get :new
-    assert_permission_denied
+    assert_permission_denied do
+      get :new
+    end
     init_custom_appearance
-    get :edit, :id => @current_site.custom_appearance.id
-    assert_permission_denied
-    post :update, :id => @current_site.custom_appearance.id
-    assert_permission_denied
-    get :available, :id => @current_site.custom_appearance.id
-    assert_permission_denied
+    assert_permission_denied do
+      get :edit, :id => @current_site.custom_appearance.id
+    end
+    assert_permission_denied do
+      post :update, :id => @current_site.custom_appearance.id
+    end
+    assert_permission_denied do
+      get :available, :id => @current_site.custom_appearance.id
+    end
   end
 
   def init_custom_appearance()
