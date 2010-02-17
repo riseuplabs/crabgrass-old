@@ -1,5 +1,14 @@
 / see permissions_helper for the source of this data
 %div.debug(style="text-align: left; margin-left:1em")
+
+  %h3 Become user
+  - form_tag(debug_become_path) do
+    %label Login
+    = text_field_tag('id')
+    = hidden_field_tag('url', request.path)
+    = submit_tag("Become")
+  %br/
+
   %h3 Params
   = params.to_json
   %br/
