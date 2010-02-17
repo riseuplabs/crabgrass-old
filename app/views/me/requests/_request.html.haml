@@ -1,6 +1,9 @@
 %tr
   %td.check
-    = check_box_tag 'requests[]', request.id, false, :id =>"request_checkbox_#{request.id}", :class => 'request_check'
+    - if @not_checkeable
+      = ' ' 
+    - else 
+      = check_box_tag 'requests[]', request.id, false, :id =>"request_checkbox_#{request.id}", :class => 'request_check'
   %td= link_to avatar_for(request.created_by, 'xsmall'), url_for_entity(request.created_by)
   %td= expand_links(request.description)
   %td

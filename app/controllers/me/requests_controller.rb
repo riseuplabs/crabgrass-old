@@ -22,11 +22,13 @@ class Me::RequestsController < Me::BaseController
 
   def approved
     @requests = Request.having_state(:approved).send(view_filter, current_user).paginate(page_params)
+    @not_checkeable = true
     render :action => :index
   end
 
   def rejected
     @requests = Request.having_state(:rejected).send(view_filter, current_user).paginate(page_params)
+    @not_checkeable = true
     render :action => :index
   end
 
