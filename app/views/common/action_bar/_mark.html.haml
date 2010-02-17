@@ -1,0 +1,8 @@
+%div#mark-as-bar.left
+  %h4.left= I18n.t(:mark_as_label)
+
+  %ul
+    - settings[:mark].try.each_with_index do |mark, index|
+      %li
+        - caption = I18n.t(mark[:translation]).capitalize
+        = link_to_function caption, action_bar_submit_mark_function(mark[:name]), :class => "#{ index == 0 ? 'first' : '' }"
