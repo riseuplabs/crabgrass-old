@@ -60,9 +60,8 @@ module TaskListPageHelper
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
   def task_link_to_people(task)
     links = task.users.collect{|user|
-      user == current_user ? link_to(current_user.login, {:controller => 'me/tasks', :action => nil, :id => nil}, :class => 'hov') : link_to_user(user, :action => 'tasks', :class => 'hov')
+      link_to_user(user, :action => 'tasks', :class => 'hov')
     }.join(', ')
-    #links.any? ? links+': ' : ''
   end
 
   # a button to hide the task detail

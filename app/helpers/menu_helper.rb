@@ -39,12 +39,11 @@ module MenuHelper
   ## MENUS
   ##
   def menu(label, url, options={})
-    active = options.has_key?(:active) ? options[:active] : (url_for(url) =~ /#{request.path}/i)
+    active = options.has_key?(:active) ? options.delete(:active) : (url_for(url) =~ /#{request.path}/i)
     selected_class = active ? (options[:selected_class] || 'current') : ''
+    li_options = options.merge({:class => [options.delete(:class), selected_class].join(' ')})
     content_tag(:li,
-      link_to(label, url, options),
-      options.merge(
-        { :class => [options[:class], selected_class].join(' ')})
+      link_to(label, url, options), li_options
     )
   end
 

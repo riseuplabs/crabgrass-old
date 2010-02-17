@@ -660,6 +660,7 @@ en:
   organizational_role: organizational role
   descriptions: Descriptions
   add_description: Add Description
+  phone_number: Phone Number
   phone_numbers: Phone Numbers
   add_phone_number: Add Phone Number
   email_addresses: Email Addresses
@@ -1694,6 +1695,11 @@ en:
   signup_mode_closed_description: "Signup is closed."
   signup_mode_invite_only_description: "Signup is allowed by invitation only."
   signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
+
+  sign_up_settings: "Sign Up Settings"
+  profile_settings: "Profile Settings"
+  email_blasts: "Email Blasts"
+  
 
   # custom appearances
 
