@@ -3,13 +3,19 @@ module FunctionalTestHelper
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
   def assert_permission_denied(failure_message='missing "permission denied" message')
-    if flash[:type]
-      assert_equal 'error', flash[:type], failure_message
-      assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
-      assert_response :redirect
-      assert_redirected_to :controller => :account, :action => :login
+    if block_given?
+      assert_raise PermissionDenied, failure_message do
+        yield
+      end
     else
-      assert_select "div#main-content-full blockquote", "Sorry. You do not have the ability to perform that action.", failure_message
+      if flash[:type]
+        assert_equal 'error', flash[:type], failure_message
+        assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
+        assert_response :redirect
+        assert_redirected_to :controller => :account, :action => :login
+      else
+        assert_select "div#main-content-full blockquote", "Sorry. You do not have the ability to perform that action.", failure_message
+      end
     end
   end
 
