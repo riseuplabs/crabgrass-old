@@ -5,6 +5,10 @@ Given /^#{capture_model} (?:has|have) proposed to destroy #{capture_model}$/ do 
   RequestToDestroyOurGroup.create! :created_by => user, :recipient => group
 end
 
+Given /^#{capture_model} requests? #{capture_model} to be friends$/ do |user1, user2|
+  RequestToFriend.create! :created_by => model(user1), :recipient => model(user2)
+end
+
 When /^I wait 1 month$/ do
   assert $browser.nil?, "Can not stub Time.now with browser javascript tests because the server is a separate process"
 

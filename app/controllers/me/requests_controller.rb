@@ -33,7 +33,7 @@ class Me::RequestsController < Me::BaseController
   def mark
     mark_as = params[:as].to_sym
     # load requests to mark
-    requests = params[:requests].blank? ? [] : Request.having_state(:pending).to_user(current_user).find(params[:requests])
+    requests = params[:requests].blank? ? [] : Request.having_state(:pending).to_or_created_by_user(current_user).find(params[:requests])
     requests.each do |request|
       request.mark!(mark_as, current_user)
     end

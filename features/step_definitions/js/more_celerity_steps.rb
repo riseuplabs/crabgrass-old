@@ -1,3 +1,8 @@
+# find nearest checkbox for element with id
+def find_nearest_chebox(id)
+end
+
+
 When /I select "(.*)" from select list named "(.*)"/ do |value, field|
   $browser.select_list(:name, field).select value
 end
@@ -22,13 +27,19 @@ When /I check the checkbox with id "(.*)"/ do |id|
   $browser.check_box(:id, id).set(true)
 end
 
+When /I check the checkbox for "(.*)"/ do |label|
+  # try different items for label
+  require 'ruby-debug';debugger;1-1
+  field = $browser.text_field(:name, label)
+end
+
 Then /^I should see "([^\"]*)" translated(?: with #{capture_fields})?$/ do |key, fields|
   key=key.gsub(' ','_').to_sym
   substitutions = parse_fields(fields)
   Then "I should see \"#{I18n.t(key, substitutions)}\""
 end
 
-# for debugging 
+# for debugging
 Then /^show me the div with id \"([^\"]+)\"$/ do |id|
   puts "CONTENT FOR div #{id} is:\n----------------"
   puts $browser.div(:id, id).html
