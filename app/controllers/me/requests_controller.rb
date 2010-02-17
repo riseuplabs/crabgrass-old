@@ -16,23 +16,28 @@ class Me::RequestsController < Me::BaseController
 
   # pending requests
   def index
-    # view_filter = :created_by | :to_user
-    @requests = Request.having_state(:pending).send(view_filter, current_user).paginate(page_params)
+    params[:view] ||= "to_me"
+    @requests = Request.having_state(:pending).send(current_view_named_scope, current_user).paginate(page_params)
   end
 
   def approved
-    @requests = Request.having_state(:approved).send(view_filter, current_user).paginate(page_params)
+    params[:view] ||= "all"
     @not_checkeable = true
+
+    @requests = Request.having_state(:approved).send(current_view_named_scope, current_user).paginate(page_params)
     render :action => :index
   end
 
   def rejected
-    @requests = Request.having_state(:rejected).send(view_filter, current_user).paginate(page_params)
+    params[:view] ||= "all"
     @not_checkeable = true
+
+    @requests = Request.having_state(:rejected).send(current_view_named_scope, current_user).paginate(page_params)
     render :action => :index
   end
 
   def mark
+    params[:view] ||= "to_me"
     mark_as = params[:as].to_sym
     # load requests to mark
     requests = params[:requests].blank? ? [] : Request.having_state(:pending).to_or_created_by_user(current_user).find(params[:requests])
@@ -40,18 +45,20 @@ class Me::RequestsController < Me::BaseController
       request.mark!(mark_as, current_user)
     end
 
-    @requests = Request.having_state(:pending).send(view_filter, current_user).paginate(page_params)
+    @requests = Request.having_state(:pending).send(current_view_named_scope, current_user).paginate(page_params)
     render :partial => 'main_content'
   end
 
   protected
 
-  # returns a named scope to view
-  # named scope takes one argument - current_user
-  def view_filter
-    # return :created_by if view is :from_me
-    # return :to_user otherwise (could be :to_me or blank)
-    params[:view].to_sym == :from_me ? :created_by : :to_user
+  # returns a named_scope for Request that takes 1 argument - current_user
+  def current_view_named_scope
+    scopes = {
+      "all" => :to_or_created_by_user,
+      "to_me" => :to_user,
+      "from_me" => :created_by}
+
+    scopes[params[:view]]
   end
 
   def context

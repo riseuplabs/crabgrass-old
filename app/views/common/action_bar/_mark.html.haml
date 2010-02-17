@@ -6,3 +6,4 @@
       %li
         - caption = I18n.t(mark[:translation]).capitalize
         = link_to_function caption, action_bar_submit_mark_function(mark[:name]), :class => "#{ index == 0 ? 'first' : '' }"
+  = spinner('mark_as')

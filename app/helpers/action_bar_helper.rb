@@ -1,5 +1,10 @@
 module ActionBarHelper
 
+  # return params[:view] or the default view (which is the first name in view settings)
+  def action_bar_current_view_name(settings)
+    params[:view].blank? ? settings[:view].try.first.try[:name].to_s : params[:view]
+  end
+
   def action_bar_submit_mark_function(as)
     "$('mark_as').value = '#{as}';$('mark_form').onsubmit()"
   end
@@ -18,8 +23,7 @@ module ActionBarHelper
     end
 
     # the first one in the settings list should be selected if no view param given
-    selected = params[:view].blank? ? settings[:view].try.first.try[:name].to_s : params[:view]
-    options = options_for_select(options_array, selected)
+    options = options_for_select(options_array, action_bar_current_view_name(settings))
     select_tag 'view_filter_select', options
   end
 
@@ -27,21 +31,11 @@ module ActionBarHelper
   # type - controller name symbol like :pages or :messages which determines
   # mark_path - POST form to this url (ex: /messages/mark)
   # settings - hash which describes what actions are available in the action bar
-  # &block - the extra stuff inside the form like a list of items with checkboxes for example
+  # &block - the extra stuff inside the form (see request/_main_content.html.haml for example)
   def action_bar_form(mark_path, settings, &block)
-    data_content = capture(&block)
-
-    # _method hidden field is not needed for the ajax form, but can be used if
-    # form is submitted without ajax
-    form_contents = %Q[
-      #{hidden_field_tag('_method', 'put')}
-      #{hidden_field_tag('as', '', :id => 'mark_as')}
-      #{data_content}
-    ]
-
     form_remote_tag(:url => mark_path, :method => 'put', :update => 'main-content-full',
                     :html => { :id => 'mark_form' }, :loading => show_spinner('mark_as'),
-                    :complete => hide_spinner('mark_as')) {concat(form_contents)}
+                    :complete => hide_spinner('mark_as'), &block)# {concat(form_contents)}
 
   end
 end
