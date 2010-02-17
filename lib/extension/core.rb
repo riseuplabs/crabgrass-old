@@ -129,6 +129,11 @@ class Object
     end
   end
 
+  # TODO: remove in rails 2.3
+  # from file activesupport/lib/active_support/core_ext/blank.rb, line 17
+  def present?
+    !blank?
+  end
 end
 
 class Array
