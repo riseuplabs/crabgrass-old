@@ -2,4 +2,5 @@
   = render :partial => 'pages/tabs'
 = render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_base_path => my_work_me_pages_path}
 - action_bar_form(mark_me_pages_path, action_bar_settings) do
+  = render :partial => 'common/action_bar/hidden_form_fields', :locals => {:settings => action_bar_settings}
   = render :partial => 'pages/list', :locals => {:layout => '/pages/notice', :full_width => true}
