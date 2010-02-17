@@ -26,10 +26,9 @@ module ActionBarHelper
   # return a form that contains a generated action bar and other content defined by user
   # type - controller name symbol like :pages or :messages which determines
   # mark_path - POST form to this url (ex: /messages/mark)
-  # view_path - GET from this url when view dropdown changes (ex: /messages)
   # settings - hash which describes what actions are available in the action bar
   # &block - the extra stuff inside the form like a list of items with checkboxes for example
-  def action_bar_form(mark_path, view_path, settings, &block)
+  def action_bar_form(mark_path, settings, &block)
     data_content = capture(&block)
 
     # _method hidden field is not needed for the ajax form, but can be used if
