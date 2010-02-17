@@ -26,4 +26,38 @@
     padding: 0 1em 1em 0
     vertical-align: top
 
+//
+// sidebar
+//
+ul.icon_boxes
+  +zero
+  list-style: none
+  & li
+    float: left
+    height: 32px
+    width: 32px
+    z-index: auto
+    margin: 5px 4px 0 0
+    & span
+      display: none
+      padding: 1em
+      background-color: black
+      color: white
+      font-weight: bold
+      z-index: 10
+      position: absolute
+      top: 4px
+      left: 0
+    & div
+      position: relative
+    &:hover span
+      display: inline
+    & a
+      display: block
+
+.dash_box
+  float: left
+  margin: 0 2em 1.5em 0
+  .dash_box div.link_line
+    line-height: 0.8em
 
