@@ -116,7 +116,6 @@ form.mini_search table {
   </div>
 <% end %>
 
-<% @title_box = capture do %>
 <table>
 <tr>
   <td>
@@ -127,12 +126,14 @@ form.mini_search table {
   </td>
 </tr>
 </table>
+
+<h3>
+  <span class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></span>
+</h3>
+
 <ul class="navbar">
   <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
 </ul>
-&nbsp;<%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %>
-<% end %>
-
 
 <%- if @announcements.any? %>
   <div class='section'>
