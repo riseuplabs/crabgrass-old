@@ -20,6 +20,7 @@ enabled_languages:
   - ar
 enabled_mods:
   - super_admin
+  - moderation
 enabled_tools:
   - asset_tool
   - core_tools
@@ -50,6 +51,7 @@ email:
 sites:
   - name: site1 
     admin_group: rainbow 
+    moderation_group: rainbow
 #  - name: red
 #    admin_group: redadmins
 

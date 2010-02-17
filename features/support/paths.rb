@@ -68,6 +68,9 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
       path_to_pickle $1, :extra => $2                               #  or the forum's edit page
 
+    when /^requests (from me|to me) page$/
+      view = $1.downcase.gsub(' ','_')
+      "/me/requests?view=#{view}"
     ## OTHER PATHS
     when /^the (.+?) page$/                                         # translate to named route
       send "#{$1.downcase.gsub(' ','_')}_path"

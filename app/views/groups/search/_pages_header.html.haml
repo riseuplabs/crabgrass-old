@@ -10,7 +10,5 @@
     %a.right{:href => "#{url_for(group_search_url(:action => 'trash'))}"}
       = I18n.t(:trash)
 
-  = render :partial => 'pages/search'
-
 %div.right
   = drop_down("View:", group_pages_view_options, group_pages_view_selected)

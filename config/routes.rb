@@ -163,6 +163,12 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
 
 
+  if RAILS_ENV == "development"
+    ## DEBUG ROUTE
+    map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
+  end
+
+
   ##
   ## DISPATCHER
   ##

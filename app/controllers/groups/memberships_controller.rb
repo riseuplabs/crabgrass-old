@@ -37,6 +37,7 @@ class Groups::MembershipsController < Groups::BaseController
 
   # leave this group
   def leave
+    @no_leave_group_link = true
     return unless request.post? # show form on get
 
     @group.remove_user!(current_user)

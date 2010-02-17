@@ -20,6 +20,8 @@ module TabBarHelper
     uppercase = options.delete :upcase
     if options.empty? and respond_to?(named_path)
       target = send named_path
+    elsif options[:target]
+      target = options[:target]
     else
       target = options
     end

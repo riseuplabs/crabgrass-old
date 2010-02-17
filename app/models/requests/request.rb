@@ -66,6 +66,14 @@ class Request < ActiveRecord::Base
     # you only get to approve group requests for groups that you are an admin for
     {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
   }
+
+  named_scope :to_or_created_by_user, lambda { |user|
+    # you only get to approve group requests for groups that you are an admin for
+    {:conditions => [
+      "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
+      user.id, user.admin_for_group_ids, user.id]}
+  }
+
   named_scope :to_group, lambda { |group|
     {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, 'Group']}
   }

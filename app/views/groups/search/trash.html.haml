@@ -7,8 +7,6 @@
 %p
   = I18n.t(:trash_description, :undelete => content_tag(:b, I18n.t(:undelete_from_trash)), :destroy => content_tag(:b, I18n.t(:destroy_page_via_shred)))
 
-= render :partial => 'pages/search', :locals => {:users => @visible_users}
-
 - form_tag({:controller => 'group', :action => 'update_trash', :path => params[:path], :id => @group}, {:id => 'trash_form'}) do
 
   %p

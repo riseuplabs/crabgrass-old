@@ -1,14 +1,20 @@
-%tr
-  %td.post-author
-    %a{:href => "#"}
-      %img.right{:src=> avatar_url_for(post.user, 'small')}
-    = call_hook :author_info, {:post => post}
-    = link_to_user post.user
+- color = cycle('shade-odd', 'shade-even')
+
+%tbody{:id=>post.dom_id}
+  %tr{:class=>"post-spacer-top #{color}"}
+    %td{:colspan => 2}
+      %a{:name=>post.dom_id}= '&nbsp;' 
+
+  %tr{:class => "post #{color}"}
+    %td.post-author
+      %a{:href => "#"}
+        %img.right{:src=> avatar_url_for(post.user, 'small')}
+      = call_hook :author_info, {:post => post}
+      = link_to_user post.user
     
-    %span= created_modified_date(post.created_at, post.updated_at)
-    
-  %td
-    = render :partial => 'posts/post_body', :locals => {:post => post}
-  %td
-    
+      %span= created_modified_date(post.created_at, post.updated_at)
+    %td{:class => 'post-body', :id=> "post-body-#{post.id}"}
+      = render :partial => 'posts/post_body', :locals => {:post => post}
+  %tr{:class => "post-spacer-bottom #{color}"}
+    %td{:colspan => 2}= '&nbsp;'
 

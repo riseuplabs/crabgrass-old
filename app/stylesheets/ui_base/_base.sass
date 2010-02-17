@@ -762,24 +762,41 @@ table#activity
       font-size: 10px
 
 table#messages
-  +full-width
+  table-layout: fixed
+  width: 764px
   tr
     td
       +bordered-btm(!light_grey_border)
-      padding: 6px
+      padding: 12px 6px
     td.reply
   tr.unread
     td
       font-weight: bold
   tr
+    td.check
+      width: 36px
+    td.reply
+      width: 30px
+    td.avatar
+      width: 150px
+    td.message
+      width: px
     td.date
       font-size: 10px
+      width: 80px
 
 table#messages.thread
+  margin: 12px 0
   tr
-    td
-      padding: 6px
-
+    td.avatar
+      width: 60px
+    td.name
+      width: 160px
+      a.name_icon
+        padding-right: 10px
+    td.date
+      font-size: 10px
+      width: 80px
 
 #tag-cloud
   text-align: center
