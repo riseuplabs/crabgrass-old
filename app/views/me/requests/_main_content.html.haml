@@ -1,4 +1,4 @@
-= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_base_path => requests_path}
+= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_base_path => action_bar_view_base_path}
 
 - action_bar_form(mark_requests_path, action_bar_settings) do
   %div
