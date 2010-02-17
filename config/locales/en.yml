@@ -1695,6 +1695,11 @@ en:
   signup_mode_invite_only_description: "Signup is allowed by invitation only."
   signup_mode_verify_email_description: "Anyone can join, but they have to provide a real email address and respond to a verification email."
 
+  sign_up_settings: "Sign Up Settings"
+  profile_settings: "Profile Settings"
+  email_blasts: "Email Blasts"
+  
+
   # custom appearances
 
   succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"
