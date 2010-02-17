@@ -2,7 +2,7 @@
   - unless profile.notes.empty?
     - profile.notes.each do |note|
       %h4
-        = note.note_type ? I18n.t(note.note_type.to_sym) : I18n.t(:about_me)
+        = note.note_type ? I18n.t(note.note_type.downcase.to_sym) : I18n.t(:about_me)
       %p 
         = h(note.body)
 
@@ -20,7 +20,7 @@
       - profile.phone_numbers.each do |phone_number|
         %li.small_icon.mobile_16 
           %i 
-            = "#{ I18n.t(:phone_number) } (#{ h(I18n.t(phone_number.phone_number_type.to_sym)) })"
+            = "#{ I18n.t(:phone_number) } (#{ h(I18n.t(phone_number.phone_number_type.downcase.to_sym)) })"
           = h(phone_number.phone_number)
 
     / Emails
@@ -28,7 +28,7 @@
       - profile.email_addresses.each do |email_address|
         %li.small_icon.page_message_16 
           %i 
-            = h(I18n.t(email_address.email_type.to_sym))
+            = h(I18n.t(email_address.email_type.downcase.to_sym))
           = h(email_address.email_address)
 
     / Messaging
