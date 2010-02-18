@@ -19,8 +19,6 @@ class Me::TrashController < Me::BaseController
     full_url = url_for(:controller => '/me/pages/trash', :action => 'search', :path => @path)
 
     @pages = Page.paginate_by_path(@path.merge(:admin => current_user.id), options_for_me(:page => params[:page], :flow => :deleted))
-    @columns = [:admin_checkbox, :icon, :title, :owner, :deleted_by, :deleted_at, :contributors_count]
-
     @second_nav = 'pages'
     handle_rss(
       :link => full_url,

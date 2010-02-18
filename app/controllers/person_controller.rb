@@ -29,7 +29,6 @@ class PersonController < ApplicationController
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
     params[:path] += ['limit','30', 'contributed_by', @user.id]
 
-    @columns = [:stars, :owner_with_icon, :icon, :title, :last_updated]
     options = options_for_user(@user, :page => params[:page])
     @pages = Page.find_by_path params[:path], options
     if logged_in? and @user.may_show_status_to?(current_user)
@@ -46,7 +45,6 @@ class PersonController < ApplicationController
     else
       @path.default_sort('updated_at').merge!(:contributed => @user.id)
       @pages = Page.paginate_by_path(@path, options_for_user(@user, :page => params[:page]))
-      @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors]
     end
 
     handle_rss :title => @user.name, :link => url_for_user(@user),

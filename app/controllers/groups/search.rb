@@ -11,12 +11,6 @@ module Groups::Search
     else
       @path.default_sort('updated_at')
       @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
-
-      if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
-        @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
-      else
-        @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
-      end
       hide_users
       search_template('search')
     end
@@ -39,13 +33,6 @@ module Groups::Search
 
       # find pages
       @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
-
-      # set columns
-      if @field == 'created'
-        @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
-      else
-        @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
-      end
     end
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     search_template('archive')
@@ -81,7 +68,6 @@ module Groups::Search
     else
       @path.default_sort('updated_at')
       @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :flow => :deleted))
-      @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
       hide_users
       search_template('trash')
     end
@@ -90,7 +76,6 @@ module Groups::Search
   def discussions
     @path.default_sort('updated_at').merge!(:type => :discussion)
     @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
-    @columns = [:icon, :title, :posts, :contributors, :last_post]
     search_template('discussions')
   end
 
@@ -147,8 +132,6 @@ module Groups::Search
       @visible_users = @group.users # << wasteful, because we don't always show the form
     else
       @visible_users = []
-      @columns.delete(:updated_by)
-      @columns.delete(:created_by)
     end
   end
 end
