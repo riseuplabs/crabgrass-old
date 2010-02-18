@@ -609,8 +609,9 @@ module PageHelper
 
   def owner_image(page)
     return unless page.owner
+    display_name = page.owner.respond_to?(:display_name) ? page.owner.display_name : ""
     link_to "#{avatar_for page.owner, 'small'}",
-      url_for_entity(page.owner),:class=>'imglink'
+      url_for_entity(page.owner), :class => 'imglink', :title => display_name
   end
 
   def page_html_attributes(page)

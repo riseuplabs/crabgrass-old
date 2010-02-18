@@ -338,17 +338,22 @@ module UrlHelper
     style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
+    if label.length > 19
+      options[:title] = label
+      label = truncate(label, :length => 19)
+    end
+    options[:title] ||= ""
     klass = options[:class] || 'name_icon'
     style += " display:block" if options[:block]
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
-      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style, :title => label)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
       url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
-    avatar + link_to(label, path, :class => klass, :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style, :title => options[:title])
   end
 
   # creates a link to a user, with or without the avatar.

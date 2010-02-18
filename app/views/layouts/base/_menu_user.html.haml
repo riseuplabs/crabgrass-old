@@ -3,7 +3,7 @@
     %li.first
       = I18n.t(:group_home_welcome)
 
-      = link_to(current_user.display_name, :controller => '/me', :action => 'edit')
+      = link_to(truncate(current_user.display_name, :length => 25), {:controller => '/me', :action => 'edit'}, :title => current_user.display_name)
 
     %li
       = link_to(I18n.t(:menu_link_logout), :controller => '/account', :action => 'logout')
