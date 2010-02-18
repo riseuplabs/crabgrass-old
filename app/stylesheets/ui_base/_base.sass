@@ -45,7 +45,7 @@
 
 =bordered2-top(!border_color= !warm_grey_border)
   border-top= 1px "double" !border_color
-  
+
 =bordered-left(!border_color= !warm_grey_border)
   border-left= 1px "solid" !border_color
 
@@ -70,7 +70,7 @@
   margin: 0
   padding: 0
   line-height: 1.0
-  
+
 =inline-middle
   display: inline
   vertical-align: middle
@@ -90,7 +90,7 @@
 =full-width
   +columns(14,14)
   width: 764px
-  
+
 =partial-width
   +columns(10,10)
   width: 540px
@@ -152,7 +152,7 @@
   background-position: 0 50%
 
 
-    
+
 /* @group links */
 
 \:focus
@@ -240,11 +240,11 @@ h6
     color= !white_text
     font-size: 11px
     padding: 0
-    
-/* @end */     
- 
-//      
-//title-box-full w/search 
+
+/* @end */
+
+//
+//title-box-full w/search
 //
 
 #title-box-full, #info-box-full
@@ -262,8 +262,8 @@ h6
     input.search-submit
       +inline-middle
       margin-top: -2px
-    
-      
+
+
 #info-box-full
   margin-bottom: 15px
   span
@@ -298,7 +298,7 @@ h6
           +bordered-block(!third_nav_border)
           +spaced
           background= !third_nav_bg
-          height: 20px          
+          height: 20px
           display: block
           float: left
           position: relative
@@ -317,7 +317,7 @@ h6
             font-weight: bold
         li.first
           +bordered(!third_nav_border)
-/* @end */ 
+/* @end */
 
 
 /* groups page feed, me-section page feed, group landing/wiki section */
@@ -707,7 +707,7 @@ nav#nav-full
 
 #sidebar.left
   float: left
-  
+
 #sidebar.no-border
   border: none
 
@@ -779,10 +779,10 @@ nav#tabs
         border-left: 1px solid #ddd
   div.right
     margin-top: -2px
-    h4 
+    h4
       margin-top: 2px
-  
-  
+
+
 table
   tr
     td.date
@@ -816,7 +816,11 @@ table#messages
     td.avatar
       width: 150px
     td.message
+      +hover-link
       width: px
+      &:hover
+        background-color: #ffc
+        cursor: pointer
     td.date
       font-size: 10px
       width: 80px
@@ -860,7 +864,7 @@ table#messages.thread
     h2
       +partial-width
       clear: both
-      
+
 /* footer */
 
 footer.page
@@ -980,7 +984,7 @@ img
   .right
     +columns(5,10)
     +omega(10)
-    +clearfix 
+    +clearfix
   ul
     a
       +hover-link
@@ -993,8 +997,8 @@ img
       label.date
         font-size: 9px
         color= !lighter_grey_text
-        
-        
+
+
 #announcements
   +columns(10,10)
   margin: 24px 0 0
@@ -1020,13 +1024,13 @@ img
     margin: 0
     .pagination
       float: right
-      
-      
-#info-box 
+
+
+#info-box
   +columns(10,10)
   +clearfix
   padding: 0 0 8px
-  width: 540px 
+  width: 540px
   #say-box
     +columns(10,10)
     +clearfix
