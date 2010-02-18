@@ -15,9 +15,9 @@ class MeControllerTest < ActionController::TestCase
   end
 
   def test_show_me_not_logged_in
-    get :show
-    assert_response :redirect, "shouldn't reach index if not logged in"
-    assert_redirected_to({:controller => 'account', :action => 'login'}, "should redirect to account/login")
+    assert_login_required do 
+      get :show
+    end
   end
 
   def test_show_me

@@ -4,26 +4,33 @@ module FunctionalTestHelper
   # when permission is denied. but this should be improved.
   def assert_permission_denied(failure_message='missing "permission denied" message')
     if block_given?
-      assert_raise PermissionDenied, failure_message do
+      begin
         yield
+      rescue PermissionDenied
+        return true
       end
+    end
+    if flash[:type]
+      assert_equal 'error', flash[:type], failure_message
+      assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
+      assert_response :redirect
+      assert_redirected_to :controller => :account, :action => :login
     else
-      if flash[:type]
-        assert_equal 'error', flash[:type], failure_message
-        assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
-        assert_response :redirect
-        assert_redirected_to :controller => :account, :action => :login
-      else
-        assert_select "div#main-content-full blockquote", "Sorry. You do not have the ability to perform that action.", failure_message
-      end
+      assert_select "div#main-content-full blockquote", "Sorry. You do not have the ability to perform that action.", failure_message
     end
   end
 
   def assert_login_required(message='missing "login required" message')
-    assert_equal 'info', flash[:type], message
-    assert_equal 'Login Required', flash[:title], message
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    if block_given?
+      assert_raise PermissionDenied, message do
+        yield
+      end
+    else
+      assert_equal 'info', flash[:type], message
+      assert_equal 'Login Required', flash[:title], message
+      assert_response :redirect
+      assert_redirected_to url_for(:controller => '/account', :action => :login, :only_path => true)
+    end
   end
 
   def assert_error_message(regexp=nil)
@@ -70,13 +77,13 @@ module FunctionalTestHelper
       assert_response(:redirect, message)
       return true if options == @response.redirected_to
 
-      if options.is_a?(Hash) && @response.redirected_to.is_a?(Hash)
-        if options.all? { |(key, value)| @response.redirected_to[key] == value }
-          return true
-        end
-      elsif @response.redirected_to.is_a?(String)
-        url = options.kind_of?(Hash) ? url_for(options.merge(:only_path => true)) : options
-        assert_equal url, @response.redirected_to[0..(url.size - 1)], (message || "Excpected response to be redirected to a url beginning with <#{url}>, but was a redirect to <#{@response.redirected_to}>")
+      if @response.redirected_to.is_a?(Hash) && options.all? { |(key, value)| @response.redirected_to[key].to_s == value.to_s }
+        return true
+      elsif options.is_a?(String) || @response.redirected_to.is_a?(String)
+        url = @response.redirected_to.kind_of?(Hash) ? url_for(@response.redirected_to.merge(:only_path => true)) : @response.redirected_to
+        options_url = options.kind_of?(Hash) ? url_for(options.merge(:only_path => (url =~ /^http:/ ? false : true))) : options
+        assert_equal options_url, url[0..(options_url.size - 1)], (message || "Excpected response to be redirected to a url beginning with <#{options_url}>, but was a redirect to <#{url}>")
+        return true
       end
     end
     assert_redirected_to_without_partial_hash(options, message)

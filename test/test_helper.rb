@@ -1,3 +1,4 @@
+
 require 'rubygems'
 
 gem 'mocha'
@@ -32,6 +33,8 @@ require 'shoulda/rails'
 # require all helpers
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
+include ActionController::Assertions::ResponseAssertions
+ActionController::TestCase.send(:include, FunctionalTestHelper) unless ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
 class ActiveSupport::TestCase
   setup { Sham.reset }

@@ -53,7 +53,7 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   def test_join_not_logged_in
     get :create_join, :id => groups(:rainbow).to_param
     assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login, :redirect => '/groups/requests/create_join/rainbow'
+    assert_redirected_to :controller => '/account', :action => :login, :redirect => '/groups/requests/create_join/rainbow'
   end
 
   def test_join_logged_in

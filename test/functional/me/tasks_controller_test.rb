@@ -17,8 +17,9 @@ class MeTasksControllerTest < ActionController::TestCase
 
   def test_login_required
     [:pending, :completed].each do |action|
-      get action
-      assert_redirected_to :controller => 'account', :action => 'login'
+      assert_login_required do 
+         get action
+      end
     end
   end
 

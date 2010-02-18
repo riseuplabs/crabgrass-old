@@ -47,8 +47,9 @@ ActiveRecord::Base.class_eval do
 
   # make sanitize_sql public so we can use it ourselves
   def self.quote_sql(condition)
-    sanitize_sql(condition)
+    sanitize_sql_array(condition)
   end
+  
   def quote_sql(condition)
     self.class.quote_sql(condition)
   end

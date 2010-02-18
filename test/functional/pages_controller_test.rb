@@ -54,9 +54,9 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   def test_index_without_logging_in
-    get :index
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    assert_login_required do 
+       get :index
+    end
   end
 
 
