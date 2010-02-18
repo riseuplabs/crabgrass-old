@@ -9,7 +9,7 @@ class Me::MessagesController < Me::BaseController
   helper 'autocomplete', 'javascript', 'action_bar'
 
   before_filter :login_required
-  before_filter :fetch_from_user, :only => :index
+  before_filter :fetch_from_user, :only => [:index, :mark]
   before_filter :fetch_discussion, :only => [:show, :next, :previous]
   before_filter :fetch_recipient, :only => :show
 
@@ -18,7 +18,8 @@ class Me::MessagesController < Me::BaseController
 
   # GET /messages
   def index
-    @discussions = current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(page_params)
+    params[:view] ||= 'all'
+    @discussions = find_index_discussions
 
     # used by the new message ajax partial
     @discussion = current_user.discussions.build
@@ -27,6 +28,7 @@ class Me::MessagesController < Me::BaseController
 
   # PUT /messages/mark
   def mark
+    params[:view] ||= 'all'
     mark_as = params[:as].to_sym
     # load several discusssions
     selected_discussions = params[:messages].blank? ? [] : current_user.discussions.find(params[:messages])
@@ -34,7 +36,7 @@ class Me::MessagesController < Me::BaseController
       discussion.mark!(mark_as, current_user)
     end
 
-    @discussions = current_user.discussions.with_some_posts.paginate(page_params)
+    @discussions = find_index_discussions
     render :partial => 'messages_main_content'
   end
 
@@ -52,7 +54,6 @@ class Me::MessagesController < Me::BaseController
     end
 
     # not so RESTful modifying the record on a GET request
-
     @discussion.mark!(:read, current_user)
     @posts = @discussion.posts.paginate(page_params(default_page, 10))
     @active_tab=:people
@@ -73,8 +74,8 @@ class Me::MessagesController < Me::BaseController
   protected
 
   def view_filter
-    # view only :all or :unread messages
-    params[:view].blank? ? :all : params[:view].to_sym
+    # view :all or :unread messages
+    params[:view].to_sym
   end
 
   def redirect_to_message(recipient)
@@ -94,6 +95,11 @@ class Me::MessagesController < Me::BaseController
       add_context(I18n.t(:messages), messages_url)
       add_context(h(@recipient.display_name), message_path(@recipient))
     end
+  end
+
+  # load discussions based on view filters
+  def find_index_discussions
+    current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(page_params)
   end
 
   # trying to do discussion.save! has raised RecordInvalid
