@@ -186,5 +186,4 @@ class ActionView::Base
   end
 
   alias_method_chain :truncate, :compatible_code
-
 end

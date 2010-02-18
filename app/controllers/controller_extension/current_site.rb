@@ -1,4 +1,5 @@
-module ControllerExtension::CurrentSite
+module ControllerExtension
+  module CurrentSite
 
   def self.included(base)
     base.class_eval do
@@ -39,3 +40,4 @@ module ControllerExtension::CurrentSite
 
 end
 
+end
