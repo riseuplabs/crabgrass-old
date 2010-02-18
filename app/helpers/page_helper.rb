@@ -558,24 +558,22 @@ module PageHelper
   end
 
   def create_page_link(group=nil, options={})
-    if may_create_group_page?
-      url = new_me_page_url
-      if group
-        url = new_group_page_url(group)
-      end
-      icon = 'cross'
-      text = I18n.t(:contribute_content_link).upcase
-      klass = options[:class] || 'contribute'
-
-      content_tag(:div,
-        content_tag(:span,
-            link_to(text, url ),
-          :class => "small_icon #{icon}_20"),
-        :class => klass, :id => 'contribute'
-      )
+    if group
+      url = new_group_page_url(group) if may_create_group_page?
     else
-      ""
+      url = new_me_page_url if may_create_pages?
     end
+    return unless url
+    icon = 'cross'
+    text = I18n.t(:contribute_content_link).upcase
+    klass = options[:class] || 'contribute'
+
+    content_tag(:div,
+      content_tag(:span,
+          link_to(text, url ),
+        :class => "small_icon #{icon}_20"),
+      :class => klass, :id => 'contribute'
+    )
   end
 
   #  group -- what group we are creating the page for
