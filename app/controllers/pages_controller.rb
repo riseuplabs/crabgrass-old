@@ -74,6 +74,7 @@ class PagesController < ApplicationController
   end
 
   def all
+    params[:view] ||= 'public'
     @path.default_sort('updated_at')
     fetch_pages_for @path
     rss_for_collection(all_me_pages_path, :all_pages_tab)
@@ -93,15 +94,9 @@ class PagesController < ApplicationController
     params[:view] ||= 'work'
     path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
     fetch_pages_for path
-    render :action => :my_work, :layout => false
+    render :partial => '/pages/content', :locals => {:view_base_path => view_path_from_referer}
   end
 
-
-  def notification
-    path = parse_filter_path("/notified/#{current_user.id}")
-    fetch_pages_for path
-    rss_for_collection(notification_me_pages_path, :notification_tab)
-  end
 
   protected
 
@@ -151,4 +146,13 @@ class PagesController < ApplicationController
       :image => avatar_url(:id => @user.try.avatar_id||0, :size => 'huge')
     )
   end
+
+  def view_path_from_referer
+    case referer
+    when /me\/pages\/all/ then all_me_pages_path
+    when /me\/pages\/my_work/ then my_work_me_pages_path
+    else my_work_me_pages_path
+    end
+  end
+
 end
