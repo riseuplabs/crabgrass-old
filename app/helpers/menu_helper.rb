@@ -38,10 +38,24 @@ module MenuHelper
   ##
   ## MENUS
   ##
+  ## use url as a path or as an array of paths, if you provide an array of paths
+  ## the first item will be the destination url, the rest are used to highlight the
+  ## tab if is needed
   def menu(label, url, options={})
-    active = options.has_key?(:active) ? options.delete(:active) : (url_for(url) =~ /#{request.path}/i)
+    active = options.delete(:active) if options.has_key?(:active)
+
+    if url.is_a?(String)
+      active = url_for(url) =~ /#{request.path}/i
+    elsif url.is_a?(Array)
+      active = !(url.select { |path| url_for(path) =~ /#{request.path}/i }).empty?
+      url = url.first
+    else
+      active = false
+    end
+
     selected_class = active ? (options[:selected_class] || 'current') : ''
     li_options = options.merge({:class => [options.delete(:class), selected_class].join(' ')})
+
     content_tag(:li,
       link_to(label, url, options), li_options
     )
