@@ -1094,9 +1094,8 @@ img
 // page sidebar
 //
 #page_sidebar
-  a,
-  a:visited
-    color: #0000cc
+  a
+    +blue-link
   h3
     color: #666666
     border: 1px solid
@@ -1106,6 +1105,10 @@ img
     font-size: 0.8em
     padding: 0.5em 0.75em
     margin: 2.5em 0 0.5em 0
+  h4
+    padding-top: 1em
+  h5
+    padding: 0.4em 0 0.5em
   ul.rule
     border-top: 1px dotted #fff
     padding-top: 0.5em
