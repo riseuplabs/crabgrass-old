@@ -127,7 +127,7 @@ class GroupsControllerTest < ActionController::TestCase
     login_as :red
 
     # show a group you belong to
-    get :show, :id => groups(:rainbow).name
+    get :show, :id => groups(:rainbow).to_param
     assert_response :success
 #    assert_template 'show'
 
@@ -139,13 +139,13 @@ class GroupsControllerTest < ActionController::TestCase
     assert_select "section#identity-name div.left a", "Leave Group"
 
     #show a committee you belong to
-    get :show, :id => groups(:warm).name
+    get :show, :id => groups(:warm).to_param
     assert_response :success
 #    assert_template 'show'
     assert assigns(:group).valid?
 
     # show a public group you don't belong to
-    get :show, :id => groups(:public_group).name
+    get :show, :id => groups(:public_group).to_param
     assert_response :success
 #    assert_template 'show'
 
@@ -159,7 +159,7 @@ class GroupsControllerTest < ActionController::TestCase
     end
 
     # show nothing for a private group you don't belong to
-    get :show, :id => groups(:private_group).name
+    get :show, :id => groups(:private_group).to_param
     assert_response :missing
     assert_template 'dispatch/not_found'
   end
@@ -168,7 +168,7 @@ class GroupsControllerTest < ActionController::TestCase
     login_as :blue
 
     # show a group you belong to
-    get :show, :id => groups(:public_group).name
+    get :show, :id => groups(:public_group).to_param
     assert_response :success
 #    assert_template 'show'
 
@@ -250,7 +250,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     post :search, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
-    assert_redirected_to 'groups/search/rainbow/text/e'
+    assert_redirected_to :controller => :groups, :action => 'search', :path => [['text', 'e']], :id => groups(:rainbow)
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for text"
   end
@@ -281,7 +281,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     post :search, :id => groups(:public_group).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
-    assert_redirected_to "groups/search/#{groups(:public_group).name}/text/e"
+    assert_redirected_to :controller => :groups, :action => 'search', :path => [['text', 'e']], :id => groups(:public_group)
   end
 
   def test_trash
