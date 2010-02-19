@@ -474,16 +474,16 @@ editing tools on a group basis has been abandoned iirc, azul
     login_as :gerrard
 
     assert_no_difference 'Group.count', "need to be only member to destroy a group" do
-      post :destroy, :id => groups(:true_levellers).id
+        delete :destroy, :id => groups(:true_levellers).name
     end
 
     group_name = 'short-lived-group'
     group = Group.create! :name => group_name
-    group.add_user! users(:gerrard)
+    # group.add_user! users(:gerrard)
 
     assert_difference 'Group.count', -1, "should delete newly created group" do
-      post :destroy, :id => group_name
-      assert_redirected_to :controller => 'groups'
+      delete :destroy, :id => group_name
+      assert_redirected_to :controller => 'me'
     end
   end
 
