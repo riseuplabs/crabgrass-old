@@ -24,8 +24,7 @@
   <tr>
     <td></td>
     <td>
-      <%= I18n.t(:share_additional_notification) %>:
-      <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:email) %></label>
+      <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:send_email) %></label>
 <!--
 these are not supported yet.
       <label><%= check_box :notification, :send_sms %> <%= I18n.t(:text_message) %></label>
@@ -37,18 +36,18 @@ these are not supported yet.
     </td>
   </tr>
   <tr>
-    <td><%= check_box :ignored, :include_message, :checked => include_message, :onClick => "checkboxToggle(this, 'share_message_holder');" + resize_modal %></td>
-    <td>
+    <td colspan="2">
       <label for='ignored_include_message'>
         <%= I18n.t(:share_include_message) %>
       </label>
     </td>
   </tr>
   <tr>
-    <td></td>
-    <td><div id='share_message_holder' style='<%= "display:none" unless include_message %>'>
-      <%= text_area :notification, :send_message, :rows => 6, :cols => 60 %>
-    </div></td>
+    <td colspan="2">
+      <div id='share_message_holder'>
+        <%= text_area :notification, :send_message, :rows => 6, :cols => 60 %>
+      </div>
+    </td>
   </tr>
   </tbody>
 

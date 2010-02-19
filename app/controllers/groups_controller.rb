@@ -106,7 +106,7 @@ class GroupsController < Groups::BaseController
       return true
     else
       no_context
-      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401), :layout => 'base')
       return false
     end
   end

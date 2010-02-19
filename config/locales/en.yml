@@ -1119,7 +1119,8 @@ en:
 
   send_only_with_encryption: "Send only if encrypted distribution is possible"
   share_additional_notification: "Send additional notification via"
-  share_send_notification: "Send notification to inbox"
+  share_send_notification: "Send notification"
+  send_email: "Send Email"
   share_include_message: "Include a custom message"
 
   share_all_checkbox: "Shared with all users"
