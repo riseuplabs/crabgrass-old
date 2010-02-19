@@ -5,6 +5,10 @@
     %li
       %h3
         = @user.display_name
+%div#login-date
+  %time#last-login
+    = last_login(@user)
+
 %ul.side_list
   %li= friend_link
   
