@@ -349,15 +349,11 @@ div.side_list
   margin-bottom: 0.5em
   clear: both
   width: 100%
-  a, .a
-    text-decoration: none
+  a
+    +blue-link
     display: block
     padding-top: 4px
     padding-bottom: 4px
-    &.active
-    &.visited
-    &:hover
-      text-decoration: underline
   &.commands a
     text-transform: capitalize
   span 
@@ -365,6 +361,9 @@ div.side_list
     &.small_icon
       padding-left: 19px
       background-position: 0 50%
+  li.current a
+    font-weight: bold
+    font-size: 12px
 
 td.left_column
   background-color: !left_column_bg_color
