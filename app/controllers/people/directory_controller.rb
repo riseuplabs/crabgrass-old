@@ -37,6 +37,7 @@ class People::DirectoryController < People::BaseController
     @users = User.peers_of(current_user).on(current_site).alphabetized(@letter_page).paginate :page => params[:page]
      # what letters can be used for pagination
     @pagination_letters = (User.peers_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
+    @second_nav = 'peers'
   end
 
   def browse
