@@ -54,6 +54,9 @@ class MeSearchControllerTest < ActionController::TestCase
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
     assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
+
+    # text "test" inside listings should be surrounded with <span class="search-excerpt"></span>
+    # assert_select "article span.search-excerpt", "test", "should highlight exceprts in markup"
   end
 
 end

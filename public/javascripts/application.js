@@ -296,11 +296,27 @@ var DropMenu = Class.create({
 
 });
 
+var statuspostCounter = Class.create({
+  initialize: function(id) {
+    if (!$(id)) return;
+    this.trigger = $(id);
+    this.textarea = $(id);
+    this.trigger.observe("keydown", this.textLimit.bind(this));
+    this.trigger.observe("keyup", this.textLimit.bind(this));
+  },
+  textLimit: function(event) {
+    if (this.textarea.value.length > 140) {
+       this.textarea.value = this.textarea.value.substring(0, 140);
+    }
+  }
+});
+
 document.observe('dom:loaded', function() {
   new DropMenu("menu_me");
   new DropMenu("menu_people");
   new DropMenu("menu_groups");
   new DropMenu("menu_networks");
+  new statuspostCounter("say_text");
 });
 
 //

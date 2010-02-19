@@ -236,70 +236,70 @@ module PageHelper
   #  page_column(page, :title)
   # this function exists so we can re-arrange the columns easily.
   #
-  def page_list_cell(page, column, participation=nil)
-    if column == :icon
-      page_icon(page)
-    elsif column == :checkbox
-      check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
-    elsif column == :admin_checkbox
-      if current_user.may? :admin, page
-        check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
-      else
-        "&nbsp"
-      end
-    elsif column == :title
-      page_list_title(page, column, participation)
-    elsif column == :updated_by or column == :updated_by_login
-      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
-    elsif column == :created_by or column == :created_by_login
-      page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
-    elsif column == :deleted_by or column == :deleted_by_login
-      page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
-    elsif column == :updated_at
-      friendly_date(page.updated_at)
-    elsif column == :created_at
-      friendly_date(page.created_at)
-    elsif column == :deleted_at
-      friendly_date(page.updated_at)
-    elsif column == :happens_at
-      friendly_date(page.happens_at)
-    elsif column == :contributors_count or column == :contributors
-      page.contributors_count
-    elsif column == :stars_count or column == :stars
-      if page.stars_count > 0
-        content_tag(:span, "%s %s" % [icon_tag('star'), page.stars_count], :class => 'star')
-      else
-        icon_tag('star_empty')
-      end
-    elsif column == :views or column == :views_count
-      page.views_count
-    elsif column == :owner
-      page.owner_name
-    elsif column == :owner_with_icon
-      page_list_owner_with_icon(page)
-    elsif column == :last_updated
-      page_list_updated_or_created(page)
-    elsif column == :contribution
-      page_list_contribution(page)
-    elsif column == :posts
-      page.posts_count
-    elsif column == :last_post
-      if page.discussion
-        content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to(I18n.t(:view_posts_link), page_url(page)+"#posts-#{page.discussion.last_post_id}")]
-      end
-    else
-      page.send(column)
-    end
-  end
+  # def page_list_cell(page, column, participation=nil)
+  #   if column == :icon
+  #     page_icon(page)
+  #   elsif column == :checkbox
+  #     check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+  #   elsif column == :admin_checkbox
+  #     if current_user.may? :admin, page
+  #       check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '')
+  #     else
+  #       "&nbsp"
+  #     end
+  #   elsif column == :title
+  #     page_list_title(page, column, participation)
+  #   elsif column == :updated_by or column == :updated_by_login
+  #     page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
+  #   elsif column == :created_by or column == :created_by_login
+  #     page.created_by_login ? link_to_user(page.created_by_login) : '&nbsp;'
+  #   elsif column == :deleted_by or column == :deleted_by_login
+  #     page.updated_by_login ? link_to_user(page.updated_by_login) : '&nbsp;'
+  #   elsif column == :updated_at
+  #     friendly_date(page.updated_at)
+  #   elsif column == :created_at
+  #     friendly_date(page.created_at)
+  #   elsif column == :deleted_at
+  #     friendly_date(page.updated_at)
+  #   elsif column == :happens_at
+  #     friendly_date(page.happens_at)
+  #   elsif column == :contributors_count or column == :contributors
+  #     page.contributors_count
+  #   elsif column == :stars_count or column == :stars
+  #     if page.stars_count > 0
+  #       content_tag(:span, "%s %s" % [icon_tag('star'), page.stars_count], :class => 'star')
+  #     else
+  #       icon_tag('star_empty')
+  #     end
+  #   elsif column == :views or column == :views_count
+  #     page.views_count
+  #   elsif column == :owner
+  #     page.owner_name
+  #   elsif column == :owner_with_icon
+  #     page_list_owner_with_icon(page)
+  #   elsif column == :last_updated
+  #     page_list_updated_or_created(page)
+  #   elsif column == :contribution
+  #     page_list_contribution(page)
+  #   elsif column == :posts
+  #     page.posts_count
+  #   elsif column == :last_post
+  #     if page.discussion
+  #       content_tag :span, "%s &bull; %s &bull; %s" % [friendly_date(page.discussion.replied_at), link_to_user(page.discussion.replied_by), link_to(I18n.t(:view_posts_link), page_url(page)+"#posts-#{page.discussion.last_post_id}")]
+  #     end
+  #   else
+  #     page.send(column)
+  #   end
+  # end
 
-  def page_list_owner_with_icon(page)
-    return unless page.owner
-    if page.owner_type == "Group"
-      return link_to_group(page.owner, :avatar => 'xsmall')
-    else
-      return link_to_user(page.owner, :avatar => 'xsmall')
-    end
-  end
+  # def page_list_owner_with_icon(page)
+  #   return unless page.owner
+  #   if page.owner_type == "Group"
+  #     return link_to_group(page.owner, :avatar => 'xsmall')
+  #   else
+  #     return link_to_user(page.owner, :avatar => 'xsmall')
+  #   end
+  # end
 
   def page_list_updated_or_created(page, options={})
     options[:type] ||= :twolines
@@ -311,13 +311,13 @@ module PageHelper
     content_tag :span, "%s %s %s &bull; %s" % [username, separator, label, date], :class => 'nowrap'
   end
 
-  def page_list_contribution(page)
-    field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
-    label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
-    username = link_to_user(page.updated_by_login)
-    date     = friendly_date(page.send(field))
-    content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
-  end
+  # def page_list_contribution(page)
+  #   field    = (page.updated_at > page.created_at + 1.minute) ? 'updated_at' : 'created_at'
+  #   label    = field == 'updated_at' ? content_tag(:span, I18n.t(:page_list_heading_updated)) : content_tag(:span, I18n.t(:page_list_heading_new), :class=>'new')
+  #   username = link_to_user(page.updated_by_login)
+  #   date     = friendly_date(page.send(field))
+  #   content_tag :span, "%s <br/> %s &bull; %s" % [username, label, date], :class => 'nowrap'
+  # end
 
   def page_list_title(page, column, participation = nil)
     title = link_to(h(page.title), page_url(page))
@@ -340,86 +340,86 @@ module PageHelper
     end
   end
 
-  def page_list_heading(column, options={})
-    if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
-      "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
-    elsif column == :updated_by or column == :updated_by_login
-      list_heading I18n.t(:page_list_heading_updated_by), 'updated_by_login', options
-    elsif column == :created_by or column == :created_by_login
-      list_heading I18n.t(:page_list_heading_created_by), 'created_by_login', options
-    elsif column == :deleted_by or column == :deleted_by_login
-      list_heading I18n.t(:page_list_heading_deleted_by), 'updated_by_login', options
-    elsif column == :updated_at
-      list_heading I18n.t(:page_list_heading_updated), 'updated_at', options
-    elsif column == :created_at
-      list_heading I18n.t(:page_list_heading_created), 'created_at', options
-    elsif column == :deleted_at
-      list_heading I18n.t(:page_list_heading_deleted), 'updated_at', options
-    elsif column == :posts
-      list_heading I18n.t(:page_list_heading_posts), 'posts_count', options
-    elsif column == :happens_at
-      list_heading I18n.t(:page_list_heading_happens), 'happens_at', options
-    elsif column == :contributors_count or column == :contributors
-      list_heading image_tag('ui/person-dark.png'), 'contributors_count', options
-    elsif column == :last_post
-      list_heading I18n.t(:page_list_heading_last_post), 'updated_at', options
-    elsif column == :stars or column == :stars_count
-      list_heading I18n.t(:page_list_heading_stars), 'stars_count', options
-    elsif column == :views or column == :views_count
-      list_heading I18n.t(:page_list_heading_views), 'views', options
-    elsif column == :owner_with_icon || column == :owner
-      list_heading I18n.t(:page_list_heading_owner), 'owner_name', options
-    elsif column == :last_updated
-      list_heading I18n.t(:page_list_heading_last_updated), 'updated_at', options
-    elsif column == :contribution
-      list_heading I18n.t(:page_list_heading_contribution), 'updated_at', options
-    elsif column
-      list_heading I18n.t(column.to_sym, :default => column.to_s), column.to_s, options
-    end
-  end
+  # def page_list_heading(column, options={})
+  #   if column == :icon or column == :checkbox or column == :admin_checkbox or column == :discuss
+  #     "<th>&nbsp;</th>" # empty <th>s contain an nbsp to prevent collapsing in IE
+  #   elsif column == :updated_by or column == :updated_by_login
+  #     list_heading I18n.t(:page_list_heading_updated_by), 'updated_by_login', options
+  #   elsif column == :created_by or column == :created_by_login
+  #     list_heading I18n.t(:page_list_heading_created_by), 'created_by_login', options
+  #   elsif column == :deleted_by or column == :deleted_by_login
+  #     list_heading I18n.t(:page_list_heading_deleted_by), 'updated_by_login', options
+  #   elsif column == :updated_at
+  #     list_heading I18n.t(:page_list_heading_updated), 'updated_at', options
+  #   elsif column == :created_at
+  #     list_heading I18n.t(:page_list_heading_created), 'created_at', options
+  #   elsif column == :deleted_at
+  #     list_heading I18n.t(:page_list_heading_deleted), 'updated_at', options
+  #   elsif column == :posts
+  #     list_heading I18n.t(:page_list_heading_posts), 'posts_count', options
+  #   elsif column == :happens_at
+  #     list_heading I18n.t(:page_list_heading_happens), 'happens_at', options
+  #   elsif column == :contributors_count or column == :contributors
+  #     list_heading image_tag('ui/person-dark.png'), 'contributors_count', options
+  #   elsif column == :last_post
+  #     list_heading I18n.t(:page_list_heading_last_post), 'updated_at', options
+  #   elsif column == :stars or column == :stars_count
+  #     list_heading I18n.t(:page_list_heading_stars), 'stars_count', options
+  #   elsif column == :views or column == :views_count
+  #     list_heading I18n.t(:page_list_heading_views), 'views', options
+  #   elsif column == :owner_with_icon || column == :owner
+  #     list_heading I18n.t(:page_list_heading_owner), 'owner_name', options
+  #   elsif column == :last_updated
+  #     list_heading I18n.t(:page_list_heading_last_updated), 'updated_at', options
+  #   elsif column == :contribution
+  #     list_heading I18n.t(:page_list_heading_contribution), 'updated_at', options
+  #   elsif column
+  #     list_heading I18n.t(column.to_sym, :default => column.to_s), column.to_s, options
+  #   end
+  # end
 
-  def page_row(page, columns, participation=nil)
-    participation ||= page.flag[:user_participation]
-    unread = (participation && !participation.viewed?)
-    participation ||= page.flag[:group_participation]
-
-    trs = []
-    tds = []
-    tds << content_tag(:td, page_list_cell(page,columns[0], participation), :class=>'first')
-    columns[1..-2].each do |column|
-      tds << content_tag(:td, page_list_cell(page,column, participation))
-    end
-    tds << content_tag(:td, page_list_cell(page,columns[-1], participation), :class=>'last')
-    trs << content_tag(:tr, tds.join("\n"), (unread ? {:class =>  'unread'}:{}))
-
-    if participation and participation.is_a? UserParticipation and participation.notice
-      participation.notice.each do |notice|
-        next unless notice.is_a? Hash
-        trs << page_notice_row(notice, columns.size)
-      end
-    end
-
-    if page.flag[:excerpt]
-      trs << content_tag(:tr, content_tag(:td,'&nbsp;') + content_tag(:td, escape_excerpt(page.flag[:excerpt]), :class => 'excerpt', :colspan=>columns.size))
-    end
-    trs.join("\n")
-  end
+  # def page_row(page, columns, participation=nil)
+  #   participation ||= page.flag[:user_participation]
+  #   unread = (participation && !participation.viewed?)
+  #   participation ||= page.flag[:group_participation]
+  #
+  #   trs = []
+  #   tds = []
+  #   tds << content_tag(:td, page_list_cell(page,columns[0], participation), :class=>'first')
+  #   columns[1..-2].each do |column|
+  #     tds << content_tag(:td, page_list_cell(page,column, participation))
+  #   end
+  #   tds << content_tag(:td, page_list_cell(page,columns[-1], participation), :class=>'last')
+  #   trs << content_tag(:tr, tds.join("\n"), (unread ? {:class =>  'unread'}:{}))
+  #
+  #   if participation and participation.is_a? UserParticipation and participation.notice
+  #     participation.notice.each do |notice|
+  #       next unless notice.is_a? Hash
+  #       trs << page_notice_row(notice, columns.size)
+  #     end
+  #   end
+  #
+  #   if page.flag[:excerpt]
+  #     trs << content_tag(:tr, content_tag(:td,'&nbsp;') + content_tag(:td, escape_excerpt(page.flag[:excerpt]), :class => 'excerpt', :colspan=>columns.size))
+  #   end
+  #   trs.join("\n")
+  # end
 
   # allow bold in the excerpt, but no other html. We use special {bold} for bold.
   def escape_excerpt(str)
     h(str).gsub /\{(\/?)bold\}/, '<\1b>'
   end
 
-  def page_notice_row(notice, column_size)
-    html = "<td class='excerpt', colspan='#{column_size}'>"
-    html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
-    if notice[:message].any?
-      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
-      html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
-    end
-    html += "</td>"
-    content_tag(:tr, html, :class => "page_info")
-  end
+  # def page_notice_row(notice, column_size)
+  #   html = "<td class='excerpt', colspan='#{column_size}'>"
+  #   html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
+  #   if notice[:message].any?
+  #     notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+  #     html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
+  #   end
+  #   html += "</td>"
+  #   content_tag(:tr, html, :class => "page_info")
+  # end
 
   def page_tags(page=@page, join=nil)
     join ||= "\n" if join.nil?
@@ -455,33 +455,33 @@ module PageHelper
   # Sometimes we want to divide a list of time ordered +pages+
   # into several collections by recency.
   #
-  def divide_pages_by_recency(pages)
-    today = []; yesterday = []; week = []; later = [];
-    pages = array_of_pages(pages).dup
-    page = pages.shift
-    while page and after_day_start?(page.updated_at)
-      today << page
-      page = pages.shift
-    end
-    while page and after_yesterday_start?(page.updated_at)
-      yesterday << page
-      page = pages.shift
-    end
-    while page and after_week_start?(page.updated_at)
-      week << page
-      page = pages.shift
-    end
-    # unless today.size + yesterday.size + week.size > 0
-    #   show_time_dividers = false
-    # else
-    while page
-      later << page
-      page = pages.shift
-    end
-    # end
-
-    return today, yesterday, week, later
-  end
+  # def divide_pages_by_recency(pages)
+  #   today = []; yesterday = []; week = []; later = [];
+  #   pages = array_of_pages(pages).dup
+  #   page = pages.shift
+  #   while page and after_day_start?(page.updated_at)
+  #     today << page
+  #     page = pages.shift
+  #   end
+  #   while page and after_yesterday_start?(page.updated_at)
+  #     yesterday << page
+  #     page = pages.shift
+  #   end
+  #   while page and after_week_start?(page.updated_at)
+  #     week << page
+  #     page = pages.shift
+  #   end
+  #   # unless today.size + yesterday.size + week.size > 0
+  #   #   show_time_dividers = false
+  #   # else
+  #   while page
+  #     later << page
+  #     page = pages.shift
+  #   end
+  #   # end
+  #
+  #   return today, yesterday, week, later
+  # end
 
   ##
   ## FORM HELPERS

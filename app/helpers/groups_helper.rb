@@ -33,9 +33,6 @@ module GroupsHelper
   end
 
   def destroy_group_link(group = nil)
-    # disabled until release 0.5.1
-    return ""
-
     group = group.nil? ? @group : group
     if may_destroy_group?
       link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => group.group_type),

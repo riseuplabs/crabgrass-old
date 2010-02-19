@@ -37,11 +37,6 @@ class Me::SearchController < Me::BaseController
       end
     end
 
-    if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
-      @columns = [:icon, :title, :owner, :created_by, :created_at, :contributors_count]
-    else
-      @columns = [:icon, :title, :owner, :updated_by, :updated_at, :contributors_count]
-    end
     full_url = me_url(:action => 'search') + @path
     handle_rss :title => full_url, :link => full_url,
                :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
