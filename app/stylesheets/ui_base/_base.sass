@@ -1160,10 +1160,23 @@ ul.side_list
     background-position: 0 50%
 
 //
-// table superadmin
+// table admin + superadmin
 //
 #admin-content 
   form 
     table tr td, p
-      padding-bottom: 10px
+      padding: 0 4px 10px 0
+    #email-blasts
+      td
+        padding: 10px
+    &.edit_site
+      span.padtop14 
+        +clearfix
+        padding-top: 14px
+        label
+          font-weight: bold
+    i
+      font-size: 10px
+      color= !blue
+        
    

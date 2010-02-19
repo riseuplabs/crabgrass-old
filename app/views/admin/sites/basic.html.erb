@@ -37,8 +37,8 @@
     <%= f.check_box :enforce_ssl %><%= f.label :enforce_ssl, 'Enforce SSL:' %>&nbsp;if checked, cookies will only work over   TLS/SSL
   </span>
   <br />
-  <span>
-    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created (hold CTRL down while clicking to select multiple elements)
+  <span class="padtop14">
+    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created<br/ >(hold CTRL down while clicking to select multiple elements)
     <ul style="list-style-type:none;">
       <li><%= f.select :available_page_types, Conf.available_page_types,{}, :multiple => true %></li>
     </ul>
