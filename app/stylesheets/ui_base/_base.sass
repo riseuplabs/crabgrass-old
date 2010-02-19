@@ -198,11 +198,11 @@ h6
   +full-width
 
 
-
 /* content container */
 #identity-name
   h1
     color= !banner_title
+    width: 500px
     float: left
     display: inline
     line-height: 1.2
@@ -224,22 +224,26 @@ h6
     +hover-link
     +small-text
     color= !light_grey_text
-    padding: 4px 0 0 8px
-#chat
-  margin: 10px 0 2px
-  color= !warm_grey_text
+    padding: 4px 0 0 18px
+    margin-top: 4px
+    font-weight: bold
+
 #contribute
   float: right
   height: 12px
   width: 90px
-  padding: 4px 0 4px 6px
+  padding: 6px 6px 6px 2px
   margin-top: 10px
   background-color: #78be63
   border: 1px solid #448c3b
+  span.small_icon
+    padding: 20px
   a
     color= !white_text
     font-size: 11px
+    font-weight: normal
     padding: 0
+    margin: 0 2px 0 0
 
 /* @end */
 
@@ -342,8 +346,8 @@ h6
     margin: 0
     padding: 10px 0
     .pages-info
-      +columns(8,10)
-      +alpha(10)
+      +columns(8,11)
+      +alpha(11)
       margin: 0
       img
         float: left
@@ -375,6 +379,7 @@ h6
       +omega(10)
       +zero
       +bordered
+      width: 110px
       float: right
       padding: 4px 2px 4px 0
       li
@@ -417,7 +422,7 @@ h6
       +columns(12,14)
       +alpha(14)
       margin: 0
-      width: 83%
+      width: 80%
       img
         float: left
         padding: 0 10px 10px 0
@@ -447,7 +452,7 @@ h6
       +omega(14)
       +zero
       +bordered
-      width: 120px
+      width: 135px
       float: right
       padding: 4px 2px 4px 0
       li
@@ -801,6 +806,7 @@ table#activity
 table#messages
   table-layout: fixed
   width: 764px
+  float: left
   tr
     td
       +bordered-btm(!light_grey_border)
@@ -817,11 +823,13 @@ table#messages
     td.avatar
       width: 150px
     td.message
-      +hover-link
-      width: px
-      &:hover
-        background-color: #ffc
-        cursor: pointer
+      padding: 0
+      margin: 0
+      a
+        display: block
+        padding: 12px 6px
+        &:hover
+          background-color: #ffc
     td.date
       font-size: 10px
       width: 80px
@@ -1081,95 +1089,15 @@ img
       width: 164px
       padding-top: 4px
 
-#identity-meta
-  +columns(4,4)
-  +bordered
-  margin: 20px 0 0 0
-  width: 182px
-  padding: 0 10px 10px
-  font-size: 11px
-  line-height: 1.5
-  h4
-    color= !red
-    padding: 24px 0 8px
-    margin: 0 0 10px
-    +bordered-btm(!medium_grey_border)
-  h4.first
-    padding-top: 20px
-  #about-group, #people, #affiliations, #featured
-    +clearfix
-    width: 184px
-    img
-      background-color: #fc0
-    header
-      +clearfix
-      h3, a
-        display: inline
-      a
-        +blue-link(10px)
-        padding-left: 8px
-        font-weight: normal
-    h4, h5
-      width: 182px
-      +clearfix
-    h5
-      font-weight: normal
-      font-size: 11px
-  #people, #affiliations
-    ul
-      padding: 5px 0 7px
-      +clearfix
-  #about-group
-    p
-      width: 184px
-      a
-        +blue-link(10px)
-    ul#details
-      +clearfix
-      width: 184px
-      li
-        +spaced
-        border: none
-        width: 68px
-        margin: 10px 0 0 0
-        padding: 0 0 0 24px
-        min-height: 24px
-        font-size: 9px
-        line-height: 1
-        color: !medium-grey-text
-        span
-          letter-spacing: normal
-          font-size: 8px
-    #featured
-      li
-        padding: 12px 0 4px
-        margin: 12px 0 0
-        +bordered-top(!light_grey_border)
-        article
-          width: 184px
-          h5
-            color= !blue
-            font-weight: bold
-            font-size: 13px
-            padding: 0 0 10px
-          p
-            padding-bottom: 6px
-          span.tags
-            a
-              +blue-link(10px)
-      li.first
-        +zero
-        border: none
-
 
 //
 // page sidebar
 //
 #page_sidebar
-  & a,
-  & a:visited
+  a,
+  a:visited
     color: #0000cc
-  & h3
+  h3
     color: #666666
     border: 1px solid
     border-color: #eee #bbb #bbb #eee
@@ -1178,21 +1106,21 @@ img
     font-size: 0.8em
     padding: 0.5em 0.75em
     margin: 2.5em 0 0.5em 0
-  & ul.rule
+  ul.rule
     border-top: 1px dotted #fff
     padding-top: 0.5em
     margin-top: 0.5em
-  & ul.names li:first-child
+  ul.names li:first-child
     border-top: 0
-  & ul.names li
+  ul.names li
     padding: 3px 0
     border-top: 1px dotted white
-    & span
+    span
       background-position: 100% 0
       background-repeat: no-repeat
       padding-right: 20px
       margin-right: -20px
-  & input.check
+  input.check
     float: left
     margin: 7px 0 0 -18px
 
@@ -1218,15 +1146,24 @@ ul.side_list
   margin: 0
   list-style: none
   clear: both
-  & ul
+  ul
     list-style: none
     padding-left: 16px
-  & a, & .a
+  a, & .a
     display: block
     padding-top: 4px
     padding-bottom: 4px
   &.commands a
     text-transform: capitalize
-  & li.small_icon
+  li.small_icon
     padding-left: 19px
     background-position: 0 50%
+
+//
+// table superadmin
+//
+#admin-content 
+  form 
+    table tr td, p
+      padding-bottom: 10px
+   

@@ -43,6 +43,8 @@ module UrlHelper
       :browse
     when 'my'
       :friends
+    when 'peers'
+      :peers
     end
   end
 
@@ -271,12 +273,14 @@ module UrlHelper
     elsif active_tab == :people
       my = I18n.t(:my_contacts)
       all = I18n.t(:all_people)
+      peers = I18n.t(:my_peers)
     else
       my = I18n.t(:my_networks)
       all = I18n.t(:all_networks)
     end
     return my if action == 'my'
     return all if action == 'search'
+    return peers if action == 'peers'
   end
 
   def url_for_directory(active_tab, action)
@@ -338,17 +342,22 @@ module UrlHelper
     style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
+    if label.length > 19
+      options[:title] = label
+      label = truncate(label, :length => 19)
+    end
+    options[:title] ||= ""
     klass = options[:class] || 'name_icon'
     style += " display:block" if options[:block]
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
-      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style, :title => label)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
       url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
-    avatar + link_to(label, path, :class => klass, :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style, :title => options[:title])
   end
 
   # creates a link to a user, with or without the avatar.
