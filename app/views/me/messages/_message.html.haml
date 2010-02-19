@@ -6,7 +6,7 @@
   %td.reply-arrow{message_reply_html_attributes(message)}
   %td.avatar
     = display_entity(other_user, :avatar => :small, :format => :short, :link => true)
-  %td.message.clickable{:onclick => 'window.location.pathname="' + message_path(other_user.login, :anchor => 'last') + '"'}
-    = truncate(strip_links(post.body_html), :length => 300)
+  %td.message
+    = link_to(truncate(strip_links(post.body_html), :length => 300), message_path(other_user.login, :anchor => 'last'))
   %td.date
     %span.date= friendly_date(post.try.created_at)

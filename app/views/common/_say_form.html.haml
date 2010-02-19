@@ -6,7 +6,7 @@
 - cols = (@user == current_user) ? '50' : '25'
 
 - if logged_in?
-  = avatar_for(current_user, :xsmall) unless @user == current_user
+  =# avatar_for(current_user, :xsmall) unless @user == current_user
   - form_tag(url, :id => 'say') do
     - if recipient
       %h3 Recipient

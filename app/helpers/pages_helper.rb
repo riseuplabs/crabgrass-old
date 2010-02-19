@@ -1,12 +1,23 @@
 module PagesHelper
+
+  def my_work_pages_views
+    [:work, :watched, :editor, :owner, :unread]
+  end
+
   def my_work_view_settings
-    [
-      {:name => :work, :translation => :view_work_pages_option},
-      {:name => :watched, :translation => :view_watched_pages_option},
-      {:name => :editor, :translation => :view_editor_pages_option},
-      {:name => :owner, :translation => :view_owner_pages_option},
-      {:name => :unread, :translation => :view_unread_pages_option}
-    ]
+    my_work_pages_views.map do |view|
+      {:name => view, :translation => title_key_for(view)}
+    end
+  end
+
+  def all_pages_views
+    [:public, :networks, :groups]
+  end
+
+  def all_view_settings
+    all_pages_views.map do |view|
+      {:name => view, :translation => title_key_for(view)}
+    end
   end
 
   def title_key_for(view)
@@ -17,18 +28,14 @@ module PagesHelper
     ('view_'+view.to_s+'_pages_description').to_sym
   end
 
-  def all_view_settings
-   [
-     {:name => :public, :translation => :view_public_pages_option},
-     {:name => :networks, :translation => :view_networks_pages_option},
-     {:name => :groups, :translation => :view_groups_pages_option}
-    ]
-  end
-
   def view_settings
-    if action?(:my_work) or action?(:mark)
+    if action?(:my_work)
       my_work_view_settings
     elsif action?(:all)
+      all_view_settings
+    elsif my_work_pages_views.include?(params[:view].to_sym)
+      my_work_view_settings
+    elsif all_pages_views.include?(params[:view].to_sym)
       all_view_settings
     end
   end
