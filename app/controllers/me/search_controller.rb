@@ -58,10 +58,12 @@ class Me::SearchController < Me::BaseController
       :before_match     => "{bold}",
       :after_match      => "{/bold}",
       :chunk_separator  => " ... ",
-      :limit            => 400,        # the max size of the total result
+      :limit            => 300,        # the max size of the total result
       :around           => 5           # how much text around each match to show. it is not characters. words maybe?
     )
     results.each_with_index do |result, i|
+      result.gsub!("{bold}", '<span class="search-excerpt">')
+      result.gsub!("{/bold}", '</span>')
       pages[i].flag[:excerpt] = result
     end
   end
