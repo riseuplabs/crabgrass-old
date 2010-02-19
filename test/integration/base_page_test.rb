@@ -15,6 +15,9 @@ class BasePageTest < ActionController::IntegrationTest
       post '/base_page/participation/update_share_all?add=true&page_id=214'
       page.reload
       assert !page.participation_for_group(group).nil?, "Page does not have participation after sharing."
+      login :red
+      get '/blue/survey-ipsum', "can't display page as a different user!"
+      login :blue
       get '/blue/survey-ipsum+214'
       assert_select "a[href='/#{group.name}']"
       get '/base_page/participation/update_share_all?page_id=214'
