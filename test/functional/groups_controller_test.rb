@@ -391,18 +391,15 @@ class GroupsControllerTest < ActionController::TestCase
     post :update, :id => groups(:rainbow).name, :group => {
       :name => new_name,
       :full_name => new_full_name,
-      :summary => new_summary
     }
-    assert_response :redirect
-    assert_redirected_to :action => 'edit', :id => groups(:rainbow)
+    assert_equal assigns(:group), groups(:rainbow)
 
     group.reload
     assert_equal new_full_name, group.full_name, "full name should now be '#{new_full_name}'"
     assert_equal new_name, group.name, "group name should now be '#{new_name}'"
-    assert_equal new_summary, group.summary, "summary should now be '#{new_summary}'"
 
     # a sneaky hacker attack to watch out for
-    g = Group.create! :name => 'hack-committee', :full_name => "hacker!", :summary => ""
+    g = Group.create! :name => 'hack-committee', :full_name => "hacker!"
     #Site.default.network.add_group! g unless Site.default.network.nil?
     assert_not_nil Group.find_by_name('hack-committee')
     post :edit, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
@@ -524,7 +521,7 @@ editing tools on a group basis has been abandoned iirc, azul
     group_page = DiscussionPage.create :title => 'a group page', :public => false
     group_page.add(g, :access => :admin)
     group_page.save
-    committee_page = DiscussionPage.create :title => 'a committee page', :public => false, :group => c
+    committee_page = DiscussionPage.create :title => 'a committee page', :public => false, :owner => c
     committee_page.add(c, :access => :admin)
     committee_page.save
 
@@ -532,11 +529,11 @@ editing tools on a group basis has been abandoned iirc, azul
     @controller.stubs(:logged_in?).returns(true)
     @controller.instance_variable_set(:@group, c)
     assert u.may_admin?(c)
-    assert @controller.may?(:group,:admin)
+    assert @controller.may?(:group,:edit)
 
     get :show
     assert_response :success
-    assert_select "td.date", "Today"
+    # assert_select "td.date", "Today"
     assert_select "a[href=?]", @controller.page_url(committee_page)
 
     @controller.instance_variable_set(:@group, g)
