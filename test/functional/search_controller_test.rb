@@ -1,19 +1,9 @@
-require File.dirname(__FILE__) + '/../../test_helper'
-require 'me/search_controller'
+require File.dirname(__FILE__) + '/../test_helper'
 
-# Re-raise errors caught by the controller.
-class Me::SearchController; def rescue_action(e) raise e end; end
-
-class MeSearchControllerTest < Test::Unit::TestCase
+class SearchControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :page_terms
-
-  def setup
-    @controller = Me::SearchController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_index
     return unless sphinx_working?
@@ -56,7 +46,30 @@ class MeSearchControllerTest < Test::Unit::TestCase
     assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
 
     # text "test" inside listings should be surrounded with <span class="search-excerpt"></span>
-    # assert_select "article span.search-excerpt", "test", "should highlight exceprts in markup"
+    assert_select "article span.search-excerpt", "test", "should highlight exceprts in markup"
   end
 
 end
+
+
+=begin
+  TODO: make it work
+  def test_search
+    login_as :quentin
+
+    get :search
+    assert_response :success
+#    assert_template 'search'
+    assert assigns(:pages).length > 0, "search should find some pages"
+
+    search_opts = {:text => "", :type => "", :person => "", :group => "", :month => "", :year => ""}
+
+    post :search, :search => search_opts
+    assert_response :redirect
+    assert_redirected_to me_url(:action => 'search') + @controller.parse_filter_path(search_opts)
+
+    search_opts[:text] = "e"
+    post :search, :search => search_opts
+    assert_response :redirect
+    assert_redirected_to 'me/search/text/e'
+=end

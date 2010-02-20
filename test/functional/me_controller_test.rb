@@ -27,29 +27,6 @@ class MeControllerTest < Test::Unit::TestCase
     assert_redirected_to({:controller => 'me/pages'}, "should redirect to pages")
   end
 
-=begin
-  TODO: move to a different test
-  def test_search
-    login_as :quentin
-
-    get :search
-    assert_response :success
-#    assert_template 'search'
-    assert assigns(:pages).length > 0, "search should find some pages"
-
-    search_opts = {:text => "", :type => "", :person => "", :group => "", :month => "", :year => ""}
-
-    post :search, :search => search_opts
-    assert_response :redirect
-    assert_redirected_to me_url(:action => 'search') + @controller.parse_filter_path(search_opts)
-
-    search_opts[:text] = "e"
-    post :search, :search => search_opts
-    assert_response :redirect
-    assert_redirected_to 'me/search/text/e'
-  end
-=end
-
   def test_edit
     user = User.make
     login_as(user)
