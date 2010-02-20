@@ -45,9 +45,9 @@ module MenuHelper
     active = options.delete(:active) if options.has_key?(:active)
 
     if url.is_a?(String)
-      active = url_for(url) =~ /#{request.path}/i
+      active = url_for(url) =~ /#{Regexp.escape(request.path)}/i
     elsif url.is_a?(Array)
-      active = !(url.select { |path| url_for(path) =~ /#{request.path}/i }).empty?
+      active = !(url.select { |path| url_for(path) =~ /#{Regexp.escape(request.path)}/i }).empty?
       url = url.first
     else
       active = false
