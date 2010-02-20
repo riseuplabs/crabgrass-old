@@ -12,6 +12,14 @@ module ScopeHelpers
       '.info_box'
     when /the page sidebar/
       '#page_sidebar'
+    when /the level 1 navigation/
+      '.topnav'
+    when /the level 2 navigation/
+      '#second-level'
+    when /the level 3 navigation/
+      '#third-level'
+    when /the level 4 navigation/
+      '#nav4'
     when /#{capture_model}(?:'s)? row/
       thing = model!($1)
       model_name = thing.class.to_s.downcase

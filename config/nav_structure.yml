@@ -27,6 +27,7 @@ Groups:
   My Groups:
     The Animals:
       outside_nav:true
+      nav_level:1
       path: /animals
       PAGES:
         path: /groups/pages/animals

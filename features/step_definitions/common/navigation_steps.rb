@@ -18,8 +18,9 @@ Then /^show the current navigation submenu$/ do
 end
 
 Then /^I should be able to click through "(.*)"(?: in level (\d) navigation)$/ do |key, n|
-  n = n.to_i
+  n = @submenu[key]['nav_level'] || n.to_i
   @submenu=@submenu[key]
+  puts %(following "#{key}" in #{n})
   n+=1
   When %(I follow "#{key}")
   Then "I should see the submenu links in level #{n} navigation"
@@ -30,11 +31,12 @@ end
 Then /^I should see (?:all (?:of )?)?the submenu links(?: in level (\d) navigation)?$/ do |n|
   n = n.to_i
   @submenu.each_pair do |key, value|
+    debugger
     if value.is_a? Hash
-      if value[:outside_nav] or n == 0
+      if value['outside_nav'] or n == 0
         Then %(I should see "#{key}")
       else
-        Then %(I should see "#{key}")  #in the #{n}th level navigation"
+        Then %(I should see "#{key}" within "the level #{n} navigation")
       end
     end
   end
