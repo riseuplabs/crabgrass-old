@@ -1,7 +1,15 @@
-class Me::SearchController < Me::BaseController
+class SearchController < ApplicationController
 
   prepend_before_filter :login_with_http_auth
+  before_filter :login_required, :fetch_user
 
+
+  # # POST /search/results
+  # def results
+  #   # redirect to a nice listing
+  # end
+
+  # GET /search
   def index
     if request.post?
       # form was POSTed with search query
@@ -21,7 +29,7 @@ class Me::SearchController < Me::BaseController
     path_params.delete :group if(path_params[:use_group] and path_params[:use_group] != "1")
     path_params.delete :person if(path_params[:use_person] and path_params[:use_person] != "1")
 
-    redirect_to(me_url(:action => 'search') + parse_filter_path(path_params))
+    redirect_to(search_url + parse_filter_path(path_params))
   end
 
   def render_search_results
@@ -37,14 +45,24 @@ class Me::SearchController < Me::BaseController
       end
     end
 
-    full_url = me_url(:action => 'search') + @path
+    full_url = search_url + @path
     handle_rss :title => full_url, :link => full_url,
                :image => avatar_url(:id => @user.avatar_id||0, :size => 'huge')
   end
 
+  def authorized?
+    true
+  end
+
+  def fetch_user
+    @user ||= current_user
+  end
+
+
   def context
-    super
-    add_context I18n.t(:me_search_link), url_for(:controller => '/me/search', :action => nil, :path => params[:path])
+    site_network_context
+    add_context I18n.t(:search_link), search_url(:path => @path)
+    breadcrumbs_from_context
   end
 
   def add_excerpts_to_pages(pages)

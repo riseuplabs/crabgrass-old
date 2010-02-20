@@ -4,8 +4,8 @@ module LayoutHelper
   ## DISPLAYING BREADCRUMBS and CONTEXT
   ##
 
-  def link_to_breadcrumbs(min_length = 3)
-    if @breadcrumbs and @breadcrumbs.length >= min_length
+  def link_to_breadcrumbs
+    if @breadcrumbs and @breadcrumbs.length >= breadcrumb_min_length
       content_tag(:section, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
       ""
@@ -14,6 +14,10 @@ module LayoutHelper
 
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
+  end
+
+  def breadcrumb_min_length
+    controller?(:search) ? 2 : 3
   end
 
   ##
@@ -312,7 +316,7 @@ module LayoutHelper
       # <h2><%= current_site.title %></h2>
  #   end
   end
-  
+
   def masthead_container
     locals = {}
     appearance = current_site.custom_appearance

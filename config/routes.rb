@@ -47,7 +47,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
   # map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
-  map.connect 'me/search/*path',            :controller => 'me/search', :action => 'index'
   # map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
   map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
   map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
@@ -125,6 +124,7 @@ ActionController::Routing::Routes.draw do |map|
   map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
   map.account '/account/:action/:id', :controller => 'account'
 
+  map.search 'search/*path', :controller => 'search', :action => 'index'
   map.connect '', :controller => 'root'
 
   map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'

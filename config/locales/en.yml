@@ -114,6 +114,9 @@ en:
   search_headline: "Search"
   search_this_group: "Search this group only"
   search_this_person: "Search this person only"
+  search_link: "Search"
+
+  search_description: Search through all pages you have access to
 
   see_more_link: "More"
   see_all_link: "See All"
@@ -543,7 +546,6 @@ en:
   my_inbox_headline: "My Inbox"
 
   me_trash_link: "Trash"
-  me_search_link: "Search"
   me_tasks_link: "Tasks"
   my_world_heading: "My World"
 
@@ -575,8 +577,6 @@ en:
   my_pending_tasks_link: "Pending"
   my_completed_tasks_link: "Completed"
 
-  my_search_headline: "Search"
-
   my_messages_headline: "My Messages"
 
   my_social_activity_friends_tab: "Friend Activity"
@@ -588,7 +588,6 @@ en:
   public_profile: "Public Profile"
 
   create_task_list: create new task list
-  me_search_description: Search through all pages you have access to
   inbox_description: Inbox of pages I am actively participating in or watching for changes
   toggle_selection: Toggle Selection
   remove_from_inbox: Remove from inbox

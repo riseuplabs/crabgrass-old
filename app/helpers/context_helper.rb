@@ -95,6 +95,7 @@ module ContextHelper
 
   def site_network_context(size='large', update_breadcrumbs=true)
     @active_tab = :home
+    add_context I18n.t(:menu_home), '/'
   end
 
   def person_context(size='large', update_breadcrumbs=true)
