@@ -518,16 +518,23 @@ module PageHelper
 
   ## options for a page type dropdown menu for searching
   def options_for_select_page_type(default_selected=nil)
-    default_selected.sub!(' ', '+') if default_selected
+    available_types = current_site.available_page_types
+    # used by options_for_select helpe
     menu_items = []
-    tree_of_page_types.each do |grouping|
-      menu_items << [grouping[:display], grouping[:url]]
-      sub_items = grouping[:pages].collect do |page_class|
-         ["#{grouping[:display]} > #{page_class.class_display_name}",
-         "#{grouping[:url]}+#{page_class.url}"]
-       end
-       menu_items.concat sub_items if sub_items.size > 1
+
+    # collect [display_name, url] pairs for all pages
+    available_types.each do |klass_name|
+      klass = Page.class_name_to_class(klass_name)
+      next if klass.nil? or klass.internal
+
+      display_name = klass.class_display_name
+      url = klass.url
+      menu_items << [display_name, url]
     end
+
+    # sort by display name
+    menu_items.sort
+    # create select attributes
     options_for_select([[I18n.t(:all_page_types),'']] + menu_items, default_selected)
   end
 
