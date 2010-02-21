@@ -43,14 +43,16 @@ module MenuHelper
   ## tab if is needed
   def menu(label, url, options={})
     active = options.delete(:active) if options.has_key?(:active)
-
-    if url.is_a?(String)
-      active = url_for(url) =~ /#{Regexp.escape(request.path)}/i
+ 
+    ### PLEASE if you change this make sure it doesn't break menus elsewhere, for example:
+    ### people directory, group directory, group pages, etc.
+    if url.is_a?(String) or url.is_a?(Hash)
+      active = url_for(url) =~ /#{Regexp.escape(request.path)}/i if active.nil?
     elsif url.is_a?(Array)
-      active = !(url.select { |path| url_for(path) =~ /#{Regexp.escape(request.path)}/i }).empty?
+      active = !(url.select { |path| url_for(path) =~ /^#{Regexp.escape(request.path)}$/i }).empty? if active.nil?
       url = url.first
     else
-      active = false
+      active = false if active.nil?
     end
 
     selected_class = active ? (options[:selected_class] || 'current') : ''
