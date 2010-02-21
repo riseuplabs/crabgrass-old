@@ -250,3 +250,12 @@ GeoPlace.blueprint {
   longitude { 1.0 }
   geonameid { 2 }
 }
+
+#
+# Navigation
+# this is the navigation structure used for testing only
+#
+
+require 'lib/crabgrass/navigation'
+require 'machinist/object'
+Navigation.blueprint {}

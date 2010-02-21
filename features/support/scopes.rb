@@ -13,13 +13,18 @@ module ScopeHelpers
     when /the page sidebar/
       '#page_sidebar'
     when /the level 1 navigation/
-      '.topnav'
+      '#global-nav'
     when /the level 2 navigation/
       '#second-level'
+    when /the aside level 2 navigation/
+      '#second-level-aside'
     when /the level 3 navigation/
       '#third-level'
     when /the level 4 navigation/
       '#nav4'
+    when /a link to (.*)/
+      target = $1
+      "a[href='#{target}']"
     when /#{capture_model}(?:'s)? row/
       thing = model!($1)
       model_name = thing.class.to_s.downcase

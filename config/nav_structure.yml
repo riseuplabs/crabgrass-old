@@ -24,28 +24,39 @@ People:
     Stranger:
       path: /stranger
 Groups:
+  path: /groups/directory
   My Groups:
+    path_name: my
     The Animals:
-      outside_nav:true
-      nav_level:1
+      outside_nav: true
+      nav_level: 1
       path: /animals
       PAGES:
+        scope: the aside level 2 navigation
         path: /groups/pages/animals
       ADMINISTRATION:
         path: /groups/animals/edit
         Settings:
+          path: /groups/animals/edit
           Basic Settings:
             path: /groups/animals/edit
           Permissions:
-            path: /groups/permissions/edit/animals
+            path: /groups/profiles/permissions/animals
           Public Profile:
             path: /groups/profiles/edit/animals
           Featured Pages:
+            path: /groups/features/index/animals
           Destroy Group:
+            path: /groups/animals/edit
+            visit: false
           Create Committee:
+            path: /groups/committees/new/animals
         Members:
+          path: /groups/memberships/list/animals
         Requests:
-  All:  
+          path: /groups/requests/list/animals
+  All Groups:
+    path_name: all
 Networks:
   Directory:
     My:
