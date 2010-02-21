@@ -136,7 +136,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:access)
     assert_equal :private, assigns(:access), "red should have access to private group information for :rainbow"
-    assert_select "section#identity-name div.left a", "Leave Group"
+    assert_select "section#identity-name div.group-action a", "Leave Group"
 
     #show a committee you belong to
     get :show, :id => groups(:warm).to_param
