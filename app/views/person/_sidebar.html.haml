@@ -9,8 +9,9 @@
   %time#last-login
     = last_login(@user)
 
-%ul.side_list
-  %li= friend_link
+- unless @user == @current_user
+  %ul.side_list
+    %li= friend_link
   
 %div#identity-meta
   =# render :partial => 'about_me', :locals => {:profile => profile}
