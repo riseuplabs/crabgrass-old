@@ -49,7 +49,7 @@ module MenuHelper
     if url.is_a?(String) or url.is_a?(Hash)
       active = url_for(url) =~ /#{Regexp.escape(request.path)}/i if active.nil?
     elsif url.is_a?(Array)
-      active = !(url.select { |path| url_for(path) =~ /^#{Regexp.escape(request.path)}$/i }).empty? if active.nil?
+      active = !url.select { |path| url_for(path).match(/^#{Regexp.escape(request.path)}$/i) ? true : false }.empty? if !active
       url = url.first
     else
       active = false if active.nil?
