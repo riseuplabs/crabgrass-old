@@ -7,7 +7,7 @@ Feature: The my_work and all_pages feeds shows notifications with the pages
 Background:
   Given I exist
   And a page: "interesting" exists with title: "This is interesting stuff!"
-  And I have view access to that page
+  And I have admin access to that page
 
 Scenario: I can't see the page without notification
   Given a user: "sender" exists with display_name: "I notify others"
@@ -46,7 +46,7 @@ Scenario: I can see Pages I was notified of and the messages on all pages
   And I should see the user: "yan"'s login
   And I should see "yet another notification"
   When I am on my work page
-  Then I should not see "This is interesting stuff!"
+  Then I should not see "check this out!"
   And I should not see the user: "early"'s login
 
 
