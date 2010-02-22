@@ -3,3 +3,6 @@
 .owner_image
   = owner_image page
 = yield
+-if page.respond_to? :notice
+  .notice
+    = notice_box(page.notice)
