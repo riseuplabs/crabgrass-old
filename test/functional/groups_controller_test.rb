@@ -225,12 +225,11 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_archive_not_logged_in
-    get :archive, :id => groups(:public_group).name
+    get :archive, :id => groups(:public_group).to_param
     assert_response :success
-#    assert_template 'archive'
 
-    get :archive, :id => groups(:private_group).name
-#    assert_template 'show_nothing'
+    get :archive, :id => groups(:private_group).to_param
+    assert_response :unauthorized
   end
 
 

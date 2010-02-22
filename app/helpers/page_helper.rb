@@ -623,13 +623,13 @@ module PageHelper
 
   def page_html_attributes(page)
     classes = %w(cover small_icon page_text_blue_16)
-    classes << 'unread' if page.unread_by?(current_user)
+    classes << 'unread' if !logged_in? || page.unread_by?(current_user)
     { :class => classes.join(' ') }
   end
 
   def section_html_attributes(page)
     classes = %w(pages-info)
-    classes << 'unread' if page.unread_by?(current_user)
+    classes << 'unread' if !logged_in? || page.unread_by?(current_user)
     { :class => classes.join(' ') }
   end
 
