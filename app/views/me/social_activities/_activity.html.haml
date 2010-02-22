@@ -10,6 +10,3 @@
     = linked_activity_description(activity)
   %td.date
     = friendly_date(activity.created_at)
-    = I18n.t(:at)
-    %br
-    = activity.created_at.try.to_formatted_s(:time)
