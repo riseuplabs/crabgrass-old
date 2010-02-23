@@ -12,7 +12,7 @@ class Me::MessagePostsControllerTest < ActionController::TestCase
     end
 
     assert_equal "blue: hi orange", users(:blue).relationships.with(users(:orange)).discussion.posts.last.body
-    assert_redirected_to messages_path
+    assert_redirected_to message_path('orange')
   end
 
 
