@@ -97,7 +97,6 @@ class PagesController < ApplicationController
     render :partial => '/pages/content', :locals => {:view_base_path => view_path_from_referer}
   end
 
-
   protected
 
   def context
@@ -129,10 +128,17 @@ class PagesController < ApplicationController
     add_user_participations(@pages) if logged_in?
   end
 
+  # given an array of pages, find the corresponding user_participation records
+  # and associate each participtions with the correct page.
+  # afterwards, page.flag[:user_participation] should hold current_user's
+  # participation for page.
   def add_user_participations(pages)
     pages_by_id = {}
-    pages.each{|page|pages_by_id[page.id] = page}
-    uparts = UserParticipation.find(:all, :conditions => ['user_id = ? AND page_id IN (?)',current_user.id,pages_by_id.keys])
+    pages.each do |page|
+      pages_by_id[page.id] = page
+    end
+    uparts = UserParticipation.find :all,
+      :conditions => ['user_id = ? AND page_id IN (?)', current_user.id, pages_by_id.keys]
     uparts.each do |part|
       pages_by_id[part.page_id].flag[:user_participation] = part
     end
