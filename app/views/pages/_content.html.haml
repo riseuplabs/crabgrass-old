@@ -1,4 +1,4 @@
-- layout ||= 'pages/checkbox'
+- layout ||= 'pages/layouts/checkbox'
 = render :partial => 'common/title_box', :locals => {:title => I18n.t(title_key_for(params[:view]))}
 = render :partial => 'common/info_box', :locals => {:description => I18n.t(description_key_for(params[:view]))}
 = render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_base_path => view_base_path}

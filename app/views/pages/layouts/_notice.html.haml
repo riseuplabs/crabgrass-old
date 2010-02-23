@@ -1,0 +1,6 @@
+.owner_image
+  = owner_image(page)
+= yield
+-if notices = notices_for(page)
+  .notice
+    = render :partial=>'pages/notice', :collection => notices
