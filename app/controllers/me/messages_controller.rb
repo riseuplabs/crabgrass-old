@@ -92,7 +92,7 @@ class Me::MessagesController < Me::BaseController
 
   def discussion_last_page
     total_entries = @discussion.posts.count
-   total_pages = (total_entries.to_f / @discussion.posts.per_page).ceil
+    total_pages = (total_entries.to_f / @discussion.posts.per_page).ceil
 
     # total_pages is 0 when total_entries is 0
     total_pages = 1 if total_pages == 0
