@@ -47,7 +47,7 @@ module MenuHelper
     ### PLEASE if you change this make sure it doesn't break menus elsewhere, for example:
     ### people directory, group directory, group pages, etc.
     if url.is_a?(String) or url.is_a?(Hash)
-      active = url_for(url) =~ /#{Regexp.escape(request.path)}/i if active.nil?
+      active = url_for(url) =~ /^#{Regexp.escape(request.path)}$/i if active.nil?
     elsif url.is_a?(Array)
       active = !url.select { |path| url_for(path).match(/^#{Regexp.escape(request.path)}$/i) ? true : false }.empty? if !active
       url = url.first

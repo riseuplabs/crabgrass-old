@@ -1,6 +1,4 @@
-.owner_image
-  = owner_image(page)
-= yield
--if page.respond_to? :notice 
-  .notice
-    = page.notice
+%ul.notice
+  %li.message="Message: #{notice[:message]}"
+  %li.time="Time: #{notice[:time]}"
+  %li.login="User Login: #{notice[:user_login]}"

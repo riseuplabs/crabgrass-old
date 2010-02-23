@@ -620,14 +620,28 @@ module PageHelper
 
   def page_html_attributes(page)
     classes = %w(cover small_icon page_text_blue_16)
-    classes << 'unread' if !logged_in? || page.unread_by?(current_user)
+    classes << 'unread' if !logged_in? || page_is_unread(page)
     { :class => classes.join(' ') }
+  end
+
+  # we use a cached field from the user_participation join here and fall
+  # back to fetching the user_participation again.
+  def page_is_unread(page)
+    if page.flag[:user_participation]
+      !page.flag[:user_participation].viewed
+    else
+      page.unread_by?(current_user)
+    end
   end
 
   def section_html_attributes(page)
     classes = %w(pages-info)
-    classes << 'unread' if !logged_in? || page.unread_by?(current_user)
+    classes << 'unread' if !logged_in? || page_is_unread(page)
     { :class => classes.join(' ') }
   end
 
+  def notices_for(page)
+    notices = page.flag[:user_participation].try.notice
+    notices.blank? ? false : notices
+  end
 end
