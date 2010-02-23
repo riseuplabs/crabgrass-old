@@ -106,6 +106,8 @@
 .nowrap
   white-space: nowrap
 
+.clear
+  clear: both
 //
 // NOTE: duplication of .small_icon in global nav for nested li
 // for use with icon + text
@@ -729,6 +731,16 @@ nav#nav-full
 
 #sidebar.left
   float: left
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+  a
+    +blue-link
+    height: 20px
 
 #sidebar.no-border
   border: none
