@@ -1,4 +1,5 @@
 %ul.notice
-  %li.message="Message: #{notice[:message]}"
-  %li.time="Time: #{notice[:time]}"
-  %li.login="User Login: #{notice[:user_login]}"
+  %li.message=I18n.t(:message).capitalize + ": " + notice[:message]
+  %li.login=I18n.t(:from).capitalize + ': ' User.find_by_login(notice[:user_login]).display_name
+  %li.date=I18n.t(:date).capitalize + ': ' + notice[:time]
+

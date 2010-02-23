@@ -634,7 +634,7 @@ module PageHelper
 
   def page_html_attributes(page)
     classes = %w(cover small_icon page_text_blue_16)
-    classes << 'unread' if !logged_in? || page_is_unread(page)
+    classes << 'unread' if page_is_unread(page)
     { :class => classes.join(' ') }
   end
 
@@ -650,7 +650,7 @@ module PageHelper
 
   def section_html_attributes(page)
     classes = %w(pages-info)
-    classes << 'unread' if !logged_in? || page_is_unread(page)
+    classes << 'unread' if page_is_unread(page)
     { :class => classes.join(' ') }
   end
 
