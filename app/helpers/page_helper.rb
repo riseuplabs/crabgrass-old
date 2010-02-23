@@ -571,14 +571,11 @@ module PageHelper
       url = new_me_page_url if may_create_pages?
     end
     return unless url
-    icon = 'cross'
-    text = I18n.t(:contribute_content_link).upcase
-    klass = options[:class] || 'contribute'
+    text = I18n.t(:contribute_content_link).capitalize
+    klass = options[:class] || 'a'
 
     content_tag(:div,
-      content_tag(:span,
-          link_to(text, url ),
-        :class => "small_icon #{icon}_20"),
+        link_to(text, url ),
       :class => klass, :id => 'contribute'
     )
   end
