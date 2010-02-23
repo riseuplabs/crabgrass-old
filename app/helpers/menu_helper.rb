@@ -125,7 +125,7 @@ module MenuHelper
       network_directory_url,
       :active => @active_tab == :networks,
       :menu_items => menu_items('boxes', {
-        :entities => current_user.primary_networks.most_active,
+        :entities => current_user.primary_networks.most_active(@current_site),
         :heading => I18n.t(:my_networks),
         :see_all_url => network_directory_url(:action => 'my'),
         :submenu => 'networks'
