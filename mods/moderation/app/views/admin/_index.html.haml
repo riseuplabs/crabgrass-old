@@ -9,7 +9,8 @@
         %li{:style=>"display: inline;", :class=>'small_icon flag_orange_16'}= tab_link('new',nil,{:obj_type=>obj_type})+'&nbsp;'
         %li{:style=>"display: inline;", :class=>'small_icon flag_green_16'}= tab_link('vetted',nil,{:obj_type=>obj_type})+'&nbsp;'
         %li{:style=>"display: inline;", :class=>'small_icon flag_red_16'}= tab_link('deleted',nil,{:obj_type=>obj_type})
-    = display_public_pages_links(obj_type)
+      %br
+      = display_public_pages_links(obj_type)
 
 = render :partial => "/admin/listing", :locals=>{:obj_type=>obj_type} if @flagged.any?
 = '<em>There are no pages for this view</em>' unless @flagged.any?
