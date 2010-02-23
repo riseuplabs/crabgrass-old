@@ -1,6 +1,6 @@
 %article
   = check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '') if defined?(checkeable) && checkeable
   %section{section_html_attributes(page)}
-    - layout ||= '/pages/cover'
+    - layout ||= '/pages/layouts/cover'
     = render :partial => '/pages/core', :layout => layout, :locals => {:page => page}
   = page_information_box_for(page, local_assigns || {})
