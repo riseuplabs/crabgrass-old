@@ -3,4 +3,4 @@
   %section{section_html_attributes(page)}
     - layout ||= '/pages/cover'
     = render :partial => '/pages/core', :layout => layout, :locals => {:page => page}
-  = last_updated_box_for page
+  = page_information_box_for(page, local_assigns || {})

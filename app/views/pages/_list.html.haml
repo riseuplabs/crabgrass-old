@@ -1,4 +1,6 @@
 - pages ||= @pages
+
+= render(:partial => heading_partial) if local_assigns[:heading_partial]
 - if pages && pages.any?
   %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
     %header
