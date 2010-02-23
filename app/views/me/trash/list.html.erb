@@ -11,7 +11,7 @@
 <br/>
 
 <% form_tag({:controller => 'me/trash', :action => 'update', :path => params[:path]}, {:id => 'trash_form'}) do -%>
-  <%= render :partial => 'pages/list', :locals => {:layout => 'pages/checkbox', :full_width => true} %>
+  <%= render :partial => 'pages/list', :locals => {:layout => 'pages/layouts/checkbox', :full_width => true} %>
   <p><%= link_line(
     link_to_function(I18n.t(:toggle_selection), "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})"),
     submit_link(I18n.t(:undelete_from_trash), :name => 'undelete'),
