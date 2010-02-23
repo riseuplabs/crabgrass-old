@@ -5,7 +5,7 @@ class GalleryTest < ActionController::IntegrationTest
     login 'purple'
 
     visit '/me/pages'
-    click_link 'Create Page'
+    click_link 'Create a page'
     click_link 'Gallery'
 
     # within is not necessary (since the fields names are unique)
