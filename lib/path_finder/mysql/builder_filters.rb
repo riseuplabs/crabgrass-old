@@ -333,40 +333,30 @@ module PathFinder::Mysql::BuilderFilters
     (user_participations.changed_at IS NOT NULL) OR
     (user_participations.watch))
 EOSQL
-    @selects << 'user_participations.viewed AS viewed'
-    @selects << 'user_participations.notice AS notice'
   end
 
   def filter_owner(user_id)
     @conditions << 'pages.owner_type = "User" AND pages.owner_id = ?'
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
-    @selects << 'user_participations.notice AS notice'
-    @selects << 'user_participations.viewed AS viewed'
   end
 
   def filter_unread(user_id)
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
     @conditions << '(!user_participations.viewed)'
-    @selects << 'user_participations.notice AS notice'
-    @selects << 'user_participations.viewed AS viewed'
   end
 
   def filter_read(user_id)
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
     @conditions << '(user_participations.viewed)'
-    @selects << 'user_participations.notice AS notice'
-    @selects << 'user_participations.viewed AS viewed'
   end
 
   def filter_watched(user_id)
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
     @conditions << '(user_participations.watch)'
-    @selects << 'user_participations.notice AS notice'
-    @selects << 'user_participations.viewed AS viewed'
   end
 
   def filter_notified(user_id)
@@ -374,8 +364,6 @@ EOSQL
     @conditions << 'user_participations.user_id = ?'
     @values << user_id.to_i
     @conditions << '(user_participations.notice != "")'
-    @selects << 'user_participations.notice AS notice'
-    @selects << 'user_participations.viewed AS viewed'
   end
 
   def filter_editor(user_id)

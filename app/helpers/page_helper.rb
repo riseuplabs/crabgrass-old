@@ -630,8 +630,11 @@ module PageHelper
   # we use a cached field from the user_participation join here and fall
   # back to fetching the user_participation again.
   def page_is_unread(page)
-    page.respond_to? :viewed && !page.viewed or
+    if page.flag[:user_participation]
+      !page.flag[:user_participation].viewed
+    else
       page.unread_by?(current_user)
+    end
   end
 
   def section_html_attributes(page)
@@ -640,10 +643,8 @@ module PageHelper
     { :class => classes.join(' ') }
   end
 
-  def notice_box(notices)
-    if notices.is_a? String
-      notices = YAML.load notices
-    end
-    render :partial=>'pages/notice', :collection => notices
+  def notices_for(page)
+    notices = page.flag[:user_participation].try.notice
+    notices.blank? ? false : notices
   end
 end
