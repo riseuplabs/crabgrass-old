@@ -17,10 +17,10 @@
 %>
 <% if entities.any? or show_empty -%>
 <div class="dash_box">
-  <h3 class="dim">
+  <h5>
     <%= header %>
     <%= link_span(:bullet, links, more_link) %>
-  </h3>
+  </h5>
   <%- if entities.any? -%>
     <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
   <%- else -%>
