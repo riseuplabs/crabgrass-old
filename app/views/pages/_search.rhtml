@@ -1,5 +1,5 @@
 <%# this is a partial of search controls to be used by any search view %>
-<% 
+<%
   if @user and @profile
     users ||= @user.friends if @profile.may_see_contacts?
     groups ||= @user.groups.visible_by(current_user) if @profile.may_see_groups?
@@ -7,7 +7,7 @@
     groups ||= []
     users.unshift @user unless users.include? @user
   else
-    users ||= nil; groups ||= nil 
+    users ||= nil; groups ||= nil
   end
 
   # we use strings for boolean so that we can correctly set defaults
@@ -28,17 +28,17 @@
 <% form_tag(url) do -%>
 
 <% if show_page_types == 'true' -%>
-<%= select_tag 'search[type]', options_for_select_page_type(@path.arg_for('type')) %>
+<%= select_tag 'search[type]', options_for_select_page_type(@path.arg_for('type')), :id => 'search_type' %>
 <% end -%>
 
 <% if users.any? -%>
 <%= select_tag 'search[person]', "<option value=''>#{I18n.t(:all_people)}</option>"+
-options_from_collection_for_select(users, "id", "name", @path.int_for('person')) %>
+options_from_collection_for_select(users, "id", "name", @path.int_for('person')), :id => 'search_person' %>
 <% end -%>
 
 <% if groups -%>
 <%= select_tag 'search[group]', "<option value=''>#{I18n.t(:all_groups)}</option>"+
-options_from_collection_for_select(groups, "id", "name", @path.int_for('group')) %>
+options_from_collection_for_select(groups, "id", "name", @path.int_for('group')), :id => 'search_group' %>
 <% end -%>
 
 <% if show_extras == 'true' -%>
