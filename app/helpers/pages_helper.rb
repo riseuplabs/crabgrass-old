@@ -29,32 +29,50 @@ module PagesHelper
   end
 
   def view_settings
-    if action?(:my_work)
+    if action_for_page_list == :my_work
       my_work_view_settings
-    elsif action?(:all)
-      all_view_settings
-    elsif my_work_pages_views.include?(params[:view].to_sym)
-      my_work_view_settings
-    elsif all_pages_views.include?(params[:view].to_sym)
+    elsif action_for_page_list == :all
       all_view_settings
     end
   end
 
+  def action_for_page_list
+    if action?(:my_work)
+      :my_work
+    elsif action?(:all)
+      :all
+    elsif my_work_pages_views.include?(params[:view].to_sym)
+      :my_work
+    elsif all_pages_views.include?(params[:view].to_sym)
+      :all
+    end
+  end
+
+  def select_settings
+    if action_for_page_list == :my_work
+      [ {:name => :all,
+          :translation => :select_all,
+          :function => checkboxes_subset_function(".page_check_box", ".page_check_box")},
+        {:name => :none,
+          :translation => :select_none,
+          :function => checkboxes_subset_function(".page_check_box", "")},
+        {:name => :unread,
+          :translation => :select_unread,
+          :function => checkboxes_subset_function(".page_check_box", "section.pages-info.unread .page_check_box")}]
+    end
+  end
+
+  def mark_settings
+    if action_for_page_list == :my_work
+      [ {:name => :read, :translation => :read},
+        {:name => :unread, :translation => :unread},
+        {:name => :unwatched, :translation => :unwatched}]
+    end
+  end
+
   def action_bar_settings
-    { :select =>
-            [ {:name => :all,
-               :translation => :select_all,
-               :function => checkboxes_subset_function(".page_check_box", ".page_check_box")},
-              {:name => :none,
-               :translation => :select_none,
-               :function => checkboxes_subset_function(".page_check_box", "")},
-              {:name => :unread,
-               :translation => :select_unread,
-               :function => checkboxes_subset_function(".page_check_box", "section.pages-info.unread .page_check_box")}],
-      :mark =>
-            [ {:name => :read, :translation => :read},
-              {:name => :unread, :translation => :unread},
-              {:name => :unwatched, :translation => :unwatched}],
+    { :select => select_settings,
+      :mark => mark_settings,
       :view => view_settings }
   end
 
