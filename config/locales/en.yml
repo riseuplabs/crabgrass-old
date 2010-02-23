@@ -625,6 +625,9 @@ en:
   message_recipient_name_caption: 'To: {{user}}'
   message_to_self_error: "Can't talk to yourself"
   message_cant_perster_error: "Only friends may send messages to {{user}}"
+
+  message_you_wrote_caption: "You wrote:"
+  message_user_wrote_caption: "{{user}} wrote:"
   ##
   ## PROFILE
   ##

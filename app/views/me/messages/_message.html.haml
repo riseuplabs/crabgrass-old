@@ -1,5 +1,6 @@
 - other_user = message.user_talking_to(current_user)
-- post = message.head_post_for(current_user)
+- post = message.last_post.try
+
 %tr{message_html_attributes(message)}
   %td.check
     = check_box_tag 'messages[]', message.id, false, :id =>"message_checkbox_#{message.id}", :class => 'message_check_box'
@@ -7,6 +8,6 @@
   %td.avatar
     = display_entity(other_user, :avatar => :small, :format => :short, :link => true)
   %td.message
-    = link_to(truncate(strip_links(post.body_html), :length => 3000), message_path(other_user.login, :anchor => 'last'))
+    = link_to(message_post_summary_body(post), message_path(other_user.login, :anchor => 'last'))
   %td.date
-    %span.date= friendly_date(post.try.created_at)
+    %span.date= friendly_date(post.created_at)
