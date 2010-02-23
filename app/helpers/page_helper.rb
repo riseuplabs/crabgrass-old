@@ -186,15 +186,29 @@ module PageHelper
 
   # *NEWUI
   #
-  # helper to show the box about last updated_by_and_stars
+  # helper to show the information box of a page
   #
-  def last_updated_box_for(page, options={})
+  def page_information_box_for(page, options={})
+    locals = {:page => page}
+
+    # status, date and username
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
     is_new = field == 'updated_at'
-    label    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
+    status    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    render :partial => 'pages/last_updated', :locals => {:label => label, :username => username, :date => date}
+    locals.merge!(:status => status, :username => username, :date => date)
+
+    if options.has_key?(:columns)
+      locals.merge!(:views_count => page.views_count) if options[:columns].include?(:views)
+      if options[:columns].include?(:stars)
+        star_icon = page.stars_count > 0 ? icon_tag('star') : icon_tag('star_empty')
+        locals.merge!(:stars_count => content_tag(:span, "%s %s" % [star_icon, page.stars_count]))
+      end
+      locals.merge!(:contributors =>  content_tag(:span, "%s %s" % [image_tag('ui/person-dark.png'), page.stars_count])) if options[:columns].include?(:contributors)
+    end
+
+    render :partial => 'pages/information_box', :locals => locals
   end
 
 
@@ -226,7 +240,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals= [:layout, :checkeable]
+    allowed_locals= [:columns, :layout, :checkeable]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
