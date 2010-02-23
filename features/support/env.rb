@@ -1,12 +1,12 @@
 require 'rubygems'
-require 'spork'
+#require 'spork'
 
 # this code is run by spork daemon if it's running and cucumber is started with --drb option
 # otherwise this is loaded at the start of the cucumber process
-Spork.prefork do
+#Spork.prefork do
   # Sets up the Rails environment for Cucumber
   ENV["RAILS_ENV"] = "cucumber"
-  require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
+  require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')##
 
   require 'cucumber/formatter/unicode'
   require 'cucumber/rails/world'
@@ -20,11 +20,11 @@ Spork.prefork do
   end
 
   require 'pickle/path/world'
-end
+#end
 
 
 # This code will be run each time you start cucumber.
-Spork.each_run do
+#Spork.each_run do
   ActionController::Base.allow_rescue = true
 
   require 'cucumber/rails/world'
@@ -73,6 +73,6 @@ Spork.each_run do
 
   After { disable_site_testing }
 
-end
+#end
 
 
