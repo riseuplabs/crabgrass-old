@@ -44,14 +44,7 @@ class Me::MessagesController < Me::BaseController
   def show
     # show the last page if page param is not set
     # instead of the usual first page
-    default_page = nil
-    if params[:page].blank?
-      total_entries = @discussion.posts.count
-      total_pages = (total_entries.to_f / @discussion.posts.per_page).ceil
-      # total_pages is 0 when total_entries is 0
-      total_pages = 1 if total_pages == 0
-      default_page = total_pages
-    end
+    default_page = params[:page].blank? ? discussion_last_page : nil
 
     # not so RESTful modifying the record on a GET request
     @discussion.mark!(:read, current_user)
@@ -97,6 +90,15 @@ class Me::MessagesController < Me::BaseController
     end
   end
 
+  def discussion_last_page
+    total_entries = @discussion.posts.count
+   total_pages = (total_entries.to_f / @discussion.posts.per_page).ceil
+
+    # total_pages is 0 when total_entries is 0
+    total_pages = 1 if total_pages == 0
+    total_pages
+  end
+
   # load discussions based on view filters
   def find_index_discussions
     current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(page_params)
@@ -126,6 +128,7 @@ class Me::MessagesController < Me::BaseController
   # default page when no page param is present can be nil
   # in some cases, it should be the last page
   def page_params(default_page = nil, per_page = nil)
+    per_page ||= @discussion.try.posts.try.per_page
     {:page => params[:page] || default_page, :per_page => per_page}
   end
 

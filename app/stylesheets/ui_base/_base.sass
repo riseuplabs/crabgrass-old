@@ -844,8 +844,12 @@ table#messages
       a
         display: block
         padding: 12px 6px
+        text-decoration: none
         &:hover
           background-color: #ffc
+        .message-body
+          text-decoration: underline
+
     td.date
       font-size: 10px
       width: 80px
@@ -1182,14 +1186,14 @@ ul.side_list
 // table admin + superadmin
 //
 #admin-content
-  form 
+  form
     table tr td, p
       padding: 0 4px 10px 0
     #email-blasts
       td
         padding: 10px
     &.edit_site
-      span.padtop14 
+      span.padtop14
         +clearfix
         padding-top: 14px
         label
@@ -1201,5 +1205,5 @@ ul.side_list
     +bordered-btm(!medium_grey_border)
     padding-bottom: 4px
     margin-bottom: 14px
-        
-   
+
+
