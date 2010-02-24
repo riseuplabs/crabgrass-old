@@ -2,7 +2,11 @@
 .swatches
   .gallery_swatch_portrait
     a     
-      :border-width 3px  
+      :border-width 3px 
+       
+.swatches
+  span
+    display: none
 
 .cover
   :margin-bottom 1em
@@ -30,6 +34,8 @@
 
 .cover a.thumbnail
   :border-width 3px
+
+
 
 
 .gallery-nav
@@ -77,14 +83,16 @@
   a                 
     :color #5A98C8
     :font-size 11px
-
-  .gallery-actions a
+    
+.gallery-actions
+  width: 100%
+  a
     :padding 2px 0px 4px 24px
     :margin-right 17px
 
 
-  .gallery-nav .meta
-    :float right
+.gallery-nav .meta
+  float: left
 
 
 .gallery-item
