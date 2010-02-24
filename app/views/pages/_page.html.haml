@@ -1,6 +1,17 @@
 %article
-  = check_box('page_checked', page.id, {:class => 'page_check'}, 'checked', '') if defined?(checkeable) && checkeable
+  = checkbox_for(page) if local_assigns[:checkeable]
   %section{section_html_attributes(page)}
-    - layout ||= '/pages/layouts/cover'
-    = render :partial => '/pages/core', :layout => layout, :locals => {:page => page}
+    - if local_assigns[:with_cover]
+      = cover_image(page)
+    - else
+      = owner_image(page)
+    %a{:href=> page_url(page)}
+      %h4{page_html_attributes(page)}
+        = page.title
+    - if page.flag[:excerpt].present?
+      %br/
+      %em
+        = page.flag[:excerpt]
+    = summary_for(page)
+    = notices_for(page) if local_assigns[:with_notice]
   = page_information_box_for(page, local_assigns || {})

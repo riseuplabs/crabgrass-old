@@ -240,7 +240,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals= [:columns, :layout, :checkeable]
+    allowed_locals = [:columns, :checkeable, :with_cover, :with_notice]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
@@ -625,6 +625,10 @@ module PageHelper
     check_box_tag 'pages[]', page.id, false, :id =>"page_checkbox_#{page.id}", :class => 'page_check_box'
   end
 
+  def summary_for(page)
+    text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)
+  end
+
   def owner_image(page)
     return unless page.owner
     display_name = page.owner.respond_to?(:display_name) ? page.owner.display_name : ""
@@ -641,7 +645,7 @@ module PageHelper
     { :class => classes.join(' ') }
   end
 
-  # we use a cached field from the user_participation join here and fall
+  # we use a cached field from the user_participation and fall
   # back to fetching the user_participation again.
   def page_is_unread(page)
     if page.flag[:user_participation]
@@ -659,6 +663,6 @@ module PageHelper
 
   def notices_for(page)
     notices = page.flag[:user_participation].try.notice
-    notices.blank? ? false : notices
+    render :partial=>'pages/notice', :collection => notices
   end
 end

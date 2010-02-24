@@ -76,4 +76,23 @@ module PagesHelper
       :view => view_settings }
   end
 
+  def page_list
+    case action_for_page_list
+    when :all
+      all_pages_list
+    when :my_work
+      my_work_list
+    end
+  end
+
+  def all_pages_list
+    render :partial => 'pages/list',
+      :locals => {:with_notice => true, :full_width => true}
+  end
+
+  def my_work_pages_list
+    render :partial => 'pages/list',
+      :locals => {:checkable => true, :with_notice => true, :full_width => true}
+  end
+
 end
