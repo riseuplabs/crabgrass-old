@@ -240,7 +240,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals = [:columns, :checkeable, :with_cover, :with_notice]
+    allowed_locals = [:columns, :checkable, :with_cover, :with_notice]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
@@ -663,6 +663,8 @@ module PageHelper
 
   def notices_for(page)
     notices = page.flag[:user_participation].try.notice
-    render :partial=>'pages/notice', :collection => notices
+    if notices.any?
+      render :partial=>'pages/notice', :collection => notices
+    end
   end
 end

@@ -1,6 +1,8 @@
 %article
-  = checkbox_for(page) if local_assigns[:checkeable]
   %section{section_html_attributes(page)}
+    - if local_assigns[:checkable]
+      .checkbox.left
+        = checkbox_for(page)
     - if local_assigns[:with_cover]
       = cover_image(page)
     - else
