@@ -1,3 +1,6 @@
 - content_for :third_nav do
   = render :partial => 'pages/tabs'
-= render :partial => 'pages/content', :locals => {:view_base_path => my_work_me_pages_path}
+= title_and_info_for(params[:view])
+= my_work_action_bar do
+  = my_work_hidden_fields
+  = my_work_pages_list
