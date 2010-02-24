@@ -547,7 +547,7 @@ module PageHelper
     end
 
     # sort by display name
-    menu_items.sort
+    menu_items.sort!
     # create select attributes
     options_for_select([[I18n.t(:all_page_types),'']] + menu_items, default_selected)
   end
