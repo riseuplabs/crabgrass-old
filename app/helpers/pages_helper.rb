@@ -81,7 +81,7 @@ module PagesHelper
     when :all
       all_pages_list
     when :my_work
-      my_work_list
+      my_work_pages_list
     end
   end
 
