@@ -1,11 +1,8 @@
 %ul
-  %li
-    = link_to I18n.t(:people), {:controller => 'groups/memberships', :action => 'list', :id => group}
+  = menu I18n.t(:people), {:controller => 'groups/memberships', :action => 'list', :id => group}
   - if group.network? and group.federatings.any?
-    %li
-      = link_to I18n.t(:groups), {:controller => 'groups/memberships', :action => 'groups', :id => group}
+    = menu I18n.t(:groups), {:controller => 'groups/memberships', :action => 'groups', :id => group}
   - if may_edit_memberships?
-    %li
-      = link_to I18n.t(:edit), {:controller => 'groups/memberships', :action => 'edit', :id => group}
+    = menu I18n.t(:edit), {:controller => 'groups/memberships', :action => 'edit', :id => group}
   %li
     = invite_link
