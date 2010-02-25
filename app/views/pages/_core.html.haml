@@ -1,9 +1,0 @@
-%a{:href=> page_url(page)}
-  %h4{page_html_attributes(page)}
-    = page.title
-- if page.flag[:excerpt].present?
-  %br/
-  %em
-    = page.flag[:excerpt]
-
-= text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)

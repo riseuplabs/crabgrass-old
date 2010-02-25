@@ -25,11 +25,11 @@ Scenario: I can see notifications and messages on my work
   And that user notified me about that page with message: "Comments in the house"
   And I am logged in
   When I am on my work page
-  Then I should see "Comments in the house"
-  And I should see that user's login
+  Then I should see "Commander Commenter notified you about this page on"
+  And I should see "Comments in the house"
   When I am on my all pages page
   Then I should see "Comments in the house"
-  And I should see that user's login
+  And I should see that user's display_name
 
 Scenario: I can see Pages I was notified of and the messages on all pages
   Given a user: "early" exists with display_name: "Early Bird"
@@ -41,12 +41,11 @@ Scenario: I can see Pages I was notified of and the messages on all pages
   And I am logged in
   When I am on my all pages page
   Then I should see "This is interesting stuff!"
-  And I should see the user: "early"'s login
+  And I should see "Early Bird notified you about this page on"
   And I should see "check this out!"
-  And I should see the user: "yan"'s login
+  And I should see "Yet another noti..."
   And I should see "yet another notification"
   When I am on my work page
   Then I should not see "check this out!"
-  And I should not see the user: "early"'s login
-
+  And I should not see "Early bird"
 
