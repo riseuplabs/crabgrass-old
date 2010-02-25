@@ -74,7 +74,7 @@ class PagesController < ApplicationController
   end
 
   def all
-    params[:view] ||= 'public'
+    params[:view] ||= 'networks'
     @path.default_sort('updated_at')
     fetch_pages_for @path
     rss_for_collection(all_me_pages_path, :all_pages_tab)
