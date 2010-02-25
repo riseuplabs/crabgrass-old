@@ -15,7 +15,7 @@ class CachingTest < ActionController::IntegrationTest
     login 'red'
     visit '/groups/rainbow/edit'
     # should save the fragment
-    assert_contain "ADMINISTRATION"
+    assert_contain I18n.t(:administration)
 
     # create a council
     login 'blue'
@@ -36,13 +36,13 @@ class CachingTest < ActionController::IntegrationTest
     visit '/rainbow'
 
     assert_contain 'Council'
-    assert_not_contain "ADMINISTRATION"
+    assert_not_contain I18n.t(:administration) 
 
     # blue should see the right links too if cache was expired
     login 'blue'
     visit '/rainbow'
 
     assert_contain 'Council'
-    assert_contain "ADMINISTRATION"
+    assert_contain I18n.t(:administration)
   end
 end
