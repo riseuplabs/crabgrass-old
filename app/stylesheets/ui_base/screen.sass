@@ -37,7 +37,7 @@ body
     +clearfix
     color= !medium_grey_text
     overflow: visible   
-    #content-container.login
+    #content-container
       background-image: none
       background-color= !white_bg
       padding-top: 40px 
@@ -46,16 +46,20 @@ body
         width: 764px
         overflow: visible
         form#entry
+          float: left
           +columns(5,14)
           +alpha(14)
           div
             label, a
               display: block
+            a
+              +blue-link
         div#welcome
           +columns(8,14)
           +omega(14)
+          margin-top: 15px
           p
-            margin-top: 14px
+            margin-top: 10px
   
     #content-container
       +container
