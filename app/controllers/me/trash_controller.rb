@@ -29,18 +29,16 @@ class Me::TrashController < Me::BaseController
 
   # post required
   def update
-    pages = params[:page_checked]
+    pages = params[:pages]
     if pages
-      pages.each do |page_id, do_it|
-        if do_it == 'checked' and page_id
-          page = Page.find_by_id(page_id)
-          if page
-            if params[:undelete] and may_undelete_page?(page)
-              page.undelete
-            elsif params[:remove] and may_remove_page?(page)
-              page.destroy
-              ## add more actions here later
-            end
+      pages.each do |page_id|
+        page = Page.find_by_id(page_id)
+        if page
+          if params[:undelete] and may_undelete_page?(page)
+            page.undelete
+          elsif params[:remove] and may_remove_page?(page)
+            page.destroy
+            ## add more actions here later
           end
         end
       end
