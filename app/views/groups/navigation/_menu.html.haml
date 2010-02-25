@@ -1,6 +1,6 @@
 %ul
-  = menu((I18n.t(:home)).upcase, url_for_group(@parent || @group), active_tab_for_nav(@second_nav, 'home'))
-  = menu((I18n.t(:pages)).upcase, [group_search_url(:action => 'pages'), group_search_url(:action => 'archive')], active_tab_for_nav(@second_nav, 'pages'))
-  = menu((I18n.t(:tasks)).upcase, group_search_url(:action => 'tasks'), active_tab_for_nav(@second_nav, 'tasks'))
+  = menu((I18n.t(:home)).capitalize, url_for_group(@parent || @group), active_tab_for_nav(@second_nav, 'home'))
+  = menu((I18n.t(:pages)).capitalize, [group_search_url(:action => 'pages'), group_search_url(:action => 'archive')], active_tab_for_nav(@second_nav, 'pages'))
+  = menu((I18n.t(:tasks)).capitalize, group_search_url(:action => 'tasks'), active_tab_for_nav(@second_nav, 'tasks'))
   - if may_update_group?
     = menu((I18n.t(:administration)).upcase, group_search_url(:action => 'edit'), active_tab_for_nav(@second_nav, 'administration'))

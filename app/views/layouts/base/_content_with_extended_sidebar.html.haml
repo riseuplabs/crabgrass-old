@@ -1,8 +1,10 @@
 
 %div.banner
-  #banner-container
+  #banner-container.no-avatar
     %header#banner-no-avatar
       = yield :banner
+%div.nav2
+  #nav2-container    
     %nav#second-level-aside
       = yield :info_box
     

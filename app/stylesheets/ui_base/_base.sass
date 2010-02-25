@@ -43,8 +43,11 @@
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
 
-=bordered2-top(!border_color= !warm_grey_border)
-  border-top= 1px "double" !border_color
+=bordered-2sides(!border_color= !warm_grey_border)
+  border-top= 1px "solid" #fff
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" #fff
 
 =bordered-left(!border_color= !warm_grey_border)
   border-left= 1px "solid" !border_color
@@ -204,61 +207,6 @@ h6
 
 
 /* content container */
-#identity-name
-  h1
-    color= !banner_title
-    float: left
-    display: inline
-    line-height: 1.2
-    font-size: 26px
-    font-weight: normal
-  a
-    +hover-link
-    +small-text
-    float: left
-    clear: left
-    color= !light_grey_text
-
-#banner-no-avatar
-  #identity-name
-    h1
-      width: 430px
-
-#banner
-  #identity-name
-    h1
-      width: 500px
-
-#group-action
-  +zero
-  width: 98px
-  display: inline
-  float: right
-  text-align: right
-  a
-    +hover-link
-    +small-text
-    color= !light_grey_text
-    padding: 4px 0 0 18px
-    margin-top: 4px
-    font-weight: bold
-
-#contribute
-  float: right
-  height: 12px
-  width: 90px
-  padding: 6px 6px 6px 2px
-  margin-top: 10px
-  background-color: #78be63
-  border: 1px solid #448c3b
-  span.small_icon
-    padding: 20px
-  a
-    color= !white_text
-    font-size: 11px
-    font-weight: normal
-    padding: 0
-    margin: 0 2px 0 0
 
 /* @end */
 
@@ -291,51 +239,28 @@ h6
 /* third-level nav */
 #third-level-container
   +container
-  height: 51px
-  background= !white_bg
+  +bordered-btm(!second_nav_border)
+  height: 24px
+  background= !third_nav_bg
   nav#third-level
     +columns(14)
     +full
-    border-top= 3px "double" !third_nav_border
-    margin-top: 28px
-    height: 20px
     width: 764px
-    #centered-nav
-      float: left
-      width: 100%
-      position: relative
-      height: 20px
-      ul
-        clear: left
-        float: left
-        height: 20px
-        margin-top: -13px
-        position: relative
-        left: 50%
-        text-align: center
-        li
-          +bordered-block(!third_nav_border)
-          +spaced
-          background= !third_nav_bg
-          height: 20px
-          display: block
-          float: left
-          position: relative
-          right: 50%
-          a
-            color= !third_nav_text
-            display: block
-            text-decoration: none
-            height: 8px
-            line-height: 0.5
-            padding: 6px 10px
-        li.current
-          background= !third_nav_current_bg
-          a
-            color= !third_nav_current_text
-            font-weight: bold
-        li.first
-          +bordered(!third_nav_border)
+    ul
+      li
+        +inline-list
+        font-size: 11px
+        font-weight: normal
+        line-height: 2.4
+        a
+          +hover-link
+          color= !third_nav_text
+          height: 10px
+          padding: 0 10px
+      li.current
+        a
+          font-weight: bold
+
 /* @end */
 
 

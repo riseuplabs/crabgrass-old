@@ -1,41 +1,13 @@
-/* floating top nav block - logout */
-// WAS FOR FLOATING CONTAINER
-// #top-nav
-//  +clearfix
-//  height: 30px
-//  #top-nav-container
-//    +container
-//    height: 30px
-#account-links
-  width: 280px
-  float: right
-  height: 30px
-#user
-  float: right
-  margin: 5px 8px 0 0
-  +clearfix
-  
-  li
-    +inline-list
-    +small-text
-    a
-      +blue-link
-      margin-right: 10px
-  li.first
-    float: left
-    margin: 1px 6px 0 0
-
-
-/* @end */
-    
-/* masthead with logout */
+//
+// masthead with logout
+//
 #masthead
   +clearfix 
-  height: 46px
+  height: 50px
   background= !masthead_header_bg
   #masthead-container
     +container
-    height: 46px
+    height: 50px
     overflow: visible
     #masthead-name
       +columns(14)
@@ -43,7 +15,7 @@
       width: 764px
       position: relative
       h2
-        color= !white_text
+        color= !masthead_header_text
         font-weight: normal
         font-size: 24px
         float: left
@@ -79,18 +51,19 @@
           .light-small
             +small-text
             color= !white_text
-/* @end */
 
 
-/* global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance) */
+//
+//global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
+//
 nav.page
   +clearfix
-  height: 30px
+  +bordered-top(!global_nav_top_brdr)
+  height: 29px
   background= !global_nav_bg
   overflow: visible
   #global-nav-container
     +container    
-    height: 30px
     overflow: visible
     #global-nav
       +columns(14)
@@ -100,6 +73,7 @@ nav.page
 //     
 // list-items from global nav
 //
+
 #menu li.menu
   float: left
   margin: 0
@@ -115,12 +89,10 @@ nav.page
     +inline-list
     a
       +hover-link
-      color= !white_text
+      color= !blue
       font-size: 12px
       font-weight: bold
-      margin: 0 26px 0 0
-    a:hover
-      color: #382526   
+      margin: 0 26px 0 0  
   li.current
     a
       color: #382526
@@ -135,7 +107,22 @@ nav.page
     a
       color: !warm_grey_text
       font-weight: normal
-      
+
+#account-links
+  width: 280px
+  float: right
+  height: 30px
+#user
+  float: right
+  margin: 5px 8px 0 0
+  +clearfix
+
+  li
+    +inline-list
+    +small-text
+    a
+      +blue-link
+      margin-right: 10px      
 // sub menu items
 
 #menu div.menu_items

@@ -585,7 +585,7 @@ module PageHelper
       url = new_me_page_url if may_create_pages?
     end
     return unless url
-    text = I18n.t(:contribute_content_link).capitalize
+    text = I18n.t(:contribute_content_link).upcase
     klass = options[:class] || 'a'
 
     content_tag(:div,

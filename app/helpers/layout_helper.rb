@@ -312,7 +312,7 @@ module LayoutHelper
  #     end
  #   else
       # no image
-      content_tag :h2, current_site.title, :class => 'site_title'
+      content_tag :h2, current_site.title
       # <h2><%= current_site.title %></h2>
  #   end
   end
