@@ -112,8 +112,9 @@ en:
   loadingdotdotdot: "Loading..."
 
   search_headline: "Search"
-  search_this_group: "Search this group only"
-  search_this_person: "Search this person only"
+  search_input_caption: "Search for pages"
+  search_this_group: "this group only"
+  search_this_person: "this person only"
   search_link: "Search"
 
   search_description: Search through all pages you have access to
