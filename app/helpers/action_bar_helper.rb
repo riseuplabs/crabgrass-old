@@ -27,8 +27,15 @@ module ActionBarHelper
     select_tag 'view_filter_select', options
   end
 
+  # render the action bar itself with
+  # view_base_path - Submit to this URL to get the different views
+  # settings - hash which describes what actions are available in the action bar
+  def action_bar(view_base_path, settings)
+  render :partial => 'common/action_bar',
+      :locals => {:settings => settings, :view_base_path => view_base_path}
+  end
+
   # return a form that contains a generated action bar and other content defined by user
-  # type - controller name symbol like :pages or :messages which determines
   # mark_path - POST form to this url (ex: /messages/mark)
   # settings - hash which describes what actions are available in the action bar
   # &block - the extra stuff inside the form (see request/_main_content.html.haml for example)
@@ -38,4 +45,12 @@ module ActionBarHelper
                     :complete => hide_spinner('mark_as'), &block)# {concat(form_contents)}
 
   end
+
+  # render the hidden fields for the action bar with
+  # settings - hash which describes what actions are available in the action bar
+  def action_bar_hidden_fields(settings)
+    render :partial => 'common/action_bar/hidden_form_fields',
+      :locals => {:settings => settings}
+  end
+
 end

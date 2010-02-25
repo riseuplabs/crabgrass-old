@@ -18,16 +18,6 @@ module PagesHelper
   end
 
   def all_pages_action_bar
-    render :partial => 'common/action_bar',
-      :locals => {:settings => all_pages_settings, :view_base_path => all_me_pages_path}
-    action_bar_form(mark_me_pages_path, all_pages_settings) do
-      yield
-    end
-  end
-
-  def all_pages_hidden_fields
-    render :partial => 'common/action_bar/hidden_form_fields',
-      :locals => {:settings => all_pages_settings}
   end
 
   def all_pages_settings
@@ -63,6 +53,7 @@ module PagesHelper
   end
 
   def my_work_settings
+    debugger
     { :select => my_work_select_settings,
       :mark => my_work_mark_settings,
       :view => my_work_view_settings }
