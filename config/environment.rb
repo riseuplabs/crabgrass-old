@@ -75,6 +75,7 @@ Rails::Initializer.run do |config|
   config.load_paths << "#{RAILS_ROOT}/app/sweepers"
 
   Engines.mix_code_from(:permissions)
+  Engines.disable_code_mixing = false
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
