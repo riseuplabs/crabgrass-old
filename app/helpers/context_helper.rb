@@ -184,7 +184,7 @@ module ContextHelper
   end
 
   def referer_crumb
-    session[:breadcrumbs_by_referer][referer]
+    breadcrumbs_by_referer[referer]
   end
 
   def referer_or_last_crumb(page)
