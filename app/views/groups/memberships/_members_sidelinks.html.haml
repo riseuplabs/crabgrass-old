@@ -1,4 +1,4 @@
-%ul
+%ul#nav4
   = menu I18n.t(:people), {:controller => 'groups/memberships', :action => 'list', :id => group}
   - if group.network? and group.federatings.any?
     = menu I18n.t(:groups), {:controller => 'groups/memberships', :action => 'groups', :id => group}

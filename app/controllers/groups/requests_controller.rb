@@ -15,6 +15,7 @@ class Groups::RequestsController < Groups::BaseController
                     having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
     @second_nav = 'administration'
     @third_nav = 'requests'
+    @fourth_nav = params[:state]
   end
 
   ##

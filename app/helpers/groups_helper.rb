@@ -86,7 +86,7 @@ module GroupsHelper
 
   def invite_link
     if may_create_invite_request?
-      link_to_active(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
+      menu(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
     end
   end
 

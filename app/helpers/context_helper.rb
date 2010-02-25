@@ -158,6 +158,11 @@ module ContextHelper
 
   end
 
+  def search_context
+    @context = referer_crumb
+    breadcrumbs_from_context(false)
+  end
+
   def no_context
     @context = []
     @left_column = nil
@@ -179,7 +184,7 @@ module ContextHelper
   end
 
   def referer_crumb
-    session[:breadcrumbs_by_referer][referer]
+    breadcrumbs_by_referer[referer]
   end
 
   def referer_or_last_crumb(page)
