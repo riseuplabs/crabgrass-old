@@ -71,6 +71,7 @@ module Me::MessagesHelper
               {:name => :unread, :translation => :unread}],
       :view =>
             [ {:name => :all, :translation => :all},
-              {:name => :unread, :translation => :unread}] }
+              {:name => :unread, :translation => :unread}],
+      :view_base_path => messages_path }
   end
 end

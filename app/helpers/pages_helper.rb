@@ -17,11 +17,11 @@ module PagesHelper
       :locals => {:with_notice => true, :full_width => true}
   end
 
-  def all_pages_action_bar
-  end
-
   def all_pages_settings
-    { :view => all_view_settings }
+    { :view => all_view_settings,
+      :mark_path => mark_me_pages_path,
+      :view_base_path => all_me_pages_path
+    }
   end
 
   def all_view_settings
@@ -39,24 +39,13 @@ module PagesHelper
       :locals => {:checkable => true, :with_notice => true, :full_width => true}
   end
 
-  def my_work_action_bar
-    render :partial => 'common/action_bar',
-      :locals => {:settings => my_work_settings, :view_base_path => my_work_me_pages_path}
-    action_bar_form(mark_me_pages_path, my_work_settings) do
-      yield
-    end
-  end
-
-  def my_work_hidden_fields
-    render :partial => 'common/action_bar/hidden_form_fields',
-      :locals => {:settings => my_work_settings}
-  end
-
   def my_work_settings
-    debugger
     { :select => my_work_select_settings,
       :mark => my_work_mark_settings,
-      :view => my_work_view_settings }
+      :view => my_work_view_settings,
+      :mark_path => mark_me_pages_path,
+      :view_base_path => my_work_me_pages_path
+    }
   end
 
   def my_work_select_settings
@@ -87,9 +76,12 @@ module PagesHelper
   # General View and Translation Key Helpers
   #
 
-  def title_and_info_for(view)
+  def title_for(view)
     render :partial => 'common/title_box',
       :locals => {:title => I18n.t(title_key_for(view))}
+  end
+
+  def info_for(view)
     render :partial => 'common/info_box',
       :locals => {:description => I18n.t(description_key_for(view))}
   end

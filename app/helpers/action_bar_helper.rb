@@ -27,30 +27,30 @@ module ActionBarHelper
     select_tag 'view_filter_select', options
   end
 
-  # render the action bar itself with
-  # view_base_path - Submit to this URL to get the different views
-  # settings - hash which describes what actions are available in the action bar
-  def action_bar(view_base_path, settings)
-  render :partial => 'common/action_bar',
-      :locals => {:settings => settings, :view_base_path => view_base_path}
+  # render the action bar with a form and hidden fields.
+  # The following options can be set:
+  # :select - List of selectors for the checkboxes
+  # :mark - List of flags to mark the selected pages as
+  # :view - List of views to select from
+  # :view_base_path - request other views based on this path (ex: /pages/all)
+  #
+  # The Lists are Arrays of Hashes with :name and :translation keys used.
+  # The content the action bar acts upon should be passed as a block.
+  def action_bar(options)
+    render (:partial => 'common/action_bar', :locals => {:settings => options})
   end
 
-  # return a form that contains a generated action bar and other content defined by user
+  # return a form that wraps the other content defined by user
   # mark_path - POST form to this url (ex: /messages/mark)
   # settings - hash which describes what actions are available in the action bar
   # &block - the extra stuff inside the form (see request/_main_content.html.haml for example)
-  def action_bar_form(mark_path, settings, &block)
-    form_remote_tag(:url => mark_path, :method => 'put', :update => 'main-content-full',
-                    :html => { :id => 'mark_form' }, :loading => show_spinner('mark_as'),
-                    :complete => hide_spinner('mark_as'), &block)# {concat(form_contents)}
-
-  end
-
-  # render the hidden fields for the action bar with
-  # settings - hash which describes what actions are available in the action bar
-  def action_bar_hidden_fields(settings)
-    render :partial => 'common/action_bar/hidden_form_fields',
-      :locals => {:settings => settings}
+  def action_bar_form(mark_path, &block)
+    form_remote_tag(:url => mark_path,
+      :method => 'put',
+      :update => 'main-content-full',
+      :html => { :id => 'mark_form' },
+      :loading => show_spinner('mark_as'),
+      :complete => hide_spinner('mark_as'), &block)
   end
 
 end

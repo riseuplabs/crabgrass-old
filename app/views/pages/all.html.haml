@@ -1,7 +1,8 @@
 - content_for :third_nav do
   = render :partial => 'pages/tabs'
-= title_and_info_for(params[:view])
-= action_bar(all_me_pages_path, all_pages_settings)
-= action_bar_form(mark_me_pages_path, all_pages_settings) do
-  = action_bar_hidden_fields(all_pages_settings)
+= title_for(params[:view])
+= info_for(params[:view])
+= action_bar(all_pages_settings)
+= action_bar_form(mark_me_pages_path) do
+  = render :partial => '/common/action_bar/hidden_form_fields'
   = all_pages_list
