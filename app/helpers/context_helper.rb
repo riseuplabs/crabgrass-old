@@ -158,6 +158,11 @@ module ContextHelper
 
   end
 
+  def search_context
+    @context = referer_crumb
+    breadcrumbs_from_context(false)
+  end
+
   def no_context
     @context = []
     @left_column = nil

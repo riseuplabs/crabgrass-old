@@ -60,9 +60,7 @@ class SearchController < ApplicationController
 
 
   def context
-    site_network_context
-    add_context I18n.t(:search_link), search_url(:path => @path)
-    breadcrumbs_from_context
+    search_context
   end
 
   def add_excerpts_to_pages(pages)
