@@ -1145,7 +1145,7 @@ en:
 
   # creating
 
-  contribute_content_link: "Create a Page"
+  contribute_content_link: "Create Page"
   contribute_group_content_link: "Add Page To {{group}}"
   page_create_owner: "Page Owner"
   create_page_information: "{{page_class}} Information"
