@@ -1,10 +1,14 @@
 - @networks = @group.networks
 - @committees = @group.committees_for(@access) || []
+- @groups = @group.groups.select{ |g| g.has_access? :view, current_user }
 
-- if((affiliations_count = @networks.size + @committees.size) > 0)
+- if((affiliations_count = @networks.size + @committees.size + @groups.size) > 0)
   %header
     %h4
       = I18n.t(:affiliations).downcase
+
+  - if @groups.any?
+    = render :partial => '/avatars/entity_list', :locals => { :collection => @groups.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :groups, :what => 'groups', :conditions => true }
 
   - if @networks.any?
     = render :partial => '/avatars/entity_list', :locals => { :collection => @networks.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :networks, :what => 'networks', :conditions => may_show_networks_of_group? }
