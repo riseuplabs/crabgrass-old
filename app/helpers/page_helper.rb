@@ -586,11 +586,11 @@ module PageHelper
     end
     return unless url
     text = I18n.t(:contribute_content_link).upcase
-    klass = options[:class] || 'a'
+
 
     content_tag(:div,
         link_to(text, url ),
-      :class => klass, :id => 'contribute'
+      :id => 'contribute'
     )
   end
 
