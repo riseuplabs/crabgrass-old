@@ -175,6 +175,8 @@ en:
   error: "Error"
   status: "Status"
 
+  optional_message: "optional message"
+
 
   ##
   ## MEDIA

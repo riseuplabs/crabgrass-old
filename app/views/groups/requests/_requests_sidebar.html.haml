@@ -1,0 +1,5 @@
+%ul#nav4
+  = menu I18n.t(:pending), {:state => "pending", :controller => "groups/requests", :action => "list", :id => @group}, active_tab_for_nav(@fourth_nav, 'pending') 
+  = menu I18n.t(:approved), {:state => "approved", :controller => "groups/requests", :action => "list", :id => @group}, active_tab_for_nav(@fourth_nav, 'approved')
+  = menu I18n.t(:rejected), {:state => "rejected", :controller => "groups/requests", :action => "list", :id => @group}, active_tab_for_nav(@fourth_nav, 'rejected')
+
