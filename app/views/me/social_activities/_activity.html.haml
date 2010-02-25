@@ -1,11 +1,10 @@
-- subject = activity.subject
-- object = activity.object
+- avatar = activity.avatar
 
 %tr
   %td.avatar
-    = link_to avatar_for(subject), url_for_entity(subject) unless subject.blank?
-  %td.avatar_xsmall
-    = link_to avatar_for(object, 'xsmall'), url_for_entity(object) unless object.blank?
+    = link_to avatar_for(avatar), url_for_entity(avatar) unless avatar.blank?
+  %td
+    %span.small_icon{:class => "#{activity.icon}_16"}
   %td.description
     = linked_activity_description(activity)
   %td.date

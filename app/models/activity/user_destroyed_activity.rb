@@ -7,6 +7,10 @@ class UserDestroyedActivity < Activity
   alias_attr :recipient,  :subject
   alias_attr :username,   :extra
 
+  def avatar
+    nil
+  end
+
   def description(view=nil)
     I18n.t(:activity_user_destroyed, :user => username)
   end
