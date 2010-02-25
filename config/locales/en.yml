@@ -1034,7 +1034,7 @@ en:
   page_list_heading_last_post: "last post"
   page_list_heading_views: "views"
 
-  page_notice_message: "page sent by {{user}} on {{date}}"
+  page_notice_message: "{{user}} notified you about this page on {{date}}"
   page_with_message: "with message"
   pagination_next: "Next"
   pagination_previous: "Previous"
@@ -1144,7 +1144,7 @@ en:
 
   entity_autocomplete_tip: "Enter the name of a group or person."
 
-  notice_with_message: "with message {{mesage}}"
+  notice_with_message: "with message {{message}}"
 
   # creating
 

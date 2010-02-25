@@ -424,17 +424,6 @@ module PageHelper
     h(str).gsub /\{(\/?)bold\}/, '<\1b>'
   end
 
-  # def page_notice_row(notice, column_size)
-  #   html = "<td class='excerpt', colspan='#{column_size}'>"
-  #   html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
-  #   if notice[:message].any?
-  #     notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
-  #     html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
-  #   end
-  #   html += "</td>"
-  #   content_tag(:tr, html, :class => "page_info")
-  # end
-
   def page_tags(page=@page, join=nil)
     join ||= "\n" if join.nil?
     if page.tags.any?
@@ -667,4 +656,16 @@ module PageHelper
       render :partial=>'pages/notice', :collection => notices
     end
   end
+
+  def page_notice_message(notice)
+    sender = User.find_by_login notice[:user_login]
+    date = friendly_date notice[:time]
+    html = I18n.t(:page_notice_message, :user => link_to_user(sender), :date => date)
+    if notice[:message].any?
+      notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
+    end
+    html
+  end
+
 end
