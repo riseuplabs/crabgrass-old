@@ -16,7 +16,6 @@
   %div
     - if may_signup?
       = link_to(I18n.t(:signup_link), { :controller => '/account', :action => 'signup', :redirect => params[:redirect] })
-    %br
     = link_to(I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password')  
     = hidden_field_tag 'redirect', params[:redirect]  
     
