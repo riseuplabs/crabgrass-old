@@ -56,6 +56,11 @@ class Activity < ActiveRecord::Base
   ## ACTIVITY DISPLAY
   ##
 
+  # user to be used as avatar in the activities list for the current user
+  def avatar
+    self.respond_to?(:user) ? self.user : self.subject
+  end
+
   # to be defined by subclasses
   def icon()
     'exclamation'
@@ -213,7 +218,7 @@ class Activity < ActiveRecord::Base
     # if it's a group, try to get the group name directly from the reference object
     # need to figure out if i'm the subject or object!
     if thing.to_s == 'group'
-      name = (self.object_type == 'Group') ? self.object.try.name : self.subject.try.name 
+      name = (self.object_type == 'Group') ? self.object.try.name : self.subject.try.name
     end
     name ||= self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
     '<span class="%s">%s</span>' % [type, name]
