@@ -17,14 +17,14 @@ class Me::RequestsController < Me::BaseController
   # pending requests
   def index
     params[:view] ||= "to_me"
-    @requests = Request.having_state(:pending).send(current_view_named_scope, current_user).paginate(page_params)
+    @requests = Request.having_state(:pending).send(current_view_named_scope, current_user).by_updated_at.paginate(page_params)
   end
 
   def approved
     params[:view] ||= "all"
     @not_checkeable = true
 
-    @requests = Request.having_state(:approved).send(current_view_named_scope, current_user).paginate(page_params)
+    @requests = Request.having_state(:approved).send(current_view_named_scope, current_user).by_updated_at.paginate(page_params)
     render :action => :index
   end
 
@@ -32,7 +32,7 @@ class Me::RequestsController < Me::BaseController
     params[:view] ||= "all"
     @not_checkeable = true
 
-    @requests = Request.having_state(:rejected).send(current_view_named_scope, current_user).paginate(page_params)
+    @requests = Request.having_state(:rejected).send(current_view_named_scope, current_user).by_updated_at.paginate(page_params)
     render :action => :index
   end
 
