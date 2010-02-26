@@ -12,12 +12,6 @@
 ##
 ## GLOBAL
 ##
-
-enabled_languages:
-  - en
-  - es
-  - pt
-  - ar
 enabled_mods:
   - super_admin
   - moderation
