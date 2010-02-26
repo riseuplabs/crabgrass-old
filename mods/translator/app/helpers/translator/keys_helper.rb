@@ -28,7 +28,7 @@ module Translator::KeysHelper
     else
       link_line(
         link_to_active('all keys', {:controller => 'keys', :action => nil, :filter => nil}),
-        link_to_active("search", {:controller => 'keys', :action => nil, :filter => 'search'}),
+        link_to_active("search", {:controller => 'keys', :action => nil, :filter => 'search'})
       )
     end
   end
