@@ -59,10 +59,6 @@ class SearchController < ApplicationController
   end
 
 
-  def context
-    search_context
-  end
-
   def add_excerpts_to_pages(pages)
     config = ThinkingSphinx::Configuration.instance
     client = Riddle::Client.new config.address, config.port
