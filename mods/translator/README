@@ -3,6 +3,14 @@ Translator
 
 This crabgrass mod allow add a translation user interface to crabgrass.
 
+
+Languages in the database
+=========================
+
+
+Before you start translating, you must setup your database.
+Read doc/I18N on how to do this.
+
 Usage
 =======
 
@@ -25,15 +33,14 @@ Run Translator Migrations:
 $ ./script/generate plugin_migration
 $ rake db:migrate
 
-If you haven't done so during installation, run:
+If you haven't done so already, run:
 $ rake cg:load_default_data
 
 This will load all files matching RAILS_ROOT/config/db/*.yml into the database
 including config/db/languages.yml - the list of available languages.
 
 
-restart rails and browse to: http://localhost:3000/translator
-
+Restart rails and browse to: http://localhost:3000/translator
 
 
 Adding Languages
