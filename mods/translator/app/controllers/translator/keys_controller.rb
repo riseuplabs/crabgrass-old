@@ -39,18 +39,6 @@ class Translator::KeysController < Translator::BaseController
     @key = Key.find_by_name(params[:id])
   end
 
-  # POST /keys
-  def create
-    @key = Key.new(params[:key])
-    if @key.save
-      flash_message :success => 'Key was successfully created.'
-      redirect_to(@key)
-    else
-      flash_message_now :object => @key
-      render :action => "new"
-    end
-  end
-
   # PUT /keys/1
   def update
     @key = Key.find_by_name(params[:id])
