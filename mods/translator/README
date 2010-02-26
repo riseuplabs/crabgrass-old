@@ -6,39 +6,44 @@ This crabgrass mod allow add a translation user interface to crabgrass.
 Usage
 =======
 
+
+Enable the mod and specify the translation group name in config/crabgrass.production.yml:
+
+<begin>
+enabled_mods:
+  - translator
+
+translation_group: rainbow
+<end>
+
 edit config/routes.rb
   map.from_plugin :translator
 
-Specify the logins you want to be translators in config/sites.yml:
-
-<begin>
-default:
-  name: crabgrass
-  domain: localhost
-  email_sender: 'crabgrass-system@localhost'
-  secret: 'd24833cab5fafcd17f2c555f7663c0524a938e5ed6df2af8bf134d3959fc8ac3214fa8c7'
-  pagination_size: 29
-  translators:
-  - sally
-  - bob
-  translation_group:
-  - translators
-<end>
-
-Use "translators" and/or "translation_group"
-
-Uncomment translator on config/mods_enabled.list
 
 Run Translator Migrations:
 
 $ ./script/generate plugin_migration
 $ rake db:migrate
 
-Populate the translator database with the contents of RAILS_ROOT/lang/*.yml:
+If you haven't done so during installation, run:
+$ rake cg:load_default_data
 
-$ this doesn't exist yet.
+This will load all files matching RAILS_ROOT/config/db/*.yml into the database
+including config/db/languages.yml - the list of available languages.
+
 
 restart rails and browse to: http://localhost:3000/translator
+
+
+
+Adding Languages
+================
+
+Add it to config/db/languages.yml and (optionaly if you plan to run tests) to test/fixtures/languages.yml
+
+Import it to the database by running:
+
+$ rake cg:load_default_data
 
 
 Running Translator in development mode
