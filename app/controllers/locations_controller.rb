@@ -1,7 +1,12 @@
 class LocationsController < ApplicationController
 
   def all_admin_codes_options
-    geo_admin_codes = GeoCountry.find_by_id(params[:country_code]).geo_admin_codes
+    # can select 'Country' which isn't really a country, and that should reset the form
+    if params[:country_code] == "Country"
+      geo_admin_codes = []
+    else
+      geo_admin_codes = GeoCountry.find_by_id(params[:country_code]).geo_admin_codes
+    end
     render :update do |page|
       page.replace 'state_dropdown', :partial => '/locations/state_dropdown', :locals => {:display=>'inline', :name => params[:select_state_name], :geo_admin_codes => geo_admin_codes}
       page.show 'state_dropdown' 
