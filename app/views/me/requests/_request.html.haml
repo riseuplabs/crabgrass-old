@@ -2,13 +2,8 @@
   %td.check
     - unless @not_checkeable
       = check_box_tag 'requests[]', request.id, false, :id =>"request_checkbox_#{request.id}", :class => 'request_check'
-  %td= link_to avatar_for(request.created_by, 'xsmall'), url_for_entity(request.created_by)
+  %td= link_to avatar_for(request.created_by, 'small'), url_for_entity(request.created_by)
   %td= expand_links(request.description)
-  %td
-    %ul.pages-status
-      %li
-        = friendly_date(request.created_at)
-        = I18n.t(:at)
-      %li= request.created_at.to_s(:time)
-      %li
-        &nbsp;
+  %td.date
+    = friendly_date(request.created_at)
+
