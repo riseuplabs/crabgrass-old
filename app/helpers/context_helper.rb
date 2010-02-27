@@ -115,6 +115,11 @@ module ContextHelper
     breadcrumbs_from_context if update_breadcrumbs
   end
 
+  def account_context(size='large', update_breadcrumbs=false)
+    me_context(size, update_breadcrumbs)
+    @active_tab = :account
+  end
+
   def page_context
     if @page and !@page.new_record?
       if @group and @page.group_ids.include?(@group.id)

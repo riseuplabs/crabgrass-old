@@ -7,6 +7,7 @@
 
   - content_for :secondary_nav do
     - menu = menu_partial_for(@active_tab)
-    = render :partial => menu
+    - if ! menu.nil?
+      = render :partial => menu
   = yield
 
