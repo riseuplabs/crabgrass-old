@@ -114,15 +114,18 @@ nav.page
   height: 30px
 #user
   float: right
-  margin: 5px 8px 0 0
+  margin: 3px 8px 0 0
   +clearfix
 
   li
     +inline-list
     +small-text
-    a
-      +blue-link
-      margin-right: 10px      
+  a
+    +blue-link
+    margin-right: 5px
+    margin-left: 5px      
+    &.active
+      font-weight: bold
 // sub menu items
 
 #menu div.menu_items
