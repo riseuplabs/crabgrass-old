@@ -28,7 +28,7 @@ class RootController < ApplicationController
   def featured
     update_page_list('featured_panel',
       :pages => paginate('featured_by', @group.id, 'descending', 'updated_at'),
-      :expanded => true
+      :columns => [:icon, :title, :last_updated]
     )
   end
 
