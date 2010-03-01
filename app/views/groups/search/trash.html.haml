@@ -1,6 +1,9 @@
 - content_for(:html_head) do
   = group_search_rss
 
+- content_for :third_nav do
+  = render :partial => 'groups/navigation/group_pages_tabs'
+
 %h3
   = I18n.t(:trash)
 

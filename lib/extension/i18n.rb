@@ -7,7 +7,7 @@ module I18n
 
     def available_languages
       load_available_languages if @languages.blank?
-      @languages.values.sort_by(&:id)
+      @languages.values.compact.sort_by(&:id)
     end
 
     def site_scope

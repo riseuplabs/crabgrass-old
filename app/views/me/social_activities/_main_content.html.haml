@@ -1,6 +1,9 @@
-%table#activity
-  = render :partial => 'activity', :collection => @activities
+%section#social-activities
+  %header
+    = pagination_for(@activities)
+
+  %table
+    = render :partial => 'activity', :collection => @activities
 
   %footer
-    %span.pagination
-      = pagination_for(@activities)
+    = pagination_for(@activities)

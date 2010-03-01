@@ -18,9 +18,11 @@ class ContactController < ApplicationController
     elsif request.post? and params[:send]
       begin
         RequestToFriend.create! :created_by => current_user, :recipient => @user
-        flash_message_now :success => I18n.t(:contact_request_sent)
+        flash_message :success => I18n.t(:contact_request_sent)
       rescue Exception => exc
-        flash_message_now :exception => exc
+        flash_message :exception => exc
+      ensure
+        redirect_to url_for_user(@user)
       end
     end
   end

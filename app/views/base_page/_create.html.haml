@@ -1,11 +1,11 @@
 .big_icon{ :class => "#{@page_class.icon}_48"}
   %h1
-    = I18n.t(:create_a_new_thing, :thing => content_tag(:i, page_class))
+    = I18n.t(:create_a_new_thing, :thing => content_tag(:i, @page_class.class_display_name))
 
 - if @group
   = I18n.t(:page_added_to_group, :group_type => @group.group_type.downcase, :group_name => content_tag(:b,@group.display_name))
 
-  
+
 - sections = [] if sections.nil?
 - multipart = sections.grep 'file'
 

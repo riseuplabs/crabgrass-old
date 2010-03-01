@@ -3,11 +3,11 @@
     = render :partial => 'browse_people_tabs'
 
 %section#people_listing
-  = render :partial => 'users'
-
-  %br.clear
   %h3{:class=>'dim pagination_label'}
     = I18n.t(:new_people_in_weeks)
+  %br.clear
+  = render :partial => 'users'
+
   = pagination_links @users
 
 = call_hook :bottom_people_list

@@ -358,6 +358,7 @@ module LayoutHelper
   def banner_partial_for(toplevel_tab)
     case toplevel_tab
     when :me then 'me/navigation/banner'
+    when :account then 'me/navigation/banner'
     when :people then 'people/navigation/banner'
     else 'groups/navigation/banner'
     end
@@ -366,6 +367,7 @@ module LayoutHelper
   def menu_partial_for(toplevel_tab)
     case toplevel_tab
     when :me then 'me/navigation/menu'
+    when :account then nil
     when :people then 'people/navigation/menu'
     else 'groups/navigation/menu'
     end

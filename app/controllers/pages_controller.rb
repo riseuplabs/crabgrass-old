@@ -31,7 +31,7 @@ class PagesController < ApplicationController
   before_filter :login_required, :except => [:search]
   stylesheet 'page_creation', :action => :new
   stylesheet 'messages'
-  permissions 'pages', 'groups/base'
+  permissions 'pages', 'groups/base', 'groups/memberships', 'groups/requests'
   helper 'action_bar', 'tab_bar', 'groups'
   layout 'header'
 
@@ -94,7 +94,7 @@ class PagesController < ApplicationController
     params[:view] ||= 'work'
     path = parse_filter_path("/#{params[:view]}/#{current_user.id}")
     fetch_pages_for path
-    render :partial => '/pages/content', :locals => {:view_base_path => view_path_from_referer}
+    render :action => action_from_referer, :layout => false
   end
 
   protected
@@ -153,11 +153,11 @@ class PagesController < ApplicationController
     )
   end
 
-  def view_path_from_referer
+  def action_from_referer
     case referer
-    when /me\/pages\/all/ then all_me_pages_path
-    when /me\/pages\/my_work/ then my_work_me_pages_path
-    else my_work_me_pages_path
+    when /me\/pages\/all/ then :all
+    when /me\/pages\/my_work/ then :my_work
+    else :my_work
     end
   end
 

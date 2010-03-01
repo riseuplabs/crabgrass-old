@@ -59,10 +59,6 @@ class SearchController < ApplicationController
   end
 
 
-  def context
-    search_context
-  end
-
   def add_excerpts_to_pages(pages)
     config = ThinkingSphinx::Configuration.instance
     client = Riddle::Client.new config.address, config.port
@@ -78,6 +74,7 @@ class SearchController < ApplicationController
       :around           => 5           # how much text around each match to show. it is not characters. words maybe?
     )
     results.each_with_index do |result, i|
+      result = h(result)
       result.gsub!("{bold}", '<span class="search-excerpt">')
       result.gsub!("{/bold}", '</span>')
       pages[i].flag[:excerpt] = result

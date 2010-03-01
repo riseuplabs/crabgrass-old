@@ -99,6 +99,11 @@ sv:
   name: Svenska
   code: sv
 
+bg:
+  id: 85
+  name: български език
+  code: bg
+
 da:
   id: 104
   name: Dansk

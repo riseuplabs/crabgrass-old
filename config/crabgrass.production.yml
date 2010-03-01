@@ -12,15 +12,10 @@
 ##
 ## GLOBAL
 ##
-
-enabled_languages:
-  - en
-  - es
-  - pt
-  - ar
 enabled_mods:
   - super_admin
   - moderation
+  - translator
 enabled_tools:
   - asset_tool
   - core_tools
@@ -49,9 +44,10 @@ enabled_tools:
 ##
 
 sites:
-  - name: site1 
-    admin_group: rainbow 
+  - name: site1
+    admin_group: rainbow
     moderation_group: rainbow
+    translation_group: animals
 #  - name: red
 #    admin_group: redadmins
 

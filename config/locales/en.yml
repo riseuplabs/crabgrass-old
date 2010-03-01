@@ -94,6 +94,7 @@ en:
   total: "{{count}} total"
   affiliations: "Affiliations"
   pages: "Pages"
+  comments: "Comments"
   browse: "Browse"
   discover: "Discover"
 
@@ -771,7 +772,8 @@ en:
   group_wiki: Group Wiki
   rss_feed: RSS Feed
   group_has_no_public_profile: This group does not have a public profile.
-  pending_tasks: pending tasks.
+  pending_tasks: 'pending tasks'
+  completed_tasks: 'completed tasks'
   no_committees: no committees
   category: Category
   founded: Founded

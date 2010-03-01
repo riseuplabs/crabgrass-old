@@ -111,7 +111,7 @@
 
 .clear
   clear: both
-  
+
 .blue-link
   +blue-link
 
@@ -267,9 +267,12 @@ h6
 /* @end */
 
 
-/* groups page feed, me-section page feed, group landing/wiki section */
+/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
+#sitehome-wiki
+  #wiki-area
+    margin: 10px 0 40px 0
 
-#pages, #group-wiki
+#pages, #group-wiki, #sitehome-wiki
   +partial-width
   margin: 30px 0 0
   h3
@@ -282,7 +285,7 @@ h6
       a
         +blue-link
 
-#pages, #group-wiki, #activities
+#pages, #group-wiki
   article
     +partial-width
     +bordered-btm(!light_grey_border)
@@ -424,6 +427,8 @@ span.search-excerpt
 footer.page
   background= !white_bg
   height: 65px
+  .language-menu
+    float: right
 .space
   height: 22px
 .small-space
@@ -639,6 +644,7 @@ nav#nav-full
   font-size: 11px
   color= !medium_grey_text
   display: inline
+  margin-top: 5px
   a
     +blue-link
 
@@ -753,65 +759,68 @@ table
     td.date
       font-size: 10px
 
-table#activity
+#social-activities
   +full-width
-  tr
-    td
-      +bordered-btm(!light_grey_border)
-      padding: 6px
-    td.date
-      font-size: 10px
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
+        padding: 6px
+      td.date
+        font-size: 10px
 
-table#messages
-  table-layout: fixed
-  width: 764px
-  float: left
-  tr
-    td
-      +bordered-btm(!light_grey_border)
-      padding: 12px 6px
-    td.reply
-  tr.unread
-    td
-      font-weight: bold
-  tr
-    td.check
-      width: 36px
-    td.reply
-      width: 30px
-    td.avatar
-      width: 150px
-    td.message
-      padding: 0
-      margin: 0
-      a
-        display: block
+#messages
+  +full-width
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
         padding: 12px 6px
-        text-decoration: none
-        &:hover
-          background-color: #ffc
-        .message-body
-          text-decoration: underline
+      td.reply
+    tr.unread
+      td
+        font-weight: bold
+    tr
+      td.check
+        width: 36px
+      td.reply
+        width: 30px
+      td.avatar
+        width: 150px
+      td.message
+        padding: 0
+        margin: 0
+        a
+          display: block
+          padding: 12px 6px
+          text-decoration: none
+          &:hover
+            background-color: #ffc
+          .message-body
+            text-decoration: underline
 
-    td.date
-      font-size: 10px
-      width: 80px
+      td.date
+        font-size: 10px
+        width: 80px
 
-table#messages.thread
-  margin: 12px 0
-  tr
-    td.avatar
-      width: 60px
-    td.name
-      width: 160px
-      a.name_icon
-        padding-right: 10px
-    td.date
-      font-size: 10px
-      width: 80px
+#messages.thread
+  table
+    margin: 12px 0
+    tr
+      td.avatar
+        width: 60px
+      td.name
+        width: 160px
+        a.name_icon
+          padding-right: 10px
+      td.date
+        font-size: 10px
+        width: 80px
 
 #tag-cloud
-  text-align: center
+  //text-align: center
   li
     display: inline-block
     float: none
@@ -819,23 +828,24 @@ table#messages.thread
     text-align: center
     a
       +hover-link
-  .tag1
-    font-size: 20px
-  .tag2
-    font-size: 18px
-  .tag3
-    font-size: 16px
-  .tag4
-    font-size: 14px
-  .tag5
-    font-size: 12px
   .tag6
+    font-size: 20px
+  .tag5
+    font-size: 18px
+  .tag4
+    font-size: 16px
+  .tag3
+    font-size: 14px
+  .tag2
+    font-size: 12px
+  .tag1
     font-size: 10px
 #wiki-content
   article
     h2
       +partial-width
       clear: both
+      padding-bottom: 8px
 
 /* footer */
 
@@ -943,32 +953,7 @@ q
 img
 
 /* @end */
-#activities
-  +bordered-btm(!light_grey_border)
-  +columns(10,10)
-  +clearfix
-  width: 540px
-  margin: 20px 0 0
-  .left
-    +columns(5,10)
-    +alpha(10)
-    +clearfix
-  .right
-    +columns(5,10)
-    +omega(10)
-    +clearfix
-  ul
-    a
-      +hover-link
-    li
-      margin-bottom: 4px
-      line-height: 1.4
-      img
-        float: left
-        padding: 6px 6px 6px 0
-      label.date
-        font-size: 9px
-        color= !lighter_grey_text
+
 
 
 #announcements
@@ -1016,6 +1001,33 @@ img
         border: 1px solid #ccc
         width: 300px
         height: 16px
+  #activities
+    +bordered-btm(!light_grey_border)
+    +columns(10,10)
+    +clearfix
+    width: 540px
+    margin: 20px 0 0
+    .left
+      +columns(5,10)
+      +alpha(10)
+      +clearfix
+    .right
+      +columns(5,10)
+      +omega(10)
+      +clearfix
+    ul
+      a
+        +hover-link
+      li
+        margin-bottom: 4px
+        line-height: 1.4
+        img
+          float: left
+          padding: 6px 6px 6px 0
+        label.date
+          font-size: 9px
+          color= !lighter_grey_text
+
 
 #helpful-links
   +columns(10,10)
