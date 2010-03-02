@@ -5,14 +5,13 @@
   %table(summary='message thread' class='pretty')
     = render :partial => 'message_post', :collection => @posts, :locals => {:last_post => @posts.last}
 
-  %div#send-message.say-box
-    = render :partial => 'send_form', :locals => {:recipient_name => @recipient.login}
+  %div#messages-forms
+    %div#send-message#say-box
+      = render :partial => 'send_form', :locals => {:recipient_name => @recipient.login}
 
   %footer
     = pagination_for(@posts)
 
-    %br/
-    %br/
-    .pagination{:style => "float:none;"}
-      =link_to "« " + I18n.t(:pagination_previous), previous_message_path
+    .pagination.secondary
+      =link_to "« " + I18n.t(:pagination_previous), previous_message_path, :class => "left"
       =link_to I18n.t(:pagination_next) + " »", next_message_path, :class => "right"
