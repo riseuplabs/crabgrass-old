@@ -4,8 +4,8 @@
       .checkbox.left
         = checkbox_for(page)
     - if local_assigns[:with_cover]
-      = cover_image(page)
-    - else
+      = cover_for(page)
+    - elsif local_assigns[:with_owner] || local_assigns[:with_owner].nil?
       = owner_image(page)
     %a{:href=> page_url(page)}
       %h4{page_html_attributes(page)}

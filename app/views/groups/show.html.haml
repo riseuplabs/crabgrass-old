@@ -9,5 +9,4 @@
 
 = render :partial => '/announcement_page/announcements'
 
-= render :partial => '/pages/list', :locals => {:title => I18n.t(:recent_pages)}
-
+= list_pages :title => I18n.t(:recent_pages), :with_cover => true

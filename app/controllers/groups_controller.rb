@@ -8,6 +8,7 @@ class GroupsController < Groups::BaseController
   stylesheet :wiki_edit
 
   helper 'groups', 'wiki', 'base_page'
+  helper 'groups/search'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]

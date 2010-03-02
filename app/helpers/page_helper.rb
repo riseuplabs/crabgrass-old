@@ -166,6 +166,18 @@ module PageHelper
 
   # *NEWUI
   #
+  # wrapper for the render :partial call. Options can be the following:
+  # * title
+  # * with_cover :: show cover image
+  # * with_owner :: show owner avatar (default)
+  # * checkable :: add a checkbox for selecting pages
+  # * columns :: info to be displayed in page info box (see below)
+  # * with_notice :: show notifications about that page
+  def list_pages(options)
+    render :partial => '/pages/list', :locals => options
+  end
+  # *NEWUI
+  #
   # helper to show stars of an item (page or whatever that responds to stars_count)
   #
   def stars_for(item)
@@ -240,7 +252,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals = [:columns, :checkable, :with_cover, :with_notice]
+    allowed_locals = [:columns, :checkable, :with_cover, :with_owner, :with_notice]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
