@@ -1428,7 +1428,7 @@ en:
   survey_introduction_tab: "Introduction"
   survey_create_tab: "Create Survey"
   survey_edit_tab: "Edit Survey"
-  survey_list_all_tab: "List All Responses"
+  survey_list_all_tab: "List Responses"
   survey_my_response_tab: "My Response"
   survey_rate_responses_tab: "Rate Responses"
   survey_take_tab: "Take Survey"
