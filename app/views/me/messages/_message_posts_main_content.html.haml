@@ -2,7 +2,7 @@
   %header
     = pagination_for(@posts)
 
-  %table{:summary => 'message thread'}
+  %table(summary='message thread' class='pretty')
     = render :partial => 'message_post', :collection => @posts, :locals => {:last_post => @posts.last}
 
   %div#send-message.say-box
