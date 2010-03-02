@@ -90,10 +90,6 @@
   font-size= !sized
   font-weight: normal
 
-=full-width
-  +columns(14,14)
-  width: 764px
-
 =partial-width
   +columns(10,10)
   width: 540px
@@ -205,8 +201,7 @@ h6
 //
 //misc
 //
-.full-width
-  +full-width
+
 
 
 /* content container */
@@ -218,7 +213,7 @@ h6
 //
 
 #title-box-full, #info-box-full
-  +full-width
+  width: 764px
   height: 16px
   h3
     font-size: 15px
@@ -339,10 +334,11 @@ h6
           +blue-link
 
 #pages.full
-  +full-width
+  +clearfix
+  width: 764px
   h3
     +bordered-btm(!medium_grey_border)
-    +full-width
+    width: 764px
     padding: 0 0 8px
     float: left
     display: inline
@@ -354,14 +350,9 @@ h6
     display: inline
     a
       +blue-link
-
-
-#pages.full
-  +clearfix
-  +full-width
   article
-    +full-width
     +bordered-btm(!light_grey_border, "dotted")
+    width: 764px
     margin: 0
     padding: 10px 0
     .pages-info
@@ -463,10 +454,10 @@ td.reply
   min-height: 24px
 #browse-content
   +clearfix
-  +full-width
+  width: 764px
   nav
     +clearfix
-    +full-width
+    width: 764px
 button.icon_16
   +zero
   vertical-align: text-top
@@ -612,7 +603,7 @@ button.icon_16
 
 
 nav#nav-full
-  +full-width
+  width: 764px
   height: 28px
   ul
     +clearfix
@@ -722,7 +713,7 @@ nav#tabs
 
 #action-bar
   +bordered-top-btm
-  +full-width
+  width: 764px
   clear: both
   height: 21px
   h4
@@ -760,7 +751,7 @@ table
       font-size: 10px
 
 #social-activities
-  +full-width
+  width: 764px
   table
     width: 100%
     tr
@@ -771,7 +762,7 @@ table
         font-size: 10px
 
 #messages
-  +full-width
+  width: 764px
   table
     width: 100%
     tr
