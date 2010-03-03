@@ -2,7 +2,6 @@
 %br
 = state_dropdown('profile','state_id', @profile.country_id)
 %br
-= I18n.t(:location_city).capitalize
 = city_text_field('profile','geo_city_name')
 %br
 = city_id_field('profile', 'city_id') 

@@ -5,6 +5,7 @@ class Groups::CommitteesController < GroupsController
     @group = Committee.new
     @second_nav = 'administration'
     @third_nav = 'settings'
+    @fourth_nav = 'new committee'
   end
 
   def create

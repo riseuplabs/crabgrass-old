@@ -6,4 +6,4 @@
   - if may_edit_menu?
     = menu I18n.t(:menu_items), groups_menu_items_url(:action => :index)
   %li= destroy_group_link(@parent || @group)
-  %li= create_committee_link
+  %li= create_committee_link(@fourth_nav)

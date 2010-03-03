@@ -14,4 +14,7 @@
 
     %footer
       %span.pagination
-        = pagination_for(pages)
+        - if pagination_link.nil?
+          = pagination_for(pages)
+        - else
+          = pagination_link
