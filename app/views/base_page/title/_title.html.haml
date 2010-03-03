@@ -1,8 +1,8 @@
-%div#title
+%div#title.page_title.shy_parent
 
   - if may_edit_title?
     %div{:style => 'float: right'}
-      = link_to_modal(I18n.t(:edit_title), {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:icon => 'pencil'})
+      = link_to_modal(I18n.t(:edit_title), {:url => {:controller => 'base_page/title', :action => 'edit', :page_id => @page.id}}, {:class => 'shy', :icon => 'pencil'})
 
   %h3
     = icon_for @asset if @asset
