@@ -76,7 +76,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     # check the listing
     get :list, :page_id => pages("survey1").id
     assert_response :success
-    assert_active_tab "List All Responses"
+    assert_active_tab "List Responses"
 
     response = assigns("responses").detect {|r| r.user_id == blue_id}
     assert_equal ["ba1", "ba2", "ba3"], response.answers.map{|a| a.value}
