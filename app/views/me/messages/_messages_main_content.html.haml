@@ -14,7 +14,7 @@
     %header
       = pagination_for(@discussions)
 
-    %table{:summary => 'messages'}
+    %table(summary='messages' class='pretty')
       = render :partial => 'message', :collection => @discussions
 
     %footer

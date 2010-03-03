@@ -1,11 +1,11 @@
 <h2 class="bright"><%= I18n.t(:survey_previous_result) %></h2>
-
+<br/>
 <% if response.user %>
   <p><%= link_to_user response.user, :avatar => 'small' %></p>
 <% else %>
   <p><b><%=h response.name %></b> <%=h response.email %></p>
 <% end %>
-
+<br/>
 <ul>
     <li><b><%= I18n.t(:survey_your_rating_heading) %></b> <%= (current_user.rating_for(response)||Rating.new).rating %></li>
   <% if may_view_survey_response_ratings?(response) %>

@@ -38,13 +38,23 @@ body
     +clearfix
     color= !medium_grey_text
     overflow: visible
+    +pie-clearfix
     #content-container
+      +container
+      +pie-clearfix
       background-image: none
       background-color= !white_bg
+      padding-bottom: 100px
+      overflow: visible
+      width: 764px
+      padding: 0 18px
       #content-wrap
+        +columns(14)
+        +full
         +pie-clearfix
         width: 764px
         overflow: visible
+        margin: 20px 0 0
         form#entry
           float: left
           +columns(5,14)
@@ -60,20 +70,6 @@ body
           margin-top: 15px
           p
             margin-top: 10px
-
-    #content-container
-      +container
-      background= !white_bg
-      padding-bottom: 100px
-      overflow: visible
-      +pie-clearfix
-      #content-wrap
-        +columns(14)
-        +full
-        +pie-clearfix
-        width: 764px
-        margin-top: 20px
-        overflow: visible
         header#header-full
           +clearfix
           #identity
