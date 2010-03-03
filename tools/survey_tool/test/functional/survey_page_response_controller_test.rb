@@ -43,7 +43,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 1, assigns(:survey).responses(true).size
 
-    assert_active_tab "List All Responses"
+    assert_active_tab "List Responses"
     response = assigns("responses").detect {|r| r.user_id == @user.id}
     assert_equal ["a1", "a2", "a3"], response.answers.map{|a| a.value}
   end
