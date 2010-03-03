@@ -10,7 +10,11 @@ class ChatController < ApplicationController
   include ChatHelper
   stylesheet 'chat'
   stylesheet 'groups'
-  permissions 'chat'
+  permissions 'chat', 'groups/base', 'groups/memberships', 'groups/requests'
+
+  helper 'groups', 'wiki', 'base_page'
+  helper 'groups/search'
+
   before_filter :login_required
   prepend_before_filter :get_channel_and_user, :except => :index
   append_before_filter :breadcrumbs
@@ -38,6 +42,7 @@ class ChatController < ApplicationController
     session[:last_retrieved_message_id] = message_id
     @channel_user.record_user_action :not_typing
     @html_title = Time.zone.now.strftime('%Y.%m.%d')
+    render :layout => 'header'
   end
 
   # Post a user's message to a channel

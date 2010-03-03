@@ -6,9 +6,14 @@
     - if local_assigns[:title] && !title.blank?
       %h3
         = title
-    = pagination_for(pages)
+        %div.right
+          = render(:partial => pages_dropdown) if local_assigns[:pages_dropdown]
+          = pagination_for(pages)
+    - else
+      = pagination_for(pages)
 
   - if pages
+    = render(:partial => calendar_partial) if local_assigns[:calendar_partial]
     = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
   - else
     -# we might want to display some "no page found" message here
