@@ -34,7 +34,7 @@ class SearchController < ApplicationController
 
   def render_search_results
     @path.default_sort('updated_at') if @path.search_text.empty?
-    @pages = Page.paginate_by_path(@path, options_for_me(:method => :sphinx, :page => params[:page]))
+    @pages = Page.paginate_by_path(@path, options_for_me({:method => :sphinx}.merge(pagination_params)))
 
     # if there was a text string in the search, generate extracts for the results
     if @path.search_text and @pages.any?

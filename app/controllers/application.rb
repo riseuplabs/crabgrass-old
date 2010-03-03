@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
   include ControllerExtension::RescueErrors
+  include ControllerExtension::PaginationOptions
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"

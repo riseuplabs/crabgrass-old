@@ -124,7 +124,7 @@ class PagesController < ApplicationController
   end
 
   def fetch_pages_for(path)
-    @pages = Page.paginate_by_path(path, options_for_me(:page => params[:page]))
+    @pages = Page.paginate_by_path(path, options_for_me.merge(pagination_params))
     add_user_participations(@pages) if logged_in?
   end
 

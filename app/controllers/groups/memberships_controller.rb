@@ -16,7 +16,7 @@ class Groups::MembershipsController < Groups::BaseController
   def list
     # disabled for the sites mode - do we want membership by site?
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-    @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
+    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
     @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
     @second_nav = 'administration'
     @third_nav = 'members'
@@ -93,13 +93,6 @@ class Groups::MembershipsController < Groups::BaseController
     add_context I18n.t(:membership), url_for(:controller=>'groups/memberships', :action => 'list', :id => @group)
     #@left_column = render_to_string :partial => 'sidebar'
     @title_box = render_to_string :partial => 'title_box'
-  end
-
-  before_filter :prepare_pagination
-  def prepare_pagination
-    @page_number = params[:page] || 1
-    @per_page = current_site.pagination_size
-    @letter_page = params[:letter] || ''
   end
 
   def fetch_membership

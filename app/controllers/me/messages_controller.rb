@@ -48,7 +48,7 @@ class Me::MessagesController < Me::BaseController
 
     # not so RESTful modifying the record on a GET request
     @discussion.mark!(:read, current_user)
-    @posts = @discussion.posts.paginate(page_params(default_page, default_per_page))
+    @posts = @discussion.posts.paginate(pagination_params(:page => default_page))
     @active_tab=:people
   end
 
@@ -92,7 +92,7 @@ class Me::MessagesController < Me::BaseController
 
   def discussion_last_page
     total_entries = @discussion.posts.count
-    total_pages = (total_entries.to_f / default_per_page).ceil
+    total_pages = (total_entries.to_f / pagination_default_per_page).ceil
 
     # total_pages is 0 when total_entries is 0
     total_pages = 1 if total_pages == 0
@@ -101,7 +101,7 @@ class Me::MessagesController < Me::BaseController
 
   # load discussions based on view filters
   def find_index_discussions
-    current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(page_params)
+    current_user.discussions.with_some_posts.from_user(@from_user).send(view_filter).paginate(pagination_params)
   end
 
   # trying to do discussion.save! has raised RecordInvalid
@@ -123,18 +123,6 @@ class Me::MessagesController < Me::BaseController
 
   def fetch_recipient
     @recipient = @discussion.user_talking_to(current_user)
-  end
-
-
-  def default_per_page
-    10
-  end
-
-  # default page when no page param is present can be nil
-  # in some cases, it should be the last page
-  def page_params(default_page = nil, per_page = nil)
-    per_page ||= default_per_page
-    {:page => params[:page] || default_page, :per_page => per_page}
   end
 
 end

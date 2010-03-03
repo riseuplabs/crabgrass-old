@@ -1,7 +1,7 @@
 #
 #
 #
-#
+# These are wall posts on the user's wall
 
 class Me::PublicMessagesController < Me::BaseController
 
@@ -13,7 +13,7 @@ class Me::PublicMessagesController < Me::BaseController
   # display a list of recent message activity
   #
   def index
-    @posts = current_user.discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
+    @posts = current_user.discussion.posts.by_created_at.paginate(pagination_params)
   end
 
   def show

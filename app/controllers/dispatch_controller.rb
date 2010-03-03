@@ -32,7 +32,7 @@
 #
 
 class DispatchController < ApplicationController
-  
+
   def process(request, response, method = :perform_action, *arguments)
     super(request, response, :dispatch)
   end
@@ -199,7 +199,7 @@ class DispatchController < ApplicationController
     else
       options = options_for_public
     end
-    Page.paginate_by_path ["name",name], options
+    Page.paginate_by_path ["name",name], options.merge(pagination_params)
   end
 
   def controller_for_list_of_pages(name)

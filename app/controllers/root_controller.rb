@@ -132,7 +132,7 @@ class RootController < ApplicationController
 
   def paginate(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
-    Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page]}.merge(options)))
+    Page.paginate_by_path(args, options_for_group(@group, options).merge(pagination_params(:per_page => 10)))
   end
 
   def update_page_list(target, locals)

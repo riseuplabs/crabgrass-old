@@ -89,6 +89,7 @@ class Group < ActiveRecord::Base
   }
 
   named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :by_created_at, :order => 'groups.created_at DESC'
 
   named_scope :names_only, :select => 'full_name, name'
 
@@ -106,7 +107,7 @@ class Group < ActiveRecord::Base
       conditions << city_id
     end
     { :joins => "join geo_locations as gl",
-      :conditions => conditions 
+      :conditions => conditions
     }
   }
 
