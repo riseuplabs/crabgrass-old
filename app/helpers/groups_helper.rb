@@ -58,6 +58,7 @@ module GroupsHelper
   end
 
   def create_committee_link(fourth_nav=nil)
+    return if (@current_site and (@current_site.network_id == @group.id))
     if may_create_subcommittees?
       menu I18n.t(:create_committee), committees_params(:action => :new), active_tab_for_nav(fourth_nav, 'new committee')
     end
