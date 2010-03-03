@@ -1,4 +1,5 @@
+- group = @parent || @group
 %ul
-  = menu(I18n.t(:settings), edit_group_path(@parent || @group), active_tab_for_nav(@third_nav, 'settings'))
-  = menu(I18n.t(:members), {:controller => 'groups/memberships', :action => 'list', :id => @group}, active_tab_for_nav(@third_nav, 'members'))
-  = menu(I18n.t(:requests), {:controller => 'groups/requests', :action => :list, :id => @group}, active_tab_for_nav(@third_nav, 'requests'))
+  = menu(I18n.t(:settings), edit_group_path(group), active_tab_for_nav(@third_nav, 'settings'))
+  = menu(I18n.t(:members), {:controller => 'groups/memberships', :action => 'list', :id => group}, active_tab_for_nav(@third_nav, 'members'))
+  = menu(I18n.t(:requests), {:controller => 'groups/requests', :action => :list, :id => group}, active_tab_for_nav(@third_nav, 'requests'))
