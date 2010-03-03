@@ -57,9 +57,9 @@ module GroupsHelper
     ## link_to_iff may_view_committee?, I18n.t(:view_all), ''
   end
 
-  def create_committee_link
+  def create_committee_link(fourth_nav=nil)
     if may_create_subcommittees?
-      link_to I18n.t(:create_committee), committees_params(:action => :new)
+      menu I18n.t(:create_committee), committees_params(:action => :new), active_tab_for_nav(fourth_nav, 'new committee')
     end
   end
 
