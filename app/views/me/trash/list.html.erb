@@ -6,17 +6,9 @@
       :undelete => content_tag(:b, I18n.t(:undelete_from_trash)),
       :destroy => content_tag(:b, I18n.t(:destroy_page_via_shred))) %>
 <%= render :partial => 'common/title_box', :locals => {:title => I18n.t(:trash)} %>
-<%= render :partial => 'common/info_box', :locals => {:description => description} %>
 
 <br/>
 
 <% form_tag({:controller => 'me/trash', :action => 'update', :path => params[:path]}, {:id => 'trash_form'}) do -%>
-  <%= render :partial => 'pages/list', :locals => {:layout => 'pages/layouts/checkbox', :full_width => true} %>
-  <% if @pages.size > 0 %>
-  <p><%= link_line(
-    link_to_function(I18n.t(:toggle_selection), "$$('.page_check').each(function(cb) {cb.checked = !cb.checked})"),
-    submit_link(I18n.t(:undelete_from_trash), :name => 'undelete'),
-    submit_link(I18n.t(:destroy_page_via_shred), :name => 'remove', :confirm => I18n.t(:destroy_confirmation, :thing => I18n.t(:page)))
-  ) %></p>
-  <% end %>
+  <%= render :partial => 'pages/list', :locals => {:full_width => true} %>
 <% end %>

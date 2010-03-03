@@ -8,7 +8,7 @@
   = I18n.t(:trash)
 
 %p
-  = I18n.t(:trash_description, :undelete => content_tag(:b, I18n.t(:undelete_from_trash)), :destroy => content_tag(:b, I18n.t(:destroy_page_via_shred)))
+  //= I18n.t(:trash_description, :undelete => content_tag(:b, I18n.t(:undelete_from_trash)), :destroy => content_tag(:b, I18n.t(:destroy_page_via_shred)))
 
 - form_tag({:controller => 'groups', :action => 'update_trash', :path => params[:path], :id => @group}, {:id => 'trash_form'}) do
 
