@@ -13,5 +13,5 @@
     = pagination_for(@posts)
 
     .pagination.secondary
-      =link_to "« " + I18n.t(:pagination_previous), previous_message_path, :class => "left"
-      =link_to I18n.t(:pagination_next) + " »", next_message_path, :class => "right"
+      =link_to "« " + I18n.t(:pagination_newer), previous_message_path, :class => "left"
+      =link_to I18n.t(:pagination_older) + " »", next_message_path, :class => "right"

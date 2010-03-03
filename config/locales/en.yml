@@ -1038,8 +1038,12 @@ en:
 
   page_notice_message: "{{user}} notified you about this page on {{date}}"
   page_with_message: "with message"
-  pagination_next: "Older"
-  pagination_previous: "Newer"
+  pagination_next: "Next"
+  pagination_previous: "Previous"
+
+  pagination_older: "Older"
+  pagination_newer: "Newer"
+
 
   view_posts_link: "view"
 
