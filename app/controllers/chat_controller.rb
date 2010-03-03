@@ -95,7 +95,7 @@ class ChatController < ApplicationController
   def leave_channel
      user_leaves_channel(@user, @channel)
      @channel_user.destroy
-     redirect_to :controller => :me, :action => :dashboard
+     redirect_to my_work_me_pages_path
   end
 
   def archive
