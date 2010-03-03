@@ -4,10 +4,6 @@
 
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_members), :entities => most_active_users(), :after => link_to(I18n.t(:view_all)) } %>
 
-<!--
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_members), :entities => recently_active_users(), :after => link_to(I18n.t(:view_all), people_directory_index_path)} %>
--->
-
 <br class='clear'/>
 
 
@@ -16,9 +12,6 @@
 
 <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_groups), :entities => most_active_groups(), :after => link_to(I18n.t(:view_all)) } %>
 
-<!--
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:recently_active_groups), :entities => recently_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_params(:action => 'search')) } %>
--->
 <br class='clear'/>
 
 <!-- </div>  -->
