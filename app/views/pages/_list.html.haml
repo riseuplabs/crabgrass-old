@@ -7,14 +7,14 @@
       - if local_assigns[:title] && !title.blank?
         %h3
           = title
-      %span.pagination
-        = pagination_for(pages)
+      = pagination_for(pages)
 
     = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
 
     %footer
-      %span.pagination
-        - if pagination_link.nil?
-          = pagination_for(pages)
-        - else
+      - if defined?(pagination_link) && pagination_link.present?
+        %span.pagination
           = pagination_link
+      - else
+        = pagination_for(pages)
+
