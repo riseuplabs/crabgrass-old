@@ -14,7 +14,7 @@ module ActionBarHelper
   def action_bar_view_filter_select(settings)
     options_array = []
     settings[:view].try.each do |view|
-      text = I18n.t(view[:translation]).capitalize
+      text = I18n.t(view[:translation])
 
       # ex: options_hash["My Watched Pages"] = "watched"
       # we do not use a hash here because it does not preserve order.
