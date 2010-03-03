@@ -935,8 +935,9 @@ en:
   approved: "approved"
 
   my_requests_link: "my requests"
-  requests_to_me: "to me"
-  requests_from_me: "from me"
+  all_requests: "All Requests"
+  requests_to_me: "Requests to me"
+  requests_from_me: "Requests from me"
   incoming: "Incoming"
   outgoing: "Outgoing"
   state: "state"
