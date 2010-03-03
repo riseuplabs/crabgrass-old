@@ -1,5 +1,4 @@
 - pages ||= @pages
-
 = render(:partial => heading_partial) if local_assigns[:heading_partial]
 
 %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
@@ -9,7 +8,10 @@
         = title
     = pagination_for(pages)
 
-  = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
+  - if pages
+    = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
+  - else
+    -# we might want to display some "no page found" message here
 
   %footer
     - if defined?(pagination_link) && pagination_link.present?
