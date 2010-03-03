@@ -1,20 +1,20 @@
 - pages ||= @pages
 
 = render(:partial => heading_partial) if local_assigns[:heading_partial]
-- if pages && pages.any?
-  %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
-    %header
-      - if local_assigns[:title] && !title.blank?
-        %h3
-          = title
+
+%section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
+  %header
+    - if local_assigns[:title] && !title.blank?
+      %h3
+        = title
+    = pagination_for(pages)
+
+  = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
+
+  %footer
+    - if defined?(pagination_link) && pagination_link.present?
+      %span.pagination
+        = pagination_link
+    - else
       = pagination_for(pages)
-
-    = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
-
-    %footer
-      - if defined?(pagination_link) && pagination_link.present?
-        %span.pagination
-          = pagination_link
-      - else
-        = pagination_for(pages)
 
