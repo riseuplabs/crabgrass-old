@@ -103,7 +103,7 @@ form.mini_search table {
   <div id="welcome-container">
     <ul id="welcome-links">
       <li>
-        <%= [ welcome_box_link, create_group_link, contribute_link ].join('<li></li>') %>
+        <%= [ welcome_box_link, create_group_link ].compact.join('<li></li>') %>
       </li>
     </ul>
     <% if params[:welcome_box] && logged_in? -%>
