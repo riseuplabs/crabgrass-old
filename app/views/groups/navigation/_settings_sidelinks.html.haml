@@ -5,5 +5,5 @@
   = menu I18n.t(:featured_pages), groups_features_url(:action => :index)
   - if may_edit_menu?
     = menu I18n.t(:menu_items), groups_menu_items_url(:action => :index)
-  %li= destroy_group_link(@parent || @group)
-  %li= create_committee_link(@fourth_nav)
+  = li_if destroy_group_link(@parent || @group)
+  = create_committee_link(@fourth_nav)

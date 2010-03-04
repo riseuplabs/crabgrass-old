@@ -57,7 +57,7 @@ module UrlHelper
   end
 
   def committees_params(options={})
-    {:controller => '/groups/committees', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/committees', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def councils_params(options={})

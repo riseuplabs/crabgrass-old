@@ -43,7 +43,7 @@ module MenuHelper
   ## tab if is needed
   def menu(label, url, options={})
     active = options.delete(:active) if options.has_key?(:active)
- 
+
     ### PLEASE if you change this make sure it doesn't break menus elsewhere, for example:
     ### people directory, group directory, group pages, etc.
     if url.is_a?(String) or url.is_a?(Hash)
@@ -156,4 +156,11 @@ module MenuHelper
     return cols
   end
 
+  # haml helper to prevent emptly list items
+  # example:
+  # =li_if destroy_group_link
+  # will wrap the destroy group link in a li tag if it exists.
+  def li_if content
+    content_tag(:li, content) if content
+  end
 end
