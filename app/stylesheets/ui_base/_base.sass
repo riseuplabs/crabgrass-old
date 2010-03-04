@@ -122,6 +122,7 @@
   background-position: 0 50%
   padding-left: 20px
   min-height: 16px
+  line-height:  1.6
   &.twenty
     padding-left: 22px
     min-height: 24px
@@ -269,7 +270,7 @@ h6
 /* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
 #sitehome-wiki, #group-wiki
   #wiki-area
-    margin: 10px 0 15px 0
+    margin: 10px 0 15px
 
 #pages, #group-wiki, #sitehome-wiki
   +partial-width
@@ -284,6 +285,9 @@ h6
       a
         +blue-link
 
+#group-wiki
+  margin-top: 0
+  
 #pages
   margin: 0
 
@@ -483,11 +487,11 @@ button.icon_16
 #identity-image
   +columns(4,4)
   +bordered(!almost_black)
-  width: 204px
-  height: 204px
+  width: 202px
+  height: 202px
   float: left
   margin: 0
-  background: !white_bg
+  background= !white_bg
 
 
 #image-label
