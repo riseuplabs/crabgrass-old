@@ -1,3 +1,5 @@
 - group = @parent || @group
 %ul
-  %li= link_to I18n.t(:people), {:controller => 'groups', :action => 'people', :id => group}
+  = menu(I18n.t(:people), {:controller => 'groups', :action => 'people', :id => group}) 
+  - if group.network?
+    = menu(I18n.t(:groups), {:controller => 'groups', :action => 'list_groups', :id => group})

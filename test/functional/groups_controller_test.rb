@@ -565,4 +565,16 @@ editing tools on a group basis has been abandoned iirc, azul
     assert_response :success, "list public_group should succeed"
   end
 
+  def test_list_groups_when_not_logged_in
+    get :list_groups, :id => groups(:fai).name
+    assert_response :redirect, "login required to list groups of a network"
+  end
+
+  def test_list_groups_when_logged_in
+    login_as :red
+    get :list_groups, :id => groups(:fai).name
+    assert_response :success, "list groups of network fai should succeed, because user red in network rainbow"
+  end
+
+
 end

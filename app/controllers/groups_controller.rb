@@ -50,6 +50,12 @@ class GroupsController < Groups::BaseController
     render :layout => 'header_for_sidebar'
   end
 
+  def list_groups
+    group_landing_instance_vars()
+    @federatings = @group.federatings.alphabetized_by_group
+    render :layout => 'header_for_sidebar' 
+  end
+
   def new
     @group = Group.new
     render :layout => 'directory'
@@ -130,7 +136,7 @@ class GroupsController < Groups::BaseController
       group_context
     else
       super
-      if !action?(:show, :people)
+      if !action?(:show, :people, :list_groups)
         add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
       end
     end

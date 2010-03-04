@@ -16,6 +16,8 @@ module Groups::BasePermission
   def may_people_group?(group=@group)
     may_list_memberships?(group)
   end
+  alias_method :may_list_groups_group?, :may_people_group?
+
 
   def may_update_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)

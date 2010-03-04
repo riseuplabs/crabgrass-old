@@ -1,0 +1,9 @@
+- content_for :extended_sidebar do
+  = render :partial => '/groups/navigation/sidebar'
+
+// this permission test will need to be separated out when there are more tabs 
+// but for now it makes sense to leave it here to prevent the third nav container
+// from getting added if there are no permissions to view memberships
+- if may_list_memberships?(@group) 
+  - content_for :third_nav do
+    = render :partial => '/groups/navigation/home_tabs'

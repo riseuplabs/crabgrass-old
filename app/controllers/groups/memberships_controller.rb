@@ -23,7 +23,7 @@ class Groups::MembershipsController < Groups::BaseController
   end
 
   # list groups belonging to a network
-  def groups
+  def review_groups
     @federatings = @group.federatings.alphabetized_by_group
     @second_nav = 'administration'
     @third_nav = 'members'

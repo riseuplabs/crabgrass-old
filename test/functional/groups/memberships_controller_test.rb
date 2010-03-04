@@ -17,6 +17,17 @@ class Groups::MembershipsControllerTest < ActionController::TestCase
     assert_response :success, "list rainbow should succeed, because user red in group rainbow"
   end
 
+  def test_review_groups_when_not_logged_in
+    get :review_groups, :id => groups(:fai).name
+    assert_response :redirect, "login required to list membership of a network"
+  end
+
+  def test_review_groups_when_logged_in
+    login_as :blue
+    get :review_groups, :id => groups(:fai).name
+    assert_response :success, "list groups in fai should succeed, because user blue is an admin in network rainbow"
+  end
+
   def test_leave
     login_as :blue
 

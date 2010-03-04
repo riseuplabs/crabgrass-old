@@ -1,12 +1,7 @@
 - content_for :html_head do
   %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
 
-- content_for :extended_sidebar do
-  = render :partial => '/groups/navigation/sidebar'
-
-- if may_list_memberships?(@group)
-  - content_for :third_nav do
-    = render :partial => '/groups/navigation/home_tabs'
+= render :partial => '/groups/navigation/nav_for_landing'
 
 %section#group-wiki
   = render :partial => 'widgets/group_wiki'
