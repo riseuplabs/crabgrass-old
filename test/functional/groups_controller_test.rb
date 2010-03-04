@@ -540,5 +540,29 @@ editing tools on a group basis has been abandoned iirc, azul
     assert_select "a[href=?]", @controller.page_url(group_page), false
   end
 
+  def test_people_when_not_logged_in
+    get :people, :id => groups(:rainbow).name
+    assert_response :redirect, "login required to list membership of a group"
+  end
+
+  def test_people
+    login_as :red
+    get :people, :id => groups(:rainbow).name
+    assert_response :success, "list rainbow should succeed, because user red in group rainbow"
+
+    groups(:public_group).profiles.public.may_see_members = true
+    groups(:public_group).save!
+    get :people, :id => groups(:public_group).name
+    assert_response :success, "list public_group should succeed, because membership is public"
+
+    get :people, :id => groups(:private_group).name
+    assert_response :success, "list private_group should succeed"
+
+    groups(:public_group).profiles.public.may_see_members = false
+    groups(:public_group).save!
+
+    get :people, :id => groups(:public_group).name
+    assert_response :success, "list public_group should succeed"
+  end
 
 end
