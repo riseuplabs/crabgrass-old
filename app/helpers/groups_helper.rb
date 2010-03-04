@@ -102,7 +102,7 @@ module GroupsHelper
   def membership_count_link(options = nil)
     options[:text] ||= :group_membership_count
     link_if_may(I18n.t(options[:text], :count=>(@group.users.size).to_s) + ARROW,
-                   '/groups/memberships', 'list', @group) or
+                   '/groups', 'people', @group) or
     I18n.t(options[:text], :count=>(@group.users.size).to_s)
   end
 

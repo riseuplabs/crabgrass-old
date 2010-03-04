@@ -1,0 +1,11 @@
+- content_for :style do
+  table.members td {padding: 12px;}
+
+- content_for :extended_sidebar do
+  = render :partial => '/groups/navigation/sidebar'
+
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/home_tabs'
+
+= render :partial => 'groups/memberships/members_list'
+

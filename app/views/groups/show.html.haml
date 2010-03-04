@@ -4,6 +4,10 @@
 - content_for :extended_sidebar do
   = render :partial => '/groups/navigation/sidebar'
 
+- if may_list_memberships?(@group)
+  - content_for :third_nav do
+    = render :partial => '/groups/navigation/home_tabs'
+
 %section#group-wiki
   = render :partial => 'widgets/group_wiki'
 
