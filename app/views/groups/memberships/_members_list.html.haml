@@ -1,12 +1,3 @@
-- content_for :style do
-  table.members td {padding: 12px;}
-
-- content_for :third_nav do
-  = render :partial => '/groups/navigation/admin_tabs'
-
-- content_for :left_sidebar do
-  = render :partial => 'members_sidelinks', :locals => {:group => @group }
-
 - if current_site.tracking
   %b
     Visits:
@@ -32,9 +23,11 @@
           / %th
           /   Joined by
         %th
-        %th
-          = I18n.t(:buttons_list_label)
-      = render :partial => 'membership', :collection => @memberships
+        - if @second_nav == 'administration'  # don't show action column if not in admin section 
+          %th
+            = I18n.t(:buttons_list_label)
+      = render :partial => 'groups/memberships/membership', :collection => @memberships
     %br
 
 = pagination_links(@memberships)
+

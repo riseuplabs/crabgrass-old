@@ -4,6 +4,7 @@ module Groups::MembershipsPermission
     logged_in? and
     current_user.may?(:admin, group)
   end
+  alias_method :may_review_memberships?, :may_create_memberships?
 
   def may_join_memberships?(group=@group)
     logged_in? and

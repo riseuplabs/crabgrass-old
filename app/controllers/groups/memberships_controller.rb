@@ -13,7 +13,7 @@ class Groups::MembershipsController < Groups::BaseController
   ###### PUBLIC ACTIONS #########################################################
 
   # list all members of the group
-  def list
+  def review 
     # disabled for the sites mode - do we want membership by site?
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
     @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)

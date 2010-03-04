@@ -13,6 +13,10 @@ module Groups::BasePermission
     may_show_private_profile?(group) or may_show_public_profile?(group)
   end
 
+  def may_people_group?(group=@group)
+    may_list_memberships?(group)
+  end
+
   def may_update_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
