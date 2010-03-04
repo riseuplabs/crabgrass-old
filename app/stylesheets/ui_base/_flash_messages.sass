@@ -1,19 +1,24 @@
 //
 // flash messages
 //
+#flash_messages
+  +pie-clearfix
+  overflow: visible
+  background= !global_nav_bg
+  line-height: 0
 #flash-message
   +container
   clear: both
-  background= !page_bg
   #message-container
-    width: 764px
+    width: 800px
 #flash-status-message
   width: 744px
-  margin-bottom: 10px
+  margin: 6px 18px
 .small_notice
   padding: 6px 10px
   .text
     padding-left: 20px
+    line-height: 1.6
   p, ul
     margin: 0
     clear: left
