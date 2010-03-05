@@ -137,11 +137,7 @@ class RootController < ApplicationController
 
   def update_page_list(target, locals)
     render :update do |page|
-      if locals[:expanded]
-        page.replace_html target, :partial => 'pages/list_expanded', :locals => locals
-      else
-        page.replace_html target, :partial => 'pages/list', :locals => locals
-      end
+      page.replace_html target, :partial => 'pages/list', :locals => locals
     end
   end
 
