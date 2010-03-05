@@ -11,12 +11,12 @@ class LinkRenderer::Ajax < LinkRenderer::Dispatch
    #   attributes[:style] = 'padding-left: 20px'
     elsif attributes[:class] =~ /next_page/
    #   attributes[:icon] = 'right'
-      attributes[:class] += ' right'
+   #   attributes[:class] += ' right'
    #   attributes[:style] = 'padding-right: 20px'
     else
       attributes[:icon] = 'none'
     end
-    @template.link_to_remote_with_icon(text, options, attributes)
+    @template.link_to_remote(text, options, attributes)
   end
 
   def page_span(page, text, attributes = {})
