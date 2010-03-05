@@ -1,19 +1,24 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class GalleryToolTest < Test::Unit::TestCase
+class GalleryToolTest < ActiveSupport::TestCase
   fixtures :users, :pages, :assets
 
   def test_add_and_remove
-    user = User.find 4 # we need a user so we can check permissions.
-    wrong_user = User.find 1 # we need a user so we can check permissions.
+    user = users(:blue) # we need a user so we can check permissions.
+    wrong_user = users(:quentin) # we need a user so we can check permissions.
     gal = Gallery.create! :title => 'kites', :user => user
-    a1 = Asset.find 1
-    a2 = Asset.find 2
+    a1 = assets(:assets_001)
+    a2 = assets(:assets_002)
 
     assert_nothing_raised do
       gal.add_image!(a1, user)
       gal.add_image!(a2, user)
+    end
+
+    assert_permission_denied do
+      gal.add_image!(a1, wrong_user)
+      gal.add_image!(a2, wrong_user)
     end
 
     assert gal.images.include?(a1)

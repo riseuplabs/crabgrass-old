@@ -1,7 +1,7 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class SurveyTest < Test::Unit::TestCase
+class SurveyTest < ActiveSupport::TestCase
   fixtures :surveys, :survey_questions
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
