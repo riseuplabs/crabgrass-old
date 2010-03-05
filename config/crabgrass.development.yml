@@ -19,7 +19,7 @@ title: "Crabgrass Development"
 
 enabled_mods:
    # - design_tester
-   # - super_admin
+   - super_admin
    # - moderation
    # - translator
    # - ui_tester
