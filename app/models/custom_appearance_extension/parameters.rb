@@ -72,7 +72,7 @@ module CustomAppearanceExtension
     end
 
     def masthead_background_parameter
-      background = self.parameters['masthead_background'] || CustomAppearance.available_parameters['masthead_background']
+      background = self.parameters['masthead_header_bg'] || CustomAppearance.available_parameters['masthead_background']
       background = 'white' if !background || background.empty?
       background.gsub /^#/, ""
     end
@@ -86,7 +86,7 @@ module CustomAppearanceExtension
         end
       end
 
-      self.parameters['masthead_background'] = value.any? ? value : 'white'
+      self.parameters['masthead_header_bg'] = value.any? ? value : 'white'
     end
 
     def masthead_enabled

@@ -322,8 +322,8 @@ module LayoutHelper
     appearance = current_site.custom_appearance
     if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
       height = appearance.masthead_asset.height
-      #bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
-      #bgcolor = bgcolor+appearance.masthead_background_parameter
+      bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
+      bgcolor = bgcolor+appearance.masthead_background_parameter
       locals[:section_style] = "height: #{height}px"
       locals[:style] = "background-image: url(#{appearance.masthead_asset.url}); height: #{height}px;"
       locals[:render_title] = false
