@@ -40,30 +40,29 @@ ActionController::Base.class_eval do
   end
 end
 
-# FIXME: figure out how to do this in Rails 2.3
-=begin
-ActionView::PartialTemplate.class_eval do
+# View inheritance for partials.
+ActionView::Partials.class_eval do
   private
-  def partial_pieces(view, partial_path)
-    if partial_path.include?('/')
-      return File.dirname(partial_path), File.basename(partial_path)
-    else
-      return partial_controller_find(view, partial_path)
+  def _pick_partial_template_with_view_inheritance(partial_path)
+    _pick_partial_template_without_view_inheritance(partial_path)
+  rescue ActionView::MissingTemplate => original_exception
+    raise original_exception if !controller
+    controller_class = controller.class
+    while controller_class && controller_class.superclass.respond_to?(:controller_path) && cp = controller_class.superclass.controller_path
+      basename = File.basename(partial_path)
+      dirname = File.dirname(partial_path)
+      path = File.join(cp, dirname, "_#{basename}")
+      begin
+        return self.view_paths.find_template(path, self.template_format)
+      rescue ActionView::MissingTemplate
+        controller_class = controller_class.superclass
+      end
     end
+    raise original_exception
   end
 
-  def partial_controller_find(view, partial_path, klass = view.controller.class)
-    if view.finder.file_exists?("#{klass.controller_path}/_#{partial_path}")
-      return klass.controller_path, partial_path
-    elsif !klass.superclass.method_defined?(:controller_path)
-      # End of the inheritance line
-      return view.controller.class.controller_path, partial_path
-    else
-      return partial_controller_find(view, partial_path, klass.superclass)
-    end
-  end
+  alias_method_chain :_pick_partial_template, :view_inheritance
 end
-=end
 
 ###
 ### MULTIPLE SUBMIT BUTTONS
