@@ -5,7 +5,7 @@ module CustomAppearanceExtension
     end
 
     STYLESHEETS_ROOT = './public/stylesheets'
-    SASS_ROOT = './app/stylesheets/ui_base'
+    SASS_ROOT = './app/stylesheets'
     CONSTANTS_FILENAME = "constants.sass"
     SASS_LOAD_PATHS = ['.', File.join(RAILS_ROOT, SASS_ROOT)]
 
