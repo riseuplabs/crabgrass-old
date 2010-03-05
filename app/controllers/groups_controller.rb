@@ -8,6 +8,7 @@ class GroupsController < Groups::BaseController
   stylesheet :wiki_edit
 
   helper 'groups', 'wiki', 'base_page'
+  helper 'groups/search'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
@@ -34,15 +35,25 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) )
+    group_landing_instance_vars()
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
     @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
-    @profile = @group.profiles.send(@access)
     @wiki = private_or_public_wiki()
-    @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
-    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
-    @second_nav = 'home'
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
     render :layout => 'header_for_sidebar'
+  end
+
+  def people
+    group_landing_instance_vars()
+    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
+    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    render :layout => 'header_for_sidebar'
+  end
+
+  def list_groups
+    group_landing_instance_vars()
+    @federatings = @group.federatings.alphabetized_by_group
+    render :layout => 'header_for_sidebar' 
   end
 
   def new
@@ -90,6 +101,13 @@ class GroupsController < Groups::BaseController
 
   protected
 
+  def group_landing_instance_vars
+    @profile = @group.profiles.send(@access)
+    @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
+    @second_nav = 'home'
+  end
+
   def fetch_group
     @group = Group.find_by_name params[:id] if params[:id]
     if @group
@@ -106,7 +124,7 @@ class GroupsController < Groups::BaseController
       return true
     else
       no_context
-      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401), :layout => 'base')
       return false
     end
   end
@@ -118,7 +136,7 @@ class GroupsController < Groups::BaseController
       group_context
     else
       super
-      if !action?(:show)
+      if !action?(:show, :people, :list_groups)
         add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
       end
     end

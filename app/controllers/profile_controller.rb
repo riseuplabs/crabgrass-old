@@ -138,7 +138,7 @@ class ProfileController < ApplicationController
   end
 
   def context
-    me_context('large')
+    account_context('large')
     @banner = render_to_string :partial => 'me/banner'
   end
 

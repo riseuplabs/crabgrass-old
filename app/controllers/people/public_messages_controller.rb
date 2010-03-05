@@ -11,7 +11,7 @@ class People::PublicMessagesController < People::BaseController
   # display a list of recent message activity
   #
   def index
-    @posts = @user.wall_discussion.posts.paginate(:order => 'created_at DESC', :page => params[:page])
+    @posts = @user.wall_discussion.posts.by_created_at.paginate(pagination_params)
   end
 
   def update

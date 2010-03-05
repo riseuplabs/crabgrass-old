@@ -7,7 +7,7 @@
 
   <tr>
     <th colspan="2">
-      <h2 class="alert"><%= I18n.t(:profile) -%></h2>
+      <h2 class="alert"><%= I18n.t(:more_information) -%></h2>
     </th>
   </tr>
 
@@ -59,24 +59,6 @@
         </tbody>
       </table>
       <%= add_row_link I18n.t(:add_email_address), 'add_email_address' %>
-    </td>
-  </tr>
-<%- end -%>
-
-<%- if current_site.profile_field_enabled? :locations -%>
-  <tr class="<%=cycle('odd','even')%>">
-    <td class="label">
-      <%= I18n.t(:location) -%>
-    </td>
-    <td class="form">
-      <table>
-        <tbody id="profile_locations">
-        <%- @profile.locations.each_with_index do |location, index| -%>
-          <%= render :partial => 'location', :locals => { :location => location, :index => index } %>
-        <%- end -%>
-        </tbody>
-      </table>
-      <span id='add_location_link'><%= add_row_link I18n.t(:add_location), 'add_location', :id => @profile.type %></span>
     </td>
   </tr>
 <%- end -%>

@@ -7,8 +7,12 @@ class NetworksController < GroupsController
   end
 
   def show
-    super
-    @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids)) if @group
+    if @current_site and @current_site.network == @group
+      redirect_to '/'
+    else
+      super
+      @group_pages = Page.find_by_path(['descending', 'updated_at', 'limit','10'], options_for_groups(@group.group_ids)) if @group
+    end
   end
 
   def new

@@ -216,11 +216,15 @@ class Profile < ActiveRecord::Base
       :geo_admin_code_id => params.delete('state_id'),
       :geo_place_id => params.delete('city_id'),
     }
-    if self.geo_location.nil?
-      params['geo_location'] = GeoLocation.new(geo_location_options)
-    else
-      ### do not create new records.
-      self.geo_location.update_attributes(geo_location_options)
+    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
+      if self.geo_location.nil?
+        params['geo_location'] = GeoLocation.new(geo_location_options)
+      else
+        ### do not create new records.
+        self.geo_location.update_attributes(geo_location_options)
+      end
+    elsif !self.geo_location.nil?
+      self.geo_location.destroy
     end
 
     if params['may_see'] == "0"

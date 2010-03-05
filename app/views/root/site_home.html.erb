@@ -103,7 +103,7 @@ form.mini_search table {
   <div id="welcome-container">
     <ul id="welcome-links">
       <li>
-        <%= [ welcome_box_link, create_group_link, contribute_link ].join('<li></li>') %>
+        <%= [ welcome_box_link, create_group_link ].compact.join('<li></li>') %>
       </li>
     </ul>
     <% if params[:welcome_box] && logged_in? -%>
@@ -137,11 +137,13 @@ form.mini_search table {
 
 <%- if @announcements.any? %>
   <div class='section'>
-    <%= render :partial => 'announcement_page/list'  %>
+    <%= render :partial => 'announcement_page/announcements'  %>
   </div>
 <%- end -%>
 
-<%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
+<div id="sitehome-wiki">
+  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
+</div>
 
 <br/>
 

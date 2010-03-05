@@ -42,6 +42,19 @@ module Me::MessagesHelper
     end
   end
 
+  def message_post_summary_body(post)
+    caption = if (post.created_by == current_user)
+      I18n.t(:message_you_wrote_caption)
+    else
+      I18n.t(:message_user_wrote_caption, :user => post.created_by.try.display_name)
+    end
+
+    # remove surrounding <p> from body_html
+    html = post.body_html.try.gsub(/(\A\s*<p>)|(<\/p>\s*\Z)/, "")
+    content_tag(:em, caption, :class => "message-author-caption") + " \n" +
+    content_tag(:span, truncate(strip_links(html), :length => 300), :class => "message-body")
+  end
+
   def action_bar_settings
     { :select =>
             [ {:name => :all,
@@ -58,6 +71,7 @@ module Me::MessagesHelper
               {:name => :unread, :translation => :unread}],
       :view =>
             [ {:name => :all, :translation => :all},
-              {:name => :unread, :translation => :unread}] }
+              {:name => :unread, :translation => :unread}],
+      :view_base_path => messages_path }
   end
 end

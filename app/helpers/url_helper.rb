@@ -57,7 +57,7 @@ module UrlHelper
   end
 
   def committees_params(options={})
-    {:controller => '/groups/committees', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/committees', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def councils_params(options={})
@@ -95,7 +95,7 @@ module UrlHelper
   end
 
   def link_to_search_announcements
-    @group ? group_search_url('type', 'announcement') : me_search_url('type', 'announcement')
+    @group ? group_search_url('type', 'announcement') : search_url('type', 'announcement')
   end
 
   # first arg is options hash, remaining args are used for the path.
@@ -118,10 +118,6 @@ module UrlHelper
 
   def person_search_url(*path)
     url_for_user(@user, :action => 'search', :path => parse_filter_path(path))
-  end
-
-  def me_search_url(*path)
-    me_params(:action => 'search', :path => parse_filter_path(path))
   end
 
   ##

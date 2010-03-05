@@ -28,7 +28,7 @@ class RootController < ApplicationController
   def featured
     update_page_list('featured_panel',
       :pages => paginate('featured_by', @group.id, 'descending', 'updated_at'),
-      :expanded => true
+      :columns => [:icon, :title, :last_updated]
     )
   end
 
@@ -132,7 +132,7 @@ class RootController < ApplicationController
 
   def paginate(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
-    Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page]}.merge(options)))
+    Page.paginate_by_path(args, options_for_group(@group, options).merge(pagination_params(:per_page => 10)))
   end
 
   def update_page_list(target, locals)
@@ -151,7 +151,7 @@ class RootController < ApplicationController
 
   helper_method :most_active_groups
   def most_active_groups
-    Group.only_groups.most_visits.find(:all, :limit => 5)
+    Group.only_groups.most_visits.find(:all, :limit => 15)
   end
 
   helper_method :recently_active_groups
@@ -161,7 +161,7 @@ class RootController < ApplicationController
 
   helper_method :most_active_users
   def most_active_users
-    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 5)
+    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 15)
   end
 
   helper_method :recently_active_users

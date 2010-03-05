@@ -166,6 +166,18 @@ module PageHelper
 
   # *NEWUI
   #
+  # wrapper for the render :partial call. Options can be the following:
+  # * title
+  # * with_cover :: show cover image
+  # * with_owner :: show owner avatar (default)
+  # * checkable :: add a checkbox for selecting pages
+  # * columns :: info to be displayed in page info box (see below)
+  # * with_notice :: show notifications about that page
+  def list_pages(options)
+    render :partial => '/pages/list', :locals => options
+  end
+  # *NEWUI
+  #
   # helper to show stars of an item (page or whatever that responds to stars_count)
   #
   def stars_for(item)
@@ -186,15 +198,29 @@ module PageHelper
 
   # *NEWUI
   #
-  # helper to show the box about last updated_by_and_stars
+  # helper to show the information box of a page
   #
-  def last_updated_box_for(page, options={})
+  def page_information_box_for(page, options={})
+    locals = {:page => page}
+
+    # status, date and username
     field    = (page.updated_at > page.created_at + 1.hour) ? 'updated_at' : 'created_at'
     is_new = field == 'updated_at'
-    label    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
+    status    = is_new ? I18n.t(:page_list_heading_updated) : I18n.t(:page_list_heading_new)
     username = link_to_user(page.updated_by_login)
     date     = friendly_date(page.send(field))
-    render :partial => 'pages/last_updated', :locals => {:label => label, :username => username, :date => date}
+    locals.merge!(:status => status, :username => username, :date => date)
+
+    if options.has_key?(:columns)
+      locals.merge!(:views_count => page.views_count) if options[:columns].include?(:views)
+      if options[:columns].include?(:stars)
+        star_icon = page.stars_count > 0 ? icon_tag('star') : icon_tag('star_empty')
+        locals.merge!(:stars_count => content_tag(:span, "%s %s" % [star_icon, page.stars_count]))
+      end
+      locals.merge!(:contributors =>  content_tag(:span, "%s %s" % [image_tag('ui/person-dark.png'), page.stars_count])) if options[:columns].include?(:contributors)
+    end
+
+    render :partial => 'pages/information_box', :locals => locals
   end
 
 
@@ -226,7 +252,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals= [:layout, :checkeable]
+    allowed_locals = [:columns, :checkable, :with_cover, :with_owner, :with_notice]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
@@ -410,17 +436,6 @@ module PageHelper
     h(str).gsub /\{(\/?)bold\}/, '<\1b>'
   end
 
-  # def page_notice_row(notice, column_size)
-  #   html = "<td class='excerpt', colspan='#{column_size}'>"
-  #   html += I18n.t(:page_notice_message, :user => link_to_user(notice[:user_login]), :date => friendly_date(notice[:time]))
-  #   if notice[:message].any?
-  #     notice_message_html = " &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
-  #     html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
-  #   end
-  #   html += "</td>"
-  #   content_tag(:tr, html, :class => "page_info")
-  # end
-
   def page_tags(page=@page, join=nil)
     join ||= "\n" if join.nil?
     if page.tags.any?
@@ -518,16 +533,23 @@ module PageHelper
 
   ## options for a page type dropdown menu for searching
   def options_for_select_page_type(default_selected=nil)
-    default_selected.sub!(' ', '+') if default_selected
+    available_types = current_site.available_page_types
+    # used by options_for_select helpe
     menu_items = []
-    tree_of_page_types.each do |grouping|
-      menu_items << [grouping[:display], grouping[:url]]
-      sub_items = grouping[:pages].collect do |page_class|
-         ["#{grouping[:display]} > #{page_class.class_display_name}",
-         "#{grouping[:url]}+#{page_class.url}"]
-       end
-       menu_items.concat sub_items if sub_items.size > 1
+
+    # collect [display_name, url] pairs for all pages
+    available_types.each do |klass_name|
+      klass = Page.class_name_to_class(klass_name)
+      next if klass.nil? or klass.internal
+
+      display_name = klass.class_display_name
+      url = klass.url
+      menu_items << [display_name, url]
     end
+
+    # sort by display name
+    menu_items.sort!
+    # create select attributes
     options_for_select([[I18n.t(:all_page_types),'']] + menu_items, default_selected)
   end
 
@@ -564,15 +586,12 @@ module PageHelper
       url = new_me_page_url if may_create_pages?
     end
     return unless url
-    icon = 'cross'
     text = I18n.t(:contribute_content_link).upcase
-    klass = options[:class] || 'contribute'
+
 
     content_tag(:div,
-      content_tag(:span,
-          link_to(text, url ),
-        :class => "small_icon #{icon}_20"),
-      :class => klass, :id => 'contribute'
+        link_to(text, url ),
+      :id => 'contribute'
     )
   end
 
@@ -607,6 +626,10 @@ module PageHelper
     check_box_tag 'pages[]', page.id, false, :id =>"page_checkbox_#{page.id}", :class => 'page_check_box'
   end
 
+  def summary_for(page)
+    text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)
+  end
+
   def owner_image(page)
     return unless page.owner
     display_name = page.owner.respond_to?(:display_name) ? page.owner.display_name : ""
@@ -615,15 +638,46 @@ module PageHelper
   end
 
   def page_html_attributes(page)
-    classes = %w(cover small_icon page_text_blue_16)
-    classes << 'unread' if page.unread_by?(current_user)
+    icon = page.icon || :page_text_blue
+
+    classes = %w(cover small_icon)
+    classes << "#{icon}_16"
+    classes << 'unread' if page_is_unread(page)
     { :class => classes.join(' ') }
+  end
+
+  # we use a cached field from the user_participation and fall
+  # back to fetching the user_participation again.
+  def page_is_unread(page)
+    if page.flag[:user_participation]
+      !page.flag[:user_participation].viewed
+    else
+      page.unread_by?(current_user)
+    end
   end
 
   def section_html_attributes(page)
     classes = %w(pages-info)
-    classes << 'unread' if page.unread_by?(current_user)
+    classes << 'unread' if page_is_unread(page)
     { :class => classes.join(' ') }
+  end
+
+  def notices_for(page)
+    notices = page.flag[:user_participation].try.notice
+    if notices.any?
+      render :partial=>'pages/notice', :collection => notices
+    end
+  end
+
+  def page_notice_message(notice)
+    sender = User.find_by_login notice[:user_login]
+    date = friendly_date notice[:time]
+    html = I18n.t(:page_notice_message, :user => link_to_user(sender), :date => date)
+    if notice[:message].any?
+      notice_message_html = ":<br/> &ldquo;<i>%s</i>&rdquo;" % h(notice[:message])
+      html += ' ' + I18n.t(:notice_with_message, :message => notice_message_html)
+    end
+    html
   end
 
 end

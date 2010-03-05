@@ -94,6 +94,7 @@ en:
   total: "{{count}} total"
   affiliations: "Affiliations"
   pages: "Pages"
+  comments: "Comments"
   browse: "Browse"
   discover: "Discover"
 
@@ -112,8 +113,12 @@ en:
   loadingdotdotdot: "Loading..."
 
   search_headline: "Search"
-  search_this_group: "Search this group only"
-  search_this_person: "Search this person only"
+  search_input_caption: "Search for pages"
+  search_this_group: "this group only"
+  search_this_person: "this person only"
+  search_link: "Search"
+
+  search_description: Search through all pages you have access to
 
   see_more_link: "More"
   see_all_link: "See All"
@@ -170,6 +175,8 @@ en:
   success: "Success"
   error: "Error"
   status: "Status"
+
+  optional_message: "optional message"
 
 
   ##
@@ -543,7 +550,6 @@ en:
   my_inbox_headline: "My Inbox"
 
   me_trash_link: "Trash"
-  me_search_link: "Search"
   me_tasks_link: "Tasks"
   my_world_heading: "My World"
 
@@ -575,8 +581,6 @@ en:
   my_pending_tasks_link: "Pending"
   my_completed_tasks_link: "Completed"
 
-  my_search_headline: "Search"
-
   my_messages_headline: "My Messages"
 
   my_social_activity_friends_tab: "Friend Activity"
@@ -588,7 +592,6 @@ en:
   public_profile: "Public Profile"
 
   create_task_list: create new task list
-  me_search_description: Search through all pages you have access to
   inbox_description: Inbox of pages I am actively participating in or watching for changes
   toggle_selection: Toggle Selection
   remove_from_inbox: Remove from inbox
@@ -626,6 +629,9 @@ en:
   message_recipient_name_caption: 'To: {{user}}'
   message_to_self_error: "Can't talk to yourself"
   message_cant_perster_error: "Only friends may send messages to {{user}}"
+
+  message_you_wrote_caption: "You wrote:"
+  message_user_wrote_caption: "{{user}} wrote:"
   ##
   ## PROFILE
   ##
@@ -766,7 +772,8 @@ en:
   group_wiki: Group Wiki
   rss_feed: RSS Feed
   group_has_no_public_profile: This group does not have a public profile.
-  pending_tasks: pending tasks.
+  pending_tasks: 'pending tasks'
+  completed_tasks: 'completed tasks'
   no_committees: no committees
   category: Category
   founded: Founded
@@ -825,6 +832,7 @@ en:
 
   edit_settings: "Edit Settings"
   basic_settings: "Basic Settings"
+  basic_info: "Basic Information"
   view_all: "View All"
   send_invites: "Send Invites"
   view_requests: "View Requests"
@@ -927,8 +935,9 @@ en:
   approved: "approved"
 
   my_requests_link: "my requests"
-  requests_to_me: "to me"
-  requests_from_me: "from me"
+  all_requests: "All Requests"
+  requests_to_me: "Requests to me"
+  requests_from_me: "Requests from me"
   incoming: "Incoming"
   outgoing: "Outgoing"
   state: "state"
@@ -1029,10 +1038,14 @@ en:
   page_list_heading_last_post: "last post"
   page_list_heading_views: "views"
 
-  page_notice_message: "page sent by {{user}} on {{date}}"
+  page_notice_message: "{{user}} notified you about this page on {{date}}"
   page_with_message: "with message"
   pagination_next: "Next"
   pagination_previous: "Previous"
+
+  pagination_older: "Older"
+  pagination_newer: "Newer"
+
 
   view_posts_link: "view"
 
@@ -1119,7 +1132,8 @@ en:
 
   send_only_with_encryption: "Send only if encrypted distribution is possible"
   share_additional_notification: "Send additional notification via"
-  share_send_notification: "Send notification to inbox"
+  share_send_notification: "Send notification"
+  send_email: "Send Email"
   share_include_message: "Include a custom message"
 
   share_all_checkbox: "Shared with all users"
@@ -1138,11 +1152,11 @@ en:
 
   entity_autocomplete_tip: "Enter the name of a group or person."
 
-  notice_with_message: "with message {{mesage}}"
+  notice_with_message: "with message {{message}}"
 
   # creating
 
-  contribute_content_link: "Contribute"
+  contribute_content_link: "Create Page"
   contribute_group_content_link: "Add Page To {{group}}"
   page_create_owner: "Page Owner"
   create_page_information: "{{page_class}} Information"
@@ -1420,7 +1434,7 @@ en:
   survey_introduction_tab: "Introduction"
   survey_create_tab: "Create Survey"
   survey_edit_tab: "Edit Survey"
-  survey_list_all_tab: "List All Responses"
+  survey_list_all_tab: "List Responses"
   survey_my_response_tab: "My Response"
   survey_rate_responses_tab: "Rate Responses"
   survey_take_tab: "Take Survey"
@@ -1565,6 +1579,7 @@ en:
   last_seen: "last seen"
 
   directory_of_people: Directory of People
+  directory_peers_description: "A list of your friends and all the people in your groups and networks."
   no_contacts_msg: You have no friends.
   my_peers_explain: users I share a common group with
   no_peers_msg: You have no peers.

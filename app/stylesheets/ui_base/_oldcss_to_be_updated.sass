@@ -15,6 +15,9 @@ form.login_dialog
 table.page_types 
   td
     vertical-align: top
+  a
+    +blue-link(12px)
+    
     
 //
 // FORMS
@@ -228,11 +231,13 @@ ul.tabset.top
       border-bottom: 0
 
 .sub_tabs a
-  font-size: 0.85em
+  +blue-link
 
 ul.tabset.simple
   margin-top: 0
   margin-bottom: 13px
+  & li.tab a
+    +blue-link(12px)
 
 //
 // INFO_BOX
@@ -255,9 +260,12 @@ ul.tabset.simple
   .status h3
     margin: 0.5em 0
   &.tabs
+    width: 100%
     padding: 1em 0 0 0
     overflow: hidden
     border-bottom: 0
+    & li.tab a
+      +blue-link(12px)
 
 .info_box .description,
 .inset_box .description
@@ -269,6 +277,7 @@ ul.tabset.simple
   line-height: 1.6em
   letter-spacing: 1px
   word-spacing: 2px
+
 
 //
 // UI ELEMENTS
@@ -349,15 +358,11 @@ div.side_list
   margin-bottom: 0.5em
   clear: both
   width: 100%
-  a, .a
-    text-decoration: none
+  a
+    +blue-link
     display: block
     padding-top: 4px
     padding-bottom: 4px
-    &.active
-    &.visited
-    &:hover
-      text-decoration: underline
   &.commands a
     text-transform: capitalize
   span 
@@ -365,6 +370,9 @@ div.side_list
     &.small_icon
       padding-left: 19px
       background-position: 0 50%
+  li.current
+    font-weight: bold
+    font-size: 12px
 
 td.left_column
   background-color: !left_column_bg_color

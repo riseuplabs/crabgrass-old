@@ -57,9 +57,11 @@ module GroupsHelper
     ## link_to_iff may_view_committee?, I18n.t(:view_all), ''
   end
 
-  def create_committee_link
+  def create_committee_link(fourth_nav=nil)
+    group = @parent || @group
+    return if (@current_site and (@current_site.network_id == group.id))
     if may_create_subcommittees?
-      link_to I18n.t(:create_committee), committees_params(:action => :new)
+      menu I18n.t(:create_committee), committees_params(:action => :new), active_tab_for_nav(fourth_nav, 'new committee')
     end
   end
 
@@ -86,7 +88,7 @@ module GroupsHelper
 
   def invite_link
     if may_create_invite_request?
-      link_to_active(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
+      menu(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
     end
   end
 
@@ -100,7 +102,7 @@ module GroupsHelper
   def membership_count_link(options = nil)
     options[:text] ||= :group_membership_count
     link_if_may(I18n.t(options[:text], :count=>(@group.users.size).to_s) + ARROW,
-                   '/groups/memberships', 'list', @group) or
+                   '/groups', 'people', @group) or
     I18n.t(options[:text], :count=>(@group.users.size).to_s)
   end
 

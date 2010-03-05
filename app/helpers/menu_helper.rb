@@ -8,7 +8,7 @@ module MenuHelper
   def top_menu(label, url, options={})
     id = options.delete(:id)
     menu_heading = content_tag(:span,
-      link_to_active(label.capitalize, url, options[:active]),
+      link_to_active(label.upcase, url, options[:active]),
       :class => 'topnav'
     )
     content_tag(:li,
@@ -38,10 +38,26 @@ module MenuHelper
   ##
   ## MENUS
   ##
+  ## use url as a path or as an array of paths, if you provide an array of paths
+  ## the first item will be the destination url, the rest are used to highlight the
+  ## tab if is needed
   def menu(label, url, options={})
-    active = options.has_key?(:active) ? options.delete(:active) : (url_for(url) =~ /#{request.path}/i)
+    active = options.delete(:active) if options.has_key?(:active)
+
+    ### PLEASE if you change this make sure it doesn't break menus elsewhere, for example:
+    ### people directory, group directory, group pages, etc.
+    if url.is_a?(String) or url.is_a?(Hash)
+      active = url_for(url) =~ /^#{Regexp.escape(request.path)}$/i if active.nil?
+    elsif url.is_a?(Array)
+      active = !url.select { |path| url_for(path).match(/^#{Regexp.escape(request.path)}$/i) ? true : false }.empty? if !active
+      url = url.first
+    else
+      active = false if active.nil?
+    end
+
     selected_class = active ? (options[:selected_class] || 'current') : ''
     li_options = options.merge({:class => [options.delete(:class), selected_class].join(' ')})
+
     content_tag(:li,
       link_to(label, url, options), li_options
     )
@@ -109,7 +125,7 @@ module MenuHelper
       network_directory_url,
       :active => @active_tab == :networks,
       :menu_items => menu_items('boxes', {
-        :entities => current_user.primary_networks.most_active,
+        :entities => current_user.primary_networks.most_active(@current_site),
         :heading => I18n.t(:my_networks),
         :see_all_url => network_directory_url(:action => 'my'),
         :submenu => 'networks'
@@ -140,4 +156,11 @@ module MenuHelper
     return cols
   end
 
+  # haml helper to prevent emptly list items
+  # example:
+  # =li_if destroy_group_link
+  # will wrap the destroy group link in a li tag if it exists.
+  def li_if content
+    content_tag(:li, content) if content
+  end
 end

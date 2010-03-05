@@ -25,7 +25,7 @@ module RootHelper
 
   def contribute_link
     if may_contribute_to_site?
-      link_to_with_icon 'plus', I18n.t(:contribute_to_site), {:controller => '/pages', :action => 'create', :group => current_site.network}
+      link_to_with_icon 'plus', I18n.t(:contribute_to_site), new_group_page_url(current_site.network)
     end
   end
 

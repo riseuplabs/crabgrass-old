@@ -1,10 +1,13 @@
-= render :partial => 'common/action_bar', :locals => {:settings => action_bar_settings, :view_base_path => action_bar_view_base_path}
+= action_bar(action_bar_settings)
+- action_bar_form(mark_requests_path) do
+  = render :partial => '/common/action_bar/hidden_form_fields'
 
-- action_bar_form(mark_requests_path, action_bar_settings) do
-  = render :partial => 'common/action_bar/hidden_form_fields', :locals => {:settings => action_bar_settings}
+  %header
+    = pagination_for(@requests)
+
   %div
     %table#requests.pretty
       = render :partial => 'request', :collection => @requests
 
-%footer
-  = pagination_links(@requests)
+  %footer
+    = pagination_for(@requests)

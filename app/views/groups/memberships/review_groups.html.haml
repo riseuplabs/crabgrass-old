@@ -1,0 +1,18 @@
+- content_for :style do
+  table.members td {padding: 12px;}
+
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => 'members_sidelinks', :locals => {:group => @group }
+
+%div
+
+- if @federatings.any? 
+  %table{:class=>'members pretty'}
+    %tr
+      %th Group
+      %th Joined
+    = render :partial => 'federating', :collection => @federatings 
+

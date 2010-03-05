@@ -6,7 +6,7 @@ class Me::MessagePostsController < Me::BaseController
     current_user.send_message_to!(@recipient, params[:post][:body], in_reply_to)
 
     respond_to do |wants|
-      wants.html { redirect_to messages_path }
+      wants.html { redirect_to message_path(@recipient.login) }
       wants.js { render :nothing => true }
     end
   end

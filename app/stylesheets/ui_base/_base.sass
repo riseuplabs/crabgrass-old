@@ -43,8 +43,11 @@
 =bordered-top(!border_color= !warm_grey_border)
   border-top= 1px "solid" !border_color
 
-=bordered2-top(!border_color= !warm_grey_border)
-  border-top= 1px "double" !border_color
+=bordered-2sides(!border_color= !warm_grey_border)
+  border-top= 1px "solid" #fff
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" #fff
 
 =bordered-left(!border_color= !warm_grey_border)
   border-left= 1px "solid" !border_color
@@ -87,10 +90,6 @@
   font-size= !sized
   font-weight: normal
 
-=full-width
-  +columns(14,14)
-  width: 764px
-
 =partial-width
   +columns(10,10)
   width: 540px
@@ -106,6 +105,14 @@
 .nowrap
   white-space: nowrap
 
+.clear
+  clear: both
+
+.blue-link
+  +blue-link
+
+.pencil_16
+  +blue-link
 //
 // NOTE: duplication of .small_icon in global nav for nested li
 // for use with icon + text
@@ -115,6 +122,7 @@
   background-position: 0 50%
   padding-left: 20px
   min-height: 16px
+  line-height:  1.6
   &.twenty
     padding-left: 22px
     min-height: 24px
@@ -194,56 +202,10 @@ h6
 //
 //misc
 //
-.full-width
-  +full-width
+
 
 
 /* content container */
-#identity-name
-  h1
-    color= !banner_title
-    width: 500px
-    float: left
-    display: inline
-    line-height: 1.2
-    font-size: 26px
-    font-weight: normal
-  a
-    +hover-link
-    +small-text
-    float: left
-    clear: left
-    color= !light_grey_text
-#group-action
-  +zero
-  width: 98px
-  display: inline
-  float: right
-  text-align: right
-  a
-    +hover-link
-    +small-text
-    color= !light_grey_text
-    padding: 4px 0 0 18px
-    margin-top: 4px
-    font-weight: bold
-
-#contribute
-  float: right
-  height: 12px
-  width: 90px
-  padding: 6px 6px 6px 2px
-  margin-top: 10px
-  background-color: #78be63
-  border: 1px solid #448c3b
-  span.small_icon
-    padding: 20px
-  a
-    color= !white_text
-    font-size: 11px
-    font-weight: normal
-    padding: 0
-    margin: 0 2px 0 0
 
 /* @end */
 
@@ -252,7 +214,7 @@ h6
 //
 
 #title-box-full, #info-box-full
-  +full-width
+  width: 764px
   height: 16px
   h3
     font-size: 15px
@@ -276,59 +238,43 @@ h6
 /* third-level nav */
 #third-level-container
   +container
-  height: 51px
-  background= !white_bg
+  +bordered-btm(!second_nav_border)
+  height: 24px
+  background= !third_nav_bg
   nav#third-level
     +columns(14)
     +full
-    border-top= 3px "double" !third_nav_border
-    margin-top: 28px
-    height: 20px
     width: 764px
-    #centered-nav
-      float: left
-      width: 100%
-      position: relative
-      height: 20px
-      ul
-        clear: left
-        float: left
-        height: 20px
-        margin-top: -13px
-        position: relative
-        left: 50%
-        text-align: center
-        li
-          +bordered-block(!third_nav_border)
-          +spaced
-          background= !third_nav_bg
-          height: 20px
-          display: block
-          float: left
-          position: relative
-          right: 50%
-          a
-            color= !third_nav_text
-            display: block
-            text-decoration: none
-            height: 8px
-            line-height: 0.5
-            padding: 6px 10px
-        li.current
-          background= !third_nav_current_bg
-          a
-            color= !third_nav_current_text
-            font-weight: bold
-        li.first
-          +bordered(!third_nav_border)
+    ul
+      li
+        +inline-list
+        font-size: 11px
+        font-weight: normal
+        line-height: 2.4
+        a
+          +hover-link
+          color= !third_nav_text
+          height: 10px
+          padding: 0 10px
+      li.current
+        a
+          font-weight: bold
+    &.extended_sidebar
+      width: 540px
+      padding-left: 224px
+
+
 /* @end */
 
 
-/* groups page feed, me-section page feed, group landing/wiki section */
+/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
+#sitehome-wiki, #group-wiki
+  #wiki-area
+    margin: 10px 0 15px
 
-#pages, #group-wiki
+#pages, #group-wiki, #sitehome-wiki
   +partial-width
-  margin: 30px 0 0
+  margin: 30px 0 15px
   h3
     +bordered-btm(!medium_grey_border)
     padding: 0 0 8px
@@ -339,7 +285,13 @@ h6
       a
         +blue-link
 
-#pages, #group-wiki, #activities
+#group-wiki
+  margin-top: 0
+  
+#pages
+  margin: 0
+
+#pages, #group-wiki
   article
     +partial-width
     +bordered-btm(!light_grey_border)
@@ -393,10 +345,11 @@ h6
           +blue-link
 
 #pages.full
-  +full-width
+  +clearfix
+  width: 764px
   h3
     +bordered-btm(!medium_grey_border)
-    +full-width
+    width: 764px
     padding: 0 0 8px
     float: left
     display: inline
@@ -408,14 +361,9 @@ h6
     display: inline
     a
       +blue-link
-
-
-#pages.full
-  +clearfix
-  +full-width
   article
-    +full-width
     +bordered-btm(!light_grey_border, "dotted")
+    width: 764px
     margin: 0
     padding: 10px 0
     .pages-info
@@ -462,6 +410,10 @@ h6
         line-height: 1.0
         padding: 0.1em
 
+span.search-excerpt
+  font-weight: bold
+  font-style: normal
+
 /* @end */
 #contributors
   ul
@@ -477,6 +429,8 @@ h6
 footer.page
   background= !white_bg
   height: 65px
+  .language-menu
+    float: right
 .space
   height: 22px
 .small-space
@@ -511,10 +465,10 @@ td.reply
   min-height: 24px
 #browse-content
   +clearfix
-  +full-width
+  width: 764px
   nav
     +clearfix
-    +full-width
+    width: 764px
 button.icon_16
   +zero
   vertical-align: text-top
@@ -533,11 +487,11 @@ button.icon_16
 #identity-image
   +columns(4,4)
   +bordered(!almost_black)
-  width: 204px
-  height: 204px
+  width: 202px
+  height: 202px
   float: left
   margin: 0
-  background: !white_bg
+  background= !white_bg
 
 
 #image-label
@@ -654,11 +608,13 @@ button.icon_16
   margin-top: 14px
 #main-content.full
   width: 764px
+#main-content-right.admin
+  margin: 0
 
 
 
 nav#nav-full
-  +full-width
+  width: 764px
   height: 28px
   ul
     +clearfix
@@ -690,8 +646,14 @@ nav#nav-full
   font-size: 11px
   color= !medium_grey_text
   display: inline
+  margin-top: 5px
   a
     +blue-link
+
+.pagination.secondary
+  width: 100%
+  margin-top: 4em
+  margin-bottom: 2em
 
 #sidebar
   +bordered
@@ -699,8 +661,11 @@ nav#nav-full
   padding: 10px
   float: right
   margin: 0
+  .round
+    +border-radius(5px)
   ul
     +clearfix
+    overflow: visible
   ul#nav4
     li
       +bordered-btm(!medium_grey_border,"dotted")
@@ -713,6 +678,16 @@ nav#nav-full
 
 #sidebar.left
   float: left
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+  a
+    +blue-link
+    height: 20px
 
 #sidebar.no-border
   border: none
@@ -732,11 +707,10 @@ nav#nav-full
     td
       padding: 8px 8px 8px 0
 .shy_parent:hover
-  .shy:hover
+  .shy
     opacity: 1
 .shy
   opacity: 0
-  font-size: 8px
 .pagination
   font-weight: normal
   font-size: 11px
@@ -757,7 +731,7 @@ nav#tabs
 
 #action-bar
   +bordered-top-btm
-  +full-width
+  width: 764px
   clear: both
   height: 21px
   h4
@@ -794,61 +768,68 @@ table
     td.date
       font-size: 10px
 
-table#activity
-  +full-width
-  tr
-    td
-      +bordered-btm(!light_grey_border)
-      padding: 6px
-    td.date
-      font-size: 10px
-
-table#messages
-  table-layout: fixed
+#social-activities
   width: 764px
-  float: left
-  tr
-    td
-      +bordered-btm(!light_grey_border)
-      padding: 12px 6px
-    td.reply
-  tr.unread
-    td
-      font-weight: bold
-  tr
-    td.check
-      width: 36px
-    td.reply
-      width: 30px
-    td.avatar
-      width: 150px
-    td.message
-      padding: 0
-      margin: 0
-      a
-        display: block
-        padding: 12px 6px
-        &:hover
-          background-color: #ffc
-    td.date
-      font-size: 10px
-      width: 80px
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
+        padding: 6px
+      td.date
+        font-size: 10px
 
-table#messages.thread
-  margin: 12px 0
-  tr
-    td.avatar
-      width: 60px
-    td.name
-      width: 160px
-      a.name_icon
-        padding-right: 10px
-    td.date
-      font-size: 10px
-      width: 80px
+#messages
+  width: 764px
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
+        padding: 12px 6px
+      td.reply
+    tr.unread
+      td
+        font-weight: bold
+    tr
+      td.check
+        width: 36px
+      td.reply
+        width: 30px
+      td.avatar
+        width: 150px
+      td.message
+        padding: 0
+        margin: 0
+        a
+          display: block
+          padding: 12px 6px
+          text-decoration: none
+          &:hover
+            background-color: #ffc
+          .message-body
+            text-decoration: underline
+
+      td.date
+        font-size: 10px
+        width: 80px
+
+#messages.thread
+  table
+    margin: 12px 0
+    tr
+      td.avatar
+        width: 60px
+      td.name
+        width: 160px
+        a.name_icon
+          padding-right: 10px
+      td.date
+        font-size: 10px
+        width: 80px
 
 #tag-cloud
-  text-align: center
+  //text-align: center
   li
     display: inline-block
     float: none
@@ -856,28 +837,31 @@ table#messages.thread
     text-align: center
     a
       +hover-link
-  .tag1
-    font-size: 20px
-  .tag2
-    font-size: 18px
-  .tag3
-    font-size: 16px
-  .tag4
-    font-size: 14px
-  .tag5
-    font-size: 12px
   .tag6
+    font-size: 20px
+  .tag5
+    font-size: 18px
+  .tag4
+    font-size: 16px
+  .tag3
+    font-size: 14px
+  .tag2
+    font-size: 12px
+  .tag1
     font-size: 10px
+
 #wiki-content
   article
     h2
       +partial-width
       clear: both
+      padding-bottom: 8px
 
 /* footer */
 
 footer.page
   +container
+  padding-top: 2em
   ul#crabgrass
     +columns(10)
     +full
@@ -980,32 +964,7 @@ q
 img
 
 /* @end */
-#activities
-  +bordered-btm(!light_grey_border)
-  +columns(10,10)
-  +clearfix
-  width: 540px
-  margin: 20px 0 0
-  .left
-    +columns(5,10)
-    +alpha(10)
-    +clearfix
-  .right
-    +columns(5,10)
-    +omega(10)
-    +clearfix
-  ul
-    a
-      +hover-link
-    li
-      margin-bottom: 4px
-      line-height: 1.4
-      img
-        float: left
-        padding: 6px 6px 6px 0
-      label.date
-        font-size: 9px
-        color= !lighter_grey_text
+
 
 
 #announcements
@@ -1053,6 +1012,33 @@ img
         border: 1px solid #ccc
         width: 300px
         height: 16px
+  #activities
+    +bordered-btm(!light_grey_border)
+    +columns(10,10)
+    +clearfix
+    width: 540px
+    margin: 20px 0 0
+    .left
+      +columns(5,10)
+      +alpha(10)
+      +clearfix
+    .right
+      +columns(5,10)
+      +omega(10)
+      +clearfix
+    ul
+      a
+        +hover-link
+      li
+        margin-bottom: 4px
+        line-height: 1.4
+        img
+          float: left
+          padding: 6px 6px 6px 0
+        label.date
+          font-size: 9px
+          color= !lighter_grey_text
+
 
 #helpful-links
   +columns(10,10)
@@ -1094,9 +1080,8 @@ img
 // page sidebar
 //
 #page_sidebar
-  a,
-  a:visited
-    color: #0000cc
+  a
+    +blue-link
   h3
     color: #666666
     border: 1px solid
@@ -1106,6 +1091,10 @@ img
     font-size: 0.8em
     padding: 0.5em 0.75em
     margin: 2.5em 0 0.5em 0
+  h4
+    padding-top: 1em
+  h5
+    padding: 0.4em 0 0.5em
   ul.rule
     border-top: 1px dotted #fff
     padding-top: 0.5em
@@ -1160,10 +1149,27 @@ ul.side_list
     background-position: 0 50%
 
 //
-// table superadmin
+// table admin + superadmin
 //
-#admin-content 
-  form 
+#admin-content
+  form
     table tr td, p
-      padding-bottom: 10px
-   
+      padding: 0 4px 10px 0
+    #email-blasts
+      td
+        padding: 10px
+    &.edit_site
+      span.padtop14
+        +clearfix
+        padding-top: 14px
+        label
+          font-weight: bold
+    i
+      font-size: 10px
+      color= !blue
+  h1
+    +bordered-btm(!medium_grey_border)
+    padding-bottom: 4px
+    margin-bottom: 14px
+
+

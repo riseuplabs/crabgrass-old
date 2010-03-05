@@ -1,6 +1,12 @@
-.swatches a.thumbnail
-  :border-width 3px
 
+.swatches
+  .gallery_swatch_portrait
+    a     
+      :border-width 3px 
+       
+.swatches
+  span
+    display: none
 
 .cover
   :margin-bottom 1em
@@ -13,9 +19,23 @@
   :margin 0 1em 1em 0
   :float left
 
+.gallery_swatch_portrait  
+  a
+    clip: border
+    background: white none repeat scroll 0 0
+    border: 1px solid white
+    display: block
+    margin: 0 5px 5px 0
+    outline: #999 solid 1px
+    overflow: hidden 
+
+  span
+    display: none
 
 .cover a.thumbnail
   :border-width 3px
+
+
 
 
 .gallery-nav
@@ -54,23 +74,25 @@
     :-moz-border-radius-bottomleft 4px
 
   .meta
-    :margin-right 10px
+    :margin-right 17px
     :color #898989
     :display inline
     :margin-top 9px
     :font-size 11px
 
-  a
+  a                 
     :color #5A98C8
     :font-size 11px
-
-  .gallery-actions a
+    
+.gallery-actions
+  width: 100%
+  a
     :padding 2px 0px 4px 24px
-    :margin-right 20px
+    :margin-right 17px
 
 
-  .gallery-nav .meta
-    :float right
+.gallery-nav .meta
+  float: left
 
 
 .gallery-item

@@ -1,8 +1,6 @@
 - if @group.committee?
   - headline = I18n.t(:new_committee, :group_name => @parent.name)
   - url = committees_url(:action => :create, :id => @parent)
-  - content_for :left_sidebar do
-    = render :partial => '/groups/navigation/settings_sidelinks'
 - elsif @group.council?
   - headline = I18n.t(:new_council, :group_name => @parent.name)
   - url = councils_url(:action => :create, :id => @parent)
@@ -12,6 +10,12 @@
 - elsif @group.normal?
   - headline = I18n.t(:new_group)
   - url = groups_url(:action => :create)
+
+- if @group.committee? or @group.council?
+  - content_for :left_sidebar do
+    = render :partial => '/groups/navigation/settings_sidelinks'
+  - content_for :third_nav do
+    = render :partial => '/groups/navigation/admin_tabs'
 
 = content_tag(:h3, headline)
 

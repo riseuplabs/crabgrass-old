@@ -297,4 +297,75 @@ out: |-
   	<li><a href="http://riseup.net">riseup.net</a></li>
   	<li><a href="http://riseup.net">riseup.net</a></li>
   </ul>
+---
+name: list with too many headings
+in: |-
+  h5. heading h5
+
+  h4. heading h4
+
+  h3. and heading h3
+
+  h2. en die
+
+  h1. ook!
+
+
+  Moet je dat zien?
+
+
+  Kijk dan!
+
+
+  Er moet bullet points er zijn:
+
+
+  * een
+  * twee
+  * drie
+  * vier
+  * vijf
+
+
+  Er moet nummers erbij:
+
+
+  # een
+  # twee
+  # drie
+  # vier
+  # vijf
+
+
+  Ook belangrijk:
+
+
+
+  *Niks werkt!*
+out: |-
+  <h5>heading h5</h5>
+  <h4>heading h4</h4>
+  <h3>and heading h3</h3>
+  <h2 class="first">en die</h2>
+  <h1>ook!</h1>
+  <p>Moet je dat zien?</p>
+  <p>Kijk dan!</p>
+  <p>Er moet bullet points er zijn:</p>
+  <ul>
+  	<li>een</li>
+  	<li>twee</li>
+  	<li>drie</li>
+  	<li>vier</li>
+  	<li>vijf</li>
+  </ul>
+  <p>Er moet nummers erbij:</p>
+  <ol>
+  	<li>een</li>
+  	<li>twee</li>
+  	<li>drie</li>
+  	<li>vier</li>
+  	<li>vijf</li>
+  </ol>
+  <p>Ook belangrijk:</p>
+  <p><strong>Niks werkt!</strong></p>
 

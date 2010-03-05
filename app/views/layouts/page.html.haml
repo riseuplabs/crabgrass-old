@@ -1,6 +1,6 @@
 - inside_layout 'header' do
-  
-  %section#wiki-content
+
+  %section#page-content
     - if @title_box.any?
       .title_box
         = render :partial => @title_box
@@ -10,6 +10,6 @@
     %article
       %div.content_box
         = yield
-      
+
     %section#posts
       = render :partial => 'posts/list' if @show_posts

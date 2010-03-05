@@ -7,9 +7,8 @@
     #banner-container
       %header#banner
         = yield :banner
-      /
-      / secondary nav (always required?)
-      /
+  %div.nav2
+    #nav2-container
       - if yield :secondary_nav
         %nav#second-level
           = yield :secondary_nav
@@ -20,8 +19,7 @@
 - if yield :third_nav
   #third-level-container
     %nav#third-level
-      #centered-nav
-        = yield :third_nav
+      = yield :third_nav
         
 #content
   #content-container

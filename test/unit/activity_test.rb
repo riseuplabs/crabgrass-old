@@ -132,6 +132,29 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal '<span class="user">iguana</span>', act.user_span(:other_user)
   end
 
+  def test_avatar
+    group = groups(:rainbow)
+    u1 = users(:kangaroo)
+    u2 = users(:iguana)
+
+    u1.add_contact!(u2, :friend)
+    u1.send_message_to!(u2, "hi u2")
+    group.add_user!(u1)
+
+    friend_act = FriendActivity.find_by_subject_id(u1.id)
+    user_joined_act = UserJoinedGroupActivity.find_by_subject_id(u1.id)
+    group_gained_act = GroupGainedUserActivity.find_by_subject_id(group.id)
+    post_act = PrivatePostActivity.find_by_subject_id(u2.id)
+
+
+    # the person doing the thing should be the avatar for it
+    # disregarding whatever is the subject (in the gramatical/language sense) of the activity
+    assert_equal u1, friend_act.avatar
+    assert_equal u1, user_joined_act.avatar
+    assert_equal u1, group_gained_act.avatar
+    assert_equal u1, post_act.avatar
+  end
+
   def test_associations
     assert check_associations(Activity)
   end

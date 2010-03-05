@@ -10,7 +10,7 @@ module Groups::Search
       redirect_to group_search_url(:action => 'search', :path => path)
     else
       @path.default_sort('updated_at')
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
+      @pages = Page.paginate_by_path(@path, options_for_group(@group).merge(pagination_params))
       hide_users
       search_template('search')
     end
@@ -32,7 +32,7 @@ module Groups::Search
       @path.set_keyword(@field)
 
       # find pages
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
+      @pages = Page.paginate_by_path(@path, options_for_group(@group).merge(pagination_params))
     end
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     search_template('archive')
@@ -42,7 +42,7 @@ module Groups::Search
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
     if path.any?
-      @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
+      @pages   = Page.paginate_by_path(path, options_for_group(@group).merge(pagination_params))
       page_ids = Page.ids_by_path(path, options_for_group(@group))
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
     else
@@ -67,7 +67,7 @@ module Groups::Search
       redirect_to url_for_group(@group, :action => 'trash', :path => path)
     else
       @path.default_sort('updated_at')
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :flow => :deleted))
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :flow => :deleted).merge(pagination_params))
       hide_users
       search_template('trash')
     end
@@ -75,7 +75,7 @@ module Groups::Search
 
   def discussions
     @path.default_sort('updated_at').merge!(:type => :discussion)
-    @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
+    @pages = Page.paginate_by_path(@path, options_for_group(@group, :include => {:discussion => :last_post}).merge(pagination_params))
     search_template('discussions')
   end
 
@@ -95,7 +95,7 @@ module Groups::Search
   end
 
   def pages
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge({:per_page => GROUP_ITEMS_PER_PAGE, :page => params[:page]}) )
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params))
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     @second_nav = 'pages'
     search_template('pages')

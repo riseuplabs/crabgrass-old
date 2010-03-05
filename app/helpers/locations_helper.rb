@@ -21,7 +21,7 @@ module LocationsHelper
       geo_admin_codes = []
     else
       geocountry = GeoCountry.find_by_id(country_id)
-      geo_admin_codes = geocountry.geo_admin_codes.find(:all)
+      geo_admin_codes = geocountry.nil? ? [] : geocountry.geo_admin_codes.find(:all)
     end
     render :partial => '/locations/state_dropdown', :locals => {:geo_admin_codes => geo_admin_codes, :display => display, :name => name}
   end

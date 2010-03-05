@@ -29,8 +29,8 @@ class PersonController < ApplicationController
     params[:path] += ['descending', 'updated_at'] if params[:path].empty?
     params[:path] += ['limit','30', 'contributed_by', @user.id]
 
-    options = options_for_user(@user, :page => params[:page])
-    @pages = Page.find_by_path params[:path], options
+    options = options_for_user(@user, pagination_params(:per_page => 10))
+    @pages = Page.paginate_by_path params[:path], options
     if logged_in? and @user.may_show_status_to?(current_user)
       @status = @user.current_status
     end
@@ -44,7 +44,7 @@ class PersonController < ApplicationController
       redirect_to url_for_user(@user, :action => 'search', :path => path)
     else
       @path.default_sort('updated_at').merge!(:contributed => @user.id)
-      @pages = Page.paginate_by_path(@path, options_for_user(@user, :page => params[:page]))
+      @pages = Page.paginate_by_path(@path, options_for_user(@user, pagination_params))
     end
 
     handle_rss :title => @user.name, :link => url_for_user(@user),

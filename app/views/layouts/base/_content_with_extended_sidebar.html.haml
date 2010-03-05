@@ -1,15 +1,25 @@
 
 %div.banner
-  #banner-container
+  #banner-container.no-avatar
     %header#banner-no-avatar
       = yield :banner
+%div.nav2
+  #nav2-container    
     %nav#second-level-aside
       = yield :info_box
+
+/
+/ third nav (not always required)
+/
+- if yield :third_nav
+  #third-level-container
+    %nav{:id => 'third-level', :class=>'extended_sidebar'}
+      = yield :third_nav
     
 #content
   #content-container
     #content-wrap
-      %aside#identity-info
+      %aside#xxlarge-avatar
         = yield :extended_sidebar
       /
       / container for pages that has extended sidebar

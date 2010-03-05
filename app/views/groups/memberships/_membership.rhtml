@@ -7,6 +7,8 @@
   <% end %>
 <!--  <td><%= membership.join_method %></td> -->
   <td><%= membership.user.may?(:admin,@group) ? I18n.t(:coordinator) : '' %></td>
-  <td><%= destroy_membership_link(membership) %>
+  <% if @second_nav == 'administration' %>
+    <td><%= destroy_membership_link(membership) %>
+  <% end %>
 </tr>
 

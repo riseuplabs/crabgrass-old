@@ -4,6 +4,8 @@ module Groups::MembershipsPermission
     logged_in? and
     current_user.may?(:admin, group)
   end
+  alias_method :may_review_memberships?, :may_create_memberships?
+  alias_method :may_review_groups_memberships?, :may_create_memberships?
 
   def may_join_memberships?(group=@group)
     logged_in? and
@@ -26,11 +28,6 @@ module Groups::MembershipsPermission
       group.profiles.public.may_see_members?
     end
   end
-
-  # wtf is may_groups_memberships?() for?
-  %w(groups).each{ |action|
-    alias_method "may_#{action}_memberships?".to_sym, :may_list_memberships?
-  }
 
   def may_update_memberships?(group=@group)
     current_user.may?(:admin, group) and group.committee?

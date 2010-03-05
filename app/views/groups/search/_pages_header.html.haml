@@ -4,11 +4,5 @@
 - content_for :right_sidebar do
   = render :partial => 'groups/search/tags'
 
-- content_for :browse_content do
-  %nav
-  - if may_trash_group?
-    %a.right{:href => "#{url_for(group_search_url(:action => 'trash'))}"}
-      = I18n.t(:trash)
-
-%div.right
-  = drop_down("View:", group_pages_view_options, group_pages_view_selected)
+- content_for :third_nav do
+  = render :partial => 'groups/navigation/group_pages_tabs'

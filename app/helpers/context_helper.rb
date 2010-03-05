@@ -95,6 +95,7 @@ module ContextHelper
 
   def site_network_context(size='large', update_breadcrumbs=true)
     @active_tab = :home
+    add_context I18n.t(:menu_home), '/'
   end
 
   def person_context(size='large', update_breadcrumbs=true)
@@ -112,6 +113,11 @@ module ContextHelper
     @active_tab = :me
     add_context 'me', me_url
     breadcrumbs_from_context if update_breadcrumbs
+  end
+
+  def account_context(size='large', update_breadcrumbs=false)
+    me_context(size, update_breadcrumbs)
+    @active_tab = :account
   end
 
   def page_context
@@ -157,6 +163,11 @@ module ContextHelper
 
   end
 
+  def search_context
+    @context = referer_crumb
+    breadcrumbs_from_context(false)
+  end
+
   def no_context
     @context = []
     @left_column = nil
@@ -178,7 +189,7 @@ module ContextHelper
   end
 
   def referer_crumb
-    session[:breadcrumbs_by_referer][referer]
+    breadcrumbs_by_referer[referer]
   end
 
   def referer_or_last_crumb(page)

@@ -17,10 +17,12 @@ if logged_in? and current_user.may?(:admin, @page)
 end
 %>
 <% end -%>
-<div class='wiki'>
-  <div id='wiki_html'>
-    <%= @wiki.body_html %>
-  </div>
-  <br style='clear:both' />
-</div>
 
+<section id='wiki-content'>
+  <div class='wiki'>
+    <div id='wiki_html'>
+      <%= @wiki.body_html %>
+    </div>
+    <br style='clear:both' />
+  </div>
+</section>

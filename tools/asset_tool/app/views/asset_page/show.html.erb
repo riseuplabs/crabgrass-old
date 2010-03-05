@@ -12,6 +12,7 @@
             asset_link_with_preview(@asset) 
           end %>
       </div></div>
+      <div class='upload_file_info'>
       <p><%= download_link %> &nbsp;&nbsp; <%= upload_link %></p>
       <div id="upload_new" style="display: none;">
         <% form_tag page_url(@page, :action => 'update'), :multipart => true do -%>
@@ -19,9 +20,8 @@
           <%= submit_tag 'upload' %>
         <% end %>
       </div>
-    </div>
+      </div>
 
-    <div class='right'>
       <h2 class='section'><%= I18n.t(:information) %></h2>
       <%= render :partial => 'information' %>
 
@@ -33,7 +33,7 @@
       <br/>
       <h2 class='section'><%= I18n.t(:other_formats) %></h2>
       <%= render :partial => 'thumbnails' %>
-    </div> <!-- end right -->
+    </div> <!-- end left -->
 
 </div> <!-- end asset_page -->
 <br style='clear:both'/>

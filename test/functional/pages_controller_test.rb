@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'pages_controller'
+require 'pages_helper'
 
 class PagesControllerTest < ActionController::TestCase
   fixtures :users, :pages, :user_participations
@@ -22,6 +23,10 @@ class PagesControllerTest < ActionController::TestCase
     get :my_work
     assert_response :success
     assert assigns(:pages).length > 0
+    [:work, :watched, :editor, :owner, :unread].each do |view|
+      get :my_work, :view => view
+      assert_response :success
+    end
   end
 
   def test_all_pages
@@ -29,6 +34,10 @@ class PagesControllerTest < ActionController::TestCase
     get :all
     assert_response :success
     assert assigns(:pages).length > 0
+    [:public, :networks, :groups].each do |view|
+      get :my_work, :view => view
+      assert_response :success
+    end
   end
 
   def test_index_to_all

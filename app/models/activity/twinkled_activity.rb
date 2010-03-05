@@ -11,6 +11,7 @@ class TwinkledActivity < Activity
 
   alias_attr :user,       :subject
   alias_attr :twinkler,   :object
+  alias_attr :avatar,     :object
   alias_attr :post,       :extra
 
   before_create :set_access

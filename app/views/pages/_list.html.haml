@@ -1,14 +1,27 @@
 - pages ||= @pages
+= render(:partial => heading_partial) if local_assigns[:heading_partial]
+
 %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
   %header
     - if local_assigns[:title] && !title.blank?
       %h3
         = title
-    %span.pagination
+        %div.right
+          = render(:partial => pages_dropdown) if local_assigns[:pages_dropdown]
+          = pagination_for(pages)
+    - else
       = pagination_for(pages)
 
-  = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
+  - if pages
+    = render(:partial => calendar_partial) if local_assigns[:calendar_partial]
+    = render :partial => '/pages/page', :collection => pages, :locals => page_locals(local_assigns)
+  - else
+    -# we might want to display some "no page found" message here
 
   %footer
-    %span.pagination
+    - if defined?(pagination_link) && pagination_link.present?
+      %span.pagination
+        = pagination_link
+    - else
       = pagination_for(pages)
+

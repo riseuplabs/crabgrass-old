@@ -4,8 +4,8 @@ module LayoutHelper
   ## DISPLAYING BREADCRUMBS and CONTEXT
   ##
 
-  def link_to_breadcrumbs(min_length = 3)
-    if @breadcrumbs and @breadcrumbs.length >= min_length
+  def link_to_breadcrumbs
+    if @breadcrumbs and @breadcrumbs.length >= breadcrumb_min_length
       content_tag(:section, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
       ""
@@ -14,6 +14,10 @@ module LayoutHelper
 
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
+  end
+
+  def breadcrumb_min_length
+    controller?(:search) ? 2 : 3
   end
 
   ##
@@ -308,11 +312,11 @@ module LayoutHelper
  #     end
  #   else
       # no image
-      content_tag :h2, current_site.title, :class => 'site_title'
+      content_tag :h2, current_site.title
       # <h2><%= current_site.title %></h2>
  #   end
   end
-  
+
   def masthead_container
     locals = {}
     appearance = current_site.custom_appearance
@@ -354,6 +358,7 @@ module LayoutHelper
   def banner_partial_for(toplevel_tab)
     case toplevel_tab
     when :me then 'me/navigation/banner'
+    when :account then 'me/navigation/banner'
     when :people then 'people/navigation/banner'
     else 'groups/navigation/banner'
     end
@@ -362,6 +367,7 @@ module LayoutHelper
   def menu_partial_for(toplevel_tab)
     case toplevel_tab
     when :me then 'me/navigation/menu'
+    when :account then nil
     when :people then 'people/navigation/menu'
     else 'groups/navigation/menu'
     end

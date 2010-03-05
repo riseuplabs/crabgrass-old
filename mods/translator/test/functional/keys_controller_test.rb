@@ -12,14 +12,6 @@ class KeysControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_create_key
-    assert_difference('Key.count') do
-      post :create, :key => valid_key
-    end
-
-    assert_redirected_to key_path(assigns(:key))
-  end
-
   def test_should_show_key
     get :show, :id => keys(:hello).id
     assert_response :success

@@ -92,8 +92,8 @@ module BasePageHelper
   end
 
   def share_all_line
+    li_id = 'share_all_li'
     if may_share_with_all?
-      li_id = 'share_all_li'
       checkbox_id = 'share_all_checkbox'
       url = {:controller => 'base_page/participation',
         :action => 'update_share_all',
@@ -103,7 +103,7 @@ module BasePageHelper
       checkbox_line = sidebar_checkbox(I18n.t(:share_all_checkbox), @page.shared_with_all?, url, li_id, checkbox_id, :title => I18n.t(:share_all_checkbox_help))
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     elsif Site.current.network
-      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, I18n.t(:share_all_checkbox), :class => 'a'), :class => 'small_icon'
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, I18n.t(:share_all_checkbox), :class => 'a'), :id => li_id, :class => 'small_icon'
     end
   end
 
