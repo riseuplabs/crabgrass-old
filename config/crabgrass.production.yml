@@ -79,7 +79,6 @@ sites:
   - name: voiceofyouth
     admin_group: siteadminvoy
     moderation_group: siteadminvoy
->>>>>>> 33018ef... add missing site config for voiceofyouth
 
 ##
 ## SITE DEFAULTS
