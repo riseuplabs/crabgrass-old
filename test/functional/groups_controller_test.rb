@@ -543,6 +543,9 @@ editing tools on a group basis has been abandoned iirc, azul
   def test_people_when_not_logged_in
     get :people, :id => groups(:rainbow).name
     assert_response :redirect, "login required to list membership of a group"
+    get :people, :id => groups(:private_group).name
+    assert_response :unauthorized,
+      "attempt to list private_group should return unauthorized."
   end
 
   def test_people
@@ -556,7 +559,7 @@ editing tools on a group basis has been abandoned iirc, azul
     assert_response :success, "list public_group should succeed, because membership is public"
 
     get :people, :id => groups(:private_group).name
-    assert_response :success, "list private_group should succeed"
+    assert_response :missing, "attempt to list private_group should return 404"
 
     groups(:public_group).profiles.public.may_see_members = false
     groups(:public_group).save!
