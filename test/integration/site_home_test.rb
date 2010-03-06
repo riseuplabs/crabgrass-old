@@ -36,4 +36,10 @@ class SiteHomeTest < ActionController::IntegrationTest
     assert_not_contain I18n.t(:announcements)
   end
 
+  def test_create_group_link_not_shown
+    login 'blue'
+    visit '/'
+    assert_not_contain I18n.t(:create_a_group)
+  end
+
 end
