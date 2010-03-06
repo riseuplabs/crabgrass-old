@@ -42,4 +42,10 @@ class SiteHomeTest < ActionController::IntegrationTest
     assert_not_contain I18n.t(:create_a_group)
   end
 
+  def test_nav_links_in_welcome_box
+    login 'blue'
+    visit '/'
+    contain '<ul id="welcome-links" class=\'navbar\'>'
+  end
+
 end
