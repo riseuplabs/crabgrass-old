@@ -12,7 +12,6 @@
 ##
 ## GLOBAL
 ##
-<<<<<<< HEAD:config/crabgrass.production.yml
 
 enabled_languages:
   - en
