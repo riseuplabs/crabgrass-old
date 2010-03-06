@@ -1,0 +1,21 @@
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => 'requests_sidebar'
+
+%h2
+  = I18n.t(:incoming)
+
+= render :partial => 'groups/requests/table', :locals => {:requests => @incoming}
+
+= pagination_links(@incoming, :param_name => :in_page)
+
+
+%h2
+  = I18n.t(:outgoing)
+
+= render :partial => 'groups/requests/table', :locals => {:requests => @outgoing, :approvable => false, :destroyable => true}
+
+= pagination_links(@outgoing, :param_name => :out_page)
+

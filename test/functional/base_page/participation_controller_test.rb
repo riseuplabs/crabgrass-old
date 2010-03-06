@@ -23,10 +23,10 @@ class BasePage::ParticipationControllerTest < ActionController::TestCase
     login_as(:blue)
     # blue can edit page 1
 
-    xhr :post, :update_public, :add => true, :page_id => 1
+    xhr :post, :update_public, :public => true, :page_id => 1
     assert_equal true, Page.find(1).public?
 
-    xhr :post, :update_public, :add => false, :page_id => 1
+    xhr :post, :update_public, :public => false, :page_id => 1
     assert_equal false, Page.find(1).public?
 
 
@@ -34,10 +34,10 @@ class BasePage::ParticipationControllerTest < ActionController::TestCase
     @asset = Asset.create :uploaded_data => upload_data('photo.jpg'), :page_id => 1
     @asset.save
 
-    xhr :post, :update_public, :add => true, :page_id => 1
+    xhr :post, :update_public, :public => true, :page_id => 1
     assert_equal true, Page.find(1).public?
 
-    xhr :post, :update_public, :add => false, :page_id => 1
+    xhr :post, :update_public, :public => false, :page_id => 1
     assert_equal false, Page.find(1).public?
 
   end

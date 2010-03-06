@@ -171,10 +171,7 @@ module WikiHelper
      # add users name
      if version.user_id
        user_name = User.find_by_id(version.user_id).try.name || I18n.t(:unknown)
-       label << ' ' << I18n.t(:created_when_by) % {
-         :when => full_time(version.updated_at),
-         :user => user_name
-       }
+       label << ' ' << I18n.t(:created_when_by, :when => full_time(version.updated_at), :user => user_name)
      end
 
      label

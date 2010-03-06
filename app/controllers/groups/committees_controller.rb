@@ -3,6 +3,9 @@ class Groups::CommitteesController < GroupsController
   def new
     @parent = get_parent
     @group = Committee.new
+    @second_nav = 'administration'
+    @third_nav = 'settings'
+    @fourth_nav = 'new committee'
   end
 
   def create
@@ -15,12 +18,18 @@ class Groups::CommitteesController < GroupsController
   rescue Exception => exc
     flash_message_now :exception => exc
     render :template => 'groups/new'
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   protected
 
   def authorized?
     true
+  end
+
+  def context
+    group_settings_context if action_name == "new" || action_name == "create"
   end
 
   def get_parent

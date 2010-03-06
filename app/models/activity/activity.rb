@@ -56,6 +56,11 @@ class Activity < ActiveRecord::Base
   ## ACTIVITY DISPLAY
   ##
 
+  # user to be used as avatar in the activities list for the current user
+  def avatar
+    self.respond_to?(:user) ? self.user : self.subject
+  end
+
   # to be defined by subclasses
   def icon()
     'exclamation'
@@ -107,23 +112,31 @@ class Activity < ActiveRecord::Base
 
   # for user's dashboard
   #
+  named_scope(:social_activities_for_groups_and_friends, lambda do |user|
+    {:conditions => social_activities_scope_conditions(user, user.friend_id_cache)}
+  end)
+
+  named_scope(:social_activities_for_groups_and_peers, lambda do |user|
+    {:conditions => social_activities_scope_conditions(user, user.peer_id_cache)}
+  end)
+
+  # +other_users_ids_list+ should be an array of user ids whose
+  # social activity should be retrieved
   # show all activity for:
   #
   # (1) subject is current_user
-  # (2) subject is friend of current_user
+  # (2) subject belongs to the +other_users_ids_list+ (a list of current_user's friends or peers)
   # (3) subject is a group current_user is in.
   # (4) take the intersection with the contents of site if site.network.nil?
-  named_scope(:for_dashboard, lambda do |user|
-    {:conditions => [
-      "(subject_type = 'User'  AND subject_id = ?) OR
+  def self.social_activities_scope_conditions(user, other_users_ids_list)
+    [ "(subject_type = 'User'  AND subject_id = ?) OR
        (subject_type = 'User'  AND subject_id IN (?) AND access != ?) OR
        (subject_type = 'Group' AND subject_id IN (?)) ",
       user.id,
-      user.friend_id_cache,
+      other_users_ids_list,
       Activity::PRIVATE,
       user.all_group_id_cache]
-    }
-  end)
+  end
 
   # for user's landing page
   #
@@ -202,7 +215,12 @@ class Activity < ActiveRecord::Base
   # often, stuff that we want to report activity on has already been
   # destroyed. so, if the thing responds to :name, we cache the name.
   def thing_span(thing, type)
-    name = self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
+    # if it's a group, try to get the group name directly from the reference object
+    # need to figure out if i'm the subject or object!
+    if thing.to_s == 'group'
+      name = (self.object_type == 'Group') ? self.object.try.name : self.subject.try.name
+    end
+    name ||= self.send("#{thing}_name") || self.send(thing).try.name || I18n.t(:unknown)
     '<span class="%s">%s</span>' % [type, name]
   end
 

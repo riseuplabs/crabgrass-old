@@ -1,6 +1,13 @@
-class ModeratedPost < ModeratedFlag 
+#
+# DEPRECATED
+#
+# This class has been obsoleted by using a polymorphic approach.
+# It's left here to avoid class not found errors during earlier
+# migrations.
 
-  belongs_to :post, :foreign_key => 'foreign_id'
+class ModeratedPost < ModeratedFlag
+
+  belongs_to :post, :foreign_key => 'flagged_id'
 
   def foreign
     self.post

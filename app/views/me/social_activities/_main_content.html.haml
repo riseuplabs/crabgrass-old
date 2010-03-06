@@ -1,0 +1,9 @@
+%section#social-activities
+  %header
+    = pagination_for(@activities)
+
+  %table
+    = render :partial => 'activity', :collection => @activities
+
+  %footer
+    = pagination_for(@activities)

@@ -15,5 +15,5 @@ Scenario: User logs in
   And I fill in "Login name" with "green"
   And I fill in "Password" with "green"
   And I press "Log in"
-  Then I should see "Logout Green"
+  Then I should see "Welcome to Crabgrass, Green!"
   And I should be on my dashboard page

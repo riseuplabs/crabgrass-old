@@ -14,7 +14,7 @@ class AvatarsController < ApplicationController
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user
     if thing.avatar
-      for size in %w(xsmall small medium large xlarge)
+      for size in %w(xsmall small medium large xlarge big)
         expire_page :controller => 'static', :action => 'avatar', :id => thing.avatar.id, :size => size
       end
       thing.avatar.image_file = params[:image][:image_file]

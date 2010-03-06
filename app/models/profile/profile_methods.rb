@@ -19,7 +19,7 @@ module ProfileMethods
     else
       profile = find_by_access :stranger
     end
-    profile || Profile.new
+    profile || build
   end
 
   # returns the first profile that matches one of the access symbols in *arg

@@ -1,5 +1,0 @@
-
-class MessagePage < Page
-
-end
-

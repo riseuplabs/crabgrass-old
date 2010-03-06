@@ -1,0 +1,208 @@
+//
+// masthead with logout
+//
+#masthead
+  +clearfix 
+  height: 50px
+  background= !masthead_header_bg
+  #masthead-container
+    +container
+    height: 50px
+    overflow: visible
+    #masthead-name
+      +columns(14)
+      +full
+      width: 764px
+      position: relative
+      h2
+        color= !masthead_header_text
+        font-weight: normal
+        font-size: 24px
+        float: left
+        display: inline
+        margin-top: 12px
+      form#search
+        margin-top: 12px
+        float: right
+        display: inline
+        text-align: right
+        color= !almost_black
+        position: relative
+        fieldset
+          display: inline
+          width: 190px
+          height: 23px
+          margin-right: 4px
+          .text
+            float: left
+            display: inline
+            font-size: 12px
+            padding: 4px 0 0 2px
+          .search-submit
+            +inline-middle
+            
+        div
+          display: inline
+          position: relative
+          vertical-align: top
+          top: 1px
+          .checkbox
+            position: relative
+          .light-small
+            +small-text
+            color= !white_text
+
+
+//
+//global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
+//
+nav.page
+  +clearfix
+  +bordered-top(!global_nav_top_brdr)
+  height: 29px
+  background= !global_nav_bg
+  overflow: visible
+  #global-nav-container
+    +container    
+    overflow: visible
+    #global-nav
+      +columns(14)
+      +full
+      width: 764px
+      overflow: visible
+//     
+// list-items from global nav
+//
+
+#menu li.menu
+  float: left
+  margin: 0
+  position: relative
+
+#menu  
+  +clearfix
+  float: left
+  overflow: visible
+  margin-top: 5px
+
+  li
+    +inline-list
+    a
+      +hover-link
+      color= !blue
+      font-size: 12px
+      font-weight: bold
+      margin: 0 26px 0 0  
+  li.current
+    a
+      color: #382526
+              
+#menu .menu_items
+  li.small_icon
+    float: left
+    background-repeat: no-repeat
+    background-position: 0 50%
+    padding-left: 20px
+    min-height: 16px  
+    a
+      color: !warm_grey_text
+      font-weight: normal
+
+#account-links
+  width: 280px
+  float: right
+  height: 30px
+#user
+  float: right
+  margin: 3px 8px 0 0
+  +clearfix
+
+  li
+    +inline-list
+    +small-text
+  a
+    +blue-link
+    margin-right: 5px
+    margin-left: 5px      
+    &.active
+      font-weight: bold
+// sub menu items
+
+#menu div.menu_items
+  position: absolute
+  top: 20px
+  left: 0
+  background= !white_bg
+  padding: 0.75em 0.5em 0.5em
+  border-width: 1px 2px 2px 1px
+  border-color= !menu_border_color
+  border-style: solid
+  z-index: 99
+  h3
+    margin: 0 0 1px 4px
+    .see_all
+      font-size: smaller
+      font-variant: small-caps
+  ul
+    border: 0 none transparent
+    width: auto
+    position: static
+  li
+    float: none
+  a 
+    border: 0px none transparent
+    color= !link_color
+
+  // for name icon links, draw a colored border when hover
+  // for this to work, we need to increase the padding from the default.
+  // in this case, an extra 5px
+  a.name_icon
+    display: block
+    border: 1px solid white
+    background-position: 4px 50%
+    padding: 12px 5px 12px 45px
+    &.two
+      padding-top: 5px
+      padding-bottom: 5px
+    &:hover
+      background-color: #ffc
+      border: 1px solid #cc9
+
+  div.leftcol
+    float: left
+    width: 17em
+  div.rightcol
+    width: 17em
+    margin-left: 18em
+
+#menu #menu_me
+  div.leftcol
+    width: 12em
+    padding: 0em 1em
+  div.rightcol
+    width: 23em
+    margin-left: 13em
+    border-left: 1px dotted #ccc
+    padding-left: 1em
+  ul.recent_pages li
+    margin-top: 0.5em
+  h3
+    margin: 0
+
+ul.menu_me_left
+  padding: 0
+  margin: 0
+  list-style: none
+  margin-bottom: 0.5em
+  clear: both
+  width: 100%
+  a, .a
+    text-decoration: none
+    display: block
+    padding-top: 4px
+    padding-bottom: 4px
+  li
+    &.active, &:hover
+    &.small_icon
+      padding-left: 19px
+      background-position: 0 50%

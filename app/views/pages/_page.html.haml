@@ -1,0 +1,19 @@
+%article
+  %section{section_html_attributes(page)}
+    - if local_assigns[:checkable]
+      .checkbox.left
+        = checkbox_for(page)
+    - if local_assigns[:with_cover]
+      = cover_for(page)
+    - elsif local_assigns[:with_owner] || local_assigns[:with_owner].nil?
+      = owner_image(page)
+    %a{:href=> page_url(page)}
+      %h4{page_html_attributes(page)}
+        = page.title
+    - if page.flag[:excerpt].present?
+      %br/
+      %em
+        = page.flag[:excerpt]
+    = summary_for(page)
+    = notices_for(page) if local_assigns[:with_notice]
+  = page_information_box_for(page, local_assigns || {})

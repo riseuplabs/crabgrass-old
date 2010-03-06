@@ -2,7 +2,7 @@
   <table class="pretty">
     <tr>
       <th>
-        <h2 class="alert"><%= I18n.t(:general_info) -%></h2>
+        <h2 class="alert"><%= I18n.t(:basic_info) -%></h2>
       </th>
     </tr>
     <tr class='even'>
@@ -36,14 +36,8 @@
           </tr>
           <tr>
             <td colspan="3">
-              <%= text_field 'profile', 'country', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input label"><%= I18n.t(:location_country) -%></div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              <%= text_field 'profile', 'city', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= I18n.t(:location_city) -%></div>
+              <%= render :partial => 'locations/select_form' %>
+              <div class="input_label"><%= I18n.t(:location) -%></div>
             </td>
           </tr>
         </table>

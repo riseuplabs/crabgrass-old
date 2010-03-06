@@ -11,6 +11,7 @@ class MessageWallActivity < Activity
 
   alias_attr :user,     :subject
   alias_attr :author,   :object
+  alias_attr :avatar,   :object
   alias_attr :post_id,  :related_id
 
   def post=(post)

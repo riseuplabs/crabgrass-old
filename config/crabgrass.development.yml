@@ -17,10 +17,11 @@
 
 title: "Crabgrass Development"
 enabled_mods:
-   - design_tester
-#  - super_admin
-#  - moderation
-#  - translator
+   # - design_tester
+   # - super_admin
+   # - moderation
+   # - translator
+   # - ui_tester
 
 email:
   delivery_method: :sendmail
@@ -29,6 +30,8 @@ ensure_page_owner: false
 
 # text_editor: greencloth_only
 text_editor: html_preferred
+
+#use_full_geonames_data: true
 
 ##
 ## SITES

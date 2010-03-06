@@ -7,10 +7,10 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   include BasePageHelper
-  layout :choose_layout
+  layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  permissions 'base_page', 'posts'
+  permissions 'base_page', 'posts', 'groups/memberships'
   helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
@@ -39,6 +39,7 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
+    @second_nav = 'pages'
   end
 
   ##
@@ -190,10 +191,10 @@ class BasePageController < ApplicationController
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
-      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
-      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
-        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
-      end
+      @title_box = 'base_page/title/title' if @title_box.nil? && @page
+#      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+ #       @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+ #     end
     end
     true
   end
@@ -210,7 +211,6 @@ class BasePageController < ApplicationController
 
   def build_new_page(page_class)
     params[:page] ||= HashWithIndifferentAccess.new
-    params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
     params[:page][:access] = case params[:access]
       when 'admin' then :admin
@@ -218,7 +218,11 @@ class BasePageController < ApplicationController
       when 'view'  then :view
       else Conf.default_page_access
     end
-    page_class.build!( params[:page].dup )
+    # adding a real object to params makes the debug output
+    # fail. so we only add user to a the local page_params.
+    page_params=params[:page].dup
+    page_params[:user] = current_user
+    page_class.build!( page_params )
   end
 
   # returns a new data object for page initialization

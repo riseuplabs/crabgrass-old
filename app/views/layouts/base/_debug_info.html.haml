@@ -1,0 +1,52 @@
+/ see permissions_helper for the source of this data
+%div.debug(style="text-align: left; margin-left:1em")
+
+  %h3 Become user
+  - form_tag(debug_become_path) do
+    %label Login
+    = text_field_tag('id')
+    = hidden_field_tag('url', request.path)
+    = submit_tag("Become")
+  %br/
+
+  %h3 Params
+  = params.to_json
+  %br/
+  %br/
+
+  %h3 Deciding
+  %ul
+    - permission_log.each do |key, info|
+      %li
+        - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
+        %span{:style => ([controller_path, key[1]] == [params[:controller], params[:action]] ? "border:1px solid black" : "")}
+          = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json} => <b>#{info[:decided]}</b>"
+        %br/
+        %br/
+  %br/
+  %br/
+
+  %h3 Attempted
+  %ul
+    - permission_log.each do |key, info|
+      %li
+        %ul
+          %li
+            - controller_path = key[0].respond_to?(:controller_path) ? key[0].controller_path : key[0]
+            = "controller: <b>#{controller_path}</b>, action: <b>#{key[1]}</b>, params: #{key[2..-1].to_json}"
+          - info[:attempted].each do |attempted|
+            %li
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              = attempted
+          %br/
+  %br/
+
+  %h3 All
+  - permission_methods = self.methods.grep(/^may_.*\?$/).group_by{|method|method.sub(/^.*_/,'')}.sort_by{|elem|elem[0]}
+  - permission_methods.each do |section|
+    %ul
+      %li(style="font-weight:bold")
+        = section[0]
+      - section[1].each do |method|
+        %li= method
+    %br/

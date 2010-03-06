@@ -5,10 +5,9 @@ end
 require 'mocha/standalone'
 include Mocha::Standalone
 
-require 'cucumber/webrat/element_locator' # Lets you do table.diff!(element_at('#my_table_or_dl_or_ul_or_ol').to_table)
-
 require 'webrat'
 require 'webrat/core/matchers'
+
 Webrat.configure do |config|
   config.mode = :rails
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser

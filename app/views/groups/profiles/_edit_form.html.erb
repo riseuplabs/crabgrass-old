@@ -1,0 +1,69 @@
+<% video = @profile.video || ExternalVideo.new -%>
+
+<%= Formy.form do |f|
+  f.heading I18n.t(:information)
+  f.row do |r|
+    r.label I18n.t(:summary)
+    r.label_for 'profile_summary'
+    r.input text_area('profile', 'summary', :rows => 5, :cols => 40)
+  end
+  if @profile.summary_html.any?
+    f.row do |r|
+      r.label "%s (%s)" % [I18n.t(:summary), I18n.t(:preview)]
+      r.input @profile.summary_html
+    end
+  end
+  f.row do |r|
+    r.label 'Location'
+    r.label_for 'group_location'
+#    r.info I18n.t(:group_location, :group => @group.group_type.downcase)
+    r.input %Q{
+      #{render(:partial => 'locations/select_form')}
+    }
+  end
+  f.heading I18n.t(:photo)
+  if @profile.photo
+    f.row do |r|
+      r.input [thumbnail_img_tag(@profile.photo, :medium), submit_tag("Clear", :name => 'clear_photo')].join('<br/>')
+    end
+  else
+    f.row do |r|
+      r.label I18n.t(:file)
+      r.label_for 'profile_photo_uploaded_data'
+      r.input file_field_tag('profile[photo][uploaded_data]', :id => 'profile_photo_uploaded_data')
+    end
+    f.row do |r|
+      r.label I18n.t(:caption)
+      r.label_for 'profile_photo_caption'
+      r.input text_field_tag('profile[photo][caption]', '', :id => 'profile_photo_caption')
+    end
+    f.row do |r|
+      r.label I18n.t(:photo_credit)
+      r.label_for 'profile_photo_photo'
+      r.input text_field_tag('profile[photo][credit]', '', :id => 'profile_photo_photo')
+    end      
+  end
+  f.heading I18n.t(:media_video)
+  if video.media_embed.any?
+    f.row do |r|
+      r.input [display_media(@profile.video), submit_tag("Clear", :name => 'clear_video')].join('<br/>')
+      f.info I18n.t(:video_embed_code_prompt) + ' ' + I18n.t(:current_video_sources)
+    end
+  end
+  f.row do |r|
+    r.label I18n.t(:video_embed)
+    r.label_for 'profile_video_media_embed'
+    r.input text_area_tag('profile[video][media_embed]', video.media_embed, :rows => 3, :cols => 40, :id => 'profile_video_media_embed')
+  end
+  f.row do |r|
+    r.label I18n.t(:height)
+    r.label_for 'profile_video_height'
+    r.input text_field_tag('profile[video][height]', video.height, :id => 'profile_video_height')
+  end
+  f.row do |r|
+    r.label I18n.t(:width)
+    r.label_for 'profile_video_width'
+    r.input text_field_tag('profile[video][width]', video.width, :id => 'profile_video_width')
+  end      
+end %>
+

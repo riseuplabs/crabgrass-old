@@ -31,6 +31,10 @@ class UnreadActivity < Activity
 
   public
 
+  def avatar
+    unread_count == 1 ? author : user
+  end
+
   def description(view)
     if unread_count == 1
       str = I18n.t(:activity_unread_singular)

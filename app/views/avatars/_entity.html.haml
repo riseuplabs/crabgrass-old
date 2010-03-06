@@ -1,0 +1,4 @@
+- url = url_for_group(entity) if entity.is_a? Group
+- url = url_for_user(entity) if entity.is_a? User
+%li 
+  = link_to avatar_for(entity, 'small'), url

@@ -302,7 +302,9 @@ Object.extend(document, {
 			delta =- event.detail / 3;
 		if(!delta)
 			return;
-		var custom_event = event.element().fire('mouse:wheel',{
+		/* CRABGRASS HACK: Prototype's 'Event.element(event)' works
+											used to be 'event.element()' which did not work */
+		var custom_event = Event.element(event).fire('mouse:wheel',{
 			delta: delta
 		});
 		if(custom_event.stopped){

@@ -1,0 +1,9 @@
+- inside_layout 'base' do
+  - content_for :banner do
+    %section#identity-name
+      = render :partial => 'banner'
+
+  - content_for :info_box do
+    = render :partial => 'menu'
+  = yield
+

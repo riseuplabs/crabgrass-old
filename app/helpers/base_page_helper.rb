@@ -7,6 +7,17 @@ BasePageController
 
 module BasePageHelper
 
+  def display_page_cover(page, options={}, html_options={})
+    options = {:size => :medium, :crop => "200x200"}.merge(options)
+    html_options = {:class => "thumb", :alt => "thumbnail", :width => "200"}.merge(html_options)
+    if page.cover.respond_to?(:thumbnail)
+      link_to(thumbnail_img_tag(page.cover, options[:size], {:crop => options[:crop]}, {:class => html_options[:class]}),
+        page_url(page))
+    elsif page.external_cover_url
+      link_to(image_tag(page.external_cover_url, :class => html_options[:class], :width => html_options[:size], :alt => html_options[:alt]), page_url(page))
+    end
+  end
+
   def header_for_page_create(page_class)
     style = 'background: url(/images/pages/big/#{page_class.icon}) no-repeat 0% 50%'
     text = "<b>#{page_class.class_display_name}</b>: #{page_class.class_description}"
@@ -27,8 +38,8 @@ module BasePageHelper
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = content_tag :span, upart.user.display_name, :class => klass
-    link_to_user(upart.user, :avatar => 'xsmall', :label => label, :style => '')
+    label = '' #content_tag :span, upart.user.display_name, :class => klass
+    link_to_user_avatar(upart.user, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
   end
 
   def link_to_group_participation(gpart)
@@ -37,8 +48,8 @@ module BasePageHelper
       when :edit : 'tiny_pencil_16'
       when :view : ''
     end
-    label = content_tag :span, gpart.group.display_name, :class => klass
-    link_to_group(gpart.group, :avatar => 'xsmall', :label => label, :style => '')
+    label = '' #content_tag :span, gpart.group.display_name, :class => klass
+    link_to_group_avatar(gpart.group, :avatar => 'small', :label => label, :style => '', :avatar_as_separate_link => true)
   end
 
   ##
@@ -81,8 +92,8 @@ module BasePageHelper
   end
 
   def share_all_line
+    li_id = 'share_all_li'
     if may_share_with_all?
-      li_id = 'share_all_li'
       checkbox_id = 'share_all_checkbox'
       url = {:controller => 'base_page/participation',
         :action => 'update_share_all',
@@ -92,7 +103,7 @@ module BasePageHelper
       checkbox_line = sidebar_checkbox(I18n.t(:share_all_checkbox), @page.shared_with_all?, url, li_id, checkbox_id, :title => I18n.t(:share_all_checkbox_help))
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     elsif Site.current.network
-      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, I18n.t(:share_all_checkbox), :class => 'a'), :class => 'small_icon'
+      content_tag :li, check_box_tag(checkbox_id, '1', @page.shared_with_all?, :class => 'check', :disabled => true) + " " + content_tag(:span, I18n.t(:share_all_checkbox), :class => 'a'), :id => li_id, :class => 'small_icon'
     end
   end
 
@@ -100,7 +111,7 @@ module BasePageHelper
     if may_public_page?
       li_id = 'public_li'
       checkbox_id = 'public_checkbox'
-      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :add => !@page.public?}
+      url = {:controller => 'base_page/participation', :action => 'update_public', :page_id => @page.id, :public => !@page.public?}
       checkbox_line = sidebar_checkbox(I18n.t(:public_checkbox), @page.public?, url, li_id, checkbox_id, :title => I18n.t(:public_checkbox_help))
       content_tag :li, checkbox_line, :id => li_id, :class => 'small_icon'
     else
@@ -164,10 +175,10 @@ module BasePageHelper
 
   def page_attachments
     if @page.assets.any?
-      items = @page.assets.collect do |asset|
+      @page.assets.collect do |asset|
         link_to_asset(asset, :small, :crop! => '36x36')
       end
-      content_tag :div, column_layout(3, items), :class => 'side_indent'
+      #content_tag :div, column_layout(3, items), :class => 'side_indent'
     elsif may_create_assets?
       ''
     end
@@ -258,7 +269,7 @@ module BasePageHelper
 
   def share_line
     if may_share_page?
-      popup_line(:name => 'share', :label => I18n.t(:share_page_link, :page_class => page_class), :icon => 'group', :controller => 'share')
+      popup_line(:name => 'share', :label => I18n.t(:share_page_link, :page_class => this_page_class), :icon => 'group', :controller => 'share')
     end
   end
 
@@ -270,19 +281,19 @@ module BasePageHelper
 
   def delete_line
     if may_delete_page?
-      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => page_class), :icon => 'trash')
+      popup_line(:name => 'trash', :label => I18n.t(:delete_page_link, :page_class => this_page_class), :icon => 'trash')
     end
   end
 
 #  def move_line
 #    if may_move_page?
-#      popup_line(:name => 'move', :label => I18n.t(:move_page_link) % {:page_class => page_class }, :icon => 'lorry', :controller => 'participation')
+#      popup_line(:name => 'move', :label => I18n.t(:move_page_link) % {:page_class => this_page_class }, :icon => 'lorry', :controller => 'participation')
 #    end
 #  end
 
   def details_line(id='details')
     if id == 'details'
-      label = I18n.t(:page_details_link, :page_class => page_class)
+      label = I18n.t(:page_details_link, :page_class => this_page_class)
       icon = 'table'
     elsif id == 'more'
       label = I18n.t(:see_more_link)
@@ -290,7 +301,7 @@ module BasePageHelper
     end
 
     if may_show_page?
-      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => page_class), :icon => icon, :controller => 'participation')
+      popup_line(:name => 'details', :id => id, :label => label, :title => I18n.t(:page_details_link, :page_class => this_page_class), :icon => icon, :controller => 'participation')
     end
   end
 
@@ -298,7 +309,7 @@ module BasePageHelper
   ## MISC HELPERS
   ##
 
-  def page_class
+  def this_page_class
     @page ? @page.class_display_name.capitalize : @page_class.class_display_name.capitalize
   end
 

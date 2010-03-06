@@ -1,29 +1,19 @@
 require 'rubygems'
 
 begin
-  require 'ruby-debug'
-rescue LoadError => exc
-  # no ruby debug installed
-end
-
-begin
   require 'leftright'
 rescue LoadError => exc
   # no leftright installed
 end
 
-# this can speed running a single test method from 11 seconds to 3
-# see http://roman.flucti.com/a-test-server-for-rails-applications
-begin
-  require 'rails_test_serving'
-  RailsTestServing.boot
-rescue LoadError => exc
-  # no rails-test-server gem
-end
 
+# load the environment
 ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+
+# test_help.rb from rails
+# loads test::unit and rails specific test classes like ActionController::IntegrationTest
 require 'test_help'
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")
@@ -35,39 +25,10 @@ end
 
 require 'shoulda/rails'
 
-module Tool; end
 
+# require all helpers
+Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
-
-#
-# put this at the top of your test, before the class def, to see
-# the logs printed to stdout. useful for tracking what sql is called when.
-# probably way too much information unless run with -n to limit the test.
-# ie: ruby test/unit/page_test.rb -n test_destroy
-#
-def showlog
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-end
-
-# This is a testable class that emulates an uploaded file
-# Even though this is exactly like a ActionController::TestUploadedFile
-# i can't get the tests to work unless we use this.
-class MockFile
-  attr_reader :path
-  def initialize(path); @path = path; end
-  def size; 1; end
-  def original_filename; @path.split('/').last; end
-  def read; File.open(@path) { |f| f.read }; end
-  def rewind; end
-end
-
-class ParamHash < HashWithIndifferentAccess
-end
-
-def mailer_options
-  {:site => Site.new(), :current_user => users(:blue), :host => 'localhost',
-  :protocol => 'http://', :port => '3000', :page => @page}
-end
 
 class Test::Unit::TestCase
   setup { Sham.reset }
@@ -97,6 +58,13 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
 
   include AuthenticatedTestHelper
+  include FunctionalTestHelper
+  include AssetTestHelper
+  include SphinxTestHelper
+  include SiteTestHelper
+  include LoginTestHelper
+  include FixtureTestHelper
+  include DebugTestHelper
 
   # make sure the associations are at least defined properly
   def check_associations(m)

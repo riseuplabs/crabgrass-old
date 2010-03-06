@@ -1,0 +1,33 @@
+- if current_site.tracking
+  %b
+    Visits:
+  = @group.memberships.count(:all, :conditions => "visited_at > now() - 86400*30").to_s + " last month, "
+  = @group.memberships.count(:all, :conditions => "visited_at  is not null").to_s + " all time"
+
+%p
+= letter_pagination_links(groups_memberships_params(:action => 'list'), :available_letters => @pagination_letters)
+
+%div
+  - if @memberships.any?
+    %table.members.pretty
+      %tr
+        %th
+          User
+        %th
+          Joined
+        - if current_site.tracking
+          %th
+            Last Visit
+          %th
+            Total Visits
+          / %th
+          /   Joined by
+        %th
+        - if @second_nav == 'administration'  # don't show action column if not in admin section 
+          %th
+            = I18n.t(:buttons_list_label)
+      = render :partial => 'groups/memberships/membership', :collection => @memberships
+    %br
+
+= pagination_links(@memberships)
+

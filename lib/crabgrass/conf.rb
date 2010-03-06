@@ -25,7 +25,6 @@ class Conf
 
   # Site attributes that can only be specified in crabgrass.*.yml.
   cattr_accessor :name
-  cattr_accessor :admin_group
 
   # Default values for site objects. If a site does not have
   # a value defined for one of these, we use the default in
@@ -68,6 +67,7 @@ class Conf
   cattr_accessor :ensure_page_owner
   cattr_accessor :default_page_access
   cattr_accessor :text_editor
+  cattr_accessor :use_full_geonames_data
 
   # set automatically from site.admin_group
   cattr_accessor :super_admin_group_id
@@ -122,6 +122,7 @@ class Conf
     self.ensure_page_owner = true
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
+    self.use_full_geonames_data = false
   end
 
   def self.load(filename)

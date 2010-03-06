@@ -16,13 +16,10 @@ module GroupsHelper
   ## NAVIGATION
   ##
 
-  def settings_tabs
-    render :partial => 'groups/navigation/settings_tabs'
-  end
-
-  def edit_settings_link
+  def edit_settings_link(group = nil)
+    group = group.nil? ? @group : group
     if may_edit_group?
-      link_to I18n.t(:edit_settings), groups_url(:action => 'edit', :id => @group)
+      link_to I18n.t(:edit_settings), groups_url(:action => 'edit', :id => group)
     end
   end
 
@@ -35,21 +32,22 @@ module GroupsHelper
     end
   end
 
-  def destroy_group_link
+  def destroy_group_link(group = nil)
+    group = group.nil? ? @group : group
     if may_destroy_group?
-      link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => @group.group_type),
-                        {:confirm => I18n.t(:destroy_confirmation, :thing => @group.group_type.downcase),
+      link_to_with_confirm(I18n.t(:destroy_group_link, :group_type => group.group_type),
+                        {:confirm => I18n.t(:destroy_confirmation, :thing => group.group_type.downcase),
                           :ok => I18n.t(:delete_button),
-                          :url => groups_url(:action => :destroy),
-                          :method => :post})
-    elsif may_create_destroy_request?
-      if RequestToDestroyOurGroup.pending.for_group(@group).created_by(current_user).blank?
-        link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => @group.group_type),
-                          {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => @group.group_type.downcase),
+                          :url => group_url(group),
+                          :method => :delete})
+    elsif may_create_destroy_request?(group)
+      if RequestToDestroyOurGroup.pending.for_group(group).created_by(current_user).blank?
+        link_to_with_confirm(I18n.t(:propose_to_destroy_group_link, :group_type => group.group_type),
+                          {:confirm => I18n.t(:propose_to_destroy_group_confirmation, :group_type => group.group_type.downcase),
                             :ok => I18n.t(:delete_button),
                             # :title => "Destroy Group"
-                            :title => I18n.t(:destroy_group_link, :group_type => @group.group_type),
-                            :url => {:controller => 'groups/requests', :action => 'create_destroy', :id => @group},
+                            :title => I18n.t(:destroy_group_link, :group_type => group.group_type),
+                            :url => {:controller => 'groups/requests', :action => 'create_destroy', :id => group},
                             :method => :post})
       end
     end
@@ -59,9 +57,11 @@ module GroupsHelper
     ## link_to_iff may_view_committee?, I18n.t(:view_all), ''
   end
 
-  def create_committee_link
+  def create_committee_link(fourth_nav=nil)
+    group = @parent || @group
+    return if (@current_site and (@current_site.network_id == group.id))
     if may_create_subcommittees?
-      link_to I18n.t(:create_button), committees_params(:action => :new)
+      menu I18n.t(:create_committee), committees_params(:action => :new), active_tab_for_nav(fourth_nav, 'new committee')
     end
   end
 
@@ -88,7 +88,7 @@ module GroupsHelper
 
   def invite_link
     if may_create_invite_request?
-      link_to_active(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
+      menu(I18n.t(:send_invites), {:controller => 'groups/requests', :action => 'create_invite', :id => @group})
     end
   end
 
@@ -99,10 +99,11 @@ module GroupsHelper
     link_to_active_if_may(I18n.t(:see_all_link), '/groups/memberships', 'list', @group)
   end
 
-  def membership_count_link
-    link_if_may(I18n.t(:group_membership_count, :count=>(@group.users.size).to_s) + ARROW,
-                   '/groups/memberships', 'list', @group) or
-    I18n.t(:group_membership_count, :count=>(@group.users.size).to_s)
+  def membership_count_link(options = nil)
+    options[:text] ||= :group_membership_count
+    link_if_may(I18n.t(options[:text], :count=>(@group.users.size).to_s) + ARROW,
+                   '/groups', 'people', @group) or
+    I18n.t(options[:text], :count=>(@group.users.size).to_s)
   end
 
 
@@ -116,6 +117,9 @@ module GroupsHelper
   end
 
   def destroy_membership_link(membership)
+    # disabled until release 0.5.1
+
+    return ""
     user, group = membership.user, membership.group
 
     # can't remove yourself from the group this way - have to use the 'Leave Group' link
@@ -125,6 +129,19 @@ module GroupsHelper
             :confirm => I18n.t(:membership_destroy_confirm_message, :user => user.display_name, :group_type => group.group_type.downcase),
             :method => :delete)
     end
+  end
+
+  ## all content views
+  def group_pages_view_options
+    {
+      "By Date" => group_search_url(:action => 'pages'),
+      "Calendar View" => group_search_url(:action => 'archive')
+    }
+  end
+
+  def group_pages_view_selected
+    return 0 if params[:controller] == "groups" && params[:action] == "pages"
+    return 1 if params[:controller] == "groups" && params[:action] == "archive"
   end
 
   ##
@@ -141,22 +158,6 @@ module GroupsHelper
     widget = widgets[name]
     #@group.network? ? widget_folder =  'network' : widget_folder = 'group'
     render :partial => '/widgets/' + widget if widget.length > 0
-  end
-
-  ##
-  ## CREATION
-  ##
-
-  def create_group_link
-    if @active_tab == :groups
-      if may_create_group?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:group).downcase), groups_url(:action => 'new'))
-      end
-    elsif @active_tab == :networks
-      if may_create_network?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:network).downcase), networks_url(:action => 'new'))
-      end
-    end
   end
 
   ##

@@ -1,23 +1,19 @@
 <%
-  @message_box ||= render(
-    :partial => 'common/say_form',
-    :locals => {
-      :submit => I18n.t(:say_message_button), 
-      :url => my_public_messages_path,
-      :text => current_user.current_status
-    }
-  )
+  # @message_box ||= render(
+  #     :partial => 'common/say_form',
+  #     :locals => {
+  #       :submit => I18n.t(:say_message_button),
+  #       :url => my_public_messages_path,
+  #       :text => current_user.current_status
+  #     }
+  #   )
 %>
-
-<%= render :partial => 'me/dashboard/title_box' %>
-
-<%= render :partial => 'me/dashboard/info_box' %>
 
 <div class='landing'>
 
   <%= render :partial => 'me/dashboard/welcome_box'  %>
 
-  <%= render :partial => 'announcement_page/list'  %>
+  <%= render :partial => 'announcement_page/announcements'  %>
 
   <%= header_with_more :h2, 'alert', I18n.t(:recent_pages), me_url(:action => 'search') + "/descending/updated_at" %>
 

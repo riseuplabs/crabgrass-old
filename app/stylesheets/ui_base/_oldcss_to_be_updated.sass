@@ -1,0 +1,407 @@
+// were	 in constants.sass
+!z_autocomplete = 400
+!z_tooltip = 300
+!title_box_border_color = #D0E3F7
+!post_alternate_bg_color = #eef5fc
+!body_text_font_family = "verdana, bitstream vera sans, helvetica, sans-serif"
+!body_text_line_height = 18px
+!body_text_font_size = 13px
+
+form.login_dialog
+  label
+    font-weight: bold
+    display: block
+  input#login, input#password
+    width: 99%
+    margin-bottom: 1em
+  input[type=submit]
+    font-size: 1.1em
+    float: right
+
+//
+//patch to show right the td's on page create view
+//
+table.page_types
+  td
+    vertical-align: top
+  a
+    +blue-link(12px)
+
+
+//
+// FORMS
+//
+
+table.form
+  margin-left: 1em
+  border-collapse: collapse
+  td
+    padding: 2px
+  tr.first td
+    border-top: 0
+  & > tbody > tr > td
+    vertical-align: top
+    border-top: 1px dotted #ccc
+  td.heading
+    padding: 0.5em 0
+    h2
+      color: #666
+      font-size: 1.5em
+      margin: 0
+  td.label
+    font-weight: bold
+    white-space: nowrap
+    text-align: right
+    padding: 1em
+    padding-right: 0
+  td.input
+    padding: 1em
+    width: 35em
+  //td.input
+  //  white-space: nowrap
+  //td.first
+  //  padding-top: 0
+  .info
+    font-size: 0.9em
+    font-style: italic
+    color: #777
+  input[type=text], textarea
+    +sans-family
+    font-size: 1.2em
+    width: 100%
+
+.form_buttons
+  padding-top: 1em
+  margin-top: 2em
+  margin-bottom: 0
+  text-align: right
+  border-top: 1px dotted #ccc
+  input
+    font-size: 1.25em
+    padding: 0.1em 0.5em
+    margin-left: 0.5em
+
+//
+// ICONS
+//
+
+
+//
+// AUTO COMPLETE
+//
+
+.autocomplete-w1
+  background: url(/images/ui/shadow.png) no-repeat bottom right
+  position: absolute
+  top: 7px
+  left: 6px
+  z-index= !z_autocomplete
+
+.autocomplete
+  width: 300px
+  border: 1px solid #999
+  background-color: white
+  cursor: pointer
+  text-align: left
+  max-height: 350px
+  overflow: auto
+  margin: -6px 6px 6px -6px
+  overflow-x: hidden
+  .selected
+    background: #eee
+  div
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  p
+    margin: 0
+  ins
+    text-decoration: none
+    color: #3399FF
+  em
+    font-weight: bold
+    font-style: normal
+
+
+
+//
+// name icons are for showing an icon with a user or group.
+// we display the icons as background images, aligned center,
+// and then add padding to make enough room for the icon.
+//
+// there are other ways we could do this: we could set the height
+// or the min-height. however, then the text does not appear centered
+// if the icon is much bigger than the line height.
+//
+// the padding method is not ideal:
+// * if the font is a different size, then the top/bottom padding numbers will be wrong
+// * if the text takes up two lines instead of one, then there should be no padding.
+//
+// however, after having tried other methods, the padding method seems to do better.
+//
+.name_icon
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  &.tiny
+    padding: 0px 0 0px 17px
+  &.xsmall
+    padding: 2px 0 4px 26px
+  &.small
+    padding: 7px 0 7px 40px
+    line-height: 14px
+  &.medium
+    padding: 15px 0 15px 60px
+    display: block
+    font-size: 1.3em
+  b
+    display: none
+  // this class is set when we know we will have two lines of text
+  &.two
+    padding-top: 0
+    padding-bottom: 0
+
+.name_icon:hover
+  b
+    display: block
+    position: absolute
+    background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left
+    color: white
+    bottom: 25px
+    left: -5px
+    z-index= !z_tooltip
+    padding: 3px 5px 9px 5px
+    // ^^ must be in px to match gif bg
+    &:hover
+      display: none
+
+.page_list a.name_icon.xsmall
+  display: block
+
+// patch forms on page creation
+#main-content
+  section
+    form
+      p
+        font-size: 13px
+        line-height: 18px
+        margin-top: 13px
+        margin-bottom: 13px
+
+
+//
+// TABS
+//
+
+.tab_area
+  background-color: white
+  padding-top: 1em
+  clear: left
+
+// modalbox tabs
+#MB_content
+  .tab_area
+    padding: 1em
+    border: 1px solid #999
+    border-top: 0
+
+ul.tabset
+  padding: 0
+  list-style: none
+  li
+    display: inline
+    float: none
+
+ul.tabset.top
+  margin: 0
+  clear: left
+  float: left
+  width: 100%
+  height: 1%
+  background: url(/images/grey9.png) repeat-x bottom
+  a:hover
+    text-decoration: underline
+  a
+    display: block
+    float: left
+    text-align: center
+    text-decoration: none
+    position: relative
+    left: 1em
+    line-height: 1.3em
+    padding: 0.5em 1em
+    // i don't understand why this is needed:
+    cursor: pointer
+    &.small_icon
+      padding-left: 28px
+      margin-left: 0.5em
+      background-position: 8px 50%
+    &.active
+      background-color: white
+      border: 1px solid #999
+      border-bottom: 0
+
+.sub_tabs a
+  +blue-link
+
+ul.tabset.simple
+  margin-top: 0
+  margin-bottom: 13px
+  & li.tab a
+    +blue-link(12px)
+
+//
+// INFO_BOX
+//
+
+.info_box
+  padding: 1em
+  border-bottom= "1px solid" !title_box_border_color
+  table.columns
+    width: 100%
+  td
+    vertical-align: top
+    &.right
+      padding-left: 1em
+      //border-left: 1px dotted #ccc
+      width: 50%
+    &.left
+      width: 50%
+  .status h3
+    margin: 0.5em 0
+  &.tabs
+    width: 100%
+    padding: 1em 0 0 0
+    overflow: hidden
+    border-bottom: 0
+    & li.tab a
+      +blue-link(12px)
+
+.info_box .description,
+.inset_box .description
+  // color: #738899
+  color: #697D8C
+  font-family: georgia, times
+  font-style: italic
+  font-size: 1.1em
+  line-height: 1.6em
+  letter-spacing: 1px
+  word-spacing: 2px
+
+
+//
+// UI ELEMENTS
+//
+
+
+.handle
+  cursor: move
+.not_handle
+  cursor: default
+
+//
+// CONTENT BOX
+//
+.content_box
+  padding: 1em
+  background: #FFFFFF none repeat scroll 0 0
+
+
+//
+// FORMATTED TABLES
+//
+
+table.pretty
+  border-collapse: collapse
+  width: 100%
+  float: left
+  & > tbody > tr
+    &.even
+      background-color: #F2F2F2
+    &.odd
+      background-color: white
+    &.unread
+      font-weight: bold
+    & > td
+      padding: 0.5em
+      border-bottom: 1px solid #e6e6e6
+      img
+        vertical-align: bottom
+    & > th
+      padding: 0.5em
+      text-align: left
+      background: #FFF4E8
+      color: #F28367
+      text-transform: capitalize
+      font-weight: bold
+      border-bottom: 1px solid #ccc
+  & > tbody > tr.heading > th
+    img
+      vertical-align: bottom
+    a
+      color: #333
+    &.selected
+      background: #888
+      a
+        color: white
+  a
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+
+table.plain
+  border-collapse: collapse
+  width: 100%
+  td
+    padding: 0.5em
+    &.label
+      text-align: right
+      font-weight: bold
+
+//
+// used in admin pages
+//
+div.side_list
+  padding: 0
+  margin: 0
+  list-style: none
+  margin-bottom: 0.5em
+  clear: both
+  width: 100%
+  a
+    +blue-link
+    display: block
+    padding-top: 4px
+    padding-bottom: 4px
+  &.commands a
+    text-transform: capitalize
+  span
+    &.active, &:hover
+    &.small_icon
+      padding-left: 19px
+      background-position: 0 50%
+  li.current
+    font-weight: bold
+    font-size: 12px
+
+td.left_column
+  background-color: !left_column_bg_color
+  width: !left_column_width
+  border-right: 0
+  padding: !left_column_margin
+
+.tooltip
+  span
+    display: none
+    position: absolute
+    top: #px
+    left: #px
+    padding: 1em
+    width: 25em
+    border: 1px solid #666
+    background-color: #FFFFAA
+    color: #000
+    z-index: 100
+  &:hover
+    span
+      display: block
+
+

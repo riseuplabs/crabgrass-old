@@ -77,6 +77,10 @@ function saving_changes_notifier() {
 }
 " %>
 
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
 <%= spinner('gallery') %>
 <div id="gallery_notify_area">
   <noscript>

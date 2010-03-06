@@ -1,4 +1,3 @@
-
 first:
   id: 1
   page_id: 1
@@ -13,5 +12,30 @@ about_blue:
   posts_count: 1
   replied_by_id: 3
   last_post_id: 3
-  page_id: 3
+
+# a discussion for each relationship
+blue_orange:
+  id: 4
+blue_purple:
+  id: 5
+blue_yellow:
+  id: 6
+blue_red:
+  id: 7
+blue_green:
+  id: 8
+purple_orange:
+  id: 9
+
+# discussions for users
+<% id = 9 %>
+
+<% [[1, "quentin"], [2, "aaron"], [3, "gerrard"], [4, "blue"], [5, "orange"], [6, "purple"], [7, "yellow"], [8, "red"], [9, "green"], [10, "kangaroo"], [11, "dolphin"], [12, "penguin"], [13, "iguana"]].each do |user_id,login| %>
+<%=login%>_wall:
+  id: <%=id+=1%>
+  commentable_id: <%= user_id %>
+  commentable_type: "User"
+<% end %>
+
+
 

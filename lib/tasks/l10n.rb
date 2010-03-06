@@ -185,7 +185,7 @@ namespace :cg do
     end
 
     # This tasks loads strings and its translation keys from 'config/locales/*.yml'.
-    desc "Load translations from YAML files in the 'lang' directory"
+    desc "Load translations from YAML files in the 'confign/locales' directory"
     task (:load_translations => :environment) do
       if ENV["FILE"]
         load_locale_file(File.join(LANG_DIR, ENV["FILE"]))

@@ -129,6 +129,11 @@ class Object
     end
   end
 
+  # TODO: remove in rails 2.3
+  # from file activesupport/lib/active_support/core_ext/blank.rb, line 17
+  def present?
+    !blank?
+  end
 end
 
 class Array
@@ -167,6 +172,26 @@ class Array
   def combine(delimiter = ' ')
     compact.join(delimiter)
   end
+
+  # copied from rails 2.3
+  # returns the object if it is an array or responsd to :to_ary
+  # returns a blank array if the object is nil
+  # finally, returns a new array containing the object
+  def wrap(object)
+    case object
+    when nil
+      []
+    when self
+      object
+    else
+      if object.respond_to?(:to_ary)
+        object.to_ary
+      else
+        [object]
+      end
+    end
+  end
+
 
 =begin
   # returns a copy of the hash with symbols

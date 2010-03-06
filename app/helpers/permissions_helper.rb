@@ -148,6 +148,8 @@ module PermissionsHelper
   # the permissions without a controller name is attempted (ie 'may_eat_soup?)
   #
   def permission_for_controller(controller, action, *args)
+    permission_log_setup(controller, action, args)
+
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
@@ -172,12 +174,19 @@ module PermissionsHelper
       methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
       methods << "may_#{action}?" if action =~ /_/
       methods.each do |method|
-        return target.send(method, *args) if target.respond_to?(method)
+        add_permission_log(:attempted => method)
+        if target.respond_to?(method)
+          add_permission_log(:decided => method)
+          return target.send(method, *args)
+        end
       end
     end
     if target.respond_to?('default_permission')
+      add_permission_log(:attempted => 'default_permission', :decided => 'default_permission')
+
       return target.send('default_permission', *args)
     end
+
     return nil
   end
 
@@ -189,5 +198,26 @@ module PermissionsHelper
       object.id
     end
   end
+
+
+  # setup what combination we are logging
+  def permission_log_setup(*key)
+    @permission_log ||= {}
+    @permission_log_key = key
+    @permission_log[key] = {:attempted => [], :decided => nil}
+  end
+
+  # log perm info for the combination
+  # available keys are :attempted => "method_name" and :decided => "method_name"
+  def add_permission_log(opts = {})
+    log = permission_log[@permission_log_key]
+    log[:attempted] << opts[:attempted] unless opts[:attempted].blank?
+    log[:decided] = opts[:decided] unless opts[:decided].blank?
+  end
+
+  def permission_log
+    @permission_log
+  end
+
 end
 

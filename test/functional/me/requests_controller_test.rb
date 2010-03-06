@@ -1,30 +1,33 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 require 'me/requests_controller'
 
-# Re-raise errors caught by the controller.
-class Me::RequestsController; def rescue_action(e) raise e end; end
-
-class Me::RequestsControllerTest < Test::Unit::TestCase
+class Me::RequestsControllerTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :requests
-
-  def setup
-    @controller = Me::RequestsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   # TODO: Add fixtures for requests to make results in all of these categories
 
-  def test_from_me
+  def test_index
     login_as :blue
-    get :from_me
-    assert_response :success
+    %w/all from_me to_me/.each do |view|
+      get :index, :view => view
+      assert_response :success
+    end
   end
 
-  def test_to_me
+  def test_approved
     login_as :blue
-    get :to_me
-    assert_response :success
+    %w/all from_me to_me/.each do |view|
+      get :approved, :view => view
+      assert_response :success
+    end
+  end
+
+  def test_rejected
+    login_as :blue
+    %w/all from_me to_me/.each do |view|
+      get :rejected, :view => view
+      assert_response :success
+    end
   end
 
 end

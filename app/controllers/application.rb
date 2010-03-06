@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper CommonHelper
   helper PathFinder::Options
   helper Formy
+  helper 'tab_bar'
   permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
@@ -21,6 +22,7 @@ class ApplicationController < ActionController::Base
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
   include ControllerExtension::RescueErrors
+  include ControllerExtension::PaginationOptions
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -57,6 +59,7 @@ class ApplicationController < ActionController::Base
   def essential_initialization
     current_site
     @path = parse_filter_path(params[:path])
+    @skip_context = false
   end
 
   def header_hack_for_ie6

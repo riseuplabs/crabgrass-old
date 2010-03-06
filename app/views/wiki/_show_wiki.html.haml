@@ -1,0 +1,8 @@
+/ locals: wiki
+
+%h3
+  = I18n.t(:wiki)
+  %span.right
+    = wiki_edit_link(wiki.id)
+%div.wiki
+  = wiki.body_html

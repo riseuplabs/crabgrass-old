@@ -1,0 +1,1161 @@
+//  Susy: Elastic-Fluid grids without all the math
+//  by Eric Meyer and OddBird Collective
+//  Site: www.oddbird.net/susy/
+
+//  GRID
+
+!grid_unit = "px"
+!col_width = 36px
+!gutter_width = 20px
+!side_gutter_width = 18px
+!total_cols = 14
+//
+//  HACKS
+//  Are you using hacks or conditional comments? Susy makes both possible.
+//  Leave this as 'true' to use hacks, set it as false for conditional comments.
+//  Conditional comments will require overrides for +omega, +inline-block and
+//  several other mixins.
+//  !hacks = true
+
+//  FONT-SIZE
+
+!base_font_size_px = 12
+!base_line_height_px = 21
+
+// SUSY
+//  (don't move this @import above the GRID and FONT-SIZE overrides)
+
+@import susy/susy.sass
+
+
+// common styles/mixins
+=sans-family-headings
+  font-family: arial, helvetica, sans-serif
+  font-weight: bold
+  line-height: 1
+
+=sans-family
+  :font-family verdana, bitstream vera sans, helvetica, sans-serif
+
+=bordered-btm(!border_color= !warm_grey_border, !border_style= "solid")
+  border-bottom= 1px !border_style !border_color
+
+=bordered-top(!border_color= !warm_grey_border)
+  border-top= 1px "solid" !border_color
+
+=bordered-2sides(!border_color= !warm_grey_border)
+  border-top= 1px "solid" #fff
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" #fff
+
+=bordered-left(!border_color= !warm_grey_border)
+  border-left= 1px "solid" !border_color
+
+=bordered-tab(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-left= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+
+=bordered-block(!border_color= !almost_black)
+  border-top= 1px "solid" !border_color
+  border-right= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
+
+=bordered-top-btm(!border_color= !light_grey_border)
+  border-top= 1px "solid" !border_color
+  border-bottom= 1px "solid" !border_color
+
+=bordered(!border_color= !light_grey_border)
+  border= 1px "solid" !border_color
+
+=zero
+  margin: 0
+  padding: 0
+  line-height: 1.0
+
+=inline-middle
+  display: inline
+  vertical-align: middle
+
+=spaced(!spacing= 0.09em)
+  letter-spacing= !spacing
+
+=small-text(!font_small= 10px)
+  font-size= !font_small
+
+=blue-link(!sized= 11px)
+  +hover-link
+  color= !blue
+  font-size= !sized
+  font-weight: normal
+
+=partial-width
+  +columns(10,10)
+  width: 540px
+
+
+/* @general */
+.left
+  float: left
+
+.right
+  float: right
+
+.nowrap
+  white-space: nowrap
+
+.clear
+  clear: both
+
+.blue-link
+  +blue-link
+
+.pencil_16
+  +blue-link
+//
+// NOTE: duplication of .small_icon in global nav for nested li
+// for use with icon + text
+//
+.small_icon
+  background-repeat: no-repeat
+  background-position: 0 50%
+  padding-left: 20px
+  min-height: 16px
+  line-height:  1.6
+  padding-top: 2px
+  padding-bottom: 2px
+  &.twenty
+    padding-left: 22px
+    min-height: 24px
+  &.right
+    background-position: 100% 50%
+    padding-left: 4px
+    padding-right: 20px
+  &.bullet
+    background-position: 0 2px
+    margin: 0.5em 0
+
+.none_16
+  background-image: none
+
+// for use with icon stand alone
+.small_icon_button
+  height: 16px
+  width: 16px
+  display: block
+  padding: 0
+
+.spinner_icon
+  background-image: url(/images/spinner.gif)
+
+.big_icon
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  padding: 14px 0 14px 54px
+  // min-height: 48px (doesn't work for ie6)
+
+.page_icon
+  height: 16px
+  width: 16px
+  background-repeat: no-repeat
+  background-position: 0 50%
+
+
+
+/* @group links */
+
+\:focus
+
+a
+
+/* @end */
+
+
+/* headers */
+h1, h2, h3, h4, h5, h6
+  +sans-family-headings
+  line-height: 1
+  font-weight: bold
+
+h1
+  font-size: 22px
+  color= !almost_black
+
+h2
+  font-size: 18px
+  color= !almost_black
+h3
+  font-size: 16px
+  color= !red
+
+h4
+  font-size: 13px
+  color: #777
+
+h5
+  :font-size 11px
+
+h6
+  :font-size 9px
+/* @end */
+
+
+//
+//misc
+//
+
+
+
+/* content container */
+
+/* @end */
+
+//
+//title-box-full w/search
+//
+
+#title-box-full, #info-box-full
+  width: 764px
+  height: 16px
+  h3
+    font-size: 15px
+    font-weight: normal
+    color: #993333
+  form#search-my-work
+    position: relative
+    input.text
+      height: 14px
+      width: 200px
+    input.search-submit
+      +inline-middle
+      margin-top: -2px
+
+
+#info-box-full
+  margin-bottom: 15px
+  span
+    color= !almost_black
+
+/* third-level nav */
+#third-level-container
+  +container
+  +bordered-btm(!second_nav_border)
+  height: 24px
+  background= !third_nav_bg
+  nav#third-level
+    +columns(14)
+    +full
+    width: 764px
+    ul
+      li
+        +inline-list
+        font-size: 11px
+        font-weight: normal
+        line-height: 2.4
+        a
+          +hover-link
+          color= !third_nav_text
+          height: 10px
+          padding: 0 10px
+      li.current
+        a
+          font-weight: bold
+    &.extended_sidebar
+      width: 540px
+      padding-left: 224px
+
+
+/* @end */
+
+
+/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
+#sitehome-wiki, #group-wiki
+  #wiki-area
+    margin: 10px 0 15px
+
+#pages, #group-wiki, #sitehome-wiki
+  +partial-width
+  margin: 30px 0 15px
+  h3
+    +bordered-btm(!medium_grey_border)
+    padding: 0 0 8px
+    float: left
+    display: inline
+    width: 540px
+    span
+      a
+        +blue-link
+
+#group-wiki
+  margin-top: 0
+
+#pages
+  margin: 0
+
+#pages, #group-wiki
+  article
+    +partial-width
+    +bordered-btm(!light_grey_border)
+    margin: 0
+    padding: 10px 0
+    .pages-info
+      +columns(8,11)
+      +alpha(11)
+      margin: 0
+      img
+        float: left
+        display: inline
+        padding: 0 6px 6px 0
+      h4
+        float: left
+        display: inline
+        font-size: 14px
+        margin-bottom: 2px
+        line-height: 1.3
+        color= !blue
+        font-weight: normal
+      h4.unread
+        font-weight: bold
+      p
+        float: left
+        display: inline
+        padding-left: 20px
+        a
+          +blue-link
+      p.cover, h4.cover
+        width: 320px
+      .checkbox
+        padding-right: 10px
+
+    .pages-status
+      +columns(2,10)
+      +omega(10)
+      +zero
+      +bordered
+      width: 110px
+      float: right
+      padding: 4px 2px 4px 0
+      li
+        clear: both
+        float: right
+        font-size: 9px
+        line-height: 1.2
+        padding: 0.1em
+        white-space: nowrap
+        a
+          +blue-link
+
+#pages.full
+  +clearfix
+  width: 764px
+  h3
+    +bordered-btm(!medium_grey_border)
+    width: 764px
+    padding: 0 0 8px
+    float: left
+    display: inline
+
+  article
+    +bordered-btm(!light_grey_border, "dotted")
+    width: 764px
+    margin: 0
+    padding: 10px 0
+    .pages-info
+      +columns(12,14)
+      +alpha(14)
+      margin: 0
+      width: 80%
+      img
+        float: left
+        padding: 0 10px 10px 0
+      h4
+        float: left
+        display: inline
+        font-size: 14px
+        margin-bottom: 2px
+        color= !blue
+      p
+        float: left
+        display: inline
+        padding-left: 20px
+        a
+          +blue-link
+        .tags
+          +clearfix
+          a
+            +blue-link(10px)
+      p.cover, h4.cover
+        width: 480px
+      .checkbox
+        padding: 0 10px 0 0
+
+    .pages-status
+      +columns(2,14)
+      +omega(14)
+      +zero
+      +bordered
+      width: 135px
+      float: right
+      padding: 4px 2px 4px 0
+      li
+        clear: both
+        float: right
+        font-size: 11px
+        line-height: 1.0
+        padding: 0.1em
+
+span.search-excerpt
+  font-weight: bold
+  font-style: normal
+
+/* @end */
+#contributors
+  ul
+    li
+      +inline-list
+
+
+#identity-name i
+  font-size: 18px
+  color= !warm_grey_text
+
+
+footer.page
+  background= !white_bg
+  height: 65px
+  .language-menu
+    float: right
+.space
+  height: 22px
+.small-space
+  height: 10px
+
+td.reply
+  background-repeat: no-repeat
+  background-position: 0 50%
+  width: 24px
+  height: 24px
+.activities li
+  color: #333
+  margin-bottom: 1em
+  padding-left: 24px
+  span.commands
+    white-space: nowrap
+    a
+      text-transform: lowercase
+      font-size: 80%
+  .small_icon
+    background-position: 0 2px
+  .label.date
+    font-style: italic
+    color: #999
+  br
+    display: none
+.name_icon_xsmall
+  float: left
+  background-repeat: no-repeat
+  background-position: 1px 50%
+  padding: 2px 0 4px 28px
+  min-height: 24px
+#browse-content
+  +clearfix
+  width: 764px
+  nav
+    +clearfix
+    width: 764px
+button.icon_16
+  +zero
+  vertical-align: text-top
+  background-repeat: no-repeat
+  border: none
+  background-color: transparent
+  height: 16px
+  width: 16px
+
+#identity-info
+  overflow: visible
+  width: 204px
+  float: left
+  margin: 0 20px 0 0
+
+#identity-image
+  +columns(4,4)
+  +bordered(!almost_black)
+  width: 202px
+  height: 202px
+  float: left
+  margin: 0
+  background= !white_bg
+
+
+#image-label
+  +columns(4,4)
+  width: 204px
+  float: left
+  margin: 4px 0 0 0
+  line-height: 0.7
+  h3
+    color= !almost_black
+  ul
+    li
+      width: 204px
+      font-size: 11px
+
+#identity-meta
+  +columns(4,4)
+  +bordered
+  margin: 20px 0 0 0
+  width: 182px
+  padding: 0 10px 10px
+  font-size: 11px
+  line-height: 1.5
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+#about-group, #people, #affiliations, #featured
+  +clearfix
+  width: 184px
+  img
+    background-color: #fc0
+  header
+    +clearfix
+    h3, a
+      display: inline
+    a
+      +blue-link(10px)
+      padding-left: 8px
+      font-weight: normal
+  h4, h5
+    width: 182px
+    +clearfix
+  h5
+    font-weight: normal
+    font-size: 11px
+#people, #affiliations
+  ul
+    padding: 5px 0 7px
+    +clearfix
+    li
+      +inline-list
+#about-group
+  p
+    width: 184px
+    a
+      +blue-link(10px)
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      +spaced
+      border: none
+      width: 68px
+      margin: 10px 0 0 0
+      padding: 0 0 0 24px
+      min-height: 24px
+      font-size: 9px
+      line-height: 1
+      color: !medium-grey-text
+      span
+        letter-spacing: normal
+        font-size: 8px
+#featured
+  li
+    padding: 12px 0 4px
+    margin: 12px 0 0
+    +bordered-top(!light_grey_border)
+    article
+      width: 184px
+      h5
+        color= !blue
+        font-weight: bold
+        font-size: 13px
+        padding: 0 0 10px
+      p
+        padding-bottom: 6px
+      span.tags
+        a
+          +blue-link(10px)
+  li.first
+    +zero
+    border: none
+#about-profile
+  +small-text
+  line-height: 1.2
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      width: 164px
+      padding-top: 4px
+#last-login
+  font-size: 10px
+#main-content,#main-content-right
+  +columns(10,14)
+  width: 540px
+  margin: 0
+#main-content-right
+  float: right
+  margin-top: 14px
+#main-content.full
+  width: 764px
+#main-content-right.admin
+  margin: 0
+
+
+
+nav#nav-full
+  width: 764px
+  height: 28px
+  ul
+    +clearfix
+    li
+      +zero
+      +bordered(!almost_black)
+      +spaced
+      height: 28px
+      border-left: none
+      background: #fff
+      font-size: 11px
+      a
+        color= !warm_grey_text
+        text-decoration: none
+        font-weight: bold
+        height: 28px
+        line-height: 1.3
+        padding: 8px 10px
+    li.current
+      background= !almost_black
+      a
+        color: #fff
+    li.first
+      +bordered(!almost_black)
+
+
+.pagination.secondary
+  width: 100%
+  margin-top: 4em
+  margin-bottom: 2em
+
+#sidebar
+  +bordered
+  width: 184px
+  padding: 10px
+  float: right
+  margin: 0
+  .round
+    +border-radius(5px)
+  ul
+    +clearfix
+    overflow: visible
+  ul#nav4
+    li
+      +bordered-btm(!medium_grey_border,"dotted")
+      a
+        color= !blue
+        text-decoration: none
+    li.current
+      a
+        font-weight: bold
+
+#sidebar.left
+  float: left
+  h4
+    color= !red
+    padding: 24px 0 8px
+    margin: 0 0 10px
+    +bordered-btm(!medium_grey_border)
+  h4.first
+    padding-top: 20px
+  a
+    +blue-link
+    height: 20px
+
+#sidebar.no-border
+  border: none
+
+#wiki-page
+  article
+    +clearfix
+    +partial-width
+    padding-top: 16px
+  ul
+    li
+      +inline-list
+#comments
+  +partial-width
+  padding-top: 30px
+  tr
+    td
+      padding: 8px 8px 8px 0
+.shy_parent:hover
+  .shy
+    opacity: 1
+.shy
+  opacity: 0
+.pagination
+  font-weight: normal
+  font-size: 11px
+  color= !medium_grey_text
+  float: right
+  display: inline
+  a
+    +blue-link
+
+nav#tabs
+  +clearfix
+  display: block
+#settings-form
+  +clearfix
+  div
+    display: block
+    #group_avatar_image_file
+      display: block
+
+#action-bar
+  +bordered-top-btm
+  width: 764px
+  clear: both
+  height: 21px
+  h4
+    color= !almost_black
+    font-size: 12px
+    font-weight: normal
+    line-height: 1.9
+    margin-right: 10px
+  ul
+    display: inline
+    padding: 2px 0
+    margin-right: 20px
+    background: url(/images/action-bar/action-bar-bg.png) repeat-x bottom
+    li
+      +inline-list
+      line-height: 1.0
+      font-size: 11px
+      a
+        +hover-link
+        color= !blue
+        display: inline-block
+        padding: 0 6px
+        border-right: 1px solid #ddd
+      a.first
+        border-left: 1px solid #ddd
+  div.right
+    margin-top: -2px
+    h4
+      margin-top: 2px
+
+
+table
+  tr
+    td.date
+      font-size: 10px
+
+#social-activities
+  width: 764px
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
+        padding: 6px
+      td.date
+        font-size: 10px
+
+#messages
+  width: 764px
+  table
+    width: 100%
+    tr
+      td
+        +bordered-btm(!light_grey_border)
+        padding: 12px 6px
+      td.reply
+    tr.unread
+      td
+        font-weight: bold
+    tr
+      td.check
+        width: 36px
+      td.reply
+        width: 30px
+      td.avatar
+        width: 150px
+      td.message
+        padding: 0
+        margin: 0
+        a
+          display: block
+          padding: 12px 6px
+          text-decoration: none
+          &:hover
+            background-color: #ffc
+          .message-body
+            text-decoration: underline
+
+      td.date
+        font-size: 10px
+        width: 80px
+
+#messages.thread
+  table
+    margin: 12px 0
+    tr
+      td.avatar
+        width: 60px
+      td.name
+        width: 160px
+        a.name_icon
+          padding-right: 10px
+      td.date
+        font-size: 10px
+        width: 80px
+
+#tag-cloud
+  //text-align: center
+  li
+    display: inline-block
+    float: none
+    padding: 4px
+    text-align: center
+    a
+      +hover-link
+  .tag6
+    font-size: 20px
+  .tag5
+    font-size: 18px
+  .tag4
+    font-size: 16px
+  .tag3
+    font-size: 14px
+  .tag2
+    font-size: 12px
+  .tag1
+    font-size: 10px
+
+#wiki-content
+  article
+    h2
+      +partial-width
+      clear: both
+      padding-bottom: 8px
+
+/* footer */
+
+footer.page
+  +container
+  padding-top: 2em
+  ul#crabgrass
+    +columns(10)
+    +full
+    li
+      color: #f60
+  div.debug
+    ul
+      padding: 0.1em 0 0.1em 1em
+      list-style-position: inside
+      list-style-type: disc
+      li
+        display: list-item
+        padding: 0.1em 0 0.1em 1em
+        float: none
+/* @end */
+
+
+/* @group forms */
+
+input.checkbox
+  width: 12px
+  height: 12px
+  margin-right: 0
+
+input.text
+  +bordered
+
+form#search-browse
+  +bordered
+
+
+fieldset
+
+legend
+
+label
+
+textarea
+
+input
+
+button
+
+/* @end */
+
+
+/* @group tables */
+
+/* tables */
+
+table
+
+thead
+
+tbody
+
+tfoot
+
+tr
+
+th
+
+td
+
+/* @end */
+
+
+/* @group block tags */
+
+p
+
+blockquote
+
+/* @end */
+
+
+/* @group inline tags */
+
+cite
+
+em
+  :font-style italic
+
+strong
+  :font-weight bold
+
+ins
+  :text-decoration underline
+
+del
+  :text-decoration line-through
+
+q
+
+/* @end */
+
+
+/* @group replaced tags */
+
+img
+
+/* @end */
+
+
+
+#announcements
+  +columns(10,10)
+  margin: 24px 0 0
+  width: 540px
+  h3
+    +bordered-btm(!medium_grey_border)
+    padding: 0 0 8px
+  article
+    +columns(5,10)
+    +alpha(10)
+    padding-top: 10px
+  article.right
+    +columns(5,10)
+    +omega(10)
+  h4
+    line-height: 1.4
+  a
+    +blue-link
+
+  footer
+    +columns(10,10)
+    width: 540px
+    margin: 0
+
+
+
+#info-box
+  +columns(10,10)
+  +clearfix
+  padding: 0 0 8px
+  width: 540px
+  #say-box
+    +columns(10,10)
+    +clearfix
+    width: 540px
+    img
+      float: left
+      margin: 0 6px
+    #say
+      input.textarea
+        display: inline
+        border: 1px solid #ccc
+        width: 300px
+        height: 16px
+  #activities
+    +bordered-btm(!light_grey_border)
+    +columns(10,10)
+    +clearfix
+    width: 540px
+    margin: 20px 0 0
+    .left
+      +columns(5,10)
+      +alpha(10)
+      +clearfix
+    .right
+      +columns(5,10)
+      +omega(10)
+      +clearfix
+    ul
+      a
+        +hover-link
+      li
+        margin-bottom: 4px
+        line-height: 1.4
+        img
+          float: left
+          padding: 6px 6px 6px 0
+        label.date
+          font-size: 9px
+          color= !lighter_grey_text
+
+
+#helpful-links
+  +columns(10,10)
+  +clearfix
+  +bordered-top-btm
+  margin: 15px 0 0
+  padding: 8px 0
+  width: 540px
+  h4, ul
+    display: inline
+  ul
+    +clearfix
+  h4
+    float: left
+    line-height: 1.1
+    margin-right: 2px
+  li
+    +zero
+    line-height: 1.3
+    margin-left: 6px
+    a
+      +blue-link
+      padding-left: 2px
+    span
+      color= !light_grey_border
+
+#about-profile
+  +small-text
+  line-height: 1.2
+  ul#details
+    +clearfix
+    width: 184px
+    li
+      width: 164px
+      padding-top: 4px
+
+
+//
+// page sidebar
+//
+#page_sidebar
+  a
+    +blue-link
+  h3
+    color: #666666
+    border: 1px solid
+    border-color: #eee #bbb #bbb #eee
+    background: #e0e0e0
+    text-transform: uppercase
+    font-size: 0.8em
+    padding: 0.5em 0.75em
+    margin: 2.5em 0 0.5em 0
+  h4
+    padding-top: 1em
+  h5
+    padding: 0.4em 0 0.5em
+  ul.rule
+    border-top: 1px dotted #fff
+    padding-top: 0.5em
+    margin-top: 0.5em
+  ul.names li:first-child
+    border-top: 0
+  ul.names li
+    padding: 3px 0
+    border-top: 1px dotted white
+    span
+      background-position: 100% 0
+      background-repeat: no-repeat
+      padding-right: 20px
+      margin-right: -20px
+  input.check
+    float: left
+    margin: 7px 0 0 -18px
+
+#page_sidebar .tags
+  overflow: hidden
+#page_sidebar .tags a
+  width: 100%
+  overflow: hidden
+  background-color: #dde
+  padding: 0px 2px
+  line-height: 175%
+  white-space: nowrap
+#page_sidebar .tags a:hover
+  background-color: #eef
+
+.edit_tags p
+  float: left
+  width: 40%
+  margin: 0.25em
+
+ul.side_list
+  padding: 0
+  margin: 0
+  list-style: none
+  clear: both
+  ul
+    list-style: none
+    padding-left: 16px
+  a, & .a
+    display: block
+    padding-top: 4px
+    padding-bottom: 4px
+  &.commands a
+    text-transform: capitalize
+  li.small_icon
+    padding-left: 19px
+    background-position: 0 50%
+
+//
+// table admin + superadmin
+//
+#admin-content
+  form
+    table tr td, p
+      padding: 0 4px 10px 0
+    #email-blasts
+      td
+        padding: 10px
+    &.edit_site
+      span.padtop14
+        +clearfix
+        padding-top: 14px
+        label
+          font-weight: bold
+    i
+      font-size: 10px
+      color= !blue
+  h1
+    +bordered-btm(!medium_grey_border)
+    padding-bottom: 4px
+    margin-bottom: 14px
+
+

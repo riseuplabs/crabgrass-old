@@ -29,34 +29,77 @@ class Discussion < ActiveRecord::Base
 
   belongs_to :commentable, :polymorphic => true
 
-  # if we are a private discussion:
+  # if we are a private discussion (or 'messages')
   has_many :relationships do
-    def contact_of(user)
-      self.select {|relationship| return relationship.contact if relationship.user_id == user.id}
-    end
     def for_user(user)
-      self.select {|relationship| return relationship if relationship.user_id == user.id}
+      self.detect {|relationship| relationship.user_id == user.id}
     end
   end
 
   ##
-  ## PRIVATE DISCUSSION
+  ## NAMED SCOPES
   ##
 
-  def last_post_by(user)
-    self.posts.find_by_user_id(user.id, :order => 'created_at DESC')
+  named_scope :with_some_posts, :conditions => ['discussions.posts_count > ?', 0]
+
+
+  # used when relationships are joined in
+  # ex: current_user.discussions.from_user(User.first)
+  # where user has many dicussions through relationships
+  named_scope :from_user, lambda { |user|
+    user.blank? ? {} : { :conditions => ['relationships.contact_id = ?', user.id] }
+  }
+
+  # user with relationships like the above scope
+  # ex: current_user.discussions.unread
+  named_scope :unread, :conditions => ['relationships.unread_count > 0']
+  named_scope :all # used same as :unread, but with nothing to filter
+
+  ##
+  ## PRIVATE DISCUSSION (MESSAGES)
+  ##
+
+  # this discussion is between 2 people
+  # takes one user, returns the other
+  def user_talking_to(user)
+    relationship_to_other_user = self.relationships.for_user(user)
+    relationship_to_other_user.try.contact
   end
 
-  #def unread_count(user)
-  #  if relationship = self.relationships.for_user(user)
-  #    self.posts.count :conditions => ['created_at > ?', relationship.viewed_at]
-  #  else
-  #    0
-  #  end
-  #end
 
-  def increment_unread_for(user)
+  # each pair of users (if they are contacts)
+  # shares a discussion. a single user has a list of discussions, one per friend.
+  # the user's discussions list is sorted by the time the last thing was said on each discussion
+  # most recently updated discussions are first on the list.
+  #
+  # @current_discussion.next_for(current_user) returns the next discussion in that list
+  def next_for(user)
+    all_discussions = user.discussions.with_some_posts.find(:all)
+    current_index = all_discussions.index(self)
+    all_discussions[current_index + 1] # next discussion or nil
+  end
+
+  # see next_for
+  def previous_for(user)
+    all_discussions = user.discussions.find(:all)
+    current_index = all_discussions.index(self)
+
+    prev_index = current_index - 1
+    # return the previous discussion or nil if current discussion is the first one
+    prev_index >= 0 ? all_discussions[prev_index] : nil
+  end
+
+  def increment_unread_for!(user)
     relationships.for_user(user).try.increment!(:unread_count)
+  end
+
+  def unread_by?(user)
+    relationships.for_user(user).unread_count > 0
+  end
+
+  # mark as either :read or :under
+  def mark!(as, marking_user)
+    relationships.for_user(marking_user).try.mark!(as)
   end
 
   ##
@@ -87,6 +130,7 @@ class Discussion < ActiveRecord::Base
   end
 
   def posts_changed
+    @head_posts.try.clear
     update_attributes! :posts_count => visible_posts.count,
       :last_post => visible_posts.last,
       :replied_by => visible_posts.last.try.user,

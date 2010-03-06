@@ -1,18 +1,23 @@
 class Groups::RequestsController < Groups::BaseController
 
   helper 'requests'
-  permissions 'groups/requests', 'requests'
+  permissions 'groups/requests', 'requests', 'groups/memberships'
   before_filter :fetch_group
   before_filter :login_required
 
   def list
     params[:state] ||= 'pending'
 
+    params.delete(:page) # never paginate on the usual page param
+
     @incoming = Request.to_group(@group).
-                    having_state(params[:state]).by_created_at.paginate(:page => params[:in_page])
+                    having_state(params[:state]).by_created_at.paginate(pagination_params(:page => params[:in_page]))
 
     @outgoing = Request.from_group(@group).
-                    having_state(params[:state]).by_created_at.paginate(:page => params[:out_page])
+                    having_state(params[:state]).by_created_at.paginate(pagination_params(:page => params[:out_page]))
+    @second_nav = 'administration'
+    @third_nav = 'requests'
+    @fourth_nav = params[:state]
   end
 
   ##
@@ -33,6 +38,9 @@ class Groups::RequestsController < Groups::BaseController
   end
 
   def create_invite
+    @second_nav = 'administration'
+    @third_nav = 'members'
+
     if request.get?
       store_back_url and return
     else

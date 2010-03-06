@@ -1,6 +1,7 @@
 class Groups::ProfilesController < Groups::BaseController
+  permissions 'groups/requests'
 
-  helper 'profile', 'groups', 'groups/permissions'
+  helper 'profile', 'groups', 'locations', 'groups/permissions'
   before_filter :fetch_data, :login_required
 
   def show
@@ -8,6 +9,8 @@ class Groups::ProfilesController < Groups::BaseController
 
   def edit
     update if request.post?
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   def media
@@ -16,6 +19,8 @@ class Groups::ProfilesController < Groups::BaseController
 
   def permissions
     update if request.post?
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   protected

@@ -78,6 +78,16 @@ class PathFinder::ParsedPath < Array
     # ie {:page_state => 'unread'}
     'page_state' => 1,
 
+    # views - we have a number of special views on ones pages
+    # we have to hand over the user_id via one field.
+    'work' => 1,
+    'unread' => 1,
+    'read' => 1,
+    'owner' => 1,
+    'editor' => 1,
+    'watched' => 1,
+    'notified' => 1,
+
     # moderation
     'public' => 0,
     'public_requested' => 0,

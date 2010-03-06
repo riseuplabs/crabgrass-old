@@ -1,4 +1,5 @@
 module NavigationHelpers
+  include PageHelper
   # Maps a name to a path. Used by the
   #
   #   When /^I go to (.+)$/ do |page_name|
@@ -17,13 +18,17 @@ module NavigationHelpers
     when /my dashboard page/
       '/me/dashboard'
     when /my work page/
-      '/me/work'
+      '/pages/my_work'
+    when /my all pages page/
+      '/pages/all'
     when /my requests page/
-      '/me/requests/to_me'
+      '/me/requests'
     when /the destroyed groups directory/
       '/groups/directory/destroyed'
     when /the moderation panel/
       '/admin/pages'
+    when /the group directory/
+      '/groups/directory/search'
 
     when /^the page of #{capture_model}$/          # translate to named route
       "/page/#{model($1).friendly_url}"
@@ -42,6 +47,20 @@ module NavigationHelpers
       name = model($1).name
       "/#{name}"
 
+    when /^#{capture_model}(?:'s)? (edit|show) tab$/                      # eg. that wikis pages's edit tab
+      page_url(model($1), :action => $2)
+
+    when /^#{capture_model}(?:'s)? administration page$/                     # eg. the groups's landing page
+      object = model($1)
+      name = object.name
+      # NOTE: this will only work for groups right now
+      controller_name = object.class.table_name
+      "#{controller_name}/#{name}/edit"
+
+    when /^#{capture_model}(?:'s)? edit profile page$/                     # eg. the groups's edit page
+      name = model($1).name
+      "/groups/profiles/edit/#{name}"
+
     when /^#{capture_model}(?:'s)? membership list page$/                     # eg. the groups's membership list page
       name = model($1).name
       "/groups/memberships/list/#{name}"
@@ -49,6 +68,9 @@ module NavigationHelpers
     when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
       path_to_pickle $1, :extra => $2                               #  or the forum's edit page
 
+    when /^requests (from me|to me) page$/
+      view = $1.downcase.gsub(' ','_')
+      "/me/requests?view=#{view}"
     ## OTHER PATHS
     when /^the (.+?) page$/                                         # translate to named route
       send "#{$1.downcase.gsub(' ','_')}_path"

@@ -15,7 +15,6 @@ set :branch, "youthportal"
 stopx = false
 
 if stopx
-
   set :password, 'm3p3m3p3'
   set :app_db_host, 'localhost'
   set :app_db_user, 'crabby'

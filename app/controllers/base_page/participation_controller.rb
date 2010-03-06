@@ -99,7 +99,7 @@ class BasePage::ParticipationController < BasePage::SidebarController
   ##
 
   def update_public
-    @page.public = params[:add]
+    @page.public = params[:public]
     @page.updated_by = current_user
     @page.save
     render :template => 'base_page/participation/reset_public_line'
@@ -174,32 +174,6 @@ class BasePage::ParticipationController < BasePage::SidebarController
       may_action?
     end
   end
-
-  # given the params[:recipients] returns an options-hash for recipients
-#  def get_recipients_with_options(recipients_with_options)
-#    options_with_recipients = {}
-#    recipients_with_options.each_pair do |recipient,options|
-#      if options.kind_of?(Hash)
-#        options_with_recipients[symbolize_options(options)] ||= []
-#        options_with_recipients[symbolize_options(options)] << recipient.sub(" ", "+")
-#      end
-#      @recipients ||= []
-#      @recipients << recipient
-#    end
-#    options_with_recipients
-#  end
-
-#
-#  def symbolize_options options
-#    return options unless options.respond_to?(:each)
-#    symbolized_options = {}
-#    options.each do |k,v|
-#      k.respond_to?(:to_sym) ? k = k.to_sym : k ;
-#      v.respond_to?(:to_sym) ? v = v.to_sym : v ;
-#      symbolized_options[k] = v
-#    end
-#    symbolized_options
-#  end
 
   def close_popup
     render :template => 'base_page/reset_sidebar'

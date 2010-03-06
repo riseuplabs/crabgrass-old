@@ -318,15 +318,70 @@ module PathFinder::Mysql::BuilderFilters
   end
 
   #--
+  ## VIEWS
+  #++
+
+  # my work contains
+  # * pages i own
+  # * pages i contributed to
+  # * pages i am watching
+  def filter_work(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << <<EOSQL
+    ((pages.owner_type = 'User' AND pages.owner_id = #{user_id}) OR
+    (user_participations.changed_at IS NOT NULL) OR
+    (user_participations.watch))
+EOSQL
+  end
+
+  def filter_owner(user_id)
+    @conditions << 'pages.owner_type = "User" AND pages.owner_id = ?'
+    @values << user_id.to_i
+  end
+
+  def filter_unread(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(!user_participations.viewed)'
+  end
+
+  def filter_read(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.viewed)'
+  end
+
+  def filter_watched(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.watch)'
+  end
+
+  def filter_notified(user_id)
+    #TODO: implement this one with persistent notifications!
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.notice != "")'
+  end
+
+  def filter_editor(user_id)
+    @conditions << 'user_participations.user_id = ?'
+    @values << user_id.to_i
+    @conditions << '(user_participations.changed_at IS NOT NULL)'
+    @order = ['user_participations.changed_at DESC']
+  end
+
+  #--
   ## MODERATION
   #++
 
   def filter_public()
-    @conditions << ["pages.public = ?", true]
+    @conditions << "pages.public = TRUE"
   end
 
   def filter_public_requested()
-    @conditions << ["pages.public_requested = ?", true]
+    @conditions << "pages.public_requested = TRUE"
   end
 
   def filter_moderation(state)

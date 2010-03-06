@@ -16,7 +16,7 @@ class SignupTest < ActionController::IntegrationTest
     click_button "Sign up"
 
     assert_contain "Registration successful"
-    assert_contain "My Dashboard"
+    assert_contain "Logout"
   end
 
   def test_signup_existing_name_doesnt_work

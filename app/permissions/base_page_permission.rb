@@ -94,7 +94,6 @@ module BasePagePermission
 
   def may_share_with_all?
     false # deactivated on youthportal for now.
-    # !Site.current.try.network.nil? and may_share_page?
   end
 
   ##

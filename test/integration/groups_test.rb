@@ -15,7 +15,7 @@ class GroupsTest < ActionController::IntegrationTest
   def test_change_group_membership_policy
     login 'blue'
     visit '/rainbow'
-    click_link 'Edit Settings'
+    click_link 'ADMINISTRATION'
     click_link 'Permissions'
 
     check 'Allow Membership Requests'
@@ -32,7 +32,7 @@ class GroupsTest < ActionController::IntegrationTest
     # disable open group. should change what users see
     login 'blue'
     visit '/rainbow'
-    click_link 'Edit Settings'
+    click_link 'ADMINISTRATION'
     click_link 'Permissions'
 
     check 'Allow Membership Requests'
