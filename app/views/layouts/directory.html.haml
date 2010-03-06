@@ -4,7 +4,8 @@
       - key = "directory_of_#{@active_tab}"
       %h1= I18n.t(key.to_sym)
     %div.right
-      = link_to_create(@active_tab)
+      %div#contribute
+        = link_to_create(@active_tab)
 
   - content_for :secondary_nav do
     = render :partial => '/layouts/directory/menu'
