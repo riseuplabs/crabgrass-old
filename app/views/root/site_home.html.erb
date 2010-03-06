@@ -94,11 +94,9 @@ form.mini_search table {
   <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
 </ul>
 
-<%- if @announcements.any? %>
-  <div class='section'>
-    <%= render :partial => 'announcement_page/announcements'  %>
-  </div>
-<%- end -%>
+<%# if @announcements.any? %>
+  <%# render :partial => 'announcement_page/announcements'  %>
+<%# end -%>
 
 <div id="sitehome-wiki">
   <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>

@@ -30,4 +30,10 @@ class SiteHomeTest < ActionController::IntegrationTest
     assert_have_no_selector "#welcome_box table"
   end
 
+  def test_announcements_not_shown
+    login 'blue'
+    visit '/'
+    assert_not_contain I18n.t(:announcements)
+  end
+
 end
