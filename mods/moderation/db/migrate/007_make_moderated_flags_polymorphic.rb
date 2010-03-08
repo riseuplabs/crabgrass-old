@@ -7,9 +7,11 @@ class MakeModeratedFlagsPolymorphic < ActiveRecord::Migration
     ModeratedFlag.find_all_by_type("ModeratedPage").each do |mpage|
       # This can't be done with update all because we can't set flagged_type to the
       # specific subclasses.
+      next unless Page.exists?(mpage.flagged_id)
       mpage.flagged=Page.find(mpage.flagged_id)
     end
     ModeratedFlag.find_all_by_type("ModeratedPost").each do |mpage|
+      next unless Post.exists?(mpage.flagged_id)
       mpage.flagged=Post.find(mpage.flagged_id)
     end
   end
