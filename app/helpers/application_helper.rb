@@ -140,7 +140,7 @@ module ApplicationHelper
   end
 
   def browser_is_ie?
-    user_agent = request.env['HTTP_USER_AGENT'].downcase
+    user_agent = request.env['HTTP_USER_AGENT'].try.downcase
     user_agent =~ /msie/ and user_agent !~ /opera/
   end
 
