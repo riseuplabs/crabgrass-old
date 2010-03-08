@@ -1,13 +1,15 @@
 <%##
   ## The onclick remote function gets called once when this menu becomes visible
   ##%>
-<div class="menu_items" style="display: none" onclick="<%= remote_function(:url => recent_pages_url) %>">
+<div class="menu_items" style="display: none" onclick="<%= remote_function(:url => recent_pages_url) unless browser_is_ie? %>">
   <div class="leftcol menu_me">
     <% cache(menu_cache_key(:submenu=>'me_sidebar')) do %>
       <%= render :partial => '/layouts/menu/me_left_column' %>
     <% end %>
   </div>
-  <div class="rightcol">
-    <div id="recent_pages_dropdown"><%= big_spinner %></div>
-  </div>
+  <%- unless browser_is_ie? %>
+    <div class="rightcol">
+      <div id="recent_pages_dropdown"><%= big_spinner %></div>
+    </div>
+  <%- end %>
 </div>

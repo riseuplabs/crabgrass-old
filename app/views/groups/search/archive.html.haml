@@ -2,4 +2,4 @@
 
 //@info_box = link_line(link_to_active(I18n.t(:archive_filter_created_link), group_search_url(:action => 'archive', :path => @path.replace_keyword('updated','created')), @path.keyword?('created')), link_to_active(I18n.t(:archive_filter_updated_link), group_search_url(:action => 'archive', :path => @path.replace_keyword('created','updated')), @path.keyword?('updated')))
 
-= list_pages :title => I18n.t(:group_pages), :calendar_partial => 'groups/search/pages_calendar', :pages_dropdown => 'groups/search/pages_dropdown'
+= list_pages :title => I18n.t(:group_pages), :block_above_pages_list_partial => 'groups/search/pages_calendar', :pages_dropdown => 'groups/search/pages_dropdown', :with_owner => false
