@@ -6,29 +6,38 @@
 // this was in constants.sass
 !strong_heading_color = #CE4A48
 
+
+
 #messages-forms
   overflow: visible
   height: 35px
   padding-top: 10px
-
+  
   #say-box
     position: relative
+    +bordered
+    display: block
+    clear: both
+    padding: 10px 10px 4px 18px
+    margin-bottom: 10px
     img
       position: relative
       top: 4px
     #say
       .textinput
         vertical-align: top
+        margin-top: 1px
+        width: 160px
+        height: 15px
       position: relative
       overflow: visible
       height: 30px
       textarea
         overflow: visible
-      input.textarea
-        padding: 2px
+        width: 500px
         position: relative
         font-family: monospace
-        overflow: auto
+        overflow: visible
         .tall
           height: 120px
       input.say-submit
@@ -37,6 +46,9 @@
         vertical-align: top
       label
         vertical-align: top
+        
+#select-messages-from
+  margin-bottom: 10px
 
 
 //
