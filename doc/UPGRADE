@@ -15,6 +15,11 @@
 * db migrations (rake db:migrate) are required for this upgrade.
 ** if you use the moderation module, you need to run this first:
     * script/generate plugin_migration
+    * additionally, after the plugin migration file is generated (something like
+      *_moderation_to_version_8.rb), the convert_message_page_to_discussion_message
+      migration needs to be renamed so that it runs after the moderation migration.
+      to do this, simply move the message_page migration to a timestamp later than 
+      the moderation migration.
 
 * Features now use Transforms.
   Transforms are a great way to make features more readable.
