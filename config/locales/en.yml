@@ -613,6 +613,7 @@ en:
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
+  messages_back_to_all: "Back to Messages"
   messages_from_label: "Messages from"
   messages_mark_as_label: "Mark as:"
   messages_view_label: "View:"

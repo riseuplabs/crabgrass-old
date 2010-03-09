@@ -74,4 +74,11 @@ module Me::MessagesHelper
               {:name => :unread, :translation => :unread}],
       :view_base_path => messages_path }
   end
+
+  def message_thread_actions
+    { :link =>
+      [ { :translation => :messages_back_to_all,
+          :target => messages_path }]
+    }
+  end
 end

@@ -34,6 +34,7 @@ class Me::MessagesControllerTest < ActionController::TestCase
     get :show, :id => users(:orange).to_param
     assert_response :success
     assert_equal relationship.discussion, assigns(:discussion)
+    assert_select "a[href=#{messages_path}]", 'Back to Messages'
 
     # same discussion, from a different perspective
     login_as :orange
@@ -92,6 +93,9 @@ class Me::MessagesControllerTest < ActionController::TestCase
     last_id = last.user_talking_to(@blue).to_param
 
 
+    get :show, :id => middle_id
+    assert_select 'a.left', '« Previous'
+    assert_select 'a.right', 'Next »'
     # asking for next while on last item
     # or for previous while on first item
     # should return you to index
