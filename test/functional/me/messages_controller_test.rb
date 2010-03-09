@@ -34,6 +34,10 @@ class Me::MessagesControllerTest < ActionController::TestCase
     get :show, :id => users(:orange).to_param
     assert_response :success
     assert_equal relationship.discussion, assigns(:discussion)
+    # test for #1919
+    assert_equal users(:blue), assigns(:user)
+    assert_equal users(:orange), assigns(:recipient)
+    # test for #1918
     assert_select "a[href=#{messages_path}]", 'Back to Messages'
 
     # same discussion, from a different perspective
@@ -94,6 +98,7 @@ class Me::MessagesControllerTest < ActionController::TestCase
 
 
     get :show, :id => middle_id
+    # test for #1920
     assert_select 'a.left', '« Previous'
     assert_select 'a.right', 'Next »'
     # asking for next while on last item

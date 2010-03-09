@@ -116,8 +116,8 @@ class Me::MessagesController < Me::BaseController
   end
 
   def fetch_discussion
-    @user = User.find_by_login(params[:id])
-    @discussion = current_user.discussions.from_user(@user).first
+    user = User.find_by_login(params[:id])
+    @discussion = current_user.discussions.from_user(user).first
     redirect_to :action => :index if @discussion.blank?
   end
 
