@@ -9,37 +9,39 @@ then you can only install it via that mechanism.
 If you are running Debian stable, you can often pull newer versions of
 packages from [http://backports.org].
 
-| gem        | debian package          | notes / required versions                     |
-|------------+-------------------------+-----------------------------------------------|
-|            | ruby1.8                 | =1.8.7                                        |
-|            | ruby1.8-dev             |                                               |
-|            | rubygems                |                                               |
-| rake       | rake                    | >=0.8.1                                       |
-| rails      | rails*                  | =2.1.0                                        |
-| mysql      | libmysql-ruby           | ruby mysql support >=5.0                      |
-|            | mysql-server            | the database server                           |
-|            | libopenssl-ruby         |                                               |
-| tzinfo     | libtzinfo-ruby          | timezone support                              |
-| RedCloth   | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
-| haml       | libhaml-ruby            | templating, generated CSS site themes >=2.2.8 |
-| hpricot    | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
-| chronic    | libchronic-ruby         | required by backgroundrb                      |
-| packet     | libpacket-ruby          | required by backgroundrb >=0.1.15             |
-| mime-types | libmime-types-ruby      | file upload bug in IE6                        |
-|            | openoffice.org          | image thumbnails/document previews (optional) |
-|            | openoffice.org-headless | image thumbnails/document previews (optional) |
-|            | msttcorefonts           | document previews (optional)                  |
-|            | graphicsmagick          | thumbnail generation (optional)               |
-|            | inkscape                | thumbnail generation (optional)               |
-|            | libcrack2               | password strength checking (optional)         |
-|            | cracklib-runtime        | password strength checking (optional)         |
-|            | libopen4-ruby           | better pipes, for latex renderer (optional)   |
-|            | ruby-debug              | for debugging running application (optional)  |
-|            | libxslt1-dev            | pre-required for nokogiri (optional)          |
-|            | libxml2-dev             | pre-required for nokogiri (optional)          |
-| nokogiri   | libnokogiri-ruby        | for webrat plugin (optional)                  |
-| launchy    |                         | for webrat plugin (optional)                  |
-| leftright  |                         | for better organized test output (optional)   |
+| gem                 | debian package          | notes / required versions                     |
+|---------------------+-------------------------+-----------------------------------------------|
+|                     | ruby1.8                 | =1.8.7                                        |
+|                     | ruby1.8-dev             |                                               |
+|                     | rubygems                |                                               |
+| rake                | rake                    | >=0.8.1                                       |
+| rails               | rails*                  | =2.1.0                                        |
+| mysql               | libmysql-ruby           | ruby mysql support >=5.0                      |
+|                     | mysql-server            | the database server                           |
+|                     | libopenssl-ruby         |                                               |
+| tzinfo              | libtzinfo-ruby          | timezone support                              |
+| RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
+| haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
+| compass             | libcompass-ruby         | a semantic CSS system =0.8.5                  |
+| compass-susy-plugin |                         | =0.6.3                                        |
+| hpricot             | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
+| chronic             | libchronic-ruby         | required by backgroundrb                      |
+| packet              | libpacket-ruby          | required by backgroundrb >=0.1.15             |
+| mime-types          | libmime-types-ruby      | file upload bug in IE6                        |
+|                     | openoffice.org          | image thumbnails/document previews (optional) |
+|                     | openoffice.org-headless | image thumbnails/document previews (optional) |
+|                     | msttcorefonts           | document previews (optional)                  |
+|                     | graphicsmagick          | thumbnail generation (optional)               |
+|                     | inkscape                | thumbnail generation (optional)               |
+|                     | libcrack2               | password strength checking (optional)         |
+|                     | cracklib-runtime        | password strength checking (optional)         |
+|                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
+|                     | ruby-debug              | for debugging running application (optional)  |
+|                     | libxslt1-dev            | pre-required for nokogiri (optional)          |
+|                     | libxml2-dev             | pre-required for nokogiri (optional)          |
+| nokogiri            | libnokogiri-ruby        | for webrat plugin (optional)                  |
+| launchy             |                         | for webrat plugin (optional)                  |
+| leftright           |                         | for better organized test output (optional)   |
 
 
 NOTE: If you use the Debian rails package, you will need to install a
