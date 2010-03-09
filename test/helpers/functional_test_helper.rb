@@ -49,6 +49,12 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
+  def assert_no_select(selector, message=nil)
+    message ||= "Selector '#{selector}' was not expected but found."
+    assert_raise Test::Unit::AssertionFailedError, message do
+      assert_select selector
+    end
+  end
   ##
   ## ROUTE HELPERS
   ##

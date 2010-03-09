@@ -131,6 +131,10 @@ class GroupsControllerTest < ActionController::TestCase
     assert_response :success
 #    assert_template 'show'
 
+    # inverted test for #1901
+    assert_no_select '.no-third-level',
+      "Class set for sidebars without 3rd leven nav despite having one."
+
     assert_not_nil assigns(:group)
     assert assigns(:group).valid?
 
