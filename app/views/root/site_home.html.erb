@@ -95,10 +95,9 @@ form.mini_search table {
   <%# render :partial => 'announcement_page/announcements'  %>
 <%# end -%>
 
-<div id="sitehome-wiki">
-  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
+<div id="sitehome">
+ <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
 </div>
-
 <br/>
 
 <%= Formy.tabs do |f|
