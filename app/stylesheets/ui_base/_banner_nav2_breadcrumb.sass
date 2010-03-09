@@ -47,6 +47,12 @@
       padding-left: 0
       div.left
         padding-left: 17px
+        display: inline
+        h1
+          float: left
+        .speech
+          float: left
+          clear: left
       img
         +bordered
         background= !white_bg
@@ -70,9 +76,8 @@
 
 
 #group-action
-  +clearfix
+  clear: left
   margin-top: 4px
-  display: inline
   a
     +hover-link
     +small-text
@@ -82,10 +87,10 @@
 
 #contribute
   float: right
+  background-color: #78be63
+  border: 1px solid #448c3b
   a
     +hover-link
-    background-color: #78be63
-    border: 1px solid #448c3b
     color= !white_text
     font-size: 11px
     font-weight: bold
