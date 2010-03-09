@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100211213933) do
+ActiveRecord::Schema.define(:version => 20100308201918) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   end
 
   create_table "bdrb_job_queues", :force => true do |t|
-    t.text     "args"
+    t.text     "args",           :limit => 16777215
     t.string   "worker_name"
     t.string   "worker_method"
     t.string   "job_key"
@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
 
   create_table "crypt_keys", :force => true do |t|
     t.integer "profile_id",  :limit => 11
-    t.boolean "preferred",                 :default => false
-    t.text    "key"
+    t.boolean "preferred",                       :default => false
+    t.text    "key",         :limit => 16777215
     t.string  "keyring"
     t.string  "fingerprint"
     t.string  "name"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   end
 
   create_table "custom_appearances", :force => true do |t|
-    t.text     "parameters"
+    t.text     "parameters",        :limit => 16777215
     t.integer  "parent_id",         :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -185,11 +185,11 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   add_index "email_addresses", ["profile_id"], :name => "email_addresses_profile_id_index"
 
   create_table "events", :force => true do |t|
-    t.text     "description"
-    t.text     "description_html"
-    t.boolean  "is_all_day",       :default => false
-    t.boolean  "is_cancelled",     :default => false
-    t.boolean  "is_tentative",     :default => true
+    t.text     "description",      :limit => 16777215
+    t.text     "description_html", :limit => 16777215
+    t.boolean  "is_all_day",                           :default => false
+    t.boolean  "is_cancelled",                         :default => false
+    t.boolean  "is_tentative",                         :default => true
     t.string   "location"
     t.datetime "starts_at"
     t.datetime "ends_at"
@@ -202,10 +202,10 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.string   "media_key"
     t.string   "media_url"
     t.string   "media_thumbnail_url"
-    t.text     "media_embed"
+    t.text     "media_embed",         :limit => 16777215
     t.integer  "page_terms_id",       :limit => 11
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "height",              :limit => 3
     t.integer  "width",               :limit => 3
     t.integer  "player",              :limit => 1
@@ -364,14 +364,14 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   create_table "messages", :force => true do |t|
     t.datetime "created_at"
     t.string   "type"
-    t.text     "content"
+    t.text     "content",     :limit => 16777215
     t.integer  "channel_id",  :limit => 11
     t.integer  "sender_id",   :limit => 11
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
-    t.integer  "yuck_count",  :limit => 11, :default => 0
-    t.boolean  "vetted",                    :default => false
+    t.integer  "yuck_count",  :limit => 11,       :default => 0
+    t.boolean  "vetted",                          :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -414,9 +414,9 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   create_table "page_terms", :force => true do |t|
     t.integer  "page_id",            :limit => 11
     t.string   "page_type"
-    t.text     "access_ids"
-    t.text     "body"
-    t.text     "comments"
+    t.text     "access_ids",         :limit => 16777215
+    t.text     "body",               :limit => 16777215
+    t.text     "comments",           :limit => 16777215
     t.string   "tags"
     t.string   "title"
     t.boolean  "resolved"
@@ -431,8 +431,8 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.datetime "page_created_at"
     t.boolean  "delta"
     t.string   "media"
-    t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0, :null => false
+    t.integer  "stars_count",        :limit => 11,       :default => 0
+    t.integer  "views_count",        :limit => 11,       :default => 0, :null => false
     t.string   "owner_name"
   end
 
@@ -452,23 +452,23 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "resolved",                         :default => true
+    t.boolean  "resolved",                               :default => true
     t.boolean  "public"
     t.integer  "created_by_id",      :limit => 11
     t.integer  "updated_by_id",      :limit => 11
-    t.text     "summary"
+    t.text     "summary",            :limit => 16777215
     t.string   "type"
-    t.integer  "message_count",      :limit => 11, :default => 0
+    t.integer  "message_count",      :limit => 11,       :default => 0
     t.integer  "data_id",            :limit => 11
     t.string   "data_type"
-    t.integer  "contributors_count", :limit => 11, :default => 0
-    t.integer  "posts_count",        :limit => 11, :default => 0
+    t.integer  "contributors_count", :limit => 11,       :default => 0
+    t.integer  "posts_count",        :limit => 11,       :default => 0
     t.string   "name"
     t.string   "updated_by_login"
     t.string   "created_by_login"
     t.integer  "flow",               :limit => 11
-    t.integer  "stars_count",        :limit => 11, :default => 0
-    t.integer  "views_count",        :limit => 11, :default => 0,     :null => false
+    t.integer  "stars_count",        :limit => 11,       :default => 0
+    t.integer  "views_count",        :limit => 11,       :default => 0,     :null => false
     t.integer  "owner_id",           :limit => 11
     t.string   "owner_type"
     t.string   "owner_name"
@@ -479,9 +479,9 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
-    t.boolean  "public_requested",                 :default => false
-    t.boolean  "vetted",                           :default => false
-    t.integer  "yuck_count",         :limit => 11, :default => 0
+    t.boolean  "public_requested",                       :default => false
+    t.boolean  "vetted",                                 :default => false
+    t.integer  "yuck_count",         :limit => 11,       :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -507,10 +507,10 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
 
   create_table "possibles", :force => true do |t|
     t.string  "name"
-    t.text    "action"
+    t.text    "action",           :limit => 16777215
     t.integer "poll_id",          :limit => 11
-    t.text    "description"
-    t.text    "description_html"
+    t.text    "description",      :limit => 16777215
+    t.text    "description_html", :limit => 16777215
     t.integer "position",         :limit => 11
   end
 
@@ -519,14 +519,14 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   create_table "posts", :force => true do |t|
     t.integer  "user_id",       :limit => 11
     t.integer  "discussion_id", :limit => 11
-    t.text     "body"
-    t.text     "body_html"
+    t.text     "body",          :limit => 16777215
+    t.text     "body_html",     :limit => 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
-    t.boolean  "vetted",                      :default => false
-    t.integer  "yuck_count",    :limit => 11, :default => 0
+    t.boolean  "vetted",                            :default => false
+    t.integer  "yuck_count",    :limit => 11,       :default => 0
     t.integer  "page_terms_id", :limit => 11
   end
 
@@ -535,9 +535,9 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
 
   create_table "profile_notes", :force => true do |t|
     t.integer "profile_id", :limit => 11
-    t.boolean "preferred",                :default => false
+    t.boolean "preferred",                      :default => false
     t.string  "note_type"
-    t.text    "body"
+    t.text    "body",       :limit => 16777215
   end
 
   add_index "profile_notes", ["profile_id"], :name => "profile_notes_profile_id_index"
@@ -545,10 +545,10 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   create_table "profiles", :force => true do |t|
     t.integer  "entity_id",              :limit => 11
     t.string   "entity_type"
-    t.boolean  "stranger",                             :default => false, :null => false
-    t.boolean  "peer",                                 :default => false, :null => false
-    t.boolean  "friend",                               :default => false, :null => false
-    t.boolean  "foe",                                  :default => false, :null => false
+    t.boolean  "stranger",                                   :default => false, :null => false
+    t.boolean  "peer",                                       :default => false, :null => false
+    t.boolean  "friend",                                     :default => false, :null => false
+    t.boolean  "foe",                                        :default => false, :null => false
     t.string   "name_prefix"
     t.string   "first_name"
     t.string   "middle_name"
@@ -560,28 +560,28 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
-    t.boolean  "fof",                                  :default => false, :null => false
-    t.text     "summary"
+    t.boolean  "fof",                                        :default => false, :null => false
+    t.text     "summary",                :limit => 16777215
     t.integer  "wiki_id",                :limit => 11
     t.integer  "photo_id",               :limit => 11
     t.integer  "layout_id",              :limit => 11
-    t.boolean  "may_see",                              :default => true
+    t.boolean  "may_see",                                    :default => true
     t.boolean  "may_see_committees"
     t.boolean  "may_see_networks"
     t.boolean  "may_see_members"
     t.boolean  "may_request_membership"
-    t.integer  "membership_policy",      :limit => 11, :default => 0
+    t.integer  "membership_policy",      :limit => 11,       :default => 0
     t.boolean  "may_see_groups"
     t.boolean  "may_see_contacts"
-    t.boolean  "may_request_contact",                  :default => true
-    t.boolean  "may_pester",                           :default => true
+    t.boolean  "may_request_contact",                        :default => true
+    t.boolean  "may_pester",                                 :default => true
     t.boolean  "may_burden"
     t.boolean  "may_spy"
     t.string   "language",               :limit => 5
     t.integer  "discussion_id",          :limit => 11
     t.string   "place"
     t.integer  "video_id",               :limit => 11
-    t.text     "summary_html"
+    t.text     "summary_html",           :limit => 16777215
     t.boolean  "admins_may_moderate"
     t.integer  "geo_location_id",        :limit => 11
   end
@@ -657,16 +657,16 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.string  "email_sender"
     t.integer "pagination_size",        :limit => 11
     t.integer "super_admin_group_id",   :limit => 11
-    t.text    "translators"
+    t.text    "translators",            :limit => 16777215
     t.string  "translation_group"
     t.string  "default_language"
-    t.text    "available_page_types"
-    t.text    "evil"
+    t.text    "available_page_types",   :limit => 16777215
+    t.text    "evil",                   :limit => 16777215
     t.boolean "tracking"
-    t.boolean "default",                              :default => false
+    t.boolean "default",                                    :default => false
     t.integer "network_id",             :limit => 11
     t.integer "custom_appearance_id",   :limit => 11
-    t.boolean "has_networks",                         :default => true
+    t.boolean "has_networks",                               :default => true
     t.string  "signup_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
@@ -690,7 +690,7 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.integer  "question_id",       :limit => 11
     t.integer  "response_id",       :limit => 11
     t.integer  "asset_id",          :limit => 11
-    t.text     "value"
+    t.text     "value",             :limit => 16777215
     t.string   "type"
     t.datetime "created_at"
     t.integer  "external_video_id", :limit => 11
@@ -698,18 +698,18 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
 
   create_table "survey_questions", :force => true do |t|
     t.string   "type"
-    t.text     "choices"
+    t.text     "choices",    :limit => 16777215
     t.integer  "survey_id",  :limit => 11
     t.integer  "position",   :limit => 11
     t.string   "label"
-    t.text     "details"
+    t.text     "details",    :limit => 16777215
     t.boolean  "required"
     t.datetime "created_at"
     t.datetime "expires_at"
     t.string   "regex"
     t.integer  "maximum",    :limit => 11
     t.integer  "minimum",    :limit => 11
-    t.boolean  "private",                  :default => false
+    t.boolean  "private",                        :default => false
   end
 
   create_table "survey_responses", :force => true do |t|
@@ -722,9 +722,9 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   end
 
   create_table "surveys", :force => true do |t|
-    t.text     "description"
+    t.text     "description",     :limit => 16777215
     t.datetime "created_at"
-    t.integer  "responses_count", :limit => 11, :default => 0
+    t.integer  "responses_count", :limit => 11,       :default => 0
     t.string   "settings"
   end
 
@@ -761,8 +761,8 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
   create_table "tasks", :force => true do |t|
     t.integer  "task_list_id",     :limit => 11
     t.string   "name"
-    t.text     "description"
-    t.text     "description_html"
+    t.text     "description",      :limit => 16777215
+    t.text     "description_html", :limit => 16777215
     t.integer  "position",         :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -822,14 +822,14 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
     t.integer  "access",        :limit => 11
     t.datetime "viewed_at"
     t.datetime "changed_at"
-    t.boolean  "watch",                       :default => false
+    t.boolean  "watch",                             :default => false
     t.boolean  "star"
-    t.boolean  "resolved",                    :default => true
+    t.boolean  "resolved",                          :default => true
     t.boolean  "viewed"
-    t.integer  "message_count", :limit => 11, :default => 0
-    t.boolean  "attend",                      :default => false
-    t.text     "notice"
-    t.boolean  "inbox",                       :default => false
+    t.integer  "message_count", :limit => 11,       :default => 0
+    t.boolean  "attend",                            :default => false
+    t.text     "notice",        :limit => 16777215
+    t.boolean  "inbox",                             :default => false
   end
 
   add_index "user_participations", ["page_id", "user_id"], :name => "page_and_user", :unique => true
@@ -921,30 +921,30 @@ ActiveRecord::Schema.define(:version => 20100211213933) do
 
   create_table "wiki_locks", :force => true do |t|
     t.integer "wiki_id",      :limit => 11
-    t.text    "locks"
-    t.integer "lock_version", :limit => 11, :default => 0
+    t.text    "locks",        :limit => 16777215
+    t.integer "lock_version", :limit => 11,       :default => 0
   end
 
   create_table "wiki_versions", :force => true do |t|
     t.integer  "wiki_id",       :limit => 11
     t.integer  "version",       :limit => 11
-    t.text     "body"
-    t.text     "body_html"
+    t.text     "body",          :limit => 16777215
+    t.text     "body_html",     :limit => 16777215
     t.datetime "updated_at"
     t.integer  "user_id",       :limit => 11
-    t.text     "raw_structure"
+    t.text     "raw_structure", :limit => 16777215
   end
 
   add_index "wiki_versions", ["wiki_id"], :name => "index_wiki_versions"
   add_index "wiki_versions", ["wiki_id", "updated_at"], :name => "index_wiki_versions_with_updated_at"
 
   create_table "wikis", :force => true do |t|
-    t.text     "body"
-    t.text     "body_html"
+    t.text     "body",          :limit => 16777215
+    t.text     "body_html",     :limit => 16777215
     t.datetime "updated_at"
     t.integer  "user_id",       :limit => 11
     t.integer  "version",       :limit => 11
-    t.text     "raw_structure"
+    t.text     "raw_structure", :limit => 16777215
   end
 
   add_index "wikis", ["user_id"], :name => "index_wikis_user_id"

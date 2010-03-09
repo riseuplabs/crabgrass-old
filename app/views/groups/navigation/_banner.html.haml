@@ -1,6 +1,8 @@
 - group = @parent || @group
-%h1
-  = group.display_name
+%div.left
+  %h1
+    = group.display_name
+%div.right
   = create_page_link(group)
 %div#group-action
   = join_group_link
