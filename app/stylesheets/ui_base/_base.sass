@@ -151,12 +151,12 @@ h6
 //
 //title-box-full w/search
 //
-
+.partial_width
+  width: 540px
+  font-style: italic
 #title-box-full, #info-box-full
   width: 764px
   height: 16px
-  .partial_width
-    width: 540px
   h3
     font-size: 15px
     font-weight: normal
@@ -659,9 +659,11 @@ nav#tabs
 
 #action-bar
   +bordered-top-btm
+  +clearfix
   width: 764px
-  clear: both
   height: 21px
+  margin-top: 2px
+  float: left
   h4
     color= !almost_black
     font-size: 12px
