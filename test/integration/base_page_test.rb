@@ -10,7 +10,8 @@ class BasePageTest < ActionController::IntegrationTest
       assert_not_nil group = site.network, "Could not find site network."
       get '/blue/survey-ipsum+214'
       assert_response :success, "Could not get page."
-      assert_select "li#share_all_li"
+      # share with all has been disabled as of #1672
+      assert_select "li#share_all_li", false
       assert page.participation_for_group(group).nil?, "Page has already been shared with all."
       post '/base_page/participation/update_share_all?add=true&page_id=214'
       page.reload
@@ -34,8 +35,7 @@ class BasePageTest < ActionController::IntegrationTest
     assert_nil group = site.network, "Could not find site network."
     get '/blue/survey-ipsum+214'
     assert_response :success, "Could not get page."
-    assert_raise Test::Unit::AssertionFailedError do
-      assert_select "li#share_all_li"
-    end
+      # share with all has been disabled as of #1672
+    assert_select "li#share_all_li", false
   end
 end
