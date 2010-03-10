@@ -2,7 +2,7 @@
   = group_search_rss
 
 - content_for :right_sidebar do
-  = render :partial => 'groups/search/tags'
+  = render :partial => 'groups/search/tags', :locals => {:limit => 15, :see_all_url => groups_url(:action => 'tags')}
 
 - content_for :third_nav do
   = render :partial => 'groups/navigation/group_pages_tabs'
