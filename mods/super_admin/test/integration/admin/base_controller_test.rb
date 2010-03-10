@@ -37,6 +37,7 @@ class Admin::BaseTest < ActionController::IntegrationTest
     assert_contain "Admin"
 
     click_link 'Admin'
+    follow_redirect!
     assert_contain "Super Admin Powers"
     assert_select "a[href='/blue']", "Profile"
   end

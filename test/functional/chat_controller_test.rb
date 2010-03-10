@@ -32,7 +32,7 @@ class ChatControllerTest < ActionController::TestCase
     login_as :blue
     get :channel, :id => groups(:rainbow).name
     assert_response :success, "should reach chat channel"
-    assert_no_select 'a#chat', "Should not show link to join chat in chat."
+    assert_select 'a#chat', false, "Should not show link to join chat in chat."
  end
 
   def test_channel_archive_when_not_logged_in
