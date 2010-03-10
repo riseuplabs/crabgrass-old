@@ -370,14 +370,7 @@ span.search-excerpt
   color= !warm_grey_text
 
 
-footer.page
-  border-top-color= !light_grey_border
-  border-top-style: solid
-  border-top-width: 1px
-  background= !white_bg
-  height: 65px
-  .language-menu
-    float: right
+
 .space
   height: 22px
 .small-space
@@ -800,23 +793,26 @@ table
 
 /* footer */
 
-footer.page
-  +container
+.footer-container
+  +bordered-top(!light_grey_border)
+  background= !white_bg
+  height: 65px
   padding-top: 2em
-  ul#crabgrass
-    +columns(10)
+  +container
+  .footer
+    +columns(14)
     +full
-    li
-      color: #f60
-  div.debug
-    ul
-      padding: 0.1em 0 0.1em 1em
-      list-style-position: inside
-      list-style-type: disc
-      li
-        display: list-item
+    .language-menu
+      float: right
+    div.debug
+      ul
         padding: 0.1em 0 0.1em 1em
-        float: none
+        list-style-position: inside
+        list-style-type: disc
+        li
+          display: list-item
+          padding: 0.1em 0 0.1em 1em
+          float: none
 /* @end */
 
 
