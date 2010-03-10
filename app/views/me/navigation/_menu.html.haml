@@ -5,3 +5,4 @@
   - tasks_current = (@second_nav == 'tasks')
   = tab_li :tasks, :controller => 'me/tasks', :action => 'pending', :translate => :tasks, :current => tasks_current
   = tab_li :requests
+= javascript_tag remote_function(:url => flag_counts_path)
