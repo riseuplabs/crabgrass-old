@@ -96,7 +96,7 @@ form.mini_search table {
 <%# end -%>
 
 <div id="sitehome">
- <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
+  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?, :no_title => true} %>
 </div>
 <br/>
 

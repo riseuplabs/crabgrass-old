@@ -1,7 +1,7 @@
-/ locals: wiki
+/ locals: wiki, no_title
 
 %h3
-  = I18n.t(:wiki)
+  = I18n.t(:wiki) unless local_assigns[:no_title]
   %span.right
     = wiki_edit_link(wiki.id)
 %div.wiki

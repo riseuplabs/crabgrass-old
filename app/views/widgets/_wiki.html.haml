@@ -1,0 +1,13 @@
+-# this is a widget like _group_wiki, but more generic.
+-# It can be used to show any particular wiki object.
+-# options: wiki, editable, no_title
+-# wiki = Wiki.new if wiki.nil? <-- if wiki is nil, we have a problem, because then we cannot save it.
+
+- raise 'wiki cannot be nil' if wiki.nil?
+- editable = false if editable.nil?
+
+- if editable
+  = render :partial => 'wiki/show', :locals => {:wiki => wiki, :no_title => local_assigns[:no_title]}
+- else
+  .wiki
+    = wiki.body_html
