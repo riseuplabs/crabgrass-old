@@ -30,8 +30,13 @@ class GroupsControllerTest < ActionController::TestCase
 
   def test_archive
     login_as :blue
+    # let's prepare some tag so we can test the link for #1888
+    page=groups(:rainbow).pages.first
+    page.tag_list.add("Tag me baby!", :parse => true)
+    page.save
     get :archive, :id => groups(:rainbow).to_param, :path => ['created']
     assert_response :success
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!']", "Tag me baby!"
   end
 
   def test_create_group
@@ -348,6 +353,18 @@ class GroupsControllerTest < ActionController::TestCase
     get :tags, :id => groups(:rainbow).name
     assert_response :success
     assert_not_nil assigns(:pages)
+    # let's prepare some tag so we can test the filters adding up.
+    # this is an additional test for #1888 - make sure this still works.
+    page=groups(:rainbow).pages.first
+    page.tag_list.add("Tag me baby!", :parse => true)
+    page.tag_list.add("tags tags tags", :parse => true)
+    page.save
+    get :tags, :id => groups(:rainbow).name
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!']", "Tag me baby!"
+    get :tags, :id => groups(:rainbow).name, :path => ['Tag+me+baby!']
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!/tags+tags+tags']", "tags tags tags"
   end
 
   def test_tags_not_allowed
