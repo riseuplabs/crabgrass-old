@@ -614,7 +614,7 @@ en:
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
   messages_back_to_all: "Back to Messages"
-  messages_from_label: "View messages from"
+  messages_from_label: "Only view messages from:"
   messages_mark_as_label: "Mark as:"
   messages_view_label: "View:"
 
