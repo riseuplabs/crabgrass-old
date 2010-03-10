@@ -99,7 +99,9 @@ form.mini_search table {
  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
 </div>
 <br/>
-
+<div id="sitehome">
+  <h3>Pages</h3>
+</div>
 <%= Formy.tabs do |f|
   if @show_featured
     f.tab do |t|
