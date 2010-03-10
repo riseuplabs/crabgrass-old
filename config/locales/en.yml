@@ -609,6 +609,7 @@ en:
   language: Language
   time_zone: Time Zone
   set_status_messsage: What are you doing right now?
+  status_post_sent: Your message has been successfully posted to your profile and your social activity feed for your friends.
 
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
