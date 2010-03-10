@@ -12,6 +12,16 @@ class Me::MessagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  # testing for #1931
+  def test_banner_image_should_link_to_profile
+    login_as :blue
+    get :index
+    assert_select 'div.banner' do
+      assert_select "a[href='/blue']" do
+        assert_select 'img.left'
+      end
+    end
+  end
 
   def test_should_not_show_nonexisting_conversation
     login_as :yellow

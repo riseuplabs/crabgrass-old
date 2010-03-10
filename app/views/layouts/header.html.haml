@@ -1,7 +1,9 @@
 - inside_layout 'base' do
   - content_for :banner do
     %section#identity-name
-      = avatar_for((@parent || @group || @user), 'large', :class => "left")
+      - entity = @parent || @group || @user
+      %a{:href => url_for_entity(entity)}
+        = avatar_for(entity, 'large', :class => "left")
       - banner = banner_partial_for(@active_tab)
       = render :partial => banner
 

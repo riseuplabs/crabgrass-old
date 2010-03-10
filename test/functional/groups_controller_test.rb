@@ -10,10 +10,16 @@ class GroupsControllerTest < ActionController::TestCase
     Conf.disable_site_testing
   end
 
-  def test_tasks
+  def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
     assert_response :success
+    # testing for link to home on banner image (#1930)
+    assert_select 'div.banner' do
+      assert_select "a[href='/rainbow']" do
+        assert_select 'img.left'
+      end
+    end
   end
 
   def test_discussions
