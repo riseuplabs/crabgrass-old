@@ -14,10 +14,13 @@ module TabBarHelper
     current ||= controller.controller_name == thing
     li_class = current ? 'current' : ''
     li_class += " #{options.delete(:class)}" if !options[:class].nil?
+    li_class = nil if li_class.empty?
     key = options.delete :translate
-    key ||= (thing + '_tab').to_sym
+    id = (thing + '_tab').to_sym
+    key ||= id
     named_path = (thing + '_path').to_sym
     uppercase = options.delete :upcase
+    postfix = options.delete(:after) || ''
     if options.empty? and respond_to?(named_path)
       target = send named_path
     elsif options[:target]
@@ -25,8 +28,11 @@ module TabBarHelper
     else
       target = options
     end
-    content_tag(:li, :class => li_class) do
-      uppercase ? link_to(I18n.t(key).upcase, target) : link_to(I18n.t(key).capitalize, target)
+    content_tag(:li, :class => li_class, :id => id) do
+      link = uppercase ?
+        link_to(I18n.t(key).upcase, target) :
+        link_to(I18n.t(key).capitalize, target)
+      link + postfix
     end
   end
 

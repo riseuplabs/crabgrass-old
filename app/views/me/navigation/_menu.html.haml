@@ -1,7 +1,7 @@
 %ul
-  = tab_li :pages, :target => my_work_me_pages_path, :current => ((@second_nav == 'pages') ? true : false)
+  = tab_li :pages, :target => my_work_me_pages_path, :current => (@second_nav == 'pages')
   = tab_li :social_activities
   = tab_li :messages
-  - tasks_current = (@second_nav == 'tasks') ? true : false
+  - tasks_current = (@second_nav == 'tasks')
   = tab_li :tasks, :controller => 'me/tasks', :action => 'pending', :translate => :tasks, :current => tasks_current
   = tab_li :requests
