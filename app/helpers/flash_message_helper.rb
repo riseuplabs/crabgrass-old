@@ -67,7 +67,7 @@ module FlashMessageHelper
   # It is use in rjs templates.
   #
   # For example:
-  #   page.replace_html 'message', message_text(:object => @page) unless @page.valid?
+  #   page.replace_html 'flash-message', message_text(:object => @page) unless @page.valid?
   #
   def message_text(options)
     add_flash_message(flash, options)

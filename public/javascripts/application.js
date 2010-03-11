@@ -10,10 +10,10 @@ function showNoticeMessage(msg) {
   Autocomplete.hideAll();
   if ($('modal_message') && !$('modal_message').ancestors().detect(function(e){return !e.visible()})) {
     $('modal_message').update(msg);
-  } else if ($('message')) {
-    $('message').update(msg);
+  } else if ($('flash-message')) {
+    $('flash-message').update(msg);
     if (msg)
-      window.location.hash = "message";
+      window.location.hash = "flash-message";
   }
   $$('.spin').invoke('hide');
 }
