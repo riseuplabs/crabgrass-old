@@ -59,7 +59,7 @@ module ContextHelper
   # because various parts of the application might need to set a
   # group, person, or page context.
 
-  def group_context(size='large', update_breadcrumbs=true)
+  def group_context(size='large', update_breadcrumbs=false)
     return network_context(size, update_breadcrumbs) if @group and @group.network?
 
     @active_tab = :groups
