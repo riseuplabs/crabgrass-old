@@ -28,6 +28,13 @@
   them empty step arguments so please apply the fix from
   http://github.com/robholland/cucumber/commit/59b51c8a2e7ff25eae33ddda559939719c726213
   to your cucumber install.
+  Alternatively, the latest version of cucumber fixes this problem.
+
+* Custom Appearances
+  Due to the change in the UI, custom appearances will need to be re-done after
+  an upgrade. Custom Appearaances are set in the Advanced tab of the Site Appearance
+  settings.  The mastehead background color will work as before, but any other 
+  changes using this form will not be applicable to 0.5.
 
 
 0.4.7
