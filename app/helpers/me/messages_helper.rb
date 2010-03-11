@@ -70,8 +70,8 @@ module Me::MessagesHelper
             [ {:name => :read, :translation => :read},
               {:name => :unread, :translation => :unread}],
       :view =>
-            [ {:name => :all, :translation => :all},
-              {:name => :unread, :translation => :unread}],
+            [ {:name => :all, :translation => :messages_select_all_link},
+              {:name => :unread, :translation => :messages_select_unread_link}],
       :view_base_path => messages_path }
   end
 
