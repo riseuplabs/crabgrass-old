@@ -257,7 +257,8 @@ h6
         color= !blue
         font-weight: normal
         a
-          +hover-link
+          +hover-link  
+          color= !blue
       h4.unread
         font-weight: bold
       p
@@ -722,6 +723,11 @@ table
         padding: 6px
       td.date
         font-size: 10px
+  .description
+    a
+      +hover-link
+      color= !blue                
+
 
 #messages
   width: 764px
@@ -730,7 +736,10 @@ table
     tr
       td
         +bordered-btm(!light_grey_border)
-        padding: 12px 6px
+        padding: 12px 6px 
+        a
+          +hover-link
+          color= !blue
       td.reply
     tr.unread
       td
@@ -771,6 +780,11 @@ table
       td.date
         font-size: 10px
         width: 80px
+
+#requests
+  a.name_icon
+    +hover-link
+    color= !blue
 
 #tag-cloud
   text-align: center
