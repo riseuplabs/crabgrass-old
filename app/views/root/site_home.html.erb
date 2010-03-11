@@ -65,6 +65,7 @@ form.mini_search table {
         <%= welcome_box_link %>
       </li>
       <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
+      <li class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></li>
     </ul>
     <% if params[:welcome_box] && logged_in? -%>
       <div id='welcome_box'>
@@ -88,10 +89,6 @@ form.mini_search table {
   </td>
 </tr>
 </table>
-
-<h3>
-  <span class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></span>
-</h3>
 
 <%# if @announcements.any? %>
   <%# render :partial => 'announcement_page/announcements'  %>
