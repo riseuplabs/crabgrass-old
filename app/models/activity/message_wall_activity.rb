@@ -55,7 +55,9 @@ class MessageWallActivity < Activity
     if user == User.current
       {:controller => '/me/public_messages', :id => post_id, :action => 'show'}
     else
-      {:controller => '/people/messages', :person_id => user, :id => post_id, :action => 'show'}
+      nil
+      # we currently have no single message view it seems
+      #{:controller => '/people/messages', :person_id => user, :id => post_id, :action => 'show'}
     end
   end
 

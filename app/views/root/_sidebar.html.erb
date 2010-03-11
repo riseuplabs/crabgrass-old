@@ -3,8 +3,7 @@
     <%= li_if contribute_link %>
   </ul>
 <h4 class=first><%= I18n.t(:members) %></h4>
-
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_members), :entities => most_active_users(), :after => link_to(I18n.t(:view_all)) } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_members), :entities => most_active_users(), :after => link_to(I18n.t(:view_all), people_directory_path(:browse)) } %>
 
 <br class='clear'/>
 
@@ -12,7 +11,7 @@
 
 <h4><%= I18n.t(:groups) %></h4>
 
-<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_groups), :entities => most_active_groups(), :after => link_to(I18n.t(:view_all)) } %>
+<%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:most_active_groups), :entities => most_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_path(:action => :search)) } %>
 
 <br class='clear'/>
 

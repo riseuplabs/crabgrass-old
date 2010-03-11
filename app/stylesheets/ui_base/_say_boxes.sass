@@ -6,14 +6,23 @@
   .speech
     padding: 2px 2px 2px 0
     overflow: visible
-    height: 19px
+    height: 38px
+    float: left
+    clear: left
+    input.submit
+      vertical-align: top
+      margin-top: 4px
+
     textarea
       +bordered(!warm_grey_border)
       overflow: visible
     .textinput
-      height: 19px
+      +bordered
+      height: 30px
+      padding: 2px
+      margin-top: 5px
       background: white
-      overflow: auto
+      overflow: visible
       &.tall
         height: 5em
   .triangle
@@ -23,4 +32,13 @@
     background: transparent url(/images/ui/say.gif) no-repeat 0 50%
     height: 18px
     width: 9px
- 
+
+
+// this is for me/messages
+// these should be consolidated later - they are too similar (one is underscore other is dash!)
+#say-box
+  #say
+    textarea#say_msg.tall
+      height: 5em
+
+

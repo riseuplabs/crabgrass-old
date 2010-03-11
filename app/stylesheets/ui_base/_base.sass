@@ -47,6 +47,9 @@
 
 .pencil_16
   +blue-link
+
+.top
+  vertical-align: top
 //
 // NOTE: duplication of .small_icon in global nav for nested li
 // for use with icon + text
@@ -148,12 +151,12 @@ h6
 //
 //title-box-full w/search
 //
-
+.partial_width
+  width: 540px
+  font-style: italic
 #title-box-full, #info-box-full
   width: 764px
   height: 16px
-  .partial_width
-    width: 540px
   h3
     font-size: 15px
     font-weight: normal
@@ -171,15 +174,15 @@ h6
   margin-bottom: 15px
   span
     color= !almost_black
-    
+
 
 
 /* third-level nav */
 #third-level-container
   +container
   +bordered-btm(!second_nav_border)
-  height: 24px
   background= !third_nav_bg
+  height: 24px
   nav#third-level
     +columns(14)
     +full
@@ -208,11 +211,11 @@ h6
 
 
 /* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
-#sitehome-wiki, #group-wiki
+#sitehome, #group-wiki
   #wiki-area
-    margin: 10px 0 15px
+    margin: 0 0 15px
 
-#pages, #group-wiki, #sitehome-wiki
+#pages, #group-wiki, #sitehome
   +partial-width
   margin: 30px 0 15px
   h3
@@ -253,6 +256,9 @@ h6
         line-height: 1.3
         color= !blue
         font-weight: normal
+        a
+          +hover-link  
+          color= !blue
       h4.unread
         font-weight: bold
       p
@@ -274,6 +280,7 @@ h6
       width: 110px
       float: right
       padding: 4px 2px 4px 0
+      background: #f5f5f5
       li
         clear: both
         float: right
@@ -304,15 +311,19 @@ h6
       +alpha(14)
       margin: 0
       width: 80%
-      img
-        float: left
-        padding: 0 10px 10px 0
       h4
         float: left
         display: inline
         font-size: 14px
         margin-bottom: 2px
         color= !blue
+        a
+          +hover-link
+
+      img
+        float: left
+        padding: 0 10px 10px 0
+
       p
         float: left
         display: inline
@@ -333,6 +344,7 @@ h6
       +omega(14)
       +zero
       +bordered
+      background: #f5f5f5
       width: 135px
       float: right
       padding: 4px 2px 4px 0
@@ -355,15 +367,11 @@ span.search-excerpt
 
 
 #identity-name i
-  font-size: 18px
+  font-size: 13px
   color= !warm_grey_text
 
 
-footer.page
-  background= !white_bg
-  height: 65px
-  .language-menu
-    float: right
+
 .space
   height: 22px
 .small-space
@@ -420,11 +428,12 @@ button.icon_16
 #identity-image
   +columns(4,4)
   +bordered(!almost_black)
+  background= !white_bg
   width: 202px
   height: 202px
   float: left
   margin: 0
-  background= !white_bg
+  border-width: 1px
 
 
 #image-label
@@ -581,6 +590,7 @@ nav#nav-full
 
 #sidebar
   +bordered
+  background: #f5f5f5
   width: 184px
   padding: 10px
   float: right
@@ -599,6 +609,13 @@ nav#nav-full
     li.current
       a
         font-weight: bold
+  .tags
+    h3
+      display: inline
+    .see_all
+      margin-left: 4px
+      a
+        +blue-link
 
 #sidebar.left
   float: left
@@ -656,9 +673,11 @@ nav#tabs
 
 #action-bar
   +bordered-top-btm
+  +clearfix
   width: 764px
-  clear: both
   height: 21px
+  margin-top: 6px
+  float: left
   h4
     color= !almost_black
     font-size: 12px
@@ -678,7 +697,7 @@ nav#tabs
         +hover-link
         color= !blue
         display: inline-block
-        padding: 0 6px
+        padding: 1px 6px
         border-right: 1px solid #ddd
       a.first
         border-left: 1px solid #ddd
@@ -703,6 +722,11 @@ table
         padding: 6px
       td.date
         font-size: 10px
+  .description
+    a
+      +hover-link
+      color= !blue                
+
 
 #messages
   width: 764px
@@ -711,7 +735,10 @@ table
     tr
       td
         +bordered-btm(!light_grey_border)
-        padding: 12px 6px
+        padding: 12px 6px 
+        a
+          +hover-link
+          color= !blue
       td.reply
     tr.unread
       td
@@ -753,15 +780,19 @@ table
         font-size: 10px
         width: 80px
 
+#requests
+  a.name_icon
+    +hover-link
+    color= !blue
+
 #tag-cloud
-  //text-align: center
+  text-align: center
   li
     display: inline-block
     float: none
     padding: 4px
-    text-align: center
     a
-      +hover-link
+      +blue-link
   .tag6
     font-size: 20px
   .tag5
@@ -784,23 +815,27 @@ table
 
 /* footer */
 
-footer.page
-  +container
+.footer-container
+  +bordered-top(!light_grey_border)
+  background= !white_bg
+  height: 65px
   padding-top: 2em
-  ul#crabgrass
-    +columns(10)
+  +container
+  .footer
+    +columns(14)
     +full
-    li
-      color: #f60
-  div.debug
-    ul
-      padding: 0.1em 0 0.1em 1em
-      list-style-position: inside
-      list-style-type: disc
-      li
-        display: list-item
+    background= !white_bg
+    .language-menu
+      float: right
+    div.debug
+      ul
         padding: 0.1em 0 0.1em 1em
-        float: none
+        list-style-position: inside
+        list-style-type: disc
+        li
+          display: list-item
+          padding: 0.1em 0 0.1em 1em
+          float: none
 /* @end */
 
 

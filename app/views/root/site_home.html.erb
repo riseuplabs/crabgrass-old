@@ -58,13 +58,14 @@ form.mini_search table {
   <%= render :partial => 'sidebar' %>
 <% end %>
 
-<% content_for :misc_header do %> 
+<% content_for :misc_header do %>
   <div id="welcome-container">
     <ul id="welcome-links" class='navbar'>
       <li>
         <%= welcome_box_link %>
       </li>
       <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
+      <li class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></li>
     </ul>
     <% if params[:welcome_box] && logged_in? -%>
       <div id='welcome_box'>
@@ -78,27 +79,26 @@ form.mini_search table {
 
 <table>
 <tr>
-  <td>
-    <p class="description" style="margin: 0"><%= @group.profiles.public.summary_html %></p>
+  <td class='top'>
+    <div class="description" style="margin: 0">
+      <%= @group.profiles.public.summary_html %>
+    </div>
   </td>
-  <td style="padding-left: 1em">
+  <td class='top' style="padding-left: 1em">
     <%= display_media(@group.profiles.public.cover) %>
   </td>
 </tr>
 </table>
 
-<h3>
-  <span class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></span>
-</h3>
-
 <%# if @announcements.any? %>
   <%# render :partial => 'announcement_page/announcements'  %>
 <%# end -%>
 
-<div id="sitehome-wiki">
-  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?} %>
+<div id="sitehome">
+  <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?, :no_title => true} %>
 </div>
-
+<br/>
+<h3>Pages</h3>
 <br/>
 
 <%= Formy.tabs do |f|

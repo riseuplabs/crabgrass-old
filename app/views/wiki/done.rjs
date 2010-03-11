@@ -1,1 +1,3 @@
-page.replace_html 'wiki-area', :partial => 'wiki/show'
+no_title = (@group == current_site.network)
+page.replace_html 'wiki-area', :partial => 'wiki/show',
+  :locals => {:no_title => no_title}

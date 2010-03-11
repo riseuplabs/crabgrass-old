@@ -14,7 +14,7 @@ module PagesHelper
 
   def all_pages_list
     render :partial => 'pages/list',
-      :locals => {:with_notice => true, :full_width => true}
+      :locals => {:with_notice => true, :full_width => true, :no_top_pagination => true}
   end
 
   def all_pages_settings

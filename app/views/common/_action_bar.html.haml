@@ -1,5 +1,7 @@
 - if settings.present?
   %div#action-bar
+    - if settings[:link].present?
+      = render :partial => '/common/action_bar/link', :locals => {:settings => settings}
     - if settings[:select].present?
       = render :partial => '/common/action_bar/select', :locals => {:settings => settings}
     - if settings[:mark].present?

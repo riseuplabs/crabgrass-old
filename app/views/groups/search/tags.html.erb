@@ -4,7 +4,7 @@
 
 <% @title_box = content_tag :h1, 'tags' %>
 
-<p><%= render :partial => 'groups/search/tags' %></p>
+<p><%= render :partial => 'groups/search/tags', :locals => {:limit => false, :see_all_url => false} %></p>
 
 <div>
   <% if @pages.any? %>

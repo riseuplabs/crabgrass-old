@@ -13,6 +13,7 @@ class Admin::PagesController < Admin::BaseController
     end
 
     options = moderation_options.merge :page => params[:page]
+    options.merge!({:flow => :deleted}) if view == 'deleted'
     @flagged = Page.paginate_by_path(path_for_view, options)
   end
 

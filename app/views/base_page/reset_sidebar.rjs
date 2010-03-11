@@ -3,7 +3,7 @@
 
 page.call 'Modalbox.hide'
 page.replace 'page_sidebar', :partial => 'base_page/sidebar'
-page.replace_html 'message', display_messages if display_messages.any?
+page.replace_html 'flash-message', display_messages if display_messages.any?
 page.select('submit').each do |submit|
   submit.disable = false
 end

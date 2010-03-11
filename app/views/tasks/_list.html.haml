@@ -8,7 +8,7 @@
 
         %p
           = link_to list.page.title, page_url(list.page)
-          = "(#{link_to_entity(list.page.owner, :action => 'tasks')})" if list.page.owner
+          = "(#{link_to_entity(list.page.owner)})" if list.page.owner
 
         %ul.task_list
           = render :partial => 'task_list_page/task', :collection => @tasks, :locals => {:sortable => false}

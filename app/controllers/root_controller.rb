@@ -28,7 +28,8 @@ class RootController < ApplicationController
   def featured
     update_page_list('featured_panel',
       :pages => paginate('featured_by', @group.id, 'descending', 'updated_at'),
-      :columns => [:icon, :title, :last_updated]
+      :columns => [:icon, :title, :last_updated],
+      :with_cover => true
     )
   end
 
@@ -38,6 +39,7 @@ class RootController < ApplicationController
       :columns => [:views, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -48,6 +50,7 @@ class RootController < ApplicationController
       :columns => [:contributors, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -58,6 +61,7 @@ class RootController < ApplicationController
       :columns => [:stars, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -80,6 +84,7 @@ class RootController < ApplicationController
       :heading_partial => 'root/type_links',
       :sortable => false,
       :show_time_dividers => true,
+      :with_cover => true,
       :pagination_options => {:params => {:type => params[:type]}}
     )
   end

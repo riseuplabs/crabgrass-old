@@ -37,7 +37,7 @@ module ActionBarHelper
   # The Lists are Arrays of Hashes with :name and :translation keys used.
   # The content the action bar acts upon should be passed as a block.
   def action_bar(options)
-    render (:partial => 'common/action_bar', :locals => {:settings => options})
+    render(:partial => 'common/action_bar', :locals => {:settings => options})
   end
 
   # return a form that wraps the other content defined by user

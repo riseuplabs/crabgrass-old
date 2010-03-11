@@ -6,7 +6,7 @@
 //    = menu I18n.t(:my_completed_tasks_link), :controller => '/groups/tasks', :action => 'completed', :id => @group
 
 = render :partial => 'common/title_box', :locals => {:title => I18n.t(:pending_tasks).capitalize}
-= render :partial => 'common/info_box', :locals => {:description => link_to(I18n.t(:create_task_list) + ARROW, create_page_url(TaskListPage)) }
+= render :partial => 'common/info_box', :locals => {:description => link_to(I18n.t(:create_task_list) + ARROW, create_page_url(TaskListPage, :group => @group), :id => 'create_tasks_link') }
 
 %section#tasks
   = render :partial => 'tasks/list'
