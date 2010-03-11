@@ -13,7 +13,7 @@
       = text_field_tag 'id', params[:id], :id => 'recipient_name', :onkeypress => eat_enter, :class => 'textinput'
       = autocomplete_users_tag('recipient_name')
       %h3 Message
-   
+
     %div#say_box
       %div.speech
         = text_area_tag 'post[body]', text, :id => 'say_text', :class => 'textinput', :cols => cols, :onfocus=>'setRows($("say_text"), 5)', :onblur=>'setRows($("say_text"), 1)'
