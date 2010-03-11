@@ -7,13 +7,9 @@
 #end
 
 if @to_me_count > 0
-  suffix = content_tag :span, "#{@to_me_count}", :class => 'count'
-  page.replace_html 'requests_tab',
-    tab_li(:requests, :after => suffix)
+  page.replace_html 'requests_count', @to_me_count
 end
 
 if @messages_count > 0
-  suffix = content_tag :span, "#{@messages_count}", :class => 'count'
-  page.replace_html 'messages_tab',
-    tab_li(:messages, :after => suffix)
+  page.replace_html 'messages_count', @messages_count
 end
