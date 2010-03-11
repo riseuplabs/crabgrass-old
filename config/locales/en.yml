@@ -571,7 +571,7 @@ en:
   view_owner_pages_description: "Pages you own."
   view_unread_pages_description: "Unread pages that you own, participated in, or are watching."
   view_public_pages_description: "All pages that you have access too, including public pages."
-  view_networks_pages_description: "All pages of your groups and networks and those shared with all users."
+  view_networks_pages_description: "All pages of your groups and networks and those shared between you and other users."
   view_groups_pages_description: "All pages of your groups and your own pages."
 
   my_tasks: "Tasks"
