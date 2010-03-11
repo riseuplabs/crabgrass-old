@@ -228,9 +228,12 @@ function showTab(tabLink, tabContent, hash) {
     $$('.tab_content').invoke('hide');
     tabLink.addClassName('active');
     tabContent.show();
-    evalAttributeOnce(tabContent, 'onclick');
+    // evalAttributeOnce(tabContent, 'onclick');
+    eval(tabContent.onclick.call());
     tabLink.blur();
-    if (hash) {window.location.hash = hash}
+    if (hash) {
+      window.location.hash = hash;
+    }
   }
   return false;
 }
