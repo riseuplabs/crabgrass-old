@@ -114,6 +114,9 @@ h3:hover a.anchor {
   filter: alpha(opacity = 100);
 }
 
+#info-box #activities .left {
+  width: 230px;
+}
 
 a.edit {
   filter: alpha(opacity = 0);
