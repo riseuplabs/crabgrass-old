@@ -5,6 +5,6 @@
 %div#say
   - form_tag do
     = recipient_field(recipient_name)
-    = text_area_tag 'post[body]', text, :id => 'say_msg', :class => 'textarea', :rows => '1'
+    = text_area_tag 'post[body]', text, :id => 'say_msg', :class => 'textarea', :rows => '1', :onfocus => 'setRows($("say_msg"), 5)', :onblur => 'setRows($("say_msg"), 1)'
     = button_to_function I18n.t(:send_button), send_message_function(recipient_name), :class => 'say-submit'
 
