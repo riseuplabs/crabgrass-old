@@ -42,9 +42,6 @@ packages from [http://backports.org].
 | nokogiri            | libnokogiri-ruby        | for webrat plugin (optional)                  |
 | launchy             |                         | for webrat plugin (optional)                  |
 | leftright           |                         | for better organized test output (optional)   |
-| uglify_html-0.12    |                         | used with wysiwyg editor (froze on the app)   |
-| undress-0.2.4       |                         | used with wysiwyg editor (froze on the app)   |
-
 
 
 NOTE: If you use the Debian rails package, you will need to install a
