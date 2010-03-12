@@ -7,6 +7,8 @@ TODO: this needs a lot of help.
 hpricot
 nokogiri
 launchy
+machinist
+faker
 ruby-debug
 leftright (optional but recommended, lerftright organizes and colorizes test output)
 
