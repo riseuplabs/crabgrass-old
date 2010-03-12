@@ -1,5 +1,5 @@
----
-pl:
+--- 
+pl: 
   about_me: "O mnie"
   accept_usage_agreement: "Akceptuje warunki użytkowania"
   access: Dostęp
@@ -71,8 +71,6 @@ pl:
   category: Kategoria
   check_all: "Zaznacz wszystko"
   close_button: Zamknij
-  collection_class_description: "Specjalne strony zawierające podstrony."
-  collection_page_display: kolekcja
   committee: Komitet
   committee_publicly_visible: "Komitety będą publicznie widoczne"
   committee_publicly_visible_description: "Komitety będą widoczne dla zalogowanych osób pod adresem {{domain}}/nazwatwojejgrupy"
@@ -170,14 +168,11 @@ pl:
   featured_content: "Wyróżniona treść"
   featured_content_header: Wyróżnione
   file: plik
-  file_class_description: "Załadowany plik."
   file_must_be_image_error: "Plik musi być grafiką żeby stać się częścią galerii. "
   file_size: "Rozmiar pliku"
   file_version_deleted: "wersja pliku usunięta"
   first_name: imię
   folder_display: Folder
-  folder_page_description: "Zbiór aktywów"
-  folder_page_display: Katalog
   forgot_password_link: "Odzyskiwanie hasła"
   forgot_password_mail_expiry: |-
       Ten link pozostanie aktywny pzrez 24 godziny. Jeśli chesz
@@ -194,7 +189,6 @@ pl:
   full: pełne
   fullname: "Imię i nazwisko"
   galleries: Galerie
-  gallery_class_description: "Kolekcja grafik."
   gallery_description: "Kolekjcja obrazów."
   gallery_display: galeria
   gallery_undo_link: cofnij
@@ -210,15 +204,15 @@ pl:
   group_information: "Informacje o {{group_type}}"
   group_invite_email: |
       {{from_user}} zaprasza cię do grupy "{{group}}".
-
+      
       Jeśli chcesz do niej dołączyć, kliknij tutaj:
-
+      
         {{accept_invite_link}}
-
+      
       Strona domowa tej grupy znajduje się tutaj:
-
+      
         {{group_home_link}}
-
+      
       Jeśli nie chcesz dołączyć do tej grupy po prostu zignoruj tą wiadomość.
   group_invite_subject: "Zaproszenie do grupy \"{{group}}\""
   group_join_chat: "Dołącz do czatu"
@@ -254,7 +248,6 @@ pl:
   incoming: Przychodzące
   information: Informacje
   insert_image_heading: "Wklej obraz"
-  insert_image_instructions: "Kliknij na miniaturę obrazu, aby wkleić go w tekście wiki"
   invalid_email: "Nieprawidłowy adres e-mail"
   invalid_email_text: "Adres e-mail który zsotał wprowadzony jest błędny."
   invalid_token: "Niepoprawna autoryzacja"
@@ -298,8 +291,6 @@ pl:
   mark_pages_as_featured_content_for_group: "Tutaj możesz zaznaczyć strony jako opisane zawartości tej grupy."
   me_dashboard_link: Panel
   me_inbox_link: "Skrzynka odbiorcza\n"
-  me_search_description: "Przeszukaj wszystkie strony do których masz dostęp"
-  me_search_link: Szukaj
   me_tasks_link: Zadania
   media_all: Media
   media_alls: Media
@@ -552,7 +543,6 @@ pl:
   share_page_recipients_results: "Ta {{page_class}} będzie wpsółużytkowana z "
   share_page_recipients_sections: "Wybierz spośród swoich grup lub przyjaciół"
   share_page_recipients_selection: "Stwórz własny wybór"
-  share_this_page: "Współużytkowuj tą stronę"
   show_gallery: "Pokaż Galerię"
   signup_button: Dołącz
   signup_confirm_password: "Potwierdź hasło"

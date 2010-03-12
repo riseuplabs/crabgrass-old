@@ -1,5 +1,5 @@
----
-it:
+--- 
+it: 
   about_me: "Dico di me"
   accept_usage_agreement: "Accetto i termini di utilizzo"
   access: Accesso
@@ -82,8 +82,6 @@ it:
   category: Categoria
   check_all: "Seleziona tutto"
   close_button: Chiudi
-  collection_class_description: "Pagine speciali che contengono altre pagine."
-  collection_page_display: collezione
   committee: comitato
   committee_publicly_visible: "Rendi Comitati Visibili Pubblicamente"
   committee_publicly_visible_description: "I comitati sono visibili dai non-memrbi all'indirizzo {{domain}}/nomedeltuogruppo"
@@ -200,7 +198,6 @@ it:
   featured_content: "Contenuti in Evidenza"
   featured_content_header: "In evidenza"
   file: File
-  file_class_description: "Un file caricato."
   file_must_be_image_error: "Il file deve essere un'immagine per essere caricato in una galleria."
   file_size: "Dimensioni file"
   file_version_deleted: "file di versione eliminato"
@@ -208,8 +205,6 @@ it:
   first_name: nome
   folder_class_description: "Crea una cartella per raggruppare altre pagine."
   folder_display: Cartella
-  folder_page_description: "Una collezione di risorse."
-  folder_page_display: Cartella
   forgot_password_link: "Ho dimenticato la mia password."
   forgot_password_mail_expiry: "Questo link rimarrà valido per 24 ore. Se non avrai ancora cambiato la password dopo questo periodo di tempo, dovrai richiedere un nuovo link per cambiare la tua password."
   forgot_password_mail_greeting: "{{user}}, per cambiare la tua password, visita"
@@ -224,7 +219,6 @@ it:
   full: pieno
   fullname: "Nome Completo"
   galleries: Gallerie
-  gallery_class_description: "Una collezione di immagini."
   gallery_description: "Carica immagini multiple o organizza le immagini esistenti in una raccolta."
   gallery_display: galleria
   gallery_undo_link: annulla
@@ -240,15 +234,15 @@ it:
   group_information: "Informazioni su {{group_type}}"
   group_invite_email: |
       {{from_user}} ti ha invitato/a a entrare nel gruppo "{{group}}".
-
+      
       Se vuoi entrare a far parte di questo gruppo, fai click qui:
-
+      
         {{accept_invite_link}}
-
+      
       Ecco il link alla pagina iniziale di questo gruppo:
-
+      
         {{group_home_link}}
-
+      
       Se non vuoi entrare a far parte di questo gruppo, semplicemente ignora questa e-mail.
   group_invite_subject: "Invito a entrare nel gruppo \"{{group}}\""
   group_join_chat: "Entra in chat"
@@ -286,7 +280,6 @@ it:
   incoming: "In arrivo"
   information: Informazioni
   insert_image_heading: "Inserisci Immagine"
-  insert_image_instructions: "Fai click su un'immagine per inserirla nel testo del wiki."
   invalid_email: "Indirizzo email non valido"
   invalid_email_text: "L'indirizzo email che hai inserito non è valido."
   invalid_token: "Token Non Valido"
@@ -335,8 +328,6 @@ it:
   mark_pages_as_featured_content_for_group: "Qui puoi fare in modo che delle pagine divengano contenuti in evidenza di questo gruppo."
   me_dashboard_link: Bacheca
   me_inbox_link: "In arrivo"
-  me_search_description: "Cerca in tutte le pagine a cui hai accesso"
-  me_search_link: Cerca
   me_tasks_link: compiti
   media_all: Media
   media_alls: Media
@@ -672,11 +663,11 @@ it:
   welcome_hide_link: "Nascondi Benvenuto"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-
+      
       Questo sito web è basato su Crabgrass, un'applicazione web che è <a href="http://www.affero.org/oagpl.html">software libero</a> e che è stata progettata per l'organizzazione di gruppi e reti, e che è tagliata su misura per le necessità dei movimenti per la giustizia globale. L'obiettivo a lungo termine è di fornire gli strumenti tecnici per favorire il lavoro delle reti per un cambiamento sociale attivo, confederale e di democrazia diretta. [di più... -> /crabgrass/about]
-
+      
       h3. Questo sito web è nuovo per te?
-
+      
       [Iscriviti -> /account/signup] e inizia a usarlo. Siamo in una fase di sviluppo iniziale. Visto che i cambiamenti alla piattaforma sono diretti dal feedback dei nostri utenti, vi raccomandiamo di farci sapere come state usando il sito, quali modifiche vorreste, e cosa vi piace e cosa no.
   welcome_message: "Crabgrass permette a gruppi e organizzazioni impegnati nel cambiamento sociale di portare a termine i loro compiti, diffondere informazioni, collaborare e fare rete insieme."
   welcome_show_link: "Mostra Benvenuto"

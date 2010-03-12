@@ -1,5 +1,5 @@
----
-ru:
+--- 
+ru: 
   about_me: "Обо мне"
   accept_usage_agreement: "Я принимаю условия пользовательского соглашения"
   access: Доступ
@@ -80,8 +80,6 @@ ru:
   category: Категория
   check_all: "Отметить всё"
   close_button: Закрыть
-  collection_class_description: "Особые страницы, которые содержат другие страницы."
-  collection_page_display: коллекция
   committee: комитет
   committee_publicly_visible: "Сделать комитеты видимыми для всех"
   committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {{domain}}/yourgroupname"
@@ -196,7 +194,6 @@ ru:
   featured_content: "Основной материал"
   featured_content_header: Основное
   file: файл
-  file_class_description: "Загруженный файл."
   file_must_be_image_error: "Чтобы стать частью галереи, файл должен быть изображением. "
   file_size: "Размер файла"
   file_version_deleted: "версия файла удалена"
@@ -204,8 +201,6 @@ ru:
   first_name: имя
   folder_class_description: "Создайте папку для объединения других страниц."
   folder_display: Папка
-  folder_page_description: "Коллекция файлов."
-  folder_page_display: папка
   forgot_password_link: "Я забыл свой пароль"
   forgot_password_mail_expiry: "Эта ссылка будет действительна в течение 24 часов. Если Вам необходимо будет сменить пароль по истечение этого времени, Вы снова должны будете посетить страницу напоминания пароля и запросить новую ссылку. "
   forgot_password_mail_greeting: "{{user}}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
@@ -220,7 +215,6 @@ ru:
   full: полный
   fullname: "Полное имя"
   galleries: Галереи
-  gallery_class_description: "Коллекция изображений."
   gallery_description: "Загрузить множество изображений, или упорядочить имеющиеся изображения в набор."
   gallery_display: галерея
   gallery_undo_link: отменить
@@ -236,11 +230,11 @@ ru:
   group_information: "Информация о {{group_type}}"
   group_invite_email: |-
       {{from_user}} пригласил Вас вступить в группу "{{group}}".
-
+      
       Если Вы желаете вступить в эту группу, нажмите здесь:
-
+      
       {{accept_invite_link}}
-
+      
       Если Вы не желаете вступить в эту группу, просто проигнорируйте это письмо.
   group_invite_subject: "Приглашение вступить в группу \"{{group}}\""
   group_join_chat: "Войти в чат"
@@ -272,7 +266,6 @@ ru:
   incoming: Входящие
   information: Информация
   insert_image_heading: "Вставить изображение"
-  insert_image_instructions: "Щёлкните по эксизу изображения, чтобы вставить его в текст страницы вики."
   invalid_email: "Недействительный адрес Email"
   invalid_email_text: "Предоставленный Вами адрес электронной почты недействителен."
   invalid_token: "Неверный признак"
@@ -321,8 +314,6 @@ ru:
   mark_pages_as_featured_content_for_group: "Здесь Вы можете отметить страницы, которые будут выступать в качестве основного содержимого данной группы."
   me_dashboard_link: "Панель управления"
   me_inbox_link: Входящие
-  me_search_description: "Поиск по страницам, к которым у вас есть доступ"
-  me_search_link: Поиск
   me_tasks_link: задачи
   media_all: Данные
   media_alls: Данные
@@ -573,7 +564,6 @@ ru:
   share_page_recipients_results: "Эта {{page_class}} будет разделена с"
   share_page_recipients_sections: "Выберите из Ваших групп, или друзей"
   share_page_recipients_selection: "Сделайте Вашу подборку"
-  share_this_page: "Разделить эту страницу"
   show_gallery: "Показать галерею"
   signup_button: Записаться
   signup_confirm_password: "Подтвердить пароль"
@@ -665,11 +655,11 @@ ru:
   welcome_hide_link: "Скрыть приветствие"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-
+      
       Этот сайт работает на Crabgrass, <a href="http://www.affero.org/oagpl.html">свободном</a> Веб-приложении, предназначенном для групповой и сетевой организации, и оптимизированном для нужд движения за всеобщую справедливость. Долгосрочной целью проекта является предоставление технических инструментов для содействия деятельным, конфедеративным и построенным на принципах прямой демократии сетям, добивающимся перемен в обществе. [дополнительная информация... -> /crabgrass/about]
-
+      
       h3. Новичок на этом сайте?
-
+      
       [Вступайте здесь -> /account/signup], чтобы начать действовать. Мы находимся на раннем этапе развития. Так как изменения основываются на откликах пользователей, дайте нам знать, как вы используете сайт, что бы вы хотели поменять, что вам нравится, а что нет.
   welcome_message: "Crabgrass позволяет организациям, выступающим за изменение общества, выполнять поставленные задачи, высказываться, сотрудничать и связываться между собой."
   welcome_show_link: "Показать приветствие"

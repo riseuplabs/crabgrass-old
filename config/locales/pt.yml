@@ -1,5 +1,5 @@
----
-pt:
+--- 
+pt: 
   about_me: "Sobre Mim"
   accept_usage_agreement: "Aceito os termos e condições de uso."
   access: Acessar
@@ -60,8 +60,6 @@ pt:
   cancel_link: cancelar
   category: Categoria
   close_button: Fechar
-  collection_class_description: "Páginas especiais contendo outras páginas."
-  collection_page_display: coleção
   committee: comitê
   committee_publicly_visible: "Tornar Públicos os Comitês"
   committee_publicly_visible_description: "Os comitês podem ser vistos por não-membros em {{domain}}/yourgroupname"
@@ -155,13 +153,10 @@ pt:
   featured_content: "Conteúdo em Destaque "
   featured_content_header: "Em destaque"
   file: arquivo
-  file_class_description: "Arquivo carregado."
   file_must_be_image_error: "O arquivo tem que ser uma imagem para ser incluído em um álbum."
   file_size: "Tamanho do arquivo"
   file_version_deleted: "a versão do arquivo foi removida"
   first_name: nome
-  folder_page_description: "Compilação de recursos."
-  folder_page_display: Pasta
   forgot_password_link: "Esqueci minha senha"
   forgot_password_mail_expiry: "Este link é válido durante 24 horas. Se você precisar restabelecer sua senha depois disso, você terá de voltar a visitar a página de senha esquecida e pedir um novo link.\n"
   forgot_password_mail_greeting: "{{user}}, para restabelecer sua senha, visite"
@@ -176,7 +171,6 @@ pt:
   full: completo
   fullname: "Nome Completo"
   galleries: Galerias
-  gallery_class_description: "Compilação de imagens."
   gallery_display: galeria
   gallery_undo_link: desfazer
   general_info: "Informação geral"
@@ -191,15 +185,15 @@ pt:
   group_information: "Informação do {{group_type}}"
   group_invite_email: |
       {{from_user}} convidou você para fazer parte do grupo "{{group}}".
-
+      
       Se você quiser fazer parte deste grupo, clique aqui:
-
+      
         {{accept_invite_link}}
-
+      
       Visite a homepage deste grupo:
-
+      
         {{group_home_link}}
-
+      
       Se você não quiser fazer parte deste grupo, apenas ignore esta mensagem.
   group_invite_subject: "Convite para fazer parte do grupo \"{{group}}\""
   group_join_chat: "entre no bate-papo"
@@ -227,7 +221,6 @@ pt:
   incoming: Entrante
   information: Informação
   insert_image_heading: "Incluir Imagem"
-  insert_image_instructions: "Clique na foto minimizada para incluí-la no texto wiki."
   invalid_email: "E-mail inválido"
   invalid_email_text: "O endereço de e-mail digitado é inválido."
   invalid_token: "Token inválido"
@@ -270,8 +263,6 @@ pt:
   mark_pages_as_featured_content_for_group: "Aqui você pode estabelecer páginas como conteúdo em destaque deste grupo."
   me_dashboard_link: Painel
   me_inbox_link: "Caixa de Entrada"
-  me_search_description: "Pesquisar em todas as páginas às quais você tem acesso"
-  me_search_link: Pesquisar
   me_tasks_link: tarefas
   media_all: mídia
   media_alls: Mídia
@@ -491,7 +482,6 @@ pt:
   share_page_recipients_results: "Este {{page_class}} vai ser partilhado com"
   share_page_recipients_sections: "Escolha dentre seus grupos ou amigos"
   share_page_recipients_selection: "Faça sua seleção"
-  share_this_page: "Partilhar Esta Página"
   show_gallery: "Mostrar Galeria"
   signup_button: Cadastrar-se
   signup_confirm_password: "Confirmar senha"

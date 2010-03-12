@@ -1,5 +1,5 @@
----
-el:
+--- 
+el: 
   about_me: "Σχετικά με εμένα"
   accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
   access: Πρόσβαση
@@ -52,7 +52,6 @@ el:
   category: Κατηγορία
   check_all: "Επιλογή Όλων"
   close_button: Κλείσιμο
-  collection_page_display: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
   committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {{domain}}/yourgroupname"
