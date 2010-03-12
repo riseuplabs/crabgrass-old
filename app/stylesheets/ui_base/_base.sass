@@ -214,6 +214,8 @@ h6
 #sitehome, #group-wiki
   #wiki-area
     margin: 0 0 15px
+    .wiki
+      clear: both
 
 #pages, #group-wiki, #sitehome
   +partial-width
@@ -257,7 +259,7 @@ h6
         color= !blue
         font-weight: normal
         a
-          +hover-link  
+          +hover-link
           color= !blue
       h4.unread
         font-weight: bold
@@ -725,7 +727,7 @@ table
   .description
     a
       +hover-link
-      color= !blue                
+      color= !blue
 
 
 #messages
@@ -735,7 +737,7 @@ table
     tr
       td
         +bordered-btm(!light_grey_border)
-        padding: 12px 6px 
+        padding: 12px 6px
         a
           +hover-link
           color= !blue
