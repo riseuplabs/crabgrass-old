@@ -11,11 +11,11 @@
 
   4. Replace everything else with the code from this release
 
-  5. Do you use the moderation module? If so, you need to run this first:
-       % script/generate plugin_migration
+  5. Run plugin migrations, you may not have any but this is safe to do:
+       % RAILS_ENV=production script/generate plugin_migration
 
-    after the plugin migration file is generated (something like
-    *_moderation_to_version_8.rb), the
+    If a plugin migration file is generated (something like
+    *_moderation_to_version_8.rb), then
     convert_message_page_to_discussion_message migration needs to be
     renamed so that it runs after the moderation migration.  to do
     this, simply move the message_page migration to a timestamp later
