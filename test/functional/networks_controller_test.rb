@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'networks_controller'
-
-# Re-raise errors caught by the controller.
-class NetworksController; def rescue_action(e) raise e end; end
 
 class NetworksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :federatings
-
-  def setup
-    @controller = NetworksController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_show
     login_as :blue
@@ -47,6 +37,17 @@ class NetworksControllerTest < ActionController::TestCase
     assert_response :success
     assert_no_difference 'groups(:animals).networks.count',"should not be allowed to add animals group to new network" do
       create_network(:name => 'testnetwork', :group => :animals)
+    end
+  end
+
+  # test for #1988
+  def test_network_drop_down
+    login_as :penguin
+    get :show, :id => groups(:fai).to_param
+    assert_response :success
+    assert_select 'li#menu_networks' do
+      assert_select 'a.entity[title="rainbow+the-cold-colors"]', false,
+        "Committees should not show up in the network dropdown menu."
     end
   end
 

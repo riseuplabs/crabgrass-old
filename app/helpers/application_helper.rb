@@ -139,6 +139,11 @@ module ApplicationHelper
     concat(render(:partial => partial_name, :locals => options))
   end
 
+  def browser_is_ie?
+    user_agent = request.env['HTTP_USER_AGENT'].try.downcase
+    user_agent =~ /msie/ and user_agent !~ /opera/
+  end
+
   ##
   ## CRABGRASS SPECIFIC
   ##
@@ -212,7 +217,7 @@ module ApplicationHelper
   def pagination_for(things, options={})
     return if !things.is_a?(WillPaginate::Collection)
     if request.xhr?
-      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => I18n.t(:pagination_previous), :next_label => I18n.t(:pagination_next), :inner_window => 2}
+      defaults = {:renderer => LinkRenderer::Ajax, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
     else
       defaults = {:renderer => LinkRenderer::Dispatch, :previous_label => "&laquo; %s" % I18n.t(:pagination_previous), :next_label => "%s &raquo;" % I18n.t(:pagination_next), :inner_window => 2}
     end

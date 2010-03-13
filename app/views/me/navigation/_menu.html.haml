@@ -1,7 +1,10 @@
 %ul
-  = tab_li :pages, :target => my_work_me_pages_path, :current => ((@second_nav == 'pages') ? true : false)
+  = tab_li :pages, :target => my_work_me_pages_path, :current => (@second_nav == 'pages')
   = tab_li :social_activities
-  = tab_li :messages
-  - tasks_current = (@second_nav == 'tasks') ? true : false
+  - messages_count = content_tag :span, "", :class => 'count', :id => 'messages_count'
+  = tab_li :messages, :after => messages_count
+  - tasks_current = (@second_nav == 'tasks')
   = tab_li :tasks, :controller => 'me/tasks', :action => 'pending', :translate => :tasks, :current => tasks_current
-  = tab_li :requests
+  - requests_count = content_tag :span, "", :class => 'count', :id => 'requests_count'
+  = tab_li :requests, :after => requests_count
+= javascript_tag remote_function(:url => flag_counts_path)

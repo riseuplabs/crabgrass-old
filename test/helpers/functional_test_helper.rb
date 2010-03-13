@@ -62,6 +62,17 @@ module FunctionalTestHelper
     assert_equal layout, @response.layout
   end
 
+  def assert_no_select(*args)
+    if args.count == 4
+      message = args.pop
+    elsif args.count == 3
+      message = args.pop unless args.first.is_a?(HTML::Node)
+    end
+    message ||= "Selector '#{selector}' was not expected but found."
+    assert_raise Test::Unit::AssertionFailedError, message do
+      assert_select *args
+    end
+  end
   ##
   ## ROUTE HELPERS
   ##

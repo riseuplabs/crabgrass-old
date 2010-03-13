@@ -167,11 +167,11 @@ label}</a></span>)
   def link_to_create(type)
     if type == :groups
       if may_create_group?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:group).downcase), groups_url(:action => 'new'))
+        link_to(I18n.t(:create_a_group).upcase, groups_url(:action => 'new'))
       end
     elsif type == :networks
       if may_create_network?
-        link_to_with_icon('plus', I18n.t(:create_a_new_thing, :thing => I18n.t(:network).downcase), networks_url(:action => 'new'))
+        link_to(I18n.t(:create_a_network).upcase, networks_url(:action => 'new'))
       end
     end
   end

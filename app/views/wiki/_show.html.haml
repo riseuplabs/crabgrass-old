@@ -1,4 +1,4 @@
-- wiki = @wiki if wiki.nil?
+- wiki ||= @wiki
 
 %div#wiki-area
   = render :partial => 'wiki/show_wiki', :locals => local_assigns.merge(:wiki => wiki)

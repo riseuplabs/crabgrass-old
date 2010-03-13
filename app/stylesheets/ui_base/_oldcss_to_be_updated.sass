@@ -1,3 +1,12 @@
+// were	 in constants.sass
+!z_autocomplete = 400
+!z_tooltip = 300
+!title_box_border_color = #D0E3F7
+!post_alternate_bg_color = #eef5fc
+!body_text_font_family = "verdana, bitstream vera sans, helvetica, sans-serif"
+!body_text_line_height = 18px
+!body_text_font_size = 13px
+
 form.login_dialog
   label
     font-weight: bold
@@ -12,13 +21,13 @@ form.login_dialog
 //
 //patch to show right the td's on page create view
 //
-table.page_types 
+table.page_types
   td
     vertical-align: top
   a
     +blue-link(12px)
-    
-    
+
+
 //
 // FORMS
 //
@@ -245,7 +254,6 @@ ul.tabset.simple
 
 .info_box
   padding: 1em
-  background-color= !info_box_bg_color
   border-bottom= "1px solid" !title_box_border_color
   table.columns
     width: 100%
@@ -295,7 +303,7 @@ ul.tabset.simple
 .content_box
   padding: 1em
   background: #FFFFFF none repeat scroll 0 0
-  
+
 
 //
 // FORMATTED TABLES
@@ -365,7 +373,7 @@ div.side_list
     padding-bottom: 4px
   &.commands a
     text-transform: capitalize
-  span 
+  span
     &.active, &:hover
     &.small_icon
       padding-left: 19px
@@ -383,9 +391,9 @@ td.left_column
 .tooltip
   span
     display: none
-    position: absolute 
-    top: #px 
-    left: #px 
+    position: absolute
+    top: #px
+    left: #px
     padding: 1em
     width: 25em
     border: 1px solid #666

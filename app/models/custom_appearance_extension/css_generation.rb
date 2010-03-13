@@ -70,9 +70,11 @@ module CustomAppearanceExtension
 
     module ClassMethods
       def clear_cached_css
-        path = File.join(CustomAppearance::STYLESHEETS_ROOT, 'themes')
-        pattern = path + "/**"
-        FileUtils.rm_rf(Dir.glob(pattern))
+        %w{themes, compiled}.each do |dir|
+          path = File.join(CustomAppearance::STYLESHEETS_ROOT, dir)
+          pattern = path + "/**"
+          FileUtils.rm_rf(Dir.glob(pattern))
+        end
       end
     end
   end

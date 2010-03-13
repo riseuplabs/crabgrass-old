@@ -3,37 +3,60 @@
 //    td.left, td.right
 //      padding-top: 1em
 
+// this was in constants.sass
+!strong_heading_color = #CE4A48
+
+
+
 #messages-forms
   overflow: visible
   height: 35px
   padding-top: 10px
-
+  
   #say-box
-    position: relative
+    +bordered
+    position: relative    
+    float: left
+    padding: 8px 8px 0 8px
+    margin-bottom: 10px
+    background= !banner_bg
     img
       position: relative
       top: 4px
     #say
       .textinput
         vertical-align: top
+        margin-top: 1px
+        width: 150px
+        height: 15px
       position: relative
       overflow: visible
       height: 30px
       textarea
-        overflow: visible
-      input.textarea
-        padding: 2px
+        height: 20px
+        width: 300px
         position: relative
         font-family: monospace
-        overflow: auto
+        overflow: visible
         .tall
           height: 120px
       input.say-submit
         position: relative
-        top: 3px
         vertical-align: top
       label
         vertical-align: top
+        
+#select-messages-from
+  +bordered
+  background: #f5f5f5
+  margin-bottom: 10px
+  padding: 8px 8px 0 8px
+  position: relative
+  overflow: visible
+  height: 30px
+  input
+    vertical-align: top
+    margin-top: 1px
 
 
 //

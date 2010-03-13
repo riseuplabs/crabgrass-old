@@ -15,7 +15,7 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance.parameters["box1_bg_color"] = "green"
     appearance.save!
 
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
 
     assert File.exists?(css_path), "CustomAppearance#themed_stylesheet_url should generate a new file"
@@ -30,13 +30,13 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     assert !File.exists?(css_path), "clearing css cache should delete cached files"
 
     # should regerate
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     assert File.exists?(css_path), "CustomAppearance#themed_stylesheet_url should generate a new file"
   end
 
   def test_nonexisting_css
     assert_raise Errno::ENOENT do
-      CustomAppearance.default.themed_stylesheet_url("does_not_exists.css");
+      CustomAppearance.default.themed_stylesheet_url("does_not_exists.css", "ui_base");
     end
   end
 
@@ -44,13 +44,13 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance = custom_appearances(:default_appearance)
 
     # update appearance
-    appearance.parameters["left_column_bg_color"] = "magenta"
+    appearance.parameters["page_bg"] = "magenta"
     appearance.save!
 
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     css_text = File.read(css_path)
-    assert css_text =~ /left_column\s*\{\s*background-color:\s*magenta/, "generated text must use updated background-color value"
+    assert css_text =~ /body\s*\{\s*.*background:\s*magenta/, "generated text must use updated background-color value"
   end
 
   def test_always_regenerate_options
@@ -59,14 +59,14 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance = custom_appearances(:default_appearance)
 
     # generate once
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the tyle
     mtime1 = File.mtime(css_path)
 
     # generate again
     sleep 1
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the time
     mtime2 = File.mtime(css_path)
@@ -77,14 +77,14 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     Conf.always_renegerate_themed_stylesheet = false
 
     # generate once
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the time
     mtime1 = File.mtime(css_path)
 
     # generate again
     sleep 1
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the time
     mtime2 = File.mtime(css_path)
@@ -95,7 +95,7 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     appearance.save!
 
     # generate again
-    stylesheet_url = appearance.themed_stylesheet_url("screen.css")
+    stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     # remember the tyle
     mtime3 = File.mtime(css_path)

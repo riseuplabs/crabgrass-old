@@ -36,6 +36,7 @@ ru:
   additional_page_access: "Дополнительный доступ"
   administer_site: "Управление сайтом"
   administration: Администрирование
+  alert: Тревога
   alert_error: Ошибка
   alert_field_errors: "Обнаружены проблемы со следующими полями"
   alert_not_saved: "Изменения не могут быть сохранены"
@@ -78,15 +79,18 @@ ru:
   cancel_link: отменить
   caption: Заглавие
   category: Категория
+  chat_flagged_inappropriate: "Комната для разговоров успешно отмечена как неподходящая."
   check_all: "Отметить всё"
   close_button: Закрыть
-  collection_class_description: "Особые страницы, которые содержат другие страницы."
-  collection_page_display: коллекция
   committee: комитет
   committee_publicly_visible: "Сделать комитеты видимыми для всех"
   committee_publicly_visible_description: "Комитеты доступны для просмотра нечленам по адресу {{domain}}/yourgroupname"
   committees: Комитеты
   comparing_changes_header: "Сравнение изменений, сделанных {{user}} в {{when}} с {{old_version}}  до {{new_version}}"
+  confirm: Подтвердить
+  confirm_discarding_text_area: "Вся ваша несохранённая работа будет утрачена. Нажмите {{cancel}}, чтобы продолжить редактирование."
+  confirm_inappropriate_chat: "Вы уверены, что эта беседа неуместна? Нажмите 'OK' только в том случае, если вы думаете что она оскорбительна, груба или враждебна. Модератор ознакомится с ней в ближайшее время."
+  confirm_inappropriate_page: "Вы уверены, что эта страница неуместна? Нажмите 'OK' только если вы думаете, что она содержит оскорбления, грубость или враждебность. Модератор скоро посмотрит её."
   confirm_new_password: "Подтвердить новый пароль"
   confirmation: "Вы уверены?"
   contact: Товарищ
@@ -143,6 +147,7 @@ ru:
   delete_post: "Удалить сообщение"
   delete_this_version: "удалить эту версию"
   delete_version_confirm: "Вы действительно хотите удалить эту версию?"
+  deleted: Стёртый
   description: описание
   descriptions: Описания
   descriptive_name_for_display: "Наглядное имя, используемое для показа."
@@ -181,6 +186,7 @@ ru:
   edit_tags_link: Редактировать
   edit_title: "редактировать заглавие"
   edit_underlined_e: р<u>е</u>дактировать
+  edited: Редактированный
   email: "Электронный адрес"
   email_addresses: "Электронные адреса"
   email_link_expires: "Эта ссылка станет недействительной через {{days}} дней."
@@ -189,23 +195,23 @@ ru:
   email_notice_hello_with_message: "Приветствуем, {{from}} прислал(а) вам веб-страницу со следующим сообщением: {{message}}"
   email_notice_subject: "Проверьте страницу \"{{title}}\""
   empty_results: "Ничего нет"
+  entity_autocomplete_tip: "Введите имя группы или пользователя."
   error_saving_new_order: "Ошибка при сохранении нового расположения!"
+  exception_title: "Системная ошибка"
   external_video_page_description: "Показать видео, размещённое на внешнем веб-узле."
   fax: Факс
   feature_button: Функция!
   featured_content: "Основной материал"
   featured_content_header: Основное
   file: файл
-  file_class_description: "Загруженный файл."
   file_must_be_image_error: "Чтобы стать частью галереи, файл должен быть изображением. "
   file_size: "Размер файла"
   file_version_deleted: "версия файла удалена"
   files: Файлы
   first_name: имя
+  flag_appropriate: "отметить как подходящее"
   folder_class_description: "Создайте папку для объединения других страниц."
   folder_display: Папка
-  folder_page_description: "Коллекция файлов."
-  folder_page_display: папка
   forgot_password_link: "Я забыл свой пароль"
   forgot_password_mail_expiry: "Эта ссылка будет действительна в течение 24 часов. Если Вам необходимо будет сменить пароль по истечение этого времени, Вы снова должны будете посетить страницу напоминания пароля и запросить новую ссылку. "
   forgot_password_mail_greeting: "{{user}}, чтобы сменить Ваш пароль, посетите, пожалуйста, страницу "
@@ -220,7 +226,6 @@ ru:
   full: полный
   fullname: "Полное имя"
   galleries: Галереи
-  gallery_class_description: "Коллекция изображений."
   gallery_description: "Загрузить множество изображений, или упорядочить имеющиеся изображения в набор."
   gallery_display: галерея
   gallery_undo_link: отменить
@@ -252,12 +257,14 @@ ru:
   group_privacy_settings: "Настройки приватности {{group}}"
   group_profile_description_may_request_membership: "Разрешить людям запрашивать членство в этой {{group_type}}."
   group_profile_description_may_see_committees: "Разрешить людям видеть, какие комитеты входят в {{group_type}}."
+  group_publicly_visible: "Сделать группу {{group}} видной для всех."
   group_publicly_visible_description: "Группа показывается в общедоступном списке и <i>профиль</i> группы видим для не-участников по адресу {{domain}}/yourgroupname."
   group_successfully_created: "Группа была успешно создана."
   group_successfully_updated: "Группа была успешно обновлена."
   group_summary: "Краткая информация об этой {{group}}."
   group_wiki: "Wiki группы"
   groups: Группы
+  have_your_say: "Скажите своё слово!"
   height: Высота
   highest_contributors: "Люди, внесшие наибольший вклад"
   history: История
@@ -272,7 +279,6 @@ ru:
   incoming: Входящие
   information: Информация
   insert_image_heading: "Вставить изображение"
-  insert_image_instructions: "Щёлкните по эксизу изображения, чтобы вставить его в текст страницы вики."
   invalid_email: "Недействительный адрес Email"
   invalid_email_text: "Предоставленный Вами адрес электронной почты недействителен."
   invalid_token: "Неверный признак"
@@ -282,6 +288,7 @@ ru:
   invite_accept_info: "Вы хотели бы принять приглашение вступить. У Вас уже есть аккаунт на этом сервере? "
   invite_accept_via_existing_account: "У меня уже есть аккаунт"
   invite_accept_via_register: "Мне надо зарегистрировать новый аккаунт"
+  invite_error_already_member: "Вы уже являетесь членом этой группы."
   invite_info: "Введите список авторизационных имён пользователей, или адресов электронной почты людей, которых вы хотите  пригласить для присоединения к это(му/той) {{group_type}}."
   invite_not_found: "Приглашение не найдено"
   join_group_link: "Вступить в {{group_type}}"
@@ -294,10 +301,12 @@ ru:
   last_name: фамилия
   last_seen: "в последний раз был"
   leave_channel: "Покинуть канал"
+  leave_editing_wiki_page_warning: "Если вы покинете эту страницу не сохранив wiki или отменив правку, то другие пользователи будут видеть, что wiki заблокирована вами и они не смогут вносить туда правки. Кроме того, если вы не сохраните wiki, то вы потеряете ваши изменения."
   leave_group_link: "Покинуть {{group_type}}"
   left_the_chatroom: "покинул комнату чата"
   link_name: "Имя ссылки"
   link_name_description: "Это название служит для указания на эту группу в ссылках и URL. Оно должно содержать только цифры и буквы, без пробелов. "
+  loading_progress: Загрузка...
   location: Местоположение
   location_address: адрес
   location_city: город
@@ -321,8 +330,6 @@ ru:
   mark_pages_as_featured_content_for_group: "Здесь Вы можете отметить страницы, которые будут выступать в качестве основного содержимого данной группы."
   me_dashboard_link: "Панель управления"
   me_inbox_link: Входящие
-  me_search_description: "Поиск по страницам, к которым у вас есть доступ"
-  me_search_link: Поиск
   me_tasks_link: задачи
   media_all: Данные
   media_alls: Данные
@@ -337,6 +344,7 @@ ru:
   media_videos: Видеозаписи
   media_without_group: "Все {{media_type}}"
   medium: средний
+  member_groups_of_network: Группы-участники
   members: Участники
   membership: Членство
   menu_admin: Администрирование
@@ -384,6 +392,7 @@ ru:
   my_dashboard: "Моя панель управления"
   my_groups: "Мои группы"
   my_groups_link: "Мои группы"
+  my_networks: "мои сети"
   my_pages: "Мои страницы"
   my_peers: "Мои товарищи"
   my_peers_description: "пользователи, с которым я состою в общую группу"
@@ -398,6 +407,7 @@ ru:
   my_tasks_headline: "Мои задачи"
   my_world_heading: "Мой мир"
   name: Имя
+  name_or_email_not_found: "«{{name}}» не совпадает ни с одним именем пользователя или группы и не является действительным адресом электронной почты."
   network: сеть
   network_invite_info: "Введите имена групп, которым вы хотите предложить присоединиться к данной сети. "
   network_settings: "Настройки сети"
@@ -415,14 +425,21 @@ ru:
   no_group_named: "группы с именем <b>{{name}}</b> не существует."
   no_images_in_gallery: "В галерее нет изображений"
   no_members: "(нет участников)"
+  no_peers_msg: "У вас нет товарищей."
   no_public_profiles: "Ещё нет публичных профилей..."
   no_search_results: "Нет результатов"
   no_tags: "без меток"
   no_title_given: "(заголовок не установлен)"
+  none: отсутствуют
   not_featured_content: "Основное содержание пока отсутствует"
   not_found: "Не найден"
   not_set: "не установлен"
+  notify_current_access: "<b>Текущий доступ:</b> уведомлять людей или группы, которые уже имеют доступ к этой странице."
+  notify_no_access_error: "К сожалению, \"{{name}}\" не имеет доступа к этой странице."
   notify_page_link: "Отправить уведомление"
+  offensive_behavior: "Оскорбительное поведение"
+  offensive_language: "Оскорбительные слова"
+  ok_button: Окей
   only_last_menber_can_delete_group: "Вы можете удалить группу, только если вы её последний оставшийся участник"
   only_me: Я
   options: Опции
@@ -432,8 +449,10 @@ ru:
   organizational_role: "роль в организации"
   other: Другой
   other_formats: "Другие форматы"
+  other_reason: "Другая причина"
   outgoing: Исходящие
   page: Страница
+  page_added_to_group: "Эта страница будет добавлена в группу {{group_name}} типа {{group_type}}."
   page_create_owner: "Создатель страницы"
   page_details_link: "Детали {{page_class}}"
   page_is_not_static: "Страница не является статической"
@@ -450,6 +469,7 @@ ru:
   page_locked_header: "Страница заблокирована"
   page_not_part_of_group: "Страница не является частью этой группы."
   page_notice_message: "страница отправлена {{date}} пользователем {{user}}"
+  page_owner_help: "Владелец страницы - это человек или группа, несущие первичную ответственность за эту страницу. Вы можете выбрать себя, или любую из групп, в которых вы состоите."
   page_with_message: "с сообщением"
   pager: Пейджер
   pagination_next: следующая
@@ -472,6 +492,7 @@ ru:
   password_reset_ok_text: "Ваш пароль был успешно сброшен. Теперь Вы можете авторизоваться с помощью Вашего нового изменённого пароля."
   password_was_reset: "Ваш пароль был сброшен"
   peers: Связи
+  pending: "ожидают решения"
   pending_tasks: "текущие задания."
   people: Люди
   permission_denied: Запрещено
@@ -507,6 +528,7 @@ ru:
   public_profile: "Публичный профиль"
   rate_many_page_description: "Одобрить, или отвергнуть каждый из вариантов."
   rate_many_page_display: "голосование за одобрение"
+  read: прочитано
   recent_activity: "Недавняя деятельность"
   recent_pages: "Свежие страницы"
   recipient_tip: "Разделяйте получателей запятыми, пробелами или переводами строки."
@@ -573,7 +595,6 @@ ru:
   share_page_recipients_results: "Эта {{page_class}} будет разделена с"
   share_page_recipients_sections: "Выберите из Ваших групп, или друзей"
   share_page_recipients_selection: "Сделайте Вашу подборку"
-  share_this_page: "Разделить эту страницу"
   show_gallery: "Показать галерею"
   signup_button: Записаться
   signup_confirm_password: "Подтвердить пароль"
@@ -614,6 +635,7 @@ ru:
   survey_take_tab: "Принять участие в опросе"
   survey_your_rating_heading: "Ваша оценка этого ответа"
   tags: Метки
+  tags_help: "Необязательно. В качестве меток введите несколько слов, которые наилучшим образом описывают эту страницу."
   task_list_page_description: "Список пунктов для выполнения."
   task_list_page_display: "список задач"
   tasks: Задачи
@@ -628,12 +650,17 @@ ru:
   try_again: "Попробовать ещё"
   tuesday: Вторник
   type_your_messages_here: "Напечатайте здесь своё сообщение и нажмите «enter»..."
+  undelete_from_trash: Восстановить
   unread: непрочитанные
   updated: обновлено
+  upload: Передать
   upload_file_help: "Помощь в загрузке файлов"
   upload_image: "Загрузить изображение"
+  upload_image_help: "Необязательно. Выберите файл заглавного изображения для передачи на эту страницу."
   upload_images_link: Загрузить
   upload_new_image: "загрузить новое изображение"
+  upload_zip_file_help: "Необязательно. Выберите файл ZIP (коллекцию изображений) для передачи на эту страницу."
+  upload_zip_file_link: "Передать ZIP-архив"
   uploaded_image_cropped: "Загруженное изображение будет обрезано и растянуто до квадрата со стороной 96 пикселов."
   usage_agreement_heading: "Пользовательское соглашение"
   usage_agreement_required: "Требуется принять условия пользовательского соглашения"
@@ -646,7 +673,9 @@ ru:
   user_profile_description_may_see_contacts: "Разрешить людям видеть ваш список личных контактов. "
   user_profile_description_may_see_groups: "Разрешить людям видеть, участником каких групп Вы являетесь. "
   username: "Имя пользователя"
+  users: Пользователи
   users_wall: "Стена пользователя {{user}}"
+  users_world: "Мир пользователя {{user}}"
   version_doesnt_exist: "Версии с номером {{version}} не существует"
   version_number: "версия {{version}}"
   versions: версии
@@ -656,12 +685,16 @@ ru:
   view_all: "посмотреть всё"
   view_requests: "посмотреть запросы"
   view_slideshow: "Показать слайд-шоу"
+  viewed: Просмотрено
+  viewer: Просмотрщик
+  viewer_help: "<b>Только для чтения</b> позволит только просматривать эту страницу."
   visibility: Видимость
   wall_heading: "Стена публичных сообщений"
   wall_post_button: "Написать новое сообщение"
   watch_checkbox: "Следить за обновлениями"
   websites: Web-сайты
   wednesday: Среда
+  welcome_heading: "Добро пожаловать в {{site_title}}, {{user_name}}!"
   welcome_hide_link: "Скрыть приветствие"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
@@ -676,13 +709,20 @@ ru:
   welcome_title: "Добро пожаловать на {{site_title}}"
   welcome_upload_icon_text: "Загрузите изображение для использования в качестве вашего аватара. Это изображение будет появляться рядом с каждым вашим комментарием."
   width: Ширина
+  wiki_body_help: "Необязательно. Введите сюда первоначальный основной текст страницы."
+  wiki_editor: Редактор
   wiki_is_locked: "В настоящий момент wiki заблокировано пользователем {{user}}"
   wiki_page_description: "Текстовый документ свободной формы. "
   wiki_page_display: вики
+  wiki_plain_editor: "Простой редактор"
+  wiki_revert_version: "Откатиться к версии {{version}}"
+  wiki_section_edit: "Править этот раздел"
+  wiki_visual_editor: "Визуальный редактор"
   wont_be_able_to_save: "Вы не сможете сохранить эту страницу"
   work: Рабочий
   work_life: "Трудовая жизнь"
   you_are_not_member_of_any_group: "Вы не являетесь членом какой-либо группы. "
   you_are_viewing_version: "Вы просматриваете версию {{version}} от пользователя {{user}}"
   you_have_no_contacts: "У вас нет контактов"
+  you_have_no_peers: "У вас нет товарищей"
   your_login: "Ваше имя пользователя"

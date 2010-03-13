@@ -19,7 +19,6 @@
         text-transform: uppercase
         color= !almost_black
 
-
 //
 //banner
 //
@@ -47,6 +46,10 @@
       padding-left: 0
       div.left
         padding-left: 17px
+        display: inline
+        h1
+          float: left
+
       img
         +bordered
         background= !white_bg
@@ -68,11 +71,10 @@
             clear: left
             color= !light_grey_text
 
-
 #group-action
-  +clearfix
+  float: left
+  clear: left
   margin-top: 4px
-  display: inline
   a
     +hover-link
     +small-text
@@ -82,10 +84,10 @@
 
 #contribute
   float: right
+  background-color: #78be63
+  border: 1px solid #448c3b
   a
     +hover-link
-    background-color: #78be63
-    border: 1px solid #448c3b
     color= !white_text
     font-size: 11px
     font-weight: bold
@@ -94,15 +96,11 @@
 
 //
 //banner2 for banner-no-avatar
-//      
-
+//
 #banner-container.no-avatar
   +pie-clearfix
   height: 92px    
   overflow: visible
-
-
-
 
 //
 // second-level nav 
@@ -121,6 +119,7 @@
       +full
       width: 540px
       padding-left: 224px
+      margin: 0 18px
       li
         +inline-list
         display: inline-block
@@ -148,4 +147,7 @@
     nav#second-level
       width: 764px
       padding-left: 0
-      margin: 0 18px
+    span.count
+      +blue-link 
+      padding-right: 8px
+      margin-left: -3px 

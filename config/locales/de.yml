@@ -1,19 +1,28 @@
 ---
 de:
+  a_message_link: "eine Nachricht"
+  a_reply_link: "eine Antwort"
+  a_request_was_sent_to_admin_to_make_this_page_public_message: "Einer administrierenden Person wurde eine Anfrage geschickt, diese Seite öffentlich zu machen"
+  about: Über
   about_me: "&Uuml;ber mich"
   accept_usage_agreement: "Ich akzeptiere die Benutzungsbedingungen"
   access: Zugang
   action: Aktion
   activate_js_to_rearrange_photos: "Aktiviere JavaScript und die Reihenfolge mit Drag&amp;Drop zu ver&auml;ndern!"
+  activity: Aktivität
   activity_contact_created: "{{user}} hat {{other_user}} als Kontakt hinzugefügt"
   activity_group_created: "{{user}} hat {{group_type}} {{group}} erstellt"
   activity_group_destroyed: "{{group}} wurde durch {{user}} gelöscht"
   activity_message: "{{author}} schrieb: {{message}}"
+  activity_message_received: "Du hast eine {{message_tag}} von {{other_user}} erhalten: {{title}}"
+  activity_twinkled: "{{user}} hat deinen Beitrag \"{{post}}\" hervorgehoben."
   activity_unread: "Du hast {{count}} ungelesene [private Nachrichten]"
   activity_unread_singular: "Du hast eine ungelesene [private Nachricht]"
   activity_user_destroyed: "{{user}} hat sich gelöscht"
   activity_user_joined_group: "{{user}} ist der {{group_type}} {{group}} beigetreten"
+  activity_user_joined_site: "{{user}} hat sich {{group}} angeschlossen"
   activity_user_left_group: "{{user}} hat {{group_type}} {{group}} verlassen"
+  activity_user_left_site: "{{user}} hat {{group}} verlassen"
   activity_user_status: "{{user}} ist jetzt {{status}}"
   activity_wall_message: "{{author}} schrieb zu {{user}}: {{message}}"
   add_another_file: "Weitere Datei hinzuf&uuml;gen"
@@ -25,16 +34,31 @@ de:
   add_encryption_key: "Schlüssel hinzufügen"
   add_existing_image: "Existierendes Bild hinzuf&uuml;gen"
   add_im_address: "IM Adresse hinzufügen"
+  add_link: "Link hinzufügen"
   add_location: "Ort hinzufügen"
+  add_long_text_question_link: "Lange Antwort"
+  add_menu_item: "Punkt hinzufügen"
   add_new_attachment: "Neuen Anhang hinzufügen"
+  add_new_possibility_link: "Neue Möglichkeit hinzufügen"
   add_one_or_more_tags: "Füge ein oder mehr Tags hinzu (getrennt durch Kommas)"
   add_phone_number: "Telefonnummer hinzufügen"
   add_photo_to_gallery: "Bild zur Gallerie hinzuf&uuml;gen"
+  add_possibility_button: "Möglichkeit hinzufügen"
+  add_select_many_question_link: "Mehrere Antworten auswählen"
+  add_select_one_question_link: "Eine Antwort auswählen"
+  add_short_text_question_link: "Kurze Antwort"
   add_star_link: "Stern hinzufügen ({{star_count}})"
   add_tags: "Tags hinzufügen"
   add_websites: "Webseiten hinzufügen"
   additional_page_access: "Weitere Zugriffe"
+  administer_site: Administration
   administration: Administration
+  admins_may_moderate: "Erlaube Gremiummitgliedern, den Inhalt der Gruppe zu moderieren"
+  admins_may_moderate_description: "Wen diese Option ausgewählt ist, haben Gremiummitglieder Zugang zu einem Moderationswerkzeug, welches ihnen erlaubt Seiten und Kommentare zu kritisieren und zu löschen."
+  advanced: Erweitert
+  affiliations: Mitgliedschaften
+  album_cover_changed: "Albencover geändert"
+  alert: Warnung
   alert_error: Error
   alert_field_errors: "Es gibt Probleme mit den folgenden Feldern"
   alert_not_saved: "Änderungen konnten nicht gespeichert werden"
@@ -43,20 +67,28 @@ de:
   alert_saved: "Änderungen gespeichert"
   all: Alle
   all_content: "Gesamter Inhalt"
+  all_day_event: "ganztägliches Event"
   all_groups: "alle Gruppen"
   all_networks: "Alle Netzwerke"
   all_page_types: "alle Seitenarten"
+  all_pages_tab: "Alle Seiten"
   all_people: "alle Personen"
   all_people_link: "neue Leute"
+  all_requests: "Alle Anfragen"
   all_states: "alle Zustände"
   allow_membership_requests: "Erlaube Mitgliedschaftsanfragen"
   already_contacts_info: "Du bist schon ein Kontakt dieser Person."
+  already_verified: "Bereits überprüft."
+  already_verified_text: "Du musst dich nicht nochmal verifizieren."
   announcement_page_description: "Eine Ank&uuml;ndigung"
   announcement_page_display: Ank&uuml;ndigung
   announcements: Ankündigungen
+  announcements_page_display: Ankündigung
+  anonymous: anonym
   approve: zustimmen
   approve_button: zustimmen
   approve_contact_info: "Es existiert bereits eine Kontaktanfrage von diesem Benutzer. Möchtest du diese annehmen?"
+  approve_contact_request: "Kontaktanfrage aktzeptieren"
   approve_or_reject_link: "Anfrage bestätigen oder zurückweisen"
   approved: genehmigt
   archive: Archiv
@@ -67,42 +99,88 @@ de:
   article_page_display: Artikel
   asset_page_description: "Eine Hochgeladene Datei."
   asset_page_display: Datei
+  asset_version_list_version_heading: Version
+  at: at
   at_least_one_recipient_is_required: "Mindestens eine Empfängerin angeben"
   attachments: Anhänge
+  avatar_image_upload_success: "Neuen Avatar erfolgreich hochgeladen."
   away: abwesend
+  back: Zurück
   back_button: Zurück
+  back_to_gallery_link: "Zurück zur Gallerie"
   back_to_group: "zurück zu {{group_name}}"
+  back_to_the_page: "Zurück zur Seite"
+  basic_info: Grundinformationen
   basic_settings: Grundeinstellungen
+  body: Körper
   break_lock: "Sperre aufheben"
   break_lock_button: "Sperre aufheben"
+  browse: Stöbern
+  browse_groups: "{{groups_type}} durchstöbern"
+  browse_groups_desc: "Hier ist eine alphabetisch sortierte Liste aller {{groups_type}}. Du kannst diese Liste nach dem Ort filtern, um {{groups_type}} in deiner Nähe zu finden."
+  buttons_list_label: Aktion
+  cancel: Abbrechen
   cancel_button: Abbrechen
   cancel_link: Abbrechen
+  cant_detect_image_height_error: "Kann die Bildhöhe nicht ermitteln. Entweder ist das Bild beschädigt oder der Server spinnt grade."
+  cant_find_wiki_section: "Kann den Wikibereich {{section}} nicht finden."
+  cant_lock_another_section: "Du hast bereits einen Bereich gesperrt. Noch einer geht nicht."
+  cant_lock_nonexistant_section: "Kann keine nichtexistierende Bereiche sperren"
+  cant_unlock_nonexistant_section: "Kann keine nichtexistierenden Bereiche entsprennen"
+  caption: Überschrift
   category: Kategorie
+  chat: Chat
+  chat_archive_headline: Chatarchiv
+  chat_archive_link: "Archiv des Chatrooms ansehen"
+  chat_flagged_inappropriate: "Chatroom erfolgreich als ungeeignet markiert."
   check_all: "Alles ausw&auml;hlen"
+  clear_link_button: "Lösche Link"
   close_button: Schließen
-  collection_class_description: "Spezialseiten, die andere Seiten enthalten."
-  collection_page_display: Sammlung
+  close_editor: "Editor schließen"
+  close_link: schließen
+  color_theme: Farbschema
+  comments: Kommentare
   committee: Arbeitsgruppe
   committee_publicly_visible: "Arbeitsgruppen öffentlich sichtbar machen"
   committee_publicly_visible_description: "Arbeitsgruppen können von Nichtmitgliedern unter we.riseup.net/DeinGruppenName eingesehen werden."
   committees: Arbeitsgruppen
   comparing_changes_header: "Vergleich der Änderungen durch {{user}} am {{when}} zwischen {{old_version}} und {{new_version}}"
+  completed_tasks: "Erledigte Aufgaben"
+  confirm: Bestätigen
+  confirm_delete_avatar: "Willst du dein Benutzer_Innenbild wirklich löschen?"
+  confirm_destroy_page: "Willst du diese Seite wirklich löschen? Wiederherstellen geht dann nicht mehr."
+  confirm_discarding_text_area: "All deine ungespeicherte Arbeit wird verloren gehen. Drücke {{cancel}} um mit dem Editieren fortzusetzen."
+  confirm_inappropriate_chat: "Bist du dir sicher das diese Unterhaltung unangemessen ist? Klick nur auf \"OK\" wenn sie beleidigend oder ähnliches ist. Ein moderierender Mensch wird sich dann bald drum kümmern."
+  confirm_inappropriate_page: "Bist du dir sicher das diese Seite unangemessen ist? Klick nur auf \"OK\" wenn sie beleidigend oder ähnliches ist. Ein moderierender Mensch wird sich dann bald drum kümmern."
   confirm_new_password: "Bestätige neues Passwort"
+  confirm_vote_button: "Abstimmung bestätigen"
   confirmation: Sicher?
+  congratulations_you_have_signed_up: "Gratulation! Du hast dich für {{site_title}} eingetragen."
   contact: Kontakt
+  contact_removed: "{{user}} wurde von deiner Kontaktliste entfernt."
   contact_request_message_label: "Sage {{user}} warum du sein Kontakt werden willst."
+  contact_request_sent: "Freundschaftsanfrage wurde gesendet"
   contacts: Kontakte
   contribute_content_link: "Tu was!"
+  contribute_group_content_link: "Füge Seite {{group}} hinzu"
+  contribute_to_site: "Bei dieser Seite mitmachen"
   contributed: Mitgearbeitet
+  contributions: Beiträge
+  contributors: Beitragende
   coordinating_council: "Koordinierendes Gremium"
   coordinator: Koordinator
+  coordinator_help: "<b>Voller Zugriff</b> garantiert uneingeschränkten Zugriff, um diese Seite zu ändern (auch löschen oder teilen ist möglich)"
   coordinators: Koordinatoren
+  council: Gremium
   council_help_text: "Falls diese Gruppe ein koordinierendes Gremium hat darf nur ein Mitglied dieses Gremiums die Gruppe administrieren. Andernfalls darf das jedes Gruppenmitglied tun."
+  councils: Gremien
   create_a_group: "Eine Gruppe erstellen"
+  create_a_network: "Netzwerk erstellen"
   create_a_new_thing: "Neue {{thing}} erstellen"
   create_button: Erstellen
   create_committee: "Arbeitsgruppe erstellen"
   create_group_link: "Gruppe erstellen"
+  create_link_button: "Erzeuge Link"
   create_page: "Seite erstellen"
   create_page_button: "{{page_class}} erstellen"
   create_page_data: "{{page_class}} Daten"
@@ -119,6 +197,7 @@ de:
   current_video_sources: "derzeit Unterstützung für: youtube, blip.tv, google video, vimeo"
   data_for_page_missing: "Es gibt keine Daten zu dieser Seite."
   date: Datum
+  date_all_time: "Alle Zeiten"
   date_centuries: Jahrhunderte
   date_days: Tage
   date_hours: Stunden
@@ -126,50 +205,72 @@ de:
   date_months: Monate
   date_older: Älter
   date_seconds: Sekunden
+  date_this_month: "Dieser Monat"
   date_this_week: "Diese Woche"
   date_today: Heute
   date_weeks: Wochen
   date_years: Jahre
   date_yesterday: Gestern
   delete: Löschen
+  delete_button: Löschen
   delete_page_link: "Lösche {{page_class}}"
   delete_post: "Eintrag löschen"
   delete_this_version: "Lösche diese Version"
   delete_version_confirm: "Willst Du diese Version tatsächlich löschen?"
+  deleted: Gelöscht
   description: Beschreibung
   descriptions: Beschreibungen
   descriptive_name_for_display: "Ein aussagefähiger Name zur Anzeige"
   destroy: Zerstören
   destroy_confirmation: "Du bist dabei ein(e) {{thing}} zu l&ouml;schen. Bist du sicher dass du dies tun willst? Dieser Vorgang kann nicht r&uuml;ckg&auml;ngig gemacht werden."
   destroy_group_link: "{{group_type}} auflösen"
+  destroy_page_link: "{{page_class}} zerstören"
+  destroy_page_via_shred: "Sofort löschen"
+  destroy_page_via_shred_info: "Das wird die Seite dauerhaft löschen. Kann nicht rückgängig gemacht werden!"
+  destroy_page_via_trash: "In den Müll verschieben"
+  destroy_page_via_trash_info: "Das wird die Seite in den Müll verschieben, von wo sie später wiederhergestellt werden kann."
   details_link: Details
   diff_link: Unterschiede
   directory_of_groups: "Verzeichnis der Gruppen"
   directory_of_networks: "Verzeichnis der Netzwerke"
   directory_of_people: "Verzeichnis von Personen"
+  directory_peers_description: "Eine Liste all deiner Freunde_Innen und Menschen, die mit dir in den gleichen Gruppen und Netzwerken sind."
+  discover: Entdecken
+  discover_groups: "{{groups_type}} entdecken"
+  discover_groups_desc: "Hier ist eine Liste kürzlich ersteller {{groups_type}}. Du kannst diese Liste nach Ort filtern, um {{groups_type}} in deiner Nähe zu finden."
   discuss_request_link: "Diese Anfrage mit {{person_or_group}} bereden"
   discussion_page_description: "Eine Diskussion mit mehreren Teilnehmern &uuml;ber ein bestimmtes Thema."
   discussion_page_display: "Gruppen Diskussion"
   discussions: Diskussionen
   display_name: "Namen anzeigen"
+  do_you_want_to_receive_email_notifications: "Möchtest du E-Mail-Benachrichtigungen zu Seiten erhalten, die du \"beobachtest\"?"
+  done_button: Fertig
   dont_have_permission_to_create_committees: "Du kannst keine Arbeitsgruppen unter {{group}} anlegen."
   dont_understand_group_type: "Gruppentyp {{type}} ist unbekannt."
   download: Herunterladen
   download_gallery: "Gallerie herunterladen"
   drag_and_drop_to_rearrange_photos: "Benutze Drag&amp;Drop um die Reihenfolge der bilder zu ver&auml;ndern"
+  drag_to_move_tip: "Ziehen um zu verschieben"
+  dual_membership_info: "Mitglieder von {{group_type}} {{group_name}}, welche auch in der Arbeitsgruppe {{committee_name}} sein sollten."
+  dual_memberships: "doppelte Mitgliedschaften"
+  each_line_is_a_choice_caption: "(jede Zeile ist eine Wahlmöglichkeit)"
   edit: bearbeiten
   edit_appearance: "Bearbeite erscheinen"
   edit_attachments: "Anhänge bearbeiten"
   edit_attachments_link: Bearbeiten
+  edit_committe: "Arbeitsgruppe bearbeiten"
   edit_featured_content_for_group: "Ausgewählte Inhalte von {{group_name}} bearbeiten"
   edit_featured_content_link: "Aktuelle Inhalte bearbeiten"
   edit_gallery: "Gallerie bearbeiten"
+  edit_layout_heading: "Layout bearbeiten"
+  edit_my_vote_tab: "Meine Abstimmung bearbeiten"
   edit_profile_link: "Profil bearbeiten"
   edit_settings: "Einstellungen bearbeiten"
   edit_tags: "Markierungen bearbeiten"
   edit_tags_link: Bearbeiten
   edit_title: "Titel bearbeiten"
   edit_underlined_e: <u>B</u>earbeiten
+  edited: Bearbeitet
   email: Email
   email_addresses: "Email Adressen"
   email_link_expires: "Dieser Link wird in {{days}} Tagen ablaufen."
@@ -177,26 +278,54 @@ de:
   email_notice_hello: "Hallo, {{from}} hat dir eine Web Seite gesendet."
   email_notice_hello_with_message: "Hallo, {{from}} hat dir eine Web Seite mit der folgenden Nachricht geschickt: {{message}}"
   email_notice_subject: "Sieh Dir die Seite \"{{title}}\" an"
+  email_verification_body: |-
+      Du hast dich für {{site_title}} ({{host}}) eingetragen!
+
+      Bevor du dich einloggen kannst musst du bestätigen, dass dies hier deine E-Mail-Adresse ist.
+
+      Klick auf den Link hier oder füg ihn in die Adresszeile deines Browsers ein.
+
+        {{verify_email_link}}
+
+      Wenn du dich nicht anschließen willst, ignorier diese Mail einfach.
   empty_results: Nichts
+  enable_masthead_question: "Impressum ermöglichen?"
+  ends_at: "endet am"
+  enter_page_title: "Seitentitel eingeben"
+  entity_autocomplete_tip: "Gib den Namen eine Gruppe oder einer Person ein."
+  error: Fehler
   error_saving_new_order: "Beim speichern der neuen Reihenfolge ist ein Fehler aufgetreten!"
+  error_saving_new_order_message: "Fehler beim Speichern einer neuen Anforderung: {{error_message}}"
+  exception_back_link: Zurück
+  exception_bug_report_description: "Bitte beschreibe wie du zu dieser Seite gelangt bist, und erwähne alle weiteren Informationen"
+  exception_bug_report_link: "Bugreport abschicken"
+  exception_description: "Bitte hilf uns diese Software zu verbessern, indem du uns einen Bugreport schickst. Wir werden daran arbeiten das Problem bald zu beheben."
+  exception_headline: "Mist! Es gab einen Fehler."
+  exception_title: Systemfehler
   expired_featured_content: "Abgelaufene Inhalte"
+  external_link_menu_item: "externer Link"
   external_video_page_description: "Binde ein Video von einer externen Seite ein."
   external_video_page_display: "Externes Video"
+  favicon: Browsericon
+  favicon_image_bad_dimensions_error: "Das hochgeladene Favicon hat eine falsche Größe. Es muss entweder 16x16 oder 32x32 Pixel groß sein."
   fax: Fax
   feature_button: Veröffentlichen!
   featured_content: "Angebotene Inhalte"
   featured_content_header: Angeboten
+  featured_pages: "Veröffentlichte Seiten"
   file: Datei
-  file_class_description: "Eine hochgeladene Datei."
   file_must_be_image_error: "Nur Bilddateien können zur Galerie hinzugefügt werden."
   file_size: Dateigröße
   file_version_deleted: "Dateiversion gelöscht"
   files: Dateien
+  fingerprint: Fingerprint
+  first_choice_of: "Erste Wahl von"
   first_name: Vorname
+  flag_appropriate: "Als passend markieren"
+  flag_button: Markieren
+  flag_inappropriate: "Als unpassend markieren"
   folder_class_description: "Eine Sammlung an Dateien."
   folder_display: Ordner
-  folder_page_description: "Eine Sammlung von Ressourcen."
-  folder_page_display: Verzeichnis
   forgot_password_link: "Ich habe mein Passwort vergessen"
   forgot_password_mail_expiry: "Dieser Link behält seine Gültigkeit für 24 Stunden. Willst Du Dein Passwort später rücksetzen musst Du Dir auf der \"Passwort vergessen\"-Seite einen neuen Link zuschicken lassen."
   forgot_password_mail_greeting: "{{user}}, um Dein Passwort zurückzusetzen besuche bitte"
@@ -211,19 +340,24 @@ de:
   full: komplett
   fullname: "vollständiger Name"
   galleries: Galerien
-  gallery_class_description: "Eine Bilder-Sammlung."
+  gallery_changing_cover_message: "Ändere Cover..."
   gallery_description: "Eine geordnete Bilder-Kollektion"
   gallery_display: Galerie
+  gallery_slideshow_apply_settings_button: Übernehmen
   gallery_undo_link: r&uuml;ckg&auml;ngig
   general_info: "Generelle Infos"
   grant_access: "Zugang gewähren"
   group: Gruppe
   group_administration_not_allowed: "Du kannst diese Gruppe nicht administrieren."
+  group_destroyed_email: "{{group_type}} {{group}} wurde zerstört!"
+  group_destroyed_message: "{{group_type}} zerstört"
+  group_destroyed_subject: "{{group_type}} {{group}} wurde von {{user}} zerstört!"
   group_directory: Gruppen-Verzeichnis
   group_directory_link: Gruppen-Verzeichnis
   group_has_no_public_profile: "Diese Gruppe hat kein öffentlich einsehbares Profil."
   group_home_headline: "{{group_type}} Home"
   group_home_welcome: Willkommen
+  group_icon: Gruppenicon
   group_information: "{{group_type}} Information"
   group_invite_email: |-
       {{from_user}} hat Dich eingeladen, der Gruppe "{{group}}" beizutreten.
@@ -240,9 +374,12 @@ de:
   group_invite_subject: "Einladung, der Gruppe \"{{group}}\" beizutreten"
   group_join_chat: "Am Plausch teilnehmen"
   group_language: "Die Hauptsprache dieser {{group}}."
+  group_location: "Das örtliche Zentrum dieser {{group}}."
   group_members_publicly_visible: "Mitglieder öffentlich sichtbar machen"
   group_members_publicly_visible_description: "Nichtmitglieder können eine Liste mit Mitgliedern unter we.riseup.net/DeinGruppenName einsehen. Ausserdem wird der Gruppenname auf der Profilseite eines jeden Mitglieds gelistet. (we.riseup.net/Nutzername)"
+  group_membership_count: "{{count}} Mitglieder"
   group_not_allowed_to_view_image_error: "Die Gruppe, der diese Seite gehört, darf dieses Bild nicht anschauen."
+  group_pages: Gruppenseiten
   group_privacy_settings: "{{group}} Datenschutz Einstellungen"
   group_profile_description_may_request_membership: "Erlaube Personen, eine Mitgliedschaftsanfrage an diese {{group_type}} zu stellen."
   group_profile_description_may_see: "Untenstehende Infos werden sichtbar sein, wenn das Kästchen angekreuzt ist. Andernfalls wird das Profil für diese {{group_type}} komplett versteckt."
@@ -259,20 +396,25 @@ de:
   groups: Gruppen
   have_your_say: "Sag auch was!"
   height: Höhe
+  hide_tips: "Verstecke Tipps"
   highest_contributors: "Aktivste Mitwirkende"
   history: Verlauf
   home: Home
   icon: Icon
+  ignore: ignorieren
+  illegal_redirect: "ungültige Weiterleitung"
   im_addresses: "IM Adressen"
   image_count: "Bild {{number}} von {{count}} gesamt"
   image_count_total: "{{count}} Bilder"
   image_title: "Bildtitel: {{title}}"
+  inappropriate_content: "unpassender Inhalt"
   inbox_description: "Liste von Seiten, an denen ich aktiv teilhabe oder bei denen ich Änderungen registriere."
   include_full_checkbox: "Link zum ganzen Bild einfügen"
   incoming: Eingang
   information: Information
+  insert_image: "Bild einfügen"
   insert_image_heading: "Bild einfügen"
-  insert_image_instructions: "Klicke auf das kleine Bild um es in den Wikitext einzufügen."
+  instant_messaging: "Instant Messaging"
   invalid_email: "Ungültige Emailadresse"
   invalid_email_text: "Die von Dir angegebene Emailadresse ist ungültig."
   invalid_token: "Ungültiger Token"
@@ -282,8 +424,13 @@ de:
   invite_accept_info: "Du willst die Einladung annehmen. Hast Du schon einen Zugang zu diesem Server?"
   invite_accept_via_existing_account: "Ich habe bereits einen Zugang."
   invite_accept_via_register: "Ich will einen neuen Zugang anmelden."
+  invite_error_already_member: "Du bist bereits ein Teil dieser Gruppe."
+  invite_error_redeemed: "Einladung wurde bereits zurückgenommen."
   invite_info: "Gib eine Liste mit Loginnamen oder Emailadressen der Leute, die Du einladen willst, dieser {{group_type}} beizutreten, ein."
   invite_not_found: "Einladung nicht gefunden"
+  invite_sent: "Einladung gesendet an {{recipient}}"
+  invites_sent: "{{count}} Einladungen gesendet"
+  is_required: "wird benötigt"
   join_group_link: "Join {{group_type}}"
   join_group_success: "Du hast dich der Gruppe {{group_name}} angeschlossen."
   join_request_info: "Du wirst erst dann Mitglied dieser Gruppe, wenn Deine Anfrage genehmigt wurde. Du kannst den Status Deiner Anfrage überprüfen, indem Du \"{{my_requests_url}}\" besuchst."
@@ -293,10 +440,16 @@ de:
   last_change: "letzte Änderung"
   last_name: Familienname
   last_seen: "Zuletzt gesehen"
+  leave_channel: "Raum verlassen"
+  leave_editing_wiki_page_warning: "Wenn du das Wiki ohne Speichern oder stoppen deiner Bearbeitung verlässt, werden andere Benutzer_Innen sehen, dass das Wiki gerade von dir gesperrt ist, und das sie es nicht bearbeiten können. Außerdem wirst du deine ungespeicherten Änderungen verlieren."
   leave_group_link: "Verlasse {{group_type}}"
   left_the_chatroom: "hat den Chatroom verlassen"
+  link: Link
   link_name: Linkname
   link_name_description: "Dieser Name dient als Bezeichner der Gruppe in Links und URLs. Es dürfen nur alphanumerische Zeichen und keine Leerzeichen enthalten sein."
+  loading_progress: Lade...
+  loadingdotdotdot: Lade...
+  local_link_menu_item: "lokaler Link"
   location: Ort
   location_address: Adresse
   location_city: Ort
@@ -305,7 +458,9 @@ de:
   location_state: Bundesland
   locations: Orte
   locked_by_user: "gesperrt durch {{user}}"
+  locked_wiki_because_locked_section: "Wiki gesperrt - ein Bereich wird gerade bearbeitet. Du kannst andere Bereiche bearbeiten."
   locking_error: "Fehler. Kann Deine Daten nicht sichern - jemand anders hat zuerst neue Änderungen übermittelt. "
+  log_in: Einloggen
   login: Anmelden
   login_button: Anmelden
   login_failed: "Anmeldung fehlgeschlagen"
@@ -317,12 +472,16 @@ de:
   logout_success: "auf Wiedersehn"
   logout_success_message: "Du hast dich abgemeldet."
   make_album_cover: "dieses Bild als Albumcover auswählen"
+  make_public_requested: "\"Öffentlich machen\" angefragt"
+  mark_as_label: "Markieren als:"
   mark_pages_as_featured_content_for_group: "Hier kannst du Seiten als besonderen Inhalt dieser Gruppe kennzeichen."
+  masthead: Impressum
+  may_request_membership_description: "Ein \"Gruppe anschließen\"-Link wird auf deiner Gruppenseite erscheinen. Dadurch können Mitgliedschaftsanfragen an deine Gruppe geschickt werden, welche entweder angenommen oder abgelehnt werden können."
   me_dashboard_link: Übersicht
   me_inbox_link: Eingang
-  me_search_description: "Suche in allen zugriffsberechtigten Seiten"
-  me_search_link: Suchen
+  me_recent_messages: Neu
   me_tasks_link: Aufgaben
+  me_trash_link: Müll
   media_all: Medien
   media_alls: Medien
   media_audio: Tonaufnahme
@@ -339,21 +498,44 @@ de:
   member_groups_of_network: "Gruppen im Netzwerk"
   members: BenutzerInnen
   membership: Mitgliedschaft
+  membership_destroy_confirm_message: "Bist du sicher das du '{{user}}' von {{group_type}} entfernen willst?"
+  membership_exists_error: "Mitgliedschaft besteht bereits für {{member}}"
+  membership_leave_message: "Du wurdest von {{group}} entfernt"
   menu_admin: Admin
   menu_chat: Chat
   menu_groups: Gruppen
   menu_home: Start
+  menu_items: Navigation
   menu_link_account: Konto
   menu_link_logout: Abmelden
   menu_me: Ich
+  menu_moderation: Moderation
   menu_networks: Netzwerke
   menu_people: Personen
   message: Nachricht
+  message_cant_perster_error: "Nur Freund_Innen können {{user}} Nachrichten senden"
   message_must_not_be_empty: "Nachricht darf nicht leer sein"
   message_page_description: "Eine Nachricht an einen oder mehrere Benutzer."
   message_page_display: Nachricht
+  message_recipient_name_caption: "An: {{user}}"
+  message_recipient_name_input_caption: "An: Freund_Innen und Peers"
+  message_to_self_error: "Selbstgespräche sind nicht möglich"
+  message_user_wrote_caption: "{{user}} schrieb:"
+  message_you_wrote_caption: "Du hast geschrieben:"
+  messages: Nachrichten
+  messages_back_to_all: "Zurück zu den Nachrichten"
+  messages_from_label: "Nur Nachrichten anzeigen von:"
+  messages_mark_as_label: "Markieren als:"
+  messages_mark_as_read_link: Gelesen
+  messages_mark_as_unread_link: Ungelesen
+  messages_select_all_link: Alle
+  messages_select_none_link: Keine
+  messages_select_unread_link: Ungelesen
+  messages_tab: Nachrichten
+  messages_view_label: "Ansehen:"
   middle_name: "zweiter Vorname"
   mobile: Handy
+  moderation: Moderation
   monday: Montag
   month_short_april: Apr
   month_short_august: Aug
@@ -367,7 +549,12 @@ de:
   month_short_november: Nov
   month_short_october: Okt
   month_short_september: Sep
+  more: Mehr
   more_information: "weitere Informationen"
+  most_active: Aktivsten
+  most_active_groups: "die aktivsten Gruppen"
+  most_active_members: "die aktivsten Mitglieder"
+  most_stars: "die meisten Sterne"
   most_viewed: Meistangeschaut
   move_button: Verschieben
   move_image_left: "Bild nach links verschieben"
@@ -381,6 +568,10 @@ de:
   my_dashboard: "Meine Übersicht"
   my_groups: "Meine Gruppen"
   my_groups_link: "Meine Gruppen"
+  my_inbox_headline: "Mein Eingang"
+  my_messages_headline: "Meine Nachrichten"
+  my_networks: "Meine Netzwerke"
+  my_networks_link: "Meine Netzwerke"
   my_pages: "Meine Seiten"
   my_peers: "Meine Peers"
   my_peers_description: "BenutzerInnen, mit denen ich eine Gruppe teile"
@@ -388,26 +579,42 @@ de:
   my_peers_link: "mein Umfeld"
   my_pending_tasks_link: Offen
   my_requests_headline: "Meine Anfragen"
+  my_requests_link: "Meine Anfragen"
   my_settings: "Einstellungen für {{user}}"
+  my_social_activity_friends_tab: "Aktivitäten von Freund_Innen"
+  my_social_activity_peers_tab: "Aktivitäten von Peers"
   my_status_heading: "Dein derzeitiger Status"
   my_tasks: Aufgaben
   my_tasks_description: "Aufgabenlisten, zu denen ich Zugang habe"
   my_tasks_headline: "Meine Aufgaben"
+  my_work_headline: "Meine Arbeit"
+  my_work_tab: "Meine Arbeit"
   my_world_heading: "Meine Welt"
   name: Name
+  name_or_email_not_found: "\"{{name}}\" passt zu keinem Namen irgendwelcher User oder Gruppen und ist keine gültige E-Mail-Adresse."
   network: Netzwerk
+  network_directory_link: Netzwerkverzeichnis
+  network_initial_member: "Wähle eine Gründungsgruppe für dieses Netzwerk aus."
   network_invite_info: "Gib die Namen der Gruppen ein, welche du in dieses Netzwerk einladen willst."
   network_settings: Netzwerkeinstellungen
   networks: Netzwerke
+  new_committee: "Neue Arbeitsgruppe für Gruppe {{group_name}}"
+  new_council: "Neues Gremium für Gruppe {{group_name}}"
   new_group: "Neue Gruppe"
+  new_members: "Neue Mitglieder"
   new_network: "Neues Netzwerk"
   new_password: "Neues Passwort"
   new_people: "Neue Leute"
+  new_people_in_weeks: "Neue Mitglieder der letzten 2 Wochen"
   new_people_link: "Neue Leute"
+  new_possibility_heading: "Neue Möglichkeit"
+  next: Weiter
   next_change: "nächste Änderung"
   no_change: "keine Änderung"
   no_committees: "Keine Arbeitsgruppen"
   no_contacts_msg: "Du hast keine Kontakte."
+  no_data_uploaded: "Keine Dateien hochgeladen"
+  no_data_uploaded_label: "Keine Dateien hochgeladen"
   no_group_named: "Es gibt keine Gruppe namens <b>{{name}}</b>."
   no_images_in_gallery: "In dieser Gallerie sind noch keine Bilder"
   no_members: "(keine TeilnehmerInnen)"
@@ -417,15 +624,33 @@ de:
   no_tags: "Keine Tags"
   no_title_given: "Kein Titel angegeben"
   none: keine
+  not_a_favicon_image_error: "Die hochgeladene Datei ist kein Faviconbildformat. Versuchs mal mit .png oder .gif Dateien."
+  not_allowed_to_respond_to_request: "{{user}} ist es nicht erlaubt um diese Anfrage zu {{command}}."
+  not_an_image_error: "Die hochgeladene Datei ist keine Bilddatei. Versuch es mit .png oder .jpg (.jpeg) Dateien."
+  not_contact_of: "Du bist kein Kontakt von {{user}}."
   not_featured_content: "Noch nicht angebotene Inhalte"
   not_found: "Nicht gefunden"
+  not_found_description: "Sorry, wir haben nicht gefunden nach was du gesucht hast."
   not_set: "nicht aktiv"
+  notice_with_message: "mit Nachricht {{message}}"
+  notification_message: Benachrichtigung
+  notification_tab: Benachrichtigungen
   notify_contribution: "<b>Mitwirkende:</b> Benachrichtige Leute die an dieser Seite <b>mitgewirkt</b> haben."
   notify_current_access: "<b>Teilnehmer:</b> benachrichtige Leute die bereits Zugang zu dieser Seite haben."
   notify_new_access: "<b>Neue Zug&auml;nge: </b>Gib neuen Leuten oder Gruppen Zugang auf diese Seite und schicke ihnen eine Benachrichtigung."
+  notify_no_access_error: "Sorry, \"{{name}}\" hat zu dieser Seite keinen Zugriff."
   notify_page_link: "Schicke Eine Benachrichtigung."
+  notify_success: "Du hast erfolgreich Benachrichtigungen verschickt."
+  off_topic: Offtopic
+  offensive_behavior: "Beleidigendes Verhalten"
+  offensive_language: "Beleidigende Sprache"
+  ok_button: OK
   only_last_menber_can_delete_group: "Du kannst eine Gruppe nur löschen, wenn du der/die letzte TeilnehmerIn bist"
   only_me: "Nur Ich"
+  open: Offen
+  open_group: "Offene Gruppe"
+  open_group_description: "Benutzer_Innen werden der Gruppe sofort hinzugefügt - Anfragen müssen nicht erst akzeptiert werden."
+  optional_message: "optionale Nachricht"
   options: Optionen
   or_image_url: "oder URL zum Bild"
   order_changed: "Reihenfolge ge&auml;ndert."
@@ -433,8 +658,14 @@ de:
   organizational_role: "Organisatorische Rolle"
   other: Andere
   other_formats: "Andere Formate"
+  other_reason: "anderer Grund"
   outgoing: ausgehend
   page: Seite
+  page_access_admin: "Voller Zugriff"
+  page_access_edit: Schreibrechte
+  page_access_none: "Kein Zugriff"
+  page_access_view: "Nur Leserechte"
+  page_added_to_group: "Diese Seite wird {{group_type}} {{group_name}} hinzugefügt."
   page_create_owner: "Seiten Besitzer"
   page_details: Seitendetails
   page_details_link: "{{page_class}} Details"
@@ -450,26 +681,72 @@ de:
   page_group_task: Aufgaben
   page_group_text: Text
   page_group_vote: Abstimmung
+  page_history_add_star: "{{user_name}} hat einen Stern hinzugefügt"
+  page_history_added_comment: "{{user_name}} hat ein Kommentar hinzugefügt"
+  page_history_change_title: "{{user_name}} hat den Seitentitel bearbeitet"
+  page_history_deleted_page: "{{user_name}} hat die Seite gelöscht"
+  page_history_destroyed_comment: "{{user_name}} hat ein Kommentar zerstört"
+  page_history_details_change_title: "Von: \"{{from}}\" An: \"{{to}}\""
+  page_history_granted_group_full_access: "{{user_name}} wurde voller Zugriff zur Gruppe {{object_name}} gewährt"
+  page_history_granted_group_read_access: "{{user_name}} wurde es erlaubt, in der Gruppe {{object_name}} mitzulesen"
+  page_history_granted_group_write_access: "{{user_name}} wurde erlaubt, bei der Gruppe {{object_name}} mitzuschreiben"
+  page_history_granted_user_full_access: "{{user_name}} gewährte {{object_name}} vollen Zugriff"
+  page_history_granted_user_read_access: "{{user_name}} erlaubte {{object_name}} das mitlesen"
+  page_history_granted_user_write_access: "{{user_name}} erlaubte {{object_name}} das mitschreiben"
+  page_history_mailer: "Hier kannst du deine E-Mail-Benachrichtigungseinstellungen ändern: {{page_link}}"
+  page_history_mailer_a_page_has_been_modified: "{{site_title}} : Eine Seite wurde bearbeitet"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Eine Seite, welche du beobachtest, wurde seit der letzten Benachrichtigung {{histories_count}}x bearbeitet. Hier gelangst du zur Seite:"
+  page_history_mailer_a_page_you_are_watching: "Eine Seite, welche du beobachtest, wurde bearbeitet. Hier gelangst du zur Seite:"
+  page_history_mailer_choose_turn_off_notifications: "Du kannst dich entscheiden zwischen gar keinen E-Mail-Benachrichtigungen, regelmäßigen Zusammenfassungen der Änderungen oder eine E-Mail bei jeder Änderung der Seite"
+  page_history_mailer_expire_link: "Der Link wird in {{expire_time}} ablaufen"
+  page_history_mailer_hello_user_name: "Hallo {{user_name}}"
+  page_history_make_private: "{{user_name}} hat die Option abgewählt, diese Seite öffentlich zu machen"
+  page_history_make_public: "{{user_name}} hat diese Seite öffentlich gemacht"
+  page_history_remove_star: "{{user_name}} hat einen Stern entfernt"
+  page_history_revoked_group_access: "{{user_name}} wurde der Zugang zur Gruppe {{object_name}} entzogen"
+  page_history_revoked_user_access: "{{user_name}} entzog Benutzer_In {{object_name}} den Zugriff"
+  page_history_start_watching: "{{user_name}} beobachtet ab jetzt diese Seite"
+  page_history_stop_watching: "{{user_name}} beobachtet diese Seite nicht mehr"
+  page_history_the_page_you_are_watching_description: "Die Seite \"{{page_title}}\", die du beobachtest, wurde bearbeitet"
+  page_history_updated_comment: "{{user_name}} hat ein Kommentar editiert"
+  page_history_updated_content: "{{user_name}} hat den Inhalt der Seite editiert"
+  page_history_user_created_page: "{{user_name}} hat diese Seite erstellt"
   page_is_not_static: "Seite wird bearbeitet"
   page_list: Seitenliste
+  page_list_heading_contribution: Mitwirkung
   page_list_heading_created: erstellt
   page_list_heading_created_by: "Erstellt von"
+  page_list_heading_deleted: gelöscht
+  page_list_heading_deleted_by: "gelöscht von"
+  page_list_heading_last_post: "Letzer Beitrag"
   page_list_heading_last_updated: "Letzte Aktualisierung"
+  page_list_heading_new: neu
   page_list_heading_owner: ErstellerIn
   page_list_heading_posts: Posts
   page_list_heading_stars: Sterne
   page_list_heading_title: Titel
   page_list_heading_updated: Aktualisiert
   page_list_heading_updated_by: "Aktualisiert von"
+  page_list_heading_views: angesehen
   page_locked_header: "Seite gesperrt"
+  page_make_public_link: "öffentlich machen"
+  page_make_public_pending_link: "öffentlich machen (noch nicht erledigt)"
+  page_menu_item: Seite
+  page_name_description: "Optionaler, eindeutiger Name (wird benutzt um eine URL für diese Seite zu erstellen)"
   page_not_part_of_group: "Seite nicht Teil dieser Gruppe"
   page_notice_message: "Seite von {{user}} am {{date}} gesendet."
+  page_owner_error: "Seitenbesitzer_In kann nicht leer sein"
   page_owner_help: "Der oder die SeitenbesitzerIn ist die Person oder die Gruppe, welche die Hauptverantwortung für diese Seite trägt. Wähle dich selber, oder eine beliebige andere Gruppe, in der du Mitglied bist."
   page_with_message: "mit Botschaft"
   pager: Pager
+  pages: Seiten
+  pages_tab: Seiten
+  pagination_newer: Neuer
   pagination_next: weiter
+  pagination_older: Älter
   pagination_previous: zurück
   participant: TeilnehmerIn
+  participant_help: "<b>Schreibrecht</b> wird das bearbeiten dieser Seite erlauben."
   participants: Teilnehmer
   participation: Teilnahme
   password: Passwort
@@ -495,14 +772,25 @@ de:
   permissions: Rechte
   personal: Persönlich
   personal_interests: "Persönliche Interessen"
+  phone: Telefon
+  phone_number: Telefonnummer
   phone_numbers: Telefonnummern
   photo: Foto
+  photo_credit: Photocredit
+  place: Platz
+  popular: Bekannt
   post_message: "Poste Nachricht"
   prev_change: "Letzte Änderung"
   preview: Vorschau
+  previous: Vorherige
+  print: Drucken
   print_underlined_p: <u>D</u>ruck
+  print_view_link: Druckversion
   private: Privat
+  private_homepage: "Private Homepage"
   private_profile: "Privates Profil"
+  private_question_label: "Private Frage"
+  profile: Profil
   profile_last_login: "Letzter Login"
   profile_member_since: "Mitglied seit"
   profile_option_allow_peers: "Für Kollegen (\"Peers\") sichtbar"
@@ -515,15 +803,21 @@ de:
   profile_option_may_see_groups: "Gruppenmitgliedschaften anzeigen"
   profile_option_may_see_members: "Gruppenmitglieder anzeigen"
   profile_option_may_see_networks: "Netzwerke anzeigen"
+  profile_permissions: Erlaubnis
   profile_private_description: "Dieses Profil ist privat und nur für deine Kontakte sichtbar."
   profile_public_description: |-
       Dieses Profil ist öffentlich und kann von allen BesucherInnen dieser Website gelesen werden.
       Die Informationen, die du hier angegeben hast, sind außerdem von allen anderen Menschen über diverse Suchmaschinen zu finden.
       Bedenke das, wenn du persönliche Informationen von dir in deinem öffentlichen Profil bekannt gibst.
   profile_saved: "Dein Profil wurde gespeichert."
+  profile_settings: Profileinstellungen
+  propose_to_destroy_group_confirmation: "Bist du sicher, dass du vorschlagen willst diese {{group_type}} zu löschen? Diese {{group_type}} wird gelöscht, wenn genügend Mitglieder dem Vorschlag zustimmen."
+  propose_to_destroy_group_link: "Vorschlagen {{group_type}} zu zerstören."
   public: Öffentlich
   public_checkbox: Öffentlich
   public_checkbox_help: "Wenn markiert, kann jeder diese Seite betrachten."
+  public_encryption_keys: "Public Key"
+  public_homepage: "Öffentliche Homepage"
   public_key: "Public Key"
   public_profile: "Öffentliches Profil"
   ranked_vote_instructions: "Ziehe die Items von der folgenden Liste solange, bis sie in der gewünschten Reihenfolge sind. Die am meisten bevorzugte Möglichkeit steht am oberen, die am wenigsten bevorzugte Möglichkeit am unteren Ende der Liste. Wenn du fertig best, drücke Bestätigen, um deine Stimme abzugeben."
@@ -539,6 +833,8 @@ de:
   recent_network_pages: "Neue Netzwerk-Seiten"
   recent_pages: "Aktuelle Seiten"
   recent_wall_posts: "Jüngste Beiträge auf der Mauer"
+  recently_active_groups: "Kürzlich aktive Gruppen"
+  recently_active_members: "Kürzlich aktive Mitglieder"
   recently_created: "Kürzlich erstellt"
   recipient_tip: "Trenne Empfänger mit Kommata, Leerzeichen oder Zeilensprüungen."
   recipients: Empfänger
@@ -550,25 +846,46 @@ de:
   reject_button: Abweisen
   rejected: abgewiesen
   remove: Entfernen
+  remove_access_error: "Der Zugriff zu dieser Seite konnte nicht entfernt werden. Du kannst den Zugriff der_des Besitzerin_Besitzers nicht entfernen, oder einen Zugriff, den du zum Administrieren der Seite benötigst."
+  remove_contact: "Kontakt {{user}} entfernen"
+  remove_contact_button: "Entferne Kontakt"
   remove_contact_confirmation: "Bist du sicher, dass du den Kontakt zu {{user}} abbrechen willst?"
   remove_contact_info: "Wenn du Personen von deiner Kontaktliste entfernst, wirst du nicht mehr sehen können, wann sich die Personen eingeloggt haben - außerdem wirst du keinen Zugang zu deren kompletten Profil mehr haben. Wenn du eine Person von deiner Kontaktliste entfernst, wirst du auch nicht mehr auf der Kontaktliste der entfernten Person erscheinen."
   remove_friend_link: "Entferne von meinen Kontakten"
   remove_from_gallery: "Aus Gallerie entfernen"
   remove_from_inbox: "Entferne von Eingang"
+  remove_group_link: "Entferne Gruppe"
+  remove_image: "Entferne Bild"
+  remove_image_link: "Entferne Bild"
+  remove_last_access_error: "Du kannst deinen letzten Zugriff zu dieser Seite nicht enziehen."
   remove_star_link: "Entferne Stern ({{star_count}})"
   removing_image: "Entferne Bild..."
+  request_exists_error: "Es gibt schon eine Anfrage für {{recipient}}"
   request_friend_link: "Zu meinen Kontakten hinzufügen"
   request_join_group_link: "Sich {{group_type}} anschliessen"
   request_status: "Diese Anfrage wurde von {{user}} um {{time}} {{status}} "
+  request_to_destroy_our_group_description: "{{user}} hat vorgeschlagen {{group_type}} {{group}} zu zerstören"
+  request_to_destroy_our_group_email: |
+      Die {{group_type}} '{{group}}' wird zerstört, wenn genügend Mitglieder diesem Vorschlag zustimmen.
+
+      Wenn kein Mensch oder nur eine Person diesen Vorschlag ablehnt, und alle anderen von {{group}} sind dafür, wird {{group}} sofort zerstört.
+
+      Wenn es einige Zusagen gibt, werden die Stimmen nach einem Monat gezählt, und die Gruppe wird zerstört, wenn 2/3 oder mehr dafür sind.
+
+      Außerdem können, falls ein Koordinationsgremium vorhanden ist, nur Mitglieder dieses Gremiums abstimmen, ob die Gruppe zerstört werden soll.
+  request_to_destroy_sent: "Dein Vorschlag diese Gruppe zu zerstören wurde den Gruppenmitgliedern gesendet. Wenn der Vorschlag innerhalb eines Monats nicht abgelehnt wird, wird diese Gruppe zerstört."
   request_to_friend_description: "{{user}} würde gerne {{other_user}} zu seinen/ihren Kontakten hinzufügen"
   request_to_join_our_network_description: "Gruppe {{group}} wurde eingeladen, sich beim Netzwerk {{network}} anzuschließen"
+  request_to_join_sent: "Anfrage, sich anzuschließen zu dürfen, wurde gesendet"
   request_to_join_us_description: "{{user}} wurde eingeladen, sich {{group}} anzuschließen"
   request_to_join_us_via_email_description: "{{email}} wurde eingeladen, sich {{group}} anzuschließen"
   request_to_join_you_description: "{{user}} würde sich gerne {{group}} anschließen"
   request_to_join_your_network_description: "{{group}} stellte eine Anfrage, sich dem Netzwerk {{network}} anzuschließen"
+  request_votes_tally_info: "{{approved_count}} stimmten zu / {{rejected_count}} stimmten nicht zu"
   requested_forgot_password: "Du hast eine Änderung deines Passworts angefordert"
   requests: Anfragen
   requests_from_me: "Von mir"
+  requests_tab: Anfragen
   requests_to_me: "An mich"
   required: (benötigt)
   reset_password: "Setze Passwort zurück"
@@ -577,32 +894,62 @@ de:
   reset_password_mail_warning: "Wenn du keine Anfrage, dein Passwort zurückzusetzen, gestellt hast, kontaktiere uns bitte."
   reset_password_text: "Hallo {{user}}. Wenn du dein Passwort zum Einloggen vergessen hast, kannst du hier ein Neues erstellen."
   return_link: Zur&uuml;ck
+  revert_to_previous_version: "Zu vorheriger Version ändern:"
   rss_feed: "RSS Feed"
   saturday: Samstag
   save_button: Speichern
   save_changes: "Speichere Änderungen"
+  save_or_cancel_edit_lock_wiki_error: "Du hast dieses Wiki gesperrt. Andere Benutzer_Innen können es erst wieder bearbeiten, wenn du {{save_button}} oder {{cancel_button}} drückst, um mit dem Bearbeiten aufzuhören."
   save_survey_button: "Umfrage Speichern"
   saved_new_order: "Neue Reihenfolge gespeichert!"
   saving_your_changes: "&Auml;nderungen werden gespeichert..."
   say_message_button: Schreien
   school: Schule
   search: Suche
+  search_description: "Alle Seiten durchsuchen, zu denen du Zugriff hast"
   search_headline: Suche
+  search_input_caption: "Nach Seiten suchen"
+  search_link: Suchen
+  search_menu_item: Suchen
+  search_this_group: "Nur diese Gruppe"
+  search_this_person: "Nur diese Person"
   see_all_link: "Alles sehen"
   see_more_link: Mehr
   see_tips_to_get_started: "Starttips sehen"
+  see_whole_response_link: "Ganze Antwort ansehen"
+  select_all: Alles
+  select_filter_label: "Auswählen:"
   select_image_file: "Wähle Bilddatei"
+  select_many_choices_label: "Markiere mehrere Antwortmöglichkeiten:"
+  select_masthead_background_color: "Wähle Hintergrundfarbe des Impressums"
+  select_none: Nichts
+  select_one_choices_label: "Markiere eine Antwortmöglichkeit:"
+  select_page_types: "Wähle Seitentypen"
+  select_unread: Ungelesen
+  select_visible_group_widgets: "Wähle die Widgets, die auf der Gruppenstartseite sichtbar sein sollen"
   send_button: Sende
+  send_contact_button: "Sende Kontakteinladung"
+  send_contacts_title: "Sende eine Kontakteinladung an {{user}}"
+  send_email: "Sende E-Mail"
   send_invites: "Einladungen senden"
   send_invites_button: "Sende Einladungen"
   send_invites_headline: "Sende Einladung für Teilnahme bei {{group}}"
+  send_join_request: "Anfrage senden, sich {{group_name}} anzuschließen"
   send_message_link: "Sende Nachricht"
+  send_only_with_encryption: "Nur senden, wenn verschlüsselte Auslieferung möglich ist"
+  send_request_button: "Anfrage senden"
   separate_tags: "Mehrere Tags mit einem Beistrich trennen."
   set_status_button: "Ändere Status"
   set_status_messsage: "Was machst du gerade?"
   settings: Einstellungen
   share: Teile
+  share_additional_notification: "Sende zusätzliche Notizen via"
+  share_all_checkbox: "Mit allen Benutzer_Innen geteilt"
+  share_all_checkbox_help: "Wenn markiert können alle Benutzer_Innen auf diese Seite zugreifen."
+  share_already_exists_error: "\"{{name}}\" hat bereits Zugriff auf diese Seite."
   share_button: Teile
+  share_grant_required_error: "{{name}} darf diese Seite nicht ansehen. {{name}} benötigt erst weitere Zugriffsrechte."
+  share_include_message: "Füge eine eigene Nachricht ein"
   share_page_email: "Sende eine E-Mailbenachrichtigung"
   share_page_link: "Teile {{page_class}}"
   share_page_message: "Sende eine Nachricht (optional)"
@@ -611,9 +958,16 @@ de:
   share_page_recipients_results: "Diese {{page_class}} wird geteilt mit"
   share_page_recipients_sections: "Wähle aus deinen Gruppen oder Freunden"
   share_page_recipients_selection: "Wähle aus"
-  share_this_page: "Teile diese Seite"
+  share_permission_denied_error: "Dir ist es nicht erlaubt die Zugriffsberechtigungen dieser Seite zu ändern"
+  share_pester_error: "Sorry, es ist dir nicht erlaubt mit \"{{name}}\" zu teilen."
+  share_send_notification: "Sende Benachrichtigung"
+  shared_page_success: "Du hast diese Seite erfolgreich geteilt."
   sharing_help: "Optional. Du kannst diese Seite mit unterschiedlichen EmpfängerInnen teilen (egal ob Personen oder Gruppen)"
+  show: Zeige
+  show_button: Zeige
   show_gallery: "Gallerie &Uuml;berblick"
+  show_results_tab: "Zeige Ergebnisse"
+  sign_up_settings: Anmeldeeinstellungen
   signup_button: Registrieren
   signup_confirm_password: "Passwort bestätigen"
   signup_email: "Deine E-Mailadresse"
@@ -621,46 +975,83 @@ de:
   signup_info: "Wähle deinen Nick und dein Passwort, dann klicke \"{{sign_up}}\""
   signup_link: "Brauchst du ein neues Konto?"
   signup_login_name: "Dein Nick"
+  signup_mode_closed_description: "Registrierung ist geschlossen."
+  signup_mode_default_description: "Normale Registrierung. Alle können sich ein neues Account anlegen."
+  signup_mode_invite_only_description: "Registrierung ist nur mit Einladung erlaubt."
+  signup_mode_verify_email_description: "Alle können sich registrieren, sie benötigen aber eine echte E-Mail-Adresse und müssen auf eine Bestätigungsmail reagieren."
   signup_password: "Dein Passwort"
   signup_success: "Registration erfolgreich"
   signup_success_message: "Danke für die Registrierung!"
+  signup_time_to_crack_password: "(braucht {{time}} um es zu knacken)"
   signup_title: "Erstelle dein Konto"
+  site_name: "Name der Seite"
   slideshow_delay_input: "Aktualisiere alle {{input_field}} Sekunden"
   small: klein
+  social_activities_tab: "Soziale Aktivitäten"
   social_change_interests: "Interessen im Zusammenhang mit sozialem Wandel"
   starred: Sternenübersäht
+  starts_at: "beginnt am"
   state: Status
+  statistics: Statistiken
+  status: Status
   status_pending: offen
+  status_post_sent: "Deine Nachricht wurde erfolgreich auf deinem Profil und im Feed deiner Freunde gepostet."
   status_resolved: gelöst
   subject: Betreff
   subject_must_not_be_empty: "Betreff darf nicht leer sein"
+  succesfully_updated_custom_appearance: "Benutzer_Innendefiniertes Erscheinungsbild #{{appearance_id}} Optionen aktualisiert!"
+  success: Erfolg
   successful_undelete_image: "L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht."
   successfully_removed_image: "Bild erfolgreich entfernt ({{undo_link}})"
+  successfully_verified_email_message: "E-Mail-Adresse erfolgreich bestätigt"
   summary: Zusammenfassung
   summary_help: "Optional. Die Zusammenfassung kann ein Satz oder ein Absatz sein, welcher kurz den Inhalt der Seite beschreibt."
   sunday: Sonntag
+  survey: Umfrage
+  survey_average_rating_heading: "Durchschnittliche Bewertung:"
+  survey_create_tab: "Erstelle Umfrage"
+  survey_description_explaination: "Dieser Text wird als Einführung angezeigt, und wird das erste sein was Umfrageteilnehmer_Innen zu sehen bekommen."
+  survey_description_heading: Beschreibung
   survey_edit_tab: "Gestalte Diese Umfrage"
+  survey_introduction_tab: Einführung
   survey_list_all_tab: "Zeige alle Antworten"
+  survey_may_create_response: "Eine Antwort erstellen?"
   survey_may_rate: "Sollen Antworten in einer Abstimmung bewertet werden k&ouml;nnen?"
   survey_may_see_ratings: "Soll die Abstimmung &ouml;ffentlich einsehbar sein?"
   survey_may_see_responses: "Antworten &ouml;ffentlich machen?"
   survey_my_response_tab: "Meine Antworten"
   survey_page_description: "Stelle Fragen und warte auf Antworten."
   survey_page_display: Umfrage
+  survey_please_check_and_rate_message: "Bitte überprüfe deine Antworten und bewerte die Antworten anderer Menschen."
+  survey_please_check_message: "Bitte überprüfe deine Antworten."
+  survey_previous_result: Vorherig
+  survey_question_label: "Frage:"
   survey_questions: Fragen
   survey_rate_responses_tab: Abstimmung
   survey_rate_this_response_heading: "Gib deine Stimme ab"
+  survey_rated_by_1_person_caption: "Bewerted von einer Person."
+  survey_rated_by_x_people_caption: "Bewertet von {{count}} Menschen."
   survey_rating_enabled: "Erm&ouml;gliche das Abstimmen &uuml;ber Antworten?"
+  survey_respond_button: Antworten
   survey_response_by: "Antworten von {{login}}"
   survey_responses_enabled: "Offen f&uuml;r Antworten? Wenn ausgew&auml;hlt k&ouml;nnen Leute Antworten geben. Deaktiviere dies um die Umfrage zu beenden."
+  survey_select_a_rating_message: "Wähle eine Bewertung um den nächsten Punkt zu sehen."
+  survey_skip_next_link: Überspringen
   survey_take_tab: "Nimm Teil"
+  survey_thanks_submit_message: "Danke für deine Antwort."
+  survey_you_already_rated_response_with_rating_heading: "Du hast diese Antwort bereits bewertet, und zwar mit einem {{rating}}."
+  survey_you_previousely_rated_message: "Du hast diesen Punkt gerade mit {{rating}} bewertet."
   survey_your_rating_heading: "Deine Stimme f&uuml; diese Antwort"
+  tag_menu_item: Tag
   tags: Tags
   tags_help: "Optional. Benutze am besten ein paar verschiedene Wörter um den Inhalt der Seite zu beschreiben."
   task_list_page_description: "Eine Liste an To-Do-Einträgen."
   task_list_page_display: Aufgabenliste
   tasks: Aufgaben
+  text_message: Textnachricht
+  their_answer_goes_here_label: "Deren Antwort kommt hierher..."
   thing_not_found: "{{thing}} nicht gefunden"
+  thing_not_found_description: "Sorry, wir konnten '{{thing}}' nicht finden"
   thing_settings: "{{thing}} Settings"
   this_is_committee: "Diese Arbeitsgruppe ist Teil von {{parent_group}}."
   this_is_coordinating: "Dieses Gremium ist der <strong>koordinierende Rat</strong> von {{parent_group}}."
@@ -670,9 +1061,15 @@ de:
   title_help: "Benötigt. Der Titel wird benötigt um die Seite zu identifizieren."
   to: An
   toggle_selection: "Setze Auswahl"
+  too_tall_image_error: "Das hochgeladene Bild ist zu hoch ({{count}} Pixel sind die maximale Höhe)"
+  too_wide_image_error: "Das hochgeladene Bild muss genau {{count}} Pixel breit sein"
+  top_pick: Lieblingsmöglichkeit
   top_rated: "Höchste Bewertung"
+  total: "{{count}} insgesamt"
   trash: Müll
+  trash_chat_message: "verschiebe Nachricht in den Müll"
   trash_description: "Im Müll befinden sich all deine gelöschten Seiten. Du kannst eine Seite wiederherstellen indem du {{undelete}} klickst oder sie auch permanent zerstörst indem du {{destroy}} klickst."
+  trash_page_link: "Verschiebe {{page_class}} in den Müll"
   try_again: "Versuch's nochmal"
   tuesday: Dienstag
   type_your_messages_here: "Tippe deine Nachricht hier und drücke Enter..."
@@ -681,17 +1078,39 @@ de:
   unfeature_button: Defeature!
   unknown: unbekannt
   unread: ungelesen
+  unwatched: Unbeobachtet
+  update_button: Aktualisieren
+  update_color_theme: "Farbschema aktualisieren"
+  update_event: "Event aktualisieren"
+  update_favicon: "Favicon aktualisieren"
+  update_link_button: "Link aktualisieren"
+  update_masthead: "Impressum aktualisieren"
+  update_thing: "{{thing}} aktualisieren"
   updated: aktualisiert
+  updating_this_list_will_update_featured_pages: "Hinzufügen, entfernen und umsortieren von Seitennamen auf dieser List wird die veröffentlichten Seiten, welche Benutzer_Innen sehen, sofort aktualisieren."
+  updating_this_list_will_update_menu_items: "Hinzufügen, entfernen und umsortieren von Menüpunkten auf dieser Liste wird die Menüpunkte, welche Benutzer_Innen sehen, sofort aktualisieren."
+  upload: Hochladen
+  upload_a_zip_file_link: "Eine ZIP-Datei hochladen"
+  upload_favicon_image_label: "Ein Favicon-Bild hochladen. Größen können 16x16 oder 32x32 Pixel sein. Dieses Bild wird für Lesezeichen und Tabs im Browser benutzt. PNG und GIF sind gültige Dateiformate."
   upload_file_help: "Benötigt. Wähle eine Datei, welche du hochladen willst."
   upload_image: "Lade Bild hoch"
   upload_image_help: "Optional. Wähle ein erstes Bild um es hochzuladen."
+  upload_image_link: "Bild hochladen"
+  upload_image_question_link: "Bild hochladen"
   upload_images_link: Hochladen
+  upload_masthead_image_label: "Ein Bild für das Impressum hochladen. Darf nicht höher als 80 Pixel sein."
   upload_new_image: "Neues Bild hochladen"
+  upload_zip_file_help: "Optional. Wähle eine ZIP-Datei (Sammlung von Bildern) zum Hochladen auf diese Seite."
+  upload_zip_file_link: "Eine ZIP-Datei hochladen"
   uploaded_image_cropped: "Hochgeladenes Bild wird auf 96x96 Pixel zugeschnitten/gestreckt."
+  url: URL
   usage_agreement_heading: Nutzungsvereinbarung
   usage_agreement_required: "Hier gibts nix ohne Akzeptanz der Nutzungsvereinbarung."
+  use_as_cover: "Als Cover verwenden"
+  use_radio_buttons_to_select_page_cover: "Benutze Radiobuttons um das Seitencover auszuwählen"
   user: BenutzerIn
   user_or_group_name: "BenutzerInnen- oder Gruppenname"
+  user_preferences: Benutzer_Inneneinstellungen
   user_profile_description_allow_peers: "Wenn gesetzt, können Personen, mit denen du eine Gruppe teilst (Peers) dein privates Profil einsehen."
   user_profile_description_may_pester: "Erlaube anderen, Inhalte mit Dir zu teilen und Dir Einladungen zu senden."
   user_profile_description_may_request_contact: "Erlaube Personen, dir eine Kontaktanfrage zu schicken."
@@ -699,25 +1118,53 @@ de:
   user_profile_description_may_see_contacts: "Anderen erlauben, Deine Liste persönlicher Kontakte einzusehen."
   user_profile_description_may_see_groups: "Anderen Deine Gruppenzugehörigkeiten offenbaren."
   username: Username
+  users: Benutzer_Innen
   users_wall: "{{user}}'s Wand"
   users_world: "{{user}}'s Welt"
   version_doesnt_exist: "Es gibt keine Version {{version}}"
   version_number: "Version {{version}}"
   versions: Versionen
   video_embed: Eingebettet
+  video_embed_code_description: "Dies ist nicht die Adresse der Webseite. Es ist ein Code, umschlossen von < und > welcher von der Videoseite - YouTube, etc... - verfügbar gemacht wird, um das Video auf anderen Seiten einzubinden (\"Embedding Code\")"
   video_embed_code_prompt: "Embedcode eines externen Videos"
+  video_link_question_link: Videolink
   video_service_is_not_supported: "wird nicht unterstützt (momentan nur YouTube, Google Video, blip.tv und vimeo)"
   view_all: "Alles ansehen"
+  view_editor_pages_description: "Seiten, an denen du mitwirkst"
+  view_editor_pages_option: "Meine Seitenbearbeitungen"
+  view_groups_pages_description: "Alle Seiten deiner Gruppen und deine eigenen Seiten."
+  view_groups_pages_option: "Meine Gruppen und Ich"
+  view_label: Zeige
+  view_networks_pages_description: "Alle Seiten deiner Gruppen und Netzwerke und diese, welche mit allen Benutzer_Innen geteilt werden."
+  view_networks_pages_option: "Meine Welt"
+  view_owner_pages_description: "Seiten, welche du besitzt."
+  view_owner_pages_option: "Seiten, welche ich besitze"
+  view_posts_link: zeige
+  view_public_pages_description: "Alle Seiten, zu denen du Zugriff hast (auch öffentliche Seiten)"
+  view_public_pages_option: "Die Welt"
   view_requests: "Anfragen zeigen"
   view_slideshow: "Diashow ansehen"
+  view_unread_pages_description: "Ungelesen Seiten welche du besitzt, an welchen du mitwirkst oder welche du beobachtest."
+  view_unread_pages_option: "Ungelesene Seiten"
+  view_watched_pages_description: "Seiten, welche du beobachtest."
+  view_watched_pages_option: "Meine beobachteten Seiten."
+  view_work_pages_description: "Seiten, die du besitzt, an denen du mitwirkst oder die du beobachtest."
+  view_work_pages_option: "All meine Arbeitsseiten"
   viewed: Gesehen
   viewer: BesucherInnen
   viewer_help: "<b>ZuseherIn</b>-Zugriff macht diese Seite sichtbar, aber sonst nichts."
   viewers: Ankucker
   visibility: Sichtbarkeit
+  vote_bad: schlecht
+  vote_good: gut
+  vote_no: nein
+  vote_none: nichts
+  vote_ok: ok
   wall_heading: "Öffentliches Schwarzes Brett"
   wall_post_button: "Neue Nachricht schreiben"
   watch_checkbox: "Benachrichtigung bei Aktualisierungen"
+  watched: Beobachtet
+  website: Website
   websites: Websites
   wednesday: Mittwoch
   welcome_create_group_link: "Erstelle Eine Neue Gruppe"
@@ -732,24 +1179,39 @@ de:
   welcome_find_people_text: "Durchst&ouml;bere das Mitglieder-Verzeichnis nach anderen Benutzern."
   welcome_heading: "Willkommen auf {{site_title}}, {{user_name}}!"
   welcome_hide_link: "Willkommenstext verstecken"
+  welcome_login_message: "Willkommensnachricht beim Einloggen"
   welcome_message: "Crabgrass erm&ouml;glicht es am sozialen Wandel interessierten Organisationen Dinge anzupacken, sich zu Koordinieren und zu Netzwerken."
   welcome_show_link: "Willkommenstext zeigen"
   welcome_title: "Willkommen auf {{site_title}}"
   welcome_upload_icon_link: "Lade ein Symbol hoch"
   welcome_upload_icon_text: "Lade ein Bild als dein Symbol hoch. Dieses Symbol wird neben jedem deiner Beitr&auml;ge erscheinen."
   when_does_feature_expire: "Ab wann ist dieses Feature nicht mehr aktuell?"
+  widget_index: "Widget {{index}}"
   width: Breite
+  wiki: Wiki
+  wiki_advanced_editor: "Erweiterter Editor"
+  wiki_body_help: "Optional. Gib hier den ersten Text der Seite ein."
+  wiki_editor: Editor
   wiki_is_locked: "Dieses Wiki ist momentan gesperrt von {{user}}"
   wiki_lost_text_confirmation: "Aller ungesicherter Text wird verlohren gehen. Bist du Dir sicher?"
   wiki_page_description: "Ein allgemeines Textdokument"
   wiki_page_display: Wiki
+  wiki_plain_editor: Texteditor
   wiki_revert_version: "Rückgängig zu Version {{version}}"
   wiki_section_edit: "bearbeite diesen Abschnitt"
+  wiki_version_creator_heading: Person
+  wiki_version_destroy_link: zerstören
+  wiki_version_revert_link: rückgängig
+  wiki_visual_editor: "WYSIWYG Editor"
   wont_be_able_to_save: "Du wirst diese Seite nicht speichern können"
   work: Arbeit
   work_life: Arbeitsleben
+  you_are_a_member_already_error: "Du bist bereits ein Mitglied"
+  you_are_not_allowed_to_do_that: "Du darfst das nicht tun!"
   you_are_not_member_of_any_group: "Du bist bei keiner Gruppe Mitglied."
   you_are_viewing_version: "Du betrachtest Version {{version}} von {{user}}"
   you_have_no_contacts: "Du hast keine Kontakte"
   you_have_no_peers: "Du hast keine Peers"
+  you_should_receive_instructions_email: "Du solltest eine E-Mail mit der weiteren Vorgehensweiße erhalten haben, um das Erstelen deines Accounts abzuschließen."
   your_login: "Dein Login"
+  zip_file: Zip-Datei

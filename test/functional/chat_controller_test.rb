@@ -35,10 +35,7 @@ class ChatControllerTest < ActionController::TestCase
     login_as :blue
     get :channel, :id => groups(:rainbow).name
     assert_response :success, "should reach chat channel"
-    assert_raise Test::Unit::AssertionFailedError,
-      "Should not show link to join chat in chat." do
-      assert_select 'a#chat'
-    end
+    assert_select 'a#chat', false, "Should not show link to join chat in chat."
  end
 
   def test_channel_archive_when_not_logged_in

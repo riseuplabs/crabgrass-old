@@ -12,17 +12,20 @@
   Please note that the cg:import_geo_data rake task could take a bit of
   time to run and will add a large-ish data set to mysql.
 
-FIXME
-* Dashboard path has been changed. It is no longer '/me/dashboard'.
-  Now the default path is '???'. Please update 'login_redirect_url' field for every site.
+* db migrations (rake db:migrate) are required for this upgrade.
+** if you use the moderation module, you need to run this first:
+    * script/generate plugin_migration
+    * additionally, after the plugin migration file is generated (something like
+      *_moderation_to_version_8.rb), the convert_message_page_to_discussion_message
+      migration needs to be renamed so that it runs after the moderation migration.
+      to do this, simply move the message_page migration to a timestamp later than 
+      the moderation migration.
 
-* Features now use Transforms.
-  Transforms are a great way to make features more readable.
-  However Cucumber 0.4.4 comes with a bug that makes it crash if
-  transforms are used and arguments to steps are left empty. We want
-  them empty step arguments so please apply the fix from
-  http://github.com/robholland/cucumber/commit/59b51c8a2e7ff25eae33ddda559939719c726213
-  to your cucumber install.
+* Custom Appearances
+  Due to the change in the UI, custom appearances will need to be re-done after
+  an upgrade. Custom Appearaances are set in the Advanced tab of the Site Appearance
+  settings.  The mastehead background color will work as before, but any other 
+  changes using this form will not be applicable to 0.5.
 
 
 0.4.7

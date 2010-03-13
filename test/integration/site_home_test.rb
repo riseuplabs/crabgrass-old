@@ -30,4 +30,22 @@ class SiteHomeTest < ActionController::IntegrationTest
     assert_have_no_selector "#welcome_box table"
   end
 
+  def test_announcements_not_shown
+    login 'blue'
+    visit '/'
+    assert_not_contain I18n.t(:announcements)
+  end
+
+  def test_create_group_link_not_shown
+    login 'blue'
+    visit '/'
+    assert_not_contain I18n.t(:create_a_group)
+  end
+
+  def test_nav_links_in_welcome_box
+    login 'blue'
+    visit '/'
+    contain '<ul id="welcome-links" class=\'navbar\'>'
+  end
+
 end

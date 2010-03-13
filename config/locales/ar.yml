@@ -1,5 +1,5 @@
----
-ar:
+--- 
+ar: 
   about_me: معلوماتي
   accept_usage_agreement: "أوافق على تعليمات اتفاقية الإستخدام"
   access: الدخول
@@ -82,8 +82,6 @@ ar:
   category: تصنيف
   check_all: "اختر الكل"
   close_button: إغلاق
-  collection_class_description: "صفحات خاصة تحتوي صفحات أخرى"
-  collection_page_display: مجموعة
   committee: لجنة
   committee_publicly_visible: "إجعل هذه اللجنة مرئية للجميع"
   committee_publicly_visible_description: "يمكن مشاهدة اللجان لغير الأعضاء على {{domain}}/yourgroupname"
@@ -200,7 +198,6 @@ ar:
   featured_content: "المحتوى المخُتار"
   featured_content_header: المخُتار
   file: الملف
-  file_class_description: "ملف تم تحميله"
   file_must_be_image_error: "يجب أن يكون الملف صورة حتى بصبح جزء من معرض الصور"
   file_size: "حجم الملف"
   file_version_deleted: "تم حذف نسخة الملف"
@@ -208,26 +205,6 @@ ar:
   first_name: "الإسم الأول"
   folder_class_description: "مجموعة ملفات"
   folder_display: مجلد
-  folder_page_description: "مجموعة من الملفات."
-  folder_page_display: مجلد
-  footer_text_crabgrass: |-
-      <span>هذا الموقعم مدعوم بواسطة <a href="https://we.riseup.net/crabgrass">crabgrass</a>, <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL البرمجيات الحرة</a> لتنظيم الشبكات.</span>
-      <ul>
-        <li><a href='https://labs.riseup.net/report-a-bug'>للتبليغ عن أخطاء</a></li>
-        <li><a href='https://labs.riseup.net/request-a-feature'>أطلب ميزة</a></li>
-        <li><a href='https://we.riseup.net/crabgrass/table-of-contents'>صفحات crabgrass المساعدة </a></li>
-        <li><a href='https://we.riseup.net/cgdev/get-involved'>الإنضمام</a></li>
-      </ul>
-  footer_text_riseup: |-
-      <span>هذا الموقع تم تشغيله من قبل <a href="http://riseup.net">riseup.net</a>, مجموعتكم التكنولوجية المستقلة الصديقة لكم منذ 1999.</span>
-      <ul>
-        <li><a href="http://help.riseup.net/policy/privacy/">ضمان الخصوصية</a></li>
-        <li><a href="http://help.riseup.net/about-us/">من نحن</a></li>
-        <li><a href="https://mail.riseup.net/">حسابات البريد الإلكتروني</a></li>
-        <li><a href="https://lists.riseup.net/">القوائم البريدية</a></li>
-        <li><a href="http://status.riseup.net/">حالة النظام</a></li>
-        <li><a href="http://riseup.net/donate/">التبرع لriseup.net</a></li>
-      </ul>
   forgot_password_link: "نسيت كلمة المرور"
   forgot_password_mail_expiry: "سيبقى هذا الرابط فعّال لمدة 24 ساعة. إذا كنت ترغب بتغيير كلمة المرور بعد هذه الفترة عليك زيارة الصفحة الخاصة بنسيان كلمة المرور مرة أخرى وطلب رابط جديد"
   forgot_password_mail_greeting: "{{user}}, لتغيير كلمة المرور، الرجاء زيارة"
@@ -242,7 +219,6 @@ ar:
   full: كامل
   fullname: "الإسم الكامل"
   galleries: "معارض الصور"
-  gallery_class_description: "مجموعة من الصور."
   gallery_description: "ارفع عددا من الصور أو نظم صورا موجودة في مجموعة."
   gallery_display: "معرض الصور"
   gallery_undo_link: تراجع
@@ -258,15 +234,15 @@ ar:
   group_information: "معلومات {{group_type}}"
   group_invite_email: |
       {{from_user}} قام بدعوتك للانضمام إلى مجموعة "{{group}}".
-
+      
       إذا كنت ترغب في أن تنضم إلى هذه المجموعة ، انقر هنا
-
+      
         {{accept_invite_link}}
-
+      
       الصفحة الرئيسية لهذه المجموعة يمكن ان تجدها هنا:
-
+      
         {{group_home_link}}
-
+      
       إذا كنت لا ترغب في الانضمام إلى هذه المجموعة ، ببساطة تجاهل هذه البريد الالكتروني.
   group_invite_subject: "دعوة للانضمام إلى مجموعة \"{{group}}\""
   group_join_chat: "الانضمام للدردشة"
@@ -304,7 +280,6 @@ ar:
   incoming: الوارد
   information: المعلومات
   insert_image_heading: "إدراج صورة"
-  insert_image_instructions: "اضغط على الصورة المصغرة لاضافتها الى نص الويكي."
   invalid_email: "عنوان البريد الإلكتروني غير صحيح"
   invalid_email_text: "عنوان البريد الإلكتروني غير صحيح"
   invalid_token: "رابط غير صحيح"
@@ -353,8 +328,6 @@ ar:
   mark_pages_as_featured_content_for_group: "هنا يمكنك اختيار الصفحات على انها المحتوى المُختار لهذه المجموعة."
   me_dashboard_link: "لوحة التحكُّم"
   me_inbox_link: "صندوق الوارد"
-  me_search_description: "ابحث في جميع الصفحات التي يُسمح لك بمشاهدتها"
-  me_search_link: بحث
   me_tasks_link: المهام
   media_all: وسيطة
   media_alls: وسائط
@@ -652,7 +625,6 @@ ar:
   share_page_recipients_results: "مشاركة {{page_class}} مع"
   share_page_recipients_sections: "اختار من ضمن مجموعاتك او أصدقائك"
   share_page_recipients_selection: "قم بالإختيار"
-  share_this_page: "شارك هذه الصفحة"
   sharing_help: "اختياري. يمكنك مشاركة هذه الصفحة مع عدة مستلمين (سواء مستخدمين أو مجموعات)."
   show_gallery: "إظهار معرض الصور"
   signup_button: "سجل الآن"
@@ -775,11 +747,11 @@ ar:
   welcome_hide_link: "إخفاء مرحبا بك"
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-
+      
        هذا الموقعم مدعوم بواسطةCrabgrass <a href="http://www.affero.org/oagpl.html">البرمجيات الحرة</a> تطبيق الويب مصمم من أجل المجموعات وتنظيم الشبكات, ومصمم لتلبية احتياجات حركة العدالة العالميالهدف البعيد المدى هو توفير الأدوات التقنية لتسهيل الأنشطة والكونفدرالية ، وشبكات التغيير الاجتماعي الديمقراطي المباشر. [more... -> /crabgrass/about]
-
+      
         h3. هل أنت جديد هنا?
-
+      
         [Sign up here -> /account/signup]لتبدأ. نحن في مرحلة مبكرة من البرمجة والتطوير. حيث التعديلات نستوحيها من ملاحظات المستخدمين, تأكد من أن عليك التأكد بأن تعلمنا كيف كنت تستخدم الموقع, ما الذي ترغب في تغييره, ماذا تحب, وما الذي لا تحبه
   welcome_message: "Crabgrass تمكن منظمات التغيير الاجتماعي من أجل انجاز الامور ، ونشر المبادئ ، والتعاون ، والإتصال. "
   welcome_show_link: "أظهر مرحبا بك"

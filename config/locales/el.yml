@@ -1,14 +1,21 @@
----
-el:
+--- 
+el: 
   about_me: "Σχετικά με εμένα"
   accept_usage_agreement: "Αποδέχομαι την άδεια χρήσης"
   access: Πρόσβαση
+  action: δράση
   activate_js_to_rearrange_photos: "Ενεργοποιήστε την JavaScript ώστε να ανατακτοποιείτε τις φωτογραφίες με Drag&Drop"
   activity_contact_created: "ο/η {{user}} πρόσθεσε τον/την {{other_user}} ως επαφή"
   activity_group_created: "{{user}} δημιούργησε {{group_type}} {{group}}"
   activity_group_destroyed: "{{group}} διαγράφηκε από {{user}}"
+  activity_message: "Ο/η {{author}} έγραψε: {{message}}"
+  activity_unread: "Έχετε {{count}} αδιάβαστα [μηνύματα]"
+  activity_unread_singular: "Έχετε ένα αδιάβαστο [μύνημα]"
+  activity_user_destroyed: "Ο/η {{user}} αποσύρθηκε"
+  activity_user_joined_group: "Ο/η {{user}} προσχώρησε στην ομάδα {{group_type}} {{group}}"
   activity_user_left_group: "{{user}} αποχώρησε από {{group_type}} {{group}}"
   activity_user_status: "{{user}} είναι τώρα {{status}}"
+  activity_wall_message: "Ο/η {{author}} είπε στον/ην {{user}}: {{message}}"
   add_another_file: "Προσθήκη και άλλου αρχείου"
   add_button: Πρόσθεσε
   add_comment: "Προσθήκη Σχολίου"
@@ -16,64 +23,193 @@ el:
   add_description: "Προσθήκη Περιγραφής"
   add_email_address: "Προσθέστε διεύθυνση ηλεκτρονικού ταχυδρομείου"
   add_encryption_key: "Προσθέστε κλειδί κρυπτογράφησης"
+  add_existing_image: "Πρόσθεσε φωτογραφία"
   add_im_address: "Προσθέστε IM διεύθυνση (MSN,yahoo messenger etc)"
   add_location: "Προσθήκη Τοποθεσίας"
   add_new_attachment: "Πρόσθεσε μια νέα επισύναψη"
   add_one_or_more_tags: "Προσθέστε μία ή περισσότερες ετικέτες, διαχωρίζοντάς τες με ένα κόμμα"
   add_phone_number: "Προσθήκη Αριθμού Τηλεφώνου"
   add_photo_to_gallery: "Κάντε click σε μια φωτογραφία για να την προσθέσετε"
+  add_star_link: "Πρόσθεσε Αστέρι ({{star_count}})"
   add_tags: "Προσθέστε ετικέτες"
   add_websites: "Προσθήκη Ιστοσελίδας"
+  additional_page_access: "Επιπλέον Πρόσβαση"
+  administer_site: "Διαχειρήσου Σελίδα"
+  administration: Διαχείρηση
+  alert: Ειδοποίηση
   alert_error: Σφάλμα!
   alert_field_errors: "Υπάρχουν προβλήματα με τα παρακάτω πεδία"
   alert_not_saved: "Οι αλλαγές δεν αποθηκεύτηκαν"
   alert_permission_denied: "Απαγορεύτηκε η πρόσβαση"
+  alert_permission_denied_details: "Συγγνώμη. Δεν έχεις τη δυνατότητα να το κάνεις αυτό."
   alert_saved: "Οι αλλαγές αποθηκεύτηκαν"
   all: Όλα
   all_content: "Όλα τα περιεχόμενα"
   all_groups: "όλες οι ομάδες"
+  all_networks: "Όλα τα Δίκτυα"
   all_page_types: "όλοι οι τύποι σελίδων"
   all_people: "όλοι οι άνθρωποι"
+  all_people_link: όλοι
+  all_states: "Όλες οι Καταστάσεις"
   allow_membership_requests: "Επιτρέψτε τις αιτήσεις εγγραφής μελών"
   already_contacts_info: "Είστε ήδη επαφή αυτού του προσώπου"
+  announcement_page_description: "Μια αναγγελία."
+  announcement_page_display: Αναγγελία
   announcements: Ανακοινώσεις
   approve: εγκρίνω
   approve_button: έγκριση
+  approve_contact_info: "Μια αίτηση για να γίνει φίλος/η υπάρχει ήδη από αυτόν/η τον/η χρήστη. Θέλεις να την εγκρίνεις;"
+  approve_or_reject_link: "ενέκρινε ή απόρριψε αυτή την αίτηση"
   approved: εγγεκριμένο
   archive: Αρχείο
+  archive_filter_created_link: "Ημερομηνία Δημιουργίας"
+  archive_filter_updated_link: "Τελευταία Ημερομηνία Ενημέρωσης"
+  archive_headline: Αρχείο
+  article_page_description: "Δημιούργησε ένα άρθρο blog ή άρθρο ειδήσεων."
   article_page_display: άρθρο
+  asset_page_description: "Ανέβασε μια εικόνα, κείμενο, λογιστικό φύλλο, παρουσίαση ή οποιοδήποτε αρχείο."
+  asset_page_display: Αρχείο
   at_least_one_recipient_is_required: "απαιτείται τουλάχιστον ένας παραλήπτης"
   attachments: Επισυνάψεις
   away: απουσιάζω
   back_button: Πίσω
   back_to_group: "επιστροφή στην {{group_name}}"
+  basic_settings: "Βασικές Ρυθμίσεις"
+  break_lock: "Παύση Κλειδώματος"
+  break_lock_button: "Παύση Κλειδώματος"
   cancel_button: Ακύρωση
   cancel_link: ακύρωση
+  caption: Λεζάντα
   category: Κατηγορία
+  chat_flagged_inappropriate: "Χώρος συζήτησης επιτυχώς επισημάνθηκε ως ακατάλληλος."
   check_all: "Επιλογή Όλων"
   close_button: Κλείσιμο
-  collection_page_display: συλλογή
   committee: Επιτροπή
   committee_publicly_visible: "Κάνε τις επιτροπές να είναι εμφανείς δημόσια"
   committee_publicly_visible_description: "Οι επιτροπές είναι εμφανείς σε μη μέλη στη διεύθυνση {{domain}}/yourgroupname"
   committees: επιτροπές
+  comparing_changes_header: "Σύγκριση αλλαγών από {{user}} στις {{when}} από {{old_version}} σε {{new_version}}"
+  confirm: Έγκριση
+  confirm_discarding_text_area: "Όση δουλειά δεν έχεις σώσει θα χαθεί. Πάτησε {{cancel}} για να συνεχίσεις την επεξεργασία."
+  confirm_inappropriate_chat: "Είστε βέβαιοι ότι αυτή η συζήτηση είναι ακατάλληλη; Κάντε κλικ στο κουμπί \"ΟΚ\" μόνο αν νομίζετε ότι είναι προσβλητική, αγενής ή κακεντρεχής. Ένας μεσολαβητής θα το εξετάσει σύντομα."
+  confirm_inappropriate_page: "Είστε βέβαιοι ότι αυτή η σελίδα είναι ακατάλληλη; Κάντε κλικ στο κουμπί \"ΟΚ\" μόνο αν νομίζετε ότι είναι προσβλητική, αγενής ή κακεντρεχής. Ένας μεσολαβητής θα το εξετάσει σύντομα."
   confirm_new_password: "Επιβεβαίωσε τον νέο κωδικό"
+  confirmation: "Είσαι σίγουρος/η;"
   contact: Επαφή
+  contact_request_message_label: "Πες στον/η {{user}} γιατί θες να γίνεις φίλος/η του/ης."
   contacts: Επαφές
+  contribute_content_link: "Δημιουργία Σελίδας"
+  contribute_group_content_link: "Πρόσθεσε τη Σελίδα στην Ομάδα {{group}}"
+  contribute_to_site: "Συμβολή στη Σελίδα"
+  contributed: Συνεισφέρθηκε
+  coordinating_council: "Συντονιστικό Συμβούλιο"
   coordinator: Συντονιστής
+  coordinator_help: "Η <b>Πλήρης Πρόσβαση</b> ) θα παραχωρήσει απεριόριστη δυνατότητα για τροποποίηση αυτής της σελίδας (ακόμη και να σβήστει και να μοιραστεί)."
   coordinators: Συντονιστές
   council: Συμβούλιο
   councils: Συμβούλια
+  create_a_group: "Δημιούργησε μια Ομάδα"
+  create_a_new_thing: "Δημιούργησε ένα νέο {{thing}}"
+  create_button: Δημιουργία
+  create_committee: "δημιούργησε επιτροπή"
+  create_group_link: "δημιούργησε μια νέα ομάδα"
+  create_page: "Δημιουργία Σελίδας"
+  create_page_button: "Δημιουργία {{page_class}}"
+  create_page_data: "{{page_class}} Δεδομένα"
+  create_page_information: "{{page_class}} Πληροφορίες"
+  create_task_list: "δημιούργησε μια νέα λίστα καθηκόντων"
   created: δημιουργήθηκε
   created_by: "Δημιουργήθηκε από"
   created_on: "Δημιουργήθηκε την"
+  created_when_by: "δημιουργήθηκε {{when}} από {{user}}"
+  csrf_error_message: "Η αίτηση σύνδεσής σας μοιάζει με προσπάθεια επίθεσης σε αυτή την σελίδα. Μην ανησυχείτε, το λάθος αυτό συμβαίνει συχνά, ακόμη και για αθώα αιτήματα. Είμαστε απλά επιπλέον καχύποπτοι. Το μόνο που έχετε να κάνετε είναι να ξαναφορτώσετε τη σελίδα πριν επιχειρήσετε να συνδεθείτε. Μπορείτε να ακολουθήσετε αυτό το σύνδεσμο για να προσπαθήσετε ξανά."
+  current_attachments: "Τρέχοντα Συνημμένα"
+  current_featured_content: "Τρέχον Προτεινόμενο Περιεχόμενο"
+  current_tags: "Τρέχουσες Ετικέτες"
+  current_video_sources: "Προς το παρόν υποστηρίζονται: youtube, blip.tv, google video, vimeo."
+  data_for_page_missing: "Τα δεδομένα για αυτή τη σελίδα λείπουν."
   date: ημερομηνία
+  date_all_time: "Όλος ο Χρόνος"
+  date_centuries: αιώνες
+  date_days: μέρες
+  date_hours: ώρες
+  date_minutes: λεπτά
+  date_months: μήνες
+  date_older: Παλιότερη
+  date_seconds: δευτερόλεπτα
+  date_this_month: "Αυτό το Μήνα"
+  date_this_week: "Αυτή την Εβδομάδα"
+  date_today: Σήμερα
+  date_weeks: εβδομάδες
+  date_years: χρόνια
+  date_yesterday: Εχτές
   delete: Διαγραφή
+  delete_page_link: "Διαγραφή {{page_class}}"
+  delete_post: "Διαγραφή Άρθρου"
+  delete_this_version: "διαγραφή αυτής της έκδοσης"
+  delete_version_confirm: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την εκδοχή;"
+  deleted: Διαγράφτηκε
   description: περιγραφή
   descriptions: Περιγραφές
+  descriptive_name_for_display: "Ένα περιγραφικό όνομα που χρησιμοποιείται για απεικόνιση"
+  destroy: καταστροφή
+  destroy_confirmation: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό/ή το/η {{thing}}; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+  destroy_group_link: "Καταστροφή {{group_type}}"
+  details_link: Λεπτομέρειες
+  diff_link: "επισκόπηση αλλαγών"
+  directory_of_groups: "Κατάλογος Ομάδων"
+  directory_of_networks: "Κατάλογος Δικτύων"
+  directory_of_people: "Κατάλογος Ανθρώπων"
+  discuss_request_link: "συζητήστε αυτό το αίτημα με τον/την {{person_or_group}}"
+  discussion_page_description: "Συζητήστε ένα συγκεκριμένο θέμα με ομάδες ή άλλους χρήστες."
+  discussion_page_display: "Ομαδική Συζήτηση"
   discussions: Συζητήσεις
+  display_name: "Επισκόπηση ονόματος"
+  dont_have_permission_to_create_committees: "Δεν έχετε την άδεια να δημιουργήσετε επιτροπές υπό τον/την {{group}}"
+  dont_understand_group_type: "Ο τύπος {{type}} της ομάδας δεν είναι κατανοητός"
+  download: Κατέβασε
+  download_gallery: "Κατέβασε Έκθεση"
+  drag_and_drop_to_rearrange_photos: "Μετακινήστε εικόνες για να τις ανακατατάξετε"
+  edit: Επεξεργασία
+  edit_appearance: "Επεξεργασία Εμφάνισης"
+  edit_attachments: "Επεξεργασία Συνημμένων"
+  edit_attachments_link: Επεξεργασία
+  edit_featured_content_for_group: "Επεξεργασία Προτεινόμενου Περιεχομένου για τον/την {{group_name}}"
+  edit_gallery: "Επεξεργασία Έκθεσης"
+  edit_profile_link: "Επεξεργασία Προφίλ"
+  edit_settings: "Επεξεργασία Ρυθμίσεων"
+  edit_tags: "Επεξεργασία Ετικετών"
+  edit_tags_link: Επεξεργασία
+  edit_title: "επεξεργασία τίτλου"
+  edit_underlined_e: <u>ε</u>πεξεργασία
+  edited: Επεξεργάστηκε
+  email: Email
+  email_addresses: "Διευθύνσεις Email"
+  email_link_expires: "Αυτός ο σύνδεσμος θα λείξει σε {{days}} μέρες."
+  email_notice_access: "Μπορείτε να αποκτήσετε πρόσβαση σε αυτήν τη σελίδα εδώ:"
+  email_notice_hello: "Γειά, ο/η {{from}} σας έστειλε μια σελίδα."
+  email_notice_hello_with_message: "Γειά, ο/η {{from}} σας έστειλε μια σελίδα με το ακόλουθο μύνημα: {{message}}"
+  email_notice_subject: "Δες τη σελίδα \"{{title}}\""
+  empty_results: Κανένα
+  entity_autocomplete_tip: "Πληκτρολογήστε το όνομα μιας ομάδας ή προσώπου."
+  error_saving_new_order: "Λάθος κατά την αποθήκευση νέας τάξης!"
+  exception_back_link: Πίσω
+  exception_bug_report_description: "Παρακαλείσθε να προσθέσετε μια περιγραφή του πώς βρεθήκατε σε αυτή τη σελίδα, καθώς και τυχόν πρόσθετες παρατηρήσεις"
+  exception_bug_report_link: "Υποβολή Αναφοράς Σφάλματος"
+  exception_description: "Παρακαλούμε να μας βοηθήσετε να κάνουμε αυτό το λογισμικό καλύτερο στέλνοντάς μας μια αναφορά σφάλματος. Θα προσπαθήσουμε να διορθώσουμε το πρόβλημα σύντομα."
+  exception_headline: "Ουπς! Μόλις συνέβη ένα λάθος."
+  exception_title: "Σφάλμα Συστήματος"
+  expired_featured_content: "Ληγμένο Προτεινόμενο Περιεχόμενο"
+  external_video_page_description: "Δείτε ένα βίντεο που φιλοξενείται σε μια εξωτερική σελίδα."
+  external_video_page_display: "Εξωτερικό Βίντεο"
+  fax: Fax
+  feature_button: Χαρακτηριστικό!
+  featured_content: "Προτεινόμενο Περιεχόμενο"
+  featured_content_header: Προτεινόμενο
   file: αρχείο
+  file_must_be_image_error: "Το αρχείο πρέπει να είναι εικόνα για να είναι μέρος μιας έκθεσης."
   file_size: "Μέγεθος αρχείου"
+  file_version_deleted: "έκδοση αρχείου διαγράφηκε"
   files: Αρχεία
   friday: Παρασκευή
   friends: Φίλοι

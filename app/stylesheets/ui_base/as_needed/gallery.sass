@@ -1,12 +1,20 @@
+               
+#title
+  span
+    a
+      font-size: 11px
+      font-weight: normal
+      text-decoration: none
+      color: #5A98C8
+      margin-left: 15px
+        
+      &:hover
+        text-decoration: underline 
 
 .swatches
-  .gallery_swatch_portrait
+  .gallery_swatch_portrait, .gallery_swatch_landscape 
     a     
-      :border-width 3px 
-       
-.swatches
-  span
-    display: none
+      :border-width 3px  
 
 .cover
   :margin-bottom 1em
@@ -19,7 +27,7 @@
   :margin 0 1em 1em 0
   :float left
 
-.gallery_swatch_portrait  
+.gallery_swatch_portrait, .gallery_swatch_landscape  
   a
     clip: border
     background: white none repeat scroll 0 0
@@ -34,8 +42,6 @@
 
 .cover a.thumbnail
   :border-width 3px
-
-
 
 
 .gallery-nav
@@ -74,25 +80,27 @@
     :-moz-border-radius-bottomleft 4px
 
   .meta
-    :margin-right 17px
+    :margin-right 16px
     :color #898989
     :display inline
     :margin-top 9px
     :font-size 11px
 
-  a                 
+  a              
     :color #5A98C8
-    :font-size 11px
-    
-.gallery-actions
-  width: 100%
-  a
+    :font-size 11px             
+    text-decoration: none
+
+    &:hover
+      text-decoration: underline    
+
+  .gallery-actions a
     :padding 2px 0px 4px 24px
-    :margin-right 17px
+    :margin-right 16px
 
 
-.gallery-nav .meta
-  float: left
+  .gallery-nav .meta
+    :float right
 
 
 .gallery-item

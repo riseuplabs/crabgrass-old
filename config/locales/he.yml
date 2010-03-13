@@ -1,6 +1,5 @@
----
-he:
-  _locale_rtl: "1"
+--- 
+he: 
   about_me: אודותיי
   accept_usage_agreement: "אני מסכימ\\ה לתנאים הרשומים בהסכם השימוש"
   access: גישה
@@ -65,8 +64,6 @@ he:
   cancel_link: ביטול
   category: קטגוריה
   close_button: סגור
-  collection_class_description: "דפים מיוחדים אשר מכילים דפים נוספים."
-  collection_page_display: אוסף
   committee: וועדה
   committee_publicly_visible: "הפכי את הוועדה לשקופה ציבורית"
   committee_publicly_visible_description: |-

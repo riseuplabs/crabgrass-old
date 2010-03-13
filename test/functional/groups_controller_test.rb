@@ -10,10 +10,16 @@ class GroupsControllerTest < ActionController::TestCase
     Conf.disable_site_testing
   end
 
-  def test_tasks
+  def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
     assert_response :success
+    # testing for link to home on banner image (#1930)
+    assert_select 'div.banner' do
+      assert_select "a[href='/rainbow']" do
+        assert_select 'img.left'
+      end
+    end
   end
 
   def test_discussions
@@ -24,8 +30,13 @@ class GroupsControllerTest < ActionController::TestCase
 
   def test_archive
     login_as :blue
+    # let's prepare some tag so we can test the link for #1888
+    page=groups(:rainbow).pages.first
+    page.tag_list.add("Tag me baby!", :parse => true)
+    page.save
     get :archive, :id => groups(:rainbow).to_param, :path => ['created']
     assert_response :success
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!']", "Tag me baby!"
   end
 
   def test_create_group
@@ -130,6 +141,10 @@ class GroupsControllerTest < ActionController::TestCase
     get :show, :id => groups(:rainbow).to_param
     assert_response :success
 #    assert_template 'show'
+
+    # inverted test for #1901
+    assert_select '.no-third-level', false
+      "Class set for sidebars without 3rd leven nav despite having one."
 
     assert_not_nil assigns(:group)
     assert assigns(:group).valid?
@@ -338,6 +353,18 @@ class GroupsControllerTest < ActionController::TestCase
     get :tags, :id => groups(:rainbow).name
     assert_response :success
     assert_not_nil assigns(:pages)
+    # let's prepare some tag so we can test the filters adding up.
+    # this is an additional test for #1888 - make sure this still works.
+    page=groups(:rainbow).pages.first
+    page.tag_list.add("Tag me baby!", :parse => true)
+    page.tag_list.add("tags tags tags", :parse => true)
+    page.save
+    get :tags, :id => groups(:rainbow).name
+    assert_response :success
+    assert_not_nil assigns(:pages)
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!']", "Tag me baby!"
+    get :tags, :id => groups(:rainbow).name, :path => ['Tag+me+baby!']
+    assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!/tags+tags+tags']", "tags tags tags"
   end
 
   def test_tags_not_allowed
@@ -543,6 +570,9 @@ editing tools on a group basis has been abandoned iirc, azul
   def test_people_when_not_logged_in
     get :people, :id => groups(:rainbow).name
     assert_response :redirect, "login required to list membership of a group"
+    get :people, :id => groups(:private_group).name
+    assert_response :unauthorized,
+      "attempt to list private_group should return unauthorized."
   end
 
   def test_people
@@ -556,7 +586,7 @@ editing tools on a group basis has been abandoned iirc, azul
     assert_response :success, "list public_group should succeed, because membership is public"
 
     get :people, :id => groups(:private_group).name
-    assert_response :success, "list private_group should succeed"
+    assert_response :missing, "attempt to list private_group should return 404"
 
     groups(:public_group).profiles.public.may_see_members = false
     groups(:public_group).save!

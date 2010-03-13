@@ -1,5 +1,5 @@
----
-da:
+--- 
+da: 
   add_contact_info: "Når en anden bruger er i din kontakt liste vil de have mulighed for at se når du er logget ind og se din fulde profil. Når du bliver en kontakt til en anden person, bliver de automatisk også din kontakt."
   already_contacts_info: "Du er allerede i kontakt med denne person."
   approve_contact_info: "En kontakt ansøgning findes allerede for denne bruger. Vil du godkende den?"

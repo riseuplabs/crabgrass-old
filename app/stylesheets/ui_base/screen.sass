@@ -6,7 +6,6 @@
 /* @import */
 @import compass/reset.sass
 @import compass/utilities.sass
-@import ui_base/colors.sass
 @import ui_base/fonts.sass
 @import ui_base/base.sass
 @import ui_base/masthead_global-nav.sass
@@ -53,10 +52,11 @@ body
         +pie-clearfix
         width: 764px
         overflow: visible
-        margin: 20px 0 0
+        margin: 20px 0 20px 0
         form#entry
           float: left
-          +columns(5,14)
+          margin-top: 15px
+          +columns(4,14)
           +alpha(14)
           div
             label, a
@@ -64,7 +64,7 @@ body
             a
               +blue-link
         div#welcome
-          +columns(8,14)
+          +columns(10,14)
           +omega(14)
           margin-top: 15px
           p
@@ -114,7 +114,11 @@ body
         #xxlarge-avatar
           width: 204px
           float: left
-          margin: -116px 20px 0 0
+          position: relative
+          z-index: 1
+          margin: -140px 20px 0 0
+          &.no-third-level
+            margin-top: -116px
 
           #image-label
             +columns(4,4)
@@ -141,7 +145,7 @@ body
           width: 540px
           float: left
           margin: 0
-          padding-top: 20px
+          padding-top: 10px
           display: inline
 
           #main-content

@@ -145,6 +145,8 @@ class ActivityTest < ActiveSupport::TestCase
     user_joined_act = UserJoinedGroupActivity.find_by_subject_id(u1.id)
     group_gained_act = GroupGainedUserActivity.find_by_subject_id(group.id)
     post_act = PrivatePostActivity.find_by_subject_id(u2.id)
+    # we do not create PrivatePostActivities anymore
+    assert_nil post_act
 
 
     # the person doing the thing should be the avatar for it
@@ -152,7 +154,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal u1, friend_act.avatar
     assert_equal u1, user_joined_act.avatar
     assert_equal u1, group_gained_act.avatar
-    assert_equal u1, post_act.avatar
+    #assert_equal u1, post_act.avatar
   end
 
   def test_associations

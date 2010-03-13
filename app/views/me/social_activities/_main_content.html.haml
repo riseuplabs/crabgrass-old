@@ -1,6 +1,7 @@
 %section#social-activities
   %header
-    = pagination_for(@activities)
+    %div#info-box-full
+      = pagination_for(@activities)
 
   %table
     = render :partial => 'activity', :collection => @activities
