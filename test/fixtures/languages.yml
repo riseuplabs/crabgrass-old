@@ -104,6 +104,11 @@ bg:
   name: български език
   code: bg
 
+ca:
+  id: 92
+  name: Català
+  code: ca
+
 da:
   id: 104
   name: Dansk
