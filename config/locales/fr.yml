@@ -1,5 +1,5 @@
---- 
-fr: 
+---
+fr:
   a_message_link: "un message"
   a_reply_link: "une réponse"
   a_request_was_sent_to_admin_to_make_this_page_public_message: "Une requête a été envoyé à l'Admin, pour rendre cette page publique"
@@ -20,7 +20,7 @@ fr:
   activity_unread_singular: "Vous avez un [private message] non lu"
   activity_user_destroyed: "{{user}} s'est retiré"
   activity_user_joined_group: "{{user}} a rejoint le {{group_type}} {{group}}"
-  activity_user_joined_site: "{user} a rejoint {group}"
+  activity_user_joined_site: "{{user}} a rejoint {{group}}"
   activity_user_left_group: "{{user}} a quitté le {{group_type}} {{group}}"
   activity_user_left_site: "{{user}} a quitté {{group}}"
   activity_user_status: "{{user}} est maintenant {{status}}"
@@ -276,13 +276,13 @@ fr:
   email_notice_subject: "Jetez un œil à la page \"{{title}}\""
   email_verification_body: |
       Vous vous êtes inscrit-e à {{site_title}} ({{host}})!
-      
+
       Avant que vous puissiez vous connecter, vous devez vérifier que c'est bien votre mail.
-      
+
       Cliquez le lien ci-dessous ou copiez-le dans votre navigateur:
-      
+
         {{verify_email_link}}
-      
+
       Si vous ne souhaitez pas vous y joindre, ignorez simplement ce mail.
   empty_results: "Aucun résultat"
   enter_page_title: "entrez le titre de la page"
@@ -354,15 +354,15 @@ fr:
   group_information: "Information de {{group_type}}"
   group_invite_email: |-
       {{from_user}} vous a invité à rejoindre le groupe "{{group}}".
-      
+
       Si vous souhaitez rejoindre ce groupe, cliquez ici:
-      
+
         {{accept_invite_link}}
-      
+
       La page d'accueil du groupe peut être trouvée ici :
-      
+
         {{group_home_link}}
-      
+
       Si vous ne souhaitez pas rejoindre ce groupe, ignorez simplement ce mail.
   group_invite_subject: "Invitation à rejoindre le groupe \"{{group}}\""
   group_join_chat: "Rejoindre Salon de Discussion"
@@ -418,6 +418,7 @@ fr:
   invite_accept_via_existing_account: "J'ai déjà un compte"
   invite_accept_via_register: "Je dois ouvrir un compte"
   invite_error_already_member: "Vous êtes déjà membre de ce groupe."
+  invite_error_redeemed: "L'invitation a déjà été utilisée."
   invite_info: "Entrez la liste des noms d'utilisateur ou des adresses mail des personnes que vous voulez inviter à rejoindre ce {{group_type}}."
   invite_not_found: "Invitation non trouvée"
   invite_sent: "Invitation envoyée à {{recipient}}"
@@ -633,6 +634,8 @@ fr:
   notify_page_link: "Envoyer Notification"
   notify_success: "Vous avez envoyé des notifications avec succès."
   off_topic: Hors-Sujet
+  offensive_behavior: "Contenu Offensant"
+  offensive_language: "Langage Grossier"
   ok_button: OK
   only_last_menber_can_delete_group: "Vous ne pouvez supprimer le groupe que si vous en êtes le dernier membre"
   only_me: Moi
@@ -672,6 +675,34 @@ fr:
   page_group_vote: "Votes et Enquêtes"
   page_history_add_star: "{{user_name}} a ajouté une étoile"
   page_history_added_comment: "{{user_name}} a ajouté un commentaire"
+  page_history_change_title: "{{user_name}} a modifié le titre de la page"
+  page_history_deleted_page: "{{user_name}} a supprimé la page"
+  page_history_destroyed_comment: "{{user_name}} a détruit un commentaire"
+  page_history_details_change_title: "De: \"{{from}}\" à : \"{{to}}\""
+  page_history_granted_group_full_access: "{{user_name}} a donné les accès complets au groupe {{object_name}}"
+  page_history_granted_group_read_access: "{{user_name}} a donné l'accès en lecture au groupe {{object_name}}"
+  page_history_granted_group_write_access: "{{user_name}} a donné l'accès en écriture au groupe {{object_name}}"
+  page_history_granted_user_full_access: "{{user_name}} a donné l'accès complet à l'utilisateur  {{object_name}}"
+  page_history_granted_user_read_access: "{{user_name}} a donné l'accès en lecture à l'utilisateur {{object_name}}"
+  page_history_granted_user_write_access: "{{user_name}} a donné l'accès en écriture à l'utilisateur {{object_name}}"
+  page_history_mailer: "Modifiez vos paramètres de notification par mail ici: {{page_link}}"
+  page_history_mailer_a_page_has_been_modified: "{{site_title}} : Une page a été modifiée"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Une page dont vous suivez les mises à jour a été modifiée {{histories_count}} depuis la dernière notification, vous pouvez y accéder ici: "
+  page_history_mailer_a_page_you_are_watching: "Une page dont vous suivez les mises à jour a été modifiée, vous pouvez y accéder ici"
+  page_history_mailer_choose_turn_off_notifications: "Vous pouvez choisir de supprimer les notifications par mail, recevoir un résumé des modifications, ou recevoir un mail à chaque fois qu'une page est modifiée"
+  page_history_mailer_expire_link: "Le lien expirera dans {{expire_time}}"
+  page_history_mailer_hello_user_name: "Bonjour {{user_name}}"
+  page_history_make_private: "{{user_name}} a décoché l'option qui rend la page publique"
+  page_history_make_public: "{{user_name}} a rendu la page publique"
+  page_history_remove_star: "{{user_name}} a retiré une étoile"
+  page_history_revoked_group_access: "{{user_name}} a révoqué l'accès au groupe {{object_name}}"
+  page_history_revoked_user_access: "{{user_name}} a révoqué l'accès à l'utilisateur {{object_name}}"
+  page_history_start_watching: "{{user_name}} a mis en place un suivi de cette page"
+  page_history_stop_watching: "{{user_name}} a arrêté de suivre cette page"
+  page_history_the_page_you_are_watching_description: "La page que vous suivez \"{{page_title}}\" a été modifiée"
+  page_history_updated_comment: "{{user_name}} a modifié un commentaire"
+  page_history_updated_content: "{{user_name}} a modifié le contenu de la page"
+  page_history_user_created_page: "{{user_name}} a créé la page"
   page_is_not_static: "La page n'est pas statique"
   page_list: "liste de page"
   page_list_heading_created: créé
@@ -684,8 +715,10 @@ fr:
   page_list_heading_updated: "mis à jour le"
   page_list_heading_updated_by: "mis à jour par"
   page_locked_header: "page verrouillée"
+  page_name_description: "nom unique optionnel (utilisé pour créer l'URL de cette page)"
   page_not_part_of_group: "Page ne faisant pas partie de ce groupe"
   page_notice_message: "page envoyée par {{user}} le {{date}}"
+  page_owner_error: "Propriétaire de la page ne peut pas etre laissé en blanc"
   page_owner_help: "Le propriétaire de la page est la personne ou le groupe qui a la responsabilité première de la page. Vous pouvez choisir vous-même, ou n'importe lequel de vos groupes."
   page_with_message: "avec message"
   pager: Pager
@@ -810,6 +843,7 @@ fr:
   saturday: Samedi
   save_button: Sauvegarder
   save_changes: "Sauvegarder les modifications"
+  save_or_cancel_edit_lock_wiki_error: "Vous avez verrouillé ce wiki. Les autres utilisateurs ne pourront l'éditer tant que vous n'aurez pas cliqué sur {{save_button}} ou sur {{cancel_button}} pour finir l'édition."
   save_survey_button: "Sauvegarder l'enquête"
   saved_new_order: "Nouvel arrangement enregistré !"
   saving_your_changes: "Sauvegarde de vos modifications..."
@@ -831,6 +865,7 @@ fr:
   set_status_messsage: "Que faites-vous actuellement ?"
   settings: Paramètres
   share: Partager
+  share_already_exists_error: "\"{{name}}\" a déjà accès à cette page."
   share_button: Partager
   share_page_email: "Envoyer une notification par mail"
   share_page_link: "Partager {{page_class}}"
@@ -840,6 +875,7 @@ fr:
   share_page_recipients_results: "Cette {{page_class}} sera partagée avec"
   share_page_recipients_sections: "Choisissez parmi vos groupes ou amis"
   share_page_recipients_selection: "Faites votre choix"
+  share_pester_error: "Désolé, vous n'êtes pas autorisé à partager avec \"{{name}}\"."
   sharing_help: "Optionnel. Vous pouvez partager cette page avec plusieurs destinataires (utilisat-rice-eur-s ou groupes)."
   show_gallery: "Montrer la Galerie"
   signup_button: S'inscrire
@@ -858,6 +894,7 @@ fr:
   social_change_interests: "Intérêts pour la transformation sociale"
   starred: étoilé
   state: état
+  statistics: Statistiques
   status_pending: "en attente"
   status_resolved: résolu
   subject: sujet
@@ -910,11 +947,14 @@ fr:
   unknown: Inconnu
   unread: "marquer comme non lu"
   updated: "mis à jour"
+  upload: Télécharger
   upload_file_help: "Obligatoire. Choisissez un fichier à envoyer sur cette page."
   upload_image: "Télécharger une image"
   upload_image_help: "Optionnel. Choisissez une première image à envoyer sur cette page."
   upload_images_link: Télécharger
   upload_new_image: "télécharger une nouvelle image"
+  upload_zip_file_help: "Optionnel. Choisissez un fichier ZIP (une collection d'images) à envoyer sur cette page."
+  upload_zip_file_link: "Télécharger un Fichier ZIP"
   uploaded_image_cropped: "Les images téléchargées seront réduites à un carré de 96 pixels de côté."
   usage_agreement_heading: "Condition d'utilisation"
   usage_agreement_required: "L'acceptation des conditions d'utilisation est nécessaire"
@@ -927,6 +967,7 @@ fr:
   user_profile_description_may_see_contacts: "Autoriser autrui à voir votre liste d'ami-e-s."
   user_profile_description_may_see_groups: "Autoriser autrui à voir les groupes dont vous êtes membres."
   username: "Nom d'utilisateur"
+  users: Utilisateurs
   users_wall: "Mur de {{user}}"
   users_world: "Monde de {{user}}"
   version_doesnt_exist: "Il n'y a pas de version {{version}}"
@@ -962,11 +1003,11 @@ fr:
   welcome_hide_link: "Cacher le message d'accueil "
   welcome_login_message: |-
       !>/plugin_assets/riseup/riseup-yellow.gif!
-      
+
       Ce site utilise Crabgrass, un <a href="http://www.affero.org/oagpl.html">logiciel libre</a> web conçu pour les réseaux sociaux, le travail collaboratif et l’organisation de réseaux, et taillé pour les besoins des mouvements de solidarités internationales. Le but à long terme est de fournir les outils techniques permettant l'organisation de réseaux confédéraux, actifs, démocratiques, de transformation sociale. [en lire plus... -> /crabgrass/about]
-      
+
       h3. Êtes-vous nouveaux sur ce site ?
-      
+
       [Inscrivez-vous ici -> /account/signup] pour commencer. Nous en sommes aux développements initiaux. Comme les améliorations sont dirigées par les retours de nos utilisat-eur-rice-s, faites-nous part de la manière dont vous utilisez ce site, ce que vous voulez voir modifié, ce que vous aimez, et ce que vous n'aimez pas.
   welcome_message: "Crabgrass permet aux organisations de transformation sociale de s'organiser, communiquer, collaborer et établir des réseaux."
   welcome_show_link: "Afficher le message d'accueil"
@@ -976,12 +1017,15 @@ fr:
   when_does_feature_expire: "Quand l'importance doit-elle expirer ?"
   width: largeur
   wiki_body_help: "Optionnel. Entrez ici le texte initial de cette page."
+  wiki_editor: Éditeur
   wiki_is_locked: "Ce wiki est actuellement verrouillé par {{user}}"
   wiki_lost_text_confirmation: "Tout texte non sauvegardé sera perdu. Êtes-vous certain de vouloir procéder ?"
   wiki_page_description: "Créer un document texte modifiable."
   wiki_page_display: "Page Wiki"
+  wiki_plain_editor: "Éditeur Mode Texte"
   wiki_revert_version: "Revenir à la Version {{version}}"
   wiki_section_edit: "Éditer Cette Section"
+  wiki_visual_editor: "Éditeur Mode Graphique"
   wont_be_able_to_save: "Vous ne serez pas en mesure de sauvegarder cette page"
   work: Travail
   work_life: "Vie de taff"

@@ -1,0 +1,840 @@
+---
+ca:
+  about_me: "Informació Personal"
+  accept_usage_agreement: "Accepto els termes d'ús"
+  access: Accedir-hi
+  action: acció
+  activate_js_to_rearrange_photos: "Activeu JavaScript per poder arrossegar i reordenar les fotos!"
+  activity_contact_created: "{{user}} ha afegit a {{other_user}} com amic"
+  activity_group_created: "{{user}} ha creat el grup {{group}} de tipus {{group_type}}"
+  activity_group_destroyed: "El grup {{group}} he sigut destruït per {{user}}"
+  activity_message: "{{author}} ha escrit: {{message}}"
+  activity_unread: "Tens {{count}} [missatges privats] no llegits"
+  activity_unread_singular: "Tens un missatge privat no llegit"
+  activity_user_destroyed: "{{user}} s'ha retirat"
+  activity_user_joined_group: "{{user}} s'ha afegit al grup {{group}} ({{group_type}}) "
+  activity_user_left_group: "{{user}} ha deixat el grup {{group}} ({{group_type}})"
+  activity_user_status: "{{user}} està {{status}}"
+  activity_wall_message: "{{author}} ha escrit a {{user}}: {{message}}"
+  add_another_file: "Afegir-ne un altre fitxer"
+  add_button: Afegir
+  add_comment: "Afegir Comentari"
+  add_contact_info: "Quan un altre usuari és amic teu, poden veure quan estàs connectat i poden veure el teu perfil sencer.  Quan et fas amic d'un altre usuari aquest també es fa amic teu."
+  add_description: "Afegir Descripció"
+  add_email_address: "Afegir Adreça de Correu Electrònic"
+  add_encryption_key: "Afegir Una Clau d'Encriptació"
+  add_existing_image: "Afegir Una Foto"
+  add_im_address: "Afegir Adreça De Missatgeria Instantània"
+  add_location: "Afegir Ubicació"
+  add_new_attachment: "Afegir Un Adjunt Nou"
+  add_one_or_more_tags: "Afegir una o més etiquetes, separades per comes"
+  add_phone_number: "Afegir Número de Telèfon"
+  add_photo_to_gallery: "Fes clic sobre una foto per afegir-la"
+  add_star_link: "Afegir Estrella ({{star_count}})"
+  add_tags: "Afegir Etiquetes"
+  add_websites: "Afegir Pàgina Web"
+  additional_page_access: "Accés Addicional"
+  administer_site: "Administrar Pàgina"
+  administration: Administració
+  alert: Alerta
+  alert_error: Errada
+  alert_field_errors: "N'hi ha problemes amb el següents camps"
+  alert_not_saved: "No s'ha pogut desar els canvis"
+  alert_permission_denied: "Permís Denegat"
+  alert_permission_denied_details: "Ho sentim.  No pots executar aquesta acció."
+  alert_saved: "Canvis guardats"
+  all: Tot
+  all_content: "Tot el Contingut"
+  all_groups: "Tots els Grups"
+  all_networks: "Totes les Xarxes"
+  all_page_types: "tots els tipus de pàgines"
+  all_people: Tothom
+  all_people_link: tothom
+  all_states: "Tots els Estats"
+  allow_membership_requests: "Permetre Peticions de Adhesió "
+  already_contacts_info: "Ja ets amic/amiga d'aquesta persona."
+  announcement_page_description: "Un anunci."
+  announcement_page_display: Anunci
+  announcements: Anuncis
+  approve: aprovar
+  approve_button: Aprova
+  approve_contact_info: "Ja existeix una petició d'amistat d'aquest usuari.  La vols aprovar?"
+  approve_or_reject_link: "aprova o rebutja aquesta petició"
+  approved: aprovat
+  archive: Arxiu
+  archive_filter_created_link: "Data de Creació"
+  archive_filter_updated_link: "Última Data de Actualització"
+  archive_headline: Arxiu
+  article_page_description: "Crear una entrada al blog o article un de notícies"
+  article_page_display: Article
+  asset_page_description: "Pujar una foto, document, full de càlcul, presentació o qualsevol altre tipus de fitxer."
+  asset_page_display: Fitxer
+  at_least_one_recipient_is_required: "s'ha d'afegir com a mínim un destinatari"
+  attachments: Adjunts
+  away: fora
+  back_button: Enrere
+  back_to_group: "tornar a {{group_name}}"
+  basic_settings: "Configuració Bàsica"
+  break_lock: Desbloquejar
+  break_lock_button: Desbloquejar
+  cancel_button: Cancel·lar
+  cancel_link: cancel·lar
+  caption: Cita
+  category: Categoria
+  chat_flagged_inappropriate: "S'ha marcat el xat com desapropiat."
+  check_all: "Seleccionar Tot"
+  close_button: Tancar
+  committee: Comissió
+  committee_publicly_visible: "Marcar Les Comissions com Públicament Visibles  "
+  committee_publicly_visible_description: "Les comissions són visibles a qualsevol persona a través de {{domain}}/elteugrup"
+  committees: Comissions
+  comparing_changes_header: "Comparant canvis per {{user}} a {{when}} de {{old_version}} a {{new_version}}"
+  confirm: Confirmació
+  confirm_discarding_text_area: "Perdràs tots els canvis no desats.  Fes clic al {{cancel}} per continuar editant. "
+  confirm_inappropriate_chat: "Estàs segur/a que aquesta conversa és desapropiada?  Fes clic al 'OK' només si la trobes ofensiva.  Un moderador la revisarà aviat."
+  confirm_inappropriate_page: "Estàs segura que aquesta pàgina és ofensiva?  Fes clic al 'OK' només si la trobes ofensiva.  Una moderadora la revisarà aviat."
+  confirm_new_password: "Confirmar la Nova Contrasenya"
+  confirmation: "Estàs segur/a?"
+  contact: Amic
+  contact_request_message_label: "Diga-li a {{user}} perquè el/la vols afegir com amic/amiga"
+  contacts: Amics
+  contribute_content_link: "Crear Pàgina"
+  contribute_group_content_link: "Afegir Pàgina al grup {{group}}"
+  contribute_to_site: "Contribuir a la Pàgina"
+  contributed: Contribuït
+  coordinating_council: "Consell Coordinador"
+  coordinator: Coordinador
+  coordinator_help: "<b>Accés Sense Restriccions</b> dóna accés complet a modificar aquesta pàgina (incloent la seva eliminació i la habilitat de compartir-la)"
+  coordinators: Coordinadors
+  council: Consell
+  councils: Consells
+  create_a_group: "Crear un Grup"
+  create_a_new_thing: "Crear un/a nou/nova {{thing}}"
+  create_button: Crear
+  create_committee: "crear comissió"
+  create_group_link: "crear un grup nou"
+  create_page: "Crear Pàgina"
+  create_page_button: "Crear {{page_class}}"
+  create_page_data: "Dades de {{page_class}}"
+  create_page_information: "Informació de {{page_class}}"
+  create_task_list: "crear una nova llista de tasques"
+  created: creat
+  created_by: "Creat per"
+  created_on: "Creat al "
+  created_when_by: "creat al {{when}} per {{user}}"
+  csrf_error_message: "El teu intent d'autenticació té la pinta d'un atac contra aquesta pàgina.  No et preocupis: això passa sovint, fins i tot amb intents innocents d'autenticar-se.  El que passa és que som super paranoics.  Abans d'intentar de nou, torna a carregar aquesta pàgina.  També pots seguir aquest enllaç.    "
+  current_attachments: "Adjunts Actuals"
+  current_featured_content: "Contingut Destacat"
+  current_tags: "Etiquetes Actuals"
+  current_video_sources: "Actualment suportats: youtube, blip.tv, google video, vimeo."
+  data_for_page_missing: "Falten les dades per aquesta aquesta pàgina."
+  date: data
+  date_all_time: "Per totes les dates"
+  date_centuries: segles
+  date_days: dies
+  date_hours: hores
+  date_minutes: minuts
+  date_months: mesos
+  date_older: "Més antic"
+  date_seconds: segons
+  date_this_month: "Aquest mes"
+  date_this_week: "Aquesta setmana"
+  date_today: Avui
+  date_weeks: setmanes
+  date_years: anys
+  date_yesterday: Ahir
+  delete: Eliminar
+  delete_page_link: "Eliminar {{page_class}}"
+  delete_post: "Eliminar Entrada"
+  delete_this_version: "eliminar aquesta versió"
+  delete_version_confirm: "Estàs segur/a que vols eliminar aquesta versió?"
+  deleted: Eliminat
+  description: Descripció
+  descriptions: Descripcions
+  descriptive_name_for_display: "Un nom descriptiu a mostrar"
+  destroy: destruir
+  destroy_confirmation: "Segur que vols eliminar aquest/a {{thing}}?  No es pot desfer aquesta acció."
+  destroy_group_link: "Destruir {{group_type}}"
+  details_link: Detalls
+  diff_link: "veure diferències"
+  directory_of_groups: "Directori de Grups"
+  directory_of_networks: "Directori de Xarxes"
+  directory_of_people: "Directori de Gent"
+  discuss_request_link: "comentar sobre aquesta petició amb {{person_or_group}}"
+  discussion_page_description: "Comentar sobre un tema en particular un grups o amb altres usuaris."
+  discussion_page_display: "Conversa del Grup"
+  discussions: Converses
+  display_name: "Nom a mostrar"
+  dont_have_permission_to_create_committees: "No tens permisos a crear comissions al grup {{group}}"
+  dont_understand_group_type: "No s'ha entès el tipus de grup {{type}}"
+  download: Descarregar
+  download_gallery: "Galeria de Descarregues"
+  drag_and_drop_to_rearrange_photos: "Arrossega i Solta les imatges per reordenar-les  "
+  edit: Editar
+  edit_appearance: "Editar Aparença"
+  edit_attachments: "Editar Adjunts"
+  edit_attachments_link: Editar
+  edit_featured_content_for_group: "Editar el Contingut Destacat Pel Grup {{group_name}}"
+  edit_gallery: "Editar la Galeria"
+  edit_profile_link: "Editar Perfil"
+  edit_settings: "Editar Configuració"
+  edit_tags: "Editar Etiquetes"
+  edit_tags_link: Editar
+  edit_title: "Editar Títol"
+  edit_underlined_e: <u>e</u>ditar
+  edited: Editat
+  email: "Correu Electrònic"
+  email_addresses: "Adreces de Correu Electrònic"
+  email_link_expires: "Aquest enllaç expirarà en {{days}} dies."
+  email_notice_access: "Pots accedir-hi a aquesta pàgina aquí:"
+  email_notice_hello: "Hola, {{from}} t'ha enviat una pàgina web."
+  email_notice_hello_with_message: "Hola, {{from}} t'ha enviat una pàgina web amb el següent missatge: {{message}}"
+  email_notice_subject: "Mira la pàgina \"{{title}}\""
+  empty_results: Res
+  entity_autocomplete_tip: "Indica el nom del grup o la persona."
+  error_saving_new_order: "Error en guardar la nova ordenació!"
+  exception_back_link: "Tornar Enrere"
+  exception_bug_report_description: "Si us plau, afegeix una descripció de com accedir-hi a aquesta pàgina, i qualsevol altre comentari"
+  exception_bug_report_link: "Reportar un Problema"
+  exception_description: "Si us plau, ajuda'ns a millorar aquest programari, reportant-nos problemes i errades que hi trobes.  En posarem a reparar el problema de seguida!"
+  exception_headline: "Ai!! Ha fallat alguna cosa."
+  exception_title: "Error de Sistema"
+  expired_featured_content: "Contingut Destacat Expirat"
+  external_video_page_description: "Mostrar un vídeo allotjat a una pàgina externa."
+  external_video_page_display: "Vídeo Extern"
+  fax: Fax
+  feature_button: "Contingut Destacat!"
+  featured_content: "Contingut Destacat"
+  featured_content_header: Destacat
+  file: Fitxer
+  file_must_be_image_error: "El fitxer ha de ser una imatge per estar a la galeria."
+  file_size: "Tamany del fitxer"
+  file_version_deleted: "versió de fitxer eliminada"
+  files: Fitxers
+  first_name: nom
+  flag_appropriate: "marcar com apropiat"
+  flag_inappropriate: "marcar com desapropiat"
+  folder_class_description: "Crear una carpeta per organitzar altres pàgines."
+  folder_display: Carpeta
+  forgot_password_link: "Contrasenya Oblidada"
+  forgot_password_mail_expiry: "Aquest enllaç expirarà en 24 hores. Si han passat els 24 hores, hauràs de tornar a visitar la pàgina de \"Contrasenya Oblidada\" i demanar-ne de nou."
+  forgot_password_mail_greeting: "{{user}}, per recrear la teva contrasenya, visita a "
+  forgot_password_text: "Si te n'has oblidat de la teva contrasenya, podem enviar-te un enllaç per correu electrònic que et permetrà crear-la de nou."
+  forgotten_email_address: "Quina adreça de correu electrònic ens vas donar al crear el teu compte?"
+  format: Format
+  formatting_reference_link: "Ajuda Editant"
+  founded: "Fundat al"
+  friday: Divendres
+  friends: "Amics i Amigues"
+  from: de
+  full: complet
+  fullname: "Nom Complet"
+  galleries: Galeries
+  gallery_description: "Puja múltiples imatges o organitza algunes imatges existents a un conjunt."
+  gallery_display: Galeria
+  general_info: "Informació General"
+  grant_access: "Donar Accés"
+  group: Grup
+  group_administration_not_allowed: "No pots administrar aquest grup."
+  group_directory: "Directori de Grups"
+  group_directory_link: "Directori de Grups"
+  group_has_no_public_profile: "Aquest grup no té un perfil públic."
+  group_home_headline: "Inici ({{group_type}})"
+  group_home_welcome: Benvinguts!
+  group_information: "{{group_type}} Informació"
+  group_invite_email: |
+      {{from_user}} t'ha convidat a formar part del grup "{{group}}".
+
+      Si t'hi vols apuntar, fes clic aquí:
+
+        {{accept_invite_link}}
+
+      La pàgina d'aquest grup és aquí:
+
+        {{group_home_link}}
+
+      Si no vols formar part d'aquest grup, simplement ignora aquest correu.
+  group_invite_subject: "Invitació al grup \"{{group}}\""
+  group_join_chat: "Afegir-te al Xat"
+  group_language: "L'idioma principal d'aquest {{group}}."
+  group_members_publicly_visible: "Fes els membres públicament visibles"
+  group_members_publicly_visible_description: "Els membres són públicament visible a tothom a través de {{domain}}/yourgroupname. El nom d'aquest grup també apareixerà a la pàgina de perfil de cada membre ({{domain}}/nomusuari)"
+  group_membership_count: "{{count}} Membres"
+  group_not_allowed_to_view_image_error: "El grup propietari d'aquesta pàgina no pot veure aquesta imatge. "
+  group_privacy_settings: "{{group}} Configuració de Privacitat"
+  group_profile_description_may_request_membership: "Permetre a altres a demanar a formar part d'aquest {{group_type}}. "
+  group_profile_description_may_see: "Si és seleccionat, la informació del perfil a baix serà visible.  Si no, el perfil per aquest {{group_type}} serà completament amagat."
+  group_profile_description_may_see_committees: "Permetre a altres a veure quines comissions té aquest {{group_type}}."
+  group_profile_description_may_see_groups: "Permetre que es vegi el grups que pertanyen a aquest {{group_type}}."
+  group_profile_description_may_see_members: "Permetre a tothom veure la llista de membres d'aquest {{group_type}}."
+  group_profile_description_may_see_networks: "Permetre a tothom veure a quines xarxes pertany aquest {{group_type}}."
+  group_publicly_visible: "Fer {{group}} Visible Públicament"
+  group_publicly_visible_description: "El grup apareix en el directori públic i el <i>perfil</i> del grup és visible a no-membres a {{domain}}/elteugrup."
+  group_successfully_created: "S'ha creat el grup correctament."
+  group_successfully_updated: "S'ha actualitzat el grup correctament."
+  group_summary: "Resum breu sobre aquest {{group}}."
+  group_wiki: "Wiki del Grup"
+  groups: Grups
+  have_your_say: "Digues lo teu!"
+  height: Alçada
+  highest_contributors: "Contribuïdors Més Actius"
+  history: Historial
+  home: Inici
+  icon: Icona
+  im_addresses: "Adreces de Missatgeria Instantània"
+  image_count: "Foto {{number}} de {{count}}"
+  image_count_total: "{{count}} Fotos"
+  image_title: "Títol de la imatge: {{title}}"
+  inbox_description: "Bústia de entrada de les pàgines en les quals hi participo o segueixo (per conèixer els canvis)"
+  include_full_checkbox: "incloure l'enllaç a l'orginal "
+  incoming: Entrant
+  information: Informació
+  insert_image_heading: "Inserir Imatge"
+  invalid_email: "Adreça de Correu no Vàlida"
+  invalid_email_text: "La adreça de correu electrònic que has indicat no és vàlida."
+  invalid_token: "Codi No Vàlid"
+  invalid_token_text: "L'enllaç per regenerar la contrasenya no sembla vàlida.  És possible que s'hagi expirat o que ja s'ha utilitzat."
+  invite: Convidar
+  invite_accept_headline: "Acceptar la invitació per formar part del grup \"{{group_name}}\""
+  invite_accept_info: "Ja tens un compte a aquesta lloc web?  Fes clic a un dels següents enllaços per acceptar la invitació."
+  invite_accept_via_existing_account: "Ja tinc un compte"
+  invite_accept_via_register: "Necessito registrar un compte nou"
+  invite_error_already_member: "Ja ets membre d'aquest grup."
+  invite_error_redeemed: "Ja s'ha reclamat aquesta invitació."
+  invite_info: "Indica els noms d'usuaris o adreces de correu electrònic de la gent que vols convidar a aquest {{group_type}}."
+  invite_not_found: "No s'ha trobat la invitació"
+  join_group_link: "Adherir-se a {{group_type}}"
+  join_group_success: "T'has apuntat al grup {{group_name}}"
+  join_request_info: "No formaràs part d'aquest grup fins que s'aprovi la teva petició.  Pots seguir l'estat de les teves peticions visitant el següent enllaç: {{my_requests_url}}."
+  joins_the_chatroom: "entra a la sala del xat"
+  language: Idioma
+  large: gran
+  last_change: "Últim Canvi"
+  last_name: cognom
+  last_seen: "última visita"
+  leave_channel: "Deixar Canal"
+  leave_editing_wiki_page_warning: "Si deixes aquesta pàgina de wiki sense guardar-hi els canvis i sense cancel·lar la seva edició, altres usuaris veuran que la tens bloquejada i no la podran editar.  Tanmateix, si no guardes el wiki, perdràs els canvis."
+  leave_group_link: "Deixar {{group_type}}"
+  left_the_chatroom: "ha deixat el xat"
+  link_name: "Nom de l'Enllaç"
+  link_name_description: "Aquest serà el nom de referència d'aquest grup als enllaços i adreces web.  Només pot contenir caràcters alfanumèrics sense espais. "
+  loading_progress: Carregant...
+  location: Ubicació
+  location_address: adreça
+  location_city: ciutat
+  location_country: país
+  location_postal_code: "codi postal"
+  location_state: "estat/província/comunitat autònoma"
+  locations: Ubicacions
+  locked_by_user: "Bloquejat per {{user}}"
+  locking_error: "Error de bloqueig.  No es pot guardar les dades.  Algú ha guardat canvis nous primer.  "
+  login: Entrar
+  login_button: Entrar
+  login_failed: "No s'ha pogut autenticar"
+  login_failure_reason: "Nom d'usuari o contrasenya incorrecta."
+  login_name: "Nom d'usuari"
+  login_password: Contrasenya
+  login_required: "Autenticació Requerida"
+  login_required_description: "Autentica't per poder fer això."
+  logout_success: Adéu
+  logout_success_message: "T'has desconnectat correctament."
+  make_album_cover: "assigna aquesta imatge a la portada de l'àlbum. "
+  mark_pages_as_featured_content_for_group: "Aquí pots indicar el contingut destacat d'aquest grup."
+  me_dashboard_link: Consola
+  me_inbox_link: "Bústia d'Entrada"
+  me_tasks_link: Tasques
+  media_all: Mèdia
+  media_alls: Mèdia
+  media_audio: Àudio
+  media_audios: Àudio
+  media_document: Document
+  media_documents: Documents
+  media_for_group: "{{media_type}} en {{group}}"
+  media_image: Imatge
+  media_images: Imatges
+  media_video: Vídeo
+  media_videos: Vídeos
+  media_without_group: "Tot {{media_type}}"
+  medium: mitjà
+  member_groups_of_network: "Grups Membres"
+  members: Membres
+  membership: Afiliació
+  menu_chat: Xat
+  menu_groups: Grups
+  menu_home: Inici
+  menu_link_account: Compte
+  menu_link_logout: Desconnectar
+  menu_me: Jo
+  menu_networks: Xarxes
+  menu_people: Gent
+  message: missatge
+  message_must_not_be_empty: "el missatge no pot ser buit"
+  message_page_description: "Envia un missatge personal a individus."
+  message_page_display: "Missatge Personal"
+  middle_name: "segon nom"
+  mobile: Mòbil
+  monday: Dilluns
+  month_short_april: Apr
+  month_short_august: Ago
+  month_short_december: Des
+  month_short_february: Feb
+  month_short_january: Gen
+  month_short_july: Jul
+  month_short_june: Jun
+  month_short_march: Mar
+  month_short_may: Maig
+  month_short_november: Nov
+  month_short_october: Oct
+  month_short_september: Sep
+  more_information: "Més Informació"
+  most_active: "Més Actiu"
+  most_active_groups: "Grups Més Actius"
+  most_active_members: "Membres Més Actius"
+  most_viewed: "Més Vist"
+  move_button: Moure
+  move_image_left: "Moure la imatge a l'esquerra"
+  move_image_right: "Moure la imatge a la dreta"
+  move_page_link: "Moure {{page_class}}"
+  move_page_to_different_group: "Moure aquesta pàgina a un altre grup"
+  move_this_page: "Moure Aquesta Pàgina"
+  my_completed_tasks_link: Completat
+  my_contacts: "El meus amics i amigues"
+  my_contacts_link: amics/amigues
+  my_dashboard: "La Meva Consola"
+  my_groups: "Grups Meus"
+  my_groups_link: "Grups Meus"
+  my_pages: "Pàgines Meves"
+  my_peers: "Companys Meus"
+  my_peers_description: "usuaris amb els quals comparteixo grup"
+  my_peers_explain: "usuaris amb els qual comparteixo grup"
+  my_peers_link: companys
+  my_pending_tasks_link: Pendent
+  my_requests_headline: "Peticions Meves"
+  my_settings: "Configuració per {{user}}"
+  my_status_heading: "Estat Actual"
+  my_tasks: Tasques
+  my_tasks_description: "Llistes de tasques a les quals tinc accés"
+  my_tasks_headline: "Tasques Meves"
+  my_world_heading: "El Meu Món"
+  name: Nom
+  name_or_email_not_found: "\"{{name}}\" no sembla ser un usuari al sistema i tampoc sembla ser una adreça de correu electrònic vàlid. "
+  network: Xarxa
+  network_invite_info: "Indica els noms dels grups que vols convidar a formar part d'aquesta xarxa."
+  networks: Xarxes
+  new_council: "Nou consell pel grup {{group_name}}"
+  new_group: "Nou grup"
+  new_network: "Nova xarxa"
+  new_password: "Nova Contrasenya"
+  new_people: "Nova Gent"
+  new_people_link: "nova gent"
+  next_change: "Següent Canvi"
+  no_change: "sense canvis"
+  no_committees: "sense comissions"
+  no_contacts_msg: "No tens amics/amigues"
+  no_group_named: "no n'hi ha cap grup anomenat <b>{{name}}</b>."
+  no_images_in_gallery: "No n'hi imatges a la galeria"
+  no_members: "(sense membres)"
+  no_peers_msg: "No tens companys."
+  no_public_profiles: "No n'hi ha perfils públics encara..."
+  no_search_results: "Sense Resultats"
+  no_tags: "sense etiquetes"
+  no_title_given: "(sense títol)"
+  none: Cap
+  not_featured_content: "Contingut No Destacat"
+  not_found: "No Trobat"
+  not_set: "no enviat"
+  notify_contribution: "<b>Contribució Anterior:</b> notifica a la gent que ha  <b>contribuït</b> a aquesta pàgina."
+  notify_current_access: "<b>Accéss Actual:</b> notifica a la gent o als grups que tenen accés a aquesta pàgina."
+  notify_new_access: "<b>Accéss Nou:</b> comparteix aquesta pàgina amb gent nova o grups nous i notifica'ls."
+  notify_no_access_error: "Ho sentim, \"{{name}}\" no té accés a aquesta pàgina."
+  notify_page_link: "Enviar Notificació"
+  off_topic: "Fora de Tema"
+  offensive_behavior: "Comportament Ofensiu"
+  offensive_language: "Llenguatge Ofensiu"
+  ok_button: D'Acord
+  only_last_menber_can_delete_group: "Només pots eliminar un grup si ets l'últim membre"
+  only_me: Jo
+  options: Opcions
+  or_image_url: "o URL de imatge"
+  order_changed: "Ordre canviat."
+  organization: organització
+  organizational_role: "rol organitzatiu"
+  other: Altres
+  other_formats: "Altres Formats"
+  other_reason: "Altre Raó"
+  outgoing: Sortida
+  page: Pàgina
+  page_added_to_group: "S'afegirà aquesta pàgina a {{group_type}} {{group_name}}."
+  page_create_owner: "Amo de Pàgina"
+  page_details: "Detalls de Pàgina"
+  page_details_link: "{{page_class}} Detalls"
+  page_group_collection: Col·leccions
+  page_group_discussion: Converses
+  page_group_event: Esdeveniments
+  page_group_media: Multimèdia
+  page_group_media_audio: Àudio
+  page_group_media_document: Documents
+  page_group_media_image: Imatges
+  page_group_media_video: Vídeos
+  page_group_planning: "Eines de Planificació"
+  page_group_task: Tasques
+  page_group_text: "Text i Debats"
+  page_group_vote: "Sondejos i Vots"
+  page_history_add_star: "{{user_name}} ha afegit una estrella"
+  page_history_added_comment: "{{user_name}} ha afegit un comentari"
+  page_history_change_title: "{{user_name}} ha modificat el títol de la pàgina"
+  page_history_deleted_page: "{{user_name}} ha eliminat la pàgina"
+  page_history_destroyed_comment: "{{user_name}} ha eliminat el comentari"
+  page_history_details_change_title: "De: \"{{from}}\" A: \"{{to}}\""
+  page_history_granted_group_full_access: "{{user_name}} ha donat accés complet al grup {{object_name}}"
+  page_history_granted_group_read_access: "{{user_name}} ha donat accés de lectura al grup {{object_name}}"
+  page_history_granted_group_write_access: "{{user_name}} ha donat accés de escriptura al grup {{object_name}}"
+  page_history_granted_user_full_access: "{{user_name}} ha donat accés complet a l'usuari {{object_name}}"
+  page_history_granted_user_read_access: "{{user_name}} ha donat accés de lectura a l'usuari {{object_name}}"
+  page_history_granted_user_write_access: "{{user_name}} ha donat accés de escriptura a l'usuari {{object_name}}"
+  page_history_mailer: "Canvia les teves preferències de correu electrònic aquí: {{page_link}}"
+  page_history_mailer_a_page_has_been_modified: "{{site_title}} : Una pàgina ha sigut modificada"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Una pàgina que estàs seguint ha sigut modificada {{histories_count}} des de la última notificació.  La pots accedir aquí: "
+  page_history_mailer_a_page_you_are_watching: "Un pàgina que estàs seguint ha sigut modificada.  La pots accedir aquí"
+  page_history_mailer_choose_turn_off_notifications: "Pots decidir a suprimir les notificacions per correu electrònic, rebre un resum dels canvis o bé rebre un correu electrònic cada vegada que es modifica la pàgina."
+  page_history_mailer_expire_link: "Aquest enllaç expirarà en {{expire_time}}"
+  page_history_mailer_hello_user_name: "Hola {{user_name}}"
+  page_history_make_private: "{{user_name}} ha desactivat la opció de fer la pàgina pública."
+  page_history_make_public: "{{user_name}} ha fet la pàgina pública"
+  page_history_remove_star: "{{user_name}} ha eliminat una estrella"
+  page_history_revoked_group_access: "{{user_name}} ha revocat accés al grup {{object_name}}"
+  page_history_revoked_user_access: "{{user_name}} ha revocat accés a l'usuari {{object_name}}"
+  page_history_start_watching: "{{user_name}} ha començat a seguir aquesta pàgina"
+  page_history_stop_watching: "{{user_name}} ha deixat de seguir aquesta pàgina"
+  page_history_the_page_you_are_watching_description: "La pàgina \"{{page_title}}\" que segueixes ha sigut modificada"
+  page_history_updated_comment: "{{user_name}} ha actualitzat un comentari"
+  page_history_updated_content: "{{user_name}} ha actualitzat el contingut de la pàgina"
+  page_history_user_created_page: "{{user_name}} ha creat la pàgina"
+  page_is_not_static: "Pàgina no estàtica"
+  page_list: "Llista de pàgines"
+  page_list_heading_created: creat
+  page_list_heading_created_by: "creat per"
+  page_list_heading_last_updated: actualitzat
+  page_list_heading_owner: propietari
+  page_list_heading_posts: contribucions
+  page_list_heading_stars: estrelles
+  page_list_heading_title: títol
+  page_list_heading_updated: actualitzat
+  page_list_heading_updated_by: "actualitzat per"
+  page_locked_header: "Pàgina Bloquejada"
+  page_name_description: "No únic opcional (utilitzat per crear la URL d'aquesta pàgina)"
+  page_not_part_of_group: "La pàgina no forma part d'aquest grup"
+  page_notice_message: "pàgina enviada per {{user}} al {{date}}"
+  page_owner_error: "Ha d'haver-hi un propietari de pàgina."
+  page_owner_help: "El propietari de la pàgina és la persona o el grup amb major responsabilitat pels continguts de la pàgina.  Pots triar a tu mateix/a o qualsevol dels grups als quals pertanys."
+  page_with_message: "amb missatge"
+  pager: Pager
+  pagination_next: Següent
+  pagination_previous: Anterior
+  participant: Participant
+  participant_help: "<b>Accés de escriptura</b> et permetrà editar aquesta pàgina."
+  participants: Participants
+  participation: Participació
+  password: Contrasenya
+  password_confirmation: "Confirmació de Contrasenya"
+  password_error_confirmation: "la contrasenya de confirmació no és igual a la original."
+  password_error_default: "no és prou forta."
+  password_error_too_common: "no és bona, està basada en una paraula de diccionari."
+  password_error_too_short: "es massa curta."
+  password_error_too_similar: "no conté suficients caràcters diferents."
+  password_error_too_simple: "és massa simple."
+  password_error_username: "està basada en el teu nom d'usuari."
+  password_error_whitespace: "conté espais."
+  password_ok: "està bé."
+  password_reset: "Recrear Contrasenya"
+  password_reset_ok_text: "La teva contrasenya s'ha recreat correctament. Pots connectar-te amb la nova contrasenya. "
+  password_was_reset: "S'ha recreat la teva contrasenya"
+  peers: Companys
+  pending: pendent
+  pending_tasks: "tasques pendents"
+  people: Gent
+  permission_denied: "Permís denegat"
+  permission_denied_description: "No tens permisos suficients per complir aquella acció."
+  permissions: Permisos
+  personal: Personal
+  personal_interests: "Interessos Personals"
+  phone_numbers: "Números de Telèfon"
+  photo: Foto
+  photo_credit: "Crèdit de Foto"
+  post_message: "Enviar Missatge"
+  prev_change: "Canvi Anterior"
+  preview: Preveure
+  print_underlined_p: im<u>p</u>rimir
+  private: Privat
+  private_profile: "Perfil Privat"
+  profile_last_login: "Últim Accés"
+  profile_member_since: "Membre Des De"
+  profile_option_allow_peers: "Visible a companys"
+  profile_option_may_pester: "Em poden molestar"
+  profile_option_may_request_contact: "Podem demanar la amistat"
+  profile_option_may_request_membership: "Permetre peticions de afiliació"
+  profile_option_may_see: "Perfil visible"
+  profile_option_may_see_committees: "Mostrar comissions"
+  profile_option_may_see_contacts: "Mostrar els teus amics"
+  profile_option_may_see_groups: "Mostrar afiliació a grups"
+  profile_option_may_see_members: "Mostrar membres del grup"
+  profile_option_may_see_networks: "Mostrar xarxes"
+  profile_private_description: "Aquest perfil és privat.  És accessible només als teus amics/amigues."
+  profile_public_description: |-
+      Aquest perfil és públic i serà visible a qualsevol persona que visita aquesta pàgina web.
+      La informació que publiques aquí també accessible a altres.
+      Vigila quan afegeixes informació personal al teu perfil públic.
+  profile_saved: "Perfil guardat."
+  public: Públic
+  public_checkbox: Públic
+  public_checkbox_help: "Si està seleccionat, qualsevol por veure aquesta pàgina."
+  public_key: "Clau Pública"
+  public_profile: "Perfil Públic"
+  ranked_vote_instructions: |-
+      Arrossega i solta els objectes de la llista fins que estiguin a l'ordre de preferència desitjat (el més preferit a dalt).
+
+      Quan hagis acabat, fes clic a la confirmació enviar el teu vot.
+  ranked_vote_page_description: "Crea una llista d'opcions per a que la gent pugui ordenar les seves preferències."
+  ranked_vote_page_display: "Vot en Preferència"
+  rate_many_page_description: "Crea una llista d'opcions per a que la gent pugui aprovar o desaprovar d'elles."
+  rate_many_page_display: "Sondeig d'Aprovació "
+  reactivate_button: Reactivar!
+  read: llegir
+  recent_activity: "Activitat Recent"
+  recent_contributions: "Últimes Contribucions"
+  recent_member_group_pages: "Última Activitat dels teus Grups en {{network}}"
+  recent_network_pages: "Últimes Pàgines en la teva Xarxa"
+  recent_pages: "Recents Pàgines"
+  recent_wall_posts: "Últimes Contribucions al Mur"
+  recently_active_groups: "Grups Recent Actius"
+  recently_active_members: "Membres Recent Actius"
+  recently_created: "Recent Creat"
+  recipient_tip: "Separa els recipients amb comes, espais o línies noves."
+  recipients: Recipients
+  redirect_to_foreign_domain: "Estàs intentant redireccionar a un domini extern {{url}} després de entrar.  Per raons de seguretat, hem tret aquest parametre de la URL."
+  regenerate: "recrear miniatures"
+  reject: rebutjar
+  reject_button: Rebutjar
+  rejected: rebutjat
+  remove: Eliminar
+  remove_contact_confirmation: "Estàs segur/a que ja no vols ser amiga/amic de {{user}}?"
+  remove_contact_info: "Si elimines a algú de la teva llista d'amics, no podràs veure quan aquesta persona està connectada ni veure el seu perfil complet.  A més a més al eliminar a algú com amic, també s'elimina de la seva llista d'amics. "
+  remove_friend_link: "Eliminar dels Meus Amics"
+  remove_from_gallery: "Eliminar de la galeria"
+  remove_from_inbox: "Eliminar de la bústia d'entrada"
+  remove_last_access_error: "No pots eliminar el teu últim accés a aquesta pàgina."
+  remove_star_link: "Eliminar Estrella ({{star_count}})"
+  removing_image: "Eliminant Imatge..."
+  request_friend_link: "Afegir als Meus Amics"
+  request_join_group_link: "Petició d'Adhesió {{group_type}}"
+  request_status: "Aquesta petició ha sigut {{status}} per {{user}} al {{time}}"
+  request_to_friend_description: "{{user}} vol ser amic/amiga de {{other_user}}"
+  request_to_join_our_network_description: "el grup {{group}} ha sigut convidat a formar part de la xarxa {{network}}"
+  request_to_join_us_description: "{{user}} ha sigut convidat a {{group}}"
+  request_to_join_us_via_email_description: "{{email}} ha sigut convidat a {{group}}"
+  request_to_join_you_description: "{{user}} vol formar part de {{group}}"
+  request_to_join_your_network_description: "{{group}} vol formar part de la xarxa {{network}}"
+  requested_forgot_password: "Ha demanat un canvi de contrasenya"
+  requests: Peticions
+  requests_from_me: "de mi"
+  requests_to_me: "a mi"
+  required: (obligatori)
+  reset_password: "Regenerar Contrasenya"
+  reset_password_mail_greeting: "{{user}}, s'ha regenerat la teva contrasenya, tal com havies demanat."
+  reset_password_mail_warning: "Si no volies canviar la teva contrasenya, posa't en contacte amb nosaltres."
+  reset_password_text: "Hola, {{user}}. Si te n'has oblidat de la teva contrasenya pots regenerar-la aquí."
+  return_link: Tornar
+  rss_feed: RSS
+  saturday: Dissabte
+  save_button: Guardar
+  save_changes: "Guardar Canvis"
+  save_or_cancel_edit_lock_wiki_error: "Has bloquejat aquest wiki. Altres usuaris no podran editar-lo fins que facis clic a {{save_button}} o {{cancel_button}} per deixar la edició."
+  saved_new_order: "Nou ordre guardat!"
+  saving_your_changes: "Guardant els teus canvis..."
+  say_message_button: Digues
+  school: Escola
+  search: Cercar
+  search_headline: Cercar
+  see_all_link: "Veure Tot"
+  see_more_link: Més
+  see_tips_to_get_started: "Veure Pistes per començar"
+  select_image_file: "seleccionar fitxer de imatge"
+  send_button: Enviar
+  send_invites: "Enviar Invitacions"
+  send_invites_button: "Enviar Invitacions"
+  send_invites_headline: "Enviar invitacions al grup {{group}}"
+  send_message_link: "Enviar Missatge"
+  separate_tags: "Separar les etiquetes amb comes."
+  set_status_button: "Actualitzar Estatus"
+  set_status_messsage: "Què estàs fent ara mateix?"
+  settings: Configuració
+  share: Compartir
+  share_already_exists_error: "\"{{name}}\" ja té accés a aquesta pàgina."
+  share_button: Compartir
+  share_page_email: "Enviar notificació per correu electrònic"
+  share_page_link: "Compartir {{page_class}}"
+  share_page_message: "Enviar un missatge (opcional)"
+  share_page_options: "Triar opcions"
+  share_page_recipients_results: "Es compartirà aquest {{page_class}} amb"
+  share_page_recipients_sections: "Tria dels teus grups o amics"
+  share_page_recipients_selection: Selecciona
+  share_pester_error: "Ho sentim, no pots compartir amb \"{{name}}\"."
+  sharing_help: "Opcional.  Pots compartir aquesta pàgina amb múltiples recipients (usuaris o grups)."
+  show_gallery: "Mostrar Galeria"
+  signup_button: "Donar-se d'alta"
+  signup_confirm_password: "Confirmació de Contrasenya"
+  signup_email: "El teu Correu Electrònic"
+  signup_email_info: "Opcional: utilitzat si te n'oblides de la teva contrasenya"
+  signup_info: "Tria un nom d'usuari i una contrasenya i fes clic al \"{{sign_up}}\""
+  signup_link: "Nou compte"
+  signup_login_name: "El teu nom d'usuari"
+  signup_password: "La teva contrasenya"
+  signup_success: "T'has registrat amb èxit"
+  signup_success_message: "Gràcies per registrar-te!"
+  signup_title: "Crea el teu compte"
+  slideshow_delay_input: "Actualitza cada {{input_field}} segons"
+  small: petit
+  social_change_interests: "Interessos de Canvi Social"
+  starred: Estrellat
+  state: estat
+  statistics: Estadístiques
+  status_pending: pendent
+  status_resolved: resolt
+  subject: títol
+  subject_must_not_be_empty: "el títol no pot ser buit"
+  successful_undelete_image: "S'ha eliminat la imatge amb èxit."
+  successfully_removed_image: "S'ha mogut la imatge amb èxit {{undo_link}}"
+  summary: Resum
+  summary_help: "Opcional. El resum és una frase o paràgraf que descriu el contingut d'aquesta pàgina. "
+  sunday: Diumenge
+  survey_may_rate: "Es pot avaluar respostes?"
+  survey_may_see_ratings: "Es pot veure avaluacions?"
+  survey_may_see_responses: "Es pot veure les respostes?"
+  survey_page_description: "Crea una serie de preguntes per a la gent."
+  survey_page_display: Sondeig
+  survey_questions: Preguntes
+  survey_rating_enabled: "Habilitar la avaluació de les respostes?"
+  survey_response_by: "Resposta per {{login}}"
+  survey_responses_enabled: "Habilitar noves respostes? Si queda seleccionat, la gent podrà respondre al sondeig.  Si no, es tancarà el sondeig."
+  tags: Etiquetes
+  tags_help: "Opcional.  Per a les etiquetes, utilitza algunes paraules que descriuen aquesta pàgina."
+  task_list_page_description: "Crea una llista de tasques i assigna-les a tu mateix/a o als altres."
+  task_list_page_display: "Llista de Tasques"
+  tasks: Tasques
+  thing_not_found: "{{thing}} no trobat"
+  thing_settings: "{{thing}} Configuració"
+  this_is_committee: "Aquesta comissió forma part de {{parent_group}}."
+  this_is_coordinating: "Aquest és el <strong>consell coordinador</strong> per  {{parent_group}}."
+  thursday: Dijous
+  time_zone: "Zona Horària"
+  title: Títol
+  title_help: "Obligatori.  S'utilitza el títol per identificar la pàgina."
+  to: A
+  toggle_selection: "Invertir Selecció"
+  top_rated: "Millor Avaluat"
+  trash: Paperera
+  trash_description: "La paperera és on viuen totes les pàgines eliminades.  Pots restaurar la pàgina fent clic al {{undelete}} o eliminar-la de manera permanent fent clic al {{destroy}}. "
+  try_again: "Intenta de Nou"
+  tuesday: Dimarts
+  type_your_messages_here: "Escriu els teus missatges aquí i premi Enter..."
+  typing: teclant
+  undelete_from_trash: Restaurar
+  unfeature_button: "Treu dels Destacats!"
+  unknown: Desconegut
+  unread: "no llegit"
+  updated: actualitzat
+  upload: Pujar
+  upload_file_help: "Obligatori.  Selecciona un fitxer per pujar a aquesta pàgina."
+  upload_image: "Pujar Imatge"
+  upload_image_help: "Opcional.  Selecciona una imatge inicial per pujar a aquesta pàgina."
+  upload_images_link: "Pujar Imatges"
+  upload_new_image: "pujar una imatge nova"
+  upload_zip_file_help: "Opcional.  Selecciona un fitxer ZIP (col·lecció de imatges) per pujar a aquesta pàgina. "
+  upload_zip_file_link: "Pujar fitxer tipus ZIP"
+  uploaded_image_cropped: "La imatge pujada es tallarà i s'estirarà a 96 pixels quadrats."
+  usage_agreement_heading: "Accord d'Ús"
+  usage_agreement_required: "La acceptació de l'accord d'ús és obligatori "
+  usage_agreement_text: |-
+      Els serveis d'aquest webs es donen TAL QUAL.  Estens i estàs d'acord amb el fet que l'OPERADOR d'aquest lloc web, no assumeix cap responsabilitat per, entre d'altres coses, caigudes de serveis i interrupcions, la falta de certes característiques o serveis i la teva capacitat de accedir-hi a part o tot del servei.
+
+      A més a més, entens i n'estàs d'acord amb el fet de que l'OPERADOR no assumeix cap responsabilitat vers a la eliminació, pèrdua o mal enviament d'informació emmagatzemada o enviada a través dels nostres sistemes.  De fet, l'OPERADOR d'aquest lloc web no fa cap garantia de res.
+
+      Considerant el teu ús d'aquest servei, estàs d'acord amb les següents condicions:
+
+      Promets no vendre, revendre o explotar l'ús dels nostres serveis, l'accés als nostres serveis o qualsevol contingut accessible a través dels nostres serveis per cap benefici comercial tret l'ús d'aquella informació o contingut per l'únic objectiu de llistar el nostre servei en un cercador o un altre servei que pugui dirigir usuaris al nostre lloc web.
+  user: Usuari
+  user_or_group_name: "Nom d'usuari o grup"
+  user_profile_description_allow_peers: "Si queda seleccionat, la gent amb la qual comparteixes grup, podrà veure el teu perfil privat."
+  user_profile_description_may_pester: "Permetre a la gent que no és ni amiga teva ni companya teva compartir contingut amb tu i enviar-te invitacions."
+  user_profile_description_may_request_contact: "Permetre a la gent demanar-te la amistat."
+  user_profile_description_may_see: "Si és seleccionat, la informació del perfil quedarà visible.  Si no, serà completament amagat."
+  user_profile_description_may_see_contacts: "Permetre a la gent veure la teva llista d'amics."
+  user_profile_description_may_see_groups: "Permetre a tothom veure a quins grups pertanyes."
+  username: "Nom d'Usuari"
+  users: Usuaris
+  users_wall: "Mur de {{user}}"
+  users_world: "Món de {{user}}"
+  version_doesnt_exist: "No hi ha una versió {{version}}"
+  version_number: "versió {{version}}"
+  versions: Versions
+  video_embed: Incrustar
+  video_embed_code_prompt: "Codi d'incrustar d'una font externa de vídeo."
+  video_service_is_not_supported: "no està suportat (actualment, només acceptem youtube, google video, blip.tv, and vimeo)"
+  view_all: "Veure Tot"
+  view_requests: "Veure Peticions"
+  view_slideshow: "Veure Projecció de Diapositives"
+  viewed: Vist
+  viewer: Visor
+  viewer_help: "<b>Només Lectura</b> permetrà la visualització d'aquesta pàgina, però res més."
+  viewers: Visors
+  visibility: Visibilitat
+  wall_heading: "Mur De Missatges Públics"
+  wall_post_button: "Enviar Missatge Nou"
+  watch_checkbox: "Seguir per Canvis"
+  websites: "Llocs Web"
+  wednesday: Dimecres
+  welcome_create_group_link: "Crea un nou grup"
+  welcome_create_group_text: "Crea un nou grup i convida a altres a participar-hi.  Amb grups, pots compartir i col·laborar amb altres."
+  welcome_create_page_link: "Crea una pàgina nova"
+  welcome_create_page_text: "Pots crear nous debats, noves pàgines wiki, pujar fitxers i imatges, començar una llista de tasques i molt més."
+  welcome_edit_profile_link: "Edita el teu perfil"
+  welcome_edit_profile_text: "Deixar que et coneguin millor, editant el teu perfil públic i privat."
+  welcome_find_groups_link: "Trobar grups"
+  welcome_find_groups_text: "Fulleja pel directori de grups per trobar-ne alguns i participar-hi. "
+  welcome_find_people_link: "Trobar gent"
+  welcome_find_people_text: "Cerca al directori d'usuaris per trobar gent que coneixes."
+  welcome_heading: "Benvingut/da a {{site_title}}, {{user_name}}!"
+  welcome_hide_link: "Amagar Benvinguda"
+  welcome_login_message: |-
+      !>/plugin_assets/riseup/riseup-yellow.gif!
+
+      Aquest lloc web funciona gràcies a Crabgrass, un <a href="http://www.affero.org/oagpl.html">programari lliure</a> web dissenyat per la col·laboració entre grups i xarxes, i afinat per a les necessitats del moviment de justícia global. L'objectiu a llarg termini és donar eines tècniques per facilitar la creació de xarxes actives, confederades i de democràcia directa pel canvi social. [més... -> /crabgrass/about]
+
+      h3. Ets nou aquí?
+
+      [Dona't d'alta aquí -> /account/signup] per començar. Estem al principi del desenvolupament.  Com que els usuaris dicten els canvis, no dubtis en explicar-nos com feu servir la pàgina, què és el que canviaries, què t'agrada, què no.
+  welcome_message: "Crabgrass (pastura de quaresma) ajuda a grups que treballen pel canvi social a treballar, organitzar-se, col·laborar i fer xarxa."
+  welcome_show_link: "Mostrar Benvinguda"
+  welcome_title: "Benvingut/da a {{site_title}} "
+  welcome_upload_icon_link: "Pujar icona d'usuari"
+  welcome_upload_icon_text: "Puja una imatge per utilitzar com el teu icona.  Aquest icona apareixerà al costat de cada comentari que publiques."
+  when_does_feature_expire: "Quan expira això?"
+  width: Amplada
+  wiki_body_help: "Opcional.  Indica el text inicial per la pàgina."
+  wiki_editor: Editor
+  wiki_is_locked: "Aquest wiki està bloquejat per {{user}}"
+  wiki_lost_text_confirmation: "Tot el text no guardat es perdrà. Estàs segur?"
+  wiki_page_description: "Crea una pàgina lliurement editable sense format. "
+  wiki_page_display: "Pàgina Wiki"
+  wiki_plain_editor: "Editor Simple"
+  wiki_revert_version: "Revertir a la Versió {{version}}"
+  wiki_section_edit: "Edita Aquesta Secció"
+  wiki_visual_editor: "Editor Visual"
+  wont_be_able_to_save: "No podràs guardar aquesta pàgina"
+  work: Treball
+  work_life: "Vida Laboral"
+  you_are_not_member_of_any_group: "No formes part de cap grup."
+  you_are_viewing_version: "Estàs mirant la versió {{version}} publicada per {{user}} "
+  you_have_no_contacts: "No tens amics"
+  you_have_no_peers: "No tens companys"
+  your_login: "El teu nom d'accés"
