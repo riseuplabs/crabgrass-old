@@ -1,6 +1,22 @@
 = Testing Crabgrass
 
-TODO: this needs a lot of help.
+== News
+
+0.5.0
+* Features now use Transforms. 
+  Transforms are a great way to make features more readable. 
+  However Cucumber 0.4.4 comes with a bug that makes it crash if 
+  transforms are used and arguments to steps are left empty. We want 
+  to use empty step arguments so please apply the fix from 
+  http://github.com/robholland/cucumber/commit/59b51c8a2e7ff25eae33ddda559939719c726213 
+  to your cucumber install. 
+  Alternatively, the latest version of cucumber fixes this problem. 
+
+== Important Rules When Writing Tests
+
+(1) NEVER destroy a page that has been loaded from fixtures. This will mess up subsequent tests. Why? Because page_terms table cannot use transactions and so doesn't get rolled back.
+
+(2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
 
 == Required Gems for Running Tests
 
@@ -14,18 +30,7 @@ leftright (optional but recommended, lerftright organizes and colorizes test out
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
-== Important Rules When Writing Tests
-
-(1) NEVER destroy a page that has been loaded from fixtures. This will mess up subsequent tests. Why? Because page_terms table cannot use transactions and so doesn't get rolled back.
-
-(2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
-
-
-= Cucumber and Javascript Tests
-
-We can test the full stack of crabgrass (including ajax and other js) with cucumber. To write the tests you should be familiar with the tools involved
-
-== Requirements to Run Cucumber Features
+=== Requirements to Run Cucumber Features
 
 gems:
   cucumber
@@ -37,6 +42,10 @@ packages:
 
 jruby gems:
   celerity
+
+= Cucumber and Javascript Tests
+
+We can test the full stack of crabgrass (including ajax and other js) with cucumber. To write the tests you should be familiar with the tools involved
 
 == Environments
 
