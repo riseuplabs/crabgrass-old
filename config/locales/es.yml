@@ -1,5 +1,5 @@
---- 
-es: 
+---
+es:
   a_message_link: "un mensaje"
   a_reply_link: "una respuesta"
   a_request_was_sent_to_admin_to_make_this_page_public_message: "Una solicitud ha sido enviada a un administrador, para hacer esta página pública"
@@ -20,7 +20,7 @@ es:
   activity_unread_singular: "Tienes un [mensaje privado] sin leer"
   activity_user_destroyed: "{{user}} se ha retirado"
   activity_user_joined_group: "{{user}} se unió a {{group_type}} {{group}}"
-  activity_user_joined_site: "{user} se unió a {group}"
+  activity_user_joined_site: "{{user}} se unió a {{group}}"
   activity_user_left_group: "{{user}} ha dejado {{group_type}} {{group}}"
   activity_user_left_site: "{{user}} ha dejado {{group}}"
   activity_user_status: "{{user}} está ahora {{status}}"
@@ -172,29 +172,29 @@ es:
   coordinator_help: "<b>Acceso total</b> garantiza permisos irrestrictos para modificar esta página (incluyendo eliminarla y compartirla)."
   coordinators: Coordinadores
   council: Consejo
-  council_help_text: "Si este grupo tiene un consejo de coordinación, entonces sólo un miembro de ese Consejo podrá administrar el grupo. De lo contrario, cualquier miembro del grupo puede hacerlo."
+  council_help_text: "Si este grupo tiene un consejo coordinador, sólo una persona en el Consejo podrá administrar el grupo. De lo contrario, cualquier persona del grupo puede hacerlo."
   councils: Consejos
   create_a_group: "Crear un Grupo"
   create_a_network: "Crear una Red"
-  create_a_new_thing: "Crear un nuevo {{thing}}"
+  create_a_new_thing: "Crear nuevo {{thing}}"
   create_button: Crear
-  create_committee: "crear comité"
+  create_committee: "Crear Comité"
   create_group_link: "crear grupo"
   create_link_button: "Crear Enlace"
   create_page: "Crear Página"
-  create_page_button: "Crear página"
-  create_page_data: "{{page_class}} datos"
-  create_page_information: "{{page_class}} información"
+  create_page_button: "Crear {{page_class}}"
+  create_page_data: "Datos de {{page_class}}"
+  create_page_information: "Información de {{page_class}}"
   create_task_list: "crear nueva lista de tareas"
   created: creado
   created_by: "Creado por"
   created_on: "Creado en"
-  created_when_by: "creado {{when}} by {{user}}"
-  csrf_error_message: "Su petición de acceso tiene la apariencia de un intento de piratear este sitio web. No se preocupe: este error ocurre con frecuencia incluso en el caso de las solicitudes inocentes. Estamos siendo sólo extra precavidos. Todo lo que tienes que hacer es volver a cargar la página antes de intentar iniciar sesión. Puede seguir este enlace para volver a intentarlo:"
-  current_attachments: "Archivos ajuntos actualizados"
-  current_featured_content: "Contenido destacado más reciente"
-  current_tags: "Etiquetas Actualizadas"
-  current_video_sources: "actualmente soporta: youtube, blip.tv, Google Video, vim\n"
+  created_when_by: "creado {{when}} por {{user}}"
+  csrf_error_message: "Tu intento de acceso tiene la apariencia de un intento de hackeo de este sitio web. No te preocupes: este error ocurre con frecuencia incluso en casos de solicitudes innocuas. Somos sólo extra precavidos. Todo lo que tienes que hacer es recargar la página antes de intentar ingresar. Puedes seguir este enlace para intentarlo de nuevo."
+  current_attachments: "Archivos adjuntos actuales"
+  current_featured_content: "Contenido destacado actualmente"
+  current_tags: "Etiquetas actuales"
+  current_video_sources: "Actualmente soportados: youtube, blip.tv, Google Video, vimeo\n"
   data_for_page_missing: "Los datos de esta página no están disponibles."
   date: fecha
   date_all_time: "Todo el Tiempo"
@@ -206,7 +206,7 @@ es:
   date_older: Antiguo
   date_seconds: segundos
   date_this_month: "Este Mes"
-  date_this_week: "La Semana Pasada"
+  date_this_week: "Esta semana"
   date_today: Hoy
   date_weeks: semanas
   date_years: años
@@ -214,231 +214,231 @@ es:
   delete: Borrar
   delete_button: Eliminar
   delete_page_link: "Borrar {{page_class}}"
-  delete_post: "Borrar anuncio"
+  delete_post: "Borrar Publicación"
   delete_this_version: "borrar esta versión"
-  delete_version_confirm: "¿Estás seguro de que desea eliminar esta versión?"
-  deleted: Eliminado
+  delete_version_confirm: "¿Quieres eliminar esta versión?"
+  deleted: Borrado
   description: Descripción
   descriptions: Descripciones
-  descriptive_name_for_display: "La descripción que aparece en pantalla"
+  descriptive_name_for_display: "Un nombre descriptivo para mostrar"
   destroy: destruir
-  destroy_confirmation: "¿Estás seguro de que deseas eliminar esta/o {{thing}}? Esta acción no se puede anular."
-  destroy_group_link: "eliminar {{group_type}}"
+  destroy_confirmation: "¿Quieres eliminar este(a) {{thing}}? Esta acción no se puede deshacer."
+  destroy_group_link: "Destruir {{group_type}}"
   destroy_page_link: "Destruir {{page_class}}"
-  destroy_page_via_shred: "Destruir immediatamente"
-  destroy_page_via_shred_info: "Esto destruira permanentemente la página. Esta acción no se puede deshacer."
-  destroy_page_via_trash: "Mueve al cesto"
-  destroy_page_via_trash_info: "Esto movera la página a el cesto, donde puede ser recuperado más tarde."
+  destroy_page_via_shred: "Destruir inmediatamente"
+  destroy_page_via_shred_info: "Esto destruirá permanentemente la página. Esta acción no se puede deshacer."
+  destroy_page_via_trash: "Mover a la Papelera"
+  destroy_page_via_trash_info: "Esto movera la página a la papelera, de donde puede ser recuperada."
   details_link: Detalles
-  diff_link: diff
-  directory_of_groups: "Directorio de grupos"
-  directory_of_networks: "Directorio de las redes"
-  directory_of_people: Directorio
-  directory_peers_description: "Una lista de tus amigas y todos las usuarias en tus grupos y redes."
-  discover: Descubre
-  discover_groups: "Descubre {{groups_type}}"
-  discover_groups_desc: "Debajo está una lista de {{groups_type}} recién creados. Puedes filtrar esta lista por localidad para encontrar {{groups_type}} cercanos a ti."
+  diff_link: "Ver cambios"
+  directory_of_groups: "Directorio de Grupos"
+  directory_of_networks: "Directorio de Redes"
+  directory_of_people: "Directorio de Gente"
+  directory_peers_description: "Una lista de tus contactos y toda la gente en tus grupos y redes."
+  discover: Encontrar
+  discover_groups: "Encontrar {{groups_type}}"
+  discover_groups_desc: "Debajo está una lista de {{groups_type}} de reciente creación. Puedes filtrar esta lista por localidad para encontrar {{groups_type}} cerca de ti."
   discuss_request_link: "discutir esta solicitud con {{person_or_group}}"
-  discussion_page_description: "Un grupo de debate sobre un tema especifico. "
-  discussion_page_display: "Group Discussion"
+  discussion_page_description: "Debate sobre un tema en particular."
+  discussion_page_display: "Debate de Grupo"
   discussions: Debates
-  display_name: "Nombre visible"
-  do_you_want_to_receive_email_notifications: "¿Deseas recibir notificaciones por correo electrónico sobre los cambios a las páginas que estás \"siguiendo\"?"
-  done_button: Listo
-  dont_have_permission_to_create_committees: "Usted no tiene permiso para crear comités bajo {{group}}"
+  display_name: "Nombre mostrado"
+  do_you_want_to_receive_email_notifications: "¿Deseas recibir notificaciones por correo electrónico de cambios a las páginas que estás observando?"
+  done_button: Hecho
+  dont_have_permission_to_create_committees: "No tienes permisos para crear comités bajo {{group}}"
   dont_understand_group_type: "No se puede entender la clase de grupo {{type}}"
   download: Descargar
-  download_gallery: "Descargar Álbum de Fotos"
-  drag_and_drop_to_rearrange_photos: "Para reorganizar las fotos usar la funcion tomar y soltar"
+  download_gallery: "Descargar Galería"
+  drag_and_drop_to_rearrange_photos: "Puedes arrastrar y soltar las imágenes para reordenarlas"
   drag_to_move_tip: "arrastre para mover"
   dual_membership_info: "Personas de {{group_type}} {{group_name}} que deberían estar también en comité {{committee_name}}"
   dual_memberships: "Membresías dobles"
   each_line_is_a_choice_caption: "(cada línea es una opción posible)"
-  edit: editar
+  edit: Editar
   edit_appearance: "Editar Apariencia"
   edit_attachments: "Editar archivos adjuntos"
   edit_attachments_link: Editar
   edit_committe: "Editar Comité"
-  edit_featured_content_for_group: "Editar contenido destacado para {{group_name}}"
-  edit_featured_content_link: "editar contenido destacado"
-  edit_gallery: "Revisar Álbum de Fotos"
+  edit_featured_content_for_group: "Cambiar contenidos destacados en {{group_name}}"
+  edit_featured_content_link: "cambiar contenido destacado"
+  edit_gallery: "Editar Galería"
   edit_layout_heading: "Editar Diseño"
   edit_my_vote_tab: "Editar mi voto"
   edit_profile_link: "Editar Perfil"
-  edit_settings: "editar los ajustes"
+  edit_settings: "editar opciones"
   edit_tags: "Editar Etiquetas"
   edit_tags_link: Editar
-  edit_title: "editar titulo"
-  edit_underlined_e: <u>e</u>dit
+  edit_title: "editar título"
+  edit_underlined_e: <u>e</u>ditar
   edited: Editado
   email: "Correo electrónico "
-  email_addresses: "Dirección de Correos Electrónicos"
+  email_addresses: "Direcciones de Correo Electrónico"
   email_blasts: "Múltiples correos electrónicos"
-  email_link_expires: "Este vínculo expira en {{days}} días."
-  email_notice_access: "Puede acceder a esta página en:"
+  email_link_expires: "Este enlace expirará en {{days}} días."
+  email_notice_access: "Puedes acceder a esta página en:"
   email_notice_hello: "Hola, {{from}} te ha enviado una página web."
   email_notice_hello_with_message: "Hola, {{from}} te enviado una página web con el siguiente mensaje: {{mensaje}}"
-  email_notice_subject: "Ver la página \"{{title}}\""
+  email_notice_subject: "Examinar la página \"{{title}}\""
   email_verification_body: |
       ¡Te has registrado en {{site_title}} ({{host}})!
-      
+
       Antes de que puedas ingresar debes verificar que este es tu correo.
-      
-      Presiona el vínculo debajo o cópialo y pégalo en tu navegador:
-      
+
+      Usa el enlace siguiente directamente o cópialo y pégalo en tu navegador:
+
       {{verify_email_link}}
-      
+
       Si no deseas unirte, simplemente ignora este correo.
   empty_results: Nada
   enable_masthead_question: "¿Habilitar 'pie de página'?"
-  ends_at: "finaliza en"
+  ends_at: "termina en"
   enter_page_title: "Ingresa el título de la página"
-  entity_autocomplete_tip: "Digita el nombre de un grupo o persona."
+  entity_autocomplete_tip: "Ingresa el nombre de un grupo o persona."
   error: Error
-  error_saving_new_order: "Hubo un error al intentar guardar la nueva orden!"
+  error_saving_new_order: "¡Hubo un error al intentar guardar la nueva orden!"
   error_saving_new_order_message: "Error guardando nueva orden: {{error_message}}"
-  exception_back_link: Volver
-  exception_bug_report_description: "Por favor, añade una descripción de cómo has llegado a esta página, y cualquier comentario adicional"
+  exception_back_link: "Ir Atrás"
+  exception_bug_report_description: "Por favor, describe cómo has llegado a esta página, y cualquier comentario que desees agregar"
   exception_bug_report_link: "Envía un reporte de error"
   exception_description: "Por favor ayúdanos a hacer mejor este software enviándonos un reporte de errores. Nos pondremos a trabajar en la solución del problema muy pronto."
-  exception_headline: "Oops! Se ha producido un error."
+  exception_headline: "¡Oops! Hemos tenido un error."
   exception_title: "Error del sistema"
-  expired_featured_content: "Contenido Destacado Expirado"
+  expired_featured_content: "Expiró el contenido destacado"
   external_link_menu_item: "enlace externo"
-  external_video_page_description: "Mostrar un video alojado en un sitio web externo."
+  external_video_page_description: "Mostrar un vídeo alojado en otro sitio web (externo)."
   external_video_page_display: "Vídeo Externo"
   favicon: "Ícono para el navegador"
   favicon_image_bad_dimensions_error: "El ícono para el navegador no tiene las dimensiones adecuadas. Debe ser ya sea de 16x16 o 32x32."
   fax: Fax
-  feature_button: Destacar!
+  feature_button: ¡Destacar!
   featured_content: "Contenido destacado"
   featured_content_header: Destacado
   featured_pages: "Páginas destacadas"
-  file: archivo
-  file_must_be_image_error: "Archivo debe ser una foto para ser parte de un Álbum."
+  file: Archivo
+  file_must_be_image_error: "El archivo debe ser una imagen para ser parte de una Galería."
   file_size: "Tamaño del archivo"
-  file_version_deleted: "la versión del archivo borrado"
+  file_version_deleted: "versión del archivo borrada"
   files: Archivos
-  fingerprint: "huella dactilar"
+  fingerprint: "huella digital"
   first_choice_of: "primera elección de "
   first_name: "primer nombre"
   flag_appropriate: "Marcar como adecuada"
   flag_button: Marcar
-  flag_inappropriate: "Marcar como inapropiado"
+  flag_inappropriate: "Marcar como inapropiada"
   folder_class_description: "Crear una carpeta para organizar otras páginas."
   folder_display: Carpeta
   forgot_password_link: "Olvidé mi contraseña"
-  forgot_password_mail_expiry: "Este enlace es valido por 24 horas. Si usted necesita restablecer su contraseña después de la expiración, tendrá que visitar la página de contraseña olvidada y pedir un nuevo enlace."
-  forgot_password_mail_greeting: "{{user}}, para restablecer su contraseña, por favor visite"
-  forgot_password_text: "Si ha olvidado la contraseña que utiliza para iniciar la sesión, podemos enviarle por correo electrónico un enlace que le permitirá generar una nueva contraseña."
-  forgotten_email_address: "Que correo electrónico usaste cuando creaste la cuenta?"
+  forgot_password_mail_expiry: "Este enlace es válido por 24 horas. Si necesitas restablecer la contraseña después de la expiración, visita por favor la página de contraseña olvidada y solicita un nuevo enlace."
+  forgot_password_mail_greeting: "{{user}}, para restablecer tu contraseña, por favor visita"
+  forgot_password_text: "Si has olvidado la contraseña que utilizas para iniciar sesión, podemos enviarte por correo electrónico un enlace que te permitirá generar una nueva contraseña."
+  forgotten_email_address: "¿Qué correo electrónico usaste al crear tu cuenta?"
   format: Formato
-  formatting_reference_link: "formato de referencia"
-  founded: Fundado
+  formatting_reference_link: "Referencia de formatos"
+  founded: Hallado
   friday: Viernes
-  friends: Amigos
+  friends: Contactos
   from: desde
   full: completo
   fullname: "Nombre completo"
-  galleries: "Álbumes de fotos"
+  galleries: Galerías
   gallery_changing_cover_message: "Cambiando cubierta..."
-  gallery_description: "Subir imágenes múltiples u organizar las imágenes existentes en un conjunto."
-  gallery_display: álbum
+  gallery_description: "Subir múltiples imágenes u organizar las existentes en un conjunto."
+  gallery_display: Galería
   gallery_slideshow_apply_settings_button: Aplicar
   gallery_undo_link: deshacer
   general_info: "Información General"
-  grant_access: "Conceder el acceso"
+  grant_access: "Brindar acceso"
   group: Grupo
-  group_administration_not_allowed: "Usted no puede administrar este grupo."
-  group_destroyed_email: "{{group_type}} {{group}} ¡ha sido destruido!"
+  group_administration_not_allowed: "No puedes administrar este grupo."
+  group_destroyed_email: "¡{{group_type}} {{group}} se ha destruido!"
   group_destroyed_message: "{{group_type}} Destruido"
-  group_destroyed_subject: "{{group_type}} {{group}} ha sido eliminado por {{user}}!"
+  group_destroyed_subject: "¡{{group_type}} {{group}} ha sido eliminado por {{user}}!"
   group_directory: "Directorio del grupo"
-  group_directory_link: "directorio de group"
+  group_directory_link: "Directorio de Grupo"
   group_has_no_public_profile: "Este grupo no tiene un perfil público."
   group_home_headline: "{{group_type}} Inicio"
-  group_home_welcome: Bienvenido
+  group_home_welcome: "Que bien que estés aquí"
   group_icon: "Icono del Grupo"
-  group_information: "{{group_type}} Información"
+  group_information: "Información de {{group_type}}"
   group_invite_email: |
       {{from_user}} te ha invitado a participar en el grupo "{{group}}".
-      
-      Si deseas unirte a este grupo, haz clic aquí:
-      
+
+      Si deseas unirte a este grupo, usa este enlace:
+
          {{accept_invite_link}}
-      
+
       La página principal de este grupo se puede encontrar aquí:
-      
+
          {{group_home_link}}
-      
-      Si no deseas unirte a este grupo, simplemente ignora este mensaje de correo electrónico.
+
+      Si no deseas participar, simplemente ignora este mensaje de correo electrónico.
   group_invite_subject: "Invitación a unirse a grupo \"{{group}}\""
   group_join_chat: "Únete al Chat"
   group_language: "El idioma principal de este {{group}}."
   group_location: "La principal localidad de este {{group}}."
-  group_members_publicly_visible: "Hacer pública la lista de personas en el grupo"
-  group_members_publicly_visible_description: "La lista de quienes son parte del grupo {{domain}}/yourgroupname es visible por quienes no. Además, el nombre del grupo será mostrado en el perfil de la página de todas las personas inscritas ({{domain}} / nombre de usuario)"
+  group_members_publicly_visible: "Hacer pública la lista de integrantes del grupo"
+  group_members_publicly_visible_description: "Quienes no son parte del grupo {{domain}}/yourgroupname pueden ver la lista de integrantes. Y, el nombre del grupo será mostrado en el perfil de todas las personas inscritas ({{domain}} / nombre de usuario)"
   group_membership_count: "{{count}} personas"
-  group_not_allowed_to_view_image_error: "El grupo que es propietario de esta página no está autorizado a ver esta foto."
+  group_not_allowed_to_view_image_error: "El grupo propietario de esta página no tiene permisos para ver esta imagen."
   group_pages: "Páginas del Grupo"
   group_privacy_settings: "{{group}} Configuración de privacidad "
-  group_profile_description_may_request_membership: "Permite a visitantes solicitar ingresar a {{group_type}}."
-  group_profile_description_may_see: "Si se selecciona, la información sobre el perfil a continuación será visible. En caso contrario, el perfil de este {{group_type}} estara oculto completamente."
-  group_profile_description_may_see_committees: "Permite que las personas vean que comités este {{group_type}} tiene."
-  group_profile_description_may_see_groups: "Permite que la gente vea los grupos que forman parte de este {{group_type}}."
-  group_profile_description_may_see_members: "Permite ver la lista de personas de este {{group_type}} a otra gente."
-  group_profile_description_may_see_networks: "Permite que la gente vea qué redes este {{group_type}} pertenece."
-  group_publicly_visible: "Hacer {{group}} Publico"
-  group_publicly_visible_description: "El grupo que aparece en el directorio público y en el grupo <i>perfil</i> puede ser visto por los que no son miembros de {{domain}}/yourgroupname."
-  group_successfully_created: "Grupo ha sido creado. "
-  group_successfully_updated: "Grupo ha sido actualizado."
+  group_profile_description_may_request_membership: "Permite a visitantes solicitar ingresar a este {{group_type}}."
+  group_profile_description_may_see: "Si se elige, el perfil informativo será visible. En caso contrario, el perfil de este {{group_type}} estará oculto completamente."
+  group_profile_description_may_see_committees: "Permite a las visitas ver los comités en {{group_type}}."
+  group_profile_description_may_see_groups: "Permite a visitantes ver los grupos integrantes de este {{group_type}}."
+  group_profile_description_may_see_members: "Permite ver la lista de personas en este {{group_type}} a visitantes."
+  group_profile_description_may_see_networks: "Permite a visitantes ver en que redes este {{group_type}} está."
+  group_publicly_visible: "Hacer {{group}} visible publicamente"
+  group_publicly_visible_description: "El grupo aparece en el directorio público y su <i>perfil</i> puede ser visto por personas no inscritas en el mismo."
+  group_successfully_created: "El grupo ha sido creado con éxito. "
+  group_successfully_updated: "El grupo ha sido actualizado."
   group_summary: "Breve información sobre este {{group}}. "
-  group_wiki: "Grupo Wiki"
+  group_wiki: "Wiki del grupo"
   groups: Grupos
   have_your_say: "¡Tú lo has dicho!"
   height: Altura
   hide_tips: "Ocultar consejos"
-  highest_contributors: "Contribuyentes más activos"
-  history: Historia
+  highest_contributors: "Colaboradores más activos"
+  history: Historial
   home: Inicio
-  icon: "Símbolo gráfico"
+  icon: Icono
   ignore: ignorar
   illegal_redirect: "Redirección no autorizada"
-  im_addresses: "Direcciones IM"
-  image_count: "Foto {{number}} of {{count}}"
-  image_count_total: "{{count}} Fotos"
-  image_title: "Título de la foto: {{title}}"
+  im_addresses: "Direcciones de mensajería instantánea"
+  image_count: "Imagen {{number}} de {{count}}"
+  image_count_total: "{{count}} imágenes"
+  image_title: "Título de la imagen: {{title}}"
   inappropriate_content: "Contenido inapropiado"
-  inbox_description: "El buzón con las páginas en las que estoy participando activamente o esperando por cambios"
-  include_full_checkbox: "incluir el enlace en la foto"
+  inbox_description: "Buzón de páginas en las que participo activamente u observo cambios"
+  include_full_checkbox: "incluir enlace a la imagen completa"
   incoming: Entrante
   information: Información
-  insert_image: "Insertar imágen"
-  insert_image_heading: "Añade Foto"
-  instant_messaging: "Mensaje instantáneo"
-  invalid_email: "Correo electrónico no es valido"
+  insert_image: "Insertar imagen"
+  insert_image_heading: "Insertar Imagen"
+  instant_messaging: "Mensajería instantánea"
+  invalid_email: "Correo electrónico no válido"
   invalid_email_text: "La dirección de correo electrónico que proporcionaste no es válida."
-  invalid_token: "Señal invalida"
-  invalid_token_text: "El enlace para restablecer la contraseña que has especificado no es válido. Puede ser que ya fue utilizado, o ha expirado."
-  invite: invitar
-  invite_accept_headline: "Acepta invitación para participar en grupo"
-  invite_accept_info: "Te gustaría aceptar la solicitud para participar. ¿Ya tienes una cuenta en este servidor?"
+  invalid_token: "Token sin validez"
+  invalid_token_text: "El enlace para restablecer la contraseña que intentas usar ya no es válido. O ya fue utilizado, o expiró."
+  invite: Invitar
+  invite_accept_headline: "Aceptar invitación para unirte al grupo \"{{group_name}}\""
+  invite_accept_info: "¿Ya tienes una cuenta en este sitio? Usa uno de los siguientes enlaces para aceptar la invitación."
   invite_accept_via_existing_account: "Ya tengo una cuenta"
-  invite_accept_via_register: "Tengo que registrar una nueva cuenta"
+  invite_accept_via_register: "Necesito una nueva cuenta"
   invite_error_already_member: "Ya eres parte de ese grupo."
   invite_error_redeemed: "La invitación ya fue retirada."
-  invite_info: "Ingresa una lista de usuarios o direcciones de correo de la gente que te gustaría que se uniera a este/a {{group_type}}"
-  invite_not_found: "No hay invitación  "
+  invite_info: "Proporciona una lista de cuentas de este sitio (o direcciones de correo) de personas que quieres que participen en este(a) {{group_type}}"
+  invite_not_found: "No se encontró la invitación"
   invite_sent: "Invitación enviada a {{recipient}}"
   invites_sent: "{{count}} invitaciones enviadas"
-  is_required: "es forzoso"
-  join_group_link: "Unirse {{group_type}}"
+  is_required: "es necesario"
+  join_group_link: "Unirse a {{group_type}}"
   join_group_success: "Te has unido al grupo {{group_name}}"
-  join_request_info: "No serás parte de este grupo hasta que tu solicitud sea aprobada. Puedes mirar el estado de tus solicitudes visitando {{my_requests_url}}."
+  join_request_info: "No serás parte de este grupo hasta que tu solicitud sea aprobada. Puedes revisar el estado de tus solicitudes visitando {{my_requests_url}}."
   joins_the_chatroom: "se une a la sala de chat"
   language: Idioma
   large: grande
-  last_change: "ultimo cambio"
+  last_change: "último cambio"
   last_name: apellido
   last_seen: "últimas vez visto"
   leave_channel: "Salir del Canal"
@@ -867,13 +867,13 @@ es:
   request_to_destroy_our_group_description: "{{user}} ha propuesto borrar {{group_type}} {{group}}"
   request_to_destroy_our_group_email: |+
       Este {{group_type}} '{{group}}' desaparecerá si suficientes personas apruebas esta propuesta.
-      
+
       Si nadie o una persona rechaza esta propuesta pero el resto de {{group}} la asumen, entonces {{group}} desaparecerá inmediatamente,
-      
+
       Si hay algunas aprobaciones, entonces después de un mes de votación serán contados y el grupo desaparecerá si 2/3 partes o más de los votos aprueban esto.
-      
+
       Finalmente, en un grupo con un consejo coordinador, sólo quienes están en el consejo pueden votar para destruir el grupo.
-      
+
   request_to_destroy_sent: "Tu propuesta para eliminar este grupo ha sido enviada a sus integrantes. Si esta propuesta no es vetada en un mes, este grupo será borrado."
   request_to_friend_description: "{{user}} quiere ser el contacto de {{other_user}}"
   request_to_join_our_network_description: "grupo {{group}} fue invitado a unirse a la red {{network}}"
@@ -1110,29 +1110,29 @@ es:
   usage_agreement_text: |-
       Los servicios de este sitio son proporcionados 'AS IS'. Entiendes y aceptas que el OPERADOR de este sitio no asume responsabilidad por, entre otras cosas, cualquier corte o interrupción del servicio, la indisponibilidad de características o servicios en particular, o que no tengas la posibilidad para acceder o hacer uso de todos o parte de nuestros servicios.
       Adicionalmente, entiendes y aceptas que el OPERADOR no asume responsabilidad por el borrado, pérdida o errores de entrega de información almacenada o distribuida a través de nuestros servicios. El OPERADOR de este sitio no proporciona garantías de ningún tipo.
-      
+
       En consideración por tu uso de este servicio aceptas las siguientes condiciones:
-      
+
       Reconoces y aceptas no vender, revender o explotar el uso de nuestros servicios; ni acceder a nuestros servicios o cualquiera de los contenidos accesibles a través de nuestros servicios, para ningún propósito comercial excepto el uso de tal información o contenido con el solo propósito de enlistar nuestro servicio en un motor de búsqueda u otro servicio que dirija a usuarios a nuestro sitio.
-      
+
       También aceptas no usar nuestros servicios para:
-      
+
       * acosar a otras personas;
       * dañar o explotar a menores;
       * suplantar a alguien o causar que otros crean que eres otra persona;
       * enviar mensajes no solicitados;
       * recolectar datos personales de los usuarios de este servicio sin su consentimiento explícito; y
       * interferir o interrumpir nuestros servicios, los de nuestros usuarios o de cualquier otra persona o servicio;
-      
+
       Además, aceptas asimismo:
-      
+
       * evitar el uso excesivo de nuestros servicios;
       * ser responsable por mantener la confidencialidad de tus cuentas y contraseñas;
       * ser responsable por las acciones de cualquier persona que use tu cuenta o contraseña para obtener acceso a nuestros sistemas;
       * notificarnos inmediatamente de cualquier uso desautorizado de tus cuentas o cualquier otra falla en la seguridad en cualquier momento con relación a tu(s) cuenta(s);
-      
+
       El OPERADOR no es propietario del contenido que cargues en el sitio o de cualquier otro modo transmitas a través nuestros servicios y/o redes.
-      
+
       Si no cumples con tus obligaciones bajo el presente Acuerdo, o solicitas que otros rompan su acuerdo con el OPERADOR, POR CUALQUIER RAZÓN O FALTA DE ELLA, el OPERADOR puede retirarte el acceso a parte o la totalidad de nuestros servicios, a su sola discreción. Sin embargo, nuestras fallas en responder a un incumplimiento de tu parte o de otros, no nos quita el derecho de actuar con respecto a subsecuentes o similares infracciones.
   use_as_cover: "Usar como portada"
   use_radio_buttons_to_select_page_cover: "Usar botones de radio para elegir la cubierta de página"

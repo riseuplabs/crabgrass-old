@@ -1,5 +1,5 @@
---- 
-de: 
+---
+de:
   a_message_link: "eine Nachricht"
   a_reply_link: "eine Antwort"
   a_request_was_sent_to_admin_to_make_this_page_public_message: "Einer administrierenden Person wurde eine Anfrage geschickt, diese Seite öffentlich zu machen"
@@ -20,7 +20,7 @@ de:
   activity_unread_singular: "Du hast eine ungelesene [private Nachricht]"
   activity_user_destroyed: "{{user}} hat sich gelöscht"
   activity_user_joined_group: "{{user}} ist der {{group_type}} {{group}} beigetreten"
-  activity_user_joined_site: "{user} hat sich {group} angeschlossen"
+  activity_user_joined_site: "{{user}} hat sich {{group}} angeschlossen"
   activity_user_left_group: "{{user}} hat {{group_type}} {{group}} verlassen"
   activity_user_left_site: "{{user}} hat {{group}} verlassen"
   activity_user_status: "{{user}} ist jetzt {{status}}"
@@ -280,13 +280,13 @@ de:
   email_notice_subject: "Sieh Dir die Seite \"{{title}}\" an"
   email_verification_body: |-
       Du hast dich für {{site_title}} ({{host}}) eingetragen!
-      
+
       Bevor du dich einloggen kannst musst du bestätigen, dass dies hier deine E-Mail-Adresse ist.
-      
+
       Klick auf den Link hier oder füg ihn in die Adresszeile deines Browsers ein.
-      
+
         {{verify_email_link}}
-      
+
       Wenn du dich nicht anschließen willst, ignorier diese Mail einfach.
   empty_results: Nichts
   enable_masthead_question: "Impressum ermöglichen?"
@@ -361,15 +361,15 @@ de:
   group_information: "{{group_type}} Information"
   group_invite_email: |-
       {{from_user}} hat Dich eingeladen, der Gruppe "{{group}}" beizutreten.
-      
+
       Hier kannst Du dieser Einladung folgen:
-      
+
         {{accept_invite_link}}
-      
+
       Die Homepage der Gruppe findest Du hier:
-      
+
         {{group_home_link}}
-      
+
       Wenn Du der Gruppe nicht beitreten magst ignoriere einfach diese Mail.
   group_invite_subject: "Einladung, der Gruppe \"{{group}}\" beizutreten"
   group_join_chat: "Am Plausch teilnehmen"
@@ -867,11 +867,11 @@ de:
   request_to_destroy_our_group_description: "{{user}} hat vorgeschlagen {{group_type}} {{group}} zu zerstören"
   request_to_destroy_our_group_email: |
       Die {{group_type}} '{{group}}' wird zerstört, wenn genügend Mitglieder diesem Vorschlag zustimmen.
-      
+
       Wenn kein Mensch oder nur eine Person diesen Vorschlag ablehnt, und alle anderen von {{group}} sind dafür, wird {{group}} sofort zerstört.
-      
+
       Wenn es einige Zusagen gibt, werden die Stimmen nach einem Monat gezählt, und die Gruppe wird zerstört, wenn 2/3 oder mehr dafür sind.
-      
+
       Außerdem können, falls ein Koordinationsgremium vorhanden ist, nur Mitglieder dieses Gremiums abstimmen, ob die Gruppe zerstört werden soll.
   request_to_destroy_sent: "Dein Vorschlag diese Gruppe zu zerstören wurde den Gruppenmitgliedern gesendet. Wenn der Vorschlag innerhalb eines Monats nicht abgelehnt wird, wird diese Gruppe zerstört."
   request_to_friend_description: "{{user}} würde gerne {{other_user}} zu seinen/ihren Kontakten hinzufügen"
