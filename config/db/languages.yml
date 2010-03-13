@@ -83,6 +83,11 @@ pl:
   name: Polski
   code: pl
 
+nl:
+  id: 44
+  name: Nederlands
+  code: nl
+
 el:
   id: 53
   name: Ελληνικά
