@@ -3,12 +3,19 @@ require File.dirname(__FILE__) + '/../test_helper'
 class PersonControllerTest < ActionController::TestCase
   fixtures :users, :pages, :sites, :profiles
 
-  def test_show_not_logged_in
+  def test_show_not_logged_in_public_profile_visible
+    users(:red).profiles.public.update_attribute(:may_see, true)
     get :show, :id => users(:red).to_param
     assert_response :success
     assert_nil assigns(:pages).find { |p| !p.public? }
     # test for #1901
     assert_select '.no-third-level'
+  end
+
+  def test_show_not_logged_in
+    get :show, :id => users(:red).to_param
+    assert_response :success
+    assert_select "p", :text => /Sorry, we were unable to locate/
   end
 
   def test_show_logged_in
