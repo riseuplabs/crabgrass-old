@@ -41,9 +41,10 @@
        % rake cg:import_geo_data
 
      Please note that the cg:import_geo_data rake task could take a
-     bit of time to run and will add a large-ish data set to mysql. If
-     you do not wish to import this data, you can skip this step and
-     not use geolocation.
+     bit of time to run and will add a large-ish data set to mysql. 
+
+     If you do not wish to import this data, you can skip this step
+     and not use geolocation.
 
   9. Re-enable the application, taking down your temporary page.
 
