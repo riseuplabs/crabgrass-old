@@ -37,12 +37,6 @@ packages from [http://backports.org].
 |                     | cracklib-runtime        | password strength checking (optional)         |
 |                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
 |                     | ruby-debug              | for debugging running application (optional)  |
-|                     | libxslt1-dev            | pre-required for nokogiri (optional)          |
-|                     | libxml2-dev             | pre-required for nokogiri (optional)          |
-| nokogiri            | libnokogiri-ruby        | for webrat plugin (optional)                  |
-| launchy             |                         | for webrat plugin (optional)                  |
-| leftright           |                         | for better organized test output (optional)   |
-
 
 NOTE: If you use the Debian rails package, you will need to install a
 symlink in the crabgrass/vendor directory to rails:
