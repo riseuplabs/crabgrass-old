@@ -126,6 +126,22 @@ If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
 of test data loaded, including users. To get started, you can login as
 user 'blue' with password 'blue'.
 
+= Geo-location
+
+If you wish to use location information in Crabgrass, then you need to
+import data files from Geonames (geonames.org). By default, a smaller
+data set will be imported, consisting of cities with a population
+greater than 1000 people.
+
+     Locations require a rake task:
+       % rake cg:import_geo_data
+
+Please note that the cg:import_geo_data rake task could take a
+bit of time to run and will add a large-ish data set to mysql. 
+
+If you do not wish to import this data, you can skip this step and not
+use geo-location.
+
 = Running Crabgrass
 
   cd crabgrass
