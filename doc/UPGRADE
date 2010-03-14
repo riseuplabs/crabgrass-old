@@ -7,7 +7,10 @@
 
   2. Make a backup of all of your files, and your database!
 
-  3. Save the following directories: config, log, public, tmp, assets
+  3. Save the following files: config/database.yml, config/secret.txt, 
+     config/crabgrass.[production|development|test].yml, and the following
+     directories: log, assets, and any changes you may have made to the 
+     stylesheets in the public directory.
 
   4. Replace everything else with the code from this release
 
