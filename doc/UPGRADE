@@ -28,10 +28,10 @@
     this, simply move the message_page migration to a timestamp later
     than the moderation migration.
 
-  6. Run migrations:
-       % rake db:migrate
+  7. Run migrations:
+       % RAILS_ENV=production rake db:migrate
     
-  7. Locations have been added!
+  8. Locations have been added!
      
      Locations require an import of data files from Geonames
      (geonames.org).  By default, a smaller data set will be imported,
@@ -43,9 +43,9 @@
      Please note that the cg:import_geo_data rake task could take a
      bit of time to run and will add a large-ish data set to mysql.
 
-  8. Re-enable the application, taking down your temporary page.
+  9. Re-enable the application, taking down your temporary page.
 
-  9. Review any Custom Appearances:
+  10. Review any Custom Appearances:
      
      Due to the change in the UI, custom appearances will need to be
      re-done after an upgrade. Custom Appearaances are set in the
