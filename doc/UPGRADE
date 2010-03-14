@@ -14,7 +14,11 @@
 
   4. Replace everything else with the code from this release
 
-  5. Run plugin migrations, you may not have any but this is safe to do:
+  5. There are some new dependencies, make sure you have the compass
+  library installed, the susy compass plugin, and version 2.2.20 or
+  newer haml installed before continuing.
+
+  6. Run plugin migrations, you may not have any but this is safe to do:
        % RAILS_ENV=production script/generate plugin_migration
 
     If a plugin migration file is generated (something like
