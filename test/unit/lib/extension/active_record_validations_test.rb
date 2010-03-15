@@ -39,7 +39,7 @@ class Extension::ActiveRecordValidationsTest < Test::Unit::TestCase
       begin
         page.save!
       rescue ActiveRecord::RecordInvalid => exc
-        assert exc.message =~ /Summary is required/
+        assert page.errors['summary'] =~ /is required/
       end
     end
   end
