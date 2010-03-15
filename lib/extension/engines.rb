@@ -65,7 +65,7 @@ Engines::Plugin.class_eval do
       else
         ActionController::Base.view_paths.insert(1, view_path) # push it just underneath the app
       end
-#      ActionView::TemplateFinder.process_view_paths(view_path)
+      ActionView::Base.process_view_paths(view_path)
     end
   end
 
