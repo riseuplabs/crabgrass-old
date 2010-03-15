@@ -43,7 +43,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     assert_equal @last_count + 2, @page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
     assert_equal PageHistory::RemoveStar, PageHistory.last.class
-  end  
+  end
 
   def test_mark_as_public
     @page.public = true
@@ -84,11 +84,11 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     true
   end
 
-  def test_create_page 
+  def test_create_page
     page = Page.make_owned_by(:user => @pepe, :owner => @pepe, :access => 1)
     page.reload
-    assert_equal PageHistory::PageCreated, page.page_histories.last.class
-    assert_equal PageHistory::GrantUserFullAccess, page.page_histories.first.class 
+    assert_equal PageHistory::PageCreated, page.page_histories.first.class
+    assert_equal PageHistory::GrantUserFullAccess, page.page_histories.last.class
   end
 
   def test_start_watching
@@ -181,7 +181,7 @@ class PageTrackingObserverTest < ActiveSupport::TestCase
     previous_page_history = page.page_histories.count
     wiki.update_section!(:document, @pepe, 1, "dsds")
     assert_equal PageHistory::UpdatedContent, PageHistory.last.class
-    assert_equal previous_page_history + 1, page.page_histories.count 
+    assert_equal previous_page_history + 1, page.page_histories.count
     assert_equal @pepe, PageHistory.last.user
   end
 
