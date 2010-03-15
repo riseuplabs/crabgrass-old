@@ -1,7 +1,9 @@
 - content_for :third_nav do
   = render :partial => 'pages/tabs'
-= title_for(params[:view])
-= info_for(params[:view])
+=# title_for(params[:view])
+%div
+  %span{:class => 'left partial_width'}= info_for(params[:view])
+  %span.right= pagination_for(@pages)
 = action_bar(all_pages_settings)
 - action_bar_form(mark_me_pages_path) do
   = render :partial => '/common/action_bar/hidden_form_fields'

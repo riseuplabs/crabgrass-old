@@ -1,5 +1,5 @@
----
-tr:
+--- 
+tr: 
   about_me: Hakkımda
   accept_usage_agreement: "Kullanım anlaşmasını kabul ediyorum"
   access: Erişim
@@ -75,8 +75,6 @@ tr:
   category: Kategori
   check_all: "Hepsini Kontrol Et"
   close_button: Kapat
-  collection_class_description: "Diğer sayfaları tutan özel sayfalar."
-  collection_page_display: koleksiyon
   committee: Komite
   committee_publicly_visible: "Komiteleri Herkese Görünür Yap"
   committee_publicly_visible_description: "Komiteler {{domain}}/yourgroupname üyesi olmayanlar tarafından da görüntülenebilir"
@@ -188,7 +186,6 @@ tr:
   featured_content: "Gösterilen içerik"
   featured_content_header: "Gösterilen İcerik"
   file: Dosya
-  file_class_description: "Yüklenmiş dosya."
   file_must_be_image_error: "Galeriye eklenmesi için dosyanın bir görüntü olması gerekir."
   file_size: "Dosya boyütü"
   file_version_deleted: "dosya versiyonu silindi"
@@ -196,8 +193,6 @@ tr:
   first_name: "İlk isim"
   folder_class_description: "Diğer sayfaları organize etmek için bir klasör oluşturun"
   folder_display: Klasör
-  folder_page_description: "Dosya koleksiyonu."
-  folder_page_display: Dosya
   forgot_password_link: "Şifremi unuttum"
   forgot_password_mail_expiry: "Bu bağlantı 24 saat boyunca geçerli olacaktır. Eğer şifrenizi daha sonra sıfırlamanız gerekiyorsa unutulmuş şifre sayfasını tekrar ziyaret edip yeni bir link istemelisiniz."
   forgot_password_mail_greeting: "{{user}}, şifrenizi sıfırlamak için lütfen burayı ziyaret edin"
@@ -212,7 +207,6 @@ tr:
   full: Tümü
   fullname: "Tam isim"
   galleries: Galeriler
-  gallery_class_description: "Resimlerden oluşan koleksiyon"
   gallery_description: "Çoklu resimler yükleyin ya da varolan resimleri tek bir dizi olarak organize edin"
   gallery_display: Galeri
   gallery_undo_link: "Geri al"
@@ -228,9 +222,9 @@ tr:
   group_information: "{{group_type}} Bilgiler"
   group_invite_email: |-
       {{from_user}} sizi "{{group}}" grubuna katılmaya davet etti.
-
+      
       Bu gruba katılmak istiyorsanız, buraya tıklayın:
-
+      
         {{accept_invite_link}}
   group_invite_subject: "\"{{group}}\" grubuna katılmak için davet"
   group_join_chat: "Konuşmaya Katıl"
@@ -266,7 +260,6 @@ tr:
   incoming: Gelen
   information: Bilgi
   insert_image_heading: "Görüntü Ekle"
-  insert_image_instructions: "Vikipedi metninin içine eklemek için görüntüye tıklayın."
   invalid_email: "Geçersiz E-mail"
   invalid_email_text: "Verdiğiniz email adresi geçersiz."
   invalid_token: "Geçersiz Token"
@@ -313,8 +306,6 @@ tr:
   mark_pages_as_featured_content_for_group: "Burada sayfaları bu grubun gösterilen içeriği olarak işaretleyebilirsiniz."
   me_dashboard_link: Pano
   me_inbox_link: "Gelen kutusu"
-  me_search_description: "Erişiminiz olan bütün sayfalarda arat"
-  me_search_link: Ara
   me_tasks_link: Görevler
   media_all: Medya
   media_alls: Medya
@@ -603,7 +594,6 @@ tr:
   share_page_recipients_results: "Bu {{page_class}} paylaşılıyor:  "
   share_page_recipients_sections: "Gruplarınızdan ya da arkadaşlarınızdan seçin"
   share_page_recipients_selection: "Seçiminizi yapınız"
-  share_this_page: "Bu Sayfayı Paylaş"
   sharing_help: "İsteğe bağlı.Bu sayfayı çoklu alıcılarla (kullanıcılar ya da gruplarla) paylaşabilirsiniz."
   show_gallery: "Galeriyi Göster"
   signup_button: "Üye Ol"

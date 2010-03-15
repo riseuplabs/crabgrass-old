@@ -1,5 +1,5 @@
----
-sv:
+--- 
+sv: 
   about_me: "Om mig"
   accept_usage_agreement: "Jag accepterar användningsavtalet"
   action: handling
@@ -51,8 +51,6 @@ sv:
   cancel_link: avbryt
   category: Kategori
   close_button: Stäng
-  collection_class_description: "Speciella sidor som innehåller andra sidor."
-  collection_page_display: samling
   committee: kommitté
   committee_publicly_visible_description: "Kommittéer kan ses av ickemedlemmar på {{domain}}/gruppnamn"
   committees: Kommittéer
@@ -123,13 +121,10 @@ sv:
   error_saving_new_order: "Det gick inte att spara den nya ordern!"
   fax: Fax
   file: Fil
-  file_class_description: "En uppladdad fil."
   file_must_be_image_error: "Filen måste vara en bild för att hamna i galleriet."
   file_size: Filstorlek
   file_version_deleted: "filversion borttagen"
   first_name: förnamn
-  folder_page_description: "En samling tillgångar."
-  folder_page_display: Mapp
   forgot_password_link: "Jag har glömt mitt lösenord"
   forgot_password_mail_expiry: |-
       Den här länken kommer att fungera i 24 timmar. Om du behöver
@@ -147,7 +142,6 @@ sv:
   full: full
   fullname: "Helt namn"
   galleries: Gallerier
-  gallery_class_description: "En samling bilder."
   gallery_display: galleri
   general_info: "Allmän information"
   grant_access: "Tilldela åtkomst"
@@ -160,9 +154,9 @@ sv:
   group_information: "Information för {{group_type}}"
   group_invite_email: |-
       {{from_user}} har bjudit in dig till "{{group}}".
-
+      
       Klicka här om du vill gå med i gruppen:
-
+      
         {{accept_invite_link}}
   group_invite_subject: "Inbjudan till \"{{group}}\""
   group_join_chat: "delta i chatten"
@@ -186,7 +180,6 @@ sv:
   incoming: Inkommande
   information: Information
   insert_image_heading: "Lägg in bild"
-  insert_image_instructions: "Klicka på en miniatyr för att lägga in bilden i wikitexten."
   invalid_email: "Ogiltig e-postadress"
   invalid_email_text: "E-postadressen du angivit är ogiltig."
   invalid_token: "Ogiltig symbol"
@@ -217,8 +210,6 @@ sv:
   make_album_cover: "gör denna bild till albumomslag"
   me_dashboard_link: Panelen
   me_inbox_link: Inkorg
-  me_search_description: "Sök igenom alla sidor du har tillgång till"
-  me_search_link: Sök
   me_tasks_link: Uppgifter
   media_all: Media
   media_alls: Media

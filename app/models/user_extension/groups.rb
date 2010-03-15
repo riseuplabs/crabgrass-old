@@ -170,7 +170,7 @@ module UserExtension::Groups
   private
 
   PRIMARY_GROUPS_CONDITION   = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
-  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\')'
   PRIMARY_G_AND_N_CONDITION  = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 

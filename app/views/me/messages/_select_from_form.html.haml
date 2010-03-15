@@ -1,6 +1,5 @@
 - form_tag messages_path, :method => 'get' do
-  = label_tag 'messages_from_name', I18n.t(:messages_from_label)
   = text_field_tag 'from', params[:from], :id => 'messages_from_name'
-  = autocomplete_entity_tag('messages_from_name', :url => '/autocomplete/senders')
+  = autocomplete_entity_tag('messages_from_name', :url => '/autocomplete/senders', :message => I18n.t(:messages_from_label))
   = submit_tag I18n.t(:show), :name => nil
 

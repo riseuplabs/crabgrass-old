@@ -1,6 +1,22 @@
 #tasks
   a
-    +hover-link
+    +blue-link(12px)
   li.task 
-    p
-      font-weight: bold
+    p 
+      padding-top: 0.2em
+      margin-top: 0.8em 
+      a
+        font-size: 14px 
+  tr
+    border-top: red
+    
+a#create_tasks_link
+  +blue-link
+  
+ul.task_list li
+  padding: 0
+  margin: 0
+  list-style: none
+  padding: 0.6em 0.6em 0.2em 0.6em 
+  a
+    +blue-link(12px)

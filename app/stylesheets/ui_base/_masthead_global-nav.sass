@@ -2,7 +2,7 @@
 // masthead with logout
 //
 #masthead
-  +clearfix 
+  +clearfix
   height: 50px
   background= !masthead_background
   #masthead-container
@@ -47,7 +47,7 @@
             position: relative
             height: 21px
             margin: -2px -1px 0 0
-            
+
         div
           display: inline
           position: relative
@@ -69,14 +69,14 @@ nav.page
   background= !global_nav_bg
   overflow: visible
   #global-nav-container
-    +container    
+    +container
     overflow: visible
     #global-nav
       +columns(14)
       +full
       width: 764px
       overflow: visible
-//     
+//
 // list-items from global nav
 //
 
@@ -85,7 +85,7 @@ nav.page
   margin: 0
   position: relative
 
-#menu  
+#menu
   +clearfix
   float: left
   overflow: visible
@@ -97,19 +97,19 @@ nav.page
       +hover-link
       color= !blue
       font-size: 12px
-      margin: 0 26px 0 0  
+      margin: 0 26px 0 0
   li.current
     a
       color: #382526
       font-weight: bold
-              
+
 #menu .menu_items
   li.small_icon
     float: left
     background-repeat: no-repeat
     background-position: 0 50%
     padding-left: 20px
-    min-height: 16px  
+    min-height: 16px
     a
       color: !warm_grey_text
       font-weight: normal
@@ -118,18 +118,19 @@ nav.page
   width: 280px
   float: right
   height: 30px
+  margin-right: -5px
 #user
   float: right
-  margin: 3px 8px 0 0
+  margin: 5px 0 0 0
   +clearfix
-
+  color= !lighter_grey_text
   li
     +inline-list
     +small-text
   a
     +blue-link
     margin-right: 5px
-    margin-left: 5px      
+    margin-left: 5px
     &.active
       font-weight: bold
 // sub menu items
@@ -148,14 +149,16 @@ nav.page
     margin: 0 0 1px 4px
     .see_all
       font-size: smaller
-      font-variant: small-caps
+      font-weight: normal
   ul
     border: 0 none transparent
     width: auto
     position: static
   li
     float: none
-  a 
+    a
+      overflow: hidden
+  a
     border: 0px none transparent
     color= !link_color
 
@@ -176,9 +179,13 @@ nav.page
 
   div.leftcol
     width: 17em
+    float: left
   div.rightcol
     width: 17em
     margin-left: 18em
+
+.menu_items.twocols
+  width: 35em
 
 #menu #menu_me
   div.leftcol
@@ -192,6 +199,7 @@ nav.page
     padding-left: 1em
   ul.recent_pages li
     margin-top: 0.5em
+    width: 19em
   h3
     margin: 0
 
@@ -207,6 +215,7 @@ ul.menu_me_left
     padding-top: 4px
     padding-bottom: 4px
   li
+    width: 9em
     &.active, &:hover
     &.small_icon
       padding-left: 19px

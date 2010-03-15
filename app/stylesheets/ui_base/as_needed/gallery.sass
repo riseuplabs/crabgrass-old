@@ -1,5 +1,3 @@
-
-@import base.sass
                
 #title
   span
@@ -9,10 +7,12 @@
       text-decoration: none
       color: #5A98C8
       margin-left: 15px
-      +hover-link
+        
+      &:hover
+        text-decoration: underline 
 
 .swatches
-  .gallery_swatch_portrait
+  .gallery_swatch_portrait, .gallery_swatch_landscape 
     a     
       :border-width 3px  
 
@@ -90,7 +90,9 @@
     :color #5A98C8
     :font-size 11px             
     text-decoration: none
-    +hover-link   
+
+    &:hover
+      text-decoration: underline    
 
   .gallery-actions a
     :padding 2px 0px 4px 24px

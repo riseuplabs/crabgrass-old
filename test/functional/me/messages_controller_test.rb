@@ -12,6 +12,16 @@ class Me::MessagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  # testing for #1931
+  def test_banner_image_should_link_to_profile
+    login_as :blue
+    get :index
+    assert_select 'div.banner' do
+      assert_select "a[href='/blue']" do
+        assert_select 'img.left'
+      end
+    end
+  end
 
   def test_should_not_show_nonexisting_conversation
     login_as :yellow
@@ -34,6 +44,11 @@ class Me::MessagesControllerTest < ActionController::TestCase
     get :show, :id => users(:orange).to_param
     assert_response :success
     assert_equal relationship.discussion, assigns(:discussion)
+    # test for #1919
+    assert_equal users(:blue), assigns(:user)
+    assert_equal users(:orange), assigns(:recipient)
+    # test for #1918
+    assert_select "a[href=#{messages_path}]", 'Back to Messages'
 
     # same discussion, from a different perspective
     login_as :orange
@@ -92,6 +107,10 @@ class Me::MessagesControllerTest < ActionController::TestCase
     last_id = last.user_talking_to(@blue).to_param
 
 
+    get :show, :id => middle_id
+    # test for #1920
+    assert_select 'a.left', '« Previous'
+    assert_select 'a.right', 'Next »'
     # asking for next while on last item
     # or for previous while on first item
     # should return you to index

@@ -83,6 +83,11 @@ pl:
   name: Polski
   code: pl
 
+nl:
+  id: 44
+  name: Nederlands
+  code: nl
+
 el:
   id: 53
   name: Ελληνικά
@@ -103,6 +108,11 @@ bg:
   id: 85
   name: български език
   code: bg
+
+ca:
+  id: 92
+  name: Català
+  code: ca
 
 da:
   id: 104

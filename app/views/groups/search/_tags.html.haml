@@ -1,9 +1,13 @@
-= render :partial => 'common/title_box', :locals => {:title => I18n.t(:tags).capitalize}
+%section.tags
+  = render :partial => 'common/title_box', :locals => {:title => I18n.t(:tags).capitalize}
 
-- if @tags.any?
-  %ul#tag-cloud
-    - tag_cloud @tags, %w(tag1 tag2 tag3 tag4) do |tag, css_class|
-      %li= link_to_group_tag tag, :class => css_class
-- else
-  = I18n.t(:no_tags)
+  - if @tags.any?
+    -if see_all_url
+      %span.see_all
+        = link_to(I18n.t(:see_all_link) + "&raquo;", see_all_url)
+    %ul#tag-cloud
+      - tag_cloud @tags, %w(tag1 tag2 tag3 tag4), limit do |tag, css_class|
+        %li= link_to_group_tag tag, :class => css_class
+  - else
+    = I18n.t(:no_tags)
 

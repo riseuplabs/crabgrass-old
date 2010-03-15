@@ -166,7 +166,11 @@ module GroupsHelper
 
   def link_to_group_tag(tag,options)
     options[:class] ||= ""
-    path = (params[:path]||[]).dup
+    if action?(:tags)
+      path = (params[:path]||[]).dup
+    else
+      path = []
+    end
     name = tag.name.gsub(' ','+')
     if path.delete(name)
       options[:class] += ' invert'

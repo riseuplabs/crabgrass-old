@@ -49,7 +49,10 @@ module ProfileMethods
 
   # a shortcut to grab the 'public' profile
   def public
-    @public_profile ||= (find_by_access(:stranger) || create_or_build(:stranger => true))
+    profile_options = {:stranger => true}
+    profile_options.merge!({:may_see => false}) if proxy_owner.is_a? User
+
+    @public_profile ||= (find_by_access(:stranger) || create_or_build(profile_options))
   end
 
   # a shortcut to grab the 'private' profile

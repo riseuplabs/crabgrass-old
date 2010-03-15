@@ -20,7 +20,7 @@ begin
         end
       end
 
-      if Conf.enabled_mods.include?('translator') && !site_conf['translation_group'].blank?
+      if Conf.enabled_mods.include?('translator') && !site_conf['translation_group'].blank? && site.translation_group.blank?
         site.update_attribute(:translation_group, site_conf['translation_group'])
       end
 

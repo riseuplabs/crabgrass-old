@@ -1,6 +1,6 @@
 module PersonHelper
 
-  def friend_link
+  def friend_link_li
     if may_remove_contact?
       link = link_to I18n.t(:remove_friend_link), {:controller => 'contact', :action => 'remove', :id => @user}
       content_tag :li, link, :class => 'small_icon user_delete_16'
@@ -10,14 +10,14 @@ module PersonHelper
     end
   end
 
-  def message_link
+  def message_link_li
     if may_create_private_message?(@user)
       link = link_to I18n.t(:send_message_link), my_private_message_path(@user)
       content_tag :li, link, :class => 'small_icon page_message_16'
     end
   end
 
-  def edit_profile_link
+  def edit_profile_link_li
     if may_edit_profile?(@user)
       content_tag :li, link_to(I18n.t(:edit_profile_link), :controller => 'profile', :action => 'edit', :id => params[:profile]), :class => 'small_icon pencil_16'
     end

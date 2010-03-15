@@ -39,6 +39,7 @@ class Me::PublicMessagesController < Me::BaseController
       post.user = current_user
       post.recipient = current_user
       post.body_html = post.lite_html
+      flash_message :success => I18n.t(:status_post_sent)
     end
   rescue ActiveRecord::RecordInvalid => exc
     flash_message :exception => exc

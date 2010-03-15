@@ -7,15 +7,15 @@
 
 - if not entities.empty?
   - cache(menu_cache_key(:submenu => submenu)) do
-    %div{:class=>"menu_items", :style=>"display: none"}
+    %div{:style=>"display: none", :class => columns[:right_col].empty? ? "menu_items" : "menu_items twocols" }
       %h3.dim
-        = heading 
-        %span.see_all= link_to I18n.t(:see_all_link) + ARROW, see_all_url 
+        = heading
+      %span.see_all= link_to I18n.t(:see_all_link) + ARROW, see_all_url
       %div.leftcol
         %ul
           - for entity in columns[:left_col]
             %li= display_entity(entity, :tag => :a, :avatar => 'small', :format => :full, :block => true)
-      - if not columns[:right_col].empty? 
+      - if not columns[:right_col].empty?
         %div.rightcol
           %ul
             - for entity in columns[:right_col]

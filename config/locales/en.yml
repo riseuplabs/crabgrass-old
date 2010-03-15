@@ -408,7 +408,7 @@ en:
   activity_user_status: "{{user}} is now {{status}}"
   activity_user_left_group: "{{user}} has left {{group_type}} {{group}}"
   activity_user_joined_group: "{{user}} has joined {{group_type}} {{group}}"
-  activity_user_joined_site: "{user} has joined {group}"
+  activity_user_joined_site: "{{user}} has joined {{group}}"
   activity_user_destroyed: "{{user}} has retired"
   activity_group_created: "{{user}} created {{group_type}} {{group}}"
   activity_group_destroyed: "{{group}} was destroyed by {{user}}"
@@ -567,7 +567,7 @@ en:
   view_owner_pages_description: "Pages you own."
   view_unread_pages_description: "Unread pages that you own, participated in, or are watching."
   view_public_pages_description: "All pages that you have access too, including public pages."
-  view_networks_pages_description: "All pages of your groups and networks and those shared with all users."
+  view_networks_pages_description: "All pages of your groups and networks and those shared between you and other users."
   view_groups_pages_description: "All pages of your groups and your own pages."
 
   my_tasks: "Tasks"
@@ -605,11 +605,13 @@ en:
   language: Language
   time_zone: Time Zone
   set_status_messsage: What are you doing right now?
+  status_post_sent: "Your message has been successfully posted to your profile. Your friends will see it in 'Social Activity'."
 
   me_recent_messages: "Recent"
   do_you_want_to_receive_email_notifications: "Do you want to receive email notifications about changes to pages you are 'watching'?"
 
-  messages_from_label: "Messages from"
+  messages_back_to_all: "Back to Messages"
+  messages_from_label: "Only view messages from:"
   messages_mark_as_label: "Mark as:"
   messages_view_label: "View:"
 
@@ -913,7 +915,7 @@ en:
 
   contact_request_message_label: "Tell {{user}} why you want to be their friend."
   add_contact_info: "When another user is your friend, they are able to see when you are logged in and they have access to see your full profile. Once you become a friend of another person, they also become your friend."
-  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {{link_to_requests}}."
+  join_request_info: "You will not become a member of this group until your request has been approved. You can track the status of your requests by visiting: {{my_requests_url}}."
 
   network_invite_info: "Enter the names of the groups you would like to invite to join this network."
 

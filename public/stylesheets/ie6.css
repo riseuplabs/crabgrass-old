@@ -96,6 +96,40 @@ ul.icon_boxes li:hover span {
   width: 10em;
 }
 /* new ui 11/2009*/
-#page #content #content-container #group-content-wrap #group-info { 
-	margin: 0 16px 0 0; 
+#page #content #content-container #group-content-wrap #group-info {
+	margin: 0 16px 0 0;
 }
+
+
+/* hover action icons */
+
+a.anchor {
+  filter: alpha(opacity = 0);
+  zoom: 1;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor {
+  filter: alpha(opacity = 100);
+}
+
+#info-box #activities .left {
+  width: 230px;
+}
+
+a.edit {
+  filter: alpha(opacity = 0);
+  zoom: 1;
+}
+
+a.edit:hover {
+  filter: alpha(opacity = 100) !important;
+}
+
+h1:hover a.edit,
+h2:hover a.edit,
+h3:hover a.edit {
+  filter: alpha(opacity = 60);
+}
+

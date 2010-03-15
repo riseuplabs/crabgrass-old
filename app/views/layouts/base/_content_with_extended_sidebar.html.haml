@@ -19,7 +19,7 @@
 #content
   #content-container
     #content-wrap
-      %aside#xxlarge-avatar
+      %aside#xxlarge-avatar{:class => yield(:third_nav) ? nil : 'no-third-level'}
         = yield :extended_sidebar
       /
       / container for pages that has extended sidebar
