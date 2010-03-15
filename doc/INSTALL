@@ -22,8 +22,8 @@ packages from [http://backports.org].
 | tzinfo              | libtzinfo-ruby          | timezone support                              |
 | RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
 | haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
-| compass             | libcompass-ruby         | a semantic CSS system =0.8.5                  |
-| compass-susy-plugin |                         | =0.6.3                                        |
+| compass             | libcompass-ruby         | a semantic CSS system =>0.8.5                 |
+| compass-susy-plugin | compass-plugin-susy     | =>0.6.3                                       |
 | hpricot             | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
 | chronic             | libchronic-ruby         | required by backgroundrb                      |
 | packet              | libpacket-ruby          | required by backgroundrb >=0.1.15             |
@@ -37,12 +37,6 @@ packages from [http://backports.org].
 |                     | cracklib-runtime        | password strength checking (optional)         |
 |                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
 |                     | ruby-debug              | for debugging running application (optional)  |
-|                     | libxslt1-dev            | pre-required for nokogiri (optional)          |
-|                     | libxml2-dev             | pre-required for nokogiri (optional)          |
-| nokogiri            | libnokogiri-ruby        | for webrat plugin (optional)                  |
-| launchy             |                         | for webrat plugin (optional)                  |
-| leftright           |                         | for better organized test output (optional)   |
-
 
 NOTE: If you use the Debian rails package, you will need to install a
 symlink in the crabgrass/vendor directory to rails:
@@ -131,6 +125,22 @@ production setup:
 If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
 of test data loaded, including users. To get started, you can login as
 user 'blue' with password 'blue'.
+
+= Geo-location
+
+If you wish to use location information in Crabgrass, then you need to
+import data files from Geonames (geonames.org). By default, a smaller
+data set will be imported, consisting of cities with a population
+greater than 1000 people.
+
+     Locations require a rake task:
+       % rake cg:import_geo_data
+
+Please note that the cg:import_geo_data rake task could take a
+bit of time to run and will add a large-ish data set to mysql. 
+
+If you do not wish to import this data, you can skip this step and not
+use geo-location.
 
 = Running Crabgrass
 
