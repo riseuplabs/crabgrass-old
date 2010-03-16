@@ -1,8 +1,13 @@
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
 <%
   render :partial => 'wiki_page/tabs'
   @show_posts = false
   separator = Conf.text_editor_sym == :html_preferred ? '' : '|'
 %>
+
 <%= Formy.tabs(:type => :simple, :separator => separator) do |f|
   if Conf.allow_greencloth_editor?
     f.tab do |t|
@@ -65,6 +70,7 @@
     ]
   end
 end %>
+
 
 <% form_tag(page_url(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do -%>
 <%= hidden_field 'wiki', 'version' %>

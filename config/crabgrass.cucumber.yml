@@ -20,7 +20,7 @@ title: "Crabgrass"
 enabled_mods:
 #  - design_tester
 #  - super_admin
-  - moderation
+#  - moderation
 #  - translator
 
 translation_group: rainbow

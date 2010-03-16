@@ -1,5 +1,5 @@
-page.replace_html 'title', :partial => 'base_page/title/title'
-#page.replace_html 'message', ''
+page.replace 'title', :partial => 'base_page/title/title'
+#page.replace_html 'flash-message', ''
 page.call 'Modalbox.hide'
 
 #

@@ -441,11 +441,6 @@ class Page < ActiveRecord::Base
     @flags ||= {}
   end
 
-  # DEPRECATED
-  def self.make_a_call(function,options={})
-    PageStork.send(function, options)
-  end
-
   def class_display_name
     self.class.class_display_name
   end

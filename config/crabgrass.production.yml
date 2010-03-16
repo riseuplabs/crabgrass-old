@@ -64,7 +64,7 @@ sites:
 ##
 
 pagination_size: 30
-default_language: en_US
+default_language: en
 enforce_ssl: false
 show_exceptions: true
 email_sender: "robot@$current_host"

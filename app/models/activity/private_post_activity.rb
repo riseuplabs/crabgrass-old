@@ -8,6 +8,7 @@ class PrivatePostActivity < Activity
 
   alias_attr :user_to, :subject
   alias_attr :user_from, :object
+  alias_attr :avatar, :object
   alias_attr :post_id, :related_id
   alias_attr :snippet, :extra
   alias_attr :reply, :flag

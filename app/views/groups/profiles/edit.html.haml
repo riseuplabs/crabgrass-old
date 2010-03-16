@@ -1,0 +1,11 @@
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => '/groups/navigation/settings_sidelinks'
+
+%section#settings-form
+  - form_tag(groups_profiles_params(:action => :edit), :multipart => true) do
+    = render :partial => '/groups/profiles/edit_form'
+    %p.form_buttons= submit_tag I18n.t(:save_button), :name => 'save'
+

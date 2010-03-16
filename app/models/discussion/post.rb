@@ -31,6 +31,8 @@ class Post < ActiveRecord::Base
 
   named_scope :visible, :conditions => 'deleted_at IS NULL'
 
+  named_scope :by_created_at, :order => 'created_at DESC'
+
   ##
   ## attributes
   ##

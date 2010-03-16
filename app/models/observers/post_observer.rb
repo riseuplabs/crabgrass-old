@@ -2,13 +2,15 @@ class PostObserver < ActiveRecord::Observer
 
   def after_create(post)
     if post.private?
-      PrivatePostActivity.create(
-        :user_to => post.recipient, :user_from => post.user,
-        :post => post, :reply => !post.in_reply_to.nil?
-      )
+      return
+      # no private messages activities for now.
+      #  PrivatePostActivity.create(
+      #   :user_to => post.recipient, :user_from => post.user,
+      #   :post => post, :reply => !post.in_reply_to.nil?
+      # )
     elsif post.default?  # so far these are only status posts
       MessageWallActivity.create(
-        :user => post.recipient, :author => post.user, :post => post, :access => 2 
+        :user => post.recipient, :author => post.user, :post => post, :access => 2
       )
     elsif post.public?
       MessageWallActivity.create(

@@ -1,0 +1,51 @@
+Me:
+  Pages:
+    My Work:
+    All Pages:
+    Trash:
+  Social Activity:
+    Friend Activity:
+    Peer Activity:
+  Messages:
+  Tasks:
+    Pending:  
+      outside_nav: true
+    Completed: 
+      outside_nav: true
+  Requests:
+    Pending:
+    Approved:
+    Rejected:
+  Edit:
+    outside_nav: true
+People:
+  My Friends:
+  All:
+    Stranger:
+      path: /stranger
+Groups:
+  My Groups:
+    The Animals:
+      outside_nav:true
+      path: /animals
+      PAGES:
+        path: /groups/pages/animals
+      ADMINISTRATION:
+        path: /groups/animals/edit
+        Settings:
+          Basic Settings:
+            path: /groups/animals/edit
+          Permissions:
+            path: /groups/permissions/edit/animals
+          Public Profile:
+            path: /groups/profiles/edit/animals
+          Featured Pages:
+          Destroy Group:
+          Create Committee:
+        Members:
+        Requests:
+  All:  
+Networks:
+  Directory:
+    My:
+    All:

@@ -46,6 +46,7 @@ class Request < ActiveRecord::Base
   # some requests (ex: RequestToDestroyOurGroup) are approved only
   # when they get sufficient votes for approval and (in some cases)
   # when a period of time has passed
+  # 'ignore' is another vote that
   has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
 
   validates_presence_of :created_by_id
@@ -53,7 +54,7 @@ class Request < ActiveRecord::Base
   validates_presence_of :requestable_id, :if => :requestable_required?
 
   named_scope :having_state, lambda { |state|
-    {:conditions => [ "requests.state = ?", state]}
+    {:conditions => [ "requests.state = ?", state.to_s]}
   }
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
@@ -65,6 +66,14 @@ class Request < ActiveRecord::Base
     # you only get to approve group requests for groups that you are an admin for
     {:conditions => ["(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group')", user.id, user.admin_for_group_ids]}
   }
+
+  named_scope :to_or_created_by_user, lambda { |user|
+    # you only get to approve group requests for groups that you are an admin for
+    {:conditions => [
+      "(recipient_id = ? AND recipient_type = 'User') OR (recipient_id IN (?) AND recipient_type = 'Group') OR (created_by_id = ?)",
+      user.id, user.admin_for_group_ids, user.id]}
+  }
+
   named_scope :to_group, lambda { |group|
     {:conditions => ['recipient_id = ? AND recipient_type = ?', group.id, 'Group']}
   }
@@ -112,6 +121,18 @@ class Request < ActiveRecord::Base
     save!
   end
 
+  # alias for approve_by!, reject_by!
+  # same interface as Discussion#mark!
+  def mark!(as, user)
+    # TODO: support :ignore
+    if as == :approve
+      approve_by!(user)
+    elsif as == :reject
+      reject_by!(user)
+    elsif as == :destroy and created_by == user
+      destroy
+    end
+  end
 
   def approve_by!(user)
     set_state!('approved',user)
@@ -196,6 +217,21 @@ class Request < ActiveRecord::Base
   def self.destroy_for_group(group)
     destroy_all ["recipient_id = ? AND recipient_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
     destroy_all ["requestable_id = ? AND requestable_type = 'Group' AND type != 'RequestToDestroyOurGroup'", group.id]
+  end
+
+
+  protected
+
+  def add_vote!(response, user)
+    response_map = {
+      'reject' => 0,
+      'approve' => 1,
+      'ignore' => 2
+    }
+
+    value = response_map[response]
+    votes.by_user(user).delete_all
+    votes.create!(:value => value, :user => user)
   end
 
 end

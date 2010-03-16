@@ -1,0 +1,15 @@
+- content_for :style do
+  table.members td {padding: 12px;}
+
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => 'members_sidelinks', :locals => {:group => @group }
+
+- if may_update_group?
+  = render :partial => 'admin'
+
+- if may_create_memberships?
+  = render :partial => 'committee'
+

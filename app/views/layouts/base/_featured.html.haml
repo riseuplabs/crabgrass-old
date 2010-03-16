@@ -1,0 +1,16 @@
+- if action?(:show)
+  - if @featured_pages.any?
+    %h4
+      = I18n.t(:featured_content_header).downcase
+    - @featured_pages.each do |page|
+      %article
+        = display_page_cover(page)
+        %h4
+          = link_to(page.title, page_url(page))
+        - if !page.summary.blank?
+          %p
+            = page.summary
+        //%div.tags
+        //  - page_tags(page, false).each do |tag|
+        //    %li 
+        //      = tag

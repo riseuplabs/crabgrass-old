@@ -18,16 +18,26 @@ Given /^#{capture_model} (?:has|have) (admin|edit|view) access to #{capture_mode
   page.save
 end
 
-Given /^#{capture_model} notified #{capture_model} about #{capture_model}$/ do |sender, recipient, page|
+Given /^#{capture_model} notified #{capture_model} about #{capture_model}(?: with #{capture_fields})?$/ do |sender, recipient, page, fields|
+  fields = parse_fields(fields)
   sender = model(sender)
   recipient = model(recipient)
   page = model(page)
-  sender.share_page_with! page, recipient, :send_notice => true
+  sender.share_page_with! page, recipient,
+    :send_notice => true,
+    :send_message => fields["message"]
 end
 
 Given /^#{capture_model} owns #{capture_model}$/ do |owner, page|
   owner = model(owner)
   page = model(page)
   page.owner=owner
+  page.save
 end
 
+Given /^#{capture_model} (?:has|have) (not |)read #{capture_model}$/ do |reader, neg, page|
+  user = model(reader)
+  page = model(page)
+  upart = page.add(user, :viewed => neg.empty?)
+  upart.save!
+end

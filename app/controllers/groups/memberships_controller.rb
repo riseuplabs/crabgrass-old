@@ -2,24 +2,31 @@
 # All the relationships between users and groups are managed by this controller,
 
 class Groups::MembershipsController < Groups::BaseController
+  permissions 'groups/memberships'
 
-  permissions 'groups/memberships', 'groups/requests'
+  before_filter :fetch_membership, :only => :destroy
   before_filter :fetch_group, :login_required
-  verify :method => :post, :only => [:join]
+  skip_before_filter :fetch_group, :only => :destroy
 
+  verify :method => :post, :only => [:join]
+  verify :method => :delete, :only => [:destroy]
   ###### PUBLIC ACTIONS #########################################################
 
   # list all members of the group
-  def list
+  def review 
     # disabled for the sites mode - do we want membership by site?
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-   @memberships = @group.memberships.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
-   @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
+    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @second_nav = 'administration'
+    @third_nav = 'members'
   end
 
   # list groups belonging to a network
-  def groups
+  def review_groups
     @federatings = @group.federatings.alphabetized_by_group
+    @second_nav = 'administration'
+    @third_nav = 'members'
   end
 
   # edit committee settings (add/remove users) or admin a group (currently n/a)
@@ -30,11 +37,24 @@ class Groups::MembershipsController < Groups::BaseController
 
   # leave this group
   def leave
+    @no_leave_group_link = true
     return unless request.post? # show form on get
 
     @group.remove_user!(current_user)
     flash_message :success => I18n.t(:membership_leave_message, :group => @group.name)
     redirect_to url_for_group(@group)
+  end
+
+  def destroy
+    # disabled until release 0.5.1
+    redirect_to :action => 'list', :id => @group
+    return
+
+    @group = @membership.group
+    @user = @membership.user
+    @group.remove_user!(@user)
+
+    redirect_to :action => 'list', :id => @group
   end
 
   # used when you have admin access to a group that you
@@ -75,11 +95,8 @@ class Groups::MembershipsController < Groups::BaseController
     @title_box = render_to_string :partial => 'title_box'
   end
 
-  before_filter :prepare_pagination
-  def prepare_pagination
-    @page_number = params[:page] || 1
-    @per_page = current_site.pagination_size
-    @letter_page = params[:letter] || ''
+  def fetch_membership
+    @membership = Membership.find(params[:id])
   end
 
 end

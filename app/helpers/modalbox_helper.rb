@@ -1,6 +1,6 @@
 
 # how to deal with errors?
-# page.replace_html 'message', display_messages if display_messages.any?
+# page.replace_html 'flash-message', display_messages if display_messages.any?
 
 module ModalboxHelper
 

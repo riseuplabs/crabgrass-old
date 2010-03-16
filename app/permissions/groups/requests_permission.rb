@@ -11,6 +11,9 @@ module Groups::RequestsPermission
   end
 
   def may_create_destroy_request?(group=@group)
+    # disabled until release 0.5.1
+    return false
+
     # group with council
     if group.council != group and group.council.users.size != 1
       current_user.may?(:admin, group)

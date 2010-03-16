@@ -1,0 +1,7 @@
+HELPERS
+=======
+
+* 'member_since_line'
+** method on profile_helper.rb, it was used on old UI for profile, it isn't used anymore and should be removed after remove app/views/profile/show.rhtml
+* message(opts) like message(:success => "all good")
+** use flash_message(opts) instead from flash_message_helper.rb

@@ -88,6 +88,11 @@ class TaskListPageController < BasePageController
 
   protected
 
+  def initialize(options={})
+    super(options)
+    @second_nav = 'tasks'
+  end
+
   def update_participations
     users_pending = {}
     page_resolved = true

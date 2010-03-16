@@ -6,29 +6,26 @@ class Groups::MembershipsControllerTest < ActionController::TestCase
   def setup
   end
 
-  def test_list_when_not_logged_in
-    get :list, :id => groups(:public_group).name
+  def test_review_when_not_logged_in
+    get :review, :id => groups(:public_group).name
     assert_response :redirect, "login required to list membership of a group"
   end
 
-  def test_list_when_logged_in
-    login_as :red
-    get :list, :id => groups(:rainbow).name
+  def test_review_when_logged_in
+    login_as :blue
+    get :review, :id => groups(:rainbow).name
     assert_response :success, "list rainbow should succeed, because user red in group rainbow"
+  end
 
-    groups(:public_group).profiles.public.may_see_members = true
-    groups(:public_group).save!
-    get :list, :id => groups(:public_group).name
-    assert_response :success, "list public_group should succeed, because membership is public"
+  def test_review_groups_when_not_logged_in
+    get :review_groups, :id => groups(:fai).name
+    assert_response :redirect, "login required to list membership of a network"
+  end
 
-    get :list, :id => groups(:private_group).name
-    assert_response :success, "list private_group should succeed"
-
-    groups(:public_group).profiles.public.may_see_members = false
-    groups(:public_group).save!
-
-    get :list, :id => groups(:public_group).name
-    assert_response :success, "list public_group should succeed"
+  def test_review_groups_when_logged_in
+    login_as :blue
+    get :review_groups, :id => groups(:fai).name
+    assert_response :success, "list groups in fai should succeed, because user blue is an admin in network rainbow"
   end
 
   def test_leave

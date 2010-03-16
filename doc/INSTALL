@@ -3,44 +3,40 @@
 The required dependent programs and ruby libraries are detailed in the
 table below. You may either install them via the gem package manager,
 or if using Debian/Ubuntu by using the Debian package. Both names
-arelisted in the table when both are available, if only one is listed,
+are listed in the table when both are available, if only one is listed,
 then you can only install it via that mechanism.
 
 If you are running Debian stable, you can often pull newer versions of
 packages from [http://backports.org].
 
-| gem        | debian package          | notes / required versions                     |
-|------------+-------------------------+-----------------------------------------------|
-|            | ruby1.8                 | =1.8.7                                        |
-|            | ruby1.8-dev             |                                               |
-|            | rubygems                |                                               |
-| rake       | rake                    | >=0.8.1                                       |
-| rails      | rails*                  | =2.1.0                                        |
-| mysql      | libmysql-ruby           | ruby mysql support >=5.0                      |
-|            | mysql-server            | the database server                           |
-|            | libopenssl-ruby         |                                               |
-| tzinfo     | libtzinfo-ruby          | timezone support                              |
-| RedCloth   | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
-| haml       | libhaml-ruby            | templating, generated CSS site themes >=2.2.8 |
-| hpricot    | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
-| chronic    | libchronic-ruby         | required by backgroundrb                      |
-| packet     | libpacket-ruby          | required by backgroundrb >=0.1.15             |
-| mime-types | libmime-types-ruby      | file upload bug in IE6                        |
-|            | openoffice.org          | image thumbnails/document previews (optional) |
-|            | openoffice.org-headless | image thumbnails/document previews (optional) |
-|            | msttcorefonts           | document previews (optional)                  |
-|            | graphicsmagick          | thumbnail generation (optional)               |
-|            | inkscape                | thumbnail generation (optional)               |
-|            | libcrack2               | password strength checking (optional)         |
-|            | cracklib-runtime        | password strength checking (optional)         |
-|            | libopen4-ruby           | better pipes, for latex renderer (optional)   |
-|            | ruby-debug              | for debugging running application (optional)  |
-|            | libxslt1-dev            | pre-required for nokogiri (optional)          |
-|            | libxml2-dev             | pre-required for nokogiri (optional)          |
-| nokogiri   | libnokogiri-ruby        | for webrat plugin (optional)                  |
-| launchy    |                         | for webrat plugin (optional)                  |
-| leftright  |                         | for better organized test output (optional)   |
-
+| gem                 | debian package          | notes / required versions                     |
+|---------------------+-------------------------+-----------------------------------------------|
+|                     | ruby1.8                 | =1.8.7                                        |
+|                     | ruby1.8-dev             |                                               |
+|                     | rubygems                |                                               |
+| rake                | rake                    | >=0.8.1                                       |
+| rails               | rails*                  | =2.1.0                                        |
+| mysql               | libmysql-ruby           | ruby mysql support >=5.0                      |
+|                     | mysql-server            | the database server                           |
+|                     | libopenssl-ruby         |                                               |
+| tzinfo              | libtzinfo-ruby          | timezone support                              |
+| RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
+| haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
+| compass             | libcompass-ruby         | a semantic CSS system =>0.8.5                 |
+| compass-susy-plugin | compass-plugin-susy     | =>0.6.3                                       |
+| hpricot             | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
+| chronic             | libchronic-ruby         | required by backgroundrb                      |
+| packet              | libpacket-ruby          | required by backgroundrb >=0.1.15             |
+| mime-types          | libmime-types-ruby      | file upload bug in IE6                        |
+|                     | openoffice.org          | image thumbnails/document previews (optional) |
+|                     | openoffice.org-headless | image thumbnails/document previews (optional) |
+|                     | msttcorefonts           | document previews (optional)                  |
+|                     | graphicsmagick          | thumbnail generation (optional)               |
+|                     | inkscape                | thumbnail generation (optional)               |
+|                     | libcrack2               | password strength checking (optional)         |
+|                     | cracklib-runtime        | password strength checking (optional)         |
+|                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
+|                     | ruby-debug              | for debugging running application (optional)  |
 
 NOTE: If you use the Debian rails package, you will need to install a
 symlink in the crabgrass/vendor directory to rails:
@@ -130,6 +126,22 @@ If you have run <tt>rake db:fixtures:load</tt>, there will be a bunch
 of test data loaded, including users. To get started, you can login as
 user 'blue' with password 'blue'.
 
+= Geo-location
+
+If you wish to use location information in Crabgrass, then you need to
+import data files from Geonames (geonames.org). By default, a smaller
+data set will be imported, consisting of cities with a population
+greater than 1000 people.
+
+     Locations require a rake task:
+       % rake cg:import_geo_data
+
+Please note that the cg:import_geo_data rake task could take a
+bit of time to run and will add a large-ish data set to mysql. 
+
+If you do not wish to import this data, you can skip this step and not
+use geo-location.
+
 = Running Crabgrass
 
   cd crabgrass
@@ -145,7 +157,17 @@ webrick as it is single-threaded and quite slow, it is fine for
 development purposes.
 
 Once the server is running, just point your web browser at
-http://localhost:3000.
+http://localhost:3000. If you have followed the above steps, you
+should get the default crabgrass login screen. Make sure this works
+before proceeding.
+
+= Helper daemons
+
+Now that you have a running crabgrass installation, you need to get a
+couple of helper pieces up and running, one is necessary for regular
+tasks (backgroundrb) and the other is for search capability (sphinx
+search). Please see the following two sections for how to get these
+going.
 
 == Running Background Tasks
 
@@ -153,24 +175,19 @@ There are many tasks which crabgrass needs to run regularly in the
 background, including cleaning out cache files and recreating the
 sphinx index.
 
-These tasks will be run if you have backgroundrb running. You can
+These tasks will only be run if you have backgroundrb running. You can
 configure the frequency of these tasks by editing
 config/backgroundrb.yml.
 
 To start backgroundrb, you can do one of the following:
 
   script/start_stop_crabgrass_daemons.rb start-bgrb
-  or
-  script/backgroundrb start -e production
-
-To see the status of the running backgroundrb processes:
-
-  script/start_stop_crabgrass_daemons.rb status-bgrb
 
 == Running the Sphinx Search deamon
 
 Sphinx is used for searching, it must be running before crabgrass is
-started for it to be used. If sphinx searchd daemon is not detected,
+started for it to be used, it will not work if it is started after
+crabgrass is running. If the Sphinx searchd daemon is not detected,
 then crabgrass will not use fulltext searching.
 
 First make sure that you have an up-to-date sphinx database:
@@ -181,27 +198,21 @@ Then to start sphinx, you can do:
 
   script/start_stop_crabgrass_daemons.rb start-sphinx
 
-you can also do this to start it:
-  rake ts:start RAILS_ENV=production
+For further details, see SPHINX[link:files/doc/SPHINX.html]
 
-To see the status of the running sphinx processes:
+= Next steps: Configuration
 
-  script/start_stop_crabgrass_daemons.rb status-sphinx
+Now you are are going to want to configure crabgrass: enable/disable
+plugins or features, setup sites, and change the way it looks. To get
+started configuring crabgrass, please read doc/CONFIGURATION.
 
-For installation instructions and further details, see SPHINX[link:files/doc/SPHINX.html]
+You will also want to configure a more reasonable webserver as webrick
+is single-threaded and not meant to process more than one request at a
+time. For information about how to configure a webserver to serve
+crabgrass, such as with apache and passenger (mod_rails), please see
+doc/webserver.
 
-== Other Tips
-
-You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
-gem is installed.
-
-There is an example capistrano deploy.rb in the config directory.
-
-= Troubleshooting
-
-If you get:
-
-  extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
-
-...then you need also to install ruby1.8-dev.
-
+Finally, you may wish to consider deployment through the use of
+capistrano. There is an example capistrano deploy.rb in the config
+directory. More information can be found in doc/capistrano (needs to
+be written).

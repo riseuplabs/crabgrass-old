@@ -1,14 +1,18 @@
-Before do
+Before('@gen') do
   `mv #{Rails.root}/features/ #{Rails.root}/features.orig/ > /dev/null 2>&1`
 end
 
-After do
+After('@gen') do
   `rm -rf #{Rails.root}/features`
   `mv #{Rails.root}/features.orig/ #{Rails.root}/features/ > /dev/null 2>&1`
 end
 
 Given(/^cucumber has been freshly generated$/) do
   `cd #{Rails.root}; script/generate cucumber -f`
+end
+
+Given(/^pickle path email has been freshly generated$/) do
+  `cd #{Rails.root}; script/generate pickle path email`
 end
 
 Given(/^env\.rb already requires (.+)$/) do |file|
@@ -37,6 +41,6 @@ Then(/^the file (.+?) should not match \/(.*?)\/$/) do |file, regexp|
   File.read("#{Rails.root}/#{file}").should_not match(/#{regexp}/m)
 end
 
-Then /^the file features\/support\/paths\.rb should be identical to the local support\/paths\.rb$/ do
-  File.read("#{Rails.root}/features/support/paths.rb").should == File.read("#{File.dirname(__FILE__)}/../support/paths.rb")
+Then /^the file ([^ ]+) should be identical to the local (.+)$/ do |generated_file, source_file|
+  File.read("#{Rails.root}/#{generated_file}").should == File.read("#{File.dirname(__FILE__)}/../#{source_file}")
 end

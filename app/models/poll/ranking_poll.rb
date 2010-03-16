@@ -31,8 +31,10 @@ class RankingPoll < Poll
 
     possibles.each do |possible|
       possible.votes.each do |vote|
-        hash[vote.user.name] ||= []
-        hash[vote.user.name] << [possible.id, vote.value]
+        unless vote.user.nil?
+          hash[vote.user.name] ||= []
+          hash[vote.user.name] << [possible.id, vote.value]
+        end
       end
     end
 

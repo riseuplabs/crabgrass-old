@@ -1,6 +1,7 @@
 class AccountController < ApplicationController
 
   stylesheet 'account'
+  layout 'base_for_login'
 
   before_filter :view_setup
 
@@ -11,7 +12,9 @@ class AccountController < ApplicationController
 
   def index
     if logged_in?
-      redirect_to me_url
+      redirect_to "/#{current_user.login}"
+    else
+      render :action => 'login'
     end
   end
 

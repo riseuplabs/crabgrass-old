@@ -59,10 +59,12 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope(:only_type, lambda do |group_type|
-    group_type = group_type.to_s.capitalize
+  named_scope(:only_type, lambda do |*args|
+    group_type = args.first.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
+    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
+      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
     else
       {:conditions => ['groups.type = ?', group_type]}
     end
@@ -87,9 +89,27 @@ class Group < ActiveRecord::Base
   }
 
   named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :by_created_at, :order => 'groups.created_at DESC'
 
   named_scope :names_only, :select => 'full_name, name'
 
+  named_scope :in_location, lambda { |options|
+    country_id = options[:country_id]
+    admin_code_id = options[:state_id]
+    city_id = options[:city_id]
+    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
+    if admin_code_id =~ /\d+/
+      conditions[0] << " and gl.geo_admin_code_id=?"
+      conditions << admin_code_id
+    end
+    if city_id =~ /\d+/
+      conditions[0] << " and gl.geo_place_id=?"
+      conditions << city_id
+    end
+    { :joins => "join geo_locations as gl",
+      :conditions => conditions
+    }
+  }
 
   ##
   ## GROUP INFORMATION

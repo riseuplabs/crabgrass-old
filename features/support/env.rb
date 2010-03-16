@@ -7,9 +7,11 @@ Spork.prefork do
   # Sets up the Rails environment for Cucumber
   ENV["RAILS_ENV"] = "cucumber"
   require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
-  require 'cucumber/rails/world'
-  require 'cucumber'
+
   require 'cucumber/formatter/unicode'
+  require 'cucumber/rails/world'
+  require 'cucumber/rails/active_record'
+  require 'cucumber/web/tableish'
 
   require 'pickle/world'
   Pickle.configure do |config|
@@ -27,6 +29,7 @@ Spork.each_run do
 
   require 'cucumber/rails/world'
   require 'test/blueprints.rb'
+  require 'lib/crabgrass/navigation.rb'
 
   Before do
     @host = "test.host"
@@ -45,9 +48,11 @@ Spork.each_run do
   AfterConfiguration do |config|
     require 'database_cleaner'
     DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.strategy = :truncation
   end
 
   require File.expand_path(File.join(File.dirname(__FILE__), "paths"))
+  require File.expand_path(File.join(File.dirname(__FILE__), "scopes"))
 
   def disable_site_testing
     Conf.disable_site_testing

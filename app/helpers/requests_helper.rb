@@ -34,30 +34,6 @@ module RequestsHelper
     )
   end
 
-  def request_tabs
-    @info_box_class = 'tabs'
-    hash = {:controller => params[:controller], :action => params[:action]}
-    hash[:id] = @group if @group
-
-    Formy.tabs do |f|
-      f.tab do |t|
-        t.label I18n.t(:pending)
-        t.url url_for(hash.merge(:state => 'pending'))
-        t.selected params[:state] == 'pending'
-      end
-      f.tab do |t|
-        t.label I18n.t(:approved)
-        t.url url_for(hash.merge(:state => 'approved'))
-        t.selected params[:state] == 'approved'
-      end
-      f.tab do |t|
-        t.label I18n.t(:rejected)
-        t.url url_for(hash.merge(:state => 'rejected'))
-        t.selected params[:state] == 'rejected'
-      end
-    end
-  end
-
   def request_destroy_link(request)
     link_to(I18n.t(:destroy), {:controller => '/requests', :action => 'destroy', :id => request.id}, :method => :post)
   end

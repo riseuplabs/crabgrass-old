@@ -18,11 +18,11 @@
 title: "Crabgrass Development"
 
 enabled_languages:
-  - en_US
-  - es_ES
-  - pt_BR
-  - ar_EG
-  - fr_FR
+  - en
+  - es
+  - pt
+  - ar
+  - fr
 enabled_mods:
   - super_admin
   - student
@@ -41,6 +41,8 @@ profile_fields:
 
 text_editor: greencloth_only
 
+#use_full_geonames_data: true
+
 ##
 ## SITES
 ##
@@ -50,8 +52,7 @@ sites:
     admin_group: rainbow
     moderation_group: rainbow
 
-# bound to localhost:
-#  - name: site1
-#    admin_group: rainbow
-#    moderation_group: rainbow
+# bound to test.host
+#  - name: site2
+#    admin_group: superadmins
 

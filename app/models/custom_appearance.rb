@@ -33,18 +33,18 @@ class CustomAppearance < ActiveRecord::Base
   belongs_to :admin_group, :class_name => 'Group'
 
 
-  def themed_stylesheet_url(css_url)
+  def themed_stylesheet_url(css_url,css_prefix_path=nil)
     # append .css if missing
     css_url = ensure_dot_css(css_url)
     # path in the file system relative to RAILS_ROOT
-    themed_css_path = themed_css_path(css_url)
+    themed_css_path = themed_css_path(css_url, css_prefix_path)
     if !File.exists?(themed_css_path) or Conf.always_renegerate_themed_stylesheet
       # we don't have the file. generate it
-      generate_css_file_for_url(themed_css_path, css_url)
+      generate_css_file_for_url(themed_css_path, css_url, css_prefix_path)
     end
 
     # get the url for themed css
-    themed_css_url(css_url)
+    themed_css_url(css_url, css_prefix_path)
   end
 
   protected

@@ -49,3 +49,4 @@ module Groups::PermissionsHelper
     row.info help('council')
   end
 end
+

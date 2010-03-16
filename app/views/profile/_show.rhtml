@@ -10,7 +10,6 @@
       h(profile.place)
     ].select{|i|i.any?}.join('<br/>')
   %>
-  <h2 class="alert"><%= I18n.t(:information) %></h2>
   <%= member_since_line(profile) if profile.user %>
   <% unless profile.phone_numbers.empty? -%>
     <% profile.phone_numbers.each do |phone_number| -%>
@@ -26,10 +25,10 @@
       </div>
     <% end -%>
   <% end -%>
-  <% profile.locations.each do |location| -%>
-    <div class='small_icon <%=location.icon%>_16'>
+  <% if profile.country_id -%>
+    <div class='small_icon house_16'>
     <em><%= I18n.t(:location)%>:</em>
-    <%= h(location.country_name) %>
+    <%= h(profile.geo_location.geo_country.name) %>
     </div>
   <% end -%>
   <% unless profile.im_addresses.empty? -%>

@@ -7,7 +7,7 @@ module I18n
 
     def available_languages
       load_available_languages if @languages.blank?
-      @languages.values.sort_by(&:id)
+      @languages.values.compact.sort_by(&:id)
     end
 
     def site_scope
@@ -73,7 +73,11 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
       # try the same key but without site scope
       return  I18n.translate_without_site_scope(key, options)
     elsif locale == :en
-      return exception.message
+      if RAILS_ENV != "production"
+        raise exception
+      else
+        return key.to_s.humanize
+      end
     else
       options[:locale] = :en
       return I18n.translate(key, options)

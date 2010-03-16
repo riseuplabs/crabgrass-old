@@ -2,7 +2,7 @@ class ModerationListener < Crabgrass::Hook::ViewListener
   include Singleton
 
   def top_menu(context)
-    render(:partial => '/admin/moderation_top_menu') if logged_in? && current_user.moderates?
+    #render(:partial => '/admin/moderation_top_menu') if logged_in? && current_user.moderates?
   end
 
   def admin_nav(context)
@@ -10,7 +10,8 @@ class ModerationListener < Crabgrass::Hook::ViewListener
   end
 
   def group_permissions(context)
-    return unless context[:group].council?
+    return if context[:group].council_id.nil?
+    return if context[:form].nil?
     f=context[:form]
     f.row do |r|
       r.label I18n.t(:moderation)

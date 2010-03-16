@@ -28,7 +28,8 @@ class RootController < ApplicationController
   def featured
     update_page_list('featured_panel',
       :pages => paginate('featured_by', @group.id, 'descending', 'updated_at'),
-      :expanded => true
+      :columns => [:icon, :title, :last_updated],
+      :with_cover => true
     )
   end
 
@@ -38,6 +39,7 @@ class RootController < ApplicationController
       :columns => [:views, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -48,6 +50,7 @@ class RootController < ApplicationController
       :columns => [:contributors, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -58,6 +61,7 @@ class RootController < ApplicationController
       :columns => [:stars, :icon, :title, :last_updated],
       :sortable => false,
       :heading_partial => 'root/time_links',
+      :with_cover => true,
       :pagination_options => {:params => {:time_span => params[:time_span]}}
     )
   end
@@ -80,6 +84,7 @@ class RootController < ApplicationController
       :heading_partial => 'root/type_links',
       :sortable => false,
       :show_time_dividers => true,
+      :with_cover => true,
       :pagination_options => {:params => {:type => params[:type]}}
     )
   end
@@ -114,8 +119,7 @@ class RootController < ApplicationController
   def site_home
     @active_tab = :home
     @group.profiles.public.create_wiki unless @group.profiles.public.wiki
-    @announcements = Page.find_by_path('limit/3/descending/created_at',
-      options_for_group(@group, :flow => :announcement))
+    #@announcements = Page.find_by_path('limit/3/descending/created_at',options_for_group(@group, :flow => :announcement))
     @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
     render :template => 'root/site_home'
   end
@@ -132,16 +136,12 @@ class RootController < ApplicationController
 
   def paginate(*args)
     options = args.last.is_a?(Hash) ? args.pop : {}
-    Page.paginate_by_path(args, options_for_group(@group, {:page => params[:page]}.merge(options)))
+    Page.paginate_by_path(args, options_for_group(@group, options).merge(pagination_params(:per_page => 10)))
   end
 
   def update_page_list(target, locals)
     render :update do |page|
-      if locals[:expanded]
-        page.replace_html target, :partial => 'pages/list_expanded', :locals => locals
-      else
-        page.replace_html target, :partial => 'pages/list', :locals => locals
-      end
+      page.replace_html target, :partial => 'pages/list', :locals => locals
     end
   end
 
@@ -151,7 +151,7 @@ class RootController < ApplicationController
 
   helper_method :most_active_groups
   def most_active_groups
-    Group.only_groups.most_visits.find(:all, :limit => 5)
+    Group.only_groups.most_visits.find(:all, :limit => 15)
   end
 
   helper_method :recently_active_groups
@@ -161,7 +161,7 @@ class RootController < ApplicationController
 
   helper_method :most_active_users
   def most_active_users
-    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 5)
+    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 15)
   end
 
   helper_method :recently_active_users

@@ -12,9 +12,9 @@
   :success => "$('new_possible_form').reset()"
 ) do -%>
    description:<br/>
-   <%= text_field 'possible', 'name', :size => 70 %><br/>
+   <%= text_field 'possible', 'name', :size => 60 %><br/>
    detail:<br/>
-   <%= text_area 'possible', 'description', :size => '70x4' %><br/>
+   <%= text_area 'possible', 'description', :size => '52x4' %><br/>
    <p>
    <%= submit_tag I18n.t(:add_possibility_button) %>
    <%= button_to_function "Done", "Element.hide('new_possible_form_container'); Element.show('new_possible_link');" %>

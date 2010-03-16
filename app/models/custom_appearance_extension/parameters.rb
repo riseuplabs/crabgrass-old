@@ -1,7 +1,7 @@
 module CustomAppearanceExtension
   module Parameters
     # how tall can the masthead image be
-    MASTHEAD_IMAGE_MAX_HEIGHT = 80
+    MASTHEAD_IMAGE_MAX_WIDTH = 800
     # [W, H]
     FAVICON_DIMENSIONS = [[16, 16], [32, 32]]
 
@@ -25,8 +25,8 @@ module CustomAppearanceExtension
           self.errors.add_to_base(I18n.t(:not_an_image_error))
         elsif !asset.height
           self.errors.add_to_base(I18n.t(:cant_detect_image_height_error))
-        elsif asset.height > MASTHEAD_IMAGE_MAX_HEIGHT
-          self.errors.add_to_base(I18n.t(:too_tall_image_error, :count => MASTHEAD_IMAGE_MAX_HEIGHT))
+        elsif asset.width != MASTHEAD_IMAGE_MAX_WIDTH
+          self.errors.add_to_base(I18n.t(:too_wide_image_error, :count => MASTHEAD_IMAGE_MAX_WIDTH))
         else
           # all good
           # delete the old masthead asset

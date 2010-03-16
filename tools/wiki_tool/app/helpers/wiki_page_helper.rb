@@ -14,7 +14,7 @@ module WikiPageHelper
       user = User.find_by_id user_id
       display_name = user ? user.display_name : 'unknown'
       msgs = [
-        I18n.t(:wiki_is_locked, :user => display_name).
+        I18n.t(:wiki_is_locked, :user => display_name),
         I18n.t(:wont_be_able_to_save)
       ]
       flash_message_now :title => I18n.t(:page_locked_header), :error => msgs

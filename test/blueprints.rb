@@ -30,7 +30,7 @@ Sham.caption          { Faker::Lorem.words(5).join(" ") }
 #
 Site.blueprint do
   # make sites available from functional tests
-  domain       "test.host"
+  domain       "localhost"
   email_sender "robot@$current_host"
 end
 
@@ -238,3 +238,14 @@ if Conf.mod_enabled? 'moderation'
   end
 
 end
+
+#
+# Locations
+#
+GeoCountry.blueprint {}
+GeoAdminCode.blueprint {}
+GeoPlace.blueprint {
+  latitude { 1.0 }
+  longitude { 1.0 }
+  geonameid { 2 }
+}

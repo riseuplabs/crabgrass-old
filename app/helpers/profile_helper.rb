@@ -12,8 +12,8 @@ module ProfileHelper
     "<span class='remove'>%s</span>" % link_to_function(I18n.t(:remove), "Element.remove($('#{dom_id}'))")
   end
 
-  def add_row_link(title,action)
-    link_to_remote title, :url => {:action => action}
+  def add_row_link(title,action,options={})
+    link_to_remote title, :url => {:action => action, :id => options[:id]}
   end
 
 
@@ -60,6 +60,8 @@ module ProfileHelper
   #  "<div class='small_icon heart_16'><em>(TODO)Interest </em>: Family, Travel, Music, Politics, Outdoors,   Friends</div>"
   #end
 
+  # TODO: DEPRECATED
+  # This method was used on app/views/show.rhtml and isn't used in the haml new ui
   def member_since_line(profile)
     "<div class='small_icon status_online_16'><em>#{I18n.t(:profile_member_since)}</em>: #{friendly_date(profile.user.created_at)}</div>"
   end

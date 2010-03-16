@@ -1,0 +1,21 @@
+!!!
+%html{:dir=>language_direction}
+= render :partial => 'layouts/ui_base_head'
+
+%body{:class=>language_direction}
+  %div#page
+    %div.space
+    %header.page
+      = render :partial => 'layouts/ui_masthead'
+    %div.space
+    %section#breadcrumb
+      = render :partial => 'layouts/ui_breadcrumb'
+    //
+    // content wrapper
+    //
+    %div#content
+      = yield
+    %div.space
+    = render :partial => 'layouts/ui_footer'
+    %div.space
+

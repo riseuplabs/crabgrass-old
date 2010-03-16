@@ -99,7 +99,8 @@ module GalleryHelper
     output << available_elements[:edit].call unless params[:action] == 'edit'
     output << available_elements[:download].call
     output << available_elements[:slideshow].call
-    output << available_elements[:add_existing].call unless params[:action] == 'find'
+    # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
+    # output << available_elements[:add_existing].call unless params[:action] == 'find'
     output << available_elements[:upload].call
     output << '</span>'
     output << '</div>'

@@ -65,7 +65,6 @@ module Groups::MenuItemsHelper
 #  end
 
   def handle_update_menu_item_order_javascript(container_id, spinner_id)
-    # require 'ruby-debug';debugger;1-1
     sortable_element container_id,
         :tag => 'li',
         :handle => 'menu_item_drag_handle',

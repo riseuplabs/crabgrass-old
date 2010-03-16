@@ -26,14 +26,14 @@ complete = "eval(request.responseText)"
 <%= javascript_tag scroll_conversation_script %>
 <%= javascript_tag set_time_and_name_script %>
 
-<% form_remote_tag(:url => remote_url, :loading => loading_command, :complete => complete) do %>
+<% form_remote_tag(:url => remote_url, :loading => loading_command, :complete => complete, :html => {:id => "chat_say_form"}) do %>
 <table id="typebox" cellpadding='0' cellspacing='0'>
 <tr>
   <td width="1%" id='handle'><%= current_user.login %></td>
   <td width="99%">
     <% default_text = I18n.t(:type_your_messages_here) -%>
     <textarea id="entryfield" name="message" rows="2"
-      onkeypress="if (enterPressed(event)) {document.forms[0].onsubmit();}"
+      onkeypress="if (enterPressed(event)) {document.getElementById('chat_say_form').onsubmit();}"
       onclick="if (this.value == '<%=default_text%>') {this.clear();}"><%= default_text %></textarea>
     <input type="submit" value="Say" style="display: none;" />
   </td>

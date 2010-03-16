@@ -1,0 +1,6 @@
+- if @announcements.any?
+  %section#announcements
+    %h3 
+      = I18n.t(:announcements)
+    = render :partial => 'announcement_page/announcement', :collection => @announcements
+

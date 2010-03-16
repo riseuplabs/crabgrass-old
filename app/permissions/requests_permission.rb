@@ -9,6 +9,10 @@ module RequestsPermission
     alias_method "may_#{action}_request?".to_sym, :may_update_request?
   }
 
+  def may_mark_request?
+    logged_in?
+  end
+
   def may_redeem_request?(req=@request)
     logged_in?
   end
