@@ -98,6 +98,7 @@ module Groups::Search
     @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params))
     @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     @second_nav = 'pages'
+    @third_nav = 'all_pages'
     search_template('pages')
   end
 

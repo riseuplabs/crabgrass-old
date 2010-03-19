@@ -1,5 +1,5 @@
 %ul
-  = menu I18n.t(:all_pages_tab), [group_search_url(:action => 'pages'), group_search_url(:action => 'archive')]
+  = menu I18n.t(:all_pages_tab), [group_search_url(:action => 'pages'), group_search_url(:action => 'archive')], active_tab_for_nav(@third_nav, 'all_pages')
   - if may_trash_group?
     = menu I18n.t(:trash), group_search_url(:action => 'trash')
 
