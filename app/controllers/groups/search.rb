@@ -54,8 +54,9 @@ module Groups::Search
   end
 
   def tasks
-    @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
+    @pages = Page.find_by_path(@path.merge(:type => :task), options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
+    @show_status = params[:status] || 'pending'
     @second_nav = 'tasks'
     search_template('tasks')
   end
