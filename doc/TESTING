@@ -34,6 +34,7 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
 gems:
   cucumber
+  cucumber-rails
   webrat
   langalex-culerity
 
