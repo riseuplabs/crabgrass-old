@@ -52,7 +52,8 @@ class Groups::DirectoryController < Groups::BaseController
     else
       @second_nav = 'all'
       @misc_header = '/groups/directory/browse_header'
-      @request_path = '/groups/directory/search'
+      request_root = (@group_type == :group) ? '/groups' : '/networks'
+      @request_path = request_root+'/directory/search'
       render_list
     end
   end
