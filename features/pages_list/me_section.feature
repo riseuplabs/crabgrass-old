@@ -1,7 +1,7 @@
 Feature: Pages list appears correctly in me section
   In order to make sure the pages list is appearing correctly in the me section
   As a logged in user
-  I want to see that hovering over the owner image shows a tooltip with correct details
+  I want to see the correct owner details
 
 Background:
   Given user: "blue" exists with display_name: "blue"
