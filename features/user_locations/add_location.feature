@@ -1,4 +1,4 @@
-@plain
+@plain @wip
 Feature: Adding a location to my public profile 
   In order to add a location to my public profile 
   as a logged in user

@@ -1,4 +1,4 @@
-@js
+@js @wip
 Feature: Filter groups by location
   In order to see groups in a certain location
   as a user

@@ -16,7 +16,7 @@ module NavigationHelpers
     when /the login page/
       login_path
     when /my dashboard page/
-      '/me/dashboard'
+      '/me/my_work'
     when /my work page/
       '/pages/my_work'
     when /my all pages page/

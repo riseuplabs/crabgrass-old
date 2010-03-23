@@ -1,4 +1,4 @@
-@js
+@js @wip
 Feature: Destroying a request from me to another user from action bar works
 
 Background:
