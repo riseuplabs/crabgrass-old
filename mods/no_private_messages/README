@@ -1,0 +1,7 @@
+NoPrivateMessages
+=================
+
+This mod disables the creation of private messages. It is done pretty much in a brute force way. We remove the tab from the me section navigation and redirect on all attempts to access the controllers.
+Example goes here.
+
+Copyright (c) 2010 azul@riseup.net released under the AGPL Licence (see crabgrass README for details)
