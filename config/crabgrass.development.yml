@@ -28,6 +28,7 @@ enabled_mods:
   - student
   - connectingclassrooms
   - moderation
+  - no_private_messages
 
 email:
   delivery_method: :sendmail

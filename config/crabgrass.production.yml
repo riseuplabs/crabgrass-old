@@ -24,6 +24,7 @@ enabled_mods:
   - student
   - connectingclassrooms
   - moderation
+  - no_private_messages
 enabled_tools:
   - asset_tool
   - core_tools

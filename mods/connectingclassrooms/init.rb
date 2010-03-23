@@ -1,4 +1,3 @@
-
 self.override_views = true
 
 Dispatcher.to_prepare do
