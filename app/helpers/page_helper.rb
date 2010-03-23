@@ -636,8 +636,8 @@ module PageHelper
     url = url_for_entity(page.owner)
     img_tag = avatar_for page.owner, 'small'
     if options[:with_tooltip]
-      owner_entity = display_name.is_a?(Group) ? 'group' : 'user'
-      details = "'#{page.title}' is owned by #{owner_entity} #{display_name}"
+      owner_entity = I18n.t((page.owner.is_a?(Group) ? 'group' : 'user').to_sym).downcase
+      details = I18n.t(:page_owned_by, :title => page.title, :entity => owner_entity, :name => display_name)
       render :partial => 'pages/page_details', :locals => {:url => url, :img_tag => img_tag, :details => details}
     else
       link_to(img_tag, url, :class => 'imglink tooltip', :title => display_name)
