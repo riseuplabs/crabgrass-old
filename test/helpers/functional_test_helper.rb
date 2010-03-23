@@ -55,6 +55,7 @@ module FunctionalTestHelper
     elsif args.count == 3
       message = args.pop unless args.first.is_a?(HTML::Node)
     end
+    selector = args.first.is_a?(HTML::Node) ? args[1] : args[0]
     message ||= "Selector '#{selector}' was not expected but found."
     assert_raise Test::Unit::AssertionFailedError, message do
       assert_select *args
