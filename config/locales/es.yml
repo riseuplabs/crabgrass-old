@@ -1243,3 +1243,9 @@ es:
   you_should_receive_instructions_email: "Deberías recibir un correo electrónico con instrucciones para terminar de crear tu cuenta."
   your_login: "Tu nombre de usuario"
   zip_file: "Archivo Zip"
+
+  # cc.net specific ones
+  welcome_visit_network_link: "Visit the network"
+  welcome_find_groups_link: "Find groups"
+  welcome_upload_icon_link: "Upload a user icon"
+  welcome_create_page_link: "Create a new page"

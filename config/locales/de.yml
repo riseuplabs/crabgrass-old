@@ -1215,3 +1215,9 @@ de:
   you_should_receive_instructions_email: "Du solltest eine E-Mail mit der weiteren Vorgehensweiße erhalten haben, um das Erstelen deines Accounts abzuschließen."
   your_login: "Dein Login"
   zip_file: Zip-Datei
+
+  # cc.net specific ones
+  welcome_visit_network_link: "Visit the network"
+  welcome_find_groups_link: "Find groups"
+  welcome_upload_icon_link: "Upload a user icon"
+  welcome_create_page_link: "Create a new page"

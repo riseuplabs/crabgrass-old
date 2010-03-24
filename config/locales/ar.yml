@@ -775,3 +775,9 @@ ar:
   you_have_no_contacts: "لا يوجد أشخاص في قائمة اتصالاتك"
   you_have_no_peers: "لا يوجد لديك أقران"
   your_login: "معلومات الدخول"
+
+  # cc.net specific ones
+  welcome_visit_network_link: "Visit the network"
+  welcome_find_groups_link: "Find groups"
+  welcome_upload_icon_link: "Upload a user icon"
+  welcome_create_page_link: "Create a new page"

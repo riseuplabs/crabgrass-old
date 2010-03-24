@@ -1740,3 +1740,9 @@ en:
 
   page_make_public_link: "make public"
   page_make_public_pending_link: "make public (pending)"
+
+  # cc.net specific ones
+  welcome_visit_network_link: "Visit the network"
+  welcome_find_groups_link: "Find groups"
+  welcome_upload_icon_link: "Upload a user icon"
+  welcome_create_page_link: "Create a new page"
