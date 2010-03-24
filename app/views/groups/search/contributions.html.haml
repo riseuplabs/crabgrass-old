@@ -1,0 +1,10 @@
+- content_for(:html_head) do
+  = group_search_rss
+
+- content_for :third_nav do
+  = render :partial => 'groups/navigation/group_pages_tabs'
+
+.landing
+  = header_with_more(:h2, :alert, I18n.t(:recent_contributions_of_group_members))
+  = render :partial => 'pages/list', :locals => {:pages => @pages, :columns => [:stars, :owner_with_icon, :icon, :title, :contribution]}
+

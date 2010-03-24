@@ -80,6 +80,7 @@ module Groups::Search
   end
 
   def contributions
+    @second_nav = 'pages'
     @path.default_sort('updated_at').merge!(:limit => 20, :contributed_group => @group.id)
 
     @pages = Page.find_by_path(@path, options_for_contributions).each do |page|

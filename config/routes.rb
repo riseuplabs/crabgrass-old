@@ -140,15 +140,15 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :pages, :only => :new
   end
 
-  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
+  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages|contributions/
+  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages|contributions/
 
   map.resources :networks do |network|
     network.resources :pages, :only => :new
   end
 
-  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
-  map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
+  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash|contributions/
+  map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash|contributions/
 
   ##
   ## CHAT
