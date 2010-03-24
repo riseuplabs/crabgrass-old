@@ -1,18 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'discussion_page_controller'
-
-# Re-raise errors caught by the controller.
-class DiscussionPageController; def rescue_action(e) raise e end; end
 
 class DiscussionPageControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships, :federatings, :pages, :user_participations, :group_participations
-
-  def setup
-    @controller = DiscussionPageController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_teacher_may_view_student_pages
     login_as :teacher
@@ -25,7 +15,8 @@ class DiscussionPageControllerTest < ActionController::TestCase
     login_as :student
     # page 1098 only belongs to visitor and the second clas
     get :show, :page_id=>1098
-    assert_response :redirect, 'student should not see visitors private pages / pages of class2'
+    assert_response :success
+    assert_select 'blockquote', 'Sorry. You do not have the ability to perform that action.', 'student should not see visitors private pages / pages of class2'
   end
 
 end
