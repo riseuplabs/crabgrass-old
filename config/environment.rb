@@ -94,7 +94,7 @@ Rails::Initializer.run do |config|
   #
   # I changed this because it doesn't work with rails 2.3
   # FIXME: figure out if it makes sense this way.
-  config.action_controller.session_store = :mem_cache_store # :p_store
+  config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
 
   # store fragments on disk, we might have a lot of them.
   config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
