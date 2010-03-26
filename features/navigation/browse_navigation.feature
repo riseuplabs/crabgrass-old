@@ -1,4 +1,4 @@
-@plain @navigation
+@plain @navigation @wip
 Feature: Test navigation
 
 Background: A Little bit of group setup

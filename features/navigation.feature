@@ -1,4 +1,4 @@
-@plain @navigation
+@plain @navigation @wip 
 Feature: Test navigation
 
 Scenario: Walk navigation structure 
