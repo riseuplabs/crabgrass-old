@@ -37,12 +37,16 @@ gems:
   cucumber-rails
   webrat
   langalex-culerity
+  spork
 
 packages:
   jruby > 1.4
 
 jruby gems:
   celerity
+
+database config:
+  You will also need to add a block for cucumber: in config/database.yml.  Copying the settings from crabgrass_development should do the trick.
 
 = Cucumber and Javascript Tests
 
