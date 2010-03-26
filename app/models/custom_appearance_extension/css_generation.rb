@@ -19,6 +19,9 @@ module CustomAppearanceExtension
 
       # make the sass string
       sass_text = generate_overloaded_sass_string(css_url, css_prefix_path)
+      if css_url =~ /screen/
+        File.open("/tmp/#{css_url}.sass_txt2", "w+") {|f| f.write sass_text}
+      end
 
       # render css from or sass text
       options = Compass.configuration.to_sass_engine_options
@@ -55,6 +58,9 @@ module CustomAppearanceExtension
 
       # load the custom appearance constants from +parameters+
       sass_text << "\n" << sass_override_code
+ 
+      imports_file = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, css_prefix_path, "mixins_imports.sass")
+      sass_text << File.read(imports_file)
 
       # load the requested file
       source_sass_path = source_sass_path(css_url, css_prefix_path)
