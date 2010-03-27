@@ -248,6 +248,12 @@ module Formy
       end
     end
 
+
+    # work around rails 2.3.5 to_json circular reference problem
+    def to_json
+      self.inspect
+    end
+
     def method_missing(method_name, *args, &block)
       word = method_name.id2name
       #e = @current_element.last

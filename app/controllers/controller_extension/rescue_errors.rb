@@ -140,7 +140,7 @@ module ControllerExtension::RescueErrors
       end
     end
   end
-  
+
   private
 
   def flash_auth_error(mode)
