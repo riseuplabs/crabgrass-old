@@ -49,7 +49,7 @@ text_editor: greencloth_only
 ##
 
 sites:
-  - name: site1
+  - name: connectingclassrooms
     admin_group: rainbow
     moderation_group: rainbow
 
