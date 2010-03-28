@@ -1,21 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'groups_controller'
 #showlog
-# Re-raise errors caught by the controller.
-class GroupsController; def rescue_action(e) raise e end; end
 
-class GroupsControllerTest < Test::Unit::TestCase
+class GroupsControllerTest < ActionController::TestCase
   fixtures :groups, :group_settings, :users, :memberships, :profiles, :pages,
             :group_participations, :user_participations, :tasks, :page_terms, :sites,
             :federatings
 
   include UrlHelper
-
-  def setup
-    @controller = GroupsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def teardown
    disable_site_testing
@@ -25,7 +16,8 @@ class GroupsControllerTest < Test::Unit::TestCase
     login_as :teacher
 
     # show a group you belong to
-    get :show, :id => groups(:class1).name
+    group_param = groups(:class1).to_param
+    get :show, :id => group_param
     assert_response :success
 #    assert_template 'show'
 
@@ -35,9 +27,11 @@ class GroupsControllerTest < Test::Unit::TestCase
     # testing access rights
     assert_not_nil assigns(:access)
     assert_equal :private, assigns(:access), "teacher should have access to private group information for class1"
+
+    get :pages, :id => group_param
     # testing link display
-    assert_select 'ul.side_list' do |ul|
-      assert_select 'li[class="small_icon group_contributions_16 "]'
+    assert_select '#third-level' do |nav|
+      assert_select "a[href='/groups/contributions/#{group_param}']"
     end
 
     #show the teachers council you belong to
@@ -51,7 +45,6 @@ class GroupsControllerTest < Test::Unit::TestCase
   def test_contributions_view_teacher
     login_as :teacher
     users(:teacher).update_membership_cache
-    debugger
     page_ids = get_contributions_page_ids
     # pages that have only been touched by student
     # so they would be private without the student mod
