@@ -1,3 +1,4 @@
+@js
 Feature: The "My Work" feed can be filtered into different views
   In order to keep an overview over my work
   As a logged in user
@@ -19,8 +20,8 @@ Background:
 
 Scenario: Pages I Own
   When I am on my work page
-  And I select "Pages I Own" from "View"
-  And I press "Select View"
+  And I select "Pages I Own" from my_work View
+  And I wait for the AJAX call to finish
   Then I should see "Look at my own page!"
   And I should not see "Watch me now!"
   And I should not see "Waiting for Contributions"
@@ -28,8 +29,8 @@ Scenario: Pages I Own
 
 Scenario: My Watched Pages
   When I am on my work page
-  And I select "My Watched Pages" from "View"
-  And I press "Select View"
+  And I select "My Watched Pages" from my_work View 
+  And I wait for the AJAX call to finish
   Then I should not see "Look at my own page!"
   And I should see "Watch me now!"
   And I should not see "Waiting for Contributions"
@@ -37,8 +38,8 @@ Scenario: My Watched Pages
 
 Scenario: My Page Edits
   When I am on my work page
-  And I select "My Page Edits" from "View"
-  And I press "Select View"
+  And I select "My Page Edits" from my_work View
+  And I wait for the AJAX call to finish
   Then I should not see "Look at my own page!"
   And I should not see "Watch me now!"
   And I should see "Waiting for Contributions"
@@ -46,8 +47,8 @@ Scenario: My Page Edits
 
 Scenario: Unread Pages
   When I am on my work page
-  And I select "Unread Pages" from "View"
-  And I press "Select View"
+  And I select "Unread Pages" from my_work View
+  And I wait for the AJAX call to finish
   Then I should not see "Look at my own page!"
   And I should not see "Watch me now!"
   And I should not see "Waiting for Contributions"
