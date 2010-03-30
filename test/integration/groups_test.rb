@@ -51,7 +51,7 @@ class GroupsTest < ActionController::IntegrationTest
   end
 
   def test_do_not_show_announcements
-    login_as :red
+    login 'red'
     visit "/the-true-levellers"
     assert_not_contain "Announcements"
   end
