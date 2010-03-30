@@ -647,9 +647,10 @@ module PageHelper
   def page_html_attributes(page)
     icon = page.icon || :page_text_blue
 
-    classes = %w(cover small_icon)
+    classes = %w(small_icon)
     classes << "#{icon}_16"
     classes << 'unread' if page_is_unread(page)
+    classes << 'cover' unless page.cover.nil?
     { :class => classes.join(' ') }
   end
 
