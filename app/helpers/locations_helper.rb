@@ -39,7 +39,7 @@ module LocationsHelper
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
-    if params[:city_id]
+    if params[:city_id] =~ /\d+/
       city = GeoPlace.find(params[:city_id])
     end
     value = city.nil? ? {} : {:value => city.name} 
