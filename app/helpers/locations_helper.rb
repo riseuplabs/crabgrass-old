@@ -10,13 +10,16 @@ module LocationsHelper
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
-    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name}
+    choices = [ I18n.t(:location_country).capitalize].concat(GeoCountry.find(:all).to_select(:name, :id))
+    opts = (object.nil? and method.nil? and params[:country_id]) ? {:selected => params[:country_id]} : {}
+    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name, :choices => choices, :opts => opts}
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
-    display = _display_value
+    display = _display_value(params[:country_id])
     html = ""
     name = _field_name('state_id', object, method)
+    country_id ||= params[:country_id]
     if country_id.nil?
       geo_admin_codes = []
     else
@@ -27,7 +30,7 @@ module LocationsHelper
   end
 
   def city_text_field(object=nil, method=nil, options = {})
-    display = _display_value
+    display = _display_value(params[:country_id])
     name = _field_name('city_name', object, method)
     spinner = options[:spinner]
     onblur = remote_function(
@@ -58,7 +61,7 @@ module LocationsHelper
   end
 
   def friendly_location(entity)
-    if entity.profile.country_id
+    if entity.profile.country_id and (entity.profile.country_id != 0)
       'Local-'+entity.profile.geo_location.geo_country.name
     end
   end
@@ -73,8 +76,8 @@ module LocationsHelper
     end
   end
 
-  def _display_value
-    if @profile and @profile.country_id
+  def _display_value(force=nil)
+    if (@profile and @profile.country_id) or force
       'inline'
     else
       'none'

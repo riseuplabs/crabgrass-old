@@ -34,18 +34,19 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    if params[:country_id]
-      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(loc_options).alphabetized(letter_page).paginate(pagination_params)
-      groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).in_location(loc_options).names_only
+    if params[:country_id] =~ /^\d+$/
+      @params_location = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).alphabetized(letter_page).paginate(pagination_params)
+      groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).names_only
     else
       @groups = Group.only_type(@group_type, @current_site).visible_by(user).alphabetized(letter_page).paginate(pagination_params)
+      @params_location = {}
       groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).names_only
     end
 
     # get the starting letters of all groups
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
-    if params[:country_id]
+    if request.xhr? #params[:country_id]
       render :update do |page|
         page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
       end
