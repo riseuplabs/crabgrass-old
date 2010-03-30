@@ -39,12 +39,17 @@ module LocationsHelper
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
-    render :partial => '/locations/city_text_field', :locals => {:display => display, :name => name, :onblur => onblur, :object=>object, :method=>method}
+    if params[:city_id]
+      city = GeoPlace.find(params[:city_id])
+    end
+    value = city.nil? ? {} : {:value => city.name} 
+    options = {:onblur => onblur, :name => name, :id=> 'city_text_field'}.merge(value)
+    render :partial => '/locations/city_text_field', :locals => {:display => display, :object=>object, :method=>method, :options => options}
   end
 
   def city_id_field(object=nil, method=nil)
     name = _field_name('city_id', object, method)
-    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : ''
+    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : params[:city_id] 
     render :partial => '/locations/city_id_field', :locals => {:city_id => city_id, :name => name}
   end
 
@@ -56,8 +61,9 @@ module LocationsHelper
   end
 
   def selected_admin_code(ac_id, profile=nil)
-    return false if profile.nil?
-    true if profile.state_id == ac_id.to_s
+    return true if !profile.nil? and (profile.state_id == ac_id.to_s)
+    return true if params[:state_id].to_i == ac_id
+    return false
   end
 
   def friendly_location(entity)
