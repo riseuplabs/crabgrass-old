@@ -9,9 +9,11 @@ this will create the routes
   /admin/posts  -> Admin::PostsController
 =end
 
-map.namespace :admin do |admin|
-  admin.resources :pages
-  admin.resources :wall_posts
-  admin.resources :discussion_posts
-  admin.resources :chat_messages
+ActionController::Routing::Routes.draw do |map|
+  map.namespace :admin do |admin|
+    admin.resources :pages
+    admin.resources :wall_posts
+    admin.resources :discussion_posts
+    admin.resources :chat_messages
+  end
 end

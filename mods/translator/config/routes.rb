@@ -12,9 +12,11 @@ this will create the routes
 
 =end
 
-map.namespace :translator do |translator|
-  translator.resources :keys
-  translator.resources :languages
-  translator.resources :translations
-  translator.root :controller => 'base'
+ActionController::Routing::Routes.draw do |map|
+  map.namespace :translator do |translator|
+    translator.resources :keys
+    translator.resources :languages
+    translator.resources :translations
+    translator.root :controller => 'base'
+  end
 end

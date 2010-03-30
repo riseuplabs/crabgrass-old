@@ -9,9 +9,10 @@ this will create the routes
   /admin/users  -> Admin::UsersController
 =end
 
-map.namespace :admin do |admin|
-  admin.resources :groups
-  admin.resources :users
-  admin.resources :memberships
+ActionController::Routing::Routes.draw do |map|
+  map.namespace :admin do |admin|
+    admin.resources :groups
+    admin.resources :users
+    admin.resources :memberships
+  end
 end
-
