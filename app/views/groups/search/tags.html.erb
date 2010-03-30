@@ -8,7 +8,7 @@
 
 <div>
   <% if @pages.any? %>
-    <%= render :partial => 'pages/list', :locals => {:heading => false} %>
+    <%= render :partial => 'pages/list', :locals => {:heading => false, :full_width => true} %>
   <% end %>
 </div>
 

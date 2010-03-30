@@ -1,6 +1,6 @@
 %div{:id=>'city_text', :style=>"display: #{display}"}
   = I18n.t(:location_city).capitalize
-  = text_field(object, method, {:onblur => onblur, :name => name, :id=> 'city_text_field'})
+  = text_field(object, method, options)
   = spinner('city')
   %br
   %div#city_results_box{:style=>"display: none"}

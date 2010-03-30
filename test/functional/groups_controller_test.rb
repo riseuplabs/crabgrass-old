@@ -179,6 +179,23 @@ class GroupsControllerTest < ActionController::TestCase
     assert_template 'dispatch/not_found'
   end
 
+  def test_show_no_coordinators_without_council
+    login_as :blue
+    get :show, :id => groups(:rainbow).to_param
+    assert_response :success
+    assert_select('ul#coordinators', false, "coordinators box should not be shown if there is no council")
+  end
+
+  def test_show_coordinators_with_council
+    login_as :blue
+    rainbow = groups(:rainbow)
+    committee = groups(:cold)
+    rainbow.add_committee!(committee, true)
+    assert rainbow.real_council
+    get :show, :id => rainbow.to_param
+    assert_select('ul#coordinators', true, "coordinators box should be shown if there is a council")
+  end
+
   def test_show_committees_when_logged_in
     login_as :blue
 

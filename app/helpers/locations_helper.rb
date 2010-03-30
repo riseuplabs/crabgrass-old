@@ -10,13 +10,16 @@ module LocationsHelper
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
-    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name}
+    choices = [ I18n.t(:location_country).capitalize].concat(GeoCountry.find(:all).to_select(:name, :id))
+    opts = (object.nil? and method.nil? and params[:country_id]) ? {:selected => params[:country_id]} : {}
+    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name, :choices => choices, :opts => opts}
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
-    display = _display_value
+    display = _display_value(params[:country_id])
     html = ""
     name = _field_name('state_id', object, method)
+    country_id ||= params[:country_id]
     if country_id.nil?
       geo_admin_codes = []
     else
@@ -27,7 +30,7 @@ module LocationsHelper
   end
 
   def city_text_field(object=nil, method=nil, options = {})
-    display = _display_value
+    display = _display_value(params[:country_id])
     name = _field_name('city_name', object, method)
     spinner = options[:spinner]
     onblur = remote_function(
@@ -36,12 +39,17 @@ module LocationsHelper
       :loading => show_spinner('city'),
       :complete => hide_spinner('city')
     )
-    render :partial => '/locations/city_text_field', :locals => {:display => display, :name => name, :onblur => onblur, :object=>object, :method=>method}
+    if params[:city_id] =~ /\d+/
+      city = GeoPlace.find(params[:city_id])
+    end
+    value = city.nil? ? {} : {:value => city.name} 
+    options = {:onblur => onblur, :name => name, :id=> 'city_text_field'}.merge(value)
+    render :partial => '/locations/city_text_field', :locals => {:display => display, :object=>object, :method=>method, :options => options}
   end
 
   def city_id_field(object=nil, method=nil)
     name = _field_name('city_id', object, method)
-    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : ''
+    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : params[:city_id] 
     render :partial => '/locations/city_id_field', :locals => {:city_id => city_id, :name => name}
   end
 
@@ -53,12 +61,13 @@ module LocationsHelper
   end
 
   def selected_admin_code(ac_id, profile=nil)
-    return false if profile.nil?
-    true if profile.state_id == ac_id.to_s
+    return true if !profile.nil? and (profile.state_id == ac_id.to_s)
+    return true if params[:state_id].to_i == ac_id
+    return false
   end
 
   def friendly_location(entity)
-    if entity.profile.country_id
+    if entity.profile.country_id and (entity.profile.country_id != 0)
       'Local-'+entity.profile.geo_location.geo_country.name
     end
   end
@@ -73,8 +82,8 @@ module LocationsHelper
     end
   end
 
-  def _display_value
-    if @profile and @profile.country_id
+  def _display_value(force=nil)
+    if (@profile and @profile.country_id) or force
       'inline'
     else
       'none'

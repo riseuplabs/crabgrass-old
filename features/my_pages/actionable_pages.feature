@@ -11,7 +11,7 @@ Background:
 Scenario: I can mark pages read
   When I am on my work page
   And I mark that page
-  And I press "Read"
+  And I follow "Read"
   Then I should have read that page
 
 Scenario: Multiple Selectors on My Pages

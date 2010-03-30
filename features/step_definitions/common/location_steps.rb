@@ -57,6 +57,14 @@ Then /^country id (\d+) should be selected$/ do |country_id|
   Then "the \"profile[country_id]\" select field should have \"#{country_id}\" selected"
 end
 
+Then /^(country \w+) should be selected in the search form$/ do |country|
+  Then "country id #{country.id} should be selected in the search form"
+end
+
+Then /^country id (\d+) should be selected in the search form$/ do |country_id|
+  Then "the \"country_id\" select field should have \"#{country_id}\" selected"
+end
+
 Then /^(state \w+ in country \w+) should be selected$/ do |res|
   Then "the \"profile[state_id]\" select field should have \"#{res[1].id}\" selected"
   Then "country id #{res[0].id} should be selected"
@@ -70,3 +78,4 @@ end
 Then /city should be set to "([^\"]*)"$/ do |city|
   Then "the text field named \"profile[geo_city_name]\" should contain \"#{city}\""
 end
+

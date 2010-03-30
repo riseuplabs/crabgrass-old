@@ -13,7 +13,7 @@ Scenario: I can see Pages I did not read as unread
   And I am logged in
   And I have not read that page
   When I am on my work page
-  Then I should see "Read me now!" as "unread"
+  Then I should see "Read me now!" within ".unread" 
 
 Scenario: I can see Pages I read as read
   Given a page exists with title: "Read me already!"
@@ -23,4 +23,4 @@ Scenario: I can see Pages I read as read
   And I have read that page
   When I am on my work page
   Then I should see "Read me already!"
-  And I should not see "Read me already!" as "unread"
+  And I should not see "Read me already!" within ".unread"

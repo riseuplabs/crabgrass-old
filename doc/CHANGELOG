@@ -3,6 +3,329 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
+0.5.0 -- 2010 March 13 -- https://labs.riseup.net/code/versions/show/38
+  * Bug #493: Whitespace prob with link title that starts with "a "
+  * Bug #843: Climate Change inappropriate link creates a 404 error
+  * Bug #847: Clicking 'View Slideshow' on a newly created galery causes head trauma
+  * Bug #919: Normalize I18n Strings
+  * Bug #1370: HAML Library Needs Upgrading
+  * Bug #1400: Unknown language on user profile
+  * Bug #1408: problem with 05-locale initializer when you install the app from scratch
+  * Bug #1421: most active users count each image of a gallery
+  * Bug #1443: IE: Users comments do not show the image/link to report as inappropriate
+  * Bug #1445: IE: On site home, "featured" tab, the "xx post, contributor name, status, date" field displays oddly
+  * Bug #1446: IE: in a group's featured column, titles of pages are bigger than FF.
+  * Bug #1447: IE: Most guide texts displays oddly, in a blue background box.
+  * Bug #1449: IE: Section editing pencils dont show in ie6
+  * Bug #1481: Wrong links on email notifications of watched pages
+  * Bug #1541: Login after bad password does not shows ok
+  * Bug #1542: Group landing page things to fix/add
+  * Bug #1575: new ui: bugs on create page
+  * Bug #1589: Upload an attachment to a page doesnt update the page in feeds: groups/pages or me/pages/my_work
+  * Bug #1590: say box in me banner
+  * Bug #1594: custom masthead appearance
+  * Bug #1606: Site Admin: Chat Appearing In Global Navigation
+  * Bug #1607: blue sends a message to red. the messages list is not updated from blues view.
+  * Bug #1608: Chat: Permission Denied
+  * Bug #1609: Chat: Missing In Group Banners
+  * Bug #1610: bad 2nd nav "pages" links from within 3rd nav
+  * Bug #1613: Messages: Apply Actions = View Conflict
+  * Bug #1615: Banners: Missing Create Page
+  * Bug #1616: When there is no display name for group, the banner shows no name.
+  * Bug #1617: Custom Messages - Notifications Not Working
+  * Bug #1618: Search Consistency
+  * Bug #1619: Requests: Pending But Not Visible
+  * Bug #1620: Requests: Destroy = Error
+  * Bug #1621: Approved Requests Vanishing
+  * Bug #1622: Edited Page = Unavailable To Other Users
+  * Bug #1624: Messages: User's Thread Selections Lost
+  * Bug #1627: Selecting Thread For Reading = Wonky
+  * Bug #1630: Needless Check Boxes On Completed Requests
+  * Bug #1631: Joining A Network / Bad Link To 'My Requests'
+  * Bug #1632: Leave Group - Recursive Link
+  * Bug #1633: Social Activity / Committee Links Not Valid
+  * Bug #1634: breadcrumbs missing (or 'gretel... now what?')
+  * Bug #1637: Say Box / Text Truncated
+  * Bug #1638: Social Activity / Incorrect Links For Committee Non-Members
+  * Bug #1640: messages: css attribute badness
+  * Bug #1641: Sitehome: need to have custom nav bar brought over.
+  * Bug #1643: Bring in Footer.
+  * Bug #1644: Chat lines gets unaligned
+  * Bug #1645: super admin
+  * Bug #1646: My Pages: User Set View But Page List Incorrect
+  * Bug #1649: Share Dialog Needs Revision
+  * Bug #1650: Notify Dialog Needs Revision
+  * Bug #1651: Long names break formatting in feeds and in global nav
+  * Bug #1654: remove "add photo link" from gallery
+  * Bug #1655: request feed formating totally tweaked
+  * Bug #1660: Create annoucemetns link is missing from /admin/announcements
+  * Bug #1665: Global nav tweaks: 1) remove the messages link 2) remove help link.
+  * Bug #1667: date in Social activity in me section needs fixing
+  * Bug #1669: get ride of blue box around the info in settings adminsitration forms
+  * Bug #1670: when you go to calendar view in /groups/pages/name-of-group the page tab is not selected
+  * Bug #1672: remove share with all users?
+  * Bug #1676: search is not showing result with highlight search term content
+  * Bug #1679: My peers feed missing from People directory
+  * Bug #1681: about us formating in groups is tweaked, the info icons are in one column, should be two.
+  * Bug #1682: message feeds off to the right.
+  * Bug #1683: Committees show link name in the banner. not the display name.
+  * Bug #1684: Long user names break formatting in global nav
+  * Bug #1688: sitehome activity feed counters are not displaying in feeds for view, starred, contributed.
+  * Bug #1689: social activity feed changes
+  * Bug #1690: social activity feed should show the little icons like in 0.4.7.
+  * Bug #1691: remove selector and action bar frm /me/pages/all
+  * Bug #1692: person layout needs help
+  * Bug #1695: global nav drop downs should only show display names.
+  * Bug #1696: I see a remove from friends link on my own profile page.
+  * Bug #1700: Head trauma accesing to the archive of a public group
+  * Bug #1703: search filter page type options needs to be made much simplier.
+  * Bug #1704: pages: wiki
+  * Bug #1705: pages: discussion
+  * Bug #1706: Create page link colors should never show :visited {
+  * Bug #1707: page: article
+  * Bug #1708: pages: survey
+  * Bug #1709: pages: approval poll
+  * Bug #1710: pages: ranked voting
+  * Bug #1711: global nav drop down tweaked.
+  * Bug #1712: pages: file upload
+  * Bug #1713: pages: external video
+  * Bug #1714: pages: gallery
+  * Bug #1715: pages: task
+  * Bug #1716: home and pages 2nd nav selected in groups.
+  * Bug #1717: we need to put the language selector in place
+  * Bug #1718: 3rd level and 2nd level nav selection issue in /people/directory
+  * Bug #1719: no 2nd level nav selected in directory
+  * Bug #1721: search page does not show the person drop down filter anymore, it should.
+  * Bug #1722: Sitehome changes multi-issue
+  * Bug #1727: login page format often broken.
+  * Bug #1728: Network landing page does not show affiliation
+  * Bug #1729: Group landing page people section shows coordinators twice, seems to work locally.
+  * Bug #1730: message problem with pagination.
+  * Bug #1731: head trauma when going to this group http://munia.riseup.net/public_group_everyone_can_see
+  * Bug #1733: page specific icons not showing in feeds.
+  * Bug #1734: global nav drop down shows sitenetwork, it should not.
+  * Bug #1735: can not view groups in a network
+  * Bug #1736: trash in me section - undelete or destroy does not work
+  * Bug #1737: flag a comment as inappropriate throws an error.
+  * Bug #1738: Wrong banner when accessing pages from group page feeds
+  * Bug #1739: leave group and join chat links should be under the title.
+  * Bug #1742: in arabic i cant create a wiki page
+  * Bug #1743: setup internationalization process for 0.5.0
+  * Bug #1744: link formatting not working in greencloth in 0.5
+  * Bug #1746: top nav of moderation admin area is gone
+  * Bug #1753: 3rd nav not active in basic settings view
+  * Bug #1754: Pagination needed on sitehome feeds.
+  * Bug #1755: Change view all groups link at the bottom to direct to all group not most active.
+  * Bug #1756: sitehome active users feed
+  * Bug #1758: sitehome formatting issues
+  * Bug #1766: site network should not show up in the network directory.
+  * Bug #1769: 2nd level nav capitalization
+  * Bug #1773: title in people directory > all ppl > discover, in wrong place.
+  * Bug #1774: sitehome custom link menues needs look good
+  * Bug #1775: Cant access the public profile settings for sitehome
+  * Bug #1776: Info text for "my peers" in the ppl dir needed
+  * Bug #1777: all create a new pages title needs fixing (except galleries)
+  * Bug #1778: "no results" message needed when search result not found
+  * Bug #1779: the dates in me/requests are displaying times instead of dates sometimes
+  * Bug #1780: deleting site home nav link raises error
+  * Bug #1781: clicking "done" when adding custom nav links to site home raises error
+  * Bug #1783: person profile doesn't include new location information
+  * Bug #1786: full width layout for social activity table
+  * Bug #1787: site home sidebar active feeds
+  * Bug #1788: Change welcome username link in global nav to "Profile • Account • Logout"
+  * Bug #1789: account settings in me/edit to hide second level me navs
+  * Bug #1791: Use correct character encoding for language dropdown menu and translator ui
+  * Bug #1793: flash message mis-aligned when you logout
+  * Bug #1794: sitehome feature feed uses old feed style, should use the new style.
+  * Bug #1795: Sitehome wiki header needs to have the line under it and more room beteen it and the annoucements.
+  * Bug #1796: Most active groups and people on sitehome should show three lines of avatars each.
+  * Bug #1797: tags dont vary in size based on use. they do in 0.4.7
+  * Bug #1798: Pagination should be above the red header line
+  * Bug #1801: group. network. committee feed should not show owner
+  * Bug #1805: Groups/Pages date and calendar views need to change. see screenshots.
+  * Bug #1809: Change feed lengths
+  * Bug #1810: When a group doesnt have any pages it should still show the "recent pages" header
+  * Bug #1815: create committee has no third level nav
+  * Bug #1817: social activity icon in me drop down should change
+  * Bug #1818: IE review
+  * Bug #1821: black tool tip in sitehome left column getting cropped
+  * Bug #1825: contribute to site link doesn't lead to creating a new page
+  * Bug #1827: people page
+  * Bug #1828: head trauma accessing admin membership or requests from create committee
+  * Bug #1829: head trauma when accessing me > pages > my work > view filter "pages I own"
+  * Bug #1831: head trauma when leaving chatroom using button
+  * Bug #1835: Group Trash does not have actions
+  * Bug #1836: status posts and public messages showing up on discussion page
+  * Bug #1837: Requests: All, to me and from me in all views with nice capitalization
+  * Bug #1840: need spacing between wiki header and pages header on group landing page
+  * Bug #1842: Chat and Group Banner
+  * Bug #1843: Videos not showing IE6, IE7 or IE8
+  * Bug #1844: sitehome tweaks
+  * Bug #1845: Chat banner should have "join chat" removed
+  * Bug #1846: groups trash has wrong feed width
+  * Bug #1848: pagination on sitehome feeds needs styling to look like pagination on other feeds
+  * Bug #1849: status update in a persons profile is uglies
+  * Bug #1850: "create a new group" button should be styled like the green button
+  * Bug #1851: flash messages location
+  * Bug #1852: IE6 extended sidebar avatar cutoff
+  * Bug #1853: IE6, IE7, IE8 ME global drop-down - disable recent pages
+  * Bug #1854: IE6 2nd level nav too wide
+  * Bug #1860: header formatting in ie6 shows the hidden paragraph sign.
+  * Bug #1861: view watched pages crashed ie6
+  * Bug #1864: Remove Annoucements from sitehome landing page and ability to create from admin section.
+  * Bug #1865: customize nav links should be showing in the top blue line section which is under global nav.
+  * Bug #1866: create group link at top of site home should go away
+  * Bug #1869: Sitehome Feeds should show a cover
+  * Bug #1870: Sitehome feed shows wrong owner avatar
+  * Bug #1872: Featured pages on groups are displaying more pages then they should
+  * Bug #1873: ie6 and safari: links are underline
+  * Bug #1874: "view" in groups pages is big and red. it should be small and grey like view in me section.
+  * Bug #1875: small say box formatting tweaks
+  * Bug #1876: IE6: create page button messed up in groups and in me-section
+  * Bug #1877: ie6: global search looks bad. the little search button is and the check box are out of line.
+  * Bug #1878: ie6: groups > pages formating issue
+  * Bug #1879: ie6: group / network / person landing page content section falls below the left sidebar
+  * Bug #1881: moderation migration issue during upgrade
+  * Bug #1882: possible lost moderation data during upgrade
+  * Bug #1883: site home layout funky on staging
+  * Bug #1884: migration needed for masthead bg color
+  * Bug #1886: access me section on u4c staging server throws and error.
+  * Bug #1887: u4c: width of app is narrower then on dev server
+  * Bug #1888: u4c: clicking on a tags from group > pages shows nothing in the feed.
+  * Bug #1893: social activity in me section needs some styling
+  * Bug #1896: Grey seperator dots on sitehome need to be a lighter color of grey.
+  * Bug #1897: sitehome public profile text and video needs to be top aligned
+  * Bug #1898: quick nav tweaks to make the navs clearer
+  * Bug #1899: formatting in messages needs layout love
+  * Bug #1901: xxlarge avatar positioning - needs a dev
+  * Bug #1902: my-work section formatting changes needed.
+  * Bug #1904: page alignment tweaks
+  * Bug #1918: "back to messages" link when on a message thread
+  * Bug #1919: current_user name shown in messages feed together with avatar of peer
+  * Bug #1920: links to previous and next messages need to have the right names
+  * Bug #1924: groups: leave group and join chat floating under avatar
+  * Bug #1925: super admin become functionality fails to return
+  * Bug #1926: footer tweaks
+  * Bug #1927: sitehome: "wiki" header should go away. it's there sometimes. needs DEV
+  * Bug #1928: Sitehome: the page feed needs a header that says "Pages"
+  * Bug #1929: "view all" links on sitehome for people and groups not working.
+  * Bug #1930: Group avatars in banner should link back to group home.
+  * Bug #1931: My avatar in me-section should linke to my profile page /daniel
+  * Bug #1934: say button in me-section should be bottom aligned with say box
+  * Bug #1935: At a glance stop gap - adding counters to me-section
+  * Bug #1936: right align the logout in global nav with search and create page.
+  * Bug #1937: say box text needs a little padding. it looks not so good right up against the side of the box.
+  * Bug #1939: "view all" tags missing from group > pages
+  * Bug #1940: group > pages > tag clond and tasks link colors are really strong
+  * Bug #1941: search is not showing people dropdown again.
+  * Bug #1948: Messages formatting tweaks.
+  * Bug #1949: recent pages global nav formatting messed up again
+  * Bug #1951: move info text up from action bar by 4 px
+  * Bug #1953: quick spacing change on group landing page.
+  * Bug #1956: translation dropdown is in the gutter.
+  * Bug #1958: Sharing page dialog throws RJS error
+  * Bug #1960: User Profile & IE6
+  * Bug #1962: No Underline Fourth Level Navigation On Mouseover / IE6
+  * Bug #1963: XSS in 'code' URL redirection functions' error messages
+  * Bug #1967: say box flash message wording change
+  * Bug #1968: ie6 RJS error after go to ME link
+  * Bug #1969: "see all" link for tags in group > pages should go to the right of "tags" header and not be soo blue
+  * Bug #1971: in tasks the link to the group should go to group home, not group/task
+  * Bug #1972: Pages On Site Home = Unhappy With IE7 & IE8
+  * Bug #1975: wording change in all pages section
+  * Bug #1977: IE8 sitehome infinite spinners
+  * Bug #1978: IE7 sitehome featured tabs broken + no pages showing ie6 + ie7
+  * Bug #1981: my own profile Say feature should work differently
+  * Bug #1983: messages: the field where you type in your message no longer expands, it stay with one line.
+  * Bug #1984: Flash message confirmation of share page and sending notification not working
+  * Bug #1987: font size of a person's status in their profile is too big
+  * Bug #1988: committees showing up in network drop down
+  * Bug #1990: deleted items in superadmin are not seen.
+  * Bug #1992: page feed links have lost there formatting
+  * Bug #1993: header formatting in ie7 shows the hidden paragraph sign.
+  * Bug #1994: global nav groups dropdown is malformed again.
+  * Feature #1258: transition to rails 2.3 i18n - remove gibberish and look everything up with I18n
+  * Feature #1281: Rails 2.3 Translation
+  * Feature #1346: Make Directories Filterable by Location
+  * Feature #1454: Rework "My Pages" feed to only show your contibutions, pages you own, and pages you are watching.
+  * Feature #1455: Create "Notification" Tab and show persistant notificatons messages
+  * Feature #1457: Actionable My Pages Section
+  * Feature #1458: Actionable Messages Feed
+  * Feature #1459: User can click between messages without returning to message feed.
+  * Feature #1460: User lands at bottom of page feed, where they find the latest message and the ability to reply.
+  * Feature #1461: Create Pagination for message threads (between user and person x)
+  * Feature #1466: Expose tag cloud on all content landing page
+  * Feature #1468: Create the pre-canned options (ie. group / content type) for within context search
+  * Feature #1479: NEW UI: featured section of landing group
+  * Feature #1482: NEW UI - Profile page
+  * Feature #1483: template: User Profile Page
+  * Feature #1484: haml/css: Groups: landing/home
+  * Feature #1485: haml/css: profile page
+  * Feature #1486: haml/css: login page
+  * Feature #1487: template: group landing: pagination on page list
+  * Feature #1488: template: create layout for for no sidebar content
+  * Feature #1489: haml/css: page type (wiki et al)
+  * Feature #1491: design: grouphome browse all content
+  * Feature #1492: interactive: filter by location
+  * Feature #1493: haml/css: guide for PAT to set up a new view
+  * Feature #1494: design: me dashboard
+  * Feature #1505: haml/css: Groups: Settings page
+  * Feature #1507: haml/css: dashboard
+  * Feature #1508: haml/css: create page
+  * Feature #1509: haml/css: Me: Create Page/Wiki Form
+  * Feature #1510: haml / css: Me (Dashboard)/Messages
+  * Feature #1511: haml/css: Home: Me (Dashboard)/Inbox
+  * Feature #1512: haml/css: Home: Me (Dashboard)/Requests
+  * Feature #1513: haml/css: Home: Me (Dashboard)/Tasks/Pending
+  * Feature #1514: haml/css: Home: Me (Dashboard)/Tasks/Pending/Completed
+  * Feature #1515: Me: Create Page(s) Revisions
+  * Feature #1516: haml/css: Home: Me (Dashboard)/Create Page/Survey Form
+  * Feature #1517: haml/css: Home: Me (Dashboard)/Create Page/Approval Poll Form
+  * Feature #1518: haml/css: Home: Me (Dashboard)/Create Page/Approval Poll Form
+  * Feature #1519: haml/css: Home: Me (Dashboard)/Create Page/Ranked Vote Form
+  * Feature #1520: haml/css: Home: Me (Dashboard)/Create Page/File Form
+  * Feature #1521: haml/css: Home: Me (Dashboard)/Create Page/External Video Form
+  * Feature #1522: haml/css: Home: Me (Dashboard)/Create Page/Gallery Form
+  * Feature #1523: haml/css: Home: Me (Dashboard)/Messages/Public
+  * Feature #1524: haml/css: Home: Me (Dashboard)/Messages/Private
+  * Feature #1525: haml/css: Home: Me (Dashboard)/Search
+  * Feature #1526: haml/css: Home: Me (Dashboard)/Trash
+  * Feature #1527: haml/css: Home: Me (Dashboard)/Pages/Show
+  * Feature #1528: template: Groups, landing page
+  * Feature #1529: template: group settings
+  * Feature #1530: haml / css: group tasks
+  * Feature #1531: template: group tasks
+  * Feature #1532: template: user settings
+  * Feature #1533: haml/css: Home: Me (Dashboard)/Settings
+  * Feature #1537: template: page type (wiki et al)
+  * Feature #1539: haml/css: group browse landing
+  * Feature #1544: Right bar on pages
+  * Feature #1545: template: implement sidebar for pages
+  * Feature #1546: template: message index view
+  * Feature #1547: template: message thread
+  * Feature #1550: template: social activity tab
+  * Feature #1551: template: me dashboard requests tab
+  * Feature #1552: template: pages/my_work
+  * Feature #1553: template: pages/notifications
+  * Feature #1554: template pages/all
+  * Feature #1555: template: pages/trash
+  * Feature #1556: haml/css: group landing + profile sidebar / structure revision
+  * Feature #1561: haml/css: add title box and info box to each page if appropriate
+  * Feature #1562: haml/css: Settings - add 3rd and 4th level navigation
+  * Feature #1598: Add inline search to around the site
+  * Feature #1611: Notification Info
+  * Feature #1642: search: remove all visual UI for inline search
+  * Feature #1657: Search: Global search results should not appear under 'me' section
+  * Feature #1658: Search issues
+  * Feature #1680: In messages where you type the name of the recipient, it should say. To: Friends and Peers
+  * Feature #1847: people list to be added to 3rd level nav under group home
+  * Feature #1855: network landing page needs to show groups in third level nav under home.
+  * Feature #1862: Documentation: susy and haml requirements
+  * Feature #1863: Documentation: nokogiri
+  * Feature #1868: better formatting for tasks
+  * Feature #1885: tag display box on groups / pages needs to be smaller and have a see all link
+  * Feature #1903: fill in metabox and page sidebar with a light color
+
 0.4.7 -- 2009 November 5
   * Bug #488: Pages are being shown as updated when they were not
   * Bug #975: Pages Have No Owner If Owning Group Destroyed = Headtrauma
