@@ -627,7 +627,8 @@ module PageHelper
   end
 
   def summary_for(page)
-    text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)
+    klass = page.cover.nil? ? '' : 'cover'
+    text_with_more(page.summary, :p, :class => klass, :more_url=> page_url(page), :length => 300)
   end
 
   def owner_image(page, options={})
