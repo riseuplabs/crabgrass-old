@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class FindTagsTest < Test::Unit::TestCase
+class FindTagsTest < ActiveSupport::TestCase
 
   def test_find_with_spaces
     page = DiscussionPage.create! :title => 'classical sociologists', :public => true

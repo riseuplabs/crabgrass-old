@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 require 'keyring'
 
-class StringTest < Test::Unit::TestCase
+class StringTest < ActiveSupport::TestCase
   def test_index_split
     str1 = "aZfox\nfoxCatfoxfoxCat"
     re1 = /(fox)|Z/
