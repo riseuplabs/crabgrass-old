@@ -23,6 +23,7 @@ module CustomAppearanceExtension
       # render css from or sass text
       options = Compass.configuration.to_sass_engine_options
       options[:load_paths] = options[:load_paths] | CustomAppearance::SASS_LOAD_PATHS
+      options[:debug_info] = true
       engine = Sass::Engine.new(sass_text, options)
       css_text = engine.render
 
