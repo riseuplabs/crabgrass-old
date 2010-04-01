@@ -37,7 +37,7 @@ module LayoutHelper
   ##
 
   # CustomAppearances model allows administrators to override the default css values
-  # this method will link to the appropriate overriden css
+  # this method will link to the appropriate overridden css
   def themed_stylesheet_link_tag(path, css_prefix_path=nil)
     appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
 
