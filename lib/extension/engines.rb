@@ -50,11 +50,18 @@ Engines::Plugin.class_eval do
 
   def initialize(directory)
     super directory
-    @code_paths = default_code_paths
     @controller_paths = default_controller_paths
     @public_directory = default_public_directory
     @override_views = false
     @load_once = true
+  end
+
+  def load(initializer)
+    return if loaded?
+    super initializer
+    add_plugin_locale_paths
+    add_plugin_view_paths
+    Assets.mirror_files_for(self)
   end
 
   def add_plugin_view_paths
@@ -63,9 +70,8 @@ Engines::Plugin.class_eval do
       if @override_views
         ActionController::Base.prepend_view_path(view_path)
       else
-        ActionController::Base.view_paths.insert(1, view_path) # push it just underneath the app
+        ActionController::Base.append_view_path(view_path)
       end
-      ActionView::Base.process_view_paths(view_path)
     end
   end
 
