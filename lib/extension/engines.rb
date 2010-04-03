@@ -61,7 +61,7 @@ Engines::Plugin.class_eval do
     super initializer
     add_plugin_locale_paths
     add_plugin_view_paths
-    Assets.mirror_files_for(self)
+    Engines::Assets.mirror_files_for(self)
   end
 
   def add_plugin_view_paths
