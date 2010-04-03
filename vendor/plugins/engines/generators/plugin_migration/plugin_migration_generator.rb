@@ -2,11 +2,15 @@
 # within the database.
 class PluginMigrationGenerator < Rails::Generator::Base
   
+  # 255 characters max for Windows NTFS (http://en.wikipedia.org/wiki/Filename)
+  # minus 14 for timestamp, minus some extra chars for dot, underscore, file 
+  # extension. So let's have 230.
+  MAX_FILENAME_LENGTH = 230
+    
   def initialize(runtime_args, runtime_options={})
     super
     @options = {:assigns => {}}
-    
-    ensure_plugin_schema_table_exists
+    ensure_schema_table_exists    
     get_plugins_to_migrate(runtime_args)
     
     if @plugins_to_migrate.empty?
@@ -25,10 +29,9 @@ class PluginMigrationGenerator < Rails::Generator::Base
   end
   
   protected
-  
-    # Create the plugin schema table if it doesn't already exist. See
-    # Engines::RailsExtensions::Migrations#initialize_schema_migrations_table_with_engine_additions
-    def ensure_plugin_schema_table_exists
+
+    # Create the schema table if it doesn't already exist.
+    def ensure_schema_table_exists
       ActiveRecord::Base.connection.initialize_schema_migrations_table
     end
 
@@ -44,9 +47,8 @@ class PluginMigrationGenerator < Rails::Generator::Base
           Engines.plugins[name] ? Engines.plugins[name] : raise("Cannot find the plugin '#{name}'")
         end
       end
-      # require 'ruby-debug';debugger
       
-      @plugins_to_migrate.reject! { |p| p.latest_migration.nil? }
+      @plugins_to_migrate.reject! { |p| !p.respond_to?(:latest_migration) || p.latest_migration.nil? }
       
       # Then find the current versions from the database    
       @current_versions = {}
@@ -59,36 +61,38 @@ class PluginMigrationGenerator < Rails::Generator::Base
       @plugins_to_migrate.each do |plugin|
         @new_versions[plugin.name] = plugin.latest_migration
       end
-
+      
       # Remove any plugins that don't need migration
       @plugins_to_migrate.map { |p| p.name }.each do |name|
         @plugins_to_migrate.delete(Engines.plugins[name]) if @current_versions[name] == @new_versions[name]
       end
-
-      # begin crabgrass hack
-      # reject plugins which already have migration files
-      @plugins_to_migrate.reject! do |plugin|
-        migration_file_name = "#{plugin.name}_to_version_#{@new_versions[plugin.name]}"
-        migration_file_exists?(migration_file_name)
-      end
-      # end crabgrass hack
-
+      
       @options[:assigns][:plugins] = @plugins_to_migrate
       @options[:assigns][:new_versions] = @new_versions
       @options[:assigns][:current_versions] = @current_versions
     end
 
-    # Construct a unique migration name based on the plugins involved and the
-    # versions they should reach after this migration is run.
+    # Returns a migration name. If the descriptive migration name based on the 
+    # plugin names involved is shorter than 230 characters that one will be
+    # used. Otherwise a shorter name will be returned.
     def build_migration_name
+      returning descriptive_migration_name do |name|        
+        name.replace short_migration_name if name.length > MAX_FILENAME_LENGTH
+      end
+    end
+
+    # Construct a unique migration name based on the plugins involved and the
+    # versions they should reach after this migration is run. The name constructed
+    # needs to be lowercase
+    def descriptive_migration_name
       @plugins_to_migrate.map do |plugin| 
         "#{plugin.name}_to_version_#{@new_versions[plugin.name]}" 
-      end.join("_and_")
+      end.join("_and_").downcase
     end
-    
-    # a crabgrass hack
-    # checks to see if a file exists for this migration
-    def migration_file_exists?(migration_name)
-      !Dir.glob("#{RAILS_ROOT}/db/migrate/[0-9]*_*.rb").grep(/#{migration_name}/).empty?
+
+    # Short migration name that will be used if the descriptive_migration_name
+    # exceeds 230 characters
+    def short_migration_name
+      'plugin_migrations'
     end
 end
