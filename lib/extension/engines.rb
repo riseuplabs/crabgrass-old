@@ -104,6 +104,13 @@ Engines::Plugin.class_eval do
     }
   end
 
+
+  # copied from rails 2.3.5 plugin.rb
+  # added permissions
+  def app_paths
+    [ File.join(directory, 'app', 'models'), File.join(directory, 'app', 'helpers'), File.join(directory, 'app', 'permissions'), controller_path, metal_path ]
+  end
+
 end
 
 Engines::Plugin::FileSystemLocator.class_eval do
