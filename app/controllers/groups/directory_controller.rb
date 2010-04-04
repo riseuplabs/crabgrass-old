@@ -5,7 +5,12 @@ class Groups::DirectoryController < Groups::BaseController
   before_filter :set_group_type
 
   def index
-    logged_in? ? redirect_to(:action => 'my') : redirect_to(:action => 'search')
+    if logged_in?
+      my_groups
+      @groups.empty? ? redirect_to(:action => 'search') : redirect_to(:action => 'my')
+    else 
+      redirect_to(:action => 'search')
+    end
   end
 
   def recent
@@ -29,31 +34,33 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     letter_page = params[:letter] || ''
 
-    if params[:country_id]
-      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(loc_options).alphabetized(letter_page).paginate(pagination_params)
-      groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).in_location(loc_options).names_only
+    if params[:country_id] =~ /^\d+$/
+      @params_location = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).alphabetized(letter_page).paginate(pagination_params)
+      groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).names_only
     else
       @groups = Group.only_type(@group_type, @current_site).visible_by(user).alphabetized(letter_page).paginate(pagination_params)
+      @params_location = {}
       groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).names_only
     end
 
     # get the starting letters of all groups
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
-    if params[:country_id]
+    if request.xhr? #params[:country_id]
       render :update do |page|
         page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
       end
     else
       @second_nav = 'all'
       @misc_header = '/groups/directory/browse_header'
-      @request_path = '/groups/directory/search'
+      request_root = (@group_type == :group) ? '/groups' : '/networks'
+      @request_path = request_root+'/directory/search'
       render_list
     end
   end
 
   def my
-    @groups = current_user.primary_groups.alphabetized('').paginate(pagination_params)
+    @groups || my_groups 
     @show_committees = true
     @second_nav = 'my'
     render_list
@@ -68,6 +75,10 @@ class Groups::DirectoryController < Groups::BaseController
 
 
   protected
+
+  def my_groups
+    @groups = current_user.primary_groups.alphabetized('').paginate(pagination_params)
+  end
 
   def render_list
     render :template => 'groups/directory/list'

@@ -1,4 +1,4 @@
-@js
+@js @wip
 Feature: Setting group location 
   In order to set a location
   as an administrator of a group

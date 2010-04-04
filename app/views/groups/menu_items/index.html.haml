@@ -1,0 +1,23 @@
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do 
+  = render :partial => '/groups/navigation/settings_sidelinks'
+
+<!-- table for some pretty formatting -->
+%table.form
+  %tr
+    %td
+      %blockquote#menu_items_form_container
+        = render :partial => 'menu_items_form'
+
+  %tr
+    %td
+      %div.info
+        = I18n.t(:updating_this_list_will_update_menu_items)
+
+- form_tag(groups_params(:action => 'show'), :method => :get, :multipart => false) do
+  %p.form_buttons= submit_tag I18n.t(:done_button), :name => nil
+
+%div.buttons
+  = spinner 'menu_items'

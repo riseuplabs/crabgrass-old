@@ -55,7 +55,6 @@ namespace :cg do
     rdoc.rdoc_files.include('[A-Z]*[^~]')  # uppercase files only
     rdoc.rdoc_files.include('doc/[A-Z]*[^~]')  # uppercase files only
     rdoc.rdoc_files.include('app/**/*.rb')
-    rdoc.rdoc_files.include('app/**/**/*.rb')
     rdoc.rdoc_files.include('lib/path_finder/**/*.rb')
     rdoc.rdoc_files.include('lib/path_finder/[A-Z]*[^~]')
     rdoc.rdoc_files.include('lib/path_finder.rb')

@@ -10,13 +10,17 @@ class People::DirectoryController < People::BaseController
   before_filter :login_required, :action => 'show'
 
   def index
-    @users = User.on(current_site).recent.paginate(pagination_params)
-    @second_nav = 'all'
-    @third_nav = 'discover'
+    # the drectory link shows my friends if there are friends, otherwise browse directory
+    friends_list
+    if @users.empty?
+      redirect_to(:action=>'show', :id=>:browse)
+    else
+      redirect_to(:action=>'show', :id=>:friends)
+    end
   end
 
   def show
-    if id?(:friends, :peers, :browse)
+    if id?(:friends, :peers, :browse, :recent)
       self.send(params[:id])
     else
       render_permission_denied
@@ -26,11 +30,14 @@ class People::DirectoryController < People::BaseController
   protected
 
   def friends
-    @users = (User.friends_of(current_user).on(current_site).alphabetized(@letter_page)).paginate(pagination_params)
-
+    @users || friends_list
     # what letters can be used for pagination
     @pagination_letters = (User.friends_of(current_user).on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
     @second_nav = 'my'
+  end
+
+  def friends_list
+    @users = (User.friends_of(current_user).on(current_site).alphabetized(@letter_page)).paginate(pagination_params)
   end
 
   def peers
@@ -47,6 +54,13 @@ class People::DirectoryController < People::BaseController
     @pagination_letters = (User.on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
     @second_nav = 'all'
     @third_nav = 'browse'
+  end
+
+  def recent
+    @users = User.on(current_site).recent.paginate(pagination_params)
+    @second_nav = 'all'
+    @third_nav = 'discover'
+    render :action => 'recent'
   end
 
   protected

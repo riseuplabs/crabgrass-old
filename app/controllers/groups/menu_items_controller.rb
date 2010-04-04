@@ -9,6 +9,8 @@ class Groups::MenuItemsController < Groups::BaseController
   verify :only => :update, :method => :put
 
   def index
+    @second_nav = "administration"
+    @third_nav = "settings"
   end
 
   # not used yet.

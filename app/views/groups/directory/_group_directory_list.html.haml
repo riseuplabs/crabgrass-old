@@ -1,9 +1,9 @@
 - if @groups.any?
   %div{:align=>'center'}
     = letter_pagination_links(directory_params(:type => @group_type, :action => 'search'), :available_letters => @pagination_letters) if @pagination_letters
-    = pagination_links(@groups)
+    = pagination_links(@groups, :params => @params_location)
   = render :partial => 'group', :collection => @groups, :locals => { :show_committees => @show_committees }
-  = pagination_links(@groups)
+  = pagination_links(@groups, :params => @params_location)
 - else
   %p= I18n.t(:no_search_results)
 

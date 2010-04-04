@@ -240,6 +240,11 @@ if Conf.mod_enabled? 'moderation'
 end
 
 #
+# Profiles
+#
+Profile.blueprint {}
+
+#
 # Locations
 #
 GeoCountry.blueprint {}
@@ -249,3 +254,4 @@ GeoPlace.blueprint {
   longitude { 1.0 }
   geonameid { 2 }
 }
+GeoLocation.blueprint {}

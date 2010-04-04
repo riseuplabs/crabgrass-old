@@ -1,11 +1,9 @@
-// currently the pages search for pending tasks isn't working, so leaving out third nav for now
-// these will have to be updated to reflect the right urls once it is working.
-//- content_for :third_nav do
-//  %ul
-//    = menu I18n.t(:my_pending_tasks_link), :controller => '/groups/tasks', :action => 'pending', :id => @group
-//    = menu I18n.t(:my_completed_tasks_link), :controller => '/groups/tasks', :action => 'completed', :id => @group
+- content_for :third_nav do
+  %ul
+    = menu I18n.t(:my_pending_tasks_link), {:controller => '/groups', :action => 'tasks', :id => @group}, active_tab_for_nav(@show_status, 'pending')
+    = menu I18n.t(:my_completed_tasks_link), {:controller => '/groups', :action => 'tasks', :id => @group, :status => 'completed'}, active_tab_for_nav(@show_status, 'completed')
 
-= render :partial => 'common/title_box', :locals => {:title => I18n.t(:pending_tasks).capitalize}
+= render :partial => 'common/title_box', :locals => {:title => I18n.t(:tasks).capitalize}
 = render :partial => 'common/info_box', :locals => {:description => link_to(I18n.t(:create_task_list) + ARROW, create_page_url(TaskListPage, :group => @group), :id => 'create_tasks_link') }
 
 %section#tasks

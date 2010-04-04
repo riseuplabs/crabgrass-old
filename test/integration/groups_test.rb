@@ -50,4 +50,11 @@ class GroupsTest < ActionController::IntegrationTest
     assert_contain 'Request to join has been sent'
   end
 
+  def test_do_not_show_announcements
+    login 'red'
+    visit "/the-true-levellers"
+    assert_not_contain "Announcements"
+  end
+
+
 end

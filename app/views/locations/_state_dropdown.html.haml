@@ -2,5 +2,5 @@
   %select{:id => 'select_state_id', :name => name}
     %option{:value=>''}= 'Choose ' + I18n.t(:location_state).capitalize 
     - geo_admin_codes.each do |ac|
-      - selected = selected_admin_code(ac.id, @profile)
+      - selected = selected_admin_code(ac.id, @profile) 
       %option{:id=>"admin_code_#{ac.id}", :value=>ac.id, :selected => selected}= ac.name
