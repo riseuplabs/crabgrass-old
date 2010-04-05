@@ -32,12 +32,6 @@ class Test::Unit::TestCase
   # then set this back to true.
   self.use_instantiated_fixtures  = false
 
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
   # Add more helper methods to be used by all tests here...
   def valid_translation
     { :key => keys(:hello), :language => languages(:english), :user => users(:abie), :text => "Hey d00d" }
