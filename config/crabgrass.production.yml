@@ -19,8 +19,6 @@ enabled_languages:
   - ar_EG
   - tr_TR
 enabled_mods:
-  - super_admin
-  - moderation
 enabled_tools:
   - asset_tool
   - core_tools
@@ -34,7 +32,7 @@ enabled_tools:
   - announcement_tool
 email:
   delivery_method: :sendmail
-  dev_email: "jeffrey@tinflag.com"
+dev_email: "jeffrey@tinflag.com"
 ensure_page_owner: false
 
 ##
