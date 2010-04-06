@@ -4,6 +4,8 @@ module Groups::MembershipsPermission
     logged_in? and
     current_user.may?(:admin, group)
   end
+  alias_method :may_review_memberships?, :may_create_memberships?
+  alias_method :may_review_groups_memberships?, :may_create_memberships?
 
   def may_join_memberships?(group=@group)
     logged_in? and
@@ -27,21 +29,22 @@ module Groups::MembershipsPermission
     end
   end
 
-  # wtf is may_groups_memberships?() for?
-  %w(groups).each{ |action|
-    alias_method "may_#{action}_memberships?".to_sym, :may_list_memberships?
-  }
-
   def may_update_memberships?(group=@group)
     current_user.may?(:admin, group) and group.committee?
   end
 
-  def may_destroy_memberships?(group = @group)
+  def may_leave_memberships?(group = @group)
     logged_in? and
     current_user.direct_member_of?(group) and
     (group.network? or group.users.uniq.size > 1)
   end
 
-  alias_method :may_leave_memberships?, :may_destroy_memberships?
+  def may_destroy_memberships?(membership = @membership)
+    group = membership.group
+
+    # has to have a council
+    group.council != group and
+    current_user.may?(:admin, group)
+  end
 
 end

@@ -76,7 +76,7 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
@@ -85,7 +85,7 @@ class RequestsControllerTest < Test::Unit::TestCase
 
     get :accept, :path => [req.code, 'root_at_localhost']
     assert_response :success
-    assert_error_message(/#{Regexp.escape(:invite_error_redeemed.t)}/)
+    assert_error_message(/#{Regexp.escape(I18n.t(:invite_error_redeemed))}/)
   end
 
   def test_redeem_error
@@ -101,7 +101,7 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
     request = RequestToJoinUsViaEmail.redeem_code!(users(:red), req.code, req.email)
     request.approve_by!(users(:red))
@@ -109,8 +109,8 @@ class RequestsControllerTest < Test::Unit::TestCase
     login_as :red
     get :redeem, :email => req.email, :code => req.code
     assert_response :success
-    assert :invite_error_redeemed.t.any?
-    assert_error_message(/#{Regexp.escape(:invite_error_redeemed.t)}/)
+    assert I18n.t(:invite_error_redeemed).any?
+    assert_error_message(/#{Regexp.escape(I18n.t(:invite_error_redeemed))}/)
   end
 
   def test_already_member_error
@@ -118,14 +118,14 @@ class RequestsControllerTest < Test::Unit::TestCase
       :created_by => users(:dolphin),
       :email => 'root@localhost',
       :requestable => groups(:animals),
-      :language => languages(:pt)
+      :language => languages(:pt).code
     )
 
     login_as :penguin
     get :redeem, :email => req.email, :code => req.code
-    assert :invite_error_already_member.t.any?
+    assert I18n.t(:invite_error_already_member).any?
     assert_response :success
-    assert_error_message(/#{Regexp.escape(:invite_error_already_member.t)}/)
+    assert_error_message(/#{Regexp.escape(I18n.t(:invite_error_already_member))}/)
   end
 
 end

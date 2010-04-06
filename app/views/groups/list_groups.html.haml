@@ -1,0 +1,14 @@
+- content_for :style do
+  table.members td {padding: 12px;}
+
+= render :partial => 'groups/navigation/nav_for_landing'
+
+%div
+
+- if @federatings.any? 
+  %table{:class=>'members pretty'}
+    %tr
+      %th Group
+      %th Joined
+    = render :partial => 'groups/memberships/federating', :collection => @federatings 
+

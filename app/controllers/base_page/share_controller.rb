@@ -47,13 +47,13 @@ class BasePage::ShareController < BasePage::SidebarController
   #    "the-true-levellers"=>{"access"=>"admin"}}
   #
   def update
-    @success_msg = "You successfully shared this page."[:shared_page_success]
+    @success_msg = I18n.t(:shared_page_success)
     notify_or_share(:share)
   end
 
   # handles the notification with or without sharing
   def notify
-    @success_msg = "You successfully sent notifications."[:notify_success]
+    @success_msg = I18n.t(:notify_success)
     notify_or_share(:notify)
   end
 
@@ -112,22 +112,22 @@ class BasePage::ShareController < BasePage::SidebarController
     if recipient.nil?
       recipient_display = " (#{h(recipient_name)})";
       flash_message_now(:type => 'error',
-        :title => "Not Found"[:not_found] + recipient_display)
+        :title => I18n.t(:not_found) + recipient_display)
       return nil
     elsif !recipient.may_be_pestered_by?(current_user)
       flash_message_now(:type => 'error',
-        :title => 'Sorry, you are not allowed to share with "{name}"'[:share_pester_error, recipient.name])
+        :title => I18n.t(:share_pester_error, :name => recipient.name))
       return nil
     elsif @page
       upart = recipient.participations.find_by_page_id(@page.id)
       if upart && action == :share && !upart.access.nil?
         flash_message_now(:type => 'info',
-          :title => '"{name}" already has access to this page.'[:share_already_exists_error, recipient.name])
+          :title => I18n.t(:share_already_exists_error, :name => recipient.name))
         return nil
       elsif upart.nil? && action == :notify
         if !recipient.may?(:view, @page) and !may_share_page?
           flash_message_now(:type => 'error',
-            :title => 'Sorry, "{name}" does not have access to this page.'[:notify_no_access_error, recipient.name])
+            :title => I18n.t(:notify_no_access_error, :name => recipient.name))
           return nil
         end
       end

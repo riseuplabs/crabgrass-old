@@ -1,0 +1,15 @@
+- inside_layout 'base' do
+  - content_for :banner do
+    %section#identity-name
+      - entity = @parent || @group || @user
+      %a{:href => url_for_entity(entity)}
+        = avatar_for(entity, 'large', :class => "left")
+      - banner = banner_partial_for(@active_tab)
+      = render :partial => banner
+
+  - content_for :secondary_nav do
+    - menu = menu_partial_for(@active_tab)
+    - if ! menu.nil?
+      = render :partial => menu
+  = yield
+

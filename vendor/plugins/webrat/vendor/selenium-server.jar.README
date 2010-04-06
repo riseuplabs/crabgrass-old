@@ -1,1 +1,0 @@
-Deleted the jar to make git move little faster. If we want to use Selenium with webrat, we should probably use webrat as a gem. The last commit with the jar present is 52ab188

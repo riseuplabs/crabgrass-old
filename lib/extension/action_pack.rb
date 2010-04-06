@@ -140,8 +140,30 @@ end
 ###
 
 class ActionView::Base
+
   def button_to_remote(name, options = {}, html_options = {})
     button_to_function(name, remote_function(options), html_options)
   end
+
 end
 
+###
+### handle truncate compatibility betweeen rails 2.1 and 2.3
+###
+class ActionView::Base
+#
+# This make truncate compatible with rails 2.1 and rails 2.3
+#
+  def truncate_with_compatible_code(text, options={})
+    length = options[:length] || 30
+    omission = options[:omission] || "..."
+    if Rails::version == "2.1.0"
+      truncate_without_compatible_code(text, length, omission)
+    else
+      truncate_wihtout_compatible_code(text, options)
+    end
+  end
+
+  alias_method_chain :truncate, :compatible_code
+
+end

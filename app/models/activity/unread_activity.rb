@@ -31,16 +31,20 @@ class UnreadActivity < Activity
 
   public
 
+  def avatar
+    unread_count == 1 ? author : user
+  end
+
   def description(view)
     if unread_count == 1
-      str = "You have an unread [private message]"[:activity_unread_singular]
+      str = I18n.t(:activity_unread_singular)
       if author
         link = view.send(:my_private_message_path, author)
       else
         link = view.send(:my_private_messages_path)
       end
     else
-      str = "You have {count} unread [private messages]"[:activity_unread, unread_count]
+      str = I18n.t(:activity_unread, :count => unread_count)
       link = view.send(:my_private_messages_path)
     end
 

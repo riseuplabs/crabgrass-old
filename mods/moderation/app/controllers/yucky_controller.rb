@@ -62,11 +62,5 @@ class YuckyController < ApplicationController
       @rateable_type = :chat_message
     end
   end
-
-  #def send_user_notification
-  #  page = Page.make :private_message, :to => current_user, :from => current_user, :title => 'Your complaint has been noticed!', :body => :inapp_noticifation.t
-  #  page.save
-  #end
-
 end
 

@@ -8,6 +8,7 @@ class PrivatePostActivity < Activity
 
   alias_attr :user_to, :subject
   alias_attr :user_from, :object
+  alias_attr :avatar, :object
   alias_attr :post_id, :related_id
   alias_attr :snippet, :extra
   alias_attr :reply, :flag
@@ -29,16 +30,12 @@ class PrivatePostActivity < Activity
 
   def description(view)
     url = view.send(:my_private_message_path, user_from_name)
-    link_text = reply ? 'a reply'[:a_reply_link] : 'a message'[:a_message_link]
+    link_text = reply ? I18n.t(:a_reply_link) : I18n.t(:a_message_link)
 
-    "You received {message_tag} from {other_user}: {title}"[
-       :activity_message_received,
-       {
-         :message_tag => view.link_to(link_text, url),
-         :other_user => user_span(:user_from),
-         :title => "<i>#{snippet}</i>"
-       }
-    ]
+    I18n.t(:activity_message_received,
+             :message_tag => view.link_to(link_text, url),
+             :other_user => user_span(:user_from),
+             :title => "<i>#{snippet}</i>")
   end
 
   def icon

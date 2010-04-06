@@ -1,0 +1,94 @@
+0.5.0 
+-----
+
+* To upgrade:
+
+  1. Disable the application, put up a temporary down-for-maintenance page
+
+  2. Make a backup of all of your files, and your database!
+
+  3. Save the following files: config/database.yml, config/secret.txt, 
+     config/crabgrass.[production|development|test].yml, and the following
+     directories: log, assets, and any changes you may have made to the 
+     stylesheets in the public directory.
+
+  4. Replace everything else with the code from this release
+
+  5. There are some new dependencies, make sure you have the compass
+     library installed, the susy compass plugin, and version 2.2.20 or
+     newer haml installed before continuing.
+
+  6. Run plugin migrations, you may not have any but this is safe to do:
+       % RAILS_ENV=production script/generate plugin_migration
+
+     If a plugin migration file is generated (something like
+     *_moderation_to_version_8.rb), then
+     convert_message_page_to_discussion_message migration needs to be
+     renamed so that it runs after the moderation migration.  to do
+     this, simply move the message_page migration to a timestamp later
+     than the moderation migration.
+
+  7. Run migrations:
+       % RAILS_ENV=production rake db:migrate
+    
+  8. Locations have been added! 
+     
+     Locations require an import of data files from Geonames
+     (geonames.org).  By default, a smaller data set will be imported,
+     consisting of cities with a population greater than 1000 people.
+
+     Locations require a rake task:
+       % rake cg:import_geo_data
+
+     Please note that the cg:import_geo_data rake task could take a
+     bit of time to run and will add a large-ish data set to mysql. 
+
+     If you do not wish to import this data, you can skip this step
+     and not use geo-location.
+
+  9. Re-enable the application, taking down your temporary page.
+
+  10. Review any Custom Appearances:
+     
+      Due to the change in the UI, custom appearances will need to be
+      re-done after an upgrade. Custom Appearances are set in the
+      Advanced tab of the Site Appearance settings.  The masthead
+      background color will work as before, but any other changes using
+      this form will not be applicable to 0.5.
+
+
+0.4.7
+-----
+* Contains a migration that removes duplicate daily trackings.
+  Due to a bug hourlies where counted twice for dailies. This
+  migration fixes that. It only removes duplicates for the same
+  page and day - so it should be a no-op if there are none.
+  If you use trackings differently than on a daily basis you will
+  probably not want to run this migration. Just remove it. It does
+  not have any effect on the schema.
+
+* Contains a migration that sets the access level of status post
+  activities so that they are able to be viewed by friends and
+  peers only.  This does nto have any effect on the schema.
+
+To perform these migrations:
+    % rake db:migrate RAILS_ENV=xxxx
+
+0.4.6.1
+-------
+
+* the following is only necessary if you were running 0.4.6:
+    % backup your database!
+    % run the rails console: script/console production
+    % Wiki.find(:all, :conditions => 'body RLIKE "[\r\n]{20,}"').size
+      If it returns a zero, no need to do anything more
+    % Wiki.find(:all, :conditions => 'body RLIKE "[\r\n]{20,}"').each
+      {|w| w.body.gsub!(/[\n\r]{20,}/, "\n\n\n\n"); w.raw_structure = nil;
+      w.save!}
+    % repeat the first Wiki.find procedure to make sure you get no results
+
+0.4.6
+-----
+* if using moderation module, a db migration is required:
+    % script/generate plugin_migration
+    % rake db:migrate

@@ -1,0 +1,17 @@
+- if @second_nav == 'all'
+  - content_for :third_nav do
+    = render :partial => '/groups/directory/all_groups_tabs'
+
+- if @misc_header
+  = render :partial => @misc_header
+
+%section#group_listing
+  - if @second_nav == 'all'
+    %div#filter_by_location
+      = render :partial => '/locations/search_form_html'
+
+  %div#group_directory_list= render :partial => '/groups/directory/group_directory_list'
+
+- if @include_location_filter_DEPRECATED
+  = javascript_tag remote_function(:url => {:controller=>'/locations', :action=>'countries_with_profiles_options', :replace_id => 'select_country_id'}) 
+

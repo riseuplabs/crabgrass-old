@@ -1,4 +1,4 @@
-<div><table class='pretty'>
+<table class='pretty'>
   <%- @asset.thumbnails.select{|tn|tn.thumbdef}.sort_by{|tn|tn.thumbdef.ext}.each do |tn| -%>
     <%- next if tn.thumbdef.proxy and tn.content_type == @asset.content_type -%>
     <tr>
@@ -7,7 +7,7 @@
       <td><%= link_to tn.thumbdef.ext, tn.url %></td>
     </tr>
   <%- end -%>
-</table></div>
+</table>
 <%- if logged_in? and current_user.may?(:admin, @page) -%>
-<p style='text-align:center'><%= link_to 'regenerate thumbnails'[:regenerate], page_url(@page, :action => 'regenerate'), :method => :post %></p>
+<p style='text-align:center'><%= link_to I18n.t(:regenerate), page_url(@page, :action => 'regenerate'), :method => :post %></p>
 <%- end -%>

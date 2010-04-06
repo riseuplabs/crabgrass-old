@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper CommonHelper
   helper PathFinder::Options
   helper Formy
+  helper 'tab_bar'
   permissions 'application'
 
   # TODO: remove these, access via self.view() instead.
@@ -22,13 +23,14 @@ class ApplicationController < ActionController::Base
   include ControllerExtension::UrlIdentifiers
 
   include ControllerExtension::RescueErrors
+  include ControllerExtension::PaginationOptions
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
 
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
-  around_filter :set_language
+  before_filter :set_language
   before_filter :set_timezone, :pre_clean
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
@@ -57,6 +59,7 @@ class ApplicationController < ActionController::Base
   def essential_initialization
     current_site
     @path = parse_filter_path(params[:path])
+    @skip_context = false
   end
 
   def header_hack_for_ie6
@@ -86,23 +89,19 @@ class ApplicationController < ActionController::Base
   # (5) english
   def set_language
     session[:language_code] ||= begin
-      if LANGUAGES.empty?
-        'en_US'
+      if I18n.available_locales.empty?
+        'en'
       elsif !logged_in? || current_user.language.empty?
-        code = request.compatible_language_from(AVAILABLE_LANGUAGE_CODES)
+        code = request.compatible_language_from(I18n.available_locales)
         code ||= current_site.default_language
-        code ||= 'en_US'
-        code.sub('-', '_')
+        code ||= 'en'
+        code.to_s.sub('-', '_').sub(/_\w\w/, '')
       else
-        current_user.language.to_sym
+        current_user.language
       end
     end
 
-    if session[:language_code]
-      Gibberish.use_language(session[:language_code]) { yield }
-    else
-      yield
-    end
+    I18n.locale = session[:language_code].to_sym
   end
 
   # if we have login_required this will be called and check the

@@ -70,7 +70,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :user_observer, :membership_observer,
-    :group_observer, :relationship_observer, :post_observer
+    :group_observer, :relationship_observer, :post_observer, :page_tracking_observer,
+    :request_to_destroy_our_group_observer
 
   # currently, crabgrass stores an excessive amount of information in the session
   # in order to do smart breadcrumbs. These means we cannot use cookie based
@@ -105,6 +106,10 @@ Rails::Initializer.run do |config|
   #config.action_web_service = Rails::OrderedOptions.new
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
+  #config.gem "haml"
+  #config.gem "chriseppstein-compass", :lib => "compass"
+  #config.gem "ericam-compass-susy-plugin", :lib => "susy"
+
 
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
@@ -115,6 +120,8 @@ Rails::Initializer.run do |config|
   # we want handle sass templates ourselves
   # so we must not load the 'plugins/rails.rb' part of Sass
   module Sass
+    # this was commented to get compass working
+    # TODO: check for some problem with this
     RAILS_LOADED = true
   end
 
@@ -160,4 +167,4 @@ ActiveRecord::Base.partial_updates = false
 PAGES = PageClassRegistrar.proxies.dup.freeze
 Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
 
-
+Haml::Template.options[:format] = :html5

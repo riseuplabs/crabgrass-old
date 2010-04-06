@@ -1,0 +1,49 @@
+%section#about-profile
+  - unless profile.notes.empty?
+    - profile.notes.each do |note|
+      %h4
+        = note.note_type ? I18n.t(note.note_type.downcase.to_sym) : I18n.t(:about_me)
+      %p 
+        = h(note.body)
+
+  %ul#details
+    / Member since
+    - if profile.user
+      %li.small_icon.status_online_16 
+        %i 
+          = I18n.t(:profile_member_since)
+        %time 
+          = friendly_date(profile.user.created_at)
+
+    / Phone Numbers 
+    - unless profile.phone_numbers.empty?
+      - profile.phone_numbers.each do |phone_number|
+        %li.small_icon.mobile_16 
+          %i 
+            = "#{ I18n.t(:phone_number) } (#{ h(I18n.t(phone_number.phone_number_type.downcase.to_sym)) })"
+          = h(phone_number.phone_number)
+
+    / Emails
+    - unless profile.email_addresses.empty?
+      - profile.email_addresses.each do |email_address|
+        %li.small_icon.page_message_16 
+          %i 
+            = h(I18n.t(email_address.email_type.downcase.to_sym))
+          = h(email_address.email_address)
+
+    / Messaging
+    - unless profile.im_addresses.empty?
+      - profile.im_addresses.each do |im|
+        %li.small_icon.page_discussion_16
+          %i
+            = "#{I18n.t(:instant_messaging)} #{h(im.im_type)}:"
+          = im.im_address
+
+    / Websites
+    - unless profile.websites.empty?
+      - profile.websites.each do |website|
+        %li.small_icon.mime_html_16
+          %i
+            = "#{I18n.t(:website)}:"
+          %a{:target => "_blank", :href => website.site_url}
+            = h(website.site_title.length > 0 ? website.site_title : website.site_url)

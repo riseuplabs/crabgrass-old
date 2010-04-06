@@ -4,9 +4,9 @@ module LayoutHelper
   ## DISPLAYING BREADCRUMBS and CONTEXT
   ##
 
-  def link_to_breadcrumbs(min_length = 3)
-    if @breadcrumbs and @breadcrumbs.length >= min_length
-      content_tag(:div, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
+  def link_to_breadcrumbs
+    if @breadcrumbs and @breadcrumbs.length >= breadcrumb_min_length
+      content_tag(:section, @breadcrumbs.collect{|b| content_tag(:a, b[0], :href => b[1])}.join(' &raquo; '), :class => 'breadcrumb')
     else
       ""
     end
@@ -14,6 +14,10 @@ module LayoutHelper
 
   def first_breadcrumb
     @breadcrumbs.first.first if @breadcrumbs.any?
+  end
+
+  def breadcrumb_min_length
+    controller?(:search) ? 2 : 3
   end
 
   ##
@@ -34,20 +38,20 @@ module LayoutHelper
 
   # CustomAppearances model allows administrators to override the default css values
   # this method will link to the appropriate overriden css
-  def themed_stylesheet_link_tag(path)
+  def themed_stylesheet_link_tag(path, css_prefix_path=nil)
     appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
 
-    themed_stylesheet_url = appearance.themed_stylesheet_url(path)
+    themed_stylesheet_url = appearance.themed_stylesheet_url(path,css_prefix_path)
     stylesheet_link_tag(themed_stylesheet_url)
   end
 
   # custom stylesheet
   # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
-  def optional_stylesheet_tag
+  def optional_stylesheet_tag(css_prefix_path=nil)
     stylesheet = controller.class.stylesheet || {}
     sheets = [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    sheets.collect {|s| themed_stylesheet_link_tag(s)}
+    sheets.collect {|s| themed_stylesheet_link_tag(s,css_prefix_path)}
   end
 
   # crabgrass_stylesheets()
@@ -62,26 +66,28 @@ module LayoutHelper
   # (5) content_for :style (inline styles set in the views)
   # (6) mod styles (so that mods can insert their own styles after everthing else)
 
-  def crabgrass_stylesheets
+  def crabgrass_stylesheets(css_prefix_path=nil)
     lines = []
 
-    lines << themed_stylesheet_link_tag('screen.css')
+    lines << themed_stylesheet_link_tag('screen.css',css_prefix_path)
     lines << stylesheet_link_tag('icon_png')
-    lines << optional_stylesheet_tag
+    lines << optional_stylesheet_tag(css_prefix_path)
     lines << '<style type="text/css">'
     #lines << context_styles
     lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'
-    lines << stylesheet_link_tag('ie/ie6')
+    #lines << themed_stylesheet_link_tag('ie6')
+    lines << stylesheet_link_tag('ie6')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
-    lines << stylesheet_link_tag('ie/ie7')
+    lines << stylesheet_link_tag('ie7')
+    #lines << themed_stylesheet_link_tag('ie7')
     lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     if language_direction == "rtl"
-      lines << themed_stylesheet_link_tag('rtl')
+      lines << themed_stylesheet_link_tag('rtl',css_prefix_path)
     end
     lines.join("\n")
   end
@@ -110,7 +116,7 @@ module LayoutHelper
   end
 
   def language_direction
-    @language_direction ||= if LANGUAGES[session[:language_code]].try.rtl
+    @language_direction ||= if I18n.language_for_locale(session[:language_code]).try.rtl
       "rtl"
     else
       "ltr"
@@ -187,6 +193,9 @@ module LayoutHelper
     lines << @content_for_script
     lines << localize_modalbox_strings
     lines << '</script>'
+    lines << '<!--[if IE]>'
+    lines << '<script src="/javascripts/ie/html5.js"></script>'
+    lines << '<![endif]-->'
     lines << '<!--[if lt IE 7.]>'
       # make 24-bit pngs work in ie6
       lines << '<script defer type="text/javascript" src="/javascripts/ie/pngfix.js"></script>'
@@ -293,19 +302,74 @@ module LayoutHelper
 
   # build a masthead, using a custom image if available
   def custom_masthead_site_title
-    appearance = current_site.custom_appearance
-    if appearance and appearance.masthead_asset
-      # use an image
-      content_tag :div, :id => 'site_logo_wrapper' do
-        content_tag :a, :href => '/', :alt => current_site.title do
-          image_tag(appearance.masthead_asset.url, :id => 'site_logo')
-        end
-      end
-    else
+ #   appearance = current_site.custom_appearance
+ #   if appearance and appearance.masthead_asset
+ #     # use an image
+ #     content_tag :div, '', :id => 'site_logo_wrapper' do
+ #       content_tag :a, :href => '/', :alt => current_site.title do
+ #         image_tag(appearance.masthead_asset.url, :id => 'site_logo')
+ #       end
+ #     end
+ #   else
       # no image
-      content_tag :h1, current_site.title, :id => 'site_title'
-      # <h1 id='site_title'><%= current_site.title %></h1>
+      content_tag :h2, current_site.title
+      # <h2><%= current_site.title %></h2>
+ #   end
+  end
+
+  def masthead_container
+    locals = {}
+    appearance = current_site.custom_appearance
+    if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
+      height = appearance.masthead_asset.height
+      bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
+      bgcolor = bgcolor+appearance.masthead_background_parameter
+      locals[:section_style] = "height: #{height}px"
+      locals[:style] = "background-image: url(#{appearance.masthead_asset.url}); height: #{height}px;"
+      locals[:render_title] = false
+    else
+      locals[:section_style] = ''
+      locals[:style] = ''
+      locals[:render_title] = true
+    end
+    render :partial => 'layouts/base/masthead', :locals => locals
+  end
+
+  ##
+  ## declare strings used for logins
+  ##
+  def login_context
+    @login_context ||={
+      :strings => {
+        :login           => I18n.t(:login),
+        :username        => I18n.t(:username),
+        :password        => I18n.t(:password),
+        :forgot_password => I18n.t(:forgot_password_link),
+        :create_account  => I18n.t(:signup_link),
+        :redirect        => params[:redirect] || request.request_uri,
+        :token           => form_authenticity_token
+      },
+      :options => {
+        :may_signup => may_signup?
+      }
+    }
+  end
+
+  def banner_partial_for(toplevel_tab)
+    case toplevel_tab
+    when :me then 'me/navigation/banner'
+    when :account then 'me/navigation/banner'
+    when :people then 'people/navigation/banner'
+    else 'groups/navigation/banner'
     end
   end
 
+  def menu_partial_for(toplevel_tab)
+    case toplevel_tab
+    when :me then 'me/navigation/menu'
+    when :account then nil
+    when :people then 'people/navigation/menu'
+    else 'groups/navigation/menu'
+    end
+  end
 end

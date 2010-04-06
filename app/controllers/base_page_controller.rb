@@ -7,11 +7,11 @@ This is the controller that all page controllers are based on.
 class BasePageController < ApplicationController
 
   include BasePageHelper
-  layout :choose_layout
+  layout 'page'
   stylesheet 'page_creation', :action => :create
   javascript 'page'
-  permissions 'base_page', 'posts'
-  helper 'groups', 'autocomplete', 'base_page/share'
+  permissions 'base_page', 'posts', 'groups/memberships'
+  helper 'groups', 'autocomplete', 'base_page/share', 'page_history'
 
   # page_controller subclasses often need to run code at very precise placing
   # in the filter chain. For this reason, there are a number of stub methods
@@ -39,6 +39,7 @@ class BasePageController < ApplicationController
     @user = options[:user]   # the user context, if any
     @group = options[:group] # the group context, if any
     @page = options[:page]   # the page object, if already fetched
+    @second_nav = 'pages'
   end
 
   ##
@@ -73,6 +74,9 @@ class BasePageController < ApplicationController
     end
   end
 
+  def page_history
+  end
+
   protected
 
 
@@ -93,8 +97,8 @@ class BasePageController < ApplicationController
 
   after_filter :save_if_needed, :except => :create
   def save_if_needed
-    @upart.save if @upart and !@upart.new_record? and @upart.changed?
-    @page.save if @page and !@page.new_record? and @page.changed?
+    @upart.save if @upart and !@upart.new_record? and @upart.changed? and !@upart.readonly?
+    @page.save if @page and !@page.new_record? and @page.changed? and !@page.readonly?
     true
   end
 
@@ -183,14 +187,14 @@ class BasePageController < ApplicationController
       @user = current_user
       page_context
 
-      context_name = "Create a new {thing}"[:create_a_new_thing, get_page_type.class_display_name].titleize
+      context_name = I18n.t(:create_a_new_thing, :thing => get_page_type.class_display_name).titleize
       add_context context_name, :controller => params[:controller], :action => 'create', :id => params[:id], :group => params[:group]
     else
       page_context
-      @title_box = '<div id="title" class="page_title shy_parent">%s</div>' % render_to_string(:partial => 'base_page/title/title') if @title_box.nil? && @page
-      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
-        @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
-      end
+      @title_box = 'base_page/title/title' if @title_box.nil? && @page
+#      if !@hide_right_column and (action?(:show,:edit) or @show_right_column)
+ #       @right_column = render_to_string :partial => 'base_page/sidebar' if @right_column.nil?
+ #     end
     end
     true
   end
@@ -207,7 +211,6 @@ class BasePageController < ApplicationController
 
   def build_new_page(page_class)
     params[:page] ||= HashWithIndifferentAccess.new
-    params[:page][:user] = current_user
     params[:page][:share_with] = params[:recipients]
     params[:page][:access] = case params[:access]
       when 'admin' then :admin
@@ -215,14 +218,18 @@ class BasePageController < ApplicationController
       when 'view'  then :view
       else Conf.default_page_access
     end
-    page_class.build!( params[:page].dup )
+    # adding a real object to params makes the debug output
+    # fail. so we only add user to a the local page_params.
+    page_params=params[:page].dup
+    page_params[:user] = current_user
+    page_class.build!( page_params )
   end
 
   # returns a new data object for page initialization
   # tools override this to build their own data objects
   def build_page_data
     # if something goes terribly wrong with the data do this:
-    # @page.errors.add_to_base "something went terrible wrong"[:terrible_wrongness]
+    # @page.errors.add_to_base I18n.t(:terrible_wrongness)
     # raise ActiveRecord::RecordInvalid.new(@page)
 
     # return new data if everything goes well

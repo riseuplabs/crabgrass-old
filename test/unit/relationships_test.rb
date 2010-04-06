@@ -83,30 +83,26 @@ class RelationshipsTest < Test::Unit::TestCase
   def test_relationship_discussion
     a = users(:red)
     b = users(:green)
-    a.add_contact!(b)
 
-    assert_no_difference 'Discussion.count' do
-      a.relationships.with(b)
-    end
-
-    discussion = nil
     assert_difference 'Discussion.count' do
-      discussion = a.relationships.with(b).discussion
+      a.add_contact!(b)
     end
 
-    assert discussion
+    discussion = a.relationships.with(b).discussion
     assert_no_difference 'Discussion.count' do
       assert_equal discussion, b.relationships.with(a).discussion
     end
 
     relationships = discussion.relationships.sort_by {|r|r.id}
+    assert_equal relationships[0], discussion.relationships.for_user(b)
+    assert_equal relationships[1], discussion.relationships.for_user(a)
     assert_equal a, relationships[1].user
     assert_equal b, relationships[1].contact
     assert_equal b, relationships[0].user
     assert_equal a, relationships[0].contact
 
-    assert_equal a, discussion.relationships.contact_of(b)
-    assert_equal b, discussion.relationships.contact_of(a)
+    assert_equal a, discussion.user_talking_to(b)
+    assert_equal b, discussion.user_talking_to(a)
   end
 
   def test_relationship_discussion_auto_create

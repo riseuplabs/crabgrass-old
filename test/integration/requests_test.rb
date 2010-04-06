@@ -21,7 +21,7 @@ class RequestsTest < ActionController::IntegrationTest
     login_url = "http://localhost/account/login?redirect=#{redirect_path_encoded}"
     signup_url = "http://localhost/account/signup?redirect=#{redirect_path_encoded}"
 
-    assert_select ".main_column a" do |elements|
+    assert_select "#main-content-full a" do |elements|
       assert_select elements[0], 'a', "I already have an account"
       assert_equal login_url, elements[0]['href']
       assert_select elements[1], 'a', "I need to register a new account"
@@ -43,7 +43,7 @@ class RequestsTest < ActionController::IntegrationTest
 
     assert redirect?
     follow_redirect!
-    assert_equal "/me/dashboard", path
+    assert_equal "/pages/my_work", path
   end
 
   def test_redeem_login
@@ -61,7 +61,7 @@ class RequestsTest < ActionController::IntegrationTest
     end
     assert redirect?
     follow_redirect!
-    assert_equal "/me/dashboard", path
+    assert_equal "/pages/my_work", path
   end
 
 end

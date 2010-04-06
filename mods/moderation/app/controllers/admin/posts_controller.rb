@@ -10,18 +10,8 @@ class Admin::PostsController < Admin::BaseController
     if view == 'all'
       @flagged = Post.paginate({ :order => 'updated_at DESC', :page => params[:page]})
     else
-      if view == 'new'
-        # all posts that have been flagged as inappropriate have not had any admin action yet.
-        options = { :conditions => ['vetted_at IS NULL and deleted_at IS NULL'], :order => 'updated_at DESC' }
-      elsif view == 'vetted'
-        # all posts that have been marked as vetted by an admin (and are not deleted)
-        options = { :conditions => ['vetted_at IS NOT NULL AND deleted_at IS NULL'], :order => 'updated_at DESC' }
-      elsif view == 'deleted'
-        # list the pages that are 'deleted' by being hidden from view.
-        options = { :conditions => ['deleted_at IS NOT NULL'], :order => 'updated_at DESC' }
-      end
       # defined by subclasses
-      fetch_posts(options)
+      fetch_posts(view)
     end
   end
 
@@ -36,24 +26,19 @@ class Admin::PostsController < Admin::BaseController
 
   # Approves a post by marking :vetted = true
   def approve
-    ModeratedPost.update_all('vetted_at=now()',"foreign_id=#{params[:id]}")
-    Post.find(params[:id]).update_attribute(:vetted, true)
-    # get rid of all yucky associated with the post
-    #post.ratings.destroy_all
+    @flag.approve
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # We use delete to hide a post.
   def trash
-    Post.find(params[:id]).delete
-    ModeratedPost.update_all("deleted_at=now()","foreign_id=#{params[:id]}")
+    @flag.trash
     redirect_to :action => 'index', :view => params[:view]
   end
 
   # Undelete a hidden post in order to show it.
   def undelete
-    Post.find(params[:id]).undelete
-    ModeratedPost.update_all("deleted_at=NULL","foreign_id=#{params[:id]}")
+    @flag.undelete
     redirect_to :action => 'index', :view => params[:view]
   end
 
@@ -62,7 +47,21 @@ class Admin::PostsController < Admin::BaseController
   end
 
   def authorized?
-    may_moderate?
+    if action?(:index)
+      may_see_moderation_panel?
+    else
+      may_moderate?
+    end
   end
+
+  private
+  prepend_before_filter :fetch_flagged
+  def fetch_flagged
+    return unless params[:id]
+    @post = Post.find params[:id]
+    @flag = @post.moderated_flags.first
+  end
+
+
 end
 

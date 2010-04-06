@@ -1,0 +1,13 @@
+%div#user
+  - if logged_in?
+    = link_to(I18n.t(:profile), '/'+current_user.login)
+    = '&bull;'
+    = link_to_active(I18n.t(:menu_link_account), {:controller => '/me', :action => 'edit'}, @active_tab == :account)
+    = '&bull;'
+    = link_to(I18n.t(:menu_link_logout), :controller => '/account', :action => 'logout')
+
+    = call_hook :top_right_links
+
+  - elsif !@login_form_already_rendered
+    = link_to_function( I18n.t(:login), "loginDialog(#{login_context[:strings].to_json}, #{login_context[:options].to_json})")
+

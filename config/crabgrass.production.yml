@@ -12,7 +12,6 @@
 ##
 ## GLOBAL
 ##
-
 enabled_languages:
   - en_US
   - es_ES
@@ -20,6 +19,8 @@ enabled_languages:
   - ar_EG
   - tr_TR
 enabled_mods:
+  - super_admin
+  - moderation
 enabled_tools:
   - asset_tool
   - core_tools

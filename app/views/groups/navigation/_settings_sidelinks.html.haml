@@ -1,0 +1,9 @@
+%ul#nav4
+  = menu I18n.t(:basic_settings), edit_group_path(@parent || @group)
+  = menu I18n.t(:permissions), groups_profiles_url(:action => :permissions)
+  = menu I18n.t(:public_profile), groups_profiles_url(:action => :edit)
+  = menu I18n.t(:featured_pages), groups_features_url(:action => :index)
+  - if may_edit_menu?
+    = menu I18n.t(:menu_items), groups_menu_items_url(:action => :index)
+  = li_if destroy_group_link(@parent || @group)
+  = create_committee_link(@fourth_nav)

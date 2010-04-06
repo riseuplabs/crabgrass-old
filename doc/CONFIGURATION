@@ -97,6 +97,9 @@ text_editor
 
   The default is greencloth_only
 
+use_full_geonames_data
+  If true, the full geonames data file (~800MB unzipped) will be downloaded and imported.
+
 === Sites
 
 Crabgrass can host multiple social networks on one installation, each with their own domain. Each social network is called a 'site', and they are enabled and disabled using the <tt>crabgrass.*.yml</tt> file. The actual data for the site is stored in the database, and can be configured through the admin web interface.

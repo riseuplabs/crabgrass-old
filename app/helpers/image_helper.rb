@@ -32,11 +32,11 @@ module ImageHelper
 
   ## creates an img tag based avatar
   def avatar_for(viewable, size='medium', options={})
-    return nil if viewable.new_record?
+    return nil if viewable.blank? || viewable.new_record?
     image_tag(
       avatar_url_for(viewable, size),
-      :alt => 'avatar', :size => Avatar.pixels(size),
-      :class => (options[:class] || "avatar avatar_#{size}")
+      {:size => Avatar.pixels(size),
+      :class => (options[:class] || "avatar avatar_#{size}")}.merge(options)
     )
   end
 
@@ -267,8 +267,30 @@ module ImageHelper
     klass   = options[:class] || 'thumbnail'
     url     = options[:url] || asset.url
     method  = options[:method] || 'get'
+    span = content_tag(:span, asset.filename)
+    link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+  end
+
+  # links to an asset with a thumbnail preview
+  def old_link_to_asset(asset, thumbnail_name, options={})
+    thumbnail = asset.thumbnail(thumbnail_name)
+    img = thumbnail_img_tag(asset, thumbnail_name,options)
+    if size = (options[:crop]||options[:scale]||options[:crop!])
+      target_width, target_height = size.split(/x/).map(&:to_f)
+    elsif thumbnail and thumbnail.width and thumbnail.height
+      target_width = thumbnail.width
+      target_height = thumbnail.height
+    else
+      target_width = 32;
+      target_height = 32;
+    end
+    style   = "height:#{target_height}px;width:#{target_width}px"
+    klass   = options[:class] || 'thumbnail'
+    url     = options[:url] || asset.url
+    method  = options[:method] || 'get'
     link_to img, url, :class => klass, :title => asset.filename, :style => style, :method => method
   end
+
 
   def thumbnail_or_icon(asset, thumbnail, width=nil, height=nil, html_options={})
     if thumbnail

@@ -1,0 +1,113 @@
+= Ya2YAML - An UTF8 safe YAML dumper
+
+Project Contact: Akira FUNAI <mailto:funai.akira@gmail.com>
+
+Ya2YAML is "yet another to_yaml". It emits YAML document with complete UTF8 support (string/binary detection, "\u" escape sequences and Unicode specific line breaks). I hope someone might find it useful until Syck/RbYAML come out with UTF8/16 support.
+
+== Usage
+
+*code*:
+
+  $KCODE = 'UTF8'
+  require 'ya2yaml'
+  
+  obj = [
+    "abc\nxyz\n",
+    "日本語\n文字列\n",
+    "\xfd\xfe\xff",
+  ]
+  puts obj.ya2yaml(:syck_compatible => true)
+
+*output*:
+
+  --- 
+  - |
+      abc
+      xyz
+  - |
+      日本語
+      文字列
+  - !binary |
+      /f7/
+
+== Method and Objects
+
+When you require 'ya2yaml', public method 'Object#ya2yaml' is defined. Currently these Objects are supported.
+
+as YAML generic types:
+  - Array
+  - Hash
+  - NilClass
+  - String
+  - TrueClass
+  - FalseClass
+  - Fixnum
+  - Bignum
+  - Float
+  - Date
+  - Time
+
+as Ruby specific types:
+  - Symbol
+  - Range
+  - Regexp
+  - Struct
+  - everything else as a generic Object (serializes instance variables)
+
+A String which contains any non-UTF8 character will be regarded as "binary" and encoded in BASE64.
+
+== Options
+
+  # set them individually
+  obj.ya2yaml(
+    :indent_size          => 4,
+    :hash_order           => ['name','age','address'],
+    :minimum_block_length => 16,
+    :printable_with_syck  => true,
+    :escape_b_specific    => true,
+    :escape_as_utf8       => true
+  )
+
+  # or simply set this for a safe roundtrip with Syck.
+  obj.ya2yaml(:syck_compatible => true)
+
+**CAUTION** Some of these options are to avoid compatibility issue with Syck. When you set these options to false, the emitted YAML document might not be loadable with YAML.load() although the syntax is valid.
+
+- :indent_size
+  - default: 2
+  - Number of indentation spaces for a level.
+
+- :hash_order
+  - default: nil
+  - Array of hash keys indicating sort order (this option only works on a top-level hash).
+
+- :minimum_block_length
+  - default: 0
+  - Minimum length of a string emitted in block scalar style. If a string is shorter than this value, it will be emitted in one line.
+
+- :printable_with_syck
+  - default: false
+  - When set to true, Ya2YAML will regard some kind of strings (which cause Syck roundtrip failures) as "non-printable" and double-quote them.
+
+- :escape_b_specific
+  - default: false
+  - When set to true, Ya2YAML will regard Unicode specific line breaks (LS and PS) as "non-printable" and escape them.
+
+- :escape_as_utf8
+  - default: false
+  - When set to true, Ya2YAML uses Ruby-like escape sequences in UTF8 code instead of "\uXXXX" style in UCS code. It also suppresses use of "\L" and "\P" (escape sequences for LS and PS).
+
+- :syck_compatible
+  - default: false
+  - When set to true, These options are set to true at once. You have to set this to false when you set them individually.
+    - :printable_with_syck
+    - :escape_b_specific
+    - :escape_as_utf8
+
+== More information
+
+Visit http://rubyforge.org/projects/ya2yaml
+
+== License
+
+Ya2YAML is distributed with a MIT license, which can be found in the file LICENSE.

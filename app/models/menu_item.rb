@@ -4,11 +4,11 @@ class MenuItem < ActiveRecord::Base
   acts_as_list :scope => :group
 
   TYPES={
-    'external link'[:external_link_menu_item]=>:external,
-    'local link'[:local_link_menu_item]=>:local,
-    'page'[:page_menu_item]=>:page,
-    'tag'[:tag_menu_item]=>:tag,
-    'search'[:search_menu_item]=>:search
+    I18n.t(:external_link_menu_item)=>:external,
+    I18n.t(:local_link_menu_item)=>:local,
+    I18n.t(:page_menu_item)=>:page,
+    I18n.t(:tag_menu_item)=>:tag,
+    I18n.t(:search_menu_item)=>:search
   }
 
 end

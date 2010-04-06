@@ -1,11 +1,11 @@
 <% @title_box = capture do -%>
-  <h1><%= "Approve contact request".t %></h1>
+  <h1><%= I18n.t(:approve_contact_request) %></h1>
 <% end -%>
 
 <blockquote>
-  <p><%= :approve_contact_info.t %></p>
+  <p><%= I18n.t(:approve_contact_info) %></p>
   <%- form_tag(:controller => '/requests', :action => 'approve', :id => @past_request) do -%>
-    <%= submit_tag 'Approve contact request'.t, :name => 'approve' %>
+    <%= submit_tag I18n.t(:approve_contact_request), :name => 'approve' %>
   <% end -%>
 </blockquote>
 

@@ -1,36 +1,34 @@
 <ul class='side_list commands'>
-  <%= side_list_li :text => 'Home'[:menu_home], :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
+  <%= side_list_li :text => I18n.t(:menu_home), :url => ('/'+@group.name), :active => (params[:_context]==@group.name), :icon => 'house' %>
 
   <% if @group_navigation %>
     <ul>
-      <%= side_list_li :text => "Membership"[:membership], :url => {:controller => 'groups/memberships', :action => 'list', :id => @group}, :active => (@group_navigation == :membership), :icon => 'membership_add' %>
-      <%= side_list_li :text => "Settings"[:settings], :url => groups_url(:action => 'edit', :id => @group), :active => (@group_navigation == :settings), :icon => 'settings' %>
-      <%= side_list_li :text => "Requests"[:requests], :url => {:controller => 'groups/requests', :action => :list, :id => @group}, :active => (@group_navigation == :requests), :icon => 'info' %>
+      <%= side_list_li :text => I18n.t(:membership), :url => {:controller => 'groups/memberships', :action => 'list', :id => @group}, :active => (@group_navigation == :membership), :icon => 'membership_add' %>
+      <%= side_list_li :text => I18n.t(:settings), :url => groups_url(:action => 'edit', :id => @group), :active => (@group_navigation == :settings), :icon => 'settings' %>
+      <%= side_list_li :text => I18n.t(:requests), :url => {:controller => 'groups/requests', :action => :list, :id => @group}, :active => (@group_navigation == :requests), :icon => 'info' %>
     </ul>
   <% end %>
 
-  <%# side_list_li :text => 'about'.t, :url => url_for_group(@group,:action => 'about'), :active => ..., :icon => 'info' %>
+  <%= side_list_li :text => I18n.t(:search), :url => group_search_url, :icon => 'magnifier' %>
 
-  <%= side_list_li :text => 'Search'[:search], :url => group_search_url, :icon => 'magnifier' %>
+  <%= side_list_li :text => I18n.t(:archive), :url => group_search_url(:action => 'archive'), :icon => 'book_open' %>
 
-  <%= side_list_li :text => 'Archive'[:archive], :url => group_search_url(:action => 'archive'), :icon => 'book_open' %>
+  <%= side_list_li :text => I18n.t(:tags), :url => group_search_url(:action => 'tags'), :icon => 'tag' %>
 
-  <%= side_list_li :text => 'Tags'[:tags], :url => group_search_url(:action => 'tags'), :icon => 'tag' %>
+  <%= side_list_li :text => I18n.t(:tasks), :url => group_search_url(:action => 'tasks'), :icon => 'page_tasks' %>
 
-  <%= side_list_li :text => 'Tasks'[:tasks], :url => group_search_url(:action => 'tasks'), :icon => 'page_tasks' %>
-
-  <%= side_list_li :text => 'Discussions'[:discussions], :url => group_search_url(:action => 'discussions'), :icon => 'page_discussion' %>
+  <%= side_list_li :text => I18n.t(:discussions), :url => group_search_url(:action => 'discussions'), :icon => 'page_discussion' %>
 
   <%- if may_contributions_group? %>
-    <%= side_list_li :text => 'Contributions'[:contributions], :url => group_search_url(:action => 'contributions'), :icon => 'group_contributions' %>
+    <%= side_list_li :text => I18n.t(:contributions), :url => group_search_url(:action => 'contributions'), :icon => 'group_contributions' %>
   <%- end -%>
 
   <%- if may_trash_group? %>
-    <%= side_list_li :text => 'Trash'[:trash], :url => group_search_url(:action => 'trash'), :icon => 'trash' %>
+    <%= side_list_li :text => I18n.t(:trash), :url => group_search_url(:action => 'trash'), :icon => 'trash' %>
   <%- end -%>
 
   <%- if may_join_chat?-%>
-    <%= side_list_li :text => 'Join Chat'[:group_join_chat], :url => {:controller => 'chat', :action => 'channel', :id => @group.name}, :icon => 'chat' %>
+    <%= side_list_li :text => I18n.t(:group_join_chat), :url => {:controller => 'chat', :action => 'channel', :id => @group.name}, :icon => 'chat' %>
   <%- end -%>
 
 </ul>

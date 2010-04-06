@@ -6,11 +6,11 @@
 	</td>
 	<td>
 		<input id="profile_websites_<%= index %>_site_title" size="40" value="<%= website.site_title %>" type="text" maxlength="100" name="profile[websites][<%= index %>][site_title]" class="textInput" style="width:90px;"  />
-		<div class="input_label"><%= _('site name') -%></div>
+		<div class="input_label"><%= I18n.t(:site_name) -%></div>
 	</td>
 	<td>
 		<input id="profile_websites_<%= index %>_site_url" size="40" value="<%=h website.site_url %>" type="text" maxlength="100" name="profile[websites][<%= index %>][site_url]" class="textInput" style="width:180px;"  />
-		<div class="input_label"><%= _('url') -%></div>
+		<div class="input_label"><%= I18n.t(:url) -%></div>
 	</td>
 	<td>
 	  <%= remove_link dom_id %>

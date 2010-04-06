@@ -1,0 +1,33 @@
+!!!
+%html{:dir=>language_direction}
+  = render :partial => '/layouts/base/head'
+  %body{:class=>language_direction}
+    #page
+      / .space
+      %header.page
+        =render :partial => '/layouts/base/header'
+      / .space
+
+      %section#flash_messages
+        = render :partial => 'layouts/messages'
+
+      - if !link_to_breadcrumbs.blank?
+        %section#breadcrumb
+          = render :partial => '/layouts/base/breadcrumb'
+      /
+      / extended sidebar for landing pages 
+      /
+      - unless yield :extended_sidebar
+        /
+        / full content width pages 
+        /
+        = render :partial => '/layouts/base/full_width_content'
+
+      - else
+        = render :partial => '/layouts/base/content_with_extended_sidebar'
+
+
+      = render :partial => 'layouts/base/footer'
+
+      / .space
+

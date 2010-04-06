@@ -37,9 +37,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
   def test_only_superadmins
     login_as :red
     post_create_form
-    assert_response :redirect
-    assert_redirected_to({:controller => :account, :action => :login},
-      'Non superadmin may not create users.')
+    assert_template 'common/permission_denied'
   end
 
   protected

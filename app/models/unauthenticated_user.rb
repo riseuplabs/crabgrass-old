@@ -1,6 +1,6 @@
 class UnauthenticatedUser
   def login
-   'anonymous'.t
+   I18n.t(:anonymous)
   end
   alias :name :login
   alias :display_name :login
@@ -15,6 +15,10 @@ class UnauthenticatedUser
     else
       false
     end
+  end
+
+  def current_status
+    ""
   end
 
   def member_of?(group)

@@ -25,6 +25,11 @@ module GroupExtension::Users
       named_scope :most_visits, {:order => 'count(memberships.total_visits) DESC', :group => 'groups.id', :joins => :memberships}
 
       named_scope :recent_visits, {:order => 'memberships.visited_at DESC', :group => 'groups.id', :joins => :memberships}
+
+      named_scope :with_admin, lambda { |user|
+        {:conditions => ["groups.id IN (?)", user.admin_for_group_ids]}
+      }
+
     end
   end
 
@@ -47,14 +52,18 @@ module GroupExtension::Users
   def relationships_to(user)
     return [:stranger] unless user
     return [:stranger] if user.is_a? UnauthenticatedUser
-    (@relationships ||= {})[user.login] ||= get_relationships_to(user)
+
+    @relationships_to_user_cache ||= {}
+    @relationships_to_user_cache[user.login] ||= get_relationships_to(user)
+    @relationships_to_user_cache[user.login].dup
   end
+
   def get_relationships_to(user)
     ret = []
 #   ret << :admin    if ...
     ret << :member   if user.member_of?(self)
 #   ret << :peer     if ...
-    ret << :stranger if ret.empty?
+    ret << :stranger
     ret
   end
 

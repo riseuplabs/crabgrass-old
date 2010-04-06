@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupTest < Test::Unit::TestCase
-  fixtures :groups, :users, :profiles, :memberships
+  fixtures :groups, :users, :profiles, :memberships, :sites
 
   def test_memberships
     g = Group.create :name => 'fruits'
@@ -60,6 +60,19 @@ class GroupTest < Test::Unit::TestCase
 
     assert g.may_be_pestered_by?(u) == true, 'should be able to be pestered by user'
     assert u.may_pester?(g) == true, 'should be able to pester private group'
+  end
+
+  def test_site_disabling_public_profiles_doesnt_affect_groups
+    with_site(:local, :profiles => ["private"]) do
+      u = users(:red)
+      g = groups(:animals)
+
+      g.profiles.public.update_attributes!(:may_request_membership => true)
+
+      assert g.profiles.visible_by(u).public?
+      assert g.profiles.visible_by(u).may_request_membership?
+
+    end
   end
 
   def test_association_callbacks
@@ -148,15 +161,16 @@ class GroupTest < Test::Unit::TestCase
     assert_equal page.owner, g
 
     assert_difference 'Membership.count', -2 do
-      g.destroy
+      g.destroy_by(users(:blue))
     end
 
     assert_nil page.reload.owner_id
 
     red = users(:red)
-    assert_nil GroupLostUserActivity.for_dashboard(red).find(:first), "there should be no user left group message"
+    assert_nil GroupLostUserActivity.social_activities_for_groups_and_friends(red).find(:first),
+      "there should be no user left group message"
 
-    destroyed_act = GroupDestroyedActivity.for_dashboard(red).unique.find(:first)
+    destroyed_act = GroupDestroyedActivity.social_activities_for_groups_and_friends(red).unique.find(:first)
     assert destroyed_act, "there should exist a group destroyed activity message"
 
     assert_equal g.name, destroyed_act.groupname, "the activity should have the correct group name"
@@ -193,7 +207,7 @@ class GroupTest < Test::Unit::TestCase
     #assert_equal 19987, group.avatar.image_file_data.size
 
     assert_difference 'Avatar.count', -1 do
-      group.destroy
+      group.destroy_by(users(:red))
     end
 
   end

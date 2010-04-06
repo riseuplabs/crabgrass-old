@@ -5,7 +5,8 @@ module Mailers::Verification
     setup(options)
 
     recipients @current_user.email
-    subject 'Welcome to {site_title}!'[:welcome_to_site_tile, {:site_title => @site.title}]
+    subject I18n.t(:welcome_title, :site_title => @site.title)
+
     body({:site_title => @site.title,
             :link => account_verify_url(:token => token.value),
             :host => @host})

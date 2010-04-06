@@ -9,7 +9,7 @@ class ActivityTest < ActiveSupport::TestCase
 
     u1.add_contact!(u2, :friend)
 
-    act = FriendActivity.for_dashboard(u1).find(:first)
+    act = FriendActivity.social_activities_for_groups_and_friends(u1).find(:first)
     assert act, 'there should be a friend activity created'
     assert_equal u1, act.user
     assert_equal u2, act.other_user
@@ -23,7 +23,7 @@ class ActivityTest < ActiveSupport::TestCase
     username = u2.name
     u2.destroy
 
-    act = UserDestroyedActivity.for_dashboard(u1).find(:first)
+    act = UserDestroyedActivity.social_activities_for_groups_and_friends(u1).find(:first)
     assert act, 'there should be a user destroyed activity created'
     assert_equal username, act.username
   end
@@ -34,9 +34,9 @@ class ActivityTest < ActiveSupport::TestCase
 
     assert user.member_of?(group)
     groupname = group.name
-    group.destroy
+    group.destroy_by(user)
 
-    acts = Activity.for_dashboard(user).find(:all)
+    acts = Activity.social_activities_for_groups_and_friends(user).find(:all)
     act = acts.detect{|a|a.class == GroupDestroyedActivity}
     assert_equal groupname, act.groupname
     assert_in_description(act, group)
@@ -68,11 +68,11 @@ class ActivityTest < ActiveSupport::TestCase
 
     enable_site_testing(:unlimited)
     group.add_user!(user)
-    act = GroupGainedUserActivity.for_dashboard(notified_user).last
+    act = GroupGainedUserActivity.social_activities_for_groups_and_friends(notified_user).last
     assert_equal group.id, act.group.id, 'the notified user should get this activity'
 
     enable_site_testing(:limited)
-    act = GroupGainedUserActivity.for_dashboard(notified_user).last
+    act = GroupGainedUserActivity.social_activities_for_groups_and_friends(notified_user).last
     assert_equal nil, act, 'not visible from another site'
 
     disable_site_testing
@@ -89,9 +89,9 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.add_user!(user)
 
-    assert_nil UserJoinedGroupActivity.for_dashboard(notified_user).find_by_subject_id(user.id), 'the notified user does not get this kind of activity message'
+    assert_nil UserJoinedGroupActivity.social_activities_for_groups_and_friends(notified_user).find_by_subject_id(user.id), 'the notified user does not get this kind of activity message'
 
-    act = GroupGainedUserActivity.for_dashboard(notified_user).last
+    act = GroupGainedUserActivity.social_activities_for_groups_and_friends(notified_user).last
     assert_equal group.id, act.group.id, 'the notified user should get this activity'
 
     act = GroupGainedUserActivity.for_group(group, notified_user).last
@@ -99,7 +99,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal group.id, act.group.id
 
     # users own activity should always show up:
-    act = UserJoinedGroupActivity.for_dashboard(user).last
+    act = UserJoinedGroupActivity.social_activities_for_groups_and_friends(user).last
     assert_equal group.id, act.group.id
 
     ##
@@ -108,13 +108,13 @@ class ActivityTest < ActiveSupport::TestCase
 
     group.remove_user!(user)
 
-    act = GroupLostUserActivity.for_dashboard(notified_user).last
+    act = GroupLostUserActivity.social_activities_for_groups_and_friends(notified_user).last
     assert_activity_for_user_group(act, user, group)
 
     act = GroupLostUserActivity.for_group(group, notified_user).last
     assert_activity_for_user_group(act, user, group)
 
-    act = UserLeftGroupActivity.for_dashboard(user).last
+    act = UserLeftGroupActivity.social_activities_for_groups_and_friends(user).last
     assert_activity_for_user_group(act, user, group)
   end
 
@@ -123,7 +123,7 @@ class ActivityTest < ActiveSupport::TestCase
     u2 = users(:iguana)
 
     u1.add_contact!(u2, :friend)
-    act = FriendActivity.for_dashboard(u1).find(:first)
+    act = FriendActivity.social_activities_for_groups_and_friends(u1).find(:first)
     u2.destroy
 
     assert act, 'there should be a friend activity created'
@@ -132,19 +132,34 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal '<span class="user">iguana</span>', act.user_span(:other_user)
   end
 
+  def test_avatar
+    group = groups(:rainbow)
+    u1 = users(:kangaroo)
+    u2 = users(:iguana)
+
+    u1.add_contact!(u2, :friend)
+    u1.send_message_to!(u2, "hi u2")
+    group.add_user!(u1)
+
+    friend_act = FriendActivity.find_by_subject_id(u1.id)
+    user_joined_act = UserJoinedGroupActivity.find_by_subject_id(u1.id)
+    group_gained_act = GroupGainedUserActivity.find_by_subject_id(group.id)
+    post_act = PrivatePostActivity.find_by_subject_id(u2.id)
+    # we do not create PrivatePostActivities anymore
+    assert_nil post_act
+
+
+    # the person doing the thing should be the avatar for it
+    # disregarding whatever is the subject (in the gramatical/language sense) of the activity
+    assert_equal u1, friend_act.avatar
+    assert_equal u1, user_joined_act.avatar
+    assert_equal u1, group_gained_act.avatar
+    #assert_equal u1, post_act.avatar
+  end
+
   def test_associations
     assert check_associations(Activity)
   end
-
-#  def test_message_page
-#    u1 = users(:kangaroo)
-#    u2 = users(:iguana)
-#    @page = Page.make :private_message, :to => [u2], :from => u1, :title => "testing message_page activity", :body => "test message body"
-#    act = MessagePageActivity.for_dashboard(u2).find(:first)
-#    assert_equal u2, act.user
-#    assert_equal u1, act.other_user
-#    assert_equal @page.id, act.message_id
-#  end
 
   def assert_activity_for_user_group(act, user, group)
     assert_equal group.id, act.group.id

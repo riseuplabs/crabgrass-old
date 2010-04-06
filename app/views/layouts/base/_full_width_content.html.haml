@@ -1,0 +1,57 @@
+/
+/ full content width
+/
+
+- if yield :banner
+  %div.banner
+    #banner-container
+      %header#banner
+        = yield :banner
+  %div.nav2
+    #nav2-container
+      - if yield :secondary_nav
+        %nav#second-level
+          = yield :secondary_nav
+
+/
+/ third nav (not always required)
+/
+- if yield :third_nav
+  #third-level-container
+    %nav#third-level
+      = yield :third_nav
+        
+#content
+  #content-container
+    #content-wrap
+      /
+      / misc placeholder
+      /
+      - if yield :misc_header
+        = yield :misc_header
+  
+  
+      - if yield :browse_content
+        %section#browse-content
+          = yield :browse_content
+
+      - if yield :right_sidebar
+
+        %div#alpha10
+          #main-content
+            = yield
+        %aside#sidebar
+          = yield :right_sidebar
+
+      - elsif yield :left_sidebar
+
+        %aside#sidebar.left
+          = yield :left_sidebar
+        #main-content-right
+          = yield
+
+      - else
+
+        #main-content-full
+          = yield
+

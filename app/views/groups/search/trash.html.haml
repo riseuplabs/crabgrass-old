@@ -1,0 +1,19 @@
+- content_for(:html_head) do
+  = group_search_rss
+
+- content_for :third_nav do
+  = render :partial => 'groups/navigation/group_pages_tabs'
+
+%h3
+  = I18n.t(:trash)
+
+%p
+  //= I18n.t(:trash_description, :undelete => content_tag(:b, I18n.t(:undelete_from_trash)), :destroy => content_tag(:b, I18n.t(:destroy_page_via_shred)))
+
+- form_tag({:controller => 'groups', :action => 'update_trash', :path => params[:path], :id => @group}, {:id => 'trash_form'}) do
+
+  %p
+    =# link_line toggle_selection_link, undelete_from_trash_link, destroy_page_link
+
+  = list_pages :with_owner => false, :full_width => true#, :checkable => true
+

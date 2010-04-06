@@ -7,11 +7,13 @@ class GroupsController < Groups::BaseController
   javascript :wiki, :only => :show
   stylesheet :wiki_edit
 
-  helper 'groups', 'wiki'
+  helper 'groups', 'wiki', 'base_page'
+  helper 'groups/search'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
-  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search]
-  verify :method => :post, :only => [:create, :update, :destroy]
+  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
+  verify :method => [:post, :put], :only => [:create, :update]
+  verify :method => :delete, :only => :destroy
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
@@ -33,15 +35,30 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    @pages = Page.find_by_path(search_path, options_for_group(@group))
-    @announcements = Page.find_by_path('limit/3/descending/created_at', options_for_group(@group, :flow => :announcement))
-    @profile = @group.profiles.send(@access)
+    group_landing_instance_vars()
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
+    #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @wiki = private_or_public_wiki()
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+    render :layout => 'header_for_sidebar'
+  end
+
+  def people
+    group_landing_instance_vars()
+    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
+    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    render :layout => 'header_for_sidebar'
+  end
+
+  def list_groups
+    group_landing_instance_vars()
+    @federatings = @group.federatings.alphabetized_by_group
+    render :layout => 'header_for_sidebar' 
   end
 
   def new
     @group = Group.new
+    render :layout => 'directory'
   end
 
   def create
@@ -55,7 +72,7 @@ class GroupsController < Groups::BaseController
   end
 
   def edit
-    update if request.post?
+    active_admin_tabs
   end
 
   def update
@@ -66,19 +83,30 @@ class GroupsController < Groups::BaseController
       @group.reload if @group.name.empty?
       flash_message_now :object => @group
     end
+    active_admin_tabs
+    render :template => 'groups/edit'
   end
 
   def destroy
-    @group.destroyed_by = current_user  # needed for the activity
-    @group.destroy
+    @group.destroy_by(current_user)
+
     if @group.parent
       redirect_to url_for_group(@group.parent)
     else
       redirect_to me_url
     end
+
+    flash_message :success => true, :title => I18n.t(:group_destroyed_message, :group_type => @group.group_type)
   end
 
   protected
+
+  def group_landing_instance_vars
+    @profile = @group.profiles.send(@access)
+    @featured_pages = Page.find_by_path([ 'featured_by', @group.id], options_for_group(@group).merge(:flow => [nil]))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?)).count
+    @second_nav = 'home'
+  end
 
   def fetch_group
     @group = Group.find_by_name params[:id] if params[:id]
@@ -92,10 +120,11 @@ class GroupsController < Groups::BaseController
       end
     end
     if @group
+      Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
       return true
     else
       no_context
-      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401))
+      render(:template => 'dispatch/not_found', :status => (logged_in? ? 404 : 401), :layout => 'base')
       return false
     end
   end
@@ -107,7 +136,7 @@ class GroupsController < Groups::BaseController
       group_context
     else
       super
-      if !action?(:show)
+      if !action?(:show, :people, :list_groups)
         add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
       end
     end
@@ -138,7 +167,7 @@ class GroupsController < Groups::BaseController
   def search_template(template)
     if rss_request?
       handle_rss(
-        :title => "%s :: %s :: %s" % [@group.display_name, params[:action].t, @path.title],
+        :title => "%s :: %s :: %s" % [@group.display_name, I18n.t(params[:action].to_sym), @path.title],
         :description => @group.profiles.public.summary,
         :link => url_for_group(@group),
         :image => avatar_url_for(@group, 'xlarge')
@@ -146,6 +175,11 @@ class GroupsController < Groups::BaseController
     else
       render(:template => 'groups/search/%s' % template)
     end
+  end
+
+  def active_admin_tabs
+    @second_nav = 'administration'
+    @third_nav = 'settings'
   end
 
   #def provide_rss

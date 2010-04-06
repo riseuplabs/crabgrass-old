@@ -17,7 +17,7 @@
   :url => {:controller => 'participation', :action => 'show', :page_id => @page.id},
   :loading => show_spinner('popup')) do -%>
    <%= spinner 'popup' %>
-   <%= submit_tag "Close"[:close_button], :name => 'cancel' %>
+   <%= submit_tag I18n.t(:close_button), :name => 'cancel' %>
   <% end -%>
 </div>
 

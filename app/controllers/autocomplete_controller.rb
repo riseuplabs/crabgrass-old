@@ -31,11 +31,9 @@ class AutocompleteController < ApplicationController
         :limit => 20)
       recipients = recipients.sort_by{|r|r.name}[0..19]
     end
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
+
+
+    render_entities_to_json(recipients)
   end
 
   def people
@@ -47,14 +45,56 @@ class AutocompleteController < ApplicationController
         :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
         :limit => 20)
     end
-    render :json => {
-      :query => params[:query],
-      :suggestions => recipients.collect{|entity|display_on_two_lines(entity)},
-      :data => recipients.collect{|r|r.avatar_id||0}
-    }
+
+    render_entities_to_json(recipients)
+  end
+
+  def friends
+    if params[:query] == ""
+      friends = User.friends_of(current_user)
+    else
+      # already preloaded
+      friends = []
+    end
+
+    render_entities_to_json(friends)
+  end
+
+  # recipients for direct messages from current user
+  def recipients
+    if params[:query] == ""
+      recipients = User.friends_of(current_user)
+      recipients +=  current_user.peers
+    else
+      # already preloaded
+      recipients = []
+    end
+
+    render_entities_to_json(recipients)
+  end
+
+
+  # senders of direct messages to current user
+  def senders
+    if params[:query] == ""
+      senders = current_user.discussions.with_some_posts.collect {|discussion| discussion.user_talking_to(current_user)}
+    else
+      # already preloaded
+      senders = []
+    end
+
+    render_entities_to_json(senders)
   end
 
   private
+
+  def render_entities_to_json(entities)
+    render :json => {
+      :query => params[:query],
+      :suggestions => entities.collect{|entity|display_on_two_lines(entity)},
+      :data => entities.collect{|e|e.avatar_id||0}
+    }
+  end
 
   # this should be in a helper somewhere, but i don't know how to generate
   # json response in the view.

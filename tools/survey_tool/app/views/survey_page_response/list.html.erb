@@ -1,6 +1,6 @@
 <%= render :partial => 'survey_page/tabs' %>
 
-<%= pagination_links @responses, :params => {:action => 'list'} %>
+<%= pagination_links @responses, :params => {:action => 'response-list'} %>
 
 <table id='survey_answers' class='pretty'>
   <tr>
@@ -27,8 +27,8 @@
       <td>
         <%- if may_view_survey_question?(resp, question) -%>
           <% answer = resp.answers.detect{|a|a.question_id == question.id} %>
-          <%= answer && answer.value.any? ? truncate(answer.value, 250, "...") : '&nbsp;' %>
-          <span class="more"> <%= link_to('see whole response'.t, url) %></span>
+          <%= answer && answer.value.any? ? truncate(answer.value, :length => 250) : '&nbsp;' %>
+          <span class="more"> <%= link_to(I18n.t(:see_whole_response_link), url) %></span>
          <%- else -%>
           &mdash;
         <%- end -%>
@@ -38,6 +38,6 @@
   <%- end -%>
 </table>
 
-<%= pagination_links @responses, :params => {:action => 'list'} %>
+<%= pagination_links @responses, :params => {:action => 'response-list'} %>
 
 <br/>

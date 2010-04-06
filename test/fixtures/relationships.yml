@@ -1,57 +1,66 @@
 <% id = 0 %>
-
-# give user 4 (aka blue) lots of contacts 
+# give user 4 (aka blue) lots of contacts
 blue_orange:
   user_id: 4
   contact_id: 5
   type: Friendship
+  discussion_id: 4
   id: <%=id+=1%>
 orange_blue:
   user_id: 5
   contact_id: 4
   type: Friendship
+  discussion_id: 4
   id: <%=id+=1%>
-b1:
+blue_purple:
   user_id: 4
   contact_id: 6
   type: Friendship
+  discussion_id: 5
   id: <%=id+=1%>
-b2:
+purple_blue:
   user_id: 6
   contact_id: 4
   type: Friendship
+  discussion_id: 5
   id: <%=id+=1%>
-c1:
+blue_yellow:
   user_id: 4
   contact_id: 7
+  discussion_id: 6
   id: <%=id+=1%>
-c2:
+yellow_blue:
   user_id: 7
   contact_id: 4
+  discussion_id: 6
   id: <%=id+=1%>
-d1:
+blue_red:
   user_id: 4
   contact_id: 8
+  discussion_id: 7
   id: <%=id+=1%>
-d2:
+red_blue:
   user_id: 8
   contact_id: 4
+  discussion_id: 7
   id: <%=id+=1%>
-e1:
+blue_green:
   user_id: 4
   contact_id: 9
+  discussion_id: 8
   id: <%=id+=1%>
-e2:
+green_blue:
   user_id: 9
   contact_id: 4
+  discussion_id: 8
   id: <%=id+=1%>
-  
-# and some other people too  
-aa:
+purple_orange:
   user_id: 6
   contact_id: 5
+  discussion_id: 9
   id: <%=id+=1%>
-bb:
+orange_purple:
   user_id: 5
   contact_id: 6
+  discussion_id: 9
   id: <%=id+=1%>

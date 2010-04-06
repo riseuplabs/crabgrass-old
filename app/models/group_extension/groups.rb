@@ -18,7 +18,6 @@ module GroupExtension::Groups
       # Committees are children! They must respect their parent group.
       # This uses better_acts_as_tree, which allows callbacks.
       acts_as_tree(
-#        :dependent => :destroy,
         :order => 'name',
         :after_add => :org_structure_changed,
         :after_remove => :org_structure_changed

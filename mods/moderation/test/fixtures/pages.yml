@@ -1,5 +1,5 @@
 page301:
-  id: 3
+  id: 301
   title: A Bad Rating
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
@@ -13,4 +13,3 @@ page301:
   created_by_login: blue
   flow: 
   public_requested: 1
-  inappropriate: 0

@@ -26,15 +26,29 @@ module PageExtension::Users
       remove_method :user_ids
       after_save :reset_users
     end
+
+    base.class_eval do
+      def self.flag_all(page_ids, options)
+        return unless options[:as] and options[:by]
+        update = case options[:as]
+                 when :read then "viewed = TRUE"
+                 when :unread then "viewed = FALSE"
+                 when :watched then "watch = TRUE"
+                 when :unwatched then "watch = FALSE"
+                 end
+        UserParticipation.update_all update,
+          ["page_id IN (?) AND user_id = ?", page_ids, options[:by]]
+      end
+    end
   end
 
-  ##
-  ## CALLBACKS
-  ##
+    ##
+    ## CALLBACKS
+    ##
 
-  protected
+    protected
 
-  # when we save, we want the users association to relect whatever changes have
+    # when we save, we want the users association to relect whatever changes have
   # been made to user_participations
   def reset_users
     self.users.reset
@@ -86,6 +100,11 @@ module PageExtension::Users
     participation_for_user(user).try(:changed_at)
   end
 
+  def unread_by?(user)
+    part = participation_for_user(user)
+    part and not part.viewed?
+  end
+
   # Returns the user participation object for +user+.
   # This method is almost always called on the current user.
   def participation_for_user(user)
@@ -125,6 +144,7 @@ module PageExtension::Users
       self.user_participations.find(:all, options);
     end
   end
+
 
 end # module
 

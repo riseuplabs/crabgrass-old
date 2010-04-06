@@ -53,13 +53,15 @@ module PermissionsHelper
   #   <%= link_if_may("Boldly go", :warp_drive, :enable, nil, {}, {:style => "font-weight: bold;"} %>
   def link_if_may(link_text, controller, action, object = nil, link_opts = {}, html_opts = nil)
     if may?(controller, action, object)
-      link_to(link_text, {:controller => controller, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), html_opts)
+      object_id = params_object_id(object)
+      link_to(link_text, {:controller => controller, :action => action, :id => object_id}.merge(link_opts), html_opts)
     end
   end
 
   def link_to_active_if_may(link_text, controller, action, object = nil, link_opts = {}, active=nil)
     if may?(controller, action, object)
-      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object.nil? ? nil : object.name}.merge(link_opts), active)
+      object_id = params_object_id(object)
+      link_to_active(link_text, {:controller => controller.to_s, :action => action, :id => object_id}.merge(link_opts), active)
     end
   end
 
@@ -146,6 +148,8 @@ module PermissionsHelper
   # the permissions without a controller name is attempted (ie 'may_eat_soup?)
   #
   def permission_for_controller(controller, action, *args)
+    permission_log_setup(controller, action, args)
+
     names=[]
     if controller.is_a? ApplicationController
       names << controller.controller_name
@@ -170,13 +174,50 @@ module PermissionsHelper
       methods << "may_#{action}_#{name.singularize}?" if name != name.singularize
       methods << "may_#{action}?" if action =~ /_/
       methods.each do |method|
-        return target.send(method, *args) if target.respond_to?(method)
+        add_permission_log(:attempted => method)
+        if target.respond_to?(method)
+          add_permission_log(:decided => method)
+          return target.send(method, *args)
+        end
       end
     end
     if target.respond_to?('default_permission')
+      add_permission_log(:attempted => 'default_permission', :decided => 'default_permission')
+
       return target.send('default_permission', *args)
     end
+
     return nil
   end
+
+  # the first one that makes sense in this order: object.name, object.id, nil
+  def params_object_id(object)
+    object_id = if object.respond_to?(:name)
+      object.name
+    elsif !object.blank?
+      object.id
+    end
+  end
+
+
+  # setup what combination we are logging
+  def permission_log_setup(*key)
+    @permission_log ||= {}
+    @permission_log_key = key
+    @permission_log[key] = {:attempted => [], :decided => nil}
+  end
+
+  # log perm info for the combination
+  # available keys are :attempted => "method_name" and :decided => "method_name"
+  def add_permission_log(opts = {})
+    log = permission_log[@permission_log_key]
+    log[:attempted] << opts[:attempted] unless opts[:attempted].blank?
+    log[:decided] = opts[:decided] unless opts[:decided].blank?
+  end
+
+  def permission_log
+    @permission_log
+  end
+
 end
 

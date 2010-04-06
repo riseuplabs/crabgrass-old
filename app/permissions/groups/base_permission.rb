@@ -13,17 +13,27 @@ module Groups::BasePermission
     may_show_private_profile?(group) or may_show_public_profile?(group)
   end
 
+  def may_people_group?(group=@group)
+    may_list_memberships?(group)
+  end
+  alias_method :may_list_groups_group?, :may_people_group?
+
+
   def may_update_group?(group = @group)
     logged_in? and current_user.may?(:admin, group)
   end
   alias_method :may_edit_group?, :may_update_group?
 
-  def may_destroy_group?(parent = @group)
-    if parent.council != parent
-      current_user.may?(:admin, parent)
-    else # no explicit council
-      parent.users.size == 1 and
-        current_user.member_of?(parent)
+  def may_destroy_group?(group = @group)
+    # has a council
+    if group.council != group and group.council.users.size == 1
+      current_user.may?(:admin, group)
+      # disabled until release 0.5.1
+      false
+    elsif group.council == group
+      # no council
+      group.users.size == 1 and
+        current_user.member_of?(group)
     end
   end
 
@@ -99,6 +109,10 @@ module Groups::BasePermission
     else
       group.profiles.public.may_see_members?
     end
+  end
+
+  def may_show_affiliations?(group = @group)
+    return true if (may_show_networks_of_group?(group) or may_show_subcommittees_of_group?(group) or group.real_council)
   end
 
   ##

@@ -1,0 +1,21 @@
+%div#messages-forms
+  %div#say-box
+    = render :partial => 'send_form'
+  %div#select-messages-from.right
+    = render :partial => 'select_from_form'
+%br/
+
+%section#messages
+  = action_bar(action_bar_settings)
+  - action_bar_form(mark_messages_path) do
+    = render :partial => '/common/action_bar/hidden_form_fields'
+    = hidden_field_tag('from', params[:from])
+
+    %header
+      = pagination_for(@discussions)
+
+    %table(summary='messages' class='pretty')
+      = render :partial => 'message', :collection => @discussions
+
+    %footer
+      = pagination_for(@discussions)

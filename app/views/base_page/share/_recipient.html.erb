@@ -49,7 +49,7 @@ remove_function = "$('%s').remove()" % id
 %   end
   </td>
   <td>
-    <%= link_to_function_icon('tiny_trash', remove_function, :title => :remove.t) if newitem %>
+    <%= link_to_function_icon('tiny_trash', remove_function, :title => I18n.t(:remove)) if newitem %>
   </td>
 </tr>
 

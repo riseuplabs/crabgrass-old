@@ -29,6 +29,11 @@ module ActsAsSiteLimited
           super(*prepare_site_limited_options(*args))
         end
         def self.count(*args)
+          # patch the sql statement to avoid things like
+          # count (pages*)
+          if args[0] && args[0].is_a?(Hash) && args[0][:select]
+            args[0][:select].gsub!(/(.*\.)/i,'')
+          end
           super(*prepare_site_limited_options(*args))
         end
 
@@ -86,7 +91,7 @@ end
 
 #      extend Finders
 #      include Callbacks
-     
+
       #named_scope(:for_site, lambda do |site|
       #  site ||= Site.current
       #  if site and site.id and site.limited?
@@ -114,7 +119,7 @@ end
 #    end
 
 #    def prepare_site_limited_options(*args)
-#      if Site.current and Site.current.limited?      
+#      if Site.current and Site.current.limited?
 #        options = args.last.is_a?(Hash) ? args.pop : {}
 #        sql = "site_id = #{Site.current.id}"
 #        if options[:conditions].nil?

@@ -5,7 +5,7 @@
   more_url = nil  if more_url.nil?
   more_link = nil if more_link.nil?
   if more_url
-     more_link = link_to "See all"[:see_more_link] + ARROW, more_url, :class => 'more'
+     more_link = link_to I18n.t(:see_more_link) + ARROW, more_url, :class => 'more'
   end
   after = nil if after.nil?
   links = nil if links.nil?
@@ -17,14 +17,14 @@
 %>
 <% if entities.any? or show_empty -%>
 <div class="dash_box">
-  <h3 class="dim">
+  <h5>
     <%= header %>
     <%= link_span(:bullet, links, more_link) %>
-  </h3>
+  </h5>
   <%- if entities.any? -%>
     <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
   <%- else -%>
-    <%= "None"[:empty_results] %>
+    <%= I18n.t(:empty_results) %>
   <%- end -%>
   <div class='clear'></div>
   <%= after %>

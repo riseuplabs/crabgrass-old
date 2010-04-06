@@ -1,0 +1,135 @@
+/* get hover to work in ie */
+body {behavior:url("/javascripts/ie/csshover.htc");}
+
+/* hide the message area */
+#message {line-height: 1px;}
+
+/* status hack to make set_status form not get too big */
+table.set_status {width:80%;}
+
+/* autocomplete */
+.autocomplete_holder {z-index: 10000}
+.autocomplete-w1 {background: none; top: 1px;}
+.autocomplete {height: 350px; margin: 0px 6px 6px 0;}
+
+/* sidebar */
+ul.side_list li {height: 1%;} /* force has layout */
+#page_sidebar input.check {margin-top: 3px; margin-left: -25px} /* move check up slightly */
+ul.names li span {border: 1px solid #d6d6d6;} /* this hack makes the access icons appear */
+div.popup_arrow {right: -16px} /* move popup nub slightly */
+
+/* page list */
+div.page_scroll {
+  zoom: 1;
+}
+div.page_list {zoom: 1;}
+
+/* clearing */
+.selfclear {
+  zoom: 1; /* triggers hasLayout */
+  display: block; /* resets display */
+}
+
+/* fixes columns for drop down boxes in ie6/7 */
+span.topnav a {
+  position: relative;
+}
+.menu_items {
+  zoom: 1;
+  display: block;
+  width: 34em
+}
+div.leftcol {
+  width: 16em;
+  overflow: hidden;
+}
+div.rightcol {
+  position: absolute;
+  left: -.5em;
+  width: 16em;
+  top: 2.4em;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+#menu_me div.menu_items{
+  width: 14em;
+}
+#menu_me div.leftcol{
+  width: 12em;
+}
+#menu_me div.rightcol{
+  display: none;
+}
+
+/* opacity fix */
+.shy { filter: alpha(opacity=0); zoom: 1; background-color: white; }
+.shy:hover { filter: alpha(opacity=100)}
+.shy_parent:hover .shy { filter: alpha(opacity=60)}
+
+/**
+ ** FIRST-CHILD EMULATION
+ **/
+
+.post-body p {
+  margin: expression( this == this.parentNode.firstChild || this == this.parentNode.lastChild ? "0em" : "1em 0" );
+}
+
+
+#page_sidebar ul.names li {
+  border-top: expression( this == this.parentNode.firstChild ? "0" : "1px dotted white" )
+}
+
+/* temp hack for temp site home */
+form.mini_search table {width: 17em;}
+
+/* fix for stacking problem between drop down boxes and people/groups/networks tabs */
+li.menu {
+  z-index: 100;
+}
+ul.tabset.top li {
+  z-index: 1;
+}
+
+/* for hover over entity boxes on sidebar of dashboard */
+ul.icon_boxes li:hover span {
+  display: block;
+  width: 10em;
+}
+/* new ui 11/2009*/
+#page #content #content-container #group-content-wrap #group-info {
+	margin: 0 16px 0 0;
+}
+
+
+/* hover action icons */
+
+a.anchor {
+  filter: alpha(opacity = 0);
+  zoom: 1;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor {
+  filter: alpha(opacity = 100);
+}
+
+#info-box #activities .left {
+  width: 230px;
+}
+
+a.edit {
+  filter: alpha(opacity = 0);
+  zoom: 1;
+}
+
+a.edit:hover {
+  filter: alpha(opacity = 100) !important;
+}
+
+h1:hover a.edit,
+h2:hover a.edit,
+h3:hover a.edit {
+  filter: alpha(opacity = 60);
+}
+

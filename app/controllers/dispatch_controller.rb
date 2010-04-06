@@ -32,7 +32,7 @@
 #
 
 class DispatchController < ApplicationController
-  
+
   def process(request, response, method = :perform_action, *arguments)
     super(request, response, :dispatch)
   end
@@ -44,7 +44,7 @@ class DispatchController < ApplicationController
       find_controller.process(request, response)
     rescue ActiveRecord::RecordNotFound
       if logged_in? and (@group or (@user and @user == current_user))
-        flash_message :info => '{thing} not found'[:thing_not_found, 'Page'[:page]]
+        flash_message :info => I18n.t(:thing_not_found, :thing => I18n.t(:page))
         redirect_to create_page_url(WikiPage, {:group => @group, 'page[title]' => params[:_page]})
       else
         set_language do
@@ -173,7 +173,8 @@ class DispatchController < ApplicationController
          'pages.name = ? AND group_participations.group_id IN (?)',
           name, Group.namespace_ids(group.id)
       ],
-      :joins => :group_participations
+      :joins => :group_participations,
+      :readonly => false
     )
   end
 
@@ -198,7 +199,7 @@ class DispatchController < ApplicationController
     else
       options = options_for_public
     end
-    Page.paginate_by_path ["name",name], options
+    Page.paginate_by_path ["name",name], options.merge(pagination_params)
   end
 
   def controller_for_list_of_pages(name)

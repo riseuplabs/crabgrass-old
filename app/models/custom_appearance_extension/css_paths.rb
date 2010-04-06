@@ -5,7 +5,7 @@ module CustomAppearanceExtension
     end
 
     STYLESHEETS_ROOT = './public/stylesheets'
-    SASS_ROOT = './public/stylesheets/sass'
+    SASS_ROOT = './app/stylesheets'
     CONSTANTS_FILENAME = "constants.sass"
     SASS_LOAD_PATHS = ['.', File.join(RAILS_ROOT, SASS_ROOT)]
 
@@ -13,20 +13,28 @@ module CustomAppearanceExtension
 
     # :cal-seq:
     #   'as_needed/wiki.css' => './public/stylesheets/themes/2/2009081233/as_needed/wiki.css'
-    def themed_css_path(css_url)
-      File.join(RAILS_ROOT, STYLESHEETS_ROOT, themed_css_url(css_url))
+    def themed_css_path(css_url, css_prefix_path=nil)
+      File.join(RAILS_ROOT, STYLESHEETS_ROOT, themed_css_url(css_url, css_prefix_path))
     end
 
     # :cal-seq:
     #   'as_needed/wiki.css' => 'themes/2/2009081233/as_needed/wiki.css'
-    def themed_css_url(css_url)
-      File.join(theme_prefix, css_url)
+    def themed_css_url(css_url, css_prefix_path=nil)
+      if css_prefix_path
+        File.join("compiled", css_prefix_path, theme_prefix, css_url)
+      else
+        File.join(theme_prefix, css_url)
+      end
     end
 
     # :cal-seq:
     #   'as_needed/wiki.css' => RAILS_ROOT + './public/stylesheets/sass/as_needed/wiki.sass'
-    def source_sass_path(css_url)
-      File.join(RAILS_ROOT, SASS_ROOT, css_url).gsub(/.css$/, ".sass")
+    def source_sass_path(css_url, css_prefix_path=nil)
+      if css_prefix_path
+        File.join(RAILS_ROOT, SASS_ROOT, css_prefix_path, css_url).gsub(/.css$/, ".sass")
+      else
+        File.join(RAILS_ROOT, SASS_ROOT, css_url).gsub(/.css$/, ".sass")
+      end
     end
 
     # appends .css suffix if missing

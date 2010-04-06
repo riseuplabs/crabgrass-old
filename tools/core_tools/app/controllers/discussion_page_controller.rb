@@ -1,7 +1,6 @@
 class DiscussionPageController < BasePageController
 
   def show
-    @comment_header = ""
   end
 
   def print

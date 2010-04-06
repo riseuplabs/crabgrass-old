@@ -1,6 +1,6 @@
 <%
   form.row do |r|
-    r.label 'File'[:file]
+    r.label I18n.t(:file)
     r.label_for 'asset_uploaded_data'
     r.input file_field('asset', 'uploaded_data', :size => 29)
     r.info help(:upload_file)

@@ -9,15 +9,14 @@
 
 <div id='<%= image_popup_id(wiki) %>' class='image_popup'>
 
-<%# ""[:insert_image_instructions] %>
 <%= Formy.form do |f|
   f.row do |r|
     r.label 'Size'
-    r.input radio_buttons_tag('image_size', [[:small.t, 'small'],[:medium.t,'medium'],[:large.t, 'large'],[:full.t, 'full']], :id => 'image_size-' + wiki.id.to_s)
+    r.input radio_buttons_tag('image_size', [[I18n.t(:small), 'small'], [I18n.t(:medium),'medium'], [I18n.t(:large), 'large'], [I18n.t(:full), 'full']], :id => 'image_size-' + wiki.id.to_s)
   end
   f.row do |r|
     r.label 'Options'
-    r.input check_box_tag('link_to_image', "true", false) + "include link to full image"[:include_full_checkbox]
+    r.input check_box_tag('link_to_image', "true", false) + I18n.t(:include_full_checkbox)
   end
   f.row do |r|
     r.label 'Images'
@@ -30,7 +29,7 @@
 end %>
 
 <div class="buttons">
-  <%= close_modal_button(:cancel) %><%= button_to_function 'Insert Image'[:insert_image], insert_image_function(wiki)+close_modal_function() %>
+  <%= close_modal_button(:cancel) %><%= button_to_function I18n.t(:insert_image), insert_image_function(wiki)+close_modal_function() %>
 </div>
 
 </div>

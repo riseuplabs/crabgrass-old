@@ -10,6 +10,7 @@
 #  end
 
 class Post < ActiveRecord::Base
+  extend PathFinder::FindByPath
 
   ##
   ## associations
@@ -18,6 +19,19 @@ class Post < ActiveRecord::Base
   acts_as_rateable
   belongs_to :discussion
   belongs_to :user
+  # if this is on a page we set page_terms so we can use path_finder
+  belongs_to :page_terms
+
+  after_create :update_discussion
+  after_destroy :update_discussion
+
+  ##
+  ## named scopes
+  ##
+
+  named_scope :visible, :conditions => 'deleted_at IS NULL'
+
+  named_scope :by_created_at, :order => 'created_at DESC'
 
   after_create :update_discussion
   after_destroy :update_discussion
@@ -59,6 +73,7 @@ class Post < ActiveRecord::Base
     page.discussion ||= Discussion.create!(:page => page)
     post = page.discussion.posts.build(options)
     page.posts_count_will_change!
+    post.page_terms = page.page_terms
     return post
   end
 
@@ -100,6 +115,10 @@ class Post < ActiveRecord::Base
   end
   def private?
     'PrivatePost' == read_attribute(:type)
+  end
+
+  def default?
+    false
   end
 
   def lite_html

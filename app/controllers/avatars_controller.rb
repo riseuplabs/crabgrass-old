@@ -14,7 +14,7 @@ class AvatarsController < ApplicationController
     user  = User.find params[:user_id] if params[:user_id]
     thing = group || user
     if thing.avatar
-      for size in %w(xsmall small medium large xlarge)
+      for size in %w(xsmall small medium large xlarge big)
         expire_page :controller => 'static', :action => 'avatar', :id => thing.avatar.id, :size => size
       end
       thing.avatar.image_file = params[:image][:image_file]
@@ -24,7 +24,7 @@ class AvatarsController < ApplicationController
       thing.avatar = avatar
     end
     thing.save! # make sure thing.updated_at has been updated.
-    flash_message :success => 'Successfully uploaded a new avatar image'[:avatar_image_upload_success]
+    flash_message :success => I18n.t(:avatar_image_upload_success)
   rescue Exception => exc
     flash_message :exception => exc
   ensure

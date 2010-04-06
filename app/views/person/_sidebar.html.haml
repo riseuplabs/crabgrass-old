@@ -1,0 +1,28 @@
+%section#identity-image
+  = avatar_for @user, 'big'
+%div#image-label
+  %ul
+    %li
+      %h3
+        = @user.display_name
+%div#login-date
+  %time#last-login
+    = last_login(@user)
+
+- unless @user == @current_user
+  %ul.side_list
+    = friend_link_li
+
+%div#identity-meta
+  =# render :partial => 'about_me', :locals => {:profile => profile}
+  = render :partial => 'profile/show', :locals => {:profile => profile}
+
+  - if profile.may_see_groups? && current_site.has_networks?
+    = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:networks), :entities => @user.all_groups.visible_by(current_user).networks}
+  - if profile.may_see_groups?
+    = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:groups), :entities => @user.groups.visible_by(current_user).normals }
+  - if profile.may_see_groups?
+    = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:committees), :entities => @user.groups.visible_by(current_user).committees }
+  - if profile.may_see_contacts?
+    = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:friends), :entities => @user.friends }
+

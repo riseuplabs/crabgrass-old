@@ -151,7 +151,6 @@ class GreenTree < Array
     names.compact
   end
 
-
   def prepare_markup_indexes
     if self.parent
       raise GreenClothException, "GREENCLOTH ERROR: 'prepare_markup_indexes' can only be called on the root document node"
@@ -172,16 +171,14 @@ class GreenTree < Array
   # does not modify any data this node has
   def sub_markup(section_markup)
     current_markup = greencloth.to_s.clone
-    # we want to preserve any trailing whitespace
-    #that way if we replace the text with other text, section boundaries will remain valid
-    current_section_markup = self.markup
-    trailing_whitespace = current_section_markup.scan(/\s+\Z/).last.to_s
 
+    markup_newlines = section_markup.scan(/[\n\r]+\Z/).last.to_s
+    # should have minimum 2 newlines
 
     # don't apprend the trailing whitespace to the sections that
     # hit the end of the document text
     unless self.root? or self.successor.nil?
-      section_markup << trailing_whitespace
+      section_markup << "\n\n" if markup_newlines.length < 2
     end
 
     current_markup[self.start_index..self.end_index] = section_markup
@@ -247,24 +244,24 @@ class GreenTree < Array
     # take out carriage returns
     heading_text = Regexp.escape(self.text.gsub(/\r\n/, "\n"))
 
-    # remove html entities, and let them match any character
-    heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.')
+    # remove html entities, and let them match one to several characters
+    heading_text.gsub!(/&(\w{2,6}?|\\#[0-9A-Fa-f]{2,6});/,'.{1,3}')
 
     # add back carriage returns as optional
     heading_text.gsub!('\\n', '\\r?\\n')
 
     # allowed formatting characters around heading text
-    # /[\[\]\^\s_\*\+\?\-~]/
+    # /[\.\[\]\^\s_\*\+\?\-~]/
 
     Regexp.union(
       /^
-      [\[\]\^@_\*\+\?\-~]* # no whitespace '\s' match should happen here here
-      #{heading_text}[\[\]\^@\s_\*\+\?\-~]*
+      [ \.\[\]\^@_\*\+\?\-~]*
+      #{heading_text}[\.\[\]\^@\s_\*\+\?\-~]*
       \s*\r?\n[=-]+\s*?(\r?\n\r?\n?|$)
       /x,
       /^
       h#{heading_level}\.\s+
-      [\[\]\^@\s_\*\+\?\-~]*#{heading_text}[\[\]\^@\s_\*\+\?\-~]*
+      [\.\[\]\^@\s_\*\+\?\-~]*#{heading_text}[\.\[\]\^@\s_\*\+\?\-~]*
       \s*?(\r?\n\r?\n?|$)
       /x
     )

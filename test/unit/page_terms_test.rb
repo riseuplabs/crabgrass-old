@@ -14,11 +14,7 @@ class PageTermsTest < Test::Unit::TestCase
 
   def test_tagging_with_odd_characters
     name = 'test page'
-    page = WikiPage.new do |p|
-      p.title = name.titleize
-      p.name = name.nameize
-    end
-    page.save
+    page = WikiPage.make :title => name.titleize, :name => name.nameize
     page.tag_list = "^&#, +, **, %, ə"
     page.save!
 
