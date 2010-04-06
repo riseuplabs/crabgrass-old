@@ -107,6 +107,6 @@ class CustomAppearaceTest < ActiveSupport::TestCase
   end
 
   def test_available_parameters
-    assert CustomAppearance.available_parameters.is_a?(Hash)
+    assert CustomAppearance.available_parameters("ui_base").is_a?(Hash)
   end
 end
