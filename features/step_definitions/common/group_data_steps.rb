@@ -62,9 +62,11 @@ Then /^#{capture_model} should not be a member of #{capture_model}$/ do |user, g
   assert !user.member_of?(group)
 end
 
-Given /^#{capture_model}(?:'s)? country is "([^\"]+)"$/ do |group, country|
+Given /^#{capture_model}(?:'s)? country is #{capture_model}$/ do |group, country|
   group = model!(group)
-  gl = GeoLocation.make(:geo_country_id => 2)
+  geo_country = model!(country)
+  gl = GeoLocation.make(:geo_country_id => geo_country.id)
+  gl.save!
   profile = Profile.make(:entity => group, :stranger => 1, :peer => 1, :friend => 1, :geo_location_id => gl.id, :may_see=>1)
   profile.save!
 end
