@@ -74,10 +74,6 @@ function linkToggle(link, element) {
 
 // toggle all checkboxes of a particular css selector, based on the
 // checked status of the checkbox passed in.
-<<<<<<< HEAD:public/javascripts/application.js
-function toggleAllCheckboxes(checkbox, selector) {
-  $$(selector).each(function(cb) {cb.checked = checkbox.checked})
-=======
 function toggleAllCheckboxesToMatch(checkbox, selector) {
   $$(selector).each(function(cb) {cb.checked = checkbox.checked});
 }
@@ -85,7 +81,6 @@ function toggleAllCheckboxesToMatch(checkbox, selector) {
 // toggle all checkboxes of a particular css selector to checked boolean parameter
 function toggleAllCheckboxes(checked, selector) {
   $$(selector).each(function(cb) {cb.checked = checked});
->>>>>>> 0.5.1.1:public/javascripts/application.js
 }
 
 // submits a form, from the onclick of a link.
@@ -111,8 +106,6 @@ function submitForm(form_element, name, value) {
   }
 }
 
-<<<<<<< HEAD:public/javascripts/application.js
-=======
 // submit a form which updates a nested resource where the parent resource can be selected by the user
 // since the parent resource is part of the form action path, the form action attribute has to be dynamically updated
 //
@@ -137,7 +130,6 @@ function submitNestedResourceForm(resource_id_field, resource_url_template, dont
 }
 
 
->>>>>>> 0.5.1.1:public/javascripts/application.js
 function setRows(elem, rows) {
   elem.rows = rows;
   elem.toggleClassName('tall');
