@@ -13,11 +13,13 @@
 ## GLOBAL
 ##
 enabled_languages:
-  - en_US
-  - es_ES
-  - pt_BR
-  - ar_EG
-  - tr_TR
+  - en
+  - es
+  - pt
+  - ar
+  - fr
+  - ru
+  - tr
 enabled_mods:
 enabled_tools:
   - asset_tool
