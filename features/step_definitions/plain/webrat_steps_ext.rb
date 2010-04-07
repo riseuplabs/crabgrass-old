@@ -12,6 +12,10 @@ Then /^I should see "([^\"]*)" translated(?: with #{capture_fields})?$/ do |key,
   assert_contain I18n.t(key, substitutions)
 end
 
+Then /^I should see a link to "([^"]+)"$/ do |href|
+  assert have_selector("a", :href => href)
+end
+
 
 # Modalbox links
 When /^I follow and confirm "([^\"]*)"$/ do |link_name|

@@ -37,6 +37,16 @@ Given(/^#{capture_model} has the following members:$/) do |group, table|
   end
 end
 
+Given /^#{capture_model} has committees (.*)$/ do |group, committees|
+  group = model!(group)
+  committees.gsub!(/\s/, '')
+  committees.split(',').each do |committee|
+    committee = create_model('a committee', {:name => committee}).last
+    # false means this is not a council
+    group.add_committee!(committee, false)
+  end
+end
+
 Given /^#{capture_model} has a committee(?: with #{capture_fields})$/ do |group, committee_fields|
   group = model!(group)
   committee = create_model('a committee', committee_fields).last
