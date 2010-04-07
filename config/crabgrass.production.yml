@@ -52,6 +52,7 @@ sites:
 pagination_size: 30
 enforce_ssl: false
 show_exceptions: false
+default_language: en
 email_sender: "robot@$current_host"
 tracking: true
 available_page_types:
