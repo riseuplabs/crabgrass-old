@@ -31,17 +31,18 @@ class Committee < Group
     self.name = short_name
   end
 
-  # custom name setter so that we can ensure that the parent's
+  # committees clean up their names a little different to make sure the group's
   # name is part of the committee's name.
-  def name=(str)
+  def clean_names
+    super
+    t_name = read_attribute(:name)
     if parent
-      name_without_parent = str.sub(/^#{parent.name}\+/,'').gsub('+','-')
+      name_without_parent = t_name.sub(/^#{parent.name}\+/,'').gsub('+','-')
       write_attribute(:name, parent.name + '+' + name_without_parent)
     else
-      write_attribute(:name, str.gsub('+','-'))
+      write_attribute(:name, t_name.gsub('+','-'))
     end
   end
-  alias_method :short_name=, :name=
 
   ##
   ## ORGANIZATIONAL
