@@ -18,7 +18,10 @@ namespace :cg do
       puts '       The corresponding user will be used for deleting the groups.'
       exit
     end
-
+    do_it = ENV['DELETE'] && ENV['DELETE'].downcase == 'true'
+    unless do_it
+      puts 'TEST RUN: Add "DELETE=true" to actually delete groups!'
+    end
     dup_names=Group.find(:all, :joins => "JOIN groups as b ON b.name = groups.name AND b.id != groups.id").map(&:name).uniq
     dup_names.each do |name|
       puts "There are multiple Groups with name %s." % name
@@ -30,15 +33,15 @@ namespace :cg do
       groups.each do |g|
         if g == keep_me
           puts "Keeping: %s #%s has %s users and %s pages." % [g.type,g.id, g.users.count, g.pages.count]
-          g.clean_names
+          g.clean_names if do_it
           new_name = g.name
           puts "Renaming to %s." % new_name if new_name != name
         else
           puts "DELETING: %s #%s has %s users and %s pages." % [g.type,g.id, g.users.count, g.pages.count]
           if g.parent
-            g.destroy_by(destructor)
+            g.destroy_by(destructor) if do_it
           else
-            Group.delete_all("id = %s" % g.id)
+            Group.delete_all("id = %s" % g.id) if do_it
           end
         end
       end
