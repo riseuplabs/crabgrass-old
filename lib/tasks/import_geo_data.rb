@@ -27,11 +27,12 @@ namespace :cg do
         next if line =~ /^#/
         row = line.split("\t")
         options = {:code => row[0], :name => row[4]}
-        country = GeoCountry.find_by_code(row[0])
+        next unless options[:code] and options[:name]
+        country = GeoCountry.find_by_code(options[:code])
         if country.nil?
-          STDERR.puts "Adding new country #{row[4]}"
+          STDERR.puts "Adding new country #{options[:name]}"
           GeoCountry.create!(options)
-        else 
+        else
           STDERR.puts "Updating country #{country.name}"
           country.update_attributes(options)
         end
@@ -44,9 +45,10 @@ namespace :cg do
         row[1].sub!(/^(.*\S)\s*$/, '\1')
         row[1] = subrow[1] if row[1] !~ /\S/## use the code if the name is blank
         geocountry = GeoCountry.find_by_code(subrow[0])
+        next if geocountry.nil?
         options = {:geo_country_id => geocountry.id, :admin1_code => subrow[1], :name => row[1]}
         geoadmincode = geocountry.geo_admin_codes.find_by_admin1_code(subrow[1])
-        if geoadmincode.nil? 
+        if geoadmincode.nil?
           STDERR.puts "Adding new admin code #{subrow[1]}"
           GeoAdminCode.create!(options)
         else
@@ -54,18 +56,18 @@ namespace :cg do
           geoadmincode.update_attributes(options)
         end
       end
-      ## make records for 'Country (general)' if they're not there 
+      ## make records for 'Country (general)' if they're not there
       GeoCountry.find(:all).each do |gc|
         next if gc.geo_admin_codes.find_by_admin1_code('00')
         GeoAdminCode.create!(:geo_country_id => gc.id, :admin1_code => '00', :name => "#{gc.name} (general)")
       end
-#    end 
+#    end
 #    if File.exist?(places+".txt")
       open(path+places+".txt").each do |line|
         row = line.split("\t")
         geocountry = GeoCountry.find_by_code(row[8])
         next if geocountry.nil?
-        row[10] = '00' if row[10] !~ /\S/ 
+        row[10] = '00' if row[10] !~ /\S/
         STDERR.puts "on #{row[0]} :: #{row[10].to_s} :: #{row[8]}"
         geoadmincode = geocountry.geo_admin_codes.find_by_admin1_code(row[10])
         # if there is no admin code matching the record, use the general admin code
@@ -81,7 +83,7 @@ namespace :cg do
           :longitude => row[5]
         }
         geoplace = geoadmincode.geo_places.find_by_geonameid(row[0])
-        if geoplace.nil? 
+        if geoplace.nil?
           STDERR.puts "Adding new place #{row[1]}"
           GeoPlace.create!(options)
         else
