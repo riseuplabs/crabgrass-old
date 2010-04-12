@@ -38,8 +38,19 @@ namespace :cg do
           puts "Renaming to %s." % new_name if new_name != name
         else
           puts "DELETING: %s #%s has %s users and %s pages." % [g.type,g.id, g.users.count, g.pages.count]
-          if g.parent
-            g.destroy_by(destructor) if do_it
+          if parent = g.parent
+            begin
+              g.destroy_by(destructor) if do_it
+            rescue
+              # this might happen because the name still is invalid.
+              # it causes the destruction to fail when saving the
+              # committee. Everything that is left to do is save the
+              # parent and really delete the committee
+              parent.org_structure_changed
+              parent.save!
+              parent.committees.reset
+              Group.delete_all("id = %s" % g.id) if do_it
+            end
           else
             Group.delete_all("id = %s" % g.id) if do_it
           end
