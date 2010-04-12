@@ -36,6 +36,7 @@ class Committee < Group
   def clean_names
     super
     t_name = read_attribute(:name)
+    return unless t_name
     if parent
       name_without_parent = t_name.sub(/^#{parent.name}\+/,'').gsub('+','-')
       write_attribute(:name, parent.name + '+' + name_without_parent)
