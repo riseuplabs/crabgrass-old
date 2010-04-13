@@ -1,0 +1,14 @@
+armenia:
+  id: 1
+  name: Armenia
+  code: AM
+
+bahamas:
+  id: 2
+  name: Bahamas
+  code: BS
+
+equatorial_guinea:
+  id: 3
+  name: Equatorial Guinea
+  code: GQ
