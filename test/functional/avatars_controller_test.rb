@@ -5,7 +5,7 @@ require 'avatars_controller'
 class AvatarsController; def rescue_action(e) raise e end; end
 
 class AvatarsControllerTest < Test::Unit::TestCase
-  fixtures :avatars
+  fixtures :avatars, :users
 
   def setup
     @controller = AvatarsController.new
@@ -14,8 +14,16 @@ class AvatarsControllerTest < Test::Unit::TestCase
   end
 
   def test_create
-    # TODO: write this test
     #    post :create
+    user = User.find(1)
+    login_as user
+    post :create, :user_id => user.id, :redirect => '/me'
+    assert_equal 'no image uploaded', flash[:error]
+
+    avatar_image = fixture_file_upload('/files/bee.jpg','image/jpg')
+    post :create, :user_id => user.id, :image => {:image_file => avatar_image}, :redirect => '/me' 
+    assert_equal I18n.t(:avatar_image_upload_success), flash[:message]
+    puts @response
   end
 
 end
