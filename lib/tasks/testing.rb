@@ -20,6 +20,20 @@ def plugins_with_allowed_fixtures
   end
 end
 
+
+# apply the latest migrations from the plugin to the DB
+def engines_plugins_migrate(plugin_name)
+  plugin = Engines.plugins[plugin_name]
+  current_version = Engines::Plugin::Migrator.current_version(plugin)
+  latest_version = plugin.latest_migration
+  migration_file_exists = !Dir.glob(RAILS_ROOT + "/db/migrate/*#{plugin.name}_to_version_#{latest_version}.rb").empty?
+
+  if !migration_file_exists && latest_version.to_i > current_version.to_i
+    plugin.migrate(latest_version)
+  end
+end
+
+### MODS
 namespace :test do
   namespace :mods do
 
@@ -27,19 +41,19 @@ namespace :test do
     task :all => [:units, :functionals, :integration]
 
     desc "Run all plugin unit tests"
-    Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(:units => [:apply_all_mod_migrations, :setup_plugin_fixtures]) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Run all plugin functional tests"
-    Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(:functionals => [:apply_all_mod_migrations, :setup_plugin_fixtures]) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Integration test engines"
-    Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
+    Rake::TestTask.new(:integration => [:apply_all_mod_migrations, :setup_plugin_fixtures]) do |t|
       t.pattern = "mods/#{ENV['MOD'] || "**"}/test/integration/**/*_test.rb"
       t.verbose = true
     end
@@ -58,9 +72,16 @@ namespace :test do
       end
     end
 
+    task :apply_all_mod_migrations => :environment do
+      Conf.enabled_mods.each do |mod_name|
+        engines_plugins_migrate(mod_name)
+      end
+    end
   end
 end
 
+
+### TOOLS
 namespace :test do
   namespace :tools do
 
@@ -93,6 +114,9 @@ namespace :test do
   end
 end
 
+
+
+### EVERYTHING
 namespace :test do
 
   desc "Test everything: crabgrass, tools and mods."

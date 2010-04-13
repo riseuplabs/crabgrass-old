@@ -5,4 +5,4 @@ self.load_once = false
 self.override_views = true
 
 # Include the UserExtension module into the User class.
-apply_mixin_to_model(User, UserExtension)
+apply_mixin_to_model("User", "UserExtension")
