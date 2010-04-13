@@ -53,6 +53,12 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_most_active
+    login_as :blue
+    get :most_active
+    assert assigns(:groups).include?(groups(:true_levellers))
+  end
+
 #  def test_directory
 #    login_as :gerrard
 #    get :directory
