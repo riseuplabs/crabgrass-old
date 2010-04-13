@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class Groups::DirectoryControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships
+  fixtures :users, :groups, :memberships, :profiles, :geo_locations, :geo_countries
 
   def setup
   end
@@ -23,6 +23,9 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
   def test_recent
     login_as :blue
 
+    get :recent, :country_id => 1
+    assert assigns(:groups).include?(groups(:recent_group))
+
     get :recent
     assert assigns(:groups).include?(groups(:recent_group))
   end
@@ -36,6 +39,18 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:groups)
     assert assigns(:groups).include?(groups(:warm)), 'should display committee even though it is a committee, because we are not a member of the parent'
+  end
+
+  def test_search
+    # test public
+    get :search, :country_id => 2
+    assert assigns(:groups).include?(groups(:public_group))
+    assert_response :success
+
+    get :search
+    assert assigns(:groups).include?(groups(:public_group))
+    assert assigns(:group_type) == :group
+    assert_response :success
   end
 
 #  def test_directory
