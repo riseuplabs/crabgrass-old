@@ -6,6 +6,27 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
   def setup
   end
 
+  def test_index
+    get :index
+    assert_redirected_to(:action => 'search')
+
+    login_as :blue
+    get :index
+    assert assigns(:groups)
+    assert_redirected_to(:action => 'my')
+
+    login_as :quentin
+    get :index
+    assert_redirected_to(:action => 'search')    
+  end
+
+  def test_recent
+    login_as :blue
+
+    get :recent
+    assert assigns(:groups).include?(groups(:recent_group))
+  end
+
   def test_my_groups
     groups(:warm).add_user! users(:kangaroo)
     assert !users(:kangaroo).member_of?(groups(:rainbow))
@@ -30,13 +51,6 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
 #    assert_response :success
 #    assert_equal 1, assigns(:groups).size
 #    assert_equal "rainbow", assigns(:groups)[0].name
-#  end
-
-#  def test_index
-#    login_as :gerrard
-#    get :index
-#    assert_response :success
-#    assert_not_nil assigns(:groups)
 #  end
 
 end
