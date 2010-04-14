@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class KeysControllerTest < ActionController::TestCase
+class Translator::KeysControllerTest < ActionController::TestCase
   def test_should_get_index
     get :index
     assert_response :success
