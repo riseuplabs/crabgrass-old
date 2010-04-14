@@ -252,7 +252,7 @@ module PageHelper
   # The list partial hands all local vars down to the page partial
   # that are in the list of allowed locals.
   def page_locals(locals)
-    allowed_locals = [:columns, :checkable, :with_cover, :with_owner, :with_notice]
+    allowed_locals = [:columns, :checkable, :with_cover, :with_owner, :with_notice, :with_tooltip]
     locals.reject { |key,_| !allowed_locals.include? key }
   end
 
@@ -627,22 +627,31 @@ module PageHelper
   end
 
   def summary_for(page)
-    text_with_more(page.summary, :p, :class=>'cover', :more_url=> page_url(page), :length => 300)
+    klass = page.cover.nil? ? '' : 'cover'
+    text_with_more(page.summary, :p, :class => klass, :more_url=> page_url(page), :length => 300)
   end
 
-  def owner_image(page)
+  def owner_image(page, options={})
     return unless page.owner
     display_name = page.owner.respond_to?(:display_name) ? page.owner.display_name : ""
-    link_to "#{avatar_for page.owner, 'small'}",
-      url_for_entity(page.owner), :class => 'imglink', :title => display_name
+    url = url_for_entity(page.owner)
+    img_tag = avatar_for page.owner, 'small'
+    if options[:with_tooltip]
+      owner_entity = I18n.t((page.owner.is_a?(Group) ? 'group' : 'user').to_sym).downcase
+      details = I18n.t(:page_owned_by, :title => page.title, :entity => owner_entity, :name => display_name)
+      render :partial => 'pages/page_details', :locals => {:url => url, :img_tag => img_tag, :details => details}
+    else
+      link_to(img_tag, url, :class => 'imglink tooltip', :title => display_name)
+    end
   end
 
   def page_html_attributes(page)
     icon = page.icon || :page_text_blue
 
-    classes = %w(cover small_icon)
+    classes = %w(small_icon)
     classes << "#{icon}_16"
     classes << 'unread' if page_is_unread(page)
+    classes << 'cover' unless page.cover.nil?
     { :class => classes.join(' ') }
   end
 

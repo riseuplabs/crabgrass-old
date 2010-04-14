@@ -37,6 +37,16 @@ Given(/^#{capture_model} has the following members:$/) do |group, table|
   end
 end
 
+Given /^#{capture_model} has committees (.*)$/ do |group, committees|
+  group = model!(group)
+  committees.gsub!(/\s/, '')
+  committees.split(',').each do |committee|
+    committee = create_model('a committee', {:name => committee}).last
+    # false means this is not a council
+    group.add_committee!(committee, false)
+  end
+end
+
 Given /^#{capture_model} has a committee(?: with #{capture_fields})$/ do |group, committee_fields|
   group = model!(group)
   committee = create_model('a committee', committee_fields).last
@@ -54,11 +64,7 @@ end
 
 Given /^#{capture_model}(?:'s)? country is "([^\"]+)"$/ do |group, country|
   group = model!(group)
-  public_profile = group.profiles.find_by_stranger(true)
-  gl = GeoLocation.new({
-      :geo_country_id => 2,
-      :profile_id => group.profile.id.to_i
-  })
-  public_profile.update_attributes(:geo_location => gl) 
-  ### this would be a good place for directly manipulating the db.
+  gl = GeoLocation.make(:geo_country_id => 2)
+  profile = Profile.make(:entity => group, :stranger => 1, :peer => 1, :friend => 1, :geo_location_id => gl.id, :may_see=>1)
+  profile.save!
 end

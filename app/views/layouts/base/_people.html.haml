@@ -3,6 +3,5 @@
     = I18n.t(:people).downcase
     %span
       = membership_count_link(:text => :total)
-
-  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :coordinators, :what => 'coordinators', :conditions => may_list_memberships? }
+  = render :partial => '/avatars/entity_list', :locals => { :collection => @group.council.users.sort{|a,b| rand(3)-1}[0..4], :i18n_title => :coordinators, :what => 'coordinators', :conditions => @group.real_council && may_list_memberships? }
   = render :partial => '/avatars/entity_list', :locals => { :collection => @group.users.reverse[0..4], :i18n_title => :new_members, :what => 'new-members', :conditions => may_list_memberships? }

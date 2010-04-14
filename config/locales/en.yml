@@ -1038,6 +1038,7 @@ en:
   page_list_heading_happens: "happens"
   page_list_heading_last_post: "last post"
   page_list_heading_views: "views"
+  page_owned_by: "'{{title}}' is owned by {{entity}} '{{name}}'"
 
   page_notice_message: "{{user}} notified you about this page on {{date}}"
   page_with_message: "with message"
@@ -1046,7 +1047,6 @@ en:
 
   pagination_older: "Older"
   pagination_newer: "Newer"
-
 
   view_posts_link: "view"
 

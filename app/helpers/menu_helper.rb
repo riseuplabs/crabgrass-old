@@ -92,7 +92,7 @@ module MenuHelper
   def people_option
     top_menu(
       I18n.t(:menu_people),
-      people_directory_url(:friends),
+      '/people/directory',
       :active => @active_tab == :people,
       :menu_items => menu_items('boxes', {
         :entities => current_user.friends.most_active,

@@ -37,7 +37,7 @@ class GroupsController < Groups::BaseController
   def show
     group_landing_instance_vars()
     @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
-    @announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
+    #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
     @wiki = private_or_public_wiki()
     #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
     render :layout => 'header_for_sidebar'

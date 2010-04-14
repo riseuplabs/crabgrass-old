@@ -26,15 +26,19 @@ module UrlHelper
 
     case type
     when :network
-      network_directory_params(options)
+      network_directory_params(options).merge(location_params)
     when :group
-      group_directory_params(options)
+      group_directory_params(options).merge(location_params)
     when :people
       id=id_for_people(options.delete(:action))
       people_directory_url(id, options)
     else
       raise "Bad type #{type} for when building directory_params for the url"
     end
+  end
+
+  def location_params
+    {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
   end
 
   def id_for_people(action)

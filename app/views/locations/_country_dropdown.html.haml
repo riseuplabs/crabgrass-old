@@ -1,4 +1,3 @@
 %div#select_country
-  - options = [ I18n.t(:location_country).capitalize].concat(GeoCountry.find(:all).to_select(:name, :id))
-  = select(object,method, options, {}, {:name => name, :id => 'select_country_id', :class=>'country_dropdown',:onchange => onchange})
+  = select(object,method, choices, opts, {:name => name, :id => 'select_country_id', :class=>'country_dropdown',:onchange => onchange})
   = spinner('country')

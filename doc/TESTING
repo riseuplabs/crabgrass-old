@@ -34,14 +34,19 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
 gems:
   cucumber
+  cucumber-rails
   webrat
   langalex-culerity
+  spork
 
 packages:
   jruby > 1.4
 
 jruby gems:
   celerity
+
+database config:
+  You will also need to add a block for cucumber: in config/database.yml.  Copying the settings from crabgrass_development should do the trick.
 
 = Cucumber and Javascript Tests
 
@@ -60,6 +65,29 @@ We're not using fixtures for Cucumber. We're using factories instead.
 
 Machinist - a fixture replacement, it generates model records based on rules
 Pickle    - a cucumber plugin that makes it very easy to drive machinist from cucumber steps. see: http://github.com/ianwhite/pickle
+
+== Running Cucumber Features
+The following are the rake tasks that can be used to run cucumber tests.
+To run all cucumber tests that are expected to pass:
+  % rake cucumber
+  N.B.: this runs the default (non-js) features first. if any of these fail, cucumber exits, and the js features do not get run.
+
+To run all non-js tests that are expected to pass:
+  % rake cucumber:default
+
+To run all js tests that are expected to pass:
+  % rake cucumber:js
+
+To run wip (work in progress) tasks, these are not expected to pass:
+All:
+  % rake cucumber:wip
+Non-js:
+  % rake cucumber:wip_default
+js:
+  %rake cucumber:wip_js
+
+The environment variable CUCUMBER_FORMAT can be used to change the output. For example this will cause the cucumber command line to us the --format=progress option:
+  % rake cucumber CUCUMBER_FORMAT='progress' 
 
 == Plain (non-js) Features
 
@@ -98,6 +126,14 @@ http://github.com/jarib/celerity
 http://github.com/langalex/culerity
 http://jruby.org/download -- get the latest version and see the README - it's an easy install
 
+== WIP Features
+
+Features can be tagged with @wip, in which case they will are known to be works in progress. These features will only be run using one of the following rake tasks:
+rake cucumber:wip
+rake cucumber:wip_default
+rake cucumber:wip_js
+
+As such, these tests will not be run under the 'rake cucumber' task, so they should not cause overall test failure.
 
 = Integration Tests
 

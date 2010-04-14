@@ -11,4 +11,9 @@ class MeTest < ActionController::IntegrationTest
     assert_contain 'Successfully uploaded a new avatar image'
   end
 
+  def pages_list_contains_owner_tooltip
+    login 'blue'
+    assert_have_selector 'a.tooltip'
+  end
+
 end

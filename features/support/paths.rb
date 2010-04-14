@@ -16,7 +16,7 @@ module NavigationHelpers
     when /the login page/
       login_path
     when /my dashboard page/
-      '/me/dashboard'
+      '/me/my_work'
     when /my work page/
       '/pages/my_work'
     when /my all pages page/
@@ -27,9 +27,12 @@ module NavigationHelpers
       '/groups/directory/destroyed'
     when /the moderation panel/
       '/admin/pages'
-    when /the group directory/
-      '/groups/directory/search'
-
+    when /the (group|network) directory/
+      "/#{$1}s/directory/search"
+    when /the people directory/
+      "/people/directory/browse"
+    when /the my (groups|networks|people) directory/
+      "/#{$1}/directory/my"
     when /^the page of #{capture_model}$/          # translate to named route
       "/page/#{model($1).friendly_url}"
 

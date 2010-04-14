@@ -3,6 +3,25 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
+0.5.1.1 -- 2010 April 13th 
+  * Bug #2109: not all committees showing on a group page
+
+0.5.1 -- 2010 April 12th -- https://labs.riseup.net/code/versions/show/82
+  * Bug #1816: second and third level navs not working properly in sitehome group
+  * Bug #1891: notifications should look like the wires
+  * Bug #1959: edit tags layout is out if tags are already added
+  * Bug #1973: group page feed generated from clicking in a tag not full width
+  * Bug #1974: edit link for custom nav links on sitehome needs to move
+  * Bug #1989: third level nav not highlighted when landing on network > pages
+  * Bug #2025: filter network by location searches through groups instead of networks
+  * Bug #2027: group landing page “coordinators” section doesn’t show coordinators
+  * Bug #2075: in a wiki table after heading added on the right of the heading
+  * Bug #2088: fix cover image appearance in pages list
+  * Bug #2092: spacing within page feeds
+  * Bug #2109: not all committees showing on a group page.
+  * Feature #1822: user with no groups should land on discover groups, not my groups
+  * Feature #2007: bring back the owner title in me-section
+
 0.5.0 -- 2010 March 13 -- https://labs.riseup.net/code/versions/show/38
   * Bug #493: Whitespace prob with link title that starts with "a "
   * Bug #843: Climate Change inappropriate link creates a 404 error
