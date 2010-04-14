@@ -29,7 +29,7 @@ class MeController < Me::BaseController
         account_context('large')
 #      else 
 #        add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
-#      end
+      end
     end
   end
 

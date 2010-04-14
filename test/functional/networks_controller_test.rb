@@ -30,6 +30,7 @@ class NetworksControllerTest < ActionController::TestCase
   def edit
     login_as :blue
     get :edit, :id => groups(:fai).to_param
+    assert_equal assigns(:group_navigation), :settings
     assert_response :success
   end
 
