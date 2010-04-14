@@ -1,12 +1,17 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class NetworksControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships, :federatings
+  fixtures :users, :groups, :memberships, :federatings, :sites
 
   def test_show
     login_as :blue
     get :show, :id => groups(:fai).to_param
     assert_response :success
+
+    enable_site_testing('site1')
+    @current_site=Site.current
+    get :show, :id => groups(:cnt).to_param
+    assert_response :redirect
   end
 
   def test_create
@@ -20,6 +25,12 @@ class NetworksControllerTest < ActionController::TestCase
       assert_response :redirect, "redirect to edit on creation of new network"
       assert_redirected_to :controller => :networks, :action=>'edit', :id=>'testnet'
     end
+  end
+
+  def edit
+    login_as :blue
+    get :edit, :id => groups(:fai).to_param
+    assert_response :success
   end
 
   def create_with_no_groups
