@@ -88,7 +88,15 @@ module FunctionalTestHelper
       assert_response(:redirect, message)
       return true if options == @response.redirected_to
 
-      if @response.redirected_to.is_a?(Hash) && options.all? { |(key, value)| @response.redirected_to[key].to_s == value.to_s }
+
+
+      if @response.redirected_to.is_a?(Hash) && options.all? { |(key, value)|
+            response_value = @response.redirected_to[key].to_s.dup
+            test_value = value.to_s
+            # remove leading / when redirected_to :controller
+            response_value.gsub!(/^\//, "") if key.to_sym == :controller
+            test_value == response_value
+          }
         return true
       elsif options.is_a?(String) || @response.redirected_to.is_a?(String)
         url = @response.redirected_to.kind_of?(Hash) ? url_for(@response.redirected_to.merge(:only_path => true)) : @response.redirected_to

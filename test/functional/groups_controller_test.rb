@@ -535,9 +535,8 @@ editing tools on a group basis has been abandoned iirc, azul
     [:create, :edit, :destroy, :update,
       :edit_featured_content, :feature_content, :update_featured_pages
     ].each do |action|
-      assert_requires_login(nil, @request.host) do |c|
-        c.get action, :id => groups(:public_group).name
-      end
+      get action, :id => groups(:public_group).name
+      assert_login_required
     end
 
 # should we test unlogged-in stuff on a private group?

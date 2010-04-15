@@ -4,9 +4,8 @@ class ChatControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :sites
 
   def test_index_when_not_logged_in
-    assert_login_required do
-      get :index
-    end
+    get :index
+    assert_login_required
   end
 
   def test_index_when_logged_in
@@ -19,9 +18,8 @@ class ChatControllerTest < ActionController::TestCase
   end
 
   def test_channel_when_not_logged_in
-    assert_login_required do
-      get :channel, :id => groups(:rainbow).name
-    end
+    get :channel, :id => groups(:rainbow).name
+    assert_login_required
   end
 
   def test_channel_when_not_in_group
@@ -39,9 +37,8 @@ class ChatControllerTest < ActionController::TestCase
  end
 
   def test_channel_archive_when_not_logged_in
-    assert_login_required do
-      get :archive, :id => groups(:rainbow).name
-    end
+    get :archive, :id => groups(:rainbow).name
+    assert_login_required
   end
 
   def test_channel_archive_when_not_in_group

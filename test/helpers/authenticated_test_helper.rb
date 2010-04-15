@@ -39,14 +39,6 @@ module AuthenticatedTestHelper
   #  end
   #
 
-  # Assert the block redirects to the login
-  #
-  #   assert_requires_login(:bob) { |c| c.get :edit, :id => 1 }
-  #
-  def assert_requires_login(login = nil, host = nil)
-    yield HttpLoginProxy.new(self, login, host)
-  end
-
   def assert_http_authentication_required(login = nil)
     yield XmlLoginProxy.new(self, login)
   end
