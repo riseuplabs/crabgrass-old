@@ -177,6 +177,12 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_avatar
+    # must have GM installed
+    if !Media::Process::GraphicMagick.new.available?
+      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping GroupTest#test_avatar."
+      return
+    end
+
     group = nil
     assert_difference 'Avatar.count' do
       group = Group.create(:name => 'groupwithavatar', :avatar => {

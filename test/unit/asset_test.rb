@@ -186,6 +186,10 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_dimensions
+    if !Media::Process::GraphicMagick.new.available?
+      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
+      return
+    end
     @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     assert_equal 500, @asset.width, 'width must match file'
     assert_equal 321, @asset.height, 'height must match file'
@@ -207,10 +211,18 @@ class AssetTest < ActiveSupport::TestCase
   end
 
   def test_doc
+    # must have OO installed
     if !Media::Process::OpenOffice.new.available?
       puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
+
+    # must have GM installed
+    if !Media::Process::GraphicMagick.new.available?
+      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
+      return
+    end
+
     @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'
