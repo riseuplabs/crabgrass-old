@@ -13,12 +13,12 @@ title: "Crabgrass Testing"
 
 # all mods to be tested must be enabled
 enabled_mods:
-   - chat
-   - cracklib
-   - moderation
-   - super_admin
-   - translator
-   - ui_tester
+   # - chat
+   # - cracklib
+   # - moderation
+   # - super_admin
+   # - translator
+   # - ui_tester
 
 sites:
 # bound to localhost:
