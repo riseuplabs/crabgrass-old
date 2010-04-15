@@ -11,26 +11,21 @@ module I18n
     end
 
     def site_scope
-      Site.current.try.name.try.to_sym
+      scope_name = Site.current.try.name.try.to_sym
+      # default is reserved word
+      scope_name == :default ? nil : scope_name
     end
 
     def translate_with_site_scope(key, options = {})
       if site_scope
-        locale = options[:locale] || I18n.locale
-        keys = I18n.send(:normalize_translation_keys, locale, key, options[:scope])
+        site_options = options.dup
+        site_options[:scope] = [site_scope] | (options[:scope] || [])
 
-        # leave only scope components
-        keys.delete(locale)
-        keys.delete(key)
-
-        # make site scope the top scope
-        keys.unshift(site_scope)
-
-        # use this new scope
-        options[:scope] = keys
+        site_specific_translation = translate_without_site_scope(key, site_options)
       end
-
-      translate_without_site_scope(key, options)
+    ensure
+      return site_specific_translation unless site_specific_translation.blank?
+      return translate_without_site_scope(key, options)
     end
 
     alias_method_chain :translate, :site_scope
@@ -57,21 +52,12 @@ def crabgrass_i18n_exception_handler(exception, locale, key, options)
   # see i18n.rb in activesupport gem
   # for the default I18n exception_handler
   if I18n::MissingTranslationData === exception
-
+    #options[:scope] ||= []
     # try falling back to non-site specific translations
-    keys = I18n.send(:normalize_translation_keys, locale, key, options[:scope])
-    if keys.include?(I18n.site_scope)
-      # keys = [:en, :thediggers, :some_other_scope, :title]
-      # delete everything except :some_other_scope
-      keys.delete(I18n.site_scope)
-      keys.delete(locale)
-      keys.delete(key)
-
-      options[:scope] = keys
-      options[:locale] = locale
-
-      # try the same key but without site scope
-      return  I18n.translate_without_site_scope(key, options)
+    #keys = I18n.send(:normalize_translation_keys, locale, key, options[:scope])
+    if I18n.site_scope && options[:scope].try.first == I18n.site_scope
+      # do nothing, site scope is alway used optionaly.
+      return nil
     elsif locale == :en
       if RAILS_ENV != "production" && (RAILS_ENV == 'test' ? Conf.raise_i18n_exceptions : true )
         raise exception
