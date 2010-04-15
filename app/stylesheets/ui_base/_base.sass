@@ -118,30 +118,26 @@ a
 
 /* headers */
 h1, h2, h3, h4, h5, h6
-  +sans-family-headings
+  +headings
   line-height: 1
   font-weight: bold
 
 h1
-  font-size: 22px
+  font-size: !h1_size
   color= !almost_black
-
 h2
-  font-size: 18px
+  font-size: !h2_size
   color= !almost_black
 h3
-  font-size: 16px
+  font-size: !h3_size
   color= !red
-
 h4
-  font-size: 13px
+  font-size: !h4_size
   color: #777
-
 h5
-  :font-size 11px
-
+  font-size: !h5_size
 h6
-  :font-size 9px
+  font-size: 9px
 /* @end */
 
 
@@ -1156,9 +1152,9 @@ ul.side_list
 /* basic page layout */
 body
   +susy
-  +sans-family
+  +general-font
   color= !almost_black
-  background= !page_bg
+  background= !general_bg
   #page
     header.page
       +clearfix
@@ -1172,7 +1168,7 @@ body
       +container
       +pie-clearfix
       background-image: none
-      background-color= !white_bg
+      background-color= !content_bg
       padding-bottom: 100px
       overflow: visible
       width: 764px
