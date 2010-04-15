@@ -71,6 +71,7 @@ class ActiveSupport::TestCase
   include LoginTestHelper
   include FixtureTestHelper
   include DebugTestHelper
+  include SkipTestHelper
 
   # make sure the associations are at least defined properly
   def check_associations(m)
