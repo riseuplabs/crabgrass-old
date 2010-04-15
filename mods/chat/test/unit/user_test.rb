@@ -1,10 +1,25 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
+ActiveSupport::TestCase.class_eval do
+  def run_with_skip(result)
+    debugger
+    run_without_skip(result) unless skip
+  end
+
+  alias_method_chain :run, :skip
+end
+
 class UserTest < ActiveSupport::TestCase
   fixtures :users
 
+  def skip
+    debugger
+    true
+    #!Conf.enabled_mods.include? 'chat'
+  end
+
   # We need a hostname in order to construct a Jabber ID for each user.
-  DOMAIN = UserExtension::DOMAIN
+  #DOMAIN = UserExtension::DOMAIN
 
   # Common definitions for all tests.
   def setup
