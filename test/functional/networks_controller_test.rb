@@ -3,6 +3,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 class NetworksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :federatings, :sites
 
+
+  def test_check_site_settings
+    enable_site_testing('nonetworks')
+    current_site=Site.current
+    get :show, :id => groups(:cnt).to_param
+    assert_redirected_to('/me/dashboard')
+  end
+
   def test_show
     login_as :blue
     get :show, :id => groups(:fai).to_param
@@ -13,7 +21,7 @@ class NetworksControllerTest < ActionController::TestCase
     get :show, :id => groups(:cnt).to_param
     assert_response :redirect
   end
-
+ 
   def test_create
     login_as :blue
     get :new
