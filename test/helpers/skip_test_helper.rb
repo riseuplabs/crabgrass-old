@@ -10,8 +10,8 @@ module SkipTestHelper
             @skip_method
           end
 
-          def run_with_skip(result)
-            run_without_skip unless send self.class.skip_method
+          def run_with_skip(result, &block)
+            run_without_skip(result, &block) unless send self.class.skip_method
           end
 
           alias_method_chain :run, :skip
