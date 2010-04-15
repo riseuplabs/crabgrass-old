@@ -46,29 +46,6 @@ class String
     end
   end
 
-  #
-  # replaces the symbols in a string
-  # eg
-  #  'I love {color} {thing}'.replace_symbols(:color => 'green', :thing => 'trees')
-  # produces:
-  #  'I love green trees'
-  #
-  def percent_with_hash(hash)
-    if hash.is_a? Hash
-      str = self.dup
-      hash.each do |key, value|
-        str.gsub! /:#{key}/, value.to_s
-        str.gsub! /\{#{key}\}/, value.to_s
-      end
-      str
-    else
-      percent_without_hash(hash)
-    end
-  end
-  alias :percent_without_hash :%
-  alias :% :percent_with_hash
-
-  # :call-seq:
   #   str.index_split(pattern) => anArray
   #
   # Split the string for each match of the regular expression _pattern_.
