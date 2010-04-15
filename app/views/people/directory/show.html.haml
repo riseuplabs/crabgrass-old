@@ -7,7 +7,7 @@
 
 %section#people_listing
   = letter_pagination_links({}, :available_letters => @pagination_letters)
-  = render :partial => 'users'
+  = render :partial => 'users', :collection => @users
   %br.clear
   = pagination_links @users
 
