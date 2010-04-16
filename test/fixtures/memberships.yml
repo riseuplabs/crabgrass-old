@@ -75,6 +75,10 @@ warm_yellow:
   group_id: 31
   user_id: 7
   id: <%= id += 1 %>
+warm_blue:
+  group_id: 31
+  user_id: 4
+  id: <%= id += 1 %>
 
 # rainbows cold committee
 # members: green, blue, purple

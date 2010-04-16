@@ -6,7 +6,7 @@ class DispatchController; def rescue_action(e) raise e end; end
 
 class DispatchControllerTest < Test::Unit::TestCase
 
-  fixtures :pages, :users, :user_participations, :sites
+  fixtures :pages, :users, :user_participations, :sites, :groups, :memberships
 
   def setup
     @controller = DispatchController.new
@@ -55,6 +55,24 @@ class DispatchControllerTest < Test::Unit::TestCase
     # assert_tag 'remove from my inbox'
 
     post 'pages/remove_from_my_pages/1'
+  end
+
+  def test_record_not_found
+    login_as :blue
+    get :dispatch, :_page => 'fiddleyfoo', :_context => 'blue' 
+    assert_response :redirect
+  end
+
+  def test_find_by_context_and_name
+    login_as :blue
+    get :dispatch, :_page  => "committee_page", :_context => 'rainbow the-warm-colors'
+    assert_response :success
+
+    get :dispatch, :_page => 'rainbow_page', :_context => 'rainbow'
+    assert_response :success
+
+    get :dispatch, :_page => 'blue_page', :_context => 'blue'
+    assert_response :success
   end
 
 end
