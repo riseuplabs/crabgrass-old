@@ -28,6 +28,14 @@ class DispatchControllerTest < Test::Unit::TestCase
     assert_equal 5, assigns(:page).id
   end
 
+  # this test raises an error:
+  #NoMethodError: undefined method `>' for []:WillPaginate::Collection
+  # is this valid? is something broken??
+  def test_find_multiple_pages
+    get :dispatch, :_page => 'garble'
+    assert (assigns(:pages) > 1)
+  end
+
   def test_routes_with_all_numbers
     page = DiscussionPage.create! :name => '2006', :title => '2006', :public => true
     get :dispatch, :_page => '2006'
@@ -66,13 +74,34 @@ class DispatchControllerTest < Test::Unit::TestCase
   def test_find_by_context_and_name
     login_as :blue
     get :dispatch, :_page  => "committee_page", :_context => 'rainbow the-warm-colors'
-    assert_response :success
+    assert assigns('page')
+    assert assigns('group')
 
     get :dispatch, :_page => 'rainbow_page', :_context => 'rainbow'
-    assert_response :success
+    assert assigns('page')
+    assert assigns('group')
 
     get :dispatch, :_page => 'blue_page', :_context => 'blue'
-    assert_response :success
+    assert assigns('page')
+    assert assigns('user')
+  end
+
+  def test_no_page
+    login_as :blue
+    get :dispatch, :_context => 'blue'
+    assert assigns('user')
+    get :dispatch, :_context => 'rainbow'
+    assert assigns('group')
+    get :dispatch, :_context => 'fai'
+    assert assigns('group')
+  end
+
+  def test_site_network
+    enable_site_testing('site1')
+    @current_site=Site.current
+    login_as :blue
+    get :dispatch, :_context => 'cnt'
+    assert_redirected_to('/')
   end
 
 end
