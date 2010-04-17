@@ -23,19 +23,21 @@ class ActiveSupport::TestCase
   ### MOD MIGRATIONS
 
   def mod_migrate
-    engines_plugins_migrate mod_name
+    engines_plugin_migrate mod_name
   end
 
   # apply the latest migrations from the plugin to the DB
-  def engines_plugins_migrate(plugin_name)
+  def engines_plugin_migrate(plugin_name)
     plugin = Engines.plugins[plugin_name]
     current_version = Engines::Plugin::Migrator.current_version(plugin)
     latest_version = plugin.latest_migration
     migration_file_exists = !Dir.glob(RAILS_ROOT + "/db/migrate/*#{plugin.name}_to_version_#{latest_version}.rb").empty?
 
-    if !migration_file_exists && latest_version.to_i > current_version.to_i
+    return true if migration_file_exists
+    if latest_version.to_i > current_version.to_i
       plugin.migrate(latest_version)
     end
+    latest_version == Engines::Plugin::Migrator.current_version(plugin)
   end
 
 end
