@@ -56,3 +56,8 @@ redwood:
   name: "redwood"
   title: "just a random site for redwood trees"
   limited: true
+nonetworks:
+  id: 6
+  name: "nonetworks"
+  has_networks: false
+  limited: false 
