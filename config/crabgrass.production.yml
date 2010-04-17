@@ -13,8 +13,8 @@
 ## GLOBAL
 ##
 enabled_mods:
-  - super_admin
-  - moderation
+#  - super_admin
+#  - moderation
   - translator
 enabled_tools:
   - asset_tool
