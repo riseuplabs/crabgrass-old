@@ -8,7 +8,7 @@ shirak:
   id: 2
   geo_country_id: 1
   admin1_code: 07
-  namee: Shirak
+  name: Shirak
 
 ragged_island:
   id: 3
