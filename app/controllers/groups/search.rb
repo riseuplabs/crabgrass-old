@@ -80,21 +80,20 @@ module Groups::Search
     search_template('discussions')
   end
 
-### i don't think these are used anymore
-#  def contributions
-#    @path.default_sort('updated_at').merge!(:limit => 20, :contributed_group => @group.id)
-#
-#    @pages = Page.find_by_path(@path, options_for_contributions).each do |page|
-#      page.updated_by_id = page.user_id # user_id is from user_participation.
-#      page.updated_by_login = User.find(page.user_id).login
-#      page.updated_at = page.changed_at # changed_at is from user_participation.
-#   end
-#    search_template('contributions')
-#  end
-#
-#  def options_for_contributions
-#    options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
-#  end
+  def contributions
+    @path.default_sort('updated_at').merge!(:limit => 20, :contributed_group => @group.id)
+
+    @pages = Page.find_by_path(@path, options_for_contributions).each do |page|
+      page.updated_by_id = page.user_id # user_id is from user_participation.
+     page.updated_by_login = User.find(page.user_id).login
+      page.updated_at = page.changed_at # changed_at is from user_participation.
+   end
+    search_template('contributions')
+  end
+
+  def options_for_contributions
+    options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
+  end
 
   def pages
     @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params))
