@@ -10,10 +10,10 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass.git"
-set :branch, "master"
+set :branch, "cgdemo"
 
-deploy_host = "xxxxxx"
-staging_host = "munia.riseup.net"
+deploy_host = "quetzl.riseup.net"
+staging_host = "quetzl.riseup.net"
 
 staging = ENV['TARGET'] != 'production'
 
@@ -159,10 +159,10 @@ namespace :crabgrass do
     end
   end
 
-  desc "refresh the staging database"
-  task :refresh do
-    run "touch #{deploy_to}/shared/tmp/refresh.txt"
-  end
+#  desc "refresh the staging database"
+#  task :refresh do
+#    run "touch #{deploy_to}/shared/tmp/refresh.txt"
+#  end
 
   desc "starts the crabgrass daemons"
   task :restart do
