@@ -4,12 +4,13 @@ class NetworksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :federatings, :sites
 
 
-  def test_check_site_settings
-    enable_site_testing('nonetworks')
-    current_site=Site.current
-    get :show, :id => groups(:cnt).to_param
-    assert_redirected_to('/me/dashboard')
-  end
+#  def test_check_site_settings
+#    enable_site_testing()
+#    Site.current.update_attributes!(:has_networks => 0)
+#    @current_site = Site.current 
+#    get :show, :id => groups(:cnt).to_param
+#    assert_response :redirect
+#  end
 
   def test_show
     login_as :blue
