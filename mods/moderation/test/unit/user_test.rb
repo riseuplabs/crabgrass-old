@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class Moderation
   class UserTest < ActiveSupport::TestCase
     skip_if :mod_disabled_or_migrations_fail?
+    migrates :users, :sites, :groups, :pages, :posts, :moderated_flags, :profiles
 
     def setup
       setup_site_with_moderation

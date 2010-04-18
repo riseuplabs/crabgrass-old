@@ -22,9 +22,24 @@ class ActiveSupport::TestCase
 
   ### MOD MIGRATIONS
 
+  # migrates specifies the tables this mod migrates.
+  # This is necessary to reload the table information
+  # after the migrations so they are up to date for
+  # the tests
+  def self.migrates(*tables)
+    @migrates_tables ||= []
+    @migrates_tables |= tables
+  end
+
+  def self.migrates_tables
+    @migrates_tables
+  end
+
   def mod_migrate
     engines_plugin_migrate mod_name
   end
+
+  private
 
   # apply the latest migrations from the plugin to the DB
   def engines_plugin_migrate(plugin_name)
@@ -36,6 +51,10 @@ class ActiveSupport::TestCase
     return true if migration_file_exists
     if latest_version.to_i > current_version.to_i
       plugin.migrate(latest_version)
+      self.class.migrates_tables.try.each do |table|
+        klass=table.to_s.classify.constantize
+        klass.reset_column_information
+      end
     end
     latest_version == Engines::Plugin::Migrator.current_version(plugin)
   end
