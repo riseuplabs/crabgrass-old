@@ -1,0 +1,25 @@
+InheritableTemplates
+====================
+
+Looks for templates and partials to render in the entire controller inheritance chain.
+
+Say you have:
+
+  DocumentsController < ApplicationController
+  ArticlesController < DocumentsController
+
+and a view file at:
+
+  app/views/documents/list.html.erb
+
+If you request articles/list, and app/views/articles/list.html.erb doesn't exist, this
+plugin will render app/views/documents/list.html.erb for you.
+
+
+## Usage
+
+Just drop it in your plugins folder, everything happens automatically.
+
+
+--
+Copyright (c) 2008 Caio Chassot, released under the MIT license
