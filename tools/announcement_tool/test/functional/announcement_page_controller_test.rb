@@ -25,7 +25,7 @@ class AnnouncementPageControllerTest < ActionController::TestCase
     post 'create', :id => AnnouncementPage.param_id, :page => {:title => "announcement page", :summary => ""}, :body => "the text"
     page = assigns(:page)
 
-    assert_redirected_to "_page_action" => "show", "_page" => page.name_url
+    assert_redirected_to @controller.page_url(page, :action => 'show'), "create action should redirect to show"
     assert_not_nil page
     assert_equal "announcement page", page.title
     assert_equal "the text", page.data.body
