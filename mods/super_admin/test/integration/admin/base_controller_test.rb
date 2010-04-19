@@ -1,6 +1,7 @@
 require "#{File.dirname(__FILE__)}/../../test_helper"
 
 class Admin::BaseTest < ActionController::IntegrationTest
+  skip_if :mod_disabled_or_migrations_fail?
 
   fixtures :users, :memberships, :groups, :sites
 

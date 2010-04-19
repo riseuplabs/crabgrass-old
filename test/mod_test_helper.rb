@@ -13,13 +13,20 @@ class ActiveSupport::TestCase
   end
 
   def mod_enabled?
-    Conf.enabled_mods.include? mod_name
+    Conf.enabled_mods.include? mod.name.underscore
   end
 
-  def mod_name
-    self.class.name.split('::').first.underscore
+  def mod
+    self.class.name.split('::').first.constantize
   end
 
+  def mod_migrate
+    mod.migrate
+  end
+
+end
+
+class Mod
   ### MOD MIGRATIONS
 
   # migrates specifies the tables this mod migrates.
@@ -35,14 +42,14 @@ class ActiveSupport::TestCase
     @migrates_tables
   end
 
-  def mod_migrate
-    engines_plugin_migrate mod_name
+  def self.migrate
+    engines_plugin_migrate self.name.underscore
   end
 
-  private
+  protected
 
   # apply the latest migrations from the plugin to the DB
-  def engines_plugin_migrate(plugin_name)
+  def self.engines_plugin_migrate(plugin_name)
     plugin = Engines.plugins[plugin_name]
     current_version = Engines::Plugin::Migrator.current_version(plugin)
     latest_version = plugin.latest_migration
@@ -51,7 +58,7 @@ class ActiveSupport::TestCase
     return true if migration_file_exists
     if latest_version.to_i > current_version.to_i
       plugin.migrate(latest_version)
-      self.class.migrates_tables.try.each do |table|
+      migrates_tables.try.each do |table|
         klass=table.to_s.classify.constantize
         klass.reset_column_information
       end
@@ -59,4 +66,13 @@ class ActiveSupport::TestCase
     latest_version == Engines::Plugin::Migrator.current_version(plugin)
   end
 
+  class Controller
+    class TestCase < ActionController::TestCase
+      def self.determine_default_controller_class(name)
+        name_without_mod = name.sub(/^[^:]*::/, '')
+        super name_without_mod
+      end
+    end
+  end
 end
+
