@@ -22,7 +22,7 @@ class BasePage::YuckyController < BasePage::SidebarController
     if params[:flag]
       @flag.add({:reason=>params[:reason],:comment=>params[:comment]}) unless @flag.nil?
       if @post
-        summary = truncate(@post.body,400)
+        summary = truncate(@post.body, :length => 400)
         url = page_url(@post.discussion.page, :only_path => false) + "#posts-#{@post.id}"
       elsif @page
         summary = @page.summary

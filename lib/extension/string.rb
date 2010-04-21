@@ -53,6 +53,8 @@ class String
   # #index_split slices the string on the starting index of each _pattern_ match.
   #
   # Returns +str+ if the pattern does not match
+  # NOTE: There were discussions to make something similar to this part of ruby core
+  # check back when Ruby 2.0 is around
   def index_split(pattern)
     indexes = [0]
     last_index = 0

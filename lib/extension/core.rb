@@ -179,39 +179,6 @@ class Array
   def combine(delimiter = ' ')
     compact.join(delimiter)
   end
-
-  # copied from rails 2.3
-  # returns the object if it is an array or responsd to :to_ary
-  # returns a blank array if the object is nil
-  # finally, returns a new array containing the object
-  def wrap(object)
-    case object
-    when nil
-      []
-    when self
-      object
-    else
-      if object.respond_to?(:to_ary)
-        object.to_ary
-      else
-        [object]
-      end
-    end
-  end
-
-
-=begin
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.map {|i|
-      if(!i.nil? && P(i.respond_to?(m=:to_sym) || i.respond_to?(m=:symbolize)))
-        m == :to_sym ? i.to_sym : i.symbolize
-      else
-        i
-      end
-    }
-  end
-=end
 end
 
 
@@ -237,16 +204,6 @@ class Hash
     hsh
   end
 
-=begin
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.keys.inject({})  { |m, k|
-      m[k.kind_of?(Hash) ? k.symbolize : (k.respond_to?(:to_sym) ? k.to_sym : k)] = ((v = v.to_sym    rescue nil) ||
-                                                                                     (v = v.symbolize rescue nil) || v)
-      m
-    }
-  end
-=end
 end
 
 class Symbol
