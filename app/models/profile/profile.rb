@@ -188,11 +188,11 @@ class Profile < ActiveRecord::Base
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
       'email_addresses' => ::ProfileEmailAddress,  'websites'  => ::ProfileWebsite,
       'im_addresses'    => ::ProfileImAddress,     'notes'     => ::ProfileNote,
-      'crypt_keys'      => ::ProfileCryptKey      
+      'crypt_keys'      => ::ProfileCryptKey
     }
 
     profile_params.stringify_keys!
-    params = profile_params.allow(valid_params)
+    params = profile_params.slice valid_params
     params['summary_html'] = nil if params['summary'] == ""
 
     # save nil if value is an empty string:
@@ -210,7 +210,7 @@ class Profile < ActiveRecord::Base
 
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
-    
+
     geo_location_options = {
       :geo_country_id => params.delete('country_id'),
       :geo_admin_code_id => params.delete('state_id'),

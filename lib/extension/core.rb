@@ -215,40 +215,6 @@ class Array
 end
 
 
-class Hash
-  # returns a copy of the hash, limited to the specified keys
-  def allow(*keys)
-    keys = keys.first if keys.first.is_a? Array
-    hsh = {}
-    keys.each do |key|
-      value = self[key] || self[key.to_s] || self[key.to_sym]
-      hsh[key] = value if value
-    end
-    hsh
-  end
-
-  # returns a copy of the hash, without any of the specified keys
-  def forbid(*keys)
-    keys = keys.first if keys.first.is_a? Array
-    hsh = self.clone
-    keys.each do |key|
-      hsh.delete(key); hsh.delete(key.to_s); hsh.delete(key.to_sym)
-    end
-    hsh
-  end
-
-=begin
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.keys.inject({})  { |m, k|
-      m[k.kind_of?(Hash) ? k.symbolize : (k.respond_to?(:to_sym) ? k.to_sym : k)] = ((v = v.to_sym    rescue nil) ||
-                                                                                     (v = v.symbolize rescue nil) || v)
-      m
-    }
-  end
-=end
-end
-
 class Symbol
   # should do the same as sym.to_s.any?. symbols are never empty, hence #=> true
   def any?

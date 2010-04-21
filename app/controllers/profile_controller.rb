@@ -119,11 +119,11 @@ class ProfileController < ApplicationController
 #      # from saving.
 #      valid_keys = this_params.map do |key, value|
 #        values = ((ignored_keys = ignore[element]) ?
-#                  value.allow(value.keys-ignored_keys).values :
+#                  value.slice(value.keys-ignored_keys).values :
 #                  value.values)
 #        values.map(&:empty?).include?(false) ? key : nil
 #      end.compact
-#      params['profile'][plural] = this_params.allow(valid_keys)
+#      params['profile'][plural] = this_params.slice(valid_keys)
 #    end
 #  end
 
