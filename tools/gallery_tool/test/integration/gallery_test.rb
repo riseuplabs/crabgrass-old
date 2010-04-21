@@ -5,7 +5,7 @@ class GalleryTest < ActionController::IntegrationTest
     login 'purple'
 
     visit '/me/pages'
-    click_link I18n.t(:contribute_content_link) 
+    click_link I18n.t(:contribute_content_link)
     click_link 'Gallery'
 
     # within is not necessary (since the fields names are unique)
@@ -16,7 +16,7 @@ class GalleryTest < ActionController::IntegrationTest
       scope.select 'rainbow', :from => 'Page Owner'
       # TODO: attach_file with a multi item input name is broken.
       # figure out how to fix this
-      # might have to wait until Rails 2.3
+      # might require upgrading webrat
 
       # scope.attach_file 'assets[]', "#{RAILS_ROOT}/test/fixtures/assets/0000/0001/bee.jpg", "image/jpeg"
       # scope.attach_file 'assets[]', "#{RAILS_ROOT}/test/fixtures/assets/0000/0002/photo.jpg", "image/jpeg"
