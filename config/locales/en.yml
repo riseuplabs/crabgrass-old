@@ -1721,11 +1721,11 @@ en:
   # custom appearances
 
   succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"
-  enable_masthead_question: "Enable masthead?"
+  enable_masthead_question: "Enable masthead image?"
   masthead: "Masthead"
-  select_masthead_background_color: "Select masthead background color"
+  select_masthead_background_color: "Select masthead background color."
   upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  upload_masthead_image_label: "Upload an image for the masthead. It can't be taller than 80 pixels."
+  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
 
   masthead: "Masthead"
   advanced: "Advanced"
