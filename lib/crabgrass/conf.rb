@@ -196,7 +196,9 @@ class Conf
   # a mod will be enabled if explicitly configured to be so, or if
   # ENV['MOD'] is set.
   def self.mod_enabled?(mod_name)
-    self.enabled_mods.include?(mod_name) or ENV['MOD'] == mod_name
+    self.enabled_mods.include?(mod_name) or
+    ENV['MOD'] == mod_name or
+    ENV['MOD'] == 'ALL'
   end
 
   # tools are like mods, except that the default is to enable all tools
