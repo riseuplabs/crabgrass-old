@@ -52,11 +52,11 @@
     </td>
     <td>&nbsp;</td>
     <td>
-%     if action == 'update' and may_select_access_participation?
+<%     if action == 'update' and may_select_access_participation? %>
         <%= select_page_access 'recipient[access]', :blank => false %>
-%     else
+<%     else %>
         <%= hidden_field_tag 'recipient[access]' %>
-%     end
+<%     end %>
     </td>
     <td>
       <%= link_to_remote_icon('plus', add_action, :id => add_button_id) %>

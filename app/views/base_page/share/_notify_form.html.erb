@@ -11,12 +11,12 @@
     </td>
   </tr>
 
-% if @page.contributors_count #> 0
+<% if @page.contributors_count #> 0 %>
   <tr class='gap'>
     <td class="check"><%= check_box 'recipients', ':contributors' %></td>
     <td><%= label 'recipients', ':contributors', I18n.t(:notify_contribution) %></td>
   </tr>
-% end
+<% end %>
 
   <tr class='gap'>
     <td class="check"><%= check_box 'recipients', ':participants' %></td>

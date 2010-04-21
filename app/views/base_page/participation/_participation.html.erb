@@ -6,9 +6,9 @@
     <th>&nbsp;</th>
   </tr>
 
-% uparts = @page.user_participations.paginate(:page => params[:page], :per_page => 15, :include => :user, :order => 'users.login ASC')
-% uparts.each do |upart|
-%   next unless upart.user
+<% uparts = @page.user_participations.paginate(:page => params[:page], :per_page => 15, :include => :user, :order => 'users.login ASC')
+<% uparts.each do |upart| %>
+<%   next unless upart.user %>
     <tr class='<%=cycle "odd","even"%>'>
       <td><%= upart.user.login %></td>
       <td><%= friendly_date(upart.viewed_at) %></td>
@@ -19,10 +19,10 @@
         <%= icon_tag "tiny_star" if upart.star? %>
       </td>
     </tr>
-% end
+<% end %>
 </table>
-% if uparts.total_entries > uparts.per_page
+<% if uparts.total_entries > uparts.per_page %>
 <%= pagination_links(uparts, :params => {:controller => 'base_page/participation', :action => 'index', :page_id => @page.id, :tab => 'participation'}) %>
-% end
+<% end %>
 
 

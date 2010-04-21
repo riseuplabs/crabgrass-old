@@ -55,16 +55,6 @@ end
 #end
 
 gem 'actionpack', "=#{RAILS_GEM_VERSION}"
-require 'action_view'
-# enable trim-mode (as config.action_view.erb_trim_mode= is broken, see below)
-# this is required to run *before* the initializer block because afterwards the class is frozen.
-# https://rails.lighthouseapp.com/projects/8994/tickets/2553-actionviewtemplatehandlerserberb_trim_mode-broken
-class ActionView::TemplateHandlers::ERB
-  def erb_trim_mode
-    '%-'
-  end
-end
-
 
 Rails::Initializer.run do |config|
   ###
