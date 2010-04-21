@@ -25,7 +25,6 @@ end
 def enabled_mods_paths
   Conf.load 'crabgrass.test.yml'
   modlist = Conf.enabled_mods.join ','
-  debugger
   return "{#{modlist}}"
 end
 
