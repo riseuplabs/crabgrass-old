@@ -1,19 +1,7 @@
 class RankingPoll < Poll
   has_many :votes, :foreign_key => :votable_id, :class_name => "RankingVote", :dependent => :delete_all
 
-  # TODO: uncomment in rails2.3
-  # delegate :winners, :rank, ... :to => :results
-  def ranked_candidates
-    @results.ranked_candidates
-  end
-
-  def winners
-    @results.winners
-  end
-
-  def rank(possible)
-    @results.rank(possible)
-  end
+  delegate :winners, :rank, :ranked_candidates, :to => :results
 
   # returns:
   # a hash mapping possible name to an array of users who picked ranked this highest
