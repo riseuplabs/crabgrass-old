@@ -39,7 +39,7 @@ class Admin::CustomAppearancesController < Admin::BaseController
   end
 
   def available
-    @variables = CustomAppearance.available_parameters
+    @variables = CustomAppearance.available_parameters("ui_base")
   end
 
 protected

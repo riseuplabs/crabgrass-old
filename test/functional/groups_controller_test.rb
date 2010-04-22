@@ -315,7 +315,6 @@ class GroupsControllerTest < ActionController::TestCase
 #    assert_redirected_to :controller => :groups, :action => 'search', :path => [['text', 'e']], :id => groups(:public_group)
   end
 
-=begin
   def test_trash
     login_as :red
 
@@ -331,11 +330,10 @@ class GroupsControllerTest < ActionController::TestCase
 
     post :trash, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
-    assert_redirected_to 'group/trash/rainbow/text/e'
+    assert_redirected_to(:controller => 'groups', :action => 'trash', :path=>[["text", "e"]])
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for text"
   end
-=end
 
   def test_trash_not_allowed
     login_as :kangaroo
@@ -447,6 +445,12 @@ class GroupsControllerTest < ActionController::TestCase
     assert_not_nil Group.find_by_name('hack-committee')
     post :edit, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
+  end
+
+  def test_pages
+    login_as :blue
+    get :pages, :id => 'rainbow'
+    assert assigns(:pages)
   end
 
 =begin

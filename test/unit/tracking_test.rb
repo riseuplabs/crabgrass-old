@@ -72,10 +72,10 @@ class TrackingTest < ActiveSupport::TestCase
     user = users(:blue)
     group1 = groups(:rainbow)
     group2 = groups(:animals)
-    group3 = groups(:true_levellers)
-    3.times { Tracking.insert_delayed(:current_user => user, :group => group1) }
-    2.times { Tracking.insert_delayed(:current_user => user, :group => group2) }
+    group3 = groups(:recent_group)
     1.times { Tracking.insert_delayed(:current_user => user, :group => group3) }
+    2.times { Tracking.insert_delayed(:current_user => user, :group => group2) }
+    3.times { Tracking.insert_delayed(:current_user => user, :group => group1) }
     Tracking.process
     assert_equal [group1, group2, group3], user.primary_groups.most_active[0..2]
   end

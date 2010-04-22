@@ -3,7 +3,6 @@
 //
 #masthead
   +clearfix
-  height: 50px
   background= !masthead_background
   #masthead-container
     +container
@@ -55,7 +54,7 @@
           top: 1px
           .light-small
             +small-text
-            color= !white_text
+            color= !masthead_header_text
             margin-left: -5px
 
 
@@ -65,11 +64,11 @@
 nav.page
   +clearfix
   +bordered-top(!global_nav_top_brdr)
-  height: 29px
   background= !global_nav_bg
   overflow: visible
   #global-nav-container
     +container
+    height: 29px
     overflow: visible
     #global-nav
       +columns(14)

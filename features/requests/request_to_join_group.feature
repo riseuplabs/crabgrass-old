@@ -1,4 +1,4 @@
-@plain
+@plain @wip
 Feature: Request to join a group
   In order to join a group which requires approval to join
   As a logged in user

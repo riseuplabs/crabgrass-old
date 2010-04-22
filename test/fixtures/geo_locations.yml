@@ -1,0 +1,13 @@
+location1:
+  id: 1
+  geo_country_id: 1
+  geo_admin_code_id: 2 
+  geo_place_id: 1
+
+location2:
+  id: 2
+  geo_country_id: 2
+
+location3:
+  id: 3
+  geo_country_id: 3 

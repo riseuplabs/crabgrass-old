@@ -97,6 +97,43 @@ page<%=i%>:
   public: <%= rand(4) == 0 %>
 <% end %>
 
+committee_page:
+  id: 1001
+  name: "committee_page"
+  title: "page owned by the warm colors"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 31 
+  owner_type: Group
+  updated_by_id: 4
+  type: DiscussionPage
+
+blue_page:
+  id: 1002
+  name: "blue_page"
+  title: "page owned by blue"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 4 
+  owner_type: User
+  updated_by_id: 4
+  type: DiscussionPage
+
+rainbow_page:
+  id: 1003
+  name: "rainbow_page"
+  title: "page owned by rainbow"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 3 
+  owner_type: Group
+  updated_by_id: 4
+  type: DiscussionPage
+
+
 ranked_vote:
   id: 190
   title: a ranked vote
