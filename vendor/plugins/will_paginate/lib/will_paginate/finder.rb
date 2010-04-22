@@ -77,14 +77,6 @@ module WillPaginate
           count_options = options.except :page, :per_page, :total_entries, :finder
           find_options = count_options.except(:count).update(:offset => pager.offset, :limit => pager.per_page)
 
-          # CRABGRASS HACK!!!
-          # outside of this code,
-          # we're pretending we live in rails 2.3 world, where find accepts :having option
-          # so we have to revert to the rails 2.1 convention for find_options here without :having
-          find_options_having = find_options.delete(:having) # always delete having
-          find_options[:group] = find_options[:group] + " HAVING " + find_options_having if find_options[:group]
-          # END HACK
-
           args << find_options
           # @options_from_last_find = nil
           pager.replace(send(finder, *args) { |*a| yield(*a) if block_given? })
