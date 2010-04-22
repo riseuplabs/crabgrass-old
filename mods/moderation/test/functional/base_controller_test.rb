@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class Admin::BaseControllerTest < ActionController::TestCase
+class Admin::BaseControllerTestForModeration < ActionController::TestCase
 
   def setup
     setup_site_with_moderation

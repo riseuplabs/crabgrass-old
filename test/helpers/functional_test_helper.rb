@@ -109,8 +109,19 @@ module FunctionalTestHelper
   end
 
   def self.included(base)
+    base.class_eval do
+      class << self
+        def determine_default_controller_class_with_removing_for(name)
+          name.sub! /TestFor.*$/, 'Test'
+          determine_default_controller_class_without_removing_for name
+        end
+        alias_method_chain :determine_default_controller_class, :removing_for
+      end
+    end
+
     base.instance_eval do
       alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
     end
   end
+
 end
