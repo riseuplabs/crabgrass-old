@@ -3,10 +3,10 @@
     <%= input_selected_tab('advanced') %>
     <h2><%= "Style parameters for custom appearance #{@appearance.id}" %></h2>
       <ol id="ca-instructions">
-        <li>Click on <%= link_to 'Available Options', {:action => 'available', :id => @appearance}, :popup => ['Available Custom Appearance Options', 'height=600,width=650,scrollbars=1'] %> to view the custom appearance option names.</li>
-        <li>Copy and paste the name of the option(s) to be customized into the box below.</li>
-        <li>Add a colon (:) after each name and change the default value to a similar value type. (Note: If the default value is a hexidecimal number, be sure to include the "#" symbol and wrap it in double quotes &mdash; option_name: "#ff0000").</li>
-        <li>Click the 'Update' button below to activate the custom value(s).</li>
+        <li><%= I18n.t(:click_on) %> <%= link_to 'Available Options', {:action => 'available', :id => @appearance}, :popup => ['Available Custom Appearance Options', 'height=600,width=650,scrollbars=1'] %> <%= I18n.t(:view_custom_names) %> </li>
+        <li><%= I18n.t(:copy_paste_option_name) %></li>
+        <li><%= I18n.t(:add_colon_after_name) %></li>
+        <li><%= I18n.t(:click_update_below) %></li>
       </ol>
     <%= f.text_area :parameters, :size => "60x20", :value => f.object.parameters.to_yaml %>
     <br/>
