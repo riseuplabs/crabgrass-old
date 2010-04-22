@@ -1,0 +1,49 @@
+- views = @page.views_stats
+- stars = @page.stars_stats
+- edits = @page.edits_stats
+%table.pretty
+  %tr
+    %td
+      &nbsp;
+    %td
+      = I18n.t(:viewed).capitalize
+    %td
+      = I18n.t(:starred).capitalize
+    %td
+      = I18n.t(:edited).capitalize
+  %tr
+    %td
+      = I18n.t(:date_today)
+    %td
+      = views[0]
+    %td
+      = stars[0]
+    %td
+      = edits[0]
+  %tr
+    %td
+      = I18n.t(:date_this_week)
+    %td
+      = views[1]
+    %td
+      = stars[1]
+    %td
+      = edits[1]
+  %tr
+    %td
+      = I18n.t(:date_this_month)
+    %td
+      = views[2]
+    %td
+      = stars[2]
+    %td
+      = edits[2]
+  %tr
+    %td
+      = I18n.t(:date_all_time)
+    %td
+      = views[3]
+    %td
+      = stars[3]
+    %td
+      &nbsp;

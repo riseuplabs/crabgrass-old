@@ -169,6 +169,38 @@ module BasePage::ShareHelper
       }
   end
 
+  # the remote action that is triggered when the 'add' button is pressed (or
+  # the popup item is selected).
+  def widget_add_action(action, add_button_id, access_value)
+    {
+      :url => {:controller => 'base_page/share', :action => action, :page_id => @page.id, :add => true},
+      :with => %{'recipient[name]=' + $('recipient_name').value + '&recipient[access]=' + #{access_value}},
+      :loading => spinner_icon_on('plus', add_button_id),
+      :complete => spinner_icon_off('plus', add_button_id)
+    }
+  end
+
+  # (1) submit the form when the enter key is pressed in the text box
+  # (2) don't submit the form if the recipient name field is empty
+  # (3) eat the event by returning false on a enter key so that the form
+  #     is not submitted.
+  def add_recipient_widget_autocomplete_tag(add_action)
+    # this is called after an item in the popup has been selected.
+    # it makes it so selecting an item is like hitting the add button
+    # we clear the recipient_name field so that we don't get a double submit
+    after_update_function = "function(value, data) { #{remote_function(add_action)}; $('recipient_name').value='';}"
+
+    autocomplete_entity_tag('recipient_name',
+                        :onselect => after_update_function,
+                        :message => I18n.t(:entity_autocomplete_tip),
+                        :container => 'autocomplete_container')
+  end
+
+  def add_recipient_widget_key_press_function(add_action)
+    eat_enter = "return(!enterPressed(event));"
+    only_on_enter_press = "enterPressed(event) && $('recipient_name').value != ''"
+    remote_function(add_action.merge(:condition => only_on_enter_press)) + eat_enter;
+  end
 
 end
 
