@@ -16,5 +16,6 @@ class Admin::BaseControllerTest < ActionController::TestCase
     login_as :blue
     get :index
     assert_response :success
+    assert @controller.current_user.superadmin?, 'user blue should be a superadmin'
   end
 end

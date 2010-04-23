@@ -1,6 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class Translator::KeysControllerTest < ActionController::TestCase
+  fixtures :keys, :languages
+
+
+  def setup
+    debugger
+    setup_site_with_translator
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
