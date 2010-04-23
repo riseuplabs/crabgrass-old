@@ -9,17 +9,13 @@ def setup_site_with_translator
     :name => "translation",
     :domain => "test.host"
   @translators.site = @site
-  debugger
-  enable_site_testing @site
-end
-def teardown
-  disable_site_testing
+  enable_site_testing @site.name
 end
 
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   def valid_translation
-    { :key => keys(:hello), :language => languages(:english), :user => users(:abie), :text => "Hey d00d" }
+    { :key => keys(:hello), :language => languages(:en), :user => users(:abie), :text => "Hey d00d" }
   end
 
   def valid_key
