@@ -106,16 +106,6 @@
   background-position: 0 4px
 
 
-
-/* @group links */
-
-\:focus
-
-a
-
-/* @end */
-
-
 /* headers */
 h1, h2, h3, h4, h5, h6
   +headings
@@ -764,7 +754,6 @@ table
         a
           +hover-link
           color= !blue
-      td.reply
     tr.unread
       td
         font-weight: bold
@@ -878,75 +867,24 @@ form#search-browse
   +bordered
 
 
-fieldset
-
-legend
-
-label
-
-textarea
-
-input
-
-button
-
-/* @end */
-
-
-/* @group tables */
-
-/* tables */
-
-table
-
-thead
-
-tbody
-
-tfoot
-
-tr
-
-th
-
-td
-
-/* @end */
-
-
-/* @group block tags */
-
-p
-
-blockquote
-
 /* @end */
 
 
 /* @group inline tags */
 
-cite
 
 em
-  :font-style italic
+  font-style: italic
 
 strong
-  :font-weight bold
+  font-weight: bold
 
 ins
-  :text-decoration underline
+  text-decoration: underline
 
 del
-  :text-decoration line-through
+  text-decoration: line-through
 
-q
-
-/* @end */
-
-
-/* @group replaced tags */
-
-img
 
 /* @end */
 
@@ -970,7 +908,6 @@ img
     line-height: 1.4
   a
     +blue-link
-
   footer
     +columns(10,10)
     width: 540px
