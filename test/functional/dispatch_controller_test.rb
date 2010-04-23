@@ -28,9 +28,6 @@ class DispatchControllerTest < Test::Unit::TestCase
     assert_equal 5, assigns(:page).id
   end
 
-  # this test raises an error:
-  #NoMethodError: undefined method `>' for []:WillPaginate::Collection
-  # is this valid? is something broken??
   def test_find_page_by_name_without_context
     login_as :blue
     group = groups(:rainbow)
