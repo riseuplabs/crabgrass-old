@@ -211,10 +211,11 @@ ul.tabset
     float: none
 
 ul.tabset.top
-  margin: 0
+  margin: 0 0 0 -30px
+  padding-left: 18px
   clear: left
   float: left
-  width: 100%
+  width: 558px
   height: 1%
   background: url(/images/grey9.png) repeat-x bottom
   a:hover
@@ -268,10 +269,11 @@ ul.tabset.simple
   .status h3
     margin: 0.5em 0
   &.tabs
-    width: 100%
-    padding: 1em 0 0 0
+    margin-left: -18px
+    padding: 0 0 0 30px
     overflow: hidden
     border-bottom: 0
+    background= !page_title_tabs_bg
     & li.tab a
       +blue-link(12px)
 
