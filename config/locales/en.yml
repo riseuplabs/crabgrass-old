@@ -600,6 +600,12 @@ en:
   or_image_url: "or image URL"
   upload_image_link: "upload image"
   remove_image_link: "remove image"
+  copy_paste_option_name: "Copy and paste the name of the option(s) to be customized into the box below."
+  click_on: "Click on"
+  view_custom_names: "to view the custom appearance option names."
+  add_colon_after_name: "Add a colon (:) after each name and change the default value to a similar value type. (Note: If the default value is a hexidecimal number, be sure to include the (#) symbol and wrap it in double quotes.)"
+  click_update_below: "Click the 'Update' button below to activate the custom value(s)."
+
 
   save_changes: Save Changes
   username: Username
@@ -1721,11 +1727,11 @@ en:
   # custom appearances
 
   succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"
-  enable_masthead_question: "Enable masthead?"
+  enable_masthead_question: "Enable masthead image?"
   masthead: "Masthead"
-  select_masthead_background_color: "Select masthead background color"
+  select_masthead_background_color: "Select masthead background color."
   upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  upload_masthead_image_label: "Upload an image for the masthead. It can't be taller than 80 pixels."
+  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
 
   masthead: "Masthead"
   advanced: "Advanced"
