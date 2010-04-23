@@ -8,6 +8,10 @@ class Admin::BaseControllerTest < ActionController::TestCase
     enable_site_testing
   end
 
+  def teardown
+    disable_site_testing
+  end
+
   def test_get_index
     login_as :blue
     get :index

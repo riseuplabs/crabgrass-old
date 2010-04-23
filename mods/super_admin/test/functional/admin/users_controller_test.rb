@@ -4,9 +4,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships
 
-  # none of the tests in here were written for the superadmin mod - they
-  # all seemed to be a copy of the normal UserControllerTests.
-  #  --azul
+  def setup
+    enable_site_testing
+  end
+
+  def teardown
+    disable_site_testing
+  end
 
   def test_create_twice
     login_as :blue
