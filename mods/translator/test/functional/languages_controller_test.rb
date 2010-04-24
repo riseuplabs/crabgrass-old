@@ -35,13 +35,13 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
 
   def test_should_show_language
     login_as @translator
-    get :show, :id => languages(:en).id
+    get :show, :id => languages(:en).to_param
     assert_response :success
   end
 
   def test_should_get_edit
     login_as @translator
-    get :edit, :id => languages(:en).id
+    get :edit, :id => languages(:en).to_param
     assert_response :success
   end
 
@@ -54,7 +54,7 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
   def test_should_destroy_language
     login_as @translator
     assert_difference('Language.count', -1) do
-      delete :destroy, :id => languages(:en).id
+      delete :destroy, :id => languages(:en).to_param
     end
 
     assert_redirected_to languages_path

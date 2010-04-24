@@ -5,7 +5,7 @@ def setup_site_with_translator
   @translator = User.make :login=>"tran"
   @translators = Group.make_owned_by :user=>@translator
   @translators.add_user! @translator
-  @site = Site.make :translation_group => @translators,
+  @site = Site.make :translation_group => @translators.name,
     :name => "translation",
     :domain => "test.host"
   @translators.site = @site
@@ -15,7 +15,7 @@ end
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   def valid_translation
-    { :key => keys(:hello), :language => languages(:en), :user => users(:abie), :text => "Hey d00d" }
+    { :key => keys(:hello), :language => languages(:en), :user => @translator, :text => "Hey d00d" }
   end
 
   def valid_key
