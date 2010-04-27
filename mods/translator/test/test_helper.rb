@@ -15,11 +15,11 @@ end
 class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   def valid_translation
-    { :key => keys(:hello), :language => languages(:en), :user => @translator, :text => "Hey d00d" }
+    { :key => keys(:hello), :language => languages(:en), :text => "Hey d00d" }
   end
 
   def valid_key
-    { :name => "new_key", :project => projects(:crabgrass) }
+    { :name => "new_key" }
   end
 
 end

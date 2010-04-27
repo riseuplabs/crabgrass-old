@@ -45,7 +45,7 @@ class Translator::KeysController < Translator::BaseController
     if params[:update]
       if @key.update_attributes(params[:key])
         flash_message :success => 'Key was successfully updated.'
-        redirect_to(@key)
+        redirect_to key_path(@key)
       else
         flash_message_now :object => @key
         render :action => "edit"

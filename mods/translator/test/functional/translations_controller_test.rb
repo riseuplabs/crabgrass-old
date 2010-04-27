@@ -20,21 +20,23 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
 
   def test_should_get_new
     login_as @translator
-    get :new
+    get :new, :key => :hello
     assert_response :success
   end
 
   def test_should_create_translation
     login_as @translator
+    fr=languages(:fr)
+    de=languages(:de)
     assert_difference('Translation.count') do
-      post :create, :translation => valid_translation
+      post :create, :translation => valid_translation.merge(:language => fr)
     end
-    assert_redirected_to :action => :new
+    assert_redirected_to :controller => :keys, :language => fr, :filter => 'untranslated'
 
     assert_difference('Translation.count') do
-      post :create, :translation => valid_translation.merge(:user => nil)
+      post :create, :translation => valid_translation.merge(:language => de)
     end
-    assert_redirected_to :action => :new
+    assert_redirected_to :controller => :keys, :language => de, :filter => 'untranslated'
   end
 
   def test_should_fail_to_create_translation
@@ -70,7 +72,7 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
 
   def test_should_update_translation
     login_as @translator
-    put :update, :id => translations(:hello_en).id, :translation => { }
+    put :update, :id => translations(:hello_en).id, :translation => { }, :save => true
     assert_redirected_to translator_translation_path(assigns(:translation))
   end
 

@@ -21,6 +21,7 @@ module Translator::TranslationsHelper
   end
 
   def sites_translation_link_list
+    return unless @translation.key and @translation.language
     key = @translation.key.name
     language = @translation.language.code
 

@@ -39,7 +39,7 @@ class Translator::KeysControllerTest < ActionController::TestCase
 
   def test_should_update_key
     login_as @translator
-    put :update, :id => keys(:hello).to_param, :key => { }
+    put :update, :id => keys(:hello).to_param, :key => { }, :update => true
     assert_redirected_to translator_key_path(assigns(:key))
   end
 
