@@ -4,7 +4,7 @@ Feature: Remove users from a group without a council
   I want to be able to remove other group members and council members
 
 Background:
-  Given a group exists
+  Given a group exists with name: "diggers"
   And that group has a council
 
   And I exists with display_name: "Periwinkle!"
@@ -35,6 +35,8 @@ Scenario: I may kick out anyone as a council member
   When I go to that group's membership review page
   And I should see "Remove" within user: "blue"'s row
   And I should see "Remove" within user: "gerrard"'s row
+#  And I should see "Remove" within user: "red"'s row
+#  And I should see "Remove" within user: "parsons"'s row
 
 Scenario: I can't kick myself out
   Given I am a member of the council
@@ -47,16 +49,20 @@ Scenario: I can't kick anyone out if I am not a council member
   And I should not see "Remove" within user: "red"'s row
   And I should not see "Remove" within user: "gerrard"'s row
 
-Scenario: I can't kick out other council members
+Scenario: I remove a non-council users from the group
   Given I am a member of the council
   When I go to that group's membership review page
-  And I should not see "Remove" within user: "red"'s row
-  And I should not see "Remove" within user: "parsons"'s row
-  And I should see "Remove" within user: "blue"'s row
+  And I follow and confirm "Remove" within user: "gerrard"'s row
+  Then I should be on that group's membership review page
+  And I should see "Gerrard has been removed from group diggers"
+  And I should not see "Gerrard" within the members table
 
+@js
+Scenario: Clicking 'Remove' for regular shows a confirmation dialog
+# "Are you sure you want to remove 'Green!' from the group?"
 
-
-
+@js
+Scenario: Clicking 'Remove' for another coordinator (council-member) shows proposal to remove dialog
 
 
 
