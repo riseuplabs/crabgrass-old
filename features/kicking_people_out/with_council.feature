@@ -58,8 +58,11 @@ Scenario: I remove a non-council users from the group
   And I should not see "Gerrard" within the members table
 
 @js
-Scenario: Clicking 'Remove' for regular shows a confirmation dialog
-# "Are you sure you want to remove 'Green!' from the group?"
+Scenario: Clicking 'Remove' for regular user (non-coordinator) shows a confirmation dialog
+  Given I am a member of the council
+  When I go to that group's membership review page
+  And I follow "Remove" within user: "gerrard"'s row
+  Then I should see "Are you sure you want to remove 'Green!' from the group?"
 
 @js
 Scenario: Clicking 'Remove' for another coordinator (council-member) shows proposal to remove dialog
