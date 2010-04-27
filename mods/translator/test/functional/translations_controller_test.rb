@@ -71,7 +71,7 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
   def test_should_update_translation
     login_as @translator
     put :update, :id => translations(:hello_en).id, :translation => { }
-    assert_redirected_to translation_path(assigns(:translation))
+    assert_redirected_to translator_translation_path(assigns(:translation))
   end
 
   def test_should_destroy_translation
@@ -80,6 +80,6 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
       delete :destroy, :id => translations(:hello_en).id
     end
 
-    assert_redirected_to translations_path
+    assert_redirected_to translator_translations_path
   end
 end

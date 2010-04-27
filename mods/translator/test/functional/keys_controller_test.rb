@@ -40,7 +40,7 @@ class Translator::KeysControllerTest < ActionController::TestCase
   def test_should_update_key
     login_as @translator
     put :update, :id => keys(:hello).to_param, :key => { }
-    assert_redirected_to key_path(assigns(:key))
+    assert_redirected_to translator_key_path(assigns(:key))
   end
 
   def test_should_destroy_key
@@ -49,6 +49,6 @@ class Translator::KeysControllerTest < ActionController::TestCase
       delete :destroy, :id => keys(:hello).to_param
     end
 
-    assert_redirected_to keys_path
+    assert_redirected_to translator_keys_path
   end
 end

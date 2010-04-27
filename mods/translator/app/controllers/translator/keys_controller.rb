@@ -57,7 +57,6 @@ class Translator::KeysController < Translator::BaseController
 
   # DELETE /keys/1
   def destroy
-    debugger
     @key = Key.find_by_name(params[:id])
     @key.destroy
     flash_message :success => 'key destroyed'

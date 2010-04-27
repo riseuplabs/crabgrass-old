@@ -30,7 +30,7 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
       post :create, :language => { }
     end
 
-    assert_redirected_to language_path(assigns(:language))
+    assert_redirected_to translator_language_path(assigns(:language))
   end
 
   def test_should_show_language
@@ -48,7 +48,7 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
   def test_should_update_language
     login_as @translator
     put :update, :id => languages(:en).id, :language => { }
-    assert_redirected_to language_path(assigns(:language))
+    assert_redirected_to translator_language_path(assigns(:language))
   end
 
   def test_should_destroy_language
@@ -57,6 +57,6 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
       delete :destroy, :id => languages(:en).to_param
     end
 
-    assert_redirected_to languages_path
+    assert_redirected_to translator_languages_path
   end
 end
