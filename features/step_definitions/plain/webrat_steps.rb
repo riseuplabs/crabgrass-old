@@ -23,7 +23,7 @@ When /^(?:|I )follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^(?:|I )follow "([^\"]*)" within "([^\"]*)"$/ do |link, scope|
+When /^(?:|I )follow "([^\"]*)" within (.*)$/ do |link, scope|
   parent = selector_for(scope)
   click_link_within(parent, link)
 end

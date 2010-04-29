@@ -62,7 +62,7 @@ Scenario: Clicking 'Remove' for regular user (non-coordinator) shows a confirmat
   Given I am a member of the council
   When I go to that group's membership review page
   And I follow "Remove" within user: "gerrard"'s row
-  Then I should see "Are you sure you want to remove 'Green!' from the group?"
+  Then I should see "Are you sure you want to remove 'Gerrard' from the group?"
 
 @js
 Scenario: Clicking 'Remove' for another coordinator (council-member) shows proposal to remove dialog
