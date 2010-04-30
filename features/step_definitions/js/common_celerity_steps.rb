@@ -81,6 +81,28 @@ Then /I should not see "(.*)"/ do |text|
   div.should be_nil
 end
 
+Then /^I should see "([^\"]*)" within (.*)$/ do |link_text, scope|
+  parent_css_selector = selector_for(scope)
+  parent = find_by_css(parent_css_selector)
+  div = parent.div(:text, /#{text}/)
+
+  begin
+    div.html
+  rescue
+    #puts $browser.html
+    raise("div with '#{text}' not found")
+  end
+end
+
+Then /^I should not see "([^\"]*)" within (.*)$/ do |text, scope|
+ds
+  parent_css_selector = selector_for(scope)
+  parent = find_by_css(parent_css_selector)
+
+  div = parent.div(:text, /#{text}/).html rescue nil
+  div.should be_nil
+end
+
 Then /^I should be on (.+)/ do |path|
   path = path_to(path)
   assert_equal path, URI.parse($browser.url).path
