@@ -66,8 +66,19 @@ Scenario: Clicking 'Remove' for regular user (non-coordinator) shows a confirmat
 
 @js
 Scenario: Clicking 'Remove' for another coordinator (council-member) shows proposal to remove dialog
+  Given I am a member of the council
+  When I go to that group's membership review page
+  And I follow "Remove" within user: "red"'s row
+  Then I should see "This member is also a member of the council. Do you want to propose to remove 'Red'?"
 
-
+@dev
+Scenario: I create a propose to remove another council member
+  Given I am a member of the council
+  When I go to that group's membership review page
+  And I follow and confirm "Remove" within user: "red"'s row
+  Then I should not see "Remove" within user: "red"'s row
+  And I should see "You have proposed to remove user Red! who is also a member of the council. To remove a coordinator (council-member) two thirds of all coordinators need to approve this."
+  And I should see "Removal Requested" within user: "red"'s row
 
 
 
@@ -87,9 +98,4 @@ Scenario: Clicking 'Remove' for another coordinator (council-member) shows propo
 #   And user: "gerrard" should not be a member of that group
 #   And I should not see "Gerrard"
 #
-# @js
-# Scenario: Removing people requires confirmation
-#   Given I am a member of the council
-#   When I go to that group's membership review page
-#   And I follow "Remove"
-#   Then I should see "Are you sure you want to remove 'Red!' from the group?"
+

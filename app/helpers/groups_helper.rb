@@ -120,12 +120,23 @@ module GroupsHelper
     user, group = membership.user, membership.group
 
     # can't remove yourself from the group this way - have to use the 'Leave Group' link
-    # also can't remove other admins
-    return if user == current_user or user.may?(:admin, group)
+
+    return if user == current_user
     if may_destroy_memberships?(membership)
+      # can't remove other admins directly, must go through proposals
       link_to(I18n.t(:remove), {:controller => '/groups/memberships', :action => 'destroy', :id => membership},
-            :confirm => I18n.t(:membership_destroy_confirm_message, :user => user.display_name, :group_type => group.group_type.downcase),
+             :confirm => I18n.t(:membership_destroy_confirm_message, :user => user.display_name, :group_type => group.group_type.downcase),
             :method => :delete)
+
+    elsif may_create_remove_user_requests?(membership)
+      link_to(I18n.t(:remove), {
+            :controller => '/groups/requests',
+            :action => 'create_remove_user',
+            :id => membership.group, :user_id => membership.user},
+            :confirm => I18n.t(:membership_create_remove_user_request_confirm_message, :user => user.display_name),
+            :method => :post)
+    elsif RequestToRemoveUser.for_user(user).for_group(group).present?
+      I18n.t(:removal_requested)
     end
   end
 
