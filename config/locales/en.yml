@@ -795,7 +795,9 @@ en:
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
   membership_leave_message: "You have been removed from {{group}}"
+  membership_removed_message: "{{user}} has been removed from {{group_type}} {{group}}"
   membership_destroy_confirm_message: "Are you sure you want to remove '{{user}}' from the {{group_type}}?"
+  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '{{user}}'?"
 
 
   # featured
@@ -978,6 +980,8 @@ en:
   contact_request_sent: "Friend request has been sent"
   request_to_join_sent: "Request to join has been sent"
   request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
+  request_to_remove_user_sent: "You have proposed to remove user {{user}} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
+  removal_requested: "Removal Requested"
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   contact_removed: "{{user}} has been removed from your contact list."
   not_contact_of: "You are not the contact of {{user}}."
