@@ -53,7 +53,7 @@ class VotableRequest < Request
 
   # will update state for the request
   def tally!
-    group_members_count = group.users_allowed_to_vote_on_removing(user).count
+    group_members_count = group.users_allowed_to_vote_on_removing(user).length
 
     approve_votes_count = votes.approved.count
     reject_votes_count = votes.rejected.count
@@ -69,7 +69,7 @@ class VotableRequest < Request
     end
 
 
-    set_state(tallied_state, created_by) if tallied_state
+    set_state!(tallied_state, created_by) if tallied_state
   end
 
   protected

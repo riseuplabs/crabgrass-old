@@ -55,7 +55,7 @@ class RequestToRemoveUser < VotableRequest
   end
 
   def after_approval
-    group.destroy_by(created_by)
+    group.remove_user!(user)
   end
 
   def description
@@ -69,13 +69,17 @@ class RequestToRemoveUser < VotableRequest
   protected
 
   def instantly_tallied_state(total_possible_votes, approve_votes, reject_votes)
-    return 'approved' if approve_vote >= (total_possible_votes - 1)
-    return 'rejected' if reject_votes >= (total_possible_votes - 1)
+    if Rational(approve_votes, total_possible_votes) >= Rational(2, 3)
+      return 'approved'
+    elsif Rational(reject_votes, total_possible_votes) > Rational(1, 3)
+      # can never get enough approve votes to set approve state
+      return 'rejected'
+    end
   end
 
-  def delayed_tallied_state
+  def delayed_tallied_state(total_possible_votes, approve_votes, reject_votes)
     total_votes = approve_votes + reject_votes
-    # 0 rejections are instant win
+    # 0 rejections are instant win (even with 0 total votes)
     # 2/3 majority from total voters is required to win otherwise
     if reject_votes == 0 or Rational(approve_votes, total_votes) >= Rational(2, 3)
       return 'approved'
