@@ -71,7 +71,6 @@ Scenario: Clicking 'Remove' for another coordinator (council-member) shows propo
   And I follow "Remove" within user: "red"'s row
   Then I should see "This member is also a member of the council. Do you want to propose to remove 'Red'?"
 
-@dev
 Scenario: I create a propose to remove another council member
   Given I am a member of the council
   When I go to that group's membership review page
@@ -79,23 +78,4 @@ Scenario: I create a propose to remove another council member
   Then I should not see "Remove" within user: "red"'s row
   And I should see "You have proposed to remove user Red! who is also a member of the council. To remove a coordinator (council-member) two thirds of all coordinators need to approve this."
   And I should see "Removal Requested" within user: "red"'s row
-
-
-
-# Scenario: I remove another council member from the group
-#   Given I am a member of the council
-#   When I go to that group's membership review page
-#   And I follow and confirm "Remove" within user: "red"'s row
-#   Then I should be on that group's membership list page
-#   And user: "red" should not be a member of that group
-#   And I should not see "Remove" within user: "red"'s row
-#
-# Scenario: I remove another group member from the group
-#   Given I am a member of the council
-#   When I go to that group's membership review page
-#   And I follow and confirm "Remove" within user: "gerrard"'s row
-#   Then I should be on that group's membership list page
-#   And user: "gerrard" should not be a member of that group
-#   And I should not see "Gerrard"
-#
 
