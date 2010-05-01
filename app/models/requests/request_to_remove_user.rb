@@ -25,6 +25,10 @@ class RequestToRemoveUser < VotableRequest
     true
   end
 
+  def self.vote_duration
+    2.weeks
+  end
+
   def validate_on_create
     if RequestToRemoveUser.for_group(group).for_user(user).created_by(created_by).find(:first)
       errors.add_to_base(I18n.t(:request_exists_error, :recipient => group.display_name))
