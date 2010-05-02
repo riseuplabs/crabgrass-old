@@ -197,8 +197,7 @@ end
 #
 Wiki.blueprint do
   version 1
-  body_html { Faker::Lorem.paragraph }
-  body  { body_html }
+  body { Faker::Lorem.paragraphs(10).join '\n' }
   user_id { User.make.id }
 end
 
@@ -244,6 +243,14 @@ end
 # Profiles
 #
 Profile.blueprint {}
+
+Profile.blueprint(:public) {
+  stranger    true
+}
+
+Profile.blueprint(:private) {
+  friend      true
+}
 
 #
 # Locations

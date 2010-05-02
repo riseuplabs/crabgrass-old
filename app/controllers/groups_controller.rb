@@ -53,7 +53,7 @@ class GroupsController < Groups::BaseController
   def list_groups
     group_landing_instance_vars()
     @federatings = @group.federatings.alphabetized_by_group
-    render :layout => 'header_for_sidebar' 
+    render :layout => 'header_for_sidebar'
   end
 
   def new

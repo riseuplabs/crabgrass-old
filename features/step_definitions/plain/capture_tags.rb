@@ -12,3 +12,20 @@ Then /^I should see #{capture_model}'s (\w+)$/ do |entity, property|
   # check field_with_id("page_checked_#{page.id}")
   Then "I should see \"#{term}\""
 end
+
+
+Then /^I should see #{capture_model}'s (\w+) rendered$/ do |entity, property|
+  entity = model(entity)
+  term = entity.send(property.to_sym)
+  doc=Nokogiri::HTML::DocumentFragment.parse(term)
+  # check field_with_id("page_checked_#{page.id}")
+  Then "I should see \"#{doc.inner_text}\""
+end
+
+Then /^I should not see #{capture_model}'s (\w+) rendered$/ do |entity, property|
+  entity = model(entity)
+  term = entity.send(property.to_sym)
+  doc=Nokogiri::HTML::DocumentFragment.parse(term)
+  # check field_with_id("page_checked_#{page.id}")
+  Then "I should not see \"#{doc.inner_text}\""
+end
