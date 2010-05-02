@@ -259,6 +259,16 @@ class Wiki < ActiveRecord::Base
   ## PROTECTED METHODS
   ##
 
+  def render_preview(length)
+    return nil if body.nil?
+    return body_html if body.length < length
+    if @render_body_html_proc
+      @render_body_html_proc.call(truncated_body(lenght))
+    else
+      GreenCloth.new(truncated_body(length), link_context, [:outline]).to_html
+    end
+  end
+
   protected
 
   # # used when wiki is rendered for deciding the prefix for some link urls
@@ -292,6 +302,12 @@ class Wiki < ActiveRecord::Base
 
   def render_raw_structure
     GreenCloth.new(body.to_s).to_structure
+  end
+
+  def truncated_body(length)
+    cut = body.to_s[0...length-3] + '...'
+    cut.gsub! /^\[\[toc\]\]$/, ''
+    cut
   end
 
   private

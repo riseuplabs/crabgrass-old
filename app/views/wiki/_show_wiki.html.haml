@@ -1,11 +1,13 @@
 / locals: wiki, no_title
-- if local_assigns[:no_title]
-  %span.right
-    = wiki_edit_link(wiki.id)
-- else
+- unless local_assigns[:no_title]
   %h3
     = I18n.t(:wiki)
     %span.right
       = wiki_edit_link(wiki.id)
 %div.wiki
-  = wiki.body_html
+  - if local_assigns[:preview]
+    = wiki.render_preview(preview)
+  - else
+    = wiki.body_html
+%span.right
+  = wiki_edit_link(wiki.id)
