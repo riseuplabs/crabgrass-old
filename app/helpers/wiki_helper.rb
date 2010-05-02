@@ -189,6 +189,11 @@ module WikiHelper
     )
   end
 
+  def wiki_more_link(wiki_id=nil)
+    link_to_remote_with_icon(I18n.t(:more), :icon => 'plus',
+      :url => wiki_action('show', :wiki_id => wiki_id))
+  end
+
   ##
   ## WIKI EDITORS
   ##

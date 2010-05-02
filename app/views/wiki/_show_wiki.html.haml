@@ -10,4 +10,6 @@
   - else
     = wiki.body_html
 %span.right
+  - if local_assigns[:preview]
+    = wiki_more_link(wiki.id)
   = wiki_edit_link(wiki.id)
