@@ -30,6 +30,15 @@
 
 
 /* @general */
+a
+  +hover-link
+  color: #4978bc
+
+span.current
+  +bordered(1px,#666)
+  font-weight: bold
+  padding: 1px
+  
 .left
   float: left
 
@@ -114,16 +123,16 @@ h1, h2, h3, h4, h5, h6
 
 h1
   font-size= !h1_size
-  color= !almost_black
+  color= !h1_color
 h2
   font-size= !h2_size
-  color= !almost_black
+  color= !h2_color
 h3
   font-size= !h3_size
-  color= !red
+  color= !h3_color
 h4
   font-size= !h4_size
-  color: #777
+  color= !h4_color
 h5
   font-size= !h5_size
 h6
@@ -212,18 +221,21 @@ h6
     .wiki
       clear: both
 
-#pages, #group-wiki, #sitehome
+#pages, #group-wiki
   +partial-width
   margin: 30px 0 15px
-  h3
-    +bordered-btm(!medium_grey_border)
-    padding: 0 0 8px
-    float: left
-    display: inline
-    width: 540px
-    span
-      a
-        +blue-link
+
+h3#underlined
+  +bordered-btm(!medium_grey_border)
+  padding: 0 0 8px
+  float: left
+  display: inline
+  width: 100%
+  margin-bottom: 16px
+  span
+    a
+      +blue-link
+
 
 #group-wiki
   margin-top: 0
@@ -437,7 +449,7 @@ button.icon_16
 #identity-image
   +columns(4,4)
   +bordered(!almost_black)
-  background= !white_bg
+  background: #fff
   width: 202px
   height: 202px
   float: left
@@ -669,6 +681,7 @@ nav#nav-full
   color= !medium_grey_text
   float: right
   display: inline
+  padding-top: 4px
   a
     +blue-link
 .letter_pagination
@@ -833,14 +846,13 @@ table
 
 .footer-container
   +bordered-top(!light_grey_border)
-  background= !white_bg
+  background= !footer_bg
   height: 65px
   padding-top: 2em
   +container
   .footer
     +columns(14)
     +full
-    background= !white_bg
     .language-menu
       float: right
     div.debug
@@ -940,7 +952,7 @@ del
     +columns(10,10)
     +clearfix
     width: 540px
-    margin: 20px 0 0
+    margin: 20px 0 20px
     .left
       +columns(5,10)
       +alpha(10)
