@@ -1,6 +1,6 @@
 class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
   # MessagePage class has been deleted a while ago,
-  # readd it with :: to make it top namespace
+  # define it with :: to make it top namespace
   class ::MessagePage < ::Page
   end
 
@@ -8,7 +8,7 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
     pages = MessagePage.all
 
     pages.each do |page|
-      next unless page.users.count != 2
+      next unless page.users.count == 2
 
       page.discussion.try.posts.each do |post|
         text = post.body
@@ -20,10 +20,10 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
         # create the new message
         sender.send_message_to!(receiver, text)
       end
+      page.destroy
 
     end
 
-    MessagePage.destroy_all
   end
 
   def self.down
