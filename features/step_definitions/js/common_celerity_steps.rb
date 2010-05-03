@@ -76,12 +76,12 @@ Then /I should see "(.*)"$/ do |text|
   end
 end
 
-Then /I should not see "(.*)"/ do |text|
+Then /I should not see "(.*)"$/ do |text|
   div = $browser.div(:text, /#{text}/).html rescue nil
   div.should be_nil
 end
 
-Then /^I should see "([^\"]*)" within (.*)$/ do |link_text, scope|
+Then /^I should see "([^\"]*)" within (.*)$/ do |text, scope|
   parent_css_selector = selector_for(scope)
   parent = find_by_css(parent_css_selector)
   div = parent.div(:text, /#{text}/)
@@ -95,7 +95,6 @@ Then /^I should see "([^\"]*)" within (.*)$/ do |link_text, scope|
 end
 
 Then /^I should not see "([^\"]*)" within (.*)$/ do |text, scope|
-ds
   parent_css_selector = selector_for(scope)
   parent = find_by_css(parent_css_selector)
 

@@ -197,7 +197,7 @@ end
 #
 Wiki.blueprint do
   version 1
-  body { Faker::Lorem.paragraphs(10).join '\n' }
+  body { Faker::Lorem.paragraphs(10).join "\n" }
   user_id { User.make.id }
 end
 

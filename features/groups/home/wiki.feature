@@ -17,13 +17,16 @@ Background:
 Scenario: Seeing the folded wiki
   Then I should see that wiki's preview_html rendered
   And I should not see that wiki's body_html rendered
-  And I should see "more"
-  And I should see "Edit"
+  And I should see "more" within #group-wiki
+  And I should see "Edit" within #group-wiki
 
 @js
 Scenario: Expanding the wiki
-  When I follow "more" in the content area
+  Then I should see that wiki's preview_html rendered
+  And I should not see that wiki's body_html rendered
+  When I follow "more" within #group-wiki
+  And I wait for the AJAX call to finish
   Then I should see that wiki's body_html rendered
   And I should not see that wiki's preview_html rendered
-  And I should not see "more" in the content area
-  And I should see "Edit" in the content area
+  And I should not see "more" within #group-wiki
+  And I should see "Edit" within #group-wiki
