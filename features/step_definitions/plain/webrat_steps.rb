@@ -137,7 +137,11 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"$/ do |path, field|
 end
 
 Then /^(?:|I )should see "([^\"]*)"$/ do |text|
-  assert_contain text
+  if text.index '\n'
+    assert_contain /#{text.gsub('\n', '\n\s*')}/
+  else
+    assert_contain text
+  end
 end
 
 Then /^(?:|I )should see "([^\"]*)" within (.*)$/ do |text, scope|
