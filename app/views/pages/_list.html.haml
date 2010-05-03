@@ -4,13 +4,15 @@
 %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
   %header
     - if local_assigns[:title] && !title.blank?
-      %h3
+      %h3#underlined
         = title
         %div.right
           = render(:partial => pages_dropdown) if local_assigns[:pages_dropdown]
           = pagination_for(pages)
     - else
-      = pagination_for(pages) unless local_assigns[:no_top_pagination]
+      %h3#underlined
+        Pages
+        = pagination_for(pages) unless local_assigns[:no_top_pagination]
 
   - if pages
     = render(:partial => block_above_pages_list_partial) if local_assigns[:block_above_pages_list_partial]

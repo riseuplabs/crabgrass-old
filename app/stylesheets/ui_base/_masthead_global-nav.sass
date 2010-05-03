@@ -29,7 +29,7 @@
         position: relative
         fieldset
           +bordered(1px, #a6c0cb)
-          background= !white_bg
+          background: #fff
           display: inline
           width: 190px
           height: 20px
@@ -38,14 +38,14 @@
             display: inline
             font-size: 12px
             padding: 4px 0 0 2px
-            width: 158px
+            width: 164px
             border: none
           .search-submit
             +bordered-left
             +inline-middle
             position: relative
             height: 21px
-            margin: -2px -1px 0 0
+            vertical-align: top
 
         div
           display: inline
@@ -139,7 +139,7 @@ nav.page
   position: absolute
   top: 20px
   left: 0
-  background= !white_bg
+  background= !global_nav_dropdown_bg
   padding: 0.75em 0.5em 0.5em
   border-width: 1px 2px 2px 1px
   border-color= !menu_border_color
