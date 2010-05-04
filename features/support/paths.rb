@@ -64,9 +64,9 @@ module NavigationHelpers
       name = model($1).name
       "/groups/profiles/edit/#{name}"
 
-    when /^#{capture_model}(?:'s)? membership list page$/                     # eg. the groups's membership list page
+    when /^#{capture_model}(?:'s)? membership review page$/                     # eg. the groups's membership list page
       name = model($1).name
-      "/groups/memberships/list/#{name}"
+      "/groups/memberships/review/#{name}"
 
     when /^#{capture_model}(?:'s)? (.+?) page$/                     # eg. the forum's posts page
       path_to_pickle $1, :extra => $2                               #  or the forum's edit page

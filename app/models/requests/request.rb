@@ -46,7 +46,8 @@ class Request < ActiveRecord::Base
   # some requests (ex: RequestToDestroyOurGroup) are approved only
   # when they get sufficient votes for approval and (in some cases)
   # when a period of time has passed
-  # 'ignore' is another vote that
+  # 'ignore' is another vote that could be use by otherwise non-votable requests
+  # so that each person has a distinct 'ignore'/'non-ignore' state
   has_many :votes, :as => :votable, :class_name => "RequestVote", :dependent => :delete_all
 
   validates_presence_of :created_by_id

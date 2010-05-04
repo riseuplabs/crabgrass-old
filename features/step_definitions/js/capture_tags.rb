@@ -17,12 +17,14 @@ Then /^I should see #{capture_model}'s (\w+) rendered$/ do |entity, property|
   entity = model(entity)
   term = entity.send(property.to_sym)
   doc=Nokogiri::HTML::DocumentFragment.parse(term)
-  Then "I should see #{doc.inner_text.inspect}"
+  text=doc.inner_text.gsub("\n", "\n ")
+  Then "I should see #{text.inspect}"
 end
 
 Then /^I should not see #{capture_model}'s (\w+) rendered$/ do |entity, property|
   entity = model(entity)
   term = entity.send(property.to_sym)
   doc=Nokogiri::HTML::DocumentFragment.parse(term)
-  Then "I should not see #{doc.inner_text.inspect}"
+  text=doc.inner_text.gsub("\n", "\n ")
+  Then "I should not see #{text.inspect}"
 end

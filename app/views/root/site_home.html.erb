@@ -57,7 +57,7 @@
   <%= render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?, :no_title => true} %>
 </div>
 <br/>
-<h3>Pages</h3>
+<h3 id="underlined">Pages</h3>
 <br/>
 
 <%= Formy.tabs do |f|

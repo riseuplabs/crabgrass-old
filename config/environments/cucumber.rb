@@ -20,7 +20,7 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :test
 
-config.gem 'cucumber',        :lib => false,        :version => '>=0.4.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
+config.gem 'cucumber',        :lib => false,        :version => '>=0.6.2' unless File.directory?(File.join(Rails.root, 'vendor/plugins/cucumber'))
 config.gem 'webrat',          :lib => false,        :version => '>=0.5.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
 config.gem 'spork',           :lib => false,        :version => '>=0.7.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/spork'))
 config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'

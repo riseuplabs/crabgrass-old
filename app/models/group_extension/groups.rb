@@ -156,6 +156,10 @@ module GroupExtension::Groups
       network_ids.include?(network.id)
     end
 
+    def has_a_council?
+      self.council_id and self.council_id != self.id
+    end
+
     def destroy_council
       if self.normal? and self.council_id and self.council_id != self.id
         self.council.destroy

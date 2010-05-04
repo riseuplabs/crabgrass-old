@@ -23,7 +23,7 @@
           / %th
           /   Joined by
         %th
-        - if @second_nav == 'administration'  # don't show action column if not in admin section 
+        - if @second_nav == 'administration'  # don't show action column if not in admin section
           %th
             = I18n.t(:buttons_list_label)
       = render :partial => 'groups/memberships/membership', :collection => @memberships

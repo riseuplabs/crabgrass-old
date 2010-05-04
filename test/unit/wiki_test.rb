@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/wiki/locking_test.rb'
 require File.dirname(__FILE__) + '/wiki/rendering_test.rb'
 require File.dirname(__FILE__) + '/wiki/saving_test.rb'
 require File.dirname(__FILE__) + '/wiki/versioning_test.rb'
+require File.dirname(__FILE__) + '/wiki/preview_test.rb'
 
 class WikiTest < Test::Unit::TestCase
   fixtures :users, :wikis
@@ -57,6 +58,7 @@ class WikiTest < Test::Unit::TestCase
   include Wiki::RenderingTest
   include Wiki::VersioningTest
   include Wiki::SavingTest
+  include Wiki::PreviewTest
 
   should "Wiki have good associations" do
     assert(check_associations(Wiki))
