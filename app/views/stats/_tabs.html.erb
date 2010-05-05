@@ -1,6 +1,6 @@
 <% @info_box_class = 'tabs' %>
-<% content for :secondary_nav %>
-<% Formy.tabs do |f|
+<% content_for :secondary_nav do %>
+<%= Formy.tabs do |f|
   f.tab do |t|
     t.label 'Week'
     t.url url_for(:action => 'week')
