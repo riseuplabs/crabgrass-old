@@ -99,6 +99,11 @@ module GroupExtension::Users
 
     @user_ids = nil
     self.increment!(:version)
+
+    # remove user from all the groups committees
+    self.committees.each do |committe|
+      committe.remove_user!(user) unless committe.users.find_by_id(user.id).blank?
+    end
   end
 
   def open_membership?
