@@ -14,3 +14,5 @@
     = wiki.body_html
   - if local_assigns[:preview]
     = wiki_more_link(wiki.id)
+  - else
+    = wiki_less_link(wiki.id)
