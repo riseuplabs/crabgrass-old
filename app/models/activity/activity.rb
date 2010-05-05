@@ -94,6 +94,10 @@ class Activity < ActiveRecord::Base
   ## FINDERS
   ##
 
+  named_scope(:limit_to, lambda do |limit|
+    {:limit => limit}
+  end)
+
   named_scope :newest, {:order => 'created_at DESC'}
 
   named_scope :unique, {:group => '`key`'}
