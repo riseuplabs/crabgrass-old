@@ -59,10 +59,11 @@ class RequestToRemoveUser < VotableRequest
   end
 
   def description
-    I18n.t(:request_to_destroy_our_group_description,
+    I18n.t(:request_to_remove_coordinator_user_description,
               :group => group_span(group),
               :group_type => group.group_type.downcase,
-              :user => user_span(created_by))
+              :user => user_span(created_by),
+              :target_user => user_span(user))
   end
 
 
