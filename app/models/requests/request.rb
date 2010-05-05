@@ -62,9 +62,9 @@ class Request < ActiveRecord::Base
   # that user can vote reject/approve on some requests without changing the state
   named_scope :having_state_for_user, lambda { |state, user|
     votes_conditions = if state == :pending
-      "votes.value IS NULL"
+      "votes.value IS NULL AND requests.state = 'pending'"
     else
-      ["votes.value = ?", vote_value_for_state(state)]
+      ["votes.value = ? OR requests.state = ?", vote_value_for_state(state), state.to_s]
     end
 
     { :conditions => votes_conditions,

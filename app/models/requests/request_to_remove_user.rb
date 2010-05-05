@@ -74,6 +74,9 @@ class RequestToRemoveUser < VotableRequest
   protected
 
   def instantly_tallied_state(total_possible_votes, approve_votes, reject_votes)
+    # if proposed user for removal votes approve, this is instant remove
+    return 'approved' if votes.collect(&:user_id).include?(user.id)
+
     if Rational(approve_votes, total_possible_votes) >= Rational(2, 3)
       return 'approved'
     elsif Rational(reject_votes, total_possible_votes) > Rational(1, 3)
