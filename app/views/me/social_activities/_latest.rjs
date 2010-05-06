@@ -1,2 +1,0 @@
-@activities = Activity.social_activities_for_groups_and_friends(current_user).only_visible_groups.newest.unique.limit_to(5)
-page.replace_html 'social_activites_list', :partial => '/layouts/base/social_activities'

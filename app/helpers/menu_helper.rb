@@ -163,4 +163,14 @@ module MenuHelper
   def li_if content
     content_tag(:li, content) if content
   end
+
+  # for social activities drop down link_to_remote tag
+  def link_to_more_social_activities
+    link_to_remote I18n.t(:see_more_link), 
+      :url => {:controller => '/me/social_activities', :more => 1},
+      :loading => show_spinner('more_socials'),
+      :complete => hide_spinner('more_socials'),
+      :method => 'GET'
+  end
+
 end

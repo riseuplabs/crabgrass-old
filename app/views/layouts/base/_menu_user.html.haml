@@ -1,12 +1,11 @@
 %div#user
   - if logged_in?
+    = render :partial => '/layouts/base/social_activities'
     = link_to(I18n.t(:profile), '/'+current_user.login)
     = '&bull;'
     = link_to_active(I18n.t(:menu_link_account), {:controller => '/me', :action => 'edit'}, @active_tab == :account)
     = '&bull;'
     = link_to(I18n.t(:menu_link_logout), :controller => '/account', :action => 'logout')
-    %div.right{:style => 'padding-right: 5px'}
-      %img{:src => '/images/png/16/heart.png'}
 
     = call_hook :top_right_links
 
