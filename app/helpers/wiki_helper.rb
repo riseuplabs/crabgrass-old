@@ -190,8 +190,17 @@ module WikiHelper
   end
 
   def wiki_more_link(wiki_id=nil)
+    wiki=Wiki.find(wiki_id)
+    return unless wiki.try.body and wiki.body.length > 500
     link_to_remote_with_icon(I18n.t(:more), :icon => 'plus',
       :url => wiki_action('show', :wiki_id => wiki_id))
+  end
+
+  def wiki_less_link(wiki_id=nil)
+    wiki=Wiki.find(wiki_id)
+    return unless wiki.try.body and wiki.body.length > 500
+    link_to_remote_with_icon(I18n.t(:close_link), :icon => 'minus',
+      :url => wiki_action('teaser', :wiki_id => wiki_id))
   end
 
   ##

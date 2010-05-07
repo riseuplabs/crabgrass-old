@@ -6,9 +6,9 @@ class VotableRequest < Request
     {:conditions => ["state = 'pending' AND created_at <= ?", self.vote_duration.ago]}
   }
 
-  named_scope :unvoted_by_user, lambda { |user|
-    {:include => :votes}
-  }
+#  named_scope :unvoted_by_user, lambda { |user|
+#    {:include => :votes}
+#  }
 
   def self.vote_duration
     1.month
