@@ -204,10 +204,11 @@ class DispatchController < ApplicationController
 
   def controller_for_list_of_pages(name)
     params[:action] = 'index'
-    params[:path] = ['name', name] 
-    params[:search] = {:path => ['name', name]}
+    #params[:path] = ['name', name] 
+    params[:search] = {:text => name}
     params[:controller] = 'search'
-    new_controller("SearchController")
+    SearchController.new()
+    #new_controller("SearchController")
   end
 
   def controller_for_page(page)
