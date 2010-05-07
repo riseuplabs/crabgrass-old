@@ -16,12 +16,16 @@ class WikiController < ApplicationController
   include ControllerExtension::WikiRenderer
   include ControllerExtension::WikiPopup
 
-  before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload]
+  before_filter :login_required, :except => [:show, :image_popup_show, :link_popup_show, :image_popup_upload, :teaser]
   before_filter :fetch_wiki
   before_filter :setup_wiki_rendering
 
   # show the rendered wiki
   def show
+  end
+
+  # render the first few lines of the wiki
+  def teaser
   end
 
   # show the entire edit form
