@@ -1544,7 +1544,7 @@ en:
   say_message_button: "Say"
   wall_heading: "Public Message Wall"
   wall_post_button: "Post New Message"
-  wall_say_form_submit_caption: "Post to {{user}} activity feed"
+  wall_say_form_submit_caption: "Post to {{user}}'s activity feed"
 
   my_status_heading: "Your Current Status"
   # ^^ no longer used
