@@ -344,6 +344,12 @@ module ApplicationHelper
     text == symbol.to_s.humanize ? nil : text
   end
 
+  def tooltip(caption, content)
+    content_tag :span, :class => 'tooltip' do
+      content_tag(:span, caption, :class => 'caption') + content_tag(:span, content, :class => 'content')
+    end
+  end
+
   def debug_info
     if RAILS_ENV == 'development'
       render :partial => 'layouts/base/debug_info'
