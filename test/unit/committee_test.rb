@@ -153,5 +153,30 @@ class CommitteeTest < Test::Unit::TestCase
     assert_equal network.id, council.parent_id
   end
 
+  def test_add_council_with_full_powers
+    g = Group.create :name => 'boosh'
+    # only one user added
+    g.add_user!(users(:blue))
+
+    council = Council.create!(:name => 'council')
+    g.add_committee!(council)
+
+    council.reload
+    assert council.full_council_powers?
+  end
+
+  def test_add_council_without_full_powers
+    g = Group.create :name => 'boosh'
+    # two users added
+    g.add_user!(users(:blue))
+    g.add_user!(users(:yellow))
+
+    council = Council.create!(:name => 'council')
+    g.add_committee!(council)
+
+    council.reload
+    assert !council.full_council_powers?
+  end
+
 end
 

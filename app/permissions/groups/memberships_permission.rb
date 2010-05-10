@@ -45,6 +45,7 @@ module Groups::MembershipsPermission
 
     # has to have a council
     group.council != group and
+    group.council.full_council_powers? and
     current_user.may?(:admin, group) and
     user != current_user and
     !user.may?(:admin, group) # can't destroy other admins
