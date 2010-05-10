@@ -51,6 +51,9 @@ module Groups::MembershipsPermission
   end
 
   def may_create_remove_user_requests?(membership = @membership)
+    # TODO: fix all the issues with these requests so that voting on user removal works
+    return false
+
     group = membership.group
     user = membership.user
 
