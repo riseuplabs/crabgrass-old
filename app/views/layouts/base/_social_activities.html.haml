@@ -1,10 +1,10 @@
-%div.left{:id => 'social-activities-container'}
-  %img#show-social{:src => '/images/png/16/heart.png'}
-  %div#social_activities_count{:class=>'left'}
-  %div#social-activities-dropdown{:style => 'display: none; position: absolute;'}
-    %table#social_activities_list
-    = link_to I18n.t(:see_all_link)+' >>', social_activities_url
-    %span#see_more_activities
-      |
-      = link_to_more_social_activities 
-      = spinner('more_socials')
+%a{:href => "#",:id => 'social-activities-container'}
+  %img#show-social{:src => '/images/png/18/social.png'}
+  %div#social_activities_count{:class=>'right'}
+%div#social-activities-dropdown{:style => 'display: none; position: absolute; top: 80px;'}
+  %table#social_activities_list
+  = link_to I18n.t(:see_all_link)+' >>', social_activities_url
+  %span#see_more_activities
+    |
+    = link_to_more_social_activities 
+    = spinner('more_socials')
