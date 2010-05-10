@@ -10,9 +10,7 @@
           = render(:partial => pages_dropdown) if local_assigns[:pages_dropdown]
           = pagination_for(pages)
     - else
-      %h3#underlined
-        Pages
-        = pagination_for(pages) unless local_assigns[:no_top_pagination]
+      = pagination_for(pages) unless local_assigns[:no_top_pagination]
 
   - if pages
     = render(:partial => block_above_pages_list_partial) if local_assigns[:block_above_pages_list_partial]

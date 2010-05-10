@@ -57,6 +57,21 @@ class Request < ActiveRecord::Base
   named_scope :having_state, lambda { |state|
     {:conditions => [ "requests.state = ?", state.to_s]}
   }
+
+  # same as having_state, but take into account
+  # that user can vote reject/approve on some requests without changing the state
+  named_scope :having_state_for_user, lambda { |state, user|
+    votes_conditions = if state == :pending
+      "votes.value IS NULL AND requests.state = 'pending'"
+    else
+      ["votes.value = ? OR requests.state = ?", vote_value_for_state(state), state.to_s]
+    end
+
+    { :conditions => votes_conditions,
+      :select => "requests.*",
+      :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
+  }
+
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
   named_scope :by_updated_at, :order => 'updated_at DESC'
@@ -223,14 +238,29 @@ class Request < ActiveRecord::Base
 
   protected
 
-  def add_vote!(response, user)
+  def self.vote_value_for_action(vote_state)
     response_map = {
       'reject' => 0,
       'approve' => 1,
       'ignore' => 2
     }
 
-    value = response_map[response]
+    return response_map[vote_state.to_s]
+  end
+
+  def self.vote_value_for_state(vote_state)
+    response_map = {
+      'rejected' => 0,
+      'approved' => 1,
+      'ignored' => 2
+    }
+
+    return response_map[vote_state.to_s]
+  end
+
+
+  def add_vote!(response, user)
+    value = self.class.vote_value_for_action(response)
     votes.by_user(user).delete_all
     votes.create!(:value => value, :user => user)
   end
