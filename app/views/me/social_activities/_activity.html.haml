@@ -7,5 +7,6 @@
     %span.small_icon{:class => "#{activity.icon}_16"}
   %td.description
     = linked_activity_description(activity)
-  %td.date
-    = friendly_date(activity.created_at)
+  - unless local_assigns[:no_date]
+    %td.date
+      = friendly_date(activity.created_at)
