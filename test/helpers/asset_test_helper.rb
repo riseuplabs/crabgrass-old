@@ -8,6 +8,7 @@ module AssetTestHelper
     type = 'image/jpeg' if file =~ /\.jpg$/
     type = 'application/msword' if file =~ /\.doc$/
     type = 'application/octet-stream' if file =~ /\.bin$/
+    type = 'application/zip' if file =~ /\.zip$/
     fixture_file_upload('files/'+file, type)
   end
 
