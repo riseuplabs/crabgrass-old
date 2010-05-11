@@ -67,5 +67,57 @@ class RateManyPageControllerTest < ActionController::TestCase
     end
   end
 
+  context "a vote created by orange" do
+    setup { @page = RateManyPage.find(217) }
+
+    should "allow orange to vote" do
+      vote(@page, :possible => 1, :value => 1, :as => :orange)
+      assert(@page.data.votes.find_by_user_id(User.find_by_login('orange').id))
+    end
+
+    should "not allow green to vote" do
+      vote(@page, :possible => 1, :value => -1, :as => :green)
+      assert(@page.data.votes.find_by_user_id(User.find_by_login('green').id).nil?)
+    end
+
+    context "shared with red (write access)" do
+      setup {
+        assert(User.find_by_login('red').may?(:edit, @page),
+               "red should be allowed to edit #{@page.inspect}! check the fixtures.")
+      }
+      should("allow red to vote") {
+        vote(@page, :possible => 1, :value => 2, :as => :red)
+        assert(@page.data.votes.find_by_user_id(User.find_by_login('red').id))
+      }
+    end
+
+    context "where orange adds a possibility" do
+      setup {
+        login_as :orange
+        add_possibility @page
+      }
+      should_change("the count of possibles", :by => 1) { @page.data.possibles.count }
+    end
+  end
+
+  private
+
+  def vote(page, options)
+    login_as options.delete(:as) if options[:as]
+    options[:id] = @page.data.possibles[options.delete(:possible)].id
+    options[:page_id] = page.id
+    post :vote_one, options
+  end
+
+  def add_possibility(page, name=nil, description=nil)
+    assert_difference 'page.data.possibles.count' do
+      post :add_possible, :page_id => page.id, :possible => {
+        :name => (name || Faker::Lorem.words(2).join(' ')),
+        :description => (description || Faker::Lorem.paragraph)
+      }
+      assert_response :redirect
+    end
+  end
+
   # TODO: tests for vote, clear votes, sort
 end
