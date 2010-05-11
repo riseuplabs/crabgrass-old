@@ -26,7 +26,7 @@ class CachingTest < ActionController::IntegrationTest
 
     click_button "Create"
 
-    assert_contain 'Group Created'
+    assert_contain 'Group was successfully created'
 
     # red, who is not a council member
     # should not see 'Send Invites' link anymore
@@ -36,7 +36,7 @@ class CachingTest < ActionController::IntegrationTest
     visit '/rainbow'
 
     assert_contain 'Council'
-    assert_not_contain I18n.t(:administration) 
+    assert_not_contain I18n.t(:administration)
 
     # blue should see the right links too if cache was expired
     login 'blue'
