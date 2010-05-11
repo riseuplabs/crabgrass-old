@@ -99,6 +99,12 @@ module GroupExtension::Groups
         end
         self.council = committee
         committee.type = "Council"
+
+        # creating a new council for a new group
+        # the council members will be able to remove other members
+        if self.memberships.count < 2
+          committee.full_council_powers = true
+        end
       elsif self.real_council == committee && !make_council
         committee.type = "Committee"
         self.council = nil

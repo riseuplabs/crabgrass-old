@@ -38,4 +38,22 @@ module RequestsHelper
     link_to(I18n.t(:destroy), {:controller => '/requests', :action => 'destroy', :id => request.id}, :method => :post)
   end
 
+  def request_description(request)
+    # need special view help for some requests
+    case request
+    when RequestToRemoveUser
+      request_to_remove_user_description(request)
+    else
+      request.description
+    end
+  end
+
+  def request_to_remove_user_description(request)
+    i18n_key = request.description_translation
+    subs = request.description_translation_params
+    tooltip_keys = request.description_tooltip_translations
+    subs[:tooltip] = tooltip(I18n.t(tooltip_keys[:caption]), I18n.t(tooltip_keys[:content]))
+
+    I18n.t(i18n_key, subs)
+  end
 end

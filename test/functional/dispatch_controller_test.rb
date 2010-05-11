@@ -28,12 +28,18 @@ class DispatchControllerTest < Test::Unit::TestCase
     assert_equal 5, assigns(:page).id
   end
 
-  # this test raises an error:
-  #NoMethodError: undefined method `>' for []:WillPaginate::Collection
-  # is this valid? is something broken??
-  def test_find_multiple_pages
-    get :dispatch, :_page => 'garble'
-    assert (assigns(:pages) > 1)
+  def test_find_page_by_name_without_context
+    login_as :blue
+    group = groups(:rainbow)
+    me = users(:blue)
+    newpage = DiscussionPage.create!(:name => 'duplicate', :owner => group, :title => 'rainbow duplicate page')
+    get :dispatch, :_page => "duplicate"
+    assert assigns(:page)
+
+    # find multiple pages
+    newpage2 = DiscussionPage.create!(:name => 'duplicate', :owner => me, :title => 'blue duplicate page') 
+    get :dispatch, :_page => "duplicate"
+    assert assigns(:pages)
   end
 
   def test_routes_with_all_numbers

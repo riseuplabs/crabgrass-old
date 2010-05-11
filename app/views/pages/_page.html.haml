@@ -6,7 +6,8 @@
     - if local_assigns[:with_cover]
       = cover_for(page)
     - elsif local_assigns[:with_owner] || local_assigns[:with_owner].nil?
-      = owner_image(page, local_assigns)
+      - require 'ruby-debug';debugger;1
+    = owner_image(page, local_assigns)
     %h4{page_html_attributes(page)}
       %a{:href=> page_url(page)}
         = page.title
