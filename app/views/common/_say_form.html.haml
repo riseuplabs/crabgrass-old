@@ -7,6 +7,5 @@
       %div.speech
         = text_area_tag 'post[body]', text, :id => 'say_text', :class => 'textinput', :cols => cols, :onfocus=>'setRows($("say_text"), 5)', :onblur=>'setRows($("say_text"), 1)'
         = submit_tag submit, :class => 'submit'
-        - if defined?(recipient) && !recipient.blank?
-          %br
-          %span= I18n.t(:wall_say_form_submit_caption, :user => recipient.display_name)
+
+
