@@ -165,9 +165,10 @@ module MenuHelper
   end
 
   # for social activities drop down link_to_remote tag
-  def link_to_more_social_activities
-    link_to_remote I18n.t(:see_more_link), 
-      :url => {:controller => '/me/social_activities', :more => 1},
+  def link_to_more_social_activities(toggle='more')
+    link_s = (toggle == 'more') ? I18n.t(:see_more_link) : I18n.t(:see_less_link)
+    link_to_remote link_s, 
+      :url => {:controller => '/me/social_activities', :see => toggle},
       :loading => show_spinner('more_socials'),
       :complete => hide_spinner('more_socials'),
       :method => 'GET'
