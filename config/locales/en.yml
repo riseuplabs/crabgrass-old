@@ -757,6 +757,9 @@ en:
   group_successfully_updated: "Group was successfully updated."
   only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
   group_successfully_created: "Group was successfully created."
+  group_successfully_created_details: "Now make sure to configure your group"
+  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
+
   dont_understand_group_type: "Could not understand group type {{type}}"
   dont_have_permission_to_create_committees: "You do not have permission to create committees under {{group}}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {{domain}}/yourgroupname.
@@ -879,7 +882,7 @@ en:
   this_is_coordinating: "This is the <strong>coordinating council</strong> for {{parent_group}}."
   new_council: "New council for group {{group_name}}"
   council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-
+  create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
   # committee
 
   this_is_committee: "This committee is part of {{parent_group}}."
