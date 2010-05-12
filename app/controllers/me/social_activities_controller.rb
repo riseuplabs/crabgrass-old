@@ -6,7 +6,7 @@ class Me::SocialActivitiesController < Me::BaseController
       limit = (params[:see] == 'more') ? 15 : 5
       see = (params[:see] == 'more') ? 'less' : 'more'
       @activities_drop = Activity.social_activities_for_groups_and_friends(current_user).only_visible_groups.newest.unique.limit_to(15)
-      count_diff = @activities_drop.count - 5
+      count_diff = @activities_drop.size - 5
       @activities_drop.slice!(-count_diff, count_diff) if limit == 5
       render :update do |page|
         page.replace_html 'social_activities_list', :partial => '/me/social_activities/activity', :locals => {:no_date => true}, :collection => @activities_drop
