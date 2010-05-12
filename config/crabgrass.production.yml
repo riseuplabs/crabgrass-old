@@ -14,11 +14,11 @@
 ##
 
 enabled_languages:
-  - en_US
-  - fr_FR
-  - es_ES
-  - pt_BR
-  - ar_EG
+  - en
+  - fr
+  - es
+  - pt
+  - ar
 enabled_mods:
   - super_admin
   - moderation
