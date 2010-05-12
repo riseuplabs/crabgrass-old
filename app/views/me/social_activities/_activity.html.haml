@@ -1,8 +1,9 @@
 - avatar = activity.avatar
+- avatar_size = local_assigns[:avatar_size] || 'medium'
 
 %tr
   %td.avatar
-    = link_to avatar_for(avatar), url_for_entity(avatar) unless avatar.blank?
+    = link_to avatar_for(avatar, avatar_size), url_for_entity(avatar) unless avatar.blank?
   %td
     %span.small_icon{:class => "#{activity.icon}_16"}
   %td.description
