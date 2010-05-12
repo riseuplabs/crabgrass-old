@@ -22,19 +22,15 @@ EOWIKI
          setup {@wiki = Wiki.new :body => body}
 
          should "return body if < length given" do
-           assert_equal @wiki.body_html,  @wiki.render_preview(1000)
+           assert_equal @wiki.body_html,  @wiki.send(:render_preview, 1000)
          end
 
          should "not contain toc" do
-           assert_no_match /<ul class="toc">/, @wiki.render_preview(100)
-         end
-
-         should "not split first line" do
-           assert_match /here<\/h1>$/,  @wiki.render_preview(10)
+           assert_no_match /<ul class="toc">/, @wiki.send(:render_preview, 100)
          end
 
          should "create valid tables" do
-           assert_match /<\/table>/,  @wiki.render_preview(140)
+           assert_match /<\/table>/,  @wiki.send(:render_preview, 180)
          end
       end
     end
