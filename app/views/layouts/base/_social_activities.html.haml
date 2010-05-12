@@ -2,7 +2,10 @@
   %img#show-social{:src => '/images/png/18/social.png'}
   =# %div#social_activities_count{:class=>'right'}
 %div#social-activities-dropdown{:style => 'display: none; position: absolute; top: 80px;'}
+  %h3{:id => 'underlined', :style => 'margin: 5px; font-weight: normal; width: 212px;'} Social Activity
   %table#social_activities_list
+ 
   = link_to I18n.t(:see_all_link)+' >>', social_activities_url
   |
   %span#see_more_activities
+
