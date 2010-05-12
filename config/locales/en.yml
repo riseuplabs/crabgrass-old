@@ -120,6 +120,9 @@ en:
   search_description: Search through all pages you have access to
 
   see_more_link: "More"
+  see_less_link: "Less"
+  see_count_more_link: "See {{count}} more"
+  see_count_less_link: "See {{count}} less"
   see_all_link: "See All"
   details_link: "Details"
   check_all: "Check All"
@@ -1561,6 +1564,7 @@ en:
   say_message_button: "Say"
   wall_heading: "Public Message Wall"
   wall_post_button: "Post New Message"
+  wall_say_form_submit_caption: "Post to {{user}}'s activity feed"
 
   my_status_heading: "Your Current Status"
   # ^^ no longer used

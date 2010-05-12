@@ -6,21 +6,25 @@
   .speech
     padding: 2px 2px 2px 0
     overflow: visible
-    height: 38px
-    float: left
+    height: 42px
     clear: left
     input.submit
       vertical-align: top
       margin-top: 4px
-
+    span
+      white-space: none
+      padding-left: 2px
+      font-style: italic
     textarea
       +bordered(!warm_grey_border)
       overflow: visible
+      float: left
     .textinput
       +bordered
       height: 30px
+      width: 320px
       padding: 2px
-      margin-top: 5px
+      margin: 5px 5px 0 0
       background: white
       overflow: visible
       &.tall
