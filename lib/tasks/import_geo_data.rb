@@ -7,6 +7,15 @@ namespace :cg do
     uri = "/export/dump"
     countries = "/countryInfo.txt"
     admin_codes = "/admin1Codes.txt"
+    if ENV['http_proxy']
+      proxy_uri = URI.parse(ENV['http_proxy'])
+      proxy_host = proxy_uri.host
+      proxy_port = proxy_uri.port
+    else
+      proxy_host = nil
+      proxy_port = nil
+    end
+    debugger
     if Conf.use_full_geonames_data == true
       places = "/allCountries"
     else
@@ -14,7 +23,8 @@ namespace :cg do
     end
     Dir.mkdir(path) if ! File.directory?(path)
     [countries, admin_codes, places+".zip"].each do |geofile|
-      Net::HTTP.start("download.geonames.org") { |http|
+      proxy=Net::HTTP::Proxy(proxy_host, proxy_port)
+      proxy.start("download.geonames.org") { |http|
         resp = http.get(uri+geofile)
         open(path+geofile, "w") { |file|
           file.write(resp.body)
@@ -31,7 +41,7 @@ namespace :cg do
         if country.nil?
           STDERR.puts "Adding new country #{row[4]}"
           GeoCountry.create!(options)
-        else 
+        else
           STDERR.puts "Updating country #{country.name}"
           country.update_attributes(options)
         end
@@ -46,7 +56,7 @@ namespace :cg do
         geocountry = GeoCountry.find_by_code(subrow[0])
         options = {:geo_country_id => geocountry.id, :admin1_code => subrow[1], :name => row[1]}
         geoadmincode = geocountry.geo_admin_codes.find_by_admin1_code(subrow[1])
-        if geoadmincode.nil? 
+        if geoadmincode.nil?
           STDERR.puts "Adding new admin code #{subrow[1]}"
           GeoAdminCode.create!(options)
         else
@@ -54,18 +64,18 @@ namespace :cg do
           geoadmincode.update_attributes(options)
         end
       end
-      ## make records for 'Country (general)' if they're not there 
+      ## make records for 'Country (general)' if they're not there
       GeoCountry.find(:all).each do |gc|
         next if gc.geo_admin_codes.find_by_admin1_code('00')
         GeoAdminCode.create!(:geo_country_id => gc.id, :admin1_code => '00', :name => "#{gc.name} (general)")
       end
-#    end 
+#    end
 #    if File.exist?(places+".txt")
       open(path+places+".txt").each do |line|
         row = line.split("\t")
         geocountry = GeoCountry.find_by_code(row[8])
         next if geocountry.nil?
-        row[10] = '00' if row[10] !~ /\S/ 
+        row[10] = '00' if row[10] !~ /\S/
         STDERR.puts "on #{row[0]} :: #{row[10].to_s} :: #{row[8]}"
         geoadmincode = geocountry.geo_admin_codes.find_by_admin1_code(row[10])
         # if there is no admin code matching the record, use the general admin code
@@ -81,7 +91,7 @@ namespace :cg do
           :longitude => row[5]
         }
         geoplace = geoadmincode.geo_places.find_by_geonameid(row[0])
-        if geoplace.nil? 
+        if geoplace.nil?
           STDERR.puts "Adding new place #{row[1]}"
           GeoPlace.create!(options)
         else
