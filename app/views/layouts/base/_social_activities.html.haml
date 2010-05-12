@@ -5,4 +5,4 @@
   %table#social_activities_list
   = link_to I18n.t(:see_all_link)+' >>', social_activities_url
   |
-  = render :partial => '/layouts/base/social_activities_more_less_link', :locals => {:toggle => 'more'}
+  %span#see_more_activities
