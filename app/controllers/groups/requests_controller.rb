@@ -111,6 +111,11 @@ class Groups::RequestsController < Groups::BaseController
 
   # create a request to destroy membership (aka a remove proposal)
   def create_remove_user
+    # TODO: enable creation of these requests
+    redirect_to :controller => 'groups/memberships', :action => 'review', :id => @group
+    return
+
+=begin
     begin
       RequestToRemoveUser.create! :created_by => current_user, :recipient => @group, :requestable => @user
       flash_message :success => I18n.t(:request_to_remove_user_sent, :user => @user.display_name)
@@ -119,6 +124,7 @@ class Groups::RequestsController < Groups::BaseController
     end
 
     redirect_to :controller => 'groups/memberships', :action => 'review', :id => @group
+=end
   end
 
 

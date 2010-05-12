@@ -71,6 +71,7 @@ Scenario: Clicking 'Remove' for another coordinator (council-member) shows propo
   And I follow "Remove" within user: "red"'s row
   Then I should see "This member is also a member of the council. Do you want to propose to remove 'Red'?"
 
+@wip
 Scenario: I create a propose to remove another council member
   Given I am a member of the council
   When I go to that group's membership review page

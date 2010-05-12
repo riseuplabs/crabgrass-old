@@ -160,7 +160,13 @@ class GroupsController < Groups::BaseController
   end
 
   def group_created_success
-    flash_message :title => 'Group Created', :success => 'now make sure to configure your group'
+    if @group.class == Group
+      success_text = I18n.t(:group_successfully_created_details_council_info)
+    else
+      success_text = I18n.t(:group_successfully_created_details)
+    end
+
+    flash_message :title => I18n.t(:group_successfully_created), :success => success_text
     redirect_to groups_url(:action => 'edit')
   end
 

@@ -45,12 +45,16 @@ module Groups::MembershipsPermission
 
     # has to have a council
     group.council != group and
+    group.council.full_council_powers? and
     current_user.may?(:admin, group) and
     user != current_user and
     !user.may?(:admin, group) # can't destroy other admins
   end
 
   def may_create_remove_user_requests?(membership = @membership)
+    # TODO: fix all the issues with these requests so that voting on user removal works
+    return false
+
     group = membership.group
     user = membership.user
 
