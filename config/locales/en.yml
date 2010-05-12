@@ -121,6 +121,8 @@ en:
 
   see_more_link: "More"
   see_less_link: "Less"
+  see_count_more_link: "See {{count}} more"
+  see_count_less_link: "See {{count}} less"
   see_all_link: "See All"
   details_link: "Details"
   check_all: "Check All"
