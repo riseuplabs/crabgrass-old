@@ -112,19 +112,6 @@ module PageExtension::Groups
       Page.connection.select_all(sql)
     end
 
-    def tags_for_group(options)
-      Tag.find_by_sql(%Q[
-        SELECT tags.*, count(name) as count
-        FROM tags
-        INNER JOIN taggings ON tags.id = taggings.tag_id AND taggings.taggable_type = 'Page'
-        INNER JOIN page_terms ON page_terms.page_id = taggings.taggable_id
-        WHERE MATCH(page_terms.access_ids, page_terms.tags) AGAINST ('#{access_filter(options)}' IN BOOLEAN MODE) AND page_terms.flow IS NULL
-        GROUP BY name
-        ORDER BY name
-      ])
-    end
-
-
     def access_filter(options)
       group = options[:group]
       current_user = options[:current_user]

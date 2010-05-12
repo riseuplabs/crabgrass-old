@@ -1,8 +1,8 @@
 <table cellpadding='5' class='pretty'>
   <tr>
-    <th align='left'><%= :user.t %></th>
-    <th align='left'><%= :viewed.t %></th>
-    <th align='left'><%= :contributed.t %></th>
+    <th align='left'><%= I18n.t(:user) %></th>
+    <th align='left'><%= I18n.t(:viewed) %></th>
+    <th align='left'><%= I18n.t(:contributed) %></th>
     <th>&nbsp;</th>
   </tr>
 
@@ -14,7 +14,7 @@
       <td><%= friendly_date(upart.viewed_at) %></td>
       <td><%= friendly_date(upart.changed_at) %></td>
       <td>
-        <%= upart.viewed? ? 'read'.t : 'unread'.t %>
+        <%= upart.viewed? ? I18n.t(:read) : I18n.t(:unread) %>
         <%= icon_tag "tiny_pending" unless upart.resolved? %>
         <%= icon_tag "tiny_star" if upart.star? %>
       </td>

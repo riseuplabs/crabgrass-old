@@ -1,2 +1,6 @@
+<% content_for :right_sidebar do %>
+  <%= render :partial => 'base_page/sidebar' %>
+<% end %>
+
 <%# Warning: call build_embed, not media_embed; the latter allows the user to embed arbitrary HTML or javascript! %>
 <%= @page.data.build_embed %>

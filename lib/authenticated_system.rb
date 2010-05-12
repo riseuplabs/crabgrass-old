@@ -5,7 +5,7 @@ module AuthenticatedSystem
     @current_user ||= begin
       user = load_user(session[:user]) if session[:user]
       user ||= UnauthenticatedUser.new
-      User.current = user if user.is_a?(User) # why not UnauthenticatedUser?
+      User.current = user
       user
     end
   end

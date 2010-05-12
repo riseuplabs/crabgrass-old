@@ -1,14 +1,14 @@
 <table cellpadding='4'>
 <tr>
-  <td align='right'><b><%='starts at'.t %>:</b></td>
+  <td align='right'><b><%=I18n.t(:starts_at) %>:</b></td>
   <td><%= full_time @event.starts_at %></td>
 </tr>
 <tr>
-  <td align='right'><b><%= if !@event.is_all_day then 'ends at'.t+' :' else 'all day event'.t end%></b></td>
+  <td align='right'><b><%= if !@event.is_all_day then I18n.t(:ends_at)+' :' else I18n.t(:all_day_event) end%></b></td>
   <td><%= if !@event.is_all_day then full_time @event.ends_at end%></td>
 </tr>
 <tr>
-  <td align='right'><b><%='place'.t %>:</b></td>
+  <td align='right'><b><%=I18n.t(:place) %>:</b></td>
   <td><%= @event.location %></td>
 </tr>
 <tr>

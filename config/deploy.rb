@@ -11,9 +11,8 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "ssh://git@193.138.105.69:123/crabgrass.git"
-set :branch, "unido-0.4.7.x"
+set :branch, "unido-0.5.1.1"
 
-## TODO: setup the deploy host once it is ready.
 deploy_host = "193.138.105.70"
 staging_host = "193.138.105.69"
 
@@ -55,12 +54,6 @@ role :db, (staging ? staging_host : deploy_host), :primary=>true
 
 set :deploy_to, "/usr/apps/#{application}"
 
-##
-## SSH OPTIONS
-##
-
-# ssh_options[:keys] = %w(/path/to/my/key /path/to/another/key)
-# ssh_options[:port] = 25
 
 ##
 ## CUSTOM TASKS

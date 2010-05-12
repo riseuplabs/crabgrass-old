@@ -93,7 +93,7 @@ module BasePagePermission
   alias_method :may_notify_page?, :may_edit_page?
 
   def may_share_with_all?
-    !Site.current.try.network.nil? and may_share_page?
+    false # !Site.current.try.network.nil? and may_share_page?
   end
 
   ##

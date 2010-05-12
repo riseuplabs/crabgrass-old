@@ -5,7 +5,7 @@ class Admin::AnnouncementsController < Admin::BaseController
   helper 'base_page/share'
 
   def index
-    @pages = Page.paginate_by_path('descending/created_at', :page => params[:page], :flow => :announcement)
+    @pages = Page.paginate_by_path('descending/created_at', pagination_params.merge({:flow => :announcement}))
   end
 
   def new

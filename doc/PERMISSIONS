@@ -24,7 +24,7 @@ They are called from:
 +may_action* defaults to the current controller and is mostly used in controllers for authorization. Now we have a default authorized? method in the ApplicationController:
   def authorized?
     may_action?(params[:action])
-  end      
+  end
 
 So if you add a before_filter :login_required to your controller it will look for may_action_controller? and so on. In a few cases it still makes sense to overwrite the authorized? method. For example in order to take care of all the add_+ ajax functions in the ProfileController we now have:
    def authorized?
@@ -37,7 +37,7 @@ Other options would be a long list of alias_methods or overwriting the method_mi
 
 ==Finding the right Permission function
 
-+may_action+ calls may?(controller, action, *args) for the current controller. may? looks for the appropriate permission functions. They all have the form of '*may_*action*_*domain*?'. 
++may_action+ calls may?(controller, action, *args) for the current controller. may? looks for the appropriate permission functions. They all have the form of '*may_*action*_*domain*?'.
 * action:: is the action parameter to may? and therefore params\[:action\] for controllers that do not overwrite the authorized? method.
 *  domain:: may? looks for permissions in the following order:
  1. controller_name:: domain for Me:TrashController -> may_action_trash?
@@ -47,9 +47,9 @@ Other options would be a long list of alias_methods or overwriting the method_mi
 == Helpers
 
 +link_if_may?+ is great for link helpers. It returns false if the link is not allowed so you can do
- link_if_may("join {group_type}"[:join_group, @group_type],
+ link_if_may(I18n.t(:join_group, :group_type => @group_type),
              :membership, 'join', @group) or
- link_if_may("request to join {group_type}"[:request_join_group_link, @group_type],
+ link_if_may(I18n.t(:request_join_group_link, :group_type => @group_type),
              :requests, 'create_join', @group)
 
 ==Permissions in mods and tools
@@ -63,9 +63,9 @@ Engines has been adjusted to add app/permissions to the code path for plugins an
 We might want customized error messages if permissions are denied. This was done for contacts before like this:
   def remove
     unless current_user.friend_of?(@user)
-      flash_message_now :error => 'You are not the contact of %s.'[:not_contact_of] % @user.name
+      flash_message_now :error => I18n.t(:not_contact_of) % @user.name
       return
-    end        
+    end
     ...
   end
 

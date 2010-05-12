@@ -1,16 +1,16 @@
 <%- @info_box_class = 'tabs' -%>
 <%- @info_box = capture do -%>
-<%= 
+<%=
   Formy.tabs do |f|
     f.tab do |t|
-      t.label 'Introduction'.t
+      t.label I18n.t(:survey_introduction_tab)
       t.url page_url(@page, :action => 'show')
       t.selected controller?(:survey_page) && action?(:show)
     end
     if logged_in?
       if may_modify_survey?
         f.tab do |t|
-          t.label 'Create Survey'[:survey_create]
+          t.label I18n.t(:survey_edit_tab)
           t.url page_url(@page, :action => 'edit')
           t.selected controller?(:survey_page) && action?(:edit)
         end
@@ -19,27 +19,27 @@
         my_response = current_user.response_for_survey(@survey)
         if my_response and may_view_survey_response?(my_response)
           f.tab do |t|
-            t.label 'My Response'[:survey_my_response]
+            t.label I18n.t(:survey_my_response_tab)
             t.url page_url(@page, :action => 'response-show', :id => my_response.id)
             t.selected controller?(:survey_page_response) && action?(:show, :edit) && id?(my_response.id)
           end
         elsif may_create_survey_response?
           f.tab do |t|
-            t.label 'Take Survey'[:survey_take]
+            t.label I18n.t(:survey_take_tab)
             t.url page_url(@page, :action => 'response-new')
             t.selected controller?(:survey_page_response) && action?(:new, :create)
           end
         end
         if may_rate_survey_response?
           f.tab do |t|
-            t.label 'Rate Responses'[:survey_rate_responses]
+            t.label I18n.t(:survey_rate_responses_tab)
             t.url page_url(@page, :action => 'response-rate')
             t.selected controller?(:survey_page_response) && action?(:rate)
           end
         end
         if may_view_survey_response?
           f.tab do |t|
-            t.label 'List All Responses'[:survey_list_all]
+            t.label I18n.t(:survey_list_all_tab)
             t.url page_url(@page, :action => 'response-list')
             t.selected controller?(:survey_page_response) && action?(:list, :edit, :show) && !id?(my_response)
           end

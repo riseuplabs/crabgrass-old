@@ -1,6 +1,32 @@
 module TaskListPageHelper
 
   ##
+  ## show tasks
+  ##
+
+  def list_for_task(list, options)
+    case options[:status]
+    when 'pending'
+      tasks = list.tasks.select { |t| t.completed == false }
+    when 'completed'
+      tasks = list.tasks.select { |t| t.completed == true }
+    else
+      list.tasks
+    end
+    tasks.any? == true ? tasks.sort_by { |t| [(t.completed? ? 1 : 0), t.position]} : []
+  end
+
+  def options_for_task_list
+    options = {}
+    options[:user]        = @user ? @user : nil
+    options[:all_users]   = @user ? false : true
+    options[:status]      = @show_status ? @show_status : 'pending'
+    options[:all_states]  = @show_status == 'both'
+    options[:completed]   = @show_status == 'completed'
+    options
+  end
+
+  ##
   ## show task
   ##
 
@@ -9,9 +35,9 @@ module TaskListPageHelper
     checkbox_id  = dom_id(task, 'check')
     checked = task.completed?
     next_state = checked ? 'pending' : 'complete'
-    disabled = !current_user.may?(:edit,@page)
+    disabled = !current_user.may?(:edit, task.task_list.page)
     click = remote_function(
-      :url => page_xurl(@page, :action => 'mark_task_'+next_state, :id => task.id),
+      :url => page_xurl(task.task_list.page, :action => 'mark_task_'+next_state, :id => task.id),
       :loading => hide(checkbox_id) + add_class_name(task, 'spinning')
     )
     check_box_tag(checkbox_id, '1', checked, :class => 'task_check', :onclick => click, :disabled => disabled)
@@ -34,9 +60,8 @@ module TaskListPageHelper
   # makes links of the people assigned to a task like: "joe, janet, jezabel: "
   def task_link_to_people(task)
     links = task.users.collect{|user|
-      user == current_user ? link_to(current_user.login, {:controller => 'me/tasks', :action => nil, :id => nil}, :class => 'hov') : link_to_user(user, :action => 'tasks', :class => 'hov')
+      link_to_user(user, :action => 'tasks', :class => 'hov')
     }.join(', ')
-    #links.any? ? links+': ' : ''
   end
 
   # a button to hide the task detail
@@ -47,7 +72,7 @@ module TaskListPageHelper
   # a button to delete the task
   def delete_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(@page, :action=>'destroy_task', :id=>task.id),
+      :url => page_xurl(task.task_list.page, :action=>'destroy_task', :id=>task.id),
       :loading => show_spinner(task),
       :complete => hide(task)
     )
@@ -57,7 +82,7 @@ module TaskListPageHelper
   # a button to replace the task detail with a tast edit form.
   def edit_task_details_button(task)
     function = remote_function(
-      :url => page_xurl(@page, :action=>'edit_task', :id=>task.id),
+      :url => page_xurl(task.task_list.page, :action=>'edit_task', :id=>task.id),
       :loading => show_spinner(task)
     )
     button_to_function "Edit", function
@@ -75,13 +100,13 @@ module TaskListPageHelper
   ## edit task form
   ##
 
-  def possible_users
+  def possible_users(task, page)
     return @possible_users if @possible_users
     @possible_users = []
-    if @page.users.with_access.any?
-      @possible_users += @page.users.with_access
+    if page.users.with_access.any?
+      @possible_users += page.users.with_access
     end
-    @page.groups.each do |group|
+    page.groups.each do |group|
       @possible_users += group.users
     end
     @possible_users.uniq!
@@ -90,14 +115,15 @@ module TaskListPageHelper
 
   def options_for_task_edit_form(task)
     [{
-      :url => page_xurl(@page, :action=>'update_task', :id => task.id),
+      :url => page_xurl(task.task_list.page, :action=>'update_task', :id => task.id),
       :loading  => show_spinner(task),
       :html => {}
     }]
   end
 
-  def checkboxes_for_assign_people_to_task(task, selected=nil)
-    collection_multiple_select('task', 'user_ids', possible_users, :id, :login, :outer_class=>'plain floatlist', :selected_items => selected)
+  def checkboxes_for_assign_people_to_task(task, selected=nil, page = nil)
+    page ||= task.task_list.page
+    collection_multiple_select('task', 'user_ids', possible_users(task, page), :id, :login, :outer_class=>'plain floatlist', :selected_items => selected)
   end
 
   def close_task_edit_button(task)
@@ -116,10 +142,10 @@ module TaskListPageHelper
   ### new task form
   ###
 
-  def options_for_new_task_form
+  def options_for_new_task_form(page)
     [{
-      :url      => page_xurl(@page, :action=>'create_task'),
-      :html     => {:action => page_url(@page, :action=>'create_task'), :id => 'new-task-form'}, # non-ajax fallback
+      :url      => page_xurl(page, :action => 'create_task'),
+      :html     => {:action => page_url(page, :action => 'create_task'), :id => 'new-task-form'}, # non-ajax fallback
       :loading  => show_spinner('new-task'),
       :complete => hide_spinner('new-task'),
       :success => reset_form('new-task-form')

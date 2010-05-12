@@ -3,5 +3,5 @@
 
   <%= javascript_tag "next_image_id = #{@next_id or 0};ready_for_next = true;" %>
 <% else -%>
-  <%= "No images in gallery"[:no_images_in_gallery] %>
+  <%= I18n.t(:no_images_in_gallery) %>
 <% end -%>

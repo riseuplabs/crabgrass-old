@@ -6,6 +6,6 @@
   <td><%= membership.total_visits %></td>
   <% end %>
 <!--  <td><%= membership.join_method %></td> -->
-  <td><%= membership.user.may?(:admin,@group) ? 'coordinator'.t : '' %></td>
+  <td><%= membership.user.may?(:admin,@group) ? I18n.t(:coordinator) : '' %></td>
 </tr>
 

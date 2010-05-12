@@ -1,0 +1,128 @@
+Translator
+==========
+
+This crabgrass mod allow add a translation user interface to crabgrass.
+
+
+Languages in the database
+=========================
+
+
+Before you start translating, you must setup your database.
+Read doc/I18N on how to do this.
+
+Usage
+=======
+
+
+Enable the mod and specify the translation group name in config/crabgrass.production.yml:
+
+<begin>
+enabled_mods:
+  - translator
+
+translation_group: rainbow
+<end>
+
+edit config/routes.rb
+  map.from_plugin :translator
+
+
+Run Translator Migrations:
+
+$ ./script/generate plugin_migration
+$ rake db:migrate
+
+If you haven't done so already, run:
+$ rake cg:load_default_data
+
+This will load all files matching RAILS_ROOT/config/db/*.yml into the database
+including config/db/languages.yml - the list of available languages.
+
+
+Restart rails and browse to: http://localhost:3000/translator
+
+
+Adding Languages
+================
+
+Add it to config/db/languages.yml and (optionaly if you plan to run tests) to test/fixtures/languages.yml
+
+Import it to the database by running:
+
+$ rake cg:load_default_data
+
+
+Translating into piglatin
+=========================
+
+It can be very useful to create 'dummy' translations of every key so you can
+visually scan a page and see what strings have yet to be localized.
+
+Run this once:
+
+  rake cg:l10n:enable_piglatin
+
+Then, every time you modify en.yml:
+
+  rake cg:l10n:create_piglatin
+
+
+Translation workflow
+====================
+
+Step 1: load .yml files into the translator database
+
+  rake cg:l10n:load_translations
+
+Step 2: translate using the translator UI
+
+  http://localhost:3000/translator
+
+Step 3: export these database translations to .yml files:
+
+  rake cg:l10n:extract_translations
+
+
+Note
+====
+
+All rake tasks need to have RAILS_ENV set to correct value for your database. For example:
+$ RAILS_ENV=production rake cg:load_default_data
+
+Credits
+=======
+
+The Translator mod is based on Gibberize <http://code.autistici.org/project/gibberize>
+and the SuperAdmin mod.
+Turned into a mod by Pietro Ferrari <pietro@riseup.net>
+
+
+NOTES
+===========================
+
+<% if @use_google -%>
+  <p>
+    <b>Google Says</b><br />
+    <span id="googletranslate">Loading...</span>
+  </p>
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("language", "1");
+  function initialize() {
+    google.language.translate('<%= original %>',
+                              '<%= crabgrass_default_language.code[0,2] %>',
+                              '<%= @translation.language.code[0,2] %>',
+      function(result) {
+        var translated = document.getElementById("googletranslate");
+        if (result.translation) {
+          translated.innerHTML = result.translation;
+        }
+      });
+  };
+
+  google.setOnLoadCallback(initialize);
+
+</script>
+

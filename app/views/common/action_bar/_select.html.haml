@@ -1,0 +1,7 @@
+%div#select-bar.left
+  %h4.left= I18n.t(:select_filter_label)
+
+  %ul
+    - settings[:select].try.each_with_index do |selection, index|
+      %li
+        = link_to_function I18n.t(selection[:translation]), selection[:function], :class => "#{ index == 0 ? 'first' : '' }"

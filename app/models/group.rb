@@ -59,10 +59,12 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope(:only_type, lambda do |group_type|
-    group_type = group_type.to_s.capitalize
+  named_scope(:only_type, lambda do |*args|
+    group_type = args.first.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
+    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
+      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
     else
       {:conditions => ['groups.type = ?', group_type]}
     end
@@ -87,9 +89,27 @@ class Group < ActiveRecord::Base
   }
 
   named_scope :recent, :order => 'groups.created_at DESC', :conditions => ["groups.created_at > ?", RECENT_SINCE_TIME]
+  named_scope :by_created_at, :order => 'groups.created_at DESC'
 
   named_scope :names_only, :select => 'full_name, name'
 
+  named_scope :in_location, lambda { |options|
+    country_id = options[:country_id]
+    admin_code_id = options[:state_id]
+    city_id = options[:city_id]
+    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
+    if admin_code_id =~ /\d+/
+      conditions[0] << " and gl.geo_admin_code_id=?"
+      conditions << admin_code_id
+    end
+    if city_id =~ /\d+/
+      conditions[0] << " and gl.geo_place_id=?"
+      conditions << city_id
+    end
+    { :joins => "join geo_locations as gl",
+      :conditions => conditions
+    }
+  }
 
   ##
   ## GROUP INFORMATION
@@ -138,7 +158,8 @@ class Group < ActiveRecord::Base
   def network?;   instance_of? Network;   end
   def normal?;    instance_of? Group;     end
   def council?;   instance_of? Council;   end
-  def group_type; self.class.name.t;      end
+
+  def group_type; I18n.t(self.class.name.downcase.to_sym); end
 
   ##
   ## PROFILE
@@ -199,11 +220,26 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def destroy_by(user)
+    # needed for the activity
+    self.destroyed_by = user
+    self.council.destroyed_by = user if self.council
+    self.children.each {|committee| committee.destroyed_by = user}
+
+    self.destroy
+  end
+
   protected
 
   before_save :save_avatar_if_needed
   def save_avatar_if_needed
     avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
   end
 
   ##
@@ -244,7 +280,7 @@ class Group < ActiveRecord::Base
     if user.member_of?(self) or profiles.visible_by(user).may_see?
       return true
     else
-      raise PermissionDenied.new('Sorry, you are not allowed to share with "{name}".'[:share_pester_error, {:name => self.name}])
+      raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
     end
   end
 

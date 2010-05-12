@@ -9,16 +9,16 @@
   ) do -%>
   <%= hidden_field_tag 'version', wiki.version %>
   <%= %>
-  <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 80, :id => wiki_body_id(wiki) %></div>
+  <div class='fieldset'><%= text_area_tag 'body', wiki.body, :rows => rows, :cols => 64, :id => wiki_body_id(wiki) %></div>
   <div>
     <%= formatting_reference_link %>
     <% if wiki.document_open_for?(current_user) %>
-      <%= submit_tag 'Save'[:save_button], :name => 'save' %>
+      <%= submit_tag I18n.t(:save_button), :name => 'save' %>
     <% else %>
-      <%= submit_tag 'Break Lock'[:break_lock_button], :name => 'break_lock' %>
+      <%= submit_tag I18n.t(:break_lock_button), :name => 'break_lock' %>
     <% end %>
-    <%= submit_tag 'Cancel'[:cancel_button], :name => 'cancel' %>
-    <%= 'Revert to previous version:'[:revert_to_previous_version] %>
+    <%= submit_tag I18n.t(:cancel_button), :name => 'cancel' %>
+    <%= I18n.t(:revert_to_previous_version) %>
     <%= old_version_select_tag(wiki, spinner_id) %>
     <%= spinner(spinner_id) %>
   </div>

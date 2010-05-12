@@ -1,0 +1,77 @@
+<%# div#page_sidebar gets replaced by popups %>
+<div id='page_sidebar'>
+  <%- if logged_in? -%>
+   <%- if @page.deleted? -%>
+      <ul class='side_list commands'>
+        <%= undelete_line %>
+        <%= destroy_line %>
+        <%= details_line %>
+        <%= history_line %>
+      </ul>
+    <%- else -%>
+      <ul class='side_list commands'>
+        <%= watch_line %>
+        <%= star_line %>
+      </ul>
+      <%- if (access_changing_commands = [share_line, notify_line, share_all_line, public_line].compact).any? -%>
+        <ul class='side_list commands rule'>
+          <%= access_changing_commands %>
+        </ul>
+      <%- end -%>
+      <ul class='side_list commands rule'>
+        <%= delete_line %>
+        <%# move_line %>
+        <%= details_line %>
+        <%= history_line %>
+        <%= view_line %>
+      </ul>
+    <% end -%>
+    <%= call_hook :page_sidebar_actions %>
+  <% end -%>
+
+  <%- if !(tag_content = page_tags).nil? || may_update_tags? -%>
+    <h3><%= I18n.t(:tags) %></h3>
+    <div class='tags'>
+      <%= tag_content %>
+    </div>
+    <ul class='side_list commands'>
+      <%= edit_tags_line %>
+    </ul>
+  <%- end -%>
+
+  <%- if @page.supports_attachments and !(attachment_content = page_attachments).nil? -%>
+    <h3><%= I18n.t(:attachments) %></h3>
+    <div class='attachments'>
+      <%= attachment_content %>
+    </div>
+    <ul class='side_list commands'>
+      <%= edit_attachments_line %>
+    </ul>
+  <%- end -%>
+
+  <% if @page.group_participations.any? -%>
+    <h3><%= I18n.t(:groups) %></h3>
+    <ul class='side_list names'>
+      <% @page.sorted_group_participations.each do |group_part| %>
+        <li><%= link_to_group_participation(group_part) %></li>
+      <% end -%>
+    </ul>
+  <% end -%>
+
+% if (uparts = @page.sorted_user_participations(:limit => 20)).any?
+%   if uparts.length >= 20
+%     @more = true
+%     uparts.pop
+%   end
+    <h3><%= I18n.t(:people) %></h3>
+    <ul class='side_list names'>
+%     uparts.each do |user_part|
+        <li><%= link_to_user_participation(user_part) %></li>
+%     end
+%     if @more
+        <%= details_line('more') %>
+%     end
+    </ul>
+%  end
+</div>
+

@@ -1,6 +1,6 @@
 #
-# This is the main global crabgrass configuration. 
-# 
+# This is the main global crabgrass configuration.
+#
 # Most of the time, no other configuration should be required other than the
 # options in this file. Unusual options might be configured elsewhere.
 #
@@ -91,13 +91,12 @@ sites:
 ##
 
 pagination_size: 30
-default_language: en_US
+default_language: en
 enforce_ssl: false
 show_exceptions: false
 email_sender: "robot@$current_host"
 tracking: true
 available_page_types:
-  - WikiPage
   - AssetPage
   - EventPage
   - ExternalVideoPage

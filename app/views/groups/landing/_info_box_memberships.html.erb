@@ -1,12 +1,12 @@
 <% if may_list_memberships? -%>
   <%- cache(group_cache_key(@group, :what => 'members', :expires_in => hours(3))) do -%>
   <%= render :partial => 'avatars/entity_boxes',
-      :locals => {:header => 'members'[:members], :entities => @group.users,
+      :locals => {:header => I18n.t(:members), :entities => @group.users,
       :more_link => membership_count_link,
       :after => link_line(:bullet, list_membership_link, invite_link, requests_link),
       :show_empty => true } %>
   <%= render :partial => 'avatars/entity_boxes',
-      :locals => {:header => 'member groups'[:member_groups_of_network], :entities => @group.groups.select{ |g| g.has_access? :view, current_user },
+      :locals => {:header => I18n.t(:member_groups_of_network), :entities => @group.groups.select{ |g| g.has_access? :view, current_user },
       :after => link_line(:bullet, group_membership_link, invite_link, requests_link) } %>
   <% end -%>
 <% end -%>
@@ -14,7 +14,7 @@
 <%- if may_show_networks_of_group? -%>
   <%- cache(group_cache_key(@group, :what => 'networks')) do -%>
     <%- if @group.networks.any? -%>
-      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "networks"[:networks], :entities => @group.networks, :after => '&nbsp'} %>
+      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:networks), :entities => @group.networks, :after => '&nbsp'} %>
     <%- end -%>
   <%- end -%>
 <%- end %>
@@ -22,10 +22,10 @@
 <% if may_show_subcommittees_of_group? -%>
   <%- cache(group_cache_key(@group, :what => 'committees')) do -%>
     <% committees = @group.committees_for(@access) %>
-    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "committees"[:committees], :entities => committees, :after => link_line(create_committee_link), :show_empty => true} %>
+    <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:committees), :entities => committees, :after => link_line(create_committee_link), :show_empty => true} %>
 
     <% if @group.real_council %>
-      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => "Council"[:council], :entities => [@group.real_council], :show_empty => false} %>
+      <%= render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:council), :entities => [@group.real_council], :show_empty => false} %>
     <% end %>
 
   <%- end -%>

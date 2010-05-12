@@ -4,9 +4,9 @@ class Admin::BaseController < ApplicationController
   include FlashMessageHelper
   include AuthenticatedSystem
 
-  #layout 'admin'
+  layout 'admin'
 
-  #stylesheet('admin')
+  stylesheet('admin')
 
   helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, FlashMessageHelper, LinkHelper, ApplicationHelper, TimeHelper
 

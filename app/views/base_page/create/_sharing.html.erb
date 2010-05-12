@@ -4,7 +4,7 @@
     form.hidden hidden_field_tag('page[owner]', params[:group])
   else
     form.row do |r|
-      r.label "Page Owner (optional)"[:page_create_owner]
+      r.label I18n.t(:page_create_owner)
       r.label_for 'page_owner'
       r.input select_tag('page[owner]', options_for_page_owner(:include_me => true), :id => 'page_owner')
       r.info help(:page_owner)
@@ -14,13 +14,13 @@
   ## ADDITIONAL ACCESS
   form.hidden spinner('popup') # unused, but _add_recipient.rjs tries to hide it
   form.row do |r|
-    r.input link_to_toggle('Additional Access'[:additional_page_access], 'recipient_row')
+    r.input link_to_toggle(I18n.t(:additional_page_access), 'recipient_row')
   end
   form.row do |r|
     r.style 'display:none'
     r.id 'recipient_row'
     r.classes 'first'
-    r.label "Recipients"[:recipients]
+    r.label I18n.t(:recipients)
     r.input %Q{
       <div class='share_page'>
         <div id='share_error_message'></div>

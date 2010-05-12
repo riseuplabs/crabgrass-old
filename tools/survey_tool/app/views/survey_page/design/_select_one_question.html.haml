@@ -1,0 +1,9 @@
+= form.text_field :label, :size => 65
+%strong
+  = I18n.t(:select_one_choices_label)
+%br
+%em
+  = I18n.t(:each_line_is_a_choice_caption)
+%br
+= form.text_area :newline_delimited_choices, :cols => 60, :rows => 12
+%br

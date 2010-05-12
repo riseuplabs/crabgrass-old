@@ -1,0 +1,5 @@
+%div#select-bar.left
+  %ul
+    - settings[:link].try.each_with_index do |selection, index|
+      %li
+        = link_to I18n.t(selection[:translation]), selection[:target], :class => "#{ index == 0 ? 'first' : '' }"

@@ -1,0 +1,5 @@
+- view_base_path ||= settings[:view_base_path]
+%div.right
+  %h4.left= I18n.t(:view_label)
+  = action_bar_view_filter_select(settings)
+  = observe_field 'view_filter_select', :function => %Q[window.location.href = "#{view_base_path}" + "?view=" + value]

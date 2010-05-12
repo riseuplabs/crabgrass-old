@@ -129,6 +129,11 @@ class Object
     end
   end
 
+  # TODO: remove in rails 2.3
+  # from file activesupport/lib/active_support/core_ext/blank.rb, line 17
+  def present?
+    !blank?
+  end
 end
 
 class Array
@@ -142,9 +147,9 @@ class Array
   # creates an array suitable for options_for_select.
   # for use with arrays of single values where you want the
   # option shown to be localized.
-  # eg ['hi','bye'] --> [['hi'.t,'hi'],['bye'.t,'bye']]
+  # eg ['hi','bye'] --> [[I18n.t(:hi),'hi'],[I18n.t(:bye),'bye']]
   def to_localized_select
-    self.collect{|a| [a.t, a.to_s] }
+    self.collect{|a| [I18n.t(a.to_sym, :default => a.to_s), a] }
   end
 
   def any_in?(array)
@@ -167,6 +172,26 @@ class Array
   def combine(delimiter = ' ')
     compact.join(delimiter)
   end
+
+  # copied from rails 2.3
+  # returns the object if it is an array or responsd to :to_ary
+  # returns a blank array if the object is nil
+  # finally, returns a new array containing the object
+  def wrap(object)
+    case object
+    when nil
+      []
+    when self
+      object
+    else
+      if object.respond_to?(:to_ary)
+        object.to_ary
+      else
+        [object]
+      end
+    end
+  end
+
 
 =begin
   # returns a copy of the hash with symbols

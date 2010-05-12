@@ -71,11 +71,13 @@ module UserExtension::Groups
 
       has_many(:primary_networks, :class_name => 'Group', :through => :memberships, :source => :group, :conditions => PRIMARY_NETWORKS_CONDITION) do
          # most active should return a list of groups that we are most interested in.
+         # in the case of networks this should not include the site network
          # this includes groups we have recently visited, and groups that we visit the most.
-         def most_active
+         def most_active(site=nil)
+           site_sql = (!site.nil? and !site.network_id.nil?) ? "groups.id != #{site.network_id}" : ''
            max_visit_count = find(:first, :select => 'MAX(memberships.total_visits) as id').id || 1
            select = "groups.*, " + quote_sql([MOST_ACTIVE_SELECT, 2.week.ago.to_i, 2.week.seconds.to_i, max_visit_count])
-           find(:all, :limit => 13, :select => select, :order => 'last_visit_weight + total_visits_weight DESC')
+           find(:all, :limit => 13, :select => select, :conditions => site_sql, :order => 'last_visit_weight + total_visits_weight DESC')
          end
       end
 
@@ -161,14 +163,14 @@ module UserExtension::Groups
 
   def check_duplicate_memberships(membership)
     if self.group_ids.include?(membership.group_id)
-      raise AssociationError.new('You are already a member of that group.'[:invite_error_already_member])
+      raise AssociationError.new(I18n.t(:invite_error_already_member))
     end
   end
 
   private
 
   PRIMARY_GROUPS_CONDITION   = '(type IS NULL OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
-  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
+  PRIMARY_NETWORKS_CONDITION = '(type = \'Network\')'
   PRIMARY_G_AND_N_CONDITION  = '(type IS NULL OR type = \'Network\' OR parent_id NOT IN (#{direct_group_id_cache.to_sql}))'
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(memberships.visited_at) - ?) / ?) AS last_visit_weight, (memberships.total_visits / ?) as total_visits_weight'
 

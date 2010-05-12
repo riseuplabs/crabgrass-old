@@ -105,6 +105,9 @@ label}</a></span>)
     /<u>(.)<\/u>/.match(label).to_a[1]
   end
 
+
+
+
   # just like link_to, but sets the <a> tag to have class 'active'
   # if last argument is true or if the url is in the form of a hash
   # and the current params match this hash.
@@ -112,6 +115,21 @@ label}</a></span>)
     active = active || url_active?(url_hash)
     selected_class = active ? 'active' : ''
     link_to(link_label,url_hash, :class => selected_class)
+  end
+
+  #
+  # *NEWUI
+  #
+  # return class if strings match the current action.
+  # the default class current
+  # used in groups/navigation/_menu
+  #
+  def current_class(link, ccs_class = 'current')
+    if link == request.path
+      css_class
+    else
+      ''
+    end
   end
 
   # like link_to_remote, but sets the class to be 'active' if the link is
@@ -139,6 +157,23 @@ label}</a></span>)
       break unless selected
     end
     selected
+  end
+
+  ##
+  ## CREATION
+  ##
+
+  # returns a link to the create action for the type given.
+  def link_to_create(type)
+    if type == :groups
+      if may_create_group?
+        link_to(I18n.t(:create_a_group).upcase, groups_url(:action => 'new'))
+      end
+    elsif type == :networks
+      if may_create_network?
+        link_to(I18n.t(:create_a_network).upcase, networks_url(:action => 'new'))
+      end
+    end
   end
 
   private

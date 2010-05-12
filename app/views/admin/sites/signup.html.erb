@@ -1,4 +1,4 @@
-<% @title_box = '<h1>Sign Up</h1>' %>
+<h1>Sign Up</h1>
 
 <% form_for current_site, :url => {:action => 'update'} do |f| %>
 <%= f.error_messages %>
@@ -8,8 +8,11 @@
 <br />
 <% Conf::SIGNUP_MODE.each_pair do |key, value| -%>
   <span>
-    <label><%= f.radio_button :signup_mode, value, :checked => (current_site.signup_mode == value) %><%= key.to_s.t %></label>
-    <i><%= "#{key}_description".t %></i>
+    <label>
+        <%= f.radio_button :signup_mode, value, :checked => (current_site.signup_mode == value) %>
+        <%= I18n.t("signup_mode_#{key}_description".to_sym) %>
+    </label>
+    <i><%= signup_mode_description(key) %></i>
   </span>
   <br />
 <% end -%>

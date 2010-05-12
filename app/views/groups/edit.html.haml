@@ -1,0 +1,13 @@
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => '/groups/navigation/settings_sidelinks'
+
+%section#form-settings
+  - form_tag(group_path(@group),:method => :put, :multipart => true) do
+    = render :partial => '/groups/basic/form'
+    %p.form_buttons
+      = submit_tag I18n.t(:save_button), :name => 'save'
+
+  - call_hook :group_edit

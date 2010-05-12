@@ -17,10 +17,10 @@ class BasePage::AssetsController < BasePage::SidebarController
     render :template => 'base_page/reset_sidebar'
   end
 
-  ## TODO: notify page watcher that an attachment has been added?
   ## TODO: use iframe trick to make this ajaxy
   def create
     asset = @page.add_attachment! params[:asset], :cover => params[:use_as_cover], :title => params[:asset_title]
+    @page.update_attribute :updated_at, Time.now
     flash_message :object => asset
     redirect_to page_url(@page)
   end

@@ -22,15 +22,33 @@ module UrlHelper
   end
 
   def directory_params(options={})
-    group_type = options.delete(:group_type)
+    type = options.delete(:type)
 
-    case group_type
+    case type
     when :network
-      network_directory_params(options)
+      network_directory_params(options).merge(location_params)
     when :group
-      group_directory_params(options)
+      group_directory_params(options).merge(location_params)
+    when :people
+      id=id_for_people(options.delete(:action))
+      people_directory_url(id, options)
     else
-      raise "Bad group type #{group_type} for when building directory_params for the url"
+      raise "Bad type #{type} for when building directory_params for the url"
+    end
+  end
+
+  def location_params
+    {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+  end
+
+  def id_for_people(action)
+    case action
+    when 'search'
+      :browse
+    when 'my'
+      :friends
+    when 'peers'
+      :peers
     end
   end
 
@@ -43,7 +61,7 @@ module UrlHelper
   end
 
   def committees_params(options={})
-    {:controller => '/groups/committees', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/committees', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def councils_params(options={})
@@ -51,7 +69,7 @@ module UrlHelper
   end
 
   def groups_profiles_params(options={})
-    {:controller => '/groups/profiles', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/profiles', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def groups_memberships_params(options={})
@@ -59,7 +77,7 @@ module UrlHelper
   end
 
   def groups_features_params(options={})
-    {:controller => '/groups/features', :action => nil, :id => @group}.merge(options)
+    {:controller => '/groups/features', :action => nil, :id => @parent || @group}.merge(options)
   end
 
   def groups_menu_items_params(options={})
@@ -78,6 +96,10 @@ module UrlHelper
   # for every method xxx_params, create xxx_url
   instance_methods.grep(/_params$/).each do |method|
     define_method(method.sub('params', 'url')) {|*args| url_for(send(method, *args))}
+  end
+
+  def link_to_search_announcements
+    @group ? group_search_url('type', 'announcement') : search_url('type', 'announcement')
   end
 
   # first arg is options hash, remaining args are used for the path.
@@ -100,10 +122,6 @@ module UrlHelper
 
   def person_search_url(*path)
     url_for_user(@user, :action => 'search', :path => parse_filter_path(path))
-  end
-
-  def me_search_url(*path)
-    me_params(:action => 'search', :path => parse_filter_path(path))
   end
 
   ##
@@ -159,15 +177,38 @@ module UrlHelper
       avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
-      if arg and arg.avatar
-        url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
-      else
-        url = avatar_url(:id => 0, :size => options[:avatar])
-      end
+      url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
     avatar + link_to(label, path, :class => klass, :style => style)
   end
+
+  # see function name_and_path_for_group for description of options
+  def link_to_group_avatar(arg, options={})
+    if arg.is_a? Integer
+      @group_cache ||= {}
+      # hacky fix for error when a page persists after it's group is deleted --af
+      # what is this trying to do? --e
+      if not @group_cache[arg]
+        if Group.exists?(arg)
+          @group_cache[arg] = Group.find(arg)
+        else
+          return ""
+        end
+      end
+      # end hacky fix
+      arg = @group_cache[arg]
+    end
+
+    display_name, path = name_and_url_for_group(arg,options)
+    style = options[:style] || ""
+    label = options[:label] || display_name
+    klass = options[:class] || 'name_icon'
+    options[:title] ||= display_name
+    options[:alt] ||= display_name
+    link_to(avatar_for(arg, options[:avatar], options), path, :class => klass,  :style => style)
+  end
+
 
 
   # if you pass options[:full_name] = true, committees will have the string
@@ -218,20 +259,38 @@ module UrlHelper
     if action == 'show'
       url = "/#{name}"
     else
-      controller ||= 'groups'
+      controller ||= '/groups'
       url = {:controller => controller, :action => action, :id => name}
       url[:path] = path if path
     end
     [display_name, url]
   end
 
-  #def group_search_url(*path)
-  #  url_for_group(@group, :action => 'search', :path => path)
-  #end
-  #
-  #def group_trash_url(*path)
-  #  url_for_group(@group, :action => 'trash', :path => path)
-  #end
+  def name_for_directory(active_tab, action)
+    if active_tab == :groups
+      my = I18n.t(:my_groups)
+      all = I18n.t(:all_groups)
+    elsif active_tab == :people
+      my = I18n.t(:my_contacts)
+      all = I18n.t(:all_people)
+      peers = I18n.t(:my_peers)
+    else
+      my = I18n.t(:my_networks)
+      all = I18n.t(:all_networks)
+    end
+    return my if action == 'my'
+    return all if action == 'search'
+    return peers if action == 'peers'
+  end
+
+  def url_for_directory(active_tab, action)
+    type = case active_tab
+           when :groups then :group
+           when :people then :people
+           else :network
+    end
+    directory_params(:type => type, :action => action)
+  end
 
   ##
   ## USERS
@@ -283,18 +342,46 @@ module UrlHelper
     style = options[:style] || ""                   # allow style override
     label = options[:login] ? login : display_name  # use display_name for label by default
     label = options[:label] || label                # allow label override
+    if label.length > 19
+      options[:title] = label
+      label = truncate(label, :length => 19)
+    end
+    options[:title] ||= ""
     klass = options[:class] || 'name_icon'
     style += " display:block" if options[:block]
     avatar = ''
     if options[:avatar_as_separate_link] # not used for now
-      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style)
+      avatar = link_to(avatar_for(arg, options[:avatar], options), :style => style, :title => label)
     elsif options[:avatar]
       klass += " #{options[:avatar]}"
-      url = avatar_url(:id => (arg.avatar||0), :size => options[:avatar])
+      url = avatar_url_for(arg, options[:avatar])
       style = "background-image:url(#{url});" + style
     end
-    avatar + link_to(label, path, :class => klass, :style => style)
+    avatar + link_to(label, path, :class => klass, :style => style, :title => options[:title])
   end
+
+  # creates a link to a user, with or without the avatar.
+  # avatars are displayed as background images, with padding
+  # set on the <a> tag to make room for the image.
+  # accepts:
+  #  :avatar => [:small | :medium | :large]
+  #  :label -- override display_name as the link text
+  #  :style -- override the default style
+  #  :class -- override the default class of the link (name_icon)
+  def link_to_user_avatar(arg, options={})
+    login, path, display_name = login_and_path_for_user(arg,options)
+    return "" if login.blank?
+
+    style = options[:style] || ""                   # allow style override
+    label = options[:login] ? login : display_name  # use display_name for label by default
+    label = options[:label] || label                # allow label override
+    klass = options[:class] || 'name_icon'
+    options[:title] ||= display_name
+    options[:alt] ||= display_name
+
+    avatar = link_to(avatar_for(arg, options[:avatar], options), path,:class => klass, :style => style)
+  end
+
 
   ##
   ## GENERIC PERSON OR GROUP
@@ -351,7 +438,7 @@ module UrlHelper
     end
 
     if options[:avatar]
-      url = avatar_url(:id => (entity.avatar||0), :size => options[:avatar])
+      url = avatar_url_for(entity, options[:avatar])
       options[:class] = [options[:class], "name_icon", options[:avatar]].compact.join(' ')
       options[:style] = [options[:style], "background-image:url(#{url})"].compact.join(';')
     end
@@ -381,12 +468,12 @@ module UrlHelper
   def group_search_rss
     '<link rel="alternate" href="%s" title="%s" type="application/rss+xml" />' % [
        url_for(group_search_url(:action => params[:action], :path => current_rss_path)),
-       "RSS Feed"[:rss_feed]
+       I18n.t(:rss_feed)
     ]
   end
 
   def me_rss
-    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, 'Inbox'[:inbox]]
+    '<link rel="alternate" href="/me/inbox/list/rss" title="%s %s" type="application/rss+xml" />' % [current_user.name, I18n.t(:me_inbox_link)]
   end
 
   # TODO: rewrite this using the rails 2.0 way, with respond_to do |format| ...

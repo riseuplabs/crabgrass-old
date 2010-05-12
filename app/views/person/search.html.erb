@@ -1,7 +1,7 @@
-<% @title_box = content_tag :h1, 'Search'[:search_headline] %>
+<% @title_box = content_tag :h1, I18n.t(:search_headline) %>
 
 <% content_for :html_head do %>
-  <link rel="alternate" href="<%= url_for person_search_url(current_rss_path) %>" title="<%= "RSS Feed"[:rss_feed] %>" type="application/rss+xml" />
+  <link rel="alternate" href="<%= url_for person_search_url(current_rss_path) %>" title="<%= I18n.t(:rss_feed) %>" type="application/rss+xml" />
 <% end %>
 
 <%= render :partial => 'pages/search' %>

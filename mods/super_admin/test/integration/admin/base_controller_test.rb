@@ -9,31 +9,36 @@ class Admin::BaseTest < ActionController::IntegrationTest
   end
 
   def test_become_and_return
+    host! 'test.host'
     # has to be account/login instead of '/' (root)
     # because only account controller has CSRF protection enabled
     visit '/account/login'
     fill_in "Login name", :with => 'blue'
     fill_in "Password", :with => 'blue'
     click_button "Log in"
-    assert_contain "My Dashboard"
+    assert_response :redirect
+    follow_redirect!
+    assert_contain "Logout"
+    assert_select "a[href='/blue']", "Profile"
 
 
-    return true # ABORTING here: TODO: figure out why superadmin mod seems to be inactive.
     click_link 'Admin'
-    assert_contain "Administration Panel"
-    # assert_contain "Superadmin"
+    assert_contain "Super Admin Powers"
 
     # click_link "edit users"
     visit '/admin/users'
-    assert_contain "Total number of users"
+    assert_contain "Become"
 
+    click_link 'D'
     click_link 'Become'
-    assert_contain "My Dashboard"
-    assert_contain "Logout Aaron"
+    follow_redirect!
+    assert_contain "Logout"
+    assert_select "a[href='/dolphin']", "Profile"
     assert_contain "Admin"
 
     click_link 'Admin'
-    assert_contain "Administration Panel"
-    assert_contain "Logout Blue"
+    follow_redirect!
+    assert_contain "Super Admin Powers"
+    assert_select "a[href='/blue']", "Profile"
   end
 end

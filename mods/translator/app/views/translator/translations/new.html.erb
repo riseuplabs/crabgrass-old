@@ -1,0 +1,14 @@
+<h1>
+  New translation
+  <%= "(for '#{@site.title}' only)" if @site %>
+</h1>
+
+<%= error_messages_for :translation %>
+
+<% form_for(@translation) do |f| %>
+  <%= render :partial => 'form' %>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+

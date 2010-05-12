@@ -3,7 +3,7 @@
 <div class='sub_tabs'>
 <%= link_line(*(
   [link_to_remote_active(
-    'All'[:all],
+    I18n.t(:all),
     :url => url_for(:type => nil),
     :active => params[:type].nil?,
     :loading => show_spinner(spinner_id)

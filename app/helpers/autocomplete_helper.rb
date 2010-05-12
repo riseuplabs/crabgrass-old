@@ -40,6 +40,10 @@ module AutocompleteHelper
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/people'))
   end
 
+  def autocomplete_friends_tag(field_id, options={})
+    autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  end
+
   private
 
   def autocomplete_id_number

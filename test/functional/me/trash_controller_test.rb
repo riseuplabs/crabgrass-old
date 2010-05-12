@@ -19,7 +19,7 @@ class Me::TrashControllerTest < ActionController::TestCase
     assert assigns(:pages).any?, "should find a deleted page"
     id = assigns(:pages).first.id
     assert_equal id, 207, "expecting page 207 as deleted page for blue"
-    post :update, :page_checked=>{"207"=>"checked"}, :path=>[], :undelete=>"Undelete"
+    post :update, :pages=>["207"], :path=>[], :undelete=>"Undelete"
     assert_response :redirect
     get :index
     assert_response :success
@@ -35,7 +35,7 @@ class Me::TrashControllerTest < ActionController::TestCase
     id = assigns(:pages).first.id
     assert_equal id, 207, "expecting page 207 as deleted page for blue"
     assert_difference 'Page.count', -1, "removing page from trash destroys it" do
-      post :update, :page_checked=>{"207"=>"checked"}, :path=>[], :remove=>"Remove"
+      post :update, :pages=>["207"], :path=>[], :remove=>"Remove"
       assert_response :redirect
     end
     get :index

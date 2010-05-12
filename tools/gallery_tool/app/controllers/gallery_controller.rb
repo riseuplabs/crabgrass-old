@@ -106,7 +106,7 @@ class GalleryController < BasePageController
   def make_cover
     unless current_user.may?(:admin, @page)
       if request.xhr?
-        render(:text => "You are not allowed to do that!"[:you_are_not_allowed_to_do_that],
+        render(:text => I18n.t(:you_are_not_allowed_to_do_that),
                :layout => false) and return
       else
         raise PermissionDenied
@@ -119,9 +119,9 @@ class GalleryController < BasePageController
     @page.save!
 
     if request.xhr?
-      render :text => :album_cover_changed.t, :layout => false
+      render :text => I18n.t(:album_cover_changed), :layout => false
     else
-      flash_message(:album_cover_changed.t)
+      flash_message(I18n.t(:album_cover_changed))
       redirect_to page_url(@page, :action => 'edit')
     end
   rescue ArgumentError # happens with wrong ID
@@ -193,15 +193,15 @@ class GalleryController < BasePageController
     end
     current_user.updated(@page)
     if request.xhr?
-      render :text => "Order changed."[:order_changed], :layout => false
+      render :text => I18n.t(:order_changed), :layout => false
     else
-      flash_message_now "Order changed."[:order_changed]
+      flash_message_now I18n.t(:order_changed)
       redirect_to(:controller => 'gallery',
                   :action => 'edit',
                   :page_id => @page.id)
     end
   rescue => exc
-    render :text => "Error saving new order: :error_message"[:error_saving_new_order] %{ :error_message => exc.message}
+    render :text => I18n.t(:error_saving_new_order_message) %{ :error_message => exc.message}
   end
 
   def add
@@ -222,7 +222,7 @@ class GalleryController < BasePageController
     elsif request.post?
       params[:assets].each do |file|
         next if file.size == 0
-        asset = Asset.make(:uploaded_data => file)
+        asset = Asset.create_from_params(:uploaded_data => file)
         @page.add_image!(asset, current_user)
       end
       redirect_to page_url(@page)
@@ -251,9 +251,7 @@ class GalleryController < BasePageController
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
-      render(:text => "Successfully removed image! {undo_link}"[:successfully_removed_image,{
-               :undo_link => undo_link
-             }] + js,
+      render(:text => I18n.t(:successfully_removed_image, :undo_link => undo_link) + js,
              :layout => false)
     else
       redirect_to page_url(@page)
@@ -289,7 +287,7 @@ class GalleryController < BasePageController
   end
 
   def build_asset_data(assets, file)
-    asset = Asset.make(:uploaded_data => file) do |asset|
+    asset = Asset.create_from_params(:uploaded_data => file) do |asset|
       asset.parent_page = @page
     end
     @assets << asset

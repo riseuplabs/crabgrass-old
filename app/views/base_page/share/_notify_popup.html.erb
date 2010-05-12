@@ -8,6 +8,6 @@
 
     <div class='buttons'>
       <%= spinner 'popup' %> &nbsp;
-      <%= close_modal_button(:cancel) %><%= submit_tag "Send Notification"[:notify_page_link], :name => 'notify' %>
+      <%= close_modal_button(:cancel) %><%= submit_tag I18n.t(:notify_page_link), :name => 'notify' %>
     </div>
   <% end -%>

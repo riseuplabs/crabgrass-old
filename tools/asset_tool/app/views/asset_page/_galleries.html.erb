@@ -1,13 +1,13 @@
 <% galleries = (Page.find_by_path('type/gallery', options_for_group(@page.owner)) - @asset.galleries if @page.owner && @page.owner.is_a?(Group)) %>
 <%- if @asset.is_image? and (@asset.galleries.any? or galleries.any?) -%>
   <br/>
-  <h2 class='section'><%= 'Galleries'.t %></h2>
+  <h2 class='section'><%= I18n.t(:galleries) %></h2>
   <% @asset.galleries.each do |gallery| -%>
     <%= link_to gallery.title, page_url(gallery) %><br/>
   <% end -%>
   <% if galleries.any? %>
     <% form_tag(page_url(@page, :action => 'add_to_gallery')) do %>
-      <%= select_tag('gallery_id', options_for_select([["#{'galleries'.t}…",'']] + galleries.to_select(:title))) %>
+      <%= select_tag('gallery_id', options_for_select([["#{I18n.t(:galleries)}…",'']] + galleries.to_select(:title))) %>
       <%= submit_tag 'add to' %>
     <% end %>
   <% end %>

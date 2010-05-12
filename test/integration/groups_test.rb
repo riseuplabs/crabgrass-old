@@ -15,7 +15,7 @@ class GroupsTest < ActionController::IntegrationTest
   def test_change_group_membership_policy
     login 'blue'
     visit '/rainbow'
-    click_link 'Edit Settings'
+    click_link 'ADMINISTRATION'
     click_link 'Permissions'
 
     check 'Allow Membership Requests'
@@ -32,7 +32,7 @@ class GroupsTest < ActionController::IntegrationTest
     # disable open group. should change what users see
     login 'blue'
     visit '/rainbow'
-    click_link 'Edit Settings'
+    click_link 'ADMINISTRATION'
     click_link 'Permissions'
 
     check 'Allow Membership Requests'
@@ -49,5 +49,12 @@ class GroupsTest < ActionController::IntegrationTest
     click_button 'Send Request'
     assert_contain 'Request to join has been sent'
   end
+
+  def test_do_not_show_announcements
+    login 'red'
+    visit "/the-true-levellers"
+    assert_not_contain "Announcements"
+  end
+
 
 end

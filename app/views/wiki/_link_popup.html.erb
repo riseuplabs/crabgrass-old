@@ -29,9 +29,9 @@
 end %>
 
 <div id="new_link_buttons" class="buttons" style="display:none">
-  <%= close_modal_button(:cancel) %><%= button_to_function 'Create Link'[:create_link_button], update_link_function(wiki,:create)+close_modal_function() %>
+  <%= close_modal_button(:cancel) %><%= button_to_function I18n.t(:create_link_button), update_link_function(wiki,:create)+close_modal_function() %>
 </div>
 <div id="update_link_buttons" class="buttons" style="display:none">
-  <%= close_modal_button(:cancel) %><%= button_to_function 'Clear Link'[:clear_link_button], update_link_function(wiki, :clear)+close_modal_function() %><%= button_to_function 'Update Link'[:update_link_button], update_link_function(wiki, :update)+close_modal_function() %>
+  <%= close_modal_button(:cancel) %><%= button_to_function I18n.t(:clear_link_button), update_link_function(wiki, :clear)+close_modal_function() %><%= button_to_function I18n.t(:update_link_button), update_link_function(wiki, :update)+close_modal_function() %>
 </div>
 

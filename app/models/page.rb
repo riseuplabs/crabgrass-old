@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
   include PageExtension::Index     # page full text searching
   include PageExtension::Starring  # ???
   include PageExtension::Tracking  # page tracking views, edits and stars
-  include PageExtension::PageHistory  
+  include PageExtension::PageHistory
 
   # disable timestamps, we set the updated_at field through certain PageHistory subclasses
   self.record_timestamps = false
@@ -193,6 +193,7 @@ class Page < ActiveRecord::Base
     self.discussion.posts << post
     post.discussion = self.discussion
     post.user = user
+    post.page_terms = self.page_terms
     association_will_change(:posts)
     return post
   end
@@ -334,7 +335,7 @@ class Page < ActiveRecord::Base
     end
     if entity.nil?
       if Conf.ensure_page_owner?
-        raise ErrorMessage.new("Page owner cannot be empty."[:page_owner_error])
+        raise ErrorMessage.new(I18n.t(:page_owner_error))
       else
         self.owner_id = nil
         self.owner_name = nil
@@ -438,11 +439,6 @@ class Page < ActiveRecord::Base
   # tmp in-memory storage used by views
   def flag
     @flags ||= {}
-  end
-
-  # DEPRECATED
-  def self.make_a_call(function,options={})
-    PageStork.send(function, options)
   end
 
   def class_display_name

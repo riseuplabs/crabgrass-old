@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'chat_controller'
 
-# Re-raise errors caught by the controller.
-class ChatController; def rescue_action(e) raise e end; end
-
-class ChatControllerTest < Test::Unit::TestCase
+class ChatControllerTest < ActionController::TestCase
   fixtures :users, :groups, :memberships, :sites
-
-  def setup
-    @controller = ChatController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_index_when_not_logged_in
     get :index
@@ -42,6 +32,7 @@ class ChatControllerTest < Test::Unit::TestCase
     login_as :blue
     get :channel, :id => groups(:rainbow).name
     assert_response :success, "should reach chat channel"
+    assert_select 'a#chat', false, "Should not show link to join chat in chat."
  end
 
   def test_channel_archive_when_not_logged_in

@@ -1,5 +1,5 @@
 <div class='wing'>
-  <h3><%= 'Membership'.t %></h3>
+  <h3><%= I18n.t(:membership) %></h3>
   <ul class='side_list'>
     <%= content_tag(:li, list_membership_link) if may_list_membership? %>
     <%= content_tag(:li, join_group_link) if join_group_link %>

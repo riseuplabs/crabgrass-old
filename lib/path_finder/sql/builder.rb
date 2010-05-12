@@ -17,7 +17,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   attr_accessor :values      # array of replacement values for the '?' in conditions
 
   # initializes all the arrays for conditions, aliases, clauses and so on
-  def initialize(path, options)
+  def initialize(path, options, klass)
     @conditions  = []
     @order       = []
     @aliases     = []
@@ -26,6 +26,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
     @and_clauses = []
     @date_field  = 'created_at'
     @inbox       = options[:inbox]
+    @klass       = klass
 
     # paginating (count required)
     @per_page    = options[:per_page] || SECTION_SIZE
@@ -47,11 +48,11 @@ class PathFinder::Sql::Builder < PathFinder::Builder
   end
 
   def paginate
-    Page.paginate_by_sql sql_for_find, :page => @page, :per_page => @per_page
+    @klass.paginate_by_sql sql_for_find, :page => @page, :per_page => @per_page
   end
 
   def find
-    Page.find_by_sql sql_for_find
+    @klass.find_by_sql sql_for_find
   end
 
   def count
@@ -63,7 +64,7 @@ class PathFinder::Sql::Builder < PathFinder::Builder
       page_ids.size
     else
       @select = "count(DISTINCT pages.id)"
-      Page.count_by_sql sql_for_find
+      @klass.count_by_sql sql_for_find
     end
   end
 

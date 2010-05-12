@@ -52,5 +52,9 @@ class CronWorker < BackgrounDRb::MetaWorker
   def clean_chat_channels_users
     ChatChannel.cleanup!
   end
+
+  def tally_votes
+    RequestToDestroyOurGroup.tally_votes!
+  end
 end
 

@@ -19,7 +19,7 @@ class AccountTest < ActionController::IntegrationTest
 
     click_button "Log in"
 
-    assert_contain "My Dashboard"
+    assert_contain "Logout"
   end
 
   # shouldn't raise csrf errors

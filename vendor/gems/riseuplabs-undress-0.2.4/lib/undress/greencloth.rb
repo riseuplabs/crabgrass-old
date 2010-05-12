@@ -65,7 +65,7 @@ module Undress
     def process_headings(h) 
       h.children.each {|e| 
         next if e.class == Hpricot::Text
-        e.parent.replace_child(e, "") if e.name != "a" || e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
+        e.parent.replace_child(e, "") if e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
       }
       case h.name
         when "h1"

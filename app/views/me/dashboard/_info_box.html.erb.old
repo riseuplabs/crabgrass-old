@@ -1,7 +1,7 @@
 <table class="info_box">
 <tr>
   <td class="left">
-    <%= header_with_more(:h3, :dim, "Recent Activity"[:recent_activity], nil) %>
+    <%= header_with_more(:h3, :dim, I18n.t(:recent_activity), nil) %>
     <%= render :partial => 'activity/list' %>
   </td>
   <td class="right">

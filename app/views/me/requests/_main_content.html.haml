@@ -1,0 +1,13 @@
+= action_bar(action_bar_settings)
+- action_bar_form(mark_requests_path) do
+  = render :partial => '/common/action_bar/hidden_form_fields'
+
+  %header
+    = pagination_for(@requests)
+
+  %div
+    %table#requests.pretty
+      = render :partial => 'request', :collection => @requests
+
+  %footer
+    = pagination_for(@requests)

@@ -10,13 +10,7 @@ module Groups::Search
       redirect_to group_search_url(:action => 'search', :path => path)
     else
       @path.default_sort('updated_at')
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
-
-      if @path.sort_arg?('created_at') or @path.sort_arg?('created_by_login')
-        @columns = [:stars, :icon, :title, :created_by, :created_at, :contributors_count]
-      else
-        @columns = [:stars, :icon, :title, :updated_by, :updated_at, :contributors_count]
-      end
+      @pages = Page.paginate_by_path(@path, options_for_group(@group).merge(pagination_params))
       hide_users
       search_template('search')
     end
@@ -38,15 +32,9 @@ module Groups::Search
       @path.set_keyword(@field)
 
       # find pages
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page]))
-
-      # set columns
-      if @field == 'created'
-        @columns = [:icon, :title, :created_by, :created_at, :contributors_count]
-      else
-        @columns = [:icon, :title, :updated_by, :updated_at, :contributors_count]
-      end
+      @pages = Page.paginate_by_path(@path, options_for_group(@group).merge(pagination_params))
     end
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     search_template('archive')
   end
 
@@ -54,30 +42,33 @@ module Groups::Search
     tags = params[:path] || []
     path = tags.collect{|t|['tag',t]}.flatten
     if path.any?
-      @pages   = Page.paginate_by_path(path, options_for_group(@group, :page => params[:page]))
+      @pages   = Page.paginate_by_path(path, options_for_group(@group).merge(pagination_params))
       page_ids = Page.ids_by_path(path, options_for_group(@group))
       @tags    = Tag.for_taggables(Page,page_ids).find(:all)
     else
       @pages = []
-      @tags  = Page.tags_for_group(:group => @group, :current_user => (current_user if logged_in?))
+      @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
     end
+    @second_nav = 'pages'
     search_template('tags')
   end
 
   def tasks
-    @pages = Page.find_by_path('type/task/pending', options_for_group(@group))
+    @pages = Page.find_by_path(@path.merge(:type => :task), options_for_group(@group))
     @task_lists = @pages.collect{|page|page.data}
+    @show_status = params[:status] || 'pending'
+    @second_nav = 'tasks'
     search_template('tasks')
   end
 
   def trash
+    @second_nav = 'pages'
     if request.post?
       path = parse_filter_path(params[:search])
       redirect_to url_for_group(@group, :action => 'trash', :path => path)
     else
       @path.default_sort('updated_at')
-      @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :flow => :deleted))
-      @columns = [:admin_checkbox, :icon, :title, :deleted_by, :deleted_at, :contributors_count]
+      @pages = Page.paginate_by_path(@path, options_for_group(@group, :flow => :deleted).merge(pagination_params))
       hide_users
       search_template('trash')
     end
@@ -85,8 +76,7 @@ module Groups::Search
 
   def discussions
     @path.default_sort('updated_at').merge!(:type => :discussion)
-    @pages = Page.paginate_by_path(@path, options_for_group(@group, :page => params[:page], :include => {:discussion => :last_post}))
-    @columns = [:icon, :title, :posts, :contributors, :last_post]
+    @pages = Page.paginate_by_path(@path, options_for_group(@group, :include => {:discussion => :last_post}).merge(pagination_params))
     search_template('discussions')
   end
 
@@ -103,6 +93,14 @@ module Groups::Search
 
   def options_for_contributions
     options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
+  end
+
+  def pages
+    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params))
+    @tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
+    @second_nav = 'pages'
+    @third_nav = 'all_pages'
+    search_template('pages')
   end
 
   private
@@ -136,8 +134,6 @@ module Groups::Search
       @visible_users = @group.users # << wasteful, because we don't always show the form
     else
       @visible_users = []
-      @columns.delete(:updated_by)
-      @columns.delete(:created_by)
     end
   end
 end

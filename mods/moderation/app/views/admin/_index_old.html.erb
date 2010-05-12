@@ -1,0 +1,31 @@
+<% @title_box = '<h1>'+title+'</h1>' %>
+
+<% @info_box = capture do %>
+
+<div id="moderation_navigation">
+  <div style="display:inline; float:right;">
+    <%= link_to_see_all_flags_by_type(obj_type) %>
+  </div>
+  <div style="display:inline; margin-left:0;">
+    <%= "Flagged #{obj_type.capitalize}:"%>&nbsp;
+    <ul style="display: inline; list-style: none; padding: 0;">
+      <li style="display: inline;" class='small_icon flag_orange_16'><%= tab_link('new',nil,{:obj_type=>obj_type})%>&nbsp;</li>
+      <li style="display: inline;" class='small_icon flag_green_16'><%= tab_link('vetted',nil,{:obj_type=>obj_type})%>&nbsp;</li>
+      <li style="display: inline;" class='small_icon flag_red_16'><%= tab_link('deleted',nil,{:obj_type=>obj_type})%></li>
+    </ul>
+  </div>
+  <%= display_public_pages_links(obj_type) %>
+</div>
+
+<% end %>
+
+<%# form_tag({ :action => 'index' }, :method => :get) do %>
+<%# Filter by group: <%#= select_tag 'group', "<option value=''>#{I18n.t(:all_groups)}</option>"+
+options_from_collection_for_select(current_site.groups, "id", "name", @group) %>
+<%#= submit_tag 'Filter', :name => '' %>
+<%# end %>
+
+<%= render :partial => "/admin/listing", :locals=>{:obj_type=>obj_type} if @flagged.any? %>
+<%= '<em>There are no pages for this view</em>' unless @flagged.any?%>
+
+

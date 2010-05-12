@@ -1,0 +1,18 @@
+- form_tag(search_url, :id => "search") do
+  %fieldset
+    = mini_search_text_field_tag
+    = hidden_field_tag('search[group]', @group.id) if @group
+    = hidden_field_tag('search[person]', @user.id) if @user and (!logged_in? or @user.id != current_user.id)
+    %input.search-submit{:type => 'image', :src=>'/images/ui/search-icon.png'}
+  %div
+    - if @group
+      = check_box_tag('search[use_group]', 1)
+      = hidden_field_tag('search[use_group]', 0)
+
+      = label_tag('search_use_group',I18n.t(:search_this_group), :class => 'light-small')
+    - if @user and (!logged_in? or @user.id != current_user.id)
+      = check_box_tag('search[use_person]', 1)
+      = hidden_field_tag('search[use_person]', 0)
+
+      = label_tag('search_use_person', I18n.t(:search_this_person), :class => 'light-small')
+

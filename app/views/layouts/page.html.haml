@@ -1,0 +1,15 @@
+- inside_layout 'header' do
+
+  %section#page-content
+    - if @title_box.any?
+      .title_box
+        = render :partial => @title_box
+    - if @info_box.any?
+      .info_box{:class => @info_box_class}
+        = @info_box
+    %article
+      %div.content_box
+        = yield
+
+    %section#posts
+      = render :partial => 'posts/list' if @show_posts

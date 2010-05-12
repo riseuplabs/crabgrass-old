@@ -3,21 +3,19 @@ class ProfileController < ApplicationController
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
-  helper 'me/base'
+  helper 'me/base', 'locations'
   #permissions 'profiles'
   verify :method => :post, :only => :update
+  layout 'header'
 
   def show
   end
 
   def edit
-    if @user
-      @tabs = 'me/base/profile_tabs'
-    end
     if request.post?
       @profile.save_from_params params['profile']
       if @profile.valid?
-        flash_message :success => "Your profile has been saved."[:profile_saved]
+        flash_message :success => I18n.t(:profile_saved)
         redirect_to :controller => 'profile', :action => 'edit', :id => @profile.type
       end
     end
@@ -25,9 +23,10 @@ class ProfileController < ApplicationController
 
   # ajax
   def add_location
-    multiple = params[:multiple]
+    #multiple = params[:multiple]
     render :update do |page|
-      page.insert_html :bottom, 'profile_locations', :partial => 'location', :locals => {:location => ProfileLocation.new, :multiple => multiple}
+      page.insert_html :bottom, 'profile_locations', :partial => '/locations/select_form'
+      page.hide 'add_location_link'
     end
   end
 
@@ -139,7 +138,7 @@ class ProfileController < ApplicationController
   end
 
   def context
-    me_context('large')
+    account_context('large')
     @banner = render_to_string :partial => 'me/banner'
   end
 

@@ -1,0 +1,29 @@
+A loose collection of random things that don't really go anywhere else.
+
+== Other Tips
+
+Q. How can I analyize logs?
+A. You can run analysis on the logs using pl_analyze if the 'SyslogLogger'
+gem is installed.
+
+
+Q. How can I check on the status of backgroundrb?
+A. To see the status of the running backgroundrb processes, run the
+following:
+
+  script/start_stop_crabgrass_daemons.rb status-bgrb
+
+Q. How can I check on the status of the search processes (sphinx)?
+A. To see the status of the running sphinx processes, run the
+following:
+
+  script/start_stop_crabgrass_daemons.rb status-sphinx
+
+= Troubleshooting
+
+If you get:
+
+  extconf.rb:11:in `require': no such file to load -- mkmf (LoadError)
+
+...then you need also to install ruby1.8-dev.
+

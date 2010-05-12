@@ -15,6 +15,7 @@ module CommonHelper
   include TaggingHelper
   include ModalboxHelper
   include FormHelper
+  include SearchHelper
 
 end
 
