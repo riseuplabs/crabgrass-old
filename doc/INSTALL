@@ -16,8 +16,8 @@ packages from [http://backports.org].
 |                     | rubygems                |                                               |
 | rake                | rake                    | >=0.8.1                                       |
 | rails               | rails*                  | =2.1.0                                        |
-| mysql               | libmysql-ruby           | ruby mysql support >=5.0                      |
-|                     | mysql-server            | the database server                           |
+| mysql               | libmysql-ruby           | ruby mysql support                            |
+|                     | mysql-server            | the database server >=5.0                     |
 |                     | libopenssl-ruby         |                                               |
 | tzinfo              | libtzinfo-ruby          | timezone support                              |
 | RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |

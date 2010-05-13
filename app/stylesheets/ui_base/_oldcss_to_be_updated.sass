@@ -158,7 +158,7 @@ table.form
   &.two
     padding-top: 0
     padding-bottom: 0
-    
+
 .name_icon:hover
   b
     display: block
@@ -396,4 +396,24 @@ td.left_column
   width: !left_column_width
   border-right: 0
   padding: !left_column_margin
+
+
+.tooltip
+  span
+    display: none
+    position: absolute
+    //top: #px
+    //left: #px
+    padding: 1em
+    width: 25em
+    border: 1px solid #666
+    background-color: #FFFFAA
+    color: #000
+    z-index: 100
+  &:hover
+    span
+      display: block
+
+
+
 
