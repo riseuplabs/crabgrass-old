@@ -42,4 +42,25 @@ class GalleryControllerTest < ActionController::TestCase
       page_urls << page.name_url
     end
   end
+
+  def test_upload_zipfile
+    login_as :blue
+
+    assert_difference 'Gallery.count' do
+      post :create, :id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
+    end
+
+    assert_difference 'Asset.count' do
+      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('no-subdir.zip')
+    end
+
+    assert_difference 'Asset.count' do
+      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('subdir.zip')
+    end
+
+    assert_equal 3, assigns(:page).images.count
+    assert_not_nil assigns(:page).page_terms
+    assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
+  end
+
 end

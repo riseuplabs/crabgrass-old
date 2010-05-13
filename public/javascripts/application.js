@@ -314,12 +314,54 @@ var statuspostCounter = Class.create({
   }
 });
 
+var DropSocial = Class.create({
+  initialize: function() {
+    id = "show-social"
+    if(!$(id)) return;
+    this.trigger = $(id);
+    if(!this.trigger) return;
+    this.container = $('social-activities-dropdown');
+    if (!this.container) return;
+    this.activities = $('social_activities_list');
+    if(!this.activities) return;
+    this.trigger.observe('click', this.toggleActivities.bind(this));
+  },
+  IsOpen: function() {
+    return this.container.visible();  
+  },
+  toggleActivities: function(event) {
+    if (this.IsOpen()) {
+      this.container.hide();
+      this.clearEvents(event);
+    } else {
+      this.container.show();
+      this.clearEvents(event);
+    }
+  },
+})
+
+var LoadSocial = Class.create({
+  initialize: function() {
+    this.doRequest();
+    new PeriodicalExecuter(this.doRequest, 120);
+  },
+  doRequest: function() {
+    if ($('social-activities-dropdown').visible()) return;
+    new Ajax.Request('/me/social-activities', {
+      method: 'GET',
+      parameters: {count: 1}
+    });
+  }
+})
+
 document.observe('dom:loaded', function() {
   new DropMenu("menu_me");
   new DropMenu("menu_people");
   new DropMenu("menu_groups");
   new DropMenu("menu_networks");
   new statuspostCounter("say_text");
+  new LoadSocial();
+  new DropSocial();
 });
 
 //

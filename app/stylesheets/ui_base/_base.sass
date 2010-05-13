@@ -24,7 +24,7 @@
 
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
-// NOTE: susy file called without .sass or .scss extension 
+// NOTE: susy file called without .sass or .scss extension
 @import susy/susy
 
 
@@ -36,9 +36,8 @@ a
 
 span.current
   +bordered(1px,#333)
-  font-weight: bold
   color: #333
-  padding: 1px
+  padding: 1px 2px
   
 .left
   float: left
@@ -60,13 +59,13 @@ span.current
 
 .top
   vertical-align: top
-  
+
 .notice
   +bordered
   padding: 4px 20px
   margin: 10px 0 4px 72px
   background= !notification
-  
+
 //
 // NOTE: duplication of .small_icon in global nav for nested li
 // for use with icon + text
@@ -147,7 +146,7 @@ h6
   list-style-type: decimal
   padding-left: 30px
   margin: 10px 0
-  
+
 #masthead_preview img
   width: 500px
 
@@ -340,10 +339,12 @@ h3#underlined
         float: left
         padding: 0 10px 20px 0
 
-      .tooltip
-        span
-          margin-left: 65px
-          margin-top: 10px
+      -#
+        .tooltip
+          span
+            margin-left: 65px
+            margin-top: 10px
+
 
       p
         float: left
@@ -949,7 +950,6 @@ del
         width: 300px
         height: 16px
   #activities
-    +bordered-btm(!light_grey_border)
     +columns(10,10)
     +clearfix
     width: 540px

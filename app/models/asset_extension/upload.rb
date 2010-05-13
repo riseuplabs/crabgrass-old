@@ -3,6 +3,7 @@ begin
 rescue LoadError => exc
   # can't fix messed up IE mime_types without mime_types gem.
 end
+require 'fileutils'
 
 
 ## can be used to create assets from a script instead of uploaded from a browser:
@@ -48,11 +49,15 @@ module AssetExtension
         Dir.mkdir(tmp_dir)
         zipfile.entries.each do |entry|
           begin
-            entry.extract(tmp_filename = File.join(tmp_dir, entry.name))
-            asset = make :uploaded_data => FileData.new(tmp_filename)
+            next if entry.directory?
+            basename = File.basename(entry.name)
+            tmp_filename = File.join(tmp_dir, basename)
+            entry.extract(tmp_filename)
+            asset = create_from_params :uploaded_data => FileData.new(tmp_filename)
             assets << asset
+            File.delete(tmp_filename)
           rescue => exc
-            logger.fatal("Error while extracting asset from ZIP Archive: #{exc.message}")
+            logger.fatal("Error while extracting asset #{tmp_filename} from ZIP Archive: #{exc.message}")
             exc.backtrace.each do |bt|
               logger.fatal(bt)
             end
@@ -61,10 +66,7 @@ module AssetExtension
         end
         # tidy up
         if tmp_dir && File.exist?(tmp_dir)
-          (Dir.entries(tmp_dir)-%w(. ..)).each do |fn|
-            File.unlink(File.join(tmp_dir, fn)) rescue nil
-          end
-          Dir.rmdir(tmp_dir)
+          FileUtils.rm_r(tmp_dir)
         end
         return [assets, failures.compact]
       end

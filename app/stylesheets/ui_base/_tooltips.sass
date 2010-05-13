@@ -1,0 +1,21 @@
+.tooltip
+  position: relative
+  .caption
+    z-index: auto
+    text-decoration: underline
+  .content
+    +border-radius(5px)
+    display: none
+    z-index: 10
+    position: absolute
+    top: 4px
+    left: 0
+    padding: 1em
+    background-color: black
+    color: white
+    font-weight: bold
+    width: 300px
+  &:hover .content
+    display: inline
+
+

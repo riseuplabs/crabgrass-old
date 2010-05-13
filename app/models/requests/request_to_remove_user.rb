@@ -6,6 +6,7 @@
 # created_by: person in group who wants to remove other user
 
 class RequestToRemoveUser < VotableRequest
+  include ApplicationHelper
 
   validates_format_of :recipient_type, :with => /Group/
   validates_format_of :requestable_type, :with => /User/
@@ -63,19 +64,30 @@ class RequestToRemoveUser < VotableRequest
   end
 
   def description
-    I18n.t(:request_to_remove_coordinator_user_description,
-              :group => group_span(group),
-              :group_type => group.group_type.downcase,
-              :user => user_span(created_by),
-              :target_user => user_span(user))
+    raise "Do not call directly"
   end
 
+  def description_translation
+    :request_to_remove_coordinator_user_description
+  end
+
+  def description_translation_params
+    {:group => group_span(group),
+      :group_type => group.group_type.downcase,
+      :user => user_span(created_by),
+      :target_user => user_span(user)}
+  end
+
+  def description_tooltip_translations
+    {:caption => :request_to_remove_coordinator_user_tooltip_title,
+      :content => :request_to_remove_coordinator_user_tooltip_description}
+  end
 
   protected
 
   def instantly_tallied_state(total_possible_votes, approve_votes, reject_votes)
     # if proposed user for removal votes approve, this is instant remove
-    return 'approved' if votes.collect(&:user_id).include?(user.id)
+    return 'approved' if votes.approved.collect(&:user_id).include?(user.id)
 
     if Rational(approve_votes, total_possible_votes) >= Rational(2, 3)
       return 'approved'

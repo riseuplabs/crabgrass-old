@@ -68,7 +68,8 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
   def test_voting_scenarios
     voting_scenarios.each do |scenario|
       request = RequestToRemoveUser.create! :created_by => users(:red), :recipient => groups(:rainbow), :requestable => users(:blue)
-      users = @group.users.clone
+      # blue should never vote, because vote by user proposed for deletion is treated differently
+      users = @group.users.clone.select {|u| u.id != users(:blue).id}
 
       # do the votes
       scenario[:approve].times do
@@ -120,7 +121,6 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
 
       {:approve => 4, :reject => 0, :instant => 'approved'},
       {:approve => 5, :reject => 0, :instant => 'approved'},
-      {:approve => 6, :reject => 0, :instant => 'approved'},
 
       # 1 rejections
       {:approve => 0, :reject => 1, :delayed => 'rejected'},
@@ -129,7 +129,6 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       {:approve => 3, :reject => 1, :delayed => 'approved'},
 
       {:approve => 4, :reject => 1, :instant => 'approved'},
-      {:approve => 5, :reject => 1, :instant => 'approved'},
 
       # 2 rejections
       {:approve => 0, :reject => 2, :delayed => 'rejected'},
@@ -137,25 +136,18 @@ class RequestToRemoveUserTest < ActiveSupport::TestCase
       {:approve => 2, :reject => 2, :delayed => 'rejected'},
       {:approve => 3, :reject => 2, :delayed => 'rejected'},
 
-      {:approve => 4, :reject => 2, :instant => 'approved'},
 
       # 3 rejections
       {:approve => 0, :reject => 3, :instant => 'rejected'},
       {:approve => 1, :reject => 3, :instant => 'rejected'},
       {:approve => 2, :reject => 3, :instant => 'rejected'},
-      {:approve => 3, :reject => 3, :instant => 'rejected'},
 
       # 4 rejections
       {:approve => 0, :reject => 4, :instant => 'rejected'},
       {:approve => 1, :reject => 4, :instant => 'rejected'},
-      {:approve => 2, :reject => 4, :instant => 'rejected'},
 
       # 5 rejections
-      {:approve => 0, :reject => 5, :instant => 'rejected'},
-      {:approve => 1, :reject => 5, :instant => 'rejected'},
-
-      # 6 rejections
-      {:approve => 0, :reject => 6, :instant => 'rejected'}
+      {:approve => 0, :reject => 5, :instant => 'rejected'}
     ]
   end
 

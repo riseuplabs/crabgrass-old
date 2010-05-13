@@ -1,5 +1,6 @@
 %div#user
   - if logged_in?
+    = render :partial => '/layouts/base/social_activities'
     = link_to(I18n.t(:profile), '/'+current_user.login)
     = '&bull;'
     = link_to_active(I18n.t(:menu_link_account), {:controller => '/me', :action => 'edit'}, @active_tab == :account)
