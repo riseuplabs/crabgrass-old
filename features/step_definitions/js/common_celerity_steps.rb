@@ -25,7 +25,7 @@ When /I press "([^\"]*)"$/ do |button|
   assert_successful_response
 end
 
-When /I follow "([^\"]*)$"/ do |link|
+When /I follow "([^\"]*)"$/ do |link|
   $browser.link(:text, /#{link}/).click
   assert_successful_response
 end
