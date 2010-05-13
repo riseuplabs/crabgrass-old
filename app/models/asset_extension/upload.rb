@@ -37,9 +37,8 @@ module AssetExtension
 
     module ClassMethods
       def make_from_zip(file)
-        # Zip::ZipFile has been modified to make this work.
-        # see lib/extension/zip.rb
-        zipfile = BetterZipFile.new(file)
+        file=ensure_temp_file(file)
+        zipfile = Zip::ZipFile.new(file.path)
         assets = []
         # array of filenames for which processing failed
         failures = []
@@ -47,17 +46,15 @@ module AssetExtension
         # seperate directory.
         tmp_dir = File.join(RAILS_ROOT, 'tmp', "unzip_#{Time.now.to_i}")
         Dir.mkdir(tmp_dir)
-        zipfile.entries.each do |entry|
+        zipfile.each do |entry|
           begin
-            next if entry.directory?
-            basename = File.basename(entry.name)
-            tmp_filename = File.join(tmp_dir, basename)
-            entry.extract(tmp_filename)
-            asset = create_from_params :uploaded_data => FileData.new(tmp_filename)
-            assets << asset
-            File.delete(tmp_filename)
+            tmp_file=File.join(tmp_dir, entry.name)
+            FileUtils.mkdir_p(File.dirname(tmp_file))
+            zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)
+            asset = create_from_params :uploaded_data => FileData.new(tmp_file)
+            assets << asset if asset
           rescue => exc
-            logger.fatal("Error while extracting asset #{tmp_filename} from ZIP Archive: #{exc.message}")
+            logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")
             exc.backtrace.each do |bt|
               logger.fatal(bt)
             end
@@ -69,6 +66,19 @@ module AssetExtension
           FileUtils.rm_r(tmp_dir)
         end
         return [assets, failures.compact]
+      end
+
+      protected
+
+      def ensure_temp_file(file)
+        if file.is_a?(ActionController::UploadedStringIO)
+          temp_file = Tempfile.new(file.original_filename)
+
+          temp_file.write file.read
+          file = temp_file
+          temp_file.close
+        end
+        return file
       end
     end
 

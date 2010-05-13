@@ -2,7 +2,7 @@ require 'test/unit'
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
 class GalleryToolTest < Test::Unit::TestCase
-  fixtures :users, :pages, :assets
+  fixtures :users, :pages, :assets, :groups, :group_participations, :memberships
 
   def test_add_and_remove
     user = User.find 4 # we need a user so we can check permissions.

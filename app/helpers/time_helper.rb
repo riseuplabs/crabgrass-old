@@ -10,6 +10,10 @@ module TimeHelper
   #   7/Mar/08  -- time was in a different year.
   # The date is then wrapped in a label, so that if you hover over the text
   # you will see the full details.
+
+
+  WeekdaySymbols = [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday]
+
   def friendly_date(*times)
     return "" unless times.any?
 
@@ -22,7 +26,7 @@ module TimeHelper
       str = time.strftime("%I:%M<span>%p</span>")
     elsif today > date and (today-date) < 7
       # I18n.t(:wednesday) => Wednesday
-      str = I18n.t(time.strftime("%A").downcase.to_sym)
+      str = I18n.t(WeekdaySymbols[time.wday])
     elsif date.year != today.year
       # 7/Mar/08
       str = date.strftime('%d') + '/' + localize_month(date.strftime('%B')) + '/' + date.strftime('%y')
