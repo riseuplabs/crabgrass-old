@@ -33,7 +33,6 @@ Scenario: View list of people
 
 Scenario: Follow letter pagination links
   When I go to group: "diggers"'s people page
-  Then show me the page
   And I follow "R" within ".letter_pagination"
   Then I should see "Red!"
   And I should not see "Gerrard"
