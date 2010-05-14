@@ -212,11 +212,16 @@ function absolutePositionParams(obj) {
 // naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
 //
 
-function evalAttributeOnce(element, attribute) {
-  if (element.readAttribute(attribute)) {
-    eval(element.readAttribute(attribute));
-    element.writeAttribute(attribute, "");
+function evalOnclickOnce(element) {
+  if(element.onclick) {
+    element.onclick.call();
+    element.onclick = "";
   }
+
+  //if (element.readAttribute(attribute)) {
+  //  eval(element.readAttribute(attribute));
+  //  element[attribute] = "";
+  //}
 }
 
 function showTab(tabLink, tabContent, hash) {
@@ -228,8 +233,7 @@ function showTab(tabLink, tabContent, hash) {
     $$('.tab_content').invoke('hide');
     tabLink.addClassName('active');
     tabContent.show();
-    // evalAttributeOnce(tabContent, 'onclick');
-    eval(tabContent.onclick.call());
+    evalOnclickOnce(tabContent);
     tabLink.blur();
     if (hash) {
       window.location.hash = hash;
@@ -280,7 +284,7 @@ var DropMenu = Class.create({
   },
 
   showMenu: function(event) {
-    evalAttributeOnce(this.menu, 'onclick');
+    evalOnclickOnce(this.menu);
     if (this.timeout) window.clearTimeout(this.timeout);
     if (this.menuIsOpen()) {
       this.menu.show();
@@ -328,7 +332,7 @@ var DropSocial = Class.create({
     document.observe('click', this.hideActivities.bind(this));
   },
   IsOpen: function() {
-    return this.container.visible();  
+    return this.container.visible();
   },
   toggleActivities: function(event) {
     if (this.IsOpen()) {
@@ -367,7 +371,7 @@ var LoadSocial = Class.create({
 
 //document.observe('click', function(event) {
 //  var element = Event.findElement(event).id;
-//  var elementUp = Event.findElement(event, 'div').id; 
+//  var elementUp = Event.findElement(event, 'div').id;
 //  if ((element != 'show-social') && (elementUp != 'social-activities-dropdown')) {
 //    //alert("event element is " + element + "; elementUp is " + elementUp);
 //    var container = $('social-activities-dropdown');
