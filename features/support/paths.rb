@@ -50,6 +50,10 @@ module NavigationHelpers
       name = model($1).name
       "/#{name}"
 
+    when /^#{capture_model}(?:'s)? people page$/                     # eg. the groups's landing page
+      name = model($1).name
+      "/groups/people/#{name}"
+
     when /^#{capture_model}(?:'s)? (edit|show) tab$/                      # eg. that wikis pages's edit tab
       page_url(model($1), :action => $2)
 
