@@ -348,7 +348,6 @@ var DropSocial = Class.create({
     element = Event.findElement(event);
     elementUp = Event.findElement(event, 'div');
     if ((element != this.trigger) && (elementUp != this.container)) {
-      //alert("event element is " + element + "; elementUp is " + elementUp);
       if (!this.IsOpen()) return;
       this.container.hide();
     }
@@ -368,17 +367,6 @@ var LoadSocial = Class.create({
     });
   }
 })
-
-//document.observe('click', function(event) {
-//  var element = Event.findElement(event).id;
-//  var elementUp = Event.findElement(event, 'div').id;
-//  if ((element != 'show-social') && (elementUp != 'social-activities-dropdown')) {
-//    //alert("event element is " + element + "; elementUp is " + elementUp);
-//    var container = $('social-activities-dropdown');
-//    if (!container || !container.visible()) return;
-//    container.hide();
-//  }
-//});
 
 document.observe('dom:loaded', function() {
   new DropMenu("menu_me");

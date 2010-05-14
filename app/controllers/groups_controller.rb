@@ -47,6 +47,7 @@ class GroupsController < Groups::BaseController
     group_landing_instance_vars()
     @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
     @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @pagination_action = {:controller => 'groups', :action => 'people', :id => @group}
     render :layout => 'header_for_sidebar'
   end
 

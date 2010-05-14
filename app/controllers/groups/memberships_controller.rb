@@ -18,6 +18,7 @@ class Groups::MembershipsController < Groups::BaseController
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
     @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
     @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @pagination_action = {:controller => 'groups/memberships', :action => 'review'}
     @second_nav = 'administration'
     @third_nav = 'members'
   end

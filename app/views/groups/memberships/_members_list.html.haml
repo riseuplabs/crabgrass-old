@@ -5,7 +5,7 @@
   = @group.memberships.count(:all, :conditions => "visited_at  is not null").to_s + " all time"
 
 %p
-= letter_pagination_links(groups_memberships_params(:action => 'list'), :available_letters => @pagination_letters)
+= letter_pagination_links(groups_memberships_params(@pagination_action), :available_letters => @pagination_letters)
 
 %div
   - if @memberships.any?
