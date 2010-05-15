@@ -6,10 +6,6 @@ class GroupsControllerTest < ActionController::TestCase
 
   include UrlHelper
 
-  def setup
-    Conf.disable_site_testing
-  end
-
   def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
@@ -62,6 +58,22 @@ class GroupsControllerTest < ActionController::TestCase
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
       assert_redirected_to url_for_group(group, :action => 'edit')
+    end
+
+  end
+
+  # regression test for #2355:
+  # Group is automatically added to site network on creation
+  def test_created_group_not_in_site_network
+    with_site :test do
+      login_as :gerrard
+      get :new
+      assert_response :success
+      assert_no_difference 'Federating.count' do
+        post :create, :group => {:name => 'test-group-outside-site-network', :full_name => "Group for Testing new groups are outside Site Network!"}
+        group = assigns(:group)
+        assert !group.member_of?(Site.current.network)
+       end
     end
   end
 
