@@ -18,6 +18,8 @@
     = render :partial => '/groups/navigation/admin_tabs'
 
 = content_tag(:h3, headline)
+- if @group.network?
+  %p= I18n.t(:new_network_description)
 
 - form_tag(url,:id => "createform", :multipart => true) do
   = render(:partial => 'groups/basic/form', :locals => {:submit => false})
@@ -25,5 +27,5 @@
   %div.form_buttons
     = submit_tag I18n.t(:create_button)
 
-= javascript_tag "Form.focusFirstElement('createform');" 
+= javascript_tag "Form.focusFirstElement('createform');"
 
