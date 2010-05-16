@@ -1,3 +1,14 @@
+0.5.2
+-----
+
+Cleanup Task:
+run rake cg:cleanup_site_networks to 
+a) make sure all groups have the proper site_id set and 
+b) remove the site network federatings.
+These were used to attaching groups to a site but we changed that some
+time ago. Kepping the federatings leads to the site network showing up
+on the group landing pages.
+
 0.5.0 
 -----
 
