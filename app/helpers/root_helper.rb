@@ -48,10 +48,9 @@ module RootHelper
   end
 
   def home_summary_html
-    translation=I18n.t :welcome_home_message
-    translation.any? ?
-      format_text(translation) :
-      @group.profiles.public.summary_html
+    translation=I18n.t :welcome_home_message,
+      :default => @group.profiles.public.summary
+    format_text(translation)
   end
 
 end
