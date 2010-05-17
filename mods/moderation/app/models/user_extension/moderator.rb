@@ -8,8 +8,8 @@ module UserExtension::Moderator
     moderator? or Group.with_admin(self).moderated.any?
   end
 
-  def may_moderate?(entity)
-    return true if moderator?
+  def may_moderate?(entity, site=Site.current)
+    return true if moderator?(site)
     page = entity if entity.is_a?(Page)
     page = entity.discussion.page if entity.is_a?(Post)
     moderated_group_ids=Group.with_admin(self).moderated.map(&:id)

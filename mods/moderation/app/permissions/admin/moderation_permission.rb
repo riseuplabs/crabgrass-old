@@ -5,6 +5,6 @@ module Admin::ModerationPermission
 
   def may_moderate?
     current_user.moderator?(current_site) or
-    @page and current_user.may_moderate?(@page)
+    @page and current_user.may_moderate?(@page, current_site)
   end
 end
