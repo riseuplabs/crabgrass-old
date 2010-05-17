@@ -8,9 +8,10 @@
   %tr{:class => "post #{color}"}
     %td.post-author
       %a{:href => "#"}
-        %img.right{:src=> avatar_url_for(post.user, 'small')}
+        - if post.user
+          %img.right{:src=> avatar_url_for(post.user, 'small')}
       = call_hook :author_info, {:post => post}
-      = link_to_user post.user
+      = post.user ? link_to_user(post.user) : I18n.t(:unknown_user)
     
       %span= created_modified_date(post.created_at, post.updated_at)
     %td{:class => 'post-body', :id=> "post-body-#{post.id}"}
