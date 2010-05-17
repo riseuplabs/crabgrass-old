@@ -13,7 +13,7 @@
     %input{ :type => 'submit', :value => I18n.t(:login_button) }
   %div
     - if may_signup?
-      = link_to(I18n.t(:signup_link), { :controller => '/account', :action => 'signup', :redirect => params[:redirect] })
+      = link_to(I18n.t(:signup_link), signup_url)
     = link_to(I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password')
     = hidden_field_tag 'redirect', params[:redirect]
 
