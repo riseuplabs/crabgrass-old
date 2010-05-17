@@ -56,7 +56,7 @@ end
 def Group.make_owned_by(attributes)
   raise "Missing keys (:user) are required for this blueprint" if !attributes.has_key?(:user)
   user = attributes.delete :user
-  group = Group.make_unsaved(attributes)
+  group = self.make_unsaved(attributes)
   group.created_by = user
   group.save!
   group
@@ -85,6 +85,7 @@ def Committee.make_for(attributes)
   group = attributes.delete :group
   committee = Committee.make(attributes)
   group.add_committee!(committee)
+  committee
 end
 
 Committee.blueprint do
@@ -96,6 +97,7 @@ def Council.make_for(attributes)
   group = attributes.delete :group
   committee = Council.make(attributes)
   group.add_committee!(committee)
+  committee
 end
 
 Council.blueprint do
