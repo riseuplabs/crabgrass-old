@@ -19,7 +19,7 @@ Scenario: Short cut exists on mru site
   When I go to the site home
   Then I should see "Add a job opportunity"
 
-Scenario I add a job opportunity
+Scenario: I add a job opportunity
   Given we are on the site: mru
   When I got to the site home
     And I follow "Add a job opportunity"
@@ -28,7 +28,7 @@ Scenario I add a job opportunity
     And Summary should be filled with: "Location: (please fill out)\nDescription: (please fill out)"
     And Tags should be filled with: "job, jobs, jobsearch, employment"
 
-Scenario Added job opportunity shows in list of jobs
+Scenario: Added job opportunity shows in list of jobs
   Given we are on the site: mru
     And the site network's wiki contains "[Job opportunities->/me/search?q=job]"
   When I go to the site home
