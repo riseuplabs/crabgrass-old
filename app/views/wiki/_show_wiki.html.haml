@@ -10,9 +10,7 @@
 %div.wiki
   - if local_assigns[:preview]
     = wiki.render_preview(preview)
-  - else
-    = wiki.body_html
-  - if local_assigns[:preview]
     = wiki_more_link(wiki.id)
   - else
+    = wiki.body_html
     = wiki_less_link(wiki.id)
