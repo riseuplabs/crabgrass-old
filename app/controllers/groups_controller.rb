@@ -1,7 +1,7 @@
 class GroupsController < Groups::BaseController
 
   stylesheet 'groups'
-  permissions 'groups/memberships', 'groups/requests'
+  permissions 'groups/memberships', 'groups/requests', 'wiki'
 
   # needed by for group wiki editing
   javascript :wiki, :only => :show

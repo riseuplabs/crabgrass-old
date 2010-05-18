@@ -1,10 +1,1 @@
-- if @access == :public
-
-  %h3
-    Wiki
-  %div.wiki
-    = @profile.wiki.render_preview(500)
-
-- else
-
-  = render :partial => 'wiki/show', :locals => {:preview => 500}
+= render :partial => 'wiki/show', :locals => {:preview => 500}
