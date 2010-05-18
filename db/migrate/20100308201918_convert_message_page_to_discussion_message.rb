@@ -8,7 +8,7 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
     pages = MessagePage.all
 
     pages.each do |page|
-      next unless page.users.count == 2
+      next if page.users.count < 2
 
       page.discussion.try.posts.each do |post|
         text = post.body
