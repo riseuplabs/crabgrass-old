@@ -104,29 +104,6 @@ class ProfileController < ApplicationController
   #                       @site.profiles.private)
   #end
 
-#  # removes everything from params that isn't to be included, due to the profile
-#  # settings of the current site.
-#  def apply_settings_to_params!
-#    # values are preset (select field), so we ignore them
-#    ignore = {
-#      'location' => ['location_type'],
-#      'note' => ['note_type']
-#    }
-#    %w(crypt_key email_address location website note im_address
-#       phone_number).each do |element|
-#      next unless (this_params = params['profile'][plural = element.pluralize])
-#      # elements with all fields empty shouldn't be fatal errors that prevent us
-#      # from saving.
-#      valid_keys = this_params.map do |key, value|
-#        values = ((ignored_keys = ignore[element]) ?
-#                  value.slice(value.keys-ignored_keys).values :
-#                  value.values)
-#        values.map(&:empty?).include?(false) ? key : nil
-#      end.compact
-#      params['profile'][plural] = this_params.slice(valid_keys)
-#    end
-#  end
-
   before_filter :setup_layout
   def setup_layout
     if @user

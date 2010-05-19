@@ -192,7 +192,7 @@ class Profile < ActiveRecord::Base
     }
 
     profile_params.stringify_keys!
-    params = profile_params.slice valid_params
+    params = profile_params.reject {|key,| !valid_params.include?(key)}
     params['summary_html'] = nil if params['summary'] == ""
 
     # save nil if value is an empty string:
