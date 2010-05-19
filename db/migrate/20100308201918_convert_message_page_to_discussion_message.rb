@@ -20,14 +20,32 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
 
         # create the new message
         new_post = sender.send_message_to!(receiver, text)
+
+        disable_timestamps
         new_post.update_attributes({:updated_at => post.updated_at, :created_at => post.created_at})
+        enable_timestamps
       end
       page.destroy
 
     end
 
+  ensure
+    enable_timestamps
   end
 
   def self.down
   end
+
+  protected
+
+  def disable_timestamps
+    PrivatePost.record_timestamps = false
+    Post.record_timestamps = false
+  end
+
+  def enable_timestamps
+    PrivatePost.record_timestamps = false
+    Post.record_timestamps = false
+  end
+
 end
