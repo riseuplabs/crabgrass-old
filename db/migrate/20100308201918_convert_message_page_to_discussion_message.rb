@@ -15,10 +15,12 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
         sender = post.user
         receiver = page.users.detect {|u| u != sender}
 
+
         next if sender.blank? || receiver.blank? || text.blank?
 
         # create the new message
-        sender.send_message_to!(receiver, text)
+        new_post = sender.send_message_to!(receiver, text)
+        new_post.update_attributes({:updated_at => post.updated_at, :created_at => post.created_at})
       end
       page.destroy
 
