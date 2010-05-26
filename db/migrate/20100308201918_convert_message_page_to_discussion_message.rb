@@ -38,14 +38,14 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
 
   protected
 
-  def disable_timestamps
+  def self.disable_timestamps
     PrivatePost.record_timestamps = false
     Post.record_timestamps = false
   end
 
-  def enable_timestamps
-    PrivatePost.record_timestamps = false
-    Post.record_timestamps = false
+  def self.enable_timestamps
+    PrivatePost.record_timestamps = true
+    Post.record_timestamps = true
   end
 
 end
