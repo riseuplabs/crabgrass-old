@@ -42,7 +42,7 @@ class AssetsController < ApplicationController
     respond_to do |format|
       format.js { render :nothing => true }
       format.html do
-        message(:success => "file deleted")
+        flash_message(:success => "file deleted")
         redirect_to(page_url(@asset.page))
       end
     end

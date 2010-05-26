@@ -14,20 +14,26 @@ at_exit do
   Process.kill(6, $rails_server.pid.to_i) if $rails_server
 end
 
-Given /I am on (.+)/ do |path|
+Given /I am on (.+)$/ do |path|
   $browser.goto @host + path_to(path)
   assert_successful_response
 end
 
 
-When /I press "(.*)"/ do |button|
+When /I press "([^\"]*)"$/ do |button|
   $browser.button(:text, button).click
   assert_successful_response
 end
 
-When /I follow "(.*)"/ do |link|
+When /I follow "([^\"]*)"$/ do |link|
   $browser.link(:text, /#{link}/).click
   assert_successful_response
+end
+
+When /^(?:|I )follow "([^\"]*)" within (.*)$/ do |link_text, scope|
+  parent_css_selector = selector_for(scope)
+  parent = find_by_css(parent_css_selector)
+  parent.link(:text, link_text).click
 end
 
 When /I fill in "(.*)" with "(.*)"/ do |field, value|
@@ -70,8 +76,29 @@ Then /I should see "(.*)"$/ do |text|
   end
 end
 
-Then /I should not see "(.*)"/ do |text|
+Then /I should not see "(.*)"$/ do |text|
   div = $browser.div(:text, /#{text}/).html rescue nil
+  div.should be_nil
+end
+
+Then /^I should see "([^\"]*)" within (.*)$/ do |text, scope|
+  parent_css_selector = selector_for(scope)
+  parent = find_by_css(parent_css_selector)
+  div = parent.div(:text, /#{text}/)
+
+  begin
+    div.html
+  rescue
+    #puts $browser.html
+    raise("div with '#{text}' not found")
+  end
+end
+
+Then /^I should not see "([^\"]*)" within (.*)$/ do |text, scope|
+  parent_css_selector = selector_for(scope)
+  parent = find_by_css(parent_css_selector)
+
+  div = parent.div(:text, /#{text}/).html rescue nil
   div.should be_nil
 end
 

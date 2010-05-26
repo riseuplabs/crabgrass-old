@@ -3,6 +3,7 @@ begin
 rescue LoadError => exc
   # can't fix messed up IE mime_types without mime_types gem.
 end
+require 'fileutils'
 
 
 ## can be used to create assets from a script instead of uploaded from a browser:
@@ -36,9 +37,8 @@ module AssetExtension
 
     module ClassMethods
       def make_from_zip(file)
-        # Zip::ZipFile has been modified to make this work.
-        # see lib/extension/zip.rb
-        zipfile = BetterZipFile.new(file)
+        file=ensure_temp_file(file)
+        zipfile = Zip::ZipFile.new(file.path)
         assets = []
         # array of filenames for which processing failed
         failures = []
@@ -46,13 +46,15 @@ module AssetExtension
         # seperate directory.
         tmp_dir = File.join(RAILS_ROOT, 'tmp', "unzip_#{Time.now.to_i}")
         Dir.mkdir(tmp_dir)
-        zipfile.entries.each do |entry|
+        zipfile.each do |entry|
           begin
-            entry.extract(tmp_filename = File.join(tmp_dir, entry.name))
-            asset = make :uploaded_data => FileData.new(tmp_filename)
-            assets << asset
+            tmp_file=File.join(tmp_dir, entry.name)
+            FileUtils.mkdir_p(File.dirname(tmp_file))
+            zipfile.extract(entry, tmp_file) unless File.exist?(tmp_file)
+            asset = create_from_params :uploaded_data => FileData.new(tmp_file)
+            assets << asset if asset
           rescue => exc
-            logger.fatal("Error while extracting asset from ZIP Archive: #{exc.message}")
+            logger.fatal("Error while extracting asset #{tmp_file} from ZIP Archive: #{exc.message}")
             exc.backtrace.each do |bt|
               logger.fatal(bt)
             end
@@ -61,12 +63,22 @@ module AssetExtension
         end
         # tidy up
         if tmp_dir && File.exist?(tmp_dir)
-          (Dir.entries(tmp_dir)-%w(. ..)).each do |fn|
-            File.unlink(File.join(tmp_dir, fn)) rescue nil
-          end
-          Dir.rmdir(tmp_dir)
+          FileUtils.rm_r(tmp_dir)
         end
         return [assets, failures.compact]
+      end
+
+      protected
+
+      def ensure_temp_file(file)
+        if file.is_a?(ActionController::UploadedStringIO)
+          temp_file = Tempfile.new(file.original_filename)
+
+          temp_file.write file.read
+          file = temp_file
+          temp_file.close
+        end
+        return file
       end
     end
 

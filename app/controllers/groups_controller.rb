@@ -1,7 +1,7 @@
 class GroupsController < Groups::BaseController
 
   stylesheet 'groups'
-  permissions 'groups/memberships', 'groups/requests'
+  permissions 'groups/memberships', 'groups/requests', 'wiki'
 
   # needed by for group wiki editing
   javascript :wiki, :only => :show
@@ -47,13 +47,14 @@ class GroupsController < Groups::BaseController
     group_landing_instance_vars()
     @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
     @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @pagination_action = {:controller => 'groups', :action => 'people', :id => @group}
     render :layout => 'header_for_sidebar'
   end
 
   def list_groups
     group_landing_instance_vars()
     @federatings = @group.federatings.alphabetized_by_group
-    render :layout => 'header_for_sidebar' 
+    render :layout => 'header_for_sidebar'
   end
 
   def new
@@ -160,7 +161,13 @@ class GroupsController < Groups::BaseController
   end
 
   def group_created_success
-    flash_message :title => 'Group Created', :success => 'now make sure to configure your group'
+    if @group.class == Group
+      success_text = I18n.t(:group_successfully_created_details_council_info)
+    else
+      success_text = I18n.t(:group_successfully_created_details)
+    end
+
+    flash_message :title => I18n.t(:group_successfully_created), :success => success_text
     redirect_to groups_url(:action => 'edit')
   end
 

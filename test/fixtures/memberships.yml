@@ -5,6 +5,7 @@ blue1:
   group_id: 1
   user_id: 4
   id: <%= id += 1 %>
+  total_visits: 100
 blue2:
   group_id: 2
   user_id: 4
@@ -24,6 +25,10 @@ blue5:
 pub_13:  # blue should not be alone in public so he can leave.
   group_id: 1000
   user_id: 13
+  id: <%= id += 1 %>
+recent:
+  group_id: 33
+  user_id: 4
   id: <%= id += 1 %>
 
 # group 1
@@ -69,6 +74,10 @@ warm_orange:
 warm_yellow:
   group_id: 31
   user_id: 7
+  id: <%= id += 1 %>
+warm_blue:
+  group_id: 31
+  user_id: 4
   id: <%= id += 1 %>
 
 # rainbows cold committee

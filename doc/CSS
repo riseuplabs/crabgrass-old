@@ -1,0 +1,121 @@
+Crabgrass 0.5.1 CSS
+===================
+[[toc]]
+
+
+Crabgrass 0.5.1 CSS
+===================
+
+The CSS has been developed using the following gems:
+-----------------
+
+# Compass (chriseppstein-compass 0.8.17)
+** http://compass-style.org/
+# Compass-colors 0.3.1 
+** http://rubygems.org/gems/compass-colors
+# Sass/Haml 2.2.19 (aka Powerful Penny) 
+** http://sass-lang.com/ 
+** http://haml-lang.com/
+# Susy (ericam-compass-susy-plugin 0.6.2) - a grid plugin for Compass  
+** http://oddbird.net/susy/
+
+h3. Compass*
+
+2 core modules from Compass are used for crabgrass. 
+Both are imported within the app/stylesheets/ui_base/_screen.sass file:
+* Reset Module (@import compass/reset)*
+* Utilities Module (@import compass/utilities)*
+
+h3. Susy*
+
+The Susy module is imported within the app/stylesheets/ui_base/_base.sass file (@import susy/susy)*
+
+Crabgrass is based on an 800 px fixed width Susy grid:
+<code>
+//  GRID
+!grid_unit = "px"
+!col_width = 36px
+!gutter_width = 20px
+!side_gutter_width = 18px
+!total_cols = 14
+</code>
+Crabgrass uses the following base font size and line-height based on pixels:
+<code>
+//  FONT-SIZE
+!base_font_size_px = 12
+!base_line_height_px = 21
+</code>
+
+h4. *note for future: 
+
+As of this writing (April 2010) Compass and Susy will be soon be adopting the .scss syntax. The only crabgrass files that will be affected after the change to .scss are the imported files from within Compass and Susy outlined above. We are presently importing them without an extension, so after the adoption of the .scss syntax no problems should occur.
+
+.sass and .scss are 100% interoperable. The only difference is the syntax the file is written in. Therefore, all the .sass files can remain with the .sass extension and will work with Compass and Susy even after they have adopted the .scss extension.
+
+
+[# CSS Generation -> generation #]
+==============
+
+The layout calls the helper method crabgrass_stylesheets() which is located layout_helper.rb.  This helper method is responsible for adding the css link tags to the page header.  This method goes through the following:
+
+# [renders -> #render] screen.css from screen.sass, gets path to screen.css in return
+# adds the icon_png css file
+# [renders -> #render] any as_needed stylesheets [ defined in the controllers -> #controllers], gets paths in return
+# adds @content_for_style
+# adds ie* stylesheets within an @<!--[if IE 6]>@ (and IE7) tag
+
+
+
+Custom Appearance
+=================
+
+The main workhorse of the css generation is the CustomAppearance model.
+
+Paths
+-----
+
+app/models/custom_appearance_extension/css_paths.rb defines the following constants for the css generation:
+<code>
+    STYLESHEETS_ROOT = './public/stylesheets'
+    SASS_ROOT = './app/stylesheets'
+    CONSTANTS_FILENAME = "constants.sass"
+    SASS_LOAD_PATHS = ['.', File.join(RAILS_ROOT, SASS_ROOT)]
+</code>
+
+STYLESHEETS_ROOT - this is where the css files end up
+SASS_ROOT - this is where the sass files are
+CONSTANTS_FILENAME - this file contains all the sass constants.  this file is also parsed and used by the UI to list the constants available to customize to users.
+
+Custom Appearance Data
+----------------------
+
+Each site has a custom appearance.
+When a user defines custom appearances in the site admin UI, these get stored in the custom appearance model for the site.
+
+SASS -> css [#rendering -> render#]
+---------------------
+
+The css generator takes in a sass file name and uses the path to find the sass file. Then it builds a sass string like so:
+# adds contents of CONSTANTS_FILENAME
+# adds constants from the site's custom appearance model
+# adds contents of the file it was given
+
+Then, it passes the sass string to Sass::Engine and renders it:
+<code>
+      options = Compass.configuration.to_sass_engine_options
+      options[:load_paths] = options[:load_paths] | CustomAppearance::SASS_LOAD_PATHS
+      engine = Sass::Engine.new(sass_text, options)
+      css_text = engine.render
+</code>
+
+The css files then get written to STYLESHEETS_ROOT/compiled/, and the path to the css files get returned to the layout helper.
+
+[#Controllers#]
+===========
+
+Controllers can define stylesheets like so:
+<code>
+  stylesheet 'wiki_edit'
+</code>
+
+In this case, when the [ css is generated -> #generation], it looks for matching files in the as_needed directory within the sass root.the as_needed directory within the sass root.

@@ -23,7 +23,7 @@ When /^(?:|I )follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^(?:|I )follow "([^\"]*)" within "([^\"]*)"$/ do |link, scope|
+When /^(?:|I )follow "([^\"]*)" within (.*)$/ do |link, scope|
   parent = selector_for(scope)
   click_link_within(parent, link)
 end
@@ -137,10 +137,14 @@ When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"$/ do |path, field|
 end
 
 Then /^(?:|I )should see "([^\"]*)"$/ do |text|
-  assert_contain text
+  if text.index '\n'
+    assert_contain /#{text.gsub('\n', '\n\s*')}/
+  else
+    assert_contain text
+  end
 end
 
-Then /^(?:|I )should see "([^\"]*)" within "([^\"]*)"$/ do |text, scope|
+Then /^(?:|I )should see "([^\"]*)" within (.*)$/ do |text, scope|
   selector = selector_for(scope)
   within(selector) do |content|
     hc = Webrat::Matchers::HasContent.new(text)
@@ -153,7 +157,7 @@ Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   assert_contain regexp
 end
 
-Then /^(?:|I )should see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, scope|
+Then /^(?:|I )should see \/([^\/]*)\/ within (.*)$/ do |regexp, scope|
   selector = selector_for(scope)
   within(selector) do |content|
     regexp = Regexp.new(regexp)
@@ -165,7 +169,7 @@ Then /^I should not see "([^\"]*)"$/ do |text|
   assert_not_contain text
 end
 
-Then /^(?:|I )should not see "([^\"]*)" within "([^\"]*)"$/ do |text, scope|
+Then /^(?:|I )should not see "([^\"]*)" within (.*)$/ do |text, scope|
   selector = selector_for(scope)
   # when we don't have selector, so we don't have the content
   if have_selector(selector).matches?(response_body)

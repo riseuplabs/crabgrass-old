@@ -104,6 +104,7 @@ class GroupTest < Test::Unit::TestCase
 
     assert red.may?(:admin, group)
     assert blue.may?(:admin, group)
+    assert !group.has_a_council?
 
     assert_nothing_raised do
       group.add_committee!(committee, true)
@@ -115,6 +116,7 @@ class GroupTest < Test::Unit::TestCase
     assert !red.may_admin?(group)
     assert !red.may?(:admin, group)
     assert blue.may?(:admin, group)
+    assert group.has_a_council?
   end
 
   def test_name_change

@@ -13,11 +13,12 @@ class Groups::MembershipsController < Groups::BaseController
   ###### PUBLIC ACTIONS #########################################################
 
   # list all members of the group
-  def review 
+  def review
     # disabled for the sites mode - do we want membership by site?
     # @memberships =  @group.memberships.select{|ship| current_site.network.users.include?(ship.user)}.alphabetized_by_user(@letter_page).paginate(:page => @page_number, :per_page => @per_page)
     @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
     @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+    @pagination_action = {:controller => 'groups/memberships', :action => 'review'}
     @second_nav = 'administration'
     @third_nav = 'members'
   end
@@ -46,15 +47,14 @@ class Groups::MembershipsController < Groups::BaseController
   end
 
   def destroy
-    # disabled until release 0.5.1
-    redirect_to :action => 'list', :id => @group
-    return
-
     @group = @membership.group
     @user = @membership.user
     @group.remove_user!(@user)
 
-    redirect_to :action => 'list', :id => @group
+    flash_message :success => I18n.t(:membership_removed_message,
+                              :group => @group.name, :group_type => @group.group_type.downcase,
+                              :user => @user.display_name)
+    redirect_to :action => 'review', :id => @group
   end
 
   # used when you have admin access to a group that you

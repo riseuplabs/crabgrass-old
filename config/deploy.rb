@@ -10,7 +10,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass.git"
-set :branch, "master"
+set :branch, "release-0.5.2"
 
 deploy_host = "xxxxxx"
 staging_host = "munia.riseup.net"
@@ -159,10 +159,10 @@ namespace :crabgrass do
     end
   end
 
-  desc "refresh the staging database"
-  task :refresh do
-    run "touch #{deploy_to}/shared/tmp/refresh.txt"
-  end
+#  desc "refresh the staging database"
+#  task :refresh do
+#    run "touch #{deploy_to}/shared/tmp/refresh.txt"
+#  end
 
   desc "starts the crabgrass daemons"
   task :restart do
@@ -198,6 +198,6 @@ after  "deploy:setup",   "crabgrass:create_shared"
 after  "deploy:symlink", "crabgrass:link_to_shared"
 after  "deploy:symlink", "crabgrass:create_version_files"
 before "deploy:restart", "debian:symlinks"
-after  "deploy:restart", "passenger:restart"
+after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
 

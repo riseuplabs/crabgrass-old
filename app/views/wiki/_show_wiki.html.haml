@@ -3,9 +3,14 @@
   %span.right
     = wiki_edit_link(wiki.id)
 - else
-  %h3
+  %h3#underlined
     = I18n.t(:wiki)
     %span.right
       = wiki_edit_link(wiki.id)
 %div.wiki
-  = wiki.body_html
+  - if local_assigns[:preview]
+    = wiki.render_preview(preview)
+    = wiki_more_link(wiki.id)
+  - else
+    = wiki.body_html
+    = wiki_less_link(wiki.id)

@@ -6,6 +6,7 @@ profile_for_public_group:
   may_see_members: false
   may_see_committees: true
   stranger: true
+  geo_location_id: 2
 
 profile_for_public_committee:
   id: 101
@@ -43,6 +44,20 @@ profile_for_rainbow:
   stranger: true
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  wiki_id: 300
+
+private_profile_for_rainbow:
+  id: 31
+  entity_type: "Group"
+  entity_id: 3
+  may_see: true
+  may_see_members: false
+  may_request_membership: false
+  stranger: false 
+  friend: true
+  summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
+  wiki_id: 310
 
 profile_for_warm:
   id: 301
@@ -133,4 +148,10 @@ public_profile_for_blue:
   entity_type: "User"
   entity_id: 4
   stranger: true
+
+public_profile_for_recent_group:
+  id: 303
+  entity_type: "Group"
+  entity_id: 33
+  geo_location_id: 1
 

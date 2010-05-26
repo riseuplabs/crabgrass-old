@@ -176,6 +176,7 @@ module UserExtension::Users
         post.type = "PrivatePost"
         post.recipient = other_user
       end
+      post
     end
 
 
