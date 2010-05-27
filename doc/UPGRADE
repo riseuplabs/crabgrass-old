@@ -6,13 +6,17 @@
   1. Run migrations:
       % RAILS_ENV=production rake db:migrate
 
-* To cleanup old site network federatings:
-run rake cg:cleanup_site_networks to 
-a) make sure all groups have the proper site_id set and 
-b) remove the site network federatings.
-These were used to attaching groups to a site but we changed that some
-time ago. Kepping the federatings leads to the site network showing up
-on the group landing pages.
+  2. cleanup old site network federatings:
+     % RAILS_ENV=production rake cg:cleanup_site_networks
+
+     this will do the following:
+
+     	  a) make sure all groups have the proper site_id set and
+	  b) remove the site network federatings.
+
+	  These were used to attach groups to a site, but we changed
+	  that some time ago. Keeping the federatings leads to the
+	  site network showing up on the group landing pages.
 
 0.5.0
 -----
