@@ -51,6 +51,7 @@ namespace :cg do
   desc "removes federatings with site networks - they are not needed anymore."
   task(:cleanup_site_networks => :environment) do
     site_network_ids = Site.all.map(&:network_id)
+    exit unless site_network_ids.any?
     federatings = Federating.find :all,
       :conditions => "network_id IN (#{site_network_ids.compact.join(',')})"
     group_ids = federatings.map(&:group_id)

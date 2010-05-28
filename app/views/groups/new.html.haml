@@ -19,7 +19,7 @@
 
 = content_tag(:h3, headline)
 - if @group.network?
-  %p= I18n.t(:new_network_description)
+  %p= I18n.t(:new_network_description, :new_group_url => groups_url(:action => 'new', :controller => 'groups'))
 
 - form_tag(url,:id => "createform", :multipart => true) do
   = render(:partial => 'groups/basic/form', :locals => {:submit => false})
