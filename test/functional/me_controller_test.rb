@@ -4,7 +4,7 @@ require 'me_controller'
 # Re-raise errors caught by the controller.
 class MeController; def rescue_action(e) raise e end; end
 
-class MeControllerTest < Test::Unit::TestCase
+class MeControllerTest < ActionController::TestCase
 
   fixtures :users, :languages, :sites
 
@@ -15,9 +15,9 @@ class MeControllerTest < Test::Unit::TestCase
   end
 
   def test_show_me_not_logged_in
-    get :show
-    assert_response :redirect, "shouldn't reach index if not logged in"
-    assert_redirected_to({:controller => 'account', :action => 'login'}, "should redirect to account/login")
+    assert_login_required do 
+      get :show
+    end
   end
 
   def test_show_me

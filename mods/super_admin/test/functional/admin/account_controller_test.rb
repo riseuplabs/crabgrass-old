@@ -8,6 +8,10 @@ class Admin::AccountControllerTest < ActionController::TestCase
     enable_site_testing
   end
 
+  def teardown
+    disable_site_testing
+  end
+
   def test_become
     login_as :blue
     blue = users(:blue)

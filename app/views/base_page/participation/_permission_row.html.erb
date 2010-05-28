@@ -1,8 +1,0 @@
-% if participation.is_a?(GroupParticipation)
-  <td>&nbsp;&nbsp;<%= link_to_group(participation.group) %></td>
-% else
-  <td>&nbsp;&nbsp;<%= link_to_user(participation.user) %></td>
-% end
-  <td><%= show_or_edit_page_access(participation) %></td>
-  <td><%= spinner(dom_id(participation)) %></td>
-

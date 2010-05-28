@@ -5,7 +5,7 @@
 
 require File.dirname(__FILE__) + '/../../../test_helper'
 
-class Crabgrass::Hook::ManagerTest < Test::Unit::TestCase
+class Crabgrass::Hook::ManagerTest < ActiveSupport::TestCase
 
   # Some hooks that are manually registered in these tests
   class TestHook < Crabgrass::Hook::Listener; end

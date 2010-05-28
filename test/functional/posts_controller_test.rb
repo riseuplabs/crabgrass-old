@@ -4,7 +4,7 @@ require 'posts_controller'
 # Re-raise errors caught by the controller.
 class PostsController; def rescue_action(e) raise e end; end
 
-class PostsControllerTest < Test::Unit::TestCase
+class PostsControllerTest < ActionController::TestCase
   fixtures :pages, :users, :groups, :user_participations, :group_participations, :discussions, :memberships, :sites
 
   def setup
@@ -54,7 +54,9 @@ class PostsControllerTest < Test::Unit::TestCase
     post :create, :post => {:body => 'test post'}, :page_id => pages(:page1).id
     post_id = pages(:page1).discussion.posts.last.id
     assert_no_difference 'Post.find(post_id).ratings.count' do
-      post :twinkle, :id => post_id
+      assert_permission_denied do
+        post :twinkle, :id => post_id
+      end
     end
 
     login_as :blue

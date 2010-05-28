@@ -123,9 +123,9 @@ class AddEjabberdTables < ActiveRecord::Migration
     add_index "private_storage", ["username"], :name => "i_private_storage_username"
 
     # Create a UserRoster and GroupRoster pair for all already existing contacts.
-    Contact.all.each do |contact|
-      contact.user.create_user_roster_and_group_roster(contact.contact)
-    end
+    # Contact.all.each do |contact|
+    #   contact.user.create_user_roster_and_group_roster(contact.contact)
+    # end
   end
 
   def self.down

@@ -33,7 +33,7 @@
 ###
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -53,6 +53,8 @@ end
 #  attr_accessor :action_web_service
 #end
 
+gem 'actionpack', "=#{RAILS_GEM_VERSION}"
+
 Rails::Initializer.run do |config|
   ###
   ### (2) CONFIG BLOCK
@@ -63,6 +65,7 @@ Rails::Initializer.run do |config|
   config.load_paths << "#{RAILS_ROOT}/app/sweepers"
 
   Engines.mix_code_from(:permissions)
+  Engines.disable_code_mixing = false
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
@@ -77,7 +80,10 @@ Rails::Initializer.run do |config|
   # sessions because they are too limited in size. If you want to switch to a different
   # storage container, you need to disable breadcrumbs or store them someplace else,
   # like an in-memory temporary table.
-  config.action_controller.session_store = :p_store
+  #
+  # I changed this because it doesn't work with rails 2.3
+  # FIXME: figure out if it makes sense this way.
+  config.action_controller.session_store = :cookie_store #:mem_cache_store # :p_store
 
   # store fragments on disk, we might have a lot of them.
   config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
@@ -109,10 +115,17 @@ Rails::Initializer.run do |config|
   #config.gem "chriseppstein-compass", :lib => "compass"
   #config.gem "ericam-compass-susy-plugin", :lib => "susy"
 
+  config.gem 'cucumber' unless ['development', 'production'].include? RAILS_ENV
+
+  config.gem 'mocha'
+
+  config.action_controller.session = { :key => '_crabgrass_session', :secret => Conf.secret }
 
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
-  config.action_view.erb_trim_mode = '%-'
+  #
+  # FIXME: this is broken in Rails 2.3 (https://rails.lighthouseapp.com/projects/8994/tickets/2553-actionviewtemplatehandlerserberb_trim_mode-broken)
+  #config.action_view.erb_trim_mode = '%-'
 
   # See Rails::Configuration for more options
 

@@ -22,7 +22,7 @@
 #
 # In one application that uses this plugin, we decide that the name used in the
 # index action should be "Robbie", not "HAL 9000". To override this single method,
-# we create the corresponding controller in our application 
+# we create the corresponding controller in our application
 # (<tt>RAILS_ROOT/app/controllers/my_controller.rb</tt>), and redefine the method:
 #
 #   class MyController < ApplicationController
@@ -43,11 +43,11 @@
 # The only reason why it's possible for controllers and helpers is because
 # they can be recognised by their filenames ("whatever_controller", "jazz_helper"),
 # whereas models appear the same as any other typical Ruby library ("node",
-# "user", "image", etc.). 
+# "user", "image", etc.).
 #
-# If mixing were allowed in models, it would mean code mixing for *every* 
+# If mixing were allowed in models, it would mean code mixing for *every*
 # file that was loaded via +require_or_load+, and this could result in
-# problems where, for example, a Node model might start to include 
+# problems where, for example, a Node model might start to include
 # functionality from another file called "node" somewhere else in the
 # <tt>$LOAD_PATH</tt>.
 #
@@ -98,59 +98,53 @@ module Engines::RailsExtensions::Dependencies
     # try and load the plugin code first
     # can't use model, as there's nothing in the name to indicate that the file is a 'model' file
     # rather than a library or anything else.
-    Engines.code_mixing_file_types.each do |file_type| 
+    Engines.code_mixing_file_types.each do |file_type|
       # if we recognise this type
       # (this regexp splits out the module/filename from any instances of app/#{type}, so that
       #  modules are still respected.)
-      if file_name =~ /^(.*app\/#{file_type}s\/)?(.*_#{file_type})(\.rb)?$/
+      if file_name =~ /^(.*app\/#{file_type}s\/)+(.*_#{file_type})(\.rb)?$/
         base_name = $2
 
-        ###
-        ### CRABGRASS HACK
+        ### CRABGRASS HACK: switched LOAD APP and LOAD PLUGIN sections
         ### Normally, engines loads from plugins first, then the application.
         ### This allows the application to override the plugins. We want the opposite.
         ### We want the plugins to be able to override the application, so we switch the
         ### order of file loading.
-        ###
 
+
+        # LOAD APP
         # finally, load any application-specific controller classes using the 'proper'
         # rails load mechanism, EXCEPT when we're testing engines and could load this file
         # from an engine
-        if Engines.disable_application_code_loading
-          Engines.logger.debug("loading from application disabled.")
-        else
+        unless Engines.disable_application_code_loading
           # Ensure we are only loading from the /app directory at this point
           app_file_name = File.join(RAILS_ROOT, 'app', "#{file_type}s", "#{base_name}")
           if File.file?("#{app_file_name}.rb")
-            Engines.logger.debug("loading from application: #{base_name}")
             file_loaded = true if require_or_load_without_engine_additions(app_file_name, const_path)
-          else
-            Engines.logger.debug("(file not found in application)")
           end
-        end        
+        end
 
+        # LOAD PLUGIN
         # ... go through the plugins from first started to last, so that
         # code with a high precedence (started later) will override lower precedence
         # implementations
         Engines.plugins.each do |plugin|
           plugin_file_name = File.expand_path(File.join(plugin.directory, 'app', "#{file_type}s", base_name))
-          Engines.logger.debug("checking plugin '#{plugin.name}' for '#{base_name}'")
           if File.file?("#{plugin_file_name}.rb")
-            Engines.logger.debug("==> loading from plugin '#{plugin.name}'")
             file_loaded = true if require_or_load_without_engine_additions(plugin_file_name, const_path)
           end
         end
-    
-      end 
+
+
+      end
     end
 
     # if we managed to load a file, return true. If not, default to the original method.
     # Note that this relies on the RHS of a boolean || not to be evaluated if the LHS is true.
     file_loaded || require_or_load_without_engine_additions(file_name, const_path)
-  end  
+  end
 end
 
-#module ActiveSupport::Dependencies # TODO FOR RAILS 2.1.1: uncomment this!!!
-module ::Dependencies #:nodoc:
+module ActiveSupport::Dependencies #:nodoc:
   include Engines::RailsExtensions::Dependencies
 end

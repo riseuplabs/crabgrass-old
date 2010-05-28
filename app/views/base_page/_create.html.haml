@@ -14,13 +14,12 @@
     = hidden_field_tag 'page_class', @page_class
     = hidden_field_tag('group', params[:group]) if params[:group]
     = Formy.form do |form|
-      = render :partial => 'base_page/create/information', :locals => {:form => form}
-
+      - render :partial => 'base_page/create/information', :locals => {:form => form}
       - if sections.any_in? ['file','files','external_video','body', 'image', 'event']
         - sections.each do |section|
-          = render :partial => "base_page/create/#{section}", :locals => {:form => form}
+          - render :partial => "base_page/create/#{section}", :locals => {:form => form}
 
-      = render :partial => 'base_page/create/sharing', :locals => {:form => form}
+      - render :partial => 'base_page/create/sharing', :locals => {:form => form}
     .form_buttons
       = submit_tag "hidden", :name => 'create', :style => 'display:none'
       = submit_tag '&laquo; ' + I18n.t(:back_button), :name => 'cancel'

@@ -20,7 +20,6 @@ class Me::MessagePostsControllerTest < ActionController::TestCase
     assert_no_difference 'Post.count' do
       post :create, :message_id => users(:orange).to_param, :post => {:body => "blue: hi orange"}
     end
-
     assert_login_required
   end
 

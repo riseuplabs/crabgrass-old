@@ -1,19 +1,48 @@
 module ActionView
+
   module Partials
 
-    def render_partial_with_print(partial_path, object_assigns = nil, local_assigns = {})
-      partial_name = partial_path
-      result = render_partial_without_print(partial_path, object_assigns, local_assigns)
+    @@partioprint_decorators = [LocalsPrinter, PartioPrinter] 
+    #@@partioprint_decorators = [PartioPrinter]  Use this for without Local Variable support
 
-      if result && result !~ /^\s*<(!DOCTYPE|html)/
-        result = "<!-- ERB:START partial: #{partial_name} -->\n" + result + "\n<!-- ERB:END partial: #{partial_name} -->"
+    #To store partial and absolute path
+    @@filenames = {}
+
+    def render_partial_with_print(options = {})
+      result = render_partial_without_print(options)
+      options[options[:partial].to_sym] = filenames[options[:partial].to_sym]
+      core_printer = CorePrinter.new(result, options)
+
+      printer = core_printer
+      for each_decorator in @@partioprint_decorators
+        printer = each_decorator.new(printer)
       end
 
-      result
+      printer.to_s
     end
 
     alias_method :render_partial_without_print, :render_partial
     alias_method :render_partial, :render_partial_with_print
+
+
+    # Allows setting decorators externally
+    def self.partioprint_decorators=(decorators)
+      @@partioprint_decorators = decorators
+    end
+
+    def _pick_partial_template_with_print(partial_path) #:nodoc:
+      result = _pick_partial_template_without_print(partial_path)
+      @@filenames[partial_path.to_sym] = result.filename
+      return result
+    end
+
+    alias_method :_pick_partial_template_without_print, :_pick_partial_template
+    alias_method :_pick_partial_template, :_pick_partial_template_with_print
+
+    def filenames
+      @@filenames
+    end
+
   end
-  
+
 end

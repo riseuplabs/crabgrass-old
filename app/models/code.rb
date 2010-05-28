@@ -26,7 +26,7 @@ class Code < ActiveRecord::Base
     begin
        self.code = Password.random(10)
     end until Code.find_by_code(self.code).nil?
-    self.expires_at ||= self.created_at + 30.days
+    self.expires_at ||= Time.now + 30.days
     true
   end
 

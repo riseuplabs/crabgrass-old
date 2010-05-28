@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class RelationshipsTest < Test::Unit::TestCase
+class RelationshipsTest < ActiveSupport::TestCase
   fixtures :users
 
   def test_add_contact

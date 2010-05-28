@@ -25,7 +25,7 @@ class Admin::BaseController < ApplicationController
 
   include ControllerExtension::CurrentSite
 
-  protect_from_forgery :secret => Conf.secret
+  protect_from_forgery
 
   permissions 'admin/base'
 

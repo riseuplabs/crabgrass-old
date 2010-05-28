@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 # this test are not isolated since their are using instance objects that for example create a page
 # involve create an user participation and that makes create a page_history object, so when you read
 # the tests some counts for example seems to not have sense, but this is because of that already created data.
-class PageHistoryTest < Test::Unit::TestCase
+class PageHistoryTest < ActiveSupport::TestCase
 
   def setup
     Page.delete_all

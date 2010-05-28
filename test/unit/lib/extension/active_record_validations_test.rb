@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   validates_presence_of_optional_attributes
 end
 
-class Extension::ActiveRecordValidationsTest < Test::Unit::TestCase
+class Extension::ActiveRecordValidationsTest < ActiveSupport::TestCase
 
   def test_defines_optional_attributes_accessor
     assert_nothing_raised do
@@ -39,7 +39,7 @@ class Extension::ActiveRecordValidationsTest < Test::Unit::TestCase
       begin
         page.save!
       rescue ActiveRecord::RecordInvalid => exc
-        assert exc.message =~ /Summary is required/
+        assert page.errors['summary'] =~ /is required/
       end
     end
   end

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class PageTest < Test::Unit::TestCase
+class PageTest < ActiveSupport::TestCase
   fixtures :pages, :sites, :page_terms
 
   def test_sites

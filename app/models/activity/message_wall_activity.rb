@@ -31,7 +31,7 @@ class MessageWallActivity < Activity
 
   def description(view=nil)
     if extra[:type] == "status"
-      txt = '{user} {message}' % {:user => user_span(:author), :message => extra[:snippet]}
+      txt = '%{user} %{message}' % {:user => user_span(:author), :message => extra[:snippet]}
     elsif user_id != author_id
       author_html = user_span(:author)
       user_html = user_span(:user)

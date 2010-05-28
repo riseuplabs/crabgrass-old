@@ -1,7 +1,7 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class ExternalVideoTest < Test::Unit::TestCase
+class ExternalVideoTest < ActiveSupport::TestCase
   def test_invalid
     vid = ExternalVideo.new(:media_embed => '<object>my object</object>')
     assert !vid.valid?
@@ -26,7 +26,7 @@ class ExternalVideoTest < Test::Unit::TestCase
   end
 
   def test_vimeo
-    dancing = ExternalVideo.new(:media_embed => '<object width="400" height="225">	<param name="allowfullscreen" value="true" />	<param name="allowscriptaccess" value="always" />	<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=1211060&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" />	<embed src="http://vimeo.com/moogaloop.swf?clip_id=1211060&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="225"></embed></object><br /><a href="http://vimeo.com/1211060?pg=embed&amp;sec=1211060">Where the Hell is Matt? (2008)</a> from <a href="http://vimeo.com/user484313?pg=embed&amp;sec=1211060">Matthew Harding</a> on <a href="http://vimeo.com?pg=embed&amp;sec=1211060">Vimeo</a>.')
+    dancing = ExternalVideo.new(:media_embed => '<object width="400" height="225">      <param name="allowfullscreen" value="true" />   <param name="allowscriptaccess" value="always" />       <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=1211060&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" />   <embed src="http://vimeo.com/moogaloop.swf?clip_id=1211060&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="225"></embed></object><br /><a href="http://vimeo.com/1211060?pg=embed&amp;sec=1211060">Where the Hell is Matt? (2008)</a> from <a href="http://vimeo.com/user484313?pg=embed&amp;sec=1211060">Matthew Harding</a> on <a href="http://vimeo.com?pg=embed&amp;sec=1211060">Vimeo</a>.')
     assert dancing.valid?
     assert_equal :vimeo, dancing.service_name
     assert_equal "1211060", dancing.media_key

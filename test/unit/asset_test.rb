@@ -1,7 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AssetTest < Test::Unit::TestCase
+class AssetTest < ActiveSupport::TestCase
   fixtures :groups, :users, :page_terms, :assets, :pages, :group_participations
+
+  # fixes fixture_file_upload for Rails 2.3
+  include ActionController::TestProcess
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -183,6 +186,10 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_dimensions
+    if !Media::Process::GraphicMagick.new.available?
+      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_dimensions."
+      return
+    end
     @asset = Asset.create_from_params :uploaded_data => upload_data('photo.jpg')
     assert_equal 500, @asset.width, 'width must match file'
     assert_equal 321, @asset.height, 'height must match file'
@@ -204,10 +211,18 @@ class AssetTest < Test::Unit::TestCase
   end
 
   def test_doc
+    # must have OO installed
     if !Media::Process::OpenOffice.new.available?
       puts "\nOpenOffice converter is not available. Either OpenOffice is not installed or it can not be started. Skipping AssetTest#test_doc."
       return
     end
+
+    # must have GM installed
+    if !Media::Process::GraphicMagick.new.available?
+      puts "\GraphicMagick converter is not available. Either GraphicMagick is not installed or it can not be started. Skipping AssetTest#test_doc."
+      return
+    end
+
     @asset = Asset.create_from_params :uploaded_data => upload_data('msword.doc')
     assert_equal TextAsset, @asset.class, 'asset should be a TextAsset'
     assert_equal 'TextAsset', @asset.versions.earliest.versioned_type, 'version should by of type TextAsset'

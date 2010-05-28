@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'mailer'
 
-class MailerPageHistoryTest < Test::Unit::TestCase
+class MailerPageHistoryTest < ActiveSupport::TestCase
   def setup
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UnauthenticatedUserTest < Test::Unit::TestCase
+class UnauthenticatedUserTest < ActiveSupport::TestCase
 
   def setup
     @user = UnauthenticatedUser.new

@@ -1,4 +1,5 @@
 module AssetTestHelper
+  include ActionController::TestProcess # fixture_file_upload
   ##
   ## ASSET HELPERS
   ##

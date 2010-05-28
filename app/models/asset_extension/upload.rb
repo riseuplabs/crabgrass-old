@@ -97,8 +97,8 @@ module AssetExtension
            self.thumbdefs = klass.class_thumbdefs
         end
         self.content_type = mime_type
-        self.filename_will_change! # just in case nothing is different, force dirty.
         self.filename = file_data.original_filename
+        self.filename_will_change! # just in case nothing is different, force dirty.
         @temp_files = Media::TempFileArray.new(file_data)
       end
 

@@ -19,7 +19,7 @@ require 'set'
 # Re-raise errors caught by the controller.
 class AccountController; def rescue_action(e) raise e end; end
 
-class PageFinderTest < Test::Unit::TestCase
+class PageFinderTest < ActionController::TestCase
   fixtures :groups, :users, :memberships, :pages, :sites,
    :user_participations, :group_participations, :taggings, :tags
 

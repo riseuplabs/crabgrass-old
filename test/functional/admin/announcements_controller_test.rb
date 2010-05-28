@@ -37,8 +37,10 @@ class Admin::AnnouncementsControllerTest < ActionController::TestCase
 
   def test_new
     login_as :penguin
-    get :new
-    assert_permission_denied
+    # assert_permission_denied doesn't work here because we are re-raising errors above
+    assert_permission_denied do
+      get :new
+    end
   end
 
   def test_edit
@@ -62,8 +64,9 @@ class Admin::AnnouncementsControllerTest < ActionController::TestCase
   def test_destroy
     login_as :penguin
     assert_no_difference 'Page.count', "should not allow destruction of non-announcements" do
-      get :destroy, :id => 210
-      assert_permission_denied
+      assert_permission_denied do
+        get :destroy, :id => 210
+      end
     end
     assert_difference 'Page.count', -1, "page count should lower as announcement is destroyed." do
       get :destroy, :id => 260
@@ -73,25 +76,29 @@ class Admin::AnnouncementsControllerTest < ActionController::TestCase
   protected
 
   def assert_no_access(message="")
-    get :index
-    assert_permission_denied(message)
-    get :new
-    assert_permission_denied(message)
-    post :update
-    assert_permission_denied(message)
-    get :destroy, :id => 260
-    assert_permission_denied(message)
+    assert_permission_denied(message) do
+      get :index
+    end
+    assert_permission_denied(message) do
+      get :new
+    end
+    assert_permission_denied(message) do
+      post :update
+    end
+    assert_permission_denied(message) do
+      get :destroy, :id => 260
+    end
   end
 
   def assert_must_login(message="")
     get :index
-    assert_login_required(message)
+    assert_login_required
     get :new
-    assert_login_required(message)
+    assert_login_required
     post :update
-    assert_login_required(message)
+    assert_login_required
     get :destroy, :id => 260
-    assert_login_required(message)
+    assert_login_required
   end
 
 end

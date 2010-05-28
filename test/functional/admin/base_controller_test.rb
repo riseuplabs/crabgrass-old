@@ -24,15 +24,17 @@ class Admin::BaseControllerTest < ActionController::TestCase
 
   def test_no_admin
     login_as :red
-    get :index
-    assert_permission_denied "only site admins may access the actions."
+    assert_permission_denied "only site admins may access the actions." do
+      get :index
+    end
   end
 
   def test_no_site
     disable_site_testing
     login_as :penguin
-    get :index
-    assert_permission_denied "none of the base actions should be enabled without sites."
+    assert_permission_denied "none of the base actions should be enabled without sites." do
+      get :index
+    end
   end
 
 end

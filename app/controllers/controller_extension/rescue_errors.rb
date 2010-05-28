@@ -35,6 +35,7 @@ module ControllerExtension::RescueErrors
       rescue_from ErrorMessage,     :with => :render_error
       rescue_from ActionController::InvalidAuthenticityToken, :with => :render_csrf_error
       helper_method :rescues_path
+      alias_method_chain :rescue_action_locally, :js
     end
   end
 
@@ -121,11 +122,11 @@ module ControllerExtension::RescueErrors
 
   # override the default 'rescue_action_locally' so that we can print an error
   # message when the request is an ajax one.
-  def rescue_action_locally(exception)
+  def rescue_action_locally_with_js(exception)
     respond_to do |format|
       format.html do
         if RAILS_ENV == "production" or RAILS_ENV == "development"
-          super(exception)
+          rescue_action_locally_without_js(exception)
         else
           render :text => exception
         end

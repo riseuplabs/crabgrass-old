@@ -1,30 +1,46 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class TranslationsControllerTest < ActionController::TestCase
+class Translator::TranslationsControllerTest < ActionController::TestCase
+  fixtures :translations, :keys, :languages, :users
+
+  def setup
+    setup_site_with_translator
+  end
+
+  def teardown
+    disable_site_testing
+  end
+
   def test_should_get_index
+    login_as @translator
     get :index
     assert_response :success
     assert_not_nil assigns(:translations)
   end
 
   def test_should_get_new
-    get :new
+    login_as @translator
+    get :new, :key => :hello
     assert_response :success
   end
 
   def test_should_create_translation
+    login_as @translator
+    fr=languages(:fr)
+    de=languages(:de)
     assert_difference('Translation.count') do
-      post :create, :translation => valid_translation
+      post :create, :translation => valid_translation.merge(:language => fr)
     end
-    assert_redirected_to :action => :new
+    assert_redirected_to :controller => :keys, :language => fr, :filter => 'untranslated'
 
     assert_difference('Translation.count') do
-      post :create, :translation => valid_translation.merge(:user => nil)
+      post :create, :translation => valid_translation.merge(:language => de)
     end
-    assert_redirected_to :action => :new
+    assert_redirected_to :controller => :keys, :language => de, :filter => 'untranslated'
   end
 
   def test_should_fail_to_create_translation
+    login_as @translator
     assert_no_difference('Translation.count') do
       post :create, :translation => valid_translation.merge(:text => nil)
     end
@@ -43,25 +59,29 @@ class TranslationsControllerTest < ActionController::TestCase
 
 
   def test_should_show_translation
+    login_as @translator
     get :show, :id => translations(:hello_en).id
     assert_response :success
   end
 
   def test_should_get_edit
+    login_as @translator
     get :edit, :id => translations(:hello_en).id
     assert_response :success
   end
 
   def test_should_update_translation
-    put :update, :id => translations(:hello_en).id, :translation => { }
-    assert_redirected_to translation_path(assigns(:translation))
+    login_as @translator
+    put :update, :id => translations(:hello_en).id, :translation => { }, :save => true
+    assert_redirected_to translator_translation_path(assigns(:translation))
   end
 
   def test_should_destroy_translation
+    login_as @translator
     assert_difference('Translation.count', -1) do
       delete :destroy, :id => translations(:hello_en).id
     end
 
-    assert_redirected_to translations_path
+    assert_redirected_to translator_translations_path
   end
 end

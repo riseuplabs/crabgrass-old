@@ -21,6 +21,7 @@ http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
 
 =end
 
+require 'action_controller/middleware_stack'
 require 'dispatcher'
 
 Engines::Plugin.class_eval do
@@ -41,19 +42,26 @@ Engines::Plugin.class_eval do
   def load_once=(new_value)
     @load_once = new_value
     if @load_once
-      load_paths.each { |p| Dependencies.load_once_paths << p }
+      load_paths.each { |p| ActiveSupport::Dependencies.load_once_paths << p }
     else
-      load_paths.each { |p| Dependencies.load_once_paths.delete(p) }
+      load_paths.each { |p| ActiveSupport::Dependencies.load_once_paths.delete(p) }
     end
   end
 
   def initialize(directory)
     super directory
-    @code_paths = default_code_paths
     @controller_paths = default_controller_paths
     @public_directory = default_public_directory
     @override_views = false
     @load_once = true
+  end
+
+  def load(initializer)
+    return if loaded?
+    super initializer
+    add_plugin_locale_paths
+    add_plugin_view_paths
+    Engines::Assets.mirror_files_for(self)
   end
 
   def add_plugin_view_paths
@@ -62,9 +70,8 @@ Engines::Plugin.class_eval do
       if @override_views
         ActionController::Base.prepend_view_path(view_path)
       else
-        ActionController::Base.view_paths.insert(1, view_path) # push it just underneath the app
+        ActionController::Base.append_view_path(view_path)
       end
-      ActionView::TemplateFinder.process_view_paths(view_path)
     end
   end
 
@@ -95,6 +102,13 @@ Engines::Plugin.class_eval do
         model_class.instance_eval &(mixin_module.add_to_class_definition())
       end
     }
+  end
+
+
+  # copied from rails 2.3.5 plugin.rb
+  # added permissions
+  def app_paths
+    [ File.join(directory, 'app', 'models'), File.join(directory, 'app', 'helpers'), File.join(directory, 'app', 'permissions'), controller_path, metal_path ]
   end
 
 end

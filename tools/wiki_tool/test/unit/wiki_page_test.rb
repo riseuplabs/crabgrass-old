@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
 
-class WikiPageTest < Test::Unit::TestCase
+class WikiPageTest < ActiveSupport::TestCase
   fixtures :users
 
   context "Two WikiPages with the same title added to the same group" do

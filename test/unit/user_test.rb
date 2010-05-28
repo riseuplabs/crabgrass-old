@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UserTest < Test::Unit::TestCase
+class UserTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :memberships
 
   def setup
-    Time.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
 
   def test_ensure_values_in_receive_notifications

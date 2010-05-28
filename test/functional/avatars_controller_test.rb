@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'avatars_controller'
 
-# Re-raise errors caught by the controller.
-class AvatarsController; def rescue_action(e) raise e end; end
-
-class AvatarsControllerTest < Test::Unit::TestCase
+class AvatarsControllerTest < ActionController::TestCase
   fixtures :avatars, :users
-
-  def setup
-    @controller = AvatarsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_create
     #    post :create
@@ -21,7 +11,7 @@ class AvatarsControllerTest < Test::Unit::TestCase
     assert_equal 'no image uploaded', flash[:error]
 
     avatar_image = fixture_file_upload('/files/bee.jpg','image/jpg')
-    post :create, :user_id => user.id, :image => {:image_file => avatar_image}, :redirect => '/me' 
+    post :create, :user_id => user.id, :image => {:image_file => avatar_image}, :redirect => '/me'
     assert !flash[:exception]
     assert_redirected_to('/me')
   end

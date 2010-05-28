@@ -61,7 +61,7 @@ class Thumbnail < ActiveRecord::Base
     process_chain = Media::Process::Chain.new(input_type, output_type)
     if process_chain.run(input_file, output_file, thumbdef)
       # success
-      if Media::Process.has_dimensions?(output_type)
+      if Media::Process.has_dimensions?(output_type) and self.thumbdef.size.present?
         set_dimensions Media::Process.dimensions(output_file)
       end
       self.failure = false

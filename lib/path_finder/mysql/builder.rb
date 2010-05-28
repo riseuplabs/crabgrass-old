@@ -125,7 +125,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
   def paginate
     @page ||= 1
     @per_page ||= SECTION_SIZE
-    @klass.paginate options_for_find(:having => true).merge(:page => @page, :per_page => @per_page)
+    @klass.paginate options_for_find.merge(:page => @page, :per_page => @per_page)
   end
 
   def count
@@ -139,9 +139,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
 
   private
 
-  # :having - when true will split off "HAVING" clause from GROUP BY into a :having key
-  # not compatible with rails 2.1, but needed by will_paginate
-  def options_for_find(opts = {})
+  def options_for_find
     fulltext_filter = [@access_me_clause, @access_target_clause,
       @access_site_clause, @access_filter_clause, @tags].flatten.compact
 
@@ -167,17 +165,7 @@ class PathFinder::Mysql::Builder < PathFinder::Builder
     }
 
     find_opts[:group] = sql_for_group(order)
-
-    having = sql_for_having(order)
-    # either append HAVING clause to GROUP BY string
-    # or set a new :having key
-    unless having.blank?
-      if opts[:having]
-        find_opts[:having] = having
-      elsif !having.blank?
-        find_opts[:group] << " HAVING #{having} "
-      end
-    end
+    find_opts[:having] = sql_for_group(order)
 
     return find_opts
   end

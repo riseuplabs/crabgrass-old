@@ -1,16 +1,9 @@
 require File.dirname(__FILE__) + '/../../../../test/test_helper'
-require 'wiki_page_version_controller'
 
-# Re-raise errors caught by the controller.
-class WikiPageVersionController; def rescue_action(e) raise e end; end
-
-class WikiPageVersionControllerTest < Test::Unit::TestCase
+class WikiPageVersionControllerTest < ActionController::TestCase
   fixtures :pages, :users, :user_participations, :wikis, :groups, :sites
 
   def setup
-    @controller = WikiPageVersionController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     HTMLDiff.log_to_stdout = false # set to true for debugging
   end
 

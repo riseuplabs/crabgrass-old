@@ -1,6 +1,3 @@
-require 'erb'
-require 'action_view'
-
 module FightTheMelons #:nodoc:
   module Helpers #:nodoc:
     
@@ -74,7 +71,7 @@ module FightTheMelons #:nodoc:
         object, method, collection, value_method, text_method, options = {}
       )
         InstanceTag.new(
-          object, method, self, nil, options.delete(:object)
+          object, method, self, options.delete(:object)
         ).to_collection_multiple_select_tag(
           "#{object}[#{method}]", collection, value_method, text_method, options
         )
@@ -96,13 +93,13 @@ module FightTheMelons #:nodoc:
       #
       # If a <tt>:selected_items</tt> option is provided it will be used as
       # selection. <tt>:selected_items</tt> array should be an array of values
-      # to be matched with the ones provided by <tt>value_method</tt>.
+      # to be matched with the ones provided by <tt>method</tt>.
       #
-      # The option <tt>:outer_class</tt> specifies the HTML class of the ul
+      # The option <tt>:outer_class</tt> specifies the HTML class of the HTML
       # element that wraps the checkbox list.
       def multiple_select(object, method, container, options = {})
         InstanceTag.new(
-          object, method, self, nil, options.delete(:object)
+          object, method, self, options.delete(:object)
         ).to_multiple_select_tag("#{object}[#{method}]", container, options)
       end
       
@@ -128,7 +125,7 @@ module FightTheMelons #:nodoc:
       # element that wraps the checkbox hierarchy.
       def tree_multiple_select(object, method, nodes, value_method, text_method, options = {})
         InstanceTag.new(
-          object, method, self, nil, options.delete(:object)
+          object, method, self, options.delete(:object)
         ).to_tree_multiple_select_tag(
           "#{object}[#{method}]", nodes, value_method, text_method, options
         )
@@ -252,7 +249,7 @@ module FightTheMelons #:nodoc:
       # string of checkbox tags. Given a container where the elements respond to
       # first and last (such a two-element array), the "last" serve as checkbox
       # values and the "first" as label text. Hashes are turned into this form
-      # automatically, so the keys beceome "first" and the values become
+      # automatically, so the keys beceome "firsts" and the values become
       # "lasts". If <tt>selected_items</tt> is not empty, the matching
       # elements will get the selected attribute in its checkbox.
       #
@@ -268,8 +265,8 @@ module FightTheMelons #:nodoc:
       # position is used (<tt>:left</tt> or <tt>:right</tt>), otherwise the
       # default <tt>:right</tt> position is used.
       #
-      # The <tt>:inner_class</tt> option specifies the base class of the div that
-      # surrounds the checkbox and the label.
+      # The <tt>:inner_class</tt> option specifies the base class of the HTML
+      # element that surrounds the checkbox and the label.
       #
       # The <tt>:disabled</tt> option specifies if the checkbox will be rendered
       # disabled or not. Disabled can be <tt>true</tt>, <tt>false</tt> or an
@@ -355,15 +352,13 @@ module FightTheMelons #:nodoc:
           is_disabled = is_disabled.include?(item.last) if is_disabled.respond_to?(:include?)
           item_id = idfy("#{name}#{item.last}")
           cbt = check_box_tag("#{name}[]", html_escape(item.last.to_s), is_selected, :id => item_id, :disabled => is_disabled)
-          #lbt = av_content_tag('label', html_escape(item.first.to_s), :for => item_id)
-          lbt = html_escape(item.first.to_s)
+          lbt = av_content_tag('label', html_escape(item.first.to_s), :for => item_id)
         else
           is_selected = selected_items.include?(item)
           is_disabled = is_disabled.include?(item) if is_disabled.respond_to?(:include?)
           item_id = idfy("#{name}#{item.to_s}")
           cbt = check_box_tag("#{name}[]", html_escape(item.to_s), is_selected, :id => item_id, :disabled => is_disabled)
-          #lbt = av_content_tag('label', html_escape(item.to_s), :for => item_id)
-          lbt = html_escape(item.to_s)
+          lbt = av_content_tag('label', html_escape(item.to_s), :for => item_id)
         end
         
         item_class = is_alternate ? "#{inner_class} #{alternate_class}".strip : inner_class
@@ -372,7 +367,7 @@ module FightTheMelons #:nodoc:
         
         av_content_tag(
           FormMultipleSelectHelperConfiguration.list_tags[1],
-          position == :left ? "<label>#{lbt}#{cbt}</label>" + extra : "<label>#{cbt}#{lbt}</label>" + extra,
+          position == :left ? lbt + cbt + extra : cbt + lbt + extra,
           :class => item_class
         )
       end

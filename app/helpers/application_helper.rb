@@ -136,7 +136,7 @@ module ApplicationHelper
   # 3. Render the partial with the given options hash. Just like calling the partial directly.
   def block_to_partial(partial_name, options = {}, &block)
     options.merge!(:body => capture(&block))
-    concat(render(:partial => partial_name, :locals => options), block.binding)
+    concat(render(:partial => partial_name, :locals => options))
   end
 
   def browser_is_ie?
@@ -258,31 +258,14 @@ module ApplicationHelper
   # :options[:more_url] = the url for more link
   # :options[:length] = the max lenght to display
   # :options[:class] = any html options can be added and will be applied to the tag
-  # also you can handle the link manually passing a block
-  # text_with_more :p, my_text do
-  #   link_to "more", more_path
-  # end
 
-  def text_with_more(text, tag='p', options={}, &block)
+  def text_with_more(text, tag='p', options={})
     length = options.delete(:length) || 50
     omission = options.delete(:omission) || "... "
-    if block_given?
-      out = truncate(text, :length => length, :omission => omission + capture_haml(&block))
-      capture_haml do
-        #
-        # TODO: update  this with rails 2.3 to:
-        # haml_tag tag, options do
-        #
-        haml_tag tag do
-          haml_concat out
-        end
-      end
-    else
-      link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
-      out = truncate(text, :length => length, :omission => omission + link)
-      capture_haml do
-        haml_tag(tag, out,  options)
-      end
+    link = link_to(' '+I18n.t(:see_more_link)+ARROW, options.delete(:more_url))
+    out = truncate(text, :length => length, :omission => omission + link)
+    capture_haml do
+      haml_tag(tag, out,  options)
     end
   end
 

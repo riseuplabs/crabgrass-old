@@ -6,7 +6,7 @@ require File.dirname(__FILE__) + '/wiki/saving_test.rb'
 require File.dirname(__FILE__) + '/wiki/versioning_test.rb'
 require File.dirname(__FILE__) + '/wiki/preview_test.rb'
 
-class WikiTest < Test::Unit::TestCase
+class WikiTest < ActiveSupport::TestCase
   fixtures :users, :wikis
 
   def setup

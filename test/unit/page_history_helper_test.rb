@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PageHistoryHelperTest < Test::Unit::TestCase
+class PageHistoryHelperTest < ActiveSupport::TestCase
   include PageHistoryHelper
 
   def setup

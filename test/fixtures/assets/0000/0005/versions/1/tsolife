@@ -1,0 +1,8 @@
+* skill-model
+** permissions
+*** 1 mayor skill_group can edit skills
+*** several skill groups can edit skills (mayor skill group grant rights)
+*** skill creator can edit skills
+*** everyone can edit skills
+
+* full-text search on profile

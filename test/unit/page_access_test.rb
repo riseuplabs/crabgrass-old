@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class PageAccessTest < Test::Unit::TestCase
+class PageAccessTest < ActiveSupport::TestCase
 
   fixtures :pages, :users, :groups, :memberships
 

@@ -81,6 +81,9 @@ class Conf
   # used for error reporting
   cattr_accessor :configuration_filename
 
+  # used to run the tests even though the translations are messed up
+  cattr_accessor :raise_i18n_exceptions
+
   # cattr_accessor doesn't work with ?
   def self.chat?; self.chat; end
   def self.limited?; self.limited; end
@@ -193,7 +196,9 @@ class Conf
   # a mod will be enabled if explicitly configured to be so, or if
   # ENV['MOD'] is set.
   def self.mod_enabled?(mod_name)
-    self.enabled_mods.include?(mod_name) or ENV['MOD'] == mod_name
+    self.enabled_mods.include?(mod_name) or
+    ENV['MOD'] == mod_name or
+    ENV['MOD'] == 'ALL'
   end
 
   # tools are like mods, except that the default is to enable all tools

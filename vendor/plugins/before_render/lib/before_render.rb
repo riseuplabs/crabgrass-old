@@ -19,8 +19,23 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+##
+#
+# BeforeRender provides a callback chain that runs in the time between when the
+# controller method completes and the render method is invoked.  It can be used
+# to prepare variables for common view options (headers/footers/sidebars) in
+# a DRY manner.
+#
 module BeforeRender
 
+  ##
+  # Adding filters to this will run them after the controller action completes
+  # and before the view logic is invoked.
+  #
+  # This is the same sort of call chain as after filter, but after_filter runs
+  # after the view is complete as well, whereas this runs before the rendering
+  # but after the controller logic.
+  #
   def append_before_render_filter *filters, &block
     filter_chain.append_filter_to_chain(filters, :before_render, &block)
   end
@@ -37,7 +52,7 @@ module BeforeRender
   end
 
   def before_render_filters
-    filter_chain.select(&:before_render?).map(&:mehtod)
+    filter_chain.select(&:before_render?).map(&:method)
   end
 
 end

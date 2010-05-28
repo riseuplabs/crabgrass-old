@@ -6,7 +6,7 @@ class Site < ActiveRecord::Base
   end
 end
 
-class SiteTest < Test::Unit::TestCase
+class SiteTest < ActiveSupport::TestCase
   fixtures :sites, :users, :groups, :memberships
 
   def test_defaults_to_conf

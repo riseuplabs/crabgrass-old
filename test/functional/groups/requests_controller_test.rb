@@ -53,18 +53,20 @@ class Groups::RequestsControllerTest < ActionController::TestCase
   def test_join_not_logged_in
     get :create_join, :id => groups(:rainbow).to_param
     assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    assert_redirected_to :controller => '/account', :action => :login, :redirect => '/groups/requests/create_join/rainbow'
   end
 
   def test_join_logged_in
     login_as :red
 
     assert_difference 'Request.count', 0, "no new membership requests should be accepted" do
-      get :create_join, :id => groups(:private_group).to_param
-      assert_permission_denied
+      assert_permission_denied do
+        get :create_join, :id => groups(:private_group).to_param
+      end
 
-      post :create_join, :id => groups(:private_group).to_param, :send => "Send Request"
-      assert_permission_denied
+      assert_permission_denied do
+        post :create_join, :id => groups(:private_group).to_param, :send => "Send Request"
+      end
     end
 
     groups(:public_group).profile.update_attribute(:may_request_membership, true)

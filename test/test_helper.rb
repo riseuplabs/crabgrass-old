@@ -1,4 +1,8 @@
+
 require 'rubygems'
+
+gem 'mocha'
+require 'mocha'
 
 begin
   require 'leftright'
@@ -29,8 +33,10 @@ require 'shoulda/rails'
 # require all helpers
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
 
+include ActionController::Assertions::ResponseAssertions
+ActionController::TestCase.send(:include, FunctionalTestHelper) unless ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
   setup { Sham.reset }
 
   # Transactional fixtures accelerate your tests by wrapping each test method
@@ -58,7 +64,6 @@ class Test::Unit::TestCase
   # Add more helper methods to be used by all tests here...
 
   include AuthenticatedTestHelper
-  include FunctionalTestHelper
   include AssetTestHelper
   include SphinxTestHelper
   include SiteTestHelper

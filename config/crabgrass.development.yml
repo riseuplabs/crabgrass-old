@@ -27,7 +27,7 @@ enabled_mods:
 email:
   delivery_method: :sendmail
 
-translation_group: rainbow 
+translation_group: rainbow
 
 text_editor: greencloth_only
 

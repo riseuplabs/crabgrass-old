@@ -127,7 +127,7 @@ class RootController < ApplicationController
   def login_page
     @stylesheet = 'account'
     @active_tab = :home
-    render :template => 'account/index'
+    render :template => 'account/login'
   end
 
   def fetch_network

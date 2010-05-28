@@ -77,6 +77,10 @@ class Object
     false
   end
 
+end
+
+require 'active_support' # make sure Object#try has been defined already, so we can override it.
+module SilentNilObjectExtension
   #
   # Object#try() has been added to rails 2.3. It allows you to call a method on
   # an object in safe way that will not bomb out if the object is nil or the
@@ -118,7 +122,7 @@ class Object
   #
   # I heart syntax sugar.
   #
-  def try(method=nil, *args)
+  def try_with_crabgrass(method=nil, *args)
     if method.nil?
       self.nil? ? SilentNil.instance : self
     elsif respond_to? method
@@ -129,12 +133,15 @@ class Object
     end
   end
 
-  # TODO: remove in rails 2.3
-  # from file activesupport/lib/active_support/core_ext/blank.rb, line 17
-  def present?
-    !blank?
+  def self.included(base)
+    base.instance_eval do
+      alias_method_chain :try, :crabgrass
+    end
   end
 end
+
+Object.send(:include, SilentNilObjectExtension)
+NilClass.send(:include, SilentNilObjectExtension)
 
 class Array
   # creates an array suitable for options_for_select
@@ -172,41 +179,7 @@ class Array
   def combine(delimiter = ' ')
     compact.join(delimiter)
   end
-
-  # copied from rails 2.3
-  # returns the object if it is an array or responsd to :to_ary
-  # returns a blank array if the object is nil
-  # finally, returns a new array containing the object
-  def wrap(object)
-    case object
-    when nil
-      []
-    when self
-      object
-    else
-      if object.respond_to?(:to_ary)
-        object.to_ary
-      else
-        [object]
-      end
-    end
-  end
-
-
-=begin
-  # returns a copy of the hash with symbols
-  def symbolize
-    self.map {|i|
-      if(!i.nil? && P(i.respond_to?(m=:to_sym) || i.respond_to?(m=:symbolize)))
-        m == :to_sym ? i.to_sym : i.symbolize
-      else
-        i
-      end
-    }
-  end
-=end
 end
-
 
 class Symbol
   # should do the same as sym.to_s.any?. symbols are never empty, hence #=> true

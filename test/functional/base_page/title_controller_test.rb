@@ -4,7 +4,7 @@ require 'base_page/title_controller'
 # Re-raise errors caught by the controller.
 class BasePage::TitleController; def rescue_action(e) raise e end; end
 
-class BasePage::TitleControllerTest < Test::Unit::TestCase
+class BasePage::TitleControllerTest < ActionController::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles,

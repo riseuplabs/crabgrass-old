@@ -4,7 +4,7 @@ require 'me/tasks_controller'
 # Re-raise errors caught by the controller.
 class Me::TasksController; def rescue_action(e) raise e end; end
 
-class MeTasksControllerTest < Test::Unit::TestCase
+class MeTasksControllerTest < ActionController::TestCase
   fixtures :users, :groups, :sites,
            :memberships, :user_participations, :group_participations,
            :pages, :tasks, :task_participations, :task_lists
@@ -17,8 +17,9 @@ class MeTasksControllerTest < Test::Unit::TestCase
 
   def test_login_required
     [:pending, :completed].each do |action|
-      get action
-      assert_redirected_to :controller => 'account', :action => 'login'
+      assert_login_required do 
+         get action
+      end
     end
   end
 

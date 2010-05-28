@@ -47,8 +47,9 @@ ActiveRecord::Base.class_eval do
 
   # make sanitize_sql public so we can use it ourselves
   def self.quote_sql(condition)
-    sanitize_sql(condition)
+    sanitize_sql_array(condition)
   end
+  
   def quote_sql(condition)
     self.class.quote_sql(condition)
   end
@@ -165,3 +166,10 @@ module ActiveRecord
   end
 end
 
+module ActiveRecord::AttributeMethods::ClassMethods
+  def create_time_zone_conversion_attribute?(name, column)
+    # FIXME: this is a hack!
+    skip_time_zone_conversion_for_attributes ||= []
+    time_zone_aware_attributes && !skip_time_zone_conversion_for_attributes.include?(name.to_sym) && [:datetime, :timestamp].include?(column.type)
+  end
+end

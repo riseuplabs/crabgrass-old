@@ -8,24 +8,12 @@
 
 ActionController::Routing::Routes.draw do |map|
 
-  # total hackety magic:
-#  map.filter 'crabgrass_routing_filter'
-
-  ##
-  ## PLUGINS
-  ##
-
-  # optionally load these plugin routes, if they happen to be loaded
-  map.from_plugin :super_admin rescue NameError
-  map.from_plugin :translator   rescue NameError
-  map.from_plugin :moderation  rescue NameError
-
   map.namespace :admin do |admin|
     admin.resources :announcements
     admin.resources :email_blasts
     admin.resources :users, :only => [:new, :create]
     admin.resources :groups, :only => [:new, :create]
-    admin.resources :custom_appearances, :only => [:edit, :update]
+    admin.resources :custom_appearances, :only => [:new, :edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
   end

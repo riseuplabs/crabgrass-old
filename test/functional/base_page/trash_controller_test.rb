@@ -4,7 +4,7 @@ require 'base_page/trash_controller'
 # Re-raise errors caught by the controller.
 class BasePage::TrashController; def rescue_action(e) raise e end; end
 
-class BasePage::TrashControllerTest < Test::Unit::TestCase
+class BasePage::TrashControllerTest < ActionController::TestCase
   fixtures :users, :groups,
            :memberships, :user_participations, :group_participations,
            :pages, :profiles

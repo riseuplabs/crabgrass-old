@@ -46,29 +46,6 @@ class String
     end
   end
 
-  #
-  # replaces the symbols in a string
-  # eg
-  #  'I love {color} {thing}'.replace_symbols(:color => 'green', :thing => 'trees')
-  # produces:
-  #  'I love green trees'
-  #
-  def percent_with_hash(hash)
-    if hash.is_a? Hash
-      str = self.dup
-      hash.each do |key, value|
-        str.gsub! /:#{key}/, value.to_s
-        str.gsub! /\{#{key}\}/, value.to_s
-      end
-      str
-    else
-      percent_without_hash(hash)
-    end
-  end
-  alias :percent_without_hash :%
-  alias :% :percent_with_hash
-
-  # :call-seq:
   #   str.index_split(pattern) => anArray
   #
   # Split the string for each match of the regular expression _pattern_.
@@ -76,6 +53,8 @@ class String
   # #index_split slices the string on the starting index of each _pattern_ match.
   #
   # Returns +str+ if the pattern does not match
+  # NOTE: There were discussions to make something similar to this part of ruby core
+  # check back when Ruby 2.0 is around
   def index_split(pattern)
     indexes = [0]
     last_index = 0

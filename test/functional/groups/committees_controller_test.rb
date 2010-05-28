@@ -12,8 +12,9 @@ class Groups::CommitteesControllerTest < ActionController::TestCase
     parent = groups(:animals)
 
     login_as :gerrard
-    get :new, :id => parent.to_param
-    assert_permission_denied
+    assert_permission_denied do
+      get :new, :id => parent.to_param
+    end
   end
 
   def test_create_committee

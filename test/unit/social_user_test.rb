@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SocialUserTest < Test::Unit::TestCase
+class SocialUserTest < ActiveSupport::TestCase
 
   fixtures :users, :groups, :pages
 
   def setup
-    Time.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
 
   def test_peers

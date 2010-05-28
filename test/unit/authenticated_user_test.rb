@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AuthenticatedUserTest < Test::Unit::TestCase
+class AuthenticatedUserTest < ActiveSupport::TestCase
 
   fixtures :users
 
@@ -17,7 +17,7 @@ class AuthenticatedUserTest < Test::Unit::TestCase
   def test_should_create_user
     assert_difference 'User.count' do
       user = create_user
-      assert !user.new_record?, "#{user.errors.full_messages.to_sentence}"
+      assert !user.new_record?, "#{user.errors.full_messages.join(', ')}"
     end
   end
 

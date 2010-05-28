@@ -45,6 +45,9 @@ module UserExtension::Users
       ## USER'S STATUS / PUBLIC WALL
       has_one :wall_discussion, :as => :commentable, :dependent => :destroy, :class_name => "Discussion"
 
+      before_destroy :save_relationships
+      attr_reader :peers_before_destroy, :contacts_before_destroy
+
       ## RELATIONSHIPS
 
       has_many :relationships, :dependent => :destroy do
@@ -257,4 +260,8 @@ module UserExtension::Users
 
   MOST_ACTIVE_SELECT = '((UNIX_TIMESTAMP(relationships.visited_at) - ?) / ?) AS last_visit_weight, (relationships.total_visits / ?) as total_visits_weight'
 
+  def save_relationships
+    @peers_before_destroy = peers.dup
+    @contacts_before_destroy = contacts.dup
+  end
 end

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class NetworkTest < Test::Unit::TestCase
+class NetworkTest < ActiveSupport::TestCase
   fixtures :federatings, :groups, :users, :memberships
 
   def test_creation

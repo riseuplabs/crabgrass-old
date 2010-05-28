@@ -1,54 +1,4 @@
 ###
-### VIEW INHERITANCE
-###
-
-# View inheritance is the ability of a subclassed controller to fall back on
-# the views of its parent controller. This code is a adapted from these patches:
-# http://dev.rubyonrails.org/ticket/7076
-
-ActionController::Base.class_eval do
-  def default_template_name(action_name = self.action_name, klass = self.class)
-    if action_name && klass == self.class
-      action_name = action_name.to_s
-      if action_name.include?('/') && template_path_includes_controller?(action_name)
-        action_name = strip_out_controller(action_name)
-      end
-    end
-    if !klass.superclass.method_defined?(:controller_path)
-      return "#{self.controller_path}/#{action_name}"
-    end
-    template_name = "#{klass.controller_path}/#{action_name}"
-    if template_exists?(template_name)
-      return template_name
-    else
-      return default_template_name(action_name, klass.superclass)
-    end
-  end
-end
-
-ActionView::PartialTemplate.class_eval do
-  private
-  def partial_pieces(view, partial_path)
-    if partial_path.include?('/')
-      return File.dirname(partial_path), File.basename(partial_path)
-    else
-      return partial_controller_find(view, partial_path)
-    end
-  end
-
-  def partial_controller_find(view, partial_path, klass = view.controller.class)
-    if view.finder.file_exists?("#{klass.controller_path}/_#{partial_path}")
-      return klass.controller_path, partial_path
-    elsif !klass.superclass.method_defined?(:controller_path)
-      # End of the inheritance line
-      return view.controller.class.controller_path, partial_path
-    else
-      return partial_controller_find(view, partial_path, klass.superclass)
-    end
-  end
-end
-
-###
 ### MULTIPLE SUBMIT BUTTONS
 ###
 
@@ -115,7 +65,11 @@ ActionController::Base.class_eval do
   # and apply them considering permissions for the current controller and views.
   def self.permissions(*class_names)
     for class_name in class_names
-      permission_class = "#{class_name}_permission".camelize.constantize
+      begin
+        permission_class = "#{class_name}_permission".camelize.constantize
+      rescue NameError # permissions 'groups' => Groups::BasePermission
+        permission_class = "#{class_name}/base_permission".camelize.constantize
+      end
       include(permission_class)
       add_template_helper(permission_class)
 
@@ -135,35 +89,3 @@ end
   #  @@permissioner
   #end
 
-###
-### HACK TO BE REMOVED WHEN UPGRADING TO RAILS 2.3
-###
-
-class ActionView::Base
-
-  def button_to_remote(name, options = {}, html_options = {})
-    button_to_function(name, remote_function(options), html_options)
-  end
-
-end
-
-###
-### handle truncate compatibility betweeen rails 2.1 and 2.3
-###
-class ActionView::Base
-#
-# This make truncate compatible with rails 2.1 and rails 2.3
-#
-  def truncate_with_compatible_code(text, options={})
-    length = options[:length] || 30
-    omission = options[:omission] || "..."
-    if Rails::version == "2.1.0"
-      truncate_without_compatible_code(text, length, omission)
-    else
-      truncate_wihtout_compatible_code(text, options)
-    end
-  end
-
-  alias_method_chain :truncate, :compatible_code
-
-end

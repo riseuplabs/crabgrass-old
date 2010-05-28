@@ -24,8 +24,9 @@ class ChatControllerTest < ActionController::TestCase
 
   def test_channel_when_not_in_group
     login_as :quentin
-    get :channel, :id => groups(:rainbow).name
-    assert_permission_denied
+    assert_permission_denied do
+      get :channel, :id => groups(:rainbow).name
+    end
   end
 
   def test_channel_when_in_group
@@ -42,8 +43,9 @@ class ChatControllerTest < ActionController::TestCase
 
   def test_channel_archive_when_not_in_group
     login_as :quentin
-    get :archive, :id => groups(:rainbow).name
-    assert_permission_denied
+    assert_permission_denied do
+      get :archive, :id => groups(:rainbow).name
+    end
   end
 
   def test_channel_archive_when_in_group

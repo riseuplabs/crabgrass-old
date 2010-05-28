@@ -1,9 +1,98 @@
-require File.dirname(__FILE__) + '/test_helper'
+require 'rubygems'
+require 'active_support'
+require 'action_controller'
+require 'action_view'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'multiple_select')
+require 'test/unit'
+require 'action_controller/assertions'
 
 class MultipleSelectTest < Test::Unit::TestCase #:nodoc:
   include FightTheMelons::Helpers::FormMultipleSelectHelper
   
-  fixtures :nodes, :fathers, :sons
+  class Father
+    def son_ids=(v)
+      @son_ids = v
+    end
+    
+    def son_ids
+      @son_ids
+    end
+  end
+  
+  class Son
+    def initialize(id)
+      @son_id = id
+    end
+    
+    def id
+      @son_id
+    end
+    
+    def name
+      "Son #{@son_id}"
+    end
+    
+    def self.find(arg)
+      (1..7).map {|i| Son.new(i) }
+    end
+  end
+  
+  class Node
+    def initialize(id, with_or_without = :without_children)
+      @node_id = id
+      @with_or_without = with_or_without
+    end
+    
+    def name
+      "Node #{@node_id}"
+    end
+    
+    def id
+      @node_id
+    end
+    
+    def node_ids=(v)
+      @node_ids = v
+    end
+    
+    def node_ids
+      @node_ids || []
+    end
+    
+    def alt_children
+      children
+    end
+    
+    def children
+      case @with_or_without
+      when :with_children
+        [
+          Node.new(@node_id*10+1),
+          Node.new(@node_id*10+2)
+        ]
+      when :with_more_children
+        [
+          Node.new(@node_id*10+1),
+          Node.new(@node_id*10+2, :with_children),
+          Node.new(@node_id*10+3)
+        ]
+      else
+        []
+      end
+    end
+    
+    def self.find_all_by_parent_id(id)
+      if id == 1
+        [
+          Node.new(2),
+          Node.new(3),
+          Node.new(4)
+        ]
+      else
+        []
+      end
+    end
+  end
   
   # Have to fake the default static variables because they jump from one test to
   # another. Yes, this is bad bad bad coding.
@@ -216,9 +305,9 @@ END
   
   def test_cfcfms
     assert_dom_equal <<END.strip, checkboxes_from_collection_for_multiple_select('name', Node.find_all_by_parent_id(1), :id, :name)
-<li><input id="name2" name="name[]" type="checkbox" value="2" /><label for="name2">Node 1</label></li>
-<li><input id="name3" name="name[]" type="checkbox" value="3" /><label for="name3">Node 2</label></li>
-<li><input id="name4" name="name[]" type="checkbox" value="4" /><label for="name4">Node 3</label></li>
+<li><input id="name2" name="name[]" type="checkbox" value="2" /><label for="name2">Node 2</label></li>
+<li><input id="name3" name="name[]" type="checkbox" value="3" /><label for="name3">Node 3</label></li>
+<li><input id="name4" name="name[]" type="checkbox" value="4" /><label for="name4">Node 4</label></li>
 END
 
     assert_dom_equal "",
@@ -227,41 +316,43 @@ END
   
   def test_cfcms_with_selected
     assert_dom_equal <<END.strip, checkboxes_from_collection_for_multiple_select('name', Node.find_all_by_parent_id(1), :id, :name, [2, 4])
-<li><input checked="checked" id="name2" name="name[]" type="checkbox" value="2" /><label for="name2">Node 1</label></li>
-<li><input id="name3" name="name[]" type="checkbox" value="3" /><label for="name3">Node 2</label></li>
-<li><input checked="checked" id="name4" name="name[]" type="checkbox" value="4" /><label for="name4">Node 3</label></li>
+<li><input checked="checked" id="name2" name="name[]" type="checkbox" value="2" /><label for="name2">Node 2</label></li>
+<li><input id="name3" name="name[]" type="checkbox" value="3" /><label for="name3">Node 3</label></li>
+<li><input checked="checked" id="name4" name="name[]" type="checkbox" value="4" /><label for="name4">Node 4</label></li>
 END
   end
   
   def test_ms
     @f = Father.new
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test', ['test'])
-<ul><li><input id="f_method_for_test_test" name="f[method_for_test][]" type="checkbox" value="test" /><label for="f_method_for_test_test">test</label></li></ul>
-<input name="f[method_for_test][]" type="hidden" value="" />
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', ['test'])
+<ul><li><input id="f_son_ids_test" name="f[son_ids][]" type="checkbox" value="test" /><label for="f_son_ids_test">test</label></li></ul>
+<input name="f[son_ids][]" type="hidden" value="" />
 END
   end
 
   def test_ms_with_outer_class
     @f = Father.new
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test', ['test'], :outer_class => 'test_class')
-<ul class="test_class"><li><input id="f_method_for_test_test" name="f[method_for_test][]" type="checkbox" value="test" /><label for="f_method_for_test_test">test</label></li></ul>
-<input name="f[method_for_test][]" type="hidden" value="" />
+    @f.son_ids = []
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', ['test'], :outer_class => 'test_class')
+<ul class="test_class"><li><input id="f_son_ids_test" name="f[son_ids][]" type="checkbox" value="test" /><label for="f_son_ids_test">test</label></li></ul>
+<input name="f[son_ids][]" type="hidden" value="" />
 END
   end
 
   def test_ms_selected
     @f = Father.new
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test_selected', ['test'])
-<ul><li><input checked="checked" id="f_method_for_test_selected_test" name="f[method_for_test_selected][]" type="checkbox" value="test" /><label for="f_method_for_test_selected_test">test</label></li></ul>
-<input name="f[method_for_test_selected][]" type="hidden" value="" />
+    @f.son_ids = ['test']
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', ['test'])
+<ul><li><input checked="checked" id="f_son_ids_test" name="f[son_ids][]" type="checkbox" value="test" /><label for="f_son_ids_test">test</label></li></ul>
+<input name="f[son_ids][]" type="hidden" value="" />
 END
   end
   
   def test_ms_empty
     @f = Father.new
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test', [])
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', [])
 <ul></ul>
-<input name="f[method_for_test][]" type="hidden" value="" />
+<input name="f[son_ids][]" type="hidden" value="" />
 END
   end
   
@@ -294,50 +385,48 @@ END
   end
   
   def test_ms_selected_items
-    @n = Node.new
-    assert_dom_equal <<END.strip, multiple_select('n', 'selected_some', [1, 2], :selected_items => [2] )
-<ul><li><input id="n_selected_some_1" name="n[selected_some][]" type="checkbox" value="1" /><label for="n_selected_some_1">1</label></li>
-<li><input id="n_selected_some_2" name="n[selected_some][]" type="checkbox" value="2" checked="checked" /><label for="n_selected_some_2">2</label></li></ul>
-<input name="n[selected_some][]" type="hidden" value="" />
+    @n = Node.new(1)
+    @n.node_ids = [2]
+    assert_dom_equal <<END.strip, multiple_select('n', 'node_ids', [1, 2], :selected_items => [2] )
+<ul><li><input id="n_node_ids_1" name="n[node_ids][]" type="checkbox" value="1" /><label for="n_node_ids_1">1</label></li>
+<li><input id="n_node_ids_2" name="n[node_ids][]" type="checkbox" value="2" checked="checked" /><label for="n_node_ids_2">2</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
   def test_ms_selected_items_nil
-    @n = Node.new
-    assert_dom_equal <<END.strip, multiple_select('n', 'selected_some', [1, 2], :selected_items => nil )    
-<ul><li><input id="n_selected_some_1" name="n[selected_some][]" type="checkbox" value="1" /><label for="n_selected_some_1">1</label></li>
-<li><input id="n_selected_some_2" name="n[selected_some][]" type="checkbox" value="2" /><label for="n_selected_some_2">2</label></li></ul>
-<input name="n[selected_some][]" type="hidden" value="" />
+    @n = Node.new(1)
+    assert_dom_equal <<END.strip, multiple_select('n', 'node_ids', [1, 2], :selected_items => nil )    
+<ul><li><input id="n_node_ids_1" name="n[node_ids][]" type="checkbox" value="1" /><label for="n_node_ids_1">1</label></li>
+<li><input id="n_node_ids_2" name="n[node_ids][]" type="checkbox" value="2" /><label for="n_node_ids_2">2</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
   def test_ms_outer_class_variable
     @f = Father.new
     FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.outer_class = 'classtest'
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test', ['test'])
-<ul class="classtest"><li><input id="f_method_for_test_test" name="f[method_for_test][]" type="checkbox" value="test" /><label for="f_method_for_test_test">test</label></li></ul>
-<input name="f[method_for_test][]" type="hidden" value="" />
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', ['test'])
+<ul class="classtest"><li><input id="f_son_ids_test" name="f[son_ids][]" type="checkbox" value="test" /><label for="f_son_ids_test">test</label></li></ul>
+<input name="f[son_ids][]" type="hidden" value="" />
 END
 
-    assert_dom_equal <<END.strip, multiple_select('f', 'method_for_test', ['test'], :outer_class => 'testclass')
-<ul class="testclass"><li><input id="f_method_for_test_test" name="f[method_for_test][]" type="checkbox" value="test" /><label for="f_method_for_test_test">test</label></li></ul>
-<input name="f[method_for_test][]" type="hidden" value="" />
+    assert_dom_equal <<END.strip, multiple_select('f', 'son_ids', ['test'], :outer_class => 'testclass')
+<ul class="testclass"><li><input id="f_son_ids_test" name="f[son_ids][]" type="checkbox" value="test" /><label for="f_son_ids_test">test</label></li></ul>
+<input name="f[son_ids][]" type="hidden" value="" />
 END
   end
     
   def test_ms_nil_value
-    @n = Node.new
-    assert_dom_equal <<END.strip, multiple_select('n', 'selected_nil', {'item1' => 'value1', 'item2' => 'value2'} )
-<ul><li><input id="n_selected_nil_value1" name="n[selected_nil][]" type="checkbox" value="value1" /><label for="n_selected_nil_value1">item1</label></li>
-<li><input id="n_selected_nil_value2" name="n[selected_nil][]" type="checkbox" value="value2" /><label for="n_selected_nil_value2">item2</label></li></ul>
-<input name="n[selected_nil][]" type="hidden" value="" />
+    @n = Node.new(1)
+    assert_dom_equal <<END.strip, multiple_select('n', 'node_ids', {'item1' => 'value1', 'item2' => 'value2'} )
+<ul><li><input id="n_node_ids_value1" name="n[node_ids][]" type="checkbox" value="value1" /><label for="n_node_ids_value1">item1</label></li>
+<li><input id="n_node_ids_value2" name="n[node_ids][]" type="checkbox" value="value2" /><label for="n_node_ids_value2">item2</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
-  def test_cms
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
+  def test_cms    
     @f = Father.new
     @f.son_ids = []
     
@@ -354,9 +443,6 @@ END
   end
   
   def test_cms_with_outer_class
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
     @f = Father.new
     @f.son_ids = []
     
@@ -373,9 +459,6 @@ END
   end
   
   def test_cms_with_value
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
     @f = Father.new
     @f.son_ids = [4, 5, 6]
     
@@ -391,10 +474,7 @@ END
 END
   end
   
-  def test_cms_without_items
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
+  def test_cms_without_items    
     @f = Father.new
     @f.son_ids = []
     
@@ -451,9 +531,6 @@ END
   end
   
   def test_cms_selected_items
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
     @f = Father.new
     @f.son_ids = []
     
@@ -470,9 +547,6 @@ END
   end
   
   def test_cms_selected_items_nil
-    Father.class_eval 'has_many :sons'
-    Son.class_eval 'belongs_to :father'
-    
     @f = Father.new
     @f.son_ids = []
     
@@ -488,199 +562,232 @@ END
 END
   end
   
-  def test_tms_selected_none
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_none', nodes(:n32).children, :id, :name)
-<ul><li><input id="n_selected_none_11" name="n[selected_none][]" type="checkbox" value="11" /><label for="n_selected_none_11">Node 3.2.1</label></li>
-<li><input id="n_selected_none_12" name="n[selected_none][]" type="checkbox" value="12" /><label for="n_selected_none_12">Node 3.2.2</label></li></ul>
-<input name="n[selected_none][]" type="hidden" value="" />
+  def test_tms_node_ids
+    @n = Node.new(1)
+    nds = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name)
+<ul><li><input id="n_node_ids_11" name="n[node_ids][]" type="checkbox" value="11" /><label for="n_node_ids_11">Node 11</label></li>
+<li><input id="n_node_ids_12" name="n[node_ids][]" type="checkbox" value="12" /><label for="n_node_ids_12">Node 12</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
 
   def test_tms_with_outer_class
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_none', nodes(:n32).children, :id, :name, :outer_class => 'test_class')
-<ul class="test_class"><li><input id="n_selected_none_11" name="n[selected_none][]" type="checkbox" value="11" /><label for="n_selected_none_11">Node 3.2.1</label></li>
-<li><input id="n_selected_none_12" name="n[selected_none][]" type="checkbox" value="12" /><label for="n_selected_none_12">Node 3.2.2</label></li></ul>
-<input name="n[selected_none][]" type="hidden" value="" />
+    @n = Node.new(1)
+    nds = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name, :outer_class => 'test_class')
+<ul class="test_class"><li><input id="n_node_ids_11" name="n[node_ids][]" type="checkbox" value="11" /><label for="n_node_ids_11">Node 11</label></li>
+<li><input id="n_node_ids_12" name="n[node_ids][]" type="checkbox" value="12" /><label for="n_node_ids_12">Node 12</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
-  def test_tms_selected_some
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_some', nodes(:n32).children, :id, :name)
-<ul><li><input id="n_selected_some_11" name="n[selected_some][]" type="checkbox" value="11" /><label for="n_selected_some_11">Node 3.2.1</label></li>
-<li><input checked="checked" id="n_selected_some_12" name="n[selected_some][]" type="checkbox" value="12" /><label for="n_selected_some_12">Node 3.2.2</label></li></ul>
-<input name="n[selected_some][]" type="hidden" value="" />
+  def test_tms_node_ids_with_selected
+    @n = Node.new(1)
+    @n.node_ids = [12]
+    nds = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name)
+<ul><li><input id="n_node_ids_11" name="n[node_ids][]" type="checkbox" value="11" /><label for="n_node_ids_11">Node 11</label></li>
+<li><input checked="checked" id="n_node_ids_12" name="n[node_ids][]" type="checkbox" value="12" /><label for="n_node_ids_12">Node 12</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
   def test_tms_without_items
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_some', nodes(:n33).children, :id, :name)
+    @n = Node.new(1, :without_children)
+    @n.node_ids = [12]
+    nds = Node.new(1, :without_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name)
 <ul></ul>
-<input name="n[selected_some][]" type="hidden" value="" />
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
   def test_tmst
-    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', nodes(:n32).children, :id, :name)
-<ul><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 3.2.1</label></li>
-<li><input id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 3.2.2</label></li></ul>
+    n = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', n.children, :id, :name)
+<ul><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 11</label></li>
+<li><input id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 12</label></li></ul>
 <input name="n[]" type="hidden" value="" />
 END
   end
 
   def test_tmst_with_outer_class
-    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', nodes(:n32).children, :id, :name, :outer_class => 'test_class')
-<ul class="test_class"><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 3.2.1</label></li>
-<li><input id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 3.2.2</label></li></ul>
+    n = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', n.children, :id, :name, :outer_class => 'test_class')
+<ul class="test_class"><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 11</label></li>
+<li><input id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 12</label></li></ul>
 <input name="n[]" type="hidden" value="" />
 END
   end
 
   def test_tmst_with_selected_items
-    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', nodes(:n32).children, :id, :name, :selected_items => [12])
-<ul><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 3.2.1</label></li>
-<li><input checked="checked" id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 3.2.2</label></li></ul>
+    n = Node.new(1, :with_children)
+    n.node_ids = [12]
+    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', n.children, :id, :name, :selected_items => [12])
+<ul><li><input id="n11" name="n[]" type="checkbox" value="11" /><label for="n11">Node 11</label></li>
+<li><input checked="checked" id="n12" name="n[]" type="checkbox" value="12" /><label for="n12">Node 12</label></li></ul>
 <input name="n[]" type="hidden" value="" />
 END
   end
 
   def test_tmst_without_items
-    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', nodes(:n33).children, :id, :name)
+    n = Node.new(1, :without_children)
+    assert_dom_equal <<END.strip, tree_multiple_select_tag('n', n.children, :id, :name)
 <ul></ul>
 <input name="n[]" type="hidden" value="" />
 END
   end
   
   def test_tms_selected_items
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_none', nodes(:n32).children, :id, :name, :selected_items => [11])
-<ul><li><input id="n_selected_none_11" name="n[selected_none][]" type="checkbox" value="11" checked="checked" /><label for="n_selected_none_11">Node 3.2.1</label></li>
-<li><input id="n_selected_none_12" name="n[selected_none][]" type="checkbox" value="12" /><label for="n_selected_none_12">Node 3.2.2</label></li></ul>
-<input name="n[selected_none][]" type="hidden" value="" />
+    @n = Node.new(1)
+    nds = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name, :selected_items => [11])
+<ul><li><input id="n_node_ids_11" name="n[node_ids][]" type="checkbox" value="11" checked="checked" /><label for="n_node_ids_11">Node 11</label></li>
+<li><input id="n_node_ids_12" name="n[node_ids][]" type="checkbox" value="12" /><label for="n_node_ids_12">Node 12</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
   
   def test_tms_selected_items_nil
-    @n = Node.new
-    assert_dom_equal <<END.strip, tree_multiple_select('n', 'selected_none', nodes(:n32).children, :id, :name, :selected_items => nil)
-<ul><li><input id="n_selected_none_11" name="n[selected_none][]" type="checkbox" value="11" /><label for="n_selected_none_11">Node 3.2.1</label></li>
-<li><input id="n_selected_none_12" name="n[selected_none][]" type="checkbox" value="12" /><label for="n_selected_none_12">Node 3.2.2</label></li></ul>
-<input name="n[selected_none][]" type="hidden" value="" />
+    @n = Node.new(1)
+    nds = Node.new(1, :with_children)
+    assert_dom_equal <<END.strip, tree_multiple_select('n', 'node_ids', nds.children, :id, :name, :selected_items => nil)
+<ul><li><input id="n_node_ids_11" name="n[node_ids][]" type="checkbox" value="11" /><label for="n_node_ids_11">Node 11</label></li>
+<li><input id="n_node_ids_12" name="n[node_ids][]" type="checkbox" value="12" /><label for="n_node_ids_12">Node 12</label></li></ul>
+<input name="n[node_ids][]" type="hidden" value="" />
 END
   end
     
   def test_cftfms
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name)
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name)
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_depth
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :depth => 1), "Depth 1"
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :depth => 1), "Depth 1"
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :depth => 2), "Depth 2"
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :depth => 2), "Depth 2"
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :depth => 0), "Depth 0"
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :depth => 0), "Depth 0"
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_inner_class
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :inner_class => 'testclass')
-<li class="testclass"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="testclass"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="testclass"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="testclass"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="testclass"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :inner_class => 'testclass')
+<li class="testclass"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="testclass"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="testclass"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="testclass"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="testclass"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_level_class
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :level_class => 'level'), "With level class"
-<li class="level0"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="level0"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="level1"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="level1"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="level0"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :level_class => 'level'), "With level class"
+<li class="level0"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="level0"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="level1"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="level1"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="level0"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :level_class => 'level', :inner_class => 'testclass'), "With level and inner class"
-<li class="testclass level0"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="testclass level0"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="testclass level1"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="testclass level1"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="testclass level0"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :level_class => 'level', :inner_class => 'testclass'), "With level and inner class"
+<li class="testclass level0"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="testclass level0"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="testclass level1"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="testclass level1"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="testclass level0"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :level_class => 'level', :initial_level => 2), "With level class and initial level"
-<li class="level2"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="level2"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="level3"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="level3"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="level2"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :level_class => 'level', :initial_level => 2), "With level class and initial level"
+<li class="level2"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="level2"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="level3"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="level3"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="level2"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_level_class_variable
+    nds = Node.new(1, :with_more_children)
     FightTheMelons::Helpers::FormMultipleSelectHelperConfiguration.level_class = 'lvl'
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, []), "Without explicit level class"
-<li class="lvl0"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="lvl0"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="lvl1"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="lvl1"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="lvl0"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, []), "Without explicit level class"
+<li class="lvl0"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="lvl0"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="lvl1"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="lvl1"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="lvl0"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :level_class => 'level'), "With explicit level class"
-<li class="level0"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="level0"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="level1"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="level1"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="level0"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :level_class => 'level'), "With explicit level class"
+<li class="level0"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="level0"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="level1"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="level1"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="level0"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_child_method
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :child_method => :alt_children)
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :child_method => :alt_children)
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
   
   def test_cftfms_alternate
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :alternate => true), "With alternate = true"
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="alt"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="alt"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    nds = Node.new(1, :with_more_children)
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :alternate => true), "With alternate = true"
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="alt"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="alt"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :alternate => true, :initial_alternate => false), "With alternate = true and initial alternate = false"
-<li><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li class="alt"><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li class="alt"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :alternate => true, :initial_alternate => false), "With alternate = true and initial alternate = false"
+<li><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li class="alt"><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li class="alt"><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
 
-    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nodes(:n3).children, :id, :name, [], :alternate => true, :initial_alternate => true), "With alternate = true and initial alternate = true"
-<li class="alt"><input id="name8" name="name[]" type="checkbox" value="8" /><label for="name8">Node 3.1</label></li>
-<li><input id="name9" name="name[]" type="checkbox" value="9" /><label for="name9">Node 3.2</label>\n<ul><li class="alt"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 3.2.1</label></li>
-<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 3.2.2</label></li></ul></li>
-<li class="alt"><input id="name10" name="name[]" type="checkbox" value="10" /><label for="name10">Node 3.3</label></li>
+    assert_dom_equal <<END.strip, checkboxes_from_tree_for_multiple_select('name', nds.children, :id, :name, [], :alternate => true, :initial_alternate => true), "With alternate = true and initial alternate = true"
+<li class="alt"><input id="name11" name="name[]" type="checkbox" value="11" /><label for="name11">Node 11</label></li>
+<li><input id="name12" name="name[]" type="checkbox" value="12" /><label for="name12">Node 12</label>
+<ul><li class="alt"><input id="name121" name="name[]" type="checkbox" value="121" /><label for="name121">Node 121</label></li>
+<li><input id="name122" name="name[]" type="checkbox" value="122" /><label for="name122">Node 122</label></li></ul></li>
+<li class="alt"><input id="name13" name="name[]" type="checkbox" value="13" /><label for="name13">Node 13</label></li>
 END
   end
 end

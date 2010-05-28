@@ -4,7 +4,7 @@ require 'me/infoviz_controller'
 # Re-raise errors caught by the controller.
 class Me::InfovizController; def rescue_action(e) raise e end; end
 
-class InfovizControllerTest < Test::Unit::TestCase
+class InfovizControllerTest < ActionController::TestCase
   fixtures :users, :user_participations, :groups, :group_participations, :pages
 
   def setup

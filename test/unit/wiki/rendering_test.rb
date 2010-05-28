@@ -4,30 +4,30 @@ module Wiki::RenderingTest
   def self.included(base)
     base.instance_eval do
       context "A new Wiki" do
-         setup {@wiki = Wiki.new :body => "a"}
+        setup {@wiki = Wiki.new :body => "a"}
 
-         should "have the correct body_html" do
-           assert_equal "<p>a</p>",  @wiki.body_html
-         end
+        should "have the correct body_html" do
+          assert_equal "<p>a</p>",  @wiki.body_html
+        end
 
-         should "not get saved when reading body_html" do
-           @wiki.body_html
-           assert @wiki.new_record?
-         end
-       end
+        should "not get saved when reading body_html" do
+          @wiki.body_html
+          assert @wiki.new_record?
+        end
+      end
 
-       context "A saved Wiki" do
-         setup do
-           @wiki = Wiki.create! :body => "a"
-         end
+      context "A saved Wiki" do
+        setup do
+          @wiki = Wiki.create! :body => "a"
+        end
 
-         should "have saved the correct body_html" do
-           assert_equal "<p>a</p>", Wiki.find(@wiki.id).read_attribute(:body_html)
-         end
+        should "have saved the correct body_html" do
+          assert_equal "<p>a</p>", Wiki.find(@wiki.id).read_attribute(:body_html)
+        end
 
-         should "have saved the correct raw_structure" do
-           assert_equal  WikiTest.raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
-         end
+        should "have saved the correct raw_structure" do
+          assert_equal  WikiTest.raw_structure_for_n_byte_body(1), Wiki.find(@wiki.id).read_attribute(:raw_structure)
+        end
 
         context "after updating the body without saving" do
           setup { @wiki.body = "bb" }
@@ -37,7 +37,7 @@ module Wiki::RenderingTest
           end
 
           should "have the correct raw_structure" do
-             assert_equal  WikiTest.raw_structure_for_n_byte_body(2), @wiki.raw_structure
+            assert_equal  WikiTest.raw_structure_for_n_byte_body(2), @wiki.raw_structure
           end
 
           should "not get saved when reading body_html" do
@@ -117,3 +117,4 @@ module Wiki::RenderingTest
   end
 
 end
+

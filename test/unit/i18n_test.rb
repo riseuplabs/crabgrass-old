@@ -25,7 +25,7 @@ class I18nTest < ActiveSupport::TestCase
                            :custom => {
                                :test_title => "{{what}} olleH motsuC"}})
 
-    @site = Site.new(:name => "thediggers")
+    @site = Site.create(:name => "thediggers")
   end
 
   def teardown
@@ -38,18 +38,17 @@ class I18nTest < ActiveSupport::TestCase
 
 
   def test_site_specific_translation_scope_is_added
-    Site.stubs(:current).returns(@site)
-    assert_equal "We come to dig and sow.", I18n.translate(:test_title, :what => "We"), "Site specific translation should come up when Site.current is set"
-    assert_equal "We come to dig and sow.", I18n.t(:test_title, :what => "We"), "Site specific translation should come up when Site.current is set"
+    with_site("thediggers") do
+      assert_equal "We come to dig and sow.", I18n.translate(:test_title, :what => "We"), "Site specific translation should come up when Site.current is set"
+      assert_equal "We come to dig and sow.", I18n.t(:test_title, :what => "We"), "Site specific translation should come up when Site.current is set"
 
-    I18n.locale = :bw
-    assert_equal "wos dna gid ot emoc We", I18n.translate(:test_title, :what => "We"), "Site specific translation should come up for a different language"
-    assert_equal "wos dna gid ot emoc We", I18n.t(:test_title, :what => "We"), "Site specific translation should come up for a different language"
+      I18n.locale = :bw
+      assert_equal "wos dna gid ot emoc We", I18n.translate(:test_title, :what => "We"), "Site specific translation should come up for a different language"
+      assert_equal "wos dna gid ot emoc We", I18n.t(:test_title, :what => "We"), "Site specific translation should come up for a different language"
+    end
   end
 
   def test_without_site_language_translations_are_used
-    Site.stubs(:current).returns(Site.default)
-
     assert_equal "Hello World", I18n.t(:test_title, :what => "World"), "Default language translations should be available"
     assert_equal "Hello World", I18n.translate(:test_title, :what => "World"), "Default language translations should be available"
 
@@ -59,19 +58,18 @@ class I18nTest < ActiveSupport::TestCase
   end
 
   def test_fallback_to_default_language
-    Site.stubs(:current).returns(@site)
-    assert_equal "default name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to language translations"
-    assert_equal "default name", I18n.t(:test_name, :what => "name", :locale => :en), "Site specific translations should fall-back to language translations"
+    with_site("thediggers") do
+      assert_equal "default name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to language translations"
+      assert_equal "default name", I18n.t(:test_name, :what => "name", :locale => :en), "Site specific translations should fall-back to language translations"
 
-    assert_equal "tluafed name", I18n.t(:test_name, :what => "name", :locale => :bw), "Site specific translations should fall-back to the right language translations"
-    assert_equal "hi diggers", I18n.t(:say_hi, :locale => :bw), "translations should fallback to english locale for site-specific translations"
+      assert_equal "tluafed name", I18n.t(:test_name, :what => "name", :locale => :bw), "Site specific translations should fall-back to the right language translations"
+      assert_equal "hi diggers", I18n.t(:say_hi, :locale => :bw), "translations should fallback to english locale for site-specific translations"
 
-    I18n.locale = :bw
-    assert_equal "tluafed name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to the right language translations"
-    assert_equal "hi diggers", I18n.t(:say_hi), "translations should fallback to english locale for site-specific translations"
+      I18n.locale = :bw
+      assert_equal "tluafed name", I18n.t(:test_name, :what => "name"), "Site specific translations should fall-back to the right language translations"
+      assert_equal "hi diggers", I18n.t(:say_hi), "translations should fallback to english locale for site-specific translations"
+    end
 
-
-    Site.stubs(:current).returns(Site.default)
     assert_equal "OH HAI", I18n.t(:say_hi), "translations should fallback to english locale for non-site-specific translations"
   end
 

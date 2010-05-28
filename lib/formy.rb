@@ -150,7 +150,7 @@ module Formy
 
   class Element
     include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::JavascriptHelper
+    include ActionView::Helpers::JavaScriptHelper
 
     def initialize(form,options={})
       @base = form
@@ -246,6 +246,12 @@ module Formy
         end
         end_eval
       end
+    end
+
+
+    # work around rails 2.3.5 to_json circular reference problem
+    def to_json
+      self.inspect
     end
 
     def method_missing(method_name, *args, &block)

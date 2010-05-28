@@ -11,8 +11,9 @@ change your code you should stick to use the last stable version 20060918
 http://svn.ruido-blanco.net/multiple_select/tags/multiple_select-20060918).
 The easiest way to port your code to the new version is change all call to
 +multiple_select+, +collection_multiple_select+ and +tree_multiple_select+ to
-its +*_tag+ versions, but maybe you want to work a bit more and use the new
-"object-method" parameters versions, they simplify the controllers a lot.
+its <tt>*_tag</tt> versions, but maybe you want to work a bit more and use
+the new "object-method" parameters versions, they simplify the controllers a
+lot.
 
 Selecting multiple elements in a list is sometimes tricky. You may click
 inadvertably on one item of the list and lost all your previous selection. You
@@ -154,6 +155,10 @@ are editing.
 
 == Version history
 
+- 20081111
+  - Rails 2.2.0 RC1 compatible
+- 20080608
+  - Rails 2.1.0 compatible
 - 20070409
   - The old hidden_field toggled by include_hidden_field is now always
     included (seems like is really needed in Rails 1.2).

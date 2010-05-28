@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class Admin::PagesControllerTest < ActionController::TestCase
+class Admin::PagesControllerTestForModeration < ActionController::TestCase
 
   fixtures :pages
 

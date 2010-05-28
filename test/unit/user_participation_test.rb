@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UserParticipationTest < Test::Unit::TestCase
+class UserParticipationTest < ActiveSupport::TestCase
 
   fixtures :groups, :users, :pages, :user_participations
 
   def setup
-    Time.zone = TimeZone["Pacific Time (US & Canada)"]
+    Time.zone = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
   end
 
   def test_associations
@@ -62,7 +62,7 @@ class UserParticipationTest < Test::Unit::TestCase
   end
 
   def test_user_destroyed
-    user = User.make 
+    user = User.make
     page = Page.make :title => 'boing'
     page.add(user)
     page.save!

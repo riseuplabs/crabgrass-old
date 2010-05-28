@@ -4,8 +4,8 @@ require 'wiki_controller'
 # Re-raise errors caught by the controller.
 class WikiController; def rescue_action(e) raise e end; end
 
-class WikiControllerTest < Test::Unit::TestCase
-  fixtures :groups, :pages, :users, :memberships, :sites, :profiles, :wikis
+class WikiControllerTest < ActionController::TestCase
+  fixtures :groups, :pages, :users, :memberships, :sites
 
   def setup
     @controller = WikiController.new
@@ -24,17 +24,17 @@ class WikiControllerTest < Test::Unit::TestCase
 
     login_as :blue
 
-    get :edit, :wiki_id => 300, :group_id => group.id   
+    get :edit, :wiki_id => 300, :group_id => group.id
     assert assigns(:wiki)
 
-    # this actually bafflingly assigns both @public and @private 
-    get :edit, :profile_id => 3, :group_id => group.id 
+    # this actually bafflingly assigns both @public and @private
+    get :edit, :profile_id => 3, :group_id => group.id
     assert assigns(:wiki) ## i don't really understand how @wiki is getting assigned here?!?!?!
     assert assigns(:profile)
     assert assigns(:private)
     assert assigns(:public)
     assert_equal assigns(:wiki), assigns(:public)
- 
+
     ## now that the above has loaded the wiki_id's for the profiles are different
     ## so we can test retrieving by profile id and wiki id to make sure they match
     public_wiki = assigns(:public)

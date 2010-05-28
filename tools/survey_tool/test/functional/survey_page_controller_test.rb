@@ -33,7 +33,8 @@ class SurveyPageControllerTest < ActionController::TestCase
       "edit_may_create"=>"0"
     })
 
-    assert_redirected_to "_page_action" => "edit"
+    assert_redirected_to @controller.page_url(pages("survey_blank"), :action => 'edit'), "save action should redirect to edit"
+    #assert_redirected_to "_page_action" => "edit"
 
     get :edit, :page_id => pages("survey_blank").id
     assert_active_tab "Edit Survey"

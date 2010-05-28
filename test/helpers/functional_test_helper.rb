@@ -3,6 +3,13 @@ module FunctionalTestHelper
   # currently, for normal requests, we just redirect to the login page
   # when permission is denied. but this should be improved.
   def assert_permission_denied(failure_message='missing "permission denied" message')
+    if block_given?
+      begin
+        yield
+      rescue PermissionDenied
+        return true
+      end
+    end
     if flash[:type]
       assert_equal 'error', flash[:type], failure_message
       assert_equal 'Sorry. You do not have the ability to perform that action', flash[:title], failure_message
@@ -14,10 +21,16 @@ module FunctionalTestHelper
   end
 
   def assert_login_required(message='missing "login required" message')
-    assert_equal 'info', flash[:type], message
-    assert_equal 'Login Required', flash[:title], message
-    assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    if block_given?
+      assert_raise PermissionDenied, message do
+        yield
+      end
+    else
+      assert_equal 'info', flash[:type], message
+      assert_equal 'Login Required', flash[:title], message
+      assert_response :redirect
+      assert_redirected_to url_for(:controller => '/account', :action => :login, :only_path => true)
+    end
   end
 
   def assert_error_message(regexp=nil)
@@ -68,4 +81,47 @@ module FunctionalTestHelper
     url = ActionController::UrlRewriter.new(@request, nil)
     url.rewrite(options)
   end
+
+  # passing in a partial hash is deprecated in Rails 2.3. We need it though (at least for assert_login_required)
+  def assert_redirected_to_with_partial_hash(options={ }, message=nil)
+    clean_backtrace do
+      assert_response(:redirect, message)
+      return true if options == @response.redirected_to
+
+
+
+      if @response.redirected_to.is_a?(Hash) && options.all? { |(key, value)|
+            response_value = @response.redirected_to[key].to_s.dup
+            test_value = value.to_s
+            # remove leading / when redirected_to :controller
+            response_value.gsub!(/^\//, "") if key.to_sym == :controller
+            test_value == response_value
+          }
+        return true
+      elsif options.is_a?(String) || @response.redirected_to.is_a?(String)
+        url = @response.redirected_to.kind_of?(Hash) ? url_for(@response.redirected_to.merge(:only_path => true)) : @response.redirected_to
+        options_url = options.kind_of?(Hash) ? url_for(options.merge(:only_path => (url =~ /^http:/ ? false : true))) : options
+        assert_equal options_url, url[0..(options_url.size - 1)], (message || "Excpected response to be redirected to a url beginning with <#{options_url}>, but was a redirect to <#{url}>")
+        return true
+      end
+    end
+    assert_redirected_to_without_partial_hash(options, message)
+  end
+
+  def self.included(base)
+    base.class_eval do
+      class << self
+        def determine_default_controller_class_with_removing_for(name)
+          name.sub! /TestFor.*$/, 'Test'
+          determine_default_controller_class_without_removing_for name
+        end
+        alias_method_chain :determine_default_controller_class, :removing_for
+      end
+    end
+
+    base.instance_eval do
+      alias_method_chain :assert_redirected_to, :partial_hash if respond_to?(:assert_redirected_to)
+    end
+  end
+
 end

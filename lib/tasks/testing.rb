@@ -6,6 +6,8 @@ rescue LoadError
   # ^^ I don't want to get this error every time.
 end
 
+require 'crabgrass/conf'
+
 def plugins_with_allowed_fixtures
   # skip plugins that load fixtures we don't have a schema for
   Engines.plugins.by_precedence.reject do |p|
@@ -20,6 +22,49 @@ def plugins_with_allowed_fixtures
   end
 end
 
+def enabled_mods_paths
+  case ENV['MOD']
+  when 'ALL' then '*'
+  when /\w*/ then ENV['MOD']
+  else
+    Conf.load 'crabgrass.test.yml'
+    modlist = Conf.enabled_mods.join ','
+    "{#{modlist}}"
+  end
+end
+
+### MOD MIGRATIONS
+
+# apply the latest migrations from the plugin to the DB
+def engines_plugins_migrate(plugin_name)
+  plugin = Engines.plugins[plugin_name]
+  current_version = Engines::Plugin::Migrator.current_version(plugin)
+  latest_version = plugin.latest_migration
+  migration_file_exists = !Dir.glob(RAILS_ROOT + "/db/migrate/*#{plugin.name}_to_version_#{latest_version}.rb").empty?
+
+  if !migration_file_exists && latest_version.to_i > current_version.to_i
+    plugin.migrate(latest_version)
+  end
+end
+
+namespace :test do
+  task :apply_all_mod_migrations => [:environment] do
+    Dir.foreach(RAILS_ROOT + "/mods") do |mod_name|
+      next if mod_name.first == '.'
+      next unless Conf.mod_enabled?(mod_name)
+      engines_plugins_migrate(mod_name)
+    end
+  end
+
+  task :set_environment do
+    unless ENV['RAILS_ENV']
+      ENV['RAILS_ENV'] = 'test'
+      RAILS_ENV = 'test'
+    end
+  end
+end
+
+### MODS
 namespace :test do
   namespace :mods do
 
@@ -27,26 +72,26 @@ namespace :test do
     task :all => [:units, :functionals, :integration]
 
     desc "Run all plugin unit tests"
-    Rake::TestTask.new(:units => :setup_plugin_fixtures) do |t|
-      t.pattern = "mods/#{ENV['MOD'] || "**"}/test/unit/**/*_test.rb"
+    Rake::TestTask.new(:units => ["test:set_environment", "test:apply_all_mod_migrations", :setup_plugin_fixtures]) do |t|
+      t.pattern = "mods/#{enabled_mods_paths}/test/unit/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Run all plugin functional tests"
-    Rake::TestTask.new(:functionals => :setup_plugin_fixtures) do |t|
-      t.pattern = "mods/#{ENV['MOD'] || "**"}/test/functional/**/*_test.rb"
+    Rake::TestTask.new(:functionals => ["test:set_environment", "test:apply_all_mod_migrations", :setup_plugin_fixtures]) do |t|
+      t.pattern = "mods/#{enabled_mods_paths}/test/functional/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Integration test engines"
-    Rake::TestTask.new(:integration => :setup_plugin_fixtures) do |t|
-      t.pattern = "mods/#{ENV['MOD'] || "**"}/test/integration/**/*_test.rb"
+    Rake::TestTask.new(:integration => ["test:set_environment", "test:apply_all_mod_migrations", :setup_plugin_fixtures]) do |t|
+      t.pattern = "mods/#{enabled_mods_paths}/test/integration/**/*_test.rb"
       t.verbose = true
     end
 
     desc "Mirrors plugin fixtures into a single location to help plugin tests"
     task :setup_plugin_fixtures => :environment do
-      if ENV['MOD']
+      if ENV['MOD'] and ENV['MOD'] != 'ALL'
         plugin = Engines.plugins.detect{|plugin|plugin.name == ENV['MOD']}
         unless plugin
           puts 'ERROR: mod plugin named "%s" not found.' % ENV['MOD']
@@ -58,9 +103,12 @@ namespace :test do
       end
     end
 
+
   end
 end
 
+
+### TOOLS
 namespace :test do
   namespace :tools do
 
@@ -93,6 +141,9 @@ namespace :test do
   end
 end
 
+
+
+### EVERYTHING
 namespace :test do
 
   desc "Test everything: crabgrass, tools and mods."

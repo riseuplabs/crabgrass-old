@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
-class Admin::DiscussionPostsControllerTest < ActionController::TestCase
+class Admin::DiscussionPostsControllerTestForModeration < ActionController::TestCase
   fixtures :pages, :user_participations, :group_participations, :discussions
 
   def setup

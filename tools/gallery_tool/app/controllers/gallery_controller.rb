@@ -6,7 +6,7 @@ class GalleryController < BasePageController
 
   include GalleryHelper
   include BasePageHelper
-  include ActionView::Helpers::JavascriptHelper
+  include ActionView::Helpers::JavaScriptHelper
 
 
   verify :method => :post, :only => [:add, :remove]

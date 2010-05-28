@@ -65,15 +65,14 @@ class PagesControllerTest < ActionController::TestCase
   def test_index_without_logging_in
     get :index
     assert_response :redirect
-    assert_redirected_to :controller => :account, :action => :login
+    assert_redirected_to :controller => :account, :action => :login, :redirect => "/me/pages"
   end
-
 
 end
 
 # TODO: transfer the old inbox controller tests that have not been transfered yet.
 #
-#class InboxControllerTest < Test::Unit::TestCase
+#class InboxControllerTest < ActionController::TestCase
 #  fixtures :users, :user_participations, :groups, :group_participations, :pages, :sites
 #
 #  def test_rss

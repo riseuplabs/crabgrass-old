@@ -1,0 +1,28 @@
+- class_display_name = I18n.t(:page) if class_display_name.nil?
+- type = 'send' if type.nil?
+
+%table.notify
+  %tr
+    %td{ :colspan => "2" }
+      %h2.first
+        = I18n.t(:recipients)
+  %tr
+    %td{ :colspan => "2" }
+      = render :partial => 'add_recipient_widget', :locals => {:empty_box => true, :action => 'notify'}
+  - if @page.contributors_count #> 0
+  %tr.gap
+    %td.check
+      = check_box 'recipients', ':contributors'
+    %td
+      = label 'recipients', ':contributors', I18n.t(:notify_contribution)
+  %tr.gap
+    %td.check
+      = check_box 'recipients', ':participants'
+    %td
+      = label 'recipients', ':participants', I18n.t(:notify_current_access)
+  %tr.gap
+    %td{ :colspan => "2" }
+      %h2
+        = I18n.t(:notification_message)
+
+  = render :partial => 'notification_message_form', :locals => {:forced_send => true}

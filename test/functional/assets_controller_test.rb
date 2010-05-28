@@ -4,7 +4,7 @@ require 'assets_controller'
 # Re-raise errors caught by the controller.
 class AssetsController; def rescue_action(e) raise e end; end
 
-class AssetsControllerTest < Test::Unit::TestCase
+class AssetsControllerTest < ActionController::TestCase
   fixtures :users, :pages, :user_participations, :assets, :sites
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
@@ -80,10 +80,11 @@ class AssetsControllerTest < Test::Unit::TestCase
 
     login_as :blue
 
-    assert_no_difference 'Asset.count' do
-      post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
+    assert_permission_denied do
+      assert_no_difference 'Asset.count' do
+        post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => @page.id}
+      end
     end
-    assert_permission_denied
 
     @page.add(@user, :access => :edit)
     @page.save

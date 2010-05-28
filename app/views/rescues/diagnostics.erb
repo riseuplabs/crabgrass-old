@@ -6,6 +6,6 @@
 </h1>
 <pre><%=h exception_detailed_message(@exception) %></pre>
 
-<%= render_file(rescues_path("_trace"), false) %>
+<%= render :file => rescues_path("_trace") %>
 
-<%= render_file(rescues_path("_request_and_response"), false) %>
+<%= render :file => rescues_path("_request_and_response") %>

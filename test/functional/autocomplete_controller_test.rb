@@ -4,7 +4,7 @@ require 'autocomplete_controller'
 # Re-raise errors caught by the controller.
 class AutocompleteController; def rescue_action(e) raise e end; end
 
-class AutocompleteControllerTest < Test::Unit::TestCase
+class AutocompleteControllerTest < ActionController::TestCase
   fixtures :users, :groups,
           :memberships, :user_participations, :group_participations,
           :pages, :profiles, :relationships

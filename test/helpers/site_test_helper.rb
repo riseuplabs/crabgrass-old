@@ -56,14 +56,18 @@ module SiteTestHelper
 
   def enable_site_testing(site_name=nil)
     if site_name
-      site=Site.find_by_name(site_name) || sites(site_name)
+      site=Site.find_by_name(site_name.to_s) || sites(site_name.to_s)
+      raise ActiveRecord::RecordNotFound.new("Failed to find site named #{site_name}. Available sites are: #{Site.all.map(&:name).join(', ')}") unless site
       Conf.enable_site_testing(site)
       Site.current = site
     else
       Conf.enable_site_testing()
       Site.current = Site.new
     end
+    #raise "Something went terribly wrong: Site.current is not set, even though we just set it!" unless Site.current
     @controller.enable_current_site if @controller
+    # Site.current seems to get confused in tests (but only in rails 2.3)
+    return site
   end
 
   # run the block with a site
@@ -74,17 +78,17 @@ module SiteTestHelper
     old_site = Site.current
 
     # set the site to the new one
-    enable_site_testing(site_name)
+    site = enable_site_testing(site_name)
     # override site options
-    unmodified_site_attributes = Site.current.attributes
+    unmodified_site_attributes = site.attributes
     if site_attributes.respond_to? :each
-      site_attributes.each {|attr, value| Site.current.send("#{attr}=", value)}
+      site_attributes.each {|attr, value| site.send("#{attr}=", value)}
       updated_site_attributes = true
-      Site.current.save!
+      site.save!
     end
 
     # Run the block
-    yield Site.find_by_name(site_name) || sites(site_name)
+    yield site
   ensure
     # restore
     if updated_site_attributes
