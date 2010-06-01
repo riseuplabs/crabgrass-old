@@ -13,7 +13,7 @@ module Undress
     #       "<this was a paragraph>#{content_of(element)}</this was a paragraph>"
     #     end
     #
-    # will replace your <tt><p></tt> tags for <tt><this was a paragraph></tt> 
+    # will replace your <tt><p></tt> tags for <tt><this was a paragraph></tt>
     # tags, without altering the contents.
     #
     # The element yielded to the block is an Hpricot element for the given tag.
@@ -105,7 +105,7 @@ module Undress
       Array(nodes).map do |node|
         if node.text?
           node.to_html
-        elsif node.elem? 
+        elsif node.elem?
           send node.name.to_sym, node if ! defined?(ALLOWED_TAGS) || ALLOWED_TAGS.empty? || ALLOWED_TAGS.include?(node.name)
         else
           ""
@@ -142,14 +142,14 @@ module Undress
     def complete_word?(node)
       p, n = node.previous_node, node.next_node
 
-      return true if !p && !n 
+      return true if !p && !n
 
       if p.respond_to?(:content)
         return false if p.content       !~ /\s$/
       elsif p.respond_to?(:inner_html)
         return false if p.inner_html    !~ /\s$/
       end
-      
+
       if n.respond_to?(:content)
         return false if n.content       !~ /^\s/
       elsif n.respond_to?(:inner_html)
@@ -175,7 +175,7 @@ module Undress
     # will represent your attributes consistently across all nodes (for
     # example, +Textile+ always shows class an id inside parenthesis.)
     def attributes(node)
-      node.attributes.inject({}) do |attrs,(key,value)|
+      node.attributes.to_haml.inject({}) do |attrs,(key,value)|
         attrs[key.to_sym] = value if whitelisted_attributes.include?(key.to_sym)
         attrs
       end
