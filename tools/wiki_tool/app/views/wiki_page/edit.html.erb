@@ -9,66 +9,9 @@
 %>
 
 <%= Formy.tabs(:type => :simple, :separator => separator) do |f|
-  if Conf.allow_greencloth_editor?
-    f.tab do |t|
-      t.id       "link-tab-greencloth"
-      t.selected preferred_editor_tab == :greencloth
-      t.label    wiki_editor_tab_label(:plain)
-      if Conf.text_editor_sym == :html_preferred
-        t.class  "page_url float_right"
-      else
-        t.class  "page_url"
-      end
-      t.function "selectWikiEditorTab('%s', %s)" % [
-        page_xurl(@page, :action => 'update_editors', :editor => 'greencloth'),
-        {
-          :wiki_id => @wiki.id,
-          :tab_id  => 'link-tab-greencloth',
-          :area_id => 'tab-edit-greencloth',
-          :editor  => 'greencloth',
-          :token   => form_authenticity_token
-        }.to_json
-      ]
-    end
-  end
-
-  if Conf.allow_html_editor?
-    f.tab do |t|
-      t.id       "link-tab-html"
-      t.selected preferred_editor_tab == :html
-      t.label    wiki_editor_tab_label(:html)
-      t.class    "page_url"
-      if separator == ""
-        t.style  "padding-right: 1em; margin-right: 0.75em; border-right: 2px solid #ccc;"
-      end
-      t.function "selectWikiEditorTab('%s', %s)" % [
-        page_xurl(@page, :action => 'update_editors', :editor => 'html'),
-        {
-          :wiki_id => @wiki.id,
-          :tab_id  => 'link-tab-html',
-          :area_id => 'tab-edit-html',
-          :editor  => 'html',
-          :token   => form_authenticity_token
-        }.to_json
-      ]
-    end
-  end
-
-  f.tab do |t|
-    t.id       "link-tab-preview"
-    t.label    I18n.t(:preview)
-    t.class    "page_url"
-    t.function "selectWikiEditorTab('%s', %s)" % [
-      page_xurl(@page, :action => 'update_editors', :editor => 'preview'),
-      {
-        :wiki_id => @wiki.id,
-        :tab_id  => 'link-tab-preview',
-        :area_id => 'tab-edit-preview',
-        :editor  => 'preview',
-        :token   => form_authenticity_token
-      }.to_json
-    ]
-  end
+  greencloth_tab(f) if Conf.allow_greencloth_editor?
+  html_tab(f) if Conf.allow_html_editor?
+  preview_tab(f)
 end %>
 
 

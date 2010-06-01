@@ -1,5 +1,8 @@
 module WikiPageHelper
 
+  include GreenclothHelper
+  include HtmlHelper
+
   def may_destroy_wiki_version?
     current_user.may?(:admin, @page)
   end
@@ -110,6 +113,24 @@ module WikiPageHelper
           I18n.t(:leave_editing_wiki_page_warning)
           )
 
+  end
+
+  def preview_tab(form)
+    form.tab do |t|
+      t.id       "link-tab-preview"
+      t.label    I18n.t(:preview)
+      t.class    "page_url"
+      t.function "selectWikiEditorTab('%s', %s)" % [
+        page_xurl(@page, :action => 'update_editors', :editor => 'preview'),
+        {
+          :wiki_id => @wiki.id,
+          :tab_id  => 'link-tab-preview',
+          :area_id => 'tab-edit-preview',
+          :editor  => 'preview',
+          :token   => form_authenticity_token
+        }.to_json
+      ]
+    end
   end
 
   protected
