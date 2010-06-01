@@ -133,6 +133,10 @@ module WikiPageHelper
     end
   end
 
+  def hide_unless_preferred(editor)
+    'display:none' unless preferred_editor_tab == editor
+  end
+
   protected
 
   def find_heading_node(doc, section)
