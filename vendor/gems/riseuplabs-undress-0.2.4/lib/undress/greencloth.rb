@@ -9,7 +9,7 @@ module Undress
       'li', 'p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'notextile', 'blockquote',
       'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt'
     ]
-    
+
     # table of contents
     pre_processing("ul.toc") do |toc|
       toc.swap "[[toc]]\n"
@@ -31,7 +31,7 @@ module Undress
         if    li.parent.name == "ul" then offset = "*#{offset}"
         elsif li.parent.name == "ol" then offset = "##{offset}"
         else  return offset end
-        li = li.parent.parent ? li.parent.parent : nil 
+        li = li.parent.parent ? li.parent.parent : nil
       end
       "\n#{offset} #{content_of(e)}"
     }
@@ -48,7 +48,7 @@ module Undress
     rule_for(:code) {|e|
       if e.inner_html.match(/\n/)
         if e.parent && e.parent.name != "pre"
-          "<pre><code>#{content_of(e)}</code></pre>" 
+          "<pre><code>#{content_of(e)}</code></pre>"
         else
           "<code>#{content_of(e)}</code>"
         end
@@ -57,13 +57,13 @@ module Undress
       end
     }
 
-    # passing trough objects 
+    # passing trough objects
     rule_for(:embed, :object, :param) {|e|
       e.to_html
     }
 
-    def process_headings(h) 
-      h.children.each {|e| 
+    def process_headings(h)
+      h.children.each {|e|
         next if e.class == Hpricot::Text
         e.parent.replace_child(e, "") if e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
       }
@@ -78,36 +78,50 @@ module Undress
     end
 
     def process_links_and_anchors(e)
-      return "" if e.empty?
-      inner, name, href = e.inner_html, e.get_attribute("name"), e.get_attribute("href")
-
-      # is an anchor? and cannot be child of any h1..h6
-      if name && !e.parent.name.match(/^h1|2|3|4|5|6$/)
-        inner == name || inner == name.gsub(/-/,"\s") ? "[# #{inner} #]" : "[# #{inner} -> #{name} #]"
-      # is a link?
-      elsif href && href != ""
-        case href
-          when /^\/#/
-            "[\"#{inner}\":#{href}"
-          when /^#/
-            "[#{inner} -> #{href}]"
-          when /^(https?|s?ftp):\/\//
-            href.gsub(/^(https?|s?ftp):\/\//, "") == inner ? "[#{href}]" : "[#{inner} -> #{href}]"
-          when /^[^\/]/
-            if inner != href
-              "[#{e.inner_text} -> #{href}]" 
-            else
-              "[#{e.inner_text}]" 
-            end
-          when /^\/.[^\/]*\/.[^\/]*\//
-            "[#{inner} -> #{href}]"
-          when /(?:\/page\/\+)[0-9]+$/
-            "[#{inner} -> +#{href.gsub(/\+[0-9]+$/)}]"
-          else
-            process_as_wiki_link(e)
-        end
+      if e.empty?
+        ""
+      elsif anchor_outside_headings?(e)
+        process_anchor(e)
+      elsif !e.get_attribute("href").blank?
+        process_link(e)
       else
         ""
+      end
+    end
+
+    def anchor_outside_headings?(e)
+      e.get_attribute("name") and
+      e.parent.is_a?(Hpricot::Doc) || !e.parent.name.match(/^h1|2|3|4|5|6$/)
+    end
+
+    def process_anchor(e)
+      inner, name = e.inner_html, e.get_attribute("name")
+      inner == name || inner == name.gsub(/-/,"\s") ?
+        "[# #{inner} #]" :
+        "[# #{inner} -> #{name} #]"
+    end
+
+    def process_link(e)
+      inner, href = e.inner_html, e.get_attribute("href")
+      case href
+      when /^\/#/
+        "[\"#{inner}\":#{href}"
+      when /^#/
+        "[#{inner} -> #{href}]"
+      when /^(https?|s?ftp):\/\//
+        href.gsub(/^(https?|s?ftp):\/\//, "") == inner ? "[#{href}]" : "[#{inner} -> #{href}]"
+      when /^[^\/]/
+        if inner != href
+          "[#{e.inner_text} -> #{href}]"
+        else
+          "[#{e.inner_text}]"
+        end
+      when /^\/.[^\/]*\/.[^\/]*\//
+        "[#{inner} -> #{href}]"
+      when /(?:\/page\/\+)[0-9]+$/
+        "[#{inner} -> +#{href.gsub(/\+[0-9]+$/)}]"
+      else
+        process_as_wiki_link(e)
       end
     end
 
@@ -129,7 +143,7 @@ module Undress
         return "[#{context_name} / #{wiki_page_name}]" if wiki_page_name == inner
         return "[#{inner} -> #{wiki_page_name}]" if context_name == "page"
         return "[#{inner} -> #{context_name} / #{wiki_page_name}]"
-      end 
+      end
       if inner == page_name || inner == wiki_page_name || inner == wiki_page_name.gsub(/\s/,"-")
         return "[#{wiki_page_name}]"
       end
@@ -138,5 +152,5 @@ module Undress
     end
 
   end
-  add_markup :greencloth, GreenCloth 
+  add_markup :greencloth, GreenCloth
 end
