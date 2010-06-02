@@ -66,7 +66,7 @@ table.form
     font-style: italic
     color: #777
   input[type=text], textarea
-    +sans-family
+    +general-font
     font-size: 1.2em
     width: 100%
 
@@ -211,10 +211,11 @@ ul.tabset
     float: none
 
 ul.tabset.top
-  margin: 0
+  margin: 0 0 0 -30px
+  padding-left: 18px
   clear: left
   float: left
-  width: 100%
+  width: 558px
   height: 1%
   background: url(/images/grey9.png) repeat-x bottom
   a:hover
@@ -238,9 +239,16 @@ ul.tabset.top
       background-color: white
       border: 1px solid #999
       border-bottom: 0
+      font-weight: bold
 
 .sub_tabs a
   +blue-link
+
+#main-content-right ul.tabset.top
+  margin: 0
+  width: 540px
+  padding-left: 0
+
 
 ul.tabset.simple
   margin-top: 0
@@ -268,10 +276,11 @@ ul.tabset.simple
   .status h3
     margin: 0.5em 0
   &.tabs
-    width: 100%
-    padding: 1em 0 0 0
+    margin-left: -18px
+    padding: 0 0 0 30px
     overflow: hidden
     border-bottom: 0
+    background= !page_title_tabs_bg
     & li.tab a
       +blue-link(12px)
 
@@ -388,9 +397,10 @@ td.left_column
   border-right: 0
   padding: !left_column_margin
 
+
 .tooltip
   span
-    display: none 
+    display: none
     position: absolute
     //top: #px
     //left: #px
@@ -402,6 +412,8 @@ td.left_column
     z-index: 100
   &:hover
     span
-      display: block 
+      display: block
+
+
 
 

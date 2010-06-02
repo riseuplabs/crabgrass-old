@@ -4,9 +4,19 @@ first:
   poll_id: 1
   name: possibility one
   description: desc of first possibility
-  
+
 another:
   id: 2
   poll_id: 1
   name: possibility two
   description: desc of 2nd possiblity
+
+rate_many_possible_1:
+  id: 3
+  poll_id: 2
+  name: rate this
+
+ratte_many_possible_2:
+  id: 4
+  poll_id: 2
+  name: rate this as well

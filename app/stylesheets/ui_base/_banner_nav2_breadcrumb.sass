@@ -3,7 +3,7 @@
 //
 #breadcrumb
   +clearfix
-  +bordered-top(!banner_brdr)
+  +bordered-top(!banner_brdr_btm)
   background= !banner_bg
   height: 28px
   #breadcrumb-container
@@ -23,7 +23,7 @@
 //banner
 //
 .banner
-  +bordered-top-btm(!banner_brdr)
+  +bordered-btm(!banner_brdr_btm)
   background= !banner_bg
   #banner-container
     +container
@@ -52,7 +52,7 @@
 
       img
         +bordered
-        background= !white_bg
+        background: #fff
         padding: 2px
         margin-right: 17px
         #identity-name
@@ -88,7 +88,7 @@
   border: 1px solid #448c3b
   a
     +hover-link
-    color= !white_text
+    color: #fff
     font-size: 11px
     font-weight: bold
     padding: 6px
@@ -136,7 +136,7 @@
           padding: 0 8px
       li.current
         +bordered-2sides(!second_nav_border)
-        +bordered-btm(!white_border)
+        +bordered-btm(#fff)
         background: #fff
         a
           color= !second_nav_current

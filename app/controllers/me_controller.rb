@@ -27,8 +27,8 @@ class MeController < Me::BaseController
       # that it is. regardless, we want it.)
       if params[:action] =~ /^edit|update$/
         account_context('large')
-      else 
-        add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
+#      else 
+#        add_context params[:action], url_for(:controller => '/me/', :action => params[:action])
       end
     end
   end

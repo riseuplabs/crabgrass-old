@@ -1,0 +1,11 @@
+zangakatun:
+  id: 1
+  name: Zangakatun
+  geo_country_id: 1 
+  geo_admin_code_id: 2 
+
+yenikend:
+  id: 2
+  name: Yenikend
+  geo_country_id: 1
+  geo_admin_code_id: 3

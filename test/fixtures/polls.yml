@@ -5,3 +5,4 @@ first_poll:
 
 another:
   id: 2
+  type: RatingPoll

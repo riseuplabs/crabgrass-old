@@ -212,11 +212,16 @@ function absolutePositionParams(obj) {
 // naming scheme: location.hash => '#most-viewed', tablink.id => 'most_viewed_link', tabcontent.id => 'most_viewed_panel'
 //
 
-function evalAttributeOnce(element, attribute) {
-  if (element.readAttribute(attribute)) {
-    eval(element.readAttribute(attribute));
-    element.writeAttribute(attribute, "");
+function evalOnclickOnce(element) {
+  if(element.onclick) {
+    element.onclick.call();
+    element.onclick = "";
   }
+
+  //if (element.readAttribute(attribute)) {
+  //  eval(element.readAttribute(attribute));
+  //  element[attribute] = "";
+  //}
 }
 
 function showTab(tabLink, tabContent, hash) {
@@ -228,8 +233,7 @@ function showTab(tabLink, tabContent, hash) {
     $$('.tab_content').invoke('hide');
     tabLink.addClassName('active');
     tabContent.show();
-    // evalAttributeOnce(tabContent, 'onclick');
-    eval(tabContent.onclick.call());
+    evalOnclickOnce(tabContent);
     tabLink.blur();
     if (hash) {
       window.location.hash = hash;
@@ -280,7 +284,7 @@ var DropMenu = Class.create({
   },
 
   showMenu: function(event) {
-    evalAttributeOnce(this.menu, 'onclick');
+    evalOnclickOnce(this.menu);
     if (this.timeout) window.clearTimeout(this.timeout);
     if (this.menuIsOpen()) {
       this.menu.show();
@@ -314,12 +318,64 @@ var statuspostCounter = Class.create({
   }
 });
 
+var DropSocial = Class.create({
+  initialize: function() {
+    id = "show-social"
+    if(!$(id)) return;
+    this.trigger = $(id);
+    if(!this.trigger) return;
+    this.container = $('social-activities-dropdown');
+    if (!this.container) return;
+    this.activities = $('social_activities_list');
+    if(!this.activities) return;
+    this.trigger.observe('click', this.toggleActivities.bind(this));
+    document.observe('click', this.hideActivities.bind(this));
+  },
+  IsOpen: function() {
+    return this.container.visible();
+  },
+  toggleActivities: function(event) {
+    if (this.IsOpen()) {
+      this.container.hide();
+      this.clearEvents(event);
+    } else {
+      this.container.show();
+      event.stopPropogation();
+      this.clearEvents(event);
+    }
+  },
+  hideActivities: function(event) {
+    element = Event.findElement(event);
+    elementUp = Event.findElement(event, 'div');
+    if ((element != this.trigger) && (elementUp != this.container)) {
+      if (!this.IsOpen()) return;
+      this.container.hide();
+    }
+  }
+})
+
+var LoadSocial = Class.create({
+  initialize: function() {
+    this.doRequest();
+    new PeriodicalExecuter(this.doRequest, 120);
+  },
+  doRequest: function() {
+    if ($('social-activities-dropdown').visible()) return;
+    new Ajax.Request('/me/social-activities', {
+      method: 'GET',
+      parameters: {count: 1}
+    });
+  }
+})
+
 document.observe('dom:loaded', function() {
   new DropMenu("menu_me");
   new DropMenu("menu_people");
   new DropMenu("menu_groups");
   new DropMenu("menu_networks");
   new statuspostCounter("say_text");
+  new LoadSocial();
+  new DropSocial();
 });
 
 //

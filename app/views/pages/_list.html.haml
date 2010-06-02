@@ -4,7 +4,7 @@
 %section#pages{:class=> local_assigns[:full_width] ? 'full' : ''}
   %header
     - if local_assigns[:title] && !title.blank?
-      %h3
+      %h3#underlined
         = title
         %div.right
           = render(:partial => pages_dropdown) if local_assigns[:pages_dropdown]

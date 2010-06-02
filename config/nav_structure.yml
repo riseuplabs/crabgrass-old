@@ -1,4 +1,4 @@
-Me:
+ME:
   Pages:
     My Work:
     All Pages:
@@ -16,36 +16,46 @@ Me:
     Pending:
     Approved:
     Rejected:
-  Edit:
+  Profile:
     outside_nav: true
-People:
+  Account:
+    outside_nav: true
+#  Logout:
+#    outside_nav: true
+PEOPLE:
   My Friends:
   All:
-    Stranger:
-      path: /stranger
-Groups:
+#    Stranger:
+#      path: /stranger
+GROUPS:
   My Groups:
     The Animals:
       outside_nav:true
       path: /animals
-      PAGES:
+      Home:
+        path: /animals
+        People:
+          path: /groups/people/animals
+      Pages:
         path: /groups/pages/animals
-      ADMINISTRATION:
-        path: /groups/animals/edit
-        Settings:
-          Basic Settings:
-            path: /groups/animals/edit
-          Permissions:
-            path: /groups/permissions/edit/animals
-          Public Profile:
-            path: /groups/profiles/edit/animals
-          Featured Pages:
-          Destroy Group:
-          Create Committee:
-        Members:
-        Requests:
-  All:  
-Networks:
-  Directory:
-    My:
-    All:
+      Tasks:
+        path: /groups/tasks/animals
+### this nav item is not showing up. 
+### i'm creating a separate issue for it.
+#      Administration:
+#        path: /groups/animals/edit
+#        Settings:
+#          Basic Settings:
+#            path: /groups/animals/edit
+#          Permissions:
+#            path: /groups/permissions/edit/animals
+#          Public Profile:
+#            path: /groups/profiles/edit/animals
+#          Featured Pages:
+#          Destroy Group:
+#          Create Committee:
+#        Requests:
+  All Groups:  
+NETWORKS:
+  My Networks:
+  All Networks:

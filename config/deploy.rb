@@ -198,6 +198,6 @@ after  "deploy:setup",   "crabgrass:create_shared"
 after  "deploy:symlink", "crabgrass:link_to_shared"
 after  "deploy:symlink", "crabgrass:create_version_files"
 before "deploy:restart", "debian:symlinks"
-after  "deploy:restart", "passenger:restart"
+after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
 

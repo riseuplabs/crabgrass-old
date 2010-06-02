@@ -33,6 +33,15 @@ module GroupExtension::Users
     end
   end
 
+  def users_allowed_to_vote_on_removing(user)
+    # only council members can vote on removing council members
+    if self.has_a_council? and user.may?(:admin, self)
+      return self.council.users
+    else
+      return self.users
+    end
+  end
+
   def user_ids
     @user_ids ||= memberships.collect{|m|m.user_id}
   end
@@ -90,6 +99,11 @@ module GroupExtension::Users
 
     @user_ids = nil
     self.increment!(:version)
+
+    # remove user from all the groups committees
+    self.committees.each do |committe|
+      committe.remove_user!(user) unless committe.users.find_by_id(user.id).blank?
+    end
   end
 
   def open_membership?

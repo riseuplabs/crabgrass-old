@@ -12,6 +12,8 @@ module ScopeHelpers
       '.info_box'
     when /the page sidebar/
       '#page_sidebar'
+    when /the members table/
+      'table.members'
     when /#{capture_model}(?:'s)? row/
       thing = model!($1)
       model_name = thing.class.to_s.downcase

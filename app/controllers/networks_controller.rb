@@ -39,9 +39,10 @@ class NetworksController < GroupsController
   protected
 
   def context
-    if action?(:edit)
-      group_settings_context
-    elsif action?(:create, :new)
+    ### this is unnecessary
+#    if action?(:edit)
+#      group_settings_context
+    if action?(:create, :new)
       network_context
     else
       network_context

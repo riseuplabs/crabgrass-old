@@ -10,6 +10,14 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_show
+    login_as :gerrard
+    get :show, :id => 3, :person_id => users(:blue).to_param
+    assert_response :success
+    get :show, :id => 4444
+    assert_response :not_found
+  end
+
   def test_create
     assert_no_difference 'Post.count' do
       post :create, :post => {:body => 'x'}, :person_id => 'blue'
@@ -59,6 +67,8 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
         end
       end
     end
+    delete :destroy, :person_id => 'red', :id => 4444
+    assert :not_found
   end
 
   protected

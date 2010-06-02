@@ -3,7 +3,79 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
-0.5.1.1 -- 2010 April 13th 
+0.5.2 -- 2010 May 20th
+  Feature #2104: documentation for CSS
+  Feature #2106: create working customization
+  Feature #2214: add ability to title/summary for pages and edit tabs to have background color
+  Feature #2229: Memberships: In groups with council, council-members can remove non-council members
+  Feature #2239: Pagination needs to show clearly what page you are on
+  Feature #2255: Social Activity dropdown: implement a persistent drop down for the social activity feed
+  Feature #2266: Wording: when creating a group, add wording regarding councils
+  Feature #2271: review custom appearances
+  Feature #2294: user’s page: remove bottom line of activity feed
+
+  Feature #2112: testing a mod should load its migrations
+  Feature #2115: add more tests for avatars_controller
+  Feature #2117: increase functional test coverage for groups/directory_controller
+  Feature #2121: increase functional test coverage for groups/search
+  Feature #2124: increase functional test coverage for people/directory_controller
+  Feature #2131: increase functional test coverage for posts_controller
+  Feature #2132: increase functional test coverage for me_controller
+  Feature #2133: increase functional test coverage for me/trash_controller
+  Feature #2135: increase functional test coverage for networks_controller.rb
+  Feature #2138: increase functional test coverage for people/public_messages_controller
+  Feature #2197: don’t test mods that are not enabled
+  Feature #2205: Small Layout Tweaks
+  Feature #2206: figure out why tests are run for mods that are not active at all
+  Feature #2208: cleanup redundant functions in lib/extension/core.rb
+  Feature #2210: re-review functional test coverage
+
+  Bug #1570: council and committees with duplicate names
+  Bug #1623: URL Message Text = Leave CG Site
+  Bug #1729: Group landing page people section shows coordinators twice, seems to work locally.
+  Bug #1859: Zip upload raises “Directory not empty tmp/unzip_1267742263”
+  Bug #1894: actions in messages show up (temporarily) in social activity feed as empty items
+  Bug #2008: approval vote permissions
+  Bug #2127: remove .sass extension from imported Compass files
+  Bug #2130: remove embedded css on site home
+  Bug #2136: increase functional test coverage for dispatch_controller
+  Bug #2162: masthead image should not repeat
+  Bug #2163: Account>User Preferences
+  Bug #2164: Account > Public Profile
+  Bug #2165: Account > Private Profile
+  Bug #2167: Directories spacing
+  Bug #2170: within Pages – spacing between comments and icons
+  Bug #2178: /stats formatting is broken in 0.5.1.1
+  Bug #2183: create constant/variable for checkbox text within masthead
+  Bug #2196: test for raised errors in posts controller
+  Bug #2207: fix moderation test test_update_restricted_to_moderation
+  Bug #2211: fix failing unit tests
+  Bug #2212: CA masthead image not appearing
+  Bug #2213: impossible to make custom translations for non-site instance
+  Bug #2215: fix failing sphinx/pagination test
+  Bug #2219: fix error in dispatch controller test
+  Bug #2237: only show part of group home wiki with see more link
+  Bug #2242: deleting profile picture causes headtrauma
+  Bug #2243: pagination on me/pages stops working after action bar actions have been used
+  Bug #2254: Multiple messages created if multi recipient messages were migrated
+  Bug #2257: search from person search page does not work
+  Bug #2261: style general links
+  Bug #2262: 2 home page CSS bugs – line under Pages header, move search img in Safari
+  Bug #2267: add wording to network creation process describe network vs group
+  Bug #2268: profile page: headers
+  Bug #2269: Profile pages: add say box directions + resize
+  Bug #2272: site home: pages header appears twice
+  Bug #2273: add padding around action bar
+  Bug #2285: Moderation mod enabled by default in production env
+  Bug #2287: sorting membership by letter throws an error
+  Bug #2315: site home tabs broken
+  Bug #2319: Memberships: simplified removing of non-coordinators by coordinators
+  Bug #2349: tooltips styling broken
+  Bug #2355: Group is automatically added to CNT network on creation
+  Bug #2365: Site home sub-tabs broken
+  Bug #2366: social drop in ie7 is off to the right.
+
+0.5.1.1 -- 2010 April 13th
   * Bug #2109: not all committees showing on a group page
 
 0.5.1 -- 2010 April 12th -- https://labs.riseup.net/code/versions/show/82

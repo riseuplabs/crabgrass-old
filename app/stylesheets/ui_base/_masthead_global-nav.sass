@@ -3,7 +3,6 @@
 //
 #masthead
   +clearfix
-  height: 50px
   background= !masthead_background
   #masthead-container
     +container
@@ -30,23 +29,23 @@
         position: relative
         fieldset
           +bordered(1px, #a6c0cb)
-          background= !white_bg
+          background: #fff
           display: inline
           width: 190px
-          height: 20px
+          height: 21px
           .text
             float: left
             display: inline
             font-size: 12px
             padding: 4px 0 0 2px
-            width: 158px
+            width: 164px
             border: none
           .search-submit
             +bordered-left
             +inline-middle
             position: relative
             height: 21px
-            margin: -2px -1px 0 0
+            vertical-align: top
 
         div
           display: inline
@@ -55,7 +54,7 @@
           top: 1px
           .light-small
             +small-text
-            color= !white_text
+            color= !masthead_header_text
             margin-left: -5px
 
 
@@ -65,17 +64,64 @@
 nav.page
   +clearfix
   +bordered-top(!global_nav_top_brdr)
-  height: 29px
+  +bordered-btm(!global_nav_btm_brdr)
   background= !global_nav_bg
   overflow: visible
   #global-nav-container
     +container
+    height: 29px
     overflow: visible
     #global-nav
       +columns(14)
       +full
       width: 764px
       overflow: visible
+
+#user a#social-activities-container
+  width: 50px
+  margin-left: 0
+  float: left
+  img#show-social
+    float: right
+    padding: 4px
+    
+
+  
+#social_activities_count
+  background: #ccc
+  color: #333
+  line-height: 1
+
+#social-activities-dropdown
+  background: #FFFFFF
+  border-color = #666
+  border-width: 1px
+  border-style: solid 
+  width: 220px
+  padding: 5px
+  z-index: 999
+  
+#social-activities-dropdown td
+  vertical-align: top
+  border-bottom: 1px dotted #bbbbbb
+  padding-bottom: 4px
+  padding-top: 10px
+  
+#social_activities_list
+  float: left      
+  padding: 0 5px 5px 5px
+
+//#social_activities_list td
+//  border-bottom: 1px dotted #bbbbbb
+//  padding-bottom: 4px
+//  padding-top: 10px                          
+
+#social_activities_list img
+  padding-right: 8px
+  
+#social_activities_list a.name_icon
+  margin: 0
+
 //
 // list-items from global nav
 //
@@ -95,7 +141,7 @@ nav.page
     +inline-list
     a
       +hover-link
-      color= !blue
+      color= !global_nav_text
       font-size: 12px
       margin: 0 26px 0 0
   li.current
@@ -139,7 +185,7 @@ nav.page
   position: absolute
   top: 20px
   left: 0
-  background= !white_bg
+  background= !global_nav_dropdown_bg
   padding: 0.75em 0.5em 0.5em
   border-width: 1px 2px 2px 1px
   border-color= !menu_border_color

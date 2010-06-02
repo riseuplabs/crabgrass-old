@@ -160,6 +160,10 @@ class Wiki < ActiveRecord::Base
     read_attribute(:body_html)
   end
 
+  def preview_html
+    render_preview(500)
+  end
+
   # will calculate structure if not up to date
   # calculating structure will also update body_html
   def raw_structure
@@ -261,6 +265,15 @@ class Wiki < ActiveRecord::Base
 
   protected
 
+  def render_preview(length)
+    return unless content = truncated_body(length)
+    if @render_body_html_proc
+      @render_body_html_proc.call(content)
+    else
+      GreenCloth.new(content, link_context, [:outline]).to_html
+    end
+  end
+
   # # used when wiki is rendered for deciding the prefix for some link urls
   def link_context
     if page and page.owner_name
@@ -292,6 +305,14 @@ class Wiki < ActiveRecord::Base
 
   def render_raw_structure
     GreenCloth.new(body.to_s).to_structure
+  end
+
+  def truncated_body(length)
+    return nil if body.nil?
+    return body if body.length < length
+    cut = body.to_s[0...length-3] + '...'
+    cut.gsub! /^\[\[toc\]\]$/, ''
+    cut
   end
 
   private

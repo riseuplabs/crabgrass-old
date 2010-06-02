@@ -72,7 +72,7 @@ module CustomAppearanceExtension
     end
 
     def masthead_background_parameter
-      background = self.parameters['masthead_background'] || CustomAppearance.available_parameters['masthead_background']
+      background = self.parameters['masthead_background'] || CustomAppearance.available_parameters("ui_base")['masthead_background']
       background = 'white' if !background || background.empty?
       background.gsub /^#/, ""
     end
@@ -90,7 +90,7 @@ module CustomAppearanceExtension
     end
 
     def masthead_enabled
-      display = self.parameters['masthead_display'] || CustomAppearance.available_parameters['masthead_display']
+      display = self.parameters['masthead_display'] || CustomAppearance.available_parameters("ui_base")['masthead_display']
       if display =~ /none/ or !display
         # display is set to none or is not set at all
         false
@@ -116,10 +116,10 @@ module CustomAppearanceExtension
     protected
 
     module ClassMethods
-      def available_parameters
+      def available_parameters(dir='')
         parameters = {}
         # parse the constants.sass file and return the hash
-        constants_lines = File.readlines(File.join(CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME))
+        constants_lines = File.readlines(File.join(CustomAppearance::SASS_ROOT, dir, CustomAppearance::CONSTANTS_FILENAME))
         constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
         constants_lines.each do |l|
           k, v = l.chomp.split(/\s*=\s*/)

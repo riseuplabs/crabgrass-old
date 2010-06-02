@@ -45,6 +45,12 @@ class Groups::CommitteesControllerTest < ActionController::TestCase
       group = Committee.find_by_name 'animals+marsupials'
       assert_redirected_to url_for_group(group, :action => 'edit')
     end
+
+    assert_no_difference 'Committee.count',
+      'Duplicate names should not be allowed' do
+      post :create, :group => {:name => 'marsupials'}, :id => parent.to_param
+      assert_error_message
+    end
   end
 
 end

@@ -7,12 +7,25 @@ class ConvertLanguageCodesToTwoLetters < ActiveRecord::Migration
 
     User.find(:all, :conditions => "language RLIKE '[a-z][a-z]_[A-Z][A-Z]'").each do |user|
       user.language.gsub!(/_\w\w/, '')
-      user.save!
+      begin
+        user.save!
+      rescue StandardError => err
+        if err =~ /Email is an invalid email/
+          user.update_attribute('email', '')
+          user.save!
+        else
+          puts "Could not save #{user.login}: "+err
+        end
+      end
     end
 
     Group.find(:all, :conditions => "language RLIKE '[a-z][a-z]_[A-Z][A-Z]'").each do |group|
       group.language.gsub!(/_\w\w/, '')
-      group.save!
+      begin
+        group.save!
+      rescue StandardError => err
+        puts "Could not save #{group.name}: "+err
+      end
     end
   end
 
