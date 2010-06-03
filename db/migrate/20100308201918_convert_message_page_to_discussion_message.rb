@@ -8,30 +8,37 @@ class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
     pages = MessagePage.all
 
     pages.each do |page|
-      next if page.users.count < 2
-
-      page.discussion.try.posts.each do |post|
-        text = post.body
-        sender = post.user
-        receiver = page.users.detect {|u| u != sender}
-
-
-        next if sender.blank? || receiver.blank? || text.blank?
-
-        # create the new message
-        new_post = sender.send_message_to!(receiver, text)
-
-        disable_timestamps
-        new_post.update_attributes({:updated_at => post.updated_at, :created_at => post.created_at})
-        enable_timestamps
+      if page.users.count < 2
+        page.destroy
+      elsif page.users.count > 2
+        page.type = "DiscussionPage"
+        page.save
+      else
+        turn_page_into_messages(page)
+        page.destroy
       end
-      page.destroy
-
     end
-
   ensure
     enable_timestamps
   end
+
+  def self.turn_page_into_messages(page)
+    page.discussion.try.posts.each do |post|
+      text = post.body
+      sender = post.user
+      receiver = page.users.detect {|u| u != sender}
+
+      return if sender.blank? || receiver.blank? || text.blank?
+
+      # create the new message
+      new_post = sender.send_message_to!(receiver, text)
+
+      disable_timestamps
+      new_post.update_attributes({:updated_at => post.updated_at, :created_at => post.created_at})
+      enable_timestamps
+    end
+  end
+
 
   def self.down
   end
