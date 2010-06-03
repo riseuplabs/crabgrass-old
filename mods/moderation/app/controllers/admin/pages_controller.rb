@@ -17,11 +17,12 @@ class Admin::PagesController < Admin::BaseController
     @flagged = Page.paginate_by_path(path_for_view, options)
   end
 
-  # for vetting:       params[:page][:vetted] == true
-  # for hiding:        params[:page][:flow]   == FLOW[:deleted]
-  # for making public: params[:page][:public] == true
+  # for vetting:       params[:page]['vetted'] == true
+  # for hiding:        params[:page]['flow']   == FLOW[:deleted]
+  # for making public: params[:page]['public'] == true
   def update
-    @page.update_attributes(params[:page])
+    page_attrs = params[:page].symbolize_keys.slice :vetted, :flow, :public
+    @page.update_attributes(page_attrs)
     redirect_to :action => 'index', :view => params[:view]
   end
 
