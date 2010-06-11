@@ -797,7 +797,7 @@ en:
   group_location: "The main location of this {{group}}."
   group_summary: "Brief information regarding this {{group}}."
   new_network: "New network"
-  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than create a group?"
+  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='{{new_group_url}}'>create a group</a>?"
   group_membership_count: "{{count}} Members"
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"

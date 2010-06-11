@@ -182,6 +182,7 @@ module WikiHelper
   end
 
   def wiki_edit_link(wiki_id=nil)
+    return unless may_edit_wiki?
     # note: firefox uses layerY, ie uses offsetY
     link_to_remote_with_icon(I18n.t(:edit), :icon => 'pencil',
       :url => wiki_action('edit', :wiki_id => wiki_id),
