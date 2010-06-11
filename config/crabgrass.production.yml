@@ -12,6 +12,7 @@
 ##
 ## GLOBAL
 ##
+domain: "munia.riseup.net"
 enabled_mods:
   - super_admin
   - moderation
