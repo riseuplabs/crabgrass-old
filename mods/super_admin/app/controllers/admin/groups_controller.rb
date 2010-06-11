@@ -90,8 +90,7 @@ class Admin::GroupsController < Admin::BaseController
   # DELETE /groups/1
   # DELETE /groups/1.xml
   def destroy
-    @group.destroyed_by = current_user
-    @group.destroy
+    @group.destroy_by(current_user)
 
     respond_to do |format|
       format.html { redirect_to(groups_path) }
