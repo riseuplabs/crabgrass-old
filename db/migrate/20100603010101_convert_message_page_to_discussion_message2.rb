@@ -1,4 +1,4 @@
-class ConvertMessagePageToDiscussionMessage < ActiveRecord::Migration
+class ConvertMessagePageToDiscussionMessage2 < ActiveRecord::Migration
   # MessagePage class has been deleted a while ago,
   # define it with :: to make it top namespace
   class ::MessagePage < ::Page
