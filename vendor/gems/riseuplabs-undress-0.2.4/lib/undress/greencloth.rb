@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/textile")
 
 module Undress
   class GreenCloth < Textile
+    whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan
 
     Undress::ALLOWED_TAGS = [
       'div', 'a', 'img', 'br', 'i', 'u', 'b', 'pre', 'kbd', 'code', 'cite', 'strong', 'em',
@@ -82,7 +83,7 @@ module Undress
         ""
       elsif anchor_outside_headings?(e)
         process_anchor(e)
-      elsif !e.get_attribute("href").blank?
+      elsif not (e.get_attribute("href").nil? || e.get_attribute("href") == '')
         process_link(e)
       else
         ""
@@ -95,38 +96,48 @@ module Undress
     end
 
     def process_anchor(e)
-      inner, name = e.inner_html, e.get_attribute("name")
+      inner, name = content_of(e), e.get_attribute("name")
       inner == name || inner == name.gsub(/-/,"\s") ?
         "[# #{inner} #]" :
         "[# #{inner} -> #{name} #]"
     end
 
     def process_link(e)
-      inner, href = e.inner_html, e.get_attribute("href")
+      # title = e.has_attribute?("title") ? " (#{e["title"]})" : ""
+      # return "#{content_of(e)}#{title}:#{e["href"]}"
+      inner, href = content_of(e), e.get_attribute("href")
       case href
-      when /^\/#/
-        "[\"#{inner}\":#{href}"
-      when /^#/
-        "[#{inner} -> #{href}]"
-      when /^(https?|s?ftp):\/\//
-        href.gsub(/^(https?|s?ftp):\/\//, "") == inner ? "[#{href}]" : "[#{inner} -> #{href}]"
+      when /^\/?#/
+        link_syntax(inner,href)
       when /^[^\/]/
-        if inner != href
-          "[#{e.inner_text} -> #{href}]"
-        else
-          "[#{e.inner_text}]"
-        end
+        link_syntax(inner,href)
       when /^\/.[^\/]*\/.[^\/]*\//
-        "[#{inner} -> #{href}]"
+        link_syntax(inner,href)
       when /(?:\/page\/\+)[0-9]+$/
-        "[#{inner} -> +#{href.gsub(/\+[0-9]+$/)}]"
+        link_syntax(inner, "+#{href.gsub(/\+[0-9]+$/)}]")
       else
         process_as_wiki_link(e)
       end
     end
 
+    def link_syntax(inner,href)
+      return "[#href]" if inner == href
+      return "[#{href}]" if href.gsub(/^(https?|s?ftp):\/\//, "") == inner
+      inner=quote_if_needed(inner)
+      "#{inner}:#{href}"
+    end
+
+    # TODO: actually check if we have an image not just the !
+    def quote_if_needed(inner)
+      if inner[0] == '!' and inner[-1] == '!'
+        inner
+      else
+        '"' + inner + '"'
+      end
+    end
+
     def process_as_wiki_link(e)
-      inner, name, href = e.inner_html, e.get_attribute("name"), e.get_attribute("href")
+      inner, name, href = content_of(e), e.get_attribute("name"), e.get_attribute("href")
 
       # pages or group pages
       context_name, page_name = href.split("/")[1..2]

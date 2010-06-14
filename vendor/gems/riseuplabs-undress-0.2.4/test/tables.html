@@ -1,0 +1,26 @@
+Loaded suite test_inverse_markup
+Started
+
+table.yml	E
+Finished in 0.00771 seconds.
+
+  1) Error:
+test_general_markup(TestMarkup):
+NoMethodError: undefined method `delete!' for {}:Hash
+    /usr/src/undress/lib/undress/textile.rb:98:in `attributes'
+    /usr/src/undress/lib/undress/textile.rb:127:in `table_attributes'
+    /usr/src/undress/lib/undress/textile.rb:89:in `table'
+    /usr/src/undress/lib/undress/grammar.rb:109:in `send'
+    /usr/src/undress/lib/undress/grammar.rb:109:in `process'
+    /usr/src/undress/lib/undress/grammar.rb:105:in `map'
+    /usr/src/undress/lib/undress/grammar.rb:105:in `process'
+    /usr/src/undress/lib/undress/grammar.rb:121:in `process!'
+    /usr/src/undress/lib/undress/grammar.rb:88:in `process!'
+    /usr/src/undress/lib/undress.rb:34:in `to_greencloth'
+    test_inverse_markup.rb:42:in `test_general_markup'
+    test_inverse_markup.rb:36:in `each'
+    test_inverse_markup.rb:36:in `test_general_markup'
+    test_inverse_markup.rb:34:in `each'
+    test_inverse_markup.rb:34:in `test_general_markup'
+
+1 tests, 0 assertions, 0 failures, 1 errors

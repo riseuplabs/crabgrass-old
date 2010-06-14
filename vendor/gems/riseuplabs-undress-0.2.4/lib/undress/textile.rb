@@ -29,7 +29,8 @@ module Undress
       "[#{content_of(e)}#{title}:#{e["href"]}]"
     }
     rule_for(:img) {|e|
-      alt = e.has_attribute?("alt") ? "(#{e["alt"]})" : ""
+      alt = e.has_attribute?("alt") && e["alt"]
+      alt = "(#{alt})" unless alt == ""
       "!#{e["src"]}#{alt}!"
     }
     rule_for(:strong)  {|e| complete_word?(e) ? "*#{attributes(e)}#{content_of(e)}*" : "[*#{attributes(e)}#{content_of(e)}*]"}
@@ -41,10 +42,10 @@ module Undress
     rule_for(:ins)     {|e| complete_word?(e) ? "+#{attributes(e)}#{content_of(e)}+" : "[+#{attributes(e)}#{content_of(e)}+]"}
     rule_for(:del)     {|e| complete_word?(e) ? "-#{attributes(e)}#{content_of(e)}-" : "[-#{attributes(e)}#{content_of(e)}-]"}
     rule_for(:acronym) {|e| e.has_attribute?("title") ? "#{content_of(e)}(#{e["title"]})" : content_of(e) }
-    
+
 
     # text formatting and layout
-    rule_for(:p) do |e| 
+    rule_for(:p) do |e|
       at = attributes(e) != "" ? "p#{at}#{attributes(e)}. " : ""
       e.parent && e.parent.name == "blockquote" ? "#{at}#{content_of(e)}\n\n" : "\n\n#{at}#{content_of(e)}\n\n"
     end
@@ -86,38 +87,58 @@ module Undress
     rule_for(:dd) {|e| ":= #{content_of(e)} =:\n" }
 
     # tables
-    rule_for(:table)   {|e| "\n\n#{content_of(e)}\n" }
-    rule_for(:tr)      {|e| "#{content_of(e)}|\n" }
-    rule_for(:td, :th) {|e| "|#{e.name == "th" ? "_. " : attributes(e)}#{content_of(e)}" }
+    rule_for(:table)   {|e| "\n#{table_attributes(e)}\n#{content_of(e)}\n" }
+    rule_for(:tr)      {|e| "#{row_attributes(e)}#{content_of(e)}|\n" }
+    rule_for(:td, :th) {|e| "|#{cell_attributes(e)}#{content_of(e)}" }
 
     def attributes(node) #:nodoc:
-      filtered = super(node)
+      filtered ||= super(node)
+      attribs = ""
 
-      if filtered.has_key?(:colspan)
-        return "\\#{filtered[:colspan]}. "
+      if filtered
+        if colspan = filtered.delete(:colspan)
+          attribs << "\\#{colspan}"
+        end
+
+        if rowspan = filtered.delete(:rowspan)
+          attribs << "/#{rowspan}"
+        end
+
+        if lang = filtered.delete(:lang)
+          attribs << "[#{filtered[:lang]}]"
+        end
+
+        if klass = filtered.delete(:class)
+          klass.sub!(/(odd|even) ?/, '') if node.name == 'tr'
+        end
+        id = filtered.delete(:id)
+        if (klass && klass != '') or id
+          id = id.nil? ? "" : "#" + id
+          attribs << "(#{klass}#{id})"
+        end
+
+        if style = filtered.delete(:style)
+          attribs << "{#{style}}"
+        end
       end
+      attribs
+    end
 
-      if filtered.has_key?(:rowspan)
-        return "/#{filtered[:rowspan]}. "
-      end
+    def table_attributes(node)
+      attributes(node) == "" ? "" : "table#{attributes(node)}. "
+    end
 
-      if filtered.has_key?(:lang)
-        return "[#{filtered[:lang]}]"
-      end
+    def row_attributes(node)
+      attributes(node) == "" ? "" : "#{attributes(node)}. "
+    end
 
-      if filtered.has_key?(:class) || filtered.has_key?(:id)
-        klass = filtered.fetch(:class, "")
-        id = filtered.fetch(:id, false) ? "#" + filtered[:id] : ""
-        return "(#{klass}#{id})"
-      end
-
-      if filtered.has_key?(:style)
-        return "{#{filtered[:style]}}"
-      end
-
-      ""
+    def cell_attributes(node)
+      ret = (node.name == 'th') ? "_#{attributes(node)}" : attributes(node)
+      return if ret.nil? or ret == ''
+      ret[-1] == '.' ? "#{ret} " : "#{ret}. "
     end
   end
+
 
   add_markup :textile, Textile
 end

@@ -1,0 +1,392 @@
+---
+name: empty outline
+in: |-
+  [[toc]]
+out: |-
+  <ul class="toc">
+  </ul>
+---
+name: fruity outline
+in: |-
+  [[toc]]
+
+  h1. Fruits
+
+  h2. Tasty Apples
+
+  h3. Green
+
+  h3. Red
+
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Turnips
+
+  h2. Green Beans
+out: |-
+  <ul class="toc">
+  <li class="toc1"><a href="#fruits"><span>1</span> Fruits</a></li>
+  <ul>
+  <li class="toc2"><a href="#tasty-apples"><span>1.1</span> Tasty Apples</a></li>
+  <ul>
+  <li class="toc3"><a href="#green"><span>1.1.1</span> Green</a></li>
+  <li class="toc3"><a href="#red"><span>1.1.2</span> Red</a></li>
+  </ul>
+  <li class="toc2"><a href="#pears"><span>1.2</span> Pears</a></li>
+  </ul>
+  <li class="toc1"><a href="#vegetables"><span>2</span> Vegetables</a></li>
+  <ul>
+  <li class="toc2"><a href="#turnips"><span>2.1</span> Turnips</a></li>
+  <li class="toc2"><a href="#green-beans"><span>2.2</span> Green Beans</a></li>
+  </ul>
+  </ul>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
+  <h3><a name="green"></a>Green<a class="anchor" href="#green">&para;</a></h3>
+  <h3><a name="red"></a>Red<a class="anchor" href="#red">&para;</a></h3>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="turnips"></a>Turnips<a class="anchor" href="#turnips">&para;</a></h2>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: test with \r\n
+in: "[[toc]]\r\n\r\nh1. Bats\r\n\r\nh1. Squirrels\r\n"
+out: |-
+  <ul class="toc">
+  <li class="toc1"><a href="#bats"><span>1</span> Bats</a></li>
+  <li class="toc1"><a href="#squirrels"><span>2</span> Squirrels</a></li>
+  </ul>
+  <h1 class="first"><a name="bats"></a>Bats<a class="anchor" href="#bats">&para;</a></h1>
+  <h1><a name="squirrels"></a>Squirrels<a class="anchor" href="#squirrels">&para;</a></h1>
+---
+name: test name collisions
+in: |-
+  h1. Corvidae
+
+  h2. Crow
+
+  h2. Raven
+
+  h2. Rook
+
+  h1. Chess Pieces
+
+  h2. Queen
+
+  h2. Rook
+
+  h1. Card Games
+
+  h2. Hearts
+
+  h2. Rook
+
+out: |-
+  <h1 class="first"><a name="corvidae"></a>Corvidae<a class="anchor" href="#corvidae">&para;</a></h1>
+  <h2><a name="crow"></a>Crow<a class="anchor" href="#crow">&para;</a></h2>
+  <h2><a name="raven"></a>Raven<a class="anchor" href="#raven">&para;</a></h2>
+  <h2><a name="rook"></a>Rook<a class="anchor" href="#rook">&para;</a></h2>
+  <h1><a name="chess-pieces"></a>Chess Pieces<a class="anchor" href="#chess-pieces">&para;</a></h1>
+  <h2><a name="queen"></a>Queen<a class="anchor" href="#queen">&para;</a></h2>
+  <h2><a name="rook_2"></a>Rook<a class="anchor" href="#rook_2">&para;</a></h2>
+  <h1><a name="card-games"></a>Card Games<a class="anchor" href="#card-games">&para;</a></h1>
+  <h2><a name="hearts"></a>Hearts<a class="anchor" href="#hearts">&para;</a></h2>
+  <h2><a name="rook_3"></a>Rook<a class="anchor" href="#rook_3">&para;</a></h2>
+---
+name: test with links
+in: |-
+  h1. Russian Anarchists
+
+  h2. Michel [Bakunin -> http://en.wikipedia.org/wiki/Mikhail_Bakunin]
+
+  h2. [Peter -> http://en.wikipedia.org/wiki/Peter_Kropotkin] Kropotkin
+
+  h1. Russian-American Anarchists
+
+  h2. [Emma Goldman -> http://en.wikipedia.org/wiki/Emma_Goldman]
+
+  h2. Alexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]
+out: |-
+  <h1 class="first"><a name="russian-anarchists"></a>Russian Anarchists<a class="anchor" href="#russian-anarchists">&para;</a></h1>
+  <h2><a name="michel-bakunin"></a>Michel <a href="http://en.wikipedia.org/wiki/Mikhail_Bakunin">Bakunin</a><a class="anchor" href="#michel-bakunin">&para;</a></h2>
+  <h2><a name="peter-kropotkin"></a><a href="http://en.wikipedia.org/wiki/Peter_Kropotkin">Peter</a> Kropotkin<a class="anchor" href="#peter-kropotkin">&para;</a></h2>
+  <h1><a name="russian-american-anarchists"></a>Russian-American Anarchists<a class="anchor" href="#russian-american-anarchists">&para;</a></h1>
+  <h2><a name="emma-goldman"></a><a href="http://en.wikipedia.org/wiki/Emma_Goldman">Emma Goldman</a><a class="anchor" href="#emma-goldman">&para;</a></h2>
+  <h2><a name="alexander-berkman"></a>Alexander <a href="http://en.wikipedia.org/wiki/Alexander_Berkman">Berkman</a><a class="anchor" href="#alexander-berkman">&para;</a></h2>
+---
+name: double trouble
+in: |-
+  h1. Title
+
+  h3. Under first
+
+  h1. Title
+
+  h3. Under second
+out: |-
+  <h1 class="first"><a name="title"></a>Title<a class="anchor" href="#title">&para;</a></h1>
+  <h3><a name="under-first"></a>Under first<a class="anchor" href="#under-first">&para;</a></h3>
+  <h1><a name="title_2"></a>Title<a class="anchor" href="#title_2">&para;</a></h1>
+  <h3><a name="under-second"></a>Under second<a class="anchor" href="#under-second">&para;</a></h3>
+---
+name: setext trees
+in: |-
+  Evergreens
+  ==========
+
+  h3. Cedar
+
+  h3. Redwood
+
+  h3. Fir
+
+  Deciduous
+  =========
+
+  h3. Maple
+
+  Oaks
+  ----
+
+  h3. White Oak
+
+  h3. Red Oak
+out: |-
+  <h1 class="first"><a name="evergreens"></a>Evergreens<a class="anchor" href="#evergreens">&para;</a></h1>
+  <h3><a name="cedar"></a>Cedar<a class="anchor" href="#cedar">&para;</a></h3>
+  <h3><a name="redwood"></a>Redwood<a class="anchor" href="#redwood">&para;</a></h3>
+  <h3><a name="fir"></a>Fir<a class="anchor" href="#fir">&para;</a></h3>
+  <h1><a name="deciduous"></a>Deciduous<a class="anchor" href="#deciduous">&para;</a></h1>
+  <h3><a name="maple"></a>Maple<a class="anchor" href="#maple">&para;</a></h3>
+  <h2><a name="oaks"></a>Oaks<a class="anchor" href="#oaks">&para;</a></h2>
+  <h3><a name="white-oak"></a>White Oak<a class="anchor" href="#white-oak">&para;</a></h3>
+  <h3><a name="red-oak"></a>Red Oak<a class="anchor" href="#red-oak">&para;</a></h3>
+---
+name: multiline headings
+in: |-
+  h1. section one line one
+  line two
+
+  section one text
+
+  h2. subsection
+  without content
+
+  h1. section two line one
+  line two
+
+  section two text
+out: |-
+  <h1 class="first"><a name="section-one-line-one-line-two"></a>section one line one<br />
+  line two<a class="anchor" href="#section-one-line-one-line-two">&para;</a></h1>
+  <p>section one text</p>
+  <h2><a name="subsection-without-content"></a>subsection<br />
+  without content<a class="anchor" href="#subsection-without-content">&para;</a></h2>
+  <h1><a name="section-two-line-one-line-two"></a>section two line one<br />
+  line two<a class="anchor" href="#section-two-line-one-line-two">&para;</a></h1>
+  <p>section two text</p>
+---
+name: weird chars
+in: |-
+  h1. i eat 'food'
+
+  h1. it is yŭmmy
+out: |-
+  <h1 class="first"><a name="i-eat-food"></a>i eat &#8216;food&#8217;<a class="anchor" href="#i-eat-food">&para;</a></h1>
+  <h1><a name="it-is-yŭmmy"></a>it is yŭmmy<a class="anchor" href="#it-is-yŭmmy">&para;</a></h1>
+---
+name: badly organized fruits
+in: |-
+  h1. Fruits
+
+  h3. Green Apples
+
+  h2. Tasty Apples
+
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Turnips
+
+  h2. Green Beans
+out: |-
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h3><a name="green-apples"></a>Green Apples<a class="anchor" href="#green-apples">&para;</a></h3>
+  <h2><a name="tasty-apples"></a>Tasty Apples<a class="anchor" href="#tasty-apples">&para;</a></h2>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="turnips"></a>Turnips<a class="anchor" href="#turnips">&para;</a></h2>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: untitled leading section
+in: |-
+
+  welcome to our great list of fruits and vegetables
+
+  h1. Fruits
+
+  h2. Pears
+
+  h1. Vegetables
+
+  h2. Green Beans
+out: |-
+  <p>welcome to our great list of fruits and vegetables</p>
+  <h1 class="first"><a name="fruits"></a>Fruits<a class="anchor" href="#fruits">&para;</a></h1>
+  <h2><a name="pears"></a>Pears<a class="anchor" href="#pears">&para;</a></h2>
+  <h1><a name="vegetables"></a>Vegetables<a class="anchor" href="#vegetables">&para;</a></h1>
+  <h2><a name="green-beans"></a>Green Beans<a class="anchor" href="#green-beans">&para;</a></h2>
+---
+name: plain old text
+in: |-
+  curiouser and curiouser
+
+out: |-
+  <p>curiouser and curiouser</p>
+
+---
+name: weird and nested
+in: |-
+  loose stuff
+
+  h1. Highest
+
+  lower
+  -----------
+
+  lower text
+
+  h2. even lower
+
+  h3. lowest
+
+  lowest text
+
+  h3. lowest and blankest
+
+  high as they get
+  =================
+
+  h2. underling
+
+  underling text
+out: |-
+  <p>loose stuff</p>
+  <h1 class="first"><a name="highest"></a>Highest<a class="anchor" href="#highest">&para;</a></h1>
+  <h2><a name="lower"></a>lower<a class="anchor" href="#lower">&para;</a></h2>
+  <p>lower text</p>
+  <h2><a name="even-lower"></a>even lower<a class="anchor" href="#even-lower">&para;</a></h2>
+  <h3><a name="lowest"></a>lowest<a class="anchor" href="#lowest">&para;</a></h3>
+  <p>lowest text</p>
+  <h3><a name="lowest-and-blankest"></a>lowest and blankest<a class="anchor" href="#lowest-and-blankest">&para;</a></h3>
+  <h1><a name="high-as-they-get"></a>high as they get<a class="anchor" href="#high-as-they-get">&para;</a></h1>
+  <h2><a name="underling"></a>underling<a class="anchor" href="#underling">&para;</a></h2>
+  <p>underling text</p>
+---
+name: overdecorated
+in: |-
+  h2. _emphasis_
+
+  __italicized__
+  --------------
+
+  h2. *strong*
+
+  **bold**
+  --------
+
+  h2. ??citation??
+
+  -deleted text-
+  --------------
+
+  h2. +inserted text+
+
+  ^superscript^
+  -------------
+
+  h2. ~subscript~
+
+  @code@
+  ------
+
+  h2. [-table-]
+
+  [# Heading anchor -> head_anchor #]
+  -----------------------------------
+
+  h2. Anchor within [# heading -> head_anchor #]
+
+  Dots ...
+  --------
+
+out: |-
+  <h2 class="first"><a name="emphasis"></a><em>emphasis</em><a class="anchor" href="#emphasis">&para;</a></h2>
+  <h2><a name="italicized"></a><i>italicized</i><a class="anchor" href="#italicized">&para;</a></h2>
+  <h2><a name="strong"></a><strong>strong</strong><a class="anchor" href="#strong">&para;</a></h2>
+  <h2><a name="bold"></a><b>bold</b><a class="anchor" href="#bold">&para;</a></h2>
+  <h2><a name="citation"></a><cite>citation</cite><a class="anchor" href="#citation">&para;</a></h2>
+  <h2><a name="deleted-text"></a><del>deleted text</del><a class="anchor" href="#deleted-text">&para;</a></h2>
+  <h2><a name="inserted-text"></a><ins>inserted text</ins><a class="anchor" href="#inserted-text">&para;</a></h2>
+  <h2><a name="superscript"></a><sup>superscript</sup><a class="anchor" href="#superscript">&para;</a></h2>
+  <h2><a name="subscript"></a><sub>subscript</sub><a class="anchor" href="#subscript">&para;</a></h2>
+  <h2><a name="code"></a><code>code</code><a class="anchor" href="#code">&para;</a></h2>
+  <h2><a name="table"></a><del>table</del><a class="anchor" href="#table">&para;</a></h2>
+  <h2><a name="heading-anchor"></a><a name="head_anchor">Heading anchor</a><a class="anchor" href="#heading-anchor">&para;</a></h2>
+  <h2><a name="anchor-within-heading"></a>Anchor within <a name="head_anchor">heading</a><a class="anchor" href="#anchor-within-heading">&para;</a></h2>
+  <h2><a name="dots"></a>Dots &#8230;<a class="anchor" href="#dots">&para;</a></h2>
+
+---
+name: leading and trailing whitespace
+in: |-
+  Clearly a Section
+  ===
+
+    still a section
+
+  ---
+  more text
+
+  <code>
+    coding
+
+     not a section
+
+    ---
+    more text here
+  </code>
+out: |-
+  <h1 class="first"><a name="clearly-a-section"></a>Clearly a Section<a class="anchor" href="#clearly-a-section">&para;</a></h1>
+  <h2><a name="still-a-section"></a>still a section<a class="anchor" href="#still-a-section">&para;</a></h2>
+  <p>more text</p>
+  <pre><code>  coding
+     not a section
+    ---
+    more text here
+  </code></pre>
+---
+name: code block weirdness
+in: |-
+  real stuff
+  ----
+
+  <code>
+
+  a.. b
+  -----
+
+  aa... bb
+  -----
+
+  </code>
+out: |-
+  <h2 class="first"><a name="real-stuff"></a>real stuff<a class="anchor" href="#real-stuff">&para;</a></h2>
+  <pre><code>
+  a.. b
+  -----
+  aa... bb
+  -----
+  </code></pre>
