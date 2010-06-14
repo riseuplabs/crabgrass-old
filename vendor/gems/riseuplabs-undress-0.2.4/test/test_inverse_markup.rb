@@ -72,7 +72,7 @@ class TestMarkup < Test::Unit::TestCase
     html = GreenCloth.new(greencloth, '').to_html
     html.gsub!( /\n+/, "\n" )
     in_markup.gsub!( /\n+/, "\n" )
-    if greencloth == in_greencloth
+    if greencloth.rstrip == in_greencloth.rstrip
       putc "."
       return :first
     elsif in_markup == html

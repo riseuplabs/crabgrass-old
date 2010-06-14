@@ -58,6 +58,7 @@ module Undress
         "\n\n#{at}#{content_of(e)}\n\n"
       end
     end
+
     rule_for(:br)         {|e| "\n" }
     rule_for(:blockquote) {|e| "\n\nbq#{attributes(e)}. #{content_of(e)}\n\n" }
     rule_for(:pre)        {|e|
@@ -127,10 +128,27 @@ module Undress
         end
 
         if style = filtered.delete(:style)
-          attribs << "{#{style}}"
+          attribs << "{#{filter_css(node,style)}}"
         end
       end
       attribs
+    end
+
+    def filter_css(node,style)
+      return unless node
+      case node.name
+      when 'span'
+        # remove dangling ;
+        style.sub!(/;\s*$/,'')
+        # % sign in span styles is confusing textile
+        # background can have two % values - we remove them.
+        style.gsub!(/(background:[^;]*)\s+\d+%\s*\d*%/,'\1')
+        # we move the first style with a % to the end of the style
+        style.sub!(/(;|^)([^%;}]*%[^;%}]*);\s*([^%]+)$/,'\1\3; \2')
+        # all others are removed.
+        style.gsub!(/(;|^)([^%;}]*%[^;%}]*);/,'')
+      end
+      style
     end
 
     def table_attributes(node)
