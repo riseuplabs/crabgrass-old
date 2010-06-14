@@ -33,6 +33,7 @@ module Undress
       alt = "(#{alt})" unless alt == ""
       "!#{e["src"]}#{alt}!"
     }
+    rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : "%#{attributes(e)}#{content_of(e)}%"}
     rule_for(:strong)  {|e| complete_word?(e) ? "*#{attributes(e)}#{content_of(e)}*" : "[*#{attributes(e)}#{content_of(e)}*]"}
     rule_for(:em)      {|e| complete_word?(e) ? "_#{attributes(e)}#{content_of(e)}_" : "[_#{attributes(e)}#{content_of(e)}_]"}
     rule_for(:code)    {|e| "@#{attributes(e)}#{content_of(e)}@" }
@@ -47,7 +48,15 @@ module Undress
     # text formatting and layout
     rule_for(:p) do |e|
       at = attributes(e) != "" ? "p#{at}#{attributes(e)}. " : ""
-      e.parent && e.parent.name == "blockquote" ? "#{at}#{content_of(e)}\n\n" : "\n\n#{at}#{content_of(e)}\n\n"
+      if e.parent
+        case e.parent.name
+        when "blockquote" then "#{at}#{content_of(e)}\n\n"
+        when "td" then "#{at}#{content_of(e)}"
+        else "\n\n#{at}#{content_of(e)}\n\n"
+        end
+      else
+        "\n\n#{at}#{content_of(e)}\n\n"
+      end
     end
     rule_for(:br)         {|e| "\n" }
     rule_for(:blockquote) {|e| "\n\nbq#{attributes(e)}. #{content_of(e)}\n\n" }
