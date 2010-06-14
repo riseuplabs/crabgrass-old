@@ -3,7 +3,14 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
-0.5.2 -- 2010 May 20th
+0.5.2.1 -- 2010 June 11th
+  Feature #2410: CA - masthead text next to checkbox @ search
+  Bug #2400: remaining MessagePages cause crashes
+  Bug #2384: Cannot delete groups on cc.net
+  Bug #2376: undefined sass variables in _oldcss_to_be_updated.sass and other things
+  Bug #2246: backgroundrb packet_worker stat issue
+
+0.5.2 -- 2010 May 26th
   Feature #2104: documentation for CSS
   Feature #2106: create working customization
   Feature #2214: add ability to title/summary for pages and edit tabs to have background color
@@ -76,6 +83,10 @@ complete information on any of the issues listed below.
   Bug #2366: social drop in ie7 is off to the right.
 
 0.5.1.1 -- 2010 April 13th
+<<<<<<< HEAD:doc/CHANGELOG
+=======
+
+>>>>>>> origin/hotfix-0.5.2.1:doc/CHANGELOG
   * Bug #2109: not all committees showing on a group page
 
 0.5.1 -- 2010 April 12th -- https://labs.riseup.net/code/versions/show/82
