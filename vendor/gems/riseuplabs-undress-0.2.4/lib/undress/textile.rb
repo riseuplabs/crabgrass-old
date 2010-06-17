@@ -99,7 +99,7 @@ module Undress
     # tables
     rule_for(:table)   {|e| "\n#{table_attributes(e)}\n#{content_of(e)}\n" }
     rule_for(:tr)      {|e| "#{row_attributes(e)}#{content_of(e)}|\n" }
-    rule_for(:td, :th) {|e| "|#{cell_attributes(e)}#{content_of(e)}" }
+    rule_for(:td, :th) {|e| "|#{cell_attributes(e)}#{cell_content_of(e)}" }
 
     def attributes(node) #:nodoc:
       filtered ||= super(node)
@@ -163,6 +163,19 @@ module Undress
       ret = (node.name == 'th') ? "_#{attributes(node)}" : attributes(node)
       return if ret.nil? or ret == ''
       ret[-1] == '.' ? "#{ret} " : "#{ret}. "
+    end
+
+    # some textile does not work in table cells.
+    # trying to work around this as good as possible
+    def cell_content_of(node)
+      content = content_of(node)
+      # p in cells does not work. apply the style to td instead.
+      # TODO: figure out if we have some style applied already.
+      if content[0..1] == 'p{'
+        content[1..-1]
+      else
+        content
+      end
     end
   end
 
