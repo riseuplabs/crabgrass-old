@@ -33,25 +33,37 @@ module Undress
       alt = "(#{alt})" unless alt == ""
       "!#{e["src"]}#{alt}!"
     }
-    rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : "%#{attributes(e)}#{content_of(e)}%"}
-    rule_for(:strong)  {|e| complete_word?(e) ? "*#{attributes(e)}#{content_of(e)}*" : "[*#{attributes(e)}#{content_of(e)}*]"}
-    rule_for(:em)      {|e| complete_word?(e) ? "_#{attributes(e)}#{content_of(e)}_" : "[_#{attributes(e)}#{content_of(e)}_]"}
+    rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : wrap_with('%', e) }
+    rule_for(:div)  {|e| attributes(e) == "" ? "#{content_of(e)}\n\n" : "#{wrap_with('%', e)}\n\n" }
+    rule_for(:strong, :b)  {|e| wrap_with('*', e) }
+    rule_for(:em)      {|e| wrap_with('_', e) }
     rule_for(:code)    {|e| "@#{attributes(e)}#{content_of(e)}@" }
     rule_for(:cite)    {|e| "??#{attributes(e)}#{content_of(e)}??" }
-    rule_for(:sup)     {|e| surrounded_by_whitespace?(e) ? "^#{attributes(e)}#{content_of(e)}^" : "[^#{attributes(e)}#{content_of(e)}^]" }
-    rule_for(:sub)     {|e| surrounded_by_whitespace?(e) ? "~#{attributes(e)}#{content_of(e)}~" : "[~#{attributes(e)}#{content_of(e)}~]" }
-    rule_for(:ins)     {|e| complete_word?(e) ? "+#{attributes(e)}#{content_of(e)}+" : "[+#{attributes(e)}#{content_of(e)}+]"}
-    rule_for(:del)     {|e| complete_word?(e) ? "-#{attributes(e)}#{content_of(e)}-" : "[-#{attributes(e)}#{content_of(e)}-]"}
+    rule_for(:sup)     {|e| wrap_with('^', e, surrounded_by_whitespace?(e)) }
+    rule_for(:sub)     {|e| wrap_with('~', e, surrounded_by_whitespace?(e)) }
+    rule_for(:ins)     {|e| wrap_with('+', e) }
+    rule_for(:del)     {|e| wrap_with('-', e) }
     rule_for(:acronym) {|e| e.has_attribute?("title") ? "#{content_of(e)}(#{e["title"]})" : content_of(e) }
 
+    def wrap_with(char, node, wrap = nil)
+      wrap = complete_node?(node) if wrap.nil?
+      if wrap
+        "#{char}#{attributes(node)}#{content_of(node)}#{char}"
+      else
+        "[#{char}#{attributes(node)}#{content_of(node)}#{char}]"
+      end
+    end
 
     # text formatting and layout
-    rule_for(:p) do |e|
-      at = attributes(e) != "" ? "p#{at}#{attributes(e)}. " : ""
+    rule_for(:p, :div) do |e|
+      at = ( e.name == 'div' or attributes(e) != "" ) ?
+        "#{e.name}#{attributes(e)}. " : ""
       if e.parent
         case e.parent.name
         when "blockquote" then "#{at}#{content_of(e)}\n\n"
-        when "td" then "#{at}#{content_of(e)}"
+        when "td" then "#{content_of(e)}<br/>"
+        when "th" then "#{content_of(e)}<br/>"
+        when "li" then "#{content_of(e)}<br/>"
         else "\n\n#{at}#{content_of(e)}\n\n"
         end
       else
@@ -81,11 +93,13 @@ module Undress
     rule_for(:li) {|e|
       token = e.parent.name == "ul" ? "*" : "#"
       nesting = e.ancestors.inject(1) {|total,node| total + (%(ul ol).include?(node.name) ? 0 : 1) }
-      "\n#{token * nesting} #{content_of(e)}"
+      "\n#{token * nesting}#{start} #{content_of(e)}"
     }
     rule_for(:ul, :ol) {|e|
       if e.ancestors.detect {|node| %(ul ol).include?(node.name) }
         content_of(e)
+      elsif e.ancestor('td')
+        "#{content_of(e)}\n\n"
       else
         "\n#{content_of(e)}\n\n"
       end
@@ -97,38 +111,61 @@ module Undress
     rule_for(:dd) {|e| ":= #{content_of(e)} =:\n" }
 
     # tables
-    rule_for(:table)   {|e| "\n#{table_attributes(e)}\n#{content_of(e)}\n" }
-    rule_for(:tr)      {|e| "#{row_attributes(e)}#{content_of(e)}|\n" }
-    rule_for(:td, :th) {|e| "|#{cell_attributes(e)}#{cell_content_of(e)}" }
+    rule_for(:table)   {|e| complex_table?(e) ? html_node(e) :
+      "#{table_attributes(e)}\n#{content_of(e)}" }
+    rule_for(:tr)      {|e| complex_table?(e) ? html_node(e) :
+      "#{row_attributes(e)}#{content_of(e)}|\n" }
+    rule_for(:td, :th) {|e| complex_table?(e) ? html_node(e) :
+      "|#{cell_attributes(e)}#{cell_content_of(e)}" }
 
-    def attributes(node) #:nodoc:
+    # if a table contains a list or a another table we need html table syntax
+    def complex_table?(node)
+      return false unless %(table tr td th).include?(node.name)
+      table = node.ancestor 'table'
+      table.search('table, li').any?
+    end
+
+    def html_node(node)
+      "<#{node.name} #{attributes(node, false)}>\n#{content_of(node)}</#{node.name}>\n"
+    end
+
+    def attributes(node, textile=true) #:nodoc:
       filtered ||= super(node)
       attribs = ""
 
       if filtered
         if colspan = filtered.delete(:colspan)
-          attribs << "\\#{colspan}"
+          attribs += textile ? "\\#{colspan}" : "colspan = #{colspan} "
         end
 
         if rowspan = filtered.delete(:rowspan)
-          attribs << "/#{rowspan}"
+          attribs += textile ? "/#{rowspan}" : "rowspan = #{colspan} "
         end
 
         if lang = filtered.delete(:lang)
-          attribs << "[#{filtered[:lang]}]"
+          attribs += textile ? "[#{lang}]" : "lang=#{lang} "
         end
 
         if klass = filtered.delete(:class)
           klass.sub!(/(odd|even) ?/, '') if node.name == 'tr'
+          klass.sub!(/caps ?/, '') if node.name == 'span'
         end
         id = filtered.delete(:id)
         if (klass && klass != '') or id
-          id = id.nil? ? "" : "#" + id
-          attribs << "(#{klass}#{id})"
+          if textile
+            id = id.nil? ? "" : "#" + id
+            attribs << "(#{klass}#{id})"
+          else
+            attribs << "class=#{klass} "
+            attribs << "id=#{id} "
+          end
         end
 
         if style = filtered.delete(:style)
-          attribs << "{#{filter_css(node,style)}}"
+          css = filter_css(node,style)
+          if css && css != ""
+            attribs += textile ? "{#{css}}" : "style=#{css} "
+          end
         end
       end
       attribs

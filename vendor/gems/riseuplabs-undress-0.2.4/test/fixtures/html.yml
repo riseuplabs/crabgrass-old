@@ -1,35 +1,35 @@
 ---
+html: |-
+  <p>this line <b>has</b> a lot of safe <a>html</a> in it, that is <em>allowed</em></p>
 in: |-
   this line <b>has</b> a lot of safe <a>html</a> in it, that is <em>allowed</em>
-out: |-
-  <p>this line <b>has</b> a lot of safe <a>html</a> in it, that is <em>allowed</em></p>
 ---
+html: |-
+  <p>but we do not allow <b id='5'>some</b> dangerous <span onmouseover='javascript:alert(1)'>attributes</span></p>
 in: |-
-  but we do not allow <b id='5'>some</b> dangerous <span onmouseover='javascript:alert(1)'>attributes</span>
-out: |-
-  <p>but we do not allow <b>some</b> dangerous <span>attributes</span></p>
+  but we do not allow <b>some</b> dangerous <span>attributes</span>
 ---
+html: |-
+  <p>this line <b>has</b> a lot of <a>html</a> in it.</p>
 in: |-
   this line ==<b>has</b> a lot of <a>html</a> in it==.
-out: |-
-  <p>this line <b>has</b> a lot of <a>html</a> in it.</p>
 ---
+html: |-
+  <p>we do not allow <div>dangerous</div> <textarea> html</textarea></p>
 in: |-
-  we do not allow dangerous </div></textarea>html
-out: |-
-  <p>we do not allow dangerous html</p>
+  we do not allow dangerous html
 ---
+html: |-
+  <notextile>the notextile _tag_ turns off *textile*</notextile>
 in: |-
   <notextile>the notextile _tag_ turns off *textile*</notextile>
-out: |-
-  the notextile _tag_ turns off *textile*
 ---
+html: |-
+  <p><!-- comments are ok --></p>
 in: |-
   <!-- comments are ok -->
-out: |-
-  <p><!-- comments are ok --></p>
 ---
+html: |-
+  <p><!-- unterminated comments are not ok</p>
 in: |-
-  <!-- unterminated comments are not ok
-out: |-
-  <p>&lt;!&#8212; unterminated comments are not ok</p>
+  &lt;!&#8212; unterminated comments are not ok

@@ -611,7 +611,7 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-  BRACKET_FORMATTERS = /[\+\-\^\*\?_@=~]/
+  BRACKET_FORMATTERS = /[\+\-\^\*\?_@=~%]/
 
   # linking using square brackets
   BRACKET_LINK_RE = /

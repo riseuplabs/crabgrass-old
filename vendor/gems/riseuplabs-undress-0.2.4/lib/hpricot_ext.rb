@@ -75,6 +75,14 @@ module ::Hpricot #:nodoc:
       ancestors
     end
 
+    def ancestor(tag)
+      node = self
+      while node.respond_to?(:parent) && node.name != tag
+        node = node.parent
+      end
+      node if node.name == tag
+    end
+
     def change_tag!(new_tag, preserve_attr = true)
       return if not etag
       self.name = new_tag

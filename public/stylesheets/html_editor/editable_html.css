@@ -1,5 +1,10 @@
 /* this is the css for the iframe inside the html editor. */
 
+body {
+  color: #707070;
+  font-size: 100%;
+  line-height: 1.75em; }
+
 pre {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;

@@ -2,14 +2,17 @@ require File.expand_path(File.dirname(__FILE__) + "/textile")
 
 module Undress
   class GreenCloth < Textile
-    whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan
+    whitelist_attributes :class, :style, :colspan, :rowspan
 
     Undress::ALLOWED_TAGS = [
       'div', 'a', 'img', 'br', 'i', 'u', 'b', 'pre', 'kbd', 'code', 'cite', 'strong', 'em',
       'ins', 'sup', 'sub', 'del', 'table', 'tbody', 'thead', 'tr', 'td', 'th', 'ol', 'ul',
       'li', 'p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'notextile', 'blockquote',
-      'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt'
+      'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt', 'font'
     ]
+
+    # elements we just ignore for now...
+    rule_for(:font) {|e| content_of(e) }
 
     # table of contents
     pre_processing("ul.toc") do |toc|
@@ -28,33 +31,34 @@ module Undress
     rule_for(:li) {|e|
       offset = ""
       li = e
+      # start is not whitelisted so we access it directly
+      if li.parent.name == 'ol' and li.previous_sibling.nil?
+        start = li.parent.has_attribute?("start") && li.parent["start"]
+      end
       while li.parent
         if    li.parent.name == "ul" then offset = "*#{offset}"
         elsif li.parent.name == "ol" then offset = "##{offset}"
-        else  return offset end
+        else  return "\n#{offset}#{start} #{content_of(e)}"
+        end
         li = li.parent.parent ? li.parent.parent : nil
       end
-      "\n#{offset} #{content_of(e)}"
+      "\n#{offset}#{start} #{content_of(e)}"
     }
 
     # text formatting
     rule_for(:pre) {|e|
       if e.children && e.children.all? {|n| n.text? && n.content =~ /^\s+$/ || n.elem? && n.name == "code" }
-        "\n\n<pre><code>#{content_of(e % "code")}</code></pre>"
+        "\n\n<code>#{unescaped_content_of(e % "code")}</code>"
       else
-        "\n\n<pre>#{content_of(e)}</pre>"
+        "\n\n<pre>#{unescaped_content_of(e)}</pre>"
       end
     }
 
     rule_for(:code) {|e|
       if e.inner_html.match(/\n/)
-        if e.parent && e.parent.name != "pre"
-          "<pre><code>#{content_of(e)}</code></pre>"
-        else
-          "<code>#{content_of(e)}</code>"
-        end
+          "<code>#{unescaped_content_of(e)}</code>"
       else
-        "@#{content_of(e)}@"
+        "@#{unescaped_content_of(e)}@"
       end
     }
 
@@ -62,6 +66,10 @@ module Undress
     rule_for(:embed, :object, :param) {|e|
       e.to_html
     }
+
+    def unescaped_content_of(e)
+      e.children.map { |x| x.to_plain_text }.join
+    end
 
     def process_headings(h)
       h.children.each {|e|
