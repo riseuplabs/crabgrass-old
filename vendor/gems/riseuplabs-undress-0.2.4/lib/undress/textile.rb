@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../undress")
 module Undress
   class Textile < Grammar
     whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan
+    whitelist_styles :background_color, :background, :"text-align", :"text-decoration",
+      :"font-weight", :color
 
     # entities
     post_processing(/&nbsp;/, " ")
@@ -161,8 +163,8 @@ module Undress
           end
         end
 
-        if style = filtered.delete(:style)
-          css = filter_css(node,style)
+        if styles(node)&& styles(node).any?
+          css = process_css(node, styles(node))
           if css && css != ""
             attribs += textile ? "{#{css}}" : "style=#{css} "
           end
@@ -171,21 +173,31 @@ module Undress
       attribs
     end
 
-    def filter_css(node,style)
+    def process_css(node, styles)
       return unless node
-      case node.name
-      when 'span'
-        # remove dangling ;
-        style.sub!(/;\s*$/,'')
-        # % sign in span styles is confusing textile
-        # background can have two % values - we remove them.
-        style.gsub!(/(background:[^;]*)\s+\d+%\s*\d*%/,'\1')
-        # we move the first style with a % to the end of the style
-        style.sub!(/(;|^)([^%;}]*%[^;%}]*);\s*([^%]+)$/,'\1\3; \2')
-        # all others are removed.
-        style.gsub!(/(;|^)([^%;}]*%[^;%}]*);/,'')
+      css = ''
+      styles.each_pair do |key, value|
+        case key
+        when :background
+          # no position
+          value.gsub!(/\s*\d+%/,'')
+          # no image
+          value.gsub!(/\s*url\([\)]*\)/,'')
+          # no repeat
+          value.gsub!(/\s*(no-)?repeat(-[xy])?/,'')
+          # no attachement
+          value.gsub!(/\s*(fixed|scroll)/,'')
+          # no none
+          value.gsub!(/\s*none/,'')
+          # only background color remains
+          value.gsub!(/\s/,'')
+          css << "#{key}: #{value}; " if value != ''
+        else
+          css << "#{key}: #{value}; " if value != ''
+        end
       end
-      style
+      # remove dangling ;
+      css.sub!(/;\s*$/,'')
     end
 
     def table_attributes(node)

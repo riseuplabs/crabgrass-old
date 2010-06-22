@@ -76,6 +76,19 @@ module Undress
       @whitelisted_attributes || []
     end
 
+    # Set a list of styles you wish to whitelist
+    #
+    # The style attribute is filtered using these.
+    # Grammer#styles(node) will return a hash of the filtered styles.
+    #
+    def self.whitelist_styles(*styles)
+      @whitelisted_styles = styles
+    end
+
+    def self.whitelisted_styles #:nodoc:
+      @whitelisted_styles || []
+    end
+
     def self.post_processing_rules #:nodoc:
       @post_processing_rules ||= {}
     end
@@ -91,11 +104,13 @@ module Undress
     attr_reader :pre_processing_rules #:nodoc:
     attr_reader :post_processing_rules #:nodoc:
     attr_reader :whitelisted_attributes #:nodoc:
+    attr_reader :whitelisted_styles #:nodoc:
 
     def initialize #:nodoc:
       @pre_processing_rules = self.class.pre_processing_rules.dup
       @post_processing_rules = self.class.post_processing_rules.dup
       @whitelisted_attributes = self.class.whitelisted_attributes.dup
+      @whitelisted_styles = self.class.whitelisted_styles.dup
     end
 
     # Process a DOM node, converting it to your markup language according to
@@ -181,7 +196,17 @@ module Undress
       end
     end
 
-    def method_missing(tag, node, *args) #:nodoc:
+    def styles(node)
+      return unless style_attrib = node[:style]
+      styles = style_attrib.scan /(\S+):(([^&;]+|&[^&;\s]+;)+)[;$]/
+      styles.map{|a| [a[0], a[1]]}.inject({}) do |hash,(key,value)|
+        hash[key.to_sym] = value if whitelisted_styles.include?(key.to_sym)
+        hash
+      end
+    end
+
+    def method_missing(tag, node=nil, *args) #:nodoc:
+      super(tag) unless node
       process(node.children)
     end
   end
