@@ -38,7 +38,7 @@ class TestMarkup < Test::Unit::TestCase
           putc 'D'
           next
         end
-        html = doc['out'] || doc['html']
+        html = doc['html'] || doc['out']
         unless html
           putc '0'
           next
@@ -71,7 +71,7 @@ class TestMarkup < Test::Unit::TestCase
 
   def assert_greencloth(filename, doc, greencloth)
     in_greencloth = doc['in']
-    in_markup = doc['out'] || doc['html']
+    in_markup = doc['html'] || doc['out']
     return unless in_greencloth and greencloth
     html = GreenCloth.new(greencloth, '').to_html
     html.gsub!( /\n+/, "\n" )
