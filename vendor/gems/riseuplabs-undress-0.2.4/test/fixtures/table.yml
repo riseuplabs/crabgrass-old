@@ -320,3 +320,108 @@ out: |-
   	</tr>
   </table>
 
+---
+html: |-
+  <table>
+  	<tr class="odd">
+  		<td>a
+  </td>
+  		<td>b<br/></td>
+  		<td>c
+  d</td>
+  	</tr>
+  	<tr class="even">
+  		<td>1</td>
+  		<td>2</td>
+  		<td>3</td>
+  	</tr>
+  </table>
+  <p>a table that contains newlines at the end of the cells.
+  these should be ignored so they do not mess up the textile table syntax
+  newlines within cells should be preserved.</p>
+in: |
+  |a|b<br/>|c
+  d|
+  |1|2|3|
+  
+  a table that contains newlines at the end of the cells.
+  these should be ignored so they do not mess up the textile table syntax
+  newlines within cells should be preserved.
+out: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td>
+  		<td>b<br/></td>
+  		<td>c<br/>d</td>
+  	</tr>
+  	<tr class="even">
+  		<td>1</td>
+  		<td>2</td>
+  		<td>3</td>
+  	</tr>
+  </table>
+  <p>a table that contains newlines at the end of the cells.
+  these should be ignored so they do not mess up the textile table syntax
+  newlines within cells should be preserved.</p>
+---
+html: |-
+  <table>
+  	<tr class="odd">
+  		<td><p style="background: #6789ab;">a
+  </p></td>
+  		<td><p>b<br/></p></td>
+  		<td rowspan=2><p style="background: #6789ab;">c
+  </p>d</td>
+  	</tr>
+  	<tr class="even">
+  		<td>1<p style="background: #6789ab">2</p></td>
+  		<td>2</td>
+  	</tr>
+  </table>
+  <p>a table that contains paragraphs should not use newlines at the end of the cells.
+  Otherwise they mess up the textile table syntax
+  Paragraphs spanning the whole cell should add their styles to the cell itself instead.
+  We could also use spans instead. Spans would also work for paras only spaning a part of the cell.
+  </p>
+in: |
+  |a|b<br/>|c
+  d|
+  |1|2|3|
+  
+  a table that contains newlines at the end of the cells.
+  these should be ignored so they do not mess up the textile table syntax
+  newlines within cells should be preserved.
+out: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td>
+  		<td>b<br/></td>
+  		<td>c<br/>d</td>
+  	</tr>
+  	<tr class="even">
+  		<td>1</td>
+  		<td>2</td>
+  		<td>3</td>
+  	</tr>
+  </table>
+  <p>a table that contains newlines at the end of the cells.
+  these should be ignored so they do not mess up the textile table syntax
+  newlines within cells should be preserved.</p>
+---
+html: |
+  <table>
+  <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+
+in: |
+  | | | | |
+
+out: |
+  <table>
+  	<tr class="odd">
+  		<td></td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+  	</tr>
+  </table>

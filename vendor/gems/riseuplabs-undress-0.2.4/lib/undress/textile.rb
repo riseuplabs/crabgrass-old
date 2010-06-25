@@ -229,6 +229,7 @@ module Undress
     # trying to work around this as good as possible
     def cell_content_of(node)
       content = content_of(node)
+      return " " if content == ""
       # p in cells does not work. apply the style to td instead.
       # TODO: figure out if we have some style applied already.
       if content[0..1] == 'p{'
