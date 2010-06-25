@@ -3,8 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + "/../undress")
 module Undress
   class Textile < Grammar
     whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan
-    whitelist_styles :background_color, :background, :"text-align", :"text-decoration",
+    whitelist_styles :"background-color", :background, :"text-align", :"text-decoration",
       :"font-weight", :color
+    DEFAULT_STYLES = {:"background-color" => /(#ffffff|white)/i,
+      :background => /(#ffffff|white)/i,
+      :"text-align" => /left/i,
+      :"text-decoration" => /none/i,
+      :color => /(#000000|black)/i }
 
     # entities
     post_processing(/&nbsp;/, " ")
@@ -49,10 +54,15 @@ module Undress
 
     def wrap_with(char, node, wrap = nil)
       wrap = complete_node?(node) if wrap.nil?
+      content = content_of(node)
+      prefix = content.lstrip! ? " " : ""
+      postfix = content.chomp! ? "<br/>" : ""
+      postfix = content.rstrip! ? " #{postfix}" : postfix
+      return if content == ""
       if wrap
-        "#{char}#{attributes(node)}#{content_of(node)}#{char}"
+        "#{prefix}#{char}#{attributes(node)}#{content}#{char}#{postfix}"
       else
-        "[#{char}#{attributes(node)}#{content_of(node)}#{char}]"
+        "#{prefix}[#{char}#{attributes(node)}#{content}#{char}]#{postfix}"
       end
     end
 
@@ -177,6 +187,7 @@ module Undress
       return unless node
       css = ''
       styles.each_pair do |key, value|
+        next if DEFAULT_STYLES[key] === value
         case key
         when :background
           # no position

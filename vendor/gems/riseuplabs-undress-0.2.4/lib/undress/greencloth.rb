@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/textile")
 module Undress
   class GreenCloth < Textile
     whitelist_attributes :class, :style, :colspan, :rowspan
-    whitelist_styles :background_color, :background, :"text-align", :"text-decoration",
+    whitelist_styles :"background-color", :background, :"text-align", :"text-decoration",
       :"font-weight", :color
 
     Undress::ALLOWED_TAGS = [
