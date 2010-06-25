@@ -14,8 +14,8 @@ InsertTable.prototype.show = function(image)
     "fixed"            : '',
     "align"            : '',
     "border"           : '1',
-    "border_style"     : 'dotted',
-    "border_color"     : '#000000',
+    "border_style"     : 'solid',
+    "border_color"     : '#CCCCCC',
     "border_collapse"  : 'on',
     "spacing"          : '',
     "padding"          : '5'
