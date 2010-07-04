@@ -1,5 +1,7 @@
 <h1>Edit Users</h1>
-<% @info_box = 'Total number of users: %s' % @users.total_entries %>
+  <div class='info_box'>
+    <%= 'Total number of users: %s' % @users.total_entries %>
+  </div>
 
 <%= alphabetical_filter(:controller => 'admin/users') %>
 
@@ -8,6 +10,7 @@
     <th>Login</th>
     <th>Display name</th>
     <th>Email</th>
+    <th>Last Login</th>
     <th>&nbsp;</th>
   </tr>
   <% if @users.any? -%>
@@ -16,6 +19,7 @@
         <td><%= link_to user.login, url_for_user(user) %></td>
         <td><%=h user.display_name %></td>
         <td><%=h user.email %></td>
+        <td><%= friendly_date(user.last_seen_at) %></td>
         <td style="padding-right:0em;">
           <span class="actions">
             <%= link_to 'Show', user %>
