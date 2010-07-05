@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/textile")
 
 module Undress
   class GreenCloth < Textile
-    whitelist_attributes :class, :style, :colspan, :rowspan
+    whitelist_attributes :style, :colspan, :rowspan, :bgcolor, :align
     whitelist_styles :"background-color", :background, :"text-align", :"text-decoration",
       :"font-weight", :color
 
@@ -13,8 +13,7 @@ module Undress
       'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt', 'font'
     ]
 
-    # elements we just ignore for now...
-    rule_for(:font) {|e| content_of(e) }
+    Undress::NO_TEXT_TAGS = %w(img br table tbody thead tr ol ul)
 
     # table of contents
     pre_processing("ul.toc") do |toc|

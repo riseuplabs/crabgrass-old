@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../undress")
 
 module Undress
   class Textile < Grammar
-    whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan
+    whitelist_attributes :class, :id, :lang, :style, :colspan, :rowspan,
+      :bgcolor, :align
     whitelist_styles :"background-color", :background, :"text-align", :"text-decoration",
       :"font-weight", :color
     DEFAULT_STYLES = {:"background-color" => /(#ffffff|white)/i,
@@ -10,6 +11,19 @@ module Undress
       :"text-align" => /left/i,
       :"text-decoration" => /none/i,
       :color => /(#000000|black)/i }
+
+
+    # we try to get rid of unnecessary paras...
+    pre_processing("td p, th p, li p") do |p|
+      if p.parent.children.detect{ |sib| sib != p and sib.to_html.match /\S/}
+        if p.attributes.to_hash.empty?
+          p.swap p.inner_html + "<br/>"
+        end
+      else
+        Hpricot::Elements[p.parent].set p.attributes.to_hash
+        p.swap p.inner_html
+      end
+    end
 
     # entities
     post_processing(/&nbsp;/, " ")
@@ -41,7 +55,6 @@ module Undress
       "!#{e["src"]}#{alt}!"
     }
     rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : wrap_with('%', e) }
-    rule_for(:div)  {|e| attributes(e) == "" ? "#{content_of(e)}\n\n" : "#{wrap_with('%', e)}\n\n" }
     rule_for(:strong, :b)  {|e| wrap_with('*', e) }
     rule_for(:em)      {|e| wrap_with('_', e) }
     rule_for(:code)    {|e| "@#{attributes(e)}#{content_of(e)}@" }
@@ -70,14 +83,11 @@ module Undress
     rule_for(:p, :div) do |e|
       at = ( e.name == 'div' or attributes(e) != "" ) ?
         "#{e.name}#{attributes(e)}. " : ""
-      if e.parent
-        case e.parent.name
-        when "blockquote" then "#{at}#{content_of(e)}\n\n"
-        when "td" then "#{content_of(e)}<br/>"
-        when "th" then "#{content_of(e)}<br/>"
-        when "li" then "#{content_of(e)}<br/>"
-        else "\n\n#{at}#{content_of(e)}\n\n"
-        end
+      if e.parent and e.parent.name == 'blockquote'
+        "#{at}#{content_of(e)}\n\n"
+      elsif e.ancestor('table') and !complex_table?(e)
+        # can't use p textile in simple tables
+        html_node(e, false)
       else
         "\n\n#{at}#{content_of(e)}\n\n"
       end
@@ -130,15 +140,26 @@ module Undress
     rule_for(:td, :th) {|e| complex_table?(e) ? html_node(e) :
       "|#{cell_attributes(e)}#{cell_content_of(e)}" }
 
-    # if a table contains a list or a another table we need html table syntax
+    # if a table contains a list or a para or another table we need html table syntax
     def complex_table?(node)
-      return false unless %(table tr td th).include?(node.name)
       table = node.ancestor 'table'
       table.search('table, li').any?
     end
 
-    def html_node(node)
-      "<#{node.name} #{attributes(node, false)}>\n#{content_of(node)}</#{node.name}>\n"
+    def html_node(node, with_newline = true)
+      tag = node.name
+      attributes = attributes(node, false)
+      content = content_requires_newline?(node) ? "\n#{content_of(node)}" : content_of(node)
+      if with_newline
+        "<#{tag}#{attributes}>#{content}</#{tag}>\n"
+      else
+        "<#{tag}#{attributes}>#{content}</#{tag}>"
+      end
+    end
+
+    def content_requires_newline?(node)
+      return false unless first_tag = node.children.detect {|c| c.is_a? Hpricot::Elem}
+      %w(table, ul, ol, p, div).includes?(first_tag.name)
     end
 
     def attributes(node, textile=true) #:nodoc:
@@ -147,15 +168,15 @@ module Undress
 
       if filtered
         if colspan = filtered.delete(:colspan)
-          attribs += textile ? "\\#{colspan}" : "colspan = #{colspan} "
+          attribs += textile ? "\\#{colspan}" : " colspan = #{colspan}"
         end
 
         if rowspan = filtered.delete(:rowspan)
-          attribs += textile ? "/#{rowspan}" : "rowspan = #{colspan} "
+          attribs += textile ? "/#{rowspan}" : " rowspan = #{colspan}"
         end
 
         if lang = filtered.delete(:lang)
-          attribs += textile ? "[#{lang}]" : "lang=#{lang} "
+          attribs += textile ? "[#{lang}]" : " lang=#{lang}"
         end
 
         if klass = filtered.delete(:class)
@@ -168,17 +189,33 @@ module Undress
             id = id.nil? ? "" : "#" + id
             attribs << "(#{klass}#{id})"
           else
-            attribs << "class=#{klass} "
-            attribs << "id=#{id} "
+            attribs << " class=#{klass}"
+            attribs << " id=#{id}"
           end
         end
 
-        if styles(node)&& styles(node).any?
-          css = process_css(node, styles(node))
-          if css && css != ""
-            attribs += textile ? "{#{css}}" : "style=#{css} "
-          end
+        styles = styles(node) || {}
+        if align = filtered.delete(:align)
+          styles[%s:text-align:] ||= align.downcase
         end
+
+        if bgcolor = filtered.delete(:bgcolor)
+          styles[%s:background-color:] ||= bgcolor.downcase
+        end
+
+        if textile and align = styles.delete(%s:text-align:)
+          attribs += case align
+                     when 'center' then '='
+                     when 'right'  then '>'
+                     when 'justify' then '<>'
+                     end
+        end
+
+        css = process_css(node, styles)
+        if css && css != ""
+          attribs += textile ? "{#{css}}" : %Q( style="#{css}")
+        end
+
       end
       attribs
     end
@@ -225,18 +262,9 @@ module Undress
       ret[-1] == '.' ? "#{ret} " : "#{ret}. "
     end
 
-    # some textile does not work in table cells.
-    # trying to work around this as good as possible
+    # empty cells cause problems when parsing the textile
     def cell_content_of(node)
-      content = content_of(node)
-      return " " if content == ""
-      # p in cells does not work. apply the style to td instead.
-      # TODO: figure out if we have some style applied already.
-      if content[0..1] == 'p{'
-        content[1..-1]
-      else
-        content
-      end
+      content_of(node) == "" ? " " : content_of(node)
     end
   end
 

@@ -118,14 +118,27 @@ module Undress
     # string representation. Otherwise it will call the rule defined for it.
     def process(nodes)
       Array(nodes).map do |node|
-        if node.text?
+        if node.text? and parent_allows_text?(node)
           node.to_html
         elsif node.elem?
-          send node.name.to_sym, node if ! defined?(ALLOWED_TAGS) || ALLOWED_TAGS.empty? || ALLOWED_TAGS.include?(node.name)
+          send node.name.to_sym, node if tag_allowed?(node.name)
         else
           ""
         end
       end.join("")
+    end
+
+    def tag_allowed?(name)
+      !defined?(ALLOWED_TAGS) ||
+        ALLOWED_TAGS.empty? ||
+        ALLOWED_TAGS.include?(name)
+    end
+
+    def parent_allows_text?(node)
+      !defined?(NO_TEXT_TAGS) ||
+        NO_TEXT_TAGS.empty? ||
+        node.parent.nil? ||
+        !NO_TEXT_TAGS.include?(node.parent.name)
     end
 
     def process!(node) #:nodoc:
@@ -198,9 +211,9 @@ module Undress
 
     def styles(node)
       return unless style_attrib = node[:style]
-      styles = style_attrib.scan /(\S+):\s*(([^&;]+|&[^&;\s]+;)+)[;$]/
+      styles = style_attrib.scan /(\S+):\s*(([^&;]+|&[^&;\s]+;)+)\s*(;|$)/
       styles.map{|a| [a[0], a[1]]}.inject({}) do |hash,(key,value)|
-        hash[key.to_sym] = value if whitelisted_styles.include?(key.to_sym)
+        hash[key.downcase.to_sym] = value.downcase if whitelisted_styles.include?(key.to_sym)
         hash
       end
     end

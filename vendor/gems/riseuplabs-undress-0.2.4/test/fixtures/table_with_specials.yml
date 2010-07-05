@@ -1,0 +1,54 @@
+# spaces after the </tr> tags are a problematic
+# bgcolor attribute should be translated to background-color style
+html: |-
+  <table>
+  <thead>
+  	<tr class="odd">
+  		<td bgcolor='#c4bc96'>a</td> 
+  		<td>b</td> 
+  		<td>c</td> 
+  	</tr> 
+  </thead> 
+  <tbody> 
+  	<tr class="even"> 
+  		<td>1</td> 
+  		<td>2</td> 
+  		<td>3</td> 
+  	</tr> 
+  </tbody>
+  </table>
+in: |
+  |{background-color: #c4bc96}. a|b|c|
+  |1|2|3|
+---
+# paras with aligns should be added using spans and <br/>
+# para spanning the whole cell should set cells style
+html: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td> 
+  		<td><p align=RIGHT>b</p>c</td>
+  		<td align=right>c</td>
+  	</tr>
+  	<tr class="even">
+  		<td align=CENTER>1</td>
+  		<td bgcolor='#6789ab'><p align=CENTER>2</p></td>
+  		<td style='text-align:center'>3</td>
+  	</tr>
+  </table>
+in: |
+  |a|<p style="text-align: right">b</p>c|>. c|
+  |=. 1|={background-color: #6789ab}. 2|=. 3|
+out: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td> 
+  		<td><p style="text-align: right;">b</p>c</td>
+  		<td style="text-align:right;">c</td>
+  	</tr>
+  	<tr class="even">
+  		<td style="text-align:center;">1</td>
+  		<td style="text-align:center; background-color: #6789ab;">2</td>
+  		<td style='text-align:center;'>3</td>
+  	</tr>
+  </table>
