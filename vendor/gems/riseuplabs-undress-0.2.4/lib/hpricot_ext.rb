@@ -80,7 +80,11 @@ module ::Hpricot #:nodoc:
       while node.respond_to?(:parent) && node.name != tag
         node = node.parent
       end
-      node if node.name == tag
+      if node and node.name == tag
+        node
+      else
+        false
+      end
     end
 
     def change_tag!(new_tag, preserve_attr = true)
