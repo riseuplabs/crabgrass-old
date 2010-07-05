@@ -15,7 +15,7 @@
     <% next if @page.nil? %>
     <tr class="<%=cycle('row_0', 'row_1')%>">
       <td><%= flagged_page_link(@page) %></td>
-      <%= show_flag_details(flag) %>
+      <%= show_flag_details(flag) unless @current_view =~ /^public/ %>
       <td><%= listing_custom_column_content(@page, @current_view) %></td>
       <td><%=h @page.created_at.strftime("%d %b, %Y ") %></td>
       <td><%= list_created_by(@page) %></td>
@@ -25,6 +25,8 @@
             <%= link_to "Remove Public", { :action => 'remove_public', :id => @page.id, :view => @current_view }, :method => :post %>
         <% elsif @current_view =~ /^public.*requested/ %>
              <%= link_to "Approve Public", { :action => 'update_public', :id => @page.id, :view => @current_view, :public=>true }, :method => :post %>
+             | 
+             <%= link_to "Reject Public", { :action => 'update_public', :id => @page.id, :view => @current_view, :public=>false }, :method => :post %>
         <% else %>
           <% actions_for(@current_view).each do |action| %>
             <%= button_to_action(action, params) %>
