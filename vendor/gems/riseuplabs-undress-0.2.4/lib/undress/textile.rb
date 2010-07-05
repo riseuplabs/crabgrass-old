@@ -208,6 +208,7 @@ module Undress
                      when 'center' then '='
                      when 'right'  then '>'
                      when 'justify' then '<>'
+                     else ''
                      end
         end
 
