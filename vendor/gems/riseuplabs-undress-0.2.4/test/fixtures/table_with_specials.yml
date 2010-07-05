@@ -52,3 +52,51 @@ out: |-
   		<td style='text-align:center;'>3</td>
   	</tr>
   </table>
+---
+# paste from OO.org causing too complicated markup
+# we should remove empty paras first and then process the others.
+html: |
+  <p>
+    <table cellspacing="0" cellpadding="7" bordercolor="#000000" border="1" width="620"> <col width="20"> <col width="570"> 
+      <tbody>
+        <tr valign="TOP"> 
+          <td bgcolor="#c0c0c0" width="20" height="341"> 
+            <p align="CENTER" style="margin-bottom: 0cm;"><font face="Arial Narrow, sans-serif"><b>
+  			test paras found multiple times</b></font></p> 
+            <p align="CENTER"><br> </p> 
+          </td> 
+          <td>fillin</td>
+        </tr> 
+      </tbody>
+    </table> <br>
+  </p>
+in: |
+  |={background-color: #c0c0c0}. *test paras found multiple times*|fillin|
+---
+# paste from OO.org causing crash
+# we need to check if a para has been processed before so we do not duplicate swaps
+html: |
+  <p>
+    <table cellspacing="0" cellpadding="7" bordercolor="#000000" border="1" width="620"> <col width="20"> <col width="570"> 
+      <tbody>
+        <tr valign="TOP">
+         <td>fillin</td>
+          <td width="570"> 
+            <ul>
+              <li>
+                <p style="margin-bottom: 0cm;"><font face="Arial Narrow, sans-serif">
+  				para with attribs that is both... in a table and in a list</font></p> 
+              </li>
+              <li>
+                <p><font face="Arial Narrow, sans-serif">
+  				para without attribs that is both in a table and a list.
+                </font></p> 
+              </li>
+            </ul> 
+          </td> 
+        </tr> 
+      </tbody>
+    </table> <br>
+  </p>
+in: |
+  no good solution yet

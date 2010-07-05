@@ -87,6 +87,12 @@ module ::Hpricot #:nodoc:
       end
     end
 
+    def still_attached?
+      # sometimes we have left over elements in searches that have
+      # been swapped already.
+      self.parent.children.detect {|sib| sib == self}
+    end
+
     def change_tag!(new_tag, preserve_attr = true)
       return if not etag
       self.name = new_tag
