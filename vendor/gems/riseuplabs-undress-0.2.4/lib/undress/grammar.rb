@@ -119,7 +119,7 @@ module Undress
     def process(nodes)
       Array(nodes).map do |node|
         if node.text? and parent_allows_text?(node)
-          node.to_html
+          node.to_html.gsub('&amp;', '&')
         elsif node.elem?
           send node.name.to_sym, node if tag_allowed?(node.name)
         else

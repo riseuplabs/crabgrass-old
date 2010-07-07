@@ -49,7 +49,7 @@ module Undress
     # text formatting
     rule_for(:pre) {|e|
       if e.children && e.children.all? {|n| n.text? && n.content =~ /^\s+$/ || n.elem? && n.name == "code" }
-        "\n\n<code>#{unescaped_content_of(e % "code")}</code>"
+        "\n\n<code>#{unescaped_content_of((e % "code") || e)}</code>"
       else
         "\n\n<pre>#{unescaped_content_of(e)}</pre>"
       end
@@ -69,22 +69,21 @@ module Undress
     }
 
     def unescaped_content_of(e)
-      e.children.map { |x| x.to_plain_text }.join
+      if e and e.children
+        e.children.map { |x| x.to_plain_text }.join
+      else
+        ''
+      end
     end
 
     def process_headings(h)
-      h.children.each {|e|
-        next if e.class == Hpricot::Text
-        e.parent.replace_child(e, "") if e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
-      }
-      case h.name
-        when "h1"
-          "#{content_of(h)}\n#{'=' * h.inner_text.size}\n\n" if h.name == "h1"
-        when "h2"
-          "#{content_of(h)}\n#{'-' * h.inner_text.size}\n\n" if h.name == "h2"
-        else
-          "#{h.name}. #{content_of(h)}\n\n"
+      if h.children
+        h.children.each {|e|
+          next if e.class == Hpricot::Text
+          e.parent.replace_child(e, "") if e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
+        }
       end
+      "#{h.name}. #{content_of(h)}\n\n"
     end
 
     def process_links_and_anchors(e)
@@ -114,31 +113,51 @@ module Undress
     def process_link(e)
       # title = e.has_attribute?("title") ? " (#{e["title"]})" : ""
       # return "#{content_of(e)}#{title}:#{e["href"]}"
-      inner, href = content_of(e), e.get_attribute("href")
+      href = e.get_attribute("href")
       case href
       when /^\/?#/
-        link_syntax(inner,href)
+        link_syntax(e, href)
       when /^[^\/]/
-        link_syntax(inner,href)
+        link_syntax(e, href)
       when /^\/.[^\/]*\/.[^\/]*\//
-        link_syntax(inner,href)
+        link_syntax(e, href)
       when /(?:\/page\/\+)[0-9]+$/
-        link_syntax(inner, "+#{href.gsub(/\+[0-9]+$/)}]")
+        link_syntax(e, "+#{href.gsub(/\+[0-9]+$/)}]")
       else
         process_as_wiki_link(e)
       end
     end
 
-    def link_syntax(inner,href)
-      return "[#href]" if inner == href
-      return "[#{href}]" if href.gsub(/^(https?|s?ftp):\/\//, "") == inner
-      inner=quote_if_needed(inner)
-      "#{inner}:#{href}"
+    def link_syntax(e, href)
+      inner = content_of(e)
+      if abbrev?(inner, href)
+        if href[0...10] == "http://www"
+          href[7..-1]
+        elsif href[0...7] == "http://" or
+          href[0...4] == "www." or
+          href[0...8] == "https://"
+          href
+        else
+          "[#{href}]"
+        end
+      elsif i = e % :img and i.single_child?
+        "#{inner}:#{href}"
+      elsif complete_word?(e)
+        %Q("#{inner}":#{href})
+      else
+        "[#{inner}->#{href}]"
+      end
+    end
+
+    def abbrev?(short, long)
+      return true if short == long
+      short = short[0...-3] if short[-3..-1] == "..."
+      long.index(short)
     end
 
     # TODO: actually check if we have an image not just the !
     def quote_if_needed(inner)
-      if inner[0] == '!' and inner[-1] == '!'
+      if inner[0..0] == '!' and inner[-1..-1] == '!'
         inner
       else
         '"' + inner + '"'

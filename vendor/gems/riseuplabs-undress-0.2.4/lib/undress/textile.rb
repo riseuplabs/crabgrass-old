@@ -15,13 +15,11 @@ module Undress
 
     # we try to get rid of unnecessary paras...
     pre_processing("td p, th p, li p") do |p|
-      if p.parent.children.detect{ |sib| sib != p and sib.to_html.match /\S/}
-        if p.attributes.to_hash.empty? and p.still_attached?
-          p.swap p.inner_html + "<br/>"
-        end
-      else
+      if p.single_child?
         Hpricot::Elements[p.parent].set p.attributes.to_hash
         p.swap p.inner_html
+      elsif p.attributes.to_hash.empty? and p.still_attached?
+        p.swap p.inner_html + "<br/>"
       end
     end
 
@@ -55,7 +53,7 @@ module Undress
       "!#{e["src"]}#{alt}!"
     }
     rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : wrap_with('%', e) }
-    rule_for(:strong, :b)  {|e| wrap_with('*', e) }
+    rule_for(:strong, :b)  {|e| wrap_with('*', e, true) }
     rule_for(:em)      {|e| wrap_with('_', e) }
     rule_for(:code)    {|e| "@#{attributes(e)}#{content_of(e)}@" }
     rule_for(:cite)    {|e| "??#{attributes(e)}#{content_of(e)}??" }
@@ -65,14 +63,14 @@ module Undress
     rule_for(:del)     {|e| wrap_with('-', e) }
     rule_for(:acronym) {|e| e.has_attribute?("title") ? "#{content_of(e)}(#{e["title"]})" : content_of(e) }
 
-    def wrap_with(char, node, wrap = nil)
-      wrap = complete_node?(node) if wrap.nil?
+    def wrap_with(char, node, no_wrap = nil)
+      no_wrap = complete_word?(node) if no_wrap.nil?
       content = content_of(node)
       prefix = content.lstrip! ? " " : ""
       postfix = content.chomp! ? "<br/>" : ""
       postfix = content.rstrip! ? " #{postfix}" : postfix
       return if content == ""
-      if wrap
+      if no_wrap
         "#{prefix}#{char}#{attributes(node)}#{content}#{char}#{postfix}"
       else
         "#{prefix}[#{char}#{attributes(node)}#{content}#{char}]#{postfix}"
@@ -88,6 +86,8 @@ module Undress
       elsif e.ancestor('table')
         # can't use p textile in tables
         html_node(e, complex_table?(e))
+      elsif content_of(e).match('\A(<br\s?\/?>|\s|\n)*\z')
+        "\n\n"
       else
         "\n\n#{at}#{content_of(e)}\n\n"
       end

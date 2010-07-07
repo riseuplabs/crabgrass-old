@@ -87,6 +87,10 @@ module ::Hpricot #:nodoc:
       end
     end
 
+    def single_child?
+      ! self.parent.children.detect{ |sib| sib != self and sib.to_html.match /\S/}
+    end
+
     def still_attached?
       # sometimes we have left over elements in searches that have
       # been swapped already.
