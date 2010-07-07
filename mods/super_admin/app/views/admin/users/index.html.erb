@@ -1,39 +1,21 @@
-<h1>Edit Users</h1>
-  <div class='info_box'>
-    <%= 'Total number of users: %s' % @users.total_entries %>
-  </div>
+<h1><%= users_heading %></h1>
+<div class='info_box'>
+  <%= 'Total number of users: %s' % @users.total_entries %>
+  <span style='float: right'>
+    <form action='/admin/users'>
+    <select name='show'>
+      <option value='' <%= filter_users_selected('all') %>>View all users</option>
+      <option value='active' <%= filter_users_selected('active') %>>View active users</option>
+      <option value='inactive' <%= filter_users_selected('inactive') %>> View inactive users</option>
+    </select>
+    <input type='submit' value='Go'>
+    </form>
+  </span>
+</div>
 
-<%= alphabetical_filter(:controller => 'admin/users') %>
+<%= letter_pagination_links(letter_pagination_url, :available_letters => @pagination_letters) %>
 
-<table class="pretty">
-  <tr>
-    <th>Login</th>
-    <th>Display name</th>
-    <th>Email</th>
-    <th>Last Login</th>
-    <th>&nbsp;</th>
-  </tr>
-  <% if @users.any? -%>
-    <% @users.each do |user| %>
-      <tr class="<%=cycle('row_0', 'row_1')%>">
-        <td><%= link_to user.login, url_for_user(user) %></td>
-        <td><%=h user.display_name %></td>
-        <td><%=h user.email %></td>
-        <td><%= friendly_date(user.last_seen_at) %></td>
-        <td style="padding-right:0em;">
-          <span class="actions">
-            <%= link_to 'Show', user %>
-            <%= link_to 'Edit', edit_user_path(user) %>
-            <%= link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id %>
-            <%= link_to 'Destroy', user_path(user), :confirm => "Are you sure you want to delete user '#{user.login}'?", :method => :delete %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  <% else -%>
-    <tr><td colspan="4"><i>No Match</i></td></tr>
-  <% end -%>
-</table>
+<%= render :partial => 'user_table' %>
 
 <%= pagination_links @users %>
 

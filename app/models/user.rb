@@ -46,6 +46,14 @@ class User < ActiveRecord::Base
 
   named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
 
+  named_scope :active_since, lambda{ |since|
+    {:order => 'users.last_seen_at DESC', :conditions => ["users.last_seen_at > ?", since]} 
+  }
+
+  named_scope :inactive_since, lambda{ |since|
+    {:order => 'users.last_seen_at ASC', :conditions => ["users.last_seen_at < ?", since]}
+  }
+
   # alphabetized and (optional) limited to +letter+
   named_scope :alphabetized, lambda {|letter|
     opts = {
