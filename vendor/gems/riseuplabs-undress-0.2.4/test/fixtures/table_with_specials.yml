@@ -100,3 +100,52 @@ html: |
   </p>
 in: |
   no good solution yet
+---
+# make sure tables in paras work
+html: |
+  <p align='center'>
+    <table>
+      <tr>
+        <td>test</td><td>me</td>
+      </tr>
+    </table>
+  </p>
+
+in: |
+  <p style="text-align:center;">
+  |test|me|
+  </p>
+
+---
+# make sure tables in divs work
+html: |
+  <div align='center'>
+    <table>
+      <tr>
+        <td>test</td><td>me</td>
+      </tr>
+    </table>
+  </div>
+
+in: |
+  <p style="text-align: center;">
+  |test|me|
+  </p>
+---
+# This is no joke - excel actually produces this as copy and paste
+html: |
+  first
+  <tr>
+    <td>test</td><td>me</td>
+  </tr><tr>
+    <td>second</td><td>row</td>
+  </tr>
+  last
+
+in: |
+  first
+
+  |test|me|
+  |second|row|
+  last
+

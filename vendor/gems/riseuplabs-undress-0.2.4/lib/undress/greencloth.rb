@@ -68,6 +68,25 @@ module Undress
       e.to_html
     }
 
+    # text formatting and layout
+    rule_for(:p, :div) do |e|
+      at = ( attributes(e) != "" ) ?
+        "p#{attributes(e)}. " : ""
+      if e.parent and e.parent.name == 'blockquote'
+        "#{at}#{content_of(e)}\n\n"
+      elsif e.search('table').any?
+        html_node(e, true, 'p')
+      elsif e.ancestor('table')
+        # can't use p textile in tables
+        html_node(e, complex_table?(e), 'p')
+      elsif content_of(e).match('\A(<br\s?\/?>|\s|\n)*\z')
+        # empty para gets converted to newlines
+        "\n\n"
+      else
+        "\n\n#{at}#{content_of(e)}\n\n"
+      end
+    end
+
     def unescaped_content_of(e)
       if e and e.children
         e.children.map { |x| x.to_plain_text }.join
@@ -83,31 +102,39 @@ module Undress
           e.parent.replace_child(e, "") if e.has_attribute?("href") && e["href"] !~ /^\/|(https?|s?ftp):\/\//
         }
       end
-      "#{h.name}. #{content_of(h)}\n\n"
+      "#{h.name}#{attributes(h)}. #{content_of(h)}\n\n"
     end
 
     def process_links_and_anchors(e)
       if e.empty?
         ""
-      elsif anchor_outside_headings?(e)
+      elsif heading_anchor?(e)
+        content_of(e)
+      elsif e.get_attribute("name")
         process_anchor(e)
-      elsif not (e.get_attribute("href").nil? || e.get_attribute("href") == '')
-        process_link(e)
       else
-        ""
+        process_link(e)
       end
     end
 
-    def anchor_outside_headings?(e)
+    def heading_anchor?(e)
       e.get_attribute("name") and
-      e.parent.is_a?(Hpricot::Doc) || !e.parent.name.match(/^h1|2|3|4|5|6$/)
+      content_of(e) == "" and
+      e.previous_node == nil and
+      e.parent.respond_to?(:name) and
+      parent = e.parent.name and
+      parent.match(/^h1|2|3|4|5|6$/)
     end
 
     def process_anchor(e)
-      inner, name = content_of(e), e.get_attribute("name")
-      inner == name || inner == name.gsub(/-/,"\s") ?
-        "[# #{inner} #]" :
-        "[# #{inner} -> #{name} #]"
+      name = e.get_attribute("name")
+      if e.get_attribute("href")
+        "[#  -> #{name} #] #{process_link(e)}"
+      elsif name == content_of(e).gsub(/\s/,'-')
+        "[# #{content_of(e)} #]"
+      else
+        "[# -> #{name} #] #{content_of(e)}"
+      end
     end
 
     def process_link(e)
@@ -115,6 +142,8 @@ module Undress
       # return "#{content_of(e)}#{title}:#{e["href"]}"
       href = e.get_attribute("href")
       case href
+      when nil, ''
+        content_of(e)
       when /^\/?#/
         link_syntax(e, href)
       when /^[^\/]/
