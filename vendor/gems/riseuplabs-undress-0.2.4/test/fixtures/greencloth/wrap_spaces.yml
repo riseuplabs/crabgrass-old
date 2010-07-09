@@ -1,0 +1,72 @@
+# test paste from christophe, see mail 06-22
+---
+html: |
+  <h2>Table test</h2>
+    <p> This table:&nbsp;</p>
+    <p>
+      <table style="width: 100%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; border-collapse: collapse; " cellpadding="5">
+        <tbody>
+          <tr>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong><br /></strong></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong>Week1</strong></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong>Week 2&nbsp;</strong></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong>Week 3&nbsp;</strong></td>
+          </tr>
+          <tr>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; ">Cours sur l'accréditation</td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><span style="background-color: #ffffff; "><strong>X&nbsp;</strong></span></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><span style="background-color: #ffff10; "><strong>X&nbsp;</strong></span></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong><span style="background-color: #ffffff; "> </span></strong></td>
+          </tr>
+          <tr>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; ">Examens pratiques et remise des diplômes&nbsp;</td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "> </td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><strong><span style="background-color: #ffffff; "> </span></strong></td>
+            <td style="border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-style: dotted; border-right-style: dotted; border-bottom-style: dotted; border-left-style: dotted; border-top-color: #000000; border-right-color: #000000; border-bottom-color: #000000; border-left-color: #000000; "><span style="background-color: #ffff10; "><strong>X&nbsp;</strong></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </p>
+    <p> </p>
+    <p>Should reflect the &nbsp;way we want to use tables on the CG platform.</p>
+
+in: |
+  Table test
+  ----------
+  
+   This table: 
+  
+  ||*Week1*|*Week 2* |*Week 3* |
+  |Cours sur l'accréditation|*X* |%{background-color: #ffff10}*X*% ||
+  |Examens pratiques et remise des diplômes|||%{background-color: #ffff10}*X*% |
+     
+  
+   
+  
+  Should reflect the  way we want to use tables on the CG platform.
+
+out: |
+  <h2 class="first">Table test</h2>
+  This table:
+  <table>
+  	<tr class="odd">
+  		<td></td>
+  		<td><strong>Week1</strong></td>
+  		<td><strong>Week 2</strong> </td>
+  		<td><strong>Week 3</strong> </td>
+  	</tr>
+  	<tr class="even">
+  		<td>Cours sur l&#8217;accréditation</td>
+  		<td><strong>X</strong> </td>
+  		<td><span style="background-color: #ffff10;"><strong>X</strong></span> </td>
+  		<td></td>
+  	</tr>
+  	<tr class="odd">
+  		<td>Examens pratiques et remise des diplômes</td>
+  		<td></td>
+  		<td></td>
+  		<td><span style="background-color: #ffff10;"><strong>X</strong></span> </td>
+  	</tr>
+  </table>
+  <p>Should reflect the  way we want to use tables on the CG platform.</p>
+

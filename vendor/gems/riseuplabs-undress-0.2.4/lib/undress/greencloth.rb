@@ -10,7 +10,7 @@ module Undress
       'div', 'a', 'img', 'br', 'i', 'u', 'b', 'pre', 'kbd', 'code', 'cite', 'strong', 'em',
       'ins', 'sup', 'sub', 'del', 'table', 'tbody', 'thead', 'tr', 'td', 'th', 'ol', 'ul',
       'li', 'p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'notextile', 'blockquote',
-      'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt', 'font'
+      'object', 'embed', 'param', 'acronym', 'dd', 'dl', 'dt', 'font', 'textarea'
     ]
 
     Undress::NO_TEXT_TAGS = %w(img br table tbody thead tr ol ul)
@@ -26,6 +26,10 @@ module Undress
     # inline elements
     rule_for(:a) {|e|
       "#{process_links_and_anchors(e)}"
+    }
+
+    rule_for(:notextile) {|e|
+      "<notextile>#{unescaped_content_of(e)}</notextile>"
     }
 
     # lists

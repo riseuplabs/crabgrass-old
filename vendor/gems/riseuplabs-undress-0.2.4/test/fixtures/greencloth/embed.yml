@@ -1,0 +1,7 @@
+---
+in: do you like my embedded blip.tv <embed src="http://blip.tv/play/Ac3GfI+2HA" type="application/x-shockwave-flash" width="720" height="510" allowscriptaccess="always" allowfullscreen="true"></embed>?
+out: <p>do you like my embedded blip.tv <embed src="http://blip.tv/play/Ac3GfI+2HA" type="application/x-shockwave-flash" width="720" height="510" allowscriptaccess="always" allowfullscreen="true"></embed>?</p>
+---
+in: do you like my embedded youtube <object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/suvDQoXA-TA&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/suvDQoXA-TA&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>?
+out: <p>do you like my embedded youtube <object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/suvDQoXA-TA&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.com/v/suvDQoXA-TA&hl=en&fs=1" type="application/x-shockwave-flash" width="425" height="344" allowfullscreen="true"></embed></object>?</p>
+

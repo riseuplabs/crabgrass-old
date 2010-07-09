@@ -48,9 +48,9 @@ module Undress
       "[#{content_of(e)}#{title}:#{e["href"]}]"
     }
     rule_for(:img) {|e|
-      alt = e.has_attribute?("alt") && e["alt"]
-      alt = "(#{alt})" unless alt == ""
-      "!#{e["src"]}#{alt}!"
+      alt = e["alt"]
+      alt = "(#{alt})" if alt and alt != ""
+      "!#{attributes(e)}#{e["src"]}#{alt}!"
     }
     rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : wrap_with('%', e) }
     rule_for(:strong, :b)  {|e| wrap_with('*', e, true) }
