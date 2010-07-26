@@ -3,7 +3,7 @@
 /
 
 - if yield :banner
-  %div.banner
+  %div{:class=>"banner #{@active_tab}"}
     #banner-container
       %header#banner
         = yield :banner

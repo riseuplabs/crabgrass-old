@@ -1,5 +1,5 @@
 
-%div.banner
+%div{:class=>"banner #{@active_tab}"}
   #banner-container.no-avatar
     %header#banner-no-avatar
       = yield :banner
