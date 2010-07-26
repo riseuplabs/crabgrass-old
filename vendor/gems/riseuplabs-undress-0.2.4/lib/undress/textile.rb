@@ -66,9 +66,9 @@ module Undress
     def wrap_with(char, node, no_wrap = nil)
       no_wrap = complete_word?(node) if no_wrap.nil?
       content = content_of(node)
-      prefix = content.lstrip! ? " " : ""
+      prefix = content.sub!(/^(&nbsp;|\s)*/, "") ? " " : ""
       postfix = content.chomp! ? "<br/>" : ""
-      postfix = content.rstrip! ? " #{postfix}" : postfix
+      postfix = content.sub!(/(&nbsp;|\s)*$/, "") ? " #{postfix}" : postfix
       return if content == ""
       if no_wrap
         "#{prefix}#{char}#{attributes(node)}#{content}#{char}#{postfix}"
@@ -151,8 +151,11 @@ module Undress
     # excel actually creates invalid html in some pastes
     # so let's be super robust here...
     def tr_without_table?(node)
-      !node.ancestor('table') and
-      !node.previous_node || node.previous_node.name != 'tr'
+      return false if node.ancestor('table')
+      while node = node.previous
+        return false if node.name == 'tr'
+        return true if node.name != ''
+      end
     end
 
     def html_node(node, with_newline = true, tag = nil)

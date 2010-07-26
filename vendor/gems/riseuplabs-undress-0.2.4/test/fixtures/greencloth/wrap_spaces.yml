@@ -36,9 +36,9 @@ in: |
   
    This table: 
   
-  ||*Week1*|*Week 2* |*Week 3* |
-  |Cours sur l'accréditation|*X* |%{background-color: #ffff10}*X*% ||
-  |Examens pratiques et remise des diplômes|||%{background-color: #ffff10}*X*% |
+  | |*Week1*|*Week 2* |*Week 3* |
+  |Cours sur l'accréditation|*X* |%{background-color: #ffff10}*X*% | |
+  |Examens pratiques et remise des diplômes| | |%{background-color: #ffff10}*X*% |
      
   
    
@@ -69,4 +69,27 @@ out: |
   	</tr>
   </table>
   <p>Should reflect the  way we want to use tables on the CG platform.</p>
+---
+# fix paste issues with &nbsp; - found by yuanyuan Jul 14th.
+html: |
+  <strong><span style="background-color: #ff5f10; ">test coming&nbsp;</span></strong>
+
+in: |
+  *%{background-color: #ff5f10}test coming%*
+
+out: |
+  <strong><span style="background-color: #ff5f10; ">test coming</span></strong> 
+
+---
+# fix paste issues with &nbsp; - found by yuanyuan Jul 14th.
+html: |
+  <span style="background-color: #ff5f10; "><strong>TEST coming&nbsp;</strong></span>
+
+in: |
+  [%{background-color: #ff5f10}*TEST coming*%]
+
+out: |
+  <span style="background-color: #ff5f10; "><strong>TEST coming</strong></span>
+
+
 
