@@ -62,6 +62,7 @@ class Conf
   cattr_accessor :enabled_languages
   cattr_accessor :email
   cattr_accessor :sites
+  cattr_accessor :themes
   cattr_accessor :secret
   cattr_accessor :paranoid_emails
   cattr_accessor :ensure_page_owner
@@ -118,6 +119,7 @@ class Conf
     self.enabled_languages = []
     self.email         = nil
     self.sites         = []
+    self.themes        = {}
     self.secret        = nil
     self.ensure_page_owner = true
     self.default_page_access = :admin
