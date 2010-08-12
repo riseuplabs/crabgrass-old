@@ -13,4 +13,13 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
     render(:partial => '/admin/base/super_admin_nav') if may_super?
   end
 
+  def default_path_finder_options(context)
+    return false if !current_user.superadmin?
+    options = {}
+    options[:group_ids] = [ context[:group].id ]
+    options[:public] = false
+    options[:user_ids] = false
+    return options
+  end
+
 end
