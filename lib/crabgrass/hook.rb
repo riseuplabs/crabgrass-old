@@ -47,12 +47,26 @@ module Crabgrass #:nodoc:
       # Calls a hook.
       # Returns the listeners response.
       def call_hook(hook, context={})
+        listeners = hook_listeners(hook)
+        if listeners.size > 1
+          raise 'too many listeners for call_hook!'
+        elsif listeners.size < 1 
+          return
+        end
+        listeners[0].delegate_to(context[:delegate_to]) if context[:delegate_to]
+        listeners[0].send(hook, context)
+      end
+
+      def call_hooks(hook, context={}, options={})
+        options[:format] ||= :string
         response = []
         hook_listeners(hook).each do |listener|
           listener.delegate_to(context[:delegate_to]) if context[:delegate_to]
-          response << listener.send(hook, context).to_s
+          response << listener.send(hook, context)
         end
-        response.join("\n")
+        if options[:format] == :string
+          response.join("\n")
+        end
       end
     end
 
@@ -88,9 +102,18 @@ module Crabgrass #:nodoc:
     #
     # Current project is automatically added to the call context.
     module Helper
+      def hook_defaults
+        {:page => @page, :user => @user, :group => @group, :delegate_to => self, :session => session, :params => params}
+      end
       def call_hook(hook, context={})
-        defaults = {:page => @page, :user => @user, :group => @group, :delegate_to => self, :session => session, :params => params}
-        Crabgrass::Hook.call_hook(hook, defaults.merge(context))
+        Crabgrass::Hook.call_hook(hook, hook_defaults.merge(context))
+      end
+      # use call_hooks to call multiple hooks with the same name
+      # use the following to return an array of return values from the hooks:
+      # options[:format] = :array
+      # otherwise returns a joined string of the responses
+      def call_hooks(hook, context={}, options={})
+        Crabgrass::Hook.call_hooks(hook, hook_defaults.merge(context), options)
       end
     end
   end
