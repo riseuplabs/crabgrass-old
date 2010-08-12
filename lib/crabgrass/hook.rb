@@ -58,13 +58,12 @@ module Crabgrass #:nodoc:
       end
 
       def call_hooks(hook, context={}, options={})
-        options[:format] ||= :string
         response = []
         hook_listeners(hook).each do |listener|
           listener.delegate_to(context[:delegate_to]) if context[:delegate_to]
           response << listener.send(hook, context)
         end
-        if options[:format] == :string
+        unless options[:format] == :array
           response.join("\n")
         end
       end
