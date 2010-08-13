@@ -15,6 +15,8 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
 
   def default_path_finder_options(context)
     return false if !current_user.superadmin?
+    # currently only want to overwrite data for groups
+    return if context[:group].nil?
     options = {}
     options[:group_ids] = [ context[:group].id ]
     options[:public] = false
