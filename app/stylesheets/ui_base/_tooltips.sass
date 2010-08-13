@@ -1,22 +1,16 @@
-#-
-  .tooltip
-    position: relative
-    .caption
-      z-index: auto
-      text-decoration: underline
-    .content
-      +border-radius(5px)
-      display: none
-      z-index: 10
+.tooltip
+  position: relative
+  span
+    display: none 
+    padding: 1em
+    width: 25em
+    border: 1px solid #666
+    background-color: #FFFFAA
+    color: #000
+    z-index: 100
+  &:hover
+    span
+      display: inline 
       position: absolute
-      top: 4px
-      left: 0
-      padding: 1em
-      background-color: black
-      color: white
-      font-weight: bold
-      width: 300px
-    &:hover .content
-      display: inline
-
-
+      top: 10px
+      left: 30px
