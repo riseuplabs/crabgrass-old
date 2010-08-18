@@ -7,5 +7,6 @@ Dispatcher.to_prepare do
 end
 
 apply_mixin_to_model(Site, SiteExtension)
+apply_mixin_to_model(Request, RequestExtension)
 
 #apply_mixin_to_model(User, SuperAdminUserExtension)
