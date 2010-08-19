@@ -38,10 +38,11 @@
   last_seen_at: <%= rand(10).days.ago.to_s :db %>
 <% end %>
 
-inactive_user
+inactive_user:
   id: 14
-  login: inactive_user
+  login: "inactive_user"
   display_name: "Inactive User"
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--inactive_user--") %>
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--inactive_user--") %>
   last_seen_at: <%= 5.months.ago %>
 
