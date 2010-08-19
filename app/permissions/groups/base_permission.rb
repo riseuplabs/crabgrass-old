@@ -131,6 +131,10 @@ module Groups::BasePermission
     current_user.may?(:admin,group)
   end
 
+  def may_edit_group_wiki?(group=@group)
+    current_user.may?(:admin,group) or group.profiles.public.members_may_edit_wiki?
+  end
+
   ##
   ## SEARCHING
   ##

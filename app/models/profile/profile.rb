@@ -53,6 +53,7 @@ Order of profile presidence (user sees the first one that matches):
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html",
     t.integer  "geo_location_id"
+    t.boolean  "members_may_edit_wiki"	:default => true
   end
 
 Applies to both groups and users: may_see, may_see_groups
@@ -60,7 +61,7 @@ Applies to both groups and users: may_see, may_see_groups
 Applies to users only: may_see_contacts, may_request_contact, may_pester
 
 Applies to groups only: may_see_committees, may_see_networks, may_see_members,
-  may_request_membership, membership_policy
+  may_request_membership, membership_policy, members_may_edit_wiki
 
 Currently unused: may_burden, may_spy, language.
 
@@ -182,7 +183,7 @@ class Profile < ActiveRecord::Base
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
       "may_burden", "may_spy", "peer", "photo", "video", "summary", "admins_may_moderate",
-      "country_id","state_id","city_id"]
+      "country_id","state_id","city_id", "members_may_edit_wiki"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
