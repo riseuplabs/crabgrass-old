@@ -9,6 +9,7 @@ module UserExtension::SuperAdmin
       alias_method_chain :friend_of?, :superadmin
       alias_method_chain :peer_of?, :superadmin
       alias_method_chain :may!, :superadmin
+      alias_method_chain :may?, :superadmin
     end
   end
 
@@ -59,6 +60,12 @@ module UserExtension::SuperAdmin
       return true if superadmin?
       return may_without_superadmin!(perm, object)
     end
+
+    def may_with_superadmin?(perm, object)
+      return true if superadmin?
+      return may_without_superadmin?(perm, object)
+    end
+
   end
 
 end

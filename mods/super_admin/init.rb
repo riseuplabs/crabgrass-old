@@ -8,5 +8,9 @@ end
 
 apply_mixin_to_model(Site, SiteExtension)
 apply_mixin_to_model(Request, RequestExtension)
+apply_mixin_to_model(RequestToJoinUs, RequestToJoinUsExtension)
 
-#apply_mixin_to_model(User, SuperAdminUserExtension)
+# this isn't necessary:
+#apply_mixin_to_model(User, UserExtension::SuperAdmin)
+# because this is in the core user model:
+#  include UserExtension::SuperAdmin rescue NameError
