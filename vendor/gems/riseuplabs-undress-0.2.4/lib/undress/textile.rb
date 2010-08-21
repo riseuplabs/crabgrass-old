@@ -53,7 +53,7 @@ module Undress
       "!#{attributes(e)}#{e["src"]}#{alt}!"
     }
     rule_for(:span)  {|e| attributes(e) == "" ? content_of(e) : wrap_with('%', e) }
-    rule_for(:strong, :b)  {|e| wrap_with('*', e, true) }
+    rule_for(:strong, :b)  {|e| wrap_with('*', e) }
     rule_for(:em)      {|e| wrap_with('_', e) }
     rule_for(:code)    {|e| "@#{attributes(e)}#{content_of(e)}@" }
     rule_for(:cite)    {|e| "??#{attributes(e)}#{content_of(e)}??" }
@@ -66,9 +66,9 @@ module Undress
     def wrap_with(char, node, no_wrap = nil)
       no_wrap = complete_word?(node) if no_wrap.nil?
       content = content_of(node)
-      prefix = content.sub!(/^(&nbsp;|\s)*/, "") ? " " : ""
+      prefix = content.sub!(/^(&nbsp;|\s)+/, "") ? " " : ""
       postfix = content.chomp! ? "<br/>" : ""
-      postfix = content.sub!(/(&nbsp;|\s)*$/, "") ? " #{postfix}" : postfix
+      postfix = content.sub!(/(&nbsp;|\s)+$/, "") ? " #{postfix}" : postfix
       return if content == ""
       if no_wrap
         "#{prefix}#{char}#{attributes(node)}#{content}#{char}#{postfix}"
@@ -79,7 +79,7 @@ module Undress
 
     # text formatting and layout
     rule_for(:p, :div) do |e|
-      at = ( e.name == 'div' or attributes(e) != "" ) ?
+      at = ( attributes(e) != "" ) ?
         "#{e.name}#{attributes(e)}. " : ""
       if e.parent and e.parent.name == 'blockquote'
         "#{at}#{content_of(e)}\n\n"
@@ -91,11 +91,12 @@ module Undress
       elsif content_of(e).match('\A(<br\s?\/?>|\s|\n)*\z')
         "\n\n"
       else
+        at = 'div.' if at == "" and e.name == 'div'
         "\n\n#{at}#{content_of(e)}\n\n"
       end
     end
 
-    rule_for(:br)         {|e| "\n" }
+    rule_for(:br)         {|e| "\n" unless e.parent.name == 'td' and e.last_child?}
     rule_for(:blockquote) {|e| "\n\nbq#{attributes(e)}. #{content_of(e)}\n\n" }
     rule_for(:pre)        {|e|
       if e.children && e.children.all? {|n| n.text? && n.content =~ /^\s+$/ || n.elem? && n.name == "code" }
@@ -117,7 +118,7 @@ module Undress
     rule_for(:li) {|e|
       token = e.parent.name == "ul" ? "*" : "#"
       nesting = e.ancestors.inject(1) {|total,node| total + (%(ul ol).include?(node.name) ? 0 : 1) }
-      "\n#{token * nesting}#{start} #{content_of(e)}"
+      "\n#{token * nesting} #{content_of(e)}"
     }
     rule_for(:ul, :ol) {|e|
       if e.ancestors.detect {|node| %(ul ol).include?(node.name) }
@@ -152,10 +153,7 @@ module Undress
     # so let's be super robust here...
     def tr_without_table?(node)
       return false if node.ancestor('table')
-      while node = node.previous
-        return false if node.name == 'tr'
-        return true if node.name != ''
-      end
+      return node.first_child?
     end
 
     def html_node(node, with_newline = true, tag = nil)

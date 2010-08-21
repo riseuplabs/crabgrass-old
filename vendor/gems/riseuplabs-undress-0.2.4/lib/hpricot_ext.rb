@@ -91,6 +91,22 @@ module ::Hpricot #:nodoc:
       ! self.parent.children.detect{ |sib| sib != self and sib.to_html.match /\S/}
     end
 
+    def first_child?
+      node = self
+      while node = node.previous
+        return true if node == parent
+        return false if node.name != ''
+      end
+    end
+
+    def last_child?
+      node = self
+      while node = node.next
+        return false if node.name != ''
+      end
+      return true
+    end
+
     def still_attached?
       # sometimes we have left over elements in searches that have
       # been swapped already.

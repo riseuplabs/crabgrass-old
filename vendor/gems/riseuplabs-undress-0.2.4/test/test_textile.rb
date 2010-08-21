@@ -239,7 +239,7 @@ module Undress
       context "tables" do
         test "converts table with empty cell" do
           html = "<table>  <tbody>  <tr>  <td>&nbsp;a</td>  <td> </td>  </tr>  <tr>  <td>&nbsp;b</td>  <td>&nbsp;c</td>  </tr>  </tbody>  </table>"
-          textile = "|a||\n|b|c|\n"
+          textile = "|a| |\n|b|c|\n"
           assert_renders_textile textile, html
         end
 
@@ -305,7 +305,7 @@ module Undress
         end
 
         test "converts 'style' into {_}" do
-          assert_renders_textile "*{color:blue;}hola*", "<strong style='color:blue;'>hola</strong>"
+          assert_renders_textile "*{color: blue}hola*", "<strong style='color:blue;'>hola</strong>"
         end
       end
     end

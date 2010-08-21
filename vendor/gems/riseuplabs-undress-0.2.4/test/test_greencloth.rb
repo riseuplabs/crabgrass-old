@@ -160,7 +160,7 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "remove a script tag" do
       html = "<div>Some script inside a<script type='text/javascript'>window.alert('alert')</script> paragraph</div>"
-      greencloth = "Some script inside a paragraph"
+      greencloth = "Some script inside a paragraph\n"
       assert_renders_greencloth greencloth, html
     end
   end
@@ -175,7 +175,7 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "code tag inside pre tag" do
       html = "<pre><code>def say_hi\n\tputs 'hi'\nend</code></pre>"
-      greencloth = "<pre><code>def say_hi\n\tputs 'hi'\nend</code></pre>"
+      greencloth = "<code>def say_hi\n\tputs 'hi'\nend</code>"
       assert_renders_greencloth greencloth, html
     end
 
@@ -220,13 +220,13 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "headings with links, anchors and links to anchors" do
       html = "<h1 class='first'><a name='russian-anarchists'></a>Russian Anarchists<a class='anchor' href='#russian-anarchists'>&para;</a></h1><h2><a name='michel-bakunin'></a>Michel <a href='http://en.wikipedia.org/wiki/Mikhail_Bakunin'>Bakunin</a><a class='anchor' href='#michel-bakunin'>&para;</a></h2><h2><a name='peter-kropotkin'></a><a href='http://en.wikipedia.org/wiki/Peter_Kropotkin'>Peter</a> Kropotkin<a class='anchor' href='#peter-kropotkin'>&para;</a></h2><h1><a name='russian-american-anarchists'></a>Russian-American Anarchists<a class='anchor' href='#russian-american-anarchists'>&para;</a></h1><h2><a name='emma-goldman'></a><a href='http://en.wikipedia.org/wiki/Emma_Goldman'>Emma Goldman</a><a class='anchor' href='#emma-goldman'>&para;</a></h2><h2><a name='alexander-berkman'></a>Alexander <a href='http://en.wikipedia.org/wiki/Alexander_Berkman'>Berkman</a><a class='anchor' href='#alexander-berkman'>&para;</a></h2>"
-      greencloth = "Russian Anarchists\n==================\n\nMichel [Bakunin -> http://en.wikipedia.org/wiki/Mikhail_Bakunin]\n--------------\n\n[Peter -> http://en.wikipedia.org/wiki/Peter_Kropotkin] Kropotkin\n---------------\n\nRussian-American Anarchists\n===========================\n\n[Emma Goldman -> http://en.wikipedia.org/wiki/Emma_Goldman]\n------------\n\nAlexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]\n-----------------\n"
+      greencloth = "h1. Russian Anarchists\n\nh2. Michel [Bakunin -> http://en.wikipedia.org/wiki/Mikhail_Bakunin]\n\nh2. [Peter -> http://en.wikipedia.org/wiki/Peter_Kropotkin] Kropotkin\n\nh1. Russian-American Anarchists\n\nh2. [Emma Goldman -> http://en.wikipedia.org/wiki/Emma_Goldman]\n\nh2. Alexander [Berkman -> http://en.wikipedia.org/wiki/Alexander_Berkman]\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "double trouble" do
       html = "<h1 class='first'><a name='title'></a>Title<a class='anchor' href='#title'>&para;</a></h1><h3><a name='under-first'></a>Under first<a class='anchor' href='#under-first'>&para;</a></h3><h1><a name='title_2'></a>Title<a class='anchor' href='#title_2'>&para;</a></h1><h3><a name='under-second'></a>Under second<a class='anchor' href='#under-second'>&para;</a></h3>"
-      greencloth = "Title\n=====\n\nh3. Under first\n\nTitle\n=====\n\nh3. Under second\n"
+      greencloth = "h1. Title\n\nh3. Under first\n\nh1. Title\n\nh3. Under second\n"
       assert_renders_greencloth greencloth, html
     end
   end
@@ -235,13 +235,13 @@ class Undress::GreenClothTest < Test::Unit::TestCase
   context "basics" do
     test "headers" do
       html = "<h1 class='first'>header one</h1>\n<h2>header two</h2>"
-      greencloth = "header one\n==========\n\nheader two\n----------\n"
+      greencloth = "h1. header one\n\nh2. header two\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "headers with paragraph" do
       html = "<p>la la la</p>\n<h1 class='first'>header one</h1>\n<h2>header two</h2>\n<p>la la la</p>"
-      greencloth = "la la la\n\nheader one\n==========\n\nheader two\n----------\n\nla la la\n"
+      greencloth = "la la la\n\nh1. header one\n\nh2. header two\n\nla la la\n"
       assert_renders_greencloth greencloth, html
     end
   end
@@ -257,19 +257,19 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "one section with heading" do
       html = "<div class='wiki_section' id='wiki_section-0'><h2 class='first'>are you ready?!!?</h2><p>here we go now!</p></div>"
-      greencloth = "are you ready?!!?\n-----------------\n\nhere we go now!\n"
+      greencloth = "h2. are you ready?!!?\n\nhere we go now!\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "all headings" do
       html = "<h1>First</h1><h2>Second</h2><h3>Tres</h3><h4>Cuatro</h4><h5>Five</h5><h6>Six</h6>"
-      greencloth = "First\n=====\n\nSecond\n------\n\nh3. Tres\n\nh4. Cuatro\n\nh5. Five\n\nh6. Six\n"
+      greencloth = "h1. First\n\nh2. Second\n\nh3. Tres\n\nh4. Cuatro\n\nh5. Five\n\nh6. Six\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "multiple sections with text" do
       html = "<div class='wiki_section' id='wiki_section-0'><h2 class='first'>Section One</h2><p>section one line one is here<br />section one line two is next</p><p>Here is section one still</p></div><div class='wiki_section' id='wiki_section-1'><h1>Section Two</h1><p>Section two first line<br />Section two another line</p></div><div class='wiki_section' id='wiki_section-2'><h2>Section 3 with h2</h2><p>One more line for section 3</p></div><div class='wiki_section' id='wiki_section-3'><h3>final section 4</h3><p>section 4 first non-blank line</p>\n</div>"
-      greencloth = "Section One\n-----------\n\nsection one line one is here\nsection one line two is next\n\nHere is section one still\n\nSection Two\n===========\n\nSection two first line\nSection two another line\n\nSection 3 with h2\n-----------------\n\nOne more line for section 3\n\nh3. final section 4\n\nsection 4 first non-blank line\n"
+      greencloth = "h2. Section One\n\nsection one line one is here\nsection one line two is next\n\nHere is section one still\n\nh1. Section Two\n\nSection two first line\nSection two another line\n\nh2. Section 3 with h2\n\nOne more line for section 3\n\nh3. final section 4\n\nsection 4 first non-blank line\n"
       assert_renders_greencloth greencloth, html
     end
   end
@@ -291,18 +291,18 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "list continuation" do # uses start
       html = "<ol><li>one</li><li>two</li><li>three</li></ol><ol><li>one</li><li>two</li><li>three</li></ol><ol start='4'><li>four</li><li>five</li><li>six</li></ol>"
-      greencloth = "# one\n# two\n# three\n\n# one\n# two\n# three\n\n# four\n# five\n# six\n"
+      greencloth = "# one\n# two\n# three\n\n# one\n# two\n# three\n\n#4 four\n# five\n# six\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "continue after break" do # uses start
       html = "<ol><li>one</li><li>two</li><li>three</li></ol><p>test</p><ol><li>one</li><li>two</li><li>three</li></ol><p>test</p><ol start='4'><li>four</li><li>five</li><li>six</li></ol>"
-      greencloth = "# one\n# two\n# three\n\ntest\n\n# one\n# two\n# three\n\ntest\n\n# four\n# five\n# six\n"
+      greencloth = "# one\n# two\n# three\n\ntest\n\n# one\n# two\n# three\n\ntest\n\n#4 four\n# five\n# six\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "continue list when prior list contained nested list" do # uses start
-      greencloth = "# one\n# two\n# three\n\n# four\n# five\n## sub-note\n## another sub-note\n# six\n\n# seven\n# eight\n# nine\n"
+      greencloth = "# one\n# two\n# three\n\n#4 four\n# five\n## sub-note\n## another sub-note\n# six\n\n#7 seven\n# eight\n# nine\n"
       html = "<ol><li>one</li><li>two</li><li>three</li></ol><ol start='4'><li>four</li><li>five<ol><li>sub-note</li><li>another sub-note</li></ol></li><li>six</li></ol><ol start='7'><li>seven</li><li>eight</li><li>nine</li></ol>"
       assert_renders_greencloth greencloth, html
     end
@@ -358,7 +358,7 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "a link to an external domain with the same text as dest" do
       html = "<p>url in brackets <a href='https://riseup.net/'>riseup.net</a></p>"
-      greencloth = "url in brackets [riseup.net -> https://riseup.net/]\n"
+      greencloth = "url in brackets https://riseup.net/\n"
       assert_renders_greencloth greencloth, html
     end
 
@@ -394,13 +394,13 @@ class Undress::GreenClothTest < Test::Unit::TestCase
 
     test "an external link inside a li element" do
       html = "<ul>\n<li><a href='https://riseup.net/'>riseup.net</a></li>\n</ul>"
-      greencloth = "* [riseup.net -> https://riseup.net/]\n"
+      greencloth = "* https://riseup.net/\n"
       assert_renders_greencloth greencloth, html
     end
 
     test "many anchors inside a paragraph" do
       html = "<p>make anchors <a name='here'>here</a> or <a name='maybe-here'>maybe here</a> or <a name='there'>over</a></p>"
-      greencloth = "make anchors [# here #] or [# maybe here #] or [# over -> there #]\n"
+      greencloth = "make anchors [# here #] or [# maybe here #] or [# there #] over\n"
       assert_renders_greencloth greencloth, html
     end
 
@@ -408,7 +408,7 @@ class Undress::GreenClothTest < Test::Unit::TestCase
     # this is a reduced support of it
     test "anchors and links" do
       html = "<p>link to <a href='/page/anchors#like-so'>anchors</a> or <a href='/page/like#so'>maybe</a> or <a href='#so'>just</a> or <a href='#so'>so</a></p>"
-      greencloth = "link to [anchors -> anchors#like so] or [maybe -> like#so] or [just -> #so] or [so -> #so]\n"
+      greencloth = "link to [anchors -> anchors#like so] or [maybe -> like#so] or [just -> #so] or [#so]\n"
       assert_renders_greencloth greencloth, html
     end
 
@@ -428,7 +428,7 @@ class Undress::GreenClothTest < Test::Unit::TestCase
   context "troubles with headings" do
     test "with h1" do
       html = "<h1 class='first'><a name='this-is-h1-text---this-is-h1-text'></a><span class='caps'>THIS</span> IS H1 <span class='caps'>TEXT</span> - this is h1 text<a class='anchor' href='#this-is-h1-text---this-is-h1-text'>¶</a></h1>"
-      greencloth = "THIS IS H1 TEXT - this is h1 text\n=================================\n"
+      greencloth = "h1. THIS IS H1 TEXT - this is h1 text\n"
       assert_renders_greencloth greencloth, html
     end
   end

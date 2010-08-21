@@ -1,0 +1,49 @@
+html: |
+  <table>
+  <tr style="height: 18.75pt; "> 
+              <td style="border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-right-color: #cccccc; border-bottom-color: #cccccc; border-left-color: #cccccc; border-right-width: 1pt; border-bottom-width: 1pt; border-left-width: 1pt; border-top-style: none; border-top-width: initial; border-top-color: initial; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; "> 
+                <p class="MsoNormal" style="text-align: justify; "><strong><span style="font-size: 9pt; font-family: inherit, serif; ">9.</span></strong><span style="font-size: 9pt; font-family: inherit, serif; "><o:p /></span></p> 
+              </td> 
+              <td style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1pt; border-right-style: solid; border-right-color: #cccccc; border-right-width: 1pt; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; "> 
+                <p class="MsoNormal"><strong><span style="font-size: 7.5pt; font-family: inherit, serif; ">RCI</span></strong><span style="font-size: 9pt; font-family: inherit, serif; "><o:p /></span></p> 
+              </td> 
+              <td style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1pt; border-right-style: solid; border-right-color: #cccccc; border-right-width: 1pt; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; "> 
+                <p class="MsoNormal" style="vertical-align: baseline; "><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; ">MOD_Symposium et<o:p /></span></p> 
+                <p class="MsoNormal" style="vertical-align: baseline; "><span lang="FR" style="font-size: 7.5pt; font-family: inherit, serif; ">MOD</span><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; "> </span><span lang="FR" style="font-size: 7.5pt; font-family: inherit, serif; ">NIMP</span><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; "> </span><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; ">15<o:p /></span></p> 
+              </td> 
+              <td style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1pt; border-right-style: solid; border-right-color: #cccccc; border-right-width: 1pt; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; " /> 
+              <td style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1pt; border-right-style: solid; border-right-color: #cccccc; border-right-width: 1pt; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; "> 
+                <p class="MsoNormal" align="center" style="text-align: center; "><span style="font-size: 9pt; font-family: inherit, serif; ">20 07 10<o:p /></span></p> 
+              </td> 
+              <td style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1pt; border-right-style: solid; border-right-color: #cccccc; border-right-width: 1pt; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: white; padding-top: 3pt; padding-right: 3pt; padding-bottom: 3pt; padding-left: 3pt; height: 18.75pt; background-position: initial initial; background-repeat: initial initial; "> 
+                <p class="MsoNormal"><span lang="FR" style="font-size: 7.5pt; font-family: inherit, serif; ">MOD</span><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; "> </span><span lang="FR" style="font-size: 9pt; font-family: inherit, serif; ">Symposium envoyé le
+  11.09.10 (MA).<o:p /></span></p> 
+              </td> 
+  </table>
+
+in: |
+  i got no idea
+---
+html: |
+  <table>
+    <tr class="odd">
+        <td style="text-align: justify;"><strong>8.</strong> </td>
+        <td>
+          <p> <strong><span class="caps">CTN</span></strong> </p>
+          <p> <strong><span class="caps">RCI</span></strong> </p>
+        </td>
+        <td>
+          <p> <strong><span class="caps">CTN</span></strong> </p>
+          blabla
+        </td>
+        <td>Demande de MOD_Formation métrologie _Incertitude</td>
+        <td> <br /></td>
+        <td> <br /></td>
+        <td> Envoyé 16.08.2010<br /></td>
+      </tr>
+    </table>
+
+in: |
+  |<>. *8.*| *CTN* 
+   *RCI* | *CTN* 
+   blabla|Demande de MOD_Formation métrologie _Incertitude| | |Envoyé 16.08.2010|

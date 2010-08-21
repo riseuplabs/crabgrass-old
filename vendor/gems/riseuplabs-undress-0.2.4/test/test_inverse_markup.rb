@@ -2,11 +2,9 @@ path = File.dirname(__FILE__)
 require File.expand_path(path + "/test_helper")
 require 'ruby-debug'
 require 'yaml'
-require File.expand_path(path + '/../../crabgrass/vendor/gems/riseuplabs-greencloth-0.1/lib/greencloth.rb')
+require 'greencloth'
 
 test_dir =  File.dirname(File.expand_path(__FILE__))
-# for now we only test one direction
-# require test_dir + '/../lib/greencloth.rb'
 
 SINGLE_FILE_OVERRIDE = if ARGV[0] and ARGV[0] !~ /\.rb/
   ARGV[0]
