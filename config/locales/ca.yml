@@ -806,8 +806,6 @@ ca:
   welcome_heading: "Benvingut/da a {{site_title}}, {{user_name}}!"
   welcome_hide_link: "Amagar Benvinguda"
   welcome_login_message: |-
-      !>/plugin_assets/riseup/riseup-yellow.gif!
-
       Aquest lloc web funciona gràcies a Crabgrass, un <a href="http://www.affero.org/oagpl.html">programari lliure</a> web dissenyat per la col·laboració entre grups i xarxes, i afinat per a les necessitats del moviment de justícia global. L'objectiu a llarg termini és donar eines tècniques per facilitar la creació de xarxes actives, confederades i de democràcia directa pel canvi social. [més... -> /crabgrass/about]
 
       h3. Ets nou aquí?

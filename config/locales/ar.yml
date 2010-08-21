@@ -746,8 +746,6 @@ ar:
   welcome_find_people_text: "تصفح دليل المستخدين لتجد معارفك."
   welcome_hide_link: "إخفاء مرحبا بك"
   welcome_login_message: |-
-      !>/plugin_assets/riseup/riseup-yellow.gif!
-      
        هذا الموقعم مدعوم بواسطةCrabgrass <a href="http://www.affero.org/oagpl.html">البرمجيات الحرة</a> تطبيق الويب مصمم من أجل المجموعات وتنظيم الشبكات, ومصمم لتلبية احتياجات حركة العدالة العالميالهدف البعيد المدى هو توفير الأدوات التقنية لتسهيل الأنشطة والكونفدرالية ، وشبكات التغيير الاجتماعي الديمقراطي المباشر. [more... -> /crabgrass/about]
       
         h3. هل أنت جديد هنا?
