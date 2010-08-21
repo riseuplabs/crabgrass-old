@@ -91,6 +91,8 @@ module Undress
       end
     end
 
+    rule_for(:br)         {|e| e.parent.name == 'td' ? "<br/>" :"\n"}
+
     def unescaped_content_of(e)
       if e and e.children
         e.children.map { |x| x.to_plain_text }.join
