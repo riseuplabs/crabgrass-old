@@ -99,7 +99,7 @@ module UserExtension::Users
 
     # returns the users current status by returning their latest status_posts.body
     def current_status
-      @current_status ||= self.wall_discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body rescue ""
+      @current_status ||= self.wall_discussion.posts.find(:first, :conditions => {'type' => 'StatusPost'}, :order => 'created_at DESC').body_html rescue ""
     end
 
     ##

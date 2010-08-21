@@ -110,10 +110,31 @@ class UserTest < Test::Unit::TestCase
     assert (inactive_users.include?(u_inactive) and !inactive_users.include?(u_active))
   end
 
+  def test_current_status_escaped
+    u = User.create!(:login => 'badhacker', :password => 'password', :password_confirmation => 'password');
+    sp = make_status_post('</textarea><script>alert("Hello")</script>', u)
+    assert !u.current_status.match(/<[^>]+>/)
+    u2 = User.create!(:login => 'gooduser', :password => 'password', :password_confirmation => 'password');
+    sp = make_status_post('hello', u2)
+    assert (u2.current_status == 'hello')
+  end
+
   protected
 
   def create_user(options = {})
     User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
   end
+
+  def make_status_post(body, u)
+    StatusPost.create do |post|
+      post.body = body 
+      post.body = post.body[0..140] if post.body
+      post.discussion = u.wall_discussion
+      post.user = u
+      post.recipient = u
+      post.body_html = post.lite_html
+    end
+  end
+
 
 end
