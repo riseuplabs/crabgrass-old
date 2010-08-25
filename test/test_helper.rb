@@ -1,37 +1,59 @@
-
 require 'rubygems'
 
-gem 'mocha'
-require 'mocha'
-
-begin
-  require 'leftright'
-rescue LoadError => exc
-  # no leftright installed
+def try_to_load(name, &block)
+  begin
+    if block_given?
+      yield block
+    else
+      require name
+    end
+  rescue LoadError => exc
+    puts "Warning: could not load %s" % name
+  end
 end
 
+##
+## load the environment
+##
 
-# load the environment
 ENV["RAILS_ENV"] = "test"
 $: << File.expand_path(File.dirname(__FILE__) + "/../")
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-
-# test_help.rb from rails
-# loads test::unit and rails specific test classes like ActionController::IntegrationTest
 require 'test_help'
 
-require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+##
+## load gems useful for testing
+##
 
-require 'webrat'
-Webrat.configure do |config|
-  config.mode = :rails
+try_to_load :mocha do
+  gem 'mocha'
+  require 'mocha'
 end
 
-require 'shoulda/rails'
+try_to_load 'leftright'
 
+try_to_load :blueprints do
+  require File.expand_path(File.dirname(__FILE__) + "/cg_blueprints")
+end
 
-# require all helpers
+try_to_load 'webrat' do
+  require 'webrat'
+  Webrat.configure do |config|
+    config.mode = :rails
+  end
+end
+
+try_to_load 'shoulda/rails'
+
+##
+## load all the test helpers
+##
+
 Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each {|file| require file }
+
+##
+## misc.
+##
 
 include ActionController::Assertions::ResponseAssertions
 ActionController::TestCase.send(:include, FunctionalTestHelper) unless ActionController::TestCase.included_modules.include?(FunctionalTestHelper)
@@ -75,8 +97,8 @@ class ActiveSupport::TestCase
   def check_associations(m)
     @m = m.new
     m.reflect_on_all_associations.each do |assoc|
-      assert_nothing_raised("#{assoc.name} caused an error") do
-        @m.send(assoc.name, true)
+      assert_nothing_raised("association '#{assoc.name}' caused an error") do
+        @m.send(assoc.name)
       end
     end
     true
