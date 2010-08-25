@@ -10,8 +10,6 @@ module PageExtension::Groups
       has_many :group_participations, :dependent => :destroy
       has_many :groups, :through => :group_participations
 
-      belongs_to :owner, :polymorphic => true # the page owner
-
       has_many :namespace_groups, :class_name => 'Group', :finder_sql => 'SELECT groups.* FROM groups WHERE groups.id IN (#{namespace_group_ids_sql})'
 
       remove_method :namespace_group_ids  # override the ActiveRecord

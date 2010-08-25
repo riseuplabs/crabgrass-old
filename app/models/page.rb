@@ -296,6 +296,9 @@ class Page < ActiveRecord::Base
 
   public
 
+  # every page is owned by a person or group.
+  belongs_to :owner, :polymorphic => true
+
   # Add a group or user to this page (by creating a corresponing
   # user_participation or group_participation object). This is the only way
   # that groups or users should be added to pages!
@@ -353,7 +356,7 @@ class Page < ActiveRecord::Base
       end
       part = most_privileged_participation_for(entity)
       self.add(entity, :access => :admin) unless part and part.access == ACCESS[:admin]
-      return self.owner(true)
+      return self.owner
     end
   end
 
