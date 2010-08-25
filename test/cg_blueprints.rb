@@ -1,3 +1,15 @@
+##
+## blueprints file for crabgrass
+## an alternative to fixtures
+# 
+## see http://github.com/sinsiliux/Blueprints
+##
+## note: don't name this file blueprints.rb. If you do that, it will get
+## auto loaded when the blueprints gem is loaded, which is before
+## initializers are run, which are needed to load the User class, 
+## among others.
+##
+
 require 'machinist/active_record'
 require 'sham'
 require 'faker'
