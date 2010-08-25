@@ -9,6 +9,10 @@ class PageHistory < ActiveRecord::Base
 
   def self.send_single_pending_notifications 
     pending_notifications.each do |page_history|
+      if page_history.page.nil?
+        page_history.destroy
+        next
+      end
       recipients_for_single_notification(page_history).each do |user|
         if Conf.paranoid_emails?
           Mailer.deliver_page_history_single_notification_paranoid(user, page_history)
