@@ -288,6 +288,8 @@ class Asset < ActiveRecord::Base
     begin
       return self.create_from_params!(attributes, &block)
     rescue Exception => exc
+      puts 'Error creating asset: ' + exc.to_s
+      puts exc.clean_backtrace
       return nil
     end
   end
@@ -343,22 +345,6 @@ class Asset < ActiveRecord::Base
   # to be overridden by subclasses
   def update_media_flags() end
 
-
-  after_save :update_galleries
-  # update galleries after an image was saved which has galleries.
-  # the updated_at column of galleries needs to be up to date to allow the
-  # download_gallery action to find out if it's cached zips are up to date.
-  #
-  # hmm... i don't think this is a good idea. it will result in the Gallery page
-  # being marked as updated in the recent pages feed, even when it has not been.
-  # -elijah
-  #
-  def update_galleries
-    if galleries.any?
-      galleries.each { |g| g.save }
-    end
-  end
-
   # returns either :landscape or :portrait, depending on the format of the
   # image.
   def image_format
@@ -366,4 +352,7 @@ class Asset < ActiveRecord::Base
     return :landscape if width.nil? or height.nil?
     self.width > self.height ? :landscape : :portrait
   end
+
+  acts_as_extensible
+
 end
