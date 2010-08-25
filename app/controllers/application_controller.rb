@@ -145,10 +145,11 @@ class ApplicationController < ActionController::Base
     self.class.helpers
   end
 
-  def current_appearance
-    current_site.custom_appearance || CustomAppearance.default
+  def current_theme
+    #@current_theme ||= Theme[current_site.theme_name]
+    @current_theme ||= Theme["default"]
   end
-  helper_method :current_appearance
+  helper_method :current_theme
 
   # create a filter ParsedPath
   def parse_filter_path(path)

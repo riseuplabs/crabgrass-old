@@ -29,6 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
   map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
+  map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
+
   ##
   ## ME
   ##

@@ -17,13 +17,14 @@ REQUIRED
 |                     | ruby1.8-dev             |                                               |
 |                     | rubygems                |                                               |
 | rake                | rake                    | >= 0.8.1                                      |
-| rails               | rails*                  | 2.3.X                                         |
+| rails               | rails *                 | 2.3.X                                         |
 | mysql               | libmysql-ruby           | ruby mysql support                            |
 |                     | mysql-server            | the database server >=5.0                     |
 |                     | libopenssl-ruby         |                                               |
 | tzinfo              | libtzinfo-ruby          | timezone support                              |
 | RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
 | haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
+
 
 REQUIRED FOR PRODUCTION
 
@@ -48,10 +49,9 @@ SUGGESTED FOR PRODUCTION
 |                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
 |                     | ruby-debug              | for debugging running application (optional)  |
 
-NOTE: If you use the Debian rails package, you will need to install a symlink in the
-crabgrass/vendor directory to rails:
-
-  % ln -s /usr/share/rails vendor/rails
+ * NOTE: If you use the Debian rails package, you will need to install a symlink in the
+   crabgrass/vendor directory to rails:
+     % ln -s /usr/share/rails vendor/rails
 
 = Configuration
 

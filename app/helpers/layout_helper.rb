@@ -36,71 +36,50 @@ module LayoutHelper
   ## STYLESHEET
   ##
 
-  # CustomAppearances model allows administrators to override the default css values
-  # this method will link to the appropriate overriden css
-  def themed_stylesheet_link_tag(path, css_prefix_path=nil)
-    appearance = (current_site && current_site.custom_appearance) || CustomAppearance.default
-
-    themed_stylesheet_url = appearance.themed_stylesheet_url(path,css_prefix_path)
-    stylesheet_link_tag(themed_stylesheet_url)
-  end
-
-  # custom stylesheet
+  # as needed stylesheets:
   # rather than include every stylesheet in every request, some stylesheets are
   # only included if they are needed. See Application#stylesheet()
-  def optional_stylesheet_tag(css_prefix_path=nil)
+
+  def optional_stylesheets
     stylesheet = controller.class.stylesheet || {}
-    sheets = [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
-    sheets.collect {|s| themed_stylesheet_link_tag(s,css_prefix_path)}
+    return [stylesheet[:all], @stylesheet, stylesheet[params[:action].to_sym]].flatten.compact.collect{|i| "as_needed/#{i}"}
   end
 
   # crabgrass_stylesheets()
   # this is the main helper that is in charge of returning all the needed style
-  # elements for HTML>HEAD. There are five (5!) types of stylings:
-  #
-  # (1) default crabgrass stylesheets (for core things like layout)
-  # (2) theme_styles (core css, but for making things pretty).
-  # (3) optional stylesheets (these are stylesheets that are loaded on a
-  #     per-controller or per-action basis.
-  # (4) context styles (style changes based on context)
-  # (5) content_for :style (inline styles set in the views)
-  # (6) mod styles (so that mods can insert their own styles after everthing else)
+  # elements for HTML>HEAD.
 
-  def crabgrass_stylesheets(css_prefix_path=nil)
+  def crabgrass_stylesheets
     lines = []
 
-    lines << themed_stylesheet_link_tag('screen.css',css_prefix_path)
+    lines << stylesheet_link_tag( current_theme.stylesheet_url('screen') )
     lines << stylesheet_link_tag('icon_png')
-    lines << optional_stylesheet_tag(css_prefix_path)
+    lines << optional_stylesheets.collect do |sheet|
+       stylesheet_link_tag( current_theme.stylesheet_url(sheet) )
+    end
     lines << '<style type="text/css">'
-    #lines << context_styles
-    lines << @content_for_style
+      lines << @content_for_style
     lines << '</style>'
     lines << '<!--[if IE 6]>'
-    #lines << themed_stylesheet_link_tag('ie6')
-    lines << stylesheet_link_tag('ie6')
-    lines << stylesheet_link_tag('icon_gif')
+      lines << stylesheet_link_tag('ie6')
+      lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     lines << '<!--[if IE 7]>'
-    lines << stylesheet_link_tag('ie7')
-    #lines << themed_stylesheet_link_tag('ie7')
-    lines << stylesheet_link_tag('icon_gif')
+      lines << stylesheet_link_tag('ie7')
+      lines << stylesheet_link_tag('icon_gif')
     lines << '<![endif]-->'
     if language_direction == "rtl"
-      lines << themed_stylesheet_link_tag('rtl',css_prefix_path)
+      lines << stylesheet_link_tag( current_theme.stylesheet_url('rtl') )
     end
     lines.join("\n")
   end
 
   def favicon_link
-    icon_urls = if current_appearance and current_appearance.favicon
-      [current_appearance.favicon.url] * 2
-    else
-      ['/favicon.ico', '/favicon.png']
+    if current_theme[:favicon_png] and current_theme[:favicon_ico]
+    '<link rel="shortcut icon" href="%s" type="image/x-icon" /><link rel="icon" href="%s" type="image/x-icon" />' % [current_theme.url(:favicon_ico), current_theme.url(:favicon_png)]
+    elsif current_theme[:favicon]
+      '<link rel="icon" href="%s" type="image/x-icon" />' % current_theme.url(:favicon)
     end
-
-    %Q[<link rel="shortcut icon" href="#{icon_urls[0]}" type="image/x-icon" />
-  <link rel="icon" href="#{icon_urls[1]}" type="image/x-icon" />]
   end
 
   def type_of_column_layout
