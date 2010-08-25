@@ -1,0 +1,66 @@
+Some gems should be "frozen" (ie placed in vendor/gems).
+Rails will give precedence to these gems over system gems.
+
+When should a gem be frozen and included in the crabgrass
+distribution? Use this as a guide:
+
+(1) if crabgrass is sensitive to the gem version, it might
+    be a good idea to freeze it to make installation easier.
+
+(2) if the gem is really small, why not freeze it? If it is
+    large, please don't freeze it.
+
+(3) gems which are architecture dependent (ie they are
+    compiled) should not be frozen.
+
+(4) if a gem is really uncommon, and there is unlikely to be
+    a package for it, then consider freezing it.
+
+To freeze a gem named 'x':
+
+  edit environment.rb:
+    config.gem 'x'
+  run:
+    rake gems:unpack GEM=x
+
+If you freeze a gem, please document what the gem is used
+for here:
+
+greencloth
+---------------------
+
+This is the wiki text markup language used by crabgrass. It
+is based on RedCloth, with some modifications to make it
+work better with wikis.
+
+uglify_html
+---------------------
+
+Some WYSIWYG text editors don't handle nice HTML very well. 
+This gem will take beautiful HTML and transform it into the
+ugly version needed by these editors. 
+
+TODO: is this used anymore? isn't this only for nicEdit?
+I think this is currently unused.
+
+undress
+---------------------
+
+Converts HTML to Textile markup. This is used in order to be
+able to switch back and forth between a WYSIWYG editor and a
+plain text editor.
+
+compass
+---------------------
+
+Extensions to SASS that adds some utility functions and a
+bunch of SASS mixins in order to support a wide variety of
+CSS frameworks, including the one used by Crabgrass (Susy).
+
+compass susy plugin
+---------------------
+
+An Extension to compass that adds support for the Susy CSS
+framework.
+
+

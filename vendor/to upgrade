@@ -1,0 +1,19 @@
+PLUGINS
+=================
+
+really old, but no longer maintained:
+
+  acts_as_rateable
+
+maintained in new forms:
+
+  acts_as_state_machine
+    it has become a general purpose gem,
+    and is available now from http://github.com/rubyist/aasm
+    the old plugin is no longer maintained.
+
+maintained and up to date:
+
+  backgroundrb
+
+
