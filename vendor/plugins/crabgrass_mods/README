@@ -1,0 +1,51 @@
+This plugin that allows other plugins to change the core
+code of the application. We call these plugins 'mods'.
+
+Different ways of modifying a rails app:
+
+(1) plugins provide new code that can be optionally called
+    by the application.
+
+(2) engines are plugins that can also add entire mini-apps
+    to a rails application. Most of the functionality of 
+    engines is now part of rails 2.3.
+
+(3) mods are different: they are plugins that only work
+    for a particular rails application. they work by modifying
+    the behavior of the specific classes of the application.
+
+EXAMPLE
+----------------------------------
+
+Core application model:
+
+  class Crow < ActiveRecord::Base
+    def make_sound
+      'caw'
+    end
+    acts_as_extensible
+  end
+
+A mod's init.rb:
+
+  extend_model :Crow do
+    has_many :feathers
+    def feather_color
+      'black'
+    end
+    def make_sound
+      'squawk'
+    end
+  end
+
+OPTIONS
+-------------------------------------
+
+class X
+  def self.load_plugin?(path)
+    true
+  end
+end
+
+Mods.plugin_enabled_callback = X.method(:load_plugin?)
+
