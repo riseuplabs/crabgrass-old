@@ -88,7 +88,9 @@ module Magick
       else
         resize = "#{newcols}x"
       end
-      run_command('mogrify', '-geometry', resize, '-crop', "#{newcols}x#{newrows}", @path)
+      # the "+0+0" is required to prevent the command from creating
+      # tiles from the left overs.
+      run_command('mogrify', '-geometry', resize, '-crop', "#{newcols}x#{newrows}+0+0", @path)
       update_geometry()
     end
 
