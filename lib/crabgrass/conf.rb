@@ -1,3 +1,5 @@
+require 'active_support'
+
 #
 # This class provides access to config/crabgrass.RAILS_ENV.yml.
 #

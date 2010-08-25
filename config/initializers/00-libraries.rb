@@ -1,4 +1,4 @@
-%w(string i18n core action_pack active_record active_record_validations engines).each do |file|
+%w(string i18n core action_pack active_record active_record_validations).each do |file|
   require "#{RAILS_ROOT}/lib/extension/#{file}"
 end
 

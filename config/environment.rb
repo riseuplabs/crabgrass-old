@@ -19,30 +19,40 @@
 #
 # RAILS INITIALIZATION PROCESS:
 #
-# (1) framework
-# (2) config block
-# (3) environment
-# (4) plugins
-# (5) initializers
-# (6) application
-# (7) finally
+#  1. framework
+#  2. config block
+#  3. environment
+#  4. plugins
+#  5. gems
+#  6. initializers
+#  7. view paths
+#  8. application classes
+#
+# run rails with INFO=0 to see when these are loaded.
+#
+# for much more detail, see http://railsguts.com/initialization.html
 #
 
+require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
+
 ###
-### (1) FRAMEWORK
+### FRAMEWORK
 ###
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+info "LOAD FRAMEWORK"
+
+# Use any Rails in the 2.3.x series 
+RAILS_GEM_VERSION = '~> 2.3.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
-require "#{RAILS_ROOT}/lib/extension/engines.rb"
+require File.join(File.dirname(__FILE__), '../vendor/plugins/crabgrass_mods/rails/boot')
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
-require "#{RAILS_ROOT}/lib/zip/zip.rb"
+Mods.plugin_enabled_callback = Conf.method(:plugin_enabled?)
 
 # path in which zipped galleries (for download) will be stored.
+# TODO: can this be moved somewhere better?
+require "#{RAILS_ROOT}/lib/zip/zip.rb"
 GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
 unless File.exists?(GALLERY_ZIP_PATH)
   Dir.mkdir(GALLERY_ZIP_PATH)
@@ -53,19 +63,19 @@ end
 #  attr_accessor :action_web_service
 #end
 
-gem 'actionpack', "=#{RAILS_GEM_VERSION}"
+Crabgrass::Initializer.run do |config|
+  ###
+  ### CONFIG BLOCK
+  ###
 
-Rails::Initializer.run do |config|
-  ###
-  ### (2) CONFIG BLOCK
-  ###
+  info "LOAD CONFIG BLOCK"
 
   config.load_paths += %w(activity assets associations discussion chat observers profile poll task tracking requests mailers).collect{|dir|"#{RAILS_ROOT}/app/models/#{dir}"}
   config.load_paths << "#{RAILS_ROOT}/app/permissions"
   config.load_paths << "#{RAILS_ROOT}/app/sweepers"
 
-  Engines.mix_code_from(:permissions)
-  Engines.disable_code_mixing = false
+  #Engines.mix_code_from(:permissions)
+  #Engines.disable_code_mixing = false
 
   # this is required because we have a mysql specific fulltext index.
   config.active_record.schema_format = :sql
@@ -92,7 +102,7 @@ Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
   config.active_record.default_timezone = :utc
 
-  # allow plugins in mods/ and pages/
+  # allow plugins in mods/ and tools/
   config.plugin_paths << "#{RAILS_ROOT}/mods" << "#{RAILS_ROOT}/tools"
 
   # Deliveries are disabled by default. Do NOT modify this section.
@@ -101,30 +111,39 @@ Rails::Initializer.run do |config|
 
   config.action_mailer.perform_deliveries = false
 
-  # the absolutely required gems
+  ##
+  ## GEMS
+  ## see environments/test.rb for testing specific gems
+  ##
+
+  # frozen: the absolutely required gems
   config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
-  #config.gem 'rmagick' unless system('dpkg -l librmagick-ruby1.8 2>/dev/null 1>/dev/null')
-  #config.gem 'redcloth', :version => '>= 4.0.0'
-  #config.frameworks += [ :action_web_service]
-  #config.action_web_service = Rails::OrderedOptions.new
-  #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
-  #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
-  #config.gem "haml"
-  #config.gem "chriseppstein-compass", :lib => "compass"
-  #config.gem "ericam-compass-susy-plugin", :lib => "susy"
 
-  config.gem 'cucumber' unless ['development', 'production'].include? RAILS_ENV
+  # frozen: required when modifying themes
+  config.gem 'compass'
+  config.gem 'compass-susy-plugin', :lib => 'susy'
 
-  config.gem 'mocha'
+  # required, but not included with crabgrass:
+  config.gem 'haml'
+  config.gem 'RedCloth'
 
-  config.action_controller.session = { :key => '_crabgrass_session', :secret => Conf.secret }
+  # moved to environment/test.rb
+  #unless ['development', 'production'].include? RAILS_ENV
+  #  config.gem 'cucumber'
+  #  config.gem 'mocha'
+  #end
+
+  config.action_controller.session = {
+    :key => '_crabgrass_session', :secret => Conf.secret
+  }
 
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
   # for information on how trim_mode works.
   #
-  # FIXME: this is broken in Rails 2.3 (https://rails.lighthouseapp.com/projects/8994/tickets/2553-actionviewtemplatehandlerserberb_trim_mode-broken)
+  # FIXME: this is broken in Rails 2.3. (https://rails.lighthouseapp.com/projects/8994/tickets/2553-actionviewtemplatehandlerserberb_trim_mode-broken)
+  # still broken in 2.3.8
   #config.action_view.erb_trim_mode = '%-'
 
   # See Rails::Configuration for more options
@@ -137,35 +156,24 @@ Rails::Initializer.run do |config|
     RAILS_LOADED = true
   end
 
-  ###
-  ### (3) ENVIRONMENT
-  ###     config/environments/development.rb
-  ###
-
-  ###
-  ### (4) PLUGINS
-  ###     Plugins are loading in alphanumerical order across all
-  ###     all these directories:
-  ###       vendors/plugins/*/init.rb
-  ###       mods/*/init.rb
-  ###       tools/*/init.rb
-  ###     If you want to control the load order, change their names!
-  ###
-
-  ###
-  ### (5) INITIALIZERS
-  ###     config/initializers/*.rb
-  ###
-
-  ###
-  ### (6) APPLICATION
-  ###     app/*/*.rb
-  ###
-
 end
 
-###
-### (7) FINALLY
+### 
+### subsequent loading:
+### ENVIRONMENT
+###   eg config/environments/development.rb
+### GEMS
+### PLUGINS
+###   Plugins are loading in alphanumerical order across all
+###   all these directories:
+###     vendors/plugins/*/init.rb
+###     mods/*/init.rb
+###     tools/*/init.rb
+###   If you want to control the load order, change their names!
+### INITIALIZERS
+###  config/initializers/*.rb
+### APPLICATION CLASSES
+###  app/*/*.rb
 ###
 
 #require 'actionwebservice'
@@ -173,6 +181,7 @@ end
 
 # There appears to be something wrong with dirty tracking in rails.
 # Lots of errors if this is enabled:
+# TODO: enable this
 ActiveRecord::Base.partial_updates = false
 
 # build a hash of PageClassProxy objects {'TaskListPage' => <TaskListPageProxy>}

@@ -27,20 +27,28 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :test
 
-### GEMS
-config.gem 'webrat',      :lib => false,        :version => '>=0.5.3' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
-config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'
+##
+## REQUIRED GEMS
+##
+
+#unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
+#  config.gem 'webrat', :lib => false, :version => '>=0.5.3'
+#end
+#config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'
+#config.gem 'cucumber'
+
+config.gem 'mocha'
+config.gem 'blueprints'
+config.gem 'machinist'
+config.gem 'faker'
+
+# config.gem 'gem-name', :lib => 'github_gem_name', :source => 'http://gems.github.com'
+
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
 
 MIN_PASSWORD_STRENGTH = 0
-
-# however, rails engines are way too verbose, so set engines logging to info:
-if defined? Engines
-  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
-  Engines.logger.level = Logger::INFO
-end
 
 ##
 ## INTERESTING STUFF FOR DEBUGGING

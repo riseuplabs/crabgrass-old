@@ -24,15 +24,16 @@ end
 
 #
 # have you ever wanted to know what part of your code was triggering a particular
-# sql query? enable this and set the STOP_ON_SQL constant to find out.
+# sql query? set the STOP_ON_SQL environment variable to find out.
 #
 # For example:
 #
-# STOP_ON_SQL = "SELECT * FROM `users` WHERE (`users`.`id` = 633)"
+# export STOP_ON_SQL='SELECT * FROM `users` WHERE (`users`.`id` = 633)'
+# script/server
 #
 STOP_ON_SQL = nil
-if STOP_ON_SQL
-  STOP_ON_SQL_MATCH = Regexp.escape(STOP_ON_SQL).gsub(/\\\s+/, '\s+')
+if ENV['STOP_ON_SQL'] and ENV['STOP_ON_SQL'].any?
+  STOP_ON_SQL_MATCH = Regexp.escape(ENV['STOP_ON_SQL']).gsub(/\\\s+/, '\s+')
   class ActiveRecord::ConnectionAdapters::AbstractAdapter
     def log_with_debug(sql, name, &block)
       if sql.match(STOP_ON_SQL_MATCH)
@@ -77,17 +78,15 @@ config.action_mailer.raise_delivery_errors = true
 config.log_level = :debug
 
 # however, rails engines are way too verbose, so set engines logging to info:
-if defined? Engines
-  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
-  Engines.logger.level = Logger::INFO
-end
+# if defined? Engines
+#  Engines.logger = ActiveSupport::BufferedLogger.new(config.log_path)
+#  Engines.logger.level = Logger::INFO
+# end
 
 # this will cause classes in lib to be reloaded on each request in
 # development mode. very useful if working on a source file in lib!
 
-ActiveSupport::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
-#::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/mods'])
-#::Dependencies.load_once_paths.delete(Dir[RAILS_ROOT + '/tools'])
+# ActiveSupport::Dependencies.load_once_paths.delete("#{RAILS_ROOT}/lib")
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/test/fixtures/assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/public/assets"
