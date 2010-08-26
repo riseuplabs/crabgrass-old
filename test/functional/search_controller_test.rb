@@ -31,7 +31,6 @@ class SearchControllerTest < ActionController::TestCase
     get :index, :path => ["text", "test"]
     assert_response :success
     assert assigns(:pages).any?, "should find a page"
-    assert assigns(:pages).total_pages
     assert_not_nil assigns(:pages)[0].flag[:excerpt], "should generate an excerpt"
   end
 

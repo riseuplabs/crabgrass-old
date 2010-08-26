@@ -15,17 +15,6 @@ minimagic: renamed minimagic to be aa_pseudo_rmagick and
 changed the code to use gm (graphicmagick) instead of
 imagemagic.
 
-thinking-sphinx: we don't modify the code, but we depend on
-an undocumented and unsupported "feature" of thinking
-sphinx, one that the author has said is an unintended
-byproduct of the implementation. I think it should be a 
-feature, because it is cool: You can pass an array to ":with"
-option and it will AND them together.
-
-   Page.search('text', :with => [['name','bob'], ['color','green']])
-   (searches for name = 'bob' AND color = 'green')
-
-This might break in future versions of thinking_sphinx.
 
 What do these do?
 ========================================
@@ -45,9 +34,6 @@ PLUGINS
 
 Core Plugins
 ------------
-
-thinking_sphinx v1.1.23
-  full text searching.
 
 routing_filter
   http://github.com/svenfuchs/routing-filter/tree/master

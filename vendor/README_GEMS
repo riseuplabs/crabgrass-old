@@ -63,4 +63,44 @@ compass susy plugin
 An Extension to compass that adds support for the Susy CSS
 framework.
 
+thinking_sphinx
+------------------------
+
+the adaptor for the sphinx search indexer. required for
+fulltext searching. thinking_sphinx requires gems riddle and
+after_commit
+
+we don't modify the code, but we depend on an undocumented
+and unsupported "feature" of thinking sphinx, one that the
+author has said is an unintended byproduct of the
+implementation. I think it should be a feature, because it
+is cool.
+
+Here is the problem: you pass conditions to search() using
+:with => {}. But what do you do if you want to have multiple
+conditions on the same field? You are stuck, because you can't
+have two keys that are the same. 
+
+So, instead, you can pass an array. Rather than:
+
+   Page.search 'text', :with => {:access_ids => '1 2 3'}
+
+You can do multiple constraints on the same field by doing this:
+
+   Page.search 'text', :with =>
+     [[:access_ids, '1 2 3'], [:access_ids, '4 5 6']]
+
+This will search "(1 OR 2 OR 3) AND (4 OR 5 OR 6)"
+
+This might break in future versions of thinking_sphinx.
+
+Here is the part of the code that makes it work with arrays
+and not just hashes:
+
+  lib/thinking_sphinx/search.rb:
+    (options[:with] || {}).collect { |attrib, value|
+       Riddle::Client::Filter.new attrib.to_s, filter_value(value)
+    }
+
+
 

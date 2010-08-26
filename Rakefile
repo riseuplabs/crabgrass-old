@@ -9,3 +9,8 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
+begin
+  require File.dirname(__FILE__) + '/vendor/gems/thinking-sphinx-1.3.19/lib/thinking_sphinx/tasks.rb'
+rescue LoadError => exc
+  puts 'Warning: could not load thinking sphinx tasks';
+end

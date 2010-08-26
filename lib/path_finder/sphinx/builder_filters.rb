@@ -1,6 +1,21 @@
-# = PathFinder::Sql::BuilderFilters
+# = PathFinder::Sphinx::BuilderFilters
+#
 # This contains all the filters for the different path elements.
 # It gets included from the Builder.
+#
+#
+# These fields are defines as sphinx attributes, and should use
+# @with instead of @conditions:
+#
+# :sphinx_internal_id, :class_crc, :sphinx_deleted, :title_sort,
+# :page_type_sort, :created_by_login_sort, :updated_by_login_sort,
+# :owner_name_sort, :page_created_at, :page_updated_at, :views_count,
+# :created_by_id, :updated_by_id, :resolved, :stars_count, :access_ids,
+# :media
+#
+# NOTE: @conditions is a hash, @with is an array.
+#
+# in sphinx, attributes are numeric only. 
 #
 
 module PathFinder::Sphinx::BuilderFilters
@@ -12,7 +27,7 @@ module PathFinder::Sphinx::BuilderFilters
   end
 
   def filter_pending
-    @conditions[:resolved] = 0
+    @with << [:resolved, 0]
   end
 
   def filter_interesting
@@ -83,19 +98,19 @@ module PathFinder::Sphinx::BuilderFilters
   # end
 
   def filter_ago(near,far)
-    @conditions[:page_updated_at] = range(far.to_i.days.ago, near.to_i.days.ago)
+    @with << [:page_updated_at, range(far.to_i.days.ago, near.to_i.days.ago)]
   end
 
   def filter_created_after(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
-    @conditions[:page_created_at] = range(date, date + 100.years)
+    @with << [:page_created_at, range(date, date + 100.years)]
   end
 
   def filter_created_before(date)
     year, month, day = date.split('-')
     date = to_utc Time.in_time_zone(year, month, day)
-    @conditions[:page_created_at] = range(date - 100.years, date)
+    @with << [:page_created_at, range(date - 100.years, date)]
   end
 
   # def filter_month(month)
@@ -124,7 +139,7 @@ module PathFinder::Sphinx::BuilderFilters
 
     if page_group =~ /^media-(image|audio|video|document)$/
       media_type = page_group.sub(/^media-/,'').to_sym
-      @conditions[:media] = MEDIA_TYPE[media_type] # indexed as multi array of ints.
+      @with << [:media, MEDIA_TYPE[media_type]] # indexed as multi array of ints.
     end
 
     if page_type
@@ -139,16 +154,15 @@ module PathFinder::Sphinx::BuilderFilters
   end
 
   def filter_person(id)
-    @with << ['access_ids', Page.access_ids_for(:user_ids => [id])]
+    @with << [:access_ids, Page.access_ids_for(:user_ids => [id])]
   end
 
   def filter_group(id)
-    @with << ['access_ids', Page.access_ids_for(:group_ids => [id])]
+    @with << [:access_ids, Page.access_ids_for(:group_ids => [id])]
   end
 
   def filter_created_by(id)
-    @conditions[:created_by_id] ||= ""
-    @conditions[:created_by_id] += " #{id}"
+    @with << [:created_by_id, id]
   end
 
   def filter_not_created_by(id)
@@ -167,7 +181,7 @@ module PathFinder::Sphinx::BuilderFilters
   end
 
   def filter_stars(star_count)
-    @conditions[:stars] = range(star_count, 10000)
+    @with << [:stars_count, range(star_count, 10000)]
   end
 
   def filter_starred

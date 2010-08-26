@@ -1,0 +1,62 @@
+h1. after_commit
+
+An ActiveRecord/Rails library to add @before_commit@, @after_commit@, @before_rollback@ and @after_rollback@ callbacks. These callbacks are focused on the transactions, instead of specific model actions. This is beneficial in situations where you are doing asynchronous processing and need committed objects.
+
+h2. Installation
+
+<pre><code>gem install after_commit</code></pre>
+
+h2. Usage
+
+The following callbacks are provided:
+
+* before_commit
+* before_commit_on_create
+* before_commit_on_update
+* before_commit_on_destroy
+* after_commit
+* after_commit_on_create
+* after_commit_on_update
+* after_commit_on_destroy
+* before_rollback
+* after_rollback
+
+You can use these just like you would any other callback:
+
+<pre><code>class Article < ActiveRecord::Base
+  after_commit :method_to_call_after_commit
+  
+  # ...
+  
+  private
+  
+  def method_to_call_after_commit
+    # Do something knowing that the transaction is committed.
+  end
+end</code></pre>
+
+h2. In Tests
+
+Keep in mind that transactions are finicky at best in tests, and so there's a helper module to make @after_commit@ play nicely in your testing context. You'll need to add these two lines to your spec/test helper:
+
+<pre><code>ActiveRecord::Base.send(:include, AfterCommit::AfterSavepoint)
+ActiveRecord::Base.include_after_savepoint_extensions</code></pre>
+
+h2. Credits
+
+This code first appeared in a blog post "by Eli Miller":http://elimiller.blogspot.com/2007/06/proper-cache-expiry-with-aftercommit.html, and was then included in "Thinking Sphinx":http://ts.freelancing-gods.com by "Pat Allan":http://freelancing-gods.com, with modifications from Joost Hietbrink. The code was then "put on GitHub as a plugin":http://github.com/GUI/after_commit by Nick Muerdter, and many people forked and added their own contributions.
+
+This version (maintained by Pat Allan) includes the following patches:
+
+* Callbacks for specific types of actions (create, update, destroy) ("DeLynn Berry":http://delynnberry.com/)
+* Fixes to extra callbacks ("Xavier Shay":http://rhnh.net/)
+* Thread-safety ("Dmitry Galinsky":http://dima-exe.ru/)
+* after_rollback callback ("Justin Balthrop":http://github.com/ninjudd)
+* Test environment fix ("Pivotal Labs":http://pivotalblabs.com/)
+* Scoping callbacks to specific connections ("Mat Brown":http://outofti.me/)
+* before_* callbacks ("Trotter Cashion":http://trottercashion.com/)
+* Gemspec and extended tests, works as a plugin, doesn't load ActiveRecord hooks twice, doesn't add Test environment hook automatically. ("David Yip":http://github.com/yipdw)
+* Exception propagation ("George Ogata":http://github.com/oggy/)
+* Keeping callbacks focused on the correct transactions ("Benjamin Stein":http://benjaminste.in/)
+* Using savepoints for test helper ("Lars Klevan":http://www.linkedin.com/in/larsklevan and "Joel Chippindale":http://blog.monkeysthumb.org/)
+* Only tracking objects from classes that have appropriate callbacks; Adding @after/before_commit_on_save@ to cover creates and updates but not destroys ("Jason Weathered":http://jasoncodes.com/)

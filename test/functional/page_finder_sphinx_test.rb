@@ -55,8 +55,8 @@ class PageFinderSphinxTest < ActionController::TestCase
       raw_pages = Page.all(:order => "updated_at DESC").select{ |p|
         search_code.call(p) and user.may?(:view, p)
       }
-      assert_equal page_ids(raw_pages), page_ids(sphinx_pages),
-        "#{search_str} should match results for user"
+      assert page_ids(raw_pages) == page_ids(sphinx_pages),
+        "#{search_str} should match results for user.\nFound but should not have been: %s\nNot found but should have been: %s\n" % [(page_ids(sphinx_pages)-page_ids(raw_pages)).to_a.inspect, (page_ids(raw_pages)-page_ids(sphinx_pages)).to_a.inspect]
     end
 
     ##
