@@ -14,11 +14,11 @@ class Me::SocialActivitiesControllerTest < ActionController::TestCase
 
     xhr :get, :index
     activities_drop = assigns(:activities_drop)
-    assert (activities_drop.size == 5)
+    assert_equal 5, activities_drop.size
 
     xhr :get, :index, :see => 'more'
     activities_drop = assigns(:activities_drop)
-    assert (activities_drop.size > 5)
+    assert 5 < activities_drop.size
   end
 
   protected

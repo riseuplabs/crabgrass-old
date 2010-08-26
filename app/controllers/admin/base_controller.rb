@@ -8,7 +8,7 @@ class Admin::BaseController < ApplicationController
 
   stylesheet('admin')
 
-  helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', 'admin/custom_appearances', PageHelper, UrlHelper, FlashMessageHelper, LinkHelper, ApplicationHelper, TimeHelper
+  helper 'admin/base', 'admin/pages', 'admin/posts', 'admin/email_blasts', 'admin/announcements', PageHelper, UrlHelper, FlashMessageHelper, LinkHelper, ApplicationHelper, TimeHelper
 
 
   before_filter :login_required

@@ -7,11 +7,6 @@ require File.dirname(__FILE__) + '/hook'
 # load Crabgrass::Initializer early
 require File.dirname(__FILE__) + '/initializer'
 
-#Dispatcher.to_prepare do
-  # I don't understand why this is needed for crabgrass, but not for redmine
-#  ApplicationHelper.send(:include, Crabgrass::Hook::Helper)
-#end
-
 Conf.load("crabgrass.#{RAILS_ENV}.yml")
 
 begin

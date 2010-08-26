@@ -6,16 +6,10 @@
   blank     -> include blank as an access level option.
   alter_access -> if true, then we allow the user to change the access level of pre-existing participations.
 
-
-
 - blank = false if blank.nil?
 - access = 'admin' if access.nil?
 - access_options = {:blank => blank, :selected => access}
-- if unsaved.nil?
--   newitem = false
-- else
--   newitem = unsaved
-
+- newitem = unsaved || false
 - newitem = true if @page and @page.new_record?
 - alter_access = true if alter_access.nil?
 
@@ -43,9 +37,7 @@
         In that case the access value can differ even if this person can not change it.
         However you are right about hardcoding it. It should be hardcoded to not change.
         Currently we only use it as a per site setting - so it could even be completely
-        hard coded.
-          --azul
+        hard coded. --azul
   %td
     = link_to_function_icon('tiny_trash', remove_function, :title => I18n.t(:remove)) if newitem
-
 

@@ -24,6 +24,7 @@
 def info(str,level=0)
   if ENV['INFO'] and ENV['INFO'].to_i >= level
     puts ('  '*level) + str.to_s
+    STDOUT.flush
   end
 end
 

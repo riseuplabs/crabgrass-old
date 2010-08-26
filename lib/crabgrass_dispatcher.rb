@@ -11,7 +11,12 @@ module CrabgrassDispatcher
       # (3) the handle does not collide with our routes or controllers
       #
       def validates_handle(*attr_names)
-        configuration = { :message => I18n.translate('activerecord.errors.messages.invalid'), :on => :save, :with => nil }
+        # configuration = { :message => I18n.translate('activerecord.errors.messages.invalid'), :on => :save, :with => nil }
+        # ^^ this often doesn't work. I am not sure why, but I think it is because we haven't set a language yet.
+        #    also, i can't imagine how this is supposed to work. 'validates_handle' is called once at startup, but
+        #    we want to translate the error messages different for each request, since we don't know what the language
+        #    should be outside the request.  -elijah
+        configuration = { :on => :save, :with => nil }
         configuration.update(attr_names.pop) if attr_names.last.is_a?(Hash)
 
         validates_each(attr_names, configuration) do |record, attr_name, value|

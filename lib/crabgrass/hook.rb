@@ -96,5 +96,3 @@ module Crabgrass #:nodoc:
   end
 end
 
-# this is done in an initializer instead:
-#ApplicationHelper.send(:include, Crabgrass::Hook::Helper)

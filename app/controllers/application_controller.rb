@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   include ControllerExtension::UrlIdentifiers
   include ControllerExtension::RescueErrors
   include ControllerExtension::PaginationOptions
+  include Crabgrass::Hook::Helper
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
