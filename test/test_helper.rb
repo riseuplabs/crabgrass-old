@@ -1,4 +1,6 @@
 require 'rubygems'
+require 'test/unit'  # I don't know why, but a bunch of tests fail
+                     # if test/unit is not included early on.
 
 def try_to_load(name, &block)
   begin
@@ -7,8 +9,10 @@ def try_to_load(name, &block)
     else
       require name
     end
+    return true
   rescue LoadError => exc
     puts "Warning: could not load %s" % name
+    return false
   end
 end
 
