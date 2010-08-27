@@ -6,6 +6,13 @@ You can run a single test at a time like so:
 
   ruby test/unit/user_test.rb --name test_user_name
 
+When you do this, ruby is run with the debugger on. You can put 'debugger'
+lines in you code and it will stop on the line. Normally, this is only true
+if you run rdebug. 
+
+You can replace --name with -n
+
+
 == Using INFO environment variable
 
 sometimes, it is much more useful to use print for debugging than

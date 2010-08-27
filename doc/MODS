@@ -1,26 +1,30 @@
 = Crabgrass Mods
 
-This is documentation specific to Crabgras Mods.
+Mods are plugins that modify the crabgrass application. They are specific
+to crabgrass, and won't run on other rails apps.
 
-* Controllers & Helpers: See Engines::RailsExtensions::Dependencies for more information.
+== Creating Mods
 
-* Views: now handled almost entirely by ActionView itself (see Engines::Plugin#add_plugin_view_paths for more information)
+A crabgrass mod is identical to a plugin. By convention, they live in
+RAILS_ROOT/mods or RAILS_ROOT/tools.
 
-* Models: this is tricky, see below.
 
-See http://api.rails-engines.org
+== Modifying Crabgrass Models
 
-== Overriding Views in a Mod
+In the mods init.rb:
 
-If this is in the init.rb of your plugin:
+  extend_model :Crow do
+    has_many :feathers
+    def feather_color
+      'black'
+    end
+    def make_sound
+      'squawk'
+    end
+  end
 
-  self.override_views = true
-
-Then any view file in the plugin's app/views folder will override what
-is in the main application. Otherwise, the views in the main
-application take precedence. If <tt>load_once</tt> is set to false, then you
-can make changes to your mod in development mod and see those changes
-reflected in the application without needing to restart script/server.
+This only works for models that have 'acts_as_extensive' included somewhere in
+their class definition.
 
 == View Listeners
 
@@ -53,97 +57,11 @@ In this case, the 'call_hook' command will return 'hi'.
 In your ViewListener, you can use any method that is available to a
 view.
 
-== Modifying Models in the Plugin
-
-Some plugins have a problem: if a plugin applies a mixing directly to
-a model in app/models, this mixin gets unloaded by rails after the
-first request. This only happens in development mode. The symptom is
-an application that works for the first request but fails on
-subsiquent requests.
-
-Normal plugins don't have this problem: they modify active record, and
-then the core models call these extensions which triggers the
-reloading of the plugin mixin.
-
-To get around this problem, crabgrass has a method called
-apply_mixin_to_model that is available in the plugin's init.rb. 
-
-(1) in your plugin's init.rb:
-
-  # in this example, there is a model app/models/language.rb, and module
-  # vendor/plugins/myplugin/app/models/language_extension.rb
-
-  apply_mixin_to_model(Language, LanguageExtension)
-
-(2) define a module that will be used to extend the model:
-
-  module LanguageExtension
-    module InstanceMethods
-      def percent_complete()
-        count = Key.count_all
-        if count > 0
-          (Key.translated(self).count / count * 100.0).round.to_s + '%'
-        end
-      end
-    end
-   
-    module ClassMethods
-      def hello
-         'i am a class method'
-      end
-    end
-
-    def self.add_to_class_definition
-      lambda do
-        has_many :translations, :dependent => :destroy
-      end
-    end
-  end
-
-(3) Some alternate examples
-
-Sometimes, the apply_mixin_to_model needs to be wrapped in Dispatcher.to_prepare.
-This does two things: first, it applies the code block later in init process;
-second, the code block gets re-applied on every request in development mode. 
-Sometimes, development mode will unload classes that you still want around, but
-if you wrap in Dispatcher.to_prepare, then your code will still work.
-
-  Dispatcher.to_prepare do
-    apply_mixin_to_model(User, CracklibUserExtension)
-  end
-
-You can also just extend a class directly:
-
-  Dispatcher.to_prepare do
-    User.class_eval do
-      validates_each(:password, :if => :password_required?) do |record, attr, value|
-        result = Cracklib.check(value)
-        unless result == "OK"
-          code = Cracklib.translation_key_from_error_message(result)
-          record.errors.add attr, result[code]
-        end
-      end
-    end
-  end
+== Code Listeners
 
 
-Some further reading....
 
-Plugins loaded first problem:
 
-* http://weblog.techno-weenie.net/2007/1/24/understanding-the-rails-initialization-process
-
-Plugin classes unloaded after first refresh in development mode:
-
-* http://weblog.techno-weenie.net/2007/1/26/understanding-the-rails-plugin-initialization-process
-* http://rails-engines.org/development/common-issues-when-overloading-code-from-plugins/
-* http://blog.nanorails.com/articles/2007/2/15/after_method
-* http://www.ruby-forum.com/topic/111410
-
-Reloading changed code problem:
-
-* http://cameronyule.com/2008/07/make-rails-engines-2-reload-in-development-mode
-* crabgrass has its own method. see lib/extends_to_engines.rb
 
 == Customizing the stylesheets and javascript from a plugin
 

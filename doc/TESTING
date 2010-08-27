@@ -22,18 +22,27 @@ doesn't get rolled back.
 disable_site_testing in teardown(). Otherwise, site testing will be stuck on and
 other tests fill fail.
 
-== Required for Running Tests
+== Gems to install
 
-gems:
+required gems:
   mocha
   blueprints
   machinist
   faker
   webrat
 
-this was the old list, but i don't think it is true: hpricot nokogiri launchy
-machinist faker ruby-debug, leftright (optional but recommended, lerftright
-organizes and colorizes test output).
+optional gems:
+  leftright
+  shoulda
+
+What do these do?
+
+mocha      -- provides stubbing and mocking. http://mocha.rubyforge.org/
+blueprints -- a replacement for fixtures
+machinish  -- an add on for blueprints
+faker      -- an add on for blueprints
+webrat     -- makes it much easier to write view tests
+shoulda    -- synatic sugar and helpers for normal tests
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 

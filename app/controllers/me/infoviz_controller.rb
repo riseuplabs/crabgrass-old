@@ -7,11 +7,13 @@
 # gem install ruby-graphviz
 #
 
-begin
-  require 'graphviz'
-  GRAPHVIZ_ENABLED=true
-rescue LoadError => exc
-  GRAPHVIZ_ENABLED=false
+unless defined?(GRAPHVIZ_ENABLED)
+  begin
+    require 'graphviz'
+    GRAPHVIZ_ENABLED=true
+  rescue LoadError => exc
+    GRAPHVIZ_ENABLED=false
+  end
 end
 
 class Me::InfovizController < Me::BaseController
