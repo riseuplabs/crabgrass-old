@@ -26,6 +26,7 @@
       <%= render :partial => 'navbar_item', :collection => @group.menu_items %>
       <li class="right"><%= link_to(I18n.t(:edit), groups_menu_items_url(:action => :index), :class=>'small_icon pencil_16') if may_edit_menu? %></li>
     </ul>
+<!-- the welcome box has been removed. why? i liked it -elijah -->
     <% if params[:welcome_box] && logged_in? -%>
       <div id='welcome_box'>
         <div class="inset_box round">

@@ -14,19 +14,26 @@
 
 == Important Rules When Writing Tests
 
-(1) NEVER destroy a page that has been loaded from fixtures. This will mess up subsequent tests. Why? Because page_terms table cannot use transactions and so doesn't get rolled back.
+(1) NEVER destroy a page that has been loaded from fixtures. This will mess up
+subsequent tests. Why? Because page_terms table cannot use transactions and so
+doesn't get rolled back.
 
-(2) If you call enable_site_testing in setup(), then you MUST call disable_site_testing in teardown(). Otherwise, site testing will be stuck on and other tests fill fail.
+(2) If you call enable_site_testing in setup(), then you MUST call
+disable_site_testing in teardown(). Otherwise, site testing will be stuck on and
+other tests fill fail.
 
-== Required Gems for Running Tests
+== Required for Running Tests
 
-hpricot
-nokogiri
-launchy
-machinist
-faker
-ruby-debug
-leftright (optional but recommended, lerftright organizes and colorizes test output)
+gems:
+  mocha
+  blueprints
+  machinist
+  faker
+  webrat
+
+this was the old list, but i don't think it is true: hpricot nokogiri launchy
+machinist faker ruby-debug, leftright (optional but recommended, lerftright
+organizes and colorizes test output).
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev
 
@@ -35,18 +42,27 @@ On debian, nokogiri requires: libxslt1-dev libxml2-dev
 gems:
   cucumber
   cucumber-rails
-  webrat
+  gherkin
   culerity
   spork
+
+As of this writing, cucumber needs gherkin 2.1.4, so you cannot just "gem install gherkin". 
+instead: gem install gerkin --version 2.1.4
 
 packages:
   jruby > 1.4
 
 jruby gems:
-  celerity
+  celerity (jruby -S gem install celerity)
 
 database config:
-  You will also need to add a block for cucumber: in config/database.yml.  Copying the settings from crabgrass_development should do the trick.
+  You will also need to add a block for cucumber in config/database.yml:
+
+     cucumber:
+     <<: *TEST
+
+     culerity_development:
+     <<: *TEST
 
 /etc/hosts file should contain:
   127.0.0.1       test.host

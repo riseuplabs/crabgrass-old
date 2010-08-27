@@ -22,7 +22,6 @@ What do these do?
 these are undocumented:
   database_cleaner
   inheritable_templates
-  machinist
   optional_haml
   partioprint
   pickle

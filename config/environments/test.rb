@@ -31,19 +31,16 @@ config.action_mailer.delivery_method = :test
 ## REQUIRED GEMS
 ##
 
-#unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
-#  config.gem 'webrat', :lib => false, :version => '>=0.5.3'
-#end
-#config.gem 'faker', :lib => 'faker', :version => '>=0.3.1'
-#config.gem 'cucumber'
+# these gems are currently required for in order to get all the tests
+# to work
 
 config.gem 'mocha'
 config.gem 'blueprints'
 config.gem 'machinist'
 config.gem 'faker'
+config.gem 'webrat'
 
 # config.gem 'gem-name', :lib => 'github_gem_name', :source => 'http://gems.github.com'
-
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"

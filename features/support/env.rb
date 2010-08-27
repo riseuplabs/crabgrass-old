@@ -28,7 +28,7 @@ Spork.each_run do
   ActionController::Base.allow_rescue = true
 
   require 'cucumber/rails/world'
-  require 'test/blueprints.rb'
+  require 'test/cg_blueprints.rb'
   require 'lib/crabgrass/navigation.rb'
 
   Before do

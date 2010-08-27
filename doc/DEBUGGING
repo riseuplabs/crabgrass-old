@@ -39,4 +39,9 @@ For example:
 
 This will drop you into the debugger whenever that query occurs.
 
+== Debugging View Tests
+
+You can use the method "response_body" to get an easier to read version of the
+response body. Super useful!
+
 

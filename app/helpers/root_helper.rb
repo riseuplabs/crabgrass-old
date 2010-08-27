@@ -12,11 +12,11 @@ module RootHelper
     end
   end
 
-  def configure_site_appearance_link
-    if current_site.custom_appearance and may_admin_site?
-      link_to_with_icon 'color_wheel', I18n.t(:edit_appearance), edit_admin_custom_appearance_url(current_site.custom_appearance)
-    end
-  end
+  #def configure_site_appearance_link
+  #  if current_site.custom_appearance and may_admin_site?
+  #    link_to_with_icon 'color_wheel', I18n.t(:edit_appearance), edit_admin_custom_appearance_url(current_site.custom_appearance)
+  #  end
+  #end
 
   def load_panel(panel_name, time_span=nil)
    remote_function(:url => {:controller => 'root', :action => panel_name, :time_span => time_span})

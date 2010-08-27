@@ -10,7 +10,9 @@ class SiteHomeTest < ActionController::IntegrationTest
     disable_site_testing
   end
 
-  def test_hide_show_welcome_message
+  # not sure what this test is still doing here, since the welcome box was
+  # removed. -elijah
+  def xtest_hide_show_welcome_message
     login 'blue'
     visit '/'
 
