@@ -4,14 +4,21 @@
 
 # requires:
 # apt-get install graphviz
+# gem install ruby-graphviz
 #
 
-require 'graphviz'
-
+begin
+  require 'graphviz'
+  GRAPHVIZ_ENABLED=true
+rescue LoadError => exc
+  GRAPHVIZ_ENABLED=false
+end
 
 class Me::InfovizController < Me::BaseController
 
   def visualize
+    return unless GRAPHVIZ_ENABLED
+
     format = params[:format] || 'svg'
 
     @pages = Page.find_by_path(params[:path], options_for_me)
