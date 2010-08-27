@@ -121,6 +121,7 @@ Crabgrass::Initializer.run do |config|
   config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
   config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.19'
+  config.gem 'will_paginate'
 
   # frozen: required when modifying themes
   config.gem 'compass'

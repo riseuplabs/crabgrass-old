@@ -102,5 +102,10 @@ and not just hashes:
        Riddle::Client::Filter.new attrib.to_s, filter_value(value)
     }
 
+will_paginate
+------------------
+
+the standard pagination plugin/gem for rails.
+
 
 
