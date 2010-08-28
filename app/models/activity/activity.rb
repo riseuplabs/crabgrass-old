@@ -190,6 +190,19 @@ class Activity < ActiveRecord::Base
     end
   end)
 
+  # list all users who will see this activity in their activity stream.
+  # used to expire the corresponding cache.
+  # scope can either be :friends (default) or :peers.
+  def affected_users(scope = :friends)
+    if access == Activity::PRIVATE and subject.is_a?(User)
+      return [subject]
+    elsif subject.is_a?(User)
+      return subject.send(scope) + [subject]
+    elsif subject.is_a?(Group)
+      return subject.all_users
+    end
+  end
+
   ##
   ## DISPLAY HELPERS
   ##

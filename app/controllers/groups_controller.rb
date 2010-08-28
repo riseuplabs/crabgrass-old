@@ -15,6 +15,7 @@ class GroupsController < Groups::BaseController
   verify :method => [:post, :put], :only => [:create, :update]
   verify :method => :delete, :only => :destroy
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
+  cache_sweeper :social_activities_sweeper, :only => [:update, :create, :destroy]
 
   ## TODO: remove all task list stuff from this controller
     helper 'task_list_page' # :only => ['tasks']
