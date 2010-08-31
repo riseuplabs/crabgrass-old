@@ -1,14 +1,30 @@
+# http://css3pie.com/
 
 options {
 
   favicon_png 'favicon.png'
   favicon_ico 'favicon.ico'
- 
+
+
+  masthead {
+    background {
+      color 'black'
+      border {
+        color 'green'
+      }
+    }
+  }
+
+
+##
+## BAD OLD STUFF
+##
+
+
   ##
   ## general colors
   ##
 
-  color {
     link_color "#998675"
     almost_black "#534741"
     warm_grey_text "#998675"
@@ -27,16 +43,6 @@ options {
 
     general_bg "#E6E3DC"
     content_bg "#fff"
-  }
-
-  masthead {
-    background {
-      color 'black'
-      border {
-        color 'green'
-      }
-    }
-  }
 
   ##
   ## MASTHEAD

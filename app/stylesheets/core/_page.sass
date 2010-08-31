@@ -7,9 +7,9 @@ div
 .page_title
   padding-left: 30px
   h3
-    font-size= !page_title_h3
+    font-size: $page_title_h3
     padding-top: 6px
-    color= !page_title_color
+    color: $page_title_color
   .summary
     font-style: italic
     padding: 3px 0px
@@ -27,7 +27,7 @@ div
 //
 
 #posts
-  background= !posts_bg
+  background: $posts_bg
   margin-bottom: 15px
   width: 540px
   .post-author
@@ -43,13 +43,13 @@ div
     p
       padding: 10px 10px 15px
   h4
-    +bordered-btm(!light_grey_border)
+    +bordered-btm($light_grey_border)
     line-height: 1.6
   .shade-even
-    background-color= !post_alternate_bg_color
+    background-color: $post_alternate_bg_color
 
 #posts > h4
-  color= !red
+  color: $red
 
 
 table.posts
@@ -124,7 +124,7 @@ div.sub_menu
 div.title_box
   margin-left: -18px
   padding-bottom: 5px
-  background= !page_title_bg
+  background: $page_title_bg
   form
     .h1
       line-height: 1em
