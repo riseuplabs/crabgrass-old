@@ -108,13 +108,36 @@ class Theme
     Sass::Engine.new(sass_text, sass_options).render
   end
 
+  # print out a nice error message if anything goes wrong
+  def error_response(exception)
+    txt = []
+    txt << "<html><body>"
+    txt << "<h2>#{exception}</h2>"
+    txt << "<blockquote>Line number: #{exception.sass_line}<br/>"
+    txt << "File: #{exception.sass_filename}</blockquote>"
+    txt << "<pre>"
+    line_number = 1
+    if exception.sass_filename.nil? or exception.sass_filename =~ /screen/
+      filedata = exception.sass_template.split("\n")
+    else
+      filedata = File.read(exception.sass_filename).split("\n")
+    end
+    filedata.each do |line|
+      txt << "%4.i  %s" % [line_number, line]
+      line_number += 1
+    end
+    txt << "</pre>"
+    txt << "</body></html>"
+    txt.join("\n")
+  end
+
   private
 
   # takes a sass file, and prepends the variable declarations for this theme.
   # returns a text blob that is the completed sass.
 
   def generate_sass_text(file)
-    sass = data.collect{|k,v| '!%s = "%s"' % [k,v] }.join("\n")
+    sass = data.collect{|k,v| '$%s: "%s"' % [k,v] }.join("\n")
     sass << "\n"
     sass << File.read( sass_source_path("mixins") )
     sass << "\n"
@@ -187,6 +210,7 @@ class Theme
     File.exists?(path) ? File.mtime(path) : nil
   end
 
+ 
   ##
   ## THEME LOADING AND STORAGE
   ##
@@ -194,6 +218,8 @@ class Theme
   public
 
   def load
+    info 'loading theme %s' % @directory, 1
+
     # load and eval theme init.rb
     evaluate_init_rb
 
@@ -203,9 +229,11 @@ class Theme
     # create the theme's public directory and link the theme's
     # 'images' directory to it.
     unless File.exists?(@public_directory)
-      FileUtils.mkdir(@pubic_directory)
+      FileUtils.mkdir_p(@public_directory)
     end
-    FileUtils.rm("#{@public_directory}/images") # it might be pointing to wrong path
+    if File.exists?("#{@public_directory}/images")
+      FileUtils.rm("#{@public_directory}/images") # it might be pointing to wrong path
+    end
     FileUtils.ln_s("#{@directory}/images", "#{@public_directory}/images")
   end
 
