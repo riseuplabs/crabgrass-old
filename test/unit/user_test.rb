@@ -119,6 +119,11 @@ class UserTest < Test::Unit::TestCase
     assert (u2.current_status == 'hello')
   end
 
+  def test_both_names
+    u = User.create!(:login => 'loginname', :display_name => 'display name!', :password => 'password', :password_confirmation => 'password');
+    assert(u.both_names == 'display name! (loginname)')
+  end
+
   protected
 
   def create_user(options = {})

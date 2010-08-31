@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   # displays both display_name and name
   def both_names
     if read_attribute('display_name').any? and read_attribute('display_name') != name
-      '%s (%s)' % [name, display_name]
+      '%s (%s)' % [display_name, name]
     else
       name
     end
