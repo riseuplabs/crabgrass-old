@@ -101,6 +101,14 @@ mested_layouts
 text_editor_helper
   formatting buttons for textareas.
 
+Development Plugins
+----------------------------------
+
+rails-dev-boost
+  http://github.com/thedarkone/rails-dev-boost
+  amazing plugin that improves the class loading/unloading code for development
+  mode. it makes running dev mode many times faster.
+
 Testing Plugins
 ---------------
 
