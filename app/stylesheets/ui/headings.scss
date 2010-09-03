@@ -1,0 +1,24 @@
+
+
+// see all links are commonly used. they embed a small link inside a heading
+// to see more information. the text might not read, "see all".
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+  font-family: $font_heading_family;
+  line-height: 1em;
+  .more {
+    padding-left: 1em;
+    font-size: 0.8em; // $grid_font_size;
+  }
+}
+
+h2.dim, h3.dim, h4.dim {
+  color: $color_dim;
+}
+
+h1 {font-size: $font_heading_h1_size;}
+h2 {font-size: $font_heading_h2_size;}
+h3 {font-size: $font_heading_h3_size;}
+h4 {font-size: $font_heading_h4_size;}
+

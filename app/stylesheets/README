@@ -1,0 +1,131 @@
+0.6 structure
+
+body
+  div#container
+    header#masthead
+      div#masthead_content
+      ul#menu
+    aside#flash_messages
+    header#banner
+      div#banner_content
+        div#identity
+      nav#context_nav
+    aside#sidebar
+    article#content
+      header#title_box
+        nav#title_nav
+      section#body
+        section
+        section
+      section#comments
+        article.comment
+        article.comment
+
+
+0.5 structure
+
+body
+  div#page
+     header.page
+       section#masthead
+         div#masthead-container
+       nav.page
+         div#global-nav-container
+           div#global-nav
+             ul#menu
+             div#account-links
+     section#flash_messages
+     div.banner
+       div#banner-container
+         header#banner-no-avatar        (landing)
+       header#banner                    (me, page)
+         section#identity-name
+     div.nav2
+       div#nav2-container
+         div#second-level               (me, page)
+         dev#second-level-aside         (landing)
+     div#third-level-container          (landing)
+       nav#third-level.extended_sidebar
+     div#content
+       div#content-container
+         div#content-wrap
+           div#alpha10                  (page)
+           aside#sidebar                (page)
+           aside#xxlarge-avatar         (landing)
+           div#main-content-full        (me)
+           div#omega10                  (landing)
+             div#main-content
+     footer.footer-container
+     div.debug
+
+
+body
+  masthead
+  banner
+  navigation
+  content
+  footer
+
+
+SUSY CRASH COURSE
+
+grid element
+  an html element that has been asigned a spanning width on the susy grid.
+  this is done with the 'columns' or 'full' mixins.
+
+non-grid element
+  all the other html elements
+
+container
+  an element that @includes 'container'
+
+root context
+  an element with a 'container' as its closest grid ancestor 
+  side gutters are taken into account only in the root context.
+
+nested context
+  any element that is not in a root context. in other words, its nearest grid
+  ancestor is not a 'container'
+
+mixins:
+
+  The `columns` mixin:
+     @include columns($span, [$context]);
+
+  The `full` mixin:
+     @include full([$context]);
+
+  Note: $context is a column number.
+        It must not NOT be passed at the root level.
+        It MUST be passed at nested levels.
+
+  alpha
+    to declare elements which include the first column within their parent element
+    (only matters for root context, and when not using full column)
+    @include alpha
+
+  omega
+    to declare elements which include the last column within their parent element
+    (only matters for root context, and when not using full column)
+    @include omega
+
+  padding
+    The `prefix`, `suffix` and `pad` mixins add column paddings to the left,
+    right, or both sides of a column:
+       @include prefix($prefix-span [, $context])
+       @include prefix($suffix-span [, $context])
+       @include pad($prefix-span, $suffix-span [, $context])
+
+NOTES
+
+From the html5 spec:
+
+  "The section element represents a generic section of a document or
+   application. A section, in this context, is a thematic GROUPING OF
+   CONTENT, typically with a heading"
+   http://www.w3.org/TR/html5/sections.html#the-section-element
+   (emphasis added)
+
+sections are to be used for grouping content, not as a generic container element.
+
+

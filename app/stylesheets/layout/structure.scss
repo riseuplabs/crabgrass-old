@@ -1,0 +1,135 @@
+
+
+
+/* basic page layout */
+/*
+body
+  +susy
+  +general-font
+  color: $almost_black
+  background: $general_bg
+  #page
+    header.page
+      +clearfix
+      overflow: visible
+
+  #content
+    +pie-clearfix
+    color: $medium_grey_text
+    overflow: visible
+    #content-container
+      +container
+      +pie-clearfix
+      background-image: none
+      background-color: $content_bg
+      padding-bottom: 100px
+      overflow: visible
+      width: 764px
+      padding: 0 18px
+      #content-wrap
+        +columns(14)
+        +full
+        +pie-clearfix
+        width: 764px
+        overflow: visible
+        margin: 20px 0 20px 0
+        form#entry
+          float: left
+          margin-top: 15px
+          +columns(4,14)
+          // +alpha(14)
+          div
+            label, a
+              display: block
+            a
+              +blue-link
+        div#welcome
+          +columns(10,14)
+          +omega(14)
+          margin-top: 15px
+          p
+            margin-top: 10px
+        header#header-full
+          +clearfix
+          #identity
+            +clearfix
+            width: 764px
+            height: 67px
+          img
+            padding-right: 40px
+          a
+            +hover-link
+            +small-text
+            float: left
+            clear: left
+            color: $light_grey_text
+          nav#nav-full
+            width: 764px
+            height: 28px
+            ul
+              +clearfix
+              li
+                +zero
+                +bordered($almost_black)
+                +spaced
+                height: 28px
+                border-left: none
+                background: #fff
+                font-size: 11px
+                a
+                  color: $warm_grey_text
+                  text-decoration: none
+                  font-weight: bold
+                  height: 28px
+                  line-height: 1.3
+                  padding: 8px 10px
+              li.current
+                +bordered($almost_black)
+                a
+                  color: $almost_black
+
+
+        #main-content-full
+          width: 764px
+        #xxlarge-avatar
+          width: 204px
+          float: left
+          position: relative
+          z-index: 1
+          margin: -140px 20px 0 0
+          &.no-third-level
+            margin-top: -116px
+
+          #image-label
+            +columns(4,4)
+            width: 204px
+            float: left
+            margin: 4px 0 0 0
+            line-height: 0.7
+            h3
+              color: $almost_black
+            ul
+              li
+                width: 204px
+                font-size: 11px
+
+
+
+
+        #alpha10
+          width: 540px
+          float: left
+          margin: 0
+          display: inline
+        #omega10
+          width: 540px
+          float: left
+          margin: 0
+          padding-top: 10px
+          display: inline
+
+          #main-content
+            +clearfix
+            width: 540px
+
+*/

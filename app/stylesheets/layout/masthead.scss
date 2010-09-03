@@ -1,0 +1,32 @@
+$masthead_css: false !default;
+
+#masthead {
+  height: $masthead_height;
+  @if $masthead_style == 'full' {
+    width: 100%;
+    margin: 0;
+  } @else {
+    @include full;
+  }
+  position: relative;
+  @if $masthead_css { @include masthead_css; }
+}
+
+#masthead_content {
+  @if $masthead_content_padding { padding: $masthead_content_padding; }
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@if $masthead_content_vertical_align == 'center' {
+  // see http://blog.themeforest.net/tutorials/vertical-centering-with-css/
+  // this only works if #masthead {position: relative;}
+  #masthead_content {
+    position: absolute;
+    top: 50%;
+    height: $masthead_content_height ;
+    margin-top: -($masthead_content_height/2);
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

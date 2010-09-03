@@ -1,0 +1,17 @@
+//
+// susy font sizes
+// set in pixels, susy will make them flexible.
+//
+
+$base-font-size: $grid_font_size;
+$base-line-height: $grid_font_line_height;
+
+//
+// susy grid
+//
+
+$total-cols: $grid_column_count;
+$col-width: $grid_column_width;
+$gutter-width: $grid_column_gutter;
+$side-gutter-width: $grid_column_side_gutter;
+

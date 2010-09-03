@@ -1,21 +1,160 @@
+
 # http://css3pie.com/
+
+=begin
+
+the theme code does a good job of figuring out if a value, when rendered as css,
+should have quotes around it or not. you can force it to not have quotes by
+creating a symbol, like so...
+ 
+  masthead {
+    height :"100px"
+  }
+
+In this case, this is not needed, because values in px units are not quoted by
+default anyway.
+
+you are not allowed to know selectors of css or structure of html. this might change, so don't rely on it.
+
+'html' is a special options. it takes either a string, a hash, or a block. 
+ * string: inserts this value directly into the template
+ * hash: the template will call render and pass in the hash.
+ * block: this will get eval'ed in the context of the view.
+
+'css' is a special option. it will get included in the stylesheet as a sass mixin. 
+this means you can make sass calls (using scss format).
+
+=end
 
 options {
 
   favicon_png 'favicon.png'
   favicon_ico 'favicon.ico'
 
+  grid {
+    column {
+      width '4em'
+      count 12
+      gutter '1em'
+      side_gutter '1em'
+    }
+    font {
+      size '16px'
+      line_height '24px'
+    }
+  }
+
+  # general color constants that are frequently reused
+  color {
+    dim '#999';
+    bright '#f33';
+  }
+
+  font {
+    heading {
+      family :"sans-serif";
+      h1_size "2.10em";
+      h2_size "1.125em";
+      h3_size "1em";
+      h4_size "1em";
+    }
+  }
+
+  background {
+    color 'white'
+  }
 
   masthead {
-    background {
-      color 'black'
-      border {
-        color 'green'
+    style 'full'    # accepts [full | narrow]
+                   # full -- the masthead stretches the full width of the screen
+                   # grid -- the masthead stops at the edge of the grid.
+
+    height '100px'
+    css "background-color: #ddd;"
+#    css %{
+#      @include linear-gradient(color-stops(green, red));
+#    }
+    content {
+      vertical_align 'center' # accepts [center | top]
+                              # if you set center alignment, you are still
+                              # responsible for aligning whatever text you put
+                              # in the content block.
+      height "2.5em"          # required if vertical_align == 'center'
+      padding var(:grid_column_gutter)
+      html { content_tag :div, current_site.title, :id => 'masthead_title' }
+    }
+    nav {
+      style 'cutout'  # accepts [cutout | bar]
+                     # cutout -- creates tabs cut out from masthead
+                     # bar -- creates a separate menu nav bar
+      tab {
+        # padding '0.5em'   # space within tab
+        padding '8px'   # must be in pixels
+        margin '0'    # space between tabs
+        css %{ }
+        active_css %{   }
+      }
+      dropdown {
+        background_color 'white'
+        border_color '#999'
+        hover {
+          background_color '#ffc';
+          border '1px solid #cc9';
+        }
       }
     }
   }
 
+  banner {
+    nav {
+      style 'inset'
+    }
+  }
 
+  # all the various z-index values are defined here. 
+  # these should not ever need to be changed. 
+  zindex {
+    menu 99            # masthead navigation menus
+    tooltip 300        #
+    autocomplete 400   # autocomplete popups
+
+
+  }
+
+}
+
+style %{
+  #masthead_title {
+    color: #333;
+    font-size: 1.5em;
+    // vertically center align:
+    line-height: 1.5em;
+  }
+}
+
+=begin
+masthead {
+  nav {}
+}
+error {}
+banner {
+  nav { }
+}
+page {
+  sidebar {  }
+  titlebox {  }
+  comments {  }
+}
+landing {
+  sidebar {  }
+}
+footer {}
+type {}
+colors {}
+grid {}
+=end
+
+=begin
 ##
 ## BAD OLD STUFF
 ##
@@ -48,7 +187,6 @@ options {
   ## MASTHEAD
   ##
 
-  masthead_background "green"
 #"#000000 url(/riseup-masthead.png) 0 0 no-repeat"
   masthead_header_text "#fff"
   masthead_search_text "#fff"
@@ -118,6 +256,5 @@ options {
   popup_bg "#f3f2ee"
   box1_bg_color "#eee"
   notification "#ffffcc"
-
-}
+=end
 

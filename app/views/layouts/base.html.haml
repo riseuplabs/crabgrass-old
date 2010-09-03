@@ -2,13 +2,12 @@
 %html{:dir=>language_direction}
   = render :partial => '/layouts/base/head'
   %body{:class=>language_direction}
-    #page
-      / .space
-      %header.page
-        =render :partial => '/layouts/base/header'
-      / .space
-
-      %section#flash_messages
+    - if current_theme.masthead_style == 'full'
+      = render :partial => '/layouts/base/masthead'
+    #container
+      - unless current_theme.masthead_style == 'full'
+        = render :partial => '/layouts/base/masthead'
+      %aside#flash_messages
         = render :partial => 'layouts/messages'
 
       - if !link_to_breadcrumbs.blank?

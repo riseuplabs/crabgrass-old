@@ -1,0 +1,12 @@
+//
+// the layout structure of the primary containers
+//
+// #container
+//   #header
+//   #content
+//   #footer
+//
+
+#container {
+  @include container;
+}

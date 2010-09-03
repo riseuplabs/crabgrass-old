@@ -1,0 +1,19 @@
+//
+// THE BANNER
+//
+
+header#banner {
+  @include full;
+  background: #eee;
+  border: 1px solid #ccc;
+
+  @if $masthead_nav_style == 'cutout' {
+    margin-top: $grid_column_gutter;
+  }
+
+  @if $banner_nav_style == 'inset' {
+    padding: $grid_column_gutter;
+  }
+}
+
+
