@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
 
   def current_theme
     #@current_theme ||= Theme[current_site.theme_name]
-    @current_theme ||= Theme["default"]
+    @current_theme ||= Crabgrass::Theme["default"]
   end
   helper_method :current_theme
 

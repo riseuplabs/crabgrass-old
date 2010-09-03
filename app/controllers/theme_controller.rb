@@ -26,9 +26,7 @@ class ThemeController < ApplicationController
   caches_page :show, :if => Proc.new {|ctrl| ctrl.cache_css}
 
   def show
-    @theme = Theme[params[:name]]
-    file = File.join(params[:file])
-    render :text => @theme.render_css(file), :content_type => 'text/css'
+    render :text => @theme.render_css(@file), :content_type => 'text/css'
   rescue Sass::SyntaxError => exc
     self.cache_css = false
     render :text => @theme.error_response(exc)
@@ -37,8 +35,8 @@ class ThemeController < ApplicationController
 
   # don't cache css if '_refresh' is in the theme or stylesheet name.
   # useful for debugging.
-  prepend_before_filter :check_if_should_cache
-  def check_if_should_cache
+  prepend_before_filter :get_theme
+  def get_theme
     self.cache_css = true
     [params[:name], *params[:file]].each do |param|
       if param =~ /_refresh/
@@ -46,6 +44,9 @@ class ThemeController < ApplicationController
         self.cache_css = false
       end
     end
+    @theme = Crabgrass::Theme[params[:name]]
+    @file = File.join(params[:file])
+    @theme.clear_cache(@file) unless self.cache_css
   end
 
 end
