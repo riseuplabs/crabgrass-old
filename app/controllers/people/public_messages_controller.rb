@@ -2,6 +2,8 @@
 class People::PublicMessagesController < People::BaseController
   permissions 'public_messages'
 
+  cache_sweeper :social_activities_sweeper, :only => [:update, :create, :destroy]
+
   before_filter :fetch_post, :login_required
 
   helper 'wall_posts'

@@ -3,6 +3,8 @@ class PostsController < ApplicationController
   permissions 'posts'
   before_filter :fetch_data, :login_required
 
+  cache_sweeper :social_activities_sweeper, :only => [:create, :save, :twinkle]
+
   def create
     begin
       @post = Post.build params[:post].merge(:user => current_user, :page => @page)
