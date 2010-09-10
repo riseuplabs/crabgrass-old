@@ -486,7 +486,7 @@ owner_users = [['student','101'],['teacher','102'], ['visitor', '103'],
                ['other_student','104'],['other_teacher','105'], ['other_visitor', '106']]
 %>
 
-<% for i in 1001..1100 %>
+<% for i in 1005..1100 %>
 <% idx = (0..6).to_a.select{|g| i%(g+7)==0}.last
     if idx.nil?
       group_id = nil
