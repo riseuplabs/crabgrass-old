@@ -2,7 +2,9 @@ class Groups::RequestsController < Groups::BaseController
 
   helper 'requests'
   permissions 'groups/requests', 'requests', 'groups/memberships'
+
   before_filter :fetch_group
+  before_filter :fetch_user_membership, :only => :create_remove_user
   before_filter :login_required
 
   def list
@@ -107,6 +109,25 @@ class Groups::RequestsController < Groups::BaseController
     redirect_to url_for_group(@group)
   end
 
+  # create a request to destroy membership (aka a remove proposal)
+  def create_remove_user
+    # TODO: enable creation of these requests
+    redirect_to :controller => 'groups/memberships', :action => 'review', :id => @group
+    return
+
+=begin
+    begin
+      RequestToRemoveUser.create! :created_by => current_user, :recipient => @group, :requestable => @user
+      flash_message :success => I18n.t(:request_to_remove_user_sent, :user => @user.display_name)
+    rescue Exception => exc
+      flash_message :exception => exc
+    end
+
+    redirect_to :controller => 'groups/memberships', :action => 'review', :id => @group
+=end
+  end
+
+
   protected
 
   def context
@@ -115,5 +136,9 @@ class Groups::RequestsController < Groups::BaseController
     add_context(I18n.t(:requests), {:controller => 'groups/requests', :action => :list, :id => @group})
   end
 
+  def fetch_user_membership
+    @user = User.find_by_login(params[:user_id])
+    @membership = @group.memberships.find_by_user_id(@user.id)
+  end
 end
 

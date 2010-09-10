@@ -7,7 +7,7 @@ class RootController < ApplicationController
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
 
-  permissions 'root','groups/base'
+  permissions 'root','groups/base', 'wiki'
   before_filter :login_required, :except => ['index']
   before_filter :fetch_network
 

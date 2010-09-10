@@ -168,6 +168,17 @@ survey_ipsum_<%= id+=1 %>:
   access: 2
 <% end %>
 
+rate_many_<%= id+=1 %>:
+  id: <%= id %>
+  page_id: 217
+  user_id: 5 # orange
+  access: 1
+
+rate_many_<%= id+=1 %>:
+  id: <%= id %>
+  page_id: 217
+  user_id: 8 # red
+  access: 2
 
 ### Connecting Classrooms ###
 

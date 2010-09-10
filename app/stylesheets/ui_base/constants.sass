@@ -1,17 +1,9 @@
-// CUSTOM APPEARANCE
+// fonts
+!headings_font = "arial, helvetica, sans-serif"
+!general_font = "verdana, bitstream vera sans, helvetica, sans-serif"
 
-!page_bg = #f3f4f4
-!banner_bg = #eef5fc
-!banner_title = #464646
-!banner_button = #78be63
-!banner_brdr = #a6c0cb
-
-//new colors phase1
-// GENERAL
+// general colors
 !link_color = #998675
-!link_visited_color = #998675
-!link_active_color = #534741
-!link_hover_color = #534741
 !almost_black = #534741
 !warm_grey_text = #998675
 !warm_grey_border = #b89882
@@ -23,43 +15,75 @@
 !medium_grey_border = #bbb
 !blue = #4978bc
 !red = #bd5743
-!white_border = #fff
-!white_text = #fff
-!white_bg = #fff
-!notification = #ffffcc
+
+!posts_bg = #fff
+!footer_bg = #fff
+
+//
+!general_bg = #f3f4f4
+!content_bg = #fff
 
 !masthead_background = #e76f44
-!masthead_header_text = !white_text
+!masthead_header_text = #fff
+!masthead_search_text = #fff
+
+!global_nav_dropdown_bg = #fff
 !global_nav_top_brdr = #a6c0cb
-!global_nav_bg = !white_bg
-!global_nav_text = !blue
+!global_nav_btm_brdr = #a6c0cb
+!global_nav_bg = #fff
+!global_nav_text = #4978bc
+
+!banner_bg = #eef5fc
+!banner_title = #464646
+!banner_button = #78be63
+!banner_brdr_btm = #a6c0cb
+
 !second_nav_border = #dbdbdb
-!second_nav_bg = !white_bg
+!second_nav_bg = #fff
 !second_nav_current = #4978bc
 !second_nav_link = #aaa
+
 !third_nav_border = #ebebeb
-!third_nav_bg = !white_bg
+!third_nav_bg = #fff
 !third_nav_text = #aaa
 !third_nav_current = #4978bc
 
+!page_title_bg = #eef5fc
+!page_title_color = #bd5743
+!page_title_h3 = 20px
+!page_title_tabs_bg =  #eef5fc
+!page_title_tabs_text = #4978bc
 
-// these were in the old constants.sass file and are apparently used
+!notification = #ffffcc
+// 
+
+!h1_size = 22px
+!h2_size = 18px
+!h3_size = 16px
+!h4_size = 13px
+!h5_size = 11px
+!h6_size = 9px
+!h1_color = #534741
+!h2_color = #534741
+!h3_color = #bd5743
+!h4_color = #777
+
 !menu_border_color = #000
-!popup_bg = "#F3F2EE"
+!popup_bg = #f3f2ee
 !box1_bg_color = #eee
-
+!notification = #ffffcc
 
 //
 // common styles/mixins
 //
-=sans-family-headings
-  font-family: arial, helvetica, sans-serif
+=headings
+  font-family= !headings_font
   font-weight: bold
   line-height: 1
 
-=sans-family
-  :font-family verdana, bitstream vera sans, helvetica, sans-serif
-
+=general-font
+  font-family= !general_font
+  
 =bordered-btm(!border_color= !warm_grey_border, !border_style= "solid")
   border-bottom= 1px !border_style !border_color
 
@@ -74,6 +98,9 @@
 
 =bordered-left(!border_color= !warm_grey_border)
   border-left= 1px "solid" !border_color
+  
+=bordered-right(!border_color= !warm_grey_border)
+  border-right= 1px "solid" !border_color
 
 =bordered-tab(!border_color= !almost_black)
   border-top= 1px "solid" !border_color

@@ -86,9 +86,9 @@ module Groups::Search
 
     @pages = Page.find_by_path(@path, options_for_contributions).each do |page|
       page.updated_by_id = page.user_id # user_id is from user_participation.
-      page.updated_by_login = User.find(page.user_id).login
+     page.updated_by_login = User.find(page.user_id).login
       page.updated_at = page.changed_at # changed_at is from user_participation.
-    end
+   end
     search_template('contributions')
   end
 
@@ -106,29 +106,30 @@ module Groups::Search
 
   private
 
-  def update_trash
-    pages = params[:page_checked]
-    if pages
-      pages.each do |page_id, do_it|
-        if do_it == 'checked' and page_id
-          page = Page.find_by_id(page_id)
-          if page
-            if params[:undelete] and may_undelete_base_page?(page)
-              page.undelete
-            elsif params[:remove] and may_remove_base_page?(page)
-              page.destroy
-              ## add more actions here later
-            end
-          end
-        end
-      end
-    end
-    if params[:path]
-      redirect_to :action => 'trash', :id => @group, :path => params[:path]
-    else
-      redirect_to :action => 'trash', :id => @group
-    end
-  end
+# this is not being used right now
+#  def update_trash
+#    pages = params[:page_checked]
+#    if pages
+#      pages.each do |page_id, do_it|
+#        if do_it == 'checked' and page_id
+#          page = Page.find_by_id(page_id)
+#          if page
+#            if params[:undelete] and may_undelete_base_page?(page)
+#              page.undelete
+#            elsif params[:remove] and may_remove_base_page?(page)
+#              page.destroy
+#              ## add more actions here later
+#            end
+#          end
+#        end
+#      end
+#    end
+#    if params[:path]
+#      redirect_to :action => 'trash', :id => @group, :path => params[:path]
+#    else
+#      redirect_to :action => 'trash', :id => @group
+#    end
+#  end
 
   def hide_users
     if may_list_memberships?

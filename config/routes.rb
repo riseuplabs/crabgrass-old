@@ -58,7 +58,7 @@ ActionController::Routing::Routes.draw do |map|
     # This should only be index. However ajax calls seem to post not get...
     me.resource :flag_counts, :only => [:show, :create]
     me.resource :recent_pages, :only => [:show, :create]
-    me.resource :my_avatar, :as => 'avatar', :controller => 'avatar', :only => :delete
+    me.resource :my_avatar, :as => 'avatar', :controller => 'avatars', :only => :destroy
 
     me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
     # for now removing peers option until we work on fixing friends/peers distinction

@@ -165,10 +165,10 @@ namespace :crabgrass do
     end
   end
 
-  desc "refresh the staging database"
-  task :refresh do
-    run "touch #{deploy_to}/shared/tmp/refresh.txt"
-  end
+#  desc "refresh the staging database"
+#  task :refresh do
+#    run "touch #{deploy_to}/shared/tmp/refresh.txt"
+#  end
 
   desc "starts the crabgrass daemons"
   task :restart do
@@ -205,6 +205,6 @@ after  "deploy:symlink", "crabgrass:link_to_shared"
 after  "deploy:symlink", "crabgrass:create_version_files"
 before "deploy:restart", "debian:symlinks"
 after  "deploy:migrate", "passenger:restart"
-after  "deploy:restart", "passenger:restart"
+after  "deploy:restart", "passenger:restart", "deploy:cleanup"
 
 

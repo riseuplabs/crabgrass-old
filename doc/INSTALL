@@ -15,15 +15,15 @@ packages from [http://backports.org].
 |                     | ruby1.8-dev             |                                               |
 |                     | rubygems                |                                               |
 | rake                | rake                    | >=0.8.1                                       |
-| rails               | rails*                  | =2.1.0                                        |
-| mysql               | libmysql-ruby           | ruby mysql support >=5.0                      |
-|                     | mysql-server            | the database server                           |
+| rails               | rails* (see NOTE)       | =2.1.0                                        |
+| mysql               | libmysql-ruby           | ruby mysql support                            |
+|                     | mysql-server            | the database server >=5.0                     |
 |                     | libopenssl-ruby         |                                               |
 | tzinfo              | libtzinfo-ruby          | timezone support                              |
 | RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
 | haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
-| compass             | libcompass-ruby         | a semantic CSS system =>0.8.5                 |
-| compass-susy-plugin | compass-plugin-susy     | =>0.6.3                                       |
+| compass             | libcompass-ruby         | a semantic CSS system =>0.8.5 <= 0.8.17       |
+| compass-susy-plugin | compass-susy-plugin1.8  | =>0.6.3                                       |
 | hpricot             | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
 | chronic             | libchronic-ruby         | required by backgroundrb                      |
 | packet              | libpacket-ruby          | required by backgroundrb >=0.1.15             |
@@ -38,8 +38,8 @@ packages from [http://backports.org].
 |                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
 |                     | ruby-debug              | for debugging running application (optional)  |
 
-NOTE: If you use the Debian rails package, you will need to install a
-symlink in the crabgrass/vendor directory to rails:
+* NOTE: If you use the Debian rails package, you will need to install a symlink in the 
+crabgrass/vendor directory to rails:
   % ln -s /usr/share/rails vendor/rails
 
 = Configuration

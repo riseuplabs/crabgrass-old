@@ -6,7 +6,7 @@ class DispatchController; def rescue_action(e) raise e end; end
 
 class DispatchControllerTest < Test::Unit::TestCase
 
-  fixtures :pages, :users, :user_participations, :sites
+  fixtures :pages, :users, :user_participations, :sites, :groups, :memberships
 
   def setup
     @controller = DispatchController.new
@@ -26,6 +26,20 @@ class DispatchControllerTest < Test::Unit::TestCase
     assert assigns(:page)
     assert assigns(:page).is_a?(DiscussionPage)
     assert_equal 5, assigns(:page).id
+  end
+
+  def test_find_page_by_name_without_context
+    login_as :blue
+    group = groups(:rainbow)
+    me = users(:blue)
+    newpage = DiscussionPage.create!(:name => 'duplicate', :owner => group, :title => 'rainbow duplicate page')
+    get :dispatch, :_page => "duplicate"
+    assert assigns(:page)
+
+    # find multiple pages
+    newpage2 = DiscussionPage.create!(:name => 'duplicate', :owner => me, :title => 'blue duplicate page') 
+    get :dispatch, :_page => "duplicate"
+    assert assigns(:pages)
   end
 
   def test_routes_with_all_numbers
@@ -55,6 +69,45 @@ class DispatchControllerTest < Test::Unit::TestCase
     # assert_tag 'remove from my inbox'
 
     post 'pages/remove_from_my_pages/1'
+  end
+
+  def test_record_not_found
+    login_as :blue
+    get :dispatch, :_page => 'fiddleyfoo', :_context => 'blue' 
+    assert_response :redirect
+  end
+
+  def test_find_by_context_and_name
+    login_as :blue
+    get :dispatch, :_page  => "committee_page", :_context => 'rainbow the-warm-colors'
+    assert assigns('page')
+    assert assigns('group')
+
+    get :dispatch, :_page => 'rainbow_page', :_context => 'rainbow'
+    assert assigns('page')
+    assert assigns('group')
+
+    get :dispatch, :_page => 'blue_page', :_context => 'blue'
+    assert assigns('page')
+    assert assigns('user')
+  end
+
+  def test_no_page
+    login_as :blue
+    get :dispatch, :_context => 'blue'
+    assert assigns('user')
+    get :dispatch, :_context => 'rainbow'
+    assert assigns('group')
+    get :dispatch, :_context => 'fai'
+    assert assigns('group')
+  end
+
+  def test_site_network
+    enable_site_testing('site1')
+    @current_site=Site.current
+    login_as :blue
+    get :dispatch, :_context => 'cnt'
+    assert_redirected_to('/')
   end
 
 end

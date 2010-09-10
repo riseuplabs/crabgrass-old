@@ -52,6 +52,11 @@ class AssetsControllerTest < Test::Unit::TestCase
 
     post :show, :id => @asset.id, :filename => [@asset.filename], :version => 3
     assert_response :not_found, "should not find anything for version 2 of asset"
+
+    @asset_no_page = Asset.create :uploaded_data => upload_data('bee.jpg')
+    @asset_no_page.save
+    post :show, :id => @asset_no_page.id
+    assert_response :redirect
   end
 
   def test_create
@@ -89,16 +94,26 @@ class AssetsControllerTest < Test::Unit::TestCase
     end
   end
 
-  def test_destroy
+  def test_destroy(format="text/javascript")
     login_as :blue
 
     assert_difference 'Page.find(1).assets.length' do
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
     end
 
+    @request.accept = format 
     assert_difference 'Page.find(1).assets.length', -1 do
       post 'destroy', :id => assigns(:asset).id
+      if format == "text/javascript"
+        assert_response :success
+      else
+        assert_response :redirect
+      end
     end
+  end
+
+  def test_destroy_html
+     test_destroy("text/html")    
   end
 
   protected

@@ -7,7 +7,7 @@ class AvatarsController < ApplicationController
   def create
     unless params[:image]
       flash[:error] = "no image uploaded"
-      render(:nothing => true, :layout => true)
+      #render(:nothing => true, :layout => true)
       return
     end
     group = Group.find params[:group_id] if params[:group_id]

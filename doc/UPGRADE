@@ -1,4 +1,33 @@
-0.5.0 
+0.5.2.1
+-------
+
+* To upgrade:
+
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+
+
+0.5.2
+-----
+
+* To upgrade:
+
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+
+  2. cleanup old site network federatings:
+     % RAILS_ENV=production rake cg:cleanup_site_networks
+
+     this will do the following:
+
+     	  a) make sure all groups have the proper site_id set and
+	  b) remove the site network federatings.
+
+	  These were used to attach groups to a site, but we changed
+	  that some time ago. Keeping the federatings leads to the
+	  site network showing up on the group landing pages.
+
+0.5.0
 -----
 
 * To upgrade:
@@ -7,9 +36,9 @@
 
   2. Make a backup of all of your files, and your database!
 
-  3. Save the following files: config/database.yml, config/secret.txt, 
+  3. Save the following files: config/database.yml, config/secret.txt,
      config/crabgrass.[production|development|test].yml, and the following
-     directories: log, assets, and any changes you may have made to the 
+     directories: log, assets, and any changes you may have made to the
      stylesheets in the public directory.
 
   4. Replace everything else with the code from this release
@@ -30,9 +59,9 @@
 
   7. Run migrations:
        % RAILS_ENV=production rake db:migrate
-    
-  8. Locations have been added! 
-     
+
+  8. Locations have been added!
+
      Locations require an import of data files from Geonames
      (geonames.org).  By default, a smaller data set will be imported,
      consisting of cities with a population greater than 1000 people.
@@ -41,7 +70,7 @@
        % rake cg:import_geo_data
 
      Please note that the cg:import_geo_data rake task could take a
-     bit of time to run and will add a large-ish data set to mysql. 
+     bit of time to run and will add a large-ish data set to mysql.
 
      If you do not wish to import this data, you can skip this step
      and not use geo-location.
@@ -49,7 +78,7 @@
   9. Re-enable the application, taking down your temporary page.
 
   10. Review any Custom Appearances:
-     
+
       Due to the change in the UI, custom appearances will need to be
       re-done after an upgrade. Custom Appearances are set in the
       Advanced tab of the Site Appearance settings.  The masthead

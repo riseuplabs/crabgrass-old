@@ -3,7 +3,7 @@
 
     NOTE!!! IF YOU MODIFY THIS FILE, YOU NEED TO THEN RUN THIS
 
-    rake db:fixtures:load    
+    rake db:fixtures:load
     rake cg:update_page_terms
     rake cg:update_fixtures
     rake db:test:prepare
@@ -20,19 +20,19 @@
 # Table name: pages
 #
 #  id              :integer(11)   not null, primary key
-#  title           :string(255)   
-#  created_at      :datetime      
-#  updated_at      :datetime      
-#  happens_at      :datetime      
-#  resolved        :boolean(1)    
-#  public          :boolean(1)    
-#  needs_attention :boolean(1)    
-#  created_by_id   :integer(11)   
-#  updated_by_id   :integer(11)   
-#  summary         :string(255)   
-#  controller      :string(255)   
-#  tool_id         :integer(11)   
-#  tool_type       :string(255)   
+#  title           :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#  happens_at      :datetime
+#  resolved        :boolean(1)
+#  public          :boolean(1)
+#  needs_attention :boolean(1)
+#  created_by_id   :integer(11)
+#  updated_by_id   :integer(11)
+#  summary         :string(255)
+#  controller      :string(255)
+#  tool_id         :integer(11)
+#  tool_type       :string(255)
 #
 
 <%
@@ -91,11 +91,48 @@ page<%=i%>:
 <% else %>
   owner_type: User
   owner_id: <%= user_id %>
-  owner_name: <%= user_name %>  
+  owner_name: <%= user_name %>
 <% end %>
   type: DiscussionPage
   public: <%= rand(4) == 0 %>
 <% end %>
+
+committee_page:
+  id: 1001
+  name: "committee_page"
+  title: "page owned by the warm colors"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 31 
+  owner_type: Group
+  updated_by_id: 4
+  type: DiscussionPage
+
+blue_page:
+  id: 1002
+  name: "blue_page"
+  title: "page owned by blue"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 4 
+  owner_type: User
+  updated_by_id: 4
+  type: DiscussionPage
+
+rainbow_page:
+  id: 1003
+  name: "rainbow_page"
+  title: "page owned by rainbow"
+  <% updated = rand(46080); created = updated + rand(46080) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+  owner_id: 3 
+  owner_type: Group
+  updated_by_id: 4
+  type: DiscussionPage
+
 
 ranked_vote:
   id: 190
@@ -153,7 +190,7 @@ tasklist2:
 # <% updated = rand(46080); created = updated + rand(46080) %>
 #   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
 #   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-# 
+#
 # event2:
 #   id: 203
 #   title : other event
@@ -165,7 +202,7 @@ tasklist2:
 # <% updated = rand(46080); created = updated + rand(46080) %>
 #   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
 #   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-# 
+#
 # event3:
 #   id: 204
 #   title : one other event
@@ -186,7 +223,7 @@ delete_test: # also serves as flow test.
   updated_by_id: 4
   updated_by_login: blue
   type: DiscussionPage
-  flow: "<%= FLOW[:deleted] %>" 
+  flow: "<%= FLOW[:deleted] %>"
   public: 1
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
@@ -234,7 +271,7 @@ malformed_wiki:
 <% updated = rand(46080); created = updated + rand(46080) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
-  
+
 multi_section_wiki:
   id: 240
   title: multi section wiki
@@ -290,11 +327,11 @@ announcement1:
 ## ASSETS
 ##
 
-asset1: 
+asset1:
   owner_name: animals
   owner_id: 2
   owner_type: Group
-  name: 
+  name:
   created_by_login: blue
   updated_by_id: "4"
   public: "1"
@@ -307,7 +344,7 @@ asset1:
   created_by_id: "4"
   id: "211"
   summary: ""
-  flow: 
+  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "1"
@@ -316,14 +353,14 @@ asset1:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-asset2: 
+asset2:
   owner_name: animals
   owner_id: 2
   owner_type: Group
-  name: 
+  name:
   created_by_login: blue
   updated_by_id: "4"
-  public: 
+  public:
   resolved: "1"
   title: sunset
   data_type: Asset
@@ -333,7 +370,7 @@ asset2:
   created_by_id: "4"
   id: "212"
   summary: ""
-  flow: 
+  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "2"
@@ -342,14 +379,14 @@ asset2:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-asset3: 
+asset3:
   owner_name: animals
   owner_id: 2
   owner_type: Group
-  name: 
+  name:
   created_by_login: blue
   updated_by_id: "4"
-  public: 
+  public:
   resolved: "1"
   title: crabgrass
   data_type: Asset
@@ -359,7 +396,7 @@ asset3:
   created_by_id: "4"
   id: "213"
   summary: ""
-  flow: 
+  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "3"
@@ -368,8 +405,8 @@ asset3:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-survey1: 
-  name: 
+survey1:
+  name:
   created_by_id: "4"
   updated_by_id: "4"
   created_by_login: blue
@@ -384,7 +421,7 @@ survey1:
   message_count: "0"
   id: "214"
   summary: ""
-  flow: 
+  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "1"
@@ -392,8 +429,8 @@ survey1:
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
-survey_blank: 
-  name: 
+survey_blank:
+  name:
   created_by_login: blue
   updated_by_id: "4"
   public: true
@@ -406,13 +443,15 @@ survey_blank:
   created_by_id: "4"
   id: "215"
   summary: ""
-  flow: 
+  flow:
   posts_count: "0"
   contributors_count: "0"
   data_id: "3"
 <% updated = rand(4320); created = updated + rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+
 
 #announcement:
 #  name:
@@ -421,6 +460,21 @@ survey_blank:
 #  title: an announcement
 #  type: AnnouncementPage
 #  id: 216
+
+rate_many_page:
+  id: 217
+  title: odit ipsa quam
+  created_by_id: 5
+  created_by_login: orange
+  data_type: Poll
+  updated_by_login: orange
+  type: RateManyPage
+  data_id: 2
+  owner_type: User
+  owner_name: orange
+  owner_id: 5
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
 
 
 ### Connecting Classrooms ###

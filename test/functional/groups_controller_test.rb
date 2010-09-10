@@ -6,10 +6,6 @@ class GroupsControllerTest < ActionController::TestCase
 
   include UrlHelper
 
-  def setup
-    Conf.disable_site_testing
-  end
-
   def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
@@ -62,6 +58,22 @@ class GroupsControllerTest < ActionController::TestCase
       assert_response :redirect
       group = Group.find_by_name 'test-create-group'
       assert_redirected_to url_for_group(group, :action => 'edit')
+    end
+
+  end
+
+  # regression test for #2355:
+  # Group is automatically added to site network on creation
+  def test_created_group_not_in_site_network
+    with_site :test do
+      login_as :gerrard
+      get :new
+      assert_response :success
+      assert_no_difference 'Federating.count' do
+        post :create, :group => {:name => 'test-group-outside-site-network', :full_name => "Group for Testing new groups are outside Site Network!"}
+        group = assigns(:group)
+        assert !group.member_of?(Site.current.network)
+       end
     end
   end
 
@@ -315,7 +327,6 @@ class GroupsControllerTest < ActionController::TestCase
 #    assert_redirected_to :controller => :groups, :action => 'search', :path => [['text', 'e']], :id => groups(:public_group)
   end
 
-=begin
   def test_trash
     login_as :red
 
@@ -331,11 +342,10 @@ class GroupsControllerTest < ActionController::TestCase
 
     post :trash, :id => groups(:rainbow).name, :search => {:text => "e", :type => "", :person => "", :month => "", :year => "", :pending => "", :starred => ""}
     assert_response :redirect
-    assert_redirected_to 'group/trash/rainbow/text/e'
+    assert_redirected_to(:controller => 'groups', :action => 'trash', :path=>[["text", "e"]])
     assert_not_nil assigns(:pages)
     assert assigns(:pages).length > 0, "should have some search results when filter for text"
   end
-=end
 
   def test_trash_not_allowed
     login_as :kangaroo
@@ -447,6 +457,12 @@ class GroupsControllerTest < ActionController::TestCase
     assert_not_nil Group.find_by_name('hack-committee')
     post :edit, :id => 'hack-committee', :group => {:parent_id => groups(:rainbow).id}
     assert_nil Group.find_by_name('hack-committee').parent
+  end
+
+  def test_pages
+    login_as :blue
+    get :pages, :id => 'rainbow'
+    assert assigns(:pages)
   end
 
 =begin

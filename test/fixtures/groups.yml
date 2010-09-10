@@ -48,6 +48,11 @@ cold:
   type: Committee
   created_at: <%= rand(30).days.ago.to_s :db %>
 
+recent_group:
+  id: 33
+  name: recent_group
+  created_at: <%= rand(5).days.ago.to_s :db %>
+
 public_group:
   id: 1000
   name: public_group_everyone_can_see

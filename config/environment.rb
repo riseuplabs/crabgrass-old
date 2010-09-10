@@ -41,7 +41,6 @@ require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 require "#{RAILS_ROOT}/lib/extension/engines.rb"
 require "#{RAILS_ROOT}/lib/crabgrass/boot.rb"
 require "#{RAILS_ROOT}/lib/zip/zip.rb"
-require "#{RAILS_ROOT}/lib/extension/zip.rb"
 
 # path in which zipped galleries (for download) will be stored.
 GALLERY_ZIP_PATH = "#{RAILS_ROOT}/public/gallery_download"
@@ -106,6 +105,7 @@ Rails::Initializer.run do |config|
   #config.action_web_service = Rails::OrderedOptions.new
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
+  #config.gem 'actionpack', :lib => 'action_pack'
   #config.gem "haml"
   #config.gem "chriseppstein-compass", :lib => "compass"
   #config.gem "ericam-compass-susy-plugin", :lib => "susy"

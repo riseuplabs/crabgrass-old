@@ -120,6 +120,9 @@ en:
   search_description: Search through all pages you have access to
 
   see_more_link: "More"
+  see_less_link: "Less"
+  see_count_more_link: "See {{count}} more"
+  see_count_less_link: "See {{count}} less"
   see_all_link: "See All"
   details_link: "Details"
   check_all: "Check All"
@@ -600,6 +603,12 @@ en:
   or_image_url: "or image URL"
   upload_image_link: "upload image"
   remove_image_link: "remove image"
+  copy_paste_option_name: "Copy and paste the name of the option(s) to be customized into the box below (one option per line)."
+  click_on: "Click on"
+  view_custom_names: "to view the custom appearance option names."
+  add_colon_after_name: "Add a colon (:) after each name and change the default value to a similar value type. (Note: If the default value is a hexidecimal number, be sure to include the (#) symbol and wrap it in double quotes.)"
+  click_update_below: "Click the 'Update' button below to activate the custom value(s)."
+
 
   save_changes: Save Changes
   username: Username
@@ -751,6 +760,9 @@ en:
   group_successfully_updated: "Group was successfully updated."
   only_last_menber_can_delete_group: "You can only delete a group if you are the last member"
   group_successfully_created: "Group was successfully created."
+  group_successfully_created_details: "Now make sure to configure your group"
+  group_successfully_created_details_council_info: "Now make sure to configure your group. Groups are egalitarian spaces by default. Everyone in the group has administration ability. If you want to create a separate administrative council, click on the permissions link below."
+
   dont_understand_group_type: "Could not understand group type {{type}}"
   dont_have_permission_to_create_committees: "You do not have permission to create committees under {{group}}"
   group_publicly_visible_description: Group appears in public directory and group <i>profile</i> is viewable by non-members at {{domain}}/yourgroupname.
@@ -785,11 +797,14 @@ en:
   group_location: "The main location of this {{group}}."
   group_summary: "Brief information regarding this {{group}}."
   new_network: "New network"
+  new_network_description: "A network is a shared space for autonomous groups (a group's privacy and autonomy are not changed by joining a network). Networks are useful when there are 2 or more groups that want to work together. Are you sure you want to create a network rather than <a href='{{new_group_url}}'>create a group</a>?"
   group_membership_count: "{{count}} Members"
   membership_exists_error: "Membership already exists for {{member}}"
   you_are_a_member_already_error: "You are a member already"
   membership_leave_message: "You have been removed from {{group}}"
+  membership_removed_message: "{{user}} has been removed from {{group_type}} {{group}}"
   membership_destroy_confirm_message: "Are you sure you want to remove '{{user}}' from the {{group_type}}?"
+  membership_create_remove_user_request_confirm_message: "This member is also a member of the council. Do you want to propose to remove '{{user}}'?"
 
 
   # featured
@@ -871,7 +886,7 @@ en:
   this_is_coordinating: "This is the <strong>coordinating council</strong> for {{parent_group}}."
   new_council: "New council for group {{group_name}}"
   council_help_text: "If this group has a coordinating council, then only a member of that council may administer the group. Otherwise, any member of the group may do so."
-
+  create_a_new_council_caption: "Groups are egalitarian spaces by default. Everyone in the group has administrative ability. If you want to create a seperate administrative council click here."
   # committee
 
   this_is_committee: "This committee is part of {{parent_group}}."
@@ -950,6 +965,19 @@ en:
   request_to_join_you_description: "{{user}} requested to join {{group}}"
   request_to_join_your_network_description: "{{group}} requested to join network {{network}}"
   request_to_destroy_our_group_description: "{{user}} has proposed to destroy {{group_type}} {{group}}"
+  request_to_remove_coordinator_user_tooltip_title: "(voting details)"
+
+  request_to_remove_coordinator_user_tooltip_description: |
+    <p>There is a running tally of the  votes.</p><br/>
+
+    <p>Removal of a a coordinator takes approval from 2/3rds of all coordinators.</p><br/>
+
+    <p>If a 1/3rd of all coordinators reject this proposal, the proposal is closed and the coordinator will not be removed.</p><br/>
+
+    <p>If after two weeks it is still undecided total, all votes casted will be tallied. If at this point 2/3rds of all votes casted are for approval of the proposal, the coordinator will be removed. Otherwise the proposal will be rejected.</p>
+
+  request_to_remove_coordinator_user_description: "{{user}} has proposed to remove {{target_user}} from {{group_type}} {{group}}. {{target_user}} is a coordinator. To  remove a coordinator two thirds of all coordinators need to approve this. {{tooltip}}"
+
   request_to_destroy_our_group_email: |
     The {{group_type}} '{{group}}' will be destroyed enough members approve this proposal.
 
@@ -958,6 +986,7 @@ en:
     If there are some approvals, then after one month votes will be tallied and the group will get destroyed if 2/3 or more of the votes are to approve.
 
     Finally, for a group with a coordinating council, only the council members can vote on destroying the group.
+
 
   request_votes_tally_info: "{{approved_count}} voted to approve / {{rejected_count}} voted to reject"
 
@@ -972,6 +1001,8 @@ en:
   contact_request_sent: "Friend request has been sent"
   request_to_join_sent: "Request to join has been sent"
   request_to_destroy_sent: "Your proposal to destroy this group has been sent to the groups members. If this proposal is not vetoed in a month, this group will be destroyed."
+  request_to_remove_user_sent: "You have proposed to remove user {{user}} who is also a member of the council. To  remove a coordinator (council-member) two thirds of all coordinators need to approve this."
+  removal_requested: "Removal Requested"
   remove_contact_confirmation: "Are you sure you wish to no longer be friends with {{user}}?"
   contact_removed: "{{user}} has been removed from your contact list."
   not_contact_of: "You are not the contact of {{user}}."
@@ -1534,6 +1565,7 @@ en:
   say_message_button: "Say"
   wall_heading: "Public Message Wall"
   wall_post_button: "Post New Message"
+  wall_say_form_submit_caption: "Post to {{user}}'s activity feed"
 
   my_status_heading: "Your Current Status"
   # ^^ no longer used
@@ -1721,11 +1753,11 @@ en:
   # custom appearances
 
   succesfully_updated_custom_appearance: "Updated custom appearance #{{appearance_id}} options!"
-  enable_masthead_question: "Enable masthead?"
+  enable_masthead_question: "Enable masthead image?"
   masthead: "Masthead"
-  select_masthead_background_color: "Select masthead background color"
+  select_masthead_background_color: "Select masthead background color."
   upload_favicon_image_label: "Upload a favicon image. Dimensions can be 16x16 or 32x32 pixels. This image is used for browser bookmarks and tabs. PNG and GIF are valid formats."
-  upload_masthead_image_label: "Upload an image for the masthead. It can't be taller than 80 pixels."
+  upload_masthead_image_label: "Upload an image for the masthead. (Image must be exactly 800 pixels wide and ideally no taller than 80 pixels.)"
 
   masthead: "Masthead"
   advanced: "Advanced"

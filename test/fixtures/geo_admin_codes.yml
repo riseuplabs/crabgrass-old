@@ -1,0 +1,35 @@
+lorri:
+  id: 1
+  geo_country_id: 1 
+  admin1_code: 06
+  name: Lorri
+
+shirak:
+  id: 2
+  geo_country_id: 1
+  admin1_code: 07
+  name: Shirak
+
+ragged_island:
+  id: 3
+  geo_country_id: 2
+  admin1_code: 18
+  name: Ragged Island
+
+harbour_island:
+  id: 4
+  geo_country_id: 2
+  admin1_code: 22
+  name: Harbour Island
+
+new_providence:
+  id: 5
+  geo_country_id: 2
+  admin1_code: 23
+  name: New Providence
+
+equatorial_guinea_general:
+  id: 6
+  geo_country_id: 3
+  admin1_code: 00
+  name: Equatorial Guinea (general)
