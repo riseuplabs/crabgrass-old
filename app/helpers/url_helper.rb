@@ -447,7 +447,7 @@ module UrlHelper
       when :full  then [display_name, name,         nil]
       when :both  then [both_names,   nil,          nil]
       when :hover then [name,         nil,          display_name]
-      when :twolines then ["<div class='name'>%s</div>%s"%[name, (display_name if name != display_name)], nil, nil]
+      when :twolines then ["<div class='name'>%s</div>%s"%[(display_name if name != display_name), name], nil, nil]
     end
     if hover
       display += content_tag(:b,hover)
