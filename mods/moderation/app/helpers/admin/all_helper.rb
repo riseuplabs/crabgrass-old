@@ -55,7 +55,7 @@ module Admin::AllHelper
 
   def listing_custom_column_content(flagged_obj, view)
     if flagged_obj.is_a?(Post)
-      post_link(flagged_obj)
+      h(post_link(flagged_obj))
     elsif flagged_obj.is_a?(Page)
       h(flagged_obj.type)
     else
