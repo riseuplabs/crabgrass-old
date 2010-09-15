@@ -99,7 +99,7 @@ class AutocompleteController < ApplicationController
   # this should be in a helper somewhere, but i don't know how to generate
   # json response in the view.
   def display_on_two_lines(entity)
-    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+    "<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
   end
 
 end
