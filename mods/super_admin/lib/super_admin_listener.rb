@@ -24,4 +24,8 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
     return options
   end
 
+  def default_requests_view(context)
+    return "all" if current_user.superadmin? 
+  end
+
 end

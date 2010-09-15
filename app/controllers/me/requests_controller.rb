@@ -14,9 +14,11 @@ class Me::RequestsController < Me::BaseController
 
   helper 'requests', 'action_bar'
 
+  include Crabgrass::Hook::Helper
+
   # pending requests
   def index
-    params[:view] ||= "to_me"
+    params[:view] = params[:view] || call_hook('default_requests_view') || "to_me"
 
     if params[:view] == "to_me"
       state_scope = :having_state_for_user
