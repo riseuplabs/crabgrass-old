@@ -1,15 +1,15 @@
 <h1><%= users_heading %></h1>
 <div class='info_box'>
-  <%= 'Total number of users%s: %s' % [total_users_heading, @users.total_entries] %>
+  <%= 'Total # of users%s: %s' % [total_users_heading, @users.total_entries] %>
   <span style='float: right'>
     <form action='/admin/users'>
-    <select name='show'>
+    <select name='show' id='users_view_select'>
       <option value='' <%= filter_users_selected('all') %>>View all users</option>
       <option value='active' <%= filter_users_selected('active') %>>View active users</option>
       <option value='inactive' <%= filter_users_selected('inactive') %>> View inactive users</option>
     </select>
-    <input type='submit' value='Go'>
     </form>
+    <%= observe_field 'users_view_select', :function => %Q[window.location.href = "/admin/users" + "?show=" + value] %>
   </span>
 </div>
 
