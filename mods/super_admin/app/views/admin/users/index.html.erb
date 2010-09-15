@@ -1,6 +1,6 @@
 <h1><%= users_heading %></h1>
 <div class='info_box'>
-  <%= 'Total number of users: %s' % @users.total_entries %>
+  <%= 'Total number of users%s: %s' % [total_users_heading, @users.total_entries] %>
   <span style='float: right'>
     <form action='/admin/users'>
     <select name='show'>

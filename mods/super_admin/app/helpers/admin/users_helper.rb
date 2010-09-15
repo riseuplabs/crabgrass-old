@@ -34,6 +34,14 @@ module Admin::UsersHelper
     return 'selected' if arg == params[:show]
   end
 
+  def total_users_heading
+    case params[:show]
+      when "active" then " active within the last two weeks"
+      when "inactive" then " not active within the last two weeks"
+      else ''
+    end
+  end
+
 end
 
 
