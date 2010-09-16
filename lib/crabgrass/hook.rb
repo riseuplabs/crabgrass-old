@@ -114,6 +114,9 @@ module Crabgrass #:nodoc:
       def call_hooks(hook, context={}, options={})
         Crabgrass::Hook.call_hooks(hook, hook_defaults.merge(context), options)
       end
+      def hook_exists(hook)
+        return true if !Crabgrass::Hook.hook_listeners(hook).empty?
+      end
     end
   end
 end
