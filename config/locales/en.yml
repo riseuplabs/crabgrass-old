@@ -954,6 +954,7 @@ en:
 
   my_requests_link: "my requests"
   all_requests: "All Requests"
+  all_admin_requests: "All Requests (Admin View)"
   requests_to_me: "Requests to me"
   requests_from_me: "Requests from me"
   incoming: "Incoming"
