@@ -28,4 +28,12 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
     return "all" if current_user.superadmin? 
   end
 
+  def requests_views_options(context)
+    return {} if !current_user.superadmin?
+    {:view => [{:name => :all, :translation => :all_admin_requests},
+                {:name => :to_me, :translation => :requests_to_me},
+                {:name => :from_me, :translation => :requests_from_me}]
+    }
+  end
+
 end

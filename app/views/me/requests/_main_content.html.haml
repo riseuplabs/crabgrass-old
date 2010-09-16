@@ -1,4 +1,4 @@
-= action_bar(action_bar_settings)
+= action_bar(action_bar_settings({:hooks => ['requests_views_options']}))
 - action_bar_form(mark_requests_path) do
   = render :partial => '/common/action_bar/hidden_form_fields'
 

@@ -1,8 +1,8 @@
 module Me::RequestsHelper
 
-  def action_bar_settings
+  def action_bar_settings(options={})
     if action?(:index, :mark)
-      action_bar_index_settings
+      action_bar_index_settings(options)
     else
       action_bar_other_actions_settings
     end
@@ -21,9 +21,9 @@ module Me::RequestsHelper
     end
   end
 
-  def action_bar_index_settings
+  def action_bar_index_settings(options={})
     # only render action bar for all lists of requests
-    { :select =>
+    settings = { :select =>
             [ {:name => :all,
                :translation => :select_all,
                :function => checkboxes_subset_function(".request_check", ".request_check")},
@@ -35,6 +35,10 @@ module Me::RequestsHelper
                 {:name => :to_me, :translation => :requests_to_me},
                 {:name => :from_me, :translation => :requests_from_me}],
       :view_base_path => requests_path}
+    options[:hooks].each do |hook|
+      settings.merge!(call_hook(hook)) if hook_exists(hook)
+    end
+    return settings
   end
 
   ###
