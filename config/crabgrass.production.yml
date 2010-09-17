@@ -25,6 +25,7 @@ enabled_mods:
   - connectingclassrooms
   - moderation
   - no_private_messages
+  - evil_mod
 enabled_tools:
   - asset_tool
   - core_tools
@@ -59,7 +60,11 @@ sites:
     admin_group: superadmin
     moderation_group: superadmin
     email_sender: coordinator@connectingclassrooms.net
-
+    evil:
+       google_analytics:
+         site_id: UA-3858569-2
+         https: true
+         enabled: true
 ##
 ## SITE DEFAULTS
 ##
