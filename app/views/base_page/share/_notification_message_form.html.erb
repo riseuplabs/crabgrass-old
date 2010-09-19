@@ -4,6 +4,7 @@
   send_notice     = false if send_notice.nil?
   include_message = false if include_message.nil?
   send_email      = false if send_email.nil?
+  include_email_option = (@current_site && @current_site.never_pester_users) ? false : true
 
   check_box_options = {:checked => send_notice, :onclick => "checkboxToggle(this, 'notification_details');" + resize_modal}
   if forced_send
@@ -20,34 +21,37 @@
       </label>
     </td>
   </tr>
-  <tbody id='notification_details' style='<%= 'display:none' unless send_notice %>'>
-  <tr>
-    <td></td>
-    <td>
-      <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:send_email) %></label>
-<!--
-these are not supported yet.
-      <label><%= check_box :notification, :send_sms %> <%= I18n.t(:text_message) %></label>
-      <label><%= check_box :notification, :send_xmpp %> <%= I18n.t(:chat) %></label>
-      <br/>
-      <label><%= check_box :notification, :send_encrypted %> <%= I18n.t(:send_only_with_encryption) %></label>
-
--->
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <label for='ignored_include_message'>
-        <%= I18n.t(:share_include_message) %>
-      </label>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <div id='share_message_holder'>
-        <%= text_area :notification, :send_message, :rows => 6, :cols => 60 %>
-      </div>
-    </td>
-  </tr>
-  </tbody>
+  <!-- don't include the rest at all if sharing emails is disabled -->
+  <% if include_email_option %>
+    <tbody id='notification_details' style='<%= 'display:none' unless send_notice %>'>
+    <tr>
+      <td></td>
+      <td>
+        <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:send_email) %></label>
+  <!--
+  these are not supported yet.
+        <label><%= check_box :notification, :send_sms %> <%= I18n.t(:text_message) %></label>
+        <label><%= check_box :notification, :send_xmpp %> <%= I18n.t(:chat) %></label>
+        <br/>
+        <label><%= check_box :notification, :send_encrypted %> <%= I18n.t(:send_only_with_encryption) %></label>
+  
+  -->
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label for='ignored_include_message'>
+          <%= I18n.t(:share_include_message) %>
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div id='share_message_holder'>
+          <%= text_area :notification, :send_message, :rows => 6, :cols => 60 %>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  <% end %>
 
