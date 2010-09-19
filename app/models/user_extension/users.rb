@@ -231,7 +231,8 @@ module UserExtension::Users
     def may_be_pestered_by!(user)
       # TODO: perhaps being someones friend or peer does not automatically
       # mean that you can pester them. It should all be based on the profile?
-      if friend_of?(user) or peer_of?(user) or profiles.visible_by(user).may_pester?
+      # 20100919 - removed 'or peer_of?(user)' because it is problematic in site network contexts
+      if friend_of?(user) or profiles.visible_by(user).may_pester?
         return true
       else
         raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
