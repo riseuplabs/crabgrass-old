@@ -218,24 +218,32 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     # try to push the participation to inbox
     assert_difference 'UserParticipation.count', 2 do
       assert_difference 'UserParticipation.count(:all, :conditions => {:inbox => true})', 2 do
-        xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['yellow', 'green'], :notification => {:send_notice => "1", :send_message => 'xxxxxxxxx'}}
+        xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['orange', 'green'], :notification => {:send_notice => "1", :send_message => 'xxxxxxxxx'}}
+        assert_response :success
+      end
+    end
+
+    # yellow'ss profile is set to not be pestered - shoould not be able to send a message
+    assert_no_difference 'UserParticipation.count' do
+      assert_no_difference 'UserParticipation.count(:all, :conditions => {:inbox => true})' do
+        xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['yellow'], :notification => {:send_notice => "1", :send_message => 'xxxxxxxxx'}}
         assert_response :success
       end
     end
 
     # send emails (and simulate the participants checkbox not checked)
     assert_difference 'ActionMailer::Base.deliveries.size', 2 do
-      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'yellow' => {}, 'green' => {}, ':participants' => "0"}, :notification => {:send_notice => "1", :send_message => 'yyyyyyyyyy', :send_email => "1"}}
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'orange' => {}, 'green' => {}, ':participants' => "0"}, :notification => {:send_notice => "1", :send_message => 'yyyyyyyyyy', :send_email => "1"}}
     end
 
     # send to inbox, but only some are new.
     assert_difference 'UserParticipation.count(:all, :conditions => {:inbox => true})', 1 do
-      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['yellow', 'red'], :notification => {:send_notice => "1", :send_message => 'zzzzzzzzz'}}
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => ['orange', 'red'], :notification => {:send_notice => "1", :send_message => 'zzzzzzzzz'}}
     end
 
     # send to inbox, symbolic + explicit (there are only 4 participants)
     assert_difference 'ActionMailer::Base.deliveries.size', 4 do
-      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'yellow' => {}, ':participants' => "1"}, :notification => {:send_notice => "1", :send_email => "1", :send_message => 'aaaaaa'}}
+      xhr :post, :notify, {:page_id => page.id, :notify => "1", :recipients => {'orange' => {}, ':participants' => "1"}, :notification => {:send_notice => "1", :send_email => "1", :send_message => 'aaaaaa'}}
     end
   end
 
@@ -278,6 +286,9 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     page.reload
     group_users = groups(:rainbow).users.collect{|u|u.name}.sort
     page_users = page.user_participations.collect{|up|up.user.name}.sort
+    # yellow is a member of rainbow who is set not to be pestered, so there should be a difference
+    # until yellow is removed
+    group_users.delete('yellow')
     assert_equal group_users, page_users
   end
 
