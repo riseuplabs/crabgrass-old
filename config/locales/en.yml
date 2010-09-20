@@ -1752,7 +1752,7 @@ en:
   profile_settings: "Profile Settings"
   email_blasts: "Email Blasts"
 
-  never_pester_users_description: "if checked, page share and invitation notifications will not be sent to users over email"
+  never_pester_users_description: "if checked, the ability to send email notifications from pages and invites will not be available to users."
 
   # custom appearances
 
