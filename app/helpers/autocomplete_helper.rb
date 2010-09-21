@@ -61,7 +61,7 @@ module AutocompleteHelper
 
   # called to convert the row data into a value
   def extract_value_from_entity_row_function
-    %Q[function(value){return value.replace(/<em>(.*)<\\/em>.*/g,'$1');}]
+    %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /.*<br\\/>(\\S+).*/g; }else { reEntity = /<em>(.*)<\\/em>.*/g; } return value.replace(reEntity,'$1');}]
   end
 
 end

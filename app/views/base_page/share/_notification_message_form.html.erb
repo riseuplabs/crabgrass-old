@@ -22,12 +22,12 @@
     </td>
   </tr>
   <!-- don't include the rest at all if sharing emails is disabled -->
-  <% if include_email_option %>
     <tbody id='notification_details' style='<%= 'display:none' unless send_notice %>'>
+      <% if include_email_option %>
     <tr>
       <td></td>
-      <td>
-        <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:send_email) %></label>
+        <td>
+          <label><%= check_box :notification, :send_email, :checked => send_email %> <%= I18n.t(:send_email) %></label>
   <!--
   these are not supported yet.
         <label><%= check_box :notification, :send_sms %> <%= I18n.t(:text_message) %></label>
@@ -36,8 +36,9 @@
         <label><%= check_box :notification, :send_encrypted %> <%= I18n.t(:send_only_with_encryption) %></label>
   
   -->
-      </td>
+        </td>
     </tr>
+  <% end %>
     <tr>
       <td colspan="2">
         <label for='ignored_include_message'>
@@ -53,5 +54,4 @@
       </td>
     </tr>
     </tbody>
-  <% end %>
 
