@@ -3,6 +3,10 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
+0.4.7.2 -- 2010 September 21
+  * Bug #2482: XSS problem! in say box
+  * removes commented out SASS lines which are incompatible with later sass versions
+
 0.4.7.1 -- 2009 November 16
   * Bug #1419: wiki update permissions were not working correctly
 
