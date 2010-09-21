@@ -11,13 +11,13 @@
           <tr>
             <td colspan="3">
               <%= text_field 'profile', 'organization', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('organization') -%></div>
+              <div class="input_label"><%= I18n.t(:organization) -%></div>
             </td>
           </tr>
           <tr>
             <td colspan="3">
             <%= text_field 'profile', 'place', 'size' => 40, 'maxlength' => 100, 'style' => 'width:100%' %>
-              <div class="input_label"><%= _('location') -%></div>
+              <div class="input_label"><%= I18n.t(:location) -%></div>
             </td>
           </tr>
         </table>
