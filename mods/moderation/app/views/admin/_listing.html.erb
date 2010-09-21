@@ -21,7 +21,7 @@
     <tr class="<%=cycle('row_0', 'row_1')%>">
       <td><%= flagged_page_link(@page) %></td>
       <%= show_flag_details(flag) %>
-      <td><%= listing_custom_column_content(@page, @current_view) %></td>
+      <td><%=h listing_custom_column_content(@page, @current_view) %></td>
       <td><%=h @page.created_at.strftime("%d %b, %Y ") %></td>
       <td><%= list_created_by(@page) %></td>
       <td>
