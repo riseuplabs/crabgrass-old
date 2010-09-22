@@ -55,6 +55,9 @@ sites:
 ## SITE DEFAULTS
 ##
 
+profiles:
+  - private
+
 pagination_size: 30
 default_language: en
 enforce_ssl: false
