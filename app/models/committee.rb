@@ -53,6 +53,7 @@ class Committee < Group
 
   before_destroy :remove_from_parent
   def remove_from_parent
+    return if parent.nil?
     parent.remove_committee!(self)
     true
   end

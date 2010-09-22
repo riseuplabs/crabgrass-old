@@ -171,3 +171,8 @@ superadmin_blue:
   user_id: 4
   id: <%= id += 1 %>
 
+# blue is the only member of the committee to be destroyed
+committee_to_be_destroyed_blue:
+  group_id: 35
+  user_id: 4
+  id: <%= id += 1 %> 
