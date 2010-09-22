@@ -118,7 +118,7 @@ class PersonController < ApplicationController
       else
         @profile = @user.profiles.visible_by(current_user)
       end
-    else
+    elsif current_site.profile_enabled?(:public)
       @profile = @user.profiles.public
     end
     unless @profile and @profile.may_see?
