@@ -1,0 +1,40 @@
+.country_dropdown
+  width: 150px
+
+#state_dropdown
+  select
+    width: 150px
+<<<<<<< HEAD
+#city_text
+  position: relative
+  #city_results_box
+    position: absolute 
+    top: 20px 
+    left: 20px 
+    padding: 1em
+    width: 25em
+    border: 1px solid #666
+    background-color: #FFFFAA
+    color: #000
+    z-index: 100
+    ul 
+      list-style: none
+=======
+
+#city_results_box
+  position: absolute 
+  padding: 1em
+  width: 25em
+  border: 1px solid #666
+  background-color: #FFFFAA
+  color: #000
+  z-index: 100
+//  top: #px 
+//  left: #px 
+>>>>>>> e571f63... fixing some sass issues that break layout regeneration
+
+
+#filter_by_location
+  margin: 1em
+  div
+    display: inline
