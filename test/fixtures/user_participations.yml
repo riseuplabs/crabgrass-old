@@ -43,11 +43,13 @@ blue_page1:
   page_id: 1
   user_id: 4
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 red_page1:
   id: <%= id+=1 %>
   page_id: 1
   user_id: 8
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 #red_page2:
 #  id: <%= id+=1 %>
 #  page_id: 2
@@ -58,11 +60,13 @@ red_page3:
   page_id: 3
   user_id: 8
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 tasklist11:
   id: <%= id+=1 %>
   page_id: 200
   user_id: 1
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 tasklist21:
   id: <%= id+=1 %>
   page_id: 201
@@ -98,16 +102,19 @@ wiki_orange:
   page_id: 210
   user_id: 5
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 wiki_red:
   id: <%= id+=1 %>
   page_id: 210
   user_id: 8
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 wiki_blue:
   id: <%= id+=1 %>
   page_id: 210
   user_id: 4
   access: 1
+  changed_at: <%= rand(1000).minutes.ago.to_s(:db) %>
 message_gerrard:
   id: <%= id+=1 %>
   page_id: 220
