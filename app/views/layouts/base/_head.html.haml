@@ -2,19 +2,14 @@
   %meta{ :name=>"description", :content=>""}
   %meta{ :name=>"keywords", :content=>""}
   %meta{"http-equiv"=>"Content-Type", :content=>"application/xhtml+xml;charset=utf-8"}
-  - t = Time.now
   =favicon_link
   %title
     =h title_from_context
-  %meta{ :name=>"before_stylesheets", :content=>(Time.now - t)}
   / begin styling 
   = crabgrass_stylesheets("ui_base")
-  %meta{ :name=>"before_js", :content=>(Time.now - t)}
   / end styling
   / begin scripts
   = crabgrass_javascripts
   / end scripts
-  %meta{ :name=>"before_hook", :content=>(Time.now - t)}
   = call_hook :html_head
   = yield :html_head
-  %meta{ :name=>"after_yield", :content=>(Time.now - t)}
