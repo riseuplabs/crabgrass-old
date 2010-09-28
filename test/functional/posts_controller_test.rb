@@ -18,7 +18,9 @@ class PostsControllerTest < Test::Unit::TestCase
   def test_create
     page = pages(:page1)
     login_as :red
-    assert_difference 'Page.find(%d).contributors_count' % page.id do
+    # contributors_count does not get incremented if the user is the same
+    # so since we're still red this should not  change
+    assert_no_difference 'Page.find(%d).contributors_count' % page.id do
       post :create, :post => {:body => 'test post'}, :page_id   => page.id
       assert_equal 'test post', page.discussion.posts(true).last.body
     end
