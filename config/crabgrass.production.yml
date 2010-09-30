@@ -43,6 +43,8 @@ enabled_tools:
 ## SITES
 ##
 
+text_editor: html_only
+
 sites:
   - name: site1
     admin_group: rainbow
