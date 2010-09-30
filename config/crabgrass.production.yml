@@ -61,6 +61,7 @@ enforce_ssl: false
 show_exceptions: false
 email_sender: "robot@$current_host"
 tracking: true
+text_editor: "html_only"
 available_page_types:
   - AssetPage
   - EventPage
