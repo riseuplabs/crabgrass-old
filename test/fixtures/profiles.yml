@@ -155,3 +155,8 @@ public_profile_for_recent_group:
   entity_id: 33
   geo_location_id: 1
 
+profile_for_committee_of_group_to_be_deleted:
+  id: 304
+  entity_type: "Group"
+  entity_id: 35
+  stranger: true
