@@ -10,6 +10,7 @@ gem 'compass'
 gem 'compass-susy-plugin', :require => 'susy'
 gem 'haml'
 gem 'RedCloth'
+gem 'packet'
 
 group :cucumber do
   gem 'cucumber', '>=0.6.2'
