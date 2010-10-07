@@ -41,7 +41,7 @@ require "#{File.dirname(__FILE__)}/../lib/crabgrass/info.rb"
 
 info "LOAD FRAMEWORK"
 
-# Use any Rails in the 2.3.x series 
+# Use any Rails in the 2.3.x series
 RAILS_GEM_VERSION = '~> 2.3.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
@@ -116,26 +116,6 @@ Crabgrass::Initializer.run do |config|
   ## see environments/test.rb for testing specific gems
   ##
 
-  # frozen: the absolutely required gems
-  config.gem 'riseuplabs-greencloth', :lib => 'greencloth'
-  config.gem 'riseuplabs-undress', :lib => 'undress/greencloth'
-  config.gem 'riseuplabs-uglify_html', :lib => 'uglify_html'
-  config.gem 'thinking-sphinx', :lib => 'thinking_sphinx', :version => '1.3.19'
-  config.gem 'will_paginate'
-
-  # frozen: required when modifying themes
-  config.gem 'compass'
-  config.gem 'compass-susy-plugin', :lib => 'susy'
-
-  # required, but not included with crabgrass:
-  config.gem 'haml'
-  config.gem 'RedCloth'
-
-  # moved to environment/test.rb
-  #unless ['development', 'production'].include? RAILS_ENV
-  #  config.gem 'cucumber'
-  #  config.gem 'mocha'
-  #end
 
   config.action_controller.session = {
     :key => '_crabgrass_session', :secret => Conf.secret
@@ -160,7 +140,7 @@ Crabgrass::Initializer.run do |config|
 
 end
 
-### 
+###
 ### subsequent loading:
 ### ENVIRONMENT
 ###   eg config/environments/development.rb

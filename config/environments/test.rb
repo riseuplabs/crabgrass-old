@@ -27,20 +27,6 @@ config.action_controller.allow_forgery_protection    = false
 config.action_mailer.perform_deliveries = true
 config.action_mailer.delivery_method = :test
 
-##
-## REQUIRED GEMS
-##
-
-# these gems are currently required for in order to get all the tests
-# to work
-
-config.gem 'mocha'
-config.gem 'blueprints'
-config.gem 'machinist'
-config.gem 'faker'
-config.gem 'webrat'
-
-# config.gem 'gem-name', :lib => 'github_gem_name', :source => 'http://gems.github.com'
 
 ASSET_PRIVATE_STORAGE = "#{RAILS_ROOT}/tmp/private_assets"
 ASSET_PUBLIC_STORAGE  = "#{RAILS_ROOT}/tmp/public_assets"
