@@ -1,1 +1,0 @@
-class GreenClothException < StandardError; end
