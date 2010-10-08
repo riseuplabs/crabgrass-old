@@ -36,8 +36,8 @@ module Admin::UsersHelper
 
   def total_users_heading
     case params[:show]
-      when "active" then " active within the last two weeks"
-      when "inactive" then " not active within the last two weeks"
+      when "active" then " active within the last month"
+      when "inactive" then " not active within the last month"
       else ''
     end
   end
