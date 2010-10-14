@@ -24,14 +24,12 @@
         </td>
         <td class="description"><%= I18n.t(:user_profile_description_may_request_contact) %></td>
       </tr>
-      <%- if @profile.public? %> 
       <tr class="<%=cycle('odd','even')%>">
         <td>
           <label class="checkbox"><%= check_box 'profile', 'may_pester', :class => 'checkbox' %> <%= I18n.t(:profile_option_may_pester) %></label>
         </td>
         <td class="description"><%= I18n.t(:user_profile_description_may_pester) %></td>
       </tr>
-      <%- end %>
       <%- if @profile.private? %>
       <tr class="<%=cycle('odd','even')%>">
         <td>

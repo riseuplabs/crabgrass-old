@@ -203,7 +203,7 @@ module Undress
     # will represent your attributes consistently across all nodes (for
     # example, +Textile+ always shows class an id inside parenthesis.)
     def attributes(node)
-      node.attributes.to_haml.inject({}) do |attrs,(key,value)|
+      node.attributes.to_hash.inject({}) do |attrs,(key,value)|
         attrs[key.to_sym] = value if whitelisted_attributes.include?(key.to_sym)
         attrs
       end
