@@ -1,0 +1,7 @@
+---
+out: |
+  <p style="float:left;" class="left"><a href="/assets/22/ACPI%20Logo.gif"><img src="/assets/22/ACPI%20Logo_medium.png" alt="" /></a></p>
+
+in: |
+  !/assets/22/ACPI%20Logo_medium.png!:/assets/22/ACPI%20Logo.gif
+

@@ -1,3 +1,17 @@
+0.5.3
+-----
+
+* To upgrade:
+
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+
+* New Config:
+
+  1. "Never Pester Users" has been added as a site config option, which can be set in the Site's Basic Settings.
+     This option disables the options to share pages or send invitations via email.
+
+
 0.5.2.1
 -------
 

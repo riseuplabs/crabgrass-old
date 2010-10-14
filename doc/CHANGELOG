@@ -3,6 +3,26 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
+0.5.3 -- 2010 Sep 27th
+  Feature #2416: Superadmin to be able to accept all request
+  Feature #2419: add reject button for public page requests
+  Feature #2421: bring back share with everyone button
+  Feature #2422: allow coordinators to decide if the group wiki is editable by non-coordinators
+  Feature #2423: add active/inactive users lists
+  Feature #2426: change order of names in share popup
+  Feature #2427: superadmin should see all pages
+  Feature #2484: add siteadmin option to receive no email notifications
+  Bug #1498: XSS in ‘group not found’ error pages
+  Bug #2451: infobox rollover on icons in me-section out of line
+  Bug #2452: pagination in social activity displays twice on back pages.
+  Bug #2482: XSS problem!
+  Bug #2485: Clicking close on the sitehome wiki throws error
+  Bug #2505: conf ‘profiles’ setting has no effect
+  Bug #2506: destroy orphaned committees raises error
+  Bug #2420: fix number of total users
+  Bug #2487: Superadmin, moderation section: active links not displaying
+  Bug #2497: xss attack still working in superadmin section
+
 0.5.2.1 -- 2010 June 11th
   Feature #2410: CA - masthead text next to checkbox @ search
   Bug #2400: remaining MessagePages cause crashes

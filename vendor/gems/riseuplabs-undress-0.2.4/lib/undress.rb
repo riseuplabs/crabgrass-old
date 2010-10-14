@@ -36,7 +36,7 @@ module Undress
     end
 
     private
-    
+
     # We try to fix those elements which aren't write as xhtml standard but more
     # important we can't parse it ok without correct it before.
     def xhtmlize!
@@ -50,8 +50,8 @@ module Undress
     # Delete tabs, newlines and more than 2 spaces from inside elements
     # except <pre> or <code> elements
     def cleanup_indentation
-      (@doc/"*").each do |e| 
-        if e.elem? && e.inner_html != "" && e.name !~ (/pre|code/) && e.children.size == 0 
+      (@doc/"*").each do |e|
+        if e.elem? && e.inner_html != "" && e.name !~ (/pre|code/) && e.children.size == 0
           e.inner_html = e.inner_html.gsub(/\n|\t/,"").gsub(/\s+/," ")
         elsif e.text? && e.parent.name !~ /pre|code/
           e.content = e.content.gsub(/\n|\t/,"").gsub(/\s+/," ")
@@ -103,7 +103,7 @@ module Undress
         end
       end
     end
-  
+
     # spaces beetween td and th elements break textile formatting
     # <br> aren't allowed
     # strip spaces

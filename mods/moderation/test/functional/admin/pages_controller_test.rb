@@ -83,6 +83,22 @@ class Admin::PagesControllerTest < ActionController::TestCase
     end
   end
 
+  def test_should_get_reject_public
+   with_site "moderation" do
+      login_as @mod
+      get :update_public, :id => Page.first.id
+      assert_response :redirect
+      assert_redirected_to :action => 'index'
+      assert !Page.first.public?
+      assert !Page.first.public_requested?
+      get :update_public, :id => Page.first.id, :public => false 
+      assert_response :redirect
+      assert_redirected_to :action => 'index'
+      assert !Page.first.public?
+      assert !Page.first.public_requested?
+    end
+  end
+
   def test_should_get_remove_public
     with_site "moderation" do
       login_as @mod

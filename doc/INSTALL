@@ -24,7 +24,7 @@ packages from [http://backports.org].
 | haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
 | compass             | libcompass-ruby         | a semantic CSS system =>0.8.5 <= 0.8.17       |
 | compass-susy-plugin | compass-susy-plugin1.8  | =>0.6.3                                       |
-| hpricot             | libhpricot-ruby         | visual WYSIWYG wiki editor >=0.8.1            |
+| hpricot             | libhpricot-ruby         | xml and html parser needed for wysiwyg >=0.8.1            |
 | chronic             | libchronic-ruby         | required by backgroundrb                      |
 | packet              | libpacket-ruby          | required by backgroundrb >=0.1.15             |
 | mime-types          | libmime-types-ruby      | file upload bug in IE6                        |

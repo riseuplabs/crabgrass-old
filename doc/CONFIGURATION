@@ -90,12 +90,13 @@ dev_email
 text_editor
   Which text editor to use for editing wikis:
 
-  [greencloth_only]  only a plain text editor will be used
-  [html_only]        only a html editor will be used
-  [greencloth_preferred]  both editors will be available, but the default will be plain text
-  [html_preferred]   both editors will be available, but the default will be html.
+  Supported
+    [greencloth_only]  only a plain text editor will be used
+    [html_only]  only a html (wysiwyg) editor will be used
 
-  The default is greencloth_only
+  Experimental
+    [greencloth_preferred]  both editors will be available, but the default will be plain text
+    [html_preferred]   both editors will be available, but the default will be html.
 
 use_full_geonames_data
   If true, the full geonames data file (~800MB unzipped) will be downloaded and imported.

@@ -1,0 +1,355 @@
+---
+html: |
+  <meta content="text/html; charset=utf-8" http-equiv="CONTENT-TYPE" /> 
+  <title></title> 
+  <meta content="OpenOffice.org 3.2  (Linux)" name="GENERATOR" /> 
+  <table cellspacing="0" cellpadding="4" bordercolor="#000000" border="1" width="100%"> <col width="128*" /> <col width="128*" /> 
+    <tbody>
+      <tr valign="TOP"> 
+        <td width="50%"> 
+          <p>A</p> 
+        </td> 
+        <td width="50%"> 
+          <p>B</p> 
+        </td> 
+      </tr> 
+      <tr valign="TOP"> 
+        <td width="50%"> 
+          <p>C</p> 
+        </td> 
+        <td width="50%"> 
+          <p>D</p> 
+        </td> 
+      </tr> 
+    </tbody>
+  </table>
+
+in: |
+  |A|B|
+  |C|D|
+---
+html: |
+  <span style="font-size: 80%; font-color: blue;">
+  text
+  </span>
+
+in: |
+  %{font-color: blue; font-size: 80%}text%
+---
+html: |
+  <span style="background: none repeat scroll 0% 0% #ffff00;">
+  text
+  </span>
+
+in: |
+  %{background: none repeat scroll #ffff00}text%
+
+---
+# jp's table paste
+html: |
+  <title></title>   
+  <table cellspacing="0" cellpadding="7" bordercolor="#ffffff" border="1" width="593" frame="BELOW" style="page-break-before: always;"> <col width="5" /> <col width="102" /> <col width="103" /> <col width="102" /> <col width="100" /> <col width="94" /> <col width="0" /> 
+    <tbody>
+      <tr> 
+        <td bgcolor="#cccccc" width="579" valign="TOP" colspan="7"> 
+          <p align="CENTER" lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>trial</strong></font></font></p> 
+        </td> 
+      </tr> 
+      <tr valign="TOP"> 
+        <td bgcolor="#cccccc" width="5"> 
+          <p align="CENTER" lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#cccccc" width="102"> 
+          <p align="CENTER" lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>Chemical
+          GSB</strong></font></font></p> 
+          <p align="CENTER" lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#cccccc" width="103"> 
+          <p align="CENTER" lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>Textile
+          GSB</strong></font></font></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="102"> 
+          <p align="CENTER" lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>Microbiology
+          FDB</strong></font></font></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="100"> 
+          <p align="CENTER" lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>Seed
+          testing PPRSD</strong></font></font></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="94"> 
+          <p align="CENTER" lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><strong>Pesticide
+          Residues</strong></font></font></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="0"> 
+          <p><br /> </p> 
+        </td> 
+      </tr> 
+      <tr valign="TOP"> 
+        <td bgcolor="#f2f2f2" width="5"> 
+          <p lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="102"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Provision
+          	of equipment HPLC</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Training
+          	on equipment</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Development
+          	of quality and technical documentation</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Proficiency
+          	tests</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Accreditation
+          	subjected to performance</font></font></p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="103"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Provision
+          	of equipment</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Training
+          	on equipment</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Development
+          	of quality and technical documentation</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Proficiency
+          	tests</font></font></p> 
+            </li>
+          </ul> 
+          <p lang="en-GB" style="margin-left: 0.1cm;"><br /> </p> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="102"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Proficiency
+          	tests</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Development
+          	of quality and technical manuals</font></font></p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="100"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Provision
+          	of equipment </font></font> </p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Provision
+          	of literature</font></font></p> 
+            </li>
+            <li>
+              <p style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><span lang="en-GB">Practical
+          	</span></font></font><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;"><span lang="en-GB">Training
+          	overseas</span></font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Development
+          	of quality and technical documentation</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Proficiency
+          	tests</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Accreditation
+          	subjected to performance</font></font></p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="94"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Provision
+          	of equipment</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Proficiency
+          	test</font></font></p> 
+            </li>
+            <li>
+              <p lang="en-GB"><font face="Arial, sans-serif"><font size="1" style="font-size: 8pt;">Enlargement
+          	of scope of accreditation</font></font></p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="0"> 
+          <p><br /> </p> 
+        </td> 
+      </tr> 
+    </tbody>
+  </table>
+
+in: ""
+---
+# jp's table paste - simplified
+# title, col and font tags removed
+html: |
+  <table cellspacing="0" cellpadding="7" bordercolor="#ffffff" border="1" width="593" frame="BELOW" style="page-break-before: always;"> 
+    <tbody>
+      <tr> 
+        <td bgcolor="#cccccc" width="579" valign="TOP" colspan="7"> 
+          <p align="CENTER" lang="en-GB"><strong>trial</strong></p> 
+        </td> 
+      </tr> 
+      <tr valign="TOP"> 
+        <td bgcolor="#cccccc" width="5"> 
+          <p align="CENTER" lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#cccccc" width="102"> 
+          <p align="CENTER" lang="en-GB" style="margin-bottom: 0cm;"><strong>Chemical
+          GSB</strong></p> 
+          <p align="CENTER" lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#cccccc" width="103"> 
+          <p align="CENTER" lang="en-GB"><strong>Textile
+          GSB</strong></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="102"> 
+          <p align="CENTER" lang="en-GB"><strong>Microbiology
+          FDB</strong></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="100"> 
+          <p align="CENTER" lang="en-GB"><strong>Seed
+          testing PPRSD</strong></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="94"> 
+          <p align="CENTER" lang="en-GB"><strong>Pesticide
+          Residues</strong></p> 
+        </td> 
+        <td bgcolor="#cccccc" width="0"> 
+          <p><br /> </p> 
+        </td> 
+      </tr> 
+      <tr valign="TOP"> 
+        <td bgcolor="#f2f2f2" width="5"> 
+          <p lang="en-GB"><br /> </p> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="102"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Provision
+          	of equipment HPLC</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Training
+          	on equipment</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Development
+          	of quality and technical documentation</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Proficiency
+          	tests</p> 
+            </li>
+            <li>
+              <p lang="en-GB">Accreditation
+          	subjected to performance</p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="103"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Provision
+          	of equipment</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Training
+          	on equipment</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Development
+          	of quality and technical documentation</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Proficiency
+          	tests</p> 
+            </li>
+          </ul> 
+          <p lang="en-GB" style="margin-left: 0.1cm;"><br /> </p> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="102"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Proficiency
+          	tests</p> 
+            </li>
+            <li>
+              <p lang="en-GB">Development
+          	of quality and technical manuals</p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="100"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Provision
+          	of equipment  </p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Provision
+          	of literature</p> 
+            </li>
+            <li>
+              <p style="margin-bottom: 0cm;"><span lang="en-GB">Practical
+          	</span><span lang="en-GB">Training
+          	overseas</span></p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Development
+          	of quality and technical documentation</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Proficiency
+          	tests</p> 
+            </li>
+            <li>
+              <p lang="en-GB">Accreditation
+          	subjected to performance</p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="94"> 
+          <ul>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Provision
+          	of equipment</p> 
+            </li>
+            <li>
+              <p lang="en-GB" style="margin-bottom: 0cm;">Proficiency
+          	test</p> 
+            </li>
+            <li>
+              <p lang="en-GB">Enlargement
+          	of scope of accreditation</p> 
+            </li>
+          </ul> 
+        </td> 
+        <td bgcolor="#f2f2f2" width="0"> 
+          <p><br /> </p> 
+        </td> 
+      </tr> 
+    </tbody>
+  </table>
+
+in: ""
+---

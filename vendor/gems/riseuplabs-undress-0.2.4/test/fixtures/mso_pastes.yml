@@ -1,0 +1,51 @@
+---
+# MSO style heading with toc anchor
+html: |
+  <h1 align="center" style="text-align: center;"><a name="_Toc232594961"><span lang="FR" style="font-size: 14pt;"><strong>RESUME</strong></span></a></h1>
+
+in: |
+  h1=. [# -> _Toc232594961 #] *RESUME*
+
+---
+# Second Iteration of the above... make sure we keep the anchor
+html: |
+<h2 style="text-align: center;"><a name="resume"></a><a name="_toc232594961"></a> <strong><span class="caps">RESUME</span></strong><a class="anchor" href="#resume">¶</a></h2>
+
+in: |
+  h1=. [# -> _Toc232594961 #] *RESUME*
+
+---
+# MSO style footnode reference
+html: |
+  text<a name="_ftnref1" href="#_ftn1"><span class=" "><span lang="FR" style="font-family: Arial;"><span><!--[if !supportFootnotes]--><span class=" "><span lang="FR" style="font-size: 12pt; font-family: Arial;">[1]</span></span><!--[endif]--></span></span></span></a><span lang="FR">.</span></p>
+
+in: |
+  text[1]
+
+---
+# MSO style footnode
+html: |
+  <p class=" "><a name="_ftn1" href="#_ftnref1"><span class=" "><span lang="FR" style="font-family: Arial;"><span><!--[if !supportFootnotes]--><span class=" "><span lang="FR" style="font-size: 10pt; font-family: Arial;">[1]</span></span><!--[endif]--></span></span></span></a><span lang="FR"> footnode 1
+
+in: |
+  fn1. footnode 1
+
+---
+# OO.org style footnode reference
+html: |
+  <p>text<a href="#sdfootnote1sym" name="sdfootnote1anc" class="sdfootnoteanc"><sup>1</sup></a></sup>.</p>
+
+in: |
+  text[1]
+
+---
+# OO.org style footnode
+html: |
+  <div id="sdfootnote1"> 
+    <p class="sdfootnote"><a href="#sdfootnote1anc" name="sdfootnote1sym" class="sdfootnotesym-western">1</a>
+    footnode 1</p>
+  </div>
+
+in: |
+  fn1. footnode 1
+

@@ -19,6 +19,29 @@ module Admin::UsersHelper
   def user_url(arg, options={})
     admin_user_url(arg, options)
   end
+
+  def users_heading
+    show = params[:show] ? (params[:show]+' ') : ''
+    'Edit ' + show.capitalize + 'Users'
+  end
+
+  def letter_pagination_url
+    show = params[:show] ? {:show => params[:show]} : {}
+    {:controller => '/admin/users'}.merge(show)
+  end
+
+  def filter_users_selected(arg)
+    return 'selected' if arg == params[:show]
+  end
+
+  def total_users_heading
+    case params[:show]
+      when "active" then " active within the last two weeks"
+      when "inactive" then " not active within the last two weeks"
+      else ''
+    end
+  end
+
 end
 
 

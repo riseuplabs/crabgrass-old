@@ -39,6 +39,14 @@ module Groups::PermissionsHelper
       cb.info I18n.t(:open_group_description)
     end
   end
+  
+  def members_may_edit_wiki_checkbox(list)
+    list.checkbox do |cb|
+      cb.label I18n.t(:members_may_edit_wiki)
+      cb.input check_box(:profile, :members_may_edit_wiki, :onclick => '')
+      cb.info I18n.t(:members_may_edit_wiki_description)
+    end
+  end
 
   def council_field(row)
     if @group.council_id

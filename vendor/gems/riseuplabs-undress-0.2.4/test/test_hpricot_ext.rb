@@ -13,7 +13,7 @@ class HpricotExtensionsTest < Test::Unit::TestCase
     setup do
       setup_elements
     end
-    
+
     test "delete an specific style from an element" do
       @p_with_styles.del_style("font-weight")
       assert_equal({"color" => "#000", "font-style" => "italic"}, @p_with_styles.styles.to_h)
@@ -27,13 +27,13 @@ class HpricotExtensionsTest < Test::Unit::TestCase
       @p_without_styles.set_style("color", "red")
       assert_equal({"color" => "red"}, @p_without_styles.styles.to_h)
     end
-    
+
     test "add new style to an element trough Styles" do
       @p_without_styles.styles["color"] = "red"
       assert_equal({"color" => "red"}, @p_without_styles.styles.to_h)
     end
   end
-  
+
   context "Hpricot::Elem extensions" do
     setup do
       setup_elements
@@ -43,12 +43,12 @@ class HpricotExtensionsTest < Test::Unit::TestCase
       @p_with_styles.change_tag! "span"
       assert_equal "<span style=\"font-weight:bold; color:#000; font-style: italic\">some text inside</span>", @p_with_styles.to_s
     end
-    
+
     test "change an element tag name not preserving attributes" do
       @p_with_styles.change_tag! "span", false
       assert_equal "<span>some text inside</span>", @p_with_styles.to_s
     end
-    
+
     test "ignore self closed element tag name" do
       @img_without_styles.change_tag! "hr"
       assert_equal "<img src=\"some.jpg\" />", @img_without_styles.to_s

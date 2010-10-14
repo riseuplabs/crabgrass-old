@@ -12,6 +12,7 @@ class RequestsController < ApplicationController
   prepend_before_filter :set_language_from_invite, :only => [:accept]
   before_filter :fetch_data
   before_filter :login_required, :except => [:accept]
+  cache_sweeper :social_activities_sweeper, :only => [:approve]
 
   ##
   ## approval

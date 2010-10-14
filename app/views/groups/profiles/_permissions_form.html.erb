@@ -20,6 +20,14 @@
       council_field(row)
     end
   end
+  if @group.has_a_council?
+    f.row do |row|
+      row.label I18n.t(:group_wiki)
+      row.checkboxes do |list|
+        members_may_edit_wiki_checkbox(list)
+      end
+    end
+  end
   call_hook :group_permissions, :form=>f, :group => @group
 end %>
 

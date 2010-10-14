@@ -68,15 +68,17 @@ class Groups::RequestsController < Groups::BaseController
       reqs << RequestToJoinOurNetwork.create(:created_by=>current_user,
         :recipient => group, :requestable => @group)
     end
-    emails.each do |email|
-      req = RequestToJoinUsViaEmail.create(:created_by => current_user,
-        :email => email, :requestable => @group, :language => I18n.locale.to_s)
-      begin
-        Mailer.deliver_request_to_join_us!(req, mailer_options)
-        reqs << req
-      rescue Exception => exc
-        flash_message_now :text => "#{I18n.t(:could_not_deliver_email)} (#{email}):", :exception => exc
-        req.destroy
+    if @current_site and !@current_site.never_pester_users
+      emails.each do |email|
+        req = RequestToJoinUsViaEmail.create(:created_by => current_user,
+          :email => email, :requestable => @group, :language => I18n.locale.to_s)
+        begin
+          Mailer.deliver_request_to_join_us!(req, mailer_options)
+         reqs << req
+        rescue Exception => exc
+          flash_message_now :text => "#{I18n.t(:could_not_deliver_email)} (#{email}):", :exception => exc
+          req.destroy
+        end
       end
     end
     if reqs.detect{|req|!req.valid?}

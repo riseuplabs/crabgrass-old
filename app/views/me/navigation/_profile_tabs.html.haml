@@ -1,4 +1,6 @@
 %ul
   = menu(I18n.t(:user_preferences), edit_me_path)
-  = menu(I18n.t(:public_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'public'))
-  = menu(I18n.t(:private_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'private'))
+  - if current_site.profile_enabled?(:public)
+    = menu(I18n.t(:public_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'public'))
+  - if current_site.profile_enabled?(:private)
+    = menu(I18n.t(:private_profile), url_for(:controller => '/profile', :action => 'edit', :id => 'private'))

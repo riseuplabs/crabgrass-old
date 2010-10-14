@@ -11,7 +11,8 @@ class BasePageTest < ActionController::IntegrationTest
       get '/blue/survey-ipsum+214'
       assert_response :success, "Could not get page."
       # share with all has been disabled as of #1672
-      assert_select "li#share_all_li", false
+      # this has been brough back per 2421
+      assert_select "li#share_all_li", true
       assert page.participation_for_group(group).nil?, "Page has already been shared with all."
       post '/base_page/participation/update_share_all?add=true&page_id=214'
       page.reload

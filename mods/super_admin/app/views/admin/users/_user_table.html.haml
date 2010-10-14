@@ -1,0 +1,25 @@
+%table{:class =>'pretty', :id=>'admin_users_table'}
+  %tr
+    %th Login
+    %th Display name
+    %th Email
+    %th Last Login
+    %th 
+  - if @users.any?
+    - @users.each do |user|
+      %tr{:class=>cycle('row_0', 'row_1')}
+        %td= link_to user.login, url_for_user(user)
+        %td= h user.display_name
+        %td= h user.email
+        %td= friendly_date(user.last_seen_at)
+        %td{:style=>"padding-right:0em;"}
+          %span.actions
+            = link_to 'Show', user
+            = link_to 'Edit', edit_user_path(user)
+            = link_to 'Become', :controller => 'admin/account', :action => 'become', :id => user.id
+            = link_to 'Destroy', user_path(user), :confirm => "Are you sure you want to delete user '#{user.login}'?", :method => :delete
+  - else
+    %tr
+      %td{:colspan=>"4"} 
+        %i No Match
+

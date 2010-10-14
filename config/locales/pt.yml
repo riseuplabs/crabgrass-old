@@ -798,8 +798,6 @@ pt:
   welcome_heading: "Bem-vindo(a) ao {{site_title}}, {{user_name}}!"
   welcome_hide_link: "Esconder Boas Vindas"
   welcome_login_message: |-
-      !>/plugin_assets/riseup/riseup-yellow.gif!
-
       Este site utiliza o Crabgrass, um <a href="http://www.affero.org/oagpl.html">software livre</a> para web, projetado para a organização de grupos e redes, e direcionado às necessidades do movimento de justiça global. O objetivo a longo prazo é fornecer as ferramentas para facilitar redes de mudança social de democracia direta, ativa e confederal. [Leia mais... -> /crabgrass/about]
 
       h3. Você é novo(a) no site?
