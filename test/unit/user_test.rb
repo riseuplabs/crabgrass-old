@@ -104,10 +104,11 @@ class UserTest < Test::Unit::TestCase
   def test_active_since
     u_active = User.create! :login => 'activeuser', :password => 'password', :password_confirmation => 'password', :last_seen_at => 2.days.ago
     u_inactive = User.create! :login => 'inactiveuser', :password => 'password', :password_confirmation => 'password', :last_seen_at => 2.months.ago
+    u_inactive_never_logged_in = User.create! :login => 'inactiveuser_never_logged_in', :password => 'password', :password_confirmation => 'password'
     active_users = User.active_since(1.week.ago)
     inactive_users = User.inactive_since(1.week.ago)
     assert (active_users.include?(u_active) and !active_users.include?(u_inactive))
-    assert (inactive_users.include?(u_inactive) and !inactive_users.include?(u_active))
+    assert (inactive_users.include?(u_inactive) and inactive_users.include?(u_inactive_never_logged_in) and !inactive_users.include?(u_active))
   end
 
   def test_current_status_escaped

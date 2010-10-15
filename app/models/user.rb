@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   }
 
   named_scope :inactive_since, lambda{ |since|
-    {:order => 'users.last_seen_at ASC', :conditions => ["users.last_seen_at < ?", since]}
+    {:order => 'users.last_seen_at ASC', :conditions => ["users.last_seen_at < ? OR users.last_seen_at IS NULL", since]}
   }
 
   # alphabetized and (optional) limited to +letter+
