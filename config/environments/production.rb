@@ -38,7 +38,7 @@ MAKE_ASSET_BUNDLES = true
 
 # use syslog if available
 begin
-  config.gem 'log4r'
+  config.gem 'log4r', :version => '>=1.1.0'
   require 'log4r/outputter/syslogoutputter'
   config.logger = Log4r::Logger.new('main')
   config.logger.outputters = Log4r::SyslogOutputter.new('crabgrass')
