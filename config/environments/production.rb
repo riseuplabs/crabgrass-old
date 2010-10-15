@@ -38,11 +38,13 @@ MAKE_ASSET_BUNDLES = true
 
 # use syslog if available
 begin
-  require 'syslog_logger'
-  #RAILS_DEFAULT_LOGGER = SyslogLogger.new
-  config.logger = SyslogLogger.new
+  config.gem 'log4r'
+  require 'log4r/outputter/syslogoutputter'
+  config.logger = Log4r::Logger.new('main')
+  config.logger.outputters = Log4r::SyslogOutputter.new('crabgrass')
+  config.logger.info "initializing production server"
 rescue LoadError => exc
-  # i guess there is no syslog_logger
+  # i guess there is no log4r
 end
 
 # the default log level for production should be to only log warnings.
