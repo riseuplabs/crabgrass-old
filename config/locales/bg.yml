@@ -5,17 +5,17 @@ bg:
   access: Достъп
   action: действие
   activate_js_to_rearrange_photos: "Активиране на JavaScript, позволяващо използването на Drag&amp;Drop за пренареждане на снимки!"
-  activity_contact_created: "{{user}} добави {{other_user}} като приятел"
-  activity_group_created: "{{user}} създаде {{group_type}} {{group}}"
-  activity_group_destroyed: "{{group}} беше унищожена от {{user}}"
-  activity_message: "{{author}} написа: {{message}}"
-  activity_unread: "Имате {{count}} непрочетени [private messages]"
+  activity_contact_created: "%{user} добави %{other_user} като приятел"
+  activity_group_created: "%{user} създаде %{group_type} %{group}"
+  activity_group_destroyed: "%{group} беше унищожена от %{user}"
+  activity_message: "%{author} написа: %{message}"
+  activity_unread: "Имате %{count} непрочетени [private messages]"
   activity_unread_singular: "Имате непрочетено [private message]"
-  activity_user_destroyed: "{{user}} се оттегли"
-  activity_user_joined_group: "{{user}} се присъедини към {{group_type}} {{group}}"
-  activity_user_left_group: "{{user}} напусна {{group_type}} {{group}}"
-  activity_user_status: "{{user}} е {{status}}"
-  activity_wall_message: "{{author}} написа на {{user}}: {{message}}"
+  activity_user_destroyed: "%{user} се оттегли"
+  activity_user_joined_group: "%{user} се присъедини към %{group_type} %{group}"
+  activity_user_left_group: "%{user} напусна %{group_type} %{group}"
+  activity_user_status: "%{user} е %{status}"
+  activity_wall_message: "%{author} написа на %{user}: %{message}"
   add_another_file: "Добавете друг документ"
   add_button: Добави
   add_comment: "Добавете коментар"
@@ -30,7 +30,7 @@ bg:
   add_one_or_more_tags: "Добавете един или повече етикети, разделени със запетаи"
   add_phone_number: "Добавете телефонен номер"
   add_photo_to_gallery: "Натиснете върху снимката, за да я добавите"
-  add_star_link: "Добавяне на звезда ({{star_count}})"
+  add_star_link: "Добавяне на звезда (%{star_count})"
   add_tags: "Добавяне на етикети"
   add_websites: "Добавете интернет страница"
   additional_page_access: "Настройки за допълнителен достъп"
@@ -73,7 +73,7 @@ bg:
   attachments: Притурки
   away: отсъства
   back_button: Назад
-  back_to_group: "Назад към {{group_name}}"
+  back_to_group: "Назад към %{group_name}"
   basic_settings: "Основни настройки"
   break_lock: Отключване
   break_lock_button: Отключете
@@ -88,9 +88,9 @@ bg:
   committee_publicly_visible: "Направете комитетите достъпни за разглеждане"
   committee_publicly_visible_description: "Комитетите са достъпни за разглеждане от външни за групата потребители."
   committees: Комитети
-  comparing_changes_header: "Сравняване на промени от {{user}}, направени на {{when}} между {{old_version}} и {{new_version}}"
+  comparing_changes_header: "Сравняване на промени от %{user}, направени на %{when} между %{old_version} и %{new_version}"
   confirm: Потвърди
-  confirm_discarding_text_area: "Незапазените Ви промени, ще бъдат загубени. Натиснете {{cancel}}, за да продължите да редактирате."
+  confirm_discarding_text_area: "Незапазените Ви промени, ще бъдат загубени. Натиснете %{cancel}, за да продължите да редактирате."
   confirm_inappropriate_chat: "Сигурни ли сте, че разговорът е неподходящ? Натиснете 'ОК' само ако смятате, че той е обиден, груб или неприятен. Оператор скоро ще извърши проверка."
   confirm_inappropriate_page: "Сигурни ли сте, че страницата е неподходяща? Натиснете 'ОК', само ако смятате, че тя съдържа, обидно, грубо или неприятно съдържание. Ръководителят на страницата, скоро ще извърши проверка."
   confirm_new_password: "Потвърдете новата парола"
@@ -99,7 +99,7 @@ bg:
   contact_request_message_label: "Кажете причината да искате да бъдете техен приятел."
   contacts: Контакти
   contribute_content_link: "Нова страница"
-  contribute_group_content_link: "Добавяне на страница към {{group}}"
+  contribute_group_content_link: "Добавяне на страница към %{group}"
   contribute_to_site: "Създаване на страница"
   contributed: Споделен/Участие/Contributed
   coordinating_council: "Координиращ съвет"
@@ -110,19 +110,19 @@ bg:
   council_help_text: "Ако тази група има координиращ съвет, тогава членовете само на този съвет могат да администрират групата, иначе всеки член на групата може да го прави."
   councils: Съвети
   create_a_group: "Създаване на група"
-  create_a_new_thing: "Създаване на {{thing}}"
+  create_a_new_thing: "Създаване на %{thing}"
   create_button: Създай
   create_committee: "създаване на комитет"
   create_group_link: "Създайте нова група"
   create_page: "Създане на страница"
   create_page_button: Създаване
-  create_page_data: "Данни за/на {{page_class}}"
-  create_page_information: "Информация за/на {{page_class}}"
+  create_page_data: "Данни за/на %{page_class}"
+  create_page_information: "Информация за/на %{page_class}"
   create_task_list: "Създаване на нов списък със задачи"
   created: създадена
   created_by: "Създаден/а от"
   created_on: "Създаден на/Created on"
-  created_when_by: "създадена created {{when}} от {{user}}"
+  created_when_by: "създадена created %{when} от %{user}"
   csrf_error_message: "Заявката Ви за регистрация прилича на опит за разбиване на защитата на системата. Не се притеснявайте. Тази грешка се появява често дори при невинни заявки. Ние сме просто малко по-загрижени. Всичко, което трябва да направите е да презаредите отново страницата преди нов опит за регистрация. Натиснете връзката, за да опитате отново."
   current_attachments: "Текущи притурки"
   current_featured_content: "Текущо подбрано съдържание"
@@ -145,7 +145,7 @@ bg:
   date_years: години
   date_yesterday: Вчера
   delete: Изтриване
-  delete_page_link: "Изтрийте {{page_class}}"
+  delete_page_link: "Изтрийте %{page_class}"
   delete_post: "Изтрийте публикация"
   delete_this_version: "изтрививане на тази версия"
   delete_version_confirm: "Сигурни ли Сте, че желаете да изтриете тази версия?"
@@ -154,8 +154,8 @@ bg:
   descriptions: Описания
   descriptive_name_for_display: "Описателно име, за идентификация"
   destroy: Унищожете
-  destroy_confirmation: "Сигурни ли сте, че искате да изтриете this {{thing}}? Действието е окончателно."
-  destroy_group_link: "Премахнете {{group_type}}"
+  destroy_confirmation: "Сигурни ли сте, че искате да изтриете this %{thing}? Действието е окончателно."
+  destroy_group_link: "Премахнете %{group_type}"
   destroy_page_via_shred: "Унищожете веднага"
   destroy_page_via_shred_info: "Така страницата ще бъде изцяло унищожена. Това действие е крайно и не може да се възстанови."
   destroy_page_via_trash: "Преместете в кошчето за отпадъци"
@@ -165,13 +165,13 @@ bg:
   directory_of_groups: "Списък на групите"
   directory_of_networks: "Списък на мрежите"
   directory_of_people: "Списък с хора"
-  discuss_request_link: "обсъдете тази заявка с {{person_or_group}}"
+  discuss_request_link: "обсъдете тази заявка с %{person_or_group}"
   discussion_page_description: "Дискусия по определена тема, в която могат да участват както цели групи, така и отделни потребители."
   discussion_page_display: "Групова дискусия"
   discussions: Дискусия
   display_name: "Показване на име"
-  dont_have_permission_to_create_committees: "Нямате права за създаване на комитети под {{group}}"
-  dont_understand_group_type: "Неизвестен групов тип {{type}}"
+  dont_have_permission_to_create_committees: "Нямате права за създаване на комитети под %{group}"
+  dont_understand_group_type: "Неизвестен групов тип %{type}"
   download: Сваляне
   download_gallery: "Свалете галерията"
   drag_and_drop_to_rearrange_photos: "Drag &amp; Drop, за да ги пренаредите"
@@ -179,7 +179,7 @@ bg:
   edit_appearance: "Редактиране на изглед"
   edit_attachments: "Редактиране на притурки"
   edit_attachments_link: Редактиране
-  edit_featured_content_for_group: "Редактиране на подбраното съдържание в/за {{group_name}}"
+  edit_featured_content_for_group: "Редактиране на подбраното съдържание в/за %{group_name}"
   edit_gallery: "Редактирайте галерията"
   edit_profile_link: "Редактиране на профил"
   edit_settings: "Редактиране на настройки"
@@ -190,11 +190,11 @@ bg:
   edited: Редактирана
   email: "Пощенски адрес"
   email_addresses: "Пощенски адреси"
-  email_link_expires: "Валидността на връзката ще изтече след {{days}} дни."
+  email_link_expires: "Валидността на връзката ще изтече след %{days} дни."
   email_notice_access: "Може да приемете страницата тук:"
-  email_notice_hello: "Здравейте, {{from}} Ви изпрати уеб страница."
-  email_notice_hello_with_message: "Здравейте, {{from}} Ви изпрати уеб страница със следното съобщение: {{message}}"
-  email_notice_subject: "Проверете страница \"{{title}}\""
+  email_notice_hello: "Здравейте, %{from} Ви изпрати уеб страница."
+  email_notice_hello_with_message: "Здравейте, %{from} Ви изпрати уеб страница със следното съобщение: %{message}"
+  email_notice_subject: "Проверете страница \"%{title}\""
   empty_results: Няма
   entity_autocomplete_tip: "Въведете името на група или личност."
   error_saving_new_order: "Грешка при запис на новата подредба!"
@@ -226,7 +226,7 @@ bg:
       Този линк ще е валиден 24 часа. Ако желате да промените паролата си след
       изтичане на срока, ще трябва да подадете нова заявка в страницата за
       забравена парола.
-  forgot_password_mail_greeting: "{{user}}, за да промените паролата си, посететеf"
+  forgot_password_mail_greeting: "%{user}, за да промените паролата си, посететеf"
   forgot_password_text: "Ако сте забравили паролата си, можем да Ви изпратим писмо с връзка, която ще ви позвли да генерирате нова.\n"
   forgotten_email_address: "Каква поща ни предоставихте, когато създадохте регистрацията си?"
   format: Формат
@@ -248,40 +248,40 @@ bg:
   group_directory: "Папка на групите"
   group_directory_link: "Групова папка"
   group_has_no_public_profile: "Тази група няма публичен профил."
-  group_home_headline: "Начална страница на {{group_type}}"
+  group_home_headline: "Начална страница на %{group_type}"
   group_home_welcome: "Добре дошли"
-  group_information: "{{group_type}} Информация"
+  group_information: "%{group_type} Информация"
   group_invite_email: |
-      {{from_user}} Ви кани да се приседините към група "{{group}}".
+      %{from_user} Ви кани да се приседините към група "%{group}".
       
       Ако желаете да се присъедините към групата, натиснете тук:
       
-        {{accept_invite_link}}
+        %{accept_invite_link}
       
       Началната страница на групата може да бъде намерена тук:
       
-        {{group_home_link}}
+        %{group_home_link}
       
       Ако не желаете да се присъедините към групата, просто игнорирайте това писмо.
-  group_invite_subject: "Покана за пръсъединяване към група \"{{group}}\""
+  group_invite_subject: "Покана за пръсъединяване към група \"%{group}\""
   group_join_chat: "Към беседа"
-  group_language: "Основен език на {{group}}."
+  group_language: "Основен език на %{group}."
   group_members_publicly_visible: "Направете членовете на групата достъпни за разглеждане"
   group_members_publicly_visible_description: "Списък с членовете на групата е достъпен за разглеждане от външни хора. Също така, в профилите на всеки един от тях, ще бъдат вписани имената на достъпните за разглеждане групи, в които членуват."
-  group_membership_count: "{{count}} Участници"
+  group_membership_count: "%{count} Участници"
   group_not_allowed_to_view_image_error: "Групата собственик на тази страница, няма права да отвори изображението."
-  group_privacy_settings: "{{group}} Лични настройки"
-  group_profile_description_may_request_membership: "Ако опцията е маркирана, позволявате на външни хора да подават заявки за членство в тази {{group_type}}."
-  group_profile_description_may_see: "Ако опцията е маркирана, информацията в профила, ще бъде достъпна за разглеждане, иначе ще бъде скрита за {{group_type}}."
-  group_profile_description_may_see_committees: "Ако опцията е маркирана, позволявате на външни хора да видят, какви комитети притежава тази {{group_type}}."
-  group_profile_description_may_see_groups: "Ако опцията е маркирана, позволявате на външни хора да видят групите, които са част от {{group_type}}."
-  group_profile_description_may_see_members: "Ако опцията е маркирана, позволявате на външни хора да видят списъка с членовете на {{group_type}}."
-  group_profile_description_may_see_networks: "Ако опцията е маркирана, позволявате на wyn[ni хора да видят в какви мрежи {{group_type}} участвате."
-  group_publicly_visible: "{{group}} Разрешен достъп за разглеждане"
+  group_privacy_settings: "%{group} Лични настройки"
+  group_profile_description_may_request_membership: "Ако опцията е маркирана, позволявате на външни хора да подават заявки за членство в тази %{group_type}."
+  group_profile_description_may_see: "Ако опцията е маркирана, информацията в профила, ще бъде достъпна за разглеждане, иначе ще бъде скрита за %{group_type}."
+  group_profile_description_may_see_committees: "Ако опцията е маркирана, позволявате на външни хора да видят, какви комитети притежава тази %{group_type}."
+  group_profile_description_may_see_groups: "Ако опцията е маркирана, позволявате на външни хора да видят групите, които са част от %{group_type}."
+  group_profile_description_may_see_members: "Ако опцията е маркирана, позволявате на външни хора да видят списъка с членовете на %{group_type}."
+  group_profile_description_may_see_networks: "Ако опцията е маркирана, позволявате на wyn[ni хора да видят в какви мрежи %{group_type} участвате."
+  group_publicly_visible: "%{group} Разрешен достъп за разглеждане"
   group_publicly_visible_description: "Появява се в публичния регистър и <i>профила</i> е достъпен за разглеждане не само от членовете на тази група."
   group_successfully_created: "Групата беше създадена успешно."
   group_successfully_updated: "Групата беше успешно обновена."
-  group_summary: "Кратка информация за {{group}}."
+  group_summary: "Кратка информация за %{group}."
   group_wiki: "Wiki на групата"
   groups: Групи
   have_your_say: "Вие сте на ход!"
@@ -291,9 +291,9 @@ bg:
   home: Местоживеене
   icon: Икона
   im_addresses: "IM адреси"
-  image_count: "Снимка {{number}} от {{count}}"
-  image_count_total: "{{count}} Снимки"
-  image_title: "Заглавие на изображение: {{title}}"
+  image_count: "Снимка %{number} от %{count}"
+  image_count_total: "%{count} Снимки"
+  image_title: "Заглавие на изображение: %{title}"
   inbox_description: "Списък със страници, в които активно участвам или следя за промени"
   include_full_checkbox: "добавяне на връзка към пълното/цялото изображение"
   incoming: Входящи
@@ -304,17 +304,17 @@ bg:
   invalid_token: "Невалиден символ/Invalid Token"
   invalid_token_text: "Връзката за преустановяване на паролата, която сте подали, е невалидна. Възможно е вече да е била използвана или да е с изтекъл срок."
   invite: Покана
-  invite_accept_headline: "Приемете поканата за присъединяване към група \"{{group_name}}\""
+  invite_accept_headline: "Приемете поканата за присъединяване към група \"%{group_name}\""
   invite_accept_info: "Имате ли вече регистрация на тази уеб страница? Изберете една от следващите връзки, за да приемете поканата."
   invite_accept_via_existing_account: "Вече имам регистрация"
   invite_accept_via_register: "Трябва да се регистрирам"
   invite_error_already_member: "Вие вече сте член на тази група."
   invite_error_redeemed: "Поканата вече е изпратена."
-  invite_info: "Въведете списък от потребителски имена или пощенски адреси на хора, които бихте искали да поканите да се присъединят към {{group_type}}."
+  invite_info: "Въведете списък от потребителски имена или пощенски адреси на хора, които бихте искали да поканите да се присъединят към %{group_type}."
   invite_not_found: "Поканата не е намерена"
-  join_group_link: "Присъединете се {{group_type}}"
-  join_group_success: "Вие се присъединихте към {{group_name}}"
-  join_request_info: "Ще станете член на тази група, само след като заявката Ви бъде одобрена. Може да следите състоянията на заявките си, посещавайки \"{{link_to_requests}}\"."
+  join_group_link: "Присъединете се %{group_type}"
+  join_group_success: "Вие се присъединихте към %{group_name}"
+  join_request_info: "Ще станете член на тази група, само след като заявката Ви бъде одобрена. Може да следите състоянията на заявките си, посещавайки \"%{link_to_requests}\"."
   joins_the_chatroom: "се присъединява към стаята за беседи"
   language: Език
   large: голямо/а/и
@@ -322,7 +322,7 @@ bg:
   last_name: Фамилия
   last_seen: "видян за последно"
   leave_editing_wiki_page_warning: "Ако напуснете страницата без да запазите или откажете промените, другите потребители ще видят, че вие сте заключили това wiki и няма да могат да го редактират. Ако не запазите промените, те ще бъдат загубени."
-  leave_group_link: "Напуснете {{group_type}}"
+  leave_group_link: "Напуснете %{group_type}"
   left_the_chatroom: "напуска стаята за беседи"
   link_name: "Име на връзката"
   link_name_description: "Име на връзката ще се използва за изграждане на връзки, насочващи към тази група. То може да съдържа само цифри и букви без празни пространства между тях."
@@ -334,7 +334,7 @@ bg:
   location_postal_code: "пощенски код"
   location_state: щат/област
   locations: Местонахождения
-  locked_by_user: "Заключена от {{user}}"
+  locked_by_user: "Заключена от %{user}"
   locking_error: "Грешка при заключване. Не е възможно данните да бъдат запазени, някой друг вече е запазил нови промени."
   login: Вход
   login_button: Влезте
@@ -357,12 +357,12 @@ bg:
   media_audios: "Звукови записи"
   media_document: "Медиен документ"
   media_documents: "Медийни документи"
-  media_for_group: "{{media_type}} в {{group}}"
+  media_for_group: "%{media_type} в %{group}"
   media_image: Изображение
   media_images: Изображения
   media_video: Видео
   media_videos: Видея
-  media_without_group: "Всички {{media_type}}"
+  media_without_group: "Всички %{media_type}"
   medium: средно/а/и
   member_groups_of_network: "Групи участници"
   members: Членове
@@ -402,7 +402,7 @@ bg:
   move_button: Премести
   move_image_left: "Преместване на изображението наляво"
   move_image_right: "Преместване на изображението надясно"
-  move_page_link: "Местене на {{page_class}}"
+  move_page_link: "Местене на %{page_class}"
   move_page_to_different_group: "Преместване на страницата в различна група"
   move_this_page: "Преместване на тази страница"
   my_completed_tasks_link: Завършени
@@ -418,19 +418,19 @@ bg:
   my_peers_link: Съратници
   my_pending_tasks_link: Висящи
   my_requests_headline: "Лични заявки"
-  my_settings: "Настройки за/на {{user}}"
+  my_settings: "Настройки за/на %{user}"
   my_status_heading: "Текущото Ви състояние"
   my_tasks: Задачи
   my_tasks_description: "Списък със задачи, до които имам достъп"
   my_tasks_headline: "Лични задачи"
   my_world_heading: "Лично пространство"
   name: Име
-  name_or_email_not_found: "\"{{name}}\" не съвпада с името на потребител или група и не е валиден пощенски адрес."
+  name_or_email_not_found: "\"%{name}\" не съвпада с името на потребител или група и не е валиден пощенски адрес."
   network: мрежа
   network_invite_info: "Въведете имената на групите, които бихте искали да поканите да се присъедният към тази мрежа."
   network_settings: Настройки
   networks: Мрежи
-  new_council: "Нов съвет за група {{group_name}}"
+  new_council: "Нов съвет за група %{group_name}"
   new_group: "Нова група"
   new_network: "Нова мрежа"
   new_password: "Нова парола"
@@ -440,7 +440,7 @@ bg:
   no_change: "без промяна"
   no_committees: "липсват комитети"
   no_contacts_msg: "Нямате приятели."
-  no_group_named: "няма група с име <b>{{name}}</b>."
+  no_group_named: "няма група с име <b>%{name}</b>."
   no_images_in_gallery: "Няма изображения в галерията"
   no_members: "(липсват членове)"
   no_peers_msg: "Нямате съратници в групата/You have no peers."
@@ -455,7 +455,7 @@ bg:
   notify_contribution: "<b>Принос:</b> уведомяване на хората, които са дали своя <b>принос</b> към тази страница."
   notify_current_access: "<b>Текущ достъп:</b> уведомяване на хората или групите, които имат достъп до тази страница."
   notify_new_access: "<b>Позволение за достъп:</b> споделяне на страницата с нови хора или групи и ги уведомява."
-  notify_no_access_error: "За съжаление, \"{{name}}\" няма достъп до тази страница."
+  notify_no_access_error: "За съжаление, \"%{name}\" няма достъп до тази страница."
   notify_page_link: "Изпращане на известие"
   off_topic: "Извън темата."
   offensive_behavior: "Обидно поведение."
@@ -473,10 +473,10 @@ bg:
   other_reason: "Друга причина"
   outgoing: Изходящи
   page: Станица
-  page_added_to_group: "Тази страница ще бъде добавена в {{group_type}} {{group_name}}."
+  page_added_to_group: "Тази страница ще бъде добавена в %{group_type} %{group_name}."
   page_create_owner: "Собственик на страница"
   page_details: "Подробности за страницата"
-  page_details_link: "Подробности за {{page_class}}"
+  page_details_link: "Подробности за %{page_class}"
   page_group_collection: Сбирки
   page_group_discussion: Дискусии
   page_group_event: Събития
@@ -503,7 +503,7 @@ bg:
   page_locked_header: "Страницате е заключена"
   page_name_description: "Незадължително уникално име (използва се за създаване на URL за тази страница)"
   page_not_part_of_group: "Страницата не е част от тази група"
-  page_notice_message: "страница изпратена от {{user}} на {{date}}"
+  page_notice_message: "страница изпратена от %{user} на %{date}"
   page_owner_error: "Полето за собственик на страница не може да бъде празно."
   page_owner_help: "Собственикът на страницата е личност или група, изцяло отговарящ за нея. Създателят избира дали той самият или някоя от групите, в които членува, да стане собственик на страницата."
   page_with_message: "със съобщение"
@@ -579,7 +579,7 @@ bg:
   read: прочетена
   recent_activity: "Скорошна активност"
   recent_contributions: Принос
-  recent_member_group_pages: "Последна активност на Вашата група в {{network}}"
+  recent_member_group_pages: "Последна активност на Вашата група в %{network}"
   recent_network_pages: "Последни страници на/от/в мрежата"
   recent_pages: "Последни страници"
   recent_wall_posts: "Последни публикации на стената"
@@ -588,29 +588,29 @@ bg:
   recently_created: "Последно създадени"
   recipient_tip: "Разделянето на получателите става с запети, интервали или нови редове."
   recipients: Получатели
-  redirect_to_foreign_domain: "След като сте се регистрирали се опитвате да пренасочите сесията към друг домейн ({{url}}). За ваша сигурност премахнахме този параметър от URL адреса."
+  redirect_to_foreign_domain: "След като сте се регистрирали се опитвате да пренасочите сесията към друг домейн (%{url}). За ваша сигурност премахнахме този параметър от URL адреса."
   regenerate: "пресъздаване  на thumbnail изображенията"
   reject: Отхвърлете
   reject_button: Откажи
   rejected: Отхвърлени
   remove: Премахване
-  remove_contact_confirmation: "Сигурни ли сте, че не желаете вече да поддържате приятелство с {{user}}?"
+  remove_contact_confirmation: "Сигурни ли сте, че не желаете вече да поддържате приятелство с %{user}?"
   remove_contact_info: "Ако премахнете някой от списъка си с приятели, няма да виждате, кога е влязъл в системата, а също и личният му профил. Това означава, че Вие също ще бъдете изтрит, от неговия списък с приятели."
   remove_friend_link: "Премахване от списъка с приятели"
   remove_from_gallery: "Премахнете от галерията"
   remove_from_inbox: "Премахнете от пощенската кутия"
   remove_last_access_error: "Не можете да ограничите, последната възможност за достъп до тази страница."
-  remove_star_link: "Премахване на звезда ({{star_count}})"
+  remove_star_link: "Премахване на звезда (%{star_count})"
   removing_image: "Премахване на изображение..."
   request_friend_link: "Добавяне към списъка с приятели"
-  request_join_group_link: "Заявка за присъединяване {{group_type}}"
-  request_status: "Тази заявка беше {{status}} от {{user}} в {{time}}"
-  request_to_friend_description: "{{user}} би искал да се сприятели с {{other_user}}"
-  request_to_join_our_network_description: "Група {{group}} е поканена да се присъедини към {{network}} мрежата"
-  request_to_join_us_description: "{{user}} е поканен/а да се присъедини към {{group}}"
-  request_to_join_us_via_email_description: "{{email}} е поканен/а да се присъедини към {{group}}"
-  request_to_join_you_description: "{{user}} прояви желание да се присъедини към {{group}}"
-  request_to_join_your_network_description: "{{group}} прояви желание да се присъедини към {{network}}"
+  request_join_group_link: "Заявка за присъединяване %{group_type}"
+  request_status: "Тази заявка беше %{status} от %{user} в %{time}"
+  request_to_friend_description: "%{user} би искал да се сприятели с %{other_user}"
+  request_to_join_our_network_description: "Група %{group} е поканена да се присъедини към %{network} мрежата"
+  request_to_join_us_description: "%{user} е поканен/а да се присъедини към %{group}"
+  request_to_join_us_via_email_description: "%{email} е поканен/а да се присъедини към %{group}"
+  request_to_join_you_description: "%{user} прояви желание да се присъедини към %{group}"
+  request_to_join_your_network_description: "%{group} прояви желание да се присъедини към %{network}"
   requested_forgot_password: "Подали сте заявка за промяна на паролата"
   requests: Заявки
   requests_from_me: "от мен"
@@ -618,15 +618,15 @@ bg:
   required: (required)
   reset_password: "Промяна на парола"
   reset_password_email_sent: "Изпратена Ви е поща, съдържаща инструкции как да установите отново паролата си."
-  reset_password_mail_greeting: "{{user}}, Паролата ви беше променена/reset както заявихте."
+  reset_password_mail_greeting: "%{user}, Паролата ви беше променена/reset както заявихте."
   reset_password_mail_warning: "Ако не сте подали заявка за промяна на паролата, моля свържете се с нас."
-  reset_password_text: "Привет, {{user}}. Ако сте забравили паролата си, тук може да регистрирате нова.\n"
+  reset_password_text: "Привет, %{user}. Ако сте забравили паролата си, тук може да регистрирате нова.\n"
   return_link: Връщане
   rss_feed: "RSS Feed"
   saturday: Събота
   save_button: Запази
   save_changes: "Запазете промените"
-  save_or_cancel_edit_lock_wiki_error: "Вие зкалчихте това wiki. Други потребители няма да могат да редактират, докато не натиснете или {{save_button}} или {{cancel_button}}, за да спрете да редактирате."
+  save_or_cancel_edit_lock_wiki_error: "Вие зкалчихте това wiki. Други потребители няма да могат да редактират, докато не натиснете или %{save_button} или %{cancel_button}, за да спрете да редактирате."
   save_survey_button: "Запазете проучването"
   saved_new_order: "Новата подреба е запазена!"
   saving_your_changes: "Запазване на промените..."
@@ -641,38 +641,38 @@ bg:
   send_button: Изпрати
   send_invites: "Изпращане на покана"
   send_invites_button: "Изпращане на поканите"
-  send_invites_headline: "Изпращане на покани за присъедняване към {{group}}"
+  send_invites_headline: "Изпращане на покани за присъедняване към %{group}"
   send_message_link: "Изпращане на съобщение"
   separate_tags: "Разделете етикетите със запети"
   set_status_button: "Обновяване на състоянието"
   set_status_messsage: "Какво правите сега?"
   settings: Настройки
   share: Споделяне
-  share_already_exists_error: "\"{{name}}\" вече има достъп до тази страница."
+  share_already_exists_error: "\"%{name}\" вече има достъп до тази страница."
   share_button: Сподели
   share_page_email: "Изпращане на известие по пощата"
-  share_page_link: "Споделяне на {{page_class}}"
+  share_page_link: "Споделяне на %{page_class}"
   share_page_message: "Изпращане на съобщение (незадължително)"
   share_page_options: "Избор на опции/възможности"
-  share_page_recipients: "Споделете {{page_class}}"
-  share_page_recipients_results: "Тази {{page_class}} ще бъде споделена с"
+  share_page_recipients: "Споделете %{page_class}"
+  share_page_recipients_results: "Тази %{page_class} ще бъде споделена с"
   share_page_recipients_sections: "Изберете с кого да споделите от групите или приятелите си"
   share_page_recipients_selection: Изберете
-  share_pester_error: "За съжаление не Ви е позволено да споделяте с \"{{name}}\"."
+  share_pester_error: "За съжаление не Ви е позволено да споделяте с \"%{name}\"."
   sharing_help: "Незадължително поле. Страницата може да бъде споделена с множество други получатели(както потребители така и групи)."
   show_gallery: "Покажете галерията"
   signup_button: "Регистрирайте се"
   signup_confirm_password: "Потвърдете паролата"
   signup_email: "Електронна поща"
   signup_email_info: "Незадължително: Използва се при забравена парола"
-  signup_info: "Попълнете потребителско име и парола, след това натиснете бутона \"{{sign_up}}\""
+  signup_info: "Попълнете потребителско име и парола, след това натиснете бутона \"%{sign_up}\""
   signup_link: "Нова регистрация"
   signup_login_name: "Вашето потребителско име"
   signup_password: "Вашата парола"
   signup_success: "Регистрацията е успешна"
   signup_success_message: "Благодаря ви, че се регистрирахте!"
   signup_title: "Създайте си регистрация"
-  slideshow_delay_input: "Обновете на всеки {{input_field}} seconds"
+  slideshow_delay_input: "Обновете на всеки %{input_field} seconds"
   small: малко/а/и
   social_change_interests: "Интереси за социална промяна"
   starred: "Наградена със звезда"
@@ -683,7 +683,7 @@ bg:
   subject: тема
   subject_must_not_be_empty: "темата не трябва да е празна"
   successful_undelete_image: "Изображението е възстановено успешно."
-  successfully_removed_image: "Изображението е премахнато успешно! ({{undo_link}})"
+  successfully_removed_image: "Изображението е премахнато успешно! (%{undo_link})"
   summary: "Кратко описание"
   summary_help: "Незадължително поле. Това е изречение или параграф, описващи на кратко съдържанието на новата страница."
   sunday: Неделя
@@ -699,7 +699,7 @@ bg:
   survey_rate_responses_tab: "Оценете отговорите"
   survey_rate_this_response_heading: "Оценка на този отговор"
   survey_rating_enabled: "Позволявате ли оценяване на отговорите?"
-  survey_response_by: "Отговор от {{login}}"
+  survey_response_by: "Отговор от %{login}"
   survey_responses_enabled: "Позволете нов отговор? Ако опцията е маркирана, хората могат да си изберат проучване. Премахване на маркировката, закрива проучването."
   survey_take_tab: "Избете проучване"
   survey_your_rating_heading: "Вашата оценка за този отговор"
@@ -708,10 +708,10 @@ bg:
   task_list_page_description: "Създаване на списък с дейности за решаване на даден проблем и разпределянето им между участниците в групата."
   task_list_page_display: "списък със задачи"
   tasks: Задачи
-  thing_not_found: "{{thing}} не съществува"
-  thing_settings: "{{thing}} настройки"
-  this_is_committee: "Този комитет е част от {{parent_group}}."
-  this_is_coordinating: "Това е <strong>коодиниращият съвет</strong> за {{parent_group}}."
+  thing_not_found: "%{thing} не съществува"
+  thing_settings: "%{thing} настройки"
+  this_is_committee: "Този комитет е част от %{parent_group}."
+  this_is_coordinating: "Това е <strong>коодиниращият съвет</strong> за %{parent_group}."
   thursday: Четвъртък
   time_zone: "Времева зона"
   title: Заглавие
@@ -720,7 +720,7 @@ bg:
   toggle_selection: "Прикрепяне на избора/Toggle Selection"
   top_rated: Най-оценявани
   trash: "Кофа за отпадъци"
-  trash_description: "Кофата за отпадъци е място, където се намират всички вече изтрити страници. Те могат да се възстановят, при натискане на {{undelete}} или да бъдат изцяло премахвани при натискане на {{destroy}}."
+  trash_description: "Кофата за отпадъци е място, където се намират всички вече изтрити страници. Те могат да се възстановят, при натискане на %{undelete} или да бъдат изцяло премахвани при натискане на %{destroy}."
   try_again: "Опитайте отново"
   tuesday: Вторник
   type_your_messages_here: "Напишете съобщението си тук и натиснете бутона enter..."
@@ -777,10 +777,10 @@ bg:
   user_profile_description_may_see_groups: "Ако опцията е маркирана, позволявате на външни хора да видят в кои групи членувате."
   username: "Потребителско име"
   users: Потребители
-  users_wall: "Информационна стена на {{user}}"
-  users_world: "Потребителско пространство на {{user}}"
-  version_doesnt_exist: "Версия {{version}} не съществува"
-  version_number: "версия {{version}}"
+  users_wall: "Информационна стена на %{user}"
+  users_world: "Потребителско пространство на %{user}"
+  version_doesnt_exist: "Версия %{version} не съществува"
+  version_number: "версия %{version}"
   versions: Версии
   video_embed: "HTML код за вграждане на външно видео"
   video_embed_code_prompt: "Вграждане на html код, за показване на видео от външен източник."
@@ -808,30 +808,30 @@ bg:
   welcome_find_groups_text: "Прегледайте списъка с групи, за да намерите такива, към които бихте се присъединили."
   welcome_find_people_link: "Търсене на хора"
   welcome_find_people_text: "В списъка с потребители може да намерите познати."
-  welcome_heading: "Добре дошли в {{site_title}}, {{user_name}}!"
+  welcome_heading: "Добре дошли в %{site_title}, %{user_name}!"
   welcome_hide_link: "Скриване на приветственото съобщение"
   welcome_message: "Крабграс позволява на организациите за социална промяна преди всичко да извършват работа и още да представят идеите си пред по-широк кръг от хора, да си сътрудничат и да изграждат по между си социални комуникационни мрежи."
   welcome_show_link: "Показване на приветственото съобщение"
-  welcome_title: "Добре дошли в {{site_title}}"
+  welcome_title: "Добре дошли в %{site_title}"
   welcome_upload_icon_link: "Зареждане на потребителска снимка"
   welcome_upload_icon_text: "Изображението допълнително ще Ви идентифицира.То ще стои до всеки Ваш коментар."
   when_does_feature_expire: "Кога подбраното съдържание губи валидност?"
   width: "Ширина на видео рамката"
   wiki_body_help: "Незадължително поле. Въведете текст, служещ за тяло на страницата."
   wiki_editor: Редактор
-  wiki_is_locked: "Това wiki в момента е заключено от {{user}}"
+  wiki_is_locked: "Това wiki в момента е заключено от %{user}"
   wiki_lost_text_confirmation: "Всеки незапазен текст ще бъде загубен. Сигурни ли сте?"
   wiki_page_description: "Създаване на текстов документ със свободна форма и с възможност за редактиране."
   wiki_page_display: "Wiki страница"
   wiki_plain_editor: "Обикновен редактор"
-  wiki_revert_version: "Връщане към версия {{version}}"
+  wiki_revert_version: "Връщане към версия %{version}"
   wiki_section_edit: "Редактиране на този раздел"
   wiki_visual_editor: "Визуален редактор"
   wont_be_able_to_save: "Не бихте могли да запишете тази страница"
   work: Работа
   work_life: Опит
   you_are_not_member_of_any_group: "Не сте член на никоя група."
-  you_are_viewing_version: "Наблюдавата версия {{version}} от {{user}}"
+  you_are_viewing_version: "Наблюдавата версия %{version} от %{user}"
   you_have_no_contacts: "Нямате приятели"
   you_have_no_peers: "Нямате съратници в групата"
   your_login: "Вашето потребителско име"

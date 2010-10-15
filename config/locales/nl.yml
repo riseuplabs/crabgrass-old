@@ -17,5 +17,5 @@ nl:
   add_new_attachment: "Voeg een Nieuwe Bijlage toe"
   add_phone_number: "Voeg telefoonnummer toe"
   add_photo_to_gallery: "Klik op een foto om toe te voegen"
-  add_star_link: "Voeg Ster toe ({{star_count}})"
+  add_star_link: "Voeg Ster toe (%{star_count})"
   add_websites: "Voeg website toe"
