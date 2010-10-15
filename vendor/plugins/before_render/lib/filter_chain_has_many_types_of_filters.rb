@@ -37,11 +37,11 @@ module FilterChainHasManyTypesOfFilters
 
   private
   def map_filter_types_to_positions
-    returning({}) do |rv|
-      self.class.filter_order.each_with_index do |filter, idx|
-        rv[filter] = idx
-      end
+    rv = {}
+    self.class.filter_order.each_with_index do |filter, idx|
+      rv[filter] = idx
     end
+    rv
   end
 
   def find_filter_append_positions_multitype filters, filter_type
