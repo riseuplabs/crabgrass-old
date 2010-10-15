@@ -4,9 +4,10 @@ Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
 0.5.3.1 -- 2010 Oct 15
-  Feature #2526 – enable no pestering by friends
-  Bug #2525 – active/inactive users lists counts off
-  Bug #2527 – incorrect wording in superadmin for users lists
+  Feature #2526: enable no pestering by friends
+  Bug #2525: active/inactive users lists counts off
+  Bug #2527: incorrect wording in superadmin for users lists
+  Bug #2543: crash on save, preview, or cancel wysiwyg wiki 
 
 0.5.3 -- 2010 Sep 27th
   Feature #2416: Superadmin to be able to accept all request
