@@ -1,0 +1,43 @@
+//
+// AUTO COMPLETE
+//
+
+.autocomplete-w1 {
+  // background: url(/images/ui/shadow.png) no-repeat bottom right;
+  // lets do css3 shadow
+  position: absolute;
+  top: 7px;
+  left: 6px;
+  z-index: $zindex_autocomplete;
+}
+
+.autocomplete {
+  width: 300px;
+  border: 1px solid #999;
+  background-color: white;
+  cursor: pointer;
+  text-align: left;
+  max-height: 350px;
+  overflow: auto;
+  margin: -6px 6px 6px -6px;
+  overflow-x: hidden;
+  .selected {
+    background: #eee;
+  }
+  div {
+    padding: 1px 0 1px 5px
+    white-space: nowrap
+  }
+  p {
+    margin: 0;
+  }
+  ins {
+    text-decoration: none;
+    color: #3399FF;
+  }
+  em {
+    font-weight: bold;
+    font-style: normal;
+  }
+}
+

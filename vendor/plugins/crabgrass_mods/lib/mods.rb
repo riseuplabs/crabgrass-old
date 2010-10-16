@@ -14,9 +14,17 @@ module Mods
   mattr_accessor :model_mixins
   self.model_mixins = {}
 
-  # used by the application to determine which plugins to
-  # enable or disable.
+  # used by the application to determine which plugins to enable or disable.
+  # if set, this callback is passed the directory path of the plugin, and
+  # returns true or false.
   mattr_accessor :plugin_enabled_callback
+
+  # used by the application to determine which plugins to auto-reload in
+  # development mode. With mods enabled, a plugin can call 'reloadable()' in
+  # its init.rb. Otherwise, the application can set a callback here to 
+  # globally decide based on the path of the plugin. The callback, given the
+  # plugin path, should return true if the plugin should be reloadable.
+  mattr_accessor :plugin_reloadable_callback
 
   public
 

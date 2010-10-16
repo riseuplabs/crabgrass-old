@@ -211,6 +211,11 @@ class Conf
     self.enabled_tools.empty? or self.enabled_tools.include?(tool_name) or ENV['TOOL'] == tool_name
   end
 
+  # in development mode, allow all tools to be reloadable
+  def self.plugin_reloadable?(plugin_path)
+    plugin_path =~ /^#{RAILS_ROOT}\/tools\//
+  end
+
   ##
   ## CONVENIENCE METHODS
   ##

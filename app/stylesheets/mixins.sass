@@ -1,46 +1,46 @@
 
 =headings
-  font-family= !headings_font
+  font-family: $headings_font
   font-weight: bold
   line-height: 1
 
 =general-font
-  font-family= !general_font
+  font-family: $general_font
   
-=bordered-btm(!border_color= !warm_grey_border, !border_style= "solid")
-  border-bottom= 1px !border_style !border_color
+=bordered-btm($border_color: $warm_grey_border, $border_style: "solid")
+  border-bottom: 1px $border_style $border_color
 
-=bordered-top(!border_color= !warm_grey_border)
-  border-top= 1px "solid" !border_color
+=bordered-top($border_color: $warm_grey_border)
+  border-top: 1px "solid" $border_color
 
-=bordered-2sides(!border_color= !warm_grey_border)
-  border-top= 1px "solid" #fff
-  border-left= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
-  border-bottom= 1px "solid" #fff
+=bordered-2sides($border_color: $warm_grey_border)
+  border-top: 1px "solid" #fff
+  border-left: 1px "solid" $border_color
+  border-right: 1px "solid" $border_color
+  border-bottom: 1px "solid" #fff
 
-=bordered-left(!border_color= !warm_grey_border)
-  border-left= 1px "solid" !border_color
+=bordered-left($border_color: $warm_grey_border)
+  border-left: 1px "solid" $border_color
   
-=bordered-right(!border_color= !warm_grey_border)
-  border-right= 1px "solid" !border_color
+=bordered-right($border_color: $warm_grey_border)
+  border-right: 1px "solid" $border_color
 
-=bordered-tab(!border_color= !almost_black)
-  border-top= 1px "solid" !border_color
-  border-left= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
+=bordered-tab($border_color: $almost_black)
+  border-top: 1px "solid" $border_color
+  border-left: 1px "solid" $border_color
+  border-right: 1px "solid" $border_color
 
-=bordered-block(!border_color= !almost_black)
-  border-top= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
-  border-bottom= 1px "solid" !border_color
+=bordered-block($border_color: $almost_black)
+  border-top: 1px "solid" $border_color
+  border-right: 1px "solid" $border_color
+  border-bottom: 1px "solid" $border_color
 
-=bordered-top-btm(!border_color= !light_grey_border)
-  border-top= 1px "solid" !border_color
-  border-bottom= 1px "solid" !border_color
+=bordered-top-btm($border_color: $light_grey_border)
+  border-top: 1px "solid" $border_color
+  border-bottom: 1px "solid" $border_color
 
-=bordered(!border_width= 1px, !border_color= !light_grey_border)
-  border= !border_width "solid" !border_color
+=bordered($border_width: 1px, $border_color: $light_grey_border)
+  border: $border_width "solid" $border_color
 
 =zero
   margin: 0
@@ -51,16 +51,16 @@
   display: inline
   vertical-align: middle
 
-=spaced(!spacing= 0.09em)
-  letter-spacing= !spacing
+=spaced($spacing: 0.09em)
+  letter-spacing: $spacing
 
-=small-text(!font_small= 10px)
-  font-size= !font_small
+=small-text($font_small: 10px)
+  font-size: $font_small
 
-=blue-link(!sized= 11px)
+=blue-link($sized: 11px)
   +hover-link
-  color= !blue
-  font-size= !sized
+  color: $blue
+  font-size: $sized
   font-weight: normal
 
 =partial-width

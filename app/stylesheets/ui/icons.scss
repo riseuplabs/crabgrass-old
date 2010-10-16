@@ -1,0 +1,125 @@
+//
+// SMALL ICONS
+//
+
+// the small icons are used everywhere. the basic idea is that 
+// we add some padding and then position the background image in the space
+// created. this has the advantage of telling the browser to load the images
+// later. 
+// horizontal spacing is no problem. vertical spacing is a bit more of a pain.
+// we can add vertical padding, or we can set the line-height.
+
+.small_icon {
+  background-repeat: no-repeat !important;;
+  background-position: 0 50% !important;   // flush left, vertical align middle
+  padding-left: 20px !important;           // 16px + 4 more for space between icon and text.
+  min-height: 16px !important;             // make sure the 16x16 icon doesn't get clipped.
+  line-height: 1.6em;
+  // alternately:
+  // padding-top: 2px  
+  // padding-bottom: 2px
+
+  // not sure if these are still used.
+  //&.twenty
+  //  padding-left: 22px
+  //  min-height: 24px
+  //&.right
+  //  background-position: 100% 4px
+  //  padding-left: 4px
+  //  padding-right: 20px
+  //&.bullet
+  //  background-position: 0 2px
+  //  margin: 0.5em 0
+}
+
+// an empty icon
+.none_16 { background-image: none; }
+
+//.small_icon_button {
+//  height: 16px;
+//  width: 16px;
+//  display: block;
+//  padding: 0; }
+
+// .spinner_icon {
+//  background-image: url(/images/spinner.gif);
+// }
+
+// .big_icon {
+//   background-repeat: no-repeat;
+//  background-position: 1px 50%;
+//  padding: 14px 0 14px 54px; }
+
+
+// .page_icon {
+//  height: 16px;
+//  width: 16px;
+//  background-repeat: no-repeat;
+//  background-position: 0 50%; }
+
+
+//
+// NAME ICONS
+//
+// name icons are used to show the icon for a group or user, with some text.
+//
+// we display the icons as background images, aligned center,
+// and then add padding to make enough room for the icon.
+//
+// there are other ways we could do this: we could set the height
+// or the min-height. however, then the text does not appear centered
+// if the icon is much bigger than the line height.
+//
+// the padding method is not ideal:
+// * if the font is a different size, then the top/bottom padding numbers will be wrong
+// * if the text takes up two lines instead of one, then there should be no padding.
+//
+// however, after having tried other methods, the padding method seems to do better.
+//
+
+.name_icon {
+  background-repeat: no-repeat;
+  background-position: 1px 50%;
+  .tiny {
+    padding: 0px 0 0px 17px;
+  }
+  .xsmall {
+    padding: 2px 0 4px 26px;
+  }
+  .small {
+    padding: 7px 0 7px 40px;
+    line-height: 14px;
+  }
+  .medium {
+    padding: 15px 0 15px 60px;
+    display: block;
+    font-size: 1.3em;
+  }
+  //.two {
+  //  padding-top: 0;
+  //  padding-bottom: 0; }
+}
+
+//
+// hover icons
+// i am not sure i want to still do it this way.
+//
+
+.name_icon b { display: none; }
+
+// .name_icon:hover {
+//   b {
+//    display: block;
+//    position: absolute;
+//    background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left;
+//    color: white;
+//    bottom: 25px;
+//    left: -5px;
+//    z-index: $z_tooltip;
+//    padding: 3px 5px 9px 5px;
+//    // ^^ must be in px to match gif bg
+//    &:hover {
+//      display: none;
+//    }
+//  }
+//}

@@ -10,21 +10,21 @@ es:
   action: acción
   activate_js_to_rearrange_photos: "¡Activa Javascript para reacomodar las fotos sólo con Arrastrar y Soltar!"
   activity: Actividad
-  activity_contact_created: "{{user}} agregó a {{other_user}} como contacto"
-  activity_group_created: "{{user}} creó {{group_type}} {{group}}"
-  activity_group_destroyed: "{{group}} fue borrado por {{user}}"
-  activity_message: "{{author}} escribió: {{message}}"
-  activity_message_received: "Has recibido {{message_tag}} de {{other_user}}: {{title}}"
-  activity_twinkled: "{{user}} agregó una estrella a tu post \"{{post}}\""
-  activity_unread: "Tienes {{count}} [mensajes privados] sin leer"
+  activity_contact_created: "%{user} agregó a %{other_user} como contacto"
+  activity_group_created: "%{user} creó %{group_type} %{group}"
+  activity_group_destroyed: "%{group} fue borrado por %{user}"
+  activity_message: "%{author} escribió: %{message}"
+  activity_message_received: "Has recibido %{message_tag} de %{other_user}: %{title}"
+  activity_twinkled: "%{user} agregó una estrella a tu post \"%{post}\""
+  activity_unread: "Tienes %{count} [mensajes privados] sin leer"
   activity_unread_singular: "Tienes un [mensaje privado] sin leer"
-  activity_user_destroyed: "{{user}} se ha retirado"
-  activity_user_joined_group: "{{user}} se unió a {{group_type}} {{group}}"
-  activity_user_joined_site: "{{user}} se unió a {{group}}"
-  activity_user_left_group: "{{user}} ha dejado {{group_type}} {{group}}"
-  activity_user_left_site: "{{user}} ha dejado {{group}}"
-  activity_user_status: "{{user}} está ahora {{status}}"
-  activity_wall_message: "{{author}} escribió a {{user}}: {{message}}"
+  activity_user_destroyed: "%{user} se ha retirado"
+  activity_user_joined_group: "%{user} se unió a %{group_type} %{group}"
+  activity_user_joined_site: "%{user} se unió a %{group}"
+  activity_user_left_group: "%{user} ha dejado %{group_type} %{group}"
+  activity_user_left_site: "%{user} ha dejado %{group}"
+  activity_user_status: "%{user} está ahora %{status}"
+  activity_wall_message: "%{author} escribió a %{user}: %{message}"
   add_another_file: "Agregar otro archivo"
   add_button: Agregar
   add_comment: "Añadir comentario"
@@ -47,7 +47,7 @@ es:
   add_select_many_question_link: "Elige respuestas múltiples"
   add_select_one_question_link: "Elige sólo una respuesta"
   add_short_text_question_link: "Respuesta Breve"
-  add_star_link: "Añadir Estrella ({{star_count}})"
+  add_star_link: "Añadir Estrella (%{star_count})"
   add_tags: "Añadir Etiquetas"
   add_websites: "Agregar Sitios Web"
   additional_page_access: "Acceso Adicional"
@@ -108,7 +108,7 @@ es:
   back: Volver
   back_button: Regresar
   back_to_gallery_link: "Volver a la Galería"
-  back_to_group: "volver a {{group_name}}"
+  back_to_group: "volver a %{group_name}"
   back_to_the_page: "Volver a la página"
   basic_info: "Información Básica"
   basic_settings: "Configuración básica"
@@ -116,14 +116,14 @@ es:
   break_lock: "Romper bloqueo"
   break_lock_button: "Romper el bloqueo"
   browse: Examinar
-  browse_groups: "Examinar {{groups_type}}"
-  browse_groups_desc: "Esta es una lista por orden alfabético del conjunto de {{groups_type}}. Puedes filtrar ésta lista por localidad, para encontrar {{groups_type}} cerca de ti."
+  browse_groups: "Examinar %{groups_type}"
+  browse_groups_desc: "Esta es una lista por orden alfabético del conjunto de %{groups_type}. Puedes filtrar ésta lista por localidad, para encontrar %{groups_type} cerca de ti."
   buttons_list_label: Acción
   cancel: Cancelar
   cancel_button: Cancelar
   cancel_link: cancelar
   cant_detect_image_height_error: "No se puede detectar la altura de la imagen. O la imagen está dañada o el servidor tuvo un error"
-  cant_find_wiki_section: "No se puede encontrar la sección {{section}} del wiki"
+  cant_find_wiki_section: "No se puede encontrar la sección %{section} del wiki"
   cant_lock_another_section: "Ya tienes una sección bloqueada. No puedes bloquear otra."
   cant_lock_nonexistant_section: "no se puede bloquear una sección inexistente"
   cant_unlock_nonexistant_section: "no puedes desbloquear una sección inexistente"
@@ -142,27 +142,27 @@ es:
   comments: Comentarios
   committee: Comité
   committee_publicly_visible: "Hacer comités públicos"
-  committee_publicly_visible_description: "Los comités son visibles a personas no afiliadas a {{domain}}/nombredelgrupo"
+  committee_publicly_visible_description: "Los comités son visibles a personas no afiliadas a %{domain}/nombredelgrupo"
   committees: Comités
-  comparing_changes_header: "Comparando cambios hechos por {{user}} en fecha {{when}} de {{old_version}} a {{new_version}}"
+  comparing_changes_header: "Comparando cambios hechos por %{user} en fecha %{when} de %{old_version} a %{new_version}"
   completed_tasks: "tareas terminadas"
   confirm: Confirmar
   confirm_delete_avatar: "¿Quieres eliminar tu avatar?"
   confirm_destroy_page: "¿Quieres destruir esta página? No podrá ser recuperada."
-  confirm_discarding_text_area: "Todo el trabajo que no has guardado se perderá. Presiona {{cancel}} para continuar editando."
+  confirm_discarding_text_area: "Todo el trabajo que no has guardado se perderá. Presiona %{cancel} para continuar editando."
   confirm_inappropriate_chat: "¿Quieres marcar ésta conversación como inapropiada? Presiona 'OK' sólo si crees que es ofensiva, ruda o grosera. Un(a) moderador(a) lo atenderá pronto."
   confirm_inappropriate_page: "¿Quieres marcar esta página como inapropiada? Has clic en 'OK' sólo  si crees que es ofensiva, grosera o descortés. Un(a) moderador(a) lo atenderá pronto."
   confirm_new_password: "Confirmar nueva contraseña"
   confirm_vote_button: "Confirma tu voto"
   confirmation: "¿Tienes la certeza?"
-  congratulations_you_have_signed_up: "¡Felicidades! Te has registrado en {{site_title}}."
+  congratulations_you_have_signed_up: "¡Felicidades! Te has registrado en %{site_title}."
   contact: Contacto
-  contact_removed: "{{user}} se borró de tu lista de contactos."
-  contact_request_message_label: "Cuéntale a {{user}} por qué quieres ser su contacto."
+  contact_removed: "%{user} se borró de tu lista de contactos."
+  contact_request_message_label: "Cuéntale a %{user} por qué quieres ser su contacto."
   contact_request_sent: "Se envió solicitud de contacto."
   contacts: Contactos
   contribute_content_link: Contribuir
-  contribute_group_content_link: "Añadir página a {{group}}"
+  contribute_group_content_link: "Añadir página a %{group}"
   contribute_to_site: "Contribuir al Sitio"
   contributed: Aportado
   contributions: Contribuciones
@@ -176,20 +176,20 @@ es:
   councils: Consejos
   create_a_group: "Crear un Grupo"
   create_a_network: "Crear una Red"
-  create_a_new_thing: "Crear nuevo {{thing}}"
+  create_a_new_thing: "Crear nuevo %{thing}"
   create_button: Crear
   create_committee: "Crear Comité"
   create_group_link: "crear grupo"
   create_link_button: "Crear Enlace"
   create_page: "Crear Página"
-  create_page_button: "Crear {{page_class}}"
-  create_page_data: "Datos de {{page_class}}"
-  create_page_information: "Información de {{page_class}}"
+  create_page_button: "Crear %{page_class}"
+  create_page_data: "Datos de %{page_class}"
+  create_page_information: "Información de %{page_class}"
   create_task_list: "crear nueva lista de tareas"
   created: creado
   created_by: "Creado por"
   created_on: "Creado en"
-  created_when_by: "creado {{when}} por {{user}}"
+  created_when_by: "creado %{when} por %{user}"
   csrf_error_message: "Tu intento de acceso tiene la apariencia de un intento de hackeo de este sitio web. No te preocupes: este error ocurre con frecuencia incluso en casos de solicitudes innocuas. Somos sólo extra precavidos. Todo lo que tienes que hacer es recargar la página antes de intentar ingresar. Puedes seguir este enlace para intentarlo de nuevo."
   current_attachments: "Archivos adjuntos actuales"
   current_featured_content: "Contenido destacado actualmente"
@@ -213,7 +213,7 @@ es:
   date_yesterday: Ayer
   delete: Borrar
   delete_button: Eliminar
-  delete_page_link: "Borrar {{page_class}}"
+  delete_page_link: "Borrar %{page_class}"
   delete_post: "Borrar Publicación"
   delete_this_version: "borrar esta versión"
   delete_version_confirm: "¿Quieres eliminar esta versión?"
@@ -222,9 +222,9 @@ es:
   descriptions: Descripciones
   descriptive_name_for_display: "Un nombre descriptivo para mostrar"
   destroy: destruir
-  destroy_confirmation: "¿Quieres eliminar este(a) {{thing}}? Esta acción no se puede deshacer."
-  destroy_group_link: "Destruir {{group_type}}"
-  destroy_page_link: "Destruir {{page_class}}"
+  destroy_confirmation: "¿Quieres eliminar este(a) %{thing}? Esta acción no se puede deshacer."
+  destroy_group_link: "Destruir %{group_type}"
+  destroy_page_link: "Destruir %{page_class}"
   destroy_page_via_shred: "Destruir inmediatamente"
   destroy_page_via_shred_info: "Esto destruirá permanentemente la página. Esta acción no se puede deshacer."
   destroy_page_via_trash: "Mover a la Papelera"
@@ -236,22 +236,22 @@ es:
   directory_of_people: "Directorio de Gente"
   directory_peers_description: "Una lista de tus contactos y toda la gente en tus grupos y redes."
   discover: Encontrar
-  discover_groups: "Encontrar {{groups_type}}"
-  discover_groups_desc: "Debajo está una lista de {{groups_type}} de reciente creación. Puedes filtrar esta lista por localidad para encontrar {{groups_type}} cerca de ti."
-  discuss_request_link: "discutir esta solicitud con {{person_or_group}}"
+  discover_groups: "Encontrar %{groups_type}"
+  discover_groups_desc: "Debajo está una lista de %{groups_type} de reciente creación. Puedes filtrar esta lista por localidad para encontrar %{groups_type} cerca de ti."
+  discuss_request_link: "discutir esta solicitud con %{person_or_group}"
   discussion_page_description: "Debate sobre un tema en particular."
   discussion_page_display: "Debate de Grupo"
   discussions: Debates
   display_name: "Nombre mostrado"
   do_you_want_to_receive_email_notifications: "¿Deseas recibir notificaciones por correo electrónico de cambios a las páginas que estás observando?"
   done_button: Hecho
-  dont_have_permission_to_create_committees: "No tienes permisos para crear comités bajo {{group}}"
-  dont_understand_group_type: "No se puede entender la clase de grupo {{type}}"
+  dont_have_permission_to_create_committees: "No tienes permisos para crear comités bajo %{group}"
+  dont_understand_group_type: "No se puede entender la clase de grupo %{type}"
   download: Descargar
   download_gallery: "Descargar Galería"
   drag_and_drop_to_rearrange_photos: "Puedes arrastrar y soltar las imágenes para reordenarlas"
   drag_to_move_tip: "arrastre para mover"
-  dual_membership_info: "Personas de {{group_type}} {{group_name}} que deberían estar también en comité {{committee_name}}"
+  dual_membership_info: "Personas de %{group_type} %{group_name} que deberían estar también en comité %{committee_name}"
   dual_memberships: "Membresías dobles"
   each_line_is_a_choice_caption: "(cada línea es una opción posible)"
   edit: Editar
@@ -259,7 +259,7 @@ es:
   edit_attachments: "Editar archivos adjuntos"
   edit_attachments_link: Editar
   edit_committe: "Editar Comité"
-  edit_featured_content_for_group: "Cambiar contenidos destacados en {{group_name}}"
+  edit_featured_content_for_group: "Cambiar contenidos destacados en %{group_name}"
   edit_featured_content_link: "cambiar contenido destacado"
   edit_gallery: "Editar Galería"
   edit_layout_heading: "Editar Diseño"
@@ -274,19 +274,19 @@ es:
   email: "Correo electrónico "
   email_addresses: "Direcciones de Correo Electrónico"
   email_blasts: "Múltiples correos electrónicos"
-  email_link_expires: "Este enlace expirará en {{days}} días."
+  email_link_expires: "Este enlace expirará en %{days} días."
   email_notice_access: "Puedes acceder a esta página en:"
-  email_notice_hello: "Hola, {{from}} te ha enviado una página web."
-  email_notice_hello_with_message: "Hola, {{from}} te enviado una página web con el siguiente mensaje: {{mensaje}}"
-  email_notice_subject: "Examinar la página \"{{title}}\""
+  email_notice_hello: "Hola, %{from} te ha enviado una página web."
+  email_notice_hello_with_message: "Hola, %{from} te enviado una página web con el siguiente mensaje: %{mensaje}"
+  email_notice_subject: "Examinar la página \"%{title}\""
   email_verification_body: |
-      ¡Te has registrado en {{site_title}} ({{host}})!
+      ¡Te has registrado en %{site_title} (%{host})!
 
       Antes de que puedas ingresar debes verificar que este es tu correo.
 
       Usa el enlace siguiente directamente o cópialo y pégalo en tu navegador:
 
-      {{verify_email_link}}
+      %{verify_email_link}
 
       Si no deseas unirte, simplemente ignora este correo.
   empty_results: Nada
@@ -296,7 +296,7 @@ es:
   entity_autocomplete_tip: "Ingresa el nombre de un grupo o persona."
   error: Error
   error_saving_new_order: "¡Hubo un error al intentar guardar la nueva orden!"
-  error_saving_new_order_message: "Error guardando nueva orden: {{error_message}}"
+  error_saving_new_order_message: "Error guardando nueva orden: %{error_message}"
   exception_back_link: "Ir Atrás"
   exception_bug_report_description: "Por favor, describe cómo has llegado a esta página, y cualquier comentario que desees agregar"
   exception_bug_report_link: "Envía un reporte de error"
@@ -329,7 +329,7 @@ es:
   folder_display: Carpeta
   forgot_password_link: "Olvidé mi contraseña"
   forgot_password_mail_expiry: "Este enlace es válido por 24 horas. Si necesitas restablecer la contraseña después de la expiración, visita por favor la página de contraseña olvidada y solicita un nuevo enlace."
-  forgot_password_mail_greeting: "{{user}}, para restablecer tu contraseña, por favor visita"
+  forgot_password_mail_greeting: "%{user}, para restablecer tu contraseña, por favor visita"
   forgot_password_text: "Si has olvidado la contraseña que utilizas para iniciar sesión, podemos enviarte por correo electrónico un enlace que te permitirá generar una nueva contraseña."
   forgotten_email_address: "¿Qué correo electrónico usaste al crear tu cuenta?"
   format: Formato
@@ -350,49 +350,49 @@ es:
   grant_access: "Brindar acceso"
   group: Grupo
   group_administration_not_allowed: "No puedes administrar este grupo."
-  group_destroyed_email: "¡{{group_type}} {{group}} se ha destruido!"
-  group_destroyed_message: "{{group_type}} Destruido"
-  group_destroyed_subject: "¡{{group_type}} {{group}} ha sido eliminado por {{user}}!"
+  group_destroyed_email: "¡%{group_type} %{group} se ha destruido!"
+  group_destroyed_message: "%{group_type} Destruido"
+  group_destroyed_subject: "¡%{group_type} %{group} ha sido eliminado por %{user}!"
   group_directory: "Directorio del grupo"
   group_directory_link: "Directorio de Grupo"
   group_has_no_public_profile: "Este grupo no tiene un perfil público."
-  group_home_headline: "{{group_type}} Inicio"
+  group_home_headline: "%{group_type} Inicio"
   group_home_welcome: "Que bien que estés aquí"
   group_icon: "Icono del Grupo"
-  group_information: "Información de {{group_type}}"
+  group_information: "Información de %{group_type}"
   group_invite_email: |
-      {{from_user}} te ha invitado a participar en el grupo "{{group}}".
+      %{from_user} te ha invitado a participar en el grupo "%{group}".
 
       Si deseas unirte a este grupo, usa este enlace:
 
-         {{accept_invite_link}}
+         %{accept_invite_link}
 
       La página principal de este grupo se puede encontrar aquí:
 
-         {{group_home_link}}
+         %{group_home_link}
 
       Si no deseas participar, simplemente ignora este mensaje de correo electrónico.
-  group_invite_subject: "Invitación a unirse a grupo \"{{group}}\""
+  group_invite_subject: "Invitación a unirse a grupo \"%{group}\""
   group_join_chat: "Únete al Chat"
-  group_language: "El idioma principal de este {{group}}."
-  group_location: "La principal localidad de este {{group}}."
+  group_language: "El idioma principal de este %{group}."
+  group_location: "La principal localidad de este %{group}."
   group_members_publicly_visible: "Hacer pública la lista de integrantes del grupo"
-  group_members_publicly_visible_description: "Quienes no son parte del grupo {{domain}}/yourgroupname pueden ver la lista de integrantes. Y, el nombre del grupo será mostrado en el perfil de todas las personas inscritas ({{domain}} / nombre de usuario)"
-  group_membership_count: "{{count}} personas"
+  group_members_publicly_visible_description: "Quienes no son parte del grupo %{domain}/yourgroupname pueden ver la lista de integrantes. Y, el nombre del grupo será mostrado en el perfil de todas las personas inscritas (%{domain} / nombre de usuario)"
+  group_membership_count: "%{count} personas"
   group_not_allowed_to_view_image_error: "El grupo propietario de esta página no tiene permisos para ver esta imagen."
   group_pages: "Páginas del Grupo"
-  group_privacy_settings: "{{group}} Configuración de privacidad "
-  group_profile_description_may_request_membership: "Permite a visitantes solicitar ingresar a este {{group_type}}."
-  group_profile_description_may_see: "Si se elige, el perfil informativo será visible. En caso contrario, el perfil de este {{group_type}} estará oculto completamente."
-  group_profile_description_may_see_committees: "Permite a las visitas ver los comités en {{group_type}}."
-  group_profile_description_may_see_groups: "Permite a visitantes ver los grupos integrantes de este {{group_type}}."
-  group_profile_description_may_see_members: "Permite ver la lista de personas en este {{group_type}} a visitantes."
-  group_profile_description_may_see_networks: "Permite a visitantes ver en que redes este {{group_type}} está."
-  group_publicly_visible: "Hacer {{group}} visible publicamente"
+  group_privacy_settings: "%{group} Configuración de privacidad "
+  group_profile_description_may_request_membership: "Permite a visitantes solicitar ingresar a este %{group_type}."
+  group_profile_description_may_see: "Si se elige, el perfil informativo será visible. En caso contrario, el perfil de este %{group_type} estará oculto completamente."
+  group_profile_description_may_see_committees: "Permite a las visitas ver los comités en %{group_type}."
+  group_profile_description_may_see_groups: "Permite a visitantes ver los grupos integrantes de este %{group_type}."
+  group_profile_description_may_see_members: "Permite ver la lista de personas en este %{group_type} a visitantes."
+  group_profile_description_may_see_networks: "Permite a visitantes ver en que redes este %{group_type} está."
+  group_publicly_visible: "Hacer %{group} visible publicamente"
   group_publicly_visible_description: "El grupo aparece en el directorio público y su <i>perfil</i> puede ser visto por personas no inscritas en el mismo."
   group_successfully_created: "El grupo ha sido creado con éxito. "
   group_successfully_updated: "El grupo ha sido actualizado."
-  group_summary: "Breve información sobre este {{group}}. "
+  group_summary: "Breve información sobre este %{group}. "
   group_wiki: "Wiki del grupo"
   groups: Grupos
   have_your_say: "¡Tú lo has dicho!"
@@ -405,9 +405,9 @@ es:
   ignore: ignorar
   illegal_redirect: "Redirección no autorizada"
   im_addresses: "Direcciones de mensajería instantánea"
-  image_count: "Imagen {{number}} de {{count}}"
-  image_count_total: "{{count}} imágenes"
-  image_title: "Título de la imagen: {{title}}"
+  image_count: "Imagen %{number} de %{count}"
+  image_count_total: "%{count} imágenes"
+  image_title: "Título de la imagen: %{title}"
   inappropriate_content: "Contenido inapropiado"
   inbox_description: "Buzón de páginas en las que participo activamente u observo cambios"
   include_full_checkbox: "incluir enlace a la imagen completa"
@@ -421,20 +421,20 @@ es:
   invalid_token: "Token sin validez"
   invalid_token_text: "El enlace para restablecer la contraseña que intentas usar ya no es válido. O ya fue utilizado, o expiró."
   invite: Invitar
-  invite_accept_headline: "Aceptar invitación para unirte al grupo \"{{group_name}}\""
+  invite_accept_headline: "Aceptar invitación para unirte al grupo \"%{group_name}\""
   invite_accept_info: "¿Ya tienes una cuenta en este sitio? Usa uno de los siguientes enlaces para aceptar la invitación."
   invite_accept_via_existing_account: "Ya tengo una cuenta"
   invite_accept_via_register: "Necesito una nueva cuenta"
   invite_error_already_member: "Ya eres parte de ese grupo."
   invite_error_redeemed: "La invitación ya fue retirada."
-  invite_info: "Proporciona una lista de cuentas de este sitio (o direcciones de correo) de personas que quieres que participen en este(a) {{group_type}}"
+  invite_info: "Proporciona una lista de cuentas de este sitio (o direcciones de correo) de personas que quieres que participen en este(a) %{group_type}"
   invite_not_found: "No se encontró la invitación"
-  invite_sent: "Invitación enviada a {{recipient}}"
-  invites_sent: "{{count}} invitaciones enviadas"
+  invite_sent: "Invitación enviada a %{recipient}"
+  invites_sent: "%{count} invitaciones enviadas"
   is_required: "es necesario"
-  join_group_link: "Unirse a {{group_type}}"
-  join_group_success: "Te has unido al grupo {{group_name}}"
-  join_request_info: "No serás parte de este grupo hasta que tu solicitud sea aprobada. Puedes revisar el estado de tus solicitudes visitando {{my_requests_url}}."
+  join_group_link: "Unirse a %{group_type}"
+  join_group_success: "Te has unido al grupo %{group_name}"
+  join_request_info: "No serás parte de este grupo hasta que tu solicitud sea aprobada. Puedes revisar el estado de tus solicitudes visitando %{my_requests_url}."
   joins_the_chatroom: "se une a la sala de chat"
   language: Idioma
   large: grande
@@ -443,7 +443,7 @@ es:
   last_seen: "últimas vez visto"
   leave_channel: "Salir del Canal"
   leave_editing_wiki_page_warning: "Si abandonas esta página sin guardar el wiki o cancelar la edición, entonces otras personas verán que este wiki está bloqueado por ti y no podrán editarlo. También, si no deseas guardar el wiki, perderás tus cambios."
-  leave_group_link: "Dejar {{group_type}}"
+  leave_group_link: "Dejar %{group_type}"
   left_the_chatroom: "salido de la sala de chat "
   link: Enlace
   link_name: "Nombre del enlace"
@@ -458,7 +458,7 @@ es:
   location_postal_code: código_postal
   location_state: estado/provincia
   locations: Lugares
-  locked_by_user: "Bloqueado por {{user}}"
+  locked_by_user: "Bloqueado por %{user}"
   locked_wiki_because_locked_section: "Wiki bloqueado - una sección está siendo editada. Puedes, sin embargo, editar otras secciones."
   locking_error: "Hubo un error. No puede guardar los datos, alguien ha guardado nuevos cambios primero."
   log_in: Entrar
@@ -489,19 +489,19 @@ es:
   media_audios: "Grabación de sonidos"
   media_document: Documento
   media_documents: Documentos
-  media_for_group: "{{media_type}} en {{group}}"
+  media_for_group: "%{media_type} en %{group}"
   media_image: Foto
   media_images: Fotos
   media_video: Video
   media_videos: Videos
-  media_without_group: "Todos {{media_type}}"
+  media_without_group: "Todos %{media_type}"
   medium: medio
   member_groups_of_network: "Grupos Miembros"
   members: Personas
   membership: Afiliaciones
-  membership_destroy_confirm_message: "¿Tienes la certeza de que quieres retirar a '{{user}}' de {{group_type}}?"
-  membership_exists_error: "Ya {{member}} tiene una afiliación"
-  membership_leave_message: "Te han retirado de {{group}}"
+  membership_destroy_confirm_message: "¿Tienes la certeza de que quieres retirar a '%{user}' de %{group_type}?"
+  membership_exists_error: "Ya %{member} tiene una afiliación"
+  membership_leave_message: "Te han retirado de %{group}"
   menu_admin: Admin
   menu_chat: Charla
   menu_groups: Grupos
@@ -514,14 +514,14 @@ es:
   menu_networks: Redes
   menu_people: Gente
   message: mensaje
-  message_cant_perster_error: "Sólo amigas(os) pueden enviar mensajes a {{user}}"
+  message_cant_perster_error: "Sólo amigas(os) pueden enviar mensajes a %{user}"
   message_must_not_be_empty: "el mensaje no debe estar vacío"
   message_page_description: "Enviar un mensaje personal a los distintos destinatarios."
   message_page_display: Mensaje
-  message_recipient_name_caption: "Para: {{user}}"
+  message_recipient_name_caption: "Para: %{user}"
   message_recipient_name_input_caption: "Para: Amigos y Pares"
   message_to_self_error: "No puedes hablar contigo misma"
-  message_user_wrote_caption: "{{user}} escribió:"
+  message_user_wrote_caption: "%{user} escribió:"
   message_you_wrote_caption: "Tu escribiste:"
   messages: Mensajes
   messages_back_to_all: "Volver a los Mensajes"
@@ -560,7 +560,7 @@ es:
   move_button: Mueve
   move_image_left: "Mover la foto hacia la izquierda"
   move_image_right: "Mover la foto hacia la derecha"
-  move_page_link: "Mover {{page_class}}"
+  move_page_link: "Mover %{page_class}"
   move_page_to_different_group: "Mover esta página a un grupo diferente"
   move_this_page: "Mueve esta página"
   my_completed_tasks_link: Completo
@@ -581,7 +581,7 @@ es:
   my_pending_tasks_link: Pendiente
   my_requests_headline: "Mis peticiones"
   my_requests_link: "mis solicitudes"
-  my_settings: "Configuración de {{user}}"
+  my_settings: "Configuración de %{user}"
   my_social_activity_friends_tab: "Actividad de Amigos(as)"
   my_social_activity_peers_tab: "Actividad de Pares"
   my_status_heading: "My situación actual"
@@ -592,15 +592,15 @@ es:
   my_work_tab: "My Trabajo"
   my_world_heading: "Mi Mundo"
   name: Nombre
-  name_or_email_not_found: "\"{{name}}\" no coincide con el nombre de ninguna persona o grupo y no es una dirección válida de email."
+  name_or_email_not_found: "\"%{name}\" no coincide con el nombre de ninguna persona o grupo y no es una dirección válida de email."
   network: Red
   network_directory_link: "directorio de redes"
   network_initial_member: "Escoge un grupo como miembro inicial de esta red."
   network_invite_info: "Ingresa el nombre de los grupos que te gustaría invitar a esta red."
   network_settings: "Configuración de Red"
   networks: Redes
-  new_committee: "Nuevo comité para grupo {{group_name}}"
-  new_council: "Nuevo consejo de coordinación para el grupo {{group_name}}"
+  new_committee: "Nuevo comité para grupo %{group_name}"
+  new_council: "Nuevo consejo de coordinación para el grupo %{group_name}"
   new_group: "Nuevo Grupo"
   new_members: "Nuevas Integrantes"
   new_network: "Nueva red"
@@ -616,7 +616,7 @@ es:
   no_contacts_msg: "No tienes contactos."
   no_data_uploaded: "No has subido nada"
   no_data_uploaded_label: "No has subido nada"
-  no_group_named: "No existe un grupo con el nombre de <b>{{name}}</b>."
+  no_group_named: "No existe un grupo con el nombre de <b>%{name}</b>."
   no_images_in_gallery: "No hay fotos en el álbum"
   no_members: "(sin gente)"
   no_peers_msg: "No tienes compañeros."
@@ -626,20 +626,20 @@ es:
   no_title_given: "(no tiene titulo)"
   none: ninguno/a
   not_a_favicon_image_error: "Los datos subidos no están en formato de favicon. Intenta con archivos PNG o GIF."
-  not_allowed_to_respond_to_request: "{{user}} no tiene autorizado {{command}} la solicitud"
+  not_allowed_to_respond_to_request: "%{user} no tiene autorizado %{command} la solicitud"
   not_an_image_error: "Los datos subidos no se reconocen como imagen. Intenta archivos PNG o JPEG."
-  not_contact_of: "No eres contacto de {{user}}"
+  not_contact_of: "No eres contacto de %{user}"
   not_featured_content: "El contenido aun no ha sido destacado"
   not_found: "No Encontrado"
   not_found_description: "Lo siento, no hemos encontrado lo que buscas."
   not_set: "No esta establecido"
-  notice_with_message: "con mensaje {{message}}"
+  notice_with_message: "con mensaje %{message}"
   notification_message: "Mensaje de Notificación"
   notification_tab: Notificaciones
   notify_contribution: "<b>Contribución Anterior:</b> notificar a las personas que han hecho una <b>contribución</b> a esta página."
   notify_current_access: "<b>Current Access:</b> notificar a las personas o grupos que tienen acceso actualmente  a esta página."
   notify_new_access: "<b>Nuevo Acceso:</b> compartir esta página con nuevas personas o grupos, y notificarles."
-  notify_no_access_error: "Perdón, \"{{name}}\" no tiene acceso a esta página"
+  notify_no_access_error: "Perdón, \"%{name}\" no tiene acceso a esta página"
   notify_page_link: "Enviar Notificación"
   notify_success: "Has enviado exitosamente las notificaciones."
   off_topic: "Off Topic"
@@ -666,10 +666,10 @@ es:
   page_access_edit: "Permiso de Escritura"
   page_access_none: "Ningún acceso"
   page_access_view: "Sólo Lectura"
-  page_added_to_group: "Esta página se añadirá a {{group_type}} {{group_name}}."
+  page_added_to_group: "Esta página se añadirá a %{group_type} %{group_name}."
   page_create_owner: "Propietario de página"
   page_details: "Detalles de la página"
-  page_details_link: "{{page_class}} Detalles"
+  page_details_link: "%{page_class} Detalles"
   page_group_collection: Colecciones
   page_group_discussion: Debates
   page_group_event: Eventos
@@ -682,36 +682,36 @@ es:
   page_group_task: Tareas
   page_group_text: Texto
   page_group_vote: Votar
-  page_history_add_star: "{{user_name}} añadió una estrella"
-  page_history_added_comment: "{{user_name}} añadió un comentario"
-  page_history_change_title: "{{user_name}} ha modificado el título de la página"
-  page_history_deleted_page: "{{user_name}} borró la página"
-  page_history_destroyed_comment: "{{user_name}} eliminó un comentario"
-  page_history_details_change_title: "De: \"{{from}}\" Para: \"{{to}}\""
-  page_history_granted_group_full_access: "{{user_name}} concedió acceso pleno al grupo {{object_name}}"
-  page_history_granted_group_read_access: "{{user_name}} concedió permisos de lectura al grupo {{object_name}}"
-  page_history_granted_group_write_access: "{{user_name}} concedió permisos de escritura al grupo {{object_name}}"
-  page_history_granted_user_full_access: "{{user_name}} concedió acceso pleno a {{object_name}}"
-  page_history_granted_user_read_access: "{{user_name}} concedió permisos de lectura a la persona {{object_name}}"
-  page_history_granted_user_write_access: "{{user_name}} concedió acceso pleno a la persona {{object_name}}"
-  page_history_mailer: "Cambia tu correo electrónico de notificación aquí: {{page_link}}"
-  page_history_mailer_a_page_has_been_modified: "{{site_title}} : Una página ha sido modificada"
-  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Una página que estás observando ha sido modificada {{histories_count}} desde la última notificación, puedes acceder a esta página aquí:"
+  page_history_add_star: "%{user_name} añadió una estrella"
+  page_history_added_comment: "%{user_name} añadió un comentario"
+  page_history_change_title: "%{user_name} ha modificado el título de la página"
+  page_history_deleted_page: "%{user_name} borró la página"
+  page_history_destroyed_comment: "%{user_name} eliminó un comentario"
+  page_history_details_change_title: "De: \"%{from}\" Para: \"%{to}\""
+  page_history_granted_group_full_access: "%{user_name} concedió acceso pleno al grupo %{object_name}"
+  page_history_granted_group_read_access: "%{user_name} concedió permisos de lectura al grupo %{object_name}"
+  page_history_granted_group_write_access: "%{user_name} concedió permisos de escritura al grupo %{object_name}"
+  page_history_granted_user_full_access: "%{user_name} concedió acceso pleno a %{object_name}"
+  page_history_granted_user_read_access: "%{user_name} concedió permisos de lectura a la persona %{object_name}"
+  page_history_granted_user_write_access: "%{user_name} concedió acceso pleno a la persona %{object_name}"
+  page_history_mailer: "Cambia tu correo electrónico de notificación aquí: %{page_link}"
+  page_history_mailer_a_page_has_been_modified: "%{site_title} : Una página ha sido modificada"
+  page_history_mailer_a_page_that_you_are_watching_has_been_modified_n_times: "Una página que estás observando ha sido modificada %{histories_count} desde la última notificación, puedes acceder a esta página aquí:"
   page_history_mailer_a_page_you_are_watching: "Una página que estás observando ha sido modificada, puedes acceder a esta aquí"
   page_history_mailer_choose_turn_off_notifications: "Puedes elegir desactivar las notificaciones por correo, recibir un resumen de cambios, o recibir un correo cada vez que la página es cambiada"
-  page_history_mailer_expire_link: "El enlace expirará el {{expire_time}}"
-  page_history_mailer_hello_user_name: "Hola {{user_name}}"
-  page_history_make_private: "{{user_name}} ha desactivado la opción que haría pública la página"
-  page_history_make_public: "{{user_name}} ha hecho pública la página"
-  page_history_remove_star: "{{user_name}} ha retirado una estrella"
-  page_history_revoked_group_access: "{{user_name}} revocó el acceso al grupo {{object_name}}"
-  page_history_revoked_user_access: "{{user_name}} revocó el acceso a {{object_name}}"
-  page_history_start_watching: "{{user_name}} ha comenzado a seguir los cambios en esta página"
-  page_history_stop_watching: "{{user_name}} ha dejado de seguir los cambios en esta página"
-  page_history_the_page_you_are_watching_description: "La página que estás observando \"{{page_title}}\" ha sido modificada"
-  page_history_updated_comment: "{{user_name}} actualizó un comentario"
-  page_history_updated_content: "{{user_name}} ha actualizado el contenido de la página"
-  page_history_user_created_page: "{{user_name}} creó la página"
+  page_history_mailer_expire_link: "El enlace expirará el %{expire_time}"
+  page_history_mailer_hello_user_name: "Hola %{user_name}"
+  page_history_make_private: "%{user_name} ha desactivado la opción que haría pública la página"
+  page_history_make_public: "%{user_name} ha hecho pública la página"
+  page_history_remove_star: "%{user_name} ha retirado una estrella"
+  page_history_revoked_group_access: "%{user_name} revocó el acceso al grupo %{object_name}"
+  page_history_revoked_user_access: "%{user_name} revocó el acceso a %{object_name}"
+  page_history_start_watching: "%{user_name} ha comenzado a seguir los cambios en esta página"
+  page_history_stop_watching: "%{user_name} ha dejado de seguir los cambios en esta página"
+  page_history_the_page_you_are_watching_description: "La página que estás observando \"%{page_title}\" ha sido modificada"
+  page_history_updated_comment: "%{user_name} actualizó un comentario"
+  page_history_updated_content: "%{user_name} ha actualizado el contenido de la página"
+  page_history_user_created_page: "%{user_name} creó la página"
   page_is_not_static: "La pagina no esta estática"
   page_list: "La lista de páginas"
   page_list_heading_contribution: contribución
@@ -736,7 +736,7 @@ es:
   page_menu_item: página
   page_name_description: "Nombre único opcional (usado para crear la URL de esta página)"
   page_not_part_of_group: "Esta página no forma parte de este grupo"
-  page_notice_message: "página enviada {{user}} el {{date}}"
+  page_notice_message: "página enviada %{user} el %{date}"
   page_owner_error: "No puede dejarse sin propietario la página."
   page_owner_help: "Opcional. El propietario de la página es la persona o grupo con la responsabilidad primordial de esta página. Puede elegirse a usted mismo, o cualquiera de los grupos que pertenezca.\n"
   page_with_message: "con mensaje"
@@ -813,8 +813,8 @@ es:
       Ten cuidado con la información personal que revelas y puede ser vista por otros.
   profile_saved: " Su perfil se ha guardado. "
   profile_settings: "Ajustes de Perfil"
-  propose_to_destroy_group_confirmation: "¿Tienes la seguridad de que quieres proponer borrar este {{group_type}}? {{group_type}} será borrado si suficiente personas aprueban la propuesta."
-  propose_to_destroy_group_link: "Propuesta para eliminar {{group_type}}"
+  propose_to_destroy_group_confirmation: "¿Tienes la seguridad de que quieres proponer borrar este %{group_type}? %{group_type} será borrado si suficiente personas aprueban la propuesta."
+  propose_to_destroy_group_link: "Propuesta para eliminar %{group_type}"
   public: Publico
   public_checkbox: Publico
   public_checkbox_help: "Si se selecciona, cualquiera puede ver esta página."
@@ -831,7 +831,7 @@ es:
   read: leer
   recent_activity: "Actividad reciente"
   recent_contributions: "Contribuciones Recientes"
-  recent_member_group_pages: "Páginas más recientes de tus grupos en {{network}}"
+  recent_member_group_pages: "Páginas más recientes de tus grupos en %{network}"
   recent_network_pages: "Paginas más recientes de la red"
   recent_pages: "Paginas Recientes"
   recent_wall_posts: "Las más recientes noticias"
@@ -840,16 +840,16 @@ es:
   recently_created: "Creado recientemente"
   recipient_tip: "Separa a los destinatarios con comas, espacios o escribiendolos en líneas nuevas."
   recipients: destinatarios
-  redirect_to_foreign_domain: "Usted está tratando de redirigir a un sitio extranjero ({{url}}) después de su ingreso. Por razones de seguridad hemos eliminado este parámetro de la URL."
+  redirect_to_foreign_domain: "Usted está tratando de redirigir a un sitio extranjero (%{url}) después de su ingreso. Por razones de seguridad hemos eliminado este parámetro de la URL."
   regenerate: "Regenerar las fotos pequeñas"
   reject: rechazar
   reject_button: eliminar
   rejected: rechazado
   remove: eliminar
   remove_access_error: "El acceso a esta página no puede ser eliminado. No puedes retirar el acceso a quien es propietario(a), o un acceso que necesitas para administrar la página."
-  remove_contact: "Eliminar contacto {{user}}"
+  remove_contact: "Eliminar contacto %{user}"
   remove_contact_button: "Eliminar Contacto"
-  remove_contact_confirmation: "¿Estás seguro que quieres dejar de ser contacto con {{user}}?"
+  remove_contact_confirmation: "¿Estás seguro que quieres dejar de ser contacto con %{user}?"
   remove_contact_info: "Si eliminas a alguien de tu lista de contactos, no serás capaz de ver cuando ellos ingresen o ver su perfil completo. También, al remover un/una contacto significará que tú también serás borrado de su lista de contactos."
   remove_friend_link: "Eliminar de mis contactos"
   remove_from_gallery: "Eliminar el álbum de fotos"
@@ -858,31 +858,31 @@ es:
   remove_image: "Retirar imagen"
   remove_image_link: "retirar imagen"
   remove_last_access_error: "Usted no puede eliminar su último acceso a esta página."
-  remove_star_link: "Eliminar Estrella ({{star_count}})"
+  remove_star_link: "Eliminar Estrella (%{star_count})"
   removing_image: "Eliminar foto...."
-  request_exists_error: "Ya existe una solicitud para {{recipient}}"
+  request_exists_error: "Ya existe una solicitud para %{recipient}"
   request_friend_link: "Añadir a mis contactos"
-  request_join_group_link: "Solicitud para unirse {{group_type}}"
-  request_status: "Esta solicitud fue {{status}} by {{user}} on {{time}}"
-  request_to_destroy_our_group_description: "{{user}} ha propuesto borrar {{group_type}} {{group}}"
+  request_join_group_link: "Solicitud para unirse %{group_type}"
+  request_status: "Esta solicitud fue %{status} by %{user} on %{time}"
+  request_to_destroy_our_group_description: "%{user} ha propuesto borrar %{group_type} %{group}"
   request_to_destroy_our_group_email: |+
-      Este {{group_type}} '{{group}}' desaparecerá si suficientes personas apruebas esta propuesta.
+      Este %{group_type} '%{group}' desaparecerá si suficientes personas apruebas esta propuesta.
 
-      Si nadie o una persona rechaza esta propuesta pero el resto de {{group}} la asumen, entonces {{group}} desaparecerá inmediatamente,
+      Si nadie o una persona rechaza esta propuesta pero el resto de %{group} la asumen, entonces %{group} desaparecerá inmediatamente,
 
       Si hay algunas aprobaciones, entonces después de un mes de votación serán contados y el grupo desaparecerá si 2/3 partes o más de los votos aprueban esto.
 
       Finalmente, en un grupo con un consejo coordinador, sólo quienes están en el consejo pueden votar para destruir el grupo.
 
   request_to_destroy_sent: "Tu propuesta para eliminar este grupo ha sido enviada a sus integrantes. Si esta propuesta no es vetada en un mes, este grupo será borrado."
-  request_to_friend_description: "{{user}} quiere ser el contacto de {{other_user}}"
-  request_to_join_our_network_description: "grupo {{group}} fue invitado a unirse a la red {{network}}"
+  request_to_friend_description: "%{user} quiere ser el contacto de %{other_user}"
+  request_to_join_our_network_description: "grupo %{group} fue invitado a unirse a la red %{network}"
   request_to_join_sent: "La solicitud para unirse se ha enviado"
-  request_to_join_us_description: "{{user}} fue invitado a unirse {{group}}"
-  request_to_join_us_via_email_description: "{{email}} fue invitado a unirse a {{group}}"
-  request_to_join_you_description: "{{user}} solicito unirse a {{group}}"
-  request_to_join_your_network_description: "{{group}} solicito unirse a la red {{network}}"
-  request_votes_tally_info: "{{approved_count}} votaron a favor / {{rejected_count}} votaron en contra"
+  request_to_join_us_description: "%{user} fue invitado a unirse %{group}"
+  request_to_join_us_via_email_description: "%{email} fue invitado a unirse a %{group}"
+  request_to_join_you_description: "%{user} solicito unirse a %{group}"
+  request_to_join_your_network_description: "%{group} solicito unirse a la red %{network}"
+  request_votes_tally_info: "%{approved_count} votaron a favor / %{rejected_count} votaron en contra"
   requested_forgot_password: "Usted ha solicitado un cambio de contraseña"
   requests: Solicitudes
   requests_from_me: "Solicitudes mías"
@@ -891,16 +891,16 @@ es:
   required: (requerido)
   reset_password: "Restablecer la contraseña"
   reset_password_email_sent: "Un mensaje de correo electrónico ha sido enviado con instrucciones para restablecer su contraseña."
-  reset_password_mail_greeting: "{{user}}, su contraseña fue restablecida como lo solicito."
+  reset_password_mail_greeting: "%{user}, su contraseña fue restablecida como lo solicito."
   reset_password_mail_warning: "Si no ha solicitado que su contraseña sea cambiada, póngase en contacto con nosotros."
-  reset_password_text: "Hola, {{user}}. Si ha olvidado la contraseña que utiliza para acceder, puede establecer una nueva aquí. "
+  reset_password_text: "Hola, %{user}. Si ha olvidado la contraseña que utiliza para acceder, puede establecer una nueva aquí. "
   return_link: Regresar
   revert_to_previous_version: "Volver a la versión anterior:"
   rss_feed: "RSS Feed "
   saturday: sabado
   save_button: Guardar
   save_changes: "Guardar Cambios"
-  save_or_cancel_edit_lock_wiki_error: "Has bloqueado este wiki. Nadie más podrá editarlo hasta que presiones {{save_button}} o {{cancel_button}} para dejar de editar."
+  save_or_cancel_edit_lock_wiki_error: "Has bloqueado este wiki. Nadie más podrá editarlo hasta que presiones %{save_button} o %{cancel_button} para dejar de editar."
   save_survey_button: "Guardar Encuesta"
   saved_new_order: "Nueva orden guardada!"
   saving_your_changes: "Guardar tus cambios..."
@@ -930,12 +930,12 @@ es:
   select_visible_group_widgets: "Escoge los widgets visibles en la página de entrada de tu grupo"
   send_button: Enviar
   send_contact_button: "Enviar invitación de contacto"
-  send_contacts_title: "Enviar invitación de contacto a {{user}}"
+  send_contacts_title: "Enviar invitación de contacto a %{user}"
   send_email: "Enviar Correo"
   send_invites: "enviar invitaciones"
   send_invites_button: "Enviar invitaciones"
   send_invites_headline: "Enviar invitaciones para unirse a (group)"
-  send_join_request: "Enviar solicitud para unirse a {{group_name}}"
+  send_join_request: "Enviar solicitud para unirse a %{group_name}"
   send_message_link: "Enviar Mensaje"
   send_only_with_encryption: "Enviar sólo si es posible encriptar la distribución"
   send_request_button: "Enviar Solicitud"
@@ -947,20 +947,20 @@ es:
   share_additional_notification: "Notificar adicionalmente vía:"
   share_all_checkbox: "Compartir con todos(as) los(as) usuarios(as)"
   share_all_checkbox_help: "Si está marcado, cualquier persona registrada puede acceder a esta página"
-  share_already_exists_error: "\"{{name}}\" ya tiene acceso a esta página"
+  share_already_exists_error: "\"%{name}\" ya tiene acceso a esta página"
   share_button: Compartir
-  share_grant_required_error: "{{name}} no tiene permitido ver esta página. Se les debe autorizar mayores permisos primero."
+  share_grant_required_error: "%{name} no tiene permitido ver esta página. Se les debe autorizar mayores permisos primero."
   share_include_message: "Incluir un mensaje personalizado"
   share_page_email: "Enviar notificación por correo electrónico"
-  share_page_link: "Compartir {{page_class}}"
+  share_page_link: "Compartir %{page_class}"
   share_page_message: "Enviar un mensaje (opcional)"
   share_page_options: "Elegir opciones"
-  share_page_recipients: "Compartir esta {{page_class}} con"
-  share_page_recipients_results: "Esta {{page_class}} será compartida/o con"
+  share_page_recipients: "Compartir esta %{page_class} con"
+  share_page_recipients_results: "Esta %{page_class} será compartida/o con"
   share_page_recipients_sections: "Elige entre tus grupos o amigos"
   share_page_recipients_selection: "Haz tu selección"
   share_permission_denied_error: "No tienes autorización para cambiar los permisos de acceso de esta página"
-  share_pester_error: "Disculpa, pero no se te permite compartir esto con \"{{name}}\""
+  share_pester_error: "Disculpa, pero no se te permite compartir esto con \"%{name}\""
   share_send_notification: "Enviar notificación"
   shared_page_success: "Has compartido esta página con éxito"
   sharing_help: "Opcional. Puede compartir esta página con varios destinatarios (los usuarios o grupos)."
@@ -973,7 +973,7 @@ es:
   signup_confirm_password: "Confirma la Contraseña"
   signup_email: "Tu correo electrónico"
   signup_email_info: "Opcional: usa si olvidas tu contraseña"
-  signup_info: "Elige tu nombre de usuario y contraseña, luego haz click en \"{{sign_up}}\""
+  signup_info: "Elige tu nombre de usuario y contraseña, luego haz click en \"%{sign_up}\""
   signup_link: "¿Necesitas una nueva cuenta?"
   signup_login_name: "Tu nombre de usuario"
   signup_mode_closed_description: "El registro está cerrado."
@@ -983,10 +983,10 @@ es:
   signup_password: "Tu Contraseña"
   signup_success: "Registro completo"
   signup_success_message: "¡Gracias por registrarte!"
-  signup_time_to_crack_password: "(toma {{time}} romperla)"
+  signup_time_to_crack_password: "(toma %{time} romperla)"
   signup_title: "Crea Tu Cuenta"
   site_name: "nombre del sitio"
-  slideshow_delay_input: "Actualizar cada {{input_field}} seconds"
+  slideshow_delay_input: "Actualizar cada %{input_field} seconds"
   small: pequeño
   social_activities_tab: "Actividad social"
   social_change_interests: "Intereses de cambio social"
@@ -1000,10 +1000,10 @@ es:
   status_resolved: resuelto
   subject: tema
   subject_must_not_be_empty: "el tema no debe estar vacío"
-  succesfully_updated_custom_appearance: "Se actualizó un ajuste personal #{{appearance_id}} options!"
+  succesfully_updated_custom_appearance: "Se actualizó un ajuste personal #%{appearance_id} options!"
   success: Éxito
   successful_undelete_image: "La foto ha sido recuperada exitosamente"
-  successfully_removed_image: "Foto ha sido exitosamente eliminada! ({{undo_link}})"
+  successfully_removed_image: "Foto ha sido exitosamente eliminada! (%{undo_link})"
   successfully_verified_email_message: "Correo electrónico verificado!"
   summary: Resumen
   summary_help: "Opcional. El resumen es una frase o párrafo en el que se describe brevemente el contenido de esta página."
@@ -1031,17 +1031,17 @@ es:
   survey_rate_responses_tab: "Calificar respuestas"
   survey_rate_this_response_heading: "Calificar esta respuesta"
   survey_rated_by_1_person_caption: "Votado por una persona."
-  survey_rated_by_x_people_caption: "Votado por {{count}} personas."
+  survey_rated_by_x_people_caption: "Votado por %{count} personas."
   survey_rating_enabled: "Permitir la calificación de las respuestas?"
   survey_respond_button: Responder
-  survey_response_by: "Respuesta de {{login}}"
+  survey_response_by: "Respuesta de %{login}"
   survey_responses_enabled: "¿Permite nuevas respuestas? Si está marcada, la gente puede tomar la encuesta. Elimine la marca para cerrar la encuesta."
   survey_select_a_rating_message: "Elige un voto para ver el próximo ítem."
   survey_skip_next_link: "Saltar al siguiente"
   survey_take_tab: "Tome la encuesta"
   survey_thanks_submit_message: "Gracias por enviar tu respuesta."
-  survey_you_already_rated_response_with_rating_heading: "Ya has votado esta respuesta - le diste un {{rating}}."
-  survey_you_previousely_rated_message: "Previamente votaste este ítem con {{rating}}."
+  survey_you_already_rated_response_with_rating_heading: "Ya has votado esta respuesta - le diste un %{rating}."
+  survey_you_previousely_rated_message: "Previamente votaste este ítem con %{rating}."
   survey_your_rating_heading: "Su Calificación a Esta Respuesta"
   tag_menu_item: etiqueta
   tags: Etiquetas
@@ -1051,26 +1051,26 @@ es:
   tasks: tareas
   text_message: "Mensaje de texto"
   their_answer_goes_here_label: "Su respuesta va aquí..."
-  thing_not_found: "{{thing}} no se encuentra"
-  thing_not_found_description: "Disculpa, no pudimos localizar '{{thing}}'"
-  thing_settings: "{{thing}} Ajustes"
-  this_is_committee: "Este comité es parte de {{parent_group}}."
-  this_is_coordinating: "Este comité es el <strong>consejo de coordinación</strong> para {{parent_group}}."
+  thing_not_found: "%{thing} no se encuentra"
+  thing_not_found_description: "Disculpa, no pudimos localizar '%{thing}'"
+  thing_settings: "%{thing} Ajustes"
+  this_is_committee: "Este comité es parte de %{parent_group}."
+  this_is_coordinating: "Este comité es el <strong>consejo de coordinación</strong> para %{parent_group}."
   thursday: Jueves
   time_zone: "Zona Horaria"
   title: Titulo
   title_help: "Requerido. El título se utiliza para identificar la página."
   to: para
   toggle_selection: "Cambiar la selección"
-  too_tall_image_error: "La imagen subida es demasiado grande ({{count}} pixeles es la altura máxima)"
-  too_wide_image_error: "La imagen subida deber ser de {{count}} píxeles de ancho"
+  too_tall_image_error: "La imagen subida es demasiado grande (%{count} pixeles es la altura máxima)"
+  too_wide_image_error: "La imagen subida deber ser de %{count} píxeles de ancho"
   top_pick: "opción preferida"
   top_rated: "Más estimado"
-  total: "{{count}} en total"
+  total: "%{count} en total"
   trash: Basura
   trash_chat_message: "mover mensaje a la papelera"
-  trash_description: "La basura es donde todas sus páginas borradas residen. Usted puede restaurar una página, haga clic {{undelete}}o destruya permanentemente una página haciendo clic en {{destruir}}."
-  trash_page_link: "Mover {{page_class}} a la papelera"
+  trash_description: "La basura es donde todas sus páginas borradas residen. Usted puede restaurar una página, haga clic %{undelete}o destruya permanentemente una página haciendo clic en %{destruir}."
+  trash_page_link: "Mover %{page_class} a la papelera"
   try_again: "Inténtelo de nuevo"
   tuesday: Martes
   type_your_messages_here: "Escriba aquí sus mensajes y pulse ENTER ..."
@@ -1086,7 +1086,7 @@ es:
   update_favicon: "Actualizar favicon"
   update_link_button: "Actualizar enlace"
   update_masthead: "Actualizar pie de página"
-  update_thing: "Actualizar {{thing}}"
+  update_thing: "Actualizar %{thing}"
   updated: actualizado
   updating_this_list_will_update_featured_pages: "Agregar, borrar y reordenar nombres de páginas en esta lista actualizará inmediatamente que páginas destacadas verán las visitas."
   updating_this_list_will_update_menu_items: "Agregar, borrar y reordenar opciones del menú en esta lista actualizará inmediatamente lo que las visitas verán."
@@ -1147,10 +1147,10 @@ es:
   user_profile_description_may_see_groups: "Permite a las personas ver los grupos a los que se ha unido."
   username: Usuario
   users: Usuarias
-  users_wall: "Mural de {{user}}"
-  users_world: "Mundo de {{user}}"
-  version_doesnt_exist: "No hay versión {{version}}"
-  version_number: "versión {{version}}"
+  users_wall: "Mural de %{user}"
+  users_world: "Mundo de %{user}"
+  version_doesnt_exist: "No hay versión %{version}"
+  version_number: "versión %{version}"
   versions: versiones
   video_embed: Insertado
   video_embed_code_description: "Esta no es la dirección del sitio. Es un código rodeado por < y > que el sitio del video - youtube, etc. - pone a tu disposición para empotrar el video en otros sitios."
@@ -1205,27 +1205,27 @@ es:
   welcome_find_groups_text: "Examine el directorio de grupos para encontrar los grupos que desee unirse."
   welcome_find_people_link: "Encontrar gente"
   welcome_find_people_text: "Examine el directorio de usuario para encontrar la gente que usted conoce."
-  welcome_heading: "Bienvenido a {{site_title}}, {{user_name}}!"
+  welcome_heading: "Bienvenido a %{site_title}, %{user_name}!"
   welcome_hide_link: "Oculta la bienvenida"
   welcome_login_message: "mensaje de bienvenida"
   welcome_message: "Crabgrass permite que organizaciones que trabajan en asuntos de cambio social ejecutan acciones, promovan, colaboren y crean redes."
   welcome_show_link: "Muestra la bienvenida"
-  welcome_title: "Bienvenido a {{site_title}}"
+  welcome_title: "Bienvenido a %{site_title}"
   welcome_upload_icon_link: "Cargue una foto del usuario"
   welcome_upload_icon_text: "Cargue una imagen para usar como su foto. Esta foto aparecerá al lado de cada comentario que usted haga."
   when_does_feature_expire: "Cuándo expirará esta característica?"
-  widget_index: "Widget {{index}}"
+  widget_index: "Widget %{index}"
   width: Anchura
   wiki: Wiki
   wiki_advanced_editor: "Editor avanzado"
   wiki_body_help: "Opcional. Incorpore aquí el texto inicial para la página."
   wiki_editor: Editor
-  wiki_is_locked: "Este wiki se encuentra actualmente bloqueado por {{user}}"
+  wiki_is_locked: "Este wiki se encuentra actualmente bloqueado por %{user}"
   wiki_lost_text_confirmation: "Cualquier texto que no se haya guardado será perdido. ¿Está usted seguro?"
   wiki_page_description: "Un documento con texto de formato libre"
   wiki_page_display: Wiki
   wiki_plain_editor: "Editor texto"
-  wiki_revert_version: "Invierta a la versión {{version}}"
+  wiki_revert_version: "Invierta a la versión %{version}"
   wiki_section_edit: "Corrija esta sección"
   wiki_version_creator_heading: persona
   wiki_version_destroy_link: destruir
@@ -1237,7 +1237,7 @@ es:
   you_are_a_member_already_error: "Ya eres integrante"
   you_are_not_allowed_to_do_that: "¡No tienes permiso para hacer esto!"
   you_are_not_member_of_any_group: "No estás en ningún grupo. "
-  you_are_viewing_version: "Usted está viendo la versión {{version}} by {{usuario}}"
+  you_are_viewing_version: "Usted está viendo la versión %{version} by %{usuario}"
   you_have_no_contacts: "Usted no tiene contactos"
   you_have_no_peers: "Usted no tiene compañeros"
   you_should_receive_instructions_email: "Deberías recibir un correo electrónico con instrucciones para terminar de crear tu cuenta."

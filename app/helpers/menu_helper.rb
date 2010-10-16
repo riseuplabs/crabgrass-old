@@ -7,10 +7,11 @@ module MenuHelper
 
   def top_menu(label, url, options={})
     id = options.delete(:id)
-    menu_heading = content_tag(:span,
-      link_to_active(label.upcase, url, options[:active]),
-      :class => 'topnav'
-    )
+    #menu_heading = content_tag(:span,
+    #  link_to_active(label, url, options[:active]),
+    #  :class => 'menu_title'
+    #)
+    menu_heading = link_to_active(label, url, options[:active], :class => 'menu_title')
     content_tag(:li,
       [menu_heading, options[:menu_items]].combine("\n"),
       :class => ['menu', (options[:active] && 'current')].combine,
@@ -140,6 +141,13 @@ module MenuHelper
 
   def admin_option
     top_menu I18n.t(:menu_admin), '/admin', :active => @active_tab == :admin, :id => 'menu_admin'
+  end
+
+  # i can't get the last of the top nav menus to render correctly in webkit.
+  # this dummy_menu makes it so that the last menu is invisible, so the other
+  # ones look fine.
+  def dummy_menu
+    '<li class="menu"><a class="menu_title"> </a></li>'
   end
 
   def split_entities_into_columns(entities)

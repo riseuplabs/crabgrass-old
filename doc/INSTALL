@@ -48,6 +48,7 @@ SUGGESTED FOR PRODUCTION
 |                     | cracklib-runtime        | password strength checking (optional)         |
 |                     | libopen4-ruby           | better pipes, for latex renderer (optional)   |
 |                     | ruby-debug              | for debugging running application (optional)  |
+| log4r               | liblog4r-ruby           | > 1.1.0 for logging to syslog (optional)      |
 
  * NOTE: If you use the Debian rails package, you will need to install a symlink in the
    crabgrass/vendor directory to rails:
