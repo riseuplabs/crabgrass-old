@@ -1,5 +1,5 @@
 source :gemcutter
-gem "rails", "2.3.8"
+gem "rails", "2.3.9"
 
 gem 'greencloth', :git => "git://github.com/riseuplabs/greencloth"
 gem 'undress', :git => "git://github.com/riseuplabs/undress"
