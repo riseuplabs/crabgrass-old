@@ -164,7 +164,7 @@
          <p><%= I18n.t(:exception_bug_report_description) %></p>
          <%= text_area_tag(:comments, nil, :size => "60x8") %>
          <%= hidden_field_tag('exception_class', @exception.class.to_s) %>
-         <%= hidden_field_tag('error_controller', request.parameters['controller'].humanize) %>
+         <%= hidden_field_tag('error_controller', request.parameters['controller'].try.humanize) %>
          <%= hidden_field_tag('error_action', request.parameters['action']) %>
          <%= hidden_field_tag('exception_detailed_message', exception_detailed_message(@exception)) %>
          <%= hidden_field_tag('full_backtrace', @exception.clean_backtrace.join("\n")) %>
