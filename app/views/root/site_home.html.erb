@@ -61,7 +61,7 @@
 <h3 id="underlined"><%=I18n.t(:pages)%></h3>
 <br/>
 
-<%= Formy.tabs do |f|
+<%= formy(:tabset) do |f|
   if @show_featured
     f.tab do |t|
       t.label I18n.t(:featured_content_header)
