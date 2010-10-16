@@ -1,0 +1,67 @@
+@mixin headings {
+  font-family: $headings_font;
+  font-weight: bold;
+  line-height: 1; }
+
+@mixin general-font {
+  font-family: $general_font; }
+
+@mixin bordered-btm($border_color: $warm_grey_border, $border_style: "solid") {
+  border-bottom: 1px $border_style $border_color; }
+
+@mixin bordered-top($border_color: $warm_grey_border) {
+  border-top: 1px "solid" $border_color; }
+
+@mixin bordered-2sides($border_color: $warm_grey_border) {
+  border-top: 1px "solid" white;
+  border-left: 1px "solid" $border_color;
+  border-right: 1px "solid" $border_color;
+  border-bottom: 1px "solid" white; }
+
+@mixin bordered-left($border_color: $warm_grey_border) {
+  border-left: 1px "solid" $border_color; }
+
+@mixin bordered-right($border_color: $warm_grey_border) {
+  border-right: 1px "solid" $border_color; }
+
+@mixin bordered-tab($border_color: $almost_black) {
+  border-top: 1px "solid" $border_color;
+  border-left: 1px "solid" $border_color;
+  border-right: 1px "solid" $border_color; }
+
+@mixin bordered-block($border_color: $almost_black) {
+  border-top: 1px "solid" $border_color;
+  border-right: 1px "solid" $border_color;
+  border-bottom: 1px "solid" $border_color; }
+
+@mixin bordered-top-btm($border_color: $light_grey_border) {
+  border-top: 1px "solid" $border_color;
+  border-bottom: 1px "solid" $border_color; }
+
+@mixin bordered($border_width: 1px, $border_color: $light_grey_border) {
+  border: $border_width "solid" $border_color; }
+
+@mixin zero {
+  margin: 0;
+  padding: 0;
+  line-height: 1; }
+
+@mixin inline-middle {
+  display: inline;
+  vertical-align: middle; }
+
+@mixin spaced($spacing: 0.09em) {
+  letter-spacing: $spacing; }
+
+@mixin small-text($font_small: 10px) {
+  font-size: $font_small; }
+
+@mixin blue-link($sized: 11px) {
+  @include hover-link;
+  color: $blue;
+  font-size: $sized;
+  font-weight: normal; }
+
+@mixin partial-width {
+  @include columns(10, 10);
+  width: 540px; }
