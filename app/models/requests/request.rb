@@ -58,19 +58,23 @@ class Request < ActiveRecord::Base
     {:conditions => [ "requests.state = ?", state.to_s]}
   }
 
-  # same as having_state, but take into account
-  # that user can vote reject/approve on some requests without changing the state
-  named_scope :having_state_for_user, lambda { |state, user|
-    votes_conditions = if state == :pending
-      "votes.value IS NULL AND requests.state = 'pending'"
-    else
-      ["votes.value = ? OR requests.state = ?", vote_value_for_state(state), state.to_s]
-    end
+  # i think this is a nice idea, but... i am not sure about the UI for this. by making the view dependent
+  # on the user, you make it hard to find requests that are still pending but have been approved by you
+  # and not others. I think it is better to show these requests as pending, but indicate in the view
+  # that you have already voted on this. so, i am commented out this complicated bit of code:
 
-    { :conditions => votes_conditions,
-      :select => "requests.*",
-      :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
-  }
+  ## same as having_state, but take into account
+  ## that user can vote reject/approve on some requests without changing the state
+  #named_scope :having_state_for_user, lambda { |state, user|
+  #  votes_conditions = if state == :pending
+  #    "votes.value IS NULL AND requests.state = 'pending'"
+  #  else
+  #    ["votes.value = ? OR requests.state = ?", vote_value_for_state(state), state.to_s]
+  #  end
+  #  { :conditions => votes_conditions,
+  #    :select => "requests.*",
+  #    :joins => "LEFT OUTER JOIN votes ON `votes`.votable_id = `requests`.id AND `votes`.votable_type = 'Request'AND `votes`.`type` = 'RequestVote' AND votes.user_id = #{user.id}"}
+  #}
 
   named_scope :pending, :conditions => "state = 'pending'"
   named_scope :by_created_at, :order => 'created_at DESC'
@@ -95,6 +99,10 @@ class Request < ActiveRecord::Base
   }
   named_scope :from_group, lambda { |group|
     {:conditions => ['requestable_id = ? and requestable_type = ?', group.id, 'Group']}
+  }
+
+  named_scope :regarding_group, lambda { |group|
+    {:conditions => ['(recipient_id = ? AND recipient_type = ?) OR (requestable_id = ? AND requestable_type = ?)', group.id, 'Group', group.id, 'Group']}
   }
 
   named_scope :for_recipient, lambda { |recipient|
@@ -239,24 +247,22 @@ class Request < ActiveRecord::Base
   protected
 
   def self.vote_value_for_action(vote_state)
-    response_map = {
-      'reject' => 0,
-      'approve' => 1,
-      'ignore' => 2
-    }
-
-    return response_map[vote_state.to_s]
+    case vote_state.to_s
+      when 'reject' then 0;
+      when 'approve' then 1;
+      when 'ignore' then 2;
+    end
   end
 
-  def self.vote_value_for_state(vote_state)
-    response_map = {
-      'rejected' => 0,
-      'approved' => 1,
-      'ignored' => 2
-    }
-
-    return response_map[vote_state.to_s]
-  end
+  #def self.vote_value_for_state(vote_state)
+  #  response_map = {
+  #    'rejected' => 0,
+  #    'approved' => 1,
+  #    'ignored' => 2
+  #  }
+  #
+  #  return response_map[vote_state.to_s]
+  #end
 
 
   def add_vote!(response, user)
