@@ -1,28 +1,26 @@
-class GroupsController < Groups::BaseController
+class Groups::GroupsController < Groups::BaseController
 
-  stylesheet 'groups'
-  permissions 'groups/memberships', 'groups/requests', 'wiki'
-
+  # permissions 'wiki'
   # needed by for group wiki editing
-  javascript :wiki, :only => :show
-  stylesheet :wiki_edit
+  #javascript :wiki, :only => :show
+  #stylesheet :wiki_edit
+  # helper 'wiki'
 
-  helper 'groups', 'wiki', 'base_page'
-  helper 'groups/search'
+  helper 'groups', 'group/search'
 
   before_filter :fetch_group, :except => [:create, :new, :index]
-  before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
+  before_filter :login_required, :except => [:index, :show, :pages]
   verify :method => [:post, :put], :only => [:create, :update]
   verify :method => :delete, :only => :destroy
   cache_sweeper :avatar_sweeper, :only => [:edit, :update, :create]
 
   ## TODO: remove all task list stuff from this controller
-    helper 'task_list_page' # :only => ['tasks']
-    stylesheet 'tasks', :action => :tasks
-    javascript :extra, :action => :tasks
+  #  helper 'task_list_page' # :only => ['tasks']
+  #  stylesheet 'tasks', :action => :tasks
+  #  javascript :extra, :action => :tasks
   ## end task list cruft
 
-  include Groups::Search
+  # include Groups::Search
 
   # called by dispatcher
   def initialize(options={})
@@ -35,31 +33,32 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    group_landing_instance_vars()
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
-    #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
-    @wiki = private_or_public_wiki()
-    #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
-    render :layout => 'header_for_sidebar'
+    #  group_landing_instance_vars()
+    @pages = Page.paginate_by_path(
+      search_path,
+      options_for_group(@group).merge(pagination_params(:per_page => 10))
+    )
+    # @wiki = private_or_public_wiki()
+    # @activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
   end
 
-  def people
-    group_landing_instance_vars()
-    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
-    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
-    @pagination_action = {:controller => 'groups', :action => 'people', :id => @group}
-    render :layout => 'header_for_sidebar'
-  end
+#  def people
+#    group_landing_instance_vars()
+#    @memberships = @group.memberships.alphabetized_by_user(params[:letter]).paginate(pagination_params)
+#    @pagination_letters = @group.memberships.with_users.collect{|m| m.user.login.first.upcase}.uniq
+#    @pagination_action = {:controller => 'groups', :action => 'people', :id => @group}
+#    render :layout => 'header_for_sidebar'
+#  end
 
-  def list_groups
-    group_landing_instance_vars()
-    @federatings = @group.federatings.alphabetized_by_group
-    render :layout => 'header_for_sidebar'
-  end
+#  def list_groups
+#    group_landing_instance_vars()
+#    @federatings = @group.federatings.alphabetized_by_group
+#    render :layout => 'header_for_sidebar'
+#  end
 
   def new
     @group = Group.new
-    render :layout => 'directory'
+#    render :layout => 'directory'
   end
 
   def create
@@ -73,7 +72,7 @@ class GroupsController < Groups::BaseController
   end
 
   def edit
-    active_admin_tabs
+#    active_admin_tabs
   end
 
   def update
@@ -84,8 +83,8 @@ class GroupsController < Groups::BaseController
       @group.reload if @group.name.empty?
       flash_message_now :object => @group
     end
-    active_admin_tabs
-    render :template => 'groups/edit'
+#    active_admin_tabs
+#    render :template => 'groups/edit'
   end
 
   def destroy
@@ -111,15 +110,15 @@ class GroupsController < Groups::BaseController
 
   def fetch_group
     @group = Group.find_by_name params[:id] if params[:id]
-    if @group
-      if may_show_private_profile?
-        @access = :private
-      elsif may_show_public_profile?
-        @access = :public
-      else
-        @group = nil
-      end
-    end
+#    if @group
+#      if may_show_private_profile?
+#        @access = :private
+#      elsif may_show_public_profile?
+#        @access = :public
+#      else
+#        @group = nil
+#      end
+#    end
     if @group
       Tracking.insert_delayed(:group => @group, :user => current_user) if current_site.tracking
       return true
@@ -130,18 +129,18 @@ class GroupsController < Groups::BaseController
     end
   end
 
-  def context
-    if action?(:edit)
-      group_settings_context
-    elsif action?(:create, :new)
-      group_context
-    else
-      super
-      if !action?(:show, :people, :list_groups)
-        add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
-      end
-    end
-  end
+#  def context
+#    if action?(:edit)
+#      group_settings_context
+#    elsif action?(:create, :new)
+#      group_context
+#    else
+#      super
+#      if !action?(:show, :people, :list_groups)
+#        add_context params[:action], url_for_group(@group, :action => params[:action], :path => params[:path])
+#      end
+#    end
+#  end
 
   # returns a private wiki if it exists, a public one otherwise
   # TODO: make this less ugly, move to models
@@ -184,10 +183,10 @@ class GroupsController < Groups::BaseController
     end
   end
 
-  def active_admin_tabs
-    @second_nav = 'administration'
-    @third_nav = 'settings'
-  end
+  #def active_admin_tabs
+  #  @second_nav = 'administration'
+  #  @third_nav = 'settings'
+  #end
 
   #def provide_rss
   #  handle_rss :title => @group.name, :description => @group.summary,
