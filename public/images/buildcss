@@ -41,16 +41,16 @@ images.sort!{|a,b|
   write_file(type, images)
 end
 
-File.open('../../mods/design_tester/app/views/design/reference/Images/icons.html','w') do |file|
-  images.each do |image|
-    if image[0] == '16'
-      klass = 'small_icon'
-    else
-      klass = 'big_icon'
-    end
-    file.write %(<div class="#{klass} #{image[1]}_#{image[0]}">#{image[1]}_#{image[0]}</div>\n)
-  end
-end
+#File.open('../../mods/design_tester/app/views/design/reference/Images/icons.html','w') do |file|
+#  images.each do |image|
+#    if image[0] == '16'
+#      klass = 'small_icon'
+#    else
+#      klass = 'big_icon'
+#    end
+#    file.write %(<div class="#{klass} #{image[1]}_#{image[0]}">#{image[1]}_#{image[0]}</div>\n)
+#  end
+#end
 
 puts 'done'
 
