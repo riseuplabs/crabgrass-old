@@ -1,3 +1,15 @@
+class Symbol
+  def t()
+    I18n.t(self)
+  end
+end
+
+class String
+  def t()
+    I18n.t(self)
+  end
+end
+
 module I18n
   class << self
     def language_for_locale(locale)
