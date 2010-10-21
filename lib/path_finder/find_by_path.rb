@@ -19,8 +19,8 @@ module PathFinder
     # We are paginating pages, so the term page is ambiguous. In options, :page
     # and :per_page are used for pagination, and don't refer to the type of pages
     # that we are finding.
-    def paginate_by_path(path, options={})
-      builder(path, options).paginate
+    def paginate_by_path(path, options={}, pagination_options={})
+      builder(path, options.merge(pagination_options)).paginate
     end
 
     # For path see ParsedPath.
