@@ -263,15 +263,15 @@ function isTabVisible(elem) {
 
 var DropMenu = Class.create({
   initialize: function(menu_id) {
-    this.timeout = null;
     if(!$(menu_id)) return;
     this.trigger = $(menu_id);
-    if(!this.trigger) return;
     this.menu = $(menu_id).down('.menu_items');
+    this.timeout = null;
+    if(!this.trigger) return;
     if(!this.menu) return;
-    this.trigger.observe('mouseover', this.showMenu.bind(this));
-    this.trigger.observe('mouseout', this.hideMenu.bind(this));
-    //document.observe('mouseover', function(){ this.menu.show()}.bind(this));
+    this.trigger.observe('mouseover', this.showMenuEvent.bind(this));
+    this.trigger.observe('mouseout', this.hideMenuEvent.bind(this));
+    DropMenu.instances.push(this);
   },
 
   menuIsOpen: function() {
@@ -279,103 +279,111 @@ var DropMenu = Class.create({
   },
 
   clearEvents: function(event) {
+    if (this.timeout) window.clearTimeout(this.timeout);
     event.stop();
-    $$('.menu_items').without(this.menu).invoke('hide');
   },
 
-  showMenu: function(event) {
+  showMenuEvent: function(event) {
     evalOnclickOnce(this.menu);
-    if (this.timeout) window.clearTimeout(this.timeout);
-    if (this.menuIsOpen()) {
-      this.menu.show();
-      this.clearEvents(event);
-    } else {
-      this.timeout = Element.show.delay(.3,this.menu);
-      this.clearEvents(event);
-    }
-  },
-
-  hideMenu: function(event) {
     this.clearEvents(event);
-    if (this.timeout) window.clearTimeout(this.timeout);
-    this.timeout = Element.hide.delay(.3, this.menu);
-  }
-
-});
-
-var statuspostCounter = Class.create({
-  initialize: function(id) {
-    if (!$(id)) return;
-    this.trigger = $(id);
-    this.textarea = $(id);
-    this.trigger.observe("keydown", this.textLimit.bind(this));
-    this.trigger.observe("keyup", this.textLimit.bind(this));
-  },
-  textLimit: function(event) {
-    if (this.textarea.value.length > 140) {
-       this.textarea.value = this.textarea.value.substring(0, 140);
-    }
-  }
-});
-
-var DropSocial = Class.create({
-  initialize: function() {
-    id = "show-social"
-    if(!$(id)) return;
-    this.trigger = $(id);
-    if(!this.trigger) return;
-    this.container = $('social-activities-dropdown');
-    if (!this.container) return;
-    this.activities = $('social_activities_list');
-    if(!this.activities) return;
-    this.trigger.observe('click', this.toggleActivities.bind(this));
-    document.observe('click', this.hideActivities.bind(this));
-  },
-  IsOpen: function() {
-    return this.container.visible();
-  },
-  toggleActivities: function(event) {
-    if (this.IsOpen()) {
-      this.container.hide();
-      this.clearEvents(event);
+    if (this.menuIsOpen()) {
+      DropMenu.instances.invoke('hideMenu');
+      this.showMenu();
     } else {
-      this.container.show();
-      event.stopPropogation();
-      this.clearEvents(event);
+      this.timeout = this.showMenu.bind(this).delay(0.3);
     }
   },
-  hideActivities: function(event) {
-    element = Event.findElement(event);
-    elementUp = Event.findElement(event, 'div');
-    if ((element != this.trigger) && (elementUp != this.container)) {
-      if (!this.IsOpen()) return;
-      this.container.hide();
-    }
-  }
-})
 
-var LoadSocial = Class.create({
-  initialize: function() {
-    this.doRequest();
-    new PeriodicalExecuter(this.doRequest, 120);
+  hideMenuEvent: function(event) {
+    this.clearEvents(event);
+    this.timeout = this.hideMenu.bind(this).delay(0.3);
   },
-  doRequest: function() {
-    if ($('social-activities-dropdown').visible()) return;
-    new Ajax.Request('/me/social-activities', {
-      method: 'GET',
-      parameters: {count: 1}
-    });
+
+  showMenu: function() {
+    this.menu.show();
+    this.trigger.addClassName('menu_visible');
+  },
+
+  hideMenu: function() {
+    this.menu.hide();
+    this.trigger.removeClassName('menu_visible');
   }
-})
+
+});
+DropMenu.instances = [];
+
+//var statuspostCounter = Class.create({
+//  initialize: function(id) {
+//    if (!$(id)) return;
+//    this.trigger = $(id);
+//    this.textarea = $(id);
+//    this.trigger.observe("keydown", this.textLimit.bind(this));
+//    this.trigger.observe("keyup", this.textLimit.bind(this));
+//  },
+//  textLimit: function(event) {
+//    if (this.textarea.value.length > 140) {
+//       this.textarea.value = this.textarea.value.substring(0, 140);
+//    }
+//  }
+//});
+
+//var DropSocial = Class.create({
+//  initialize: function() {
+//    id = "show-social"
+//    if(!$(id)) return;
+//    this.trigger = $(id);
+//    if(!this.trigger) return;
+//    this.container = $('social-activities-dropdown');
+//    if (!this.container) return;
+//    this.activities = $('social_activities_list');
+//    if(!this.activities) return;
+//    this.trigger.observe('click', this.toggleActivities.bind(this));
+//    document.observe('click', this.hideActivities.bind(this));
+//  },
+//  IsOpen: function() {
+//    return this.container.visible();
+//  },
+//  toggleActivities: function(event) {
+//    if (this.IsOpen()) {
+//      this.container.hide();
+//      this.clearEvents(event);
+//    } else {
+//      this.container.show();
+//      event.stopPropogation();
+//      this.clearEvents(event);
+//    }
+//  },
+//  hideActivities: function(event) {
+//    element = Event.findElement(event);
+//    elementUp = Event.findElement(event, 'div');
+//    if ((element != this.trigger) && (elementUp != this.container)) {
+//      if (!this.IsOpen()) return;
+//      this.container.hide();
+//    }
+//  }
+//})
+
+//var LoadSocial = Class.create({
+//  initialize: function() {
+//    this.doRequest();
+//    new PeriodicalExecuter(this.doRequest, 120);
+//  },
+//  doRequest: function() {
+//    if ($('social-activities-dropdown').visible()) return;
+//    new Ajax.Request('/me/social-activities', {
+//      method: 'GET',
+//      parameters: {count: 1}
+//    });
+//  }
+//})
 
 document.observe('dom:loaded', function() {
-  new DropMenu("menu_me");
-  new DropMenu("menu_people");
-  new DropMenu("menu_groups");
-  new DropMenu("menu_networks");
-  new statuspostCounter("say_text");
-  new LoadSocial();
-  new DropSocial();
+  $$(".drop_menu").each(function(element){
+    new DropMenu(element.id);
+  })
+  // new statuspostCounter("say_text");
+  // new LoadSocial();
+  // new DropSocial();
 });
 
 //
