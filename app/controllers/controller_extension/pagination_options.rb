@@ -6,7 +6,7 @@ module ControllerExtension::PaginationOptions
   protected
 
   def pagination_default_per_page
-    20
+    Conf.pagination_size
   end
 
   def pagination_default_page

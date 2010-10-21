@@ -92,7 +92,7 @@ module ControllerExtension::RescueErrors
   end
 
   # renders an error message or messages
-  def render_error(exception=nil)
+  def render_error(exception=nil, options={})
     respond_to do |format|
       format.html do
         if exception
@@ -104,8 +104,7 @@ module ControllerExtension::RescueErrors
             flash_message_now :exception => exception
           end
         end
-        @skip_context = true
-        render :template => 'common/error', :status => exception.try(:status), :layout => 'default'
+        render :template => (options[:template] || 'common/error'), :status => exception.try(:status)
       end
       format.js do
         if exception
