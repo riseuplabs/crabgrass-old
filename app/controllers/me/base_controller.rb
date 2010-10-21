@@ -5,9 +5,8 @@ class Me::BaseController < ApplicationController
 
   before_filter :login_required, :fetch_user
   stylesheet 'me'
-  stylesheet 'messages'
+  # stylesheet 'messages'
   permissions 'me'
-  layout 'header'
 
   protected
 
@@ -16,12 +15,11 @@ class Me::BaseController < ApplicationController
   end
 
   def fetch_user
-    @user ||= current_user
+    @user = current_user
   end
 
   def context
-    me_context('large')
-    @left_column = render_to_string :partial => 'me/sidebar'
+    @context = Context::Me.new(current_user)
   end
 
 end

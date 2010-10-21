@@ -1,0 +1,21 @@
+- ##
+- ## displays a list of pages in a table (ie, using rows and columns). 
+- ##
+-
+-  columns = local_assigns[:collums] ||= [:icon, :title, :updated_by, :updated_at, :contributors_count]
+-  colspan = columns.size
+-  heading = true if heading.nil?
+-  sortable = false
+
+%table
+  - if pages.empty?
+    %tr
+      %td{:colspan => colspan}
+        = I18n.t(:no_search_results)
+  - else
+    - if heading
+      = page_table_header_row(columns, :sortable => sortable)
+    - pages.each do |page|
+      = page_table_row(page, columns)
+
+

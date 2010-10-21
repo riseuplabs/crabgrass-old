@@ -1,0 +1,29 @@
+
+%table
+  %tr
+    %td{ :valign => 'top', :id => 'user_avatar'}
+      = avatar_for @user, 'xlarge'
+    %td{ :valign =>'top', :style => 'padding-left: 10px'}
+      = link_to_function(I18n.t(:upload_image_link), "$('uploadimage').show(); this.hide();", :class => "small_icon picture_edit_16")
+      %br
+      - if @user.avatar
+        = link_to_remote_with_icon(I18n.t(:remove_image_link), { :url => '/me/avatar', :update=>'user_avatar', :complete => "$('remove_image_link').hide()", :confirm => I18n.t(:confirm_delete_avatar), :method => 'DELETE'}, :icon => "minus", :id => "remove_image_link")
+      %div#uploadimage{:style =>'display:none'}
+        = I18n.t(:uploaded_image_cropped)
+        %br
+        %br
+        - form_for(:image, @avatar, :url => {:controller => '/avatars', :action => 'create'}, :html => {:multipart => true}) do |f|
+          = I18n.t(:select_image_file)
+          %br
+          = f.file_field :image_file
+          %br
+          %br
+          = I18n.t(:or_image_url)
+          %br
+          = f.text_field :image_file_url
+          %br
+          = hidden_field_tag 'redirect', url_for(:controller => 'me',:action=>'edit')
+          = hidden_field_tag 'user_id', @user.id
+          %br
+          = submit_tag I18n.t(:upload_image)
+

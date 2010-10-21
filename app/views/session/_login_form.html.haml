@@ -1,0 +1,19 @@
+- @login_form_already_rendered = true
+
+- form_tag({:controller => 'session', :action => 'login'}, :id => "entry") do
+  %div
+    = text_field_tag 'login',params['login'],:id => 'login'
+    %label(for = 'login')= I18n.t(:login_name)
+  %div
+    = password_field_tag 'password',:id => 'password'
+    %label(for = 'password')= I18n.t(:login_password)
+  %div
+    %input{ :type => 'submit', :value => I18n.t(:login_button) }
+  %div
+    - if may_signup?
+      = link_to(I18n.t(:signup_link), { :controller => '/account', :action => 'signup', :redirect => params[:redirect] })
+    = link_to(I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password')
+    = hidden_field_tag 'redirect', params[:redirect]
+
+= javascript_tag "Form.focusFirstElement('entry');"
+

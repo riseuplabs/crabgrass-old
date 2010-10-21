@@ -3,7 +3,7 @@
 #
 class RootController < ApplicationController
 
-  helper :groups, :account, :wiki, :page
+  helper :groups, :account, :wiki
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
 
@@ -11,13 +11,15 @@ class RootController < ApplicationController
   before_filter :login_required, :except => ['index']
   before_filter :fetch_network
 
+  layout proc{ |c| c.logged_in? ? 'base' : 'login' }
+
   def index
     if !logged_in?
-      login_page
+      redirect_to :controller => 'session', :action => 'login'
     elsif current_site.network
       site_home
     else
-      redirect_to me_url
+      redirect_to me_home_url
     end
   end
 
@@ -122,12 +124,6 @@ class RootController < ApplicationController
     #@announcements = Page.find_by_path('limit/3/descending/created_at',options_for_group(@group, :flow => :announcement))
     @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
     render :template => 'root/site_home'
-  end
-
-  def login_page
-    @stylesheet = 'account'
-    @active_tab = :home
-    render :template => 'account/login'
   end
 
   def fetch_network

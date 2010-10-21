@@ -1,0 +1,10 @@
+- @avatar ||= @user.avatar
+
+= render :partial => 'me/settings/avatar_form'
+
+.form
+  - form_tag(me_settings_path, :method => :put) do
+    = render :partial => '/me/settings/form'
+    %p.buttons
+      = submit_tag I18n.t(:save_changes)
+

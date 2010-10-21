@@ -1,0 +1,9 @@
+- style = local_assigns[:style] ||= :table
+- pages = local_assigns[:pages] ||= @pages
+- paginate = pages.respond_to?(:total_entries)
+- paginate_options ||= {}
+
+%section{:class => "page_list #{style}"}
+  = render :partial => "/common/pages/list_as_#{style}", :locals => local_assigns
+  - if paginate
+    = pagination_links( pages, paginate_options )

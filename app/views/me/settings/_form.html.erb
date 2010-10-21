@@ -1,0 +1,46 @@
+
+<%= formy(:simple_form) do |f|
+
+  f.row do |r|
+    r.label :username.t, 'user_login'
+    r.input text_field('user','login')
+  end
+
+  f.row do |r|
+    r.label :display_name.t, 'user_display_name'
+    r.input text_field('user','display_name')
+  end
+
+  f.row do |r|
+    r.label :email.t, 'user_email'
+    r.input text_field('user','email')
+  end
+
+  ## TODO I18N:
+  f.row do |r|
+    r.label :do_you_want_to_receive_email_notifications.t, 'user_receive_notifications'
+    r.input select('user', 'receive_notifications', [["No", ""], ["Yes: an email per change","Single"], ["Yes: just a summary email","Digest"]])
+  end
+
+  f.row do |r|
+    r.label :language.t, 'user_language'
+    r.input select('user', 'language', Language.find(:all).to_select(:name, :code), { :include_blank => true })
+  end
+
+  f.row do |r|
+    r.label :time_zone.t, 'user_time_zone'
+    r.input time_zone_select('user', 'time_zone', nil, :include_blank => true)
+  end
+
+  f.row do |r|
+    r.label :password.t, 'user_password'
+    r.input password_field('user', 'password')
+  end
+
+  f.row do |r|
+    r.label :password_confirmation.t, 'user_password_confirmation'
+    r.input password_field('user', 'password_confirmation')
+  end
+
+end %>
+

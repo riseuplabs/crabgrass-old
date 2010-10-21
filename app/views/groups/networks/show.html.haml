@@ -1,0 +1,10 @@
+- content_for :html_head do
+  %link{:rel => 'alternate', :href => "/groups/search/#{@group.name}/rss", :title => I18n.t(:rss_feed), :type =>'application/rss+xml'}
+
+-# = render :partial => '/groups/navigation/nav_for_landing'
+-# = %section#group-wiki
+  -# = render :partial => 'widgets/group_wiki'
+
+-# = render :partial => '/announcement_page/announcements'
+
+= list_pages :title => I18n.t(:recent_pages), :with_cover => true
