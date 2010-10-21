@@ -26,6 +26,8 @@ this means you can make sass calls (using scss format).
 
 =end
 
+$border = '1px solid #ccc'
+
 options {
 
   favicon_png 'favicon.png'
@@ -33,10 +35,10 @@ options {
 
   grid {
     column {
-      width '4em'
-      count 12
-      gutter '1em'
-      side_gutter '1em'
+      width '40px'
+      count 16
+      gutter '15px'
+      side_gutter '15px'
     }
     font {
       size '16px'
@@ -61,16 +63,16 @@ options {
   }
 
   background {
-    color 'white'
+    color '#e6e6e6';
   }
 
   masthead {
-    style 'full'    # accepts [full | narrow]
+    style 'full'   # accepts [full | grid]
                    # full -- the masthead stretches the full width of the screen
                    # grid -- the masthead stops at the edge of the grid.
-
+    border $border # not yet supported
     height '100px'
-    css "background-color: #ddd;"
+    css "background-color: #f9f9f9;"
 #    css %{
 #      @include linear-gradient(color-stops(green, red));
 #    }
@@ -88,9 +90,7 @@ options {
                      # cutout -- creates tabs cut out from masthead
                      # bar -- creates a separate menu nav bar
       tab {
-        # padding '0.5em'   # space within tab
         padding '8px'   # must be in pixels
-        margin '0'    # space between tabs
         css %{ }
         active_css %{   }
       }
@@ -105,9 +105,35 @@ options {
     }
   }
 
+  global_nav {
+  }
+
   banner {
+    # unfortunately, banner padding must be specified in pixels.
+    padding "12px"
+    border "1px solid #888"
+    default_background '#999'
+    default_foreground '#fff'
+    vertical_align 'default'  # [center | top | default]
+    font {
+      size "36px" # var(:font_heading_h1_size)
+    }
     nav {
-      style 'inset'
+      style 'cutout' # [cutout | inset | none]
+      padding '6px'
+    }
+  }
+
+  local {
+    # border $border
+    content {
+      border $border
+      background 'white'
+    }
+    nav {
+      style 'tabs'
+      side 'left'   # only left for now.
+      column_count 3
     }
   }
 
