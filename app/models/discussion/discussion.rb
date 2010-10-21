@@ -116,14 +116,13 @@ class Discussion < ActiveRecord::Base
   ## methods
   ##
 
-  def per_page() 30 end
-
-  # this doesn't appear to be called anywhere.
-  #def paged?() posts_count > per_page end
-
-  def last_page
+  # 
+  # returns the total number of pagination pages, given the pagination size.
+  #
+  def last_page(pagination_size=nil)
+    pagination_size ||= Conf.pagination_size
     if posts_count > 0
-      (posts_count.to_f / per_page.to_f).ceil
+      (posts_count.to_f / pagination_size.to_f).ceil
     else
       1
     end
