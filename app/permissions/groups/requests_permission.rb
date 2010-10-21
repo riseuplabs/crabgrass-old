@@ -24,8 +24,12 @@ module Groups::RequestsPermission
     end
   end
 
-  def may_list_requests?(group=@group)
+  def may_admin_requests?(group=@group)
     current_user.may?(:admin, group)
   end
+
+  alias_method :may_list_requests?, :may_admin_requests?
+  alias_method :may_index_requests?, :may_admin_requests?
+  alias_method :may_update_requests?, :may_admin_requests?
 
 end
