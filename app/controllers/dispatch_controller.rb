@@ -234,19 +234,19 @@ class DispatchController < ApplicationController
         params[:controller] = 'site_network'
         new_controller('SiteNetworkController')
       else
-        params[:controller] = 'network'
-        new_controller('NetworksController')
+        params[:controller] = 'groups/networks'
+        new_controller('Groups::NetworksController')
       end
     else
-      params[:controller] = 'group'
-      new_controller('GroupsController')
+      params[:controller] = 'groups/groups'
+      new_controller('Groups::GroupsController')
     end
   end
 
   def controller_for_people
     params[:action] = 'show'
-    params[:controller] = 'person'
-    new_controller('PersonController')
+    params[:controller] = 'people/people'
+    new_controller('People::PeopleController')
   end
 
 end
