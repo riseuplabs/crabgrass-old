@@ -51,7 +51,7 @@
   <td class='right'>
     <h3 class='dim'><%= I18n.t(:usage_agreement_heading) %></h3>
     <div class='agreement'>
-      <%= GreenCloth.new(I18n.t(:usage_agreement_text)).to_html %>
+      <%= to_html( I18n.t(:usage_agreement_text) ) %>
     </div>
   </td>
 </tr>
