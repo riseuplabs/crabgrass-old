@@ -15,3 +15,10 @@ $col-width: $grid_column_width;
 $gutter-width: $grid_column_gutter;
 $side-gutter-width: $grid_column_side_gutter;
 
+//
+// susy webkit hack
+//
+
+$webkit-selector: "body.webkit";
+
+

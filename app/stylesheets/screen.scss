@@ -8,15 +8,23 @@
 @import "layout/grid";
 @import "susy/susy";
 
+// import the mixins we wrote
+@import "mixins";
+
 // define our basic layout
 @import "layout/containers";
 @import "layout/masthead";
 @import "layout/top_menu";
 @import "layout/banner";
+@import "layout/local";
+@import "layout/footer";
 
 // include ui elements
 @import "ui/icons";
 @import "ui/headings";
+// @import "ui/autocomplete";
+
+@import "pages/listing";
 
 @import "debug";
 

@@ -1,0 +1,85 @@
+//
+// define here any new mixins you want available everywhere
+//
+
+//
+// this is based on the susy mixin 'columns', but it eats the gutter.
+// in other words, the gutter is added to the width of the column, 
+// and no gutter is added on the outside of the column.
+//
+
+@mixin columns-eat-gutter($n, $context: false) {
+  @include float(left);
+  width: columns($n, $context) + gutter($context);
+  margin-right: 0; 
+  @if $webkit-selector {
+    #{$webkit-selector} & {
+      // nudging twice would be too much nudge
+      width: columns($n, $context) + gutter-nudge($context);
+    }
+  }
+}
+
+
+//
+// vertical align an element within the center of an enclosing element
+// see: http://blog.themeforest.net/tutorials/vertical-centering-with-css/ 
+// NOTE: this only works if the enclosing element is position:relative.
+//
+
+@mixin center-vertically($height) {
+  position: absolute;
+  top: 50%;
+  height: $height;
+  margin-top: -($height/2);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+// center a single line of text vertically
+@mixin center-line-vertically($height) {
+  height: $height;
+  line-height: $height;
+}
+
+//
+// An UL,LI menu that looks like a cutout and is posited at the bottom
+// of the enclosing element.
+//
+// requires li.tab and a.tab classes set for the tabs.
+//
+
+@mixin cutout_menu(
+  $ul_id,
+  $tab_padding: 10px,
+  $active_background: white,
+  $active_border: false,
+  $inactive_border: 1px solid transparent) {
+
+  $vertical_padding: $tab_padding/2;
+  position: relative;                 // allows us to put the menu at the bottom
+  ul##{$ul_id} {
+    position: absolute;               // allows us to put the menu at the bottom
+    bottom: $vertical_padding + 1px;  // puts the menu at the bottom of the masthead
+    padding-left: $tab_padding;
+    white-space: nowrap;
+    li.tab {
+      display:inline;
+      a.tab {
+        // a slight 0.25px nudge seems to help with rendering in different sizes.
+        padding: $vertical_padding+0.25px $tab_padding;
+        @include hover-link;
+        border: $inactive_border;
+        &.active {
+          background: $active_background;
+          @if $active_border {
+            border: $active_border;
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+}
+

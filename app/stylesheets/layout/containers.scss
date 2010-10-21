@@ -1,11 +1,7 @@
-//
-// the layout structure of the primary containers
-//
-// #container
-//   #header
-//   #content
-//   #footer
-//
+
+body {
+  background-color: $background_color;
+}
 
 #container {
   @include container;

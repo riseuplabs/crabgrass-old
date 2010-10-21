@@ -1,0 +1,114 @@
+$center_columns: $grid_column_count - $local_nav_column_count;
+
+div#local {
+  // for when there is no banner:
+  margin-top: gutter();
+}
+
+#column_center.full {
+  @include full;
+}
+
+#column_center.with_left {
+  @include omega;
+  @include columns($center_columns);
+  // @include columns(6);
+  // @include full;
+  // background: $local_content_background;
+}
+
+//#column_center {
+//  background-color: rgba(254,254,254,.5);
+//  // background: blue;
+//}
+
+#column_left {
+  @include alpha;
+  @if $local_nav_style == 'tabs' {
+    @include columns-eat-gutter($local_nav_column_count);
+  } @else {
+    @include columns($local_nav_column_count);
+  }
+}
+
+nav#local_nav {
+  li {
+    border: border_size($local_content_border) "solid transparent";
+    @if $local_nav_style == 'tabs' {
+      &.active {
+        border: $local_content_border;
+        border-right: 0;
+      }
+    }
+  }
+  li a {
+    padding: gutter($local_nav_column_count) / 2;
+    display: block;
+    @if $local_nav_style == 'tabs' {
+      &.active {
+        background: $local_content_background;
+        @if border_size($local_content_border) > 0px {
+          position: relative;
+          left: border_size($local_content_border);
+        }
+      }
+    }
+  }
+}
+
+@if $local_nav_style == 'tabs' {
+  //
+  // side tab navigation
+  // make the sidebar navigation look like vertical tabs
+  //
+
+  #column_left {
+    @include alpha;
+    @include columns-eat-gutter($local_nav_column_count);
+  }
+
+  nav#local_nav {
+    li {
+      @if border_size($local_content_border) > 0px {
+        border: border_size($local_content_border) "solid transparent";
+      }
+      &.active {
+        border: $local_content_border;
+        background: $local_content_background;
+        border-right: 0;
+      }
+    }
+    li a {
+      padding: gutter($local_nav_column_count) / 2;
+      display: block;
+      &.active {
+        background: $local_content_background;
+        @if border_size($local_content_border) > 0px {
+          position: relative;
+          left: border_size($local_content_border);
+        }
+      }
+    }
+  }
+
+} @else {
+
+  #column_left {
+    @include alpha;
+    @include columns($local_nav_column_count);
+  }
+  nav#local_nav {
+    li a {
+      padding: gutter($local_nav_column_count) / 2;
+    }
+  }
+
+}
+
+
+article#content {
+  border: $local_content_border;
+  background: $local_content_background;
+  padding: gutter($center_columns);
+}
+

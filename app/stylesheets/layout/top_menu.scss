@@ -12,74 +12,70 @@ $masthead_nav_tab_margin: 0 !default;
 $masthead_nav_dropdown_border_size: 1px; 
 
 //
-// menu titles
+// menu tabs
 //
 
-#menu li {@include inline-list;}
-#menu li.menu {
-  margin-right: $masthead_nav_tab_margin; // spacing between menus
-  position: relative;  // requires for the submenus to line up under the menu titles
+// cutout style tabs
+@if $masthead_nav_style == 'cutout' {
+  #masthead {
+    $ul_id: 'menu';
+    @include cutout_menu(
+      $ul_id,
+      $masthead_nav_tab_padding,
+      $background_color,
+      $masthead_border
+    );
+  }
+} @else {
+  #menu li.tab {@include inline-list;}
 }
 
-@if $masthead_nav_style == 'cutout' {
-  $vertical_padding: $masthead_nav_tab_padding/2;
-  #menu {
-    position: absolute;        // allows us to put the menu at the bottom of the masthead
-    bottom: $vertical_padding + 1px; // puts the menu at the bottom of the masthead
-    padding-left: $masthead_content_padding;
-  }
-  #menu li a.menu_title {
-    padding: $vertical_padding $masthead_nav_tab_padding;
-    @include hover-link;
-  
-    // this is here in case we want to add a visible border to
-    // li.menu_visible a.menu_title
-    border: $masthead_nav_dropdown_border_size solid transparent;
-
-    &.active {
-      background: $background_color; // not configurable. it is 'cutout' style, afterall.
-                                     // maybe we should support bg pattern?
-    }
-  }
+#menu li.tab {
+  position: relative;  // requires for the submenus to line up under the menu titles
 }
 
 // make the menu title look different when the dropdown is visible
 // this is super cool, not sure if it works in ie.
 
-#menu li.menu_visible a.menu_title {
+#masthead ul#menu li.menu_visible a.tab {
   border: $masthead_nav_dropdown_border_size solid $masthead_nav_dropdown_border_color;
   border-bottom: 0;
   z-index: $zindex_menu + 1;
   position: relative;
   background-color: $masthead_nav_dropdown_background_color;
+  &.active {
+    background-color: $masthead_nav_dropdown_background_color;
+    border: $masthead_nav_dropdown_border_size solid $masthead_nav_dropdown_border_color;
+    border-bottom: 0;
+  }
 }
 
 //
-// the dropdown menus
+// the dropdown menu items
 //
 
-// .menu_items are the actual dropdown menus that appear when you hover over the
-// menu titles.
+// menu_items are the actual dropdown menus that appear when you hover over the
+// menu tabs.
 //
-// to debug how .menu_items look, you may want to make them visible by default.
+// to debug how menu_items look, you may want to make them visible by default.
 // this can be controlled in layouts/menu/boxes by setting :style=>"display: block"
 
 #menu .menu_items {
 
   // positioning:
-  // makes the menu items fall under the menu title.
+  // makes the menu items fall under the menu title (li.tab).
   // the actual magic that makes them appear is the in javascript class DropMenu. 
   position: absolute; 
   left: 0;
-  // this positions the drop menu exactly under the menu title. not sure
-  // if it works in all browsers.
+
+  // this positions the top of the menu items exactly under the menu tab.
+  // not sure if it works in all browsers.
   margin-top: $masthead_nav_tab_padding/2 + $masthead_nav_dropdown_border_size;
 
   // appearance
   background-color: $masthead_nav_dropdown_background_color;
   padding: $grid_column_gutter;
-  // white-space: nowrap; // give the menus as much aspace as they need
-  border: $masthead_nav_dropdown_border_size solid  $masthead_nav_dropdown_border_color;
+  border: $masthead_nav_dropdown_border_size solid $masthead_nav_dropdown_border_color;
   z-index: $zindex_menu;
 
   // the name icons have a fancy hover effect
@@ -104,7 +100,7 @@ $masthead_nav_dropdown_border_size: 1px;
 // menu columns
 //
 
-#menu{
+#menu {
   // columns
   div.leftcol {
     width: 17em;

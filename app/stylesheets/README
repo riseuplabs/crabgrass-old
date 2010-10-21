@@ -1,25 +1,41 @@
+DEVELOPMENT NOTES
+=====================================
+
+There appears to be a bug in susy if you specify different gutter and side-gutter values. It may be a problem with the susy webkit hack, or it may be a general susy problem.
+
+
+USEFUL COMMANDS
+=====================================
+
+re regenerate the debug grid:
+  cd public
+  ../vendor/gems/compass-0.10.4/bin/compass grid-img 40+15 --force
+
+HTML STRUCTURE
+============================================================
+
 0.6 structure
 
 body
+  header#masthead
+    div#masthead_content
+    nav#global_nav
   div#container
-    header#masthead
-      div#masthead_content
-      ul#menu
-    aside#flash_messages
-    header#banner
+    div#flash_messages         (todo: change from flash-messages)
+    header#context_banner
       div#banner_content
-        div#identity
-      nav#context_nav
-    aside#sidebar
-    article#content
-      header#title_box
-        nav#title_nav
-      section#body
-        section
-        section
-      section#comments
-        article.comment
-        article.comment
+      nav#context_nav          (todo: change from banner_nav)
+    div#local
+      nav#local_nav
+      article#content
+        header#title_box
+          nav#title_nav
+        section#body
+          section
+          section
+        section#comments
+          article.comment
+          article.comment
 
 
 0.5 structure
@@ -59,15 +75,8 @@ body
      div.debug
 
 
-body
-  masthead
-  banner
-  navigation
-  content
-  footer
-
-
 SUSY CRASH COURSE
+=========================================
 
 grid element
   an html element that has been asigned a spanning width on the susy grid.
@@ -77,7 +86,8 @@ non-grid element
   all the other html elements
 
 container
-  an element that @includes 'container'
+  an element that @includes 'container'.
+  the thing that encloses everybody else.
 
 root context
   an element with a 'container' as its closest grid ancestor 
@@ -117,6 +127,7 @@ mixins:
        @include pad($prefix-span, $suffix-span [, $context])
 
 NOTES
+============================================
 
 From the html5 spec:
 
@@ -126,6 +137,15 @@ From the html5 spec:
    http://www.w3.org/TR/html5/sections.html#the-section-element
    (emphasis added)
 
-sections are to be used for grouping content, not as a generic container element.
+This could be read a few different ways. Some on the web focus on the first 
+"generic section" part, others focus on the "content" part. I choose to read
+this to mean that sections are to be used for grouping content, not
+as a generic container element.
+
+
+UNRESOLVED
+============================================
+
+The masthead tabs get messed up when you make the window really small. Can we make it not wrap?
 
 

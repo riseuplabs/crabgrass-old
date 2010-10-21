@@ -2,17 +2,108 @@
 // THE BANNER
 //
 
-header#banner {
+header#context_banner {
   @include full;
-  background: #eee;
-  border: 1px solid #ccc;
+  background: $banner_default_background;
+  border: $banner_border;
 
-  @if $masthead_nav_style == 'cutout' {
-    margin-top: $grid_column_gutter;
+  a.tab {
+    color: $banner_default_foreground;
   }
 
-  @if $banner_nav_style == 'inset' {
-    padding: $grid_column_gutter;
+  @if $masthead_nav_style == 'cutout' {
+    margin-top: gutter();
+  }
+
+  // @if $banner_nav_style == 'inset' {
+  //  padding: $banner_padding;
+  // }
+}
+
+#banner_content {
+  padding: $banner_padding;
+
+  a.avatar {
+    margin-right: $banner_padding;
+    img {
+      border: 2px solid white;
+      outline: $banner_border;
+      // this is necessary for the img to not have a gap under it
+      vertical-align: middle;
+    }
+  }
+
+  a.title {
+    color: $banner_default_foreground;
+    font-size: $banner_font_size;
+    @include hover-link;
+  }
+
+}
+
+//
+// vertically centered banner
+//
+// It takes a bit of work to center both the avatar image and the banner text.
+// For font sizes 24px or below, the banner text is already pretty spot on centered.
+// When it gets bigger, however, it does not look so good without all this extra css.
+// 
+// currently, this works, but requires a hardcoded 64px for the size of the
+// avatar.
+//
+// This is another example of where tables would be 10x easier.
+// 
+
+@if $banner_vertical_align == 'center' {
+  #banner_content {
+    // this prevents the enclosed floated divs from extending outside the banner
+    // (any value of overflow will do the trick)
+    overflow: hidden;
+
+    // required for center-vertically on a.title
+    position: relative;
+
+    // both the title and the avatar are floated left so that the title can be
+    // a block. why do we want the title to be a block? that is the only way to 
+    // vertically align it.
+    a.title, a.avatar {
+      display: block;
+      float: left;
+    }
+
+    a.title {
+      font-size: $banner_font_size;
+      @include center-line-vertically($banner_font_size);
+      @include center-vertically($banner_font_size);
+      left: $banner_padding + 64px + $banner_padding;
+    }
+  }
+}
+
+//
+// vertically aligned top
+//
+
+@if $banner_vertical_align == 'top' {
+  
+}
+
+//
+// cutout menus
+//
+
+@if $banner_nav_style == 'cutout' {
+  #context_banner {
+    $ul_id: 'banner_nav_ul';
+    @include cutout_menu($ul_id, $banner_nav_padding, $background_color, $banner_border);
+    a.tab.active {
+      color: inherit;
+    }
+    ul#banner_nav_ul {
+      // not sure why this needs 2 extra pixels, probably because of the border.
+      margin-left: 64px + $banner_padding + 2px;
+    }
+    margin-bottom: gutter();
   }
 }
 

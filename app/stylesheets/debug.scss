@@ -1,12 +1,18 @@
 
 #container {
-  @include show-grid("debug/grid.png");
+  @include show-grid("grid.png");
 }
-// #container * {
+
+//#container * {
 //   background-color: rgba(0,0,0,.125);
-// }
+//}
 
 
 .debug {
   overflow: hidden;
+  color: #999;
+}
+
+.wtf {
+  border: 1px dotted red;
 }
