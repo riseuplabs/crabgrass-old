@@ -1,33 +1,37 @@
 #
+# NOTE: make sure to update FORBIDDEN_NAMES with any words that are used by routes
+# and cannot be used for group or user names.
 #
-# NOTE: make sure to update the validates_handle function whenever you add a new controller
-# or a new root path route. This way, group and user handles will not be created for those
-# (group name or user login are used as the :context in the default route, so it can't collide
-# with any of our other routes).
-#
+
+FORBIDDEN_NAMES = %w(account admin assets avatars chat code debug do groups javascripts me networks page pages people places issues static stats stylesheets).freeze
 
 ActionController::Routing::Routes.draw do |map|
+  map.resources :examples
 
-  map.namespace :admin do |admin|
-    admin.resources :announcements
-    admin.resources :email_blasts
-    admin.resources :users, :only => [:new, :create]
-    admin.resources :groups, :only => [:new, :create]
-    admin.resources :custom_appearances, :only => [:new, :edit, :update]
-    admin.sites 'sites/:action', :controller => 'sites'
-    admin.root :controller  => 'base'
+
+
+#  map.namespace :admin do |admin|
+#    admin.resources :announcements
+#    admin.resources :email_blasts
+#    admin.resources :users, :only => [:new, :create]
+#    admin.resources :groups, :only => [:new, :create]
+#    admin.resources :custom_appearances, :only => [:new, :edit, :update]
+#    admin.sites 'sites/:action', :controller => 'sites'
+#    admin.root :controller  => 'base'
+#  end
+
+  ##
+  ## STATIC FILES AND ASSETS
+  ##
+
+  map.with_options(:controller => 'assets') do |assets|
+    assets.connect '/assets/:action/:id', :action => /create|destroy/
+    assets.connect 'assets/:id/versions/:version/*path', :action => 'show'
+    assets.connect 'assets/:id/*path', :action => 'show'
   end
 
-  ##
-  ## ASSET
-  ##
-
-  map.connect '/assets/:action/:id',                :controller => 'assets', :action => /create|destroy/
-  map.connect 'assets/:id/versions/:version/*path', :controller => 'assets', :action => 'show'
-  map.connect 'assets/:id/*path',                   :controller => 'assets', :action => 'show'
-
   map.avatar 'avatars/:id/:size.jpg', :action => 'avatar', :controller => 'static'
-  map.connect 'latex/*path', :action => 'show', :controller => 'latex'
+  # map.connect 'latex/*path', :action => 'show', :controller => 'latex'
 
   map.connect 'theme/:name/*file.css', :controller => 'theme', :action => 'show'
 
@@ -35,57 +39,79 @@ ActionController::Routing::Routes.draw do |map|
   ## ME
   ##
 
-  # map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
-  # map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
-  # map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
-  map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
-  map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
-  map.connect 'me/pages/trash/:action/*path',     :controller => 'me/trash'
-  map.connect 'me/pages/trash',                   :controller => 'me/trash'
+#  # map.connect 'me/inbox/:action/*path',     :controller => 'me/inbox'
+#  # map.connect 'me/requests/:action/*path',  :controller => 'me/requests'
+#  # map.connect 'me/dashboard/:action/*path', :controller => 'me/dashboard'
+#  map.connect 'me/tasks/:action/*path',     :controller => 'me/tasks'
+#  map.connect 'me/infoviz.:format',         :controller => 'me/infoviz', :action => 'visualize'
+#  map.connect 'me/pages/trash/:action/*path',     :controller => 'me/trash'
+#  map.connect 'me/pages/trash',                   :controller => 'me/trash'
 
 
-  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
-    # This should only be index. However ajax calls seem to post not get...
-    me.resource :flag_counts, :only => [:show, :create]
-    me.resource :recent_pages, :only => [:show, :create]
-    me.resource :my_avatar, :as => 'avatar', :controller => 'avatars', :only => :destroy
+#  map.with_options(:namespace => 'me/', :path_prefix => 'me') do |me|
+#    # This should only be index. However ajax calls seem to post not get...
+#    me.resource :flag_counts, :only => [:show, :create]
+#    me.resource :recent_pages, :only => [:show, :create]
+#    me.resource :my_avatar, :as => 'avatar', :controller => 'avatars', :only => :destroy
 
-    me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
-    # for now removing peers option until we work on fixing friends/peers distinction
-    #me.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
-    me.resources :social_activities, :as => 'social-activities', :only => :index
-    me.resources :messages, { :collection => { :mark => :put },
-                               :member => { :next => :get, :previous => :get }} do |message|
-      message.resources :posts, :controller => 'message_posts'
-    end
-    me.resources :public_messages, :only => [:show, :create, :destroy]
+#    me.resources :requests, { :collection => { :mark => :put, :approved => :get, :rejected => :get }}
+#    # for now removing peers option until we work on fixing friends/peers distinction
+#    #me.resources :social_activities, :as => 'social-activities', :only => :index, :collection => { :peers => :get }
+#    me.resources :social_activities, :as => 'social-activities', :only => :index
+#    me.resources :messages, { :collection => { :mark => :put },
+#                               :member => { :next => :get, :previous => :get }} do |message|
+#      message.resources :posts, :controller => 'message_posts'
+#    end
+#    me.resources :public_messages, :only => [:show, :create, :destroy]
 
-
+  map.with_options(:namespace => 'me/', :path_prefix => 'me', :name_prefix => 'me_') do |me|
+    me.resources :timelines
+    me.home      '', :controller => 'timelines', :action => 'index'
+    me.resource  :page, :only => [:new, :create]
+    me.pages     'pages/*path', :controller => 'pages'
+    me.resources :activities
+    me.resources :messages
+    me.resource  :settings, :only => [:show, :update]
+    me.resources :permissions
+    me.resource  :profile, :controller => 'profile'
+    me.resources :requests
   end
 
-  map.resource :me, :only => [:show, :edit, :update], :controller => 'me' do |me|
-    me.resources :pages,
-      :only => [:new, :update, :index],
-      :collection => {
-  #      :notification => :get,
-        :my_work => :get,
-        :all => :get,
-        :mark => :put}
-  end
+#  end
+
+#  map.resource :me, :only => [:show, :edit, :update], :controller => 'me' do |me|
+#    me.resources :pages,
+#      :only => [:new, :update, :index],
+#      :collection => {
+#  #      :notification => :get,
+#        :my_work => :get,
+#        :all => :get,
+#        :mark => :put}
+#  end
 
   ##
   ## PEOPLE
   ##
 
-  map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
+  map.people_directory 'people/directory/*path', :controller => 'people/directory'
 
-  map.with_options(:namespace => 'people/') do |people_space|
-    people_space.resources :people do |people|
-      people.resources :messages, :as => 'messages/public', :controller => 'public_messages'
-    end
+  map.resources :people, :namespace => 'people/' do |people|
+    people.resource  :page, :only => [:new, :create]
+    people.pages     'pages/*path', :controller => 'pages'
+    people.resources :messsages
+    people.resources :activities
+    people.resources :pages
   end
 
-  map.connect 'person/:action/:id/*path', :controller => 'person'
+  # map.resources :people_directory, :as => 'directory', :path_prefix => 'people', :controller => 'people/directory'
+  
+#  map.with_options(:namespace => 'people/') do |people_space|
+#    people_space.resources :people do |people|
+#      people.resources :messages, :as => 'messages/public', :controller => 'public_messages'
+#    end
+#  end
+
+#  map.connect 'person/:action/:id/*path', :controller => 'person'
 
   ##
   ## EMAIL
@@ -95,75 +121,63 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/code/:id', :controller => 'codes', :action => 'jump'
 
   ##
-  ## PAGES
+  ## ACCOUNT
   ##
 
-  map.connect '/me/pages/*path', :controller => 'pages'
-
-  # handle all the namespaced base_page controllers:
-  map.connect ':controller/:action/:id', :controller => /base_page\/[^\/]+/
-  #map.connect 'pages/search/*path', :controller => 'pages', :action => 'search'
-
-  ##
-  ## OTHER
-  ##
-
-  map.login 'account/login',   :controller => 'account',   :action => 'login'
-  #map.resources :custom_appearances, :only => [:edit, :update]
-  map.reset_password '/reset_password/:token', :controller => 'account', :action => 'reset_password'
-  map.account_verify '/verify_email/:token', :controller => 'account', :action => 'verify_email'
-  map.account '/account/:action/:id', :controller => 'account'
-
-  map.search 'search/*path', :controller => 'search', :action => 'index'
-  map.connect '', :controller => 'root'
-
-  map.connect 'bugreport/submit', :controller => 'bugreport', :action => 'submit'
+  map.with_options(:controller => 'account') do |account|
+    account.login 'account/login', :action => 'login'
+    account.reset_password 'account/reset_password/:token', :action => 'reset_password'
+    account.account_verify 'account/verify_email/:token', :action => 'verify_email'
+    account.connect 'account/:action/:id'
+  end
 
   ##
   ## GROUP
   ##
 
-  map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
-  map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
+  map.networks_directory 'networks/directory/*path', :controller => 'groups/networks_directory'
+  map.groups_directory 'groups/directory/*path', :controller => 'groups/groups_directory'
 
-  map.resources :groups do |group|
-    group.resources :pages, :only => :new
+  map.resources :groups, :networks, :namespace => 'groups/' do |groups|
+    # groups.resource  :page, :only => [:new, :create]
+    groups.pages     'pages/*path', :controller => 'pages' #, :path => []
+    groups.resources :members
+    groups.resources :requests
+    groups.resources :invites
+    groups.resource  :settings, :only => [:show, :update]
   end
-
-  map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
-  map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
-
-  map.resources :networks do |network|
-    network.resources :pages, :only => :new
-  end
-
-  map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
-  map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
   ##
   ## CHAT
   ##
-  map.chat 'chat/:action/:id', :controller => 'chat'
-  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
-#  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
-  ##
-  ## DEFAULT ROUTE
-  ##
+#  map.chat 'chat/:action/:id', :controller => 'chat'
+#  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
+##  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
 
-  map.connect ':controller/:action/:id'
-
+  ##
+  ## DEBUGGING
+  ##
 
   if RAILS_ENV == "development"
     ## DEBUG ROUTE
     map.debug_become 'debug/become', :controller => 'debug', :action => 'become'
   end
-
+  map.debug_report 'debug/report/submit', :controller => 'bugreport', :action => 'submit'
 
   ##
-  ## DISPATCHER
+  ## DEFAULT ROUTE
   ##
 
-  map.connect 'page/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
+  map.connect '/do/:controller/:action/:id'
+  map.root :controller => 'root'
+
+  ##
+  ## PAGES
+  ##
+
+  map.connect '/pages/:controller/:action/:id', :controller => /base_page\/[^\/]+/
+
+  map.connect 'pages/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
 
   map.connect ':_context/:_page/:_page_action/:id', :controller => 'dispatch', :action => 'dispatch', :_page_action => 'show', :id => nil
 

@@ -51,4 +51,15 @@ This will drop you into the debugger whenever that query occurs.
 You can use the method "response_body" to get an easier to read version of the
 response body. Super useful!
 
+== Debugging Routes
+
+in the console:
+  include ActionController::UrlWriter
+  default_url_options[:host] = 'localhost'
+
+via rake:
+  rake routes
+
+
+
 
