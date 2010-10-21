@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   end
 
   s.files = %w[
-.gitignore
 LICENSE
 CHANGELOG
 README.rdoc

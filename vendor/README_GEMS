@@ -23,6 +23,12 @@ To freeze a gem named 'x':
   run:
     rake gems:unpack GEM=x
 
+NOTE: for all rails 2.3.X, unpacked gems may trigger a complain by rails that 
+the gem doesn't have a specification file -- and then rails refuses to run.
+
+Unfortunately, the advice the error gives, to run "rake gems:refresh_specs", 
+does not work. Instead, try running "ruby vendor/refresh_specs.rb"
+
 If you freeze a gem, please document what the gem is used
 for here:
 
