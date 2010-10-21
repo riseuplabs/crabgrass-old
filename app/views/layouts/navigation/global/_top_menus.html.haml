@@ -1,0 +1,14 @@
+- #
+- # The top-level global navigation drop-down menu tabs
+- # say that ten times fast.
+- #
+
+%ul#menu
+  - @global_navigation.each do |tab|
+    - if tab.visible
+      %li{:class => "tab drop_menu", :id => "menu_#{tab.name}"}
+        = link_to_active(tab.label, tab.url, tab.active, :class => 'tab')
+        = theme_render(tab.html)
+  -# this dummy tab is needed at the end for correct rendering in webkit:
+  %li.tab
+    %a.tab

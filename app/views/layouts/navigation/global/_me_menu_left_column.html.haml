@@ -1,0 +1,7 @@
+- @drop_down_menu = true
+- menu = current_theme.navigation.root.seek(:me)
+%ul
+- menu.each do |item|
+  %li{:class=>"small_icon #{item.icon}_16"}
+    = link_to item.label, item.url
+- @drop_down_menu = false

@@ -1,0 +1,16 @@
+- left_column = @local_navigation.any?
+- # left_column = true if <some other reason>
+
+#local
+  - if left_column
+    #column_left
+      %nav#local_nav
+        = render :partial => 'layouts/navigation/local/sidebar'
+    #column_center.with_left
+      %article#content
+        = yield
+  - else
+    #column_center.full
+      %article#content
+        = yield
+

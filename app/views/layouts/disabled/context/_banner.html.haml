@@ -1,0 +1,170 @@
+-#
+  CONTEXT BANNER
+  
+  This is the only place that should hold banner view code.
+  it used to be in a dozen places, now it is here, and here alone.
+
+  the purpose of the banner is to provide a very strong visual and nav context.
+
+  if the current page is a blog posting, for example, i want it to be clear is
+  is *my* blog posting. if a page is owned by a group, i want to quickly figure
+  this out.
+
+  however, sometimes it makes sense to not have a banner at all. For example
+  when a page doesn't have an owner. Directories should not have banners,
+  because there is now user or group context.
+
+  A banner consists of five data elements:
+
+  - primary entity
+  - parent entity (optional)
+  - navigation (optional)
+  - secondary links (optional)
+  - an html form (optional)
+
+  eventually, we want the user to be able to personally customize the appearance
+  of their context banner, as well as the navigation and links.
+
+- if @context
+  %header#context_banner{:class => @context.size}
+    %div#banner_content
+      - if @context.avatar
+        %a{:href => url_for_entity(@context.entity), :class => 'avatar'}><
+          = avatar_for(@context.entity, @context.size)
+      = link_to_entity(@context.entity, :class => 'title')
+
+    %nav#banner_nav
+      %ul#banner_nav_ul
+        %li.tab
+          %a.tab.active{:href => '#'} hi there
+        %li.tab
+          %a.tab{:href => '#'} bye now
+        %li.tab
+          %a.tab{:href => '#'} see ya
+
+    -# if @context.navigation
+      %nav#context_nav
+        %ul
+          - banner.navigation.each do |link|
+            %li
+              %a{:href => ''}
+                = "xxxx"
+
+-# banner = banner_partial_for(@active_tab)
+-# menu = menu_partial_for(@active_tab)
+-#
+  OPEN QUESTIONS
+
+  where does old code use 'content_for :third_nav' and where should this go?
+
+  - if yield :third_nav
+    #third-level-container
+      %nav{:id => 'third-level', :class=>'extended_sidebar'}
+        = yield :third_nav
+
+  - if yield :third_nav
+    #third-level-container
+      %nav#third-level
+        = yield :third_nav
+
+  old stuff
+
+
+  %div.banner
+    #banner-container.no-avatar
+      %header#banner-no-avatar
+        = yield :banner
+  %div.nav2
+    #nav2-container    
+      %nav#second-level-aside
+        = yield :info_box
+
+  - if yield :banner
+    %div.banner
+      #banner-container
+        %header#banner
+          = yield :banner
+    %div.nav2
+      #nav2-container
+        - if yield :secondary_nav
+          %nav#second-level
+            = yield :secondary_nav
+
+  header
+    - content_for :banner do
+      %section#identity-name
+        - entity = @parent || @group || @user
+        %a{:href => url_for_entity(entity)}
+          = avatar_for(entity, 'large', :class => "left")
+        - banner = banner_partial_for(@active_tab)
+        = render :partial => banner
+
+    - content_for :secondary_nav do
+      - menu = menu_partial_for(@active_tab)
+      - if ! menu.nil?
+        = render :partial => menu
+  root
+    <table style='width:100%'>
+      <tr>
+        <td align='right' nowrap='nowrap'><%= mini_search_form %></td>
+      </tr>
+    </table>
+  person
+    %div.left
+      %h1= @user.try.display_name
+      %i.normal= h(@status)
+  search
+    %section#identity-name
+      %div.left
+        %h1
+          = I18n.t(:search_headline)
+  person small
+    <table><tr>
+      <td class='nowrap'><%= avatar_for @user,'small'%></td>
+      <td style='width:99%'><h2><%= link_to_user @user %></h2></td>
+      <td align='right' class='nowrap'>
+        <%= mini_search_form %>
+      </td>
+    </tr></table>
+  person large
+    <table>
+    <tr>
+      <td rowspan='2'><%= avatar_for @user, 'large' %></td>
+      <td style='width:99%'><h1><%= link_to_user @user %></h1></td>
+      <td align='right' class='nowrap'>
+        <%= mini_search_form %>
+      </td>
+    </tr>
+    </table>
+  people directory
+    %header.no-sidebar
+      %div.left
+        %h1= I18n.t(:directory_of_people)
+  me/navigation
+    %div.left
+      %h1= current_user.display_name
+      = render :partial => 'common/say_form', :locals => {:submit => I18n.t(:say_message_button), :url => '/me/public_messages', :text => current_user.current_status}
+    %div.right
+      = create_page_link
+  me
+    <table><tr>
+      <td style='width: 1%'><%= avatar_for current_user,'medium'%></td>
+      <td style='width: 1%' align='left' class='nowrap'><h1><%= link_to_user current_user %></h1></td>
+      <td align='right' class='nowrap'>
+        <%= mini_search_form %>
+      </td>
+    </tr></table>
+  groups
+    - group = @parent || @group
+    %div.left
+      %h1
+        = group.display_name
+      %div#group-action
+        = join_group_link
+        = leave_group_link unless @no_leave_group_link
+        - if may_join_chat? && !controller.is_a?(ChatController)
+          %a#chat.small_icon.chat2_16{:href => url_for({:controller => 'chat', :action => 'channel', :id => group.name})}
+            = I18n.t(:group_join_chat)
+    %div.right
+      = create_page_link(group)
+

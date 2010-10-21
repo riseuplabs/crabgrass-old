@@ -1,0 +1,33 @@
+-# i think this yield thing is starting to get abused. wtf are all these?
+
+- extended_sidebar = yield :extended_sidebar
+- third_nav        = yield :third_nav
+- misc_header      = yield :misc_header
+- browse_content   = yield :browse_content
+- right_sidebar    = yield :right_sidebar
+- left_sidebar     = yield :left_sidebar
+
+#main
+  - if extended_sidebar
+    = render :partial => '/layouts/content/extended_sidebar', :locals => {:content => extended_sidebar, :third_nav => third_nav}
+  - if misc_header
+    .wtf
+      = misc_header
+  - if browse_content
+    .wtf
+      %section#browse-content
+        = browse_content
+  - if right_sidebar
+    #content.left
+      = yield
+    %aside#sidebar.right
+      = right_sidebar
+  - elsif left_sidebar
+    %aside#sidebar.left
+      = left_sidebar
+    #content.right
+      = yield
+  - else
+    #content.full
+      = yield
+

@@ -5,7 +5,8 @@
     = render :partial => '/layouts/headers/masthead'
     #container
       = render :partial => '/layouts/headers/messages'
-      = render :partial => '/layouts/navigation/context/banner'
-      = render :partial => '/layouts/content/content'
+      #main
+        #content.full
+          = yield
       = render :partial => '/layouts/headers/footer'
 

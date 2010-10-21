@@ -1,0 +1,29 @@
+-#
+  CONTEXT BANNER
+  
+  This is the only place that should hold banner view code.
+  it used to be in a dozen places, now it is here, and here alone.
+
+  the purpose of the banner is to provide a very strong visual and nav context.
+
+  if the current page is a blog posting, for example, i want it to be clear is
+  is *my* blog posting. if a page is owned by a group, i want to quickly figure
+  this out.
+
+  however, sometimes it makes sense to not have a banner at all. For example
+  when a page doesn't have an owner. Directories should not have banners,
+  because there is now user or group context.
+
+  eventually, we want the user to be able to personally customize the appearance
+  of their context banner, as well as the navigation and links.
+
+- if @context
+  %header#context_banner{:class => @context.size}
+    %div#banner_content
+      - if @context.avatar
+        %a{:href => url_for_entity(@context.entity), :class => 'avatar'}><
+          = avatar_for(@context.entity, @context.size)
+      = link_to_entity(@context.entity, :class => 'title')
+    = render :partial => '/layouts/navigation/context/banner_menu'
+
+

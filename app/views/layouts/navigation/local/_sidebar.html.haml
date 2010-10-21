@@ -1,0 +1,4 @@
+%ul
+  - @local_navigation.each do |item|
+    %li{:class => (item.active ? 'active' : '')}
+      = link_to_active(item.label, item.url, item.active)

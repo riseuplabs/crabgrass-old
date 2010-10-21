@@ -1,0 +1,18 @@
+- if current_theme.masthead_style == 'grid'
+  -# if the masthead is of style 'grid' then it needs a enclosing susy container to keep it
+  -# aligned with the grid.
+  %div#masthead_container
+    %header#masthead
+      %div#masthead_content
+        = theme_render(current_theme.masthead_content_html)
+      %nav#global_nav
+        = render :partial => '/layouts/navigation/global/top_menus'
+- else
+  -# otherwise, don't enclose the masthead in a susy container
+  %header#masthead
+    %div#masthead_content
+      = theme_render(current_theme.masthead_content_html)
+    %nav#global_nav
+      = render :partial => '/layouts/navigation/global/top_menus'
+
+

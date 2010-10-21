@@ -1,0 +1,7 @@
+- if @context_navigation
+  %nav#banner_nav
+    %ul#banner_nav_ul
+      - @context_navigation.each do |tab|
+        - if tab.visible
+          %li.tab
+            = link_to_active(tab.label, tab.url, tab.active, :class => 'tab')

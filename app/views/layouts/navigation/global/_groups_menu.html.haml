@@ -1,0 +1,7 @@
+- if logged_in?
+  = render :partial => '/layouts/navigation/global/boxes',
+      :locals => { :id => 'groups',
+        :entities => current_user.primary_groups.most_active,
+        :heading => I18n.t(:my_groups),
+        :see_all_url => group_directory_url(:action => 'my') }
+

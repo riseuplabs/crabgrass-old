@@ -1,0 +1,8 @@
+- if logged_in?
+  = render :partial => '/layouts/navigation/global/boxes',
+      :locals => { :id => 'people',
+        :entities => current_user.friends.most_active,
+        :heading => I18n.t(:my_contacts),
+        :see_all_url => people_directory_url(:friends) }
+
+

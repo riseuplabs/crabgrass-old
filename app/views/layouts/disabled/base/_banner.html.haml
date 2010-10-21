@@ -1,0 +1,49 @@
+-#
+  ahh, the banner. some love it, some hate it.
+  the purpose of the banner is to provide a very strong visual and nav context.
+
+  if the current page is a blog posting, for example, i want it to be clear
+  is is *my* blog posting. if a page is owned by a group, i want to quickly
+  figure this out.
+
+  however, sometimes it makes sense to not have a banner at all. For example
+  when a page doesn't have an owner. 
+
+  because the banner may be optional, i think that the banner should not have
+  anything vital in it -- just context when context is appropriate. 
+
+  however, the current code puts a lot of junk in the banner. 
+
+- banner_html = yield(:banner)
+- nav_html = yield(:banner_nav)
+- if banner_html
+  %header#banner
+    %div#banner_content
+      = banner_html
+    - if nav_html
+      %nav#context_nav
+        nav_html
+
+
+-#
+  old stuff
+  %div.banner
+    #banner-container.no-avatar
+      %header#banner-no-avatar
+        = yield :banner
+  %div.nav2
+    #nav2-container    
+      %nav#second-level-aside
+        = yield :info_box
+
+  - if yield :banner
+    %div.banner
+      #banner-container
+        %header#banner
+          = yield :banner
+    %div.nav2
+      #nav2-container
+        - if yield :secondary_nav
+          %nav#second-level
+            = yield :secondary_nav
+

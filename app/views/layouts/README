@@ -1,0 +1,10 @@
+
+/app/views/layouts
+
+  Where actual layouts live
+
+/app/views/layouts/<sub directory>
+
+  Where the partials used by the layouts live
+
+

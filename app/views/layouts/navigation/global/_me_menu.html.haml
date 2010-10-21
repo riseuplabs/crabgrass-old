@@ -1,0 +1,14 @@
+- #
+- # Note: the onclick remote function gets called once when this menu becomes visible
+- #
+
+- #%div{:class => "menu_items", :style => "display: none" :onclick => (remote_function(:url => recent_pages_url) unless browser_is_ie?)}
+%div{:class => "menu_items", :style => "display: none", :onclick => ""}
+  %div{:class => "leftcol menu_me"}
+    -# cache(menu_cache_key(:submenu=>'me_sidebar'))
+    = render :partial => '/layouts/navigation/global/me_menu_left_column'
+  - unless browser_is_ie?
+    %div{:class => "rightcol menu_me"}
+      %div.recent_pages_dropdown
+        = big_spinner
+
