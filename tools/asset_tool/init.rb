@@ -1,14 +1,8 @@
-# Include hook code here
-
-PageClassRegistrar.add(
-  'AssetPage',
+define_page_type :AssetPage, {
   :controller => 'asset_page',
   :model => 'Asset',
   :icon => 'page_package',
   :class_group => ['media', 'media:image', 'media:audio', 'media:document'],
   :order => 10
-)
-
-#self.override_views = true
-self.load_once = false
+}
 
