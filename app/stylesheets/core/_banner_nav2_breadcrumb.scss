@@ -1,0 +1,152 @@
+//
+// breadcrumb
+//
+#breadcrumb {
+  @include clearfix;
+  @include bordered-top($banner_brdr_btm);
+  background: $banner_bg;
+  height: 28px;
+  #breadcrumb-container {
+    @include container;
+    div {
+      @include columns(14);
+      @include full;
+      margin-top: 4px;
+      a {
+        @include hover-link;
+        @include small-text;
+        @include zero;
+        text-transform: uppercase;
+        color: $almost_black; } } } }
+
+//
+//banner
+//
+.banner {
+  @include bordered-btm($banner_brdr_btm);
+  background: $banner_bg;
+  #banner-container {
+    @include container;
+    background: $banner_bg;
+    height: 114px;
+    overflow: visible;
+    #banner-no-avatar {
+      @include columns(14);
+      @include full;
+      height: 64px;
+      margin-top: 28px;
+      width: 540px;
+      padding-left: 224px; }
+    #banner {
+      @include columns(14);
+      @include full;
+      height: 86px;
+      margin-top: 28px;
+      width: 764px;
+      padding-left: 0;
+      div.left {
+        padding-left: 17px;
+        display: inline;
+        h1 {
+          float: left; } }
+      img {
+        @include bordered;
+        background: white;
+        padding: 2px;
+        margin-right: 17px;
+        #identity-name {
+          h1 {
+            color: $banner_title;
+            float: left;
+            display: inline;
+            line-height: 1.2;
+            font-size: 26px;
+            font-weight: normal;
+            width: 500px; }
+          a {
+            @include hover-link;
+            @include small-text;
+            float: left;
+            clear: left;
+            color: $light_grey_text; } } } } } }
+
+#group-action {
+  float: left;
+  clear: left;
+  margin-top: 4px;
+  a {
+    @include hover-link;
+    @include small-text;
+    color: $light_grey_text;
+    &.small_icon {
+      margin-left: 10px; } } }
+
+#contribute {
+  float: right;
+  background-color: #78be63;
+  border: 1px solid #448c3b;
+  a {
+    @include hover-link;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 6px;
+    margin: 0 2px 0 0; } }
+
+//
+//banner2 for banner-no-avatar
+//
+#banner-container.no-avatar {
+  @include pie-clearfix;
+  height: 92px;
+  overflow: visible; }
+
+//
+// second-level nav
+//
+.nav2 {
+  #nav2-container {
+    @include container;
+    @include pie-clearfix;
+    background: $second_nav_bg url(/images/background/nav2.png) repeat-x bottom left;
+    @include bordered-btm($second_nav_border);
+    height: 30px;
+    overflow: visible;
+    width: 800px;
+    nav#second-level-aside, nav#second-level {
+      @include columns(14);
+      @include full;
+      width: 540px;
+      padding-left: 224px;
+      margin: 0 18px;
+      li {
+        @include inline-list;
+        display: inline-block;
+        font-size: 12px;
+        margin-right: 4px;
+        float: left;
+        a {
+          @include hover-link;
+          color: $second_nav_link;
+          font-weight: bold;
+          display: inline-block;
+          height: 29px;
+          line-height: 2.6;
+          padding: 0 8px; } }
+      li.current {
+        @include bordered-2sides($second_nav_border);
+        @include bordered-btm(white);
+        background: white;
+        a {
+          color: $second_nav_current;
+          background: white;
+          font-weight: bold; } }
+      #last-login {
+        font-size: 10px; } }
+    nav#second-level {
+      width: 764px;
+      padding-left: 0; }
+    span.count {
+      @include blue-link;
+      padding-right: 8px;
+      margin-left: -3px; } } }
