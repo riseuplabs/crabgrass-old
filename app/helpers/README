@@ -1,0 +1,37 @@
+There are a lot of helpers. Use this guide to sort them out:
+
+Global Helpers
+============================
+
+Global helpers are available everywhere.
+
+/app/helpers/page
+
+  For displaying lists of pages, creating pages, and linking to pages.
+
+/app/helpers/ui
+
+  For UI display elements: widgets, images, linking, navigation, etc.
+
+/app/helpers/utility
+
+  Global helpers that don't relate to UI elements. For example, time functions,
+  caching, etc.
+
+Controller Specific Helpers
+============================
+
+/app/helpers
+
+  Only controller specific helpers should go here.
+
+/app/base_page
+
+  Helpers that are used by controllers that are decended from BasePage (ie tools)
+
+/app/me
+
+  For use by controllers in app/controllers/me
+
+
+

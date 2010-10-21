@@ -1,29 +1,89 @@
+module UI
+end
+
+module Utility
+end
+
 class ApplicationController < ActionController::Base
 
-  helper CommonHelper
-  helper PathFinder::Options
-  helper Formy
-  helper 'tab_bar'
-  permissions 'application'
+  # permissions 'application'
 
-  # TODO: remove these, access via self.view() instead.
-  include AuthenticatedSystem
-  include PageHelper      # various page helpers needed everywhere
-  include UrlHelper       # for user and group urls/links
-  include TimeHelper      # for displaying local and readable times
-  include FlashMessageHelper     # for displaying errors and messages to the user
-  include ContextHelper
+  ##
+  ## GLOBAL HELPERS
+  ##
+
+  # note: if there is an error in any of the helpers or controller extensions, 
+  # for some reason rails does not report the error correctly. It will say that
+  # helper/ui/error_helper.rb does not define UI::ErrorHelper. I have found that
+  # loading ApplicationController from the console can correctly identify the
+  # real error. 
+
+  include UI::FlashMessageHelper   # for displaying errors and messages to the user
+  helper UI::FlashMessageHelper    # load early, in case an error occurs
+
+  helper PathFinder::Options
+  helper Crabgrass::Hook::Helper
+
+  helper Utility::CacheHelper
+  helper Utility::GeneralHelper
+  helper Utility::PermissionsHelper
+  helper Utility::RouteHelper
+  helper Utility::RssHelper
+  helper Utility::TimeHelper
+
+  helper UI::ContextHelper
+  helper UI::EntityUrlHelper
+  helper UI::EntityDisplayHelper
+  helper UI::HelpHelper
+  helper UI::FormHelper
+  helper UI::ImageHelper
+  helper UI::JavascriptHelper
+  helper UI::LayoutHelper
+  helper UI::LinkHelper
+  helper UI::MenuHelper         # deprecated
+  helper UI::ModalboxHelper
+  helper UI::PaginationHelper
+  helper UI::PostHelper
+  helper UI::SearchHelper
+  helper UI::TabBarHelper       # deprecated
+  helper UI::TaggingHelper
+  helper UI::TextHelper
+
+  helper Page::CreationHelper
+  helper Page::FormHelper
+  helper Page::ListingHelper
+  helper Page::ListingTableHelper
+  helper Page::UrlHelper
+
+  # TODO: figure out why each of these is here and then remove it. 
+  # if still needed, access via self.view() instead.
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
-  include ImageHelper
-  include PermissionsHelper
+#  include Pages::PageHelper        # various page helpers needed everywhere
+  include Utility::TimeHelper      # for displaying local and readable times
+  # include Utility::RouteHelper  
+  # include UI::DisplayEntityHelper
+  include UI::ImageHelper
+  include UI::LinkHelper
+  include UI::EntityUrlHelper
 
-  include PathFinder::Options                   # for Page.find_by_path options
+  ##
+  ## CONTROLLER EXTENSIONS
+  ## 
+
+  include AuthenticatedSystem
+  include Utility::PermissionsHelper
+  include PathFinder::Options
+  include ControllerExtension::Context
   include ControllerExtension::CurrentSite
   include ControllerExtension::UrlIdentifiers
   include ControllerExtension::RescueErrors
   include ControllerExtension::PaginationOptions
   include Crabgrass::Hook::Helper
+
+  ##
+  ## FILTERS
+  ##
 
   # don't allow passwords in the log file.
   filter_parameter_logging "password"
@@ -44,7 +104,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   # no layout for HTML responses to ajax requests
-  layout proc{ |c| c.request.xhr? ? false : 'default' }
+  layout proc{ |c| c.request.xhr? ? false : 'base' }
 
   # ensure that essential_initialization ALWAYS comes first
   def self.prepend_before_filter(*filters, &block)
@@ -120,21 +180,8 @@ class ApplicationController < ActionController::Base
 
   # TODO: figure out what the hell is the purpose of this?
   def pre_clean
-    User.current = nil
+    # User.current = nil
   end
-
-  # A special 'before_render' filter that calls 'context()' if this is a normal
-  # request for html and there has not been a redirection. This allows
-  # subclasses to put their navigation setup calls in context() because
-  # it will only get called when appropriate.
-  def context_if_appropriate
-    if !@skip_context and normal_request?
-      @skip_context = true
-      context()
-    end
-    true
-  end
-  def context; end
 
   ##
   ## HELPERS
@@ -240,6 +287,14 @@ class ApplicationController < ActionController::Base
         founduser = User.authenticate(user, password)
         self.current_user = founduser unless founduser.nil?
       end
+    end
+  end
+
+  # controllers should call this when they want to record a tracking event.
+  # e.g. in order to update the page view count.
+  def track(options={})
+    if current_site.tracking
+      Tracking.delayed_insert({:current_user => current_user, :group => @group, :user => @user, :action => :view}.merge(options))
     end
   end
 
