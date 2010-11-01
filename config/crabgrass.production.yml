@@ -51,7 +51,7 @@ profile_fields:
   - notes
   - websites
 
-text_editor: html_only
+#text_editor: html_only
 
 ##
 ## SITES
