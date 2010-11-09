@@ -14,7 +14,7 @@ ymd += "-#{@day}" unless @day.empty?
         <td>
           <%- if month_data = @months.detect {|a| a['year'] == year and a['month'] == month} -%>
            <%- klass = @date == "#{year}-#{month}" ? 'invert' : '' -%>
-            <%= link_to month, {:controller => 'chat', :action => 'archive', :path => ['date', "#{year}-#{month}"]}, :class => klass %>
+            <%= link_to month, {:controller => 'chat', :action => 'archive', :date => "#{year}-#{month}"}, :class => klass %>
           <%- else -%>
             <%= month %>
           <%- end -%>
