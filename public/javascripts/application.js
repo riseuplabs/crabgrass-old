@@ -340,7 +340,7 @@ var DropSocial = Class.create({
       this.clearEvents(event);
     } else {
       this.container.show();
-      event.stopPropogation();
+      event.stopPropagation();
       this.clearEvents(event);
     }
   },
