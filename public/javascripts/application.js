@@ -334,6 +334,10 @@ var DropSocial = Class.create({
   IsOpen: function() {
     return this.container.visible();
   },
+  clearEvents: function(event) {
+    event.stop();
+    $$('.menu_items').without(this.menu).invoke('hide');
+  },
   toggleActivities: function(event) {
     if (this.IsOpen()) {
       this.container.hide();
