@@ -118,7 +118,7 @@ module CustomAppearanceExtension
     module ClassMethods
       def available_parameters(dir='')
         parameters = {}
-        # parse the constants.sass file and return the hash
+        # parse the constants file and return the hash
         constants_lines = File.readlines(File.join(CustomAppearance::SASS_ROOT, dir, CustomAppearance::CONSTANTS_FILENAME))
         constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
         constants_lines.each do |l|
