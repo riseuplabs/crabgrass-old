@@ -108,5 +108,6 @@ class CustomAppearaceTest < ActiveSupport::TestCase
 
   def test_available_parameters
     assert CustomAppearance.available_parameters("ui_base").is_a?(Hash)
+    assert CustomAppearance.available_parameters("ui_base").size > 0
   end
 end
