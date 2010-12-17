@@ -2,8 +2,8 @@
 // masthead with logout
 //
 #masthead {
-  @include clearfix;
-  background: $masthead_background;
+  display: block;
+  background-color: $masthead_background;
   #masthead-container {
     @include container;
     height: 50px;
@@ -60,9 +60,7 @@
 //global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
 //
 nav.page {
-  @include clearfix;
-  @include bordered-top($global_nav_top_brdr);
-  @include bordered-btm($global_nav_btm_brdr);
+  display: block;
   background: $global_nav_bg;
   overflow: visible;
   #global-nav-container {
@@ -73,7 +71,10 @@ nav.page {
       @include columns(14);
       @include full;
       width: 764px;
-      overflow: visible; } } }
+      overflow: visible; } } 
+  @include bordered-top($global_nav_top_brdr);
+  @include bordered-btm($global_nav_btm_brdr);
+}
 
 #user a#social-activities-container {
   width: 50px;

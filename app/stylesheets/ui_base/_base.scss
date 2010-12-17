@@ -251,7 +251,6 @@ h3#underlined {
     padding: 10px 0;
     .pages-info {
       @include columns(8, 11);
-      @include alpha(11);
       margin: 0;
       a.tooltip {
         float: left;
@@ -323,7 +322,6 @@ h3#underlined {
     padding: 10px 0;
     .pages-info {
       @include columns(12, 14);
-      @include alpha(14);
       margin: 0;
       width: 80%;
       h4 {
@@ -912,7 +910,6 @@ del {
     padding: 0 0 8px; }
   article {
     @include columns(5, 10);
-    @include alpha(10);
     padding-top: 10px; }
   article.right {
     @include columns(5, 10);
@@ -951,7 +948,6 @@ del {
     margin: 20px 0 20px;
     .left {
       @include columns(5, 10);
-      @include alpha(10);
       @include clearfix; }
     .right {
       @include columns(5, 10);
@@ -1112,6 +1108,7 @@ body {
   #page {
     header.page {
       @include clearfix;
+      display: block;
       overflow: visible; } }
   #content {
     @include pie-clearfix;
@@ -1137,7 +1134,6 @@ body {
           float: left;
           margin-top: 15px;
           @include columns(4, 14);
-          @include alpha(14);
           div {
             label, a {
               display: block; }
