@@ -106,7 +106,7 @@ Rails::Initializer.run do |config|
   #config.load_paths += %W( #{RAILS_ROOT}/vendor/plugins/actionwebservice/lib )
   #config.load_paths += %W( #{RAILS_ROOT}/mods/undp_sso/app/apis )
   #config.gem 'actionpack', :lib => 'action_pack'
-  config.gem "haml"
+  #config.gem "haml"
   #config.gem "chriseppstein-compass", :lib => "compass"
   #config.gem "ericam-compass-susy-plugin", :lib => "susy"
 
