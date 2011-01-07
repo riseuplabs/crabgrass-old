@@ -382,20 +382,6 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
     t.datetime "created_at"
   end
 
-  create_table "moderated_flags", :force => true do |t|
-    t.string   "type",                         :null => false
-    t.datetime "vetted_at"
-    t.integer  "vetted_by_id",   :limit => 11
-    t.datetime "deleted_at"
-    t.integer  "deleted_by_id",  :limit => 11
-    t.string   "reason_flagged"
-    t.string   "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id",        :limit => 11
-    t.integer  "foreign_id",     :limit => 11, :null => false
-  end
-
   create_table "page_histories", :force => true do |t|
     t.integer  "user_id",                     :limit => 11
     t.integer  "page_id",                     :limit => 11
