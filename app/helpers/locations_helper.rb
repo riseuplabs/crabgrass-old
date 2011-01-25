@@ -32,18 +32,18 @@ module LocationsHelper
   def city_text_field(object=nil, method=nil, options = {})
     display = _display_value(params[:country_id])
     name = _field_name('city_name', object, method)
-    spinner = options[:spinner]
-    onblur = remote_function(
-      :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
-      :loading => show_spinner('city'),
-      :complete => hide_spinner('city')
-    )
-    if params[:city_id] =~ /\d+/
-      city = GeoPlace.find(params[:city_id])
-    end
-    value = city.nil? ? {} : {:value => city.name} 
-    options = {:onblur => onblur, :name => name, :id=> 'city_text_field'}.merge(value)
+    #spinner = options[:spinner]
+    #onblur = remote_function(
+    #  :url => {:controller => '/locations', :action => 'city_lookup'},
+    #  :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
+    #  :loading => show_spinner('city'),
+    #  :complete => hide_spinner('city')
+    #)
+    #if params[:city_id] =~ /\d+/
+    #  city = GeoPlace.find(params[:city_id])
+    #end
+    #value = city.nil? ? {} : {:value => city.name} 
+    options = {:name => name, :id=> 'city_text_field'}  #.merge(value)
     render :partial => '/locations/city_text_field', :locals => {:display => display, :object=>object, :method=>method, :options => options}
   end
 
