@@ -19,6 +19,7 @@ module AutocompleteHelper
   def autocomplete_entity_tag(field_id, options={})
     options[:url] ||= '/autocomplete/entities'
     options[:onselect] ||= 'null'
+    options[:renderer] ||= render_entity_row_function
     auto_complete_js = %Q[
       new Autocomplete('#{field_id}', {
         serviceUrl:'#{options[:url]}',
@@ -29,7 +30,7 @@ module AutocompleteHelper
         message: '#{escape_javascript(options[:message])}',
         container: '#{options[:container]}',
         preloadedOnTop: true,
-        rowRenderer: #{render_entity_row_function},
+        rowRenderer: #{options[:renderer]},
         selectValue: #{extract_value_from_entity_row_function}
       }, #{autocomplete_id_number});
     ]
@@ -42,6 +43,12 @@ module AutocompleteHelper
 
   def autocomplete_friends_tag(field_id, options={})
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  end
+
+  def autocomplete_locations_tag(field_id, options={})
+    autocomplete_entity_tag(field_id,
+      options.merge(:url => '/autocomplete/locations',
+        :renderer => render_location_row_function ))
   end
 
   private
@@ -57,6 +64,10 @@ module AutocompleteHelper
   #
   def render_entity_row_function
     %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
+  end
+
+  def render_location_row_function
+    %Q[function(value, re, data) {return 'value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')});}]
   end
 
   # called to convert the row data into a value
