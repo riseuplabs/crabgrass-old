@@ -98,7 +98,7 @@ class AutocompleteController < ApplicationController
   def render_entities_to_json(entities)
     render :json => {
       :query => params[:query],
-      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))}
+      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))},
       :data => entities.collect{|e|e.avatar_id||0}
     }
   end
