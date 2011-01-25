@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
-  helper 'me/base', 'locations'
+  helper 'me/base', 'locations', 'autocomplete'
   #permissions 'profiles'
   verify :method => :post, :only => :update
   layout 'header'
