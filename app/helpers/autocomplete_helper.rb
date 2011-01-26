@@ -22,6 +22,7 @@ module AutocompleteHelper
     serviceurl = options[:serviceurl] || "serviceUrl:'#{options[:url]}'"
     options[:onselect] ||= 'null'
     options[:renderer] ||= render_entity_row_function
+    options[:selectvalue] ||= extract_value_from_entity_row_function
     auto_complete_js = %Q[
       #{options[:additional_js]}
       new Autocomplete('#{field_id}', {
@@ -34,7 +35,7 @@ module AutocompleteHelper
         container: '#{options[:container]}',
         preloadedOnTop: true,
         rowRenderer: #{options[:renderer]},
-        selectValue: #{extract_value_from_entity_row_function}
+        selectValue: #{options[:selectvalue]} 
       }, #{autocomplete_id_number});
     ]
     javascript_tag(auto_complete_js)
@@ -53,7 +54,8 @@ module AutocompleteHelper
     autocomplete_entity_tag(field_id,
       options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
         :renderer => render_location_row_function,
-        :additional_js => find_selected_country_js )
+        :additional_js => find_selected_country_js,
+        :selectvalue => extract_value_from_locations_row_function )
     )
   end
 
@@ -80,5 +82,10 @@ module AutocompleteHelper
   def extract_value_from_entity_row_function
     %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /.*<br\\/>(\\S+).*/g; }else { reEntity = /<em>(.*)<\\/em>.*/g; } return value.replace(reEntity,'$1');}]
   end
+
+  def extract_value_from_locations_row_function
+    %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /<em>(.*)<\\/em><br\\/>(.*)/g; return value.replace(reEntity,'$1, $2');}else { reEntity = /<em>(.*)<\\/em>.*/g; return value.replace(reEntity, '$1');  }}]
+  end
+
 
 end
