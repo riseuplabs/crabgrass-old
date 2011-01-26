@@ -87,9 +87,13 @@ class AutocompleteController < ApplicationController
   end
 
   def locations
-    return if params[:query] == ""
-    filter = "#{params[:query]}%"
-    locations = GeoPlace.find(:all, :conditions => ["name LIKE ?", filter], :limit => 20)
+    if params[:query] == ""
+      # we could preload if we had the country
+      locations = []
+    else
+      filter = "#{params[:query]}%"
+      locations = GeoPlace.find(:all, :conditions => ["name LIKE ?", filter], :limit => 20)
+    end
     render_locations_to_json(locations)
   end
 
