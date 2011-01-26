@@ -18,11 +18,14 @@ module AutocompleteHelper
   #
   def autocomplete_entity_tag(field_id, options={})
     options[:url] ||= '/autocomplete/entities'
+    # sometimes we might want to make some fancy serviceURL involving some js
+    serviceurl = options[:serviceurl] || "serviceUrl:'#{options[:url]}'"
     options[:onselect] ||= 'null'
     options[:renderer] ||= render_entity_row_function
     auto_complete_js = %Q[
+      #{options[:additional_js]}
       new Autocomplete('#{field_id}', {
-        serviceUrl:'#{options[:url]}',
+        #{serviceurl},
         minChars:2,
         maxHeight:400,
         width:300,
@@ -46,9 +49,12 @@ module AutocompleteHelper
   end
 
   def autocomplete_locations_tag(field_id, options={})
+    find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
     autocomplete_entity_tag(field_id,
-      options.merge(:url => '/autocomplete/locations',
-        :renderer => render_location_row_function ))
+      options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
+        :renderer => render_location_row_function,
+        :additional_js => find_selected_country_js )
+    )
   end
 
   private
