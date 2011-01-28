@@ -30,13 +30,15 @@ class Groups::ProfilesController < Groups::BaseController
       @profile.photo.destroy; @profile.photo = nil
     elsif params[:clear_video]
       @profile.video.destroy; @profile.video = nil
+    elsif params[:location_only]
+      @profile.update_location(params)
     else
-    @profile.save_from_params params['profile']
-    if @profile.valid?
-      flash_message_now :success
-    else
-      flash_message_now :object => @profile
-    end
+      @profile.save_from_params params['profile']
+      if @profile.valid?
+        flash_message_now :success
+      else
+        flash_message_now :object => @profile
+      end
     end
   end
 

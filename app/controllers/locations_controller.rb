@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
     render :update do |page|
       page << "$$('option.newselected').collect(function(el){el.removeClassName('newselected')});" 
       page << "$('select_country_id').select('[value=\"#{params[:country_code]}\"]')[0].addClassName('newselected');" 
-      page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js'
+      page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js', :locals => {:entity_id => params[:entity_id]}
       #page.replace 'state_dropdown', :partial => '/locations/state_dropdown', :locals => {:display=>'inline', :name => params[:select_state_name], :geo_admin_codes => geo_admin_codes}
       #page.show 'state_dropdown' 
       page.show 'city_text'

@@ -1,2 +1,3 @@
+- e_id = @profile ? @profile.entity_id : entity_id
 %div#autocomplete_js
-  = autocomplete_locations_tag('city_text_field', :container => 'city_text')
+  = autocomplete_locations_tag('city_text_field', :container => 'city_text', :entity_id => e_id)
