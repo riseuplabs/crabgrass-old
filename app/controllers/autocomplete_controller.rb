@@ -114,7 +114,8 @@ class AutocompleteController < ApplicationController
   def render_locations_to_json(locations)
     render :json => {
       :query => params[:query],
-      :suggestions => locations.collect{|loc|display_on_two_lines(loc.name, loc.geo_admin_code.name)}
+      :suggestions => locations.collect{|loc|display_on_two_lines(loc.name, loc.geo_admin_code.name)},
+      :data => locations.collect{|loc|loc.id}
     }
   end
 

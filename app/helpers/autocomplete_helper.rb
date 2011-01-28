@@ -50,12 +50,21 @@ module AutocompleteHelper
   end
 
   def autocomplete_locations_tag(field_id, options={})
+    entity = Group.find(options[:entity_id])
     find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
+    add_action = {
+      :url => {:controller => 'groups/profiles', :action => 'edit', :id => entity},
+      :with => %{'location_only=1&country_id='+getCountry()+'&city_id=' + data }
+      #:loading => spinner_icon_on('plus', add_button_id),
+      #:complete => spinner_icon_off('plus', add_button_id)
+    }
+    after_update_function = "function(value, data) {#{remote_function(add_action)}; }"
     autocomplete_entity_tag(field_id,
       options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
         :renderer => render_location_row_function,
         :additional_js => find_selected_country_js,
-        :selectvalue => extract_value_from_locations_row_function )
+        :selectvalue => extract_value_from_locations_row_function,
+        :onselect => after_update_function )
     )
   end
 

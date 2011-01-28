@@ -6,7 +6,7 @@ module LocationsHelper
     show_submit = options[:show_submit] || false 
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'show_submit=#{show_submit}&country_code='+value",
+      :with => "'entity_id=#{options[:entity_id]}&show_submit=#{show_submit}&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 

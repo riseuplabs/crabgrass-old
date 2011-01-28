@@ -183,7 +183,7 @@ class Profile < ActiveRecord::Base
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
       "may_burden", "may_spy", "peer", "photo", "video", "summary", "admins_may_moderate",
-      "country_id","state_id","city_id", "members_may_edit_wiki"]
+       "members_may_edit_wiki"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
@@ -211,22 +211,6 @@ class Profile < ActiveRecord::Base
 
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
-
-    geo_location_options = {
-      :geo_country_id => params.delete('country_id'),
-      :geo_admin_code_id => params.delete('state_id'),
-      :geo_place_id => params.delete('city_id'),
-    }
-    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
-      if self.geo_location.nil?
-        params['geo_location'] = GeoLocation.new(geo_location_options)
-      else
-        ### do not create new records.
-        self.geo_location.update_attributes(geo_location_options)
-      end
-    elsif !self.geo_location.nil?
-      self.geo_location.destroy
-    end
 
     if params['may_see'] == "0"
       %w(committees networks members groups contacts).each do |subject|
@@ -259,6 +243,25 @@ class Profile < ActiveRecord::Base
   def city_id
     return nil if self.geo_location.nil?
     self.geo_location.geo_place_id
+  end
+
+  def update_location(params)
+    return unless params[:country_id]
+    geo_location_options = {
+      :geo_country_id => params.delete('country_id'),
+      :geo_admin_code_id => params.delete('state_id'),
+      :geo_place_id => params.delete('city_id'),
+    }
+    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
+      if self.geo_location.nil?
+        params['geo_location'] = GeoLocation.new(geo_location_options)
+      else
+        ### do not create new records.
+        self.geo_location.update_attributes(geo_location_options)
+      end
+    elsif !self.geo_location.nil?
+      self.geo_location.destroy
+    end
   end
 
   # DEPRECATED
