@@ -155,6 +155,11 @@ class ProfileTest < Test::Unit::TestCase
     profile.update_location({:country_id => country.id, :city_id => city.id})
     assert_equal profile.country_id.to_i, country.id.to_i
     assert_equal profile.city_id.to_i, city.id.to_i
+
+    profile.update_location({:country_id => country.id})
+    assert_equal profile.country_id.to_i, country.id.to_i
+    assert_nil profile.city_id, 'the city should be blank if only the country was set.'
+
     profile.destroy
   end
 
