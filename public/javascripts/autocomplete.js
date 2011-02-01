@@ -112,7 +112,7 @@ Autocomplete.prototype = {
     }
     this.instanceId = Autocomplete.instances.push(this) - 1;
     /* I think we should trigger a preloading request from here */
-    this.requestSuggestions("");
+    //this.requestSuggestions("");
   },
 
   fixPosition: function() {
