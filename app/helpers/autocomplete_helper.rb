@@ -23,6 +23,7 @@ module AutocompleteHelper
     options[:onselect] ||= 'null'
     options[:renderer] ||= render_entity_row_function
     options[:selectvalue] ||= extract_value_from_entity_row_function
+    preload = options[:nopreload] ? false : true
     auto_complete_js = %Q[
       #{options[:additional_js]}
       new Autocomplete('#{field_id}', {
@@ -33,7 +34,7 @@ module AutocompleteHelper
         onSelect: #{options[:onselect]},
         message: '#{escape_javascript(options[:message])}',
         container: '#{options[:container]}',
-        preloadedOnTop: true,
+        preloadedOnTop: #{preload},
         rowRenderer: #{options[:renderer]},
         selectValue: #{options[:selectvalue]} 
       }, #{autocomplete_id_number});
@@ -64,7 +65,8 @@ module AutocompleteHelper
         :renderer => render_location_row_function,
         :additional_js => find_selected_country_js,
         :selectvalue => extract_value_from_locations_row_function,
-        :onselect => after_update_function )
+        :onselect => after_update_function,
+        :nopreload => true )
     )
   end
 
