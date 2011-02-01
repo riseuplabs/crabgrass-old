@@ -248,13 +248,16 @@ class Profile < ActiveRecord::Base
   def update_location(params)
     return unless params[:country_id]
     geo_location_options = {
-      :geo_country_id => params.delete('country_id'),
-      :geo_admin_code_id => params.delete('state_id'),
-      :geo_place_id => params.delete('city_id'),
+      :geo_country_id => params[:country_id],
+      :geo_admin_code_id => params[:state_id],
+      :geo_place_id => params[:city_id]
     }
     if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
       if self.geo_location.nil?
-        params['geo_location'] = GeoLocation.new(geo_location_options)
+        geo_loc = GeoLocation.new(geo_location_options)
+        geo_loc.save!
+        self.geo_location = geo_loc
+        self.save!
       else
         ### do not create new records.
         self.geo_location.update_attributes(geo_location_options)
