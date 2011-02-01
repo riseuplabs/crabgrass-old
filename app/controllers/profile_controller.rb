@@ -20,6 +20,12 @@ class ProfileController < ApplicationController
       end
     end
   end
+ 
+  def edit_location
+    return unless request.xhr?
+    @profile.update_location(params)
+    render :nothing => true
+  end
 
   # ajax
   def add_location
