@@ -1,0 +1,35 @@
+.stats_container {
+  border: 1px solid #aaa;
+  width: 400px;
+}
+
+.stats_container h3 {
+  color: white;
+  background-color: #aaa;
+  padding: 10px;
+}
+
+#daterange {
+  margin: 2px 0 0 10px; 
+}
+
+#daterange div {
+  width: 130px;
+  color: #707070;
+  font-weight: bold;
+}
+
+#enddate {
+  position: relative;
+  top: -44px;
+  left: 150px;
+}
+
+.input_container {
+  border: 1px solid black;
+}
+
+input {
+  border: none;
+  margin: 0 5px;
+}
