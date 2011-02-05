@@ -30,7 +30,7 @@ module AutocompleteHelper
         #{serviceurl},
         minChars:2,
         maxHeight:400,
-        width:300,
+        width:340,
         onSelect: #{options[:onselect]},
         message: '#{escape_javascript(options[:message])}',
         container: '#{options[:container]}',
@@ -92,7 +92,7 @@ module AutocompleteHelper
   end
 
   def render_location_row_function
-    %Q[function(value, re, data) {return value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')});}]
+    %Q[function(value, re, data) {return value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? ', ' + Autocomplete.highlight(m3, re) : '')});}]
   end
 
   # called to convert the row data into a value
