@@ -3,12 +3,12 @@
     Starting
     %div.input_container
       %input{:type => 'text', :id => 'selected_start_date', :name => 'start_date', :size => 10}
-      %span{:class => 'small_icon date_16', :id => 'startdate_pop'}
+      %span{:class => 'small_icon calendar_edit_16', :id => 'startdate_pop'}
   #enddate
     Ending
     %div.input_container
       %input{:type => 'text', :id => 'selected_end_date', :name => 'end_date', :size => 10}
-      %span{:class => 'small_icon date_16', :id => 'enddate_pop'}
+      %span{:class => 'small_icon calendar_edit_16', :id => 'enddate_pop'}
   %span.submit
 
 = javascript_tag add_calendar_js('startdate_pop', 'selected_start_date')
