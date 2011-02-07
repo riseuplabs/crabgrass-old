@@ -61,5 +61,12 @@ class RootControllerTest < ActionController::TestCase
     end
   end
 
+  def test_fetching_pages
+    with_site :test do
+      get :recent_pages
+      assert_response :success
+    end
+  end
+
 end
 
