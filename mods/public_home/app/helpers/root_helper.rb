@@ -14,7 +14,7 @@ module RootHelper
     if logged_in?
       'sidebox_top'
     else
-      '/account/login_form_box'
+      '/account/login/form'
     end
   end
 end
