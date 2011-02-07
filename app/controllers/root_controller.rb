@@ -8,7 +8,7 @@ class RootController < ApplicationController
   javascript :wiki, :action => :index
 
   permissions 'root','groups/base', 'wiki'
-  before_filter :login_required, :except => ['index']
+  #before_filter :login_required, :except => ['index']
   before_filter :fetch_network
 
   def index
