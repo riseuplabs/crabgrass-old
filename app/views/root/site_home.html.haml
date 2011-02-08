@@ -1,0 +1,72 @@
+-# THIS IS JUST A TEMPORARY STOP GAP FOR NOW. NOTHING HERE IS FOR THE FUTURE
+
+
+- content_for :left_sidebar do
+  = render :partial => 'sidebar'
+
+- content_for :misc_header do
+  #welcome-container
+    %ul#welcome-links.navbar
+      %li= welcome_box_link 
+      = render :partial => 'navbar_item', :collection => @group.menu_items
+      - if may_edit_menu?
+        %li.right
+          %a.small_icon.pencil_16{'href'=> groups_menu_items_url(:action => :index)}
+            = I18n.t(:edit)
+    - if params[:welcome_box] && logged_in?
+      #welcome_box
+        .inset_box.round
+          = render :partial => '/me/dashboard/welcome_box_content'
+
+%table
+  %tr
+    %td.top
+      .description{'style'=>"margin: 0"}
+        = home_summary_html
+    %td.top{'style'=>"padding-left: 1em"}
+      = display_media(@group.profiles.public.cover)
+
+-# if @announcements.any? 
+  -# render :partial => 'announcement_page/announcements'  
+-# end -
+
+#sitehome
+  = render :partial => 'widgets/wiki', :locals => {:wiki => @group.profiles.public.wiki, :editable => may_update_profile?, :no_title => true}
+%br/
+
+
+%h3#underlined= I18n.t(:pages)
+%br/
+
+- default_hash = @show_featured ? 'featured' : 'recent-pages'
+- content_for :script do
+  ="onHashChanged = showTabByHash;"
+  ="defaultHash = defaultHash || '#{default_hash}';"
+
+= Formy.tabs do |f|
+  - if @show_featured
+    - f.tab do |t|
+      - t.label I18n.t(:featured_content_header)
+      - t.show_tab 'featured_panel'
+      - t.default true
+  - f.tab do |t|
+    - t.label I18n.t(:recent_pages)
+    - t.show_tab 'recent_pages_panel'
+    - t.default !@show_featured
+  - f.tab do |t|
+    - t.label I18n.t(:most_viewed)
+    - t.show_tab 'most_viewed_panel'
+  - f.tab do |t|
+    - t.label I18n.t(:most_active)
+    - t.show_tab 'most_active_panel'
+  - f.tab do |t|
+    - t.label I18n.t(:most_stars)
+    - t.show_tab 'most_stars_panel'
+
+.page_scroll.rigid
+  - if @show_featured
+    = render :partial => 'panel', :locals => {:panel => 'featured'}
+  = render :partial => 'panel', :locals => {:panel => 'recent_pages'}
+  = render :partial => 'panel', :locals => {:panel => 'most_viewed'}
+  = render :partial => 'panel', :locals => {:panel => 'most_active'}
+  = render :partial => 'panel', :locals => {:panel => 'most_stars'}
