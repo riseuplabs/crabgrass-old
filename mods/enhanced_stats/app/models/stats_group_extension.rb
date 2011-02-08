@@ -1,4 +1,4 @@
-module StatsPostExtension
+module StatsGroupExtension
  
   def self.add_to_class_definition
     lambda do
