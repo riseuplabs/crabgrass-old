@@ -19,10 +19,11 @@ title: "Crabgrass Development"
 
 enabled_mods:
    # - design_tester
-   # - super_admin
-   # - moderation
+   - super_admin
+   - moderation
    # - translator
    # - ui_tester
+   - enhanced_stats
 
 email:
   delivery_method: :sendmail
