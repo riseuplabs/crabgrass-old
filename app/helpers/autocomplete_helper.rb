@@ -56,7 +56,7 @@ module AutocompleteHelper
     elsif @profile
       remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
     else
-      remote_url = nil 
+      remote_url = {:controller => 'locations', :action => 'update_city_id'} 
     end
     find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
     add_action = {
@@ -65,7 +65,7 @@ module AutocompleteHelper
       #:loading => spinner_icon_on('plus', add_button_id),
       #:complete => spinner_icon_off('plus', add_button_id)
     }
-    after_update_function = "function(value, data) {#{remote_function(add_action)}; }" if @profile
+    after_update_function = "function(value, data) {#{remote_function(add_action)}; }"# if @profile
     autocomplete_entity_tag(field_id,
       options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
         :renderer => render_location_row_function,

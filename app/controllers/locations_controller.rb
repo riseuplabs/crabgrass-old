@@ -22,7 +22,14 @@ class LocationsController < ApplicationController
       end
       page.show 'city_text'
       page['city_text_field'].value = '' 
-      page.show 'submit_loc' if params[:show_submit] == 'true' 
+      #page.show 'submit_loc' if params[:show_submit] == 'true' 
+    end
+  end
+
+  def update_city_id
+    return unless request.xhr?
+    render :update do |page|
+      page["city_id_field"].value= params[:city_id]
     end
   end
 
