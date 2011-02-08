@@ -26,7 +26,7 @@ class Admin::StatsController < Admin::BaseController
 
   def get_dates
     @startdate = params[:start_date]
-    @enddate = params[:end_date]
+    @enddate = params[:end_date] + ' 23:59:59' if params[:end_date]
   end
 
   def current_totals
