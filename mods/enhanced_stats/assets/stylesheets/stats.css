@@ -14,19 +14,33 @@
 }
 
 #daterange {
-  margin: 2px 0 0 10px; 
+  margin-left: 10px;
 }
 
-#daterange div {
+#daterange div { 
   width: 130px;
+}
+
+.subhead {
   color: #707070;
   font-weight: bold;
+}
+
+.subhead .bordered {
+  border-top: 1px solid #aaa
+  border-bottom: 1px solid #aaa
 }
 
 #enddate {
   position: relative;
   top: -44px;
   left: 150px;
+}
+
+#submit {
+  position: relative;
+  top: -64px;
+  left: 300px;
 }
 
 .input_container {
@@ -37,3 +51,17 @@ input {
   border: none;
   margin: 0 5px;
 }
+
+table {
+  width: 95%;
+  margin: -54px 10px 0 10px;
+  
+}
+
+th {
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-color: #aaa;
+  border-width: 1px;
+}
+

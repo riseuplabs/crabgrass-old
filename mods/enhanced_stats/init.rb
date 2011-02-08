@@ -3,12 +3,8 @@ self.load_once = false
 
 Dispatcher.to_prepare do
   require 'enhanced_stats_view_listener'
+  require 'enhanced_stats_activerecord_extension'
+  apply_mixin_to_model(Post, StatsPostExtension)
+  apply_mixin_to_model(PageHistory, StatsPageHistoryExtension)
 end
 
-#apply_mixin_to_model(Site, SiteExtension)
-#apply_mixin_to_model(Request, RequestExtension)
-#apply_mixin_to_model(RequestToJoinUs, RequestToJoinUsExtension)
-
-# this isn't necessary:
-# #apply_mixin_to_model(User, UserExtension::SuperAdmin)
-#

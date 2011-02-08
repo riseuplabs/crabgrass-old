@@ -2,3 +2,5 @@
 %div.stats_container
   %h3 Select a Date Range
   = render :partial => 'select_date_range'
+  - if @show_stats
+    = render :partial => 'stats_results'
