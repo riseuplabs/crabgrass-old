@@ -6,7 +6,7 @@
   +clearfix
   #masthead-container
     +container
-    +bordered-btm(#BDE0BF)
+    +bordered-btm(!masthead_background)
     background= !masthead_background
     height: 80px
     overflow: visible
@@ -69,8 +69,8 @@ nav.page
   overflow: visible
   #global-nav-container
     +container
-    +bordered-btm(#BDE0BF, solid)
-    background: #f3fff3
+    +bordered-btm(!masthead_background, solid)
+    background= !global_nav_bg
     height: 29px
     overflow: visible
     #global-nav
