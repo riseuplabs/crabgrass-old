@@ -1,12 +1,14 @@
 //
 // masthead with logout
 //
+
 #masthead
   +clearfix
-  background= !masthead_background
   #masthead-container
     +container
-    height: 50px
+    +bordered-btm(#BDE0BF)
+    background= !masthead_background
+    height: 80px
     overflow: visible
     #masthead-name
       +columns(14)
@@ -21,7 +23,7 @@
         display: inline
         margin-top: 12px
       form#search
-        margin-top: 12px
+        margin-top: 48px
         float: right
         display: inline
         text-align: right
@@ -61,14 +63,14 @@
 //
 //global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
 //
+
 nav.page
   +clearfix
-  +bordered-top(!global_nav_top_brdr)
-  +bordered-btm(!global_nav_btm_brdr)
-  background= !global_nav_bg
   overflow: visible
   #global-nav-container
     +container
+    +bordered-btm(#BDE0BF, solid)
+    background: #f3f3f3
     height: 29px
     overflow: visible
     #global-nav
