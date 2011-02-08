@@ -3,10 +3,11 @@
 //
 #masthead {
   display: block;
-  background-color: $masthead_background;
   #masthead-container {
     @include container;
-    height: 50px;
+    +bordered-btm(#BDE0BF)
+    background-color: $masthead_background;
+    height: 80px;
     overflow: visible;
     #masthead-name {
       @include columns(14);
@@ -21,7 +22,7 @@
         display: inline;
         margin-top: 12px; }
       form#search {
-        margin-top: 12px;
+        margin-top: 48px;
         float: right;
         display: inline;
         text-align: right;
@@ -61,19 +62,19 @@
 //
 nav.page {
   display: block;
-  background: $global_nav_bg;
   overflow: visible;
   #global-nav-container {
     @include container;
     height: 29px;
     overflow: visible;
+    background: $global_nav_bg;
+    @include bordered-top($global_nav_top_brdr);
+    @include bordered-btm($global_nav_btm_brdr);
     #global-nav {
       @include columns(14);
       @include full;
       width: 764px;
       overflow: visible; } } 
-  @include bordered-top($global_nav_top_brdr);
-  @include bordered-btm($global_nav_btm_brdr);
 }
 
 #user a#social-activities-container {
