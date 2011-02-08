@@ -1,0 +1,11 @@
+%div.stats_container
+  %h3= h3
+  %table{:style => 'margin-top: 8px'}
+    = stats_subheader('Number of')
+    = stats_tr('Users', @current_users)
+    = stats_tr('Groups', @current_groups)
+    = stats_tr('Committees', @current_committees)
+    = stats_tr('Councils', @current_councils) 
+    = stats_subheader('User Activity')
+    = stats_tr('Active Users', @active_users)
+    = stats_tr('Inactive Users', @inactive_users)

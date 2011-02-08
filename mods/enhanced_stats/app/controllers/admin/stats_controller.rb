@@ -2,14 +2,10 @@ class Admin::StatsController < Admin::BaseController
 
   permissions 'admin/stats'
   helper 'admin_stats'
-
-  def index
-  end
-
+  before_filter :get_dates
+ 
   def pages
     if request.post?
-      @startdate = params[:start_date]
-      @enddate = params[:end_date]
       pages_created_stats
       posts_created_stats
       pages_shared_stats
@@ -17,7 +13,40 @@ class Admin::StatsController < Admin::BaseController
     end
   end
 
+  def people
+    current_totals
+    active_users
+    if request.post?
+      things_created 
+      @show_things_created = true
+    end
+  end
+
   private
+
+  def get_dates
+    @startdate = params[:start_date]
+    @enddate = params[:end_date]
+  end
+
+  def current_totals
+    @current_users = User.find(:all).count
+    @current_groups = Group.find(:all).count
+    @current_committees = Committee.find(:all).count
+    @current_councils = Council.find(:all).count
+  end
+
+  def active_users
+    @active_users = User.active_since(1.month.ago).count
+    @inactive_users = @current_users - @active_users
+  end
+
+  def things_created
+    @users_created = User.created_between(@startdate, @enddate).count
+    @groups_created = Group.created_between(@startdate, @enddate).count
+    @committees_created = Committee.created_between(@startdate, @enddate).count
+    @councils_created = Council.created_between(@startdate, @enddate).count
+  end
 
   def pages_created_stats
     @all_pages_created = Page.created_between(@startdate, @enddate).count
