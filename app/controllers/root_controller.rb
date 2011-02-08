@@ -118,9 +118,13 @@ class RootController < ApplicationController
 
   def site_home
     @active_tab = :home
-    @group.profiles.public.create_wiki unless @group.profiles.public.wiki
+    @wiki = @group.profiles.public.wiki || @group.profiles.public.create_wiki
     #@announcements = Page.find_by_path('limit/3/descending/created_at',options_for_group(@group, :flow => :announcement))
-    @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
+    if Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
+      @page_panels = ['featured', 'recent_pages', 'most_viewed', 'most_active', 'most_stars']
+    else
+      @page_panels = ['recent_pages', 'most_viewed', 'most_active', 'most_stars']
+    end
     render :template => 'root/site_home'
   end
 

@@ -1,0 +1,18 @@
+%h3#underlined= I18n.t(:pages)
+%br/
+
+- default_hash = @page_panels.first
+- content_for :script do
+  ="onHashChanged = showTabByHash;"
+  ="defaultHash = defaultHash || '#{default_hash}';"
+
+= Formy.tabs do |f|
+  - @page_panels.each_with_index do |panel, index|
+    - f.tab do |t|
+      - t.label I18n.t(panel.to_sym)
+      - t.show_tab panel + '_panel'
+      - t.default (index == 0)
+
+.page_scroll.rigid
+  - @page_panels.each do |panel|
+    = render :partial => 'panel', :locals => {:panel => panel}
