@@ -63,5 +63,45 @@ module RootHelper
   def sidebar_top_partial
     'sidebox_top'
   end
-end
 
+  def time_link_line(spinner_id)
+    link_line(
+      link_to_remote_active(
+        I18n.t(:date_today),
+        :url => url_for(:time_span => 'today'),
+        :active => (params[:time_span] == 'today'),
+        :loading => show_spinner(spinner_id)),
+      link_to_remote_active(
+        I18n.t(:date_this_week),
+        :url => url_for(:time_span => 'this_week'),
+        :active => (params[:time_span] == 'this_week'),
+        :loading => show_spinner(spinner_id)),
+      link_to_remote_active(
+        I18n.t(:date_this_month),
+        :url => url_for(:time_span => 'this_month'),
+        :active => (params[:time_span] == 'this_month'),
+        :loading => show_spinner(spinner_id)),
+      link_to_remote_active(
+        I18n.t(:date_all_time),
+        :url => url_for(:time_span => 'all_time'),
+        :active => (params[:time_span] == 'all_time' || params[:time_span].empty?),
+        :loading => show_spinner(spinner_id))
+    )
+  end
+
+  def type_link_line(spinner_id)
+    links = []
+    links.push link_to_remote_active(I18n.t(:all),
+      :url => url_for(:type => nil),
+      :active => params[:type].nil?,
+      :loading => show_spinner(spinner_id))
+    links += ['text','vote','media'].collect do |type|
+      link_to_remote_active(
+        display_page_class_grouping(type),
+        :url => url_for(:type => type),
+        :active => (params[:type] == type),
+        :loading => show_spinner(spinner_id))
+    end
+    link_line(*links)
+  end
+end
