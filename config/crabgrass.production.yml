@@ -16,6 +16,7 @@ enabled_mods:
   - super_admin
   - moderation
   - translator
+  - enhanced_stats
 enabled_tools:
   - asset_tool
   - core_tools
