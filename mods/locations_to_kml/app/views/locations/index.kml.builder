@@ -1,5 +1,5 @@
 xml.instruct! :xml
-xml.kml(:kmlns => "http://earth.google.com/kml/2.2") {
+xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
   xml.Document {
     @places.each do |place|
       xml.Placemark {
