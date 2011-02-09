@@ -8,7 +8,7 @@ module StatsPageHistoryExtension
       } end)
 
       named_scope(:grant_accesses, 
-        {:conditions => ['page_histories.type LIKE "Grant%" and user_id != IF(object_type="User",object_id, NULL']} )
+        {:conditions => "page_histories.type LIKE 'Grant%' and user_id != IF(object_type='User',object_id, '')"} )
 
       named_scope(:to_user, {:conditions => ['object_type = "User"']})
 

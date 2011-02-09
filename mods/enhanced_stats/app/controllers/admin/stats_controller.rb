@@ -66,11 +66,11 @@ class Admin::StatsController < Admin::BaseController
   end
 
   def pages_shared_stats
-    @all_pages_shared = PageHistory.created_between(@startdate, @enddate).count
-    @pages_shared_with_users = PageHistory.created_between(@startdate, @enddate).to_user.count
-    @pages_shared_with_groups = PageHistory.created_between(@startdate, @enddate).to_group('Group').count
-    @pages_shared_with_committees = PageHistory.created_between(@startdate, @enddate).to_group('Committee').count
-    @pages_shared_with_networks = PageHistory.created_between(@startdate, @enddate).to_group('Network').count
+    @all_pages_shared = PageHistory.grant_accesses.created_between(@startdate, @enddate).count
+    @pages_shared_with_users = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count
+    @pages_shared_with_groups = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Group').count
+    @pages_shared_with_committees = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Committee').count
+    @pages_shared_with_networks = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Network').count
   end
 
 end
