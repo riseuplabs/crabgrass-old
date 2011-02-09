@@ -6,7 +6,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
         xml.name(place[:name])
         xml.description(h(place[:description]))
         xml.Point {
-          xml.coordinates("#{place[:lat]},#{place[:long]}")
+          xml.coordinates("#{place[:long]},#{place[:lat]}")
         }
       }
     end
