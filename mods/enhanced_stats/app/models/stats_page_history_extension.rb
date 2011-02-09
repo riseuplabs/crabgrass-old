@@ -7,9 +7,10 @@ module StatsPageHistoryExtension
         :conditions => {:created_at => from..to}
       } end)
 
-      named_scope(:grant_accesses, {:conditions => ['page_histories.type LIKE "Grant%"']} )
+      named_scope(:grant_accesses, 
+        {:conditions => ['page_histories.type LIKE "Grant%" and user_id != IF(object_type="User",object_id, NULL']} )
 
-      named_scope(:to_user, {:conditions => ['object_type = "User" AND user_id != object_id']})
+      named_scope(:to_user, {:conditions => ['object_type = "User"']})
 
       named_scope(:to_group, lambda do |grouptype| 
         conditions = (grouptype == 'Group') ? '(groups.type IS NULL) or (groups.type = "Group")' : "groups.type = '#{grouptype}'"
