@@ -3,6 +3,8 @@
 This crabgrass mod allow for god-like administration of all users
 and groups in a particular site. 
 
+This module is dependent upon the 'moderation' module.
+
 == Usage
 
 edit config/routes.rb (this should be done for you already)
