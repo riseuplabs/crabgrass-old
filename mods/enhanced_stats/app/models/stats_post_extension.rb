@@ -6,6 +6,10 @@ module StatsPostExtension
       named_scope(:created_between, lambda do |from, to| {
         :conditions => {:created_at => from..to}
       } end)
+   
+      named_scope(:on_pages, 
+        {:conditions => 'discussions.page_id IS NOT NULL',
+         :joins => 'JOIN discussions ON posts.discussion_id=discussions.id'})
 
       named_scope(:on_pagetype, lambda do |pagetype| {
         :conditions => ['pages.type = ?', pagetype],

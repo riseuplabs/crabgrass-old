@@ -64,7 +64,7 @@ email_sender: "robot@$current_host"
 tracking: true
 available_page_types:
   - AssetPage
-  - EventPage
+  #- EventPage
   - ExternalVideoPage
   - TaskListPage
   - AnnouncementPage

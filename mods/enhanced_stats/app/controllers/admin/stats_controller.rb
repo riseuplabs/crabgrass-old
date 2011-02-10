@@ -30,10 +30,13 @@ class Admin::StatsController < Admin::BaseController
   end
 
   def current_totals
+    @current_live_stats = []
     @current_users = User.find(:all).count
-    @current_groups = Group.find(:all).count
-    @current_committees = Committee.find(:all).count
-    @current_councils = Council.find(:all).count
+    @current_live_stats << ['Users', @current_users]
+    ['Group', 'Committee', 'Council'].each do |thing|
+      @current_live_stats << ["#{thing}s",
+      Kernel.const_get(thing).find(:all).count]
+    end
   end
 
   def active_users
@@ -42,35 +45,48 @@ class Admin::StatsController < Admin::BaseController
   end
 
   def things_created
-    @users_created = User.created_between(@startdate, @enddate).count
-    @groups_created = Group.created_between(@startdate, @enddate).count
-    @committees_created = Committee.created_between(@startdate, @enddate).count
-    @councils_created = Council.created_between(@startdate, @enddate).count
+    @things_created = []
+    ['User', 'Group', 'Committee', 'Council'].each do |thing|
+      @things_created << ["#{thing}s",
+      Kernel.const_get(thing).created_between(@startdate, @enddate).count]
+    end
   end
 
   def pages_created_stats
-    @all_pages_created = Page.created_between(@startdate, @enddate).count
-    ['wiki', 'discussion', 'asset'].each do |pagetype|
-      classname = pagetype.capitalize+'Page'
-      instance_variable_set("@#{pagetype}_pages_created", 
-        Kernel.const_get(classname).created_between(@startdate, @enddate).count)
+    @pages_created_totals = [] 
+    debug_class_names = []
+    @pages_created_totals << ['Total', Page.created_between(@startdate, @enddate).count]
+    current_site.available_page_types.each do |pagetype|
+      @pages_created_totals << [ 
+        pagetype_to_plural_string(pagetype),
+        Kernel.const_get(pagetype).created_between(@startdate, @enddate).count]
     end
   end
 
   def posts_created_stats
-    @all_posts_created = Post.created_between(@startdate, @enddate).count
-    ['wiki', 'discussion', 'asset'].each do |pagetype|
-      instance_variable_set("@#{pagetype}_posts_created", 
-        Post.created_between(@startdate, @enddate).on_pagetype(pagetype.capitalize+'Page').count)
+    @posts_created_totals = []
+    @posts_created_totals << ['Total', Post.on_pages.created_between(@startdate, @enddate).count]
+    current_site.available_page_types.each do |pagetype|
+      @posts_created_totals << [
+        pagetype_to_plural_string(pagetype),
+        Post.created_between(@startdate, @enddate).on_pagetype(pagetype).count]
     end
   end
 
   def pages_shared_stats
-    @all_pages_shared = PageHistory.grant_accesses.created_between(@startdate, @enddate).count
-    @pages_shared_with_users = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count
-    @pages_shared_with_groups = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Group').count
-    @pages_shared_with_committees = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Committee').count
-    @pages_shared_with_networks = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group('Network').count
+    @pages_shared_totals = []
+    @pages_shared_totals << ['Total', PageHistory.grant_accesses.created_between(@startdate, @enddate).count]
+    @pages_shared_totals << ['With Individuals', PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count]
+    ['Group', 'Committee', 'Network'].each do |grouptype|
+      @pages_shared_totals << ["With #{grouptype}s", 
+        PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group(grouptype).count]
+    end
+  end
+
+  def pagetype_to_plural_string(pagetype)
+    # in order to show the translated page type display names in plural, we need a method for that in lib/page_class_proxy.rb    # because the translation is done in that lib so by now it's too late to pluralize
+    #Kernel.const_get(pagetype).class_display_name, 
+    pagetype+'s'
   end
 
 end

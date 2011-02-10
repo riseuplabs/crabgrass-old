@@ -1,6 +1,2 @@
 %table
-  = stats_subheader('Number Created')
-  = stats_tr('Users', @users_created)
-  = stats_tr('Groups', @groups_created)
-  = stats_tr('Committees', @committees_created)
-  = stats_tr('Councils', @councils_created) 
+  = show_results_for(@things_created, 'Number Created')
