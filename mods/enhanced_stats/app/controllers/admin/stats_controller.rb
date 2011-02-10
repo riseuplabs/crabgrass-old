@@ -57,6 +57,7 @@ class Admin::StatsController < Admin::BaseController
     debug_class_names = []
     @pages_created_totals << ['Total', Page.created_between(@startdate, @enddate).count]
     current_site.available_page_types.each do |pagetype|
+      next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
       @pages_created_totals << [ 
         pagetype_to_plural_string(pagetype),
         Kernel.const_get(pagetype).created_between(@startdate, @enddate).count]
@@ -67,6 +68,7 @@ class Admin::StatsController < Admin::BaseController
     @posts_created_totals = []
     @posts_created_totals << ['All Page Types', Post.on_pages.created_between(@startdate, @enddate).count]
     current_site.available_page_types.each do |pagetype|
+      next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
       @posts_created_totals << [
         pagetype_to_plural_string(pagetype),
         Post.created_between(@startdate, @enddate).on_pagetype(pagetype).count]
