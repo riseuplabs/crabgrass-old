@@ -71,7 +71,7 @@ available_page_types:
   - SurveyPage
   - DiscussionPage
   - RateManyPage
-  - MessagePage
+  #- MessagePage
   - RankedVotePage
   - ArticlePage
   - Gallery
