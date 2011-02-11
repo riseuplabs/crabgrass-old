@@ -8,6 +8,7 @@
   <tr>
     <th>Name</th>
     <th>Created at</th>
+    <th>Users</th>
     <th>&nbsp;</th>
   </tr>
 
@@ -16,6 +17,7 @@
       <tr class="<%=cycle('row_0', 'row_1')%>">
         <td><%= link_to_group group %></td>
         <td><%= friendly_date group.created_at %></td>
+        <td><%= group.users.size.to_s %></td>
         <td style="padding-right:0em;">
           <span class="actions">
             <%= link_to 'Show', group %>
