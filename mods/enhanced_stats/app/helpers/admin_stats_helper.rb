@@ -18,6 +18,7 @@ module AdminStatsHelper
   def show_results_for(collection, title)
     html = stats_subheader(title)
     collection.each do |res|
+      next if res[1] == 0
       html += stats_tr(res[0], res[1])
     end
     html
