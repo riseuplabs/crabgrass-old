@@ -54,7 +54,6 @@ class Admin::StatsController < Admin::BaseController
 
   def pages_created_stats
     @pages_created_totals = [] 
-    debug_class_names = []
     @pages_created_totals << ['Total', Page.created_between(@startdate, @enddate).count]
     current_site.available_page_types.each do |pagetype|
       next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
@@ -84,7 +83,7 @@ class Admin::StatsController < Admin::BaseController
         PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group(grouptype).count]
     end
   end
-
+ 
   def pagetype_to_plural_string(pagetype)
     # in order to show the translated page type display names in plural, we need a method for that in lib/page_class_proxy.rb    # because the translation is done in that lib so by now it's too late to pluralize
     #Kernel.const_get(pagetype).class_display_name, 
