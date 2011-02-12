@@ -49,3 +49,18 @@ sites:
 #  - name: site2
 #    admin_group: superadmins
 
+
+available_page_types:
+  - AssetPage
+  #- EventPage
+  - ExternalVideoPage
+  - TaskListPage
+  - AnnouncementPage
+  - SurveyPage
+  - DiscussionPage
+  - RateManyPage
+  #- MessagePage
+  - RankedVotePage
+  - ArticlePage
+  - Gallery
+  - WikiPage
