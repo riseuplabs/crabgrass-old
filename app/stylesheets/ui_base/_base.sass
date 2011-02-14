@@ -25,6 +25,7 @@
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
 // NOTE: susy file called without .sass or .scss extension
+
 @import susy/susy
 
 
@@ -1110,9 +1111,11 @@ ul.side_list
 
 
 /* basic page layout */
+
 body
-  +susy
   +general-font
+  font-size: 75%
+  line-height: 1.75
   color= !almost_black
   background= !general_bg
   #page
