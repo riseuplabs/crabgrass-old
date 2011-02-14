@@ -1,5 +1,7 @@
 .calendar_edit_16 {
   background-image: url(/plugin_assets/enhanced_stats/images/calendar_edit.png);
+  float: right;
+  padding-top: 0;
 }
 
 .stats_container {
@@ -41,6 +43,10 @@
   position: relative;
   top: -44px;
   left: 150px;
+
+#enddate, #startdate {
+ float: left;
+ margin-right: 20px;
 }
 
 #submit {
