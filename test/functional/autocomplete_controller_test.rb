@@ -1,19 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'autocomplete_controller'
 
-# Re-raise errors caught by the controller.
-class AutocompleteController; def rescue_action(e) raise e end; end
-
-class AutocompleteControllerTest < Test::Unit::TestCase
+class AutocompleteControllerTest < ActionController::TestCase
   fixtures :users, :groups,
           :memberships, :user_participations, :group_participations,
           :pages, :profiles, :relationships, :geo_countries, :geo_admin_codes, :geo_places
-
-  def setup
-    @controller = AutocompleteController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_preloading_entities
     login_as :blue
