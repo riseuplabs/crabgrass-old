@@ -95,8 +95,8 @@ class AutocompleteController < ApplicationController
       #locations = GeoPlace.find(:all, :conditions => ["geo_country_id = ?", params[:country]])
       locations = []
     else
-      filter = "#{params[:query]}%"
-      locations = GeoPlace.find(:all, :conditions => ["geo_country_id = ? and name LIKE ?", params[:country], filter], :limit => 20)
+      country = GeoCountry.find(params[:country])
+      locations = country.geo_places.named_like(params[:query]).largest(10)
     end
     render_locations_to_json(locations)
   end
