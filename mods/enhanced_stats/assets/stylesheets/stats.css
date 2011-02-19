@@ -66,6 +66,11 @@
   padding-left: 3px;
 }
 
+#enddate, #startdate {
+ float: left;
+ margin-right: 20px;
+}
+
 #submit {
   position: relative;
   top: -64px;
