@@ -9,34 +9,57 @@
   width: 400px;
 }
 
-.stats_container h3 {
+.stats_container h2 {
   color: white;
   background-color: #aaa;
-  padding: 10px;
+  padding: 7px 10px;
 }
 
 #daterange {
-  padding: 10px;
+  padding: 0 10px 10px;
+}
+#daterange form {
+  display: block;
+}
+#daterange .input_container { 
+  width: 110px;
+  border: 1px solid #aaa;
+  background: #fff;
 }
 
-#daterange div { 
-  width: 130px;
+#daterange-wrapper {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  *zoom: 1;
+  *display: inline-block;
 }
 
+#daterange-wrapper #submit {
+  margin-top: 26px;
+}
 .subhead {
   color: #707070;
   font-weight: bold;
+  font-size: 14px;
+  line-height: 1.8;
 }
 
 .subhead .bordered {
   border-top: 1px solid #aaa
   border-bottom: 1px solid #aaa
 }
-
+#selected_start_date, #selected_end_date {
+  border: none;
+  padding: 0 0 2px 2px;
+}
 #enddate, #startdate {
  float: left;
  margin-right: 20px;
 
+#enddate .input_container, #startdate .input_container {
+  border: 1px solid #aaa;
+}
 .comment {
   font-weight: normal;
   font-style: italic;
