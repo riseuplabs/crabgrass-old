@@ -1,7 +1,6 @@
 .calendar_edit_16 {
   background-image: url(/plugin_assets/enhanced_stats/images/calendar_edit.png);
   float: right;
-  padding-top: 0;
 }
 
 .stats_container {
@@ -15,15 +14,31 @@
   padding: 7px 10px;
 }
 
+.stats_container table {
+  background:#f4f3f8;
+  padding: 20px 10px;
+  width: 100%;
+}
+
+.stats_container th.subhead {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 10px;
+  border-top: 1px solid #666; 
+  border-bottom: 1px solid #666; 
+  float: left;
+}
+
 #daterange {
-  padding: 0 10px 10px;
+  padding: 8px 10px 14px;
+  background: #ececec;
 }
 #daterange form {
   display: block;
 }
 #daterange .input_container { 
-  width: 110px;
-  border: 1px solid #aaa;
+  width: 120px;
+  border: none;
   background: #fff;
 }
 
@@ -49,17 +64,25 @@
   border-top: 1px solid #aaa
   border-bottom: 1px solid #aaa
 }
-#selected_start_date, #selected_end_date {
+#enddate .input_container, #startdate .input_container {
+  border: 1px solid #aaa;
+  display: block;
+  overflow: hidden;
+  *zoom: 1;
+  *display: inline-block;
+}
+
+input#selected_start_date, input#selected_end_date {
   border: none;
-  padding: 0 0 2px 2px;
+  padding: 3px 0 2px 2px;
+  width: 80px;
+  float: left;
 }
 #enddate, #startdate {
  float: left;
  margin-right: 20px;
 
-#enddate .input_container, #startdate .input_container {
-  border: 1px solid #aaa;
-}
+
 .comment {
   font-weight: normal;
   font-style: italic;
@@ -69,12 +92,6 @@
 #enddate, #startdate {
  float: left;
  margin-right: 20px;
-}
-
-#submit {
-  position: relative;
-  top: -64px;
-  left: 300px;
 }
 
 .input_container {

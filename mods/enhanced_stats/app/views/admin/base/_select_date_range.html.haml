@@ -4,12 +4,12 @@
     #startdate
       %span.subhead Starting
       %div.input_container
-        %input{:type => 'text', :id => 'selected_start_date', :class => 'dateselect', :name => 'start_date', :size => 11, :value => h(@startdate)}
+        %input{:type => 'text', :id => 'selected_start_date', :class => 'dateselect', :name => 'start_date',:value => h(@startdate)}
         %span{:class => 'small_icon calendar_edit_16', :id => 'startdate_pop'}
     #enddate
       %span.subhead Ending
       %div.input_container
-        %input{:type => 'text', :id => 'selected_end_date', :name => 'end_date', :size => 11, :value => h(@enddate)}
+        %input{:type => 'text', :id => 'selected_end_date', :name => 'end_date',:value => h(@enddate)}
         %span{:class => 'small_icon calendar_edit_16', :id => 'enddate_pop'}
     #submit
       = submit_tag('Go')
