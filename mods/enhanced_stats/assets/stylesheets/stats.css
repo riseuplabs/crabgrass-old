@@ -5,7 +5,8 @@
 
 .stats_container {
   border: 1px solid #aaa;
-  width: 400px;
+  width: 380px;
+  margin: 20px auto;
 }
 
 .stats_container h2 {
@@ -16,19 +17,35 @@
 
 .stats_container table {
   background:#f4f3f8;
-  padding: 20px 10px;
+  padding: 0 20px 30px;
   width: 100%;
 }
 
+.stats_container table td {
+  line-height: 1.5;
+}
+
+.stats_container table td.right {
+  padding-right: 2px;
+}
 .stats_container th.subhead {
   width: 100%;
   background: #fff;
+  margin-top: 30px;
   margin-bottom: 10px;
-  border-top: 1px solid #666; 
-  border-bottom: 1px solid #666; 
+  border-top: 1px solid #aaa; 
+  border-bottom: 1px solid #aaa; 
   float: left;
+  line-height: 1.4;
+  color: #666;
 }
 
+.stats_container th.subhead span {
+  font-size: 11px;
+  font-weight: normal;
+  font-style: italic;
+  padding-left: 6px;
+}
 #daterange {
   padding: 8px 10px 14px;
   background: #ececec;
