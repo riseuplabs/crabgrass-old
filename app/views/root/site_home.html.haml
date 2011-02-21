@@ -1,17 +1,66 @@
-- content_for :left_sidebar do
-  = render :partial => 'sidebar'
+.wrapper1-plus
+  .col1-plus.light-grey-bg
+    - form_tag({:controller => 'account', :action => 'login'}, :id => "entry") do
 
-- content_for :misc_header do
-  = render :partial => 'welcome_container'
+      //%form#entry
+      %div
+        = text_field_tag 'login',params['login'],:id => 'login'
+        %label(for = 'login')= I18n.t(:login_name)
+      %div
+        = password_field_tag 'password',:id => 'password'
+        %label(for = 'password')= I18n.t(:login_password)
+      %div
+        %input{ :type => 'submit', :value => I18n.t(:login_button) }
+      %div
+        - if may_signup?
+          = link_to(I18n.t(:signup_link), signup_url)
+        = link_to(I18n.t(:forgot_password_link), :controller => '/account', :action => 'forgot_password')
+        = hidden_field_tag 'redirect', params[:redirect]
 
-= render :partial => 'introduction'
+    = javascript_tag "Form.focusFirstElement('entry');"
 
--# if @announcements.any? 
-  -# render :partial => 'announcement_page/announcements'  
--# end -
+    .listing
+      .grouping
+        %h4.first
+          = I18n.t(:most_active_members)
+        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_users(), :after => link_to(I18n.t(:view_all), people_directory_path(:browse)) }
+      .grouping
+        %h4= I18n.t(:most_active_groups)
+        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_path(:action => :search)) }
 
-#sitehome
-  = render :partial => 'widgets/wiki', :locals => {:wiki => @wiki, :editable => may_update_profile?, :no_title => true}
-%br/
+  .col1-plus
+    %h3.panel-heading.black.pale-yellow-bg Quickfinder
+    %h4.subheading.black Industrial Policy and Studies
+    %ul.panel
+      %li Industrial sector studies
+      %li Youth and microfinance
+    %h4.subheading.black Support to institutions for industry, business, trade, environment and energy
+    %ul.panel
+      %li Rehabilitation of technical/ vocational training institutions
+      %li Laboratories for testing and metrology
+      %li Afripanet: Investment Promotion Agencies Subcontracting Exchanges
+      %li Youth Communication Hubs
+    %h4.subheading.black Support to industrial enterprises and micro, small and medium businesses
+    %ul.panel
+      %li Export consortia
 
-= render :partial => 'page_panels'
+.wrapper1-plus
+  .col1-plus
+    %h3.panel-heading.light-grey-bg Particip@te-Xchange-Support
+    %p.panel MRU Youth Network contains all your from the MRU countries: Cote d&rsquo;Ivoire, Guinea, Liberia, and Sierra Leone.
+    %p.panel The MRU Youth Network provides users with a great opportunity to network with other youth from the sub-region, share ideas, provide peer-to-peer support, and gather relevant information.
+    %p.panel This network also contains links to youth employment opportunities in the Mano River Union countries, as well as relevant documentation on youth employment. 
+
+.wrapper1
+  .col1
+    %h3.panel-heading.black.pale-yellow-bg
+      WHO is WHO?
+    %p.testmap
+  
+.wrapper2
+  .col2
+    %h3.panel-heading.light-grey-bg Mano River Youth Forum
+    %p.testvideo
+    %p.panel First and partial editing of the Mano River Youth Forum that was held in Freetow, Sierra Leone on the 10-11 March 2009.
+    %p.panel The forum was organized by UNIDO in partnership with the Mano River Union Secretariat, the Directorates of Youth of Cote d&rsquo;Ivoire, Guinea, Sierra Leone, and Liberia, ILO, UNDP and YEN.
+    %p.panel Special thanks goes to UNICEF Division of Communication, the Division of Communication, the two Goodwill Ambassadors, Meiway and Sia Tolney, riseup.net, Gregg Osofsky, and all the youth volunteers from the four countries.
