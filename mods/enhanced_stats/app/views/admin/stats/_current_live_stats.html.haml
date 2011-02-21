@@ -1,6 +1,6 @@
 %div.stats_container
-  %h3= h3
-  %table{:style => 'margin-top: 8px'}
+  %h2= h3
+  %table
     = show_results_for(@current_live_stats, 'Number of')
     = stats_subheader('User Activity', '(active = logged in within last 30 days)')
     = stats_tr('Active Users', @active_users)

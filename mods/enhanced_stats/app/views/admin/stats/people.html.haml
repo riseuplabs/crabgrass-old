@@ -3,7 +3,7 @@
 %br
 %br
 %div.stats_container
-  %h3 Select a Date Range
+  %h2 Select a Date Range
   = render :partial => 'select_date_range',:locals => { :controller => '/admin/stats/people'}
   - if @show_things_created 
     = render :partial => 'things_created_results'

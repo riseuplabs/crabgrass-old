@@ -6,12 +6,12 @@ module AdminStatsHelper
 
   def stats_subheader(content, comment=nil)
     comment = comment.nil? ? '' : content_tag(:span, comment, {:class => 'comment'})
-    th = content_tag(:th, content+comment, {:class => 'subhead bordered', :colspan => 2}) 
+    th = content_tag(:th, content+comment, {:class => 'subhead', :colspan => 2}) 
     content_tag(:tr, th)
   end
 
   def stats_tr(title, total)
-    td = content_tag(:td, title) + content_tag(:td, total)
+    td = content_tag(:td, title) + content_tag(:td, total, {:class => 'right'})
     content_tag(:tr, td)
   end
 
