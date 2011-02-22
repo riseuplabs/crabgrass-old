@@ -5,7 +5,7 @@
   display: block;
   #masthead-container {
     @include container;
-    +bordered-btm(#BDE0BF)
+    @include bordered-btm($masthead_background);
     background-color: $masthead_background;
     height: 80px;
     overflow: visible;
