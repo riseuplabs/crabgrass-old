@@ -1,2 +1,3 @@
-%table
-  = show_results_for(@things_created, 'Number Created')
+%div.stats
+  %h2 Number Created
+  %ul= show_results_for(@things_created)

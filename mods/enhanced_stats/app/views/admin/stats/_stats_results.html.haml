@@ -1,4 +1,9 @@
-%table
-  = show_results_for(@pages_created_totals, 'Number of Pages Created')
-  = show_results_for(@posts_created_totals, 'Number of Comments Posted to')
-  = show_results_for(@pages_shared_totals, 'Number of Pages Shared')
+%div.stats
+  %h2 Number of Pages Created
+  %ul= show_results_for(@pages_created_totals)
+%div.stats
+  %h2 Number of Comments Posted to
+  %ul= show_results_for(@posts_created_totals)
+%div.stats
+  %h2 Number of Pages Shared
+  %ul= show_results_for(@pages_shared_totals)

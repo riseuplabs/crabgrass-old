@@ -1,7 +1,16 @@
 %div.stats_container
   %h2= h3
-  %table
-    = show_results_for(@current_live_stats, 'Number of')
-    = stats_subheader('User Activity', '(active = logged in within last 30 days)')
-    = stats_tr('Active Users', @active_users)
-    = stats_tr('Inactive Users', @inactive_users)
+  %div.stats
+    %h2 Number of
+    %ul= show_results_for(@current_live_stats)
+  %div.stats
+    %h2 
+      User Activity
+      %span (active = logged in within last 30 days)
+    %ul
+      %li 
+        Active Users
+        %span= @active_users
+      %li 
+        Inactive Users
+        %span= @inactive_users
