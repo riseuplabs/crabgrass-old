@@ -1,7 +1,7 @@
 class MenuItem < ActiveRecord::Base
 
   belongs_to :group
-  acts_as_list :scope => :group
+  acts_as_tree :order => :position
 
   TYPES={
     I18n.t(:external_link_menu_item)=>:external,

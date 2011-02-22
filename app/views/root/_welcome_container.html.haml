@@ -1,7 +1,7 @@
 #welcome-container
   %ul#welcome-links.navbar
     %li= welcome_box_link
-    = render :partial => 'navbar_item', :collection => @group.menu_items
+    = render :partial => 'navbar_item', :collection => @group.menu_items.roots
     - if may_edit_menu?
       %li.right
         %a.small_icon.pencil_16{'href'=> groups_menu_items_url(:action => :index)}
