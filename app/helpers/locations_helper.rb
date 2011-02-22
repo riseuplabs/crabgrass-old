@@ -2,17 +2,29 @@ module LocationsHelper
 
   # <%= select('group','location', GeoCountry.find(:all).to_select(:name, :code), {:include_blank => true}) %>
   def country_dropdown(object=nil, method=nil, options={})
+    profile_id_param = @profile ? "profile_id=#{@profile.id}&" : nil
     name = _field_name('country_id', object, method)
-    show_submit = options[:show_submit] || false 
     onchange = remote_function(
-      :url => {:controller => '/locations', :action => 'all_admin_codes_options'},
-      :with => "'select_state_name='+$('select_state_id').name+'&show_submit=#{show_submit}&country_code='+value",
+      :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
+      :with => "'#{profile_id_param}country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
-    choices = [ I18n.t(:location_country).capitalize].concat(GeoCountry.find(:all).to_select(:name, :id))
-    opts = (object.nil? and method.nil? and params[:country_id]) ? {:selected => params[:country_id]} : {}
-    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name, :choices => choices, :opts => opts}
+    choices = country_choices
+    render :partial => '/locations/country_dropdown', :locals => {:object => object, :method => method, :onchange => onchange, :name=>name, :choices => choices, :opts => {} }
+  end
+
+  def country_dropdown_for_search
+    name = _field_name('country_id')
+    onchange = remote_function(
+      :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
+      :with => "'show_admin_codes=1&country_code='+value",
+      :loading => show_spinner('country'),
+      :complete => hide_spinner('country')
+    )
+    choices = country_choices
+    opts = params[:country_id] ? {:selected => params[:country_id]} : {}
+    render :partial => '/locations/country_dropdown', :locals => {:onchange => onchange, :name=>name, :choices => choices, :opts => opts}
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
@@ -32,18 +44,18 @@ module LocationsHelper
   def city_text_field(object=nil, method=nil, options = {})
     display = _display_value(params[:country_id])
     name = _field_name('city_name', object, method)
-    spinner = options[:spinner]
-    onblur = remote_function(
-      :url => {:controller => '/locations', :action => 'city_lookup'},
-      :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
-      :loading => show_spinner('city'),
-      :complete => hide_spinner('city')
-    )
-    if params[:city_id] =~ /\d+/
-      city = GeoPlace.find(params[:city_id])
-    end
-    value = city.nil? ? {} : {:value => city.name} 
-    options = {:onblur => onblur, :name => name, :id=> 'city_text_field'}.merge(value)
+    #spinner = options[:spinner]
+    #onblur = remote_function(
+    #  :url => {:controller => '/locations', :action => 'city_lookup'},
+    #  :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
+    #  :loading => show_spinner('city'),
+    #  :complete => hide_spinner('city')
+    #)
+    #if params[:city_id] =~ /\d+/
+    #  city = GeoPlace.find(params[:city_id])
+    #end
+    #value = city.nil? ? {} : {:value => city.name} 
+    options = {:name => name, :id=> 'city_text_field'}  #.merge(value)
     render :partial => '/locations/city_text_field', :locals => {:display => display, :object=>object, :method=>method, :options => options}
   end
 
@@ -73,6 +85,10 @@ module LocationsHelper
   end
 
   private
+
+  def country_choices
+    [ I18n.t(:location_country).capitalize].concat(GeoCountry.find(:all).to_select(:name, :id))
+  end
 
   def _field_name(altname, object=nil, method=nil)
     if !object.nil? and !method.nil?

@@ -138,7 +138,7 @@ module LayoutHelper
   EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
 
   # needed whenever we want controls for editing a wiki
-  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
+  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaLoader']}
 
   JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
 

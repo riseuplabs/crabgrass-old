@@ -95,8 +95,8 @@ table.form {
 .autocomplete-w1 {
   background: url(/images/ui/shadow.png) no-repeat bottom right;
   position: absolute;
-  top: 7px;
-  left: 6px;
+  top: -10px;
+  left: 44px;
   z-index: $z_autocomplete; }
 
 .autocomplete {
@@ -112,7 +112,7 @@ table.form {
   .selected {
     background: #eeeeee; }
   div {
-    padding: 1px 0 1px 5px;
+    padding: 3px 6px;
     white-space: nowrap; }
   p {
     margin: 0; }

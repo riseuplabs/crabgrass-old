@@ -3,6 +3,16 @@ class GeoPlace < ActiveRecord::Base
   belongs_to :geo_country
   belongs_to :geo_admin_code
 
+  named_scope :named_like, lambda {|query|
+    single = "#{query}%"
+    multi = "%,#{query}%"
+    { :conditions => ["name LIKE ? OR alternatenames LIKE ?", single, multi] }
+  }
+
+  named_scope :largest, lambda {|count|
+    { :order => "population DESC", :limit => count }
+  }
+
   def self.with_names_matching(name, country_id, params={})
     geo_country = GeoCountry.find(country_id)
     if params[:admin_code_id] =~ /\d+/
@@ -26,7 +36,7 @@ class GeoPlace < ActiveRecord::Base
     return @places unless (@places.empty? or params[:search_alternates])
     ### search for LIKE in name and alternatenames
     admin_codes.each do |ac|
-      @places << find(:all, 
+      @places << find(:all,
         :conditions=>['geo_admin_code_id = ? and (name LIKE ? or alternatenames LIKE ?)', ac.id, "%#{name}%", "%,#{name},%"]
       )
     end
