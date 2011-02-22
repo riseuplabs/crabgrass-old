@@ -12,16 +12,17 @@
     mp3_url  = @asset.url
   end
 %>
+
 <script type='text/javascript' src='/embed/swfobject.js'></script>
 
   <div id='preview'><%= link_to mp3_file, mp3_url %></div>
 
 <script type='text/javascript'>
-  var s1 = new SWFObject('/embed/player.swf','ply','250','60','9','#ffffff');
+  var s1 = new SWFObject('/embed/player.swf','ply','250','24','9','#ffffff');
   s1.addParam('allowfullscreen','false');
   s1.addParam('allowscriptaccess','always');
   s1.addParam('wmode','opaque');
-  s1.addParam('flashvars','file=<%= mp3_url %>');
+  s1.addVariable('file', '<%= mp3_url %>');
   s1.write('preview');
 </script>
 

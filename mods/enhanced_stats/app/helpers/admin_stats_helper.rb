@@ -4,22 +4,11 @@ module AdminStatsHelper
     "var calendar = Calendar.setup( { triggerElement: '#{trigger}', dateField: '#{el}' });"
   end
 
-  def stats_subheader(content, comment=nil)
-    comment = comment.nil? ? '' : content_tag(:span, comment, {:class => 'comment'})
-    th = content_tag(:th, content+comment, {:class => 'subhead', :colspan => 2}) 
-    content_tag(:tr, th)
-  end
-
-  def stats_tr(title, total)
-    td = content_tag(:td, title) + content_tag(:td, total, {:class => 'right'})
-    content_tag(:tr, td)
-  end
-
-  def show_results_for(collection, title)
-    html = stats_subheader(title)
+  def show_results_for(collection)
+    html = ''
     collection.each do |res|
       next if res[1] == 0
-      html += stats_tr(res[0], res[1])
+      html += content_tag(:li, res[0] + ' ' + content_tag(:span, res[1]))  
     end
     html
   end
