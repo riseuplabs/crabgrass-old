@@ -1,11 +1,51 @@
 .wrapper2-plus
   .col2
-    %h2 Welcome to MRU Youthplatform
-    %p This is your platform! Use it wisely, and remember you are responsible for everything you post. You will have semi-privacy within your groups. No other user will be able to see the information in your group, unless yo choose to share it. However, this site has heavy moderation and moderators can see all the content on the site. So, keep in mind that the content of discussions must remain appropriate.
-    %p We hope that you find the platform easy to use, and a sproductive place to discuss issues around employment, youth-led develoment and empowerment. 
+    %h2.opening Welcome to MRU Youthplatform
+    %p.panel This is your platform! Use it wisely, and remember you are responsible for everything you post. You will have semi-privacy within your groups. No other user will be able to see the information in your group, unless you choose to share it. However, this site has heavy moderation and moderators can see all the content on the site. So, keep in mind that the content of discussions must remain appropriate.
+    %p.panel We hope that you find the platform easy to use, and a productive place to discuss issues around employment, youth-led develoment and empowerment. 
+  .col2
+    %h3.panel-heading Projects Map
+    %img{:src =>"images/unido/test-projects-map.png"}
+    
+.wrapper1
+  .col1
+    %a{:href => "#", :id => "btn-contribute"} 
+      Contribute to Site
+    %a{:href => "#", :id => "btn-add-job"} 
+      Add a job opportunity
+  .col1
+    %h3.panel-heading Quickfinder
+    %h4.subheading Industrial Policy and Studies
+    %ul.panel
+      %li Industrial sector studies
+      %li Youth and microfinance
+    %h4.subheading Support to institutions for industry, business, trade, environment and energy
+    %ul.panel
+      %li Rehabilitation of technical/ vocational training institutions
+      %li Laboratories for testing and metrology
+      %li Afripanet: Investment Promotion Agencies Subcontracting Exchanges
+      %li Youth Communication Hubs
+    %h4.subheading Support to industrial enterprises and micro, small and medium businesses
+    %ul.panel
+      %li Export consortia
+  .col1
+    .listing
+      .grouping
+        %h4.first
+          = I18n.t(:most_active_members)
+        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_users(), :after => link_to(I18n.t(:view_all), people_directory_path(:browse)) }
+      .grouping
+        %h4= I18n.t(:most_active_groups)
+        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_path(:action => :search)) }
+    
+    
+      
+    
+    
+    
 
 .wrapper1-plus
-  .col1-plus.light-grey-bg
+  .col1
     - form_tag({:controller => 'account', :action => 'login'}, :id => "entry") do
 
       //%form#entry
@@ -25,48 +65,3 @@
 
     = javascript_tag "Form.focusFirstElement('entry');"
 
-    .listing
-      .grouping
-        %h4.first
-          = I18n.t(:most_active_members)
-        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_users(), :after => link_to(I18n.t(:view_all), people_directory_path(:browse)) }
-      .grouping
-        %h4= I18n.t(:most_active_groups)
-        = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_path(:action => :search)) }
-
-  .col1-plus
-    %h3.panel-heading.black.pale-yellow-bg Quickfinder
-    %h4.subheading.black Industrial Policy and Studies
-    %ul.panel
-      %li Industrial sector studies
-      %li Youth and microfinance
-    %h4.subheading.black Support to institutions for industry, business, trade, environment and energy
-    %ul.panel
-      %li Rehabilitation of technical/ vocational training institutions
-      %li Laboratories for testing and metrology
-      %li Afripanet: Investment Promotion Agencies Subcontracting Exchanges
-      %li Youth Communication Hubs
-    %h4.subheading.black Support to industrial enterprises and micro, small and medium businesses
-    %ul.panel
-      %li Export consortia
-
-.wrapper1-plus
-  .col1-plus
-    %h3.panel-heading.light-grey-bg Particip@te-Xchange-Support
-    %p.panel MRU Youth Network contains all your from the MRU countries: Cote d&rsquo;Ivoire, Guinea, Liberia, and Sierra Leone.
-    %p.panel The MRU Youth Network provides users with a great opportunity to network with other youth from the sub-region, share ideas, provide peer-to-peer support, and gather relevant information.
-    %p.panel This network also contains links to youth employment opportunities in the Mano River Union countries, as well as relevant documentation on youth employment. 
-
-.wrapper1
-  .col1
-    %h3.panel-heading.black.pale-yellow-bg
-      WHO is WHO?
-    %p.testmap
-  
-.wrapper2
-  .col2
-    %h3.panel-heading.light-grey-bg Mano River Youth Forum
-    %p.testvideo
-    %p.panel First and partial editing of the Mano River Youth Forum that was held in Freetow, Sierra Leone on the 10-11 March 2009.
-    %p.panel The forum was organized by UNIDO in partnership with the Mano River Union Secretariat, the Directorates of Youth of Cote d&rsquo;Ivoire, Guinea, Sierra Leone, and Liberia, ILO, UNDP and YEN.
-    %p.panel Special thanks goes to UNICEF Division of Communication, the Division of Communication, the two Goodwill Ambassadors, Meiway and Sia Tolney, riseup.net, Gregg Osofsky, and all the youth volunteers from the four countries.
