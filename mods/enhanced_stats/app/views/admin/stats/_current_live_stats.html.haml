@@ -1,16 +1,17 @@
 %div.stats_container
-  %h2= h3
-  %div.stats
-    %h2 Number of
-    %ul= show_results_for(@current_live_stats)
-  %div.stats
-    %h2 
-      User Activity
-      %span (active = logged in within last 30 days)
-    %ul
-      %li 
-        Active Users
-        %span= @active_users
-      %li 
-        Inactive Users
-        %span= @inactive_users
+  %h2 Current Live Stats
+  %div.wrapper
+    %div.stats
+      %h2.subhead Number of
+      %table= show_results_for(@current_live_stats)
+    %div.stats
+      %h2.subhead 
+        User Activity
+        %span (active = logged in within last 30 days)
+      %table
+        %tr
+          %td Active Users
+          %td= @active_users
+        %tr
+          %td Inactive Users
+          %td= @inactive_users

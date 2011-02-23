@@ -1,7 +1,5 @@
 = render :partial => 'stats_head', :locals => {:section => 'Users and Groups'}
-= render :partial => 'current_live_stats', :locals => {:h3 => 'Current Live Stats'}
-%br
-%br
+= render :partial => 'current_live_stats', :locals => {:h2 => 'Current Live Stats'}
 %div.stats_container
   %h2 Select a Date Range
   = render :partial => 'select_date_range',:locals => { :controller => '/admin/stats/people'}

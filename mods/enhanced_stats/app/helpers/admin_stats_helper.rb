@@ -8,7 +8,7 @@ module AdminStatsHelper
     html = ''
     collection.each do |res|
       next if res[1] == 0
-      html += content_tag(:li, res[0] + ' ' + content_tag(:span, res[1]))  
+      html += content_tag(:td, res[0] + ' ' + content_tag(:td, res[1]))  
     end
     html
   end
