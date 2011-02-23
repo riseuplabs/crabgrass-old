@@ -7,6 +7,7 @@ class Admin::StatsController < Admin::BaseController
   def pages
     if request.post?
       pages_created_stats
+      pages_edited_stats
       posts_created_stats
       pages_shared_stats
       @show_stats = true
@@ -54,34 +55,51 @@ class Admin::StatsController < Admin::BaseController
 
   def pages_created_stats
     @pages_created_totals = [] 
-    @pages_created_totals << ['Total', Page.created_between(@startdate, @enddate).count]
+    total = 0
     current_site.available_page_types.each do |pagetype|
       next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
-      @pages_created_totals << [ 
-        pagetype_to_plural_string(pagetype),
-        Kernel.const_get(pagetype).created_between(@startdate, @enddate).count]
+      count = Kernel.const_get(pagetype).created_between(@startdate, @enddate).count
+      @pages_created_totals << [pagetype_to_plural_string(pagetype),count]
+      total += count
     end
+    @pages_created_totals.unshift(['All Page Types', total])
   end
 
   def posts_created_stats
     @posts_created_totals = []
-    @posts_created_totals << ['All Page Types', Post.on_pages.created_between(@startdate, @enddate).count]
+    total = 0
     current_site.available_page_types.each do |pagetype|
       next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
-      @posts_created_totals << [
-        pagetype_to_plural_string(pagetype),
-        Post.created_between(@startdate, @enddate).on_pagetype(pagetype).count]
+      count = Post.created_between(@startdate, @enddate).on_pagetype(pagetype).count
+      @posts_created_totals << [pagetype_to_plural_string(pagetype),count]
+      total += count
     end
+    @posts_created_totals.unshift(['All Page Types', total])
   end
 
   def pages_shared_stats
     @pages_shared_totals = []
-    @pages_shared_totals << ['Total', PageHistory.grant_accesses.created_between(@startdate, @enddate).count]
-    @pages_shared_totals << ['With Individuals', PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count]
+    total = 0
+    with_i = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count
+    @pages_shared_totals << ['With Individuals', with_i]
     ['Group', 'Committee', 'Council', 'Network'].each do |grouptype|
-      @pages_shared_totals << ["With #{grouptype}s", 
-        PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group(grouptype).count]
+      count = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group(grouptype).count
+      @pages_shared_totals << ["With #{grouptype}s", count]
+      total += count
     end
+    @pages_shared_totals.unshift(['Total', total])
+  end
+
+  def pages_edited_stats
+    @pages_edited_totals = []
+    total = 0
+    current_site.available_page_types.each do |pagetype|
+      next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
+      count = PageHistory.page_updates.only_pagetype(pagetype).created_between(@startdate, @enddate).size
+      @pages_edited_totals << [pagetype_to_plural_string(pagetype),count]
+      total += count
+    end
+    @pages_edited_totals.unshift(['All Page Types', total])
   end
  
   def pagetype_to_plural_string(pagetype)
