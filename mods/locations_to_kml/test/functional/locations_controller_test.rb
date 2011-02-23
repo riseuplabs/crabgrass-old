@@ -9,4 +9,10 @@ class LocationsControllerTest < ActionController::TestCase
     puts @response.body
   end
 
+  def test_only_groups
+    user = users(:user_with_location)
+    get :index, :format => :kml
+    puts @response.body   
+  end
+
 end

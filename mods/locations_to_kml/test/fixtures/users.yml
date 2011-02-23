@@ -1,0 +1,5 @@
+user_with_location:
+  id: 4000 
+  login: "user_with_location"
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--inactive_user--") %>
+  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--inactive_user--") %>
