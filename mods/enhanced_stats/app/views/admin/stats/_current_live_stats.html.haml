@@ -3,12 +3,13 @@
   %div.wrapper
     %div.stats
       %h2.subhead Number of
-      %table= show_results_for(@current_live_stats)
+      %table{:style => "float: left; margin-left: 10px; width: 300px;"}
+        = show_results_for(@current_live_stats)
     %div.stats
       %h2.subhead 
         User Activity
         %span (active = logged in within last 30 days)
-      %table
+      %table{:style => "float: left; margin-left: 10px; width: 300px;"}
         %tr
           %td Active Users
           %td.right= @active_users
