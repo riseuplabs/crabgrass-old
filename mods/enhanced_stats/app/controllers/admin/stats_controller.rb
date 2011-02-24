@@ -82,6 +82,7 @@ class Admin::StatsController < Admin::BaseController
     total = 0
     with_i = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_user.count
     @pages_shared_totals << ['With Individuals', with_i]
+    total += with_i
     ['Group', 'Committee', 'Council', 'Network'].each do |grouptype|
       count = PageHistory.grant_accesses.created_between(@startdate, @enddate).to_group(grouptype).count
       @pages_shared_totals << ["With #{grouptype}s", count]
