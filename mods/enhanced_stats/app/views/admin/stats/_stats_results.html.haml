@@ -1,0 +1,17 @@
+%div.wrapper
+  %div.stats
+    %h2.subhead Number of Pages Created
+    %table{:style => "float: left; margin-left: 10px; width: 300px;"}
+      = show_results_for(@pages_created_totals)
+  %div.stats
+    %h2.subhead Number of Pages Edited
+    %table{:style => 'float: left; margin-left: 10px; width: 300px;'}
+      = show_results_for(@pages_edited_totals)
+  %div.stats
+    %h2.subhead Number of Comments Posted to
+    %table{:style => "float: left; margin-left: 10px; width: 300px;"}
+      = show_results_for(@posts_created_totals)
+  %div.stats
+    %h2.subhead Number of Pages Shared
+    %table{:style => "float: left; margin-left: 10px; width: 300px;"}
+      = show_results_for(@pages_shared_totals)
