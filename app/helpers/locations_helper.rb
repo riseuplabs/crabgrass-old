@@ -24,7 +24,7 @@ module LocationsHelper
     )
     choices = country_choices
     opts = params[:country_id] ? {:selected => params[:country_id]} : {}
-    render :partial => '/locations/country_dropdown', :locals => {:onchange => onchange, :name=>name, :choices => choices, :opts => opts}
+    render :partial => '/locations/country_dropdown', :locals => {:object => nil, :method => nil, :onchange => onchange, :name=>name, :choices => choices, :opts => opts}
   end
 
   def state_dropdown(object=nil, method=nil, country_id=nil, options={})
