@@ -1,10 +1,13 @@
 %div.wrapper
   %div.stats
     %h2.subhead Number of Pages Created
-    %table= show_results_for(@pages_created_totals)
+    %table{:style => 'float: left'}= show_results_for(@pages_created_totals)
+  %div.stats
+    %h2.subhead Number of Pages Edited
+    %table{:style => 'float: left'}= show_results_for(@pages_edited_totals)
   %div.stats
     %h2.subhead Number of Comments Posted to
-    %table= show_results_for(@posts_created_totals)
+    %table{:style => 'float: left'}= show_results_for(@posts_created_totals)
   %div.stats
     %h2.subhead Number of Pages Shared
-    %table= show_results_for(@pages_shared_totals)
+    %table{:style => 'float: left'}= show_results_for(@pages_shared_totals)
