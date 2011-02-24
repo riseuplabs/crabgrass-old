@@ -93,14 +93,16 @@ class Admin::StatsController < Admin::BaseController
 
   def pages_edited_stats
     @pages_edited_totals = []
-    total = 0
-    current_site.available_page_types.each do |pagetype|
-      next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
-      count = PageHistory.page_updates.only_pagetype(pagetype).created_between(@startdate, @enddate).size
-      @pages_edited_totals << [pagetype_to_plural_string(pagetype),count]
-      total += count
-    end
-    @pages_edited_totals.unshift(['All Page Types', total])
+    #total = 0
+    #current_site.available_page_types.each do |pagetype|
+    #  next if Page.class_name_to_class(pagetype).nil? or Page.class_name_to_class(pagetype).internal
+    #  count = PageHistory.page_updates.only_pagetype(pagetype).created_between(@startdate, @enddate).size
+    #  @pages_edited_totals << [pagetype_to_plural_string(pagetype),count]
+    #  total += count
+    #end
+    #@pages_edited_totals.unshift(['All Page Types', total])
+    @pages_edited_totals << ['Total',
+      PageHistory.page_updates.only_pagetype('WikiPage').created_between(@startdate, @enddate).size]
   end
  
   def pagetype_to_plural_string(pagetype)
