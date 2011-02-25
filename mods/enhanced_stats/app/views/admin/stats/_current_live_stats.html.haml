@@ -12,7 +12,9 @@
       %table{:style => "float: left; margin-left: 10px; width: 300px;"}
         %tr
           %td Active Users
-          %td.right= @active_users
+          %td{:style => "float: right;"}
+            = @active_users
         %tr
           %td Inactive Users
-          %td.right= @inactive_users
+          %td{:style => "float: right;"}
+            = @inactive_users
