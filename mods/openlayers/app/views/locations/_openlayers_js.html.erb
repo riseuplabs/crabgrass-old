@@ -1,0 +1,63 @@
+<script type='text/javascript'>
+  var map;
+  var options = {
+    theme: false,
+    maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+    numZoomLevels: 19,
+    maxResolution: 156543.0399,
+    units: 'm',
+    projection: new OpenLayers.Projection("EPSG:900913"),
+    displayProjection: new OpenLayers.Projection("EPSG:4326")
+  };
+  map = new OpenLayers.Map('map', options);
+  map.addLayer(new OpenLayers.Layer.OSM());
+  var kml = new OpenLayers.Layer.GML("MRU", "/groups/directory/search.kml", 
+     {
+      format: OpenLayers.Format.KML, 
+      formatOptions: {
+      extractStyles: false, 
+      extractAttributes: true
+     },
+    projection: map.displayProjection
+  });
+  map.addLayer(kml);
+  // Events for the objects of the KML-Data
+  kml.events.on({
+   'featureselected': onFeatureSelect,
+   'featureunselected': onFeatureUnselect
+  });
+
+  var control = new OpenLayers.Control.SelectFeature(kml);
+  map.addControl(control);
+  control.activate();
+           
+  map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+  var lonLat = new OpenLayers.LonLat(-8,8).transform(map.displayProjection,  map.projection);
+  map.setCenter (lonLat, 2); 
+
+  function onPopupClose(evt) {
+    control.unselect(this.feature);
+  }
+  function onFeatureSelect(evt) {
+    feature = evt.feature;
+    popup = new OpenLayers.Popup.AnchoredBubble("featurePopup",
+      feature.geometry.getBounds().getCenterLonLat(),
+      new OpenLayers.Size(200,200),
+      feature.attributes.name + feature.attributes.description,
+      null, true, onPopupClose);
+    feature.popup = popup;
+    popup.feature = feature;
+    map.addPopup(popup);
+  }
+  function onFeatureUnselect(evt) {
+    feature = evt.feature;
+    if (feature.popup) {
+      popup.feature = null;
+      map.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
+    }
+  }
+  map.zoomToMaxExtent();
+</script>
