@@ -1,7 +1,0 @@
-profile_for_user_with_location:
-  id: 4000 
-  entity_type: "User"
-  entity_id: 4000
-  may_see: true
-  stranger: true
-  geo_location_id: 1 
