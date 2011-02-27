@@ -33,6 +33,7 @@ profile_for_private_group:
   may_see_members: false
   may_request_membership: false
   stranger: true
+  geo_location_id: 1
 
 profile_for_rainbow:
   id: 3
