@@ -5,9 +5,9 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
       next unless data = geo_data_for_kml(entity)
       xml.Placemark {
         xml.name(h(data[:name]))
-        xml.description(h(
+        xml.description(
           render :file => data[:description_template], :layout => false, :locals => {:entity => entity, :name => data[:name]}
-        ))
+        )
         xml.Point {
           xml.coordinates("#{data[:long]},#{data[:lat]}")
         }
