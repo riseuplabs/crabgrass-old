@@ -241,7 +241,7 @@ class ApplicationController < ActionController::Base
   # render locations kml
   def render_kml_for(collection)
     @entities = collection
-    render :template => 'locations/index.kml.builder'
+    render :template => 'locations/index.kml.builder', :layout => false
   end
 
   private
