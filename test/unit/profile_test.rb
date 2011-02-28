@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProfileTest < Test::Unit::TestCase
 
-  fixtures :users, :groups, :profiles, :external_videos
+  fixtures :users, :groups, :profiles, :external_videos, :geo_countries, :geo_places
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -145,6 +145,22 @@ class ProfileTest < Test::Unit::TestCase
 
   def test_associations
     assert check_associations(Profile)
+  end
+
+  def test_locations
+    country = geo_countries(:armenia)
+    city = geo_places(:zangakatun)
+    user = users(:red)
+    profile = user.profiles.create :stranger => true
+    profile.update_location({:country_id => country.id, :city_id => city.id})
+    assert_equal profile.country_id.to_i, country.id.to_i
+    assert_equal profile.city_id.to_i, city.id.to_i
+
+    profile.update_location({:country_id => country.id})
+    assert_equal profile.country_id.to_i, country.id.to_i
+    assert_nil profile.city_id, 'the city should be blank if only the country was set.'
+
+    profile.destroy
   end
 
 end
