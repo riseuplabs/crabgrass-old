@@ -169,7 +169,7 @@ class ChatController < ApplicationController
 # the only trick is that GreenCloth returns the text wrapped
 # in a paragraph block (<p> stuff </p>), and things will
 # look funny if we don't strip that off
-    say  = GreenCloth.new(say).to_html
+    say  = GreenCloth.new(say, nil, [:lite_mode]).to_html
     say.gsub! /\A<p>(.+)<\/p>\Z/m, '\1'
     return say
   end
