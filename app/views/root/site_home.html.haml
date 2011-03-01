@@ -4,7 +4,8 @@
 - content_for :misc_header do
   = render :partial => 'welcome_container'
 
-= render :partial => 'introduction'
+- for widget in @widgets
+  = render_widget widget
 
 -# if @announcements.any? 
   -# render :partial => 'announcement_page/announcements'  

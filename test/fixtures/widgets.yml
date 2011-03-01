@@ -1,0 +1,8 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: IntroWidget
+  profile_id: 5
+  position: 1
+  section: 1
+  options: {}

@@ -3,7 +3,7 @@
 #
 class RootController < ApplicationController
 
-  helper :groups, :account, :wiki, :page
+  helper :groups, :account, :wiki, :page, :widgets
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
 
@@ -118,8 +118,9 @@ class RootController < ApplicationController
 
   def site_home
     @active_tab = :home
-    @wiki = @group.profiles.public.wiki || @group.profiles.public.create_wiki
-    #@announcements = Page.find_by_path('limit/3/descending/created_at',options_for_group(@group, :flow => :announcement))
+    @profile = @group.profiles.public
+    @widgets = @profile.widgets
+    @wiki = @profile.wiki || @profile.create_wiki
     if Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
       @page_panels = ['featured', 'recent_pages', 'most_viewed', 'most_active', 'most_stars']
     else
