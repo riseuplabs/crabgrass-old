@@ -1,9 +1,8 @@
 module WidgetsHelper
 
   def render_widget(widget)
-    render :partial => widget.partial, :locals => {
-      :widget => widget
-    }
+    render :partial => widget.partial,
+      :locals => widget.options.merge!({:widget => widget})
   end
 
   def list_widget(widget)
@@ -13,9 +12,8 @@ module WidgetsHelper
   end
 
   def edit_widget(widget)
-    render :partial => widget.edit_partial, :locals => {
-      :widget => widget
-    }
+    render :partial => widget.edit_partial,
+      :locals => widget.options.merge!({:widget => widget})
   end
 
   ##

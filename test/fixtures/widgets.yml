@@ -11,7 +11,8 @@ map:
   profile_id: 5
   position: 2
   section: 1
-  options: {}
+  options: 
+    :title: Projects in the Manu River Union
 whoiswho:
   name: TeaserWidget
   profile_id: 5
@@ -42,28 +43,38 @@ contribute_button:
   profile_id: 5
   position: 1
   section: 2
-  options: {}
+  options:
+    :title: Contribute to Site
+    :link: /groups/unido/pages/new
+add_job_button:
+  name: ButtonWidget
+  profile_id: 5
+  position: 2
+  section: 2
+  options:
+    :title: Add Job Opportunity
+    :link: /job/add
 quickfinder:
   name: MenuWidget
   profile_id: 5
-  position: 2
+  position: 3
   section: 2
   options: {}
 active_members:
   name: NetworkingWidget
   profile_id: 5
-  position: 3
+  position: 4
   section: 2
   options: {}
 active_groups:
   name: NetworkingWidget
   profile_id: 5
-  position: 4
+  position: 5
   section: 2
   options: {}
 what_is_new:
   name: TeaserWidget
   profile_id: 5
-  position: 5
+  position: 6
   section: 2
   options: {}
