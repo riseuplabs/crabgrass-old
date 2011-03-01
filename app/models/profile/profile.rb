@@ -135,6 +135,8 @@ class Profile < ActiveRecord::Base
   ## ASSOCIATED ATTRIBUTES
   ##
 
+  has_many :widgets, :order => :position, :dependent => :destroy
+
   belongs_to :wiki, :dependent => :destroy
   belongs_to :wall,
    :class_name => 'Discussion',

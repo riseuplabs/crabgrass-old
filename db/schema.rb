@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100510212536) do
+ActiveRecord::Schema.define(:version => 20110301094152) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -571,6 +571,7 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
     t.text     "summary_html",           :limit => 2147483647
     t.boolean  "admins_may_moderate"
     t.integer  "geo_location_id",        :limit => 11
+    t.boolean  "members_may_edit_wiki",                        :default => true
   end
 
   add_index "profiles", ["entity_id", "entity_type", "language", "stranger", "peer", "friend", "foe"], :name => "profiles_index"
@@ -669,6 +670,7 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
     t.string  "profile_fields"
     t.integer "moderation_group_id",    :limit => 11
     t.boolean "require_user_full_info"
+    t.boolean "never_pester_users",                           :default => false
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -905,6 +907,16 @@ ActiveRecord::Schema.define(:version => 20100510212536) do
   end
 
   add_index "websites", ["profile_id"], :name => "websites_profile_id_index"
+
+  create_table "widgets", :force => true do |t|
+    t.string   "name"
+    t.integer  "profile_id", :limit => 11
+    t.integer  "position",   :limit => 11
+    t.integer  "section",    :limit => 11
+    t.string   "options"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "wiki_locks", :force => true do |t|
     t.integer "wiki_id",      :limit => 11
