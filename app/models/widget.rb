@@ -2,6 +2,8 @@ class Widget < ActiveRecord::Base
 
   belongs_to :profile
 
+  serialize :options, Hash
+
   def partial
     "widgets/#{directory}/show"
   end
