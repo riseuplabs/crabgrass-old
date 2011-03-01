@@ -37,7 +37,6 @@ Conf.sites.each do |site_conf|
   else
     if Site.count == 0
       puts 'Skipping site configuration: database has no sites.'
-      raise Exception.new('skip sites')
     else
       puts "ERROR (%s): site name '%s' not found in database!" % [Conf.configuration_filename,site_conf['name']]
       puts "Available site names are:"
