@@ -35,7 +35,7 @@ wide_teaser:
   position: 5
   section: 1
   options:
-    :title: Your Opinion Counts\ntalk to us
+    :title: Your Opinion Counts - Talk to us
 page_list:
   name: PageListWidget
   profile_id: 5
