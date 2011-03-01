@@ -11,7 +11,8 @@ map:
   profile_id: 5
   position: 2
   section: 1
-  options: {}
+  options: 
+    :title: Projects in the Manu River Union
 whoiswho:
   name: TeaserWidget
   profile_id: 5
@@ -43,7 +44,7 @@ contribute_button:
   position: 1
   section: 2
   options:
-    :text: Contribute to Site
+    :title: Contribute to Site
     :link: /groups/unido/pages/new
 add_job_button:
   name: ButtonWidget
@@ -51,7 +52,7 @@ add_job_button:
   position: 2
   section: 2
   options:
-    :text: Add Job Opportunity
+    :title: Add Job Opportunity
     :link: /job/add
 quickfinder:
   name: MenuWidget

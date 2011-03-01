@@ -1,3 +1,6 @@
-.widget
-  %h3=widget.name.sub /Widget$/, ''
+.col1
+  %h4
+    = widget.name.sub /Widget$/, ''
+    = " - " if widget.title
+    = truncate(widget.title, :length => 20)
   = link_line :bullet, edit_widget_link(widget), preview_widget_link(widget)

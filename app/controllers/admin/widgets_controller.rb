@@ -1,10 +1,12 @@
 class Admin::WidgetsController < Admin::BaseController
 
+  helper :widgets, 'admin/widgets'
   before_filter :fetch_profile
 
   # GET /widgets
   def index
-    @widgets = @profile.widgets.find(:all)
+    @main_widgets = @profile.widgets.find_all_by_section 1
+    @sidebar_widgets = @profile.widgets.find_all_by_section 2
   end
 
   # GET /widgets/1

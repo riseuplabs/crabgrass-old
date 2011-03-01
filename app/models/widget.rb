@@ -17,4 +17,8 @@ class Widget < ActiveRecord::Base
     dir.sub! /_widget$/, ''
   end
 
+  def title
+    options[:title]
+  end
+
 end
