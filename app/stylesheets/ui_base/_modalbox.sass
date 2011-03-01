@@ -5,7 +5,7 @@
 //     #content
 //       (.alert or .confirm)
 
-!z_modalbox = 200
+$z_modalbox : 200
 
 #MB_overlay
   position: absolute
@@ -14,8 +14,8 @@
   left: 0
   width: 100%
   height: 100%
-  z-index= !z_modalbox
-  background-color: #000 !important
+  z-index: $z_modalbox
+  background-color: #000 $important
 
 #MB_overlay[id]
   position: fixed
@@ -25,8 +25,7 @@
   top: 0
   border: 0 solid
   text-align: left
-  z-index= !z_modalbox + 1
-//  :background-color #EFEFEF
+  z-index: $z_modalbox + 1
   color: #000
   .buttons
     text-align: right
@@ -37,12 +36,12 @@
     margin: 0
 
 #MB_window[id]
-  position: fixed !important
+  position: fixed $important
 
 #MB_frame
   position: relative
-  :background-color= !popup_bg
-// this is disable for crabgrass.
+  background-color: $popup_bg
+// this is disabled for crabgrass.
 //  :height 100%
 
 #MB_header
@@ -82,10 +81,10 @@
 
 //
 // what is displayed before any content for the box is loaded
-//
+
 #MB_loading
-  :background= !popup_bg "url(/images/spinner-big.gif) 50% 50% no-repeat"
-  :color= !popup_bg
+  background: $popup_bg "url(/images/spinner-big.gif) 50% 50% no-repeat"
+  color: $popup_bg
   height: 100px
 
 //

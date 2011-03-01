@@ -1,4 +1,5 @@
 // this is for the me header and for the say box on another user's page
+
 #say_box
   .submit
     vertical-align: top
@@ -16,7 +17,7 @@
       padding-left: 2px
       font-style: italic
     textarea
-      +bordered(!warm_grey_border)
+      +bordered($warm_grey_border)
       overflow: visible
       float: left
     .textinput
@@ -39,7 +40,8 @@
 
 
 // this is for me/messages
-// these should be consolidated later - they are too similar (one is underscore other is dash!)
+// these should be consolidated later - they are too similar (one is underscore other is dash$)
+
 #say-box
   #say
     textarea#say_msg.tall

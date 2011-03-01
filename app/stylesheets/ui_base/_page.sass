@@ -7,9 +7,9 @@ div
 .page_title
   padding-left: 30px
   h3
-    font-size= !page_title_h3
+    font-size: $page_title_h3
     padding-top: 6px
-    color= !page_title_color
+    color: $page_title_color
   .summary
     font-style: italic
     padding: 3px 0px
@@ -17,6 +17,7 @@ div
 
 //
 // POSTdiv
+
   &.page_search_form
     text-align: center
     line-height: 2.5em
@@ -24,10 +25,9 @@ div
 
 //
 // POST
-//
 
 #posts
-  background= !posts_bg
+  background: $posts_bg
   margin-bottom: 15px
   width: 540px
   .post-author
@@ -43,13 +43,13 @@ div
     p
       padding: 10px 10px 15px
   h4
-    +bordered-btm(!light_grey_border)
+    +bordered-btm($light_grey_border)
     line-height: 1.6
   .shade-even
-    background-color= !post_alternate_bg_color
+    background-color: $post_alternate_bg_color
 
 #posts > h4
-  color= !red
+  color: $red
 
 
 table.posts
@@ -81,50 +81,14 @@ table.posts
     bottom: 0
     display: none
 
-//
-// TITLE_BOX
-//
-
-div.title_box
-  form
-    .h1
-      line-height: 1em
-      margin: 0
-      padding: 0
-    .h2
-      line-height: 2em
-      margin: 0
-      padding: 1
-    .h3
-      line-height: .5em
-      margin: 0
-      padding: 1
-  .h1
-    font-size: 2em
-    font-weight: bold
-    line-height: 1.2em
-  .h2
-    font-size: 1.5em
-    font-weight: bold
-    line-height: 3em
-    padding: 0px 0px 0px 20px
-  .h3
-    font-size: 1.5em
-    font-weight: normal
-    line-height: 1.2em
-
-
-div.sub_menu
-  width: 200px
 
 //
 // TITLE_BOX
-//
 
 div.title_box
   margin-left: -18px
   padding-bottom: 5px
-  background= !page_title_bg
+  background: $page_title_bg
   form
     .h1
       line-height: 1em
@@ -152,14 +116,11 @@ div.title_box
     font-weight: normal
     line-height: 1.2em
 
-
 div.sub_menu
   width: 200px
 
-
 //
 // ASSETS PAGE
-//
 
 #asset_page
   .upload_file_info

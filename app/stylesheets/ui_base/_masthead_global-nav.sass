@@ -6,8 +6,8 @@
   +clearfix
   #masthead-container
     +container
-    +bordered-btm(!masthead_background)
-    background= !masthead_background
+    +bordered-btm($masthead_background)
+    background: $masthead_background
     height: 80px
     overflow: visible
     #masthead-name
@@ -16,7 +16,7 @@
       width: 764px
       position: relative
       h2
-        color= !masthead_header_text
+        color: $masthead_header_text
         font-weight: normal
         font-size: 24px
         float: left
@@ -27,7 +27,7 @@
         float: right
         display: inline
         text-align: right
-        color= !almost_black
+        color: $almost_black
         position: relative
         fieldset
           +bordered(1px, #a6c0cb)
@@ -56,7 +56,7 @@
           top: 1px
           .light-small
             +small-text
-            color= !masthead_search_text
+            color: $masthead_search_text
             margin-left: -5px
 
 
@@ -69,8 +69,8 @@ nav.page
   overflow: visible
   #global-nav-container
     +container
-    +bordered-btm(!masthead_background, solid)
-    background= !global_nav_bg
+    +bordered-btm($masthead_background, solid)
+    background: $global_nav_bg
     height: 29px
     overflow: visible
     #global-nav
@@ -96,7 +96,7 @@ nav.page
 
 #social-activities-dropdown
   background: #FFFFFF
-  border-color = #666
+  border-color : #666
   border-width: 1px
   border-style: solid 
   width: 220px
@@ -143,7 +143,7 @@ nav.page
     +inline-list
     a
       +hover-link
-      color= !global_nav_text
+      color: $global_nav_text
       font-size: 12px
       margin: 0 26px 0 0
   li.current
@@ -159,7 +159,7 @@ nav.page
     padding-left: 20px
     min-height: 16px
     a
-      color: !warm_grey_text
+      color: $warm_grey_text
       font-weight: normal
 
 #account-links
@@ -171,7 +171,7 @@ nav.page
   float: right
   margin: 5px 0 0 0
   +clearfix
-  color= !lighter_grey_text
+  color: $lighter_grey_text
   li
     +inline-list
     +small-text
@@ -187,10 +187,10 @@ nav.page
   position: absolute
   top: 20px
   left: 0
-  background= !global_nav_dropdown_bg
+  background: $global_nav_dropdown_bg
   padding: 0.75em 0.5em 0.5em
   border-width: 1px 2px 2px 1px
-  border-color= !menu_border_color
+  border-color: $menu_border_color
   border-style: solid
   z-index: 99
   h3
@@ -208,11 +208,12 @@ nav.page
       overflow: hidden
   a
     border: 0px none transparent
-    color= !link_color
+    color: $link_color
 
-  // for name icon links, draw a colored border when hover
-  // for this to work, we need to increase the padding from the default.
-  // in this case, an extra 5px
+// for name icon links, draw a colored border when hover
+// for this to work, we need to increase the padding from the default.
+// in this case, an extra 5px
+  
   a.name_icon
     display: block
     border: 1px solid white
