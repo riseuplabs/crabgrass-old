@@ -4,7 +4,6 @@
 
 //  GRID
 
-!grid_unit = "px"
 !col_width = 36px
 !gutter_width = 20px
 !side_gutter_width = 18px
@@ -19,12 +18,13 @@
 
 //  FONT-SIZE
 
-!base_font_size_px = 12
-!base_line_height_px = 21
+!base_font_size = 12px
+!base_line_height = 21px
 
 // SUSY
 //  (don't move this @import above the GRID and FONT-SIZE overrides)
 // NOTE: susy file called without .sass or .scss extension
+
 @import susy/susy
 
 
@@ -154,7 +154,7 @@ h6
 
 //
 //title-box-full w/search
-//
+
 .partial_width
   width: 540px
   font-style: italic
@@ -655,6 +655,13 @@ body #content #content-container #content-wrap #sidebar.left
     div a
       display: inline
 
+body #content #content-container #content-wrap .col1-plus
+  form#entry
+    width: 326px
+    padding: 0 0 15px 10px
+    div a
+      display: inline
+      
 #sidebar.no-border
   border: none
 
@@ -1087,6 +1094,7 @@ ul.side_list
 //
 // table admin + superadmin
 //
+
 #admin-content
   form
     table tr td, p
@@ -1110,12 +1118,15 @@ ul.side_list
 
 
 /* basic page layout */
+
 body
-  +susy
   +general-font
+  font-size: 75%
+  line-height: 1.75
   color= !almost_black
   background= !general_bg
   #page
+    margin-top: 15px
     header.page
       +clearfix
       overflow: visible
@@ -1142,7 +1153,7 @@ body
         margin: 20px 0 20px 0
         form#entry
           float: left
-          margin-top: 15px
+          margin-top: 18px
           +columns(4,14)
           +alpha(14)
           div

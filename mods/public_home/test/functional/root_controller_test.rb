@@ -11,38 +11,52 @@ class RootControllerTest < ActionController::TestCase
 
     with_site :test do
       get :index
-      assert_response :success
+      assert_site_home
     end
-
-    get :index
-    assert_response :redirect
   end
 
-  def test_index_not_logged_in
+  def test_still_redirect_without_site
+    login_as :red
+    get :index
+    assert_me_page
+  end
 
+  def test_site_home_not_logged_in
     with_site :test do
       get :index
-      assert_response :success
-      assert_not_nil assigns["current_site"].id
+      assert_site_home
     end
 
     get :index
     assert_response :success
   end
 
-  def test_site_home
+  def test_normal_login_without_site
+    get :index
+    assert_login_page
+  end
+
+  def test_normal_login_with_hidden_network
+    net = sites(:test).network
+    profile = net.profiles.public
+    profile.may_see=false
+    profile.save
     with_site :test do
       get :index
-      assert_response :success
+      assert_login_page
+    end
+  end
 
-      # just make sure the Site specific stuff worked...
-      assert_not_nil assigns["current_site"].id,
-        "Response did not come from the site we expected."
-      current_site=assigns["current_site"]
+  def test_site_home_content
+    with_site :test do
+      get :index
+      assert_site_home
 
-      assert_not_equal @controller.send(:most_active_users), [],
+      site_id = assigns['current_site'].id
+      most_active_users = @controller.send(:most_active_users)
+      assert_not_equal [], most_active_users
         "Expecting a list of most active users."
-      assert_nil @controller.send(:most_active_users).detect{|u| !u.site_ids.include?(current_site.id)},
+      assert_nil most_active_users.detect{|u| !u.site_ids.include?(site_id)},
         "All users should be on current_site."
       # testing for #1929
       assert_select "a[href='/people/directory/browse']", "View All"
@@ -61,10 +75,30 @@ class RootControllerTest < ActionController::TestCase
     end
   end
 
-  def test_fetching_pages
+  def test_all_pages_public
+    page = Page.create! :site_id => sites(:test).id, :title => "hide me"
+    page.owner=users(:blue)
+    page.add sites(:test).network
+    page.save
     with_site :test do
       get :recent_pages
       assert_response :success
+      assert_not_nil pages = @controller.send(:paginate)
+      assert_nil pages.detect{|p| !p.public?}
+    end
+  end
+
+  def test_non_public_pages_when_logged_in
+    page = Page.create! :site_id => sites(:test).id, :title => "show me"
+    page.owner=users(:blue)
+    page.add sites(:test).network
+    page.save
+    login_as :blue
+    with_site :test do
+      get :recent_pages
+      assert_response :success
+      assert_not_nil pages = @controller.send(:paginate)
+      assert pages.detect{|p| !p.public?}
     end
   end
 
