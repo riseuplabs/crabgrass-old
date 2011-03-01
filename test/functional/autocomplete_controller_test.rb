@@ -5,6 +5,12 @@ class AutocompleteControllerTest < ActionController::TestCase
           :memberships, :user_participations, :group_participations,
           :pages, :profiles, :relationships, :geo_countries, :geo_admin_codes, :geo_places
 
+  def setup
+    @controller = AutocompleteController.new
+    @request    = ActionController::TestRequest.new
+    @response   = ActionController::TestResponse.new
+  end
+
   def test_preloading_entities
     login_as :blue
     xhr :get, :entities, :query => ''

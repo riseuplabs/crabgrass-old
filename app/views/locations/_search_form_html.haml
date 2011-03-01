@@ -1,8 +1,10 @@
+
 - form_remote_tag :url => @request_path, :loading => show_spinner('submit_search'), :complete => hide_spinner('submit_search') do
   Show Groups in
   %br
-  = country_dropdown_for_search
+  = country_dropdown(nil, nil, {:show_submit => true, :show_admin_codes => true})
   = state_dropdown
+  %br
   = city_text_field
   = city_id_field
   %span{:id=>'submit_loc'}

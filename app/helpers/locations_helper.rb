@@ -3,10 +3,11 @@ module LocationsHelper
   # <%= select('group','location', GeoCountry.find(:all).to_select(:name, :code), {:include_blank => true}) %>
   def country_dropdown(object=nil, method=nil, options={})
     profile_id_param = @profile ? "profile_id=#{@profile.id}&" : nil
+    admin_codes_param = options[:show_admin_codes] ? "show_admin_codes=1&" : nil
     name = _field_name('country_id', object, method)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'#{profile_id_param}country_code='+value",
+      :with => "'#{admin_codes_param}#{profile_id_param}show_submit=#{show_submit}&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 

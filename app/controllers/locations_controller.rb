@@ -7,12 +7,17 @@ class LocationsController < ApplicationController
   def country_dropdown_onchange 
     return unless request.xhr?
     # can select 'Country' which isn't really a country, and that should reset the form
-    geo_admin_codes = (params[:show_admin_codes] and params[:country_code] != 'Country') ?
-      GeoCountry.find_by_id(params[:country_code]).geo_admin_codes : []
+
+    if params[:country_code] == "Country"
+      geo_admin_codes = []
+    elsif params[:show_admin_codes]
+      geo_admin_codes = GeoCountry.find_by_id(params[:country_code]).geo_admin_codes
+    end
+    @profile = Profile.find(params[:profile_id]) if params[:profile_id]
     # do not try to update models unless there is a current profile (ie don't update models when in search)
-    update_model_with_country(params[:country_code]) if @profile = Profile.find_by_id(params[:profile_id])
+    update_model_with_country(params[:country_code]) if @profile
     render :update do |page|
-      # these messy next three lines reload the autocomplete js with the newly selected country
+
       page << "$$('option.newselected').collect(function(el){el.removeClassName('newselected')});" 
       page << "$('select_country_id').select('[value=\"#{params[:country_code]}\"]')[0].addClassName('newselected');" 
       page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js'
@@ -22,7 +27,8 @@ class LocationsController < ApplicationController
       end
       page.show 'city_text'
       page['city_text_field'].value = '' 
-      #page.show 'submit_loc' if params[:show_submit] == 'true' 
+      #page['city_id_field'].value = ''
+      page.show 'submit_loc' if params[:show_submit] == 'true' 
     end
   end
 
@@ -34,6 +40,11 @@ class LocationsController < ApplicationController
   end
 
   private
+
+  def update_model_with_country(id)
+    return unless may_edit_location_profile?(@profile.entity)
+    @profile.update_location({:country_id => id}) 
+  end
 
   def update_model_with_country(id)
     return unless may_edit_location_profile?(@profile.entity)
