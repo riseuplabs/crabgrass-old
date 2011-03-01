@@ -1,0 +1,4 @@
+.listing
+  .grouping
+    %h4= I18n.t(:most_active_groups)
+    = render :partial => 'avatars/entity_boxes', :locals => {:entities => most_active_groups(), :after => link_to(I18n.t(:view_all), group_directory_path(:action => :search)) }

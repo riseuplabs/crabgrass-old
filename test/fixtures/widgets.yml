@@ -36,3 +36,34 @@ page_list:
   position: 6
   section: 1
   options: {}
+
+contribute_button:
+  name: ButtonWidget
+  profile_id: 5
+  position: 1
+  section: 2
+  options: {}
+quickfinder:
+  name: MenuWidget
+  profile_id: 5
+  position: 2
+  section: 2
+  options: {}
+active_members:
+  name: NetworkingWidget
+  profile_id: 5
+  position: 3
+  section: 2
+  options: {}
+active_groups:
+  name: NetworkingWidget
+  profile_id: 5
+  position: 4
+  section: 2
+  options: {}
+what_is_new:
+  name: TeaserWidget
+  profile_id: 5
+  position: 5
+  section: 2
+  options: {}

@@ -2,8 +2,9 @@
   = render :partial => 'welcome_container'
 
 .wrapper2-plus
-  - for widget in @widgets
+  - for widget in @main_widgets
     = render_widget widget
 
 .wrapper1
-  = render :partial => 'sidebar'
+  - for widget in @sidebar_widgets
+    = render_widget widget
