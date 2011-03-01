@@ -7,6 +7,8 @@
 #
 
 ActionController::Routing::Routes.draw do |map|
+  map.resources :widgets
+
 
   # total hackety magic:
 #  map.filter 'crabgrass_routing_filter'
@@ -28,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
+    admin.resources :widgets
   end
 
   ##
