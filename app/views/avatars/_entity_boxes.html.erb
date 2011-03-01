@@ -22,7 +22,7 @@
     <%= link_span(:bullet, links, more_link) %>
   </h5>
   <%- if entities.any? -%>
-    <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
+    <%= render :partial => 'avatars/boxes', :locals => {:entities => entities, :size => 'medium'} %>
   <%- else -%>
     <%= I18n.t(:empty_results) %>
   <%- end -%>

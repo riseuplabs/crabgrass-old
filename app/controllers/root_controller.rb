@@ -119,7 +119,8 @@ class RootController < ApplicationController
   def site_home
     @active_tab = :home
     @profile = @group.profiles.public
-    @widgets = @profile.widgets
+    @main_widgets = @profile.widgets.find_all_by_section 1
+    @sidebar_widgets = @profile.widgets.find_all_by_section 2
     @wiki = @profile.wiki || @profile.create_wiki
     if Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
       @page_panels = ['featured', 'recent_pages', 'most_viewed', 'most_active', 'most_stars']
@@ -156,22 +157,22 @@ class RootController < ApplicationController
 
   helper_method :most_active_groups
   def most_active_groups
-    Group.only_groups.most_visits.find(:all, :limit => 15)
+    Group.only_groups.most_visits.find(:all, :limit => 8)
   end
 
   helper_method :recently_active_groups
   def recently_active_groups
-    Group.only_groups.recent_visits.find(:all, :limit => 10)
+    Group.only_groups.recent_visits.find(:all, :limit => 8)
   end
 
   helper_method :most_active_users
   def most_active_users
-    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 15)
+    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 8)
   end
 
   helper_method :recently_active_users
   def recently_active_users
-    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 8)
   end
 
 end
