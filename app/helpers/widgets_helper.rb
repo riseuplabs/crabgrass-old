@@ -1,8 +1,9 @@
 module WidgetsHelper
 
   def render_widget(widget)
-    render :partial => widget.partial,
-      :locals => widget.options.merge!({:widget => widget})
+    locals = {:widget => widget}
+    locals.merge! widget.options if widget.options
+    render :partial => widget.partial, :locals => locals
   end
 
   def list_widget(widget)
@@ -12,28 +13,52 @@ module WidgetsHelper
   end
 
   def edit_widget(widget)
-    render :partial => widget.edit_partial,
-      :locals => widget.options.merge!({:widget => widget})
+    locals = {:widget => widget}
+    locals.merge! widget.options if widget.options
+    render :partial => widget.edit, :locals => locals
   end
 
   ##
   ## lists of active groups and users. used by the view.
   ##
 
-  def most_active_groups
-    Group.only_groups.most_visits.find(:all, :limit => 15)
+  def render_active_entities(widget)
+    type = widget.options[:type] || :users
+    recent = widget.options[:recent] || false
+    entities = get_active_entities(type, recent).find(:all, :limit => 8)
+    url = view_all_url(type)
+    render :partial => '/avatars/entity_boxes', :locals => {
+      :entities => entities,
+      :header => widget.title,
+      :size => 'medium',
+      :after => link_to(I18n.t(:view_all), url)
+    }
   end
 
-  def recently_active_groups
-    Group.only_groups.recent_visits.find(:all, :limit => 10)
+  def get_active_entities(type, recent)
+    case type
+    when :groups
+      if recent
+        Group.only_groups.recent_visits
+      else
+        Group.only_groups.most_visits
+      end
+    when :users
+      if recent
+        User.most_active_on(current_site, Time.now - 30.days).not_inactive
+      else
+        User.most_active_on(current_site, nil).not_inactive
+      end
+    end
   end
 
-  def most_active_users
-    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 15)
-  end
-
-  def recently_active_users
-    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+  def view_all_url(type)
+    case type
+    when :groups
+      group_directory_path(:action => :search)
+    when :users
+      people_directory_path(:browse)
+    end
   end
 
 end

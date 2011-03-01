@@ -4,6 +4,10 @@ class Widget < ActiveRecord::Base
 
   serialize :options, Hash
 
+  def options
+    read_attribute(:options) or {}
+  end
+
   def partial
     "widgets/#{directory}/show"
   end
@@ -18,7 +22,7 @@ class Widget < ActiveRecord::Base
   end
 
   def title
-    options[:title]
+    self.options[:title]
   end
 
 end

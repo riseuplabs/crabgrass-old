@@ -5,7 +5,8 @@ intro:
   profile_id: 5
   position: 1
   section: 1
-  options: {}
+  options:
+    :title: Welcome to MRU Youthplatform
 map:
   name: MapWidget
   profile_id: 5
@@ -18,25 +19,29 @@ whoiswho:
   profile_id: 5
   position: 3
   section: 1
-  options: {}
+  options:
+    :title: Who is Who?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
 tag_cloud:
   name: TagCloudWidget
   profile_id: 5
   position: 4
   section: 1
-  options: {}
+  options:
+    :title: Most Used Tags
 wide_teaser:
   name: TeaserWidget
   profile_id: 5
   position: 5
   section: 1
-  options: {}
+  options:
+    :title: Your Opinion Counts\ntalk to us
 page_list:
   name: PageListWidget
   profile_id: 5
   position: 6
   section: 1
-  options: {}
+  options:
 
 contribute_button:
   name: ButtonWidget
@@ -59,22 +64,31 @@ quickfinder:
   profile_id: 5
   position: 3
   section: 2
-  options: {}
+  options:
+    :title: Quickfinder
 active_members:
   name: NetworkingWidget
   profile_id: 5
   position: 4
   section: 2
-  options: {}
+  options:
+    :title: Most Active Members
+    :type: :users
+    :recent: false
 active_groups:
   name: NetworkingWidget
   profile_id: 5
   position: 5
   section: 2
-  options: {}
+  options:
+    :title: Most Active Groups
+    :type: :groups
+    :recent: false
 what_is_new:
   name: TeaserWidget
   profile_id: 5
   position: 6
   section: 2
-  options: {}
+  options:
+    :title: What is New?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum

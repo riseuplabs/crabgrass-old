@@ -1,2 +1,7 @@
-.teaser
-  teaser here.
+-if local_assigns[:text]
+  .col1.teaser
+    %h4=title
+    .text=text
+-else
+  .col2.teaser
+    %h3=title
