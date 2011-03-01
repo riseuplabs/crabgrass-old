@@ -1,35 +1,26 @@
 li
   &.task
     &:hover
-      :background= !box1_bg_color
-
+      background: $box1_bg_color
     &.spinning
-      :background #ffd url(/images/spinner.gif) no-repeat 0.75em 0.75em
-
+      background: #ffffdd url(/images/spinner.gif) no-repeat 0.75em 0.75em
   &#add_task_link
-    :background= !box1_bg_color
-    :margin 2em 4em
-    :padding 1em
-
+    background: $box1_bg_color
+    margin: 2em 4em
+    padding: 1em
 
 input
   &.task_check
-    :cursor default
-
+    cursor: default
   &.task_name
-    :font-family monospace
-    :width 100%
-
-
+    font-family: monospace
+    width: 100%
   textarea.task_description
-    :font-family monospace
-    :width 100%
-
+    font-family: monospace
+    width: 100%
 
 div.task,  span.task
-  :margin-left 24px
-
+  margin-left: 24px
 
 span.task_people
-  :margin-left 1em
-
+  margin-left: 1em

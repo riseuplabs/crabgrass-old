@@ -6,8 +6,8 @@
   +clearfix
   #masthead-container
     +container
-    +bordered-btm(!masthead_background)
-    background= !masthead_background
+    +bordered-btm($masthead_background)
+    background: $masthead_background
     height: 80px
     overflow: visible
     #masthead-name
@@ -16,7 +16,7 @@
       width: 764px
       position: relative
       h2
-        color= !masthead_header_text
+        color: $masthead_header_text
         font-weight: normal
         font-size: 24px
         float: left
@@ -27,11 +27,11 @@
         float: right
         display: inline
         text-align: right
-        color= !almost_black
+        color: $almost_black
         position: relative
         fieldset
           +bordered(1px, #a6c0cb)
-          background: #fff
+          background: white
           display: inline
           width: 190px
           height: 21px
@@ -48,17 +48,15 @@
             position: relative
             height: 21px
             vertical-align: top
-
         div
           display: inline
           position: relative
-          line-height: 2.0
+          line-height: 2
           top: 1px
           .light-small
             +small-text
-            color= !masthead_search_text
+            color: $masthead_search_text
             margin-left: -5px
-
 
 //
 //global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
@@ -69,8 +67,8 @@ nav.page
   overflow: visible
   #global-nav-container
     +container
-    +bordered-btm(!masthead_background, solid)
-    background= !global_nav_bg
+    +bordered-btm($masthead_background, solid)
+    background: $global_nav_bg
     height: 29px
     overflow: visible
     #global-nav
@@ -86,41 +84,39 @@ nav.page
   img#show-social
     float: right
     padding: 4px
-    
 
-  
 #social_activities_count
-  background: #ccc
-  color: #333
+  background: #cccccc
+  color: #333333
   line-height: 1
 
 #social-activities-dropdown
-  background: #FFFFFF
-  border-color = #666
+  background: white
+  border-color: #666666
   border-width: 1px
-  border-style: solid 
+  border-style: solid
   width: 220px
   padding: 5px
   z-index: 999
-  
+
 #social-activities-dropdown td
   vertical-align: top
   border-bottom: 1px dotted #bbbbbb
   padding-bottom: 4px
   padding-top: 10px
-  
+
 #social_activities_list
-  float: left      
+  float: left
   padding: 0 5px 5px 5px
 
 //#social_activities_list td
 //  border-bottom: 1px dotted #bbbbbb
 //  padding-bottom: 4px
-//  padding-top: 10px                          
+//  padding-top: 10px
 
 #social_activities_list img
   padding-right: 8px
-  
+
 #social_activities_list a.name_icon
   margin: 0
 
@@ -138,12 +134,11 @@ nav.page
   float: left
   overflow: visible
   margin-top: 5px
-
   li
     +inline-list
     a
       +hover-link
-      color= !global_nav_text
+      color: $global_nav_text
       font-size: 12px
       margin: 0 26px 0 0
   li.current
@@ -159,7 +154,7 @@ nav.page
     padding-left: 20px
     min-height: 16px
     a
-      color: !warm_grey_text
+      color: $warm_grey_text
       font-weight: normal
 
 #account-links
@@ -167,11 +162,12 @@ nav.page
   float: right
   height: 30px
   margin-right: -5px
+
 #user
   float: right
   margin: 5px 0 0 0
   +clearfix
-  color= !lighter_grey_text
+  color: $lighter_grey_text
   li
     +inline-list
     +small-text
@@ -181,16 +177,17 @@ nav.page
     margin-left: 5px
     &.active
       font-weight: bold
+
 // sub menu items
 
 #menu div.menu_items
   position: absolute
   top: 20px
   left: 0
-  background= !global_nav_dropdown_bg
+  background: $global_nav_dropdown_bg
   padding: 0.75em 0.5em 0.5em
   border-width: 1px 2px 2px 1px
-  border-color= !menu_border_color
+  border-color: $menu_border_color
   border-style: solid
   z-index: 99
   h3
@@ -208,11 +205,11 @@ nav.page
       overflow: hidden
   a
     border: 0px none transparent
-    color= !link_color
-
+    color: $link_color
   // for name icon links, draw a colored border when hover
   // for this to work, we need to increase the padding from the default.
   // in this case, an extra 5px
+
   a.name_icon
     display: block
     border: 1px solid white
@@ -222,9 +219,8 @@ nav.page
       padding-top: 5px
       padding-bottom: 5px
     &:hover
-      background-color: #ffc
-      border: 1px solid #cc9
-
+      background-color: #ffffcc
+      border: 1px solid #cccc99
   div.leftcol
     width: 17em
     float: left
@@ -243,7 +239,7 @@ nav.page
   div.rightcol
     width: 20em
     margin-left: 13em
-    border-left: 1px dotted #ccc
+    border-left: 1px dotted #cccccc
     padding-left: 1em
   ul.recent_pages li
     margin-top: 0.5em
@@ -264,7 +260,6 @@ ul.menu_me_left
     padding-bottom: 4px
   li
     width: 9em
-    &.active, &:hover
     &.small_icon
       padding-left: 19px
       background-position: 0 50%

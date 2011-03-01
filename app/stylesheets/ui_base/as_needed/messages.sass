@@ -4,22 +4,19 @@
 //      padding-top: 1em
 
 // this was in constants.sass
-!strong_heading_color = #CE4A48
-
-
+$strong_heading_color: #ce4a48
 
 #messages-forms
   overflow: visible
   height: 35px
   padding-top: 10px
-  
   #say-box
     +bordered
-    position: relative    
+    position: relative
     float: left
     padding: 8px 8px 0 8px
     margin-bottom: 10px
-    background= !banner_bg
+    background: $banner_bg
     img
       position: relative
       top: 4px
@@ -45,7 +42,7 @@
         vertical-align: top
       label
         vertical-align: top
-        
+
 #select-messages-from
   +bordered
   background: #f5f5f5
@@ -58,14 +55,13 @@
     vertical-align: top
     margin-top: 1px
 
-
 //
 // MESSAGE LIST
 //
 
 .messages
   .message
-    color: #333
+    color: #333333
     // room for icon:
     padding-left: 38px
     background-position: 0px 4px
@@ -78,10 +74,9 @@
     clear: both
     text-transform: capitalize
     font-weight: bold
-    color= !strong_heading_color
+    color: $strong_heading_color
   .body
     p
       margin: 0
     br + br
       display: none
-

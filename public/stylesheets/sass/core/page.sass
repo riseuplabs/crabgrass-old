@@ -17,47 +17,47 @@ div
   background: white
   table
     width: 100%
-    color: #888
+    color: #888888
     border-collapse: collapse
   td
     padding: 0.25em
-    border-bottom= !content_border
+    border-bottom: $content_border
     background-color: white
     &.last
       text-align: right
     &.date
-      background: #FFF4E8
-      color: #F28367
+      background: #fff4e8
+      color: #f28367
       text-transform: capitalize
       font-weight: bold
     &.excerpt b
       color: black
   th
     text-transform: uppercase
-    border-bottom: 1px solid #ccc
-    border-top: 2px solid #ccc
+    border-bottom: 1px solid #cccccc
+    border-top: 2px solid #cccccc
     padding: 0.75em
     padding-left: 0.5em
     text-align: left
     font-size: 0.8em
-    color: #C2C2C2
+    color: #c2c2c2
     &.last
       text-align: right
     &.selected
-      background-color: #eee
+      background-color: #eeeeee
   //a
   //  color= !page_list_link_color
   span
     &.status
       color: red
     &.star
-      color: #EBBA20
+      color: #ebba20
       font-weight: bold
 
 .page_scroll
   max-height: 40em
   overflow: auto
-  border-top: 1px solid #ccc
+  border-top: 1px solid #cccccc
   clear: left
   padding-top: none
 
@@ -71,11 +71,11 @@ div
   display: none
 
 .section div.round
-  background: #fff url(/images/ui/down-arrow.png) no-repeat right
+  background: white url(/images/ui/down-arrow.png) no-repeat right
   height: 26px
   line-height: 26px
   text-align: center
-  border: 1px solid #E1E1E1
+  border: 1px solid #e1e1e1
   width: 140px
   font-weight: normal
 
@@ -96,7 +96,7 @@ table.share_page_recipient_add
 // the enclosure for the list of added recipients
 .autocomplete_results_area
   margin: 6px 10px 6px 10px
-  border: 1px solid #ccc
+  border: 1px solid #cccccc
   max-height: 15em
   overflow: auto
   // ie hack:
@@ -108,18 +108,18 @@ table.share_page_recipient_add
 .autocomplete_results_table
   td
     padding: 4px
-    border-bottom: 1px solid #ccc
+    border-bottom: 1px solid #cccccc
     background-color: #f6f6f6
     font-size: 0.9em
   td.unsaved
-    background-color: #BBFF99
+    background-color: #bbff99
   span.entity
     width: 15em
     overflow: hidden
 
 // make it a different color in a popup
 .popup #share_page_recipient_table td
-  background-color: #fff
+  background-color: white
 
 //div.notify_details,
 //div.share_details
@@ -161,11 +161,11 @@ table.notify
   padding-top: 2.5em
   a,
   a:visited
-    color= !right_column_link_color
+    color: $right_column_link_color
   h3
-    color= !right_column_fg_color
+    color: $right_column_fg_color
     border: 1px solid
-    border-color: #eee #bbb #bbb #eee
+    border-color: #eeeeee #bbbbbb #bbbbbb #eeeeee
     background: #e0e0e0
     text-transform: uppercase
     font-size: 0.8em
@@ -173,7 +173,7 @@ table.notify
     margin: 2.5em 0 0.5em 0
     -moz-border-radius: 4px
   ul.rule
-    border-top: 1px dotted #fff
+    border-top: 1px dotted white
     padding-top: 0.5em
     margin-top: 0.5em
   ul.names li:first-child
@@ -200,12 +200,12 @@ table.notify
   .tags a
     width: 100%
     overflow: hidden
-    background-color: #dde
+    background-color: #ddddee
     padding: 0px 2px
     line-height: 175%
     white-space: nowrap
   .tags a:hover
-    background-color: #eef
+    background-color: #eeeeff
 
 .edit_tags p
   float: left
@@ -217,17 +217,17 @@ table.notify
 //
 
 #posts
-  background: #fff
+  background: white
   margin-bottom: 5px
   .comments-head
-    border-top: 1px solid #E1E1E1
+    border-top: 1px solid #e1e1e1
     padding-top: 20px
     padding-bottom: 10px
   .post-author
     text-align: right
     padding-left: 10px
     margin-right: 10px
-    color: #6E6E6C
+    color: #6e6e6c
     font-size: 12px
     div.username,
     div.date
@@ -237,22 +237,22 @@ table.notify
 
 table.posts
   width: 100%
-  border-top: 1px solid #ccc
+  border-top: 1px solid #cccccc
   .shade-even
-    background-color: #fff
+    background-color: white
   .shade-odd
-    background-color= !post_bg_color
+    background-color: $post_bg_color
   tr.post td
     vertical-align: top
   tr.post-spacer-bottom td
     line-height: 10px
-    border-bottom: 1px solid #ccc
+    border-bottom: 1px solid #cccccc
   tr.post-spacer-top td
     line-height: 10px
   textarea
     margin-bottom: 5px
   td.post-body
-    border-left: 1px solid #ccc
+    border-left: 1px solid #cccccc
     padding: 0 10px
     // the first and last <p> should not have an outer margin
     p:first-child
@@ -282,7 +282,7 @@ div.title_box
       margin: 0
       padding: 1
     .h3
-      line-height: .5em
+      line-height: 0.5em
       margin: 0
       padding: 1
   .h1
