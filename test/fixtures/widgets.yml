@@ -1,8 +1,38 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+intro:
   name: IntroWidget
   profile_id: 5
   position: 1
+  section: 1
+  options: {}
+map:
+  name: MapWidget
+  profile_id: 5
+  position: 2
+  section: 1
+  options: {}
+whoiswho:
+  name: TeaserWidget
+  profile_id: 5
+  position: 3
+  section: 1
+  options: {}
+tag_cloud:
+  name: TagCloudWidget
+  profile_id: 5
+  position: 4
+  section: 1
+  options: {}
+wide_teaser:
+  name: TeaserWidget
+  profile_id: 5
+  position: 5
+  section: 1
+  options: {}
+page_list:
+  name: PageListWidget
+  profile_id: 5
+  position: 6
   section: 1
   options: {}
