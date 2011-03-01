@@ -9,6 +9,7 @@ $col_width: 36px
 $gutter_width: 20px
 $side_gutter_width: 18px
 $total_cols: 14
+
 //
 //  HACKS
 //  Are you using hacks or conditional comments? Susy makes both possible.
@@ -27,16 +28,14 @@ $base_line_height_px: 21
 // NOTE: susy file called without .sass or .scss extension
 @import susy/susy
 
-
-
-/* @general */
+/* @general
 a
   +hover-link
   color: #4978bc
 
 span.current
-  +bordered(1px,#333)
-  color: #333
+  +bordered(1px, #333333)
+  color: #333333
   padding: 1px 2px
 
 .left
@@ -75,7 +74,7 @@ span.current
   background-position: 0 50%
   padding-left: 20px
   min-height: 16px
-  line-height:  1.6
+  line-height: 1.6
   padding-top: 2px
   padding-bottom: 2px
   &.twenty
@@ -115,8 +114,7 @@ span.current
   background-repeat: no-repeat
   background-position: 0 4px
 
-
-/* headers */
+/* headers
 
 h1, h2, h3, h4, h5, h6
   +headings
@@ -126,23 +124,28 @@ h1, h2, h3, h4, h5, h6
 h1
   font-size: $h1_size
   color: $h1_color
+
 h2
   font-size: $h2_size
   color: $h2_color
+
 h3
   font-size: $h3_size
   color: $h3_color
+
 h4
   font-size: $h4_size
   color: $h4_color
+
 h5
   font-size: $h5_size
+
 h6
   font-size: $h6_size
-/* @end */
 
+/* @end
 
-/* custom appearance in admin */
+/* custom appearance in admin
 
 #ca-instructions
   list-style-type: decimal
@@ -152,7 +155,7 @@ h6
 #masthead_preview img
   width: 500px
 
-/* @end */
+/* @end
 
 //
 //title-box-full w/search
@@ -160,6 +163,7 @@ h6
 .partial_width
   width: 540px
   font-style: italic
+
 #title-box-full, #info-box-full
   width: 764px
   height: 16px
@@ -181,9 +185,7 @@ h6
   span
     color: $almost_black
 
-
-
-/* third-level nav */
+/* third-level nav
 
 #third-level-container
   +container
@@ -213,11 +215,9 @@ h6
       width: 540px
       padding-left: 224px
 
+/* @end
 
-/* @end */
-
-
-/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
+/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section
 
 #sitehome, #group-wiki
   #wiki-area
@@ -240,7 +240,6 @@ h3#underlined
     a
       +blue-link
 
-
 #group-wiki
   margin-top: 0
 
@@ -254,7 +253,7 @@ h3#underlined
     margin: 0
     padding: 10px 0
     .pages-info
-      +columns(8,11)
+      +columns(8, 11)
       +alpha(11)
       margin: 0
       a.tooltip
@@ -292,9 +291,8 @@ h3#underlined
         width: 250px
       .checkbox
         padding-right: 10px
-
     .pages-status
-      +columns(2,10)
+      +columns(2, 10)
       +omega(10)
       +zero
       +bordered
@@ -321,14 +319,13 @@ h3#underlined
     padding: 0 0 8px
     float: left
     display: inline
-
   article
-    +bordered-btm($light_grey_border, "dotted")
+    +bordered-btm($light_grey_border, dotted)
     width: 764px
     margin: 0
     padding: 10px 0
     .pages-info
-      +columns(12,14)
+      +columns(12, 14)
       +alpha(14)
       margin: 0
       width: 80%
@@ -341,11 +338,9 @@ h3#underlined
         color: $blue
         a
           +hover-link
-
       img
         float: left
         padding: 0 10px 20px 0
-
       p
         float: left
         display: inline
@@ -361,9 +356,8 @@ h3#underlined
         width: 480px
       .checkbox
         padding: 0 10px 0 0
-
     .pages-status
-      +columns(2,14)
+      +columns(2, 14)
       +omega(14)
       +zero
       +bordered
@@ -375,28 +369,26 @@ h3#underlined
         clear: both
         float: right
         font-size: 11px
-        line-height: 1.0
+        line-height: 1
         padding: 0.1em
 
 span.search-excerpt
   font-weight: bold
   font-style: normal
 
-/* @end */
+/* @end
 #contributors
   ul
     li
       +inline-list
 
-
 #identity-name i
   font-size: 13px
   color: $warm_grey_text
 
-
-
 .space
   height: 22px
+
 .small-space
   height: 10px
 
@@ -405,8 +397,9 @@ td.reply
   background-position: 0 50%
   width: 24px
   height: 24px
+
 .activities li
-  color: #333
+  color: #333333
   margin-bottom: 1em
   padding-left: 24px
   span.commands
@@ -418,21 +411,24 @@ td.reply
     background-position: 0 2px
   .label.date
     font-style: italic
-    color: #999
+    color: #999999
   br
     display: none
+
 .name_icon_xsmall
   float: left
   background-repeat: no-repeat
   background-position: 1px 50%
   padding: 2px 0 4px 28px
   min-height: 24px
+
 #browse-content
   +clearfix
   width: 764px
   nav
     +clearfix
     width: 764px
+
 button.icon_16
   +zero
   vertical-align: text-top
@@ -449,18 +445,17 @@ button.icon_16
   margin: 0 20px 0 0
 
 #identity-image
-  +columns(4,4)
+  +columns(4, 4)
   +bordered($almost_black)
-  background: #fff
+  background: white
   width: 202px
   height: 202px
   float: left
   margin: 0
   border-width: 1px
 
-
 #image-label
-  +columns(4,4)
+  +columns(4, 4)
   width: 204px
   float: left
   margin: 4px 0 0 0
@@ -473,7 +468,7 @@ button.icon_16
       font-size: 11px
 
 #identity-meta
-  +columns(4,4)
+  +columns(4, 4)
   +bordered
   margin: 20px 0 0 0
   width: 182px
@@ -487,11 +482,12 @@ button.icon_16
     +bordered-btm($medium_grey_border)
   h4.first
     padding-top: 20px
+
 #about-group, #people, #affiliations, #featured
   +clearfix
   width: 182px
   img
-    background-color: #fc0
+    background-color: #ffcc00
   header
     +clearfix
     h3, a
@@ -506,12 +502,14 @@ button.icon_16
   h5
     font-weight: normal
     font-size: 11px
+
 #people, #affiliations
   ul
     padding: 5px 0 7px
     +clearfix
     li
       +inline-list
+
 #about-group
   p
     width: 184px
@@ -533,6 +531,7 @@ button.icon_16
       span
         letter-spacing: normal
         font-size: 8px
+
 #featured
   li
     padding: 12px 0 4px
@@ -553,6 +552,7 @@ button.icon_16
   li.first
     +zero
     border: none
+
 #about-profile
   +small-text
   line-height: 1.2
@@ -562,23 +562,26 @@ button.icon_16
     li
       width: 164px
       padding-top: 4px
+
 #last-login
   font-size: 10px
+
 #main-content,#main-content-right
-  +columns(10,14)
+  +columns(10, 14)
   width: 540px
   margin: 0
   h1
     line-height: 1.4
+
 #main-content-right
   float: right
   margin-top: 14px
+
 #main-content.full
   width: 764px
+
 #main-content-right.admin
   margin: 0
-
-
 
 nav#nav-full
   width: 764px
@@ -591,7 +594,7 @@ nav#nav-full
       +spaced
       height: 28px
       border-left: none
-      background: #fff
+      background: white
       font-size: 11px
       a
         color: $warm_grey_text
@@ -603,10 +606,9 @@ nav#nav-full
     li.current
       background: $almost_black
       a
-        color: #fff
+        color: white
     li.first
       +bordered($almost_black)
-
 
 .pagination.secondary
   width: 100%
@@ -625,7 +627,7 @@ nav#nav-full
     overflow: visible
   ul#nav4
     li
-      +bordered-btm($medium_grey_border,"dotted")
+      +bordered-btm($medium_grey_border, dotted)
       a
         color: $blue
         text-decoration: none
@@ -670,17 +672,21 @@ body #content #content-container #content-wrap #sidebar.left
   ul
     li
       +inline-list
+
 #comments
   +partial-width
   padding-top: 30px
   tr
     td
       padding: 8px 8px 8px 0
+
 .shy_parent:hover
   .shy
     opacity: 1
+
 .shy
   opacity: 0
+
 .pagination
   font-weight: normal
   font-size: 11px
@@ -690,12 +696,15 @@ body #content #content-container #content-wrap #sidebar.left
   padding-top: 4px
   a
     +blue-link
+
 .letter_pagination
   text-align: center
   margin-bottom: 10px
+
 nav#tabs
   +clearfix
   display: block
+
 #settings-form
   +clearfix
   p
@@ -727,21 +736,20 @@ nav#tabs
     background: url(/images/action-bar/action-bar-bg.png) repeat-x bottom
     li
       +inline-list
-      line-height: 1.0
+      line-height: 1
       font-size: 11px
       a
         +hover-link
         color: $blue
         display: inline-block
         padding: 1px 6px
-        border-right: 1px solid #ddd
+        border-right: 1px solid #dddddd
       a.first
-        border-left: 1px solid #ddd
+        border-left: 1px solid #dddddd
   div.right
     margin-top: -2px
     h4
       margin-top: 2px
-
 
 table
   tr
@@ -762,7 +770,6 @@ table
     a
       +hover-link
       color: $blue
-
 
 #messages
   width: 764px
@@ -793,10 +800,9 @@ table
           padding: 12px 6px
           text-decoration: none
           &:hover
-            background-color: #ffc
+            background-color: #ffffcc
           .message-body
             text-decoration: underline
-
       td.date
         font-size: 10px
         width: 80px
@@ -848,7 +854,7 @@ table
       clear: both
       padding-bottom: 8px
 
-/* footer */
+/* footer
 
 .footer-container
   +bordered-top($light_grey_border)
@@ -870,10 +876,10 @@ table
           display: list-item
           padding: 0.1em 0 0.1em 1em
           float: none
-/* @end */
 
+/* @end
 
-/* @group forms */
+/* @group forms
 
 input.checkbox
   width: 12px
@@ -886,12 +892,9 @@ input.text
 form#search-browse
   +bordered
 
+/* @end
 
-/* @end */
-
-
-/* @group inline tags */
-
+/* @group inline tags
 
 em
   font-style: italic
@@ -905,43 +908,38 @@ ins
 del
   text-decoration: line-through
 
-
-/* @end */
-
-
+/* @end
 
 #announcements
-  +columns(10,10)
+  +columns(10, 10)
   margin: 24px 0 0
   width: 540px
   h3
     +bordered-btm($medium_grey_border)
     padding: 0 0 8px
   article
-    +columns(5,10)
+    +columns(5, 10)
     +alpha(10)
     padding-top: 10px
   article.right
-    +columns(5,10)
+    +columns(5, 10)
     +omega(10)
   h4
     line-height: 1.4
   a
     +blue-link
   footer
-    +columns(10,10)
+    +columns(10, 10)
     width: 540px
     margin: 0
 
-
-
 #info-box
-  +columns(10,10)
+  +columns(10, 10)
   +clearfix
   padding: 0 0 8px
   width: 540px
   #say-box
-    +columns(10,10)
+    +columns(10, 10)
     +clearfix
     width: 540px
     img
@@ -950,20 +948,20 @@ del
     #say
       input.textarea
         display: inline
-        border: 1px solid #ccc
+        border: 1px solid #cccccc
         width: 300px
         height: 16px
   #activities
-    +columns(10,10)
+    +columns(10, 10)
     +clearfix
     width: 540px
     margin: 20px 0 20px
     .left
-      +columns(5,10)
+      +columns(5, 10)
       +alpha(10)
       +clearfix
     .right
-      +columns(5,10)
+      +columns(5, 10)
       +omega(10)
       +clearfix
     ul
@@ -979,9 +977,8 @@ del
           font-size: 9px
           color: $lighter_grey_text
 
-
 #helpful-links
-  +columns(10,10)
+  +columns(10, 10)
   +clearfix
   +bordered-top-btm
   margin: 15px 0 0
@@ -1015,7 +1012,6 @@ del
       width: 164px
       padding-top: 4px
 
-
 //
 // page sidebar
 
@@ -1025,7 +1021,7 @@ del
   h3
     color: #666666
     border: 1px solid
-    border-color: #eee #bbb #bbb #eee
+    border-color: #eeeeee #bbbbbb #bbbbbb #eeeeee
     background: #e0e0e0
     text-transform: uppercase
     font-size: 0.8em
@@ -1036,7 +1032,7 @@ del
   h5
     padding: 0.4em 0 0.5em
   ul.rule
-    border-top: 1px dotted #fff
+    border-top: 1px dotted white
     padding-top: 0.5em
     margin-top: 0.5em
   ul.names li:first-child
@@ -1055,15 +1051,17 @@ del
 
 #page_sidebar .tags
   overflow: hidden
+
 #page_sidebar .tags a
   width: 100%
   overflow: hidden
-  background-color: #dde
+  background-color: #ddddee
   padding: 0px 2px
   line-height: 175%
   white-space: nowrap
+
 #page_sidebar .tags a:hover
-  background-color: #eef
+  background-color: #eeeeff
 
 .edit_tags p
   //float: left
@@ -1112,8 +1110,7 @@ ul.side_list
     padding-bottom: 4px
     margin-bottom: 14px
 
-
-/* basic page layout */
+/* basic page layout
 body
   +susy
   +general-font
@@ -1123,7 +1120,6 @@ body
     header.page
       +clearfix
       overflow: visible
-
   #content
     +pie-clearfix
     color: $medium_grey_text
@@ -1147,7 +1143,7 @@ body
         form#entry
           float: left
           margin-top: 15px
-          +columns(4,14)
+          +columns(4, 14)
           +alpha(14)
           div
             label, a
@@ -1155,7 +1151,7 @@ body
             a
               +blue-link
         div#welcome
-          +columns(10,14)
+          +columns(10, 14)
           +omega(14)
           margin-top: 15px
           p
@@ -1185,7 +1181,7 @@ body
                 +spaced
                 height: 28px
                 border-left: none
-                background: #fff
+                background: white
                 font-size: 11px
                 a
                   color: $warm_grey_text
@@ -1198,8 +1194,6 @@ body
                 +bordered($almost_black)
                 a
                   color: $almost_black
-
-
         #main-content-full
           width: 764px
         #xxlarge-avatar
@@ -1210,9 +1204,8 @@ body
           margin: -140px 20px 0 0
           &.no-third-level
             margin-top: -116px
-
           #image-label
-            +columns(4,4)
+            +columns(4, 4)
             width: 204px
             float: left
             margin: 4px 0 0 0
@@ -1223,10 +1216,6 @@ body
               li
                 width: 204px
                 font-size: 11px
-
-
-
-
         #alpha10
           width: 540px
           float: left
@@ -1238,9 +1227,6 @@ body
           margin: 0
           padding-top: 10px
           display: inline
-
           #main-content
             +clearfix
             width: 540px
-
-

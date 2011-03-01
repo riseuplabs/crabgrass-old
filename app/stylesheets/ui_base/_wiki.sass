@@ -3,7 +3,6 @@
 
 .wiki,
 .post
-  
   pre
     white-space: pre-wrap
     white-space: -moz-pre-wrap
@@ -12,13 +11,13 @@
     word-wrap: break-word
     code
       display: block
-      background: #FFF6DD
+      background: #fff6dd
       border: solid 1px
-      border-color: #FFE8A9
+      border-color: #ffe8a9
       padding: 0.5em
   div.codetitle
-    background: #FFE8A9
-    color: #614B2A
+    background: #ffe8a9
+    color: #614b2a
     padding: 0.25em
     font-weight: bold
   h1, h2
@@ -29,17 +28,17 @@
   h1
     font-size: 20pt
     line-height: 1.25em
-    color= !almost_black
-    border-bottom= 1px "solid" !medium_grey_border
-    font-family= !body_text_font_family
+    color: $almost_black
+    border-bottom: 1px solid $medium_grey_border
+    font-family: $body_text_font_family
   h2
     font-size: 14pt
-    color= !medium_grey_text
+    color: $medium_grey_text
     line-height: 1.25em
-    border-bottom= 1px "dotted" !medium_grey_border
+    border-bottom: 1px dotted $medium_grey_border
   h3, h4
     font-size: 12pt
-    color= !light_grey_text
+    color: $light_grey_text
     margin-top: 0.75em
     margin-bottom: 10px
   span.caps
@@ -66,16 +65,16 @@
     width: 100%
   td
     padding: 4px
-    border: 1px solid #CCC
+    border: 1px solid #cccccc
     height: 25px
   th
     padding: 4px
-    border: 1px solid #CCC
-    background: #ddd
+    border: 1px solid #cccccc
+    background: #dddddd
     height: 25px
   tr
     &.odd
-      background-color: #F2F2F2
+      background-color: #f2f2f2
     &.even
       background-color: white
   code
@@ -92,19 +91,19 @@
       position: absolute
       right: 0
       top: 0
-      line-height= !body_text_line_height
+      line-height: $body_text_line_height
       text:
         transform: none
         decoration: none
       font:
-        size= !body_text_font_size
+        size: $body_text_font_size
         variant: normal
         weight: normal
         style: normal
 
 .post
   blockquote
-    border-left: 6px solid #ddd
+    border-left: 6px solid #dddddd
     margin-left: 0
     padding-left: 1.5em
     font-style: italic
@@ -118,14 +117,14 @@ div.diff
 
 del
   &.diffmod, &.diffins
-    color: #999
-    background-color: #ddd
+    color: #999999
+    background-color: #dddddd
 
 ins
   &.diffmod, &.diffins
-    background-color: #cfc
+    background-color: #ccffcc
     text-decoration: none
-    color: #000
+    color: black
 
 //
 // editing
@@ -151,6 +150,7 @@ a.edit
   padding-left: 16px
   // end hack
   float: none
+
 a.edit:hover
   opacity: 1 !important
 
@@ -164,31 +164,31 @@ h3:hover a.edit
 // Take care when changing this css, it is hard to get it to look ok in all browsers.
 
 .html_editor_wrapper
-  border: 1px solid #666
+  border: 1px solid #666666
 
 .htmlarea
   border: 0 !important
 
 .htmlarea .toolbar
   border-right: 0
-  border-bottom: 1px solid #999
-  background: #eee
+  border-bottom: 1px solid #999999
+  background: #eeeeee
   .button
-    background: #eee
-    border-color: #eee
+    background: #eeeeee
+    border-color: #eeeeee
     &:hover
       background: white
 
 .htmlarea iframe
   width: 100% !important
   border: 0 !important
-  border-top: 1px solid #ddd !important
+  border-top: 1px solid #dddddd !important
   &:focus
-    background-color: #ffe
+    background-color: #ffffee
 
 .htmlarea .statusBar
   border-left: 0 !important
-  background: #eee
+  background: #eeeeee
 
 .statusBarWidgetContainer
   display: none
@@ -227,7 +227,6 @@ h3:hover a.edit
 //  h4
 //    font-size: 0.8em
 
-
 //
 // table of contents
 
@@ -236,14 +235,14 @@ a.anchor
   margin-left: 6px
   text-decoration: none
   &:hover
-    color: #666 !important
+    color: #666666 !important
     text-decoration: none
 
 h1:hover a.anchor,
 h2:hover a.anchor,
 h3:hover a.anchor
   display: inline
-  color: #aaa
+  color: #aaaaaa
   background: white
 
 ul.toc
@@ -261,4 +260,3 @@ ul.toc
     padding-right: 0.3em
   li
     font-size: 0.95em
-

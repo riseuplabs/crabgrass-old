@@ -23,22 +23,27 @@
   background: $me_banner_bg
   #banner-container
     background: $me_banner_bg
+
 .banner.groups
   background: $groups_banner_bg
   #banner-container
     background: $groups_banner_bg
+
 .banner.people
   background: $people_banner_bg
   #banner-container
     background: $people_banner_bg
+
 .banner.home
   background: $home_banner_bg
   #banner-container
     background: $home_banner_bg
+
 .banner.networks
   background: $networks_banner_bg
   #banner-container
     background: $networks_banner_bg
+
 //
 //banner
 
@@ -48,7 +53,7 @@
   #banner-container
     +container
     background: $banner_bg
-    height: 114px    
+    height: 114px
     overflow: visible
     #banner-no-avatar
       +columns(14)
@@ -69,10 +74,9 @@
         display: inline
         h1
           float: left
-
       img
         +bordered
-        background: #fff
+        background: white
         padding: 2px
         margin-right: 17px
         #identity-name
@@ -108,7 +112,7 @@
   border: 1px solid #448c3b
   a
     +hover-link
-    color: #fff
+    color: white
     font-size: 11px
     font-weight: bold
     padding: 6px
@@ -119,18 +123,18 @@
 
 #banner-container.no-avatar
   +pie-clearfix
-  height: 92px    
+  height: 92px
   overflow: visible
 
 //
-// second-level nav 
+// second-level nav
 
 .nav2
   #nav2-container
     +container
     +pie-clearfix
     background: $second_nav_bg url(/images/background/nav2.png) repeat-x bottom left
-    +bordered-btm($second_nav_border) 
+    +bordered-btm($second_nav_border)
     height: 30px
     overflow: visible
     width: 800px
@@ -156,11 +160,11 @@
           padding: 0 8px
       li.current
         +bordered-2sides($second_nav_border)
-        +bordered-btm(#fff)
-        background: #fff
+        +bordered-btm(white)
+        background: white
         a
           color: $second_nav_current
-          background: #fff
+          background: white
           font-weight: bold
       #last-login
         font-size: 10px
@@ -168,6 +172,6 @@
       width: 764px
       padding-left: 0
     span.count
-      +blue-link 
+      +blue-link
       padding-right: 8px
-      margin-left: -3px 
+      margin-left: -3px

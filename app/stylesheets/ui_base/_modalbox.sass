@@ -5,7 +5,7 @@
 //     #content
 //       (.alert or .confirm)
 
-$z_modalbox : 200
+$z_modalbox: 200
 
 #MB_overlay
   position: absolute
@@ -15,7 +15,7 @@ $z_modalbox : 200
   width: 100%
   height: 100%
   z-index: $z_modalbox
-  background-color: #000 $important
+  background-color: black !important
 
 #MB_overlay[id]
   position: fixed
@@ -26,7 +26,7 @@ $z_modalbox : 200
   border: 0 solid
   text-align: left
   z-index: $z_modalbox + 1
-  color: #000
+  color: black
   .buttons
     text-align: right
     margin-top: 1em
@@ -36,11 +36,12 @@ $z_modalbox : 200
     margin: 0
 
 #MB_window[id]
-  position: fixed $important
+  position: fixed !important
 
 #MB_frame
   position: relative
   background-color: $popup_bg
+
 // this is disabled for crabgrass.
 //  :height 100%
 
@@ -48,18 +49,18 @@ $z_modalbox : 200
   margin: 0
   height: 2.1em
   padding: 0.4em
-  background: #999 none repeat scroll 0 0
-  border-bottom: 1px solid #777
+  background: #999999 none repeat scroll 0 0
+  border-bottom: 1px solid #777777
   margin: 0
 
 #MB_content
   overflow: hidden
   padding: 1em
-  border-top: 1px solid #ccc
+  border-top: 1px solid #cccccc
 
 #MB_caption
   font: bold 85% "Lucida Grande", Arial, sans-serif
-  text-shadow: #FFF 0 1px 0
+  text-shadow: white 0 1px 0
   text-align: left
   font-size: 2.1em
   color: white
@@ -73,11 +74,11 @@ $z_modalbox : 200
   font-weight: bold
   text-decoration: none
   font-size: 26px
-  color: #666
+  color: #666666
 
 #MB_close:hover
   background: transparent
-  color: #000
+  color: black
 
 //
 // what is displayed before any content for the box is loaded
@@ -102,16 +103,15 @@ $z_modalbox : 200
 
 #MB_frame table.styled td
   background: white
-  border-top: 1px solid #ccc
-  border-bottom: 1px solid #ccc
+  border-top: 1px solid #cccccc
+  border-bottom: 1px solid #cccccc
   padding: 0.5em
 
 #MB_frame .buttons
   padding: 1em
   margin: 1em -1em -1em -1em
   text-align: right
-  background: #EBEAE6
+  background: #ebeae6
   border-top: 1px solid white
   input
     margin-left: 1em
-

@@ -1,5 +1,5 @@
 //
-// please add a comment as to the purpose every bit of markup in this file. 
+// please add a comment as to the purpose every bit of markup in this file.
 //
 
 html,
@@ -30,10 +30,9 @@ ol,
 ul,
 td,
 div
-  font-family= !body_text_font_family
-  font-size= !body_text_font_size
-  line-height= !body_text_line_height
-
+  font-family: $body_text_font_family
+  font-size: $body_text_font_size
+  line-height: $body_text_line_height
 
 // what is the purpose of this?
 //blockquote
@@ -45,7 +44,6 @@ div
 //  &:before, &:after
 //    content: ''
 //    content: none
-
 
 // what is the purpose of this?
 //em
@@ -70,7 +68,7 @@ div
 //  text-decoration: line-through
 
 // Enable self-clearing floats
-.selfclear:after 
+.selfclear:after
   content: "."
   display: block
   height: 0
@@ -87,4 +85,3 @@ div
 // IE < 7
 * html .selfclear
   height: 1px
-

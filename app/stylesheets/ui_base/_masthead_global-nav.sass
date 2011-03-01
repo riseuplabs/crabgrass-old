@@ -31,7 +31,7 @@
         position: relative
         fieldset
           +bordered(1px, #a6c0cb)
-          background: #fff
+          background: white
           display: inline
           width: 190px
           height: 21px
@@ -48,17 +48,15 @@
             position: relative
             height: 21px
             vertical-align: top
-
         div
           display: inline
           position: relative
-          line-height: 2.0
+          line-height: 2
           top: 1px
           .light-small
             +small-text
             color: $masthead_search_text
             margin-left: -5px
-
 
 //
 //global nav in masthead *note: duplication of .small_icon here (needs to be nested in this instance)
@@ -86,41 +84,39 @@ nav.page
   img#show-social
     float: right
     padding: 4px
-    
 
-  
 #social_activities_count
-  background: #ccc
-  color: #333
+  background: #cccccc
+  color: #333333
   line-height: 1
 
 #social-activities-dropdown
-  background: #FFFFFF
-  border-color : #666
+  background: white
+  border-color: #666666
   border-width: 1px
-  border-style: solid 
+  border-style: solid
   width: 220px
   padding: 5px
   z-index: 999
-  
+
 #social-activities-dropdown td
   vertical-align: top
   border-bottom: 1px dotted #bbbbbb
   padding-bottom: 4px
   padding-top: 10px
-  
+
 #social_activities_list
-  float: left      
+  float: left
   padding: 0 5px 5px 5px
 
 //#social_activities_list td
 //  border-bottom: 1px dotted #bbbbbb
 //  padding-bottom: 4px
-//  padding-top: 10px                          
+//  padding-top: 10px
 
 #social_activities_list img
   padding-right: 8px
-  
+
 #social_activities_list a.name_icon
   margin: 0
 
@@ -138,7 +134,6 @@ nav.page
   float: left
   overflow: visible
   margin-top: 5px
-
   li
     +inline-list
     a
@@ -167,6 +162,7 @@ nav.page
   float: right
   height: 30px
   margin-right: -5px
+
 #user
   float: right
   margin: 5px 0 0 0
@@ -181,6 +177,7 @@ nav.page
     margin-left: 5px
     &.active
       font-weight: bold
+
 // sub menu items
 
 #menu div.menu_items
@@ -213,25 +210,25 @@ nav.page
 // for name icon links, draw a colored border when hover
 // for this to work, we need to increase the padding from the default.
 // in this case, an extra 5px
-  
-  a.name_icon
-    display: block
-    border: 1px solid white
-    background-position: 4px 50%
-    padding: 12px 5px 12px 45px
-    &.two
-      padding-top: 5px
-      padding-bottom: 5px
-    &:hover
-      background-color: #ffc
-      border: 1px solid #cc9
-
-  div.leftcol
-    width: 17em
-    float: left
-  div.rightcol
-    width: 17em
-    margin-left: 18em
+//
+// a.name_icon
+//   display: block
+//   border: 1px solid white
+//   background-position: 4px 50%
+//   padding: 12px 5px 12px 45px
+//   &.two
+//     padding-top: 5px
+//     padding-bottom: 5px
+//   &:hover
+//     background-color: #ffc
+//     border: 1px solid #cc9
+//
+// div.leftcol
+//   width: 17em
+//   float: left
+// div.rightcol
+//   width: 17em
+//   margin-left: 18em
 
 .menu_items.twocols
   width: 35em
@@ -244,7 +241,7 @@ nav.page
   div.rightcol
     width: 20em
     margin-left: 13em
-    border-left: 1px dotted #ccc
+    border-left: 1px dotted #cccccc
     padding-left: 1em
   ul.recent_pages li
     margin-top: 0.5em
