@@ -29,4 +29,11 @@ class Widget < ActiveRecord::Base
     self.options.has_key?(key) ? self.options[key] : false
   end
 
+  def method_missing(method, *args)
+    if options.keys.include?(method.to_sym)
+      return options[method.to_sym]
+    end
+    super
+  end
+
 end

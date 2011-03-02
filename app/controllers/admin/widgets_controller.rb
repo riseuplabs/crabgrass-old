@@ -3,6 +3,7 @@ class Admin::WidgetsController < Admin::BaseController
   helper :widgets, 'admin/widgets', 'modalbox'
   permissions 'widgets'
   before_filter :fetch_profile
+  layout :no_layout_for_ajax
 
   # GET /widgets
   def index
@@ -13,7 +14,6 @@ class Admin::WidgetsController < Admin::BaseController
   # GET /widgets/1
   def show
     @widget = @profile.widgets.find(params[:id])
-    render :partial => @widget.partial, :locals => @widget.options
   end
 
   # GET /widgets/new
@@ -24,7 +24,6 @@ class Admin::WidgetsController < Admin::BaseController
   # GET /widgets/1/edit
   def edit
     @widget = @profile.widgets.find(params[:id])
-    render :partial => @widget.edit_partial, :locals => @widget.options
   end
 
   # POST /widgets
@@ -66,4 +65,7 @@ class Admin::WidgetsController < Admin::BaseController
     @profile = @group.profiles.public
   end
 
+  def no_layout_for_ajax
+    request.xhr? ? false : 'admin'
+  end
 end

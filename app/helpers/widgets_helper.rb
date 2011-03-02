@@ -15,7 +15,7 @@ module WidgetsHelper
   def edit_widget(widget)
     locals = {:widget => widget}
     locals.merge! widget.options if widget.options
-    render :partial => widget.edit, :locals => locals
+    render :partial => widget.edit_partial, :locals => locals
   end
 
   ##
