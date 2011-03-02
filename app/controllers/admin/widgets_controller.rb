@@ -13,7 +13,7 @@ class Admin::WidgetsController < Admin::BaseController
   # GET /widgets/1
   def show
     @widget = @profile.widgets.find(params[:id])
-    render :partial => @widget.partial
+    render :partial => @widget.partial, :locals => @widget.options
   end
 
   # GET /widgets/new
