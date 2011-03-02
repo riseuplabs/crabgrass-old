@@ -1753,6 +1753,7 @@ en:
   email_blasts: "Email Blasts"
 
   never_pester_users_description: "if checked, the ability to send email notifications from pages and invites will not be available to users."
+  show_expanded_group_wikis_description: "if checked, group wikis will be fully expanded on group profile pages"
 
   # custom appearances
 
