@@ -1,4 +1,4 @@
-<h2>Basic settings</h2>
+<h1>Basic settings</h1>
 
 <% form_for current_site, :url => {:action => 'update'} do |f| %>
   <%= f.error_messages %>
@@ -20,6 +20,7 @@
     <%= f.text_field :translation_group %>
   </p>
 
+
   <span>
     <%= f.check_box :tracking %><%= f.label :tracking, 'Tracking:' %>&nbsp;if checked, we track user visits, logins and page views
   </span>
@@ -37,11 +38,20 @@
   </span>
   <br />
   <span>
-    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created (hold CTRL down while clicking to select multiple elements)
+    <%= f.check_box :never_pester_users %><%= f.label :never_pester_users, 'Never Pester Users:' %>&nbsp; <%= I18n.t(:never_pester_users_description) %>
+  </span>
+  <br />
+  <span>
+    <%= f.check_box :show_expanded_group_wikis %><%= f.label :show_expanded_group_wikis, 'Show Expanded Group Wikis:' %>&nbsp; <%= I18n.t(:show_expanded_group_wikis_description) %>
+  </span>
+  <br />
+  <span class="padtop14">
+    <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created<br/ >(hold CTRL down while clicking to select multiple elements)
     <ul style="list-style-type:none;">
       <li><%= f.select :available_page_types, Conf.available_page_types,{}, :multiple => true %></li>
     </ul>
   </span>
+
 
   <br />
   <span>
