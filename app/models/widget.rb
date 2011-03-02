@@ -25,4 +25,8 @@ class Widget < ActiveRecord::Base
     self.options[:title]
   end
 
+  def try_option(key)
+    self.options.has_key?(key) ? self.options[key] : false
+  end
+
 end
