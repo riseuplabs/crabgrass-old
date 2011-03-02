@@ -33,7 +33,8 @@ to hide data between sides)
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
-    t.bollean "never_pester_users" 		:default => false
+    t.boolean "never_pester_users" 		:default => false
+    t.boolean "show expanded group wikis"	:default => false
   end
 
 end
