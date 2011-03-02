@@ -1,0 +1,4 @@
+= form_tag(admin_widget_path(@widget), :method => 'put')
+%ul
+  %li
+    = text_field_tag('KML location', @widget.try_option('kml'))
