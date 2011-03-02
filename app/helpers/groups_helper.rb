@@ -32,6 +32,15 @@ module GroupsHelper
     end
   end
 
+  def join_group_or_create_page_link(group=@group)
+    return unless logged_in?
+    if current_user.member_of?(group)
+      create_page_link(group)
+    else
+      content_tag(:div, join_group_link, :id => 'contribute')
+    end
+  end
+
   def destroy_group_link(group = nil)
     group = group.nil? ? @group : group
     if may_destroy_group?
