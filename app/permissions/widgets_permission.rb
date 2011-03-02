@@ -4,4 +4,8 @@ module WidgetsPermission
     true
   end
 
+  def may_edit_widget?
+    true
+  end
+
 end

@@ -24,6 +24,7 @@ class Admin::WidgetsController < Admin::BaseController
   # GET /widgets/1/edit
   def edit
     @widget = @profile.widgets.find(params[:id])
+    render :partial => @widget.edit_partial, :locals => @widget.options
   end
 
   # POST /widgets
