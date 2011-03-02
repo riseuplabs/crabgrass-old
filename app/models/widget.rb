@@ -30,8 +30,8 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    if options.keys.include?(method.to_sym)
-      return options[method.to_sym]
+    if options.keys.include?(method)
+      return options[method]
     end
     super
   end

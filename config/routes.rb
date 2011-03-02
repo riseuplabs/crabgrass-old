@@ -7,7 +7,6 @@
 #
 
 ActionController::Routing::Routes.draw do |map|
-  map.resources :widgets
 
 
   # total hackety magic:
@@ -30,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
-    admin.resources :widgets
+    admin.resources :widgets, :only => [:index]
   end
 
   ##
@@ -85,6 +84,8 @@ ActionController::Routing::Routes.draw do |map|
         :all => :get,
         :mark => :put}
   end
+
+  map.resources :widgets
 
   ##
   ## PEOPLE
