@@ -1,6 +1,7 @@
 class Admin::WidgetsController < Admin::BaseController
 
-  helper :widgets, 'admin/widgets'
+  helper :widgets, 'admin/widgets', 'modalbox'
+  permissions 'widgets'
   before_filter :fetch_profile
 
   # GET /widgets
@@ -12,6 +13,7 @@ class Admin::WidgetsController < Admin::BaseController
   # GET /widgets/1
   def show
     @widget = @profile.widgets.find(params[:id])
+    render :partial => @widget.partial
   end
 
   # GET /widgets/new
