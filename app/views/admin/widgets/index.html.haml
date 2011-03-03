@@ -2,10 +2,12 @@
 .wrapper1-plus
   .col1
     %h3 Main Section
-  - for widget in @main_widgets
-    = list_widget widget
+  %ul#sort_list_main
+    = render :partial => '/widgets/widget', :collection => @main_widgets
+  = sortable_element 'sort_list_main', :url => { :action => "order" }
 .wrapper1
   .col1
     %h3 Sidebar
-  - for widget in @sidebar_widgets
-    = list_widget widget
+  %ul#sort_list_sidebar
+    = render :partial => '/widgets/widget', :collection => @sidebar_widgets
+  = sortable_element 'sort_list_sidebar', :url => { :action => "order" }

@@ -3,6 +3,7 @@ class Admin::WidgetsController < Admin::BaseController
   helper :widgets, 'modalbox'
   permissions 'widgets'
   before_filter :fetch_profile
+  javascript :extra
 
   # GET /admin/widgets
   def index
