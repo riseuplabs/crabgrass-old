@@ -6,7 +6,7 @@ intro:
   position: 1
   section: 1
   options:
-    :title: Welcome to MRU Youthplatform
+    title: Welcome to MRU Youthplatform
 map:
   name: MapWidget
   profile_id: 5

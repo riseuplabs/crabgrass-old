@@ -22,7 +22,7 @@ class Widget < ActiveRecord::Base
   end
 
   def title
-    self.options[:title]
+    self.options['title']
   end
 
   def try_option(key)
@@ -30,8 +30,8 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    if options.keys.include?(method)
-      return options[method]
+    if options.keys.include?(method.to_s)
+      return options[method.to_s]
     end
     super
   end
