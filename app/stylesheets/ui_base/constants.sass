@@ -83,9 +83,20 @@ $popup_bg: #f3f2ee
 $box1_bg_color: #eeeeee
 $notification: #ffffcc
 
+$z_autocomplete: 400
+$z_tooltip: 300
+$title_box_border_color: #d0e3f7
+$post_alternate_bg_color: #eef5fc
+$body_text_font_family: unquote("verdana, bitstream vera sans, helvetica, sans-serif")
+$body_text_line_height: 18px
+$body_text_font_size: 13px
+$left_column_bg_color: #fafdf9
+$left_column_dividing_border: unquote("1px solid #ccc")
+$left_column_width: 19em
+$left_column_margin: 1em
+
 //
 // common styles/mixins
-//
 
 =headings
   font-family: $headings_font
@@ -168,40 +179,29 @@ $yellow: #f7ed36
 $header: #333333
 $text: #666666
 $link: #4978bc
+$map-blue: #dbe4f2
 
-=col1-236-28
+=col
   display: inline
   float: left
+  margin-bottom: 20px
+  padding-bottom: 12px
+  
+=col1
+  +col
   width: 236px
-  margin-right: 28px
-  margin-bottom: 16px
-  padding-bottom: 16px
 
-=col1-236
-  display: inline
-  float: left
-  width: 236px
-  margin-bottom: 16px
-  padding-bottom: 16px
-
-=col2-500-28
-  display: inline
-  float: left
+=col2
+  +col
   width: 500px
-  margin-right: 28px
-  margin-bottom: 16px
-  padding-bottom: 16px
 
-=col2-500
-  display: inline
-  float: left
-  width: 500px
-  margin-bottom: 16px
-  padding-bottom: 16px
-
-=col3-764
-  display: inline
-  float: left
+=col3
+  +col
   width: 764px
-  margin-bottom: 16px
-  padding-bottom: 16px
+
+=wrapper
+  margin-bottom: 0
+  padding-bottom: 0
+  
+=gutter
+  margin-right: 28px

@@ -39,7 +39,7 @@ wide_teaser_<%= name %>:
   position: 5
   section: 1
   options:
-    title: Your Opinion Counts - Talk to us
+    title: Your Opinion Counts &ndash;<br>talk to us
 page_list_<%= name %>:
   name: PageListWidget
   profile_id: <%= profile_id %>
@@ -61,7 +61,7 @@ add_job_button_<%= name %>:
   position: 2
   section: 2
   options:
-    title: Add Job Opportunity
+    title: Add a job opportunity
     link: /job/add
 quickfinder_<%= name %>:
   name: MenuWidget

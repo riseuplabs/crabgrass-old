@@ -32,7 +32,6 @@ ul.navbar
   +clearfix
   margin: 0 0 20px 0
   li.navbar_menu
-    //float: left
     margin: 0 10px 0 0
     span.navbar_item
       padding-left: 10px
@@ -103,63 +102,82 @@ ul.icon_boxes
 //
 // unido mru site
 // '-plus' on columns and wrappers signify the addition of the inner gutter to the right
-// so the '-plus' applies only to the left placed single columns (maximum of 2) or a left placed double column (maximum of 1).
+// so the '-plus' applies only to the left placed single columns (maximum of 2) or a left placed double column //(maximum of 1).
 
 .col1-plus
-  +col1-236-28
+  +col1
+  +gutter
 
 .col1
-  +col1-236
+  +col1
 
 .col2-plus
-  +col2-500-28
+  +col2
+  +gutter
 
 .col2
-  +col2-500
+  +col2
 
 .col3
-  +col3-764
+  +col3
 
 .wrapper1-plus
-  width: 264px
-  display: inline
-  float: left
+  +col1
+  +wrapper
+  +gutter
 
 .wrapper1
-  width: 236px
-  display: inline
-  float: left
+  +col1
+  +wrapper
 
 .wrapper2-plus
-  width: 528px
-  display: inline
-  float: left
+  +col2
+  +wrapper
+  +gutter
 
 .wrapper2
-  width: 500px
-  display: inline
-  float: left
+  +col2
+  +wrapper
 
 .wrapper3
-  width: 764px
+  +col3
+  +wrapper
 
 .header-text
   color: $header
 
 .blue
   color: $blue
+   
+.blue20-bg
+  background: $blue20
 
+.map-blue-bg
+  background: $map-blue
+  
 .celadon
   color: $celadon
 
+.celadon-border-top
+  border-top: 2px solid $celadon
+  
+.celadon20-bg
+  background: $celadon20
+  
 .orange
   color: $orange
+  
+.orange20-border-btm
+  border-bottom: 1px solid $orange20
 
+.orange20-bg
+  background: $orange20
+
+.orange05-bg
+  background: $orange05
+  
 .yellow
   color: $yellow
-
-.yellow-bg
-  background: $yellow
 
 h2.opening
   color: $header
@@ -168,46 +186,73 @@ h2.opening
   line-height: 1.75
   letter-spacing: 0.03em
 
-h3.panel-heading
+h3.col-heading
   color: $header
-  padding: 10px 0
+  padding: 6px 0
+  text-align: center
+  float: left
+  width: 100%
+  
+.opinion-bg
+  background: $orange05 url(/images/unido/orange20-2px.png) repeat-x
 
+h2.opinion
+  color: $header
+  font-size: 21px
+  height: 75px
+  padding: 14px 0 0 150px
+  background: url(/images/unido/text-bubble.png) no-repeat 
+  
 h4.subheading
   color: $header
   font-size: 14px
   padding: 4px 0
   line-height: 1.3
 
-p.testmap
-  background: url("/images/testmap.png") left bottom
-  height: 240px
-  width: 236px
-
-p.testvideo
-  background: url("/images/testvideo.png")
-  height: 208px
-  width: 236px
-  float: left
-  margin: 8px 28px 5px 0
-
+.col-margin-top
+  margin-top: 24px
+  
 .grouping
   padding: 10px
   clear: both
+  
+img.topleft
+  float: left
+  margin: 7px 12px 12px 0
 
-p.panel
+.col1 p, .col2 p
   font-size: 13.5px
   margin-bottom: 6px
   line-height: 1.6
 
-ul.panel
-  padding: 0 8px 10px 10px
+ul.angle-quote
+  padding: 0 0 10px 0
   li
-    padding-left: 12px
+    padding-left: 16px
+    background: url(/images/png/16/dbl_angle_quote_rt.png) no-repeat 0 3px
 
-.col1
-  a#btn-contribute, a#btn-add-job
-    background: url("/images/unido/mru_button_236x32.png")
+.padding
+  padding: 6px 10px
+  width: 216px
+
+.btn-widget
+  background: url(/images/unido/mru_button_236x32.png)
+  width: 236px
+  height: 32px
+  float: left
+  margin: 12px 0 0
+  a
     width: 236px
-    height: 32px
+    color: $header
+    text-align: center
     float: left
-    margin: 12px 0 0
+    margin: 4px 0 0
+    font-size: 14px
+    text-decoration: none
+
+a.icon_1195028171
+  background: url(/images/png/16/plus.png) no-repeat 14px 5px
+
+a.icon_772485270
+  background: url(/images/png/16/wrench.png) no-repeat 14px 5px
+
