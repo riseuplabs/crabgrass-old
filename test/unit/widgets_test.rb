@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class WidgetsTest < ActiveSupport::TestCase
 
   def setup
-    Widget.register "Defaults", {}
+    Widget.register "DefaultWidget", {}
     Widget.register "OnlyTitleAndTextWidget",
       :settings => [:title, :text]
     Widget.register "OnlyTitleWidget",
@@ -11,23 +11,33 @@ class WidgetsTest < ActiveSupport::TestCase
   end
 
   def test_registry_defaults
-    options = Widget.options["Defaults"]
-    expected = { :icon => '/images/widgets/test_me.png',
-      :translation => :test_me_widget,
-      :description => :test_me_widget_description,
+    options = Widget.widgets["DefaultWidget"]
+    expected = { :icon => '/images/widgets/default.png',
+      :translation => :default_widget,
+      :description => :default_widget_description,
       :settings => [:title],
       :columns => []
     }
     assert_equal expected, options
   end
 
-  def test_only_registered_options_validate
-    valid = Widget.new :name => "OnlyTitleAndText",
+  def test_registered_options_validate
+    assert Widget.create :name => "OnlyTitleAndTextWidget",
       :options => {:title => 'Title', :text => 'Lorem Ipsum'}
-    invalid = Widget.new :name => "OnlyTitleAndText",
-      :options => {:subtitle => 'SubTitle', :text => 'Lorem Ipsum'}
-    assert valid.save, "Registered options should validate"
-    assert !invalid.save, "Unregistered options should not validate"
+  end
+
+  def test_unregistered_options_are_invalid
+    assert_raise ActiveRecord::RecordInvalid do
+      invalid = Widget.create! :name => "OnlyTitleAndTextWidget",
+        :options => {:subtitle => 'SubTitle', :text => 'Lorem Ipsum'}
+    end
+  end
+
+  def test_unregistered_names_are_invalid
+    assert_raise ActiveRecord::RecordInvalid do
+      invalid = Widget.create! :name => "OnlySubtitleWidget",
+        :options => {:subtitle => 'SubTitle', :text => 'Lorem Ipsum'}
+    end
   end
 
   def test_get_widgets_by_container_width
@@ -41,20 +51,22 @@ class WidgetsTest < ActiveSupport::TestCase
   end
 
   def test_options_default_to_empty_hash
-    empty = Widget.new "OnlyTitle"
+    empty = Widget.create :name => "OnlyTitle"
     assert_equal Hash.new, empty.options
   end
 
   def test_methods_for_registered_options_default_to_nil
-    title_and_text = Widget.new :name => "OnlyTitleAndTextWidget",
+    title_and_text = Widget.create :name => "OnlyTitleAndTextWidget",
       :options => {:title => 'Title'}
     assert_nil title_and_text.text
   end
 
   def test_unregistered_options_raise
-    title = Widget.new :name => "OnlyTitleWidget",
+    title = Widget.create :name => "OnlyTitleWidget",
       :options => {:title => 'Title'}
-    title.text
+    assert_raise NoMethodError do
+      title.text
+    end
   end
 
 
