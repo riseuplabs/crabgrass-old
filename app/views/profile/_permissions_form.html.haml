@@ -28,7 +28,7 @@
             = check_box 'profile', 'may_pester', :class => 'checkbox'
             = I18n.t(:profile_option_may_pester)
         %td.description= I18n.t(:user_profile_description_may_pester)
-      - if @profile.private?
+      - if @profile.private? and (@current_site ? !@current_site.all_profiles_visible : true)
         %tr{:class=> cycle('odd','even')}
           %td
             %label.checkbox
