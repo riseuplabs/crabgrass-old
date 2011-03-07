@@ -1,5 +1,7 @@
 %ul
   = menu(name_for_directory(@active_tab, 'search'), url_for_directory(@active_tab, 'search'), active_tab_for_nav(@second_nav, 'all'))
-  - if @active_tab == :people
+  - friends_visible = @current_site ? !@current_site.all_profiles_visible : 1
+  - if @active_tab == :people and friends_visible
     = menu(name_for_directory(@active_tab, 'peers'), url_for_directory(@active_tab, 'peers'), active_tab_for_nav(@second_nav, 'peers'))
-  = menu(name_for_directory(@active_tab, 'my'), url_for_directory(@active_tab, 'my'), active_tab_for_nav(@second_nav, 'my'))
+  - if !(@active_tab == :people) or friends_visible
+    = menu(name_for_directory(@active_tab, 'my'), url_for_directory(@active_tab, 'my'), active_tab_for_nav(@second_nav, 'my'))

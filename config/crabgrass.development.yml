@@ -40,8 +40,17 @@ profile_fields:
   - basic
   - notes
   - websites
+all_profiles_visible: 1
 
 text_editor: greencloth_only
+
+profiles:
+  - private
+profile_fields:
+  - basic
+  - notes
+  - websites
+all_profiles_visible: 1
 
 #use_full_geonames_data: true
 

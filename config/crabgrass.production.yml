@@ -51,6 +51,7 @@ profile_fields:
   - basic
   - notes
   - websites
+all_profiles_visible: 1
 
 #text_editor: html_only
 

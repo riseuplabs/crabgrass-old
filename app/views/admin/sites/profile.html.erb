@@ -5,6 +5,14 @@
 <%= f.error_messages %>
 <span><i><%= flash[:notice] %></i></span>
 <br />
+<span><b>Profile Visibility:</b></span>
+<br>Use this option to make all private profiles visible to logged-in users. This will also remove friend-related features.
+<ul style="list-style-type: none;">
+  <li> 
+    <%= check_box :site, :all_profiles_visible, {:checked => current_site.all_profiles_visible } %>
+    <%= label :all_profiles_visible, 'Make all profiles visible to logged in users' %>
+  </li>
+</ul>
 <span><b>Profiles:</b></span>
 <% f.fields_for(:profiles) do |p| %>
   <ul style="list-style-type:none;">
@@ -28,7 +36,7 @@
     </li>
   <% end -%>
   </ul>
-<% end -%>
+<% end %>
 <br />
 <span><%= submit_tag 'Save', :style => 'width:7em;' %></span>
 <br /><br />

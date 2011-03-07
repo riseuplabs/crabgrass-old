@@ -12,6 +12,18 @@ class GroupsTest < ActionController::IntegrationTest
     end
   end
 
+  def test_create_page_link_if_member
+    login 'blue'
+    visit '/rainbow'
+    assert_contain I18n.t(:contribute_content_link).upcase 
+  end
+
+  def test_join_link_if_not_member
+    login 'penguin'
+    visit '/public_group_everyone_can_see+public_committee'
+    assert_contain I18n.t(:request_join_group_link, :group_type => 'Committee')
+  end
+
   def test_change_group_membership_policy
     login 'blue'
     visit '/rainbow'
