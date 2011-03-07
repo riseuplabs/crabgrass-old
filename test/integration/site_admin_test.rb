@@ -36,11 +36,7 @@ class SiteAdminTest < ActionController::IntegrationTest
 
   def test_disabled_public_profile
     login 'blue'
-    with_site('local') do
-      visit '/me/edit'
-      assert_contain 'Public Profile'
-    end
-    with_site('local', {:profiles => ['private']}) do
+    with_site('connectingclassrooms', {:profiles => ['private']}) do
       visit '/me/edit'
       assert_not_contain 'Public Profile'
     end
@@ -48,11 +44,7 @@ class SiteAdminTest < ActionController::IntegrationTest
 
   def test_all_profiles_visible
     login 'blue'
-    with_site('local') do
-      visit '/profile/edit/private'
-      assert_contain I18n.t(:profile_option_may_see)
-    end
-    with_site('local', {:all_profiles_visible => 1}) do 
+    with_site('connectingclassrooms') do 
       visit '/profile/edit/private'
       assert_not_contain I18n.t(:profile_option_may_see)
     end

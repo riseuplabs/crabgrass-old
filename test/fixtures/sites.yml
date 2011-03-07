@@ -19,6 +19,7 @@ connectingclassrooms:
   login_redirect_url: /me/dashboard
   limited: false
   chat: false
+  all_profiles_visible: 1
 test:
   id: 2
   name: "site2"

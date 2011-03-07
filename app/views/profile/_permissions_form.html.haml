@@ -10,18 +10,6 @@
             = check_box('profile', 'may_see_groups', :class => 'checkbox')
             = I18n.t(:profile_option_may_see_groups)
         %td.description= I18n.t(:user_profile_description_may_see_groups) 
-      %tr{:class=> cycle('odd','even') }
-        %td
-          %label.checkbox
-            = check_box 'profile', 'may_see_contacts', :class => 'checkbox'
-            = I18n.t(:profile_option_may_see_contacts)
-        %td.description= I18n.t(:user_profile_description_may_see_contacts)
-      %tr{:class=> cycle('odd','even')}
-        %td
-          %label.checkbox
-            = check_box 'profile', 'may_request_contact', :class => 'checkbox'
-            = I18n.t(:profile_option_may_request_contact)
-        %td.description= I18n.t(:user_profile_description_may_request_contact)
       %tr{:class=>  cycle('odd','even')}
         %td
           %label.checkbox
