@@ -129,4 +129,7 @@ super_admin_group:
   site_id: 2
   created_at: <%= rand(30).days.ago.to_s :db %>
 
-
+group_with_long_wiki:
+  id: 5000
+  name: 'group_with_long_wiki'
+  type: Group
