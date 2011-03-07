@@ -31,12 +31,6 @@ class Widget < ActiveRecord::Base
 
   serialize :options, Hash
 
-  # This is needed so we don't use method missing for it which
-  # would in turn get self.name.
-  def name
-    read_attribute(:name)
-  end
-
   def options
     read_attribute(:options) or {}
   end
@@ -79,10 +73,9 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    if type_options[:settings].include?(method)
-      return options[method]
-    end
-    super
+    super unless name and type_options
+    super unless type_options[:settings].include?(method)
+    return options[method]
   end
 
 end
