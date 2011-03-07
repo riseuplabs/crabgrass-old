@@ -10,6 +10,7 @@ MapWidget:
     - 2
   :settings:
     - :title
+      :kml
 IntroWidget:
   :columns:
     - 2
