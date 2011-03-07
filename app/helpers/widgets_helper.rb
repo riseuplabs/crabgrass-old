@@ -31,20 +31,9 @@ module WidgetsHelper
   ## lists of active groups and users. used by the view.
   ##
 
-  def render_active_entities(widget)
+  def get_active_entities(widget)
     type = widget.options[:type] || :users
     recent = widget.options[:recent] || false
-    entities = get_active_entities(type, recent).find(:all, :limit => 8)
-    url = view_all_url(type)
-    render :partial => '/avatars/entity_boxes', :locals => {
-      :entities => entities,
-      :header => widget.title,
-      :size => 'medium',
-      :after => link_to(I18n.t(:view_all), url)
-    }
-  end
-
-  def get_active_entities(type, recent)
     case type
     when :groups
       if recent
