@@ -31,12 +31,18 @@ class Widget < ActiveRecord::Base
 
   serialize :options, Hash
 
+  # we need this for method missing - so let's make sure
+  # it can get called.
+  def name
+    read_attribute(:name)
+  end
+
   def options
     read_attribute(:options) or {}
   end
 
   def type_options
-    Widget.widgets[self.name]
+    Widget.widgets[name]
   end
 
   def validate
