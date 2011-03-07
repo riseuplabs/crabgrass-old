@@ -1,0 +1,41 @@
+TeaserWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+    - :text
+MapWidget:
+  :columns:
+    - 1
+    - 2
+  :settings:
+    - :title
+IntroWidget:
+  :columns:
+    - 2
+  :settings:
+    - :title
+    - :text
+NetworkingWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+PageListWidget:
+  :columns:
+    - 2
+  :settings:
+    - :title
+ButtonWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+    - :link
+MenuWidget:
+  :columns
+    - 1
+  :settings:
+    - :title
+
+

@@ -8,6 +8,11 @@ class Widget < ActiveRecord::Base
     @@widgets ||= {}
   end
 
+  def self.initialize_registry(filename)
+    seed_filename = [RAILS_ROOT, 'config', filename].join('/')
+    @@widgets = YAML.load_file(seed_filename) || {}
+  end
+
   def self.register(name, options)
     underscore = name.underscore
     prefix = underscore.sub /_widget$/, ''
@@ -60,8 +65,8 @@ class Widget < ActiveRecord::Base
   end
 
   def directory
-    dir = self.name.underscore
-    dir.sub! /_widget$/, ''
+    dir = self.read_attribute(:name)
+    dir.underscore.sub! /_widget$/, ''
   end
 
   def title
