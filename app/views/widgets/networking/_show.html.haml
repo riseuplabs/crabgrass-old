@@ -7,7 +7,7 @@
 -   entities = entities.sort{|a,b| rand(3)-1}[0..22]
 - entities = entities.select { |e| ! ( e.kind_of?(Network) and current_site.network == e ) }
 - if entities.any? or show_empty
-  .col1.celadon20-bg.padding
+  %div{:id=> "border_#{widget.id}", :class => 'col1 celadon20-bg padding'}
     %h4.subheading
       = header
     - if entities.any?
