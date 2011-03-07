@@ -22,8 +22,10 @@ class WidgetsTest < ActiveSupport::TestCase
   end
 
   def test_registered_options_validate
-    assert Widget.create :name => "OnlyTitleAndTextWidget",
+    widget = Widget.new :name => "OnlyTitleAndTextWidget",
       :options => {:title => 'Title', :text => 'Lorem Ipsum'}
+    assert widget.save
+    assert_equal "OnlyTitleAndTextWidget", widget.reload.name
   end
 
   def test_unregistered_options_are_invalid
