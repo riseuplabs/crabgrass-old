@@ -34,7 +34,7 @@ module GroupsHelper
 
   def join_group_or_create_page_link(group=@group)
     return unless logged_in?
-    if current_user.member_of?(group)
+    if current_user.direct_member_of?(group)
       create_page_link(group)
     else
       content_tag(:div, join_group_link, :id => 'contribute')
