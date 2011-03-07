@@ -15,18 +15,17 @@
   entities = entities.select { |e| ! ( e.kind_of?(Network) and current_site.network == e ) }
 %>
 <% if entities.any? or show_empty -%>
-<div class='padding celadon-border-top'>
-  <h4 class='subheading'>
-    <%= header %>
-    <%= link_span(:bullet, links, more_link) %>
-  </h4>
-  <%- if entities.any? -%>
-    <%= render :partial => 'avatars/boxes', :locals => {:entities => entities, :size => 'medium'} %>
-  <%- else -%>
-    <%= I18n.t(:empty_results) %>
-  <%- end -%>
-  <div class='clear'></div>
-  <%= after %>
-</div>
+<h4 class='subheading'>
+  <%= header %>
+  <%= link_span(:bullet, links, more_link) %>
+</h4>
+<%- if entities.any? -%>
+  <%= render :partial => 'avatars/boxes', :locals => {:entities => entities, :size => 'medium'} %>
+<%- else -%>
+  <%= I18n.t(:empty_results) %>
+<%- end -%>
+<div class='clear'></div>
+<%= after %>
+
 <% end %>
 
