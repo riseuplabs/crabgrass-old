@@ -33,7 +33,9 @@ class Widget < ActiveRecord::Base
 
   # This is needed so we don't use method missing for it which
   # would in turn get self.name.
-  attr_accessor :name
+  def name
+    read_attribute(:name)
+  end
 
   def options
     read_attribute(:options) or {}
@@ -65,8 +67,7 @@ class Widget < ActiveRecord::Base
   end
 
   def directory
-    dir = self.read_attribute(:name)
-    dir.underscore.sub! /_widget$/, ''
+    name.underscore.sub! /_widget$/, ''
   end
 
   def title
