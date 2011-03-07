@@ -10,36 +10,36 @@ intro_<%= name %>:
   position: 1
   section: 1
   options:
-    title: Welcome to MRU Youthplatform
+    :title: Welcome to MRU Youthplatform
 map_<%= name %>:
   name: MapWidget
   profile_id: <%= profile_id %>
   position: 2
   section: 1
   options: 
-    title: Projects in the Manu River Union
+    :title: Projects in the Manu River Union
 whoiswho_<%= name %>:
   name: TeaserWidget
   profile_id: <%= profile_id %>
   position: 3
   section: 1
   options:
-    title: Who is Who?
-    text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
+    :title: Who is Who?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
 tag_cloud_<%= name %>:
   name: TagCloudWidget
   profile_id: <%= profile_id %>
   position: 4
   section: 1
   options:
-    title: Most Used Tags
+    :title: Most Used Tags
 wide_teaser_<%= name %>:
   name: TeaserWidget
   profile_id: <%= profile_id %>
   position: 5
   section: 1
   options:
-    title: Your Opinion Counts &ndash;<br>talk to us
+    :title: Your Opinion Counts &ndash;<br>talk to us
 page_list_<%= name %>:
   name: PageListWidget
   profile_id: <%= profile_id %>
@@ -53,48 +53,48 @@ contribute_button_<%= name %>:
   position: 1
   section: 2
   options:
-    title: Contribute to Site
-    link: /groups/unido/pages/new
+    :title: Contribute to Site
+    :link: /groups/unido/pages/new
 add_job_button_<%= name %>:
   name: ButtonWidget
   profile_id: <%= profile_id %>
   position: 2
   section: 2
   options:
-    title: Add a job opportunity
-    link: /job/add
+    :title: Add a job opportunity
+    :link: /job/add
 quickfinder_<%= name %>:
   name: MenuWidget
   profile_id: <%= profile_id %>
   position: 3
   section: 2
   options:
-    title: Quickfinder
+    :title: Quickfinder
 active_members_<%= name %>:
   name: NetworkingWidget
   profile_id: <%= profile_id %>
   position: 4
   section: 2
   options:
-    title: Most Active Members
-    type: :users
-    recent: false
+    :title: Most Active Members
+    :type: :users
+    :recent: false
 active_groups_<%= name %>:
   name: NetworkingWidget
   profile_id: <%= profile_id %>
   position: 5
   section: 2
   options:
-    title: Most Active Groups
-    type: :groups
-    recent: false
+    :title: Most Active Groups
+    :type: :groups
+    :recent: false
 what_is_new_<%= name %>:
   name: TeaserWidget
   profile_id: <%= profile_id %>
   position: 6
   section: 2
   options:
-    title: What is New?
-    text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
+    :title: What is New?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
 
 <% end %>

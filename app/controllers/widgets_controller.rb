@@ -37,7 +37,7 @@ class WidgetsController < ApplicationController
   def update
     @widget = @profile.widgets.find(params[:id])
 
-    if @widget.update_attribute :options, params[:widget]
+    if @widget.update_attribute :options, params[:widget].to_options
       flash[:notice] = 'Widget was successfully updated.'
       redirect_to(admin_widgets_url)
     else
