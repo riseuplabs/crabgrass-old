@@ -124,6 +124,7 @@ public_profile_for_yellow:
   stranger: true
   may_see: true
   may_pester: false
+  may_request_contact: true
 
 #private_profile_for_yellow:
 #  id: 9
@@ -160,3 +161,9 @@ profile_for_committee_of_group_to_be_deleted:
   entity_type: "Group"
   entity_id: 35
   stranger: true
+
+profile_for_group_with_long_wiki:
+  id: 305
+  entity_type: "Group"
+  entity_id: 5000
+  wiki_id: 7

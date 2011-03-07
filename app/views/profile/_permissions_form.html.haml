@@ -1,0 +1,84 @@
+%div.section
+  %table.pretty
+    %tr
+      %th{:colspan=>"2"}
+        %h2.alert= I18n.t(:profile_permissions)
+    - if @user
+      %tr{:class=> cycle('odd','even') }
+        %td
+          %label.checkbox
+            = check_box('profile', 'may_see_groups', :class => 'checkbox')
+            = I18n.t(:profile_option_may_see_groups)
+        %td.description= I18n.t(:user_profile_description_may_see_groups) 
+      - if !current_site.all_profiles_visible
+        %tr{:class=> cycle('odd','even') }
+          %td
+            %label.checkbox
+              = check_box 'profile', 'may_see_contacts', :class => 'checkbox'
+              = I18n.t(:profile_option_may_see_contacts)
+          %td.description= I18n.t(:user_profile_description_may_see_contacts)
+      - if !current_site.all_profiles_visible
+        %tr{:class=> cycle('odd','even')}
+          %td
+            %label.checkbox
+              = check_box 'profile', 'may_request_contact', :class => 'checkbox'
+              = I18n.t(:profile_option_may_request_contact)
+          %td.description= I18n.t(:user_profile_description_may_request_contact)
+      %tr{:class=>  cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_pester', :class => 'checkbox'
+            = I18n.t(:profile_option_may_pester)
+        %td.description= I18n.t(:user_profile_description_may_pester)
+      - if @profile.private? and !current_site.all_profiles_visible
+        %tr{:class=> cycle('odd','even')}
+          %td
+            %label.checkbox
+              = check_box 'profile', 'peer', :class => 'checkbox'
+              = I18n.t(:profile_option_allow_peers)
+          %td.description= I18n.t(:user_profile_description_allow_peers)
+      - if !current_site.all_profiles_visible
+        %tr{:class=> cycle('odd','even') }
+          %td
+            %label.checkbox
+              = check_box 'profile', 'may_see', :class => 'checkbox'
+              = I18n.t(:profile_option_may_see)
+          %td.description= I18n.t(:user_profile_description_may_see)
+    - elsif @group
+      - group_type = I18n.t(((@group.type.try.downcase) || 'group').to_sym)
+      %tr{:class=> cycle('odd','even')}
+        %td>
+          %label.checkbox
+            = check_box 'profile', 'may_see_groups', :class => 'checkbox'
+            = I18n.t(:profile_option_may_see_groups)
+        %td.description= I18n.t(:group_profile_description_may_see_groups, :group_type => group_type)
+      %tr{:class=> cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_see_networks', :class => 'checkbox'
+            = I18n.t(:profile_option_may_see_networks)
+        %td.description= I18n.t(:group_profile_description_may_see_networks, :group_type => group_type)
+      %tr{:class=> cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_see_committees', :class => 'checkbox'
+            = I18n.t(:profile_option_may_see_committees)
+        %td.description= I18n.t(:group_profile_description_may_see_committees, :group_type => group_type) 
+      %tr{:class=> cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_see_members', :class => 'checkbox'
+            = I18n.t(:profile_option_may_see_members)
+        %td.description= I18n.t(:group_profile_description_may_see_members)
+      %tr{:class=> cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_request_membership', :class => 'checkbox'
+            = I18n.t(:profile_option_may_request_membership)
+        %td.description= I18n.t(:group_profile_description_may_request_membership)
+      %tr{:class=> cycle('odd','even')}
+        %td
+          %label.checkbox
+            = check_box 'profile', 'may_see', :class => 'checkbox'
+            = I18n.t(:profile_option_may_see)
+        %td.description= I18n.t(:group_profile_description_may_see)

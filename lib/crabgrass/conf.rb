@@ -54,6 +54,7 @@ class Conf
   # are global, but might end up in site one day.
   cattr_accessor :profiles
   cattr_accessor :profile_fields
+  cattr_accessor :all_profiles_visible
   cattr_accessor :limited
 
   # global instance options

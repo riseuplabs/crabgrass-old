@@ -35,6 +35,7 @@ to hide data between sides)
     t.boolean "require_user_email"
     t.boolean "never_pester_users" 		:default => false
     t.boolean "show expanded group wikis"	:default => false
+    t.boolean "all_profiles_visible"	:default => false
   end
 
 end
@@ -103,7 +104,7 @@ class Site < ActiveRecord::Base
   proxy_to_conf :name, :title, :pagination_size, :default_language,
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
     :enforce_ssl, :show_exceptions, :require_user_email, :require_user_full_info, :domain, :profiles,
-    :profile_fields, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
+    :profile_fields, :all_profiles_visible, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
