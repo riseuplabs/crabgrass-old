@@ -42,7 +42,7 @@ class Widget < ActiveRecord::Base
   end
 
   def type_options
-    Widget.widgets[name]
+    name and Widget.widgets[name]
   end
 
   def validate
@@ -79,9 +79,11 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    super unless name and type_options
-    super unless type_options[:settings].include?(method)
-    return options[method]
+    if type_options and type_options[:settings].include?(method)
+      self.options[method]
+    else
+      super
+    end
   end
 
 end

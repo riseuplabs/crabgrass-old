@@ -34,7 +34,7 @@ ButtonWidget:
     - :title
     - :link
 MenuWidget:
-  :columns
+  :columns:
     - 1
   :settings:
     - :title
