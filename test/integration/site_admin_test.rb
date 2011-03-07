@@ -46,41 +46,15 @@ class SiteAdminTest < ActionController::IntegrationTest
     end
   end
 
-  def test_disabled_profile_fields
-    login 'blue'
-    with_site('local', {:profile_fields => ['basic', 'websites']}) do 
-      visit '/profile/edit/private'
-      assert_not_contain I18n.t(:descriptions)
-    end
-  end
-
   def test_all_profiles_visible
     login 'blue'
     with_site('local') do
       visit '/profile/edit/private'
       assert_contain I18n.t(:profile_option_may_see)
-      visit '/people/directory'
-      assert_contain 'My friends'
-      assert_contain 'My Peers'
-      visit '/groups/directory'
-      assert_contain 'My Groups'
-      login 'penguin'
-      visit '/yellow'
-      assert_contain I18n.t(:request_friend_link)
     end
     with_site('local', {:all_profiles_visible => 1}) do 
       visit '/profile/edit/private'
-      assert_contain I18n.t(:profile_option_may_see_groups)
       assert_not_contain I18n.t(:profile_option_may_see)
-      visit '/people/directory'
-      assert_contain 'All People'
-      assert_not_contain 'My Friends'
-      assert_not_contain 'My Peers'
-      visit '/groups/directory'
-      assert_contain 'My Groups'
-      login 'penguin'
-      visit '/yellow'
-      assert_not_contain I18n.t(:request_friend_link)
     end
   end
 

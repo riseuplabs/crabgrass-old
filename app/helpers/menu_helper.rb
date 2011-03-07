@@ -96,7 +96,7 @@ module MenuHelper
         :see_all_url => people_directory_url(:friends),
         :submenu => 'people'
     }) 
-    include_menu_items = (@current_site ? !@current_site.all_profiles_visible : nil) ? menu_items_people : nil
+    include_menu_items = (@current_user and !@current_user.friends.empty?) ? menu_items_people : nil
     top_menu(
       I18n.t(:menu_people),
       '/people/directory',

@@ -6,7 +6,7 @@
 <span><i><%= flash[:notice] %></i></span>
 <br />
 <span><b>Profile Visibility:</b></span>
-<br>Use this option to make all private profiles visible to logged-in users. This will also remove friend-related features.
+<br>Use this option to make all private profiles visible to logged-in users. 
 <ul style="list-style-type: none;">
   <li> 
     <%= check_box :site, :all_profiles_visible, {:checked => current_site.all_profiles_visible } %>
