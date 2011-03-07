@@ -47,6 +47,7 @@ class SiteAdminTest < ActionController::IntegrationTest
     with_site('connectingclassrooms') do 
       visit '/profile/edit/private'
       assert_not_contain I18n.t(:profile_option_may_see)
+      assert_not_contain I18n.t(:profile_option_allow_peers)
     end
   end
 
