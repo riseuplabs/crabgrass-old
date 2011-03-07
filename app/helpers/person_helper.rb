@@ -1,7 +1,6 @@
 module PersonHelper
 
   def friend_link_li
-    return if (@current_site ? @current_site.all_profiles_visible : false)
     if may_remove_contact?
       link = link_to I18n.t(:remove_friend_link), {:controller => 'contact', :action => 'remove', :id => @user}
       content_tag :li, link, :class => 'small_icon user_delete_16'
