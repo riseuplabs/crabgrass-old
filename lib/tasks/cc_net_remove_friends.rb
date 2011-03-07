@@ -4,6 +4,7 @@ namespace :cg do
       user.friends.each do |f|
         user.remove_contact! f
         user.update_contacts_cache
+        puts 'removed friendship between '+user.name+' and '+f.name
       end
     end
   end
