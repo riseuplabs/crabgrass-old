@@ -653,6 +653,7 @@ en:
 
   profile_permissions: "Permissions"
   profile_private_description: This profile is private and is only visible to your friends.
+  profile_private_visible_description: This profile is visible to all logged in users. 
   profile_last_login: "Last Login"
   profile_member_since: "Member Since"
   home: Home
