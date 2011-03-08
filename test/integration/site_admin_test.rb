@@ -48,6 +48,7 @@ class SiteAdminTest < ActionController::IntegrationTest
       visit '/profile/edit/private'
       assert_not_contain I18n.t(:profile_option_may_see)
       assert_not_contain I18n.t(:profile_option_allow_peers)
+      assert_contain I18n.t(:profile_private_visible_description)
     end
   end
 
