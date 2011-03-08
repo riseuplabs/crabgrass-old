@@ -17,7 +17,7 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
 
     group.add_user! u1
-    group.add_user! u2
+    group.add_user!(u2) unless u2.direct_member_of?(group)
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
@@ -29,7 +29,7 @@ class SocialUserTest < Test::Unit::TestCase
     assert !u1.peer_of?(u2), 'red and kangaroo should not be peers'
     assert !u2.peer_of?(u1), 'red and kangaroo should not be peers'
 
-    group.add_user! u1
+    group.add_user!(u1) unless u1.direct_member_of?(group)
     u1.reload; u2.reload
 
     assert u1.peer_of?(u2), 'user with membership change (red) should have other user (kangaroo) as a peer'
@@ -55,8 +55,8 @@ class SocialUserTest < Test::Unit::TestCase
     assert !users(:kangaroo).may_pester?(green), 'strangers should be not be able to pester'
 
     red = users(:red)
-    group.add_user! red
-    group.add_user! green
+    group.add_user!(red) unless red.direct_member_of?(group)
+    group.add_user!(green) unless green.direct_member_of?(group)
     red.reload; green.reload;
     assert red.peer_of?(green), 'must be peers'
     assert !red.may_pester?(green), 'peers should not be able to pester'

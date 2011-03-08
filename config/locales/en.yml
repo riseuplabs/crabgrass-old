@@ -858,7 +858,8 @@ en:
 
   join_group_link: "Join {{group_type}}"
   leave_group_link: "Leave {{group_type}}"
-  request_join_group_link: "Ask to Join {{group_type}}"
+  #request_join_group_link: "Ask to Join {{group_type}}"
+  request_join_group_link: "Join {{group_type}}"
   send_join_request: "Send request to join {{group_name}}"
   group_destroyed_message: "{{group_type}} Destroyed"
 
@@ -1753,7 +1754,7 @@ en:
   email_blasts: "Email Blasts"
 
   never_pester_users_description: "if checked, the ability to send email notifications from pages and invites will not be available to users."
-  show_expanded_group_wikis_description: "if checked, group wikis will be fully expanded on group profile pages"
+  show_expanded_group_wikis_description: "if checked, group wikis will be fully expanded by default on group home pages."
 
   # custom appearances
 
