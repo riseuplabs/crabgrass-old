@@ -4,6 +4,14 @@ class DiscussionPageControllerTest < ActionController::TestCase
 
   fixtures :users, :sites, :groups, :memberships, :federatings, :pages, :user_participations, :group_participations
 
+  def setup
+    enable_site_testing('connectingclassrooms')
+  end
+
+  def teardown
+   disable_site_testing
+  end
+
   def test_teacher_may_view_student_pages
     login_as :teacher
     # page 1087 only belongs to student.

@@ -77,7 +77,14 @@ module StudentUserExtension
       id = user.instance_of?(Integer) ? user : user.id
       student_id_cache.include?(id)
     end
+
+    def is_teacher?
+      #self.try(:students) and !self.students.empty?
+      return false
+      self.direct_member_of?(Group.find(Site.current.council_id))
+    end
     #
     # When our membership changes, we need to clear the peer cache of all
+
   end
 end
