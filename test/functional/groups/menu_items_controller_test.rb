@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class Groups::MenuItemsControllerTest < ActionController::TestCase
-  fixtures :groups, :users, :memberships, :menu_items
+  fixtures :groups, :users, :memberships, :menu_items, :sites, :profiles
 
   include UrlHelper
 
@@ -21,11 +21,11 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_should_create_menu_item
-    #login_as :blue
-    #assert_difference('MenuItem.count') do
-    #  post :create, :id => 'fai',
-    #  :menu_item => {:link => "http://test.link", :title => "different title"}
-    #end
+    login_as :blue
+    assert_difference('MenuItem.count') do
+      post :create, :id => 'fai',
+      :menu_item => {:link => "http://test.link", :title => "different title"}
+    end
   end
 
   def test_should_update_menu_item

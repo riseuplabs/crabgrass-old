@@ -31,7 +31,9 @@ class Groups::MenuItemsController < Groups::BaseController
   #end
 
   def create
-    @menu_item=@group.add_menu_item(params[:menu_item])
+    params[:menu_item].merge :position => @menu_items.count
+    @menu_item=@menu_items.create!(params[:menu_item])
+    render :action => :index unless request.xhr?
   end
 
   # this can be called in two ways:
@@ -44,7 +46,7 @@ class Groups::MenuItemsController < Groups::BaseController
     end
     # order changed:
     if params[:menu_items_list].any?
-      @group.menu_items.update_order(params[:menu_items_list].map(&:to_i))
+      @menu_items.update_order(params[:menu_items_list].map(&:to_i))
     end
   end
 
@@ -54,10 +56,10 @@ class Groups::MenuItemsController < Groups::BaseController
 
   protected
 
-  # this also makes sure that @menu_item belongs to the group if an
+  # this also makes sure that @menu_item belongs to the profile if an
   # id is given.
   def load_menu_items
-    @menu_items = @group.menu_items
+    @menu_items = @profile.menu_items
     if params[:menu_item_id]
       @menu_item = @menu_items.find(params[:menu_item_id])
     end
@@ -66,6 +68,7 @@ class Groups::MenuItemsController < Groups::BaseController
   def fetch_data
     # must have a group
     @group = Group.find_by_name(params[:id])
+    @profile = @group.profiles.public # TODO: use privacy settings
   end
 
   def context

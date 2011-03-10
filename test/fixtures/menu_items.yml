@@ -3,7 +3,7 @@ external:
   title: external test
   link: "http://we.riseup.net"
   position: 1
-  group_id: 3002
+  profile_id: 6
   default: false
   id: <%= i=i+1 %>
 
@@ -11,7 +11,7 @@ tags:
   title: tags test
   link: tags/pale
   position: 2
-  group_id: 3002
+  profile_id: 6
   default: false
   id: <%= i=i+1 %>
 
@@ -19,7 +19,7 @@ page_outsite_group:
   title: Page test outsite group
   link: /blue/beauty-is-in-the-street+250
   position: 3
-  group_id: 3002
+  profile_id: 6
   default: false
   id: <%= i=i+1 %>
 
@@ -27,7 +27,7 @@ page_for_group:
   title: Page test
   link: beauty-is-in-the-street+250
   position: 4
-  group_id: 3002
+  profile_id: 6
   default: false
   id: <%= i=i+1 %>
 
@@ -35,6 +35,14 @@ network:
   title: Committee test
   link: /fai
   position: 0
-  group_id: 3002
+  profile_id: 6
+  default: false
+  id: <%= i=i+1 %>
+
+quickfinder_root:
+  title: Quickfinder Root
+  link: /fai
+  position: 0
+  profile_id: 6
   default: false
   id: <%= i=i+1 %>

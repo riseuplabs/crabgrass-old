@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110301094152) do
+ActiveRecord::Schema.define(:version => 20110310101180504) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -356,10 +356,11 @@ ActiveRecord::Schema.define(:version => 20110301094152) do
     t.string   "title"
     t.string   "link"
     t.integer  "position",   :limit => 11
-    t.integer  "group_id",   :limit => 11
     t.boolean  "default"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "profile_id", :limit => 11
+    t.integer  "parent_id",  :limit => 11
   end
 
   create_table "messages", :force => true do |t|

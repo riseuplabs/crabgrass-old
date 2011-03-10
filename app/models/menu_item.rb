@@ -1,6 +1,6 @@
 class MenuItem < ActiveRecord::Base
 
-  belongs_to :group
+  belongs_to :profile
   acts_as_tree :order => :position
 
   TYPES={
