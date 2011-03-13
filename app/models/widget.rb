@@ -77,10 +77,6 @@ class Widget < ActiveRecord::Base
     self.options[:title]
   end
 
-  def try_option(key)
-    options.has_key?(key.to_sym) ? options[key.to_sym] : false
-  end
-
   def method_missing(method, *args)
     if type_options and type_options[:settings].include?(method)
       self.options[method]

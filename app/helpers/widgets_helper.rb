@@ -59,4 +59,14 @@ module WidgetsHelper
     end
   end
 
+  # map widget helpers
+  def map_widget_kml_location(widget)
+    case widget.kml_data
+    when 'groups'
+      group_directory_path(:action => :search, :format => :kml)
+    when 'custom'
+      widget.custom_kml
+    end 
+  end
+
 end

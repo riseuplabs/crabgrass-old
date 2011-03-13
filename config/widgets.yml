@@ -10,7 +10,10 @@ MapWidget:
     - 2
   :settings:
     - :title
-    - :kml
+    - :kml_data
+    - :custom_kml
+    - :map_center_latitude
+    - :map_center_longitude
 IntroWidget:
   :columns:
     - 2
