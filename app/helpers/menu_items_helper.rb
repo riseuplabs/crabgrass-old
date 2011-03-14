@@ -1,5 +1,12 @@
 module MenuItemsHelper
 
+  def form_remote_for_menu_item (menu_item, spinner_id)
+    options = { :loading => show_spinner(spinner_id) }
+    form_remote_for([@widget, menu_item], options) do |f|
+      yield f
+    end
+  end
+
   def destroy_menu_item_remote_function(menu_item, spinner_id)
     remote_function({
       :url => {:controller => 'groups/menu_items', :action => 'destroy', :id => @group.name},

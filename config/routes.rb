@@ -85,7 +85,10 @@ ActionController::Routing::Routes.draw do |map|
         :mark => :put}
   end
 
-  map.resources :widgets
+  map.resources :widgets do |widgets|
+    widgets.resources :menu_items
+  end
+  map.resources :menu_items
 
   ##
   ## PEOPLE
