@@ -1,6 +1,6 @@
 quickfinder_root1:
   title: Quickfinder Root
-  link: /fai
+  link: /cnt
   profile_id: 5
   default: false
   widget: quickfinder_site1
