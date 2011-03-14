@@ -31,6 +31,8 @@ class Widget < ActiveRecord::Base
 
   serialize :options, Hash
 
+  has_many :menu_items
+
   # we need this for method missing - so let's make sure
   # it can get called.
   def name

@@ -3,6 +3,8 @@ class MenuItem < ActiveRecord::Base
   belongs_to :profile
   acts_as_tree :order => :position
 
+  belongs_to :widget
+
   TYPES={
     I18n.t(:external_link_menu_item)=>:external,
     I18n.t(:local_link_menu_item)=>:local,
