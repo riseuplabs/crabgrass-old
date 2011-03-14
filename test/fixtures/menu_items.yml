@@ -1,11 +1,16 @@
-quickfinder_root:
+quickfinder_root1:
+  title: Quickfinder Root
+  link: /fai
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+
+quickfinder_root2:
   title: Quickfinder Root
   link: /fai
   profile_id: 6
   default: false
-  id: 1 # we are using this from the widgets fixtures.
-
-<% i=1 %>
+  widget: quickfinder_site2
 
 external:
   title: external test
@@ -13,7 +18,6 @@ external:
   position: 1
   profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 tags:
   title: tags test
@@ -21,7 +25,6 @@ tags:
   position: 2
   profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 page_outsite_group:
   title: Page test outsite group
@@ -29,7 +32,6 @@ page_outsite_group:
   position: 3
   profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 page_for_group:
   title: Page test
@@ -37,7 +39,6 @@ page_for_group:
   position: 4
   profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 network:
   title: Committee test
@@ -45,5 +46,4 @@ network:
   position: 0
   profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 

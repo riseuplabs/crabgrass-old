@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class WidgetsControllerTest < ActionController::TestCase
-  fixtures :groups, :profiles, :widgets, :menu_items, :users, :sites
+  fixtures :groups, :profiles, :widgets, :menu_items, :users, :sites, :memberships
 
   def setup
     enable_site_testing
@@ -17,8 +17,8 @@ class WidgetsControllerTest < ActionController::TestCase
     assert_response :success
     profile = assigns(:profile)
     widget = assigns(:widget)
-    root_item = profile.menu_items.find(widget.menu_root_id)
-    assert_equal menu_items(:quickfinder_root), root_item
+    root_item = widget.menu_items.root
+    assert_equal menu_items(:quickfinder_root2), root_item
   end
 
 

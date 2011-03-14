@@ -30,7 +30,8 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
 
   def test_should_update_menu_item
     login_as :blue
-    put :update, :id => 'fai', :menu_item_id => 1,
+    put :update, :id => 'fai',
+      :menu_item_id => menu_items(:quickfinder_root2).id,
       :menu_item => {:link => "http://test.link", :title => "different title"}
     assert_response :success
   end
