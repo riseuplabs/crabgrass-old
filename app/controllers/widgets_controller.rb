@@ -60,6 +60,6 @@ class WidgetsController < ApplicationController
   end
 
   def no_layout_for_ajax
-    request.xhr? ? false : 'admin'
+    return false if request.xhr?
   end
 end

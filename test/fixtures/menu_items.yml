@@ -1,4 +1,12 @@
-<% i=0 %>
+quickfinder_root:
+  title: Quickfinder Root
+  link: /fai
+  profile_id: 6
+  default: false
+  id: 1 # we are using this from the widgets fixtures.
+
+<% i=1 %>
+
 external:
   title: external test
   link: "http://we.riseup.net"
@@ -39,9 +47,3 @@ network:
   default: false
   id: <%= i=i+1 %>
 
-quickfinder_root:
-  title: Quickfinder Root
-  link: /fai
-  profile_id: 6
-  default: false
-  id: <%= i=i+1 %>

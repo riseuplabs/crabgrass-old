@@ -70,6 +70,7 @@ quickfinder_<%= name %>:
   section: 2
   options:
     :title: Quickfinder
+    :menu_root_id: 1
 active_members_<%= name %>:
   name: NetworkingWidget
   profile_id: <%= profile_id %>
