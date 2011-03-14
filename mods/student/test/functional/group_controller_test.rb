@@ -8,10 +8,6 @@ class GroupsControllerTest < ActionController::TestCase
 
   include UrlHelper
 
-  def setup
-    enable_site_testing('connectingclassrooms')
-  end
-
   def teardown
    disable_site_testing
   end
@@ -55,7 +51,6 @@ class GroupsControllerTest < ActionController::TestCase
     # teacher should see them never the less
     assert page_ids.include?(1003)
     assert page_ids.include?(1007)
-    # pages that have only been touched by teacher should not be seen
   end
 
   def test_contributions_view_student
@@ -83,10 +78,6 @@ class GroupsControllerTest < ActionController::TestCase
     assert_response :success
     assert assigns(:pages)
     pages = assigns(:pages)
-    pages.each do |p|
-      puts 'page: '+p.user_participations.inspect
-    end
-    puts 'page 1015: '+Page.find(1015).user_participations.inspect
     pages.collect{|p|p.id}.sort
   end
 end

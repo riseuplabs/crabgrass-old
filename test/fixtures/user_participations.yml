@@ -211,14 +211,3 @@ userpage_<%=i%>_<%=u%>:
   changed_at: <%= time.minutes.ago.to_s(:db) %>
   <% end %>
 <% end %>
-# page only participated in by teacher
-teacherpage:
-  id: <%= id+=1 %>
-  page_id: 1015
-  user_id: 102
-  access: 1
-  viewed: <%= rand(2) %>
-  resolved: <%= rand(2) %>
-  inbox: <%= rand(5) == 1 %>
-  changed_at: <%= 6.minutes.ago.to_s(:db) %>
-
