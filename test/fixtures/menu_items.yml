@@ -42,7 +42,6 @@ network:
 quickfinder_root:
   title: Quickfinder Root
   link: /fai
-  position: 0
   profile_id: 6
   default: false
   id: <%= i=i+1 %>

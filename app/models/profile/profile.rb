@@ -149,6 +149,11 @@ class Profile < ActiveRecord::Base
     end
   end
 
+  has_many :menu_bar_items,
+    :class_name => 'MenuItem',
+    :order => :position,
+    :conditions => 'parent_id IS NULL AND position IS NOT NULL'
+
   belongs_to :wiki, :dependent => :destroy
   belongs_to :wall,
    :class_name => 'Discussion',
