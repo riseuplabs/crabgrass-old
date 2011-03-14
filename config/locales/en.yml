@@ -1617,7 +1617,7 @@ en:
   last_seen: "last seen"
 
   directory_of_people: Directory of People
-  directory_peers_description: "A list of your friends and all the people in your groups and networks."
+  directory_peers_description: "A list of all the people in your groups and networks."
   no_contacts_msg: You have no friends.
   my_peers_explain: users I share a common group with
   no_peers_msg: You have no peers.
