@@ -1,4 +1,4 @@
-module Groups::MenuItemsHelper
+module MenuItemsHelper
 
   def destroy_menu_item_remote_function(menu_item, spinner_id)
     remote_function({

@@ -1,6 +1,6 @@
 class WidgetsController < ApplicationController
 
-  helper :widgets, 'modalbox'
+  helper :widgets, 'modalbox', 'menu_items'
   permissions 'widgets'
   before_filter :fetch_profile
   before_filter :login_required
@@ -60,6 +60,6 @@ class WidgetsController < ApplicationController
   end
 
   def no_layout_for_ajax
-    return false if request.xhr?
+    request.xhr? ? false : 'default'
   end
 end
