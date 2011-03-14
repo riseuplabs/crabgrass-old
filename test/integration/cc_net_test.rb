@@ -16,4 +16,12 @@ class CcNetTest < ActionController::IntegrationTest
     assert_not_contain I18n.t(:profile_option_may_request_contact)
   end
 
+  def test_my_peers_does_not_mention_friends
+    # if this test fails, it is likely because the translation changed for the my peers tab description
+    login 'blue'
+    visit '/people/directory/peers'
+    assert_not_contain "A list of your friends and all the people in your groups and networks."    
+    assert_contain "A list of all the people in your groups and networks."
+  end
+
 end
