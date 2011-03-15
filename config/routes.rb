@@ -139,6 +139,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.group_directory 'groups/directory/:action/:id.:format', :controller => 'groups/directory'
+  map.connect 'groups/directory/search', :controller => 'groups/directory', :action => 'search'
   map.connect 'groups/directory/search.:format', :controller => 'groups/directory', :action => 'search'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
