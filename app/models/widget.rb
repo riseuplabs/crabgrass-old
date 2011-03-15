@@ -5,12 +5,15 @@ class Widget < ActiveRecord::Base
   #
 
   def self.widgets
-    @@widgets ||= {}
+    if @widgets.nil?
+      self.initialize_registry('widgets.yml')
+    end
+    @widgets ||= {}
   end
 
   def self.initialize_registry(filename)
     seed_filename = [RAILS_ROOT, 'config', filename].join('/')
-    @@widgets = YAML.load_file(seed_filename) || {}
+    @widgets = YAML.load_file(seed_filename) || {}
   end
 
   def self.register(name, options)
