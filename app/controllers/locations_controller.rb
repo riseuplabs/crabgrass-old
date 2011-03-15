@@ -38,6 +38,15 @@ class LocationsController < ApplicationController
     end
   end
 
+  def update_widget_lat_and_long
+    return unless request.xhr?
+    place = GeoPlace.find(params[:city_id])
+    render :update do |page|
+      page["latitude"].value = place.latitude
+      page["longitude"].value = place.longitude
+    end
+  end
+
   private
 
   def update_model_with_country(id)
