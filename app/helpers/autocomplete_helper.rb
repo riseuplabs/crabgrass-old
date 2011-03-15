@@ -64,14 +64,11 @@ module AutocompleteHelper
   end
 
   def locations_autocomplete_afterupdate
-    if request.path =~ /widget/i
-      return update_lat_and_long_js
-    end
     if @profile and @profile.entity.is_a?(Group)
       remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
     elsif @profile
       remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
-    elsif request.path =~ /widget/i
+    elsif @widget 
       remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
     else
       remote_url = {:controller => 'locations', :action => 'update_city_id'}

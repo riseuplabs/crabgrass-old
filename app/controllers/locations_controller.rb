@@ -42,8 +42,8 @@ class LocationsController < ApplicationController
     return unless request.xhr?
     place = GeoPlace.find(params[:city_id])
     render :update do |page|
-      page["latitude"].value = place.latitude
-      page["longitude"].value = place.longitude
+      page["widget_map_center_latitude"].value = place.latitude
+      page["widget_map_center_longitude"].value = place.longitude
     end
   end
 
