@@ -26,7 +26,6 @@ class LocationsController < ApplicationController
         page.show 'state_dropdown' 
       end
       page.show 'city_text'
-      page['city_text_field'].value = '' 
       #page['city_id_field'].value = ''
       page.show 'submit_loc' if params[:show_submit] == 'true' 
     end
