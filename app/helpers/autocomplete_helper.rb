@@ -52,7 +52,7 @@ module AutocompleteHelper
 
   def autocomplete_locations_tag(field_id, options={})
     find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
-    after_update_function = "function(value, data) {#{locations_autocomplete_afterupdate}; }"# if @profile
+    after_update_function = "function(value, data) {#{locations_autocomplete_afterupdate(options)}; }"# if @profile
     autocomplete_entity_tag(field_id,
       options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
         :renderer => render_location_row_function,
@@ -63,12 +63,12 @@ module AutocompleteHelper
     )
   end
 
-  def locations_autocomplete_afterupdate
+  def locations_autocomplete_afterupdate(options)
     if @profile and @profile.entity.is_a?(Group)
       remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
     elsif @profile
       remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
-    elsif @widget 
+    elsif options[:update_form_for] == 'widget'
       remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
     else
       remote_url = {:controller => 'locations', :action => 'update_city_id'}

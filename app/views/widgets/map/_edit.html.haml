@@ -16,6 +16,8 @@
       = country_dropdown_for_search
       = state_dropdown
       = city_text_field
+      = city_id_field
       = 'Latitude: ' + f.text_field(:map_center_latitude)
       %br= 'Longitude: ' + f.text_field(:map_center_longitude)
+      = current_map_center(@widget)
   = f.submit

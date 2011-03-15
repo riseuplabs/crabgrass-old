@@ -69,4 +69,13 @@ module WidgetsHelper
     end 
   end
 
+  def current_map_center(widget)
+    lat = widget.map_center_latitude
+    long = widget.map_center_longitude
+    return '' unless lat and long
+    return unless place = GeoPlace.find_by_latitude_and_longitude(lat, long)
+    admin_code_name = (place.try(:geo_admin_code) and place.geo_admin_code.name) || ''
+    return content_tag('div', 'Current map center: '+h(place.name)+', '+h(admin_code_name)+' '+h(place.geo_country.code))
+  end
+
 end

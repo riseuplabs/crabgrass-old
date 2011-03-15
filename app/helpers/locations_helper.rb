@@ -16,9 +16,10 @@ module LocationsHelper
 
   def country_dropdown_for_search
     name = _field_name('country_id')
+    update_form_for = @widget ? 'widget' : 'directory'
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'show_admin_codes=1&country_code='+value",
+      :with => "'update_form_for=#{update_form_for}&show_admin_codes=1&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     )
