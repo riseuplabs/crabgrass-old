@@ -238,6 +238,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # render locations kml
+  def render_kml_for(collection)
+    @entities = collection
+    render :template => 'locations/index.kml.builder', :layout => false
+  end
+
   private
 
   ## handy way to get back where we came from

@@ -84,6 +84,23 @@ module LocationsHelper
     end
   end
 
+  def geo_data_for_kml(entity)
+    # currently groups are only supported. when users are added the profile
+    # would be entity.profile (groups location data is only stored in the public profile)
+    if entity.is_a?(Group)
+      profile = entity.profiles.public
+      description_template = 'locations/description_for_kml.html.haml'
+    end
+    return false unless profile and profile.city_id
+    return false unless place = GeoPlace.find(profile.city_id)
+    data = {} 
+    data[:name] = entity.try(:display_name) || entity.name
+    data[:description_template] = description_template 
+    data[:lat] = place.latitude
+    data[:long] = place.longitude
+    return data
+  end
+
   private
 
   def country_choices
