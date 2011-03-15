@@ -40,14 +40,15 @@
 <tr>
 
   <td>
-    <h3 class='small_icon membership_add_16'><%= link_to I18n.t(:welcome_create_group_link), new_group_url %></h3>
-    <span><%= I18n.t(:welcome_create_group_text) %></span>
-  </td>
-
-  <td>
     <h3 class='small_icon page_add_16'><%= link_to I18n.t(:welcome_create_page_link), :controller => '/pages', :action => 'create' %></h3>
     <span><%= I18n.t(:welcome_create_page_text) %></span>
   </td>
+  <% if may_create_group? %>
+    <td>
+      <h3 class='small_icon membership_add_16'><%= link_to I18n.t(:welcome_create_group_link), new_group_url %></h3>
+      <span><%= I18n.t(:welcome_create_group_text) %></span>
+    </td>
+  <% end %>
 
 </tr>
 </table>
