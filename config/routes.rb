@@ -85,10 +85,10 @@ ActionController::Routing::Routes.draw do |map|
         :mark => :put}
   end
 
-  map.resources :widgets do |widgets|
-    widgets.resources :menu_items
+  map.resources :widgets do |widget|
+    widget.resources :menu_items, :collection => {
+      :sort => :put}
   end
-  map.resources :menu_items
 
   ##
   ## PEOPLE
@@ -145,6 +145,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :groups do |group|
     group.resources :pages, :only => :new
+    group.resources :menu_items
   end
 
   map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/

@@ -1,0 +1,8 @@
+<div id='menu_items_form'>
+    <ol id="menu_items_list">
+      <%= render :partial => '/menu_items/menu_item', :collection => @menu_items %>
+      <%= render :partial => '/menu_items/new', :locals => {:menu_item => MenuItem.new}%>
+    </ol>
+    <% spinner_id = "menu_items_ids_" + rand(10000).to_s %>
+    <%= sort_menu_items_js('menu_items_list', spinner_id) %>
+</div>

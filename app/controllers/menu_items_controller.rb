@@ -1,10 +1,10 @@
-class Groups::MenuItemsController < Groups::BaseController
+class MenuItemsController < ApplicationController
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
-  helper 'groups'
   prepend_before_filter :fetch_data
   before_filter :login_required
   before_filter :load_menu_items
   stylesheet 'menu_items'
+  permissions 'widgets'
 
   verify :only => :update, :method => :put
 
@@ -31,23 +31,19 @@ class Groups::MenuItemsController < Groups::BaseController
   #end
 
   def create
-    params[:menu_item].merge :position => @menu_items.count
+    params[:menu_item].merge! :position => @menu_items.count
     @menu_item=@menu_items.create!(params[:menu_item])
     render :action => :index unless request.xhr?
   end
 
-  # this can be called in two ways:
-  # * saving an edited menu_item
-  # * changing the order of menu_items via drag&drop.
   def update
-    # single item changed:
-    if @menu_item
-      @menu_item.update_attributes(params[:menu_item])
-    end
-    # order changed:
-    if params[:menu_items_list].any?
-      @menu_items.update_order(params[:menu_items_list].map(&:to_i))
-    end
+    @menu_item.update_attributes(params[:menu_item])
+    render :action => :index
+  end
+
+  # changing the order of menu_items via drag&drop.
+  def sort
+    @menu_items.update_order(params[:menu_items_list])
   end
 
   def destroy
@@ -59,24 +55,21 @@ class Groups::MenuItemsController < Groups::BaseController
   # this also makes sure that @menu_item belongs to the profile if an
   # id is given.
   def load_menu_items
-    @menu_items = @profile.menu_items
-    if params[:menu_item_id]
-      @menu_item = @menu_items.find(params[:menu_item_id])
+    @menu_items = @widget.menu_items
+    if params[:id]
+      @menu_item = @menu_items.find(params[:id])
     end
   end
 
   def fetch_data
-    # must have a group
-    @group = Group.find_by_name(params[:id])
-    @profile = @group.profiles.public # TODO: use privacy settings
-  end
-
-  def context
-    group_settings_context
+    # must have a widget
+    @widget = Widget.find(params[:widget_id])
+    @profile = @widget.profile
+    @entity = @profile.entity
   end
 
   def authorized?
-    may_edit_menu?
+    may_edit_widget?
   end
 
 end

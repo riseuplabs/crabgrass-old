@@ -9,8 +9,7 @@ module MenuItemsHelper
 
   def destroy_menu_item_remote_function(menu_item, spinner_id)
     remote_function({
-      :url => {:controller => 'groups/menu_items', :action => 'destroy', :id => @group.name},
-      :with => %Q['menu_item_id=' + #{menu_item.id}],
+      :url => widget_menu_item_url(@widget, menu_item),
       :method => :delete,
       :update => 'menu_items_form_container',
       :loading => show_spinner(spinner_id),
@@ -29,8 +28,7 @@ module MenuItemsHelper
 
   def save_menu_item_remote_function(menu_item, spinner_id)
     remote_function({
-      :url => {:controller => 'groups/menu_items', :action => 'update', :id => @group.name},
-      :with => %Q['menu_item_id=' + #{menu_item.id}],
+      :url => widget_menu_item_url(@widget, menu_item),
       :loading => show_spinner(spinner_id),
       :complete => hide_spinner(spinner_id)
     })
@@ -71,15 +69,15 @@ module MenuItemsHelper
 #      :loading  => show_spinner(spinner_id)
 #  end
 
-  def handle_update_menu_item_order_javascript(container_id, spinner_id)
+  def sort_menu_items_js(container_id, spinner_id)
     sortable_element container_id,
         :tag => 'li',
         :handle => 'menu_item_drag_handle',
         :ghosting => true,
         :constraint => :vertical,
-        :url => { :controller => 'groups/menu_items', :action => 'update', :id => @group.name},
+        :url => sort_widget_menu_items_url(@widget),
         :method => :put,
         :loading => show_spinner(spinner_id),
         :loaded => hide_spinner(spinner_id)
-    end
+  end
 end
