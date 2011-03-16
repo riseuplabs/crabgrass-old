@@ -6,6 +6,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   include UrlHelper
 
+
   def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param

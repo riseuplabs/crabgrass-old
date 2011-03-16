@@ -1,6 +1,6 @@
 class Groups::DirectoryController < Groups::BaseController
 
-  helper 'locations'
+  helper 'locations', 'autocomplete'
   layout 'directory'
   before_filter :set_group_type
 
