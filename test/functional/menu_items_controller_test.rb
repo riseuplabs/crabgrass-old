@@ -27,7 +27,7 @@ class MenuItemsControllerTest < ActionController::TestCase
         :title => "Test Menu Entry",
         :link => "http://test.me" }
     end
-    assert_equal root, qf.menu_items.last.parent
+    assert_equal qf.menu_items.root, qf.menu_items.last.parent
   end
 
   def test_update
