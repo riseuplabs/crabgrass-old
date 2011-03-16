@@ -19,7 +19,7 @@ class MenuItemsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:menu_items)
   end
 
-  def test_create
+  def test_create_without_parent
     login_as :blue
     qf = widgets(:quickfinder_site2)
     assert_difference 'qf.menu_items.count' do
@@ -27,6 +27,7 @@ class MenuItemsControllerTest < ActionController::TestCase
         :title => "Test Menu Entry",
         :link => "http://test.me" }
     end
+    assert_equal root, qf.menu_items.last.parent
   end
 
   def test_update
