@@ -31,7 +31,6 @@ class MenuItemsController < ApplicationController
   #end
 
   def create
-    params[:menu_item].merge! :position => @menu_items.count
     @menu_item=@menu_items.create!(params[:menu_item])
     render :action => :index unless request.xhr?
   end
