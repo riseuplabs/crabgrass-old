@@ -8,7 +8,7 @@ class MenuItem < ActiveRecord::Base
   acts_as_tree :order => :position
 
   belongs_to :widget
-  validates_associated :widget
+  validates_presence_of :widget_id
 
   TYPES={
     I18n.t(:external_link_menu_item)=>:external,

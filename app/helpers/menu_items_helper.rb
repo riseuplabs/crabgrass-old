@@ -73,7 +73,6 @@ module MenuItemsHelper
     sortable_element container_id,
         :tag => 'li',
         :handle => 'menu_item_drag_handle',
-        :ghosting => true,
         :constraint => :vertical,
         :url => sort_widget_menu_items_url(@widget),
         :method => :put,

@@ -19,6 +19,7 @@ class WidgetsController < ApplicationController
   # GET /widgets/1/edit
   def edit
     @widget = @profile.widgets.find(params[:id])
+    @menu_items=@widget.menu_items
   end
 
   # POST /widgets
@@ -48,7 +49,7 @@ class WidgetsController < ApplicationController
   # DELETE /widgets/1
   def destroy
     @widget = @profiel.widgets.find(params[:id])
-    @widgets.destroy
+    @widget.destroy
     redirect_to(admin_widgets_url)
   end
 

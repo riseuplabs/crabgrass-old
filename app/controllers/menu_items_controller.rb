@@ -31,7 +31,9 @@ class MenuItemsController < ApplicationController
   #end
 
   def create
-    @menu_item=@menu_items.create!(params[:menu_item])
+    if @menu_item=@menu_items.create!(params[:menu_item])
+      flash[:notice] = 'Menu item was successfully created.'
+    end
     render :action => :index unless request.xhr?
   end
 
@@ -43,6 +45,8 @@ class MenuItemsController < ApplicationController
   # changing the order of menu_items via drag&drop.
   def sort
     @menu_items.update_order(params[:menu_items_list])
+    flash[:notice] = 'Menu items have been reordered.'
+    render :action => :index unless request.xhr?
   end
 
   def destroy
