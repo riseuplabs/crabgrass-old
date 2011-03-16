@@ -13,26 +13,4 @@
     <br/>
     <%= menu_item.link %>
   </div>
-  <div class='hover' id="<%= dom_id(menu_item, :edit) %>" style='display:none'>
-    <% url = groups_menu_items_url(:action=>'update') %>
-    <% spinner_id = dom_id(menu_item, :save_button) # id used to show the spinner %>
-    <% form_remote_for( menu_item,
-      :url      => url,
-      :method   => :put,
-      :html     => {:action => url, :method => :put, :id => dom_id(menu_item, :form)}, # non-ajax fallback
-      :loading  => show_spinner(spinner_id)
-    ) do |f| -%>
-      <div style="float: right; width: 7em; text-align: right;">
-        <%= spinner(spinner_id) %>
-        <%= submit_tag I18n.t(:save_button) %>
-        <%= link_to_function(I18n.t(:cancel), nil) do |page|
-          page.toggle(dom_id(menu_item, :show))
-          page.toggle(dom_id(menu_item, :edit))
-        end %>
-      </div>
-      <%= f.text_field :title, :size => 70, :style => 'width:21em'%>
-      <%= f.text_field :link, :size => 70, :style => 'width:21em'%>
-      <%= tag(:input, :type => :hidden, :name => 'menu_item_id', :value => menu_item.id)%>
-    <% end %>
-  </div>
-</li>
+  <%= render :partial => '/menu_items/form', :locals => {:menu_item => menu_item} %>

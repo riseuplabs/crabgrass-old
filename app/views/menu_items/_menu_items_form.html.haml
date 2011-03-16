@@ -1,0 +1,8 @@
+- top_level = @menu_items.root.children
+- spinner_id = "menu_items_ids_" + rand(10000).to_s
+#menu_items_form
+  %ol#menu_items_list
+    = render :partial => '/menu_items/menu_item', :collection => top_level
+    = sort_menu_items_js('menu_items_list', spinner_id)
+  .new
+    = render :partial => '/menu_items/form'
