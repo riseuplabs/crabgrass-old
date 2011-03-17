@@ -10,7 +10,7 @@ set :application, "crabgrass"
 set :user, "crabgrass"
 
 set :repository, "git://labs.riseup.net/crabgrass.git"
-set :branch, "admin_stats"
+set :branch, "next-release"
 
 deploy_host = "xxxxxx"
 staging_host = "munia.riseup.net"
