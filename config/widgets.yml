@@ -36,6 +36,17 @@ ButtonWidget:
   :settings:
     - :title
     - :link
+    - :icon
+  :available_icons:
+    - 'archive'
+    - 'attach'
+    - 'chat'
+    - 'color_wheel'
+    - 'date'
+    - 'group'
+    - 'heart'
+    - 'key'
+    - 'lightbulb'
 MenuWidget:
   :columns:
     - 1

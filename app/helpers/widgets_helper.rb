@@ -78,4 +78,10 @@ module WidgetsHelper
     return content_tag('div', 'Current map center: '+h(place.name)+', '+h(admin_code_name)+' '+h(place.geo_country.code))
   end
 
+  # button icon helpers
+  def available_button_icons(widget)
+    name = widget.name
+    Widget.widgets[name][:available_icons]
+  end
+
 end
