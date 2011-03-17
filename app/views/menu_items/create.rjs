@@ -1,2 +1,3 @@
 # update the new_menu_item li with the created menu_item
-page.replace 'menu_items_form', :partial => 'menu_items_form'
+page.replace 'menu_items_form', :partial => 'menu_items_form',
+  :locals => {:menu_items => @menu_item.self_and_siblings}

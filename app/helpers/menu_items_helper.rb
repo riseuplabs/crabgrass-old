@@ -1,9 +1,36 @@
 module MenuItemsHelper
 
-  def form_remote_for_menu_item (menu_item, spinner_id)
-    options = { :loading => show_spinner(spinner_id) }
-    form_remote_for([@widget, menu_item], options) do |f|
-      yield f
+  def form_remote_for_menu_item(menu_item)
+    if menu_item.new_record?
+      locals = { :spinner_id => 'add_menu_item_spinner',
+        :submit_title => I18n.t(:add_button),
+      }
+    else
+      locals = { :spinner_id => dom_id(menu_item, :save_button),
+        :submit_title => I18n.t(:save_button),
+      }
+    end
+
+    locals.merge! :menu_item => menu_item,
+      :form_options => { :loading => show_spinner(locals[:spinner_id]) }
+    render :partial => '/menu_items/form', :locals => locals
+  end
+
+  def edit_menu_item_link(menu_item)
+    if menu_item.may_have_children?
+      link_to_modal(I18n.t(:edit),
+        :title => menu_item.title,
+        :url => edit_widget_menu_item_url(@widget, menu_item))
+    else
+      toggle_object_display(I18n.t(:edit), menu_item, :list, :form)
+    end
+  end
+
+  def toggle_object_display(body, object, *symbols)
+    link_to_function(body, nil) do |page|
+      symbols.each do |sym|
+        page.toggle dom_id(object, sym)
+      end
     end
   end
 

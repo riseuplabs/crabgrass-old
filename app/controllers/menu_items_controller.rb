@@ -25,13 +25,12 @@ class MenuItemsController < ApplicationController
   #  @menu_item.position = @group.menu_items.count
   #end
 
-  #not used yet.
-  #the list also displays edit forms.
-  #def edit
-  #end
+  def edit
+  end
 
   def create
     if @menu_item=@menu_items.create!(params[:menu_item])
+      @parent = @menu_item.parent
       flash[:notice] = 'Menu item was successfully created.'
     end
     render :action => :index unless request.xhr?

@@ -18,6 +18,10 @@ class MenuItem < ActiveRecord::Base
     I18n.t(:search_menu_item)=>:search
   }
 
+  def may_have_children?
+    widget.name == "MenuWidget" and self.parent == widget.menu_items.root
+  end
+
   protected
 
   def set_parent
@@ -31,5 +35,4 @@ class MenuItem < ActiveRecord::Base
       self.position = widget.menu_items.roots.count
     end
   end
-
 end
