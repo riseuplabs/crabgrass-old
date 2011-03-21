@@ -1,21 +1,5 @@
 module MenuItemsHelper
 
-  def form_remote_for_menu_item(menu_item)
-    if menu_item.new_record?
-      locals = { :spinner_id => 'add_menu_item_spinner',
-        :submit_title => I18n.t(:add_button),
-      }
-    else
-      locals = { :spinner_id => dom_id(menu_item, :save_button),
-        :submit_title => I18n.t(:save_button),
-      }
-    end
-
-    locals.merge! :menu_item => menu_item,
-      :form_options => { :loading => show_spinner(locals[:spinner_id]) }
-    render :partial => '/menu_items/form', :locals => locals
-  end
-
   def edit_menu_item_link(menu_item)
     if menu_item.may_have_children?
       link_to_modal(I18n.t(:edit),
@@ -26,10 +10,39 @@ module MenuItemsHelper
     end
   end
 
+  def list_menu_items(items)
+    render :partial => '/menu_items/list',
+      :locals => { :menu_items => items }
+  end
+
+  def save_to_widget_link(menu_item)
+    link_to_modal I18n.t(:save_button),
+      :submit => 'submit',
+      :title => @widget.title,
+      :url => edit_widget_url(@widget)
+  end
+
+  def back_to_widget_link
+    link_to_modal I18n.t(:cancel),
+      :title => @widget.title,
+      :url => edit_widget_url(@widget)
+  end
+
+  def submit_menu_item_link(menu_item)
+    if menu_item.new_record?
+      submit_link I18n.t(:add_button)
+    else
+      submit_link I18n.t(:save_button)
+    end
+  end
+
   def toggle_object_display(body, object, *symbols)
     link_to_function(body, nil) do |page|
       symbols.each do |sym|
-        page.toggle dom_id(object, sym)
+        dom_id = dom_id(object, sym)
+        # work around an issue with how haml creates dom_ids
+        dom_id << "_new" if object.new_record?
+        page.toggle dom_id
       end
     end
   end

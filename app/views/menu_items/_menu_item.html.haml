@@ -1,5 +1,5 @@
-%li.menu_item_drag_handle{:id=> dom_id(menu_item), :style=>'width:30em'}
-  .hover{:id => dom_id(menu_item, :list) }
+%li.menu_item_drag_handle[menu_item]{:style=>'width:30em'}
+  .hover[menu_item, :list]
     %div(style="float: right; width: 7em; text-align: right;")
       = edit_menu_item_link menu_item
       %br/
@@ -10,5 +10,5 @@
     <br/>
     = menu_item.link
   - unless menu_item.may_have_children?
-    .hover{:id => dom_id(menu_item, :form), :style => 'display:none'}
-      = form_remote_for_menu_item(menu_item)
+    .hover[menu_item, :form]{:style => 'display:none'}
+      = render :partial => '/menu_items/form', :locals => {:menu_item => menu_item}

@@ -1,10 +1,11 @@
 - spinner_id = "menu_items_ids_" + rand(10000).to_s
+= spinner(spinner_id)
 #menu_items_form
   %ol#menu_items_list
     = render :partial => '/menu_items/menu_item', :collection => menu_items
     = sort_menu_items_js('menu_items_list', spinner_id)
   - menu_item = MenuItem.new :parent => @parent || @menu_item
-  .hover{:id => dom_id(menu_item, :list)}
+  .hover[menu_item, :list]
     = toggle_object_display(I18n.t(:add_button), menu_item, :list, :form)
-  .hover{:id => dom_id(menu_item, :form), :style => 'display:none; width:30em'}
-    = form_remote_for_menu_item(menu_item)
+  .hover[menu_item, :form]{:style => 'display:none; width:30em'}
+    = render :partial => '/menu_items/form', :locals => {:menu_item => menu_item}

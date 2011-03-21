@@ -19,7 +19,22 @@ class MenuItemsControllerTest < ActionController::TestCase
         :title => "Test Menu Entry",
         :link => "http://test.me" }
     end
-    assert_equal qf.menu_items.root, qf.menu_items.last.parent
+    assert_response :redirect
+    assert_equal nil, qf.menu_items.last.parent
+  end
+
+  def test_create_with_parent
+    login_as :blue
+    qf = widgets(:quickfinder_site2)
+    root = qf.menu_items.root
+    assert_difference 'qf.menu_items.count' do
+      post :create, :commit => "Create", :widget_id => qf.id, :menu_item => {
+        :title => "Test Menu Entry",
+        :link => "http://test.me",
+        :parent_id => root.id}
+    end
+    assert_equal root, qf.menu_items.last.parent
+    assert_response :success
   end
 
   def test_edit

@@ -28,12 +28,12 @@ class MenuItemsController < ApplicationController
       @parent = @menu_item.parent
       flash[:notice] = 'Menu item was successfully created.'
     end
-    render :action => :index unless request.xhr?
+    render_parent_form
   end
 
   def update
     @menu_item.update_attributes(params[:menu_item])
-    render :action => :index
+    render_parent_form
   end
 
   # changing the order of menu_items via drag&drop.
@@ -69,4 +69,13 @@ class MenuItemsController < ApplicationController
     may_edit_widget?
   end
 
+  def render_parent_form
+    if request.xhr?
+      render
+    elsif @parent
+      render :action => :edit
+    else
+      redirect_to :controller => :widget, :action => :index, :id => @widget.id
+    end
+  end
 end

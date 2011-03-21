@@ -1,12 +1,12 @@
 quickfinder_root1:
-  title: Quickfinder Root
+  title: First Menu Item
   link: /cnt
   profile_id: 5
   default: false
   widget: quickfinder_site1
 
 quickfinder_root2:
-  title: Quickfinder Root
+  title: First Menu Item
   link: /fai
   profile_id: 6
   default: false

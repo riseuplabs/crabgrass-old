@@ -1,0 +1,7 @@
+= f.label :title, I18n.t(:title), :style => 'width:6em'
+= f.text_field :title, :size => 70, :style => 'width:15em'
+%br/
+= f.label :link, I18n.t(:link), :style => 'width:6em'
+= f.text_field :link, :size => 70, :style => 'width:15em'
+= f.hidden_field :id 
+= f.hidden_field :parent_id

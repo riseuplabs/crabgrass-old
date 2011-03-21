@@ -1,8 +1,6 @@
-
 - form_for @widget do |f|
   = f.label :title
   = f.text_field :title
   = f.submit
 %h4 Menu Entries
-- locals = {:menu_items => @menu_items.root.children}
-= render :partial => '/menu_items/menu_items_form', :locals => locals
+= list_menu_items @menu_items.roots

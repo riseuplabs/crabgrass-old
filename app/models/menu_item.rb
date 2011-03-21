@@ -3,7 +3,6 @@ class MenuItem < ActiveRecord::Base
   # this is deprecated and will be removed soon.
   belongs_to :profile
 
-  before_create :set_parent
   before_create :set_position
   acts_as_tree :order => :position
 
@@ -19,14 +18,10 @@ class MenuItem < ActiveRecord::Base
   }
 
   def may_have_children?
-    widget.name == "MenuWidget" and self.parent == widget.menu_items.root
+    widget.name == "MenuWidget" and self.parent == nil
   end
 
   protected
-
-  def set_parent
-    self.parent ||= widget.menu_items.root
-  end
 
   def set_position
     if parent
