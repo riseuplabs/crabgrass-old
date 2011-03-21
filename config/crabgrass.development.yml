@@ -23,6 +23,7 @@ enabled_mods:
    # - moderation
    # - translator
    # - ui_tester
+   - openlayers
 
 email:
   delivery_method: :sendmail

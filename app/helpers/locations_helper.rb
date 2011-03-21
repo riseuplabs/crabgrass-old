@@ -3,11 +3,10 @@ module LocationsHelper
   # <%= select('group','location', GeoCountry.find(:all).to_select(:name, :code), {:include_blank => true}) %>
   def country_dropdown(object=nil, method=nil, options={})
     profile_id_param = @profile ? "profile_id=#{@profile.id}&" : nil
-    admin_codes_param = options[:show_admin_codes] ? "show_admin_codes=1&" : nil
     name = _field_name('country_id', object, method)
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'#{admin_codes_param}#{profile_id_param}show_submit=#{show_submit}&country_code='+value",
+      :with => "'#{profile_id_param}country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     ) 
@@ -17,9 +16,10 @@ module LocationsHelper
 
   def country_dropdown_for_search
     name = _field_name('country_id')
+    update_form_for = @widget ? 'widget' : 'directory'
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'show_admin_codes=1&country_code='+value",
+      :with => "'update_form_for=#{update_form_for}&show_admin_codes=1&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     )
@@ -83,6 +83,23 @@ module LocationsHelper
     if entity.profile.country_id and (entity.profile.country_id != 0)
       'Local-'+entity.profile.geo_location.geo_country.name
     end
+  end
+
+  def geo_data_for_kml(entity)
+    # currently groups are only supported. when users are added the profile
+    # would be entity.profile (groups location data is only stored in the public profile)
+    if entity.is_a?(Group)
+      profile = entity.profiles.public
+      description_template = 'locations/description_for_kml.html.haml'
+    end
+    return false unless profile and profile.city_id
+    return false unless place = GeoPlace.find(profile.city_id)
+    data = {} 
+    data[:name] = entity.try(:display_name) || entity.name
+    data[:description_template] = description_template 
+    data[:lat] = place.latitude
+    data[:long] = place.longitude
+    return data
   end
 
   private

@@ -20,13 +20,12 @@ class LocationsController < ApplicationController
 
       page << "$$('option.newselected').collect(function(el){el.removeClassName('newselected')});" 
       page << "$('select_country_id').select('[value=\"#{params[:country_code]}\"]')[0].addClassName('newselected');" 
-      page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js'
+      page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js', :locals => {:update_form_for => params[:update_form_for]}
       if params[:show_admin_codes]
         page.replace 'state_dropdown', :partial => '/locations/state_dropdown', :locals => {:display=>'inline', :name => params[:select_state_name], :geo_admin_codes => geo_admin_codes}
         page.show 'state_dropdown' 
       end
       page.show 'city_text'
-      page['city_text_field'].value = '' 
       #page['city_id_field'].value = ''
       page.show 'submit_loc' if params[:show_submit] == 'true' 
     end
@@ -36,6 +35,15 @@ class LocationsController < ApplicationController
     return unless request.xhr?
     render :update do |page|
       page["city_id_field"].value= params[:city_id]
+    end
+  end
+
+  def update_widget_lat_and_long
+    return unless request.xhr?
+    place = GeoPlace.find(params[:city_id])
+    render :update do |page|
+      page["widget_map_center_latitude"].value = place.latitude
+      page["widget_map_center_longitude"].value = place.longitude
     end
   end
 

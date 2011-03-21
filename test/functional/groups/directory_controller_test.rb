@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class Groups::DirectoryControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships, :profiles, :geo_locations, :geo_countries
+  fixtures :users, :groups, :memberships, :profiles, :geo_locations, :geo_countries, :geo_places
 
   def setup
   end
@@ -18,6 +18,22 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
     login_as :quentin
     get :index
     assert_redirected_to(:action => 'search')    
+  end
+
+  def test_index_kml
+    # non-logged in user should see  rainbow but not private_group
+    get :search, :format => :kml
+    assert_response :success
+    assert @response.body =~ /rainbow/
+    assert @response.body !~ /private/ 
+
+    # blue should see some  kml data for rainbow
+    login_as :blue
+    get :search, :format => :kml
+    assert_response :success
+    assert @response.body =~ /Placemark/
+    assert @response.body =~ /rainbow/
+    assert @response.body =~ /private/
   end
 
   def test_recent

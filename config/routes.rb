@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.from_plugin :super_admin rescue NameError
   map.from_plugin :translator   rescue NameError
   map.from_plugin :moderation  rescue NameError
+  map.from_plugin :locations_to_kml  rescue NameError
 
   map.namespace :admin do |admin|
     admin.resources :announcements
@@ -142,6 +143,7 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
+  map.connect 'groups/directory/search.:format', :controller => 'groups/directory', :action => 'search'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
   map.resources :groups do |group|

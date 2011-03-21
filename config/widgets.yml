@@ -10,7 +10,10 @@ MapWidget:
     - 2
   :settings:
     - :title
-      :kml
+    - :kml
+    - :custom_kml
+    - :map_center_latitude
+    - :map_center_longitude
 IntroWidget:
   :columns:
     - 2
@@ -33,6 +36,17 @@ ButtonWidget:
   :settings:
     - :title
     - :link
+    - :icon
+  :available_icons:
+    - 'archive'
+    - 'attach'
+    - 'chat'
+    - 'color_wheel'
+    - 'date'
+    - 'group'
+    - 'heart'
+    - 'key'
+    - 'lightbulb'
 MenuWidget:
   :columns:
     - 1

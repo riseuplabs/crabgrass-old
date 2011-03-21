@@ -1,0 +1,16 @@
+- form_for @widget do |f|
+  %ul
+    %li 
+      =f.label :title
+      = f.text_field :title
+    %li
+      = f.label :link
+      = f.text_field :link
+    %li
+      = f.label :icon
+      %div{:style => 'height: 100px; overflow: auto;'}
+        %ul
+          - available_button_icons(@widget).each do |icon|
+            %li= radio_button("widget", "icon", "#{icon}")+ '' + icon.humanize
+            %span{:class => "icon #{icon}_16"}
+    = f.submit

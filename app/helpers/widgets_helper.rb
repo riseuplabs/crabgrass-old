@@ -59,4 +59,29 @@ module WidgetsHelper
     end
   end
 
+  # map widget helpers
+  def map_widget_kml_location(widget)
+    case widget.kml
+    when 'groups'
+      group_directory_path(:action => :search, :format => :kml)
+    when 'custom'
+      widget.custom_kml
+    end 
+  end
+
+  def current_map_center(widget)
+    lat = widget.map_center_latitude
+    long = widget.map_center_longitude
+    return '' unless lat and long
+    return unless place = GeoPlace.find_by_latitude_and_longitude(lat, long)
+    admin_code_name = (place.try(:geo_admin_code) and place.geo_admin_code.name) || ''
+    return content_tag('div', 'Current map center: '+h(place.name)+', '+h(admin_code_name)+' '+h(place.geo_country.code))
+  end
+
+  # button icon helpers
+  def available_button_icons(widget)
+    name = widget.name
+    Widget.widgets[name][:available_icons]
+  end
+
 end

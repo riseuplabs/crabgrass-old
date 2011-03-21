@@ -1,2 +1,3 @@
 %div#autocomplete_js
-  = autocomplete_locations_tag('city_text_field', :container => 'city_text')
+  - update_form_for = local_assigns[:update_form_for] || ''
+  = autocomplete_locations_tag('city_text_field', {:container => 'city_text', :update_form_for => update_form_for})

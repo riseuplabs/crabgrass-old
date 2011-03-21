@@ -33,6 +33,7 @@ profile_for_private_group:
   may_see_members: false
   may_request_membership: false
   stranger: true
+  geo_location_id: 1
 
 profile_for_rainbow:
   id: 3
@@ -45,6 +46,7 @@ profile_for_rainbow:
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   wiki_id: 300
+  geo_location_id: 1
 
 private_profile_for_rainbow:
   id: 31
