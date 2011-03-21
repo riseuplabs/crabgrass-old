@@ -1755,7 +1755,7 @@ en:
   email_blasts: "Email Blasts"
 
   never_pester_users_description: "if checked, the ability to send email notifications from pages and invites will not be available to users."
-  show_expanded_group_wikis_description: "if checked, group wikis will be fully expanded by default on group home pages."
+  show_expanded_group_wikis_description: "if checked, group and network home page wikis will be fully expanded by default. This does not effect the sitehome wiki which is always fully expanded by default."
 
   # custom appearances
 
