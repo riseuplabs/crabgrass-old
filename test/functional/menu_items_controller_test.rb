@@ -30,6 +30,15 @@ class MenuItemsControllerTest < ActionController::TestCase
     assert_equal qf.menu_items.root, qf.menu_items.last.parent
   end
 
+  def test_edit
+    login_as :blue
+    qf = widgets(:quickfinder_site2)
+    item = qf.menu_items.root
+    get :edit, :widget_id => qf.id, :id => item.id
+    assert_response :success
+    assert_equal item, assigns(:menu_item)
+  end
+
   def test_update
     login_as :blue
     qf = widgets(:quickfinder_site2)
