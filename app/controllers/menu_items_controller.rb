@@ -8,11 +8,6 @@ class MenuItemsController < ApplicationController
 
   verify :only => :update, :method => :put
 
-  def index
-    @second_nav = "administration"
-    @third_nav = "settings"
-  end
-
   # not used yet.
   #def show
   #end

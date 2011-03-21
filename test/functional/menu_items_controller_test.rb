@@ -11,14 +11,6 @@ class MenuItemsControllerTest < ActionController::TestCase
     disable_site_testing
   end
 
-  def test_index
-    login_as :blue
-    qf = widgets(:quickfinder_site2)
-    get :index, :widget_id => qf.id
-    assert_response :success
-    assert_not_nil assigns(:menu_items)
-  end
-
   def test_create_without_parent
     login_as :blue
     qf = widgets(:quickfinder_site2)
