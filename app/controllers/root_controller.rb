@@ -120,7 +120,7 @@ class RootController < ApplicationController
     @active_tab = :home
     @profile = @group.profiles.public
     @main_widgets = @profile.widgets.find_all_by_section(1)
-    @sidebar_widgets = @profile.widgets.find_all_by_section(2).include(:menu_items)
+    @sidebar_widgets = @profile.widgets.find_all_by_section(2, :include => :menu_items)
     @wiki = @profile.wiki || @profile.create_wiki
     if Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
       @page_panels = ['featured', 'recent_pages', 'most_viewed', 'most_active', 'most_stars']
