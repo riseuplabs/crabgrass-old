@@ -20,7 +20,7 @@ class Me::DashboardTest < ActionController::IntegrationTest
   def test_joining_network_updates_requests
     login 'aaron'
     visit '/cnt'
-    click_link 'Request to Join Network'
+    click_link I18n.t(:request_join_group_link, :group_type => 'Network')
     click_button 'Send Request'
     assert_contain 'Request to join has been sent'
 
