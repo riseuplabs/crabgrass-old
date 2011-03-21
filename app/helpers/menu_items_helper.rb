@@ -1,5 +1,13 @@
 module MenuItemsHelper
 
+  def display_menu_item(menu_item)
+    if menu_item.link.blank?
+      menu_item.title
+    else
+      link_to menu_item.title, menu_item.link
+    end
+  end
+
   def edit_menu_item_link(menu_item)
     if menu_item.may_have_children?
       link_to_modal(I18n.t(:edit),
