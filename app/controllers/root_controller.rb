@@ -3,7 +3,7 @@
 #
 class RootController < ApplicationController
 
-  helper :groups, :account, :wiki, :page, :widgets, 'map'
+  helper :groups, :account, :wiki, :page, :widgets
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
 
