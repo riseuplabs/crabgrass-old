@@ -240,8 +240,13 @@ class ApplicationController < ActionController::Base
 
   # render locations kml
   def render_kml_for(collection)
-    @entities = collection
-    render :template => 'locations/index.kml.builder', :layout => false
+    if params[:sort_by] == 'latlong'
+      @places = GeoPlace.sort_entities_by_place(collection)
+      render :template => 'locations/index_by_latlong.kml.builder', :layout => false
+    else
+      @entities = collection
+      render :template => 'locations/index.kml.builder', :layout => false
+    end
   end
 
   private
