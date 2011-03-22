@@ -87,8 +87,22 @@ class Widget < ActiveRecord::Base
     name.underscore.sub! /_widget$/, ''
   end
 
+  def width
+    if self.section == 1
+      25
+    else
+      18
+    end
+  end
+
   def title
     self.options[:title]
+  end
+
+  def short_title
+    t = self.title
+    t = self.name.sub(/Widget$/, '') if t.blank?
+    t.size <= self.width ? t : t[0..self.width-3] + '...'
   end
 
   def method_missing(method, *args)
