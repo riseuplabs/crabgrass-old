@@ -1,6 +1,6 @@
 %ul
   = menu(name_for_directory(@active_tab, 'search'), url_for_directory(@active_tab, 'search'), active_tab_for_nav(@second_nav, 'all'))
-  - if @active_tab == :people and (@current_user and !@current_user.peers.empty?)
+  - if @active_tab == :people and (current_user and !current_user.peers.empty?)
     = menu(name_for_directory(@active_tab, 'peers'), url_for_directory(@active_tab, 'peers'), active_tab_for_nav(@second_nav, 'peers'))
-  - if !@current_user.nil? and (((@active_tab == :people) and !@current_user.friends.empty?) or ((@active_tab == :groups) and !@current_user.groups.empty?))
+  - if logged_in? and (((@active_tab == :people) and !current_user.friends.empty?) or ((@active_tab == :groups) and !current_user.groups.empty?))
     = menu(name_for_directory(@active_tab, 'my'), url_for_directory(@active_tab, 'my'), active_tab_for_nav(@second_nav, 'my'))
