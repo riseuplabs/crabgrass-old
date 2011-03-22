@@ -30,9 +30,9 @@ module ModalboxHelper
   def link_to_modal(label, options={}, html_options={})
     submit = options.delete(:submit)
     icon = options.delete(:icon) || html_options.delete(:icon)
-    function = build_modalbox_function(label, icon, options)
+    id = html_options[:id] ||= 'link%s'%rand(1000000)
+    function = build_modalbox_function(label, icon, id, options)
     if icon
-      html_options[:id] ||= 'link%s'%rand(1000000)
       html_options[:icon] = icon
       if label
         link_to_function_with_icon(label, function, html_options)
@@ -75,7 +75,7 @@ module ModalboxHelper
 
   private
 
-  def build_modalbox_function(label, icon, options)
+  def build_modalbox_function(label, icon, id, options)
     contents = options.delete(:url) || options.delete(:html)
     if contents.is_a? Hash
       contents = url_for contents
@@ -84,8 +84,8 @@ module ModalboxHelper
     #html_options = [:id, :class, :style, :icon]
     if icon
       options.merge!(
-        :loading => spinner_icon_on(icon, html_options[:id]),
-        :complete => spinner_icon_off(icon, html_options[:id]),
+        :loading => spinner_icon_on(icon, id),
+        :complete => spinner_icon_off(icon, id),
         :showAfterLoading => true
       )
     end
