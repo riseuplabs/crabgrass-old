@@ -34,6 +34,20 @@ class Widget < ActiveRecord::Base
 
   serialize :options, Hash
 
+  has_many :menu_items do
+
+    # this also makes sure all menu items belong to the same
+    # widget.
+    def update_order(menu_item_ids)
+      menu_item_ids.each_with_index do |id, position|
+        # find the menu_item with this id
+        menu_item = self.find(id)
+        menu_item.update_attribute(:position, position)
+      end
+      self
+    end
+  end
+
   # we need this for method missing - so let's make sure
   # it can get called.
   def name
@@ -73,8 +87,22 @@ class Widget < ActiveRecord::Base
     name.underscore.sub! /_widget$/, ''
   end
 
+  def width
+    if self.section == 1
+      25
+    else
+      18
+    end
+  end
+
   def title
     self.options[:title]
+  end
+
+  def short_title
+    t = self.title
+    t = self.name.sub(/Widget$/, '') if t.blank?
+    t.size <= self.width ? t : t[0..self.width-3] + '...'
   end
 
   def method_missing(method, *args)

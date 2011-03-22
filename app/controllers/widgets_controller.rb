@@ -1,6 +1,6 @@
 class WidgetsController < ApplicationController
 
-  helper :widgets, 'modalbox', 'map', 'locations', 'autocomplete'
+  helper :widgets, 'modalbox', 'menu_items', 'map', 'locations', 'autocomplete'
   permissions 'widgets'
   before_filter :fetch_profile
   before_filter :login_required
@@ -19,6 +19,7 @@ class WidgetsController < ApplicationController
   # GET /widgets/1/edit
   def edit
     @widget = @profile.widgets.find(params[:id])
+    @menu_items=@widget.menu_items
   end
 
   # POST /widgets
@@ -48,7 +49,7 @@ class WidgetsController < ApplicationController
   # DELETE /widgets/1
   def destroy
     @widget = @profiel.widgets.find(params[:id])
-    @widgets.destroy
+    @widget.destroy
     redirect_to(admin_widgets_url)
   end
 
@@ -60,6 +61,6 @@ class WidgetsController < ApplicationController
   end
 
   def no_layout_for_ajax
-    request.xhr? ? false : 'admin'
+    request.xhr? ? false : 'default'
   end
 end

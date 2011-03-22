@@ -1,6 +1,6 @@
-%li.col1{:id => "widget_#{widget.id}"}
-  %h4
-    = widget.name.sub /Widget$/, ''
-    = " - " if widget.title
-    = truncate(widget.title, :length => 20)
-  = link_line :bullet, edit_widget_link(widget), preview_widget_link(widget)
+%li[widget]
+  .left
+    %h4
+      = preview_widget_link(widget)
+    = widget.name.sub(/Widget$/, '') unless widget.title.blank?
+  = edit_widget_link(widget)

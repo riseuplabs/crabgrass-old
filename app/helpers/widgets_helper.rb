@@ -17,14 +17,17 @@ module WidgetsHelper
     # link_to_remote I18n.t(:edit),
     #  :url => edit_admin_widget_path(widget),
     #  :method => :get
-    link_to_modal('edit', {:url => edit_widget_url(widget), :title => widget.title})
+    link_to_modal '',
+      :url => edit_widget_url(widget),
+      :title => widget.title,
+      :icon => 'pencil'
   end
 
   def preview_widget_link(widget)
     #link_to_remote I18n.t(:preview),
     #  :url => admin_widget_path(widget),
     #  :method => :get
-    link_to_modal('preview', {:url => widget_url(widget), :title => widget.title})
+    link_to_modal(widget.short_title, {:url => widget_url(widget), :title => widget.title})
   end
 
   ##
@@ -66,7 +69,7 @@ module WidgetsHelper
       group_directory_path(:action => :search, :format => :kml)
     when 'custom'
       widget.custom_kml
-    end 
+    end
   end
 
   def current_map_center(widget)

@@ -6,9 +6,9 @@
     %li
       = f.label 'Map Data'
       %ul
-        %li= f.radio_button(:kml, 'groups', :checked => (kml == 'groups')) + ' Show all groups'
+        %li= f.radio_button(:kml, 'groups', :checked => (@widget.kml == 'groups')) + ' Show all groups'
         %li
-          = f.radio_button(:kml, 'custom', :checked => (kml == 'custom')) + ' Custom KML: '
+          = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'custom')) + ' Custom KML: '
           = f.text_field :custom_kml
     %li
       = f.label 'Map Center'

@@ -1,0 +1,7 @@
+- form_remote_for([@widget, @menu_item]) do |f|
+  = render :partial => 'fields', :locals => {:f => f}
+  = save_to_widget_link(@menu_item)
+  = back_to_widget_link
+.sub
+  %h4 Submenu Entries
+  = list_menu_items @menu_item.children

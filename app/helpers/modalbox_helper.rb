@@ -28,29 +28,21 @@ module ModalboxHelper
   #   link_to_modal('hi', {:url => '/some/popup/action'}, {:style => 'font-weight: bold'})
   #
   def link_to_modal(label, options={}, html_options={})
-    options[:title] = label unless options[:title]
-    #html_options = [:id, :class, :style, :icon]
+    submit = options.delete(:submit)
     icon = options.delete(:icon) || html_options.delete(:icon)
-    contents = options.delete(:url) || options.delete(:html)
-    if contents.is_a? Hash
-      contents = url_for contents
-    end
+    id = html_options[:id] ||= 'link%s'%rand(1000000)
+    function = build_modalbox_function(label, icon, id, options)
     if icon
-      html_options[:id] ||= 'link%s'%rand(1000000)
       html_options[:icon] = icon
-      options.merge!(
-        :loading => spinner_icon_on(icon, html_options[:id]),
-        :complete => spinner_icon_off(icon, html_options[:id]),
-        :showAfterLoading => true
-      )
-      function = modalbox_function(contents, options)
       if label
         link_to_function_with_icon(label, function, html_options)
       else
         link_to_function_icon(icon, function, html_options)
       end
+    elsif submit
+      rails_submit_tag label, :name => submit,
+        :onclick => function
     else
-      function = modalbox_function(contents, options)
       link_to_function(label, function, html_options)
     end
   end
@@ -82,6 +74,23 @@ module ModalboxHelper
   end
 
   private
+
+  def build_modalbox_function(label, icon, id, options)
+    contents = options.delete(:url) || options.delete(:html)
+    if contents.is_a? Hash
+      contents = url_for contents
+    end
+    options[:title] = label unless options[:title]
+    #html_options = [:id, :class, :style, :icon]
+    if icon
+      options.merge!(
+        :loading => spinner_icon_on(icon, id),
+        :complete => spinner_icon_off(icon, id),
+        :showAfterLoading => true
+      )
+    end
+    modalbox_function(contents, options)
+  end
 
   #
   # Takes a ruby hash and generates the text for a javascript hash.

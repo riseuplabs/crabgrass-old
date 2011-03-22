@@ -52,5 +52,6 @@ MenuWidget:
     - 1
   :settings:
     - :title
+    - :menu_root_id
 
 

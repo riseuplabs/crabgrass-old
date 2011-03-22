@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110301094152) do
+ActiveRecord::Schema.define(:version => 20110314131417) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20110301094152) do
     t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
     t.decimal "longitude",                         :precision => 24, :scale => 20, :null => false
     t.integer "geo_admin_code_id", :limit => 11,                                   :null => false
+    t.integer "population",        :limit => 20
   end
 
   add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
@@ -356,10 +357,12 @@ ActiveRecord::Schema.define(:version => 20110301094152) do
     t.string   "title"
     t.string   "link"
     t.integer  "position",   :limit => 11
-    t.integer  "group_id",   :limit => 11
     t.boolean  "default"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "profile_id", :limit => 11
+    t.integer  "parent_id",  :limit => 11
+    t.integer  "widget_id",  :limit => 11
   end
 
   create_table "messages", :force => true do |t|

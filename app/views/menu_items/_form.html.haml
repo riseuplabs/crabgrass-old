@@ -1,0 +1,8 @@
+- spinner_id = 'menu_item_form_spinner'
+- form_options = {:loading => show_spinner('menu_item_form_spinner')}
+- form_remote_for([@widget, menu_item], form_options) do |f|
+  %div{:style => 'float:right; width: 7em; text-align: right;'}
+    = spinner(spinner_id)
+    = submit_menu_item_link menu_item
+    = toggle_object_display(I18n.t(:cancel), menu_item, :list, :form)
+  = render :partial => '/menu_items/fields', :locals => {:f => f}

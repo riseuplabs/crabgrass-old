@@ -137,6 +137,23 @@ class Profile < ActiveRecord::Base
 
   has_many :widgets, :order => :position, :dependent => :destroy
 
+  has_many :menu_items, :dependent => :destroy, :order => :position do
+
+    def update_order(menu_item_ids)
+      menu_item_ids.each_with_index do |id, position|
+        # find the menu_item with this id
+        menu_item = self.find(id)
+        menu_item.update_attribute(:position, position)
+      end
+      self
+    end
+  end
+
+  has_many :menu_bar_items,
+    :class_name => 'MenuItem',
+    :order => :position,
+    :conditions => 'parent_id IS NULL AND position IS NOT NULL'
+
   belongs_to :wiki, :dependent => :destroy
   belongs_to :wall,
    :class_name => 'Discussion',

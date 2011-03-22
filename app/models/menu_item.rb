@@ -1,7 +1,13 @@
 class MenuItem < ActiveRecord::Base
 
-  belongs_to :group
-  acts_as_list :scope => :group
+  # this is deprecated and will be removed soon.
+  belongs_to :profile
+
+  before_create :set_position
+  acts_as_tree :order => :position
+
+  belongs_to :widget
+  validates_presence_of :widget_id
 
   TYPES={
     I18n.t(:external_link_menu_item)=>:external,
@@ -11,4 +17,17 @@ class MenuItem < ActiveRecord::Base
     I18n.t(:search_menu_item)=>:search
   }
 
+  def may_have_children?
+    widget.name == "MenuWidget" and self.parent == nil
+  end
+
+  protected
+
+  def set_position
+    if parent
+      self.position = parent.children.count
+    else
+      self.position = widget.menu_items.roots.count
+    end
+  end
 end
