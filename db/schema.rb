@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20110314131417) do
     t.decimal "latitude",                          :precision => 24, :scale => 20, :null => false
     t.decimal "longitude",                         :precision => 24, :scale => 20, :null => false
     t.integer "geo_admin_code_id", :limit => 11,                                   :null => false
+    t.integer "population",        :limit => 20
   end
 
   add_index "geo_places", ["name"], :name => "index_geo_places_on_name"
