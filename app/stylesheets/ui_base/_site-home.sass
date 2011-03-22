@@ -100,9 +100,11 @@ ul.icon_boxes
     font-weight: normal
 
 //
-// unido mru site
+// unido mru site home and edit site structure
 // '-plus' on columns and wrappers signify the addition of the inner gutter to the right
 // so the '-plus' applies only to the left placed single columns (maximum of 2) or a left placed double column //(maximum of 1).
+
+
 
 .col1-plus
   +col1
@@ -262,3 +264,69 @@ a.icon_79514486
 
 #border_1048101129
   border-top: 1px solid $celadon
+  
+//
+// ADMIN edit site structure
+
+.main-edit
+  +main-edit
+  +margin-edit
+  border-right: 1px solid $light_grey_border
+
+.sidebar-edit
+  +sidebar-edit
+  +margin-edit
+
+.wrapper-edit
+  +float-left
+  width: 538px
+  border: 1px solid $light_grey_border
+  margin-bottom: 32px
+
+.wrapper-edit h4
+  font-size: 14px
+  letter-spacing: 0.3px
+  
+h3.edit
+  margin-bottom: 12px
+  
+#sort_list_main li, #sort_list_sidebar li
+  +float-left
+  +border-radius(8px) 
+  background: $orange05 url(/images/png/16/pencil.png) no-repeat 236px 50%
+  border: 2px solid $orange20
+  width: 248px
+  height: 32px
+  padding: 8px
+  margin-bottom: 18px
+  cursor: move
+  
+#sort_list_sidebar li
+  background: $orange05 url(/images/png/16/pencil.png) no-repeat 172px 50%
+  width: 184px
+  
+#sort_list_main h4, #sort_list_sidebar h4
+  color: $orange
+  
+#sort_list_main_storage li, #sort_list_sidebar_storage li
+  +float-left
+  +border-radius(8px) 
+  background: #f5f5f5 url(/images/png/16/pencil.png) no-repeat 236px 50%
+  border: 2px solid $light_grey_border
+  width: 248px
+  height: 32px
+  padding: 8px
+  margin-bottom: 18px
+  cursor: move
+
+#sort_list_sidebar_storage li
+  background: #f5f5f5 url(/images/png/16/pencil.png) no-repeat 172px 50%
+  width: 184px
+
+#sort_list_main_storage h4, #sort_list_sidebar_storage h4
+  color: $text-light
+
+a.new
+  +float-right
+  padding-left: 20px
+  background: url(/images/png/16/plus.png) no-repeat
