@@ -11,3 +11,9 @@ location2:
 location3:
   id: 3
   geo_country_id: 3 
+
+location_for_animals:
+  id: 4
+  geo_country_id: 1
+  geo_admin_code_id: 3
+  geo_place_id: 2 
