@@ -87,11 +87,17 @@ class Widget < ActiveRecord::Base
     name.underscore.sub! /_widget$/, ''
   end
 
+  def small?
+    self.name == "TagCloudWidget"
+  end
+
   def width
-    if self.section == 1
-      25
-    else
+    if self.section == 2
       18
+    elsif self.small?
+      10
+    else
+      25
     end
   end
 
