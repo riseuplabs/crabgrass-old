@@ -36,7 +36,7 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
     assert @response.body =~ /private/
   end
 
-  def test_index_kml_by_locationo
+  def test_index_kml_by_location
     get :search, :sort_by => 'latlong', :format => :kml
     assert @response.body =~ /<name>Zangakatun<\/name>[\s\n]+<description>\S+rainbow\S+recent_group/
     assert @response.body =~ /<name>Yenikend<\/name>[\s\n]+<description>\S+animals\S+the-true-levellers/
