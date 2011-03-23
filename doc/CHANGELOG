@@ -3,7 +3,7 @@ development of this version of crabgrass. Please visit the Crabgrass Issue
 Tracker at https://labs.riseup.net/code/projects/crabgrass/issues for more
 complete information on any of the issues listed below.
 
-0.5.3.2 -- 2011 Mar 21
+0.5.3.2 -- 2011 Mar 23
   Feature #2746: Updating jwplayer Audio player and optimization	
   Feature #2722: Enhanced Statistics Section in /admin	
   Feature #2747: Create siteadmin option for having the homepage wiki default set to always expanded.	
@@ -13,6 +13,7 @@ complete information on any of the issues listed below.
   Bug #2179: chat archive doesnt display archived chats	
   Bug #2402: Wikis do not recognize paragraph breaks without html code	
   Bug #2820: submit bug report redirects to me/dashboard
+  Bug #2773: XSS Vulnerability in chat
 
 0.5.3.1 -- 2010 Oct 15
   Feature #2526: enable no pestering by friends
