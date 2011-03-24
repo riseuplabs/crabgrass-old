@@ -72,6 +72,14 @@ module WidgetsHelper
     end
   end
 
+  def map_widget_options(widget)
+    return {} unless widget.map_center_latitude and widget.map_center_longitude
+    options = {}
+    options[:mapcenterlong] = widget.map_center_longitude
+    options[:mapcenterlat] = widget.map_center_latitude
+    return options
+  end
+
   def current_map_center(widget)
     lat = widget.map_center_latitude
     long = widget.map_center_longitude
