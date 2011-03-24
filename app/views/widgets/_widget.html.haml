@@ -3,4 +3,5 @@
     %h4
       = preview_widget_link(widget)
     = widget.name.sub(/Widget$/, '') unless widget.title.blank?
-  = edit_widget_link(widget)
+  %span
+    = edit_widget_link(widget)

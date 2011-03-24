@@ -1,25 +1,27 @@
 %h1 Edit the Sitehome Structure
 .wrapper-edit
   .main-edit
-    %h3.edit Main Section
-    %ul#sort_list_main
-      = render :partial => '/widgets/widget', :collection => @main_widgets
-    = sortable_element 'sort_list_main', :url => { :action => "order" }
+    .left
+      %h3.edit Main Section
+      %ul#sort_list_main.section
+        = render :partial => '/widgets/widget', :collection => @main_widgets
+      = sortable_element 'sort_list_main', :url => { :action => "order" }
+    .left
+      %h3.edit Main Section Storage
+      %a.new Add New
+      %ul#sort_list_main_storage.section
+      = sortable_element 'sort_list_main_storage', :url => { :action => "order" }
+    
   .sidebar-edit
-    %h3.edit Sidebar
-    %ul#sort_list_sidebar
-      = render :partial => '/widgets/widget', :collection => @sidebar_widgets
-    = sortable_element 'sort_list_sidebar', :url => { :action => "order" }
+    .left
+      %h3.edit Sidebar
+      %ul#sort_list_sidebar.section
+        = render :partial => '/widgets/widget', :collection => @sidebar_widgets
+      = sortable_element 'sort_list_sidebar', :url => { :action => "order" }
+    .left
+      %h3.edit Sidebar Storage
+      %a.new Add New
+      %ul#sort_list_sidebar_storage.section
+      = sortable_element 'sort_list_sidebar_storage', :url => { :action => "order" }
+  
 
-%h3.edit Not publicly visible
-.wrapper-edit
-  .main-edit
-    %a.new Add New
-    %ul#sort_list_main_storage
-      %li
-        %h4 Teaser
-  .sidebar-edit
-    %a.new Add New
-    %ul#sort_list_sidebar_storage
-      %li
-        %h4 Teaser

@@ -184,7 +184,7 @@ ul.icon_boxes
 .padding
   padding: 6px 10px
   width: 216px
-
+  
 h2.opening
   color: $header
   font-size: 20px
@@ -216,7 +216,7 @@ h4.subheading
   line-height: 1.3
 
 .col-margin-top
-  margin-top: 24px
+  margin-top: 18px
   
 .grouping
   padding: 10px
@@ -237,12 +237,16 @@ ul.angle-quote
     padding-left: 16px
     background: url(/images/png/16/dbl_angle_quote_rt.png) no-repeat 0 3px
 
+.networking
+  +bordered-top(2px, $celadon)
+  background: $celadon20 
+  
 .btn-widget
   background: url(/images/unido/mru_button_236x32.png)
   width: 236px
   height: 32px
   float: left
-  margin: 12px 0 0
+  margin: 0 0 12px 0
   a
     width: 236px
     color: $header
@@ -258,16 +262,13 @@ a.icon_1791048387
 a.icon_79514486
   background: url(/images/png/16/wrench.png) no-repeat 14px 5px
 
-#border_474318086
-  border-top: 2px solid $celadon
-  margin-bottom: 0
-
-#border_1048101129
-  border-top: 1px solid $celadon
   
 //
 // ADMIN edit site structure
 
+.hoverActive
+  border: 1px dashed #000
+  
 .main-edit
   +main-edit
   +margin-edit
@@ -290,38 +291,52 @@ a.icon_79514486
 h3.edit
   margin-bottom: 12px
   
-#sort_list_main li, #sort_list_sidebar li
+li.widget
   +float-left
   +border-radius(8px) 
   background: $orange05 50%
   border: 2px solid $orange20
-  width: 248px
-  height: 32px
-  padding: 8px
+  color: $orange 
+  width: 264px
+  height: 48px
   margin-bottom: 18px
   cursor: move
+  a
+    color: $orange 
+  .left
+    padding: 8px 0 6px 8px
+    height: 34px
+    width: 210px
+    border-right: 1px dotted $orange20
+
+#sort_list_main li.small
+  width: 126px
+  .left
+    width: 80px
+
+li.widget span 
+  +float-right
+  margin-top: 13px
+  width: 30px 
   
-#sort_list_sidebar li
-  background: $orange05 50%
-  width: 184px
+li.widget a.small_icon
+  position: relative
+  background-position: 0 50%
+
+li.widget a.small_icon:hover
+  +opacity(0.5)
   
-#sort_list_main h4, #sort_list_sidebar h4
-  color: $orange
-  
-#sort_list_main_storage li, #sort_list_sidebar_storage li
-  +float-left
-  +border-radius(8px) 
-  background: #f5f5f5 50%
-  border: 2px solid $light_grey_border
-  width: 248px
-  height: 32px
-  padding: 8px
-  margin-bottom: 18px
-  cursor: move
+#sort_list_sidebar li.widget
+  width: 196px
+  .left
+    width: 142px
 
 #sort_list_sidebar_storage li
   background: #f5f5f5 50%
   width: 184px
+  
+#sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
+  position: relative
 
 #sort_list_main_storage h4, #sort_list_sidebar_storage h4
   color: $text-light
