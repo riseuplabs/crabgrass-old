@@ -26,9 +26,18 @@ module GroupsHelper
   def join_group_link
     return unless logged_in? and !current_user.direct_member_of? @group
     if may_join_memberships?
-      link_to(I18n.t(:join_group_link, :group_type => @group.group_type), {:controller => 'groups/memberships', :action => 'join', :id => @group}, :method => :post)
+      link_to(I18n.t(:join_group_link, :group_type => @group.group_type).upcase, {:controller => 'groups/memberships', :action => 'join', :id => @group}, :method => :post)
     elsif may_create_join_request?
-      link_to(I18n.t(:request_join_group_link, :group_type => @group.group_type), {:controller => 'groups/requests', :action => 'create_join', :id => @group})
+      link_to(I18n.t(:request_join_group_link, :group_type => @group.group_type).upcase, {:controller => 'groups/requests', :action => 'create_join', :id => @group})
+    end
+  end
+
+  def join_group_or_create_page_link(group=@group)
+    return unless logged_in?
+    if current_user.direct_member_of?(group)
+      create_page_link(group)
+    else
+      content_tag(:div, join_group_link, :id => 'contribute')
     end
   end
 

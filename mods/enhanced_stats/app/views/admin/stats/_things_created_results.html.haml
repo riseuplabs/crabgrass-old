@@ -1,2 +1,5 @@
-%table
-  = show_results_for(@things_created, 'Number Created')
+%div.wrapper 
+  %div.stats
+    %h2.subhead Number Created
+    %table{:style => "float: left; margin-left: 10px; width: 300px;"}
+      = show_results_for(@things_created)

@@ -5,11 +5,23 @@ class GroupsTest < ActionController::IntegrationTest
     login 'penguin'
     visit '/fau'
 
-    assert_contain 'Join Network'
+    assert_contain I18n.t(:join_group_link, :group_type => 'Network').upcase
 
     assert_difference 'Membership.count' do
-      click_link 'Join Network'
+      click_link I18n.t(:join_group_link, :group_type => 'Network').upcase 
     end
+  end
+
+  def test_create_page_link_if_member
+    login 'blue'
+    visit '/rainbow'
+    assert_contain I18n.t(:contribute_content_link).upcase 
+  end
+
+  def test_join_link_if_not_member
+    login 'penguin'
+    visit '/public_group_everyone_can_see+public_committee'
+    assert_contain I18n.t(:join_group_link, :group_type => 'Committee').upcase
   end
 
   def test_change_group_membership_policy
@@ -26,7 +38,7 @@ class GroupsTest < ActionController::IntegrationTest
     login 'aaron'
     visit '/rainbow'
 
-    click_link 'Join Group'
+    click_link I18n.t(:join_group_link, :group_type => 'Group').upcase 
     assert_contain 'Leave Group'
 
     # disable open group. should change what users see
@@ -45,7 +57,7 @@ class GroupsTest < ActionController::IntegrationTest
     click_link 'Leave Group'
     click_button 'Leave'
 
-    click_link 'Request to Join Group'
+    click_link I18n.t(:request_join_group_link, :group_type => 'Group').upcase
     click_button 'Send Request'
     assert_contain 'Request to join has been sent'
   end

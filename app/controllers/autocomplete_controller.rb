@@ -86,20 +86,45 @@ class AutocompleteController < ApplicationController
     render_entities_to_json(senders)
   end
 
+  def locations
+    if params[:country].blank? or params[:country] == 'Country'
+      locations = []
+    elsif params[:query] == ""
+      # we could preload if we had the country, but this is still expensive if there are a lot of places
+      # perhaps we could do a count first and preload if it's a reasonable amount, or preload cities witha high population?
+      #locations = GeoPlace.find(:all, :conditions => ["geo_country_id = ?", params[:country]])
+      locations = []
+    else
+      country = GeoCountry.find(params[:country])
+      locations = country.geo_places.named_like(params[:query]).largest(10)
+    end
+    render_locations_to_json(locations)
+  end
+
   private
 
   def render_entities_to_json(entities)
     render :json => {
       :query => params[:query],
-      :suggestions => entities.collect{|entity|display_on_two_lines(entity)},
+      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))},
       :data => entities.collect{|e|e.avatar_id||0}
     }
   end
 
+  def render_locations_to_json(locations)
+    render :json => {
+      :query => params[:query],
+      :suggestions => locations.collect{|loc|display_on_two_lines(loc.name, loc.geo_admin_code.name)},
+      :data => locations.collect{|loc|loc.id}
+    }
+  end
+
+
   # this should be in a helper somewhere, but i don't know how to generate
   # json response in the view.
-  def display_on_two_lines(entity)
-    "<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
+  def display_on_two_lines(first, second)
+    "<em>%s</em>%s" % [first, ('<br/>' + second if second != first)]
+    #"<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
   end
 
 end

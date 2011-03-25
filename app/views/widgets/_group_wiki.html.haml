@@ -1,1 +1,2 @@
-= render :partial => 'wiki/show', :locals => {:preview => 500}
+- preview = (current_site and current_site.show_expanded_group_wikis) ? false : 500
+= render :partial => 'wiki/show', :locals => {:preview => preview}

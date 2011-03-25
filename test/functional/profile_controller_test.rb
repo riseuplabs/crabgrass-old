@@ -5,7 +5,7 @@ require 'profile_controller'
 class ProfileController; def rescue_action(e) raise e end; end
 
 class ProfileControllerTest < Test::Unit::TestCase
-  fixtures :users, :sites, :profiles
+  fixtures :users, :sites, :profiles, :geo_countries, :geo_places
 
   def setup
     @controller = ProfileController.new
@@ -64,6 +64,12 @@ class ProfileControllerTest < Test::Unit::TestCase
     post :edit, :id => 'private', :save => 'Save Changes', :profile => profile
     assert assigns(:profile) == user.profiles.private
     assert !assigns(:profile).may_pester?
+  end
+
+  def test_edit_location
+    login_as :quentin
+    xhr :post, :edit_location, :id => 'public', :country_id => 1, :city_id => 1
+    assert_response :success
   end
 
 

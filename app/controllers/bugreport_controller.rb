@@ -11,7 +11,7 @@ class BugreportController < ApplicationController
       flash_message :title => "Bug Report Sent",
         :success => "Thank you for submitting the bug report!"
     end
-    redirect_to(:controller => 'me', :action => 'dashboard') and return
+    redirect_to my_work_me_pages_url
   end
 
 end

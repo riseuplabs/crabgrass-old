@@ -1,52 +1,98 @@
 .calendar_edit_16 {
   background-image: url(/plugin_assets/enhanced_stats/images/calendar_edit.png);
   float: right;
-  padding-top: 0;
 }
 
 .stats_container {
   border: 1px solid #aaa;
-  width: 400px;
+  width: 380px;
+  margin: 20px auto;
 }
 
-.stats_container h3 {
+.stats_container h2 {
   color: white;
   background-color: #aaa;
-  padding: 10px;
+  padding: 7px 10px;
 }
 
+.stats_container .wrapper {
+  background:#f4f3f8;
+  padding: 0 26px 30px;
+  width: 328px;
+  overflow: hidden;
+  display: block;
+  *zoom: 1;
+  *display: inline-block;
+}
+
+.stats_container h2.subhead {
+  width: 324px;
+  background: #fff;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  padding: 0 2px;
+  border-top: 1px solid #aaa; 
+  border-bottom: 1px solid #aaa; 
+  float: left;
+  line-height: 1.4;
+  color: #666;
+  font-size: 14px;
+}
+
+.stats_container h2.subhead span {
+  font-size: 11px;
+  font-weight: normal;
+  font-style: italic;
+  padding-left: 6px;
+}
 #daterange {
-  padding: 10px;
+  padding: 8px 0 14px 24px;
+  background: #ececec;
+}
+#daterange form {
+  display: block;
+}
+#daterange .input_container { 
+  width: 120px;
+  border: none;
+  background: #fff;
 }
 
-#daterange div { 
-  width: 130px;
+#daterange-wrapper {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  *zoom: 1;
+  *display: inline-block;
 }
 
-.subhead {
-  color: #707070;
-  font-weight: bold;
+#daterange-wrapper #submit {
+  margin-top: 21px;
 }
 
-.subhead .bordered {
-  border-top: 1px solid #aaa
-  border-bottom: 1px solid #aaa
+#enddate .input_container, #startdate .input_container {
+  border: 1px solid #aaa;
+  display: block;
+  overflow: hidden;
+  *zoom: 1;
+  *display: inline-block;
 }
 
+input#selected_start_date, input#selected_end_date {
+  border: none !important;
+  padding: 3px 0 2px 2px;
+  width: 80px;
+  float: left;
+}
 #enddate, #startdate {
  float: left;
  margin-right: 20px;
+
 
 .comment {
   font-weight: normal;
   font-style: italic;
   padding-left: 3px;
-}
-
-#submit {
-  position: relative;
-  top: -64px;
-  left: 300px;
 }
 
 .input_container {
@@ -57,17 +103,5 @@
 input {
   border: none;
   margin: 0 5px;
-}
-
-table {
-  width: 95%;
-  margin: -54px 10px 0 10px;
-}
-
-th {
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-color: #aaa;
-  border-width: 1px;
 }
 

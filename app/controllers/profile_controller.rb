@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
-  helper 'me/base', 'locations'
+  helper 'me/base', 'locations', 'autocomplete'
   #permissions 'profiles'
   verify :method => :post, :only => :update
   layout 'header'
@@ -19,6 +19,12 @@ class ProfileController < ApplicationController
         redirect_to :controller => 'profile', :action => 'edit', :id => @profile.type
       end
     end
+  end
+ 
+  def edit_location
+    return unless request.xhr?
+    @profile.update_location(params)
+    render :nothing => true
   end
 
   # ajax

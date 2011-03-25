@@ -80,7 +80,8 @@ namespace :cg do
           :name => row[1],
           :alternatenames => row[3],
           :latitude => row[4],
-          :longitude => row[5]
+          :longitude => row[5],
+          :population => row[14].to_i
         }
         geoplace = geoadmincode.geo_places.find_by_geonameid(row[0])
         if geoplace.nil?
