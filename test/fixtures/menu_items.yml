@@ -1,17 +1,3 @@
-quickfinder_root1:
-  title: First Menu Item
-  link: /cnt
-  profile_id: 5
-  default: false
-  widget: quickfinder_site1
-
-quickfinder_root2:
-  title: First Menu Item
-  link: /fai
-  profile_id: 6
-  default: false
-  widget: quickfinder_site2
-
 external:
   title: external test
   link: "http://we.riseup.net"
@@ -47,3 +33,47 @@ network:
   profile_id: 6
   default: false
 
+quickfinder_root1:
+  title: First Menu Item
+  link: /cnt
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+
+quickfinder_root2:
+  title: First Menu Item
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+
+quickfinder_sub1:
+  title: First SubMenu Item
+  link: /cnt
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+  parent: quickfinder_root1
+
+quickfinder_sub2:
+  title: First SubMenu Item
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+  parent: quickfinder_root2
+
+quickfinder_sub_no_link1:
+  title: SubMenu Item w/o link
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+  parent: quickfinder_root1
+
+quickfinder_sub_no_link2:
+  title: SubMenu Item w/o link
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+  parent: quickfinder_root2

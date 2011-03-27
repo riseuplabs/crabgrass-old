@@ -30,6 +30,16 @@ module WidgetsHelper
     link_to_modal(widget.short_title, {:url => widget_url(widget), :title => widget.title})
   end
 
+  def sortable_list(section, storage = false)
+    element = "sort_list_#{section}"
+    containment = [element, "#{element}_storage"]
+    element += "_storage" if storage
+    sortable_element element,
+      :url => { :action => :sort },
+      :containment => containment
+  end
+
+
   ##
   ## lists of active groups and users. used by the view.
   ##
