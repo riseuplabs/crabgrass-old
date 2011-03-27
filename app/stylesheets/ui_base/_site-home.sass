@@ -290,6 +290,9 @@ a.icon_79514486
   
 h3.edit
   margin-bottom: 12px
+  span
+    font-size: 12px
+    color: $text-light
   
 li.widget
   +float-left
@@ -311,6 +314,7 @@ li.widget
 
 #sort_list_main li.small
   width: 126px
+  margin-right: 8px
   .left
     width: 80px
 
@@ -337,11 +341,15 @@ li.widget a.small_icon:hover
   
 #sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
   position: relative
+  
+#sort_list_main, #sort_list_sidebar
+  height: 430px
 
 #sort_list_main_storage h4, #sort_list_sidebar_storage h4
   color: $text-light
 
 a.new
   +float-right
-  padding-left: 20px
+  margin-top: -12px
+  padding: 0 18px
   background: url(/images/png/16/plus.png) no-repeat

@@ -8,7 +8,8 @@ namespace :cg do
         {:name => 'IntroWidget', :options => {:title => I18n.t(:welcome_title, :site_title =>s.name)}},
         {:name => 'MapWidget', :options => {:title => 'Projects in '+s.name, :kml => :groups}},
         {:name => 'TeaserWidget', :options => {:title => 'Who is Who?', :text => lorem}},
-        {:name => 'TagCloudWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},
+        {:name => 'TagCloudWidget', :options => {:title => 'Most Used Tags'}},
+        {:name => 'TeaserWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},
         {:name => 'PageListWidget', :options => {}}
       ]
       widgets_2 = [
