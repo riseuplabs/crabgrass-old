@@ -1,4 +1,4 @@
-class OpenlayersMap < ActiveRecord::Base
+class OpenlayersMap
 
   attr_accessor :kml, :width, :height, :mapcenterlong, :mapcenterlat, :zoomlevel, :override_stylesheet
 
@@ -10,6 +10,10 @@ class OpenlayersMap < ActiveRecord::Base
     @mapcenterlong = options[:mapcenterlong] || 8
     @zoomlevel = options[:zoomlevel] || 2 
     @override_stylesheet = options[:override_stylesheet] || nil
+  end
+
+  def map_partial
+    '/locations/map'
   end
 
 end
