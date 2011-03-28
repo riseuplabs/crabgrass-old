@@ -6,7 +6,7 @@ namespace :cg do
       lorem = 'Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum'
       widgets_1 = [ # widgets in section one, in order 
         {:name => 'IntroWidget', :options => {:title => I18n.t(:welcome_title, :site_title =>s.name)}},
-        {:name => 'MapWidget', :options => {:title => 'Projects in '+s.name, :kml => :groups}},
+        {:name => 'MapWidget', :options => {:title => 'Projects in '+s.name, :kml => 'groups'}},
         {:name => 'TeaserWidget', :options => {:title => 'Who is Who?', :text => lorem}},
         {:name => 'TagCloudWidget', :options => {:title => 'Most Used Tags'}},
         {:name => 'TeaserWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},

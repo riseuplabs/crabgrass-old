@@ -11,7 +11,7 @@
   };
   map = new OpenLayers.Map('map', options);
   map.addLayer(new OpenLayers.Layer.OSM());
-  var kml = new OpenLayers.Layer.GML("MRU", "<%= kml_path %>", 
+  var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
      {
       format: OpenLayers.Format.KML, 
       formatOptions: {
@@ -33,7 +33,7 @@
            
   map.addControl(new OpenLayers.Control.LayerSwitcher());
 
-  var lonLat = new OpenLayers.LonLat(<%= mapcenterlong.to_i %>,<%= mapcenterlat.to_i %>).transform(map.displayProjection,  map.projection);
+  var lonLat = new OpenLayers.LonLat(<%= @map.mapcenterlong.to_i %>,<%= @map.mapcenterlat.to_i %>).transform(map.displayProjection,  map.projection);
   map.setCenter (lonLat, 2); 
 
   function onPopupClose(evt) {
@@ -60,5 +60,5 @@
     }
   }
   //map.zoomToMaxExtent();
-  map.zoomTo(<%= zoomlevel %>);
+  map.zoomTo(<%= @map.zoomlevel %>);
 </script>
