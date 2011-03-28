@@ -1,6 +1,6 @@
 class WidgetsController < ApplicationController
 
-  helper :widgets, 'modalbox', 'menu_items', 'map', 'locations', 'autocomplete'
+  helper :widgets, 'modalbox', 'menu_items', 'locations', 'autocomplete'
   permissions 'widgets'
   before_filter :fetch_profile
   before_filter :login_required
