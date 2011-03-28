@@ -312,12 +312,6 @@ li.widget
     width: 210px
     border-right: 1px dotted $orange20
 
-#sort_list_main li.small
-  width: 126px
-  margin-right: 8px
-  .left
-    width: 80px
-
 li.widget span 
   +float-right
   margin-top: 13px
@@ -330,26 +324,33 @@ li.widget a.small_icon
 li.widget a.small_icon:hover
   +opacity(0.5)
   
-#sort_list_sidebar li.widget
-  width: 196px
-  .left
-    width: 142px
-
-#sort_list_sidebar_storage li
-  background: #f5f5f5 50%
-  width: 184px
-  
 #sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
   position: relative
   
 #sort_list_main, #sort_list_sidebar
   height: 430px
+  
+#sort_list_sidebar li.widget, #sort_list_sidebar_storage li.widget
+  width: 196px
+  .left
+    width: 142px
+
+#sort_list_sidebar_storage li.widget, #sort_list_main_storage li.widget
+  background: #f5f5f5 50%
+  
+#sort_list_main, #sort_list_main_storage
+  li.small
+    width: 126px
+    margin-right: 8px
+    .left
+      width: 80px
 
 #sort_list_main_storage h4, #sort_list_sidebar_storage h4
   color: $text-light
 
 a.new
   +float-right
+  +clearfix
   margin-top: -12px
   padding: 0 18px
   background: url(/images/png/16/plus.png) no-repeat
