@@ -30,6 +30,13 @@ class Widget < ActiveRecord::Base
     widgets[name] = options
   end
 
+  SECTIONS = ['main', 'sidebar', 'main_storage', 'sidebar_storage']
+
+  def self.id_for_section(section)
+    section = section.sub 'sort_list_', ''
+    SECTIONS.index(section) + 1
+  end
+
   belongs_to :profile
 
   serialize :options, Hash

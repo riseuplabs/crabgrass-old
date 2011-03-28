@@ -135,7 +135,17 @@ class Profile < ActiveRecord::Base
   ## ASSOCIATED ATTRIBUTES
   ##
 
-  has_many :widgets, :order => :position, :dependent => :destroy
+  has_many :widgets, :order => :position, :dependent => :destroy do
+    def sort_section(section, widget_ids)
+      widget_ids.each_with_index do |id, position|
+        # find the widget with this id
+        widget = self.find(id)
+        widget.update_attribute(:position, position)
+        widget.update_attribute(:section, Widget.id_for_section(section))
+      end
+      self
+    end
+  end
 
   has_many :menu_items, :dependent => :destroy, :order => :position do
 

@@ -9,6 +9,13 @@ class Admin::WidgetsController < Admin::BaseController
   def index
     @main_widgets = @profile.widgets.find_all_by_section 1
     @sidebar_widgets = @profile.widgets.find_all_by_section 2
+    @main_storage_widgets = @profile.widgets.find_all_by_section 3
+    @sidebar_storage_widgets = @profile.widgets.find_all_by_section 4
+  end
+
+  def sort
+    section, ids = params.detect{|k,v| /^sort_list_/.match(k)}
+    @profile.widgets.sort_section(section, ids)
   end
 
   protected

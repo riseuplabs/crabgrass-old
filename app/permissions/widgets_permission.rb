@@ -5,6 +5,7 @@ module WidgetsPermission
   end
 
   alias_method :may_update_widget?, :may_show_widget?
+  alias_method :may_sort_widget?, :may_show_widget?
   def may_edit_widget?
     current_user.may?(:admin, current_site)
   end
