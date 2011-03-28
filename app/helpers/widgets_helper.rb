@@ -36,7 +36,8 @@ module WidgetsHelper
     element += "_storage" if storage
     sortable_element element,
       :url => { :action => :sort },
-      :containment => containment
+      :containment => containment,
+      :dropOnEmpty => true
   end
 
 
