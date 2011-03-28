@@ -88,7 +88,7 @@ class Widget < ActiveRecord::Base
   end
 
   def small?
-    self.name == "TagCloudWidget"
+    self.name == "TeaserWidget"
   end
 
   def width
