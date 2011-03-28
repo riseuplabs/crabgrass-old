@@ -21,10 +21,11 @@
 == Required Gems for Running Tests
 
 hpricot
+webrat (this also requires libxml2-dev and libxslt-dev)
 nokogiri
 launchy
 machinist
-faker
+faker <= 0.3.1
 ruby-debug
 leftright (optional but recommended, lerftright organizes and colorizes test output)
 
