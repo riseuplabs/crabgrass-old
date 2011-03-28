@@ -1,20 +1,15 @@
 class OpenlayersMap < ActiveRecord::Base
 
-  attr_accessor :kml, :width, :height, :mapcenterlong, :mapcenterlat, :zoomlevel
+  attr_accessor :kml, :width, :height, :mapcenterlong, :mapcenterlat, :zoomlevel, :override_stylesheet
 
   def initialize(kml, options={})
     @kml = kml
-    defaults = {
-      :width => 500,
-      :height => 355,
-      :mapcenterlong => -8,
-      :mapcenterlat => 8,
-      :zoomlevel => 2
-    }
-    defaults.merge!(options)
-    [:width, :height, :mapcenterlat, :mapcenterlong, :zoomlevel].each do |z|
-      self.instance_variable_set(z.to_s, defaults[z])
-    end
+    @width = options[:width] || 500
+    @height = options[:height] || 355
+    @mapcenterlat = options[:mapcenterlat] || -8
+    @mapcenterlong = options[:mapcenterlong] || 8
+    @zoomlevel = options[:zoomlevel] || 2
+    @override_stylesheet = options[:override_stylesheet] || nil
   end
 
 end
