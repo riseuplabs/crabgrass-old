@@ -5,12 +5,12 @@
       %h3.edit Main Section
       %ul#sort_list_main.section
         = render :partial => '/widgets/widget', :collection => @main_widgets
-      = sortable_list 'main'
       
       %ul#sort_list_main_storage.section
         %h3.edit Main Section Storage
         %a.new Add New
         = render :partial => '/widgets/widget', :collection => @main_storage_widgets
+      = sortable_list 'main'
       = sortable_list 'main', true
     
   .sidebar-edit
@@ -18,12 +18,12 @@
       %h3.edit Sidebar
       %ul#sort_list_sidebar.section
         = render :partial => '/widgets/widget', :collection => @sidebar_widgets
-      = sortable_list 'sidebar'
       
       %ul#sort_list_sidebar_storage.section
         %h3.edit Sidebar Storage
         %a.new Add New
         = render :partial => '/widgets/widget', :collection => @sidebar_storage_widgets
+      = sortable_list 'sidebar'
       = sortable_list 'sidebar', true
   
 
