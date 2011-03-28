@@ -95,7 +95,7 @@ class Widget < ActiveRecord::Base
   end
 
   def small?
-    self.name == "TeaserWidget"
+    type_options and type_options[:width] == 1
   end
 
   def width

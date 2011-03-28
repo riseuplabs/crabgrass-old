@@ -4,12 +4,12 @@ namespace :cg do
       next unless s.network && s.network.profiles.public
       profile_id = s.network.profiles.public.id
       lorem = 'Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum'
-      widgets_1 = [ # widgets in section one, in order 
+      widgets_1 = [ # widgets in section one, in order
         {:name => 'IntroWidget', :options => {:title => I18n.t(:welcome_title, :site_title =>s.name)}},
         {:name => 'MapWidget', :options => {:title => 'Projects in '+s.name, :kml => 'groups'}},
-        {:name => 'TeaserWidget', :options => {:title => 'Who is Who?', :text => lorem}},
+        {:name => 'TextBoxWidget', :options => {:title => 'Who is Who?', :text => lorem}},
         {:name => 'TagCloudWidget', :options => {:title => 'Most Used Tags'}},
-        {:name => 'TeaserWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},
+        {:name => 'ImageTitleWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},
         {:name => 'PageListWidget', :options => {}}
       ]
       widgets_2 = [
@@ -18,7 +18,7 @@ namespace :cg do
         {:name => 'MenuWidget', :options =>  {:title => 'Quickfinder'}},
         {:name => 'NetworkingWidget', :options => {:title => I18n.t(:most_active_members), :type => :users, :recent => false }},
         {:name => 'NetworkingWidget', :options => {:title => I18n.t(:most_active_groups), :type => :groups, :recent => false }},
-        {:name => 'TeaserWidget', :options => {:title => 'What is new?', :text => lorem }}
+        {:name => 'TextBoxWidget', :options => {:title => 'What is new?', :text => lorem }}
       ]
       widgets_1.each_with_index do |w, i|
         create_with_options(w.merge({:section => 1, :position => i+1, :profile_id => profile_id}))

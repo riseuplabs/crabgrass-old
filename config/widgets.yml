@@ -1,9 +1,17 @@
-TeaserWidget:
+TextBoxWidget:
   :columns:
     - 1
+    - 2
   :settings:
     - :title
     - :text
+  :width: 1
+ImageTitleWidget:
+  :columns:
+    - 2
+  :settings:
+    - :title
+    - :image
 MapWidget:
   :columns:
     - 1
@@ -71,5 +79,11 @@ MenuWidget:
   :settings:
     - :title
     - :menu_root_id
-
+TagCloudWidget:
+  :columns:
+    - 1
+    - 2
+  :settigns:
+    - :title
+  :width: 1
 
