@@ -1,5 +1,5 @@
 = stylesheet_link_tag('style', :plugin => 'openlayers')
 = javascript_include_tag("OpenLayers", :plugin => 'openlayers')
 = javascript_include_tag("OpenStreetMap", :plugin => 'openlayers')
-#map{:style => "width: #{width}px; height: #{height}px;"}
-= render :partial => 'locations/openlayers_js', :locals => {:kml => kml}
+#map{:style => "width: #{@map.width}px; height: #{@map.height}px;"}
+= render :partial => 'locations/openlayers_js'

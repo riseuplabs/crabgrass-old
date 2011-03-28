@@ -11,7 +11,7 @@
   };
   map = new OpenLayers.Map('map', options);
   map.addLayer(new OpenLayers.Layer.OSM());
-  var kml = new OpenLayers.Layer.GML("MRU", "<%= kml %>", 
+  var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
      {
       format: OpenLayers.Format.KML, 
       formatOptions: {
