@@ -1,0 +1,8 @@
+.col1
+  %h3.col-heading.orange20-bg.col-margin-top Quickfinder
+  .padding.orange05-bg.left
+    -widget.menu_items.roots.each do |root|
+      %h4.subheading=display_menu_item(root)
+      %ul.angle-quote
+        -root.children.each do |child|
+          %li=display_menu_item(child)

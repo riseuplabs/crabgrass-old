@@ -19,10 +19,15 @@ module Wiki::RenderingTest
        context "A saved Wiki" do
          setup do
            @wiki = Wiki.create! :body => "a"
+           @wiki_p = Wiki.create! :body => "a\n\na"
          end
 
          should "have saved the correct body_html" do
            assert_equal "<p>a</p>", Wiki.find(@wiki.id).read_attribute(:body_html)
+         end
+
+         should "have paragraph tags for paragraph breaks" do
+           assert_equal "<p>a</p>\n<p>a</p>", Wiki.find(@wiki_p.id).read_attribute(:body_html)
          end
 
          should "have saved the correct raw_structure" do

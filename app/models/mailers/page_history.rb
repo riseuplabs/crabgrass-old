@@ -12,7 +12,7 @@ module Mailers::PageHistory
     @page_history         = page_history
     @user                 = user
     @site                 = page_history.page.site
-    @subject              = "#{@site.title} : #{@page_history.page.title}"
+    @subject              = "#{site_title} : #{@page_history.page.title}"
     @body[:page_history]  = @page_history
     setup_watched_notification_email
   end
@@ -32,7 +32,7 @@ module Mailers::PageHistory
   def page_history_digest_notification(user, page, page_histories)
     @site                   = page.site
     @user                   = user
-    @subject                = "#{@site.title} : #{page.title}"
+    @subject                = "#{site_title} : #{page.title}"
     @body[:page]            = page
     @body[:page_histories]  = page_histories
     setup_watched_notification_email
@@ -41,7 +41,7 @@ module Mailers::PageHistory
   def page_history_digest_notification_paranoid(user, page, page_histories)
     @site                   = page.site
     @user                   = user
-    @subject                = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => @site.title)
+    @subject                = I18n.t(:page_history_mailer_a_page_has_been_modified, :site_title => site_title)
     @body[:page]            = page
     @body[:page_histories]  = page_histories
 
@@ -52,8 +52,12 @@ module Mailers::PageHistory
 
   protected
 
+  def site_title
+    !@site.nil? ? @site.title : 'Crabgrass'
+  end
+
   def from_address
-    @site.email_sender.gsub('$current_host', @site.domain)
+    !@site.nil? ? @site.email_sender.gsub('$current_host', @site.domain) : Conf.email_sender
   end
 
   def setup_watched_notification_email

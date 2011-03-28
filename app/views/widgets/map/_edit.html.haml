@@ -1,0 +1,23 @@
+- form_for @widget do |f|
+  %ul
+    %li
+      = f.label :title
+      = f.text_field :title
+    %li
+      = f.label 'Map Data'
+      %ul
+        %li= f.radio_button(:kml, 'groups', :checked => (@widget.kml == 'groups')) + ' Show all groups'
+        %li
+          = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'custom')) + ' Custom KML: '
+          = f.text_field :custom_kml
+    %li
+      = f.label 'Map Center'
+      %br Select a country and city, or enter a latitude and longitude:
+      = country_dropdown_for_search
+      = state_dropdown
+      = city_text_field
+      = city_id_field
+      = 'Latitude: ' + f.text_field(:map_center_latitude)
+      %br= 'Longitude: ' + f.text_field(:map_center_longitude)
+      = current_map_center(@widget)
+  = f.submit

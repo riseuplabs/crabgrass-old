@@ -1,7 +1,8 @@
+<%- domain = @site.try.domain ? @site.domain : Conf.domain %>
 <%= I18n.t(:page_history_mailer_hello_user_name, :user_name => @user.display_name) %>,
 
 <%= I18n.t(:page_history_the_page_you_are_watching_description, :page_title => @page.title) %>:
-<%= URI::encode("http://#{@site.domain}#{page_url(@page)}") %>
+<%= URI::encode("http://#{domain}#{page_url(@page)}") %>
 
 <% @page_histories.each do |page_history| %>
   <%= "* #{description_for(page_history)} at #{full_time(page_history.created_at)}" %>

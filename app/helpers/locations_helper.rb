@@ -16,9 +16,10 @@ module LocationsHelper
 
   def country_dropdown_for_search
     name = _field_name('country_id')
+    update_form_for = @widget ? 'widget' : 'directory'
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'show_admin_codes=1&country_code='+value",
+      :with => "'update_form_for=#{update_form_for}&show_admin_codes=1&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     )
@@ -83,22 +84,13 @@ module LocationsHelper
       'Local-'+entity.profile.geo_location.geo_country.name
     end
   end
-
-  def geo_data_for_kml(entity)
-    # currently groups are only supported. when users are added the profile
-    # would be entity.profile (groups location data is only stored in the public profile)
-    if entity.is_a?(Group)
-      profile = entity.profiles.public
-      description_template = 'locations/description_for_kml.html.haml'
+ 
+  def entities_for_kml_place(entities)
+    html = '<ul>'
+    entities.each do |ent|
+      html += '<li>'+ent.name+'</li>'
     end
-    return false unless profile and profile.city_id
-    return false unless place = GeoPlace.find(profile.city_id)
-    data = {} 
-    data[:name] = entity.try(:display_name) || entity.name
-    data[:description_template] = description_template 
-    data[:lat] = place.latitude
-    data[:long] = place.longitude
-    return data
+    html += '</ul>'
   end
 
   private

@@ -1,11 +1,12 @@
 //
 // site-home
-//
+
 #welcome-container
   +bordered
   width: 764px
   margin-bottom: 10px
-  background-color: #F6FBFE
+  background-color: #f6fbfe
+
 #welcome_box
   width: 764px
   div.description, h2
@@ -13,10 +14,11 @@
     padding: 10px 10px 0
   table
     margin: 10px 10px 0
+
 #welcome-links
   +clearfix
   margin: 2px 10px
-  color: #aaa
+  color: #aaaaaa
   li
     +inline-list
   a
@@ -25,12 +27,11 @@
 
 //
 // Custom menu items
-//
+
 ul.navbar
   +clearfix
   margin: 0 0 20px 0
   li.navbar_menu
-    //float: left
     margin: 0 10px 0 0
     span.navbar_item
       padding-left: 10px
@@ -39,10 +40,10 @@ ul.navbar
 
 //
 // welcome box
-//
+
 .inset_box
-  +bordered(!light_grey_border)
-  background: #eee url(/images/background/fade-light.png) repeat-x top
+  +bordered($light_grey_border)
+  background: #eeeeee url(/images/background/fade-light.png) repeat-x top
   width: 744px
   margin: 0 10px 10px
   td
@@ -53,15 +54,14 @@ ul.navbar
     float: none
   a
     +hover-link
-    color: #4978BC
+    color: #4978bc
     font-size: 14px
     font-weight: normal
     line-height: 1.3
 
-
 //
 // sidebar
-//
+
 ul.icon_boxes
   +zero
   list-style: none
@@ -87,12 +87,270 @@ ul.icon_boxes
       display: inline
     a
       display: block
+  li.medium
+    height: 48px
+    width: 48px
 
 .dash_box
   float: left
-  margin: 0 2em 1.5em 0
+  margin: 0 0 1.5em 0
   div.link_line
     line-height: 0.8em
   h5
     font-weight: normal
 
+//
+// unido mru site home and edit site structure
+// '-plus' on columns and wrappers signify the addition of the inner gutter to the right
+// so the '-plus' applies only to the left placed single columns (maximum of 2) or a left placed double column //(maximum of 1).
+
+
+
+.col1-plus
+  +col1
+  +gutter
+
+.col1
+  +col1
+
+.col2-plus
+  +col2
+  +gutter
+
+.col2
+  +col2
+
+.col3
+  +col3
+
+.wrapper1-plus
+  +col1
+  +wrapper
+  +gutter
+
+.wrapper1
+  +col1
+  +wrapper
+
+.wrapper2-plus
+  +col2
+  +wrapper
+  +gutter
+
+.wrapper2
+  +col2
+  +wrapper
+
+.wrapper3
+  +col3
+  +wrapper
+
+.header-text
+  color: $header
+
+.blue
+  color: $blue
+   
+.blue20-bg
+  background: $blue20
+
+.map-blue-bg
+  background: $map-blue
+  
+.celadon
+  color: $celadon
+
+.celadon-border-top
+  border-top: 2px solid $celadon
+  
+.celadon20-bg
+  background: $celadon20
+  
+.orange
+  color: $orange
+  
+.orange20-border-btm
+  border-bottom: 1px solid $orange20
+
+.orange20-bg
+  background: $orange20
+
+.orange05-bg
+  background: $orange05
+  
+.yellow
+  color: $yellow
+  
+.padding
+  padding: 6px 10px
+  width: 216px
+  
+h2.opening
+  color: $header
+  font-size: 20px
+  font-weight: normal
+  line-height: 1.75
+  letter-spacing: 0.03em
+
+h3.col-heading
+  color: $header
+  padding: 6px 0
+  text-align: center
+  float: left
+  width: 100%
+  
+.opinion-bg
+  background: $orange05 url(/images/unido/orange20-2px.png) repeat-x
+
+h2.opinion
+  color: $header
+  font-size: 21px
+  height: 75px
+  padding: 14px 0 0 150px
+  background: url(/images/unido/text-bubble.png) no-repeat 
+  
+h4.subheading
+  color: $header
+  font-size: 14px
+  padding: 4px 0
+  line-height: 1.3
+
+.col-margin-top
+  margin-top: 18px
+  
+.grouping
+  padding: 10px
+  clear: both
+  
+img.topleft
+  float: left
+  margin: 7px 12px 12px 0
+
+.col1 p, .col2 p
+  font-size: 13.5px
+  margin-bottom: 6px
+  line-height: 1.6
+
+ul.angle-quote
+  padding: 0 0 10px 0
+  li
+    padding-left: 16px
+    background: url(/images/png/16/dbl_angle_quote_rt.png) no-repeat 0 3px
+
+.networking
+  +bordered-top(2px, $celadon)
+  background: $celadon20 
+  
+.btn-widget
+  background: url(/images/unido/mru_button_236x32.png)
+  width: 236px
+  height: 32px
+  float: left
+  margin: 0 0 12px 0
+  a
+    width: 236px
+    color: $header
+    text-align: center
+    float: left
+    margin: 4px 0 0
+    font-size: 14px
+    text-decoration: none
+
+a.icon_1791048387
+  background: url(/images/png/16/plus.png) no-repeat 14px 5px
+
+a.icon_79514486
+  background: url(/images/png/16/wrench.png) no-repeat 14px 5px
+
+  
+//
+// ADMIN edit site structure
+
+.hoverActive
+  border: 1px dashed #000
+  
+.main-edit
+  +main-edit
+  +margin-edit
+  border-right: 1px solid $light_grey_border
+
+.sidebar-edit
+  +sidebar-edit
+  +margin-edit
+
+.wrapper-edit
+  +float-left
+  width: 538px
+  border: 1px solid $light_grey_border
+  margin-bottom: 32px
+
+.wrapper-edit h4
+  font-size: 14px
+  letter-spacing: 0.3px
+  
+h3.edit
+  margin-bottom: 12px
+  span
+    font-size: 12px
+    color: $text-light
+  
+li.widget
+  +float-left
+  +border-radius(8px) 
+  background: $orange05 50%
+  border: 2px solid $orange20
+  color: $orange 
+  width: 264px
+  height: 48px
+  margin-bottom: 18px
+  cursor: move
+  a
+    color: $orange 
+  .left
+    padding: 8px 0 6px 8px
+    height: 34px
+    width: 210px
+    border-right: 1px dotted $orange20
+
+li.widget span 
+  +float-right
+  margin-top: 13px
+  width: 30px 
+  
+li.widget a.small_icon
+  position: relative
+  background-position: 0 50%
+
+li.widget a.small_icon:hover
+  +opacity(0.5)
+  
+#sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
+  position: relative
+  
+#sort_list_main, #sort_list_sidebar
+  height: 430px
+  
+#sort_list_sidebar li.widget, #sort_list_sidebar_storage li.widget
+  width: 196px
+  .left
+    width: 142px
+
+#sort_list_sidebar_storage li.widget, #sort_list_main_storage li.widget
+  background: #f5f5f5 50%
+  
+#sort_list_main, #sort_list_main_storage
+  li.small
+    width: 126px
+    margin-right: 8px
+    .left
+      width: 80px
+
+#sort_list_main_storage h4, #sort_list_sidebar_storage h4
+  color: $text-light
+
+a.new
+  +float-right
+  +clearfix
+  margin-top: -12px
+  padding: 0 18px
+  background: url(/images/png/16/plus.png) no-repeat

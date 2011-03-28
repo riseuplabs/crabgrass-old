@@ -144,6 +144,26 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     assert_successful_post('add', 'should add the committe to the list of unsaved share items')
   end
 
+  def test_share_with_all_and_notify
+    enable_site_testing(:local)
+    login_as :blue
+    @page = groups(:rainbow).pages.find(:first)
+    xhr :post, :update_share_all, :add => true, :page_id => @page.id
+    assert_response :success
+
+#    xhr :post, :notify, {:page_id => @page.id, "notify"=>true, "notification"=>{"send_notice"=>"1", "send_message"=>"", "send_email"=>"0"}, "action"=>"notify", "recipients"=>{:participants => 1}, "controller"=>"base_page/share"}
+#
+#    @page.reload
+#    site_users = Site.current.network.users.collect{|u|u.name}.sort
+#    page_users = @page.user_participations.collect{|up|up.user.name}.sort
+#    # yellow is a member of rainbow who is set not to be pestered, so there should be a difference
+#    # until yellow is removed
+#    site_users.delete('yellow')
+#    assert_equal site_users, page_users
+#
+    disable_site_testing
+  end
+
   def test_add_access_to_user_with_existing_group_participation_that_affects_the_user
     # Scenarios with overlapping Group / UserParticipations
 

@@ -1,19 +1,29 @@
 //
 // flash messages
-//
+
+.login
+  #flash_messages
+    #flash-message
+      #message-container
+        padding-top: 6px
+
 #flash_messages
   +pie-clearfix
   overflow: visible
-  background= !global_nav_bg
   line-height: 0
+
 #flash-message
   +container
   clear: both
   #message-container
-    width: 800px
+    width: 764px
+    padding: 0 18px
+    background-color: $content_bg
+
 #flash-status-message
   width: 744px
-  margin: 6px 18px
+  margin: 0 auto
+
 .small_notice
   padding: 6px 10px
   .text
@@ -29,10 +39,12 @@
 
 .error
   border: 1px solid red
-  background: #fcc
+  background: #ffcccc
+
 .success
   border: 1px solid green
-  background: #cfc
+  background: #ccffcc
+
 .info
   padding: 0 0 0 5px
 
@@ -40,5 +52,4 @@
   #flash-status-message
     width: 440px
 
-/* @end */
-
+/* @end

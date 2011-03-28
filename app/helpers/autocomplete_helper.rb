@@ -51,21 +51,8 @@ module AutocompleteHelper
   end
 
   def autocomplete_locations_tag(field_id, options={})
-    if @profile and @profile.entity.is_a?(Group) 
-      remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
-    elsif @profile
-      remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
-    else
-      remote_url = {:controller => 'locations', :action => 'update_city_id'} 
-    end
     find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
-    add_action = {
-      :url => remote_url,
-      :with => %{'location_only=1&country_id='+getCountry()+'&city_id=' + data }
-      #:loading => spinner_icon_on('plus', add_button_id),
-      #:complete => spinner_icon_off('plus', add_button_id)
-    }
-    after_update_function = "function(value, data) {#{remote_function(add_action)}; }"# if @profile
+    after_update_function = "function(value, data) {#{locations_autocomplete_afterupdate(options)}; }"# if @profile
     autocomplete_entity_tag(field_id,
       options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
         :renderer => render_location_row_function,
@@ -74,6 +61,25 @@ module AutocompleteHelper
         :onselect => after_update_function,
         :nopreload => true )
     )
+  end
+
+  def locations_autocomplete_afterupdate(options)
+    if @profile and @profile.entity.is_a?(Group)
+      remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
+    elsif @profile
+      remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
+    elsif options[:update_form_for] == 'widget'
+      remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
+    else
+      remote_url = {:controller => 'locations', :action => 'update_city_id'}
+    end
+    add_action = {
+      :url => remote_url,
+      :with => %{'location_only=1&country_id='+getCountry()+'&city_id=' + data }
+      #:loading => spinner_icon_on('plus', add_button_id),
+      #:complete => spinner_icon_off('plus', add_button_id)
+    }
+    remote_function(add_action)
   end
 
   private
@@ -103,6 +109,5 @@ module AutocompleteHelper
   def extract_value_from_locations_row_function
     %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /<em>(.*)<\\/em><br\\/>(.*)/g; return value.replace(reEntity,'$1, $2');}else { reEntity = /<em>(.*)<\\/em>.*/g; return value.replace(reEntity, '$1');  }}]
   end
-
 
 end

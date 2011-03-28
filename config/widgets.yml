@@ -1,0 +1,57 @@
+TeaserWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+    - :text
+MapWidget:
+  :columns:
+    - 1
+    - 2
+  :settings:
+    - :title
+    - :kml
+    - :custom_kml
+    - :map_center_latitude
+    - :map_center_longitude
+IntroWidget:
+  :columns:
+    - 2
+  :settings:
+    - :title
+    - :text
+NetworkingWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+PageListWidget:
+  :columns:
+    - 2
+  :settings:
+    - :title
+ButtonWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+    - :link
+    - :icon
+  :available_icons:
+    - 'archive'
+    - 'attach'
+    - 'chat'
+    - 'color_wheel'
+    - 'date'
+    - 'group'
+    - 'heart'
+    - 'key'
+    - 'lightbulb'
+MenuWidget:
+  :columns:
+    - 1
+  :settings:
+    - :title
+    - :menu_root_id
+
+

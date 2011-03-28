@@ -1,0 +1,6 @@
+- form_for @widget do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.submit
+%h4 Menu Entries
+= list_menu_items @menu_items.roots

@@ -1,40 +1,79 @@
-<% i=0 %>
 external:
   title: external test
   link: "http://we.riseup.net"
   position: 1
-  group_id: 3002
+  profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 tags:
   title: tags test
   link: tags/pale
   position: 2
-  group_id: 3002
+  profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 page_outsite_group:
   title: Page test outsite group
   link: /blue/beauty-is-in-the-street+250
   position: 3
-  group_id: 3002
+  profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 page_for_group:
   title: Page test
   link: beauty-is-in-the-street+250
   position: 4
-  group_id: 3002
+  profile_id: 6
   default: false
-  id: <%= i=i+1 %>
 
 network:
   title: Committee test
   link: /fai
   position: 0
-  group_id: 3002
+  profile_id: 6
   default: false
-  id: <%= i=i+1 %>
+
+quickfinder_root1:
+  title: First Menu Item
+  link: /cnt
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+
+quickfinder_root2:
+  title: First Menu Item
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+
+quickfinder_sub1:
+  title: First SubMenu Item
+  link: /cnt
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+  parent: quickfinder_root1
+
+quickfinder_sub2:
+  title: First SubMenu Item
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+  parent: quickfinder_root2
+
+quickfinder_sub_no_link1:
+  title: SubMenu Item w/o link
+  profile_id: 5
+  default: false
+  widget: quickfinder_site1
+  parent: quickfinder_root1
+
+quickfinder_sub_no_link2:
+  title: SubMenu Item w/o link
+  link: /fai
+  profile_id: 6
+  default: false
+  widget: quickfinder_site2
+  parent: quickfinder_root2

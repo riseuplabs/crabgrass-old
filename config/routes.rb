@@ -8,6 +8,7 @@
 
 ActionController::Routing::Routes.draw do |map|
 
+
   # total hackety magic:
 #  map.filter 'crabgrass_routing_filter'
 
@@ -29,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
+    admin.resources :widgets, :only => [:index]
   end
 
   ##
@@ -84,6 +86,12 @@ ActionController::Routing::Routes.draw do |map|
         :mark => :put}
   end
 
+  map.resources :widgets do |widget|
+    widget.resources :menu_items,
+      :only => [:edit, :create, :update, :destroy],
+      :collection => {:sort => :put}
+  end
+
   ##
   ## PEOPLE
   ##
@@ -134,12 +142,13 @@ ActionController::Routing::Routes.draw do |map|
   ## GROUP
   ##
 
-  map.group_directory 'groups/directory/:action/:id.:format', :controller => 'groups/directory'
+  map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
   map.connect 'groups/directory/search.:format', :controller => 'groups/directory', :action => 'search'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
   map.resources :groups do |group|
     group.resources :pages, :only => :new
+    group.resources :menu_items
   end
 
   map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
