@@ -88,6 +88,7 @@ module WidgetsHelper
     options = {}
     options[:mapcenterlong] = widget.map_center_longitude
     options[:mapcenterlat] = widget.map_center_latitude
+    options[:override_stylesheet] = 'map.css'
     return options
   end
 

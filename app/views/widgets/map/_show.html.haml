@@ -1,3 +1,4 @@
 .col2
   %h3.map-blue-bg.col-heading=title
-  = display_map(map_widget_kml_location(@widget || widget), map_widget_options(widget))
+  - @map = OpenlayersMap.new(map_widget_kml_location(@widget || widget), map_widget_options(widget))
+  = display_map

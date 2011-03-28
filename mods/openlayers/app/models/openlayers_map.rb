@@ -8,7 +8,7 @@ class OpenlayersMap < ActiveRecord::Base
     @height = options[:height] || 355
     @mapcenterlat = options[:mapcenterlat] || -8
     @mapcenterlong = options[:mapcenterlong] || 8
-    @zoomlevel = options[:zoomlevel] || 2
+    @zoomlevel = options[:zoomlevel] || 2 
     @override_stylesheet = options[:override_stylesheet] || nil
   end
 
