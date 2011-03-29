@@ -1,0 +1,9 @@
+- form_for @widget do |f|
+  %ul
+    %li 
+      = f.label :title
+      = f.text_field :title
+    %li 
+      = f.label :display_title
+      = f.check_box :display_title
+  = f.submit

@@ -55,10 +55,10 @@ class MenuItemsControllerTest < ActionController::TestCase
     assert_equal "different title", qf.menu_items.root.reload.title
   end
 
-  def test_destroy
+  def test_destroy_with_children
     login_as :blue
     qf = widgets(:quickfinder_site2)
-    assert_difference('MenuItem.count', -1) do
+    assert_difference('MenuItem.count', -3) do
       delete :destroy,
         :widget_id => qf.id,
         :id => menu_items(:quickfinder_root2).id

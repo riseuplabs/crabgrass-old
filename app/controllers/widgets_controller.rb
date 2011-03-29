@@ -46,9 +46,10 @@ class WidgetsController < ApplicationController
     end
   end
 
+
   # DELETE /widgets/1
   def destroy
-    @widget = @profiel.widgets.find(params[:id])
+    @widget = @profile.widgets.find(params[:id])
     @widget.destroy
     redirect_to(admin_widgets_url)
   end

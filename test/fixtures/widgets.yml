@@ -19,7 +19,7 @@ map_<%= name %>:
   options: 
     :title: Projects in the Manu River Union
 whoiswho_<%= name %>:
-  name: TeaserWidget
+  name: TextBoxWidget
   profile_id: <%= profile_id %>
   position: 3
   section: 1
@@ -34,7 +34,7 @@ tag_cloud_<%= name %>:
   options:
     :title: Most Used Tags
 wide_teaser_<%= name %>:
-  name: TeaserWidget
+  name: ImageTitleWidget
   profile_id: <%= profile_id %>
   position: 5
   section: 1
@@ -89,7 +89,7 @@ active_groups_<%= name %>:
     :type: :groups
     :recent: false
 what_is_new_<%= name %>:
-  name: TeaserWidget
+  name: TextBoxWidget
   profile_id: <%= profile_id %>
   position: 6
   section: 2

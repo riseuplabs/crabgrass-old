@@ -255,13 +255,9 @@ ul.angle-quote
     margin: 4px 0 0
     font-size: 14px
     text-decoration: none
-
-//a.icon_1791048387
-//  background: url(/images/png/16/plus.png) no-repeat 14px 5px
-
-//a.icon_79514486
-//  background: url(/images/png/16/wrench.png) no-repeat 14px 5px
-
+    background-position: 14px 4px
+    background-repeat: no-repeat
+    
   
 //
 // ADMIN edit site structure
@@ -290,9 +286,6 @@ ul.angle-quote
   
 h3.edit
   margin-bottom: 12px
-  span
-    font-size: 12px
-    color: $text-light
   
 li.widget
   +float-left
@@ -325,19 +318,30 @@ li.widget a.small_icon:hover
   +opacity(0.5)
   
 #sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
+  +clearfix
   position: relative
   
 #sort_list_main, #sort_list_sidebar
-  height: 430px
+  margin-bottom: 10px
+  
+#sort_list_main_storage, #sort_list_sidebar_storage
+  h3.edit
+    color: #999
+    padding-bottom: 10px
+  li.widget
+    background: #f5f5f5
+    border: 2px solid $pale-grey
+    color: $text-light
+    a
+      color: $text-light
+    .left
+      border-right: 1px dotted $pale-grey
   
 #sort_list_sidebar li.widget, #sort_list_sidebar_storage li.widget
   width: 196px
   .left
     width: 142px
-
-#sort_list_sidebar_storage li.widget, #sort_list_main_storage li.widget
-  background: #f5f5f5 50%
-  
+ 
 #sort_list_main, #sort_list_main_storage
   li.small
     width: 126px
@@ -351,6 +355,6 @@ li.widget a.small_icon:hover
 a.new
   +float-right
   +clearfix
-  margin-top: -12px
+  margin-top: -22px
   padding: 0 18px
   background: url(/images/png/16/plus.png) no-repeat

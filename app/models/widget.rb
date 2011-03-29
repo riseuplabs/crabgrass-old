@@ -43,6 +43,13 @@ class Widget < ActiveRecord::Base
 
   has_many :menu_items do
 
+    # working around the fact that acts_as_tree does not know scopes
+    # we only want to have siblings within the same widget in case
+    # parent_id is nil.
+    def with_siblings(menu_item)
+      self.find_all_by_parent_id menu_item.parent_id
+    end
+
     # this also makes sure all menu items belong to the same
     # widget.
     def update_order(menu_item_ids)
@@ -53,6 +60,7 @@ class Widget < ActiveRecord::Base
       end
       self
     end
+
   end
 
   # we need this for method missing - so let's make sure
@@ -95,7 +103,7 @@ class Widget < ActiveRecord::Base
   end
 
   def small?
-    self.name == "TeaserWidget"
+    type_options and type_options[:width] == 1
   end
 
   def width
