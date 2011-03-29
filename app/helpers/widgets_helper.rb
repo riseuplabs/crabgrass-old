@@ -19,7 +19,7 @@ module WidgetsHelper
     #  :method => :get
     link_to_modal '',
       :url => edit_widget_url(widget),
-      :title => widget.title,
+      :title => escape_javascript(widget.title),
       :icon => 'pencil'
   end
 
