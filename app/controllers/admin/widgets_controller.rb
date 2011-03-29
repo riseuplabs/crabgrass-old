@@ -15,7 +15,7 @@ class Admin::WidgetsController < Admin::BaseController
 
   def sort
     section, ids = params.detect{|k,v| /^sort_list_/.match(k)}
-    @profile.widgets.sort_section(section, ids)
+    @profile.widgets.sort_section(section, ids) if section && ids
   end
 
   protected
