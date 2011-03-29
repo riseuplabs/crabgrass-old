@@ -30,6 +30,12 @@ module WidgetsHelper
     link_to_modal(widget.short_title, {:url => widget_url(widget), :title => widget.title})
   end
 
+  def destroy_widget_link(widget)
+    link_to I18n.t(:destroy), widget_path(widget),
+      :confirm => "Are you sure you want to delete this widget?",
+      :method => 'delete'
+  end
+
   def sortable_list(section, storage = false)
     element = "sort_list_#{section}"
     containment = [element, "#{element}_storage"]
@@ -47,7 +53,7 @@ module WidgetsHelper
 
   def get_active_entities(widget)
     type = widget.options[:type] || :users
-    recent = widget.options[:recent] || false
+    recent = widget.options[:recent] == '1'
     case type
     when :groups
       if recent

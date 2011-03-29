@@ -1,0 +1,11 @@
+- form_for @widget do |f|
+  %ul
+    %li
+      = f.label :title
+      = f.text_field :title
+    %li
+      = f.label :type
+      = f.text_field :type
+    %li
+      = f.label :recent
+      = f.check_box :recent

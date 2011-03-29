@@ -34,6 +34,8 @@ NetworkingWidget:
     - 1
   :settings:
     - :title
+    - :type
+    - :recent
 PageListWidget:
   :columns:
     - 2
