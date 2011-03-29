@@ -92,5 +92,6 @@ TagCloudWidget:
     - 2
   :settings:
     - :title
+    - :limit
   :width: 1
 
