@@ -39,6 +39,12 @@ PageListWidget:
     - 2
   :settings:
     - :title
+    - :display_title
+    - :featured
+    - :recent_pages
+    - :most_viewed
+    - :most_active
+    - :most_stars
 ButtonWidget:
   :columns:
     - 1
