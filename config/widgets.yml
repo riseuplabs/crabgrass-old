@@ -28,6 +28,7 @@ IntroWidget:
   :settings:
     - :title
     - :text
+    - :display_title
 NetworkingWidget:
   :columns:
     - 1
