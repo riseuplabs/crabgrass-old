@@ -14,6 +14,7 @@ MapWidget:
     - :custom_kml
     - :map_center_latitude
     - :map_center_longitude
+    - :zoomlevel
 IntroWidget:
   :columns:
     - 2

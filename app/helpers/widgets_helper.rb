@@ -101,6 +101,17 @@ module WidgetsHelper
     return content_tag('div', 'Current map center: '+h(place.name)+', '+h(admin_code_name)+' '+h(place.geo_country.code))
   end
 
+  def select_field_for_map_zoomlevel(widget)
+    options = {
+      'Global' => 1,
+      'Continent' => 2,
+      'Region' => 3,
+      'Local' => 4
+    }
+    zoomlevel = widget.zoomlevel || 1
+    select_tag('widget[zoomlevel]', options_for_select(options, zoomlevel))
+  end
+
   # button icon helpers
   def available_button_icons(widget)
     name = widget.name

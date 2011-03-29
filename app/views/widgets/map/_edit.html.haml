@@ -20,4 +20,7 @@
       = 'Latitude: ' + f.text_field(:map_center_latitude)
       %br= 'Longitude: ' + f.text_field(:map_center_longitude)
       = current_map_center(@widget)
+    %li
+      = f.label 'Zoom Level'
+      = select_field_for_map_zoomlevel(@widget)
   = f.submit
