@@ -1,7 +1,8 @@
 - tags  = Tag.for_group(:group => @group, :current_user => (current_user if logged_in?))
+- limit = widget.limit || 20
 .right
   .col1
     %h4.orange20-border-btm.subheading=title
     %ul#tag-cloud
-      - tag_cloud tags, %w(tag1 tag2 tag3 tag4), widget.limit do |tag, css_class|
+      - tag_cloud tags, %w(tag1 tag2 tag3 tag4), limit.to_i do |tag, css_class|
         %li= link_to_group_tag tag, :class => css_class
