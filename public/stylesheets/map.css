@@ -1,4 +1,13 @@
 // this is just filler. hopefully it doesn't do anything ;-)
+
 .map {
   display: none;
+}
+
+.olControlAttribution {
+    font-size: smaller; 
+    right: 3px; 
+    bottom: 1em; 
+    position: absolute; 
+    display: block;
 }
