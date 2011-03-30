@@ -1,0 +1,13 @@
+- form_for @widget do |f|
+  %ul
+    %li 
+      = f.label :title
+      = f.text_field :title
+    %li 
+      = f.label :display_title
+      = f.check_box :display_title
+    - [:featured, :recent_pages, :most_viewed, :most_active, :most_stars].each do |panel|
+      %li 
+        = f.label panel
+        = f.check_box panel
+  = f.submit

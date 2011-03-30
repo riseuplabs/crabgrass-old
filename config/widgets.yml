@@ -35,11 +35,19 @@ NetworkingWidget:
     - 1
   :settings:
     - :title
+    - :type
+    - :recent
 PageListWidget:
   :columns:
     - 2
   :settings:
     - :title
+    - :display_title
+    - :featured
+    - :recent_pages
+    - :most_viewed
+    - :most_active
+    - :most_stars
 ButtonWidget:
   :columns:
     - 1
@@ -87,5 +95,6 @@ TagCloudWidget:
     - 2
   :settings:
     - :title
+    - :limit
   :width: 1
 

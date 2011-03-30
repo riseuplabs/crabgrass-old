@@ -1,2 +1,25 @@
+- if Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
+  - page_panels = ['featured', 'recent_pages', 'most_viewed', 'most_active', 'most_stars']
+- else
+  - page_panels = ['recent_pages', 'most_viewed', 'most_active', 'most_stars']
+- page_panels = page_panels.select{|p| widget.options[p.to_sym] != '0'}
 .col2
-  Page List goes here...
+  - if widget.display_title
+    %h3#underlined= widget.title || I18n.t(:pages)
+  %br/
+  
+  - default_hash = page_panels.first
+  - content_for :script do
+    ="onHashChanged = showTabByHash;"
+    ="defaultHash = defaultHash || '#{default_hash}';"
+  
+  = Formy.tabs do |f|
+    - page_panels.each_with_index do |panel, index|
+      - f.tab do |t|
+        - t.label I18n.t(panel.to_sym)
+        - t.show_tab panel + '_panel'
+        - t.default (index == 0)
+  
+  .page_scroll.rigid
+    - page_panels.each do |panel|
+      = render :partial => 'panel', :locals => {:panel => panel}
