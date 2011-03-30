@@ -91,10 +91,17 @@ module WidgetsHelper
 
   def map_widget_options(widget)
     return {} unless widget.map_center_latitude and widget.map_center_longitude
+    zoomlevels = {
+      'Global' => 2,
+      'Continent' => 3,
+      'Country Region' => 4,
+      'Local Region' => 5,
+      'Local' => 6 }
     options = {}
     options[:mapcenterlong] = widget.map_center_longitude
     options[:mapcenterlat] = widget.map_center_latitude
     options[:override_stylesheet] = 'map.css'
+    options[:zoomlevel] = zoomlevels[widget.zoomlevel || 'Global']
     return options
   end
 
@@ -108,13 +115,8 @@ module WidgetsHelper
   end
 
   def select_field_for_map_zoomlevel(widget)
-    options = {
-      'Global' => 1,
-      'Continent' => 2,
-      'Region' => 3,
-      'Local' => 4
-    }
-    zoomlevel = widget.zoomlevel || 1
+    options = ['Global', 'Continent', 'Country Region', 'Local Region', 'Local'] 
+    zoomlevel = widget.zoomlevel || 'Global' 
     select_tag('widget[zoomlevel]', options_for_select(options, zoomlevel))
   end
 
