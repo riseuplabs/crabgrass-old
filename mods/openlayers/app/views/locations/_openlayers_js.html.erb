@@ -44,7 +44,7 @@
     popup = new OpenLayers.Popup.AnchoredBubble("featurePopup",
       feature.geometry.getBounds().getCenterLonLat(),
       new OpenLayers.Size(200,200),
-      feature.attributes.name + feature.attributes.description,
+      feature.attributes.description,
       null, true, onPopupClose);
     feature.popup = popup;
     popup.feature = feature;
