@@ -14,7 +14,7 @@ module MapHelper
   end
 
   def link_to_kml_entity(ent)
-    link_content = avatar_for(ent, 'xsmall') + content_tag('span', ent.display_name, :class => 'name')
+    link_content = link_to_group(ent, :avatar => 'xsmall')
   end
 
   def header_for_place(place)
