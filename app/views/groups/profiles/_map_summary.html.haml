@@ -1,4 +1,7 @@
 %div{:id => 'popup_entity_'+@group.id.to_s}
   %h3= avatar_for(@group, 'small') + ' ' + @group.display_name
   = @group.profiles.public.summary_html
-  %div= render :partial => '/groups/profiles/map_summary_footer'
+  #map_summary_footer
+    - if !local_assigns[:no_back_link]
+      = render :partial => '/groups/profiles/map_summary_footer'
+    %span{:style => 'float: right;'}= link_to 'Visit project page', group_path(@group)

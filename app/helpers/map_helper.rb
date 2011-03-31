@@ -1,28 +1,19 @@
 module MapHelper
 
   def description_for_kml_place(place)
-    content_tag('div', header_for_place(place) + entities_for_kml_place(place), :id => 'popup_entities_list')
+    if place[:collection].count > 1
+      render :partial => '/map/kml_entities_list.html.haml', :locals => {:place => place}
+    else
+      @group = place[:collection][0]
+      render :partial => '/groups/profiles/map_summary.html.haml', :locals => {:no_back_link => 1}
+    end
   end
  
-  def entities_for_kml_place(place)
-    html = ''
-    html += '<ul>'
-    place[:collection].each do |ent|
-      html += '<li>' + link_to_kml_entity(ent) + '</li>'
-    end
-    html += '</ul>'
-  end
-
   def link_to_kml_entity(ent)
     link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
     link_to_remote(link_content, 
       :url => '/groups/show',
       :with => "'id=#{ent.name}&map_summary=1'")
-  end
-
-  def header_for_place(place)
-    h3 = content_tag('h3', "#{place[:name]} (#{place[:collection].count})", :style => 'display: inline;')
-    content_tag('span', h3, :class => 'small_icon world_16')
   end
 
   def sort_entities_by_place(entities)
