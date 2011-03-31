@@ -1,0 +1,4 @@
+%div{:id => 'popup_entity_'+@group.id.to_s}
+  %h3= avatar_for(@group, 'small') + ' ' + @group.display_name
+  = @group.profiles.public.summary_html
+  %div= render :partial => '/groups/profiles/map_summary_footer'

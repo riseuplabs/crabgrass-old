@@ -1,7 +1,7 @@
 module MapHelper
 
   def description_for_kml_place(place)
-    content_tag('div', header_for_place(place) + entities_for_kml_place(place), :id => 'map_popup_description')
+    content_tag('div', header_for_place(place) + entities_for_kml_place(place), :id => 'popup_entities_list')
   end
  
   def entities_for_kml_place(place)
@@ -15,6 +15,9 @@ module MapHelper
 
   def link_to_kml_entity(ent)
     link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
+    link_to_remote(link_content, 
+      :url => '/groups/show',
+      :with => "'id=#{ent.name}&map_summary=1'")
   end
 
   def header_for_place(place)

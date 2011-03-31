@@ -36,12 +36,16 @@ class GroupsController < Groups::BaseController
   end
 
   def show
-    group_landing_instance_vars()
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
-    #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
-    @wiki = private_or_public_wiki()
-    #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
-    render :layout => 'header_for_sidebar'
+    if request.xhr? and params[:map_summary]
+      show_map_summary
+    else
+      group_landing_instance_vars()
+      @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
+      #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
+      @wiki = private_or_public_wiki()
+      #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+      render :layout => 'header_for_sidebar'
+    end
   end
 
   def people
@@ -189,6 +193,14 @@ class GroupsController < Groups::BaseController
     @second_nav = 'administration'
     @third_nav = 'settings'
   end
+
+  def show_map_summary
+    render :update do |page|
+      page.insert_html(:after, 'popup_entities_list', :partial => '/groups/profiles/map_summary')
+      page.hide 'popup_entities_list'
+    end
+  end
+
 
   #def provide_rss
   #  handle_rss :title => @group.name, :description => @group.summary,
