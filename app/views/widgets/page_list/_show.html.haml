@@ -6,8 +6,7 @@
 .col2
   - if widget.display_title
     %h3#underlined= widget.title || I18n.t(:pages)
-  %br/
-  
+ 
   - default_hash = page_panels.first
   - content_for :script do
     ="onHashChanged = showTabByHash;"
