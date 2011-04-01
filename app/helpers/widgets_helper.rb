@@ -36,6 +36,21 @@ module WidgetsHelper
       :method => 'delete'
   end
 
+  def new_widget_link(section_id)
+    link_to_modal I18n.t(:create_button),
+      { :url => widgets_url,
+      :method => 'post',
+      :params => {:section => section_id} },
+      { :class => 'new' }
+  end
+
+  def submit_widget_link(widget = @widget)
+    link_to_modal I18n.t(:create_button),
+      :url => widgets_url,
+      :method => 'post',
+      :form_id => 'new_widget'
+  end
+
   def sortable_list(section, storage = false)
     element = "sort_list_#{section}"
     containment = [element, "#{element}_storage"]
@@ -115,8 +130,8 @@ module WidgetsHelper
   end
 
   def select_field_for_map_zoomlevel(widget)
-    options = ['Global', 'Continent', 'Country Region', 'Local Region', 'Local'] 
-    zoomlevel = widget.zoomlevel || 'Global' 
+    options = ['Global', 'Continent', 'Country Region', 'Local Region', 'Local']
+    zoomlevel = widget.zoomlevel || 'Global'
     select_tag('widget[zoomlevel]', options_for_select(options, zoomlevel))
   end
 
