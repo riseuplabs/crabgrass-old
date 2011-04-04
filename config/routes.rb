@@ -86,7 +86,7 @@ ActionController::Routing::Routes.draw do |map|
         :mark => :put}
   end
 
-  map.resources :widgets do |widget|
+  map.resources :widgets, :new =>  {:sidebar => :get} do |widget|
     widget.resources :menu_items,
       :only => [:edit, :create, :update, :destroy],
       :collection => {:sort => :put}

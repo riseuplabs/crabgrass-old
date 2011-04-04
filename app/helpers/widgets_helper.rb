@@ -34,19 +34,21 @@ module WidgetsHelper
       :method => 'delete'
   end
 
-  def new_widget_link(section_id)
-    link_to_modal I18n.t(:create_button),
-      { :url => widgets_url,
-      :method => 'post',
-      :params => {:section => section_id} },
+  def new_widget_link(section = nil)
+    url = (section == :sidebar) ? sidebar_new_widget_url : new_widget_url
+    link_to_modal I18n.t(:add_button),
+      { :url => url },
       { :class => 'new' }
   end
 
-  def submit_widget_link(widget = @widget)
-    link_to_modal I18n.t(:create_button),
+  def create_widget_link(section, name)
+    link_params = {:section => "'#{section}'",
+      :name => "'#{name}'",
+      :authenticity_token => "'#{form_authenticity_token}'"}
+    link_to_modal name,
       :url => widgets_url,
-      :method => 'post',
-      :form_id => 'new_widget'
+      :params => link_params,
+      :method => 'post'
   end
 
   def sortable_list(section, storage = false)
@@ -85,10 +87,10 @@ module WidgetsHelper
 
   def view_all_url(type)
     case type
-    when :groups
-      group_directory_path(:action => :search)
     when :users
       people_directory_path(:browse)
+    else
+      group_directory_path(:action => :search)
     end
   end
 

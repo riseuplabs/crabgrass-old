@@ -5,6 +5,7 @@ module WidgetsPermission
   end
 
   alias_method :may_new_widget?, :may_show_widget?
+  alias_method :may_sidebar_widget?, :may_new_widget?
   alias_method :may_create_widget?, :may_show_widget?
   alias_method :may_update_widget?, :may_show_widget?
   alias_method :may_sort_widget?, :may_show_widget?
