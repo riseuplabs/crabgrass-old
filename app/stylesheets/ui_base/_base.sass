@@ -229,8 +229,16 @@ h6
   width: 500px
   article
     width: 500px
-    .pages-info p
-      width: 350px
+    .pages-info
+      width: 76%
+      h4
+        min-width: 240px
+        &.cover
+          width: 240px
+      p
+        width: 350px
+        &.cover
+          width: 240px
 
 h3#underlined
   +bordered-btm($medium_grey_border)
