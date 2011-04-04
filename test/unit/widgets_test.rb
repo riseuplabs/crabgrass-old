@@ -46,10 +46,11 @@ class WidgetsTest < ActiveSupport::TestCase
     Widget.register "SingleOnly", :columns => [1]
     Widget.register "DoubleOnly", :columns => [2]
     Widget.register "Both", :columns => [1,2]
-    assert_equal ["Both", "SingleOnly"],
-      Widget.for_width(1).keys
-    assert_equal ["Both", "DoubleOnly"],
-      Widget.for_width(2).keys
+    all = ["Both", "SingleOnly", "DoubleOnly"]
+    single = ["Both", "SingleOnly"]
+    double = ["Both", "DoubleOnly"]
+    assert_equal single, (Widget.for_columns(1).keys & all).sort
+    assert_equal double, (Widget.for_columns(2).keys & all).sort
   end
 
   def test_options_default_to_empty_hash

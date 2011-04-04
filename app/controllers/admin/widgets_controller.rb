@@ -4,6 +4,7 @@ class Admin::WidgetsController < Admin::BaseController
   permissions 'widgets'
   before_filter :fetch_profile
   javascript :extra
+  stylesheet 'widgets'
 
   # GET /admin/widgets
   def index

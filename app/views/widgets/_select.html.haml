@@ -1,0 +1,3 @@
+%ul.create_widget
+  - @widget_names.each do |name|
+    %li.hover= create_widget_link(@widget.section, name)

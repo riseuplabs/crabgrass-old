@@ -13,7 +13,15 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/new
   def new
-    @widget = @profile.widgets.build
+    @widget_names = Widget.for_columns(2).keys
+    @widget = @profile.widgets.build(:section => 3)
+  end
+
+  # GET /widgets/new/sidebar
+  def sidebar
+    @widget_names = Widget.for_columns(1).keys
+    @widget = @profile.widgets.build(:section => 4)
+    render :action => :new
   end
 
   # GET /widgets/1/edit
@@ -24,12 +32,7 @@ class WidgetsController < ApplicationController
 
   # POST /widgets
   def create
-    options = {
-      :name => params[:widget].delete(:name),
-      :section => params[:widget].delete(:section),
-      :options => params[:widget].to_options
-    }
-    @widget = @profile.widgets.build(options)
+    @widget = @profile.widgets.build(Widget.build_params(params))
     if @widget.save
       flash[:notice] = 'Widget was successfully created.'
       redirect_to(admin_widgets_url)
