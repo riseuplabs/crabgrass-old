@@ -37,6 +37,12 @@ class Widget < ActiveRecord::Base
     SECTIONS.index(section) + 1
   end
 
+  def self.for_columns(width)
+    self.widgets.reject do |name, options|
+      !options[:columns].include?(width)
+    end
+  end
+
   def self.build_params(hash = {})
     { :name => hash[:name] || hash[:widget].delete(:name),
       :section => hash[:section] || hash[:widget].delete(:section),
