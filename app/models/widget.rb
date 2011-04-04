@@ -4,16 +4,11 @@ class Widget < ActiveRecord::Base
   # Class methods for Widget registry
   #
 
-  def self.widgets
-    if @widgets.nil?
-      self.initialize_registry('widgets.yml')
-    end
-    @widgets ||= {}
-  end
+  cattr_accessor :widgets
 
   def self.initialize_registry(filename)
     seed_filename = [RAILS_ROOT, 'config', filename].join('/')
-    @widgets = YAML.load_file(seed_filename) || {}
+    self.widgets = YAML.load_file(seed_filename) || {}
   end
 
   def self.register(name, options)
@@ -27,7 +22,7 @@ class Widget < ActiveRecord::Base
       :columns => []
     }
     options.reverse_merge! sane_defaults
-    widgets[name] = options
+    self.widgets[name] = options
   end
 
   SECTIONS = ['main', 'sidebar', 'main_storage', 'sidebar_storage']
