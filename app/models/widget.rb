@@ -37,6 +37,14 @@ class Widget < ActiveRecord::Base
     SECTIONS.index(section) + 1
   end
 
+  def self.build_params(hash = {})
+    { :name => hash[:name] || hash[:widget].delete(:name),
+      :section => hash[:section] || hash[:widget].delete(:section),
+      :options => hash[:widget].try.to_options
+    }
+  end
+
+
   belongs_to :profile
 
   serialize :options, Hash
