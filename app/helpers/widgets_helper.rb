@@ -85,10 +85,10 @@ module WidgetsHelper
 
   def view_all_url(type)
     case type
-    when :groups
-      group_directory_path(:action => :search)
     when :users
       people_directory_path(:browse)
+    else
+      group_directory_path(:action => :search)
     end
   end
 
