@@ -13,13 +13,13 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/new
   def new
-    @widget_names = %w/TextBoxWidget MapWidget TagCloudWidget/ #Widget.names_for_section(1)
+    @widget_names = Widget.for_columns(2).keys
     @widget = @profile.widgets.build(:section => 3)
   end
 
   # GET /widgets/new/sidebar
   def sidebar
-    @widget_names = %w/ButtonWidget NetworkingWidget MenuWidget/ #Widget.names_for_section(1)
+    @widget_names = Widget.for_columns(1).keys
     @widget = @profile.widgets.build(:section => 4)
     render :action => :new
   end

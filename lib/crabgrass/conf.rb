@@ -78,6 +78,9 @@ class Conf
   cattr_accessor :always_renegerate_themed_stylesheet
   cattr_accessor :enabled_site_ids
 
+  # set from the widget.yml
+  cattr_accessor :widgets
+
   # used for error reporting
   cattr_accessor :configuration_filename
 
