@@ -43,22 +43,29 @@ $z_modalbox: 200
 #MB_frame
   position: relative
   background-color: $popup_bg
+  margin-top: 40px
 
 // this is disable for crabgrass.
 //  :height 100%
 
 #MB_header
   margin: 0
-  height: 2.1em
-  padding: 0.4em
-  background: #999999 none repeat scroll 0 0
+  min-height: 14px
+  padding: 5px 10px
+  background: $orange none repeat scroll 0 0
   border-bottom: 1px solid #777777
-  margin: 0
 
 #MB_content
   overflow: hidden
   padding: 1em
   border-top: 1px solid #cccccc
+  ul
+    +float-left
+    padding: 0 0 16px
+    li label
+      font-weight: bold
+      display: block
+      
 
 #MB_caption
   font: bold 85% "Lucida Grande", Arial, sans-serif
@@ -71,12 +78,10 @@ $z_modalbox: 200
   display: block
   position: absolute
   right: 5px
-  top: 4px
-  padding: 2px 3px
-  font-weight: bold
+  top: -2px
   text-decoration: none
-  font-size: 26px
-  color: #666666
+  font-size: 15px
+  color: $white
 
 #MB_close:hover
   background: transparent
