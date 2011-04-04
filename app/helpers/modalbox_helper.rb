@@ -110,6 +110,10 @@ module ModalboxHelper
          hash[name] = "function(request){#{value}}"
        elsif value === true or value === false
          hash[key] = value
+       elsif key == :form_id
+         hash[:params] = "Form.serialize('#{escape_javascript(value)}')"
+       elsif key == :params and value.is_a? Hash
+         hash[:params] = options_for_javascript(value)
        else
          hash[key] = array_or_string_for_javascript(value)
        end

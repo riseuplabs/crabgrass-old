@@ -1,7 +1,7 @@
 - entities = get_active_entities(widget).find(:all, :limit => 8)
 - header = widget.title
 - size = 'medium'
-- after = link_to I18n.t(:view_all), view_all_url(type)
+- after = link_to I18n.t(:view_all), view_all_url(widget.type)
 - show_empty = false if show_empty.nil?
 - if entities.size > 23
 -   entities = entities.sort{|a,b| rand(3)-1}[0..22]

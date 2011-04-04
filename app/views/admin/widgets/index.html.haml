@@ -8,7 +8,7 @@
       
       %ul#sort_list_main_storage.section
         %h3.edit Main Section Storage
-        %a.new Add New
+        = new_widget_link 3
         = render :partial => '/widgets/widget', :collection => @main_storage_widgets
       = sortable_list 'main'
       = sortable_list 'main', true
@@ -21,7 +21,7 @@
       
       %ul#sort_list_sidebar_storage.section
         %h3.edit Sidebar Storage
-        %a.new Add New
+        = new_widget_link 4
         = render :partial => '/widgets/widget', :collection => @sidebar_storage_widgets
       = sortable_list 'sidebar'
       = sortable_list 'sidebar', true

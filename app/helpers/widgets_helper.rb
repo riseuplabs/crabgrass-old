@@ -2,13 +2,11 @@ module WidgetsHelper
 
   def render_widget(widget)
     locals = {:widget => widget}
-    locals.merge! widget.options if widget.options
     render :partial => widget.partial, :locals => locals
   end
 
   def edit_widget(widget)
     locals = {:widget => widget}
-    locals.merge! widget.options if widget.options
     render :partial => widget.edit_partial, :locals => locals
   end
 
@@ -34,6 +32,21 @@ module WidgetsHelper
     link_to I18n.t(:destroy), widget_path(widget),
       :confirm => "Are you sure you want to delete this widget?",
       :method => 'delete'
+  end
+
+  def new_widget_link(section_id)
+    link_to_modal I18n.t(:create_button),
+      { :url => widgets_url,
+      :method => 'post',
+      :params => {:section => section_id} },
+      { :class => 'new' }
+  end
+
+  def submit_widget_link(widget = @widget)
+    link_to_modal I18n.t(:create_button),
+      :url => widgets_url,
+      :method => 'post',
+      :form_id => 'new_widget'
   end
 
   def sortable_list(section, storage = false)
@@ -115,8 +128,8 @@ module WidgetsHelper
   end
 
   def select_field_for_map_zoomlevel(widget)
-    options = ['Global', 'Continent', 'Country Region', 'Local Region', 'Local'] 
-    zoomlevel = widget.zoomlevel || 'Global' 
+    options = ['Global', 'Continent', 'Country Region', 'Local Region', 'Local']
+    zoomlevel = widget.zoomlevel || 'Global'
     select_tag('widget[zoomlevel]', options_for_select(options, zoomlevel))
   end
 

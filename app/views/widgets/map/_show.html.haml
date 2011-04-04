@@ -1,4 +1,4 @@
 .col2
-  %h3.map-blue-bg.col-heading=title
+  %h3.map-blue-bg.col-heading=widget.title
   - @map = OpenlayersMap.new(map_widget_kml_location(@widget || widget), map_widget_options(widget))
   = render :partial => @map.map_partial

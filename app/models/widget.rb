@@ -63,6 +63,7 @@ class Widget < ActiveRecord::Base
 
   end
 
+
   # we need this for method missing - so let's make sure
   # it can get called.
   def name
@@ -77,9 +78,13 @@ class Widget < ActiveRecord::Base
     name and Widget.widgets[name]
   end
 
-  def validate
+  validate :name_and_options_match
+  validate :title_set
+
+  def name_and_options_match
     if type_options.nil?
       errors.add_to_base "Invalid name #{name} for a Widget."
+      self.name = nil
       return
     end
     invalid_keys = self.options.find do |k,v|
@@ -87,6 +92,12 @@ class Widget < ActiveRecord::Base
     end
     if invalid_keys.any?
       errors.add_to_base "Invalid keys #{invalid_keys.join","} for #{name}."
+    end
+  end
+
+  def title_set
+    if options[:title].blank?
+      errors.add_to_base "Please specify a title."
     end
   end
 

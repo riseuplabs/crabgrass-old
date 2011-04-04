@@ -1,0 +1,7 @@
+- if @widget.section && @widget.name
+  - content_for :widget_fields do
+    = hidden_field :widget, :name
+    = hidden_field :widget, :section
+  = edit_widget @widget
+- else
+  = render :partial => 'select'
