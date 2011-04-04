@@ -642,14 +642,14 @@ editing tools on a group basis has been abandoned iirc, azul
 
   def test_index_kml
     # non-logged in user should see  rainbow but not private_group
-    get :index, :format => :kml
+    get :index, :format => 'kml'
     assert_response :success
     assert @response.body =~ /rainbow/
     assert @response.body !~ /private/
 
     # blue should see some  kml data for rainbow
     login_as :blue
-    get :index, :format => :kml
+    get :index, :format => 'kml'
     assert_response :success
     assert @response.body =~ /Placemark/
     assert @response.body =~ /rainbow/
