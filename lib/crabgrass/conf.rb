@@ -126,6 +126,7 @@ class Conf
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
+    self.widgets           = {}
   end
 
   def self.load(filename)
