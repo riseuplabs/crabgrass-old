@@ -1,8 +1,5 @@
 class MenuItem < ActiveRecord::Base
 
-  # this is deprecated and will be removed soon.
-  belongs_to :profile
-
   before_create :set_position
   acts_as_tree :order => :position
 
