@@ -98,7 +98,8 @@ module WidgetsHelper
   def map_widget_kml_location(widget)
     case widget.kml
     when 'groups'
-      formatted_groups_url(:sort_by => 'latlong', :format => :kml)
+      '/geo_locations.kml'
+      #formatted_groups_url(:sort_by => 'latlong', :format => :kml)
     when 'custom'
       widget.custom_kml
     end
@@ -138,7 +139,7 @@ module WidgetsHelper
   # button icon helpers
   def available_button_icons(widget)
     name = widget.name
-    Widget.widgets[name][:available_icons]
+    Conf.widgets[name][:available_icons]
   end
 
 end
