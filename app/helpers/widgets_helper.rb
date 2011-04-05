@@ -98,7 +98,7 @@ module WidgetsHelper
   def map_widget_kml_location(widget)
     case widget.kml
     when 'groups'
-      group_directory_url(:action => :search, :sort_by => 'latlong', :format => :kml)
+      formatted_groups_url(:sort_by => 'latlong', :format => :kml)
     when 'custom'
       widget.custom_kml
     end
