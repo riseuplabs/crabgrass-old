@@ -6,7 +6,10 @@ class Widget < ActiveRecord::Base
 
   def self.initialize_registry(filename)
     seed_filename = [RAILS_ROOT, 'config', filename].join('/')
-    Conf.widgets = YAML.load_file(seed_filename) || {}
+    widgets = YAML.load_file(seed_filename) || {}
+    widgets.each do |name, options|
+      self.register(name,options)
+    end
   end
 
   def self.register(name, options)
