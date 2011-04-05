@@ -1,5 +1,6 @@
 - content_for :misc_header do
-  = render :partial => 'welcome_container'
+  - for widget in @top_widgets
+    = render_widget widget
 
 .wrapper2-plus
   - for widget in @main_widgets

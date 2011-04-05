@@ -119,6 +119,7 @@ class RootController < ApplicationController
   def site_home
     @active_tab = :home
     @profile = @group.profiles.public
+    @top_widgets = @profile.widgets.find_all_by_section(0)
     @main_widgets = @profile.widgets.find_all_by_section(1)
     @sidebar_widgets = @profile.widgets.find_all_by_section(2, :include => :menu_items)
     @wiki = @profile.wiki || @profile.create_wiki
