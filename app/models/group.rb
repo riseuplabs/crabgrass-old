@@ -99,10 +99,10 @@ class Group < ActiveRecord::Base
 
   named_scope :in_location, lambda { |options|
     country_id = options[:country_id]
-    state_id = options[:state_id]
     city_id = options[:city_id]
+    state_id = options[:state_id]
     conditions = "gl.id = profiles.geo_location_id and gl.geo_country_id=#{country_id}"
-    if state_id
+    if state_id and !city_id
       conditions += " and gl.geo_admin_code_id=#{state_id}"
     end
     if city_id
