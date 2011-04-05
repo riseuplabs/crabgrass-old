@@ -15,26 +15,17 @@ namespace :cg do
 end
 
 def self.add_widgets(s)
-  unless s.network && s.network.profiles.public
+  unless s.network && profile = s.network.profiles.public
     puts "ERROR: site #{s.name} does not have a network with a public profile."
     return
   end
   puts "Creating widgets for site #{s.name}..."
-  profile_id = s.network.profiles.public.id
   filename = (ENV['WIDGETS'] || 'old')
   filename += '_widgets.yml' unless filename.index('yml')
   filename = [RAILS_ROOT, 'test', 'fixtures', filename].join('/')
   widgets = YAML.load_file(filename)
-  widgets.values.each do |w|
-    create_with_options(w.merge({:profile_id => profile_id}))
+  widgets.values.each do |params|
+    puts "Creating widget #{params['name']}."
+    profile.widgets.create(params)
   end
-end
-
-def self.create_with_options(options)
-  if ENV['DEBUG']
-    puts 'Creating widget with options '+options.inspect
-  else
-    puts "Creating widget #{options['name']}."
-  end
-  Widget.create(options)
 end
