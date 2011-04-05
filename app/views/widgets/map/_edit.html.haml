@@ -1,5 +1,8 @@
 - form_for @widget do |f|
   = yield :widget_fields
+  %div
+    %label Current map center:
+    = current_map_center(@widget)
   %ul
     %li
       = f.label :title
@@ -13,15 +16,22 @@
           = f.text_field :custom_kml
     %li
       = f.label 'Map Center'
-      %br Select a country and city, or enter a latitude and longitude:
-      = country_dropdown_for_search
-      = state_dropdown
-      = city_text_field
-      = city_id_field
-      = 'Latitude: ' + f.text_field(:map_center_latitude)
-      %br= 'Longitude: ' + f.text_field(:map_center_longitude)
-      = current_map_center(@widget)
+      %span.statement Select a country and city,  
+      %div.wrap
+        %div.wrap-inner
+          = country_dropdown_for_search
+          = state_dropdown
+        = city_text_field
+        = city_id_field
+      
+      %span.statement or enter a latitude and longitude:
+      %div.wrap
+        %span.label Latitude 
+        = f.text_field(:map_center_latitude)
+        %span.label Longitude 
+        = f.text_field(:map_center_longitude)
     %li
       = f.label 'Zoom Level'
       = select_field_for_map_zoomlevel(@widget)
-  = f.submit
+  %div#mb-footer
+    = f.submit

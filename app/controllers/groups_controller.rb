@@ -1,4 +1,3 @@
-#Mime::Type.register "application/vnd.google-earth.kml+xml", :kml
 
 class GroupsController < Groups::BaseController
 
@@ -20,7 +19,7 @@ class GroupsController < Groups::BaseController
   cache_sweeper :social_activities_sweeper, :only => [:update, :create, :destroy]
 
   ## TODO: remove all task list stuff from this controller
-    helper 'task_list_page' # :only => ['tasks']
+    helper 'task_list_page', 'map' # :only => ['tasks']
     stylesheet 'tasks', :action => :tasks
     javascript :extra, :action => :tasks
   ## end task list cruft
@@ -35,11 +34,8 @@ class GroupsController < Groups::BaseController
 
   def index
     respond_to do |format|
-      format.kml {
-        @groups = Group.only_type(@group_type, @current_site).visible_by(@current_user).in_location(@params_location)
-        render_kml_for(@groups) }
-      format.html {
-        redirect_to group_directory_url }
+      format.kml { render_kml_for Group.all }
+      format.html { redirect_to group_directory_url }
     end
   end
 
