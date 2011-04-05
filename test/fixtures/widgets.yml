@@ -1,5 +1,3 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 <% Site.all.each do |s| %>
 <% name = s.name %>
 <% next unless s.network && s.network.profiles.public %>
