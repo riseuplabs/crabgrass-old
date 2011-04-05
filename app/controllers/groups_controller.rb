@@ -1,3 +1,5 @@
+#Mime::Type.register "application/vnd.google-earth.kml+xml", :kml
+
 class GroupsController < Groups::BaseController
 
   stylesheet 'groups'
@@ -32,7 +34,13 @@ class GroupsController < Groups::BaseController
   end
 
   def index
-    redirect_to group_directory_url
+    respond_to do |format|
+      format.kml {
+        @groups = Group.only_type(@group_type, @current_site).visible_by(@current_user).in_location(@params_location)
+        render_kml_for(@groups) }
+      format.html {
+        redirect_to group_directory_url }
+    end
   end
 
   def show
@@ -200,7 +208,6 @@ class GroupsController < Groups::BaseController
       page.hide 'popup_entities_list'
     end
   end
-
 
   #def provide_rss
   #  handle_rss :title => @group.name, :description => @group.summary,
