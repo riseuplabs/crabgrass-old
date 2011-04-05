@@ -656,11 +656,4 @@ editing tools on a group basis has been abandoned iirc, azul
     assert @response.body =~ /private/
   end
 
-  def test_index_kml_by_location
-    get :index, :sort_by => 'latlong', :format => :kml
-    assert_response :success
-    assert @response.body =~ /<name>Zangakatun<\/name>[\s\n]+<description>\S+rainbow\S+recent_group/
-    assert @response.body =~ /<name>Yenikend<\/name>[\s\n]+<description>\S+animals\S+the-true-levellers/
-  end
-
 end

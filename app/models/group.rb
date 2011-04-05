@@ -93,18 +93,20 @@ class Group < ActiveRecord::Base
 
   named_scope :names_only, :select => 'full_name, name'
 
+  named_scope :limit_to, lambda { |limit|
+    {:limit => limit}
+  }
+
   named_scope :in_location, lambda { |options|
     country_id = options[:country_id]
-    admin_code_id = options[:state_id]
+    state_id = options[:state_id]
     city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
+    conditions = "gl.id = profiles.geo_location_id and gl.geo_country_id=#{country_id}"
+    if state_id
+      conditions += " and gl.geo_admin_code_id=#{state_id}"
     end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
+    if city_id
+      conditions += " and gl.geo_place_id=#{city_id}"
     end
     { :joins => "join geo_locations as gl",
       :conditions => conditions

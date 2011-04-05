@@ -167,6 +167,10 @@ ActionController::Routing::Routes.draw do |map|
   map.chat 'chat/:action/:id', :controller => 'chat'
   map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
 #  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
+
+  ## for maps
+  map.resources :geo_locations, :only => :index
+
   ##
   ## DEFAULT ROUTE
   ##

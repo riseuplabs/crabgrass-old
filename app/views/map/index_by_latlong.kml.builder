@@ -9,12 +9,12 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
         }
       }
     }      
-    sort_entities_by_place(@entities).each do |key, place|
+    locations_with_visible_groups(@locations).each do |key, place|
+      next unless place[:collection].count > 0
       xml.Placemark {
         xml.styleUrl('#MarkerIcon')
-        xml.name(h(place[:name])+" (#{place[:total_count]})")
         xml.description(
-          description_for_kml_place(place)
+          description_for_kml_place(place, key)
         )
         xml.Point {
           xml.coordinates(place[:longlat])
