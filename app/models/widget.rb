@@ -6,7 +6,10 @@ class Widget < ActiveRecord::Base
 
   def self.initialize_registry(filename)
     seed_filename = [RAILS_ROOT, 'config', filename].join('/')
-    Conf.widgets = YAML.load_file(seed_filename) || {}
+    widgets = YAML.load_file(seed_filename) || {}
+    widgets.each do |name, options|
+      self.register(name,options)
+    end
   end
 
   def self.register(name, options)
@@ -45,8 +48,11 @@ class Widget < ActiveRecord::Base
 
 
   belongs_to :profile
+  validates_presence_of :profile_id
 
   serialize :options, Hash
+
+  acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
   has_many :menu_items do
 

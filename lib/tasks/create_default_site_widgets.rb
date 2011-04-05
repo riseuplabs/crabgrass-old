@@ -1,36 +1,54 @@
 namespace :cg do
   task :create_default_site_widgets => :environment do
-    Site.all.each do |s|
-      next unless s.network && s.network.profiles.public
-      profile_id = s.network.profiles.public.id
-      lorem = 'Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum'
-      widgets_1 = [ # widgets in section one, in order
-        {:name => 'IntroWidget', :options => {:title => I18n.t(:welcome_title, :site_title =>s.name)}},
-        {:name => 'MapWidget', :options => {:title => 'Projects in '+s.name, :kml => 'groups'}},
-        {:name => 'TextBoxWidget', :options => {:title => 'Who is Who?', :text => lorem}},
-        {:name => 'TagCloudWidget', :options => {:title => 'Most Used Tags'}},
-        {:name => 'ImageTitleWidget', :options => {:title => 'Your Opinion Counts &ndash;<br>talk to us'}},
-        {:name => 'PageListWidget', :options => {}}
-      ]
-      widgets_2 = [
-        {:name => 'ButtonWidget', :options => {:title => I18n.t(:contribute_to_site), :link => '/groups/unido/pages/new'}},
-        {:name => 'ButtonWidget', :options => {:title => 'Add a job opportunity', :link => '/job/add'}},
-        {:name => 'MenuWidget', :options =>  {:title => 'Quickfinder'}},
-        {:name => 'NetworkingWidget', :options => {:title => I18n.t(:most_active_members), :type => :users, :recent => false }},
-        {:name => 'NetworkingWidget', :options => {:title => I18n.t(:most_active_groups), :type => :groups, :recent => false }},
-        {:name => 'TextBoxWidget', :options => {:title => 'What is new?', :text => lorem }}
-      ]
-      widgets_1.each_with_index do |w, i|
-        create_with_options(w.merge({:section => 1, :position => i+1, :profile_id => profile_id}))
+    name = ensure_site(ENV['SITE'])
+    widgets = load_widgets(ENV['WIDGETS'] || 'old')
+    if name == 'ALL'
+      Site.all.each do |site|
+        clear_widgets(site) if ENV['CLEAR']
+        add_widgets(site, widgets)
       end
-      widgets_2.each_with_index do |w, i|
-        create_with_options(w.merge({:section => 2, :position => i+1, :profile_id => profile_id}))
-      end
+    elsif site = Site.find_by_name(name)
+      clear_widgets(site) if ENV['CLEAR']
+      add_widgets(site, widgets)
     end
   end
 end
 
-def self.create_with_options(options)
-  puts 'Creating widget with options '+options.inspect
-  Widget.create(options)
+def self.ensure_site(name)
+  if name.blank?
+    puts 'ERROR: site name required, use SITE=<name> to specify the name or SITE=ALL'
+    exit
+  end
+  name
+end
+
+def self.load_widgets(filename)
+  filename += '_widgets.yml' unless filename.index('yml')
+  filename = [RAILS_ROOT, 'lib', 'tasks', filename].join('/')
+  YAML.load_file(filename)
+end
+
+def self.clear_widgets(site)
+  puts "Clearing widgets from site #{site.name}..."
+  return unless profile = get_profile(site)
+  profile.widgets.destroy_all
+end
+
+def self.add_widgets(site, widgets)
+  return unless profile = get_profile(site)
+  puts "Creating widgets for site #{site.name}..."
+  widgets.each do |params|
+    puts "Creating widget #{params['name']}."
+    unless profile.widgets.create(params)
+      puts "... failed - please make sure the widget settings are valid."
+    end
+  end
+end
+
+def self.get_profile(site)
+  unless site.network && profile = site.network.profiles.public
+    puts "ERROR: site #{site.name} does not have a network with a public profile."
+    return
+  end
+  profile
 end

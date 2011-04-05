@@ -97,4 +97,12 @@ TagCloudWidget:
     - :title
     - :limit
   :width: 1
-
+WikiWidget:
+  :columns:
+    - 2
+AdminLinksWidget:
+  :columns:
+    - 1
+MenuBarWidget:
+  :columns:
+    - 3
