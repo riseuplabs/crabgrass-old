@@ -49,8 +49,6 @@ class Groups::DirectoryController < Groups::BaseController
       render :update do |page|
         page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
       end
-    elsif request.format.kml?
-      render_kml
     else
       @second_nav = 'all'
       @misc_header = '/groups/directory/browse_header'
@@ -91,10 +89,6 @@ class Groups::DirectoryController < Groups::BaseController
 
   def set_group_type
     @group_type = :group
-  end
-
-  def render_kml
-    render_kml_for(@groups)
   end
 
 end
