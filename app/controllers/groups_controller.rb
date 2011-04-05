@@ -18,7 +18,7 @@ class GroupsController < Groups::BaseController
   cache_sweeper :social_activities_sweeper, :only => [:update, :create, :destroy]
 
   ## TODO: remove all task list stuff from this controller
-    helper 'task_list_page' # :only => ['tasks']
+    helper 'task_list_page', 'map' # :only => ['tasks']
     stylesheet 'tasks', :action => :tasks
     javascript :extra, :action => :tasks
   ## end task list cruft
@@ -32,7 +32,10 @@ class GroupsController < Groups::BaseController
   end
 
   def index
-    redirect_to group_directory_url
+    respond_to do |format|
+      format.kml { render_kml_for Group.all }
+      format.html { redirect_to group_directory_url }
+    end
   end
 
   def show
