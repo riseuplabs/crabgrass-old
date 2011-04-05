@@ -29,6 +29,7 @@ module MapHelper
       places[id][:longlat] = "#{gp.longitude},#{gp.latitude}"
       places[id][:name] = gp.name + ', '+ loc.geo_country.code
       places[id][:country_id] = loc.geo_country_id
+      places[id][:state_id] = gp.geo_admin_code_id
       places[id][:total_count] = total_count 
       places[id][:collection] = groups
     end
