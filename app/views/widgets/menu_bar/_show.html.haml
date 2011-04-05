@@ -1,0 +1,8 @@
+#welcome-container
+  %ul#welcome-links.navbar
+    %li= welcome_box_link
+    = render :partial => 'navbar_item', :collection => widget.menu_items
+  - if params[:welcome_box] && logged_in?
+    #welcome_box
+      .inset_box.round
+        = render :partial => '/me/dashboard/welcome_box_content'
