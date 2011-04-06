@@ -43,4 +43,7 @@ class GeoPlace < ActiveRecord::Base
     return @places.flatten!
   end
 
+  def longlat
+    "#{longitude},#{latitude}"
+  end
 end

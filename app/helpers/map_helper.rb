@@ -1,39 +1,20 @@
 module MapHelper
 
-  def description_for_kml_place(place, id)
-    if place[:collection].count > 1
-      render :partial => '/map/kml_entities_list.html.haml', :locals => {:place => place, :id => id}
+  def description_for_kml_location(location)
+    if location.group_count > 1
+      render :partial => '/map/kml_entities_list.html.haml',
+        :locals => {:location => location}
     else
-      @group = place[:collection][0]
+      @group = location.groups.visible_by(current_user).first
       render :partial => '/groups/profiles/map_summary.html.haml', :locals => {:no_back_link => 1}
     end
   end
- 
+
   def link_to_kml_entity(ent)
     link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
-    link_to_remote(link_content, 
+    link_to_remote(link_content,
       :url => '/groups/show',
       :with => "'id=#{ent.name}&map_summary=1'")
-  end
-
-  def locations_with_visible_groups(locations)
-    places = {}
-    locations.uniq.each do |loc|
-      user = logged_in? ? current_user : nil
-      total_count = Group.visible_by(user).in_location({:country_id => loc.geo_country_id, :city_id => loc.geo_place_id}).count
-      next unless total_count > 0
-      groups = Group.visible_by(user).in_location({:country_id => loc.geo_country_id, :city_id => loc.geo_place_id}).limit_to(3)
-      gp = GeoPlace.find(loc.geo_place_id)
-      id = loc.geo_place_id
-      places[id] ||= {}
-      places[id][:longlat] = "#{gp.longitude},#{gp.latitude}"
-      places[id][:name] = gp.name + ', '+ loc.geo_country.code
-      places[id][:country_id] = loc.geo_country_id
-      places[id][:state_id] = gp.geo_admin_code_id
-      places[id][:total_count] = total_count 
-      places[id][:collection] = groups
-    end
-    return places
   end
 
   def geo_data_for_kml(entity)
@@ -53,15 +34,15 @@ module MapHelper
     data[:long] = place.longitude
     return data
   end
- 
+
   def kml_style_for_place(count)
     # return values are percents, so 1 count -> 25% marker
-    case count
+    case count.to_i
     when 1
       '40'
     when 2
       '45'
-    when 3 .. 5 
+    when 3 .. 5
       '50'
     when 6 .. 10
       '75'

@@ -11,15 +11,16 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
         }
       }
     end
-    locations_with_visible_groups(@locations).each do |key, place|
-      next unless place[:collection].count > 0
+
+    @locations.each do |location|
+      location.group_count = location.group_count.to_i
       xml.Placemark {
-        xml.styleUrl('#'+kml_style_for_place(place[:total_count])+'Marker')
+        xml.styleUrl('#'+kml_style_for_place(location.group_count)+'Marker')
         xml.description(
-          description_for_kml_place(place, key)
+          description_for_kml_location(location)
         )
         xml.Point {
-          xml.coordinates(place[:longlat])
+          xml.coordinates(location.geo_place.longlat)
         }
       }
     end
