@@ -3,5 +3,5 @@
     %h3{:style => 'display: inline;'}= place[:name] + " (#{place[:total_count]})"
   %ul
     = render :partial => '/map/kml_entity.html.haml', :collection => place[:collection] 
-- if place[:total_count] > place[:collection].count
-  = link_to('View All Groups', group_directory_url(:action => :search, :country_id => place[:country_id], :city_id => id, :state_id => place[:state_id]))
+  - if place[:total_count] > place[:collection].count
+    %div= link_to('View All Groups', group_directory_url(:action => :search, :country_id => place[:country_id], :city_id => id, :state_id => place[:state_id]))
