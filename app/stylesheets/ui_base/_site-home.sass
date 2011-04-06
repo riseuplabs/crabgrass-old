@@ -367,7 +367,7 @@ a.new
   label
     +bordered-btm(1px, $medium_grey_border)
     font-weight: bold
-    padding: 0 0 12px
+    padding: 0 0 2px
     span
       font-weight: normal
   a
@@ -400,17 +400,27 @@ a.new
       margin-left: 6px
   input#widget_map_center_latitude, input#widget_map_center_longitude
     +float-left
-    margin: 6px 160px 0 0
+    margin: 6px 260px 0 0
+    width: 90px
   span.label
     +float-left
     width: 70px
     padding: 6px 0 0 10px
+  #mb-header
+    +bordered-btm($medium_grey_border, solid)
+    padding-bottom: 6px
+    margin-bottom: 6px
   #mb-footer
     +bordered-top(1px, $medium_grey_border)
     margin-top: 20px
-    padding: 26px 0 26px 10px
-    input
+    padding: 25px 0 23px 10px
+    input#widget_submit
       +float-left
-      a
-        +float-right
+  a.destroy
+    +float-right
+    background: url(/images/png/16/trash.png) no-repeat 0 2px
+    padding-left: 20px
+    margin: -24px 12px 0 0
+      
+
 

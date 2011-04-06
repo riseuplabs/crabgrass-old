@@ -29,9 +29,10 @@ module WidgetsHelper
   end
 
   def destroy_widget_link(widget)
-    link_to I18n.t(:destroy), widget_path(widget),
+    link_to I18n.t(:destroy_widget), widget_path(widget),
       :confirm => "Are you sure you want to delete this widget?",
-      :method => 'delete'
+      :method => 'delete',
+      :class => 'destroy'
   end
 
   def new_widget_link(section = nil)

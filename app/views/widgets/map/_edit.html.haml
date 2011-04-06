@@ -1,6 +1,6 @@
 - form_for @widget do |f|
   = yield :widget_fields
-  %div
+  %div#mb-header
     %label Current map center:
     = current_map_center(@widget)
   %ul
@@ -33,5 +33,5 @@
     %li
       = f.label 'Zoom Level'
       = select_field_for_map_zoomlevel(@widget)
-  %div#mb-footer
+  %div#mb-footer.destroy
     = f.submit

@@ -951,6 +951,7 @@ en:
   pending: "pending"
   rejected: "rejected"
   approved: "approved"
+  destroy_widget: "Destroy widget"
 
   my_requests_link: "my requests"
   all_requests: "All Requests"
