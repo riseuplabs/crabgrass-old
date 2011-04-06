@@ -12,7 +12,7 @@
       %div{:style => 'height: 294px; overflow: auto;'}
         %ul
           - available_button_icons(@widget).each do |icon|
-            %li
+            %li{:class => cycle('left-col', 'right-col')}
               = radio_button("widget", "icon", "#{icon}")+ '' + icon.humanize
               %span{:class => "icon #{icon}_16", :style => 'height: 16px; width: 16px; float: left; margin: 2px 3px;'}
   %div#mb-footer.destroy
