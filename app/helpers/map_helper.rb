@@ -53,6 +53,21 @@ module MapHelper
     data[:long] = place.longitude
     return data
   end
-
+ 
+  def kml_style_for_place(count)
+    # return values are percents, so 1 count -> 25% marker
+    case count
+    when 1
+      '40'
+    when 2
+      '45'
+    when 3 .. 5 
+      '50'
+    when 6 .. 10
+      '75'
+    when 11 .. 15
+      '100'
+    end
+  end
 
 end
