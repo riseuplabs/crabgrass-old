@@ -361,7 +361,7 @@ a.new
 
 //
 //Modal box for widget settings edit 
-// map + buttons +
+// 
 
 #MB_content
   label
@@ -370,8 +370,6 @@ a.new
     padding: 0 0 2px
     span
       font-weight: normal
-  a
-    float-right
   ul
     +clearfix
     float: none
@@ -379,9 +377,17 @@ a.new
     margin-bottom: 16px
     li
       +clearfix
-      input, select
-        margin-left: 10px
-    & span.statement
+      &.image-title input
+        width: 300px
+      &.checkbox-edit
+        input
+          +float-left
+        label
+          +float-left
+          margin: 0 0 0 10px
+    input, select, textarea
+      margin-left: 10px
+    span.statement
       display: block
       white-space: none
   div.wrap
@@ -413,7 +419,7 @@ a.new
   #mb-footer
     +bordered-top(1px, $medium_grey_border)
     margin-top: 20px
-    padding: 25px 0 23px 10px
+    padding: 20px 0 23px 10px
     input#widget_submit
       +float-left
   a.destroy
