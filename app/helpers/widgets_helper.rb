@@ -37,7 +37,7 @@ module WidgetsHelper
 
   def new_widget_link(section = nil)
     url = (section == :sidebar) ? sidebar_new_widget_url : new_widget_url
-    link_to_modal I18n.t(:add_button),
+    link_to_modal I18n.t(:create_widget),
       { :url => url },
       { :class => 'new' }
   end

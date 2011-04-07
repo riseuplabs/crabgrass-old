@@ -952,6 +952,7 @@ en:
   rejected: "rejected"
   approved: "approved"
   destroy_widget: "Destroy widget"
+  create_widget: "Create new widget"
 
   my_requests_link: "my requests"
   all_requests: "All Requests"
