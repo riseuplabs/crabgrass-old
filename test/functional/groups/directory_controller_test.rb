@@ -20,29 +20,6 @@ class Groups::DirectoryControllerTest < ActionController::TestCase
     assert_redirected_to(:action => 'search')    
   end
 
-  def test_index_kml
-    # non-logged in user should see  rainbow but not private_group
-    get :search, :format => :kml
-    assert_response :success
-    assert @response.body =~ /rainbow/
-    assert @response.body !~ /private/ 
-
-    # blue should see some  kml data for rainbow
-    login_as :blue
-    get :search, :format => :kml
-    assert_response :success
-    assert @response.body =~ /Placemark/
-    assert @response.body =~ /rainbow/
-    assert @response.body =~ /private/
-  end
-
-  def test_index_kml_by_location
-    get :search, :sort_by => 'latlong', :format => :kml
-    assert @response.body =~ /<name>Zangakatun<\/name>[\s\n]+<description>\S+rainbow\S+recent_group/
-    assert @response.body =~ /<name>Yenikend<\/name>[\s\n]+<description>\S+animals\S+the-true-levellers/
-  end
-
-
   def test_recent
     login_as :blue
 

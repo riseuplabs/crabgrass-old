@@ -1,13 +1,11 @@
 class MenuItem < ActiveRecord::Base
 
-  # this is deprecated and will be removed soon.
-  belongs_to :profile
-
-  before_create :set_position
-  acts_as_tree :order => :position
 
   belongs_to :widget
   validates_presence_of :widget_id
+
+  acts_as_tree :order => :position
+  acts_as_list :scope => 'widget_id = #{self.widget_id} AND #{self.parent_condition}'
 
   TYPES={
     I18n.t(:external_link_menu_item)=>:external,
@@ -23,11 +21,8 @@ class MenuItem < ActiveRecord::Base
 
   protected
 
-  def set_position
-    if parent
-      self.position = parent.children.count
-    else
-      self.position = widget.menu_items.roots.count
-    end
+  def parent_condition
+    parent ? "parent_id = #{parent.id}" : 'parent_id IS NULL'
   end
+
 end

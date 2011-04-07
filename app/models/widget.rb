@@ -54,7 +54,7 @@ class Widget < ActiveRecord::Base
 
   acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
-  has_many :menu_items do
+  has_many :menu_items, :order => 'position' do
 
     # working around the fact that acts_as_tree does not know scopes
     # we only want to have siblings within the same widget in case

@@ -34,7 +34,7 @@ class GroupsController < Groups::BaseController
 
   def index
     respond_to do |format|
-      format.kml { render_kml_for Group.visible_by(@current_user) }
+      format.kml { render_kml_for_entities Group.visible_by(@current_user).only_groups }
       format.html { redirect_to group_directory_url }
     end
   end

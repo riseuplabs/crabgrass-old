@@ -2,6 +2,13 @@
 <% name = s.name %>
 <% next unless s.network && s.network.profiles.public %>
 <% profile_id = s.network.profiles.public.id %>
+menu_bar_<%= name %>:
+  name: MenuBarWidget
+  profile_id: <%= profile_id %>
+  position: 0
+  section: 0
+  options:
+    :title: Menu Bar
 intro_<%= name %>:
   name: IntroWidget
   profile_id: <%= profile_id %>

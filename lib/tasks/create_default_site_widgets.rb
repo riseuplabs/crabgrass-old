@@ -6,10 +6,12 @@ namespace :cg do
       Site.all.each do |site|
         clear_widgets(site) if ENV['CLEAR']
         add_widgets(site, widgets)
+        transfer_menu_items(site)
       end
     elsif site = Site.find_by_name(name)
       clear_widgets(site) if ENV['CLEAR']
       add_widgets(site, widgets)
+      transfer_menu_items(site)
     end
   end
 end
@@ -43,6 +45,13 @@ def self.add_widgets(site, widgets)
       puts "... failed - please make sure the widget settings are valid."
     end
   end
+end
+
+def transfer_menu_items(site)
+  return unless profile = get_profile(site)
+  return unless widget = profile.widgets.find_by_name('MenuBarWidget')
+  MenuItem.update_all "widget_id = #{widget.id}",
+    "profile_id = #{profile.id} AND widget_id IS NULL"
 end
 
 def self.get_profile(site)

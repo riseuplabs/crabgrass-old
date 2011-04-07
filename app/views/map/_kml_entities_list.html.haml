@@ -1,5 +1,13 @@
+- groups = location.groups.visible_by(current_user)
+- place = location.geo_place
+- country = location.geo_country
 %div#popup_entities_list
   %span{:class => 'small_icon world_16'}
-    %h3{:style => 'display: inline;'}= place[:name] + " (#{place[:collection].count})"
+    %h3{:style => 'display: inline;'}
+      = place.name + ','
+      = location.geo_country.code
+      = " (#{location.group_count})"
   %ul
-    = render :partial => '/map/kml_entity.html.haml', :collection => place[:collection] 
+    = render :partial => '/map/kml_entity.html.haml', :collection => groups
+  - if location.group_count > groups.count
+    %div= link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))

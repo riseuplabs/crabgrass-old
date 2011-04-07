@@ -239,10 +239,9 @@ class ApplicationController < ActionController::Base
   end
 
   # render locations kml
-  def render_kml_for(collection)
+  def render_kml_for_entities(collection)
     @entities = collection
-    template = (params[:sort_by] == 'latlong') ? '/map/index_by_latlong.kml.builder' : '/map/index.kml.builder'
-    render :template => template, :layout => false 
+    render :template => '/map/index.kml.builder', :layout => false 
   end
 
   private
