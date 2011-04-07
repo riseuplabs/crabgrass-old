@@ -1,9 +1,10 @@
-%div{:id => 'popup_entity_'+@group.id.to_s}
-  %h3= avatar_for(@group, 'small') + ' ' + @group.display_name
+- group ||= @group
+%div{:id => 'popup_entity_'+group.id.to_s}
+  %h3= avatar_for(group, 'small') + ' ' + group.display_name
   %p
-    = @group.profiles.public.summary_html
-  %div{:class => 'small_icon location_20'}= @group.profiles.public.geo_city_name + ', ' + @group.profiles.public.geo_location.geo_country.name
+    = group.profiles.public.summary_html
+  %div{:class => 'small_icon location_20'}= group.profiles.public.geo_city_name + ', ' + group.profiles.public.geo_location.geo_country.name
   #map_summary_footer
     - if !local_assigns[:no_back_link]
       = render :partial => '/groups/profiles/map_summary_footer_back_link'
-    %span{:style => 'float: right;'}= link_to 'Visit project page', group_path(@group)
+    %span{:style => 'float: right;'}= link_to 'Visit project page', group_path(group)

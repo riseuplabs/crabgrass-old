@@ -5,8 +5,9 @@ module MapHelper
       render :partial => '/map/kml_entities_list.html.haml',
         :locals => {:location => location}
     else
-      @group = location.groups.visible_by(current_user).first
-      render :partial => '/groups/profiles/map_summary.html.haml', :locals => {:no_back_link => 1}
+      group = location.groups.visible_by(current_user).first
+      render :partial => '/groups/profiles/map_summary.html.haml',
+        :locals => {:no_back_link => 1, :group => group }
     end
   end
 
