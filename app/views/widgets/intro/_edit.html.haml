@@ -7,4 +7,9 @@
     %li 
       = f.label :display_title
       = f.check_box :display_title
-  = f.submit
+    %li 
+      = f.label :text
+      = f.text_area :text, :size => '50x16'
+      = yield :widget_fields
+  %div#mb-footer
+    = f.submit

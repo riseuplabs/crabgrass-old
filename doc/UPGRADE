@@ -1,3 +1,29 @@
+next
+-----
+
+* To upgrade:
+
+  1. Make sure you have 0.5.4 installed and created the default widgets.
+     Otherwise your menu bar entries might be lost when running migrations.
+
+0.5.4
+------
+
+* To upgrade:
+
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+
+  2. Create default widgets:
+      % RAILS_ENV=production rake cg:create_default_site_widgets
+
+* Widget System:
+
+  We added a widget system that allows you to change the elements on 
+  site home. You can change them around in admin/widgets. Since site
+  home now requires the widgets you need to run the rake task mentioned
+  above for it to work.
+
 0.5.3.1
 -------
 

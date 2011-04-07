@@ -3,5 +3,6 @@
     = hidden_field :widget, :name
     = hidden_field :widget, :section
   = edit_widget @widget
+  = new_widget_link @widget.section, I18n.t(:back), :class => 'right back'
 - else
   = render :partial => 'select'

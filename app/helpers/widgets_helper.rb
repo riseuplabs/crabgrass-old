@@ -29,16 +29,18 @@ module WidgetsHelper
   end
 
   def destroy_widget_link(widget)
-    link_to I18n.t(:destroy), widget_path(widget),
+    link_to I18n.t(:destroy_widget), widget_path(widget),
       :confirm => "Are you sure you want to delete this widget?",
-      :method => 'delete'
+      :method => 'delete',
+      :class => 'destroy'
   end
 
-  def new_widget_link(section = nil)
+  def new_widget_link(section = nil, text = I18n.t(:add_button), html_options = nil)
     url = (section == :sidebar) ? sidebar_new_widget_url : new_widget_url
-    link_to_modal I18n.t(:add_button),
-      { :url => url },
-      { :class => 'new' }
+    html_options ||= { :class => 'right new' }
+    link_to_modal text,
+      { :url => url, :title => I18n.t(:create_widget)},
+      html_options
   end
 
   def create_widget_link(section, name)

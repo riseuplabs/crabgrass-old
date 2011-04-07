@@ -1,6 +1,6 @@
 - form_for @widget do |f|
   = yield :widget_fields
-  %div
+  %div#mb-header
     %label Current map center:
     = current_map_center(@widget)
   %ul

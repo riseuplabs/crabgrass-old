@@ -32,13 +32,18 @@ class GeoLocation < ActiveRecord::Base
   named_scope :with_visible_groups, lambda {|user|
     if user && user.real?
       group_ids = Group.namespace_ids(user.all_group_ids)
-      sql = <<EOSQL
-      (profiles.stranger = ? AND profiles.may_see = ?) OR
-      (profiles.entity_type = 'Group' and profiles.entity_id IN (?))
-EOSQL
+      sql = <<-EOSQL
+        (profiles.stranger = ? AND profiles.may_see = ? AND profiles.entity_type = 'Group') OR
+        (profiles.entity_type = 'Group' and profiles.entity_id IN (?))
+      EOSQL
       conditions = [sql, true, true, group_ids]
     else
-      conditions = ["(profiles.stranger = ? AND profiles.may_see = ?)", true, true]
+      sql = <<-EOSQL
+        profiles.stranger = ? AND
+        profiles.may_see = ? AND
+        profiles.entity_type = 'Group'
+      EOSQL
+      conditions = [sql, true, true]
     end
     { :joins => :profiles,
       :select => 'geo_locations.*, count(*) as group_count',
