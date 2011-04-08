@@ -258,21 +258,22 @@ class Profile < ActiveRecord::Base
   end
 
   def update_location(params)
-    return unless params[:country_id]
-    geo_location_options = {
-      :geo_country_id => params[:country_id],
-      :geo_admin_code_id => params[:state_id],
-      :geo_place_id => params[:city_id]
-    }
-    geo_location_options.delete(:geo_admin_code_id) if geo_location_options[:geo_admin_code_id].nil?
-    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
-      # prevent making duplicate geo location objects
-      gl = GeoLocation.find(:first, :conditions => geo_location_options)
-      self.geo_location = gl || GeoLocation.new(geo_location_options)
-      self.save!
-    elsif !self.geo_location.nil?
-      self.geo_location.delete
+    if (!params[:country_id] or params[:country_id].nil? or params[:country_id]=='Country')
+      self.geo_location = nil
+    else
+      geo_location_options = {
+        :geo_country_id => params[:country_id],
+        :geo_admin_code_id => params[:state_id],
+        :geo_place_id => params[:city_id]
+      }
+      geo_location_options.delete(:geo_admin_code_id) if geo_location_options[:geo_admin_code_id].nil?
+      if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
+        # prevent making duplicate geo location objects
+        gl = GeoLocation.find(:first, :conditions => geo_location_options)
+        self.geo_location = gl || GeoLocation.new(geo_location_options)
+      end
     end
+    self.save!
   end
 
   # DEPRECATED
