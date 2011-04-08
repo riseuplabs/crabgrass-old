@@ -6,6 +6,9 @@ next
   1. Make sure you have 0.5.4 installed and created the default widgets.
      Otherwise your menu bar entries might be lost when running migrations.
 
+  2. Run the rake task to merge duplicate geo data:
+    % rake cg:merge_duplicate_geo_locations
+
 0.5.4
 ------
 
