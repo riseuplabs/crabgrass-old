@@ -5,9 +5,10 @@
       = f.label :title
       = f.text_field :title
     %li
-      = f.label :type
-      = f.text_field :type
-    %li
-      = f.label :recent
+      = f.label :entities
+      = f.select :entities, ['Groups', 'Users']
+    %li.checkbox-edit
       = f.check_box :recent
+      = f.label :recent
   %div#mb-footer
+    =f.submit

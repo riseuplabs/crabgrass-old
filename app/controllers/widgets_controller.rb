@@ -1,7 +1,8 @@
 class WidgetsController < ApplicationController
 
-  helper :widgets, 'modalbox', 'menu_items', 'locations', 'autocomplete'
-  permissions 'widgets'
+  # we need most helpers from the root controller for the preview actions
+  helper :widgets, 'modalbox', 'menu_items', 'locations', 'autocomplete', :groups, :account, :wiki, :page, :root
+  permissions 'widgets', 'root', 'groups/base', 'wiki'
   before_filter :fetch_profile
   before_filter :login_required
   layout :no_layout_for_ajax
@@ -33,7 +34,8 @@ class WidgetsController < ApplicationController
   # POST /widgets
   def create
     @widget = @profile.widgets.build(Widget.build_params(params))
-    if @widget.save
+    if params[:step] == '2'
+      @widget.save
       flash[:notice] = 'Widget was successfully created.'
       redirect_to(admin_widgets_url)
     else

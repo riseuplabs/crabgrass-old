@@ -82,7 +82,7 @@ active_members_<%= name %>:
   section: 2
   options:
     :title: Most Active Members
-    :type: :users
+    :entities: Users
     :recent: false
 active_groups_<%= name %>:
   name: NetworkingWidget
@@ -91,7 +91,7 @@ active_groups_<%= name %>:
   section: 2
   options:
     :title: Most Active Groups
-    :type: :groups
+    :type: Groups
     :recent: false
 what_is_new_<%= name %>:
   name: TextBoxWidget

@@ -7,7 +7,8 @@ module WidgetsHelper
 
   def edit_widget(widget)
     locals = {:widget => widget}
-    render :partial => widget.edit_partial, :locals => locals
+    render :partial => widget.edit_partial,
+      :locals => locals
   end
 
   def edit_widget_link(widget)
@@ -17,7 +18,7 @@ module WidgetsHelper
     #  :method => :get
     link_to_modal '',
       :url => edit_widget_url(widget),
-      :title => escape_javascript(widget.title),
+      :title => escape_javascript(widget.title_or_name),
       :icon => 'pencil'
   end
 
@@ -46,6 +47,7 @@ module WidgetsHelper
   def create_widget_link(section, name)
     link_params = {:section => "'#{section}'",
       :name => "'#{name}'",
+      :step => '1',
       :authenticity_token => "'#{form_authenticity_token}'"}
     link_to_modal name,
       :url => widgets_url,
@@ -69,16 +71,16 @@ module WidgetsHelper
   ##
 
   def get_active_entities(widget)
-    type = widget.options[:type] || :users
+    entities = widget.options[:entities] || 'Users'
     recent = widget.options[:recent] == '1'
-    case type
-    when :groups
+    case entities
+    when 'Groups'
       if recent
         Group.only_groups.recent_visits
       else
         Group.only_groups.most_visits
       end
-    when :users
+    else
       if recent
         User.most_active_on(current_site, Time.now - 30.days).not_inactive
       else

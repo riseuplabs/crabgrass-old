@@ -1,1 +1,2 @@
-= render :partial => 'widgets/wiki', :locals => {:wiki => @wiki, :editable => may_update_profile?, :no_title => true}
+- wiki = @profile.wiki || @profile.create_wiki
+= render :partial => 'widgets/wiki', :locals => {:wiki => wiki, :editable => may_update_profile?, :no_title => true}
