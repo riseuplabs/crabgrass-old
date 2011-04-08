@@ -19,7 +19,6 @@ class Widget < ActiveRecord::Base
       :icon => "/images/widgets/#{prefix}.png",
       :translation => underscore.to_sym,
       :description => "#{underscore}_description".to_sym,
-      :settings => [:title],
       :columns => []
     }
     options.reverse_merge! sane_defaults
@@ -92,7 +91,6 @@ class Widget < ActiveRecord::Base
   end
 
   validate :name_and_options_match
-  validate :title_set
 
   def name_and_options_match
     if type_options.nil?
@@ -105,12 +103,6 @@ class Widget < ActiveRecord::Base
     end
     if invalid_keys.any?
       errors.add_to_base "Invalid keys #{invalid_keys.join","} for #{name}."
-    end
-  end
-
-  def title_set
-    if options[:title].blank?
-      errors.add_to_base "Please specify a title."
     end
   end
 
@@ -144,9 +136,14 @@ class Widget < ActiveRecord::Base
     self.options[:title]
   end
 
+  def title_or_name
+    self.title.blank? ?
+      self.name.sub(/Widget$/, '').underscore.humanize :
+      self.title
+  end
+
   def short_title
-    t = self.title
-    t = self.name.sub(/Widget$/, '') if t.blank?
+    t = self.title_or_name
     t.size <= self.width ? t : t[0..self.width-3] + '...'
   end
 

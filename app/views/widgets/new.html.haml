@@ -2,6 +2,8 @@
   - content_for :widget_fields do
     = hidden_field :widget, :name
     = hidden_field :widget, :section
+    = hidden_field :widget, :section
+    %input{:type => 'hidden', :name => 'step', :value => '2'}
   = edit_widget @widget
   = new_widget_link @widget.section, I18n.t(:back), :class => 'right back'
 - else

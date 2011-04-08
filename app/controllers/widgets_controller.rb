@@ -34,7 +34,8 @@ class WidgetsController < ApplicationController
   # POST /widgets
   def create
     @widget = @profile.widgets.build(Widget.build_params(params))
-    if @widget.save
+    if params[:step] == '2'
+      @widget.save
       flash[:notice] = 'Widget was successfully created.'
       redirect_to(admin_widgets_url)
     else
