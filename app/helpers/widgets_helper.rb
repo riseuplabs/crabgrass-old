@@ -71,16 +71,16 @@ module WidgetsHelper
   ##
 
   def get_active_entities(widget)
-    type = widget.options[:type] || :users
+    entities = widget.options[:entities] || 'Users'
     recent = widget.options[:recent] == '1'
-    case type
-    when :groups
+    case entities
+    when 'Groups'
       if recent
         Group.only_groups.recent_visits
       else
         Group.only_groups.most_visits
       end
-    when :users
+    else
       if recent
         User.most_active_on(current_site, Time.now - 30.days).not_inactive
       else
