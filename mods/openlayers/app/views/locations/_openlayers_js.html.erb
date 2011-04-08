@@ -46,7 +46,7 @@
   }
   function onFeatureSelect(evt) {
     feature = evt.feature;
-    popup = new OpenLayers.Popup.AnchoredBubble("featurePopup",
+    popup = new OpenLayers.Popup.FramedCloud("featurePopup",
       feature.geometry.getBounds().getCenterLonLat(),
       new OpenLayers.Size(200,200),
       feature.attributes.description,
