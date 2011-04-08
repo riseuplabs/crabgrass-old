@@ -921,6 +921,8 @@ en:
 
   widget_index: "Widget {{index}}"
 
+  create_widget: "Create a Widget"
+
   # profiles
 
   may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
