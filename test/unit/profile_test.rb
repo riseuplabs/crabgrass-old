@@ -163,5 +163,18 @@ class ProfileTest < Test::Unit::TestCase
     profile.destroy
   end
 
+  def test_reuse_geo_locations
+    country = geo_countries(:armenia)
+    city = geo_places(:zangakatun)
+    warmgroup = groups(:warm)
+    coldgroup = groups(:cold)
+    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
+    coldgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
+    assert_equal warmgroup.profiles.public.geo_location_id, coldgroup.profiles.public.geo_location_id
+
+    coldgroup.profiles.public.update_location(:country_id => country.id)
+    assert_not_equal warmgroup.profiles.public.geo_location_id, coldgroup.profiles.public.geo_location_id
+  end
+
 end
 
