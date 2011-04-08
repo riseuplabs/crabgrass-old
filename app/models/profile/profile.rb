@@ -271,7 +271,7 @@ class Profile < ActiveRecord::Base
       self.geo_location = gl || GeoLocation.new(geo_location_options)
       self.save!
     elsif !self.geo_location.nil?
-      self.geo_location.destroy
+      self.geo_location.delete
     end
   end
 
