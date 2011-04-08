@@ -8,12 +8,12 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
             xml.href('/images/png/map/map-marker_'+count.to_s+'.png')
           }
         }
-        xml.hotSpot(:x=>"25", :y=>"0", :xunits=>"pixels", :yunits=>"pixels")
+        xml.hotSpot(:x=>"20", :y=>"0", :xunits=>"pixels", :yunits=>"pixels")
       }
     end
 
     @locations.each do |location|
-      location.group_count = location.group_count.to_i
+      location.group_count = location.groups.count.to_i
       xml.Placemark {
         xml.styleUrl('#'+kml_style_for_place(location.group_count)+'Marker')
         xml.description(
