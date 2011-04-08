@@ -264,16 +264,12 @@ class Profile < ActiveRecord::Base
       :geo_admin_code_id => params[:state_id],
       :geo_place_id => params[:city_id]
     }
+    geo_location_options.delete(:geo_admin_code_id) if geo_location_options[:geo_admin_code_id].nil?
     if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
-      if self.geo_location.nil?
-        geo_loc = GeoLocation.new(geo_location_options)
-        geo_loc.save!
-        self.geo_location = geo_loc
-        self.save!
-      else
-        ### do not create new records.
-        self.geo_location.update_attributes(geo_location_options)
-      end
+      # prevent making duplicate geo location objects
+      gl = GeoLocation.find(:first, :conditions => geo_location_options)
+      self.geo_location = gl || GeoLocation.new(geo_location_options)
+      self.save!
     elsif !self.geo_location.nil?
       self.geo_location.destroy
     end
