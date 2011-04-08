@@ -1,7 +1,8 @@
 class WidgetsController < ApplicationController
 
-  helper :widgets, 'modalbox', 'menu_items', 'locations', 'autocomplete'
-  permissions 'widgets'
+  # we need most helpers from the root controller for the preview actions
+  helper :widgets, 'modalbox', 'menu_items', 'locations', 'autocomplete', :groups, :account, :wiki, :page
+  permissions 'widgets', 'root', 'groups/base', 'wiki'
   before_filter :fetch_profile
   before_filter :login_required
   layout :no_layout_for_ajax
