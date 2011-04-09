@@ -17,7 +17,7 @@
       - f.tab do |t|
         - t.label I18n.t(panel.to_sym)
         - t.show_tab panel + '_panel'
-        - t.default (index == 0)
+        - t.default(index == 0)
   
   .page_scroll.rigid
     - page_panels.each do |panel|

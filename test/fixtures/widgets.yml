@@ -15,14 +15,7 @@ intro_<%= name %>:
   position: 1
   section: 1
   options:
-    :title: Welcome to MRU Youthplatform
-map_<%= name %>:
-  name: MapWidget
-  profile_id: <%= profile_id %>
-  position: 2
-  section: 1
-  options: 
-    :title: Projects in the Manu River Union
+    :title: Welcome to Crabgrass
 whoiswho_<%= name %>:
   name: TextBoxWidget
   profile_id: <%= profile_id %>

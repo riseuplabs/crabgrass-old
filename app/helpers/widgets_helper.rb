@@ -89,9 +89,9 @@ module WidgetsHelper
     end
   end
 
-  def view_all_url(type)
-    case type
-    when :users
+  def view_all_url(entities)
+    case entities
+    when 'Groups'
       people_directory_path(:browse)
     else
       group_directory_path(:action => :search)
