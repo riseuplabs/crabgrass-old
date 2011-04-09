@@ -15,7 +15,7 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
 
   def test_should_get_index
     login_as :blue
-    get :index, :id => 'fai'
+    get :index, :group_id => 'fai'
     assert_response :success
     assert_not_nil assigns(:menu_items)
   end
@@ -23,23 +23,23 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
   def test_should_create_menu_item
     login_as :blue
     assert_difference('MenuItem.count') do
-      post :create, :id => 'fai',
+      post :create, :group_id => 'fai',
       :menu_item => {:link => "http://test.link", :title => "different title"}
     end
   end
 
   def test_should_update_menu_item
     login_as :blue
-    put :update, :id => 'fai',
-      :menu_item_id => menu_items(:quickfinder_root2).id,
+    put :update, :group_id => 'fai',
+      :id => menu_items(:network).id,
       :menu_item => {:link => "http://test.link", :title => "different title"}
-    assert_response :success
+    assert_response :redirect
   end
 
   def test_should_destroy_menu_item
     login_as :blue
     assert_difference('MenuItem.count', -1) do
-      delete :destroy, :id => 'fai', :menu_item_id => menu_items(:tags).id
+      delete :destroy, :group_id => 'fai', :id => menu_items(:tags).id
     end
     assert_response :success
   end

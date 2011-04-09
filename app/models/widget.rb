@@ -148,11 +148,16 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    if type_options and type_options[:settings].include?(method)
+    if method_is_option?(method)
       self.options[method]
     else
       super
     end
   end
 
+  def method_is_option?(method)
+    type_options and
+    type_options[:settings] and
+    type_options[:settings].include?(method)
+  end
 end
