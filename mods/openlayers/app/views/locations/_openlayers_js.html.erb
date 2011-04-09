@@ -40,13 +40,17 @@
     $$('#map-container').first().insert({bottom: mapdiv});
 
     // wait for OpenLayers to be loaded before trying to load map.
-    new PeriodicalExecuter(function(pe) {
-        if (typeof OpenLayers != "undefined")
-        {
+    
+    function timeoutOrLoadMap(){
+        if (typeof OpenLayers != "undefined") {
             loadMap();
-            pe.stop();
         }
-    }, 0.25);
+        else {
+            setTimeout("timeoutOrLoadMap()", 250)
+        }
+    }
+
+    timeoutOrLoadMap();
 
     function loadMap() {
     var map;
