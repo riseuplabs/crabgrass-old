@@ -7,7 +7,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
           xml.Icon{
             xml.href('/images/png/map/map-marker_'+count.to_s+'.png')
           }
-          xml.hotSpot(:x=>"0.5", :y=>"0", :xunits=>"fraction", :yunits=>"fraction")
+          xml.hotSpot(:x=>"0.5", :y=>"0.25", :xunits=>"fraction", :yunits=>"fraction")
         }
       }
     end
