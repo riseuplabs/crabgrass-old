@@ -63,7 +63,7 @@ module CustomAppearanceExtension
 
     def sass_override_code
       text = ""
-      parameters.each {|k, v| text << %Q[!#{k} = "#{v}"\n]}
+      parameters.each {|k, v| text << %Q[$#{k} : "#{v}"\n]}
       text << "\n"
     end
 
