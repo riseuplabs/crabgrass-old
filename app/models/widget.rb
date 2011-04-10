@@ -48,10 +48,10 @@ class Widget < ActiveRecord::Base
 
   belongs_to :profile
   validates_presence_of :profile_id
+  validates_presence_of :section
+  acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
   serialize :options, Hash
-
-  acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
   has_many :menu_items, :order => 'position' do
 
