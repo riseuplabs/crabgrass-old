@@ -1,0 +1,11 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  .info
+    This is the Wiki Widget. It displays the site wiki.
+  .info
+    There are no options to set. You can change the content of the wiki on site home itself.
+  %div#mb-footer
+    - if @widget.new_record?
+      = f.submit I18n.t(:close_button)
+    -else
+      = close_modal_button

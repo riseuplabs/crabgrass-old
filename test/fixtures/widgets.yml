@@ -1,7 +1,4 @@
-<% Site.all.each do |s| %>
-<% name = s.name %>
-<% next unless s.network && s.network.profiles.public %>
-<% profile_id = s.network.profiles.public.id %>
+<% {'site1'=> 5, 'site2' => 6, 'unlimited' => 6}.each do |name, profile_id| %>
 menu_bar_<%= name %>:
   name: MenuBarWidget
   profile_id: <%= profile_id %>
@@ -15,14 +12,7 @@ intro_<%= name %>:
   position: 1
   section: 1
   options:
-    :title: Welcome to MRU Youthplatform
-map_<%= name %>:
-  name: MapWidget
-  profile_id: <%= profile_id %>
-  position: 2
-  section: 1
-  options: 
-    :title: Projects in the Manu River Union
+    :title: Welcome to Crabgrass
 whoiswho_<%= name %>:
   name: TextBoxWidget
   profile_id: <%= profile_id %>

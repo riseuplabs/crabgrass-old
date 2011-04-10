@@ -4,7 +4,7 @@ namespace :cg do
     all_gl = GeoLocation.find(:all)
     all_gl.each do |gl|
       next unless GeoLocation.find_by_id(gl.id)
-      geo_country_cond = "geo_country_id=#{gl.id}"
+      geo_country_cond = "geo_country_id=#{gl.geo_country_id}"
       # we need to explictly include IS NULL where conditions because otherwise if a nil key is included, rails drops the condition
       # if other conditions are dropped, we end up with results that are too inclusive because they only look for one matching column.
       geo_admin_cond = !gl.geo_admin_code_id.nil? ? "geo_admin_code_id=#{gl.geo_admin_code_id}" : "geo_admin_code_id IS NULL"

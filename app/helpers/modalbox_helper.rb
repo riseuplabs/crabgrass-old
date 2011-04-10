@@ -144,7 +144,7 @@ module ModalboxHelper
     #
     # While loading, the modalbox spinner is shown. When complete, the modalbox is hidden.
     #
-    def link_to_remote_with_confirm(name, options = {}, html_options = nil)
+    def link_to_remote_with_confirm(body, options = {}, html_options = nil)
       if options.is_a?(Hash) and options[:confirm]
         message = options.delete(:confirm)
       elsif html_options.is_a?(Hash) and html_options[:confirm]
@@ -152,6 +152,7 @@ module ModalboxHelper
       else
         message = nil
       end
+      title = options[:title] || escape_javascript(body)
 
       if message
         ## if called when the modalbox is already open, it is important that we
@@ -160,9 +161,11 @@ module ModalboxHelper
         options[:loading]  = ['Modalbox.spin()', options[:loading]].compact.join('; ')
         options[:loaded] = ['Modalbox.back()', options[:loaded]].compact.join('; ')
         ok_function = remote_function(options)
-        link_to_function(name, %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{name}"})], html_options)
+        link_to_function(body,
+          %[Modalbox.confirm("#{message}", {ok_function:"#{ok_function}", title:"#{title}"})],
+          html_options)
       else
-        link_to_remote_without_confirm(name, options, html_options)
+        link_to_remote_without_confirm(body, options, html_options)
       end
     end
     #alias_method_chain :link_to_remote, :confirm
@@ -173,7 +176,7 @@ module ModalboxHelper
     # If cancel is pressed, then nothing happens.
     # If OK is pressed, then a form submit happens, using the action and method specified.
     #
-    def link_to_with_confirm(name, options = {}, html_options = nil)
+    def link_to_with_confirm(body, options = {}, html_options = nil)
       if options.is_a?(Hash) and options[:confirm]
         # this seems like a bad form. the confirm should be in html_options.
         # is this really used anywhere?
@@ -194,13 +197,13 @@ module ModalboxHelper
         token = form_authenticity_token
         action = url_for(action) if action.is_a?(Hash)
         ok = options[:ok] || I18n.t(:ok_button)
-        title = options[:title] || name
+        title = options[:title] || escape_javascript(body)
         cancel = options[:cancel] || I18n.t(:cancel_button)
-        link_to_function(name,
+        link_to_function(body,
               %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
               html_options)
       else
-        link_to_without_confirm(name, options, html_options)
+        link_to_without_confirm(body, options, html_options)
       end
     end
     #alias_method_chain :link_to, :confirm

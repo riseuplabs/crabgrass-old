@@ -48,10 +48,10 @@ class Widget < ActiveRecord::Base
 
   belongs_to :profile
   validates_presence_of :profile_id
+  validates_presence_of :section
+  acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
   serialize :options, Hash
-
-  acts_as_list :scope => 'profile_id = #{profile_id} AND section = #{section}'
 
   has_many :menu_items, :order => 'position' do
 
@@ -148,11 +148,16 @@ class Widget < ActiveRecord::Base
   end
 
   def method_missing(method, *args)
-    if type_options and type_options[:settings].include?(method)
+    if method_is_option?(method)
       self.options[method]
     else
       super
     end
   end
 
+  def method_is_option?(method)
+    type_options and
+    type_options[:settings] and
+    type_options[:settings].include?(method)
+  end
 end

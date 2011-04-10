@@ -11,11 +11,10 @@ class WidgetsTest < ActiveSupport::TestCase
   end
 
   def test_registry_defaults
-    options = Widget.widgets["DefaultWidget"]
+    options = Conf.widgets["DefaultWidget"]
     expected = { :icon => '/images/widgets/default.png',
       :translation => :default_widget,
       :description => :default_widget_description,
-      :settings => [:title],
       :columns => []
     }
     assert_equal expected, options
@@ -23,6 +22,8 @@ class WidgetsTest < ActiveSupport::TestCase
 
   def test_registered_options_validate
     widget = Widget.new :name => "OnlyTitleAndTextWidget",
+      :profile_id => 1,
+      :section => 1,
       :options => {:title => 'Title', :text => 'Lorem Ipsum'}
     assert widget.save
     assert_equal "OnlyTitleAndTextWidget", widget.reload.name
@@ -31,6 +32,8 @@ class WidgetsTest < ActiveSupport::TestCase
   def test_unregistered_options_are_invalid
     assert_raise ActiveRecord::RecordInvalid do
       invalid = Widget.create! :name => "OnlyTitleAndTextWidget",
+        :profile_id => 1,
+        :section => 1,
         :options => {:subtitle => 'SubTitle', :text => 'Lorem Ipsum'}
     end
   end
@@ -38,6 +41,8 @@ class WidgetsTest < ActiveSupport::TestCase
   def test_unregistered_names_are_invalid
     assert_raise ActiveRecord::RecordInvalid do
       invalid = Widget.create! :name => "OnlySubtitleWidget",
+        :profile_id => 1,
+        :section => 1,
         :options => {:subtitle => 'SubTitle', :text => 'Lorem Ipsum'}
     end
   end

@@ -1,12 +1,19 @@
 class MenuItemsController < ApplicationController
+
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
+  stylesheet 'menu_items'
+  helper 'widgets', 'groups'
+  permissions 'widgets', 'groups/base', 'groups/requests'
+
   prepend_before_filter :fetch_data
   before_filter :login_required
   before_filter :load_menu_items
-  stylesheet 'menu_items'
-  permissions 'widgets'
+  layout :no_layout_for_ajax
 
   verify :only => :update, :method => :put
+
+  def index
+  end
 
   # not used yet.
   #def show
@@ -25,7 +32,7 @@ class MenuItemsController < ApplicationController
 
   def create
     if @menu_item=@menu_items.create!(params[:menu_item])
-      @parent = @menu_item.parent
+      @parent_item = @menu_item.parent
       flash[:notice] = 'Menu item was successfully created.'
     end
     render_parent_form
@@ -60,9 +67,17 @@ class MenuItemsController < ApplicationController
 
   def fetch_data
     # must have a widget
-    @widget = Widget.find(params[:widget_id])
-    @profile = @widget.profile
-    @entity = @profile.entity
+    if params[:group_id]
+      @group = Group.find_by_name params[:group_id]
+      @profile = @group.profiles.public
+      @widget = @profile.widgets.find_by_name 'MenuBarWidget'
+      @second_nav = 'administration'
+      @third_nav = 'settings'
+    else
+      @widget = Widget.find params[:widget_id]
+      @profile = @widget.profile
+      @group = @profile.entity
+    end
   end
 
   def authorized?
@@ -72,10 +87,18 @@ class MenuItemsController < ApplicationController
   def render_parent_form
     if request.xhr?
       render
-    elsif @parent
+    elsif @parent_item
       render :action => :edit
+    elsif @group
+      redirect_to group_menu_items_path(@group)
     else
-      redirect_to :controller => :widget, :action => :index, :id => @widget.id
+      redirect_to widget_menu_items_path(@widget)
     end
+  end
+
+  protected
+
+  def no_layout_for_ajax
+    request.xhr? ? false : 'header'
   end
 end

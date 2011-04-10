@@ -29,14 +29,14 @@
   section: 2
   options:
     :title: Most Active Members
-    :type: :users
+    :entities: 'Users'
     :recent: false
 -
   name: NetworkingWidget
   section: 2
   options:
     :title: Most Active Groups
-    :type: :groups
+    :entities: 'Groups'
     :recent: false
 -
   name: AdminLinksWidget
