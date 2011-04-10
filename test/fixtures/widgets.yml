@@ -1,7 +1,4 @@
-<% Site.all.each do |s| %>
-<% name = s.name %>
-<% next unless s.network && s.network.profiles.public %>
-<% profile_id = s.network.profiles.public.id %>
+<% {'site1'=> 5, 'site2' => 6, 'unlimited' => 6}.each do |name, profile_id| %>
 menu_bar_<%= name %>:
   name: MenuBarWidget
   profile_id: <%= profile_id %>
