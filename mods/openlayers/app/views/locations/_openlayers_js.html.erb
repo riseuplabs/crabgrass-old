@@ -1,56 +1,30 @@
 <script type='text/javascript'>
   function doAllOpenLayers() {
-    function loadjscssfile(tag, filetype){
+    function loadcssfile(tag, filetype){
       var filename;
-      if (filetype=="js"){ //if filename is a external JavaScript file
-        var match = /src=&quot;(\S+)&quot;/.exec(tag);
-        if (match) {
-          $$('head').first().insert({
-            bottom: new Element('script', {
-            type: 'text/javascript',
-            src: match[1]
-            })
-          });
-        }
-      }
-      else if (filetype=="css"){ //if filename is an external CSS file
-        var match = /href=&quot;(\S+)&quot;/.exec(tag);
-        if (match) {
-          filename = match[1];
-          var fileref=document.createElement("link");
-          fileref.setAttribute("rel", "stylesheet");
-          fileref.setAttribute("type", "text/css");
-          fileref.setAttribute("href", filename);
-          $$('head').first().insert({
-              bottom: fileref
-          });
-        }
+      var match = /href=&quot;(\S+)&quot;/.exec(tag);
+      if (match) {
+        filename = match[1];
+        var fileref=document.createElement("link");
+        fileref.setAttribute("rel", "stylesheet");
+        fileref.setAttribute("type", "text/css");
+        fileref.setAttribute("href", filename);
+        $$('head').first().insert({
+            bottom: fileref
+        });
       }
      } // end function loadjscssfile
 
-    loadjscssfile('<%= h stylesheet_link_tag("style", :plugin => "openlayers") %>', "css");
+    loadcssfile('<%= h stylesheet_link_tag("style", :plugin => "openlayers") %>', "css");
     <% if @map and @map.override_stylesheet %>
-      loadjscssfile('<%= h stylesheet_link_tag(@map.override_stylesheet) %>', "css");
+      loadcssfile('<%= h stylesheet_link_tag(@map.override_stylesheet) %>', "css");
     <% end %>
-    loadjscssfile('<%= h javascript_include_tag("OpenLayers", :plugin => "openlayers") %>', "js"); ////dynamically load and add this .css file
-    loadjscssfile('<%= h javascript_include_tag("OpenStreetMap", :plugin => "openlayers") %>', "js");
 
     // inject map div
     var mapdiv = new Element('div', {id: 'map', style: 'width: <%= @map.width %>px; height: <%= @map.height %>px;'});
     $$('#map-container').first().insert({bottom: mapdiv});
 
-    // wait for OpenLayers to be loaded before trying to load map.
-    
-    function timeoutOrLoadMap(){
-        if (typeof OpenLayers != "undefined") {
-            loadMap();
-        }
-        else {
-            setTimeout("timeoutOrLoadMap()", 250)
-        }
-    }
-
-    timeoutOrLoadMap();
+    loadMap();
 
     function loadMap() {
     var map;
