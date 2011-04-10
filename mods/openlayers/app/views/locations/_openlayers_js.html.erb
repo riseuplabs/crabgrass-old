@@ -1,123 +1,69 @@
 <script type='text/javascript'>
-  function doAllOpenLayers() {
-    function loadjscssfile(tag, filetype){
-      var filename;
-      if (filetype=="js"){ //if filename is a external JavaScript file
-        var match = /src=&quot;(\S+)&quot;/.exec(tag);
-        if (match) {
-          $$('head').first().insert({
-            bottom: new Element('script', {
-            type: 'text/javascript',
-            src: match[1]
-            })
-          });
-        }
-      }
-      else if (filetype=="css"){ //if filename is an external CSS file
-        var match = /href=&quot;(\S+)&quot;/.exec(tag);
-        if (match) {
-          filename = match[1];
-          var fileref=document.createElement("link");
-          fileref.setAttribute("rel", "stylesheet");
-          fileref.setAttribute("type", "text/css");
-          fileref.setAttribute("href", filename);
-          $$('head').first().insert({
-              bottom: fileref
-          });
-        }
-      }
-     } // end function loadjscssfile
-
-    loadjscssfile('<%= h stylesheet_link_tag("style", :plugin => "openlayers") %>', "css");
-    <% if @map and @map.override_stylesheet %>
-      loadjscssfile('<%= h stylesheet_link_tag(@map.override_stylesheet) %>', "css");
-    <% end %>
-    loadjscssfile('<%= h javascript_include_tag("OpenLayers", :plugin => "openlayers") %>', "js"); ////dynamically load and add this .css file
-    loadjscssfile('<%= h javascript_include_tag("OpenStreetMap", :plugin => "openlayers") %>', "js");
-
-    // inject map div
-    var mapdiv = new Element('div', {id: 'map', style: 'width: <%= @map.width %>px; height: <%= @map.height %>px;'});
-    $$('#map-container').first().insert({bottom: mapdiv});
-
-    // wait for OpenLayers to be loaded before trying to load map.
-    new PeriodicalExecuter(function(pe) {
-        if (typeof OpenLayers != "undefined")
-        {
-            loadMap();
-            pe.stop();
-        }
-    }, 0.25);
-
-    function loadMap() {
-    var map;
-    var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
-      new OpenLayers.Control.PanZoom(),
-      new OpenLayers.Control.ArgParser(),
-      new OpenLayers.Control.Attribution()]
-    var options = {
-      theme: false,
-      maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-      numZoomLevels: 19,
-      maxResolution: 156543.0399,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326"),
-      controls: controls
-    };
-    map = new OpenLayers.Map('map', options);
-    map.addLayer(new OpenLayers.Layer.OSM());
-    var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
-      {
+  var map;
+  var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
+    new OpenLayers.Control.PanZoom(),
+    new OpenLayers.Control.ArgParser(),
+    new OpenLayers.Control.Attribution()]
+  var options = {
+    theme: false,
+    maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+    numZoomLevels: 19,
+    maxResolution: 156543.0399,
+    units: 'm',
+    projection: new OpenLayers.Projection("EPSG:900913"),
+    displayProjection: new OpenLayers.Projection("EPSG:4326"),
+    controls: controls
+  };
+  map = new OpenLayers.Map('map', options);
+  map.addLayer(new OpenLayers.Layer.OSM());
+  var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
+     {
       format: OpenLayers.Format.KML, 
       formatOptions: {
       extractStyles: true, 
       extractAttributes: true
-      },
-      projection: map.displayProjection
-    });
-    map.addLayer(kml);
-    // Events for the objects of the KML-Data
-    kml.events.on({
-      'featureselected': onFeatureSelect,
-      'featureunselected': onFeatureUnselect
-    });
+     },
+    projection: map.displayProjection
+  });
+  map.addLayer(kml);
+  // Events for the objects of the KML-Data
+  kml.events.on({
+   'featureselected': onFeatureSelect,
+   'featureunselected': onFeatureUnselect
+  });
 
-    var control = new OpenLayers.Control.SelectFeature(kml);
-    map.addControl(control);
-    control.activate();
-             
-    map.addControl(new OpenLayers.Control.LayerSwitcher());
+  var control = new OpenLayers.Control.SelectFeature(kml);
+  map.addControl(control);
+  control.activate();
+           
+  map.addControl(new OpenLayers.Control.LayerSwitcher());
 
-    var lonLat = new OpenLayers.LonLat(<%= @map.mapcenterlong.to_i %>,<%= @map.mapcenterlat.to_i %>).transform(map.displayProjection,  map.projection);
-    map.setCenter (lonLat, 2); 
+  var lonLat = new OpenLayers.LonLat(<%= @map.mapcenterlong.to_i %>,<%= @map.mapcenterlat.to_i %>).transform(map.displayProjection,  map.projection);
+  map.setCenter (lonLat, 2); 
 
-    function onPopupClose(evt) {
-      control.unselect(this.feature);
+  function onPopupClose(evt) {
+    control.unselect(this.feature);
+  }
+  function onFeatureSelect(evt) {
+    feature = evt.feature;
+    popup = new OpenLayers.Popup.FramedCloud("featurePopup",
+      feature.geometry.getBounds().getCenterLonLat(),
+      new OpenLayers.Size(200,200),
+      feature.attributes.description,
+      null, true, onPopupClose);
+    feature.popup = popup;
+    popup.feature = feature;
+    map.addPopup(popup);
+  }
+  function onFeatureUnselect(evt) {
+    feature = evt.feature;
+    if (feature.popup) {
+      popup.feature = null;
+      map.removePopup(feature.popup);
+      feature.popup.destroy();
+      feature.popup = null;
     }
-    function onFeatureSelect(evt) {
-      feature = evt.feature;
-      popup = new OpenLayers.Popup.FramedCloud("featurePopup",
-        feature.geometry.getBounds().getCenterLonLat(),
-        new OpenLayers.Size(200,200),
-        feature.attributes.description,
-        null, true, onPopupClose);
-      feature.popup = popup;
-      popup.feature = feature;
-      map.addPopup(popup);
-    }
-    function onFeatureUnselect(evt) {
-      feature = evt.feature;
-      if (feature.popup) {
-        popup.feature = null;
-        map.removePopup(feature.popup);
-        feature.popup.destroy();
-        feature.popup = null;
-      }
-    }
-    //map.zoomToMaxExtent();
-    map.zoomTo(<%= @map.zoomlevel %>);
-  } // end function loadMap()
-  }// end function doAllOpenLayers
-
-  document.observe("dom:loaded", doAllOpenLayers());
+  }
+  //map.zoomToMaxExtent();
+  map.zoomTo(<%= @map.zoomlevel %>);
 </script>

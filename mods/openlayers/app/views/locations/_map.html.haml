@@ -1,3 +1,4 @@
-#map-container
--# the javascript loads everything: the js and css in the html head, the map div, and the js that loads the OpenLayers var
+- content_for :html_head do
+  = render :partial => 'locations/map_stylesheets_and_js'
+#map{:style => "width: #{@map.width}px; height: #{@map.height}px;"}
 = render :partial => 'locations/openlayers_js'
