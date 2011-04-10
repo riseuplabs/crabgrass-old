@@ -201,12 +201,18 @@ class ApplicationController < ActionController::Base
   # for example:
   #
   #   javascript 'wiki_edit', :action => :edit
+  #   javascript 'OpenLayers', :plugin => :openlayers
   #
   def self.javascript(*js_files)
     if js_files.any?
       options = js_files.last.is_a?(Hash) ? js_files.pop : {}
       scripts  = read_inheritable_attribute("javascript") || {}
       index   = options[:action] || :all
+      if plugin = options[:plugin]
+        js_files = js_files.map do |f|
+          "../../plugin_assets/#{plugin}/javascripts/#{f}"
+        end
+      end
       scripts[index] ||= []
       scripts[index] << js_files
       write_inheritable_attribute "javascript", scripts
@@ -241,7 +247,7 @@ class ApplicationController < ActionController::Base
   # render locations kml
   def render_kml_for_entities(collection)
     @entities = collection
-    render :template => '/map/index.kml.builder', :layout => false 
+    render :template => '/map/index.kml.builder', :layout => false
   end
 
   private
