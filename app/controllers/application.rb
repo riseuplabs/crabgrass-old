@@ -207,6 +207,7 @@ class ApplicationController < ActionController::Base
       options = js_files.last.is_a?(Hash) ? js_files.pop : {}
       scripts  = read_inheritable_attribute("javascript") || {}
       index   = options[:action] || :all
+      js_files.collect!{|js| js+':'+options[:plugin]} if options.has_key?(:plugin)
       scripts[index] ||= []
       scripts[index] << js_files
       write_inheritable_attribute "javascript", scripts
