@@ -5,7 +5,7 @@
   %ol#menu_items_list
     = render :partial => '/menu_items/menu_item', :collection => menu_items
     = sort_menu_items_js('menu_items_list', spinner_id)
-  - menu_item = MenuItem.new :parent => @parent || @menu_item
+  - menu_item = MenuItem.new :parent => @parent_item || @menu_item
   .add[menu_item, :list]
     = toggle_object_display(I18n.t(:add_button), menu_item, :list, :form)
   .add[menu_item, :form]{:style => 'display:none; width:30em'}
