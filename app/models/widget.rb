@@ -19,6 +19,7 @@ class Widget < ActiveRecord::Base
       :icon => "/images/widgets/#{prefix}.png",
       :translation => underscore.to_sym,
       :description => "#{underscore}_description".to_sym,
+      :settings => [],
       :columns => []
     }
     options.reverse_merge! sane_defaults
@@ -157,7 +158,6 @@ class Widget < ActiveRecord::Base
 
   def method_is_option?(method)
     type_options and
-    type_options[:settings] and
     type_options[:settings].include?(method)
   end
 end
