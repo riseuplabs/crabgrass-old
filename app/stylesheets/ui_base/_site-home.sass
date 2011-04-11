@@ -281,10 +281,42 @@ ul.angle-quote
     font-size: 12px
   .tag1
     font-size: 10px
+
+//
+// MAP
+
+       
+#map-container
+  overflow: hidden
+  position: relative
+  width: 500px
+  
+#popup_entities_list
+  h3
+    +bordered-btm($pale-grey, solid)
+    color: $header
+    font-size: 14px
+    padding: 0 0 4px 30px
     
+.pointer
+  cursor: pointer
+  
+ul#entities
+  width: 200px
+  li
+    +bordered-btm($pale-grey, solid)
+    padding: 5px 0
+    margin: 5px 0
     
+map_summary_footer
+  +bordered-top(1px, $pale-grey)
+  padding: 5px 0
+  
+  
+  
 //
 // ADMIN edit site structure
+
 
 .hoverActive
   border: 1px dashed #000
