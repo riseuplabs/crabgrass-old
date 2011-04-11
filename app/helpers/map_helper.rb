@@ -14,7 +14,9 @@ module MapHelper
     link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
     link_to_remote(link_content,
       :url => '/groups/show',
-      :with => "'id=#{ent.name}&map_summary=1'")
+      :with => "'id=#{ent.name}&map_summary=1'",
+      :loading => "$('show-ent-"+ent.id.to_s+"-spinner').show();",
+      :complete => "$('show-ent-"+ent.id.to_s+"-spinner').hide();")
   end
 
   def geo_data_for_kml(entity)
