@@ -199,8 +199,12 @@ class GroupsController < Groups::BaseController
   end
 
   def show_map_summary
+
     render :update do |page|
+      # in case there are any of these already loaded, remove them
+      page << "if ( $('popup_entity_"+@group.id.to_s+"') == undefined ) {"
       page.insert_html(:after, 'popup_entities_list', :partial => '/groups/profiles/map_summary')
+      page << "}else { $('popup_entity_"+@group.id.to_s+"').show(); }"
       page.hide 'popup_entities_list'
     end
   end
