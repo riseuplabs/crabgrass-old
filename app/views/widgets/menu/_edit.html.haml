@@ -1,14 +1,17 @@
-%h4.menu_entries
-  Menu Entries
-.menu_entries
-  = list_menu_items @menu_items.roots
-
 - form_for @widget do |f|
   = yield :widget_fields
   %ul
     %li
       = f.label :title
       = f.text_field :title
-  %div#mb-footer
+  %div#mb-footer-absolute
     = f.submit
+
+%div.other    
+  %h4.menu_entries
+    Menu Entries
+  .menu_entries
+    = list_menu_items @menu_items.roots
+  
+%div.footer-height
 

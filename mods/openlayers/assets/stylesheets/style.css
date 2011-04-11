@@ -126,7 +126,7 @@ div.olControlMousePosition {
 }
 
 .olPopupContent {
-    padding:5px;
+    padding: 5px 0 5px 5px;
     overflow: auto;
 }    
 .olControlNavToolbar { 
@@ -312,12 +312,12 @@ div.olControlSaveFeaturesItemInactive {
 }
 
 .olPopupCloseBox {
-  background: url("images/close.gif") no-repeat;
+  background: url("/images/close.png") 6px 0 no-repeat;
   cursor: pointer;
 }
 
 .olFramedCloudPopupContent {
-    padding: 5px;
+    padding: 5px 0 5px 5px;
     overflow: auto;
 }
 

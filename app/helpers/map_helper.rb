@@ -5,18 +5,21 @@ module MapHelper
       render :partial => '/map/kml_entities_list.html.haml',
         :locals => {:location => location}
     else
-      @group = location.groups.visible_by(current_user).first
-      render :partial => '/groups/profiles/map_summary.html.haml', :locals => {:no_back_link => 1}
+      group = location.groups.visible_by(current_user).first
+      render :partial => '/groups/profiles/map_summary.html.haml',
+        :locals => {:no_back_link => 1, :group => group }
     end
   end
 
   def link_to_kml_entity(ent)
-    link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
-    link_to_remote(link_content,
-      :url => '/groups/show',
-      :with => "'id=#{ent.name}&map_summary=1'",
-      :loading => "$('show-ent-"+ent.id.to_s+"-spinner').show();",
-      :complete => "$('show-ent-"+ent.id.to_s+"-spinner').hide();")
+    avatar_url = avatar_url_for(ent, 'small')
+    style = "background-image:url(#{avatar_url});"
+    link_to_remote ent.display_name,
+      { :url => '/groups/show', :with => "'id=#{ent.name}&map_summary=1'"
+        :loading => "$('show-ent-"+ent.id.to_s+"-spinner').show();",
+        :complete => "$('show-ent-"+ent.id.to_s+"-spinner').hide();"
+      },
+      { :class => 'big_icon', :style => style }
   end
 
   def geo_data_for_kml(entity)

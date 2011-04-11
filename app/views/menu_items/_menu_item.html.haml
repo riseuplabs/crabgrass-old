@@ -1,13 +1,11 @@
-%li.menu_item_drag_handle[menu_item]{:style=>'width:30em'}
+%li.menu_item_drag_handle[menu_item]
   .hover[menu_item, :list]
-    %div(style="float: right; width: 7em; text-align: right;")
+    %div.edit
       = edit_menu_item_link menu_item
-      %br/
       - spinner_id = dom_id(menu_item, :delete_button) # id used to show the spinner
       = spinner(spinner_id)
       = link_to_function(I18n.t(:delete), destroy_menu_item_remote_function(menu_item, spinner_id))
-    %b= menu_item.title
-    <br/>
+    = menu_item.title
     = menu_item.link
   - unless menu_item.may_have_children?
     .hover[menu_item, :form]{:style => 'display:none'}

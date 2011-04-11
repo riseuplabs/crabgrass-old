@@ -99,7 +99,7 @@ module ModalboxHelper
   #
   MODAL_CALLBACKS = [:before_load, :after_load, :before_hide, :after_hide, :after_resize, :on_show, :on_update]
   def options_for_modalbox_function(options)
-    hash = {}
+    hash = {:width => 524}
     options.each do |key,value|
        if ActionView::Helpers::PrototypeHelper::CALLBACKS.include?(key)
          name = 'on' + key.to_s.capitalize
