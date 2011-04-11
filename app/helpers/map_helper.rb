@@ -15,7 +15,7 @@ module MapHelper
     avatar_url = avatar_url_for(ent, 'small')
     style = "background-image:url(#{avatar_url});"
     link_to_remote ent.display_name,
-      { :url => '/groups/show', :with => "'id=#{ent.name}&map_summary=1'"
+      { :url => '/groups/show', :with => "'id=#{ent.name}&map_summary=1'",
         :loading => "$('show-ent-"+ent.id.to_s+"-spinner').show();",
         :complete => "$('show-ent-"+ent.id.to_s+"-spinner').hide();"
       },
