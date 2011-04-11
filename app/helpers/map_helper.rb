@@ -11,10 +11,11 @@ module MapHelper
   end
 
   def link_to_kml_entity(ent)
-    link_content = content_tag('span', avatar_for(ent, 'small') + ent.display_name)
-    link_to_remote(link_content,
-      :url => '/groups/show',
-      :with => "'id=#{ent.name}&map_summary=1'")
+    avatar_url = avatar_url_for(ent, 'small')
+    style = "background-image:url(#{avatar_url});"
+    link_to_remote ent.display_name,
+      { :url => '/groups/show', :with => "'id=#{ent.name}&map_summary=1'"},
+      { :class => 'big_icon', :style => style }
   end
 
   def geo_data_for_kml(entity)
