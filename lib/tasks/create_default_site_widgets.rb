@@ -41,7 +41,7 @@ def self.add_widgets(site, widgets)
   puts "Creating widgets for site #{site.name}..."
   widgets.each do |params|
     puts "Creating widget #{params['name']}."
-    unless profile.widgets.create(params)
+    unless profile.widgets.create(params).save
       puts "... failed - please make sure the widget settings are valid."
     end
   end
