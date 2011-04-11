@@ -5,6 +5,7 @@ TextBoxWidget:
   :settings:
     - :title
     - :text
+    - :link
   :width: 1
 ImageTitleWidget:
   :columns:
@@ -12,6 +13,7 @@ ImageTitleWidget:
   :settings:
     - :title
     - :image
+    - :link
 MapWidget:
   :columns:
     - 1
