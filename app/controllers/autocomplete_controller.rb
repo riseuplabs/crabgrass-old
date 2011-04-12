@@ -96,7 +96,7 @@ class AutocompleteController < ApplicationController
       locations = []
     else
       country = GeoCountry.find(params[:country])
-      locations = country.geo_places.named_like(params[:query]).largest(10)
+      locations = country.geo_places.named_like(params[:query]).largest(20)
     end
     render_locations_to_json(locations)
   end
