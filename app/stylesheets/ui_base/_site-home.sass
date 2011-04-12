@@ -545,8 +545,9 @@ a.back
   .other
     margin: 18px 0 14px
   h4.menu_entries
-    font-size: 13px
+    font-size: 14px
     color: $header
+    line-height: 2
   #menu_items_form
     li.menu_item_drag_handle
       width: 476px
@@ -558,9 +559,11 @@ a.back
       .edit
         +float-right
         font-weight: normal
-  #list_menu_item_new a
-    background: url(/images/png/16/plus.png) no-repeat
-    padding: 0 18px
+  #list_menu_item_new.add 
+    padding-top: 18px
+    a
+      background: url(/images/png/16/plus.png) no-repeat
+      padding: 0 18px
   #form_menu_item_new, form.edit_menu_item 
     +clearfix
     background: $white
