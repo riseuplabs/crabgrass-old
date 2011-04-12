@@ -28,6 +28,7 @@ class MenuItemsController < ApplicationController
   #end
 
   def edit
+    @parent_item = @menu_item
   end
 
   def create
