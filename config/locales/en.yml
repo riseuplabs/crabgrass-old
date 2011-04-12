@@ -1721,6 +1721,8 @@ en:
 
   administer_site: "Administer Site"
   edit_appearance: "Edit Appearance"
+  edit_site_home_structure: "Edit Site Home Structure"
+  site_home_structure: "Site Home Structure"
 
   ##
   ## MODERATION
