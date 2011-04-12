@@ -176,5 +176,20 @@ class ProfileTest < Test::Unit::TestCase
     assert_not_equal warmgroup.profiles.public.geo_location_id, coldgroup.profiles.public.geo_location_id
   end
 
+  def test_location_with_city_always_sets_admin_code
+    country = geo_countries(:armenia)
+    city = geo_places(:zangakatun)
+    warmgroup = groups(:warm)
+    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
+    assert_not_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
+
+    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id, :admin_code_id => '')
+    assert_not_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
+
+    coldgroup = groups(:cold)
+    warmgroup.profiles.public.update_location(:country_id => country.id)
+    assert_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
+  end
+
 end
 
