@@ -125,7 +125,7 @@ class Widget < ActiveRecord::Base
 
   def width
     if self.section == 2
-      18
+      16
     elsif self.small?
       10
     else
