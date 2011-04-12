@@ -1,8 +1,8 @@
 - group = @group unless local_assigns[:group]
 - profile = group.profiles.public
-%div{:id => ('popup_entity_'+group.id.to_s)}
+%div{:id => ('popup_entity_'+group.id.to_s), :class => 'single-group'}
+  = avatar_for(group, 'small')
   %h3
-    = avatar_for(group, 'small') + ' '
     = group.display_name
   %p
     = profile.summary_html

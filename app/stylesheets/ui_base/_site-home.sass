@@ -287,7 +287,7 @@ ul.angle-quote
 //
 // MAP
 
-       
+      
 #map-container
   overflow: hidden
   position: relative
@@ -303,33 +303,49 @@ ul.angle-quote
 .pointer
   cursor: pointer
   
-ul#entities
-  width: 200px
-  li
-    +bordered-btm($pale-grey, solid)
-    padding: 5px 0
-    margin: 5px 0
+ul#entities li
+  +bordered-btm($pale-grey, solid)
+  background: url(/images/png/16/arrow-right-paleblue.png) no-repeat 240px 10px
+  padding: 5px 0 8px 
+  margin: 5px 0
+  height: 24px
+  a.big_icon
+    padding: 9px 0 9px 40px
+    margin-left: 6px
+    color: $text
     
 #map_summary_footer
   +bordered-top(1px, $pale-grey)
+  +clearfix
   bottom: 0
-  padding: 5px 0
+  padding: 5px 0 0
   position: absolute
   width: 98%
   
-#featurePopup_contentDiv 
+#featurePopup_contentDiv
+  .single-group img
+    +float-left
+    margin-right: 6px
   h3
     color: $header
     font-size: 14px
-  p
-    width: 240px
     line-height: 1.2
-    margin-top: 10px
+    min-height: 2em
+    &.big_icon
+      padding: 9px 0 9px 40px
+      margin-left: 6px
+      background-position: 0 50%
+    &.small_icon
+      margin: 0
+  p
+    line-height: 1.3
+    margin: 16px 0 16px 10px
   .small_icon
+    +clearfix
     line-height: 2
     min-height: 20px
     padding-left: 26px
-    margin: 10px 0 0 10px
+    margin: 10px 0 0 12px
     
   
 //
