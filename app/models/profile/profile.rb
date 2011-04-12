@@ -266,7 +266,9 @@ class Profile < ActiveRecord::Base
         :geo_admin_code_id => params[:state_id],
         :geo_place_id => params[:city_id]
       }
-      geo_location_options.delete(:geo_admin_code_id) if geo_location_options[:geo_admin_code_id].nil?
+      if gp = GeoPlace.find_by_id(params[:city_id])
+        geo_location_options[:geo_admin_code_id] = gp.geo_admin_code_id
+      end
       if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
         # prevent making duplicate geo location objects
         gl = GeoLocation.find(:first, :conditions => geo_location_options)
