@@ -525,7 +525,7 @@ a.back
     height: 24px
     padding: 20px 0 23px 10px
     position: absolute
-    width: 464px   
+    width: 486px   
   a.destroy
     +float-right
     background: url(/images/png/16/trash.png) no-repeat 0 2px
@@ -544,21 +544,41 @@ a.back
     height: 46px
   .other
     margin: 18px 0 14px
-    h4.menu_entries
-      font-size: 13px
-      color: $header
-    #menu_items_form
-      li.menu_item_drag_handle
-        width: 456px
-        background: $white
-        font-weight: bold
-        padding: 6px 10px
-        margin: 4px 0
-        cursor: move
-        .edit
-          +float-right
-          font-weight: normal
-    #list_menu_item_new a
-      background: url(/images/png/16/plus.png) no-repeat
-      padding: 0 18px
+  h4.menu_entries
+    font-size: 13px
+    color: $header
+  #menu_items_form
+    li.menu_item_drag_handle
+      width: 476px
+      background: $white
+      font-weight: bold
+      padding: 6px 10px
+      margin: 4px 0
+      cursor: move
+      .edit
+        +float-right
+        font-weight: normal
+  #list_menu_item_new a
+    background: url(/images/png/16/plus.png) no-repeat
+    padding: 0 18px
+  #form_menu_item_new, form.edit_menu_item 
+    +clearfix
+    background: $white
+    padding: 6px 10px
+    margin: 4px 0
+    width: 476px !important
+    .edit
+      +float-right
+      margin-top: 28px
+    div.new-entry
+      +clearfix
+      margin-bottom: 6px
+      .add-form-label
+        +float-left
+        font-weight: normal
+        width: 70px
+      .add-form-text-field
+        +float-left
       
+#main-entry-edit h3
+  color: $header
