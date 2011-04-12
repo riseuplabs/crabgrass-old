@@ -4,7 +4,7 @@
     = render :partial => 'fields', :locals => {:f => f}
     = save_to_widget_link(@menu_item)
     = back_to_widget_link
-  #sub-entries
-    %h4.menu_entries Submenu entries
-    = list_menu_items @menu_item.children
+#sub-entries
+  %h4.menu_entries Submenu entries
+  = list_menu_items @menu_item.children
 
