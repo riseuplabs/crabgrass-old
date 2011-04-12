@@ -4,14 +4,16 @@
     %li
       = f.label :title
       = f.text_field :title
+  - if @widget.new_record?
+    .info
+      Please save the menu widget first and then edit it to add menu items.
   %div#mb-footer-absolute
     = f.submit
-
-%div.other    
-  %h4.menu_entries
-    Menu Entries
-  .menu_entries
-    = list_menu_items @menu_items.roots
-  
-%div.footer-height
+- unless @widget.new_record?
+  %div.other    
+    %h4.menu_entries
+      Menu Entries
+    .menu_entries
+      = list_menu_items @widget.menu_items.roots
+  %div.footer-height
 
