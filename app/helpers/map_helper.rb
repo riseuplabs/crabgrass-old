@@ -1,11 +1,11 @@
 module MapHelper
 
-  def description_for_kml_location(location)
-    if location.group_count > 1
+  def description_for_kml_location(location, groups)
+    if groups.count > 1
       render :partial => '/map/kml_entities_list.html.haml',
-        :locals => {:location => location}
+        :locals => {:location => location, :groups => groups}
     else
-      group = location.groups.visible_by(current_user).first
+      group = groups.first
       render :partial => '/groups/profiles/map_summary.html.haml',
         :locals => {:no_back_link => 1, :group => group }
     end

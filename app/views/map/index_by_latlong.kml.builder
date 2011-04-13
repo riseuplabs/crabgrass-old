@@ -13,11 +13,13 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
     end
 
     @locations.each do |location|
-      location.group_count = location.groups.count.to_i
+      groups = @network ?
+        location.groups.members_of(@network) :
+        location.groups
       xml.Placemark {
-        xml.styleUrl('#'+kml_style_for_place(location.group_count)+'Marker')
+        xml.styleUrl('#'+kml_style_for_place(groups.count)+'Marker')
         xml.description(
-          description_for_kml_location(location)
+          description_for_kml_location(location, groups)
         )
         xml.Point {
           xml.coordinates(location.geo_place.longlat)

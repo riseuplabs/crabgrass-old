@@ -1,12 +1,12 @@
-- groups = location.groups.visible_by(current_user)
+- current = groups.find :all, :limit => 4
 - place = location.geo_place
 - country = location.geo_country
 %div#popup_entities_list
   %h3.location_20.small_icon
     = place.name + ','
     = location.geo_country.code
-    = " (#{location.group_count})"
+    = " (#{groups.count})"
   %ul#entities
     = render :partial => '/map/kml_entity.html.haml', :collection => groups
-  - if location.group_count > groups.count
+  - if groups.count > current.count
     %div= link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))
