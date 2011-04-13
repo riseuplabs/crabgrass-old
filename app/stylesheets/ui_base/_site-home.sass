@@ -581,7 +581,32 @@ a.back
         width: 70px
       .add-form-text-field
         +float-left
-  
+  h4.text
+    font-size: 14px
+    font-weight: normal
+    line-height: 2
+  ul.create_widget
+    width: 500px
+    li.widget-name-left, li.widget-name-right
+      +float-left
+      margin: 12px 0 0 0
+      a
+        display: block
+        padding: 0.5em
+        background: $white
+        width: 220px
+        font-size: 14px
+        font-weight: bold
+        color: $text
+        text-decoration: none
+        border: 1px solid $white
+        &:hover
+          color: $orange      
+          background: $orange05
+          border: 1px solid $orange20
+    li.widget-name-right
+      +float-right
+
 #main-entry-edit h3
   color: $header
 #sub-entries 
