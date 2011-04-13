@@ -138,7 +138,7 @@ module LayoutHelper
   EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
 
   # needed whenever we want controls for editing a wiki
-  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaLoader']}
+  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
 
   JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
 
@@ -174,7 +174,7 @@ module LayoutHelper
         bundles[file.to_sym] = true                  # include the whole bundle
       else
         if match = /^(.+):(.+)$/.match(file)
-          (from_plugin[match[2]] ||= []) << match[1] 
+          (from_plugin[match[2]] ||= []) << match[1]
         else
           as_needed["as_needed/#{file}"] = true
         end
