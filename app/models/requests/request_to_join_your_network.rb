@@ -11,7 +11,7 @@ class RequestToJoinYourNetwork < Request
   validates_format_of :requestable_type, :with => /Group/
 
   def validate_on_create
-    unless recipient.type =~ /Network/
+    unless recipient.is_a? Network
       errors.add_to_base('recipient must be a network')
     end
     if Federating.find_by_group_id_and_network_id(group.id, network.id)
