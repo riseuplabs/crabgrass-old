@@ -1,4 +1,4 @@
-%li
+%li{:id => 'entity-'+kml_entity.id.to_s, :class => 'arrow'}
   = avatar_for(kml_entity, 'small')
   = link_to_kml_entity(kml_entity)
-  %span{:id => 'show-ent-'+kml_entity.id.to_s+'-spinner', :style => 'float: right; display: none;'}= image_tag('spinner2.gif')
+
