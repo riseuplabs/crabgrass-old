@@ -52,6 +52,7 @@ class MenuItemsController < ApplicationController
   end
 
   def destroy
+    @parent_item = @menu_item.parent
     @menu_item.destroy
   end
 

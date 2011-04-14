@@ -30,19 +30,17 @@ class GeoLocation < ActiveRecord::Base
   named_scope :with_geo_place, :conditions => "geo_place_id != '' and geo_place_id is not null"
 
   named_scope :with_visible_groups, lambda {|user, site|
-    if user && user.real?
-      group_ids = Group.namespace_ids(user.all_group_ids)
+    if user and user.real? and my_group_ids = Group.namespace_ids(user.all_group_ids)
       sql = <<-EOSQL
-        ((profiles.stranger = ? AND profiles.may_see = ? AND profiles.entity_type = 'Group') OR
-          (profiles.entity_type = 'Group' and profiles.entity_id IN (?))) AND
+        ((profiles.stranger = ? AND profiles.may_see = ? ) OR
+          (groups.id IN (?))) AND
         (groups.site_id = ?)
       EOSQL
-      conditions = [sql, true, true, group_ids, site.id]
+      conditions = [sql, true, true, my_group_ids, site.id]
     else
       sql = <<-EOSQL
         profiles.stranger = ? AND
         profiles.may_see = ? AND
-        profiles.entity_type = 'Group' AND
         groups.site_id = ?
       EOSQL
       conditions = [sql, true, true, site.id]

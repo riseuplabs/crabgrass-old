@@ -295,48 +295,41 @@ ul.angle-quote
   
 #popup_entities_list
   h3
-    +bordered-btm($pale-grey, solid)
+    +bordered-btm($pale-grey, dotted)
     color: $header
     font-size: 14px
     padding: 0 0 4px 30px
     
 .pointer
   cursor: pointer
-  
-ul#entities li
-  +bordered-btm($pale-grey, solid)
-  background: url(/images/png/16/arrow-right-paleblue.png) no-repeat 240px 10px
-  padding: 5px 0 8px 
-  margin: 5px 0
-  height: 24px
-  a.big_icon
-    padding: 9px 0 9px 40px
-    margin-left: 6px
-    color: $text
-    
-#map_summary_footer
-  +bordered-top(1px, $pale-grey)
-  +clearfix
-  bottom: 0
-  padding: 5px 0 0
-  position: absolute
-  width: 98%
-  
+ 
 #featurePopup_contentDiv
-  .single-group img
+  .single-group img, li img.avatar
     +float-left
-    margin-right: 6px
+    margin-right: 8px
   h3
     color: $header
     font-size: 14px
     line-height: 1.2
     min-height: 2em
-    &.big_icon
-      padding: 9px 0 9px 40px
-      margin-left: 6px
-      background-position: 0 50%
-    &.small_icon
-      margin: 0
+    padding: 0
+    background-position: 0 50%
+  h3.small_icon
+    margin-left: 0
+    margin-top: 2px
+    padding-bottom: 8px
+    background-position: 0 20%
+  ul#entities li
+    background: url(/images/png/16/arrow-right-paleblue.png) no-repeat right 50%
+    +bordered-btm($pale-grey, dotted)
+    padding: 5px 0 4px 8px
+    height: 32px
+    a
+      +float-left
+      color: $header
+      font-size: 13px
+      line-height: 1.2
+      width: 216px
   p
     line-height: 1.3
     margin: 16px 0 16px 10px
@@ -346,7 +339,13 @@ ul#entities li
     min-height: 20px
     padding-left: 26px
     margin: 10px 0 0 12px
-    
+  #map_summary_footer
+    border-top: 1px dotted $pale-grey
+    +clearfix
+    bottom: 0
+    padding: 5px 0 0
+    position: absolute
+    width: 98% 
   
 //
 // ADMIN edit site structure
@@ -545,8 +544,9 @@ a.back
   .other
     margin: 18px 0 14px
   h4.menu_entries
-    font-size: 13px
+    font-size: 14px
     color: $header
+    line-height: 2
   #menu_items_form
     li.menu_item_drag_handle
       width: 476px
@@ -558,10 +558,12 @@ a.back
       .edit
         +float-right
         font-weight: normal
-  #list_menu_item_new a
-    background: url(/images/png/16/plus.png) no-repeat
-    padding: 0 18px
-  #form_menu_item_new, form.edit_menu_item 
+  #list_menu_item_new.add 
+    padding: 18px 10px
+    a
+      background: url(/images/png/16/plus.png) no-repeat
+      padding: 0 18px
+  #form_menu_item_new, form.edit_menu_item, #list_menu_item_new 
     +clearfix
     background: $white
     padding: 6px 10px
@@ -579,6 +581,39 @@ a.back
         width: 70px
       .add-form-text-field
         +float-left
-      
+  h4.text
+    font-size: 14px
+    font-weight: normal
+    line-height: 2
+  ul.create_widget
+    width: 500px
+    li.widget-name-left, li.widget-name-right
+      +float-left
+      margin: 12px 0 0 0
+      a
+        display: block
+        padding: 0.5em
+        background: $white
+        width: 220px
+        font-size: 14px
+        font-weight: bold
+        color: $text
+        text-decoration: none
+        border: 1px solid $white
+        &:hover
+          color: $orange      
+          background: $orange05
+          border: 1px solid $orange20
+    li.widget-name-right
+      +float-right
+
 #main-entry-edit h3
   color: $header
+#sub-entries 
+  margin: 18px 0 70px
+  #menu_items_form li.menu_item_drag_handle
+    font-weight: normal
+    form.edit_menu_item 
+      padding: 0
+  
+  

@@ -1,0 +1,3 @@
+items = @parent_item ? @parent_item.children : @menu_items.roots
+page.replace 'menu_items_form', :partial => 'list',
+  :locals => {:menu_items => items}
