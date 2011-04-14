@@ -320,10 +320,13 @@ ul.angle-quote
     padding-bottom: 8px
     background-position: 0 20%
   ul#entities li
-    background: url(/images/png/16/arrow-right-paleblue.png) no-repeat right 50%
     +bordered-btm($pale-grey, dotted)
     padding: 5px 0 4px 8px
     height: 32px
+    &.arrow
+      background: url(/images/png/16/arrow-right-paleblue.png) no-repeat right 50%
+    &.spinner
+      background: url(/images/spinner.gif) no-repeat right
     a
       +float-left
       color: $header
