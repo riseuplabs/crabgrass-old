@@ -269,6 +269,7 @@ class ApplicationController < ActionController::Base
   # which sometimes appears as :gif.
   def normal_request?
     format = request.format.to_sym
+    raise 'request format is '+format.to_s
     format = :html if (is_ie789? and format.to_s =~ /x-ms-application/)
     response.redirected_to.nil? and
     (format == :html or format == :all or format == :gif)
