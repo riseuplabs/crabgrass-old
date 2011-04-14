@@ -74,15 +74,41 @@
     }
     function onFeatureSelect(evt) {
       feature = evt.feature;
+			popup_description = feature.attributes.description;
       popup = new OpenLayers.Popup.FramedCloud("featurePopup",
         feature.geometry.getBounds().getCenterLonLat(),
         new OpenLayers.Size(200,200),
-        feature.attributes.description,
+				// if the description is an ajax call, this just adds a div that can be populated
+				renderKMLDescription(popup_description),
         null, true, onPopupClose);
       feature.popup = popup;
       popup.feature = feature;
-      map.addPopup(popup);
+			// if the description is an ajax call, run the ajax request 
+			// and show the marker on success 
+			map.addPopup(popup);
+			if (match = popup_description.match(/^ajax:(.*)$/)) {
+				new Ajax.Request(match[1], {
+					method: 'get',
+					onLoading: function() {
+						$('popup_spinner').show();
+					},
+				  onComplete: function() {
+						$('popup_spinner').hide();
+					}
+				});
+			}else {
+				// otherwise just show the marker
+				map.addPopup(popup);
+			}
     }
+    function renderKMLDescription(desc) {
+			var match = [];
+			if (match = desc.match(/^ajax:/)) {
+				return '<div id="popup_entities_list"><img src="/images/spinner.gif" id="popup_spinner" style="display:none;"></div>'
+			}else {
+				return desc;
+			}
+		}
     function onFeatureUnselect(evt) {
       feature = evt.feature;
       if (feature.popup) {

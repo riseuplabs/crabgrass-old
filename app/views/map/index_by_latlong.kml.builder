@@ -17,7 +17,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
       xml.Placemark {
         xml.styleUrl('#'+kml_style_for_place(location.group_count)+'Marker')
         xml.description(
-          description_for_kml_location(location)
+          'ajax:/geo_locations/show/'+location.id.to_s 
         )
         xml.Point {
           xml.coordinates(location.geo_place.longlat)
