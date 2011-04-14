@@ -11,5 +11,5 @@
   %ul#entities
     = render :partial => '/map/kml_entity.html.haml', :collection => groups
   - if group_count > groups.count
-    %div= link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))
-    = render :partial => 'map/kml_entities_pagination_links.html.haml', :locals => {:groups => groups, :location => location}
+    %div{:style => 'float: left;'}= link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))
+    %div{:style => 'float: right;'}= pagination_links(groups, :params => {:controller => 'geo_locations', :action => 'show', :id => location.id}, :method => 'get')
