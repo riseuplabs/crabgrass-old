@@ -1,4 +1,4 @@
-- groups = location.groups.visible_by(current_user).paginate(:per_page => 2, :page => params[:page])
+- groups = location.groups.visible_by(current_user).slice!(0,12).paginate(:per_page => 4, :page => params[:page])
 - place = location.geo_place
 - country = location.geo_country
 -# location.group_count is not always there
@@ -12,4 +12,4 @@
     = render :partial => '/map/kml_entity.html.haml', :collection => groups
   - if group_count > groups.count
     %div{:style => 'float: left;'}= link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))
-    %div{:style => 'float: right;'}= pagination_links(groups, :params => {:controller => 'geo_locations', :action => 'show', :id => location.id}, :method => 'get')
+    %div{:style => 'float: right;'}= pagination_links(groups, :inner_window => 0, :outer_window => 0, :params => {:controller => 'geo_locations', :action => 'show', :id => location.id}, :method => 'get')
