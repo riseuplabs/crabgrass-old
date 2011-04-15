@@ -1,9 +1,9 @@
 %h4.menu_entries Menu entry being edited
 - form_remote_for([@widget, @menu_item]) do |f|
   = render :partial => 'fields', :locals => {:f => f}
-#mb-footer-absolute
-  = save_to_widget_link(@menu_item)
-  = back_to_widget_link
+  #mb-footer-absolute
+    = save_to_widget_link(@menu_item)
+    = back_to_widget_link
 #sub-entries
   %h4.menu_entries Submenu entries
   = list_menu_items @menu_item.children

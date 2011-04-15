@@ -1,4 +1,4 @@
-- groups = location.groups.visible_by(current_user).paginate(:per_page => 2, :page => params[:page])
+- groups = location.groups.visible_by(current_user).slice!(0,12).paginate(:per_page => 4, :page => params[:page])
 - place = location.geo_place
 - country = location.geo_country
 -# location.group_count is not always there
