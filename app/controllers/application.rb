@@ -271,7 +271,7 @@ class ApplicationController < ActionController::Base
     format = request.format.to_sym
     response.redirected_to.nil? and
     (format == :html or format == :all or 
-      (browser_is_ie? and ((format == :gif) or (format == :jpg) or (format.to_s =~ /x-ms-application/)))
+      (browser_is_ie? and ((format == :gif) or (format == :jpg) or (format.to_s =~ /x-ms-application/))))
   end
 
 end
