@@ -11,16 +11,17 @@ class GeoLocation < ActiveRecord::Base
     :source_type => 'Group' do
 
     # overwriting the named scope so we do not join profiles twice
-    def visible_by(user)
+    def visible_by(user, site = Site.current)
       if user and user.real? and user.all_group_ids.any?
         conditions = <<-EOSQL
-          (profiles.stranger = #{true} AND profiles.may_see = #{true}) OR
-          ( profiles.entity_type = 'Group' AND
-            profiles.entity_id IN (#{user.all_group_ids.join(',')}))
+          ((profiles.stranger = #{true} AND profiles.may_see = #{true}) OR
+            (groups.id IN (#{user.all_group_ids.join(',')}))) AND
+          (groups.site_id = #{site.id})
         EOSQL
       else
         conditions = <<-EOSQL
-          profiles.stranger = #{true} AND profiles.may_see = #{true}
+          profiles.stranger = #{true} AND profiles.may_see = #{true} AND
+          (groups.site_id = #{site.id})
         EOSQL
       end
       self.find :all, :conditions => conditions
