@@ -1,4 +1,4 @@
-- group = @group unless local_assigns[:group]
+- group = @groups.first unless local_assigns[:group]
 - profile = group.profiles.public
 %div{:id => ('popup_entity_'+group.id.to_s), :class => 'single-group'}
   = avatar_for(group, 'small')
@@ -10,6 +10,6 @@
     = profile.geo_city_name + ', '
     = profile.geo_location.geo_country.name
   #map_summary_footer
-    - if !local_assigns[:no_back_link]
+    - if !@groups || (@groups.count > 1)
       = render :partial => '/groups/profiles/map_summary_footer_back_link'
     %span{:style => 'float: right;'}= link_to 'Visit project page', group_path(group)

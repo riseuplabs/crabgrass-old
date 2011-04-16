@@ -16,7 +16,7 @@ class GeoLocationsController < ApplicationController
     respond_to do |format|
       format.js {
         render :update do |page|
-          page.replace 'popup_entities_list', :partial => 'map/kml_entities_list'
+          page.replace 'popup_entities_list', :partial => popup_partial_for(@groups)
         end
       }
     end
