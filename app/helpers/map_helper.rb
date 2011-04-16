@@ -1,13 +1,10 @@
 module MapHelper
 
-  def description_for_kml_location(location)
-    if location.group_count > 1
-      render :partial => '/map/kml_entities_list.html.haml',
-        :locals => {:location => location}
+  def popup_partial_for(groups)
+    if groups.count > 1
+      '/map/kml_entities_list.html.haml'
     else
-      group = location.groups.visible_by(current_user).first
-      render :partial => '/groups/profiles/map_summary.html.haml',
-        :locals => {:no_back_link => 1, :group => group }
+      '/groups/profiles/map_summary.html.haml'
     end
   end
 
@@ -17,24 +14,6 @@ module MapHelper
         :loading => "$('entity-#{ent.id.to_s}').toggleClassName('spinner').toggleClassName('arrow');",
         :complete => "$('entity-#{ent.id.to_s}').toggleClassName('arrow').toggleClassName('spinner');"
       }
-  end
-
-  def geo_data_for_kml(entity)
-    # currently groups are only supported. when users are added the profile
-    # would be entity.profile (groups location data is only stored in the public profile)
-    if entity.is_a?(Group)
-      profile = entity.profiles.public
-    end
-    return false unless profile and profile.city_id
-    return false unless place = GeoPlace.find(profile.city_id)
-    data = {}
-    data[:name] = entity.display_name || entity.name
-    data[:geo_place_id] = place.id
-    data[:geo_place_name] = place.name + ', ' + place.geo_country.code
-    data[:geo_country_id] = place.geo_country_id
-    data[:lat] = place.latitude
-    data[:long] = place.longitude
-    return data
   end
 
   def kml_style_for_place(count)
