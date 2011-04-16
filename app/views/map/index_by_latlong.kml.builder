@@ -13,7 +13,7 @@ xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
     end
 
     @locations.each do |location|
-      location.group_count = location.groups.count.to_i
+      location.group_count = location.group_count.to_i
       xml.Placemark {
         xml.styleUrl('#'+kml_style_for_place(location.group_count)+'Marker')
         xml.description(
