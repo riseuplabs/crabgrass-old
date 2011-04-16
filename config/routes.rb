@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
-    admin.resources :widgets, :only => [:index] 
+    admin.resources :widgets, :only => [:index]
   end
 
   ##
@@ -156,6 +156,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :networks do |network|
     network.resources :pages, :only => :new
+    network.resources :geo_locations, :only => :index
   end
 
   map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
