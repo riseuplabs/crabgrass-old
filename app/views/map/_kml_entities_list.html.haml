@@ -4,7 +4,7 @@
   %h3.location_20.small_icon
     = place.name + ','
     = country.code
-    = " (#{group_count})"
+    = " (#{@group_count})"
   %ul#entities
     = render :partial => '/map/kml_entity.html.haml', :collection => @groups
   - if @group_count > @groups.count

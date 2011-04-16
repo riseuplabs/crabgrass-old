@@ -17,9 +17,12 @@ class GeoLocationsController < ApplicationController
     return false unless @location = GeoLocation.find(params[:id])
     @groups = @location.groups
     if @network
-      @groups = @groups.in_network(@network)
+      @groups = @groups.members_of(@network)
+    else
+      @groups = @groups.visible_by(current_user)
     end
-    @groups = @groups.visible_by(current_user).slice!(0,12).paginate(:per_page => 4, :page => params[:page])
+    @group_count = @groups.count
+    @groups = @groups.slice!(0,12).paginate(:per_page => 4, :page => params[:page])
     respond_to do |format|
       format.js {
         render :update do |page|
@@ -32,6 +35,6 @@ class GeoLocationsController < ApplicationController
   def load_network
     if params[:network_id]
       @network = Network.find_by_name params[:network_id]
-    end    
+    end
   end
 end

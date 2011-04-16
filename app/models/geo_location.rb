@@ -30,6 +30,7 @@ class GeoLocation < ActiveRecord::Base
     def members_of(network, user = User.current)
       member_ids = network.groups.map(&:id)
       return [] if member_ids.empty?
+      debugger
       if user and user.real? and user.all_group_ids.any?
         conditions = <<-EOSQL
           ((profiles.stranger = #{true} AND profiles.may_see = #{true}) OR

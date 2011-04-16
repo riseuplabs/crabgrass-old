@@ -242,7 +242,7 @@ class ApplicationController < ActionController::Base
   # render locations kml
   def render_kml_for_entities(collection)
     @entities = collection
-    render :template => '/map/index.kml.builder', :layout => false 
+    render :template => '/map/index.kml.builder', :layout => false
   end
 
   private
@@ -282,7 +282,8 @@ class ApplicationController < ActionController::Base
   end
 
   def is_ie789?
-    user_agent =request.env['HTTP_USER_AGENT'].downcase
+    return unless (user_agent = request.env['HTTP_USER_AGENT'])
+    user_agent.downcase!
     (user_agent =~ /msie [789]/) ? true : false
   end
 
