@@ -1,16 +1,15 @@
-- groups = location.groups.visible_by(current_user).slice!(0,12).paginate(:per_page => 4, :page => params[:page])
-- place = location.geo_place
-- country = location.geo_country
 -# location.group_count is not always there
-- group_count = location.try(:group_count) || location.groups.visible_by(current_user).count
+- place = @location.geo_place
+- country = @location.geo_country
+- group_count = @location.groups.visible_by(current_user).count
 %div#popup_entities_list
   %h3.location_20.small_icon
     = place.name + ','
-    = location.geo_country.code
+    = country.code
     = " (#{group_count})"
   %ul#entities
-    = render :partial => '/map/kml_entity.html.haml', :collection => groups
-  - if group_count > groups.count
+    = render :partial => '/map/kml_entity.html.haml', :collection => @groups
+  - if group_count > @groups.count
     %div#map_summary_footer
       = link_to('View All Groups', group_directory_url(:action => :search, :country_id => country.id, :city_id => place.id, :state_id => place.geo_admin_code_id))
-      = pagination_links(groups, :params => {:controller => 'geo_locations', :action => 'show', :id => location.id}, :method => 'get')
+      = pagination_links(@groups, :params => {:controller => 'geo_locations', :action => 'show', :id => @location.id}, :method => 'get')

@@ -11,12 +11,12 @@ class GeoLocationsController < ApplicationController
   end
 
   def show
-    return false unless location = GeoLocation.find(params[:id])
+    return false unless @location = GeoLocation.find(params[:id])
+    @groups = @location.groups.visible_by(current_user).slice!(0,12).paginate(:per_page => 4, :page => params[:page])
     respond_to do |format|
       format.js {
         render :update do |page|
-          page.replace 'popup_entities_list', :partial => 'map/kml_entities_list',
-            :locals => {:location => location}
+          page.replace 'popup_entities_list', :partial => 'map/kml_entities_list'
         end
       }
     end
