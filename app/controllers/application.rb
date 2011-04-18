@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
   before_filter :set_language
-  before_filter :set_timezone, :pre_clean
+  before_filter :set_timezone
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
   before_render :context_if_appropriate
@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     current_site
     @path = parse_filter_path(params[:path])
     @skip_context = false
+    current_user
   end
 
   def header_hack_for_ie6
@@ -112,11 +113,6 @@ class ApplicationController < ActionController::Base
   # set the current timezone, if the user has it configured.
   def set_timezone
     Time.zone = current_user.time_zone if logged_in?
-  end
-
-  # TODO: figure out what the hell is the purpose of this?
-  def pre_clean
-    User.current = nil
   end
 
   # A special 'before_render' filter that calls 'context()' if this is a normal
