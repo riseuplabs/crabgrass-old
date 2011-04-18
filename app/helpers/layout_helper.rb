@@ -173,7 +173,7 @@ module LayoutHelper
       elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
         bundles[file.to_sym] = true                  # include the whole bundle
       else
-        if match = /^(.+):(.+)$/.match(file)
+        if match = /^(.+):(.+)$/.match(file.to_s)
           (from_plugin[match[2]] ||= []) << match[1]
         else
           as_needed["as_needed/#{file}"] = true
