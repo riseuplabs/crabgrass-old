@@ -6,7 +6,6 @@ class RootController < ApplicationController
   helper :groups, :account, :wiki, :page, :widgets, :menu_items
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
-  javascript 'OpenLayers', 'OpenStreetMap', :plugin => 'openlayers'
 
   permissions 'root','groups/base', 'wiki'
   #before_filter :login_required, :except => ['index']
