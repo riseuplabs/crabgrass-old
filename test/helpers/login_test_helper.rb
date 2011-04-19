@@ -5,7 +5,6 @@ module LoginTestHelper
       when User   then user
       else             nil
     end
-    @controller.stubs(:current_user).returns(user)
     @request.session[:user] = user
   end
 
