@@ -43,7 +43,8 @@
       controls: controls
     };
     map = new OpenLayers.Map('map', options);
-    map.addLayer(new OpenLayers.Layer.OSM());
+    gsm = new OpenLayers.Layer.Google("Google Streets");
+    map.addLayer(gsm);
     var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
       {
       format: OpenLayers.Format.KML, 
