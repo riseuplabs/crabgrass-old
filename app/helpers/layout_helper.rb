@@ -166,6 +166,7 @@ module LayoutHelper
     as_needed = {}
     from_plugin = {}
     includes = []
+    remotes = []
 
     files.each do |file|
       if JS_BUNDLE_MAP[file.to_s]                    # if a file in a bundle is specified
@@ -173,7 +174,9 @@ module LayoutHelper
       elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
         bundles[file.to_sym] = true                  # include the whole bundle
       else
-        if match = /^(.+):(.+)$/.match(file.to_s)
+        if file.to_s.index("http://")
+          remotes << file
+        elsif match = /^(.+):(.+)$/.match(file.to_s)
           (from_plugin[match[2]] ||= []) << match[1]
         else
           as_needed["as_needed/#{file}"] = true
@@ -193,6 +196,11 @@ module LayoutHelper
       from_plugin.each do |plugin, js|
         js.each { |j| includes << javascript_include_tag(j, :plugin => plugin) }
       end
+    end
+    remotes.each do |remote|
+      # can't use javascript_include tag here as we might have paths that do
+      # not include .js
+      includes << tag(:script, :type => "text/javascript", :src => remote)
     end
     return includes
   end
