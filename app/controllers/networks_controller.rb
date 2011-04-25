@@ -36,6 +36,19 @@ class NetworksController < GroupsController
     render :template => 'groups/new'
   end
 
+  def autocomplete
+    if params[:query] == ""
+      networks = current_user.networks.find(:all, :limit => 20)
+    else
+      filter = "#{params[:query]}%"
+      networks = Network.find(:all,
+        :conditions => ["groups.name LIKE ? OR groups.display_name LIKE ?", filter, filter],
+        :limit => 20)
+    end
+    render_entities_to_json(networks)
+  end
+
+
   protected
 
   def context
@@ -60,5 +73,14 @@ class NetworksController < GroupsController
       redirect_to (current_site.network ? '/' : '/me/dashboard')
     end
   end
+
+  def render_entities_to_json(entities)
+    render :json => {
+      :query => params[:query],
+      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))},
+      :data => entities.collect{|e|e.avatar_id||0}
+    }
+  end
+
 end
 

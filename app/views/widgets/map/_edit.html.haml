@@ -1,8 +1,6 @@
 - form_for @widget do |f|
   = yield :widget_fields
   %div#mb-header
-    %label Current map center:
-    = current_map_center(@widget)
   %ul
     %li
       = f.label :title
@@ -12,24 +10,29 @@
       %ul
         %li= f.radio_button(:kml, 'groups', :checked => (@widget.kml == 'groups')) + ' Show all groups'
         %li
-          = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'custom')) + ' Custom KML: '
-          = f.text_field :custom_kml
+          = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'by_network')) + ' Show Groups by Network: '
+          = link_to_modal(I18n.t(:edit), :title => "Select Networks to Display on the Map", :url => widget_menu_items_url(@widget))
     %li
       = f.label 'Map Center'
-      %span.statement Select a country and city,  
-      %div.wrap
-        %div.wrap-inner
-          = country_dropdown_for_search
-          = state_dropdown
-        = city_text_field
-        = city_id_field
-      
-      %span.statement or enter a latitude and longitude:
-      %div.wrap
-        %span.label Latitude 
-        = f.text_field(:map_center_latitude)
-        %span.label Longitude 
-        = f.text_field(:map_center_longitude)
+      %div[@widget, :map_center]
+        = current_map_center(@widget)
+        = toggle_object_display(I18n.t(:edit), @widget, :map_center, :edit_center)
+      %div[@widget, :edit_center]{:style => 'display:none'}
+        %span.statement Select a country and city,  
+        %div.wrap
+          %div.wrap-inner
+            = country_dropdown_for_search
+            = state_dropdown
+          = city_text_field
+          = city_id_field
+        
+        %span.statement or enter a latitude and longitude:
+        %div.wrap
+          %span.label Latitude 
+          = f.text_field(:map_center_latitude)
+          %span.label Longitude 
+          = f.text_field(:map_center_longitude)
+        = toggle_object_display(I18n.t(:cancel), @widget, :map_center, :edit_center)
     %li
       = f.label 'Zoom Level'
       = select_field_for_map_zoomlevel(@widget)

@@ -36,7 +36,7 @@ module AutocompleteHelper
         container: '#{options[:container]}',
         preloadedOnTop: #{preload},
         rowRenderer: #{options[:renderer]},
-        selectValue: #{options[:selectvalue]} 
+        selectValue: #{options[:selectvalue]}
       }, #{autocomplete_id_number});
     ]
     javascript_tag(auto_complete_js)
@@ -48,6 +48,10 @@ module AutocompleteHelper
 
   def autocomplete_friends_tag(field_id, options={})
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  end
+
+  def autocomplete_networks_tag(field_id, options={})
+    autocomplete_entity_tag(field_id, options.merge(:url => autocomplete_networks_path))
   end
 
   def autocomplete_locations_tag(field_id, options={})

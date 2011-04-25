@@ -154,7 +154,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages/
 
-  map.resources :networks do |network|
+  map.resources :networks, :collection => {:autocomplete => :get} do |network|
     network.resources :pages, :only => :new
     network.resources :geo_locations, :only => :index
   end
