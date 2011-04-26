@@ -68,9 +68,12 @@ module UserExtension::Users
       end)
 
       # not friends of... used for autocomplete when we preloaded the friends.
-      named_scope(:strangers_to, lambda do |user|
-        {:conditions => ['users.id NOT IN (?)', user.friend_id_cache + [user.id]]}
-      end)
+      named_scope :visible_strangers_to, lambda { |user|
+        { :include => :profiles,
+          :conditions => [
+            "profiles.stranger = ? AND profiles.may_see = ? AND users.id NOT IN (?)",
+            true, true, user.friend_id_cache + [user.id]] }
+      }
 
 #      has_and_belongs_to_many :contacts,
 #        {:class_name => "User",
@@ -230,7 +233,7 @@ module UserExtension::Users
 
     def may_be_pestered_by!(user)
       # simplified pestering, using normal profile permissions
-      if profiles.visible_by(user).may_pester? 
+      if profiles.visible_by(user).may_pester?
         return true
       else
         raise PermissionDenied.new(I18n.t(:share_pester_error, :name => self.name))
