@@ -16,9 +16,8 @@ class AutocompleteController < ApplicationController
       filter = "#{params[:query]}%"
       recipients = Group.without_member(current_user).public.named_like(filter)
       recipients = recipients.find(:all, :limit => 20)
-      recipients += User.on(current_site).strangers_to(current_user).find(:all,
-        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-        :limit => 20)
+      users = User.on(current_site).visible_strangers_to(current_user).named_like(filter)
+      recipients += users.find(:all, :limit => 20)
       recipients = recipients.sort_by{|r|r.name}[0..19]
     end
 
@@ -31,9 +30,8 @@ class AutocompleteController < ApplicationController
       recipients = User.friends_of(current_user)
     else
       filter = "#{params[:query]}%"
-      recipients = User.on(current_site).strangers_to(current_user).find(:all,
-        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-        :limit => 20)
+      users = User.on(current_site).visible_strangers_to(current_user).named_like(filter)
+      recipients = users.find(:all, :limit => 20)
     end
 
     render_entities_to_json(recipients)
