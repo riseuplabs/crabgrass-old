@@ -11,7 +11,10 @@
         %li= f.radio_button(:kml, 'groups', :checked => (@widget.kml == 'groups')) + ' Show all groups'
         %li
           = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'by_network')) + ' Show Groups by Network: '
-          = link_to_modal(I18n.t(:edit), :title => "Select Networks to Display on the Map", :url => widget_menu_items_url(@widget))
+          - if @widget.new_record?
+            .info Please specify which networks to display after creating the widget.
+          - else
+            = link_to_modal(I18n.t(:edit), :title => "Select Networks to Display on the Map", :url => widget_menu_items_url(@widget))
     %li
       = f.label 'Map Center'
       %div[@widget, :map_center]
