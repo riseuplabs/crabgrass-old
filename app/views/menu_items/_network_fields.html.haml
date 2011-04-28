@@ -1,4 +1,4 @@
-%div.new-entry
+%div.new-entry#new_network
   = f.label :title, I18n.t(:network), :class => 'add-form-label'
   = f.text_field :title, :size => 30, :class => 'add-form-text-field', :id => 'network_select'
-  = autocomplete_networks_tag('network_select')
+  = autocomplete_networks_tag('network_select', :container => 'new_network')

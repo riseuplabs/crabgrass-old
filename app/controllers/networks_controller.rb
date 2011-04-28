@@ -1,6 +1,7 @@
 class NetworksController < GroupsController
 
   before_filter :check_site_settings, :only => :show
+  helper :autocomplete
 
   def initialize(options={})
     super
@@ -38,14 +39,13 @@ class NetworksController < GroupsController
 
   def autocomplete
     if params[:query] == ""
-      networks = current_user.networks.find(:all, :limit => 20)
+      @networks = current_user.networks.find(:all, :limit => 20)
     else
       filter = "#{params[:query]}%"
-      networks = Network.find(:all,
-        :conditions => ["groups.name LIKE ? OR groups.display_name LIKE ?", filter, filter],
+      @networks = Network.find(:all,
+        :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
         :limit => 20)
     end
-    render_entities_to_json(networks)
   end
 
 
@@ -72,14 +72,6 @@ class NetworksController < GroupsController
     unless current_site.has_networks?
       redirect_to (current_site.network ? '/' : '/me/dashboard')
     end
-  end
-
-  def render_entities_to_json(entities)
-    render :json => {
-      :query => params[:query],
-      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))},
-      :data => entities.collect{|e|e.avatar_id||0}
-    }
   end
 
 end
