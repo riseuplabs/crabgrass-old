@@ -59,6 +59,7 @@ en:
   remove: "Remove"
   cancel: "Cancel"
   link: "Link"
+  entry_link: "Entry link"
   back: "Back"
   share: "Share"
   contributed: "Contributed"
@@ -157,6 +158,7 @@ en:
   archive: "Archive"
   tasks: "Tasks"
   title: "Title"
+  entry_title: "Entry title"
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
@@ -923,6 +925,8 @@ en:
 
   widget_index: "Widget {{index}}"
 
+  create_widget: "Create a Widget"
+
   # profiles
 
   may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
@@ -953,6 +957,8 @@ en:
   pending: "pending"
   rejected: "rejected"
   approved: "approved"
+  destroy_widget: "Destroy widget"
+  create_widget: "Create new widget"
 
   my_requests_link: "my requests"
   all_requests: "All Requests"
@@ -1719,6 +1725,8 @@ en:
 
   administer_site: "Administer Site"
   edit_appearance: "Edit Appearance"
+  edit_site_home_structure: "Edit Site Home Structure"
+  site_home_structure: "Site Home Structure"
 
   ##
   ## MODERATION

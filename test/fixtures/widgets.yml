@@ -1,0 +1,95 @@
+<% {'site1'=> 5, 'site2' => 6, 'unlimited' => 6}.each do |name, profile_id| %>
+menu_bar_<%= name %>:
+  name: MenuBarWidget
+  profile_id: <%= profile_id %>
+  position: 0
+  section: 0
+  options:
+    :title: Menu Bar
+intro_<%= name %>:
+  name: IntroWidget
+  profile_id: <%= profile_id %>
+  position: 1
+  section: 1
+  options:
+    :title: Welcome to Crabgrass
+whoiswho_<%= name %>:
+  name: TextBoxWidget
+  profile_id: <%= profile_id %>
+  position: 3
+  section: 1
+  options:
+    :title: Who is Who?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
+tag_cloud_<%= name %>:
+  name: TagCloudWidget
+  profile_id: <%= profile_id %>
+  position: 4
+  section: 1
+  options:
+    :title: Most Used Tags
+wide_teaser_<%= name %>:
+  name: ImageTitleWidget
+  profile_id: <%= profile_id %>
+  position: 5
+  section: 1
+  options:
+    :title: Your Opinion Counts &ndash;<br>talk to us
+page_list_<%= name %>:
+  name: PageListWidget
+  profile_id: <%= profile_id %>
+  position: 6
+  section: 1
+  options:
+
+contribute_button_<%= name %>:
+  name: ButtonWidget
+  profile_id: <%= profile_id %>
+  position: 1
+  section: 2
+  options:
+    :title: Contribute to Site
+    :link: /groups/unido/pages/new
+add_job_button_<%= name %>:
+  name: ButtonWidget
+  profile_id: <%= profile_id %>
+  position: 2
+  section: 2
+  options:
+    :title: Add a job opportunity
+    :link: /job/add
+quickfinder_<%= name %>:
+  name: MenuWidget
+  profile_id: <%= profile_id %>
+  position: 3
+  section: 2
+  options:
+    :title: Quickfinder
+active_members_<%= name %>:
+  name: NetworkingWidget
+  profile_id: <%= profile_id %>
+  position: 4
+  section: 2
+  options:
+    :title: Most Active Members
+    :entities: Users
+    :recent: false
+active_groups_<%= name %>:
+  name: NetworkingWidget
+  profile_id: <%= profile_id %>
+  position: 5
+  section: 2
+  options:
+    :title: Most Active Groups
+    :type: Groups
+    :recent: false
+what_is_new_<%= name %>:
+  name: TextBoxWidget
+  profile_id: <%= profile_id %>
+  position: 6
+  section: 2
+  options:
+    :title: What is New?
+    :text: Lorem Ipsum dolor sit amet, con sectetuer adipiscing elit. Aenean commodo ligula eget sem dolor. Aeneam massa. Cum sociis justo natoque penatibus. Loram Ipsum
+
+<% end %>

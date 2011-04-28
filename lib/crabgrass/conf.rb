@@ -79,6 +79,9 @@ class Conf
   cattr_accessor :always_renegerate_themed_stylesheet
   cattr_accessor :enabled_site_ids
 
+  # set from the widget.yml
+  cattr_accessor :widgets
+
   # used for error reporting
   cattr_accessor :configuration_filename
 
@@ -124,6 +127,7 @@ class Conf
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
+    self.widgets           = {}
   end
 
   def self.load(filename)

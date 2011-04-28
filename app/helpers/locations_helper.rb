@@ -16,9 +16,10 @@ module LocationsHelper
 
   def country_dropdown_for_search
     name = _field_name('country_id')
+    update_form_for = @widget ? 'widget' : 'directory'
     onchange = remote_function(
       :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
-      :with => "'show_admin_codes=1&country_code='+value",
+      :with => "'update_form_for=#{update_form_for}&show_admin_codes=1&country_code='+value",
       :loading => show_spinner('country'),
       :complete => hide_spinner('country')
     )
@@ -44,18 +45,11 @@ module LocationsHelper
   def city_text_field(object=nil, method=nil, options = {})
     display = _display_value(params[:country_id])
     name = _field_name('city_name', object, method)
-    #spinner = options[:spinner]
-    #onblur = remote_function(
-    #  :url => {:controller => '/locations', :action => 'city_lookup'},
-    #  :with => "'city_id_name='+$('city_id_field').name+'&country_id='+$('select_country_id').value+'&admin_code_id='+$('select_state_id').value+'&city='+value",
-    #  :loading => show_spinner('city'),
-    #  :complete => hide_spinner('city')
-    #)
-    #if params[:city_id] =~ /\d+/
-    #  city = GeoPlace.find(params[:city_id])
-    #end
-    #value = city.nil? ? {} : {:value => city.name} 
     options = {:name => name, :id=> 'city_text_field'}  #.merge(value)
+    if params[:city_id] and object.nil? and method.nil?
+      gp = GeoPlace.find_by_id(params[:city_id])
+      options.merge!({:value => gp.name}) if gp and gp.name
+    end
     render :partial => '/locations/city_text_field', :locals => {:display => display, :object=>object, :method=>method, :options => options}
   end
 
@@ -83,7 +77,7 @@ module LocationsHelper
       'Local-'+entity.profile.geo_location.geo_country.name
     end
   end
-
+ 
   private
 
   def country_choices

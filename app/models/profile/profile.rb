@@ -135,6 +135,18 @@ class Profile < ActiveRecord::Base
   ## ASSOCIATED ATTRIBUTES
   ##
 
+  has_many :widgets, :order => :position, :dependent => :destroy do
+    def sort_section(section, widget_ids)
+      widget_ids.each_with_index do |id, position|
+        # find the widget with this id
+        widget = self.find(id)
+        widget.update_attribute(:position, position)
+        widget.update_attribute(:section, Widget.id_for_section(section))
+      end
+      self
+    end
+  end
+
   belongs_to :wiki, :dependent => :destroy
   belongs_to :wall,
    :class_name => 'Discussion',
@@ -246,25 +258,24 @@ class Profile < ActiveRecord::Base
   end
 
   def update_location(params)
-    return unless params[:country_id]
-    geo_location_options = {
-      :geo_country_id => params[:country_id],
-      :geo_admin_code_id => params[:state_id],
-      :geo_place_id => params[:city_id]
-    }
-    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
-      if self.geo_location.nil?
-        geo_loc = GeoLocation.new(geo_location_options)
-        geo_loc.save!
-        self.geo_location = geo_loc
-        self.save!
-      else
-        ### do not create new records.
-        self.geo_location.update_attributes(geo_location_options)
+    if (!params[:country_id] or params[:country_id].nil? or params[:country_id]=='Country')
+      self.geo_location = nil
+    else
+      geo_location_options = {
+        :geo_country_id => params[:country_id],
+        :geo_admin_code_id => params[:state_id],
+        :geo_place_id => params[:city_id]
+      }
+      if gp = GeoPlace.find_by_id(params[:city_id])
+        geo_location_options[:geo_admin_code_id] = gp.geo_admin_code_id
       end
-    elsif !self.geo_location.nil?
-      self.geo_location.destroy
+      if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
+        # prevent making duplicate geo location objects
+        gl = GeoLocation.find(:first, :conditions => geo_location_options)
+        self.geo_location = gl || GeoLocation.new(geo_location_options)
+      end
     end
+    self.save!
   end
 
   # DEPRECATED

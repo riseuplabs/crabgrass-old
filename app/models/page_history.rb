@@ -48,11 +48,7 @@ class PageHistory < ActiveRecord::Base
   end
 
   def self.pending_notifications
-<<<<<<< HEAD
-    PageHistory.find :all, :conditions => {:notification_sent_at  => nil, :created_at => (2.days.ago)..Time.now}
-=======
     PageHistory.find :all, :conditions => {:notification_sent_at  => nil, :created_at => (2.days.ago.utc)..(Time.now.utc)}
->>>>>>> release-0.5.4
   end
 
   def self.recipients_for_page(page)

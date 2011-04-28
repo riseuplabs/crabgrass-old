@@ -138,7 +138,7 @@ module LayoutHelper
   EXTRA_JS = {:extra => ['dragdrop', 'builder', 'slider']}
 
   # needed whenever we want controls for editing a wiki
-  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaLoader']}
+  WIKI_JS = {:wiki => ['wiki/html_editor', 'wiki/textile_editor', 'wiki/wiki_editing', 'wiki/xinha/XinhaCore']}
 
   JS_BUNDLES = [MAIN_JS, EXTRA_JS, WIKI_JS]
 
@@ -164,6 +164,7 @@ module LayoutHelper
 
     bundles = {}
     as_needed = {}
+    from_plugin = {}
     includes = []
 
     files.each do |file|
@@ -172,7 +173,11 @@ module LayoutHelper
       elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
         bundles[file.to_sym] = true                  # include the whole bundle
       else
-        as_needed["as_needed/#{file}"] = true        # otherwise, include one file.
+        if match = /^(.+):(.+)$/.match(file.to_s)
+          (from_plugin[match[2]] ||= []) << match[1]
+        else
+          as_needed["as_needed/#{file}"] = true
+        end
       end
     end
 
@@ -183,6 +188,11 @@ module LayoutHelper
     end
     if as_needed.any?
       includes << javascript_include_tag(*as_needed.keys)
+    end
+    if from_plugin.any?
+      from_plugin.each do |plugin, js|
+        js.each { |j| includes << javascript_include_tag(j, :plugin => plugin) }
+      end
     end
     return includes
   end

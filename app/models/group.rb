@@ -109,20 +109,20 @@ class Group < ActiveRecord::Base
   named_scope :named_like, lambda { |filter|
     { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
             filter, filter] }
+  named_scope :limit_to, lambda { |limit|
+    {:limit => limit}
   }
 
   named_scope :in_location, lambda { |options|
     country_id = options[:country_id]
-    admin_code_id = options[:state_id]
     city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
+    state_id = options[:state_id]
+    conditions = "gl.id = profiles.geo_location_id and gl.geo_country_id=#{country_id}"
+    if state_id and !city_id
+      conditions += " and gl.geo_admin_code_id=#{state_id}"
     end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
+    if city_id
+      conditions += " and gl.geo_place_id=#{city_id}"
     end
     { :joins => "join geo_locations as gl",
       :conditions => conditions
@@ -189,32 +189,6 @@ class Group < ActiveRecord::Base
     self.profiles.visible_by(User.current)
   end
 
-  ##
-  ## MENU_ITEMS
-  ##
-
-  has_many :menu_items, :dependent => :destroy, :order => :position do
-
-    def update_order(menu_item_ids)
-      menu_item_ids.each_with_index do |id, position|
-        # find the menu_item with this id
-        menu_item = self.find(id)
-        menu_item.update_attribute(:position, position)
-      end
-      self
-    end
-  end
-
-  # creates a menu item for the group and returns it.
-  def add_menu_item(params)
-    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
-  end
-
-
-  # TODO: add visibility to menu_items so they can be visible to members only.
-  # def menu_items
-  #   self.menu_items.visible_by(User.current)
-  # end
 
   ##
   ## AVATAR

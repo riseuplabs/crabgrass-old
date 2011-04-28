@@ -14,7 +14,7 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
   end
 
   def default_path_finder_options(context)
-    return false if !current_user.superadmin?
+    return false unless current_user.superadmin?
     # currently only want to overwrite data for groups
     return if context[:group].nil?
     options = {}
@@ -25,7 +25,7 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
   end
 
   def default_requests_view(context)
-    return "all" if current_user.superadmin? 
+    return "all" if current_user.superadmin?
   end
 
   def requests_views_options(context)

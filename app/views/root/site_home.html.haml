@@ -1,17 +1,11 @@
-- content_for :left_sidebar do
-  = render :partial => 'sidebar'
-
 - content_for :misc_header do
-  = render :partial => 'welcome_container'
+  - for widget in @top_widgets
+    = render_widget widget
 
-= render :partial => 'introduction'
+.wrapper2-plus
+  - for widget in @main_widgets
+    = render_widget widget
 
--# if @announcements.any? 
-  -# render :partial => 'announcement_page/announcements'  
--# end -
-
-#sitehome
-  = render :partial => 'widgets/wiki', :locals => {:wiki => @wiki, :editable => may_update_profile?, :no_title => true}
-%br/
-
-= render :partial => 'page_panels'
+.wrapper1
+  - for widget in @sidebar_widgets
+    = render_widget widget

@@ -1,6 +1,6 @@
 class Groups::DirectoryController < Groups::BaseController
 
-  helper 'locations', 'autocomplete'
+  helper 'autocomplete', 'map'
   layout 'directory'
   before_filter :set_group_type
 
@@ -43,7 +43,6 @@ class Groups::DirectoryController < Groups::BaseController
       @params_location = {}
       groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).names_only
     end
-
     # get the starting letters of all groups
     @pagination_letters = Group.pagination_letters_for(groups_with_names)
     if request.xhr? #params[:country_id]

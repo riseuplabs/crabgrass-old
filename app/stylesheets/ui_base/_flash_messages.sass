@@ -1,0 +1,55 @@
+//
+// flash messages
+
+.login
+  #flash_messages
+    #flash-message
+      #message-container
+        padding-top: 6px
+
+#flash_messages
+  +pie-clearfix
+  overflow: visible
+  line-height: 0
+
+#flash-message
+  +container
+  clear: both
+  #message-container
+    width: 764px
+    padding: 0 18px
+    background-color: $content_bg
+
+#flash-status-message
+  width: 744px
+  margin: 0 auto
+
+.small_notice
+  padding: 6px 10px
+  .text
+    padding-left: 20px
+    line-height: 1.6
+  p, ul
+    margin: 0
+    clear: left
+  ul
+    margin-left: 30px
+  li
+    list-style-type: disc
+
+.error
+  border: 1px solid red
+  background: #ffcccc
+
+.success
+  border: 1px solid green
+  background: #ccffcc
+
+.info
+  padding: 0 0 0 5px
+
+#modal_message
+  #flash-status-message
+    width: 440px
+
+/* @end

@@ -4,8 +4,8 @@ module AuthenticatedSystem
   def current_user
     @current_user ||= begin
       user = load_user(session[:user]) if session[:user]
-      user ||= UnauthenticatedUser.new
       User.current = user
+      user ||= UnauthenticatedUser.new
       user
     end
   end

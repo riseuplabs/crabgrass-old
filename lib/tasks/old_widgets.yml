@@ -1,0 +1,45 @@
+-
+  name: MenuBarWidget
+  section: 0
+  options:
+    :title: Menu Bar
+-
+  name: IntroWidget
+  section: 1
+  options:
+    :title: Welcome
+-
+  name: WikiWidget
+  section: 1
+  options:
+    :title: Wiki
+-
+  section: 1
+  name: PageListWidget
+  options:
+    :title: Pages
+-
+  name: ButtonWidget
+  section: 2
+  options:
+    :title: Contribute to Site
+    :link: /groups/unido/pages/new
+-
+  name: NetworkingWidget
+  section: 2
+  options:
+    :title: Most Active Members
+    :entities: 'Users'
+    :recent: false
+-
+  name: NetworkingWidget
+  section: 2
+  options:
+    :title: Most Active Groups
+    :entities: 'Groups'
+    :recent: false
+-
+  name: AdminLinksWidget
+  section: 2
+  options:
+    :title: Admin Links

@@ -3,25 +3,24 @@ div.create_page {
   //
   // SELECT A PAGE TYPE
   //
-  table.page_types {
-    td {
-      width: 50%;
-      padding: 0 1em;
+  table.page_types
+    td
+      width: 50%
+      padding: 0 1em
       //h2
       //  font-size: 1.1em
       //  color: white
       //  background: #666
       //  padding: 0.5em
-    } }
-  div.hover {
-    margin: 0.5em;
-    &:hover {
-      background: #ffffcc;
-      outline: 1px solid #cccc99; }
-    a {
-      text-decoration: none;
-      display: block;
-      padding: 0.5em; } }
+  div.hover
+    margin: 0.5em
+    &:hover
+      background: #ffffcc
+      outline: 1px solid #cccc99
+    a
+      text-decoration: none
+      display: block
+      padding: 0.5em
   //
   // PAGE CREATION FORM
   //

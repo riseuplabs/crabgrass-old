@@ -1,0 +1,19 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  %ul
+    %li
+      = f.label :title
+      = f.text_field :title
+  - if @widget.new_record?
+    .info
+      Please save the menu widget first and then edit it to add menu items.
+  #mb-footer-absolute
+    = f.submit
+- unless @widget.new_record?
+  .other    
+    %h4.menu_entries
+      Menu Entries
+    .menu_entries
+      = list_menu_items @widget.menu_items.roots
+.footer-height
+

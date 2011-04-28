@@ -33,6 +33,7 @@ profile_for_private_group:
   may_see_members: false
   may_request_membership: false
   stranger: true
+  geo_location_id: 1
 
 profile_for_rainbow:
   id: 3
@@ -45,6 +46,7 @@ profile_for_rainbow:
   summary: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   summary_html: Butterfly in the sky, I can go twice as high / Take a look, it is in a book - Reading Rainbow.
   wiki_id: 300
+  geo_location_id: 1
 
 private_profile_for_rainbow:
   id: 31
@@ -87,6 +89,7 @@ profile_for_animals:
   stranger: true
   summary: all the animals party down!
   summary_html: all the animals party down!
+  geo_location_id: 4 
 
 profile_for_cnt:
   id: 5
@@ -142,6 +145,7 @@ profile_for_diggers:
   stranger: true
   summary: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
   summary_html: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
+  geo_location_id: 4 
 
 
 public_profile_for_blue:
@@ -170,6 +174,8 @@ public_profile_for_recent_group:
   id: 303
   entity_type: "Group"
   entity_id: 33
+  stranger: true
+  may_see: true
   geo_location_id: 1
 
 profile_for_committee_of_group_to_be_deleted:

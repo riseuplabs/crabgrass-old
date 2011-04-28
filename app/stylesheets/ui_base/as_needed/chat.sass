@@ -1,0 +1,88 @@
+#conversation
+  overflow: auto
+  font-size: 11px
+  height: 400px
+  line-height: 14px
+  border: 1px solid #cccccc
+  background: white
+  margin-right: 10px
+  margin-bottom: 10px
+  .message
+    .time
+      color: #aaaaaa
+    .sender
+      color: #6666ff
+      font-weight: bold
+    .content
+      color: #333333
+    &.sys
+      .time
+        color: #aaaaaa
+      .sender
+        color: #aaaaaa
+        font-weight: normal
+      .content
+        color: #aaaaaa
+    &.action .content
+      color: #6666ff
+      font-weight: bold
+    &.tmp
+      font-style: italic
+
+#userlist
+  float: right
+  overflow: auto
+  width: 160px
+  height: 400px
+  background-color: white
+  line-height: 14px
+  border: 1px solid #cccccc
+  .user
+    border-bottom: 1px solid #cccccc
+    padding: 4px
+
+td#handle
+  padding: 0 6px
+  font-weight: bold
+
+table#typebox
+  background: #efefef
+  width: 100%
+
+#entryfield
+  font-size: 14px
+  width: 100%
+
+div.group_entry
+  border-bottom: 1px solid #cccccc
+  margin: 1em 0
+  a
+    font-weight: bold
+  img
+    vertical-align: top
+    float: left
+    padding: 0 1em 1em 0
+
+#conversation_archive
+  font-size: 11px
+  line-height: 14px
+  background: white
+  .message
+    .time
+      color: #aaaaaa
+    .sender
+      color: #6666ff
+      font-weight: bold
+    .content
+      color: #333333
+    &.sys
+      .time
+        color: #aaaaaa
+      .sender
+        color: #aaaaaa
+        font-weight: normal
+      .content
+        color: #aaaaaa
+    &.action .content
+      color: #6666ff
+      font-weight: bold

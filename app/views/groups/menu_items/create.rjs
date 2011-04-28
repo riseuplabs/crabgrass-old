@@ -1,2 +1,0 @@
-# update the new_menu_item li with the created menu_item
-page.replace 'menu_items_form', :partial => 'menu_items_form'
