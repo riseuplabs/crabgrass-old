@@ -109,8 +109,6 @@ class Group < ActiveRecord::Base
   named_scope :named_like, lambda { |filter|
     { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
             filter, filter] }
-  named_scope :limit_to, lambda { |limit|
-    {:limit => limit}
   }
 
   named_scope :in_location, lambda { |options|
