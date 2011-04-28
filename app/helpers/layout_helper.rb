@@ -321,11 +321,12 @@ module LayoutHelper
     locals = {}
     appearance = current_site.custom_appearance
     if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
-      height = appearance.masthead_asset.height
+      height = "height: #{appearance.masthead_asset.height}px"
       bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
       bgcolor = bgcolor+appearance.masthead_background_parameter
-      locals[:section_style] = "height: #{height}px"
-      locals[:style] = "background: url(#{appearance.masthead_asset.url}) no-repeat; height: #{height}px;"
+      url = appearance.masthead_asset.url
+      locals[:section_style] = height
+      locals[:style] = "background: url(#{url}) no-repeat #{bgcolor}; #{height}"
       locals[:render_title] = false
     else
       locals[:section_style] = ''

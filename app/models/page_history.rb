@@ -40,7 +40,7 @@ class PageHistory < ActiveRecord::Base
 
   def self.pending_digest_notifications_by_page
     histories = {}
-    PageHistory.find(:all, :order => "created_at desc", :conditions => {:notification_digest_sent_at => nil, :created_at => (2.days.ago)..Time.now}).each do |page_history|
+    PageHistory.find(:all, :order => "created_at desc", :conditions => {:notification_digest_sent_at => nil, :created_at => (2.days.ago.utc)..(Time.now.utc)}).each do |page_history|
       histories[page_history.page.id] = [] if histories[page_history.page_id].nil?
       histories[page_history.page.id] << page_history
     end
@@ -48,7 +48,11 @@ class PageHistory < ActiveRecord::Base
   end
 
   def self.pending_notifications
+<<<<<<< HEAD
     PageHistory.find :all, :conditions => {:notification_sent_at  => nil, :created_at => (2.days.ago)..Time.now}
+=======
+    PageHistory.find :all, :conditions => {:notification_sent_at  => nil, :created_at => (2.days.ago.utc)..(Time.now.utc)}
+>>>>>>> release-0.5.4
   end
 
   def self.recipients_for_page(page)

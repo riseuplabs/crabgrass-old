@@ -70,6 +70,39 @@ class AutocompleteControllerTest < ActionController::TestCase
       "response.query should contain the query string."
   end
 
+  def test_entities_respect_group_privacy
+    login_as :red
+    assert !users(:red).member_of?(groups(:private_group)),
+      "red should not be in the private group."
+    xhr :get, :entities, :query => 'pri'
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal [], response["suggestions"],
+      "red can't see any group starting with 'pri'"
+  end
+
+  def test_entities_respect_user_privacy
+    login_as :green
+    assert_equal ["blue"], users(:orange).friends.map(&:login)
+      "orange should only have blue as a friend."
+    xhr :get, :entities, :query => 're'
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal [], response["suggestions"],
+      "orange can't see red"
+  end
+
+  def test_people_respect_user_privacy
+    login_as :green
+    assert_equal ["blue"], users(:orange).friends.map(&:login)
+      "orange should only have blue as a friend."
+    xhr :get, :people, :query => 're'
+    assert_response :success
+    response = ActiveSupport::JSON.decode(@response.body)
+    assert_equal [], response["suggestions"],
+      "orange can't see red"
+  end
+
   def test_querying_locations
     login_as :blue
     xhr :get, :locations, :country => 1, :query => 'yen'

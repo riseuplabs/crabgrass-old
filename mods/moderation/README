@@ -28,6 +28,13 @@ You will also need to enable the super_admin mod, see mods/super_admin/README
 
 restart rails and browse to: http://localhost:3000/admin
 
+== Migration Issues
+
+If running migrations for this plugin throws an error, it is likely that the plugin_schema_info table record for this plugin is out of sync with the actual state of the database.  To fix:
+
+look at the moderation migrations (located in mods/moderation/db/migrate) and try to figure out what migration number matches what your current mysql tables look like. then, insert that version number in the plugin_schema_info table. so if the table structure matched what was in migration 003 but not 004 then the following sql query should be run:
+replace into plugin_shema_info (plugin_name, version) values ('moderation', 3);
+
 == Testing
 
 

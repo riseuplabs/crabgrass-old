@@ -6,24 +6,25 @@ module CustomAppearanceExtension
 
     protected
 
-    # reads the sass file file for +css_url+ and generates themed
+    # reads the sass or scss file for +css_url+ and generates themed
     # css (by overriding sass constants with +parameters+) saving it into
     # +themed_css_path+ file
     def generate_css_file_for_url(themed_css_path, css_url, css_prefix_path=nil)
       # here's the steps:
-      # 1. load all necessary sass code into a string
-      # 2. render Sass code string into a css string
+      # 1. load all necessary sass or scss code into a string
+      # 2. render the code string into a css string
       # 3. save the rendered css as themed_css_path file
 
       #alternative_constants_path
 
-      # make the sass string
-      sass_text = generate_overloaded_sass_string(css_url, css_prefix_path)
+      # make the style string
+      style_text = generate_overloaded_style_string(css_url, css_prefix_path)
 
-      # render css from or sass text
+      # render css from or sass or scss text
       options = Compass.configuration.to_sass_engine_options
+      options[:syntax] = :scss
       options[:load_paths] = options[:load_paths] | CustomAppearance::SASS_LOAD_PATHS
-      engine = Sass::Engine.new(sass_text, options)
+      engine = Sass::Engine.new(style_text, options)
       css_text = engine.render
 
       # create the directory
@@ -36,34 +37,34 @@ module CustomAppearanceExtension
       css_text
     end
 
-    def generate_overloaded_sass_string(css_url, css_prefix_path=nil)
+    def generate_overloaded_style_string(css_url, css_prefix_path=nil)
       # steps:
-      #   a. append constants.sass
-      #   b. append sass_override_code, which will change the values of some constants
-      #   c. append the sass file for +css_url+ (like sass/as_needed/wiki.sass for as_needed/wiki.css)
+      #   a. append constants file
+      #   b. append style_override_code, which will change the values of some constants
+      #   c. append the style file for +css_url+ (like sass/as_needed/wiki.scss for as_needed/wiki.css)
 
-      sass_text = ""
+      style_text = ""
 
       # read the constants
       if css_prefix_path
-        constants_sass_path = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, css_prefix_path, CustomAppearance::CONSTANTS_FILENAME)
+        constants_path = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, css_prefix_path, CustomAppearance::CONSTANTS_FILENAME)
       else
-        constants_sass_path = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME)
+        constants_path = File.join(RAILS_ROOT, CustomAppearance::SASS_ROOT, CustomAppearance::CONSTANTS_FILENAME)
       end
 
-      sass_text << File.read(constants_sass_path)
+      style_text << File.read(constants_path)
 
       # load the custom appearance constants from +parameters+
-      sass_text << "\n" << sass_override_code
+      style_text << "\n" << style_override_code
 
       # load the requested file
-      source_sass_path = source_sass_path(css_url, css_prefix_path)
-      sass_text << File.read(source_sass_path)
+      source_path = source_style_path(css_url, css_prefix_path)
+      style_text << File.read(source_path)
     end
 
-    def sass_override_code
+    def style_override_code
       text = ""
-      parameters.each {|k, v| text << %Q[!#{k} = "#{v}"\n]}
+      parameters.each {|k, v| text << %Q[$#{k}: #{v};\n]}
       text << "\n"
     end
 

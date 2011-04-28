@@ -50,7 +50,7 @@ class CustomAppearaceTest < ActiveSupport::TestCase
     stylesheet_url = appearance.themed_stylesheet_url("screen.css", "ui_base")
     css_path = File.join("./public/stylesheets", stylesheet_url)
     css_text = File.read(css_path)
-    assert css_text =~ /masthead\s*\{\s*.*background:\s*magenta/, "generated text must use updated background-color value"
+    assert css_text =~ /masthead\s*\{\s*.*background:\s*"magenta"/, "generated text must use updated background-color value"
   end
 
   def test_always_regenerate_options
@@ -108,5 +108,6 @@ class CustomAppearaceTest < ActiveSupport::TestCase
 
   def test_available_parameters
     assert CustomAppearance.available_parameters("ui_base").is_a?(Hash)
+    assert CustomAppearance.available_parameters("ui_base").size > 0
   end
 end

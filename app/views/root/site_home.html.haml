@@ -1,0 +1,17 @@
+- content_for :left_sidebar do
+  = render :partial => 'sidebar'
+
+- content_for :misc_header do
+  = render :partial => 'welcome_container'
+
+= render :partial => 'introduction'
+
+-# if @announcements.any? 
+  -# render :partial => 'announcement_page/announcements'  
+-# end -
+
+#sitehome
+  = render :partial => 'widgets/wiki', :locals => {:wiki => @wiki, :editable => may_update_profile?, :no_title => true}
+%br/
+
+= render :partial => 'page_panels'
