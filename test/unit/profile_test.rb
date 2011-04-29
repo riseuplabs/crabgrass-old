@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProfileTest < Test::Unit::TestCase
 
-  fixtures :users, :groups, :profiles, :external_videos
+  fixtures :users, :groups, :profiles, :external_videos, :sites
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -145,6 +145,17 @@ class ProfileTest < Test::Unit::TestCase
 
   def test_associations
     assert check_associations(Profile)
+  end
+
+  def test_new_public_profiles_should_be_visible_if_site_has_all_profiles_visible
+    with_site('connectingclassrooms') do
+      user = User.create(:login => 'foobar')
+      user.save
+      assert user.profiles.public.may_see? 
+    end
+    user = User.create(:login => 'foobar2')
+    user.save
+    assert !user.profiles.public.may_see?
   end
 
 end
