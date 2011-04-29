@@ -180,5 +180,16 @@ class ProfileTest < Test::Unit::TestCase
     assert_not_nil warmgroup.profiles.public.geo_locations[0].geo_admin_code_id
   end
 
+  def test_new_public_profiles_should_be_visible_if_site_has_all_profiles_visible
+    with_site('connectingclassrooms') do
+      user = User.create(:login => 'foobar')
+      user.save
+      assert user.profiles.public.may_see? 
+    end
+    user = User.create(:login => 'foobar2')
+    user.save
+    assert !user.profiles.public.may_see?
+  end
+
 end
 
