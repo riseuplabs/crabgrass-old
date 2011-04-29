@@ -6,7 +6,7 @@ module CustomAppearanceExtension
 
     STYLESHEETS_ROOT = './public/stylesheets'
     SASS_ROOT = './app/stylesheets'
-    CONSTANTS_FILENAME = "constants.scss"
+    CONSTANTS_FILENAME = "constants.sass"
     SASS_LOAD_PATHS = ['.', File.join(RAILS_ROOT, SASS_ROOT)]
 
     protected
@@ -31,9 +31,9 @@ module CustomAppearanceExtension
     #   'as_needed/wiki.css' => RAILS_ROOT + './public/stylesheets/sass/as_needed/wiki.scss'
     def source_style_path(css_url, css_prefix_path=nil)
       if css_prefix_path
-        File.join(RAILS_ROOT, SASS_ROOT, css_prefix_path, css_url).gsub(/.css$/, ".scss")
+        File.join(RAILS_ROOT, SASS_ROOT, css_prefix_path, css_url).gsub(/.css$/, ".sass")
       else
-        File.join(RAILS_ROOT, SASS_ROOT, css_url).gsub(/.css$/, ".scss")
+        File.join(RAILS_ROOT, SASS_ROOT, css_url).gsub(/.css$/, ".sass")
       end
     end
 
