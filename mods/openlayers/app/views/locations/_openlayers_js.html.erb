@@ -28,6 +28,7 @@
 
     function loadMap() {
     var map;
+    var layer;
     var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
       new OpenLayers.Control.PanZoom(),
       new OpenLayers.Control.ArgParser(),
@@ -43,8 +44,12 @@
       controls: controls
     };
     map = new OpenLayers.Map('map', options);
-    gsm = new OpenLayers.Layer.Google("Google Streets");
-    map.addLayer(gsm);
+    <% if current_site.evil.respond_to?(:[]) && current_site.evil["google_streets"] %>
+      layer = new OpenLayers.Layer.Google("Google Streets");
+    <% else %>
+      layer = new OpenLayers.Layer.OSM();
+    <% end %>
+    map.addLayer(layer);
     var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
       {
       format: OpenLayers.Format.KML, 
