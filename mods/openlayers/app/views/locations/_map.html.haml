@@ -1,3 +1,5 @@
+- content_for :html_head do
+  = include_google_street_js_tag
 #map-container
--# the javascript loads everything: the js and css in the html head, the map div, and the js that loads the OpenLayers var
+-# the javascript loads everything: the css in the html head, the map div, and the js that loads the OpenLayers var
 = render :partial => 'locations/openlayers_js'
