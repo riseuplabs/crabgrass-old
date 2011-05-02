@@ -32,7 +32,7 @@ module MapHelper
   def include_google_street_js_tag
     return unless current_site.evil.respond_to?(:[])
     return unless options = current_site.evil["google_streeets"]
-    options.merge! {'sensor' => 'false'}
+    options.merge! 'sensor' => 'false'
     url = "http://maps.google.com/maps/api/js?"
     url += options.map{|k,v| "#{k}=#{v}"}.join(';')
     tag 'script', :src => url, :type => 'text/javascript'
