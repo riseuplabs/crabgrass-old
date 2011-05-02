@@ -35,6 +35,6 @@ module MapHelper
     options.merge! 'sensor' => 'false'
     url = "http://maps.google.com/maps/api/js?"
     url += options.map{|k,v| "#{k}=#{v}"}.join('&')
-    tag 'script', :src => url, :type => 'text/javascript'
+    content_tag 'script', '', :src => url, :type => 'text/javascript'
   end
 end
