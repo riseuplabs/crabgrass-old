@@ -34,7 +34,7 @@ module MapHelper
     return unless options = current_site.evil["google_streets"]
     options.merge! 'sensor' => 'false'
     url = "http://maps.google.com/maps/api/js?"
-    url += options.map{|k,v| "#{k}=#{v}"}.join(';')
+    url += options.map{|k,v| "#{k}=#{v}"}.join('&')
     tag 'script', :src => url, :type => 'text/javascript'
   end
 end
