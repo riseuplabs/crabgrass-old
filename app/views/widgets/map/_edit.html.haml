@@ -19,8 +19,7 @@
       = f.label 'Map Center'
       %div[@widget, :map_center]
         = current_map_center(@widget)
-        = toggle_object_display(I18n.t(:edit), @widget, :map_center, :edit_center)
-      %div[@widget, :edit_center]{:style => 'display:none'}
+      %div[@widget, :edit_center]
         %span.statement Select a country and city,  
         %div.wrap
           %div.wrap-inner
@@ -35,7 +34,6 @@
           = f.text_field(:map_center_latitude)
           %span.label Longitude 
           = f.text_field(:map_center_longitude)
-        = toggle_object_display(I18n.t(:cancel), @widget, :map_center, :edit_center)
     %li
       = f.label 'Zoom Level'
       = select_field_for_map_zoomlevel(@widget)
