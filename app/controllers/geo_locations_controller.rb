@@ -2,7 +2,7 @@ class GeoLocationsController < ApplicationController
 
   helper :map, :locations, :autocomplete
   before_filter :fetch_location, :only => [:show, :edit, :update, :new]
-  before_filter :fetch_profile, :only => [:new, :create]
+  before_filter :fetch_profile, :only => [:new, :create, :destroy]
   before_filter :login_required, :except => [:index, :show]
   before_filter :load_network
 
@@ -37,6 +37,11 @@ class GeoLocationsController < ApplicationController
   end
 
   # the permissions for these are defined in app/permissions/geo_location_permissions.rb
+  def destroy
+    GeoLocation.delete(params[:id])
+    redirect_to_group_or_user(@profile)
+  end
+
   def edit
     return unless request.xhr?
     return if params[:location_only]
@@ -48,15 +53,15 @@ class GeoLocationsController < ApplicationController
 
   def create
     @profile.add_location!(params[:geo_location])
-    redirect_to groups_profiles_url(:action => :edit, :params => {:id => @profile.entity.name})
+    redirect_to_group_or_user(@profile)
   end
 
   def update
     @location.update_params(params[:geo_location]) if params[:save]
-    if @location.profile.entity_type == 'Group'
-      redirect_to groups_profiles_url(:action => :edit, :params => {:id => @location.profile.entity.name})
-    end
+    redirect_to_group_or_user(@location.profile)
   end
+
+  private
 
   def load_network
     if params[:network_id]
@@ -71,6 +76,14 @@ class GeoLocationsController < ApplicationController
 
   def fetch_profile
     @profile = Profile.find(params[:profile_id])
+  end
+  
+  def redirect_to_group_or_user(profile)
+    if profile.entity.is_a?(Group)
+      redirect_to groups_profiles_url(:action => :edit, :params => {:id => profile.entity.name})
+    else
+      redirect_to '/profile/edit/'+profile.type
+    end
   end
 
 end

@@ -34,17 +34,31 @@
               <div class="input_label"><%= I18n.t(:organizational_role) -%></div>
             </td>
           </tr>
-          <tr>
-            <td colspan="3">
-              <% @profile.geo_locations.each do |gl| %>
-                <%= label_for_location(gl)+' '+link_to_modal('Edit Location', :url => edit_geo_location_path(gl)) %>
-              <% end %>
-              <div class="input_label"><%= I18n.t(:location) -%></div>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      <h2 class="alert"><%= I18n.t(:locations) -%></h2>
+    <th>
+  </tr>
+  <tr class='even'>
+    <td>
+      <table cellpadding='8'>
+        <% @profile.geo_locations.each do |gl| %>
+          <tr><td>
+          <%= label_for_location(gl)+'&nbsp;&nbsp;'+link_to_modal('Edit Location', :url => edit_geo_location_path(gl)) %>
+          &nbsp;&nbsp;
+          <%= link_to I18n.t(:remove), geo_location_path(gl, :profile_id => @profile.id.to_s), :method => :delete %>
+          </tr></td>
+        <% end %>
+        <tr><td>
+          <%= link_to_modal('Add Location', :url => new_geo_location_path, :params => { :profile_id => @profile.id.to_s}) %>
+        </td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </div>
 

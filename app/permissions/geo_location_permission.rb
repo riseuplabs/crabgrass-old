@@ -10,5 +10,6 @@ module GeoLocationPermission
     may_edit_profile?(profile.entity)
   end
   alias_method :may_new_geo_location?, :may_create_geo_location?
+  alias_method :may_destroy_geo_location?, :may_create_geo_location?
 
 end
