@@ -64,10 +64,8 @@ module AutocompleteHelper
   end
 
   def locations_autocomplete_afterupdate(options)
-    if @profile and @profile.entity.is_a?(Group)
-      remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
-    elsif @profile
-      remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
+    if options[:update_form_for] == 'profile' 
+      return js_for_edit_geo_location
     elsif options[:update_form_for] == 'widget'
       remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
     else
@@ -86,6 +84,11 @@ module AutocompleteHelper
 
   def autocomplete_id_number
     rand(100000000)
+  end
+
+  # the javascript to insert a hidden field with the city id in the edit location form
+  def js_for_edit_geo_location
+    %Q[$('city_id_field').value = data;]
   end
 
   # called in order to render a popup row. it is a little too complicated.

@@ -73,9 +73,30 @@ module LocationsHelper
   end
 
   def friendly_location(entity)
-    if entity.profile.country_id and (entity.profile.country_id != 0)
-      'Local-'+entity.profile.geo_location.geo_country.name
+    countries = entity.profile.geo_locations.distinct(:geo_country_id)
+    countries.is_a?(Array) ?
+      countries.collect!{|c| 'Local-'+c.name }.join('<br />') :
+      'Local-'+countries.name  
+  end
+
+  def label_for_location(loc)
+    if loc.geo_place.nil?
+      return loc.geo_country.name if loc.geo_admin_code.nil?
+      loc.geo_admin_code.name+', '+loc.geo_country.name
+    else
+      loc.geo_place.name+', '+loc.geo_admin_code.name+', '+loc.geo_country.code
     end
+  end
+
+  def geo_locations_edit_country_dropdown
+    country_id = @location ? @location.geo_country_id : nil
+    select_tag 'geo_location[geo_country_id]', 
+                options_from_collection_for_select(GeoCountry.find(:all), 'id', 'name', country_id), 
+                {:id => 'select_country_id', 
+                 :onchange =>  remote_function(
+                  :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
+                  :with => "'update_form_for=profile&country_code='+value")
+                }
   end
  
   private

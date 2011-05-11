@@ -3,10 +3,12 @@ location1:
   geo_country_id: 1
   geo_admin_code_id: 2 
   geo_place_id: 1
+  profile_id: 2
 
 location2:
   id: 2
   geo_country_id: 2
+  profile_id: 1
 
 location3:
   id: 3
@@ -16,4 +18,26 @@ location_for_animals:
   id: 4
   geo_country_id: 1
   geo_admin_code_id: 3
-  geo_place_id: 2 
+  geo_place_id: 2
+  profile_id: 4 
+
+location_for_rainbow:
+  id: 5
+  geo_country_id: 1
+  geo_admin_code_id: 2
+  geo_place_id: 1
+  profile_id: 3
+
+location_for_diggers:
+  id: 6
+  geo_country_id: 1
+  geo_admin_code_id: 3
+  geo_place_id: 2
+  profile_id: 10
+
+location_for_recent_group:
+  id: 7
+  geo_country_id: 1
+  geo_admin_code_id: 2
+  geo_place_id: 1
+  profile_id: 303

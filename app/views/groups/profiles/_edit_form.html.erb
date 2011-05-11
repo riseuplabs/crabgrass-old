@@ -13,13 +13,17 @@
       r.input @profile.summary_html
     end
   end
+  f.heading I18n.t(:location).pluralize
+  @profile.geo_locations.each do |gl|
+    f.row do |r|
+      r.label ''
+      r.label_for 'group_location_'+gl.id.to_s
+      r.input label_for_location(gl)+' '+link_to_modal('Edit Location', :url => edit_geo_location_path(gl))
+    end
+    #{render(:partial => 'locations/select_form')}
+  end
   f.row do |r|
-    r.label 'Location'
-    r.label_for 'group_location'
-#    r.info I18n.t(:group_location, :group => @group.group_type.downcase)
-    r.input %Q{
-      #{render(:partial => 'locations/select_form')}
-    }
+    r.input link_to_modal('Add Location', :url => new_geo_location_path(), :params => "profile_id=#{@profile.id.to_s}")
   end
   f.heading I18n.t(:photo)
   if @profile.photo

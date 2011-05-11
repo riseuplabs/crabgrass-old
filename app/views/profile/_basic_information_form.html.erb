@@ -36,7 +36,9 @@
           </tr>
           <tr>
             <td colspan="3">
-              <%= render :partial => 'locations/select_form' %>
+              <% @profile.geo_locations.each do |gl| %>
+                <%= label_for_location(gl)+' '+link_to_modal('Edit Location', :url => edit_geo_location_path(gl)) %>
+              <% end %>
               <div class="input_label"><%= I18n.t(:location) -%></div>
             </td>
           </tr>

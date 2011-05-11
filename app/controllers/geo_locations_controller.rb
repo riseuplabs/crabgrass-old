@@ -1,10 +1,15 @@
 class GeoLocationsController < ApplicationController
 
-  helper :map
+  helper :map, :locations, :autocomplete
+  before_filter :fetch_location, :only => [:show, :edit, :update, :new]
+  before_filter :fetch_profile, :only => [:new, :create]
   before_filter :login_required, :except => [:index, :show]
   before_filter :load_network
+
+  permissions :geo_location, :profile
+
   def index
-    @locations = GeoLocation.with_geo_place.with_visible_groups(current_user, current_site)
+    @locations = GeoLocation.with_geo_place.distinct('geo_place_id').with_visible_groups(current_user, current_site)
     if @network
       @locations = @locations.with_groups_in(@network)
     end
@@ -14,7 +19,6 @@ class GeoLocationsController < ApplicationController
   end
 
   def show
-    return false unless @location = GeoLocation.find(params[:id])
     @groups = @location.groups
     if @network
       @groups = @groups.members_of(@network)
@@ -32,9 +36,41 @@ class GeoLocationsController < ApplicationController
     end
   end
 
+  # the permissions for these are defined in app/permissions/geo_location_permissions.rb
+  def edit
+    return unless request.xhr?
+    return if params[:location_only]
+  end
+
+  def new
+    return unless request.xhr?
+  end
+
+  def create
+    @profile.add_location!(params[:geo_location])
+    redirect_to groups_profiles_url(:action => :edit, :params => {:id => @profile.entity.name})
+  end
+
+  def update
+    @location.update_params(params[:geo_location]) if params[:save]
+    if @location.profile.entity_type == 'Group'
+      redirect_to groups_profiles_url(:action => :edit, :params => {:id => @location.profile.entity.name})
+    end
+  end
+
   def load_network
     if params[:network_id]
       @network = Network.find_by_name params[:network_id]
     end
   end
+
+  def fetch_location
+    @location = GeoLocation.find_by_id(params[:id]) || GeoLocation.new(:profile_id => params[:profile_id])
+    @city_name = !@location.geo_place_id.nil? ? @location.geo_place.name : ''
+  end
+
+  def fetch_profile
+    @profile = Profile.find(params[:profile_id])
+  end
+
 end

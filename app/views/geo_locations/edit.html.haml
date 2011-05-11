@@ -1,0 +1,13 @@
+= form_tag geo_location_url(@location), :method => :put
+%div
+  = label_tag 'country', 'Country'
+  = geo_locations_edit_country_dropdown
+%div{:id => 'city_text', :style => 'float: none;'}
+  = label_tag 'city', 'City'
+  = text_field_tag 'city_name', @city_name, :id => 'city_text_field'
+  %div#autocomplete_js
+    = render :partial => '/locations/autocomplete_js', :locals => {:update_form_for => 'profile'}
+  = hidden_field_tag 'geo_location[geo_place_id]', @location.try(:geo_place_id), :id => 'city_id_field'
+%div
+  = submit_tag(I18n.t(:save_button), :name => 'save')
+  = submit_tag(I18n.t(:cancel_button), :name => 'cancel')
