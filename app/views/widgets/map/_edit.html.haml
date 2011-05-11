@@ -10,7 +10,7 @@
       %ul
         %li= f.radio_button(:kml, 'groups', :checked => (@widget.kml == 'groups')) + ' Show all groups'
         %li
-          = f.radio_button(:kml, 'custom', :checked => (@widget.kml == 'by_network')) + ' Show Groups by Network: '
+          = f.radio_button(:kml, 'by_network', :checked => (@widget.kml == 'by_network')) + ' Show Groups by Network: '
           - if @widget.new_record?
             .info Please specify which networks to display after creating the widget.
           - else
