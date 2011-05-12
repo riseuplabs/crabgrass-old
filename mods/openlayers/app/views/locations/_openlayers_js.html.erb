@@ -33,7 +33,7 @@
 
     function loadMap() {
     var map;
-    var layer;
+    var layers = new Array();
     var options;
     var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
       new OpenLayers.Control.PanZoom(),
@@ -61,8 +61,8 @@
     <% end %>
     map = new OpenLayers.Map('map', options);
     map.addLayer(new OpenLayers.Layer.OSM());
-    var layers = $$(".layer");
-    layers.each( function(l) {
+    var layer_elements = $$(".layer");
+    layer_elements.each( function(l) {
       var label = l.readAttribute('data-label');
       var url = l.readAttribute('data-url');
       var layer = new OpenLayers.Layer.GML(label, url, 
@@ -74,18 +74,18 @@
           },
           projection: map.displayProjection
         });
-      map.addLayer(layer);
       // Events for the objects of the KML-Data
       layer.events.on({
         'featureselected': onFeatureSelect,
         'featureunselected': onFeatureUnselect
       });
-      var control = new OpenLayers.Control.SelectFeature(layer);
-      map.addControl(control);
-      control.activate();
-             
+      layers.push(layer)
     });
-
+    map.addLayers(layers);
+    var control = new OpenLayers.Control.SelectFeature(layers);
+    map.addControl(control);
+    control.activate();
+             
     map.addControl(new OpenLayers.Control.LayerSwitcher());
 
     var center = $$('#map-center').first()
