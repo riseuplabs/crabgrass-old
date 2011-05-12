@@ -1,7 +1,7 @@
 #map-container{:"data-height" => '355px', :"data-width" => '500px'}
   #map-center{:"data-long" => @map.mapcenterlong, :"data-lat" => @map.mapcenterlat}
   #map-zoom{:"data-level" => @map.zoomlevel}
-  %ul
+  %ul#layers{:style => 'display: none'}
     - map_widget_layers(widget).each do |label, url|
       %li.layer{:"data-label" => label, :"data-url" => url}
         = label.any? ? label : url
