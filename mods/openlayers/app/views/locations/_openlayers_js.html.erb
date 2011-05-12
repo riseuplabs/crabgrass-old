@@ -21,8 +21,13 @@
     <% end %>
 
     // inject map div
-    var mapdiv = new Element('div', {id: 'map', style: 'width: <%= @map.width %>px; height: <%= @map.height %>px;'});
-    $$('#map-container').first().insert({bottom: mapdiv});
+    var container = $$('#map-container').first()
+    var width = container.readAttribute('data-width');
+    var height = container.readAttribute('data-height');
+    // TODO: actually use the width and height data from the container
+    var style = 'width: ' + width + '; height: ' + height + ';';
+    var mapdiv = new Element('div', {id: 'map', style: style});
+    container.insert({bottom: mapdiv});
 
     loadMap();
 
@@ -44,29 +49,37 @@
     };
     map = new OpenLayers.Map('map', options);
     map.addLayer(new OpenLayers.Layer.OSM());
-    var kml = new OpenLayers.Layer.GML("MRU", "<%= @map.kml %>", 
-      {
-      format: OpenLayers.Format.KML, 
-      formatOptions: {
-      extractStyles: true, 
-      extractAttributes: true
-      },
-      projection: map.displayProjection
-    });
-    map.addLayer(kml);
-    // Events for the objects of the KML-Data
-    kml.events.on({
-      'featureselected': onFeatureSelect,
-      'featureunselected': onFeatureUnselect
+    var layers = $$(".layer");
+    layers.each( function(l) {
+      var label = l.readAttribute('data-label');
+      var url = l.readAttribute('data-url');
+      var layer = new OpenLayers.Layer.GML(label, url, 
+        {
+          format: OpenLayers.Format.KML, 
+          formatOptions: {
+          extractStyles: true, 
+          extractAttributes: true
+          },
+          projection: map.displayProjection
+        });
+      map.addLayer(layer);
+      // Events for the objects of the KML-Data
+      layer.events.on({
+        'featureselected': onFeatureSelect,
+        'featureunselected': onFeatureUnselect
+      });
+      var control = new OpenLayers.Control.SelectFeature(layer);
+      map.addControl(control);
+      control.activate();
+             
     });
 
-    var control = new OpenLayers.Control.SelectFeature(kml);
-    map.addControl(control);
-    control.activate();
-             
     map.addControl(new OpenLayers.Control.LayerSwitcher());
 
-    var lonLat = new OpenLayers.LonLat(<%= @map.mapcenterlong.to_i %>,<%= @map.mapcenterlat.to_i %>).transform(map.displayProjection,  map.projection);
+    var center = $$('#map-center').first()
+    var long = center.readAttribute('data-long');
+    var lat = center.readAttribute('data-lat');
+    var lonLat = new OpenLayers.LonLat(long, lat).transform(map.displayProjection,  map.projection);
     map.setCenter (lonLat, 2); 
 
     function onPopupClose(evt) {
@@ -119,7 +132,9 @@
       }
     }
     //map.zoomToMaxExtent();
-    map.zoomTo(<%= @map.zoomlevel %>);
+    var zoom = $$('#map-zoom').first()
+    var level = zoom.readAttribute('data-level');
+    map.zoomTo(level);
   } // end function loadMap()
   }// end function doAllOpenLayers
 
