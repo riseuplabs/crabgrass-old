@@ -28,8 +28,8 @@ module CustomAppearanceExtension
     end
 
     # :cal-seq:
-    #   'as_needed/wiki.css' => RAILS_ROOT + './public/stylesheets/sass/as_needed/wiki.scss'
-    def source_style_path(css_url, css_prefix_path=nil)
+    #   'as_needed/wiki.css' => RAILS_ROOT + './public/stylesheets/sass/as_needed/wiki.sass'
+    def source_sass_path(css_url, css_prefix_path=nil)
       if css_prefix_path
         File.join(RAILS_ROOT, SASS_ROOT, css_prefix_path, css_url).gsub(/.css$/, ".sass")
       else
