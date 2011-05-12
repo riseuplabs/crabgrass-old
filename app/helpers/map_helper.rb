@@ -29,4 +29,11 @@ module MapHelper
     '100'
   end
 
+  def include_google_street_js_tag
+    return unless current_site.evil.respond_to?(:[])
+    return unless options = current_site.evil["google_streets"]
+    url = "http://maps.google.com/maps?file=api&v=2&"
+    url += options.map{|k,v| "#{k}=#{v}"}.join('&')
+    content_tag 'script', '', :src => url, :type => 'text/javascript'
+  end
 end

@@ -1,3 +1,7 @@
+- content_for :html_head do
+  - # only includes if API key specified in config
+  = include_google_street_js_tag
+
 #map-container{:"data-height" => '355px', :"data-width" => '500px'}
   #map-center{:"data-long" => @map.mapcenterlong, :"data-lat" => @map.mapcenterlat}
   #map-zoom{:"data-level" => @map.zoomlevel}

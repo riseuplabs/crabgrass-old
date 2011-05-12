@@ -33,20 +33,32 @@
 
     function loadMap() {
     var map;
+    var layer;
+    var options;
     var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
       new OpenLayers.Control.PanZoom(),
       new OpenLayers.Control.ArgParser(),
       new OpenLayers.Control.Attribution()]
-    var options = {
-      theme: false,
-      maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-      numZoomLevels: 19,
-      maxResolution: 156543.0399,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326"),
-      controls: controls
-    };
+        
+    <% if current_site.evil.respond_to?(:[]) && current_site.evil["google_streets"] %>
+      layer = new OpenLayers.Layer.Google("Google Streets");
+      options = {
+        numZoomLevels: 20,
+        controls: controls
+      };
+    <% else %>
+      layer = new OpenLayers.Layer.OSM();
+      options = {
+        theme: false,
+        maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+        numZoomLevels: 19,
+        maxResolution: 156543.0399,
+        units: 'm',
+        projection: new OpenLayers.Projection("EPSG:900913"),
+        displayProjection: new OpenLayers.Projection("EPSG:4326"),
+        controls: controls
+      };
+    <% end %>
     map = new OpenLayers.Map('map', options);
     map.addLayer(new OpenLayers.Layer.OSM());
     var layers = $$(".layer");
@@ -79,7 +91,9 @@
     var center = $$('#map-center').first()
     var long = center.readAttribute('data-long');
     var lat = center.readAttribute('data-lat');
-    var lonLat = new OpenLayers.LonLat(long, lat).transform(map.displayProjection,  map.projection);
+    var lonLat = new OpenLayers.LonLat(long, lat).transform(
+        new OpenLayers.Projection("EPSG:4326"),
+        map.getProjectionObject());
     map.setCenter (lonLat, 2); 
 
     function onPopupClose(evt) {
