@@ -14,8 +14,8 @@
 ##
 enabled_mods:
   - super_admin
-  - moderation
-  - translator
+#  - moderation
+#  - translator
   - enhanced_stats
 enabled_tools:
   - asset_tool
@@ -44,11 +44,11 @@ enabled_tools:
 ## SITES
 ##
 
-sites:
-  - name: site1
-    admin_group: rainbow
-    moderation_group: rainbow
-    translation_group: animals
+#sites:
+#  - name: site1
+#    admin_group: rainbow
+#    moderation_group: rainbow
+#    translation_group: animals
 #  - name: red
 #    admin_group: redadmins
 
