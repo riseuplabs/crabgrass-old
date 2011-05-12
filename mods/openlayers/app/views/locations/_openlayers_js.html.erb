@@ -33,6 +33,7 @@
 
     function loadMap() {
     var map;
+    var base;
     var layers = new Array();
     var options;
     var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
@@ -41,13 +42,13 @@
       new OpenLayers.Control.Attribution()]
         
     <% if current_site.evil.respond_to?(:[]) && current_site.evil["google_streets"] %>
-      layer = new OpenLayers.Layer.Google("Google Streets");
+      base = new OpenLayers.Layer.Google("Google Streets");
       options = {
         numZoomLevels: 20,
         controls: controls
       };
     <% else %>
-      layer = new OpenLayers.Layer.OSM();
+      base = new OpenLayers.Layer.OSM();
       options = {
         theme: false,
         maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
@@ -60,7 +61,7 @@
       };
     <% end %>
     map = new OpenLayers.Map('map', options);
-    map.addLayer(new OpenLayers.Layer.OSM());
+    map.addLayer(base);
     var layer_elements = $$(".layer");
     layer_elements.each( function(l) {
       var label = l.readAttribute('data-label');
