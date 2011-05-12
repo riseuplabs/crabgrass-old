@@ -106,7 +106,10 @@ module WidgetsHelper
     when 'custom'
       {"Custom Layer" => widget.custom_kml}
     when 'by_network'
-      Hash[*(widget.menu_items).map {|item| [item.title, item.link]}.flatten]
+      layers = widget.menu_items.map do |item|
+        [item.title, item.link + '/geo_locations.kml']
+      end
+      Hash[*layers.flatten]
     end
   end
 
