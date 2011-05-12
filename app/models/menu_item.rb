@@ -29,13 +29,12 @@ class MenuItem < ActiveRecord::Base
 
   def check_for_entity_links
     case self.link
-    when 'network_link', 'group_link'
+    when 'network_link'
       group = Group.find_by_name(self.title)
       group ||= Group.find_by_full_name(self.title)
-      self.link = "/#{group.name}"
+      self.link = "/networks/#{group.name}"
       self.title = group.display_name
     end
   end
-
 
 end
