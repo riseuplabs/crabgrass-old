@@ -99,13 +99,14 @@ module WidgetsHelper
   end
 
   # map widget helpers
-  def map_widget_kml_location(widget)
+  def map_widget_layers(widget)
     case widget.kml
     when 'groups'
-      '/geo_locations.kml'
-      #formatted_groups_url(:sort_by => 'latlong', :format => :kml)
+      {"All groups" => '/geo_locations.kml'}
     when 'custom'
-      widget.custom_kml
+      {"Custom Layer" => widget.custom_kml}
+    when 'by_network'
+      Hash[*(widget.menu_items).map {|item| [item.title, item.link]}.flatten]
     end
   end
 

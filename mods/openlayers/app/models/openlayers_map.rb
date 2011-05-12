@@ -2,8 +2,7 @@ class OpenlayersMap
 
   attr_accessor :kml, :width, :height, :mapcenterlong, :mapcenterlat, :zoomlevel, :override_stylesheet
 
-  def initialize(kml, options={})
-    @kml = kml
+  def initialize(options={})
     @width = options[:width] || 500
     @height = options[:height] || 355
     @mapcenterlat = options[:mapcenterlat] || -8
