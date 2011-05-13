@@ -17,7 +17,8 @@ class Groups::DirectoryController < Groups::BaseController
     user = logged_in? ? current_user : nil
     if params[:country_id]
       loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(loc_options).by_created_at.paginate(pagination_params)
+      #@groups = Group.only_type(@group_type, @current_site).in_location(loc_options).visible_by(user).by_created_at.paginate(pagination_params)
+      @groups = GeoCountry.find(params[:country_id]).group_profiles
       render :update do |page|
         page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
       end
@@ -36,8 +37,9 @@ class Groups::DirectoryController < Groups::BaseController
 
     if params[:country_id] =~ /^\d+$/
       @params_location = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      @groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).alphabetized(letter_page).paginate(pagination_params)
-      groups_with_names = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).names_only
+      #@groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).alphabetized(letter_page).paginate(pagination_params)
+      @groups = GeoCountry.find(params[:country_id]).group_profiles(user).paginate(pagination_params)
+      groups_with_names = @groups 
     else
       @groups = Group.only_type(@group_type, @current_site).visible_by(user).alphabetized(letter_page).paginate(pagination_params)
       @params_location = {}

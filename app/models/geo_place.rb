@@ -17,6 +17,10 @@ class GeoPlace < ActiveRecord::Base
     end
   end
 
+  def group_profiles(user, site = Site.current)
+    self.profiles.visible_by(user).collect{|profile| profile.entity}.uniq
+  end
+
   named_scope :with_visible_groups, lambda {|user, site|
     { :joins => :profiles,
       :select => 'geo_places.*, count(*) as group_count',
