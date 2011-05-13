@@ -16,9 +16,7 @@ class Groups::DirectoryController < Groups::BaseController
   def recent
     user = logged_in? ? current_user : nil
     if params[:country_id]
-      loc_options = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      #@groups = Group.only_type(@group_type, @current_site).in_location(loc_options).visible_by(user).by_created_at.paginate(pagination_params)
-      @groups = GeoCountry.find(params[:country_id]).group_profiles
+      groups_for_geo_location(user)
       render :update do |page|
         page.replace_html 'group_directory_list', :partial => '/groups/directory/group_directory_list'
       end
@@ -36,9 +34,7 @@ class Groups::DirectoryController < Groups::BaseController
     letter_page = params[:letter] || ''
 
     if params[:country_id] =~ /^\d+$/
-      @params_location = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
-      #@groups = Group.only_type(@group_type, @current_site).visible_by(user).in_location(@params_location).alphabetized(letter_page).paginate(pagination_params)
-      @groups = GeoCountry.find(params[:country_id]).group_profiles(user).paginate(pagination_params)
+      groups_for_geo_location(user)
       groups_with_names = @groups 
     else
       @groups = Group.only_type(@group_type, @current_site).visible_by(user).alphabetized(letter_page).paginate(pagination_params)
@@ -91,6 +87,17 @@ class Groups::DirectoryController < Groups::BaseController
 
   def set_group_type
     @group_type = :group
+  end
+
+  def groups_for_geo_location(user)
+    @params_location = {:country_id => params[:country_id], :state_id => params[:state_id], :city_id => params[:city_id]}
+    if params[:city_id] =~ /\d+/
+      @groups = GeoPlace.find(params[:city_id]).group_profiles(user).paginate(pagination_params)
+    elsif params[:state_id] =~ /\d+/
+      @groups = GeoAdminCode.find(params[:state_id]).group_profiles(user).paginate(pagination_params)
+    else
+      @groups = GeoCountry.find(params[:country_id]).group_profiles(user).paginate(pagination_params)
+    end
   end
 
 end

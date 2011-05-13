@@ -1,4 +1,4 @@
-- group = @groups.first unless local_assigns[:group]
+- group = @group || @groups.first unless local_assigns[:group]
 - profile = group.profiles.public
 %div{:id => ('popup_entity_'+group.id.to_s), :class => 'single-group'}
   = avatar_for(group, 'small')

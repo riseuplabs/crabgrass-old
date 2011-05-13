@@ -97,20 +97,8 @@ class Group < ActiveRecord::Base
     {:limit => limit}
   }
 
-  named_scope :in_location, lambda { |options|
-    country_id = options[:country_id]
-    city_id = options[:city_id]
-    state_id = options[:state_id]
-    conditions = "gl.id = profiles.geo_location_id and gl.geo_country_id=#{country_id}"
-    if state_id and !city_id
-      conditions += " and gl.geo_admin_code_id=#{state_id}"
-    end
-    if city_id
-      conditions += " and gl.geo_place_id=#{city_id}"
-    end
-    { :joins => "join geo_locations as gl",
-      :conditions => conditions
-    }
+  named_scope :with_ids, lambda { |ids|
+    {:conditions => ['groups.id IN (?)', ids]}
   }
 
   ##

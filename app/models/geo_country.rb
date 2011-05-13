@@ -19,7 +19,8 @@ class GeoCountry < ActiveRecord::Base
   end
 
   def group_profiles(user, site = Site.current)
-    self.profiles.visible_by(user).collect{|profile| Group.find(profile.entity_id)}.uniq
+    group_ids = self.profiles.visible_by(user).collect{|p| p.entity_id}.uniq
+    Group.with_ids(group_ids)
   end
 
   named_scope :with_public_profile, 

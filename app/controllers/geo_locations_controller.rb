@@ -1,7 +1,7 @@
 class GeoLocationsController < ApplicationController
 
   helper :map, :locations, :autocomplete
-  before_filter :fetch_location, :only => [:show, :edit, :update, :new]
+  before_filter :fetch_location, :only => [:edit, :update, :new]
   before_filter :fetch_profile, :only => [:new, :create, :destroy]
   before_filter :login_required, :except => [:index, :show]
   before_filter :load_network
@@ -19,11 +19,15 @@ class GeoLocationsController < ApplicationController
   end
 
   def show
-    @groups = @location.groups
+    # this eventually should be expanded to also work for locations with only country or admin code set
+    @location = GeoPlace.find_by_id(params[:id])
+    (@groups = [] and return) if @location.nil?
+    @groups = @location.group_profiles(current_user)
     if @network
       @groups = @groups.members_of(@network)
     else
-      @groups = @groups.visible_by(current_user)
+      # i think this is covered by the group_profiles method now
+      #@groups = @groups.visible_by(current_user)
     end
     @group_count = @groups.count
     @groups = @groups.slice!(0,12).paginate(:per_page => 4, :page => params[:page])
