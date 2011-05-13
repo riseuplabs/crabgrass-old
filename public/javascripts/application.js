@@ -364,6 +364,7 @@ var LoadSocial = Class.create({
     new PeriodicalExecuter(this.doRequest, 120);
   },
   doRequest: function() {
+    if !($('social-activities-dropdown')) return;
     if ($('social-activities-dropdown').visible()) return;
     new Ajax.Request('/me/social-activities', {
       method: 'GET',
