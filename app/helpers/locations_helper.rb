@@ -113,8 +113,8 @@ module LocationsHelper
     end
   end
 
-  def _display_value(force=nil)
-    if (@profile and @profile.country_id) or force
+  def _display_value(country_id, force=nil)
+    if country_id or force
       'inline'
     else
       'none'
