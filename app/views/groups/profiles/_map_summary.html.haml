@@ -7,8 +7,8 @@
   %p
     = profile.summary_html
   %div{:class => 'small_icon location_20'}
-    = profile.geo_city_name + ', '
-    = profile.geo_location.geo_country.name
+    = @place.name + ', '
+    = @place.geo_country.name
   #map_summary_footer
     - if !@groups || (@groups.count > 1)
       = render :partial => '/groups/profiles/map_summary_footer_back_link'

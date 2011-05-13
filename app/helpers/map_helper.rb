@@ -10,7 +10,8 @@ module MapHelper
 
   def link_to_kml_entity(ent)
     link_to_remote ent.display_name,
-      { :url => '/groups/show', :with => "'id=#{ent.name}&map_summary=1'",
+      { :url => '/groups/show', 
+        :with => "'id=#{ent.name}&map_summary=1&place_id=#{@place.id}'",
         :loading => "$('entity-#{ent.id.to_s}').toggleClassName('spinner').toggleClassName('arrow');",
         :complete => "$('entity-#{ent.id.to_s}').toggleClassName('arrow').toggleClassName('spinner');"
       }

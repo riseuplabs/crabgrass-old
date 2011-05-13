@@ -199,7 +199,7 @@ class GroupsController < Groups::BaseController
   end
 
   def show_map_summary
-
+    @place = GeoPlace.find(params[:place_id])
     render :update do |page|
       # in case there are any of these already loaded, remove them
       page << "if ( $('popup_entity_"+@group.id.to_s+"') == undefined ) {"

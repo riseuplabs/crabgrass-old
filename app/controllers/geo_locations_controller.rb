@@ -20,9 +20,11 @@ class GeoLocationsController < ApplicationController
 
   def show
     # this eventually should be expanded to also work for locations with only country or admin code set
-    @location = GeoPlace.find_by_id(params[:id])
-    (@groups = [] and return) if @location.nil?
-    @groups = @location.group_profiles(current_user)
+    unless @place = GeoPlace.find(params[:id])
+      render :nothing => true
+      return
+    end
+    @groups = @place.group_profiles(current_user)
     if @network
       @groups = @groups.members_of(@network)
     else
