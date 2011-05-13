@@ -9,7 +9,7 @@ class GeoLocationsController < ApplicationController
   permissions :geo_location, :profile
 
   def index
-    @locations = GeoLocation.with_geo_place.distinct('geo_place_id').with_visible_groups(current_user, current_site)
+    @locations = GeoPlace.with_visible_groups(current_user, current_site)
     if @network
       @locations = @locations.with_groups_in(@network)
     end
