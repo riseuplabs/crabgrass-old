@@ -24,13 +24,12 @@ class GeoPlace < ActiveRecord::Base
   named_scope :with_visible_groups, lambda {|user, site|
     { :joins => :profiles,
       :select => 'geo_places.*, count(*) as group_count',
+      :group => 'geo_places.id',
       :conditions => GeoPlace.conditions_for(user,site) }
   }
 
-  named_scope :with_groups_in, lambda {|group|
-    ids = group.groups.map(&:id)
-    conditions = ["profiles.group_id in (?)",ids]
-    { :conditions => conditions }
+  named_scope :with_groups_in, lambda {|network|
+    { :conditions => ["profiles.group_id in (?)", network.group_ids] }
   }
 
   named_scope :named_like, lambda {|query|
