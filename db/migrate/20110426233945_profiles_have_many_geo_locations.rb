@@ -4,7 +4,7 @@ class ProfilesHaveManyGeoLocations < ActiveRecord::Migration
     locations = []
     Profile.find(:all).each do |prof|
       next if prof.geo_location_id.nil?
-      gl = GeoLocation.find(prof.geo_location_id)
+      gl = GeoLocation.find(prof.geo_location_id) rescue next
       geo_data = {
         :geo_country_id => gl.geo_country_id,
         :geo_admin_code_id => gl.try(:geo_admin_code_id) || nil,
