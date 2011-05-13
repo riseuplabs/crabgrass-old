@@ -5,4 +5,4 @@
     = spinner(spinner_id)
     = submit_menu_item_link menu_item
     = toggle_object_display(I18n.t(:cancel), menu_item, :list, :form)
-  = render :partial => '/menu_items/fields', :locals => {:f => f}
+  = render_fields(f)

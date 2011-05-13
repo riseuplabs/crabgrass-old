@@ -36,7 +36,7 @@ module AutocompleteHelper
         container: '#{options[:container]}',
         preloadedOnTop: #{preload},
         rowRenderer: #{options[:renderer]},
-        selectValue: #{options[:selectvalue]} 
+        selectValue: #{options[:selectvalue]}
       }, #{autocomplete_id_number});
     ]
     javascript_tag(auto_complete_js)
@@ -48,6 +48,13 @@ module AutocompleteHelper
 
   def autocomplete_friends_tag(field_id, options={})
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  end
+
+  def autocomplete_networks_tag(field_id = 'network_select', options={})
+    options[:container] ||= 'autocomplete_container'
+    url = formatted_autocomplete_networks_path(:format => 'json')
+    autocomplete_entity_tag field_id,
+      options.merge(:url => url)
   end
 
   def autocomplete_locations_tag(field_id, options={})
@@ -78,6 +85,11 @@ module AutocompleteHelper
       #:complete => spinner_icon_off('plus', add_button_id)
     }
     remote_function(add_action)
+  end
+
+  def entity_autocomplete_line(entity)
+    "<em>%s</em>%s" % [entity.display_name,
+      ('<br/>' + entity.name if entity.name != entity.display_name)]
   end
 
   private

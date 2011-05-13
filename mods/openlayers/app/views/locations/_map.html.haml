@@ -1,5 +1,14 @@
 - content_for :html_head do
+  - # only includes if API key specified in config
   = include_google_street_js_tag
-#map-container
--# the javascript loads everything: the css in the html head, the map div, and the js that loads the OpenLayers var
+
+#map-container{:"data-height" => '355px', :"data-width" => '500px'}
+  #map-center{:"data-long" => @map.mapcenterlong, :"data-lat" => @map.mapcenterlat}
+  #map-zoom{:"data-level" => @map.zoomlevel}
+  %ul#layers{:style => 'display: none'}
+    - map_widget_layers(widget).each do |label, url|
+      %li.layer{:"data-label" => label, :"data-url" => url}
+        = label.any? ? label : url
+
+-# the javascript loads everything: the js and css in the html head, the map div, and the js that loads the OpenLayers var
 = render :partial => 'locations/openlayers_js'

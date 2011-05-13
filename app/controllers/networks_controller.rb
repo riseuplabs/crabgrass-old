@@ -1,6 +1,7 @@
 class NetworksController < GroupsController
 
   before_filter :check_site_settings, :only => :show
+  helper :autocomplete
 
   def initialize(options={})
     super
@@ -36,6 +37,18 @@ class NetworksController < GroupsController
     render :template => 'groups/new'
   end
 
+  def autocomplete
+    if params[:query] == ""
+      @networks = current_user.networks.find(:all, :limit => 20)
+    else
+      filter = "#{params[:query]}%"
+      @networks = Network.find(:all,
+        :conditions => ["groups.name LIKE ? OR groups.full_name LIKE ?", filter, filter],
+        :limit => 20)
+    end
+  end
+
+
   protected
 
   def context
@@ -60,5 +73,6 @@ class NetworksController < GroupsController
       redirect_to (current_site.network ? '/' : '/me/dashboard')
     end
   end
+
 end
 
