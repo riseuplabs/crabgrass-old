@@ -55,7 +55,7 @@ module LocationsHelper
 
   def city_id_field(object=nil, method=nil)
     name = _field_name('city_id', object, method)
-    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : params[:city_id] 
+    city_id = params[:city_id] 
     render :partial => '/locations/city_id_field', :locals => {:city_id => city_id, :name => name}
   end
 
