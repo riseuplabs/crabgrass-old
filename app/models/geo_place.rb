@@ -3,77 +3,30 @@ class GeoPlace < ActiveRecord::Base
   belongs_to :geo_country
   belongs_to :geo_admin_code
   has_many :geo_locations
-  has_many :profiles, :through => :geo_locations
-
-  has_many :groups, :through => :profiles,
-    :source => 'entity',
-    :source_type => 'Group' do
+  has_many :profiles, :through => :geo_locations do
 
     # overwriting the named scope so we do not join profiles twice
     def visible_by(user, site = Site.current)
-      if user and user.real? and user.all_group_ids.any?
-        conditions = <<-EOSQL
-          ((profiles.stranger = #{true} AND profiles.may_see = #{true}) OR
-            (groups.id IN (#{user.all_group_ids.join(',')}))) AND
-          (groups.site_id = #{site.id})
-        EOSQL
-      else
-        conditions = <<-EOSQL
-          profiles.stranger = #{true} AND profiles.may_see = #{true} AND
-          (groups.site_id = #{site.id})
-        EOSQL
-      end
-      self.find :all, :conditions => conditions
+      self.find :all, :conditions => GeoPlace.conditions_for(user, site)
     end
 
+    # this does not check for the site id of the groups.
+    # we assume all members of a network are on the same site.
     def members_of(network, user = User.current)
-      member_ids = network.groups.map(&:id)
-      return [] if member_ids.empty?
-      debugger
-      if user and user.real? and user.all_group_ids.any?
-        conditions = <<-EOSQL
-          ((profiles.stranger = #{true} AND profiles.may_see = #{true}) OR
-            ( groups.id IN (#{user.all_group_ids.join(',')}))) AND
-          ( groups.id IN (#{member_ids.join(',')}))
-        EOSQL
-      else
-        conditions = <<-EOSQL
-          profiles.stranger = #{true} AND
-          profiles.may_see = #{true} AND
-          ( groups.id IN (#{member_ids.join(',')}))
-        EOSQL
-      end
-      self.find :all, :conditions => conditions
+      self.find :all, :conditions => GeoPlace.conditions_for(user, network)
     end
   end
 
-  # one day this should be changed to return groups or users
   named_scope :with_visible_groups, lambda {|user, site|
-    if user and user.real? and my_group_ids = Group.namespace_ids(user.all_group_ids)
-      sql = <<-EOSQL
-        ((profiles.stranger = ? AND profiles.may_see = ? ) OR
-          (groups.id IN (?))) AND
-        (groups.site_id = ?)
-      EOSQL
-      conditions = [sql, true, true, my_group_ids, site.id]
-    else
-      sql = <<-EOSQL
-        profiles.stranger = ? AND
-        profiles.may_see = ? AND
-        groups.site_id = ?
-      EOSQL
-      conditions = [sql, true, true, site.id]
-    end
-    { :joins => 'INNER JOIN profiles INNER JOIN groups ON (profiles.entity_id = groups.id AND profiles.entity_type = "Group")', #:groups,
-      :select => 'profiles.*, count(*) as group_count',
-      :conditions => conditions }
+    { :joins => :profiles,
+      :select => 'geo_places.*, count(*) as group_count',
+      :conditions => GeoPlace.conditions_for(user,site) }
   }
 
   named_scope :with_groups_in, lambda {|group|
     ids = group.groups.map(&:id)
-    conditions = ids.any? ? ["groups.id in (?)",ids] : "false"
-    { :joins => :groups,
-      :conditions => conditions }
+    conditions = ["profiles.group_id in (?)",ids]
+    { :conditions => conditions }
   }
 
   named_scope :named_like, lambda {|query|
@@ -114,6 +67,30 @@ class GeoPlace < ActiveRecord::Base
       )
     end
     return @places.flatten!
+  end
+
+  # sql conditions for all places with visible groups in a given context
+  # contexts need to respond to group_ids with a list of group ids
+  # sites and networks do so.
+  # one day this should be changed to return groups or users
+  def self.conditions_for(user, context)
+    if user and user.real? and my_group_ids = Group.namespace_ids(user.all_group_ids)
+      sql = <<-EOSQL
+        ((profiles.stranger = ? AND profiles.may_see = ? ) OR
+          (profiles.entity_id IN (?))) AND
+        (profiles.entity_id IN (?)) AND
+        profiles.entity_type = 'Group'
+      EOSQL
+      [sql, true, true, my_group_ids, context.group_ids]
+    else
+      sql = <<-EOSQL
+        profiles.stranger = ? AND
+        profiles.may_see = ? AND
+        profiles.entity_id IN (?) AND
+        profiles.entity_type = 'Group'
+      EOSQL
+      [sql, true, true, context.group_ids]
+    end
   end
 
   def longlat

@@ -53,6 +53,7 @@ class Site < ActiveRecord::Base
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
 
+  has_many :groups
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
@@ -152,18 +153,9 @@ class Site < ActiveRecord::Base
   #  pages
   #end
 
-  # gets all the groups in the site's network
-  def groups
-    self.network.nil? ?
-      Group.find(:all) :
-      self.network.groups
-  end
-
   # gets all the ids of all the groups in the site
   def group_ids
-    self.network.nil? ?
-      Group.find(:all, :select => :id).collect{|group| group.id} :
-      self.network.group_ids
+    self.groups.map{|g| g.id}
   end
 
 
