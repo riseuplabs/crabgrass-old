@@ -81,19 +81,22 @@ class GeoPlace < ActiveRecord::Base
       sql = <<-EOSQL
         ((profiles.stranger = ? AND profiles.may_see = ? ) OR
           (profiles.entity_id IN (?))) AND
-        (profiles.entity_id IN (?)) AND
         profiles.entity_type = 'Group'
       EOSQL
-      [sql, true, true, my_group_ids, context.group_ids]
+      vars = [true, true, my_group_ids]
     else
       sql = <<-EOSQL
         profiles.stranger = ? AND
         profiles.may_see = ? AND
-        profiles.entity_id IN (?) AND
         profiles.entity_type = 'Group'
       EOSQL
-      [sql, true, true, context.group_ids]
+       vars = [true, true]
     end
+    unless context.is_a?(Site) and !context.limited
+      vars.push context.group_ids
+      sql +=  ' AND (profiles.entity_id IN (?))'
+    end
+    [sql] + vars
   end
 
   def longlat
