@@ -6,7 +6,6 @@ var loadMap = function() {
   var options;
   var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
     new OpenLayers.Control.PanZoom(),
-    new OpenLayers.Control.LayerSwitcher({autoActive: true}),
     new OpenLayers.Control.Attribution()];
       
   var base_el;
@@ -20,7 +19,7 @@ var loadMap = function() {
       controls: controls
     };
   } else {
-    base = new OpenLayers.Layer.OSM();
+    base = new OpenLayers.Layer.OSM('OSM', 'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {'displayInLayerSwitcher':false});
     options = {
       theme: false,
       maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
@@ -34,6 +33,9 @@ var loadMap = function() {
   }
   map = new OpenLayers.Map('map', options);
   map.addLayer(base);
+  map.addControl( new OpenLayers.Control.LayerSwitcher({
+    'div':OpenLayers.Util.getElement('map-container'),
+    'roundedCorner': false}));
   var layer_elements = $$(".layer");
   layer_elements.each( function(l) {
     var label = l.readAttribute('data-label');
@@ -59,8 +61,6 @@ var loadMap = function() {
   map.addControl(control);
   control.activate();
            
-  map.addControl(new OpenLayers.Control.LayerSwitcher());
-
   var center = $$('#map-center').first()
   var long = center.readAttribute('data-long');
   var lat = center.readAttribute('data-lat');
