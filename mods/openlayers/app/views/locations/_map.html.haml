@@ -5,6 +5,8 @@
 #map-container{:"data-height" => '355px', :"data-width" => '500px'}
   #map-center{:"data-long" => @map.mapcenterlong, :"data-lat" => @map.mapcenterlat}
   #map-zoom{:"data-level" => @map.zoomlevel}
+  - if current_site.evil.respond_to?(:[]) && current_site.evil["google_streets"]
+    #map-base{:"data-provider" => "google"}
   %ul#layers{:style => 'display: none'}
     - map_widget_layers(widget).each do |label, url|
       %li.layer{:"data-label" => label, :"data-url" => url}
