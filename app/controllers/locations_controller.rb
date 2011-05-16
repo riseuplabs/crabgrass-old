@@ -13,11 +13,7 @@ class LocationsController < ApplicationController
     elsif params[:show_admin_codes]
       geo_admin_codes = GeoCountry.find_by_id(params[:country_code]).geo_admin_codes
     end
-    @profile = Profile.find(params[:profile_id]) if params[:profile_id]
-    # do not try to update models unless there is a current profile (ie don't update models when in search)
-    update_model_with_country(params[:country_code]) if @profile
     render :update do |page|
-
       page << "$$('option.newselected').collect(function(el){el.removeClassName('newselected')});" 
       page << "$('select_country_id').select('[value=\"#{params[:country_code]}\"]')[0].addClassName('newselected');" 
       page.replace 'autocomplete_js', :partial => '/locations/autocomplete_js', :locals => {:update_form_for => params[:update_form_for]}
@@ -26,7 +22,8 @@ class LocationsController < ApplicationController
         page.show 'state_dropdown' 
       end
       page.show 'city_text'
-      #page['city_id_field'].value = ''
+      page << "$('city_text_field').value = '';"
+      page << "if ($('city_id_field') != undefined) { $('city_id_field').value = ''; }"
       page.show 'submit_loc' if params[:show_submit] == 'true' 
     end
   end

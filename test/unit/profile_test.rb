@@ -147,48 +147,37 @@ class ProfileTest < Test::Unit::TestCase
     assert check_associations(Profile)
   end
 
-  def test_locations
+  def test_add_and_update_location
     country = geo_countries(:armenia)
     city = geo_places(:zangakatun)
     user = users(:red)
     profile = user.profiles.create :stranger => true
-    profile.update_location({:country_id => country.id, :city_id => city.id})
-    assert_equal profile.country_id.to_i, country.id.to_i
-    assert_equal profile.city_id.to_i, city.id.to_i
+    profile.add_location!({:geo_country_id => country.id, :geo_place_id => city.id})
+    assert profile.geo_locations.count > 0
 
-    profile.update_location({:country_id => country.id})
-    assert_equal profile.country_id.to_i, country.id.to_i
-    assert_nil profile.city_id, 'the city should be blank if only the country was set.'
+    gl = profile.geo_locations[0]
+    assert_equal gl.profile, profile
+
+    profile.update_location({:location_id => gl.id, :geo_place_id => nil })
+    profile.reload
+    assert_nil profile.geo_locations.find(gl.id).geo_place
 
     profile.destroy
-  end
-
-  def test_reuse_geo_locations
-    country = geo_countries(:armenia)
-    city = geo_places(:zangakatun)
-    warmgroup = groups(:warm)
-    coldgroup = groups(:cold)
-    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
-    coldgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
-    assert_equal warmgroup.profiles.public.geo_location_id, coldgroup.profiles.public.geo_location_id
-
-    coldgroup.profiles.public.update_location(:country_id => country.id)
-    assert_not_equal warmgroup.profiles.public.geo_location_id, coldgroup.profiles.public.geo_location_id
   end
 
   def test_location_with_city_always_sets_admin_code
     country = geo_countries(:armenia)
     city = geo_places(:zangakatun)
     warmgroup = groups(:warm)
-    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id)
-    assert_not_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
 
-    warmgroup.profiles.public.update_location(:country_id => country.id, :city_id => city.id, :admin_code_id => '')
-    assert_not_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
+    warmgroup.profiles.public.add_location!(:geo_country_id => country.id, :geo_place_id => city.id)
 
-    coldgroup = groups(:cold)
-    warmgroup.profiles.public.update_location(:country_id => country.id)
-    assert_nil warmgroup.profiles.public.geo_location.geo_admin_code_id
+    location_id = warmgroup.profiles.public.geo_locations[0].id
+    warmgroup.profiles.public.update_location(:location_id => location_id, :geo_country_id => country.id, :geo_place_id => city.id)
+    assert_not_nil warmgroup.profiles.public.geo_locations[0].geo_admin_code_id
+
+    warmgroup.profiles.public.update_location(:location_id => location_id, :geo_country_id => country.id, :geo_place_id => city.id, :geo_admin_code_id => '')
+    assert_not_nil warmgroup.profiles.public.geo_locations[0].geo_admin_code_id
   end
 
 end

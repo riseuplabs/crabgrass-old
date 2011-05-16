@@ -11,7 +11,7 @@ class GroupsController < Groups::BaseController
   helper 'groups', 'wiki', 'base_page'
   helper 'groups/search'
 
-  before_filter :fetch_group, :except => [:create, :new, :index]
+  before_filter :fetch_group, :except => [:create, :new, :index, :autocomplete]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
   verify :method => [:post, :put], :only => [:create, :update]
   verify :method => :delete, :only => :destroy
@@ -199,7 +199,7 @@ class GroupsController < Groups::BaseController
   end
 
   def show_map_summary
-
+    @place = GeoPlace.find(params[:place_id])
     render :update do |page|
       # in case there are any of these already loaded, remove them
       page << "if ( $('popup_entity_"+@group.id.to_s+"') == undefined ) {"

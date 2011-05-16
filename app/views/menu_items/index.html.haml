@@ -1,1 +1,10 @@
-= edit_widget @widget
+-# TODO: make menu bar a proper widget
+- if @widget.name == "MenuBarWidget"
+  = edit_widget @widget
+- else
+  %h4.menu_entries
+    Menu Entries
+  .menu_entries
+    = list_menu_items @menu_items.roots
+  #mb-footer
+    = back_to_widget_link

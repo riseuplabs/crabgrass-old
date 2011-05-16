@@ -55,7 +55,7 @@ module LocationsHelper
 
   def city_id_field(object=nil, method=nil)
     name = _field_name('city_id', object, method)
-    city_id =  (!@profile.nil? and @profile.city_id) ? @profile.city_id : params[:city_id] 
+    city_id = params[:city_id] 
     render :partial => '/locations/city_id_field', :locals => {:city_id => city_id, :name => name}
   end
 
@@ -73,9 +73,30 @@ module LocationsHelper
   end
 
   def friendly_location(entity)
-    if entity.profile.country_id and (entity.profile.country_id != 0)
-      'Local-'+entity.profile.geo_location.geo_country.name
+    countries = entity.profile.geo_locations.distinct(:geo_country_id)
+    countries.is_a?(Array) ?
+      countries.collect!{|c| 'Local-'+c.name }.join('<br />') :
+      'Local-'+countries.name  
+  end
+
+  def label_for_location(loc)
+    if loc.geo_place.nil?
+      return loc.geo_country.name if loc.geo_admin_code.nil?
+      loc.geo_admin_code.name+', '+loc.geo_country.name
+    else
+      loc.geo_place.name+', '+loc.geo_admin_code.name+', '+loc.geo_country.code
     end
+  end
+
+  def geo_locations_edit_country_dropdown
+    country_id = @location ? @location.geo_country_id : nil
+    select_tag 'geo_location[geo_country_id]', 
+                options_from_collection_for_select(GeoCountry.find(:all), 'id', 'name', country_id), 
+                {:id => 'select_country_id', 
+                 :onchange =>  remote_function(
+                  :url => {:controller => '/locations', :action => 'country_dropdown_onchange'},
+                  :with => "'update_form_for=profile&country_code='+value")
+                }
   end
  
   private
@@ -92,8 +113,8 @@ module LocationsHelper
     end
   end
 
-  def _display_value(force=nil)
-    if (@profile and @profile.country_id) or force
+  def _display_value(country_id, force=nil)
+    if country_id or force
       'inline'
     else
       'none'

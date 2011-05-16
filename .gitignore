@@ -33,3 +33,5 @@ lang/la_US.yml
 tmp/webrat-*
 webrat-*.png
 webrat-*.html
+test/fixtures/assets/0*/*
+*.swp

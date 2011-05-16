@@ -21,6 +21,14 @@ class WidgetsControllerTest < ActionController::TestCase
     assert_equal menu_items(:quickfinder_root2), root_item
   end
 
+  def test_openlayers_javascript_loaded
+    login_as :blue
+    get :index
+    assert_select 'script' do |s|
+      puts 'looking at script tag '+s.inspect
+    end
+  end
+
 
 end
 
