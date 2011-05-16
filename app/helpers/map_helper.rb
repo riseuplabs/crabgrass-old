@@ -18,16 +18,20 @@ module MapHelper
   end
 
   def kml_style_for_place(count)
-    return count.to_s if count <= 10
     case count.to_i
-    when 11 .. 24
-      '10'
-    when 25 .. 49
-      '25'
-    when 50 .. 99
+    when 1
       '50'
+    when 2
+      '75'
+    when 3 .. 4
+      '100'
+    when 5 .. 8
+      '125'
+    when 7 .. 16
+      '150'
+    else
+      '200'
     end
-    '100'
   end
 
   def include_google_street_js_tag
