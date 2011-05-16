@@ -1,14 +1,12 @@
 xml.instruct! :xml
 xml.kml(:xmlns => "http://earth.google.com/kml/2.2") {
   xml.Document {
-    # todo take color from a param
-    #color = 'pink'
     [50, 75, 100, 125, 150, 200].each do |scale|
       xml.Style(:id => "#{scale.to_s}Marker") { 
         xml.IconStyle {
           xml.scale(scale.to_f/100)
           xml.Icon{
-            xml.href('/images/png/map/marker-pink.png')
+            xml.href("/images/png/map/marker-#{@color}.png")
           }
         }
       }

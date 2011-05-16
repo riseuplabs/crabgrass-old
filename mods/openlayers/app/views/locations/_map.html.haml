@@ -8,8 +8,10 @@
   - if current_site.evil.respond_to?(:[]) && current_site.evil["google_streets"]
     #map-base{:"data-provider" => "google"}
   %ul#layers{:style => 'display: none'}
+    - pos = 0
     - map_widget_layers(widget).each do |label, url|
-      %li.layer{:"data-label" => label, :"data-url" => url}
+      - pos += 1
+      %li.layer{:"data-label" => label, :"data-url" => url+"?pos=#{pos}"}
         = label.any? ? label : url
 
 -# the javascript loads everything: the js and css in the html head, the map div, and the js that loads the OpenLayers var

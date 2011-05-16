@@ -8,10 +8,16 @@ class GeoLocationsController < ApplicationController
 
   permissions :geo_location, :profile
 
+  COLORS = %w/pink yellow green blue orange dark-blue red light-blue purple dark-green/
   def index
     @locations = GeoPlace.with_visible_groups(current_user, current_site)
     if @network
       @locations = @locations.with_groups_in(@network)
+    end
+    if params[:pos]
+      @color = COLORS[params[:pos].to_i - 1]
+    else
+      @color = COLORS.first
     end
     respond_to do |format|
       format.kml { render :template => '/map/index_by_latlong.kml.builder',  :layout => false }
