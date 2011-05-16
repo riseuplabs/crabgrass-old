@@ -122,10 +122,11 @@ var loadMap = function() {
     map.addControl( new OpenLayers.Control.Navigation({zoomWheelEnabled: false}) );
     map.addControl( new OpenLayers.Control.PanZoom() );
     map.addControl( new OpenLayers.Control.Attribution() );
-  map.addControl( new OpenLayers.Control.LayerSwitcher({
-    'div':OpenLayers.Util.getElement('map-container'),
-    'roundedCorner': false}));
+    map.addControl( new CustomizedLayerSwitcher({
+      'div':OpenLayers.Util.getElement('map-container'),
+      'roundedCorner': false}));
   }
+
   
   function createLayer(label, url, projection) {
     var layer = new OpenLayers.Layer.GML(label, url, 
@@ -144,4 +145,33 @@ var loadMap = function() {
     });
     return layer;
   }
-} 
+}
+
+CustomizedLayerSwitcher =
+  OpenLayers.Class(OpenLayers.Control.LayerSwitcher, {
+  
+    /** 
+     * Method: redraw
+     *
+     * Changes:
+     *  *  Add a class layer_c to each layer where c is the index of the layer
+     */  
+    redraw: function() {
+        OpenLayers.Control.LayerSwitcher.prototype.redraw.apply(this, arguments);
+        this.addLabelClasses();
+        return this.div;
+    },
+
+    addLabelClasses: function() {
+      var container = this.div;
+      var label_div = container.select('.dataLayersDiv').first();
+      var labels = label_div.select('span');
+      var index = 0;
+      labels.each( function (label) {
+        index = index + 1;
+        label.addClassName('layer_' + index);
+      });
+    },
+
+    CLASS_NAME: "CustomizedLayerSwitcher"
+});

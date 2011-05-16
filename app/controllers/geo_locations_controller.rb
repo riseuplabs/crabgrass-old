@@ -8,7 +8,7 @@ class GeoLocationsController < ApplicationController
 
   permissions :geo_location, :profile
 
-  COLORS = %w/pink yellow green blue orange dark-blue red light-blue purple dark-green/
+  COLORS = %w/pink yellow orange blue green dark-blue red light-blue purple dark-green/
   def index
     @locations = GeoPlace.with_visible_groups(current_user, current_site)
     if @network

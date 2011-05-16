@@ -29,7 +29,7 @@ class GeoPlace < ActiveRecord::Base
   }
 
   named_scope :with_groups_in, lambda {|network|
-    { :conditions => ["profiles.group_id in (?)", network.group_ids] }
+    { :conditions => ["profiles.entity_id in (?)", network.group_ids] }
   }
 
   named_scope :named_like, lambda {|query|
