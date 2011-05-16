@@ -1,60 +1,22 @@
 // loading the map in combination with the openlayers_js
 var loadMap = function() {
-  var map;
-  var base;
-  var layers = new Array();
-  var options;
-  var controls = [ new OpenLayers.Control.Navigation({zoomWheelEnabled: false}),
-    new OpenLayers.Control.PanZoom(),
-    new OpenLayers.Control.Attribution()];
-      
-  var base_el;
-  base_el = $$('#map-base').first();
+  var base_el = $('#map-base');
+  var base_provider;
   if (base_el != null) {
-    var base_provider = base_el.readAttribute('data-provider');
-    // TODO: Actually select based on the provider
-    base = new OpenLayers.Layer.Google("Google Streets");
-    options = {
-      numZoomLevels: 20,
-      controls: controls
-    };
+    base_provider = base_el.readAttribute('data-provider');
   } else {
-    base = new OpenLayers.Layer.OSM('OSM', 'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {'displayInLayerSwitcher':false});
-    options = {
-      theme: false,
-      maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-      numZoomLevels: 19,
-      maxResolution: 156543.0399,
-      units: 'm',
-      projection: new OpenLayers.Projection("EPSG:900913"),
-      displayProjection: new OpenLayers.Projection("EPSG:4326"),
-      controls: controls
-    };
+    base_provider = 'OSM'
   }
-  map = new OpenLayers.Map('map', options);
-  map.addLayer(base);
-  map.addControl( new OpenLayers.Control.LayerSwitcher({
-    'div':OpenLayers.Util.getElement('map-container'),
-    'roundedCorner': false}));
+  var map = new OpenLayers.Map('map', optionsForProvider(base_provider));
+  map.addLayer(baseLayerForProvider(base_provider));
+  addControls(map)
+
+  var layers = new Array();
   var layer_elements = $$(".layer");
   layer_elements.each( function(l) {
     var label = l.readAttribute('data-label');
     var url = l.readAttribute('data-url');
-    var layer = new OpenLayers.Layer.GML(label, url, 
-      {
-        format: OpenLayers.Format.KML, 
-        formatOptions: {
-        extractStyles: true, 
-        extractAttributes: true
-        },
-        projection: map.displayProjection
-      });
-    // Events for the objects of the KML-Data
-    layer.events.on({
-      'featureselected': onFeatureSelect,
-      'featureunselected': onFeatureUnselect
-    });
-    layers.push(layer)
+    layers.push(createLayer(label, url, map.displayProjection));
   });
   map.addLayers(layers);
   var control = new OpenLayers.Control.SelectFeature(layers);
@@ -68,6 +30,11 @@ var loadMap = function() {
       new OpenLayers.Projection("EPSG:4326"),
       map.getProjectionObject());
   map.setCenter (lonLat, 2); 
+
+  //map.zoomToMaxExtent();
+  var zoom = $$('#map-zoom').first()
+  var level = zoom.readAttribute('data-level');
+  map.zoomTo(level);
 
   function onPopupClose(evt) {
     control.unselect(this.feature);
@@ -118,8 +85,63 @@ var loadMap = function() {
       feature.popup = null;
     }
   }
-  //map.zoomToMaxExtent();
-  var zoom = $$('#map-zoom').first()
-  var level = zoom.readAttribute('data-level');
-  map.zoomTo(level);
+
+  function optionsForProvider(provider) {
+    if (provider == 'google') {
+      options = {
+        numZoomLevels: 20,
+        controls: []
+      };
+    } else {
+      options = {
+        theme: false,
+        maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+        numZoomLevels: 19,
+        maxResolution: 156543.0399,
+        units: 'm',
+        projection: new OpenLayers.Projection("EPSG:900913"),
+        displayProjection: new OpenLayers.Projection("EPSG:4326"),
+        controls: []
+      };
+    }
+    return options;
+  }
+
+  function baseLayerForProvider(provider) {
+    if (provider == 'google') {
+      base = new OpenLayers.Layer.Google("Google Streets");
+    } else {
+      base = new OpenLayers.Layer.OSM('OSM',
+        'http://tile.openstreetmap.org/${z}/${x}/${y}.png',
+        {'displayInLayerSwitcher':false});
+    }
+    return base;
+  }
+  
+  function addControls(map) {
+    map.addControl( new OpenLayers.Control.Navigation({zoomWheelEnabled: false}) );
+    map.addControl( new OpenLayers.Control.PanZoom() );
+    map.addControl( new OpenLayers.Control.Attribution() );
+  map.addControl( new OpenLayers.Control.LayerSwitcher({
+    'div':OpenLayers.Util.getElement('map-container'),
+    'roundedCorner': false}));
+  }
+  
+  function createLayer(label, url, projection) {
+    var layer = new OpenLayers.Layer.GML(label, url, 
+      {
+        format: OpenLayers.Format.KML, 
+        formatOptions: {
+        extractStyles: true, 
+        extractAttributes: true
+        },
+        projection: projection
+      });
+    // Events for the objects of the KML-Data
+    layer.events.on({
+      'featureselected': onFeatureSelect,
+      'featureunselected': onFeatureUnselect
+    });
+    return layer;
+  }
 } 
