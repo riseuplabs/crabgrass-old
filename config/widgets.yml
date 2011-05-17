@@ -25,6 +25,7 @@ MapWidget:
     - :map_center_latitude
     - :map_center_longitude
     - :zoomlevel
+  :menu_items: network
 IntroWidget:
   :columns:
     - 2

@@ -36,7 +36,7 @@ module AutocompleteHelper
         container: '#{options[:container]}',
         preloadedOnTop: #{preload},
         rowRenderer: #{options[:renderer]},
-        selectValue: #{options[:selectvalue]} 
+        selectValue: #{options[:selectvalue]}
       }, #{autocomplete_id_number});
     ]
     javascript_tag(auto_complete_js)
@@ -48,6 +48,13 @@ module AutocompleteHelper
 
   def autocomplete_friends_tag(field_id, options={})
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
+  end
+
+  def autocomplete_networks_tag(field_id = 'network_select', options={})
+    options[:container] ||= 'autocomplete_container'
+    url = formatted_autocomplete_networks_path(:format => 'json')
+    autocomplete_entity_tag field_id,
+      options.merge(:url => url)
   end
 
   def autocomplete_locations_tag(field_id, options={})
@@ -64,10 +71,8 @@ module AutocompleteHelper
   end
 
   def locations_autocomplete_afterupdate(options)
-    if @profile and @profile.entity.is_a?(Group)
-      remote_url = {:controller => 'groups/profiles', :action => 'edit', :id => @profile.entity}
-    elsif @profile
-      remote_url = {:controller => 'profile', :action => 'edit_location', :id => @profile.type}
+    if options[:update_form_for] == 'profile' 
+      return js_for_edit_geo_location
     elsif options[:update_form_for] == 'widget'
       remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
     else
@@ -82,10 +87,20 @@ module AutocompleteHelper
     remote_function(add_action)
   end
 
+  def entity_autocomplete_line(entity)
+    "<em>%s</em>%s" % [entity.display_name,
+      ('<br/>' + entity.name if entity.name != entity.display_name)]
+  end
+
   private
 
   def autocomplete_id_number
     rand(100000000)
+  end
+
+  # the javascript to insert a hidden field with the city id in the edit location form
+  def js_for_edit_geo_location
+    %Q[$('city_id_field').value = data;]
   end
 
   # called in order to render a popup row. it is a little too complicated.

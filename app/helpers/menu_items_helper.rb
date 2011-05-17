@@ -23,6 +23,13 @@ module MenuItemsHelper
       :locals => { :menu_items => items }
   end
 
+  def render_fields(form)
+    prefix = @widget.type_options[:menu_items]
+    prefix += '_' if prefix
+    render :partial => "/menu_items/#{prefix}fields",
+      :locals => {:f => form}
+  end
+
   def save_to_widget_link(menu_item)
     link_to_modal I18n.t(:save_button),
       :submit => 'submit',

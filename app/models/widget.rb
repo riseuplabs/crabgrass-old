@@ -20,7 +20,8 @@ class Widget < ActiveRecord::Base
       :translation => underscore.to_sym,
       :description => "#{underscore}_description".to_sym,
       :settings => [],
-      :columns => []
+      :columns => [],
+      :fields => nil
     }
     options.reverse_merge! sane_defaults
     Conf.widgets[name] = options

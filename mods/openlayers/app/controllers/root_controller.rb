@@ -1,4 +1,6 @@
 class RootController < ApplicationController
 
-  javascript 'OpenLayers', 'OpenStreetMap', :plugin => 'openlayers'
+  helper 'map'
+  javascript 'OpenLayers', 'OpenStreetMap', 'Map', :plugin => 'openlayers'
+
 end

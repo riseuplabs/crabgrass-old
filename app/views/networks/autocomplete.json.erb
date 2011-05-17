@@ -1,0 +1,5 @@
+<%= {
+ :query       => params[:query],
+ :suggestions => @networks.collect{|entity| entity_autocomplete_line(entity)},
+ :data        => @networks.collect{|e|e.avatar_id||0}
+}.to_json %>

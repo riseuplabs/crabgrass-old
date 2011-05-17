@@ -2,7 +2,7 @@ class MenuItemsController < ApplicationController
 
   javascript 'effects', 'dragdrop', 'controls', 'autocomplete' # require for find page autocomplete
   stylesheet 'menu_items'
-  helper 'widgets', 'groups'
+  helper 'widgets', 'groups', 'autocomplete'
   permissions 'widgets', 'groups/base', 'groups/requests'
 
   prepend_before_filter :fetch_data

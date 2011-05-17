@@ -51,6 +51,10 @@ module Groups::BasePermission
     logged_in?
   end
 
+  def may_autocomplete_network?
+    logged_in?
+  end
+
   ##
   ## GROUP PROFILE
   ##

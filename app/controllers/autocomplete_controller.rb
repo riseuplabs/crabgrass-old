@@ -75,7 +75,8 @@ class AutocompleteController < ApplicationController
   end
 
   def locations
-    if params[:country].blank? or params[:country] == 'Country'
+    # country needs to be set but defaults to translation of "Country"
+    if params[:country].to_i == 0
       locations = []
     elsif params[:query] == ""
       # we could preload if we had the country, but this is still expensive if there are a lot of places
