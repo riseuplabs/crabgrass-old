@@ -159,19 +159,28 @@ CustomizedLayerSwitcher =
     redraw: function() {
         OpenLayers.Control.LayerSwitcher.prototype.redraw.apply(this, arguments);
         this.addLabelClasses();
+        this.removeLineBreaks();
         return this.div;
     },
 
     addLabelClasses: function() {
-      var container = this.div;
-      var label_div = container.select('.dataLayersDiv').first();
-      var labels = label_div.select('span');
+      var label_div = this.div.select('.dataLayersDiv').first();
       var index = 0;
-      labels.each( function (label) {
+      label_div.select('span').each( function (label) {
         index = index + 1;
         label.addClassName('layer_' + index);
       });
+      label_div.select('input').each( function (input) {
+        input.addClassName('checkbox');
+      });
     },
+
+    removeLineBreaks: function() {
+      var label_div = this.div.select('.dataLayersDiv').first();
+      var breaks = label_div.select('br');
+      breaks.each( function (br) { br.remove() });
+    },
+      
 
     CLASS_NAME: "CustomizedLayerSwitcher"
 });
