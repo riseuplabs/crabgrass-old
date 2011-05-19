@@ -73,10 +73,10 @@ module LocationsHelper
   end
 
   def friendly_location(entity)
-    countries = entity.profile.geo_locations.distinct(:geo_country_id)
-    countries.is_a?(Array) ?
-      countries.collect!{|c| 'Local-'+c.name }.join('<br />') :
-      'Local-'+countries.name  
+    locations = entity.profile.geo_locations.distinct(:geo_country_id)
+    locations.is_a?(Array) ?
+      locations.collect!{|l| 'Local-'+l.geo_country.name }.join('<br />') :
+      'Local-'+locations.geo_country.name  
   end
 
   def label_for_location(loc)
