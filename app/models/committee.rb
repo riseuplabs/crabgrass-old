@@ -46,23 +46,6 @@ class Committee < Group
   end
 
   ##
-  ## ORGANIZATIONAL
-  ##
-
-  private
-
-  before_destroy :remove_from_parent
-  def remove_from_parent
-    return if parent.nil?
-    parent.remove_committee!(self)
-    true
-  end
-
-  def parent=(p)
-    raise 'call group.add_committee! instead'
-  end
-
-  ##
   ## PERMISSIONS
   ##
 
@@ -93,6 +76,23 @@ class Committee < Group
     else
       false
     end
+  end
+
+  ##
+  ## ORGANIZATIONAL
+  ##
+
+  private
+
+  before_destroy :remove_from_parent
+  def remove_from_parent
+    return if parent.nil?
+    parent.remove_committee!(self)
+    true
+  end
+
+  def parent=(p)
+    raise 'call group.add_committee! instead'
   end
 
 end
