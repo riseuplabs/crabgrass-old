@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GeoPlaceTest < ActiveSupport::TestCase
-  fixtures :users, :geo_places, :profiles, :sites, :groups, :geo_countries, :geo_places, :geo_admin_codes
+  fixtures :users, :geo_places, :profiles, :sites, :groups, :geo_countries, :geo_places, :geo_admin_codes, :geo_locations
   
   def setup
     enable_site_testing
@@ -46,19 +46,19 @@ class GeoPlaceTest < ActiveSupport::TestCase
   def test_with_visible_groups_with_unauth_user
     user = UnauthenticatedUser.new
     places = GeoPlace.with_visible_groups(user, sites(:local))
-    assert_equal ['2','2'], places.map(&:group_count)
+    assert_equal ['3','2'], places.map(&:group_count)
   end
 
   def test_with_visible_groups_with_auth_user_with_access
     user = users(:blue)
     places = GeoPlace.with_visible_groups(user, sites(:local))
-    assert_equal ['3','2'], places.map(&:group_count)
+    assert_equal ['4','2'], places.map(&:group_count)
   end
 
   def test_with_visible_groups_with_auth_user_without_access
     user = users(:red)
     places = GeoPlace.with_visible_groups(user, sites(:local))
-    assert_equal ['2','2'], places.map(&:group_count)
+    assert_equal ['3','2'], places.map(&:group_count)
   end
 
   def test_place_with_multiple_groups_have_multiple_groups
