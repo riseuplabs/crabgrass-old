@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314131417) do
+ActiveRecord::Schema.define(:version => 20110426233945) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20110314131417) do
     t.integer "geo_country_id",    :limit => 11, :null => false
     t.integer "geo_admin_code_id", :limit => 11
     t.integer "geo_place_id",      :limit => 11
+    t.integer "profile_id",        :limit => 11
   end
 
   create_table "geo_places", :force => true do |t|
@@ -573,7 +574,6 @@ ActiveRecord::Schema.define(:version => 20110314131417) do
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html",           :limit => 2147483647
     t.boolean  "admins_may_moderate"
-    t.integer  "geo_location_id",        :limit => 11
     t.boolean  "members_may_edit_wiki",                        :default => true
   end
 
@@ -646,34 +646,36 @@ ActiveRecord::Schema.define(:version => 20110314131417) do
     t.string  "name"
     t.string  "domain"
     t.string  "email_sender"
-    t.integer "pagination_size",        :limit => 11
-    t.integer "super_admin_group_id",   :limit => 11
-    t.text    "translators",            :limit => 2147483647
+    t.integer "pagination_size",           :limit => 11
+    t.integer "super_admin_group_id",      :limit => 11
+    t.text    "translators",               :limit => 2147483647
     t.string  "translation_group"
     t.string  "default_language"
-    t.text    "available_page_types",   :limit => 2147483647
-    t.text    "evil",                   :limit => 2147483647
+    t.text    "available_page_types",      :limit => 2147483647
+    t.text    "evil",                      :limit => 2147483647
     t.boolean "tracking"
-    t.boolean "default",                                      :default => false
-    t.integer "network_id",             :limit => 11
-    t.integer "custom_appearance_id",   :limit => 11
-    t.boolean "has_networks",                                 :default => true
+    t.boolean "default",                                         :default => false
+    t.integer "network_id",                :limit => 11
+    t.integer "custom_appearance_id",      :limit => 11
+    t.boolean "has_networks",                                    :default => true
     t.string  "signup_redirect_url"
     t.string  "title"
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
-    t.integer "council_id",             :limit => 11
+    t.integer "council_id",                :limit => 11
     t.string  "login_redirect_url"
     t.boolean "chat"
     t.boolean "limited"
-    t.integer "signup_mode",            :limit => 1
-    t.string  "email_sender_name",      :limit => 40
+    t.integer "signup_mode",               :limit => 1
+    t.string  "email_sender_name",         :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
-    t.integer "moderation_group_id",    :limit => 11
+    t.integer "moderation_group_id",       :limit => 11
     t.boolean "require_user_full_info"
-    t.boolean "never_pester_users",                           :default => false
+    t.boolean "never_pester_users",                              :default => false
+    t.boolean "show_expanded_group_wikis"
+    t.boolean "all_profiles_visible"
   end
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
@@ -916,9 +918,9 @@ ActiveRecord::Schema.define(:version => 20110314131417) do
     t.integer  "profile_id", :limit => 11
     t.integer  "position",   :limit => 11
     t.integer  "section",    :limit => 11
-    t.string   "options"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "options"
   end
 
   create_table "wiki_locks", :force => true do |t|
