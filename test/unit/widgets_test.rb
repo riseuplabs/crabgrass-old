@@ -15,7 +15,9 @@ class WidgetsTest < ActiveSupport::TestCase
     expected = { :icon => '/images/widgets/default.png',
       :translation => :default_widget,
       :description => :default_widget_description,
-      :columns => []
+      :columns => [],
+      :settings => [],
+      :fields => nil
     }
     assert_equal expected, options
   end
