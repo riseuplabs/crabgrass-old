@@ -180,8 +180,6 @@ class Group < ActiveRecord::Base
   ## AVATAR
   ##
 
-  public
-
   belongs_to :avatar, :dependent => :destroy
 
   alias_method 'avatar_equals', 'avatar='
@@ -207,43 +205,9 @@ class Group < ActiveRecord::Base
     self.destroy
   end
 
-  protected
-
-  before_save :save_avatar_if_needed
-  def save_avatar_if_needed
-    avatar.save if avatar and avatar.changed?
-  end
-
-  # make destroy protected
-  # callers should use destroy_by
-  def destroy
-    super
-  end
-
-  ##
-  ## RELATIONSHIP TO ASSOCIATED DATA
-  ##
-
-  protected
-
-  after_destroy :destroy_requests
-  def destroy_requests
-    Request.destroy_for_group(self)
-  end
-
-  after_destroy :update_networks
-  def update_networks
-    self.networks.each do |network|
-      Group.increment_counter(:version, network.id)
-    end
-  end
-
-
   ##
   ## PERMISSIONS
   ##
-
-  public
 
   def may_be_pestered_by?(user)
     begin
@@ -285,8 +249,6 @@ class Group < ActiveRecord::Base
   ## GROUP SETTINGS
   ##
 
-  public
-
   has_one :group_setting
   # can't remember the way to do this automatically
   after_create :create_group_setting
@@ -307,6 +269,33 @@ class Group < ActiveRecord::Base
   end
 
   protected
+
+  before_save :save_avatar_if_needed
+  def save_avatar_if_needed
+    avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
+  end
+
+  ##
+  ## RELATIONSHIP TO ASSOCIATED DATA
+  ##
+
+  after_destroy :destroy_requests
+  def destroy_requests
+    Request.destroy_for_group(self)
+  end
+
+  after_destroy :update_networks
+  def update_networks
+    self.networks.each do |network|
+      Group.increment_counter(:version, network.id)
+    end
+  end
 
   after_save :update_name_copies
 
