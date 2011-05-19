@@ -63,7 +63,7 @@ committee_of_group_to_be_deleted:
   name: committee_of_group_to_be_deleted
   created_at: <%= rand(4).days.ago.to_s :db %>
   type: Committee
-  parent: 34
+  parent_id: 34
 
 public_group:
   id: 1000

@@ -56,6 +56,9 @@ class CommitteeTest < Test::Unit::TestCase
     assert_nothing_raised do
       Group.find(groups(:committee_of_group_to_be_deleted)).destroy_by(users(:blue))
     end
+    assert_raises ActiveRecord::RecordNotFound, 'committee should be deleted'  do
+      Group.find(groups(:committee_of_group_to_be_deleted).id)
+    end
   end
 
   def test_membership
