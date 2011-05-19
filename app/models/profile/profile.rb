@@ -252,7 +252,8 @@ class Profile < ActiveRecord::Base
       params[:geo_admin_code_id] = gp.geo_admin_code_id
     end
     if gl = self.geo_locations.find(params.delete(:location_id)) 
-      gl.update_attributes!(params)
+      valid_keys = [:geo_admin_code_id, :geo_place_id, :geo_country_id]
+      gl.update_attributes!(params.slice(*valid_keys))
       gl.save!
     end
   end

@@ -48,3 +48,9 @@ location_for_recent_group:
   geo_admin_code_id: 2
   geo_place_id: 1
   profile_id: 303
+
+quentins_location:
+  geo_country_id: 1
+  geo_admin_code_id: 2
+  geo_place_id: 1
+  profile: quentins_profile 

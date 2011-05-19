@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'profile_controller'
 
-# Re-raise errors caught by the controller.
-class ProfileController; def rescue_action(e) raise e end; end
-
-class ProfileControllerTest < Test::Unit::TestCase
-  fixtures :users, :sites, :profiles, :geo_countries, :geo_places
-
-  def setup
-    @controller = ProfileController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
+class ProfileControllerTest < ActionController::TestCase
+  fixtures :users, :sites, :profiles, :geo_countries, :geo_places, :geo_locations
 
 =begin
   def test_show
@@ -68,7 +58,10 @@ class ProfileControllerTest < Test::Unit::TestCase
 
   def test_edit_location
     login_as :quentin
-    xhr :post, :edit_location, :id => 'public', :country_id => 1, :city_id => 1
+    xhr :post, :edit_location, 
+      :id => 'public', 
+      :geo_place_id => 2,
+      :location_id => geo_locations(:quentins_location).id
     assert_response :success
   end
 

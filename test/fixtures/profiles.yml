@@ -177,3 +177,7 @@ profile_for_committee_of_group_to_be_deleted:
   entity_id: 35
   stranger: true
 
+quentins_profile:
+  entity_type: "User"
+  entity_id: 1
+  stranger: true
