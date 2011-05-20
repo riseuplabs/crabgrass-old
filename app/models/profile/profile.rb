@@ -185,6 +185,8 @@ class Profile < ActiveRecord::Base
 
   has_many :geo_locations, :dependent => :destroy
 
+  has_many :geo_places, :through => :geo_locations
+
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
   def save_from_params(profile_params)
