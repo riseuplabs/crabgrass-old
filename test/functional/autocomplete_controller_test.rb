@@ -82,10 +82,10 @@ class AutocompleteControllerTest < ActionController::TestCase
   end
 
   def test_entities_respect_user_privacy
-    login_as :green
+    login_as :orange
     assert_equal ["blue"], users(:orange).friends.map(&:login)
       "orange should only have blue as a friend."
-    xhr :get, :entities, :query => 're'
+    xhr :get, :entities, :query => 'red'
     assert_response :success
     response = ActiveSupport::JSON.decode(@response.body)
     assert_equal [], response["suggestions"],
