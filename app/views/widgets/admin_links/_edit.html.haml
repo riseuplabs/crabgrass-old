@@ -1,0 +1,11 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  .info
+    This is the Admin Link Widget. It shows links to the different admin sections if you are an admin.
+  .info
+    There are no options to set for the Admin Widget.
+  %div#mb-footer
+    - if @widget.new_record?
+      = f.submit I18n.t(:close_button)
+    -else
+      = close_modal_button

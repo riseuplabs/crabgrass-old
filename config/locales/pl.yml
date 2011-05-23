@@ -845,8 +845,6 @@ pl:
   welcome_heading: "{{user_name}} witaj na {{site_title}}!"
   welcome_hide_link: "Ukryj Powitanie"
   welcome_login_message: |-
-      !>/plugin_assets/riseup/riseup-yellow.gif!
-
       Ta strona jest napędzana przez Crabgrass, <a href="http://www.affero.org/oagpl.html">wolne oprogramowanie</a> aplikację web stworzoną dla grup i sieci aktywistycznych, i dostosowaną do potrzeb globalnego ruchu na rzecz sprawiedliwości. Długoterminowym celem jest zapewnienie technicznych narzędzi ułatwiających stworzenie aktywnej, konfederalnej , i działającej na zasadzie demokracji bezpośredniej sieci przemian społecznych. [więcej... -> /crabgrass/about]
 
       Cześć. Nowy/nowa na stronie?

@@ -15,7 +15,7 @@ connectingclassrooms:
   domain: localhost
   custom_appearance_id: 2
   network_id: 3001
-  council_id: 5000 # teachers
+  council_id: 5001 # teachers
   login_redirect_url: /me/dashboard
   limited: false
   chat: false
@@ -29,7 +29,8 @@ test:
   domain: "test.host"
   translation_group: "animals"
   network_id: 3002
-  # this is normally overwritten at startup by crabgrass. however, 
+  council_id: 2
+  # this is normally overwritten at startup by crabgrass. however,
   # the way we enable sites for only some tests relies on their being
   # a super_admin_group_id defined for the test site.
   super_admin_group_id: 4001

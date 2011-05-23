@@ -1,0 +1,180 @@
+# spaces after the </tr> tags are a problematic
+# bgcolor attribute should be translated to background-color style
+html: |-
+  <table>
+  <thead>
+  	<tr class="odd">
+  		<td bgcolor='#c4bc96'>a</td> 
+  		<td>b</td> 
+  		<td>c</td> 
+  	</tr> 
+  </thead> 
+  <tbody> 
+  	<tr class="even"> 
+  		<td>1</td> 
+  		<td>2</td> 
+  		<td>3</td> 
+  	</tr> 
+  </tbody>
+  </table>
+in: |
+  |{background-color: #c4bc96}. a|b|c|
+  |1|2|3|
+---
+# paras with aligns should be added using spans and <br/>
+# para spanning the whole cell should set cells style
+html: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td> 
+  		<td><p align=RIGHT>b</p>c</td>
+  		<td align=right>c</td>
+  	</tr>
+  	<tr class="even">
+  		<td align=CENTER>1</td>
+  		<td bgcolor='#6789ab'><p align=CENTER>2</p></td>
+  		<td style='text-align:center'>3</td>
+  	</tr>
+  </table>
+in: |
+  |a|<p style="text-align: right">b</p>c|>. c|
+  |=. 1|={background-color: #6789ab}. 2|=. 3|
+out: |-
+  <table>
+  	<tr class="odd">
+  		<td>a</td> 
+  		<td><p style="text-align: right;">b</p>c</td>
+  		<td style="text-align:right;">c</td>
+  	</tr>
+  	<tr class="even">
+  		<td style="text-align:center;">1</td>
+  		<td style="text-align:center; background-color: #6789ab;">2</td>
+  		<td style='text-align:center;'>3</td>
+  	</tr>
+  </table>
+---
+# paste from OO.org causing too complicated markup
+# we should remove empty paras first and then process the others.
+html: |
+  <p>
+    <table cellspacing="0" cellpadding="7" bordercolor="#000000" border="1" width="620"> <col width="20"> <col width="570"> 
+      <tbody>
+        <tr valign="TOP"> 
+          <td bgcolor="#c0c0c0" width="20" height="341"> 
+            <p align="CENTER" style="margin-bottom: 0cm;"><font face="Arial Narrow, sans-serif"><b>
+  			test paras found multiple times</b></font></p> 
+            <p align="CENTER"><br> </p> 
+          </td> 
+          <td>fillin</td>
+        </tr> 
+      </tbody>
+    </table> <br>
+  </p>
+in: |
+  |={background-color: #c0c0c0}. *test paras found multiple times*|fillin|
+---
+# paste from OO.org causing crash
+# we need to check if a para has been processed before so we do not duplicate swaps
+html: |
+  <p>
+    <table cellspacing="0" cellpadding="7" bordercolor="#000000" border="1" width="620"> <col width="20"> <col width="570"> 
+      <tbody>
+        <tr valign="TOP">
+         <td>fillin</td>
+          <td width="570"> 
+            <ul>
+              <li>
+                <p style="margin-bottom: 0cm;"><font face="Arial Narrow, sans-serif">
+  				para with attribs that is both... in a table and in a list</font></p> 
+              </li>
+              <li>
+                <p><font face="Arial Narrow, sans-serif">
+  				para without attribs that is both in a table and a list.
+                </font></p> 
+              </li>
+            </ul> 
+          </td> 
+        </tr> 
+      </tbody>
+    </table> <br>
+  </p>
+in: |
+  no good solution yet
+---
+# make sure tables in paras work
+html: |
+  <p align='center'>
+    <table>
+      <tr>
+        <td>test</td><td>me</td>
+      </tr>
+    </table>
+  </p>
+
+in: |
+  <p style="text-align:center;">
+  |test|me|
+  </p>
+
+---
+# make sure tables in divs work
+html: |
+  <div align='center'>
+    <table>
+      <tr>
+        <td>test</td><td>me</td>
+      </tr>
+    </table>
+  </div>
+
+in: |
+  <p style="text-align: center;">
+  |test|me|
+  </p>
+---
+# This is no joke - excel actually produces this as copy and paste
+html: |
+  first
+  <tr>
+    <td>test</td><td>me</td>
+  </tr><tr>
+    <td>second</td><td>row</td>
+  </tr>
+  last
+
+in: |
+  first
+
+  |test|me|
+  |second|row|
+  last
+
+---
+#even more excel c&p fun...
+html: |
+  <tr height="17" style="height: 12.75pt; "> 
+    <td height="17" class="xl63" align="right" style="height: 12.75pt; border-top-style: none; border-top-width: initial; border-top-color: initial; ">1150</td> 
+    <td class="xl63" style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; ">Short-term
+  international consultants</td> 
+  </tr>
+  <tr height="17" style="height: 12.75pt; "> 
+    <td height="17" class="xl63" align="right" style="height: 12.75pt; border-top-style: none; border-top-width: initial; border-top-color: initial; ">11</td> 
+    <td class="xl63" style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; ">XX</td> 
+  </tr>
+  another
+  <tr height="17" style="height: 12.75pt; "> 
+    <td height="17" class="xl63" align="right" style="height: 12.75pt; border-top-style: none; border-top-width: initial; border-top-color: initial; ">1150</td> 
+    <td class="xl63" style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; ">Short-term
+  international consultants</td> 
+  </tr>
+  <tr height="17" style="height: 12.75pt; "> 
+    <td height="17" class="xl63" align="right" style="height: 12.75pt; border-top-style: none; border-top-width: initial; border-top-color: initial; ">11</td> 
+    <td class="xl63" style="border-top-style: none; border-top-width: initial; border-top-color: initial; border-left-style: none; border-left-width: initial; border-left-color: initial; ">XX</td> 
+in: |
+  |>. 1150|Short-term international consultants|
+  |>. 11|XX|
+  another
+
+  |>. 1150|Short-term international consultants|
+  |>. 11|XX|
+

@@ -35,7 +35,7 @@ module ::Hpricot #:nodoc:
       properties[key]
     end
 
-    def []= k, v 
+    def []= k, v
       s = properties.map {|pty,val| "#{pty}:#{val}"}.join(";")
       @element.set_attribute("style", "#{s.chomp(";")};#{k}:#{v}".sub(/^\;/, ""))
     end
@@ -74,11 +74,49 @@ module ::Hpricot #:nodoc:
       end
       ancestors
     end
-    
+
+    def ancestor(tag)
+      node = self
+      while node.respond_to?(:parent) && node.name != tag
+        node = node.parent
+      end
+      if node and node.name == tag
+        node
+      else
+        false
+      end
+    end
+
+    def single_child?
+      ! self.parent.children.detect{ |sib| sib != self and sib.to_html.match /\S/}
+    end
+
+    def first_child?
+      node = self
+      while node = node.previous
+        return true if node == parent
+        return false if node.name != ''
+      end
+    end
+
+    def last_child?
+      node = self
+      while node = node.next
+        return false if node.name != ''
+      end
+      return true
+    end
+
+    def still_attached?
+      # sometimes we have left over elements in searches that have
+      # been swapped already.
+      self.parent.children.detect {|sib| sib == self}
+    end
+
     def change_tag!(new_tag, preserve_attr = true)
       return if not etag
       self.name = new_tag
-      attributes.each {|k,v| remove_attribute(k)} if not preserve_attr
+      attributes.to_hash.each {|k,v| remove_attribute(k)} if not preserve_attr
     end
 
     def styles

@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ProfileTest < Test::Unit::TestCase
 
-  fixtures :users, :groups, :profiles, :external_videos
+  fixtures :users, :groups, :profiles, :external_videos, :geo_countries, :geo_places
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
@@ -145,6 +145,39 @@ class ProfileTest < Test::Unit::TestCase
 
   def test_associations
     assert check_associations(Profile)
+  end
+
+  def test_add_and_update_location
+    country = geo_countries(:armenia)
+    city = geo_places(:zangakatun)
+    user = users(:red)
+    profile = user.profiles.create :stranger => true
+    profile.add_location!({:geo_country_id => country.id, :geo_place_id => city.id})
+    assert profile.geo_locations.count > 0
+
+    gl = profile.geo_locations[0]
+    assert_equal gl.profile, profile
+
+    profile.update_location({:location_id => gl.id, :geo_place_id => nil })
+    profile.reload
+    assert_nil profile.geo_locations.find(gl.id).geo_place
+
+    profile.destroy
+  end
+
+  def test_location_with_city_always_sets_admin_code
+    country = geo_countries(:armenia)
+    city = geo_places(:zangakatun)
+    warmgroup = groups(:warm)
+
+    warmgroup.profiles.public.add_location!(:geo_country_id => country.id, :geo_place_id => city.id)
+
+    location_id = warmgroup.profiles.public.geo_locations[0].id
+    warmgroup.profiles.public.update_location(:location_id => location_id, :geo_country_id => country.id, :geo_place_id => city.id)
+    assert_not_nil warmgroup.profiles.public.geo_locations[0].geo_admin_code_id
+
+    warmgroup.profiles.public.update_location(:location_id => location_id, :geo_country_id => country.id, :geo_place_id => city.id, :geo_admin_code_id => '')
+    assert_not_nil warmgroup.profiles.public.geo_locations[0].geo_admin_code_id
   end
 
 end

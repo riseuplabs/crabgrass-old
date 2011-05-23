@@ -1002,8 +1002,6 @@ fr:
   welcome_heading: "Bienvenue sur {{site_title}}, {{user_name}} !"
   welcome_hide_link: "Cacher le message d'accueil "
   welcome_login_message: |-
-      !>/plugin_assets/riseup/riseup-yellow.gif!
-
       Ce site utilise Crabgrass, un <a href="http://www.affero.org/oagpl.html">logiciel libre</a> web conçu pour les réseaux sociaux, le travail collaboratif et l’organisation de réseaux, et taillé pour les besoins des mouvements de solidarités internationales. Le but à long terme est de fournir les outils techniques permettant l'organisation de réseaux confédéraux, actifs, démocratiques, de transformation sociale. [en lire plus... -> /crabgrass/about]
 
       h3. Êtes-vous nouveaux sur ce site ?

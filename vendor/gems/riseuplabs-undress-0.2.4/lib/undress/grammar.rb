@@ -13,7 +13,7 @@ module Undress
     #       "<this was a paragraph>#{content_of(element)}</this was a paragraph>"
     #     end
     #
-    # will replace your <tt><p></tt> tags for <tt><this was a paragraph></tt> 
+    # will replace your <tt><p></tt> tags for <tt><this was a paragraph></tt>
     # tags, without altering the contents.
     #
     # The element yielded to the block is an Hpricot element for the given tag.
@@ -76,6 +76,19 @@ module Undress
       @whitelisted_attributes || []
     end
 
+    # Set a list of styles you wish to whitelist
+    #
+    # The style attribute is filtered using these.
+    # Grammer#styles(node) will return a hash of the filtered styles.
+    #
+    def self.whitelist_styles(*styles)
+      @whitelisted_styles = styles
+    end
+
+    def self.whitelisted_styles #:nodoc:
+      @whitelisted_styles || []
+    end
+
     def self.post_processing_rules #:nodoc:
       @post_processing_rules ||= {}
     end
@@ -91,11 +104,13 @@ module Undress
     attr_reader :pre_processing_rules #:nodoc:
     attr_reader :post_processing_rules #:nodoc:
     attr_reader :whitelisted_attributes #:nodoc:
+    attr_reader :whitelisted_styles #:nodoc:
 
     def initialize #:nodoc:
       @pre_processing_rules = self.class.pre_processing_rules.dup
       @post_processing_rules = self.class.post_processing_rules.dup
       @whitelisted_attributes = self.class.whitelisted_attributes.dup
+      @whitelisted_styles = self.class.whitelisted_styles.dup
     end
 
     # Process a DOM node, converting it to your markup language according to
@@ -103,14 +118,27 @@ module Undress
     # string representation. Otherwise it will call the rule defined for it.
     def process(nodes)
       Array(nodes).map do |node|
-        if node.text?
-          node.to_html
-        elsif node.elem? 
-          send node.name.to_sym, node if ! defined?(ALLOWED_TAGS) || ALLOWED_TAGS.empty? || ALLOWED_TAGS.include?(node.name)
+        if node.text? and parent_allows_text?(node)
+          node.to_html.gsub('&amp;', '&')
+        elsif node.elem?
+          send node.name.to_sym, node if tag_allowed?(node.name)
         else
           ""
         end
       end.join("")
+    end
+
+    def tag_allowed?(name)
+      !defined?(ALLOWED_TAGS) ||
+        ALLOWED_TAGS.empty? ||
+        ALLOWED_TAGS.include?(name)
+    end
+
+    def parent_allows_text?(node)
+      !defined?(NO_TEXT_TAGS) ||
+        NO_TEXT_TAGS.empty? ||
+        node.parent.nil? ||
+        !NO_TEXT_TAGS.include?(node.parent.name)
     end
 
     def process!(node) #:nodoc:
@@ -142,14 +170,14 @@ module Undress
     def complete_word?(node)
       p, n = node.previous_node, node.next_node
 
-      return true if !p && !n 
+      return true if !p && !n
 
       if p.respond_to?(:content)
         return false if p.content       !~ /\s$/
       elsif p.respond_to?(:inner_html)
         return false if p.inner_html    !~ /\s$/
       end
-      
+
       if n.respond_to?(:content)
         return false if n.content       !~ /^\s/
       elsif n.respond_to?(:inner_html)
@@ -175,13 +203,23 @@ module Undress
     # will represent your attributes consistently across all nodes (for
     # example, +Textile+ always shows class an id inside parenthesis.)
     def attributes(node)
-      node.attributes.inject({}) do |attrs,(key,value)|
+      node.attributes.to_hash.inject({}) do |attrs,(key,value)|
         attrs[key.to_sym] = value if whitelisted_attributes.include?(key.to_sym)
         attrs
       end
     end
 
-    def method_missing(tag, node, *args) #:nodoc:
+    def styles(node)
+      return unless style_attrib = node[:style]
+      styles = style_attrib.scan /(\S+):\s*(([^&;]+|&[^&;\s]+;)+)\s*(;|$)/
+      styles.map{|a| [a[0], a[1]]}.inject({}) do |hash,(key,value)|
+        hash[key.downcase.to_sym] = value.downcase if whitelisted_styles.include?(key.to_sym)
+        hash
+      end
+    end
+
+    def method_missing(tag, node=nil, *args) #:nodoc:
+      super(tag) unless node
       process(node.children)
     end
   end

@@ -1,0 +1,14 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  %ul
+    %li
+      = f.label :title
+      = f.text_field :title
+    %li
+      = f.label :entities
+      = f.select :entities, ['Groups', 'Users']
+    %li.checkbox-edit
+      = f.check_box :recent
+      = f.label :recent
+  %div#mb-footer
+    = f.submit

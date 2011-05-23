@@ -85,10 +85,16 @@ module Magick
     def crop_resized!(newcols,newrows)
       if self.columns > self.rows
         resize = "x#{newrows}"
+        scaled_cols = (self.columns * newrows / self.rows)
+        offset = (scaled_cols - newcols) / 2
+        xy = "+#{offset}+0"
       else
         resize = "#{newcols}x"
+        scaled_rows = (self.rows * newcols / self.columns)
+        offset = (scaled_rows - newrows) / 2
+        xy = "+0+#{offset}"
       end
-      run_command('mogrify', '-geometry', resize, '-crop', "#{newcols}x#{newrows}", @path)
+      run_command('mogrify', '-geometry', resize, '-crop', "#{newcols}x#{newrows}#{xy}", @path)
       update_geometry()
     end
 

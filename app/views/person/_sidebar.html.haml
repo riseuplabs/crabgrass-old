@@ -25,4 +25,3 @@
     = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:committees), :entities => @user.groups.visible_by(current_user).committees }
   - if profile.may_see_contacts?
     = render :partial => 'avatars/entity_boxes', :locals => {:header => I18n.t(:friends), :entities => @user.friends }
-

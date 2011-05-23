@@ -358,6 +358,7 @@ class GreenCloth < RedCloth::TextileDoc
 
     extract_offtags(html)
 
+    wrap_table_in_div(html)
     return html
   end
 
@@ -494,6 +495,13 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
+  TABLE_OPEN_TAG_RE = /<table[^>]*>/i
+  TABLE_CLOSE_TAG_RE = /<\/table\s*>/i
+  def wrap_table_in_div( text )
+    text.gsub!( TABLE_OPEN_TAG_RE, "<div class='table-wrap'>\\0")
+    text.gsub!( TABLE_CLOSE_TAG_RE, "\\0</div>")
+  end
+
   ##
   ## OFFTAGS
   ##
@@ -611,7 +619,7 @@ class GreenCloth < RedCloth::TextileDoc
     end
   end
 
-  BRACKET_FORMATTERS = /[\+\-\^\*\?_@=~]/
+  BRACKET_FORMATTERS = /[\+\-\^\*\?_@=~%]/
 
   # linking using square brackets
   BRACKET_LINK_RE = /
@@ -633,7 +641,7 @@ class GreenCloth < RedCloth::TextileDoc
           # make this a named anchor tag, instead of a link
           label, anchor = link_text.split(/\s*->\s*/)[0..1]
           anchor ||= label
-          a_tag = '<a name="%s">%s</a>' % [anchor.nameize, htmlesc(label.strip)]
+          a_tag = '<a name="%s">%s</a>' % [anchor.nameize, label.strip]
           all = all.sub(/^#{Regexp.escape(preceding_char)}/,'')
           preceding_char + offtag_it(a_tag, all)
         elsif first_char == last_char and first_char =~ BRACKET_FORMATTERS

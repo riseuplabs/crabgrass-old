@@ -1,0 +1,39 @@
+- content_for :right_sidebar do
+  = render :partial => 'base_page/sidebar'
+
+=  render :partial => 'wiki_page/tabs'
+-  @show_posts = false
+-  separator = Conf.text_editor_sym == :html_preferred ? '' : '|'
+
+
+= Formy.tabs(:type => :simple, :separator => separator) do |f|
+  - greencloth_tab(f) if Conf.allow_greencloth_editor?
+  - html_tab(f) if Conf.allow_html_editor?
+  - preview_tab(f)
+
+- form_tag(page_url(@page, :action => 'update'), :id => wiki_form_id(@wiki), :method => 'put') do
+  = hidden_field 'wiki', 'version' 
+  = locked_error_message
+
+  - if Conf.allow_greencloth_editor?
+    .tab_content#tab-edit-greencloth{:style=> hide_unless_preferred(:greencloth)}
+      = render :partial => "wiki_page/edit_greencloth", :locals => {:load_content => preferred_editor_tab == :greencloth} 
+
+  - if Conf.allow_html_editor?
+    .tab_content#tab-edit-html{:style=> hide_unless_preferred(:html)}
+      = render :partial => "wiki_page/edit_wysiwyg", :locals => {:load_content => preferred_editor_tab == :html} 
+
+  .tab_content#tab-edit-preview(style="display:none")
+    .wiki{:id=> wiki_preview_id(@wiki)}
+
+  .tab_content#tab-edit-loading(style="display:none")
+    = big_spinner
+
+  .wiki_buttons
+    - if locked_for_me?
+      = submit_tag I18n.t(:break_lock_button), :name => 'break_lock' 
+    - else
+      = submit_tag I18n.t(:save_button), :name => 'save' 
+
+    - unless @wiki_is_blank 
+      = submit_tag I18n.t(:cancel_button), :name => 'cancel' 

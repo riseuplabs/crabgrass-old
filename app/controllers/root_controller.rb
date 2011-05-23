@@ -3,12 +3,12 @@
 #
 class RootController < ApplicationController
 
-  helper :groups, :account, :wiki, :page
+  helper :groups, :account, :wiki, :page, :widgets, :menu_items
   stylesheet 'wiki_edit'
   javascript :wiki, :action => :index
 
   permissions 'root','groups/base', 'wiki'
-  before_filter :login_required, :except => ['index']
+  #before_filter :login_required, :except => ['index']
   before_filter :fetch_network
 
   def index
@@ -118,9 +118,10 @@ class RootController < ApplicationController
 
   def site_home
     @active_tab = :home
-    @group.profiles.public.create_wiki unless @group.profiles.public.wiki
-    #@announcements = Page.find_by_path('limit/3/descending/created_at',options_for_group(@group, :flow => :announcement))
-    @show_featured = Page.count_by_path(['featured_by', @group.id], options_for_group(@group, :limit => 1)) > 0
+    @profile = @group.profiles.public
+    @top_widgets = @profile.widgets.find_all_by_section(0)
+    @main_widgets = @profile.widgets.find_all_by_section(1)
+    @sidebar_widgets = @profile.widgets.find_all_by_section(2, :include => :menu_items)
     render :template => 'root/site_home'
   end
 
@@ -151,22 +152,22 @@ class RootController < ApplicationController
 
   helper_method :most_active_groups
   def most_active_groups
-    Group.only_groups.most_visits.find(:all, :limit => 15)
+    Group.only_groups.most_visits.find(:all, :limit => 8)
   end
 
   helper_method :recently_active_groups
   def recently_active_groups
-    Group.only_groups.recent_visits.find(:all, :limit => 10)
+    Group.only_groups.recent_visits.find(:all, :limit => 8)
   end
 
   helper_method :most_active_users
   def most_active_users
-    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 15)
+    User.most_active_on(current_site, nil).not_inactive.find(:all, :limit => 8)
   end
 
   helper_method :recently_active_users
   def recently_active_users
-    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 10)
+    User.most_active_on(current_site, Time.now - 30.days).not_inactive.find(:all, :limit => 8)
   end
 
 end

@@ -1,0 +1,6 @@
+# Elements that should be cleaned up so they don't clutter
+# the wiki syntax
+---
+html: <p align="center"> <br/></p>
+in: |
+  

@@ -254,9 +254,18 @@ Profile.blueprint(:private) {
 #
 # Locations
 #
-GeoCountry.blueprint {}
-GeoAdminCode.blueprint {}
+GeoCountry.blueprint {
+  name { Sham.display_name }
+  code { name[0..1].upcase }
+}
+GeoAdminCode.blueprint {
+  name { Sham.display_name }
+  geo_country { GeoCountry.make }
+  admin1_code { 1 }
+}
 GeoPlace.blueprint {
+  geo_admin_code { GeoAdminCode.make }
+  geo_country { geo_admin_code.country }
   latitude { 1.0 }
   longitude { 1.0 }
   geonameid { 2 }

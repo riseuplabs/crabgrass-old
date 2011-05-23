@@ -3,12 +3,9 @@
   %h1
     = group.display_name
   %div#group-action
-    = join_group_link
     = leave_group_link unless @no_leave_group_link
-    - if may_join_chat? && !controller.is_a?(ChatController)
+    - if current_site.chat? && may_join_chat? && !controller.is_a?(ChatController)
       %a#chat.small_icon.chat2_16{:href => url_for({:controller => 'chat', :action => 'channel', :id => group.name})}
         = I18n.t(:group_join_chat)
 %div.right
-  = create_page_link(group)
-
-  
+  = join_group_or_create_page_link(group)

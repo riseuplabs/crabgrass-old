@@ -12,6 +12,16 @@ class PersonControllerTest < ActionController::TestCase
     assert_select '.no-third-level'
   end
 
+  def test_do_not_show_disabled_public_profile
+    Conf.profiles = []
+    Conf.profiles << 'private'
+    get :show, :id => users(:quentin).to_param
+    Conf.profiles = nil
+    assert_nil assigns(:profile)
+    assert_template 'dispatch/not_found'
+  end
+
+
   def test_show_not_logged_in
     get :show, :id => users(:red).to_param
     assert_response :success

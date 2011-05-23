@@ -37,6 +37,14 @@
     <%= f.check_box :enforce_ssl %><%= f.label :enforce_ssl, 'Enforce SSL:' %>&nbsp;if checked, cookies will only work over   TLS/SSL
   </span>
   <br />
+  <span>
+    <%= f.check_box :never_pester_users %><%= f.label :never_pester_users, 'Never Pester Users:' %>&nbsp; <%= I18n.t(:never_pester_users_description) %>
+  </span>
+  <br />
+  <span>
+    <%= f.check_box :show_expanded_group_wikis %><%= f.label :show_expanded_group_wikis, 'Show Expanded Group Wikis:' %>&nbsp; <%= I18n.t(:show_expanded_group_wikis_description) %>
+  </span>
+  <br />
   <span class="padtop14">
     <%= f.label :available_page_types, "Available Page Types:" %>&nbsp;select what page types can be created<br/ >(hold CTRL down while clicking to select multiple elements)
     <ul style="list-style-type:none;">

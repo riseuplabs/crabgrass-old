@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # the order of these filters matters. change with caution.
   before_filter :essential_initialization
   before_filter :set_language
-  before_filter :set_timezone, :pre_clean
+  before_filter :set_timezone
   before_filter :header_hack_for_ie6
   before_filter :redirect_unverified_user
   before_render :context_if_appropriate
@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
     current_site
     @path = parse_filter_path(params[:path])
     @skip_context = false
+    current_user
   end
 
   def header_hack_for_ie6
@@ -112,11 +113,6 @@ class ApplicationController < ActionController::Base
   # set the current timezone, if the user has it configured.
   def set_timezone
     Time.zone = current_user.time_zone if logged_in?
-  end
-
-  # TODO: figure out what the hell is the purpose of this?
-  def pre_clean
-    User.current = nil
   end
 
   # A special 'before_render' filter that calls 'context()' if this is a normal
@@ -207,6 +203,7 @@ class ApplicationController < ActionController::Base
       options = js_files.last.is_a?(Hash) ? js_files.pop : {}
       scripts  = read_inheritable_attribute("javascript") || {}
       index   = options[:action] || :all
+      js_files.collect!{|js| js+':'+options[:plugin]} if options.has_key?(:plugin)
       scripts[index] ||= []
       scripts[index] << js_files
       write_inheritable_attribute "javascript", scripts
@@ -236,6 +233,12 @@ class ApplicationController < ActionController::Base
         self.current_user = founduser unless founduser.nil?
       end
     end
+  end
+
+  # render locations kml
+  def render_kml_for_entities(collection)
+    @entities = collection
+    render :template => '/map/index.kml.builder', :layout => false
   end
 
   private
@@ -269,8 +272,17 @@ class ApplicationController < ActionController::Base
   # which sometimes appears as :gif.
   def normal_request?
     format = request.format.to_sym
+    format = :html if (is_ie789? and format.to_s =~ /x-ms-application/)
     response.redirected_to.nil? and
-    (format == :html or format == :all or format == :gif)
+    (format == :html or format == :all or 
+      # thses are for the IEs
+      format == :gif or format == :jpg or format.to_s =~ /x-ms-application/)
+  end
+
+  def is_ie789?
+    return unless (user_agent = request.env['HTTP_USER_AGENT'])
+    user_agent.downcase!
+    (user_agent =~ /msie [789]/) ? true : false
   end
 
 end

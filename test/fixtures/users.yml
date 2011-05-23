@@ -38,7 +38,16 @@
   last_seen_at: <%= rand(10).days.ago.to_s :db %>
 <% end %>
 
+inactive_user:
+  id: 14
+  login: "inactive_user"
+  display_name: "Inactive User"
+  salt: <%= salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--inactive_user--") %>
+  crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--inactive_user--") %>
+  last_seen_at: <%= 5.months.ago %>
+
 ### Connecting Classrooms ###
+
 # just to make sure additional users do not interfere with the numbering scheme for cc
 <% i = 100 %>
 <% for login in %w[student teacher visitor other_student other_teacher other_visitor] do %>

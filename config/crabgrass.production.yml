@@ -81,12 +81,14 @@ require_user_email: true
 available_page_types:
   - WikiPage
   - AssetPage
+  #- EventPage
   - ExternalVideoPage
   - TaskListPage
   - AnnouncementPage
   - SurveyPage
   - DiscussionPage
   - RateManyPage
+  #- MessagePage
   - RankedVotePage
   - ArticlePage
   - Gallery

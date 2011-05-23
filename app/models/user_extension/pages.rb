@@ -41,12 +41,11 @@ module UserExtension::Pages
               pages.type != 'AssetPage'",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
-          :select => "users.*, user_participations.changed_at"
+          :select => "users.*, user_participations.changed_at",
+          :conditions => time ?
+            ["user_participations.changed_at >= ?", time] :
+            "user_participations.changed_at IS NOT NULL"
         }
-        if time
-          ret[:conditions] = ["user_participations.changed_at >= ?", time]
-        end
-        ret
       end)
 
       named_scope(:most_active_since, lambda do |time|

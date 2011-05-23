@@ -1,0 +1,52 @@
+in: |-
+  > this is a quote
+  
+  this should not be in blockquote
+out: |-
+  <blockquote>this is a quote</blockquote>
+  <p>this should not be in blockquote</p>
+---
+in: |-
+  here is a regular paragraph
+  
+  > this one is a blockquote
+  > and lasts for two lines
+  
+  another regular paragraph
+out: |-
+  <p>here is a regular paragraph</p>
+  <blockquote>this one is a blockquote<br />
+  and lasts for two lines</blockquote>
+  <p>another regular paragraph</p>
+#---
+#in: |-
+#  > here is a paragraph
+#  >
+#  >> with a nested paragraph
+#  >> within it.
+#  >
+#  > what do you think about that?
+#out: ....
+---
+in: |-
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  > consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+  > 
+  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  > id sem consectetuer libero luctus adipiscing.
+out: |-
+  <blockquote>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+  Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  id sem consectetuer libero luctus adipiscing.</blockquote>
+in: |-
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+  >
+  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse id sem consectetuer libero luctus adipiscing.
+out: |-
+  <blockquote>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<br />
+  <br />
+  Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse id sem consectetuer libero luctus adipiscing.</blockquote>

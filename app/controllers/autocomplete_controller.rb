@@ -14,21 +14,10 @@ class AutocompleteController < ApplicationController
       recipients += User.friends_of(current_user)
     else
       filter = "#{params[:query]}%"
-      if current_user.group_ids.any?
-        recipients = Group.find(:all,
-          :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? ) AND
-            NOT groups.id IN (?)",
-            filter, filter, current_user.group_ids],
-          :limit => 20)
-      else
-        recipients = Group.find(:all,
-          :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
-            filter, filter],
-          :limit => 20)
-      end
-      recipients += User.on(current_site).strangers_to(current_user).find(:all,
-        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-        :limit => 20)
+      recipients = Group.without_member(current_user).public.named_like(filter)
+      recipients = recipients.find(:all, :limit => 20)
+      users = User.on(current_site).visible_strangers_to(current_user).named_like(filter)
+      recipients += users.find(:all, :limit => 20)
       recipients = recipients.sort_by{|r|r.name}[0..19]
     end
 
@@ -41,9 +30,8 @@ class AutocompleteController < ApplicationController
       recipients = User.friends_of(current_user)
     else
       filter = "#{params[:query]}%"
-      recipients = User.on(current_site).strangers_to(current_user).find(:all,
-        :conditions => ["users.login LIKE ? OR users.display_name LIKE ?", filter, filter],
-        :limit => 20)
+      users = User.on(current_site).visible_strangers_to(current_user).named_like(filter)
+      recipients = users.find(:all, :limit => 20)
     end
 
     render_entities_to_json(recipients)
@@ -86,20 +74,46 @@ class AutocompleteController < ApplicationController
     render_entities_to_json(senders)
   end
 
+  def locations
+    # country needs to be set but defaults to translation of "Country"
+    if params[:country].to_i == 0
+      locations = []
+    elsif params[:query] == ""
+      # we could preload if we had the country, but this is still expensive if there are a lot of places
+      # perhaps we could do a count first and preload if it's a reasonable amount, or preload cities witha high population?
+      #locations = GeoPlace.find(:all, :conditions => ["geo_country_id = ?", params[:country]])
+      locations = []
+    else
+      country = GeoCountry.find(params[:country])
+      locations = country.geo_places.named_like(params[:query]).largest(20)
+    end
+    render_locations_to_json(locations)
+  end
+
   private
 
   def render_entities_to_json(entities)
     render :json => {
       :query => params[:query],
-      :suggestions => entities.collect{|entity|display_on_two_lines(entity)},
+      :suggestions => entities.collect{|e|display_on_two_lines(e.display_name, h(e.name))},
       :data => entities.collect{|e|e.avatar_id||0}
     }
   end
 
+  def render_locations_to_json(locations)
+    render :json => {
+      :query => params[:query],
+      :suggestions => locations.collect{|loc|display_on_two_lines(loc.name, loc.geo_admin_code.name)},
+      :data => locations.collect{|loc|loc.id}
+    }
+  end
+
+
   # this should be in a helper somewhere, but i don't know how to generate
   # json response in the view.
-  def display_on_two_lines(entity)
-    "<em>%s</em>%s" % [entity.name, ('<br/>' + h(entity.display_name) if entity.display_name != entity.name)]
+  def display_on_two_lines(first, second)
+    "<em>%s</em>%s" % [first, ('<br/>' + second if second != first)]
+    #"<em>%s</em>%s" % [entity.display_name, ('<br/>' + h(entity.name) if entity.display_name != entity.name)]
   end
 
 end

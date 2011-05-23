@@ -73,8 +73,10 @@ module ProfileHelper
   def profile_description
     if @profile.public?
       I18n.t(:profile_public_description)
-    elsif @profile.private?
+    elsif @profile.private? and (@current_site ? !@current_site.all_profiles_visible : true)
       I18n.t(:profile_private_description)
+    elsif @profile.private? and (@current_site and @current_site.all_profiles_visible)
+      I18n.t(:profile_private_visible_description)
     end + ' ' + content_tag(:strong, link_to(I18n.t(:preview)+ARROW, '/'+current_user.login+'?profile='+@profile.type))
   end
 end

@@ -64,3 +64,7 @@ for_public:
   id: 6
   body: the body of the wiki, which is text suitable for running through green cloth
   version: 1
+
+long_group_wiki:
+  id: 7
+  body: <%= string= ''; 500.times { string += 'X' }; string += 'this is the end of the really long string'; %>

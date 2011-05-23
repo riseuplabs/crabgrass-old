@@ -1,0 +1,11 @@
+- content_for :misc_header do
+  - for widget in @top_widgets
+    = render_widget widget
+
+.wrapper2-plus
+  - for widget in @main_widgets
+    = render_widget widget
+
+.wrapper1
+  - for widget in @sidebar_widgets
+    = render_widget widget

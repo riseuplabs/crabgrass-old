@@ -6,7 +6,6 @@ profile_for_public_group:
   may_see_members: false
   may_see_committees: true
   stranger: true
-  geo_location_id: 2
 
 profile_for_public_committee:
   id: 101
@@ -124,6 +123,7 @@ public_profile_for_yellow:
   stranger: true
   may_see: true
   may_pester: false
+  may_request_contact: true
 
 #private_profile_for_yellow:
 #  id: 9
@@ -142,16 +142,42 @@ profile_for_diggers:
   summary: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
   summary_html: "We come in peace, To dig and sow / We come to work the land in common / And to make the waste land grow"
 
-
 public_profile_for_blue:
   id: 11
   entity_type: "User"
   entity_id: 4
   stranger: true
 
+# using red for testing privacy of non friends
+# in autocomplete
+public_profile_for_red:
+  id: 12
+  entity_type: "User"
+  entity_id: 8
+  stranger: true
+  may_see: false
+
+private_profile_for_red:
+  id: 13
+  entity_type: "User"
+  entity_id: 8
+  stranger: false
+  may_see: true
+
 public_profile_for_recent_group:
   id: 303
   entity_type: "Group"
   entity_id: 33
-  geo_location_id: 1
+  stranger: true
+  may_see: true
 
+profile_for_committee_of_group_to_be_deleted:
+  id: 304
+  entity_type: "Group"
+  entity_id: 35
+  stranger: true
+
+quentins_profile:
+  entity_type: "User"
+  entity_id: 1
+  stranger: true

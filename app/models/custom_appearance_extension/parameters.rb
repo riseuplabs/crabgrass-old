@@ -120,10 +120,10 @@ module CustomAppearanceExtension
         parameters = {}
         # parse the constants.sass file and return the hash
         constants_lines = File.readlines(File.join(CustomAppearance::SASS_ROOT, dir, CustomAppearance::CONSTANTS_FILENAME))
-        constants_lines.reject! {|l| l !~ /^\s*!\w+/ }
+        constants_lines.reject! {|l| l !~ /^\s*\$\w+/ }
         constants_lines.each do |l|
-          k, v = l.chomp.split(/\s*=\s*/)
-          k[/^!/] = ""
+          k, v = l.chomp.split(/\s*:\s*/)
+          k[/^\$/] = ""
           parameters[k] = v
         end
         parameters

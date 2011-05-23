@@ -40,6 +40,13 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_template 'common/permission_denied'
   end
 
+  def test_index
+    login_as :blue
+    get :index, :show => 'active'
+    assert (assigns[:users]).include?(:red)
+    assert !(assigns[:users]).include?(:inactive_user)
+  end
+
   protected
 
   def post_create_form(options = {})

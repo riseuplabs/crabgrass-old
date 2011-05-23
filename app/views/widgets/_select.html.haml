@@ -1,0 +1,6 @@
+%h4.text Step1: Choose kind of widget
+%ul.create_widget
+  - @widget_names.each do |name|
+    %li{:class => cycle('widget-name-left', 'widget-name-right')}
+      = create_widget_link(@widget.section, name)
+    

@@ -29,6 +29,10 @@ enabled_mods:
   - connectingclassrooms
   - moderation
   - no_private_messages
+  # - openlayers
+  # - ui_tester
+  # - design_tester
+  # - translator
 
 email:
   delivery_method: :sendmail
@@ -41,6 +45,14 @@ profile_fields:
   - websites
 
 text_editor: greencloth_only
+
+profiles:
+  - private
+profile_fields:
+  - basic
+  - notes
+  - websites
+all_profiles_visible: 1
 
 #use_full_geonames_data: true
 
@@ -57,3 +69,18 @@ sites:
 #  - name: site2
 #    admin_group: superadmins
 
+
+available_page_types:
+  - AssetPage
+  #- EventPage
+  - ExternalVideoPage
+  - TaskListPage
+  - AnnouncementPage
+  - SurveyPage
+  - DiscussionPage
+  - RateManyPage
+  #- MessagePage
+  - RankedVotePage
+  - ArticlePage
+  - Gallery
+  - WikiPage

@@ -1,0 +1,21 @@
+# spaces after the </tr> tags are a problematic
+html: |-
+  <table>
+  <thead>
+  	<tr class="odd">
+  		<td bgcolor='#c4bc96'>a</td> 
+  		<td>b</td> 
+  		<td>c</td> 
+  	</tr> 
+  </thead> 
+  <tbody> 
+  	<tr class="even"> 
+  		<td>1</td> 
+  		<td>2</td> 
+  		<td>3</td> 
+  	</tr> 
+  </tbody>
+  </table>
+in: |
+  |{background-color:#c4bc96}a|b|c|
+  |1|2|3|

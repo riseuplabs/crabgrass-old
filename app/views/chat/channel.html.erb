@@ -2,8 +2,9 @@
 remote_url = {:controller => 'chat', :action => 'say', :id => @channel}
 
 loading_command = %(
-  msg = '<div class="message tmp" id="tmp_msg">' + time_and_name + '<span class="content">' + $('entryfield').value + '</span></div>';
-  $('entryfield').value = '';
+  msg_text = $('entryfield').value.replace(/</g, "&lt;").replace(/>/g, '&gt;');
+  msg = '<div class="message tmp" id="tmp_msg">' + time_and_name + '<span class="content">' + msg_text + '</span></div>';
+  $('entryfield').value = ''; 
   $('entryfield').focus;
   new Insertion.Bottom('stage', msg);
   $('conversation').scrollTop = $('conversation').scrollHeight + $('conversation').clientHeight; )

@@ -9,6 +9,7 @@
 # PathFinder::Sphinx::Options and PathFinder::Sql::Options.
 
 module PathFinder::Options
+  include Crabgrass::Hook::Helper
 
   # access options for pages current_user has access to
   def options_for_me(args={})
@@ -74,12 +75,18 @@ module PathFinder::Options
       :controller => get_controller,
       :public => false,
     }
-    if logged_in?
-      options[:user_ids] = [current_user.id]
-      options[:group_ids] = current_user.all_group_ids
-      options[:current_user] = current_user
+
+    hook_options = call_hook('default_path_finder_options')
+    if hook_options.nil? or !hook_options
+      if logged_in?
+        options[:user_ids] = [current_user.id]
+        options[:group_ids] = current_user.all_group_ids
+        options[:current_user] = current_user
+      else
+        options[:public] = true
+      end
     else
-      options[:public] = true
+      options.merge!(hook_options)
     end
 
     # limit pages to the current site.

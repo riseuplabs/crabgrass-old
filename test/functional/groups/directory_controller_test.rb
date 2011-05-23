@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class Groups::DirectoryControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships, :profiles, :geo_locations, :geo_countries
+  fixtures :users, :groups, :memberships, :profiles, :geo_locations, :geo_countries, :geo_places
 
   def setup
   end

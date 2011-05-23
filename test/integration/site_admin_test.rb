@@ -17,4 +17,49 @@ class SiteAdminTest < ActionController::IntegrationTest
     assert_not_contain I18n.t(:announcements) 
   end
 
+# still working on this test
+#  def test_expanded_group_wikis
+#    login 'blue'
+#    with_site(:local, {:show_expanded_group_wikis => 1}) do
+#      visit '/group_with_long_wiki'
+#      assert_contain 'this is the end of the really long wiki'
+#      assert_contain 'close'
+#    end
+#
+#    with_site(:local) do
+#      visit '/group_with_long_wiki'
+#      asssert_not_contain 'this is the end of the really long wiki'
+#      assert_contain 'more'
+#    end
+#
+#  end
+
+  def test_disabled_public_profile
+    login 'blue'
+    with_site('local') do
+      visit '/me/edit'
+      assert_contain 'Public Profile'
+    end
+    with_site('local', {:profiles => ['private']}) do
+      visit '/me/edit'
+      assert_not_contain 'Public Profile'
+    end
+  end
+
+  def test_all_profiles_visible
+    login 'blue'
+    with_site('local') do
+      visit '/profile/edit/private'
+      assert_contain I18n.t(:profile_option_may_see)
+      assert_contain I18n.t(:profile_option_allow_peers)
+      assert_contain I18n.t(:profile_private_description)
+    end
+    with_site('local', {:all_profiles_visible => 1}) do 
+      visit '/profile/edit/private'
+      assert_not_contain I18n.t(:profile_option_may_see)
+      assert_not_contain I18n.t(:profile_option_allow_peers)
+      assert_contain I18n.t(:profile_private_visible_description)
+    end
+  end
+
 end

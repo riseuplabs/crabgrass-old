@@ -8,6 +8,7 @@
 
 ActionController::Routing::Routes.draw do |map|
 
+
   # total hackety magic:
 #  map.filter 'crabgrass_routing_filter'
 
@@ -19,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
   map.from_plugin :super_admin rescue NameError
   map.from_plugin :translator   rescue NameError
   map.from_plugin :moderation  rescue NameError
+  map.from_plugin :locations_to_kml  rescue NameError
 
   map.namespace :admin do |admin|
     admin.resources :announcements
@@ -28,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :custom_appearances, :only => [:edit, :update]
     admin.sites 'sites/:action', :controller => 'sites'
     admin.root :controller  => 'base'
+    admin.resources :widgets, :only => [:index]
   end
 
   ##
@@ -83,6 +86,12 @@ ActionController::Routing::Routes.draw do |map|
         :mark => :put}
   end
 
+  map.resources :widgets, :new =>  {:sidebar => :get} do |widget|
+    widget.resources :menu_items,
+      :only => [:edit, :create, :update, :destroy],
+      :collection => {:sort => :put}
+  end
+
   ##
   ## PEOPLE
   ##
@@ -134,17 +143,20 @@ ActionController::Routing::Routes.draw do |map|
   ##
 
   map.group_directory 'groups/directory/:action/:id', :controller => 'groups/directory'
+  map.connect 'groups/directory/search.:format', :controller => 'groups/directory', :action => 'search'
   map.network_directory 'networks/directory/:action/:id', :controller => 'networks/directory'
 
   map.resources :groups do |group|
     group.resources :pages, :only => :new
+    group.resources :menu_items
   end
 
   map.connect 'groups/:action/:id', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages|contributions/
   map.connect 'groups/:action/:id/*path', :controller => 'groups', :action => /search|archive|discussions|tags|trash|pages|contributions/
 
-  map.resources :networks do |network|
+  map.resources :networks, :collection => {:autocomplete => :get} do |network|
     network.resources :pages, :only => :new
+    network.resources :geo_locations, :only => :index
   end
 
   map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash|contributions/
@@ -156,6 +168,10 @@ ActionController::Routing::Routes.draw do |map|
   map.chat 'chat/:action/:id', :controller => 'chat'
   map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
 #  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
+
+  ## for maps
+  map.resources :geo_locations
+
   ##
   ## DEFAULT ROUTE
   ##

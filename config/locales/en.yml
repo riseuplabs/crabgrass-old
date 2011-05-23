@@ -59,6 +59,7 @@ en:
   remove: "Remove"
   cancel: "Cancel"
   link: "Link"
+  entry_link: "Entry link"
   back: "Back"
   share: "Share"
   contributed: "Contributed"
@@ -157,6 +158,7 @@ en:
   archive: "Archive"
   tasks: "Tasks"
   title: "Title"
+  entry_title: "Entry title"
   summary: "Summary"
   body: "Body"
   text_message: "Text Message"
@@ -653,6 +655,7 @@ en:
 
   profile_permissions: "Permissions"
   profile_private_description: This profile is private and is only visible to your friends.
+  profile_private_visible_description: This profile is visible to all logged in users. 
   profile_last_login: "Last Login"
   profile_member_since: "Member Since"
   home: Home
@@ -732,7 +735,7 @@ en:
   user_profile_description_may_see_groups: "Allow people to see what groups you are a member of."
   user_profile_description_may_see_contacts: "Allow people to see your list of friends."
   user_profile_description_may_request_contact: "Allow people to request to be your friend."
-  user_profile_description_may_pester: "Allow people to share content with you and send you invitations."
+  user_profile_description_may_pester: "Allow people who you allow to view this profile to share content with you and send you messages."
   user_profile_description_allow_peers: "If checked, people you share a common group with will be able to view your private profile."
   user_profile_description_may_see: "If checked, the profile information below will be visible. Otherwise, your profile will be hidden entirely."
 
@@ -858,7 +861,8 @@ en:
 
   join_group_link: "Join {{group_type}}"
   leave_group_link: "Leave {{group_type}}"
-  request_join_group_link: "Request to Join {{group_type}}"
+  #request_join_group_link: "Ask to Join {{group_type}}"
+  request_join_group_link: "Join {{group_type}}"
   send_join_request: "Send request to join {{group_name}}"
   group_destroyed_message: "{{group_type}} Destroyed"
 
@@ -921,11 +925,15 @@ en:
 
   widget_index: "Widget {{index}}"
 
+  create_widget: "Create a Widget"
+
   # profiles
 
   may_request_membership_description: "A \"join group\" link will appear on your group page. This will send a request for membership to your group that can be accepted or rejected."
   open_group: "Open Group"
   open_group_description: "Users are immediately added to the group - request don't have to be approved"
+  members_may_edit_wiki: "Members may edit wiki"
+  members_may_edit_wiki_description: "If unchecked, only council members may edit the group wiki."
 
 
   ##
@@ -949,9 +957,12 @@ en:
   pending: "pending"
   rejected: "rejected"
   approved: "approved"
+  destroy_widget: "Destroy widget"
+  create_widget: "Create new widget"
 
   my_requests_link: "my requests"
   all_requests: "All Requests"
+  all_admin_requests: "All Requests (Admin View)"
   requests_to_me: "Requests to me"
   requests_from_me: "Requests from me"
   incoming: "Incoming"
@@ -1714,6 +1725,8 @@ en:
 
   administer_site: "Administer Site"
   edit_appearance: "Edit Appearance"
+  edit_site_home_structure: "Edit Site Home Structure"
+  site_home_structure: "Site Home Structure"
 
   ##
   ## MODERATION
@@ -1749,6 +1762,8 @@ en:
   profile_settings: "Profile Settings"
   email_blasts: "Email Blasts"
 
+  never_pester_users_description: "if checked, the ability to send email notifications from pages and invites will not be available to users."
+  show_expanded_group_wikis_description: "if checked, group and network home page wikis will be fully expanded by default. This does not effect the sitehome wiki which is always fully expanded by default."
 
   # custom appearances
 

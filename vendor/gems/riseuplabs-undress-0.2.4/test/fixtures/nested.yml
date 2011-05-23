@@ -1,0 +1,49 @@
+# This is a collection of nested tags that are difficult to parse
+---
+html: |
+  <span style="font-size: 80%;">
+    hallo 
+    <span style="background-color: #CCCCCC;"
+      welt
+    </span>
+    !
+  </span>
+in: |
+  [{font-size: 80%}hallo %][%{background-color: #CCCCCC; font-size: 80%}welt%][%{font-size 80%}!%]
+
+---
+# complex table
+html: |
+  <table>
+  <tr>
+  <td>
+  <table>
+  	<tr class="odd">
+  		<td>table</td>
+  		<td> within a table </td>
+  	</tr>
+  </table>
+  </td>
+  <td>
+  <ul>
+  	<li>row</li>
+  	<li>list</li>
+  </ul>
+  </td>
+  </tr>
+  </table>
+
+in: |
+  <table>
+  <tr>
+  <td>
+  |table| within a table|
+  </td>
+  <td>
+  * row
+  * list
+  
+  </td>
+  </tr>
+  </table>
+

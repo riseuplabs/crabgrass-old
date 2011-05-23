@@ -42,6 +42,25 @@ class CommitteeTest < Test::Unit::TestCase
     end
   end
 
+  def test_delete_group_destroy_committee
+    assert_nothing_raised do
+      group = Group.find(groups(:group_to_be_deleted).id)
+      Group.delete(group.id)
+    end
+    assert_raises ActiveRecord::RecordNotFound, 'group should be deleted'  do
+      Group.find(groups(:group_to_be_deleted).id)
+    end
+    assert_nothing_raised do
+      Group.find(groups(:committee_of_group_to_be_deleted))
+    end
+    assert_nothing_raised do
+      Group.find(groups(:committee_of_group_to_be_deleted)).destroy_by(users(:blue))
+    end
+    assert_raises ActiveRecord::RecordNotFound, 'committee should be deleted'  do
+      Group.find(groups(:committee_of_group_to_be_deleted).id)
+    end
+  end
+
   def test_membership
     g = Group.create :name => 'riseup'
     c1 = Committee.create :name => 'finance'

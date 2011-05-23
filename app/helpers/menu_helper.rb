@@ -90,16 +90,21 @@ module MenuHelper
   end
 
   def people_option
-    top_menu(
-      I18n.t(:menu_people),
-      '/people/directory',
-      :active => @active_tab == :people,
-      :menu_items => menu_items('boxes', {
+    if logged_in? and current_user and !current_user.friends.empty?
+      menu_items_people = menu_items('boxes', {
         :entities => current_user.friends.most_active,
         :heading  => I18n.t(:my_contacts),
         :see_all_url => people_directory_url(:friends),
         :submenu => 'people'
-      }),
+      }) 
+    else
+      menu_items_people = nil
+    end
+    top_menu(
+      I18n.t(:menu_people),
+      '/people/directory',
+      :active => @active_tab == :people,
+      :menu_items => menu_items_people,
       :id => 'menu_people'
     )
   end

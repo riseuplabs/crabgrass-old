@@ -1,5 +1,10 @@
 /* this is the css for the iframe inside the html editor. */
 
+body {
+  color: #707070;
+  font-size: 12px;
+  line-height: 1.75em; }
+
 pre {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -13,24 +18,29 @@ pre {
     border-color: #FFE8A9;
     padding: 0.5em; }
 
+h1, h2 {
+  margin-bottom: 8px;
+  margin-top: 12px;
+  padding-bottom: 6px; }
+
 h1 {
-  font-size: 24pt;
+  font-size: 20pt;
   line-height: 1.25em;
-  color: #666;
-  border-bottom: 2px dotted #999; }
-  h1:first-child, h1.first {
-    margin-top: 0; }
+  color: #534741;
+  border-bottom: 1px solid #bbbbbb;
+  font-family: verdana, bitstream vera sans, helvetica, sans-serif; }
 
 h2 {
   font-size: 14pt;
+  color: #707070;
   line-height: 1.25em;
-  border-bottom: 1px dashed #ccc; }
-  h2:first-child, h2.first {
-    margin-top: 0; }
+  border-bottom: 1px dotted #bbbbbb; }
 
-h3 {
-  font-size: 1.1em;
-  margin-top: 0.75em; }
+h3, h4 {
+  font-size: 12pt; 
+  color: #7d7d7d; 
+  margin-top: 0.75em; 
+  margin-bottom: 10px; }
 
 span.caps {
   font-size: 80%; }
@@ -45,16 +55,20 @@ p.right {
     margin-left: 1em; }
 
 table {
-  border-collapse: collapse; }
+  border-collapse: collapse; 
+  clear: both;
+  width: 100%; }
 
 td {
   padding: 4px;
-  border: 1px solid #CCC; }
+  border: 1px solid #CCC;
+  height: 25px; }
 
 th {
   padding: 4px;
   border: 1px solid #CCC;
-  background: #ddd; }
+  background: #ddd;
+  height: 25px; }
 
 tr.odd {
   background-color: #F2F2F2; }
@@ -66,3 +80,11 @@ blockquote {
   margin-left: 0;
   padding-left: 1.5em;
   font-style: italic; }
+
+code { background-color: #fff6dd; }
+
+ul { list-style-type: disc; }
+
+ol { list-style-type: decimal; }
+
+ul, ol { padding-left: 1.5em; }

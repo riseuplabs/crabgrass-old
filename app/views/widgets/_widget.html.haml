@@ -1,0 +1,7 @@
+%li[widget]{:class => ('small' if widget.small?)}
+  .left
+    %h4
+      = preview_widget_link(widget)
+    = widget.name.sub(/Widget$/, '') unless widget.title.blank?
+  %span
+    = edit_widget_link(widget)

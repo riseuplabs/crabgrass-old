@@ -26,6 +26,7 @@ launchy
 machinist
 faker
 ruby-debug
+json (required for a few functional tests)
 leftright (optional but recommended, lerftright organizes and colorizes test output)
 
 On debian, nokogiri requires: libxslt1-dev libxml2-dev

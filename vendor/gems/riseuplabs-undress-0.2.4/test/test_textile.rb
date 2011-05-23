@@ -53,7 +53,7 @@ module Undress
           textile  = "ds [+underline+]sds\n"
           assert_renders_textile textile, html
         end
-        
+
         test "wihout a letter in headers" do
           html = "<h1>a<em>bc</em></h1>"
           textile = "h1. a[_bc_]\n"
@@ -71,19 +71,19 @@ module Undress
           html = "<p>a perfect wo<em>r</em>ld</p>"
           assert_renders_textile textile, html
         end
-        
+
         test "bolds" do
           textile = "a perfect wo[*r*]ld\n"
           html = "<p>a perfect wo<strong>r</strong>ld</p>"
           assert_renders_textile textile, html
         end
-        
+
         test "underlines" do
           textile = "a perfect wo[+r+]ld\n"
           html = "<p>a perfect wo<ins>r</ins>ld</p>"
           assert_renders_textile textile, html
         end
-        
+
         test "line through" do
           textile = "a perfect wo[-r-]ld\n"
           html = "<p>a perfect wo<del>r</del>ld</p>"
@@ -179,7 +179,7 @@ module Undress
           greencloth = "bq. this text\nbecomes not blockquoted in round trip.\n"
           assert_renders_textile greencloth, html
         end
-        
+
       end
 
       context "headers" do
@@ -239,7 +239,7 @@ module Undress
       context "tables" do
         test "converts table with empty cell" do
           html = "<table>  <tbody>  <tr>  <td>&nbsp;a</td>  <td> </td>  </tr>  <tr>  <td>&nbsp;b</td>  <td>&nbsp;c</td>  </tr>  </tbody>  </table>"
-          textile = "|a||\n|b|c|\n"
+          textile = "|a| |\n|b|c|\n"
           assert_renders_textile textile, html
         end
 
@@ -305,7 +305,7 @@ module Undress
         end
 
         test "converts 'style' into {_}" do
-          assert_renders_textile "*{color:blue;}hola*", "<strong style='color:blue;'>hola</strong>"
+          assert_renders_textile "*{color: blue}hola*", "<strong style='color:blue;'>hola</strong>"
         end
       end
     end

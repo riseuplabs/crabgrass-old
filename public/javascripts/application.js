@@ -334,13 +334,17 @@ var DropSocial = Class.create({
   IsOpen: function() {
     return this.container.visible();
   },
+  clearEvents: function(event) {
+    event.stop();
+    $$('.menu_items').without(this.menu).invoke('hide');
+  },
   toggleActivities: function(event) {
     if (this.IsOpen()) {
       this.container.hide();
       this.clearEvents(event);
     } else {
       this.container.show();
-      event.stopPropogation();
+      event.stopPropagation();
       this.clearEvents(event);
     }
   },
@@ -360,6 +364,7 @@ var LoadSocial = Class.create({
     new PeriodicalExecuter(this.doRequest, 120);
   },
   doRequest: function() {
+    if (!$('social-activities-dropdown')) return;
     if ($('social-activities-dropdown').visible()) return;
     new Ajax.Request('/me/social-activities', {
       method: 'GET',

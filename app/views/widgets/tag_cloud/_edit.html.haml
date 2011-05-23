@@ -1,0 +1,11 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  %ul
+    %li 
+      = f.label :title
+      = f.text_field :title
+    %li 
+      = f.label :limit
+      = f.text_field :limit
+  %div#mb-footer
+    = f.submit

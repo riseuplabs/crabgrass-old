@@ -1,10 +1,10 @@
 //
 // breadcrumb
-//
+
 #breadcrumb
   +clearfix
-  +bordered-top(!banner_brdr_btm)
-  background= !banner_bg
+  +bordered-top($banner_brdr_btm)
+  background: $banner_bg
   height: 28px
   #breadcrumb-container
     +container
@@ -17,18 +17,37 @@
         +small-text
         +zero
         text-transform: uppercase
-        color= !almost_black
+        color: $almost_black
+
+.banner.me
+  #banner-container
+    background: $me_banner_bg
+
+.banner.groups
+  #banner-container
+    background: $groups_banner_bg
+
+.banner.people
+  #banner-container
+    background: $people_banner_bg
+
+.banner.home
+  #banner-container
+    background: $home_banner_bg
+
+.banner.networks
+  #banner-container
+    background: $networks_banner_bg
 
 //
 //banner
-//
+
 .banner
-  +bordered-btm(!banner_brdr_btm)
-  background= !banner_bg
   #banner-container
     +container
-    background= !banner_bg
-    height: 114px    
+    +bordered-btm($banner_brdr_btm)
+    background: $banner_bg
+    height: 114px
     overflow: visible
     #banner-no-avatar
       +columns(14)
@@ -49,15 +68,14 @@
         display: inline
         h1
           float: left
-
       img
         +bordered
-        background: #fff
+        background: white
         padding: 2px
         margin-right: 17px
         #identity-name
           h1
-            color= !banner_title
+            color: $banner_title
             float: left
             display: inline
             line-height: 1.2
@@ -69,7 +87,7 @@
             +small-text
             float: left
             clear: left
-            color= !light_grey_text
+            color: $light_grey_text
 
 #group-action
   float: left
@@ -78,7 +96,7 @@
   a
     +hover-link
     +small-text
-    color= !light_grey_text
+    color: $light_grey_text
     &.small_icon
       margin-left: 10px
 
@@ -88,7 +106,7 @@
   border: 1px solid #448c3b
   a
     +hover-link
-    color: #fff
+    color: white
     font-size: 11px
     font-weight: bold
     padding: 6px
@@ -99,18 +117,18 @@
 //
 #banner-container.no-avatar
   +pie-clearfix
-  height: 92px    
+  height: 92px
   overflow: visible
 
 //
-// second-level nav 
+// second-level nav
 //
 .nav2
   #nav2-container
     +container
     +pie-clearfix
-    background= !second_nav_bg url(/images/background/nav2.png) repeat-x bottom left
-    +bordered-btm(!second_nav_border) 
+    background: $second_nav_bg url(/images/background/nav2.png) repeat-x bottom left
+    +bordered-btm($second_nav_border)
     height: 30px
     overflow: visible
     width: 800px
@@ -128,19 +146,19 @@
         float: left
         a
           +hover-link
-          color= !second_nav_link
+          color: $second_nav_link
           font-weight: bold
           display: inline-block
           height: 29px
           line-height: 2.6
           padding: 0 8px
       li.current
-        +bordered-2sides(!second_nav_border)
-        +bordered-btm(#fff)
-        background: #fff
+        +bordered-2sides($second_nav_border)
+        +bordered-btm(white)
+        background: white
         a
-          color= !second_nav_current
-          background: #fff
+          color: $second_nav_current
+          background: white
           font-weight: bold
       #last-login
         font-size: 10px
@@ -148,6 +166,6 @@
       width: 764px
       padding-left: 0
     span.count
-      +blue-link 
+      +blue-link
       padding-right: 8px
-      margin-left: -3px 
+      margin-left: -3px

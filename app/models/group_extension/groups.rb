@@ -71,7 +71,11 @@ module GroupExtension::Groups
       return [] unless ids.any?
       ids = ids.join(',')
       Group.connection.select_values(
-        "SELECT groups.parent_id FROM groups WHERE groups.id IN (#{ids})"
+        <<EOSQL
+SELECT groups.parent_id FROM groups
+WHERE groups.id IN (#{ids})
+AND groups.parent_id IS NOT NULL
+EOSQL
       ).collect{|id|id.to_i}
     end
   end

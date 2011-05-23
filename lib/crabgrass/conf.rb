@@ -54,6 +54,7 @@ class Conf
   # are global, but might end up in site one day.
   cattr_accessor :profiles
   cattr_accessor :profile_fields
+  cattr_accessor :all_profiles_visible
   cattr_accessor :limited
 
   # global instance options
@@ -77,6 +78,9 @@ class Conf
   # Typically, you will never have to configured these.
   cattr_accessor :always_renegerate_themed_stylesheet
   cattr_accessor :enabled_site_ids
+
+  # set from the widget.yml
+  cattr_accessor :widgets
 
   # used for error reporting
   cattr_accessor :configuration_filename
@@ -123,6 +127,7 @@ class Conf
     self.default_page_access = :admin
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
+    self.widgets           = {}
   end
 
   def self.load(filename)

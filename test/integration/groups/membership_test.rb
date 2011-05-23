@@ -20,6 +20,6 @@ class Groups::MembershipTest < ActionController::IntegrationTest
     click_link 'Leave Group'
     click_button 'Leave'
 
-    assert_contain 'Join Group'
+    assert_contain 'JOIN GROUP'
   end
 end

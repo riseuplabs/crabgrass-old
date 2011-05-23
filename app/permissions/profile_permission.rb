@@ -8,4 +8,5 @@ module ProfilePermission
       return false
     end
   end
+  alias_method :may_edit_location_profile?, :may_edit_profile?
 end

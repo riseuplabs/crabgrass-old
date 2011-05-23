@@ -4,11 +4,23 @@ class Admin::UsersController < Admin::BaseController
 
   permissions 'admin/super'
 
+  cache_sweeper :social_activities_sweeper, :only => [:destroy]
+
   # GET /users
   # GET /users.xml
   def index
     @letter = (params[:letter] || '')
-    @users = User.on(current_site).alphabetized(@letter).paginate(:page => params[:page])
+    if params[:show] == 'active'
+      @users = User.on(current_site).alphabetized(@letter).active_since(1.month.ago).paginate(:page => params[:page])
+      @pagination_letters = (User.on(current_site).active_since(1.month.ago).logins_only).collect{|u| u.login.first.upcase}.uniq
+    elsif params[:show] == 'inactive'
+      @users = User.on(current_site).inactive_since(1.month.ago).alphabetized(@letter).paginate(:page => params[:page])
+      @pagination_letters = (User.on(current_site).inactive_since(1.month.ago).logins_only).collect{|u| u.login.first.upcase}.uniq
+    else
+      @users = User.on(current_site).alphabetized(@letter).paginate(:page => params[:page])
+      @pagination_letters = (User.on(current_site).logins_only).collect{|u| u.login.first.upcase}.uniq
+    end
+    @show = params[:show]
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }

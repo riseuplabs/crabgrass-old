@@ -171,11 +171,17 @@ superadmin_blue:
   user_id: 4
   id: <%= id += 1 %>
 
+# blue is the only member of the committee to be destroyed
+committee_to_be_destroyed_blue:
+  group_id: 35
+  user_id: 4
+  id: <%= id += 1 %> 
+
 ### Connecting Classrooms specific ###
 
 <%
 group_id_to_member_ids = {
-  5000 => [2, 5],  # teachers
+  5001 => [2, 5],  # teachers
   7 => [1, 2, 3],  # first class
   8 => [2, 3, 4, 5, 6], # second class
   71 => [2, 3],    # first class teach + visit

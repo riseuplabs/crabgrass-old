@@ -1,0 +1,60 @@
+---
+in: |-
+  <!--[if gte IE 4]><SCRIPT>alert('XSS');</SCRIPT><![endif]-->
+out: |-
+  <p><!--<a href="/page/if-gte-ie-4">if gte IE 4</a>>alert('XSS');<!<a href="/page/endif">endif</a>--></p>
+---
+in: |-
+  <script>alert(1)</script>
+out: |-
+  <p>alert(1)</p>
+---
+in: |-
+  <a href='javascript:alert(1)'>hello</a>
+out: |-
+  <p><a>hello</a></p>
+---
+in: |-
+  [ hello -> javascript:alert(1) ]
+out: |-
+  <p><a href="/page/javascript-alert-1"> hello</a></p>
+---
+in: |-
+  <img src=javascript:alert('XSS')>  
+out: |-
+  <p><img></p>
+---
+in: |-
+  !javascript:alert('XSS')!
+out: |-
+  <p><img src="javascript:alert" title="&#39;XSS&#39;" alt="&#39;XSS&#39;" /></p>
+---
+in: |-
+  <code onmouseover="javascript:alert(1)">blah</code>
+out: |-
+  <pre><code>blah</code></pre>
+---
+in: |-
+  xx <code onmouseover="javascript:alert(1)">blah</code> xx
+out: |-
+  <p>xx <code>blah</code> xx</p>
+---
+in: |-
+  [ nasty -> link </textarea> ]
+out: |-
+  <p><a href="/link/textarea"> nasty</a></p>
+---
+in: |-
+  [ <b>nasty</b> <script>alert(1)</script> -> link ]
+out: |-
+  <p><a href="/page/link"> &lt;b&gt;nasty&lt;/b&gt; &lt;script&gt;alert(1)&lt;/script&gt;</a></p>
+---
+in: |-
+  [ nasty -> http://riseup.net/"> <script>alert(1)</script> ]
+out: |-
+  <p><a href="http://riseup.net/&quot;&gt; &lt;script&gt;alert(1)&lt;/script&gt; "> nasty</a></p>
+---
+in: |-
+  <notextile><script>alert(6)</script></notextile>
+out: |-
+  alert(6)

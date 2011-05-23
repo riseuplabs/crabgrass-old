@@ -13,4 +13,27 @@ class SuperAdminListener < Crabgrass::Hook::ViewListener
     render(:partial => '/admin/base/super_admin_nav') if may_super?
   end
 
+  def default_path_finder_options(context)
+    return false unless current_user.superadmin?
+    # currently only want to overwrite data for groups
+    return if context[:group].nil?
+    options = {}
+    options[:group_ids] = [ context[:group].id ]
+    options[:public] = false
+    options[:user_ids] = false
+    return options
+  end
+
+  def default_requests_view(context)
+    return "all" if current_user.superadmin?
+  end
+
+  def requests_views_options(context)
+    return {} if !current_user.superadmin?
+    {:view => [{:name => :all, :translation => :all_admin_requests},
+                {:name => :to_me, :translation => :requests_to_me},
+                {:name => :from_me, :translation => :requests_from_me}]
+    }
+  end
+
 end

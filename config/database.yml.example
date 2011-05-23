@@ -1,29 +1,23 @@
-development:
+common: &COMMON
   encoding: utf8
   adapter: mysql
-  database: crabgrass_development
   username: root
-  password:
+  password: 
   host: localhost
 #  socket: /var/run/mysqld/mysqld.sock
+
+
+development:
+  <<: *COMMON
+  database: crabgrass_development
 
 test: &TEST
-  encoding: utf8
-  adapter: mysql
+  <<: *COMMON
   database: crabgrass_test
-  username: root
-  password:
-  host: localhost
-#  socket: /var/run/mysqld/mysqld.sock
 
 production:
-  encoding: utf8
-  adapter: mysql
+  <<: *COMMON
   database: crabgrass
-  username: root
-  password:
-  host: localhost
-#  socket: /var/run/mysqld/mysqld.sock
 
 cucumber:
   <<: *TEST

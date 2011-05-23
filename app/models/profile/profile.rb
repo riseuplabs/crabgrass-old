@@ -52,7 +52,7 @@ Order of profile presidence (user sees the first one that matches):
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html",
-    t.integer  "geo_location_id"
+    t.boolean  "members_may_edit_wiki"	:default => true
   end
 
 Applies to both groups and users: may_see, may_see_groups
@@ -60,7 +60,7 @@ Applies to both groups and users: may_see, may_see_groups
 Applies to users only: may_see_contacts, may_request_contact, may_pester
 
 Applies to groups only: may_see_committees, may_see_networks, may_see_members,
-  may_request_membership, membership_policy
+  may_request_membership, membership_policy, members_may_edit_wiki
 
 Currently unused: may_burden, may_spy, language.
 
@@ -134,6 +134,18 @@ class Profile < ActiveRecord::Base
   ## ASSOCIATED ATTRIBUTES
   ##
 
+  has_many :widgets, :order => :position, :dependent => :destroy do
+    def sort_section(section, widget_ids)
+      widget_ids.each_with_index do |id, position|
+        # find the widget with this id
+        widget = self.find(id)
+        widget.update_attribute(:position, position)
+        widget.update_attribute(:section, Widget.id_for_section(section))
+      end
+      self
+    end
+  end
+
   belongs_to :wiki, :dependent => :destroy
   belongs_to :wall,
    :class_name => 'Discussion',
@@ -171,7 +183,9 @@ class Profile < ActiveRecord::Base
     :class_name => '::ProfileCryptKey',
     :dependent => :destroy, :order => "preferred desc"
 
-  belongs_to :geo_location
+  has_many :geo_locations, :dependent => :destroy
+
+  has_many :geo_places, :through => :geo_locations
 
   # takes a huge params hash that includes sub hashes for dependent collections
   # and saves it all to the database.
@@ -182,7 +196,7 @@ class Profile < ActiveRecord::Base
       "may_see_members", "may_request_membership", "membership_policy",
       "may_see_groups", "may_see_contacts", "may_request_contact", "may_pester",
       "may_burden", "may_spy", "peer", "photo", "video", "summary", "admins_may_moderate",
-      "country_id","state_id","city_id"]
+       "members_may_edit_wiki"]
 
     collections = {
       'phone_numbers'   => ::ProfilePhoneNumber,   'locations' => ::ProfileLocation,
@@ -211,22 +225,6 @@ class Profile < ActiveRecord::Base
     params['photo'] = Asset.build(params.delete('photo')) if params['photo']
     params['video'] = ExternalVideo.new(params.delete('video')) if params['video']
 
-    geo_location_options = {
-      :geo_country_id => params.delete('country_id'),
-      :geo_admin_code_id => params.delete('state_id'),
-      :geo_place_id => params.delete('city_id'),
-    }
-    if GeoCountry.exists?(geo_location_options[:geo_country_id])  # prevent making blank geo_location objects
-      if self.geo_location.nil?
-        params['geo_location'] = GeoLocation.new(geo_location_options)
-      else
-        ### do not create new records.
-        self.geo_location.update_attributes(geo_location_options)
-      end
-    elsif !self.geo_location.nil?
-      self.geo_location.destroy
-    end
-
     if params['may_see'] == "0"
       %w(committees networks members groups contacts).each do |subject|
         params["may_see_#{subject}"] = "0"
@@ -242,22 +240,24 @@ class Profile < ActiveRecord::Base
     self.photo || self.video
   end
 
-  def country_id
-    return nil if self.geo_location.nil?
-    self.geo_location.geo_country_id.to_s
+  def add_location!(params)
+    if gp = GeoPlace.find_by_id(params[:geo_place_id])
+      params[:geo_admin_code_id] = gp.geo_admin_code_id
+    end
+    return false unless gl = GeoLocation.create(params)
+    self.geo_locations << gl
+    self.save!
   end
-  def state_id
-    return nil if self.geo_location.nil?
-    self.geo_location.geo_admin_code_id.to_s
-  end
-  def geo_city_name
-    return nil if self.geo_location.nil? || self.geo_location.geo_place_id.nil?
-    geoplace = GeoPlace.find_by_id(self.geo_location.geo_place_id)
-    geoplace.name
-  end
-  def city_id
-    return nil if self.geo_location.nil?
-    self.geo_location.geo_place_id
+
+  def update_location(params)
+    if gp = GeoPlace.find_by_id(params[:geo_place_id])
+      params[:geo_admin_code_id] = gp.geo_admin_code_id
+    end
+    if gl = self.geo_locations.find(params.delete(:location_id)) 
+      valid_keys = [:geo_admin_code_id, :geo_place_id, :geo_country_id]
+      gl.update_attributes!(params.slice(*valid_keys))
+      gl.save!
+    end
   end
 
   # DEPRECATED

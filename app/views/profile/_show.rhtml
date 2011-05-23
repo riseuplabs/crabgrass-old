@@ -25,11 +25,13 @@
       </div>
     <% end -%>
   <% end -%>
-  <% if profile.country_id -%>
-    <div class='small_icon house_16'>
-    <em><%= I18n.t(:location)%>:</em>
-    <%= h(profile.geo_location.geo_country.name) %>
-    </div>
+  <% unless profile.geo_places.empty? -%>
+    <% profile.geo_places.each do |pl| -%>
+      <div class='small_icon house_16'>
+        <em><%= I18n.t(:location)%>:</em>
+        <%= h(pl.geo_country.name) %> - <%= h(pl.name) %>
+      </div>
+    <% end -%>
   <% end -%>
   <% unless profile.im_addresses.empty? -%>
     <% profile.im_addresses.each do |im| -%>

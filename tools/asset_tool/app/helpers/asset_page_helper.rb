@@ -33,11 +33,9 @@ module AssetPageHelper
     action = {
       :url => page_xurl(@page, :action => 'destroy_version', :id => version.version),
       :confirm => I18n.t(:delete_version_confirm),
-      :before => "$($(this).up('td')).addClassName('busy')",
-      :failure => "$($(this).up('td')).removeClassName('busy')"
+      :title => I18n.t(:delete_this_version)
     }
-    link_to_remote(image_tag('actions/delete.png'), action, :title => I18n.t(:delete_this_version))
-    # non-ajax? {:href => url_for(:controller => 'asset', :action => 'destroy', :id => @asset.id)})
+    link_to_remote image_tag('png/16/minus.png'), action
   end
 
   def preview_area_class(asset)

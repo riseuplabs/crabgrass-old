@@ -33,6 +33,9 @@ to hide data between sides)
     t.boolean "enforce_ssl"
     t.boolean "show_exceptions"
     t.boolean "require_user_email"
+    t.boolean "never_pester_users" 		:default => false
+    t.boolean "show expanded group wikis"	:default => false
+    t.boolean "all_profiles_visible"	:default => false
   end
 
 end
@@ -52,6 +55,7 @@ class Site < ActiveRecord::Base
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
 
+  has_many :groups
   serialize :translators, Array
   serialize :available_page_types, Array
   serialize :evil, Hash
@@ -101,7 +105,7 @@ class Site < ActiveRecord::Base
   proxy_to_conf :name, :title, :pagination_size, :default_language,
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
     :enforce_ssl, :show_exceptions, :require_user_email, :require_user_full_info, :domain, :profiles,
-    :profile_fields, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
+    :profile_fields, :all_profiles_visible, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
@@ -151,18 +155,9 @@ class Site < ActiveRecord::Base
   #  pages
   #end
 
-  # gets all the groups in the site's network
-  def groups
-    self.network.nil? ?
-      Group.find(:all) :
-      self.network.groups
-  end
-
   # gets all the ids of all the groups in the site
   def group_ids
-    self.network.nil? ?
-      Group.find(:all, :select => :id).collect{|group| group.id} :
-      self.network.group_ids
+    self.groups.map{|g| g.id}
   end
 
 

@@ -101,10 +101,46 @@ class UserTest < Test::Unit::TestCase
     assert !u.reload.wall_discussion.new_record?
   end
 
+  def test_active_since
+    u_active = User.create! :login => 'activeuser', :password => 'password', :password_confirmation => 'password', :last_seen_at => 2.days.ago
+    u_inactive = User.create! :login => 'inactiveuser', :password => 'password', :password_confirmation => 'password', :last_seen_at => 2.months.ago
+    u_inactive_never_logged_in = User.create! :login => 'inactiveuser_never_logged_in', :password => 'password', :password_confirmation => 'password'
+    active_users = User.active_since(1.week.ago)
+    inactive_users = User.inactive_since(1.week.ago)
+    assert (active_users.include?(u_active) and !active_users.include?(u_inactive))
+    assert (inactive_users.include?(u_inactive) and inactive_users.include?(u_inactive_never_logged_in) and !inactive_users.include?(u_active))
+  end
+
+  def test_current_status_escaped
+    u = User.create!(:login => 'badhacker', :password => 'password', :password_confirmation => 'password');
+    sp = make_status_post('</textarea><script>alert("Hello")</script>', u)
+    assert !u.current_status.match(/<[^>]+>/)
+    u2 = User.create!(:login => 'gooduser', :password => 'password', :password_confirmation => 'password');
+    sp = make_status_post('hello', u2)
+    assert (u2.current_status == 'hello')
+  end
+
+  def test_both_names
+    u = User.create!(:login => 'loginname', :display_name => 'display name!', :password => 'password', :password_confirmation => 'password');
+    assert(u.both_names == 'display name! (loginname)')
+  end
+
   protected
 
   def create_user(options = {})
     User.create({ :login => 'mrtester', :email => 'mrtester@riseup.net', :password => 'test', :password_confirmation => 'test' }.merge(options))
   end
+
+  def make_status_post(body, u)
+    StatusPost.create do |post|
+      post.body = body 
+      post.body = post.body[0..140] if post.body
+      post.discussion = u.wall_discussion
+      post.user = u
+      post.recipient = u
+      post.body_html = post.lite_html
+    end
+  end
+
 
 end

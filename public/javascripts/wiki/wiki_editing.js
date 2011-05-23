@@ -120,7 +120,7 @@ function isTabSelected(link) {return $(link).hasClassName('active')}
 function encodedEditorData(wiki_id) {
   var textarea = $('wiki_body-'+wiki_id);
   var visual_editor = new HtmlEditor(wiki_id);
-  if (textarea.getValue())
+  if (textarea && textarea.getValue())
     return textarea.serialize();
   if (visual_editor.content())
     return $H({'wiki[body_html]': visual_editor.content()}).toQueryString();

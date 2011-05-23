@@ -51,5 +51,10 @@ class Network < Group
   def all_users
     groups.collect{|group| group.all_users}.flatten.uniq
   end
+  
+  def group_ids
+    self.groups.map{|g| g.id}
+  end
+
 end
 

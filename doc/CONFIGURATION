@@ -90,12 +90,13 @@ dev_email
 text_editor
   Which text editor to use for editing wikis:
 
-  [greencloth_only]  only a plain text editor will be used
-  [html_only]        only a html editor will be used
-  [greencloth_preferred]  both editors will be available, but the default will be plain text
-  [html_preferred]   both editors will be available, but the default will be html.
+  Supported
+    [greencloth_only]  only a plain text editor will be used
+    [html_only]  only a html (wysiwyg) editor will be used
 
-  The default is greencloth_only
+  Experimental
+    [greencloth_preferred]  both editors will be available, but the default will be plain text
+    [html_preferred]   both editors will be available, but the default will be html.
 
 use_full_geonames_data
   If true, the full geonames data file (~800MB unzipped) will be downloaded and imported.
@@ -205,6 +206,9 @@ signup_mode:
   (1) default --> anyone can sign up
   (2) closed  --> no one can sign up
   (3) invite_only --> you can sign up only if you were invited to join a group.
+
+all_profiles_visible:
+  removes the ability to hide a profile in the profile settings, default is 0 (not enabled)
 
 Unfrequently modified options:
 

@@ -1,0 +1,11 @@
+- content_for :third_nav do
+  = render :partial => '/groups/navigation/admin_tabs'
+
+- content_for :left_sidebar do
+  = render :partial => '/groups/navigation/settings_sidelinks'
+
+%h4.menu_entries
+  Menu Entries
+.menu_entries
+  = list_menu_items @menu_items.roots
+

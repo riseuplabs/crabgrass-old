@@ -1,0 +1,15 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  %ul
+    %li 
+      = f.label :title 
+      = f.text_field :title    
+    %li.checkbox-edit 
+      = f.check_box :display_title
+      = f.label :display_title
+    - [:featured, :recent_pages, :most_viewed, :most_active, :most_stars].each do |panel|
+      %li.checkbox-edit 
+        = f.check_box panel
+        = f.label panel
+  %div#mb-footer
+    = f.submit

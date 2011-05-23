@@ -7,6 +7,7 @@ class Groups::MembershipsController < Groups::BaseController
   before_filter :fetch_membership, :only => :destroy
   before_filter :fetch_group, :login_required
   skip_before_filter :fetch_group, :only => :destroy
+  cache_sweeper :social_activities_sweeper, :only => [:update, :join, :leave, :destroy]
 
   verify :method => :post, :only => [:join]
   verify :method => :delete, :only => [:destroy]
