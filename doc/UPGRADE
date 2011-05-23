@@ -1,3 +1,52 @@
+next
+-----
+
+* To upgrade:
+
+  1. Make sure you have 0.5.4 installed and created the default widgets.
+     Otherwise your menu bar entries might be lost when running migrations.
+
+  2. Run the rake task to merge duplicate geo data:
+    % rake cg:merge_duplicate_geo_locations
+
+0.5.4
+------
+
+* To upgrade:
+
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+
+  2. Create default widgets:
+      % RAILS_ENV=production rake cg:create_default_site_widgets
+
+* Widget System:
+
+  We added a widget system that allows you to change the elements on 
+  site home. You can change them around in admin/widgets. Since site
+  home now requires the widgets you need to run the rake task mentioned
+  above for it to work.
+
+0.5.3.2
+-------
+* To upgrade:
+  1. Run migrations:
+      % RAILS_ENV=production rake db:migrate
+  2. Re-import locations to get population data:
+      % RAILS_ENV=production rake cg:import_geo_data
+
+* New Config:
+  1. "Disable Visibility Option" has been added. This option removes the ability to hide a profile in the
+     profile settings, either on the site or global level. Default is '0' (not enabled, profiles can be hid)
+     a. site level: there is a new option in the site admin profiles form which can toggle this option
+     b. global config level, use this option:
+          all_profiles_visible: 1
+        see also doc/CONFIGURATION
+  2. "Show expanded group wikis" has been added for installations with sites. This option
+     automatically expands all group wikis, not including the site home wiki (which is always expanded).
+     Toggle this option in the site admin basic settings.
+
+
 0.5.3.1
 -------
 

@@ -164,7 +164,9 @@ module LayoutHelper
 
     bundles = {}
     as_needed = {}
+    from_plugin = {}
     includes = []
+    remotes = []
 
     files.each do |file|
       if JS_BUNDLE_MAP[file.to_s]                    # if a file in a bundle is specified
@@ -172,7 +174,13 @@ module LayoutHelper
       elsif JS_BUNDLES_COMBINED[file.to_sym]         # if a bundle symbol is specified
         bundles[file.to_sym] = true                  # include the whole bundle
       else
-        as_needed["as_needed/#{file}"] = true        # otherwise, include one file.
+        if file.to_s.index("http://")
+          remotes << file
+        elsif match = /^(.+):(.+)$/.match(file.to_s)
+          (from_plugin[match[2]] ||= []) << match[1]
+        else
+          as_needed["as_needed/#{file}"] = true
+        end
       end
     end
 
@@ -183,6 +191,16 @@ module LayoutHelper
     end
     if as_needed.any?
       includes << javascript_include_tag(*as_needed.keys)
+    end
+    if from_plugin.any?
+      from_plugin.each do |plugin, js|
+        js.each { |j| includes << javascript_include_tag(j, :plugin => plugin) }
+      end
+    end
+    remotes.each do |remote|
+      # can't use javascript_include tag here as we might have paths that do
+      # not include .js
+      includes << tag(:script, :type => "text/javascript", :src => remote)
     end
     return includes
   end
@@ -321,11 +339,12 @@ module LayoutHelper
     locals = {}
     appearance = current_site.custom_appearance
     if appearance and appearance.masthead_asset and current_site.custom_appearance.masthead_enabled
-      height = appearance.masthead_asset.height
+      height = "height: #{appearance.masthead_asset.height}px"
       bgcolor = (appearance.masthead_background_parameter == 'white') ? '' : '#'
       bgcolor = bgcolor+appearance.masthead_background_parameter
-      locals[:section_style] = "height: #{height}px"
-      locals[:style] = "background: url(#{appearance.masthead_asset.url}) no-repeat; height: #{height}px;"
+      url = appearance.masthead_asset.url
+      locals[:section_style] = height
+      locals[:style] = "background: url(#{url}) no-repeat #{bgcolor}; #{height}"
       locals[:render_title] = false
     else
       locals[:section_style] = ''

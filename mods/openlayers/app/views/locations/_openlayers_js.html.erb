@@ -1,0 +1,35 @@
+<script type='text/javascript'>
+  function doAllOpenLayers() {
+    function loadcssfile(tag, filetype){
+      var filename;
+      var match = /href=&quot;(\S+)&quot;/.exec(tag);
+      if (match) {
+        filename = match[1];
+        var fileref=document.createElement("link");
+        fileref.setAttribute("rel", "stylesheet");
+        fileref.setAttribute("type", "text/css");
+        fileref.setAttribute("href", filename);
+        $$('head').first().insert({
+            bottom: fileref
+        });
+      }
+     } // end function loadjscssfile
+
+    loadcssfile('<%= h stylesheet_link_tag("style", :plugin => "openlayers") %>', "css");
+    loadcssfile('<%= h stylesheet_link_tag("map.css") %>', "css");
+
+    // inject map div
+    var container = $$('#map-container').first();
+    var width = container.readAttribute('data-width');
+    var height = container.readAttribute('data-height');
+    // TODO: actually use the width and height data from the container
+    var style = 'width: ' + width + '; height: ' + height + ';';
+    var mapdiv = new Element('div', {id: 'map', style: style});
+    container.insert({bottom: mapdiv});
+
+    loadMap(); // defined in the Map.js
+
+  }// end function doAllOpenLayers
+
+  document.observe("dom:loaded", doAllOpenLayers());
+</script>

@@ -42,7 +42,7 @@ federation3003b:
 
 
 ### Connecting Classrooms - all groups are on site 1. ###
-<% for g in [5000, 7,8,71,72,81,82] do %>
+<% for g in [5001, 7,8,71,72,81,82] do %>
 
 site1_<%=g%>:
   group_id: <%=g%>

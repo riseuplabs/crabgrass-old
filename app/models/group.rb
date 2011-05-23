@@ -56,6 +56,17 @@ class Group < ActiveRecord::Base
     {:include => :profiles, :group => "groups.id", :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))", true, true, group_ids]}
   }
 
+  named_scope :without_member, lambda { |user|
+    group_ids = user.group_ids
+    group_ids.any? ?
+      {:conditions => ["NOT groups.id IN (?)", group_ids]} :
+      {}
+  }
+
+  named_scope :public,
+    :include => :profiles,
+    :conditions => ["(profiles.stranger = ? AND profiles.may_see = ?)", true, true]
+
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
@@ -93,22 +104,15 @@ class Group < ActiveRecord::Base
 
   named_scope :names_only, :select => 'full_name, name'
 
-  named_scope :in_location, lambda { |options|
-    country_id = options[:country_id]
-    admin_code_id = options[:state_id]
-    city_id = options[:city_id]
-    conditions = ["gl.id = profiles.geo_location_id and gl.geo_country_id=?",country_id]
-    if admin_code_id =~ /\d+/
-      conditions[0] << " and gl.geo_admin_code_id=?"
-      conditions << admin_code_id
-    end
-    if city_id =~ /\d+/
-      conditions[0] << " and gl.geo_place_id=?"
-      conditions << city_id
-    end
-    { :joins => "join geo_locations as gl",
-      :conditions => conditions
-    }
+  # filters the groups based on their name and full name
+  # filter is a sql query string
+  named_scope :named_like, lambda { |filter|
+    { :conditions => ["(groups.name LIKE ? OR groups.full_name LIKE ? )",
+            filter, filter] }
+  }
+
+  named_scope :with_ids, lambda { |ids|
+    {:conditions => ['groups.id IN (?)', ids]}
   }
 
   ##
@@ -171,38 +175,10 @@ class Group < ActiveRecord::Base
     self.profiles.visible_by(User.current)
   end
 
-  ##
-  ## MENU_ITEMS
-  ##
-
-  has_many :menu_items, :dependent => :destroy, :order => :position do
-
-    def update_order(menu_item_ids)
-      menu_item_ids.each_with_index do |id, position|
-        # find the menu_item with this id
-        menu_item = self.find(id)
-        menu_item.update_attribute(:position, position)
-      end
-      self
-    end
-  end
-
-  # creates a menu item for the group and returns it.
-  def add_menu_item(params)
-    item = MenuItem.create!(params.merge(:group_id => self.id, :position => self.menu_items.count))
-  end
-
-
-  # TODO: add visibility to menu_items so they can be visible to members only.
-  # def menu_items
-  #   self.menu_items.visible_by(User.current)
-  # end
 
   ##
   ## AVATAR
   ##
-
-  public
 
   belongs_to :avatar, :dependent => :destroy
 
@@ -229,43 +205,9 @@ class Group < ActiveRecord::Base
     self.destroy
   end
 
-  protected
-
-  before_save :save_avatar_if_needed
-  def save_avatar_if_needed
-    avatar.save if avatar and avatar.changed?
-  end
-
-  # make destroy protected
-  # callers should use destroy_by
-  def destroy
-    super
-  end
-
-  ##
-  ## RELATIONSHIP TO ASSOCIATED DATA
-  ##
-
-  protected
-
-  after_destroy :destroy_requests
-  def destroy_requests
-    Request.destroy_for_group(self)
-  end
-
-  after_destroy :update_networks
-  def update_networks
-    self.networks.each do |network|
-      Group.increment_counter(:version, network.id)
-    end
-  end
-
-
   ##
   ## PERMISSIONS
   ##
-
-  public
 
   def may_be_pestered_by?(user)
     begin
@@ -307,8 +249,6 @@ class Group < ActiveRecord::Base
   ## GROUP SETTINGS
   ##
 
-  public
-
   has_one :group_setting
   # can't remember the way to do this automatically
   after_create :create_group_setting
@@ -329,6 +269,33 @@ class Group < ActiveRecord::Base
   end
 
   protected
+
+  before_save :save_avatar_if_needed
+  def save_avatar_if_needed
+    avatar.save if avatar and avatar.changed?
+  end
+
+  # make destroy protected
+  # callers should use destroy_by
+  def destroy
+    super
+  end
+
+  ##
+  ## RELATIONSHIP TO ASSOCIATED DATA
+  ##
+
+  after_destroy :destroy_requests
+  def destroy_requests
+    Request.destroy_for_group(self)
+  end
+
+  after_destroy :update_networks
+  def update_networks
+    self.networks.each do |network|
+      Group.increment_counter(:version, network.id)
+    end
+  end
 
   after_save :update_name_copies
 

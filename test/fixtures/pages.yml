@@ -479,7 +479,7 @@ rate_many_page:
 
 ### Connecting Classrooms ###
 <%
-owner_groups = [['teachers','5000'],['class1','7'],['class2','8'],
+owner_groups = [['teachers','5001'],['class1','7'],['class2','8'],
                 ['class1+workgroup', '72'],['class2+workgroup', '82'],
                 ['class1+teachers', '71'],['class2+teachers', '81']]
 owner_users = [['student','101'],['teacher','102'], ['visitor', '103'],

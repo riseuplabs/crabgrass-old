@@ -6,6 +6,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   include UrlHelper
 
+
   def test_banner_link
     login_as :blue
     get :tasks, :id => groups(:rainbow).to_param
@@ -639,5 +640,20 @@ editing tools on a group basis has been abandoned iirc, azul
     assert_response :success, "list groups of network fai should succeed, because user red in network rainbow"
   end
 
+  def test_index_kml
+    # non-logged in user should see  rainbow but not private_group
+    get :index, :format => 'kml'
+    assert_response :success
+    assert @response.body =~ /rainbow/
+    assert @response.body !~ /private/
+
+    # blue should see some  kml data for rainbow
+    login_as :blue
+    get :index, :format => 'kml'
+    assert_response :success
+    assert @response.body =~ /Placemark/
+    assert @response.body =~ /rainbow/
+    assert @response.body =~ /private/
+  end
 
 end

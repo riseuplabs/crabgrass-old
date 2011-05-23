@@ -1,153 +1,223 @@
 // fonts
-!headings_font = "arial, helvetica, sans-serif"
-!general_font = "verdana, bitstream vera sans, helvetica, sans-serif"
+
+$headings_font: unquote("arial, helvetica, sans-serif")
+$general_font: unquote("verdana, bitstream vera sans, helvetica, sans-serif")
 
 // general colors
-!link_color = #998675
-!almost_black = #534741
-!warm_grey_text = #998675
-!warm_grey_border = #b89882
-!warm_grey_block = #b89882
-!light_grey_text = #7d7d7d
-!light_grey_border = #ddd
-!lighter_grey_text = #aaa
-!medium_grey_text = #707070
-!medium_grey_border = #bbb
-!blue = #4978bc
-!red = #bd5743
 
-!posts_bg = #fff
-!footer_bg = #fff
+$link_color: #998675
+$almost_black: #534741
+$warm_grey_text: #998675
+$warm_grey_border: #b89882
+$warm_grey_block: #b89882
+$light_grey_text: #7d7d7d
+$light_grey_border: #dddddd
+$lighter_grey_text: #aaaaaa
+$medium_grey_text: #707070
+$medium_grey_border: #bbbbbb
+$blue: #4978bc
+$red: #bd5743
+$white: white
+
+$posts_bg: $white
+$footer_bg: $white
 
 //
-!general_bg = #f3f4f4
-!content_bg = #fff
 
-!masthead_background = #e76f44
-!masthead_header_text = #fff
-!masthead_search_text = #fff
+$general_bg: #f3f4f4
+$content_bg: $white
 
-!global_nav_dropdown_bg = #fff
-!global_nav_top_brdr = #a6c0cb
-!global_nav_btm_brdr = #a6c0cb
-!global_nav_bg = #fff
-!global_nav_text = #4978bc
+$masthead_background: #e76f44
+$masthead_header_text: $white
+$masthead_search_text: $white
 
-!banner_bg = #eef5fc
-!banner_title = #464646
-!banner_button = #78be63
-!banner_brdr_btm = #a6c0cb
-!me_banner_bg = #eef5fc
-!groups_banner_bg = #fceeee
-!networks_banner_bg = #fcfcee
-!people_banner_bg = #eefcee
-!home_banner_bg = #fcf6ee
-!admin_banner_bg = #eef5fc
+$global_nav_dropdown_bg: $white
+$global_nav_top_brdr: #a6c0cb
+$global_nav_btm_brdr: #a6c0cb
+$global_nav_bg: white
+$global_nav_text: #4978bc
 
-!second_nav_border = #dbdbdb
-!second_nav_bg = #fff
-!second_nav_current = #4978bc
-!second_nav_link = #aaa
+$banner_bg: #eef5fc
+$banner_title: #464646
+$banner_button: #78be63
+$banner_brdr_btm: #a6c0cb
+$me_banner_bg: #eef5fc
+$groups_banner_bg: #fceeee
+$networks_banner_bg: #fcfcee
+$people_banner_bg: #eefcee
+$home_banner_bg: #fcf6ee
+$admin_banner_bg: #eef5fc
 
-!third_nav_border = #ebebeb
-!third_nav_bg = #fff
-!third_nav_text = #aaa
-!third_nav_current = #4978bc
+$second_nav_border: #dbdbdb
+$second_nav_bg: $white
+$second_nav_current: #4978bc
+$second_nav_link: #aaaaaa
 
-!page_title_bg = #eef5fc
-!page_title_color = #bd5743
-!page_title_h3 = 20px
-!page_title_tabs_bg =  #eef5fc
-!page_title_tabs_text = #4978bc
+$third_nav_border: #ebebeb
+$third_nav_bg: $white
+$third_nav_text: #aaaaaa
+$third_nav_current: #4978bc
 
-!notification = #ffffcc
-// 
+$page_title_bg: #eef5fc
+$page_title_color: #bd5743
+$page_title_h3: 20px
+$page_title_tabs_bg: #eef5fc
+$page_title_tabs_text: #4978bc
 
-!h1_size = 22px
-!h2_size = 18px
-!h3_size = 16px
-!h4_size = 13px
-!h5_size = 11px
-!h6_size = 9px
-!h1_color = #534741
-!h2_color = #534741
-!h3_color = #bd5743
-!h4_color = #777
+$notification: #ffffcc
 
-!menu_border_color = #000
-!popup_bg = #f3f2ee
-!box1_bg_color = #eee
-!notification = #ffffcc
+//
+
+$h1_size: 22px
+$h2_size: 18px
+$h3_size: 16px
+$h4_size: 13px
+$h5_size: 11px
+$h6_size: 9px
+$h1_color: #534741
+$h2_color: #534741
+$h3_color: #bd5743
+$h4_color: #777777
+
+$menu_border_color: black
+$popup_bg: #f3f2ee
+$box1_bg_color: #eeeeee
+$notification: #ffffcc
+
+$z_autocomplete: 400
+$z_tooltip: 300
+$title_box_border_color: #d0e3f7
+$post_alternate_bg_color: #eef5fc
+$body_text_font_family: unquote("verdana, bitstream vera sans, helvetica, sans-serif")
+$body_text_line_height: 18px
+$body_text_font_size: 13px
+$left_column_bg_color: #fafdf9
+$left_column_dividing_border: unquote("1px solid #ccc")
+$left_column_width: 19em
+$left_column_margin: 1em
 
 //
 // common styles/mixins
-//
+
 =headings
-  font-family= !headings_font
+  font-family: $headings_font
   font-weight: bold
   line-height: 1
 
 =general-font
-  font-family= !general_font
-  
-=bordered-btm(!border_color= !warm_grey_border, !border_style= "solid")
-  border-bottom= 1px !border_style !border_color
+  font-family: $general_font
 
-=bordered-top(!border_color= !warm_grey_border)
-  border-top= 1px "solid" !border_color
+=bordered-btm($border_color: $warm_grey_border, $border_style: solid)
+  border-bottom: 1px $border_style $border_color
 
-=bordered-2sides(!border_color= !warm_grey_border)
-  border-top= 1px "solid" #fff
-  border-left= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
-  border-bottom= 1px "solid" #fff
+=bordered-top($border_width: 1px, $border_color: $warm_grey_border)
+  border-top: $border_width solid $border_color
 
-=bordered-left(!border_color= !warm_grey_border)
-  border-left= 1px "solid" !border_color
-  
-=bordered-right(!border_color= !warm_grey_border)
-  border-right= 1px "solid" !border_color
+=bordered-2sides($border_color: $warm_grey_border)
+  border-top: 1px solid white
+  border-left: 1px solid $border_color
+  border-right: 1px solid $border_color
+  border-bottom: 1px solid white
 
-=bordered-tab(!border_color= !almost_black)
-  border-top= 1px "solid" !border_color
-  border-left= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
+=bordered-left($border_color: $warm_grey_border)
+  border-left: 1px solid $border_color
 
-=bordered-block(!border_color= !almost_black)
-  border-top= 1px "solid" !border_color
-  border-right= 1px "solid" !border_color
-  border-bottom= 1px "solid" !border_color
+=bordered-right($border_color: $warm_grey_border)
+  border-right: 1px solid $border_color
 
-=bordered-top-btm(!border_color= !light_grey_border)
-  border-top= 1px "solid" !border_color
-  border-bottom= 1px "solid" !border_color
+=bordered-tab($border_color: $almost_black)
+  border-top: 1px solid $border_color
+  border-left: 1px solid $border_color
+  border-right: 1px solid $border_color
 
-=bordered(!border_width= 1px, !border_color= !light_grey_border)
-  border= !border_width "solid" !border_color
+=bordered-block($border_color: $almost_black)
+  border-top: 1px solid $border_color
+  border-right: 1px solid $border_color
+  border-bottom: 1px solid $border_color
+
+=bordered-top-btm($border_color: $light_grey_border)
+  border-top: 1px solid $border_color
+  border-bottom: 1px solid $border_color
+
+=bordered($border_width: 1px, $border_color: $light_grey_border)
+  border: $border_width solid $border_color
 
 =zero
   margin: 0
   padding: 0
-  line-height: 1.0
+  line-height: 1
 
 =inline-middle
   display: inline
   vertical-align: middle
 
-=spaced(!spacing= 0.09em)
-  letter-spacing= !spacing
+=spaced($spacing: 0.09em)
+  letter-spacing: $spacing
 
-=small-text(!font_small= 10px)
-  font-size= !font_small
+=small-text($font_small: 10px)
+  font-size: $font_small
 
-=blue-link(!sized= 11px)
+=blue-link($sized: 11px)
   +hover-link
-  color= !blue
-  font-size= !sized
+  color: $blue
+  font-size: $sized
   font-weight: normal
 
 =partial-width
-  +columns(10,10)
+  +columns(10, 10)
   width: 540px
 
+// mru mixins and colors
+
+$blue: #4978bc
+$blue20: #f6fbfe
+$celadon: #bde0bf
+$celadon20: #f3fff3
+$orange: #ec6e25
+$orange20: #fbe2d3
+$orange05: #fef8f4
+$yellow: #f7ed36
+$header: #333333
+$text: #666666
+$text-light: #999999
+$pale-grey: #dddddd
+$link: #4978bc
+$map-blue: #dbe4f2
+
+=col
+  display: inline
+  float: left
+  margin-bottom: 20px
+  padding-bottom: 12px
+  
+=col1
+  +col
+  width: 236px
+
+=col2
+  +col
+  width: 500px
+
+=col3
+  +col
+  width: 764px
+  
+=main-edit
+  +col
+  width: 284px
+  
+=sidebar-edit
+  +col
+  width: 216px
+
+=margin-edit
+  margin: 18px 0
+  padding: 0 0 0 18px
+
+=wrapper
+  margin-bottom: 0
+  padding-bottom: 0
+  
+=gutter
+  margin-right: 28px
 

@@ -1,0 +1,19 @@
+- collection = get_active_entities(widget).find(:all, :limit => 8)
+- header = widget.title
+- size = 'medium'
+- after = link_to I18n.t(:view_all), view_all_url(widget.entities)
+- show_empty = false if show_empty.nil?
+- if collection.size > 23
+-   collection = collection.sort{|a,b| rand(3)-1}[0..22]
+- collection = collection.select { |e| ! ( e.kind_of?(Network) and current_site.network == e ) }
+- if collection.any? or show_empty
+  %div{:class => 'col1'}
+    %div{:class => 'networking padding'}
+      %h4.subheading
+        = header
+      - if collection.any?
+        = render :partial => 'avatars/boxes', :locals => {:entities => collection, :size => 'medium'}
+      - else
+        = I18n.t(:empty_results)
+      .clear
+      = after

@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   named_scope :recent, :order => 'users.created_at DESC', :conditions => ["users.created_at > ?", RECENT_SINCE_TIME]
 
   named_scope :active_since, lambda{ |since|
-    {:order => 'users.last_seen_at DESC', :conditions => ["users.last_seen_at > ?", since]} 
+    {:order => 'users.last_seen_at DESC', :conditions => ["users.last_seen_at > ?", since]}
   }
 
   named_scope :inactive_since, lambda{ |since|
@@ -68,6 +68,10 @@ class User < ActiveRecord::Base
     opts
   }
 
+  named_scope :named_like, lambda {|filter|
+    { :conditions => ["users.login LIKE ? OR users.display_name LIKE ?",
+      filter, filter] }
+  }
   # select only logins
   named_scope :logins_only, :select => 'login'
 
@@ -247,7 +251,7 @@ class User < ActiveRecord::Base
     if @access and @access[key] and !@access[key][perm].nil?
       result = @access[key][perm]
     else
-      result = protected_thing.has_access!(perm,self) rescue PermissionDenied
+      result = protected_thing.has_access!(perm,self) rescue false
       # has_access! might call clear_access_cache, so we need to rebuild it
       # after it has been called.
       @access ||= {}

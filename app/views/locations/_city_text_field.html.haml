@@ -1,6 +1,7 @@
 %div{:id=>'city_text', :style=>"display: #{display}"}
   = I18n.t(:location_city).capitalize
   = text_field(object, method, options)
+  = render :partial  => '/locations/autocomplete_js'
   = spinner('city')
   %br
   %div#city_results_box{:style=>"display: none"}

@@ -1,0 +1,4 @@
+<%= link_to_function('Back to list') do |page|
+      page['popup_entities_list'].show
+      page << "$$('div[id^=popup_entity_]').collect(function(s) { s.remove()});"
+  end %>

@@ -1,11 +1,12 @@
 //
 // site-home
-//
+
 #welcome-container
   +bordered
   width: 764px
   margin-bottom: 10px
-  background-color: #F6FBFE
+  background-color: #f6fbfe
+
 #welcome_box
   width: 764px
   div.description, h2
@@ -13,10 +14,11 @@
     padding: 10px 10px 0
   table
     margin: 10px 10px 0
+
 #welcome-links
   +clearfix
   margin: 2px 10px
-  color: #aaa
+  color: #aaaaaa
   li
     +inline-list
   a
@@ -25,12 +27,11 @@
 
 //
 // Custom menu items
-//
+
 ul.navbar
   +clearfix
   margin: 0 0 20px 0
   li.navbar_menu
-    //float: left
     margin: 0 10px 0 0
     span.navbar_item
       padding-left: 10px
@@ -39,10 +40,10 @@ ul.navbar
 
 //
 // welcome box
-//
+
 .inset_box
-  +bordered(!light_grey_border)
-  background: #eee url(/images/background/fade-light.png) repeat-x top
+  +bordered($light_grey_border)
+  background: #eeeeee url(/images/background/fade-light.png) repeat-x top
   width: 744px
   margin: 0 10px 10px
   td
@@ -53,15 +54,14 @@ ul.navbar
     float: none
   a
     +hover-link
-    color: #4978BC
+    color: #4978bc
     font-size: 14px
     font-weight: normal
     line-height: 1.3
 
-
 //
 // sidebar
-//
+
 ul.icon_boxes
   +zero
   list-style: none
@@ -87,12 +87,569 @@ ul.icon_boxes
       display: inline
     a
       display: block
+  li.medium
+    height: 48px
+    width: 48px
 
 .dash_box
   float: left
-  margin: 0 2em 1.5em 0
+  margin: 0 0 1.5em 0
   div.link_line
     line-height: 0.8em
   h5
     font-weight: normal
 
+//
+// unido mru site home and edit site structure
+// '-plus' on columns and wrappers signify the addition of the inner gutter to the right
+// so the '-plus' applies only to the left placed single columns (maximum of 2) or a left placed double column //(maximum of 1).
+
+
+
+.col1-plus
+  +col1
+  +gutter
+
+.col1
+  +col1
+
+.col2-plus
+  +col2
+  +gutter
+
+.col2
+  +col2
+
+.col3
+  +col3
+
+.wrapper1-plus
+  +col1
+  +wrapper
+  +gutter
+
+.wrapper1
+  +col1
+  +wrapper
+
+.wrapper2-plus
+  +col2
+  +wrapper
+  +gutter
+
+.wrapper2
+  +col2
+  +wrapper
+
+.wrapper3
+  +col3
+  +wrapper
+
+.header-text
+  color: $header
+
+.blue
+  color: $blue
+   
+.blue20-bg
+  background: $blue20
+
+.map-blue-bg
+  background: $map-blue
+  
+.celadon
+  color: $celadon
+
+.celadon-border-top
+  border-top: 2px solid $celadon
+  
+.celadon20-bg
+  background: $celadon20
+  
+.orange
+  color: $orange
+  
+.orange20-border-btm
+  border-bottom: 1px solid $orange20
+
+.orange20-bg
+  background: $orange20
+
+.orange05-bg
+  background: $orange05
+  
+.yellow
+  color: $yellow
+  
+.padding
+  padding: 6px 10px
+  width: 216px
+  
+h2.opening
+  color: $header
+  font-size: 20px
+  font-weight: normal
+  line-height: 1.75
+  letter-spacing: 0.03em
+
+h3.col-heading
+  color: $header
+  padding: 6px 0
+  text-align: center
+  float: left
+  width: 100%
+  
+.opinion-bg
+  background: $orange05 url(/images/unido/orange20-2px.png) repeat-x
+
+h2.opinion
+  color: $header
+  font-size: 21px
+  height: 75px
+  padding: 14px 0 0 150px
+  background: url(/images/unido/text-bubble.png) no-repeat 
+  a
+    color: $header
+  
+h4.subheading
+  color: $header
+  font-size: 14px
+  padding: 4px 0
+  line-height: 1.3
+  a
+    color: $header
+    
+.col-margin-top
+  margin-top: 18px
+  
+.grouping
+  padding: 10px
+  clear: both
+  
+img.topleft
+  float: left
+  margin: 7px 12px 12px 0
+
+.col1 p, .col2 p
+  font-size: 13.5px
+  margin-bottom: 6px
+  line-height: 1.6
+
+ul.angle-quote
+  padding: 0 0 10px 0
+  a
+    color: $text
+  li
+    padding-left: 16px
+    background: url(/images/png/16/dbl_angle_quote_rt.png) no-repeat 0 3px
+
+.networking
+  +bordered-top(2px, $celadon)
+  background: $celadon20 
+  
+.btn-widget
+  background: url(/images/unido/mru_button_236x32.png)
+  width: 236px
+  height: 32px
+  float: left
+  margin: 0 0 12px 0
+  a
+    width: 236px
+    color: $header
+    text-align: center
+    float: left
+    margin: 4px 0 0
+    font-size: 14px
+    text-decoration: none
+    background-position: 14px 4px
+    background-repeat: no-repeat
+    
+#tag-cloud-widget  
+  text-align: center
+  line-height: 1.2
+  li
+    display: inline-block
+    float: none
+    padding: 4px
+    *display: inline
+    *zoom: 1
+  .tag6
+    font-size: 20px
+  .tag5
+    font-size: 18px
+  .tag4
+    font-size: 16px
+  .tag3
+    font-size: 14px
+  .tag2
+    font-size: 12px
+  .tag1
+    font-size: 10px
+
+//
+// MAP
+
+      
+#map-container
+  overflow: hidden
+  position: relative
+  width: 500px
+  
+#popup_entities_list
+  h3
+    +bordered-btm($pale-grey, dotted)
+    color: $header
+    font-size: 14px
+    padding: 0 0 4px 30px
+    
+.pointer
+  cursor: pointer
+ 
+#featurePopup_contentDiv
+  .single-group img, li img.avatar
+    +float-left
+    margin-right: 8px
+  h3
+    color: $header
+    font-size: 14px
+    line-height: 1.2
+    min-height: 2em
+    padding: 0
+    background-position: 0 50%
+  h3.small_icon
+    margin-left: 0
+    margin-top: 2px
+    padding-bottom: 2px
+    background-position: 0 40%
+  ul#entities li
+    +bordered-btm($pale-grey, dotted)
+    padding: 5px 0 4px 8px
+    height: 32px
+    &.arrow
+      background: url(/images/png/16/arrow-right-paleblue.png) no-repeat right 50%
+    &.spinner
+      background: url(/images/spinner.gif) no-repeat right
+    a
+      +float-left
+      color: $header
+      font-size: 13px
+      line-height: 1.1
+      width: 206px
+      height: 32px
+      padding-right: 12px
+  p
+    line-height: 1.3
+    margin: 16px 0 16px 10px
+  .small_icon
+    +clearfix
+    line-height: 2
+    min-height: 20px
+    padding-left: 26px
+    margin: 10px 0 0 12px
+  #map_summary_footer
+    border-top: 1px dotted $pale-grey
+    +clearfix
+    bottom: 0
+    padding: 5px 0 0
+    position: absolute
+    width: 98% 
+
+div.dataLayersDiv
+  .labelSpan 
+    padding-left: 20px
+    width: 200px
+    float: left
+    margin-left: 5px
+  input.checkbox
+    float: left
+  .layer_1
+    background: url(/images/png/map/16_marker-pink.png) no-repeat
+  .layer_2
+    background: url(/images/png/map/16_marker-yellow.png) no-repeat
+  .layer_3
+    background: url(/images/png/map/16_marker-orange.png) no-repeat
+  .layer_4
+    background: url(/images/png/map/16_marker-blue.png) no-repeat
+  .layer_5
+    background: url(/images/png/map/16_marker-green.png) no-repeat
+  .layer_6
+    background: url(/images/png/map/16_marker-dark-blue.png) no-repeat
+  .layer_7
+    background: url(/images/png/map/16_marker-red.png) no-repeat
+  .layer_8
+    background: url(/images/png/map/16_marker-light-blue.png) no-repeat
+  .layer_9
+    background: url(/images/png/map/16_marker-purple.png) no-repeat
+  .layer_0
+    background: url(/images/png/map/16_marker-dark-green.png) no-repeat
+
+//
+// ADMIN edit site structure
+
+
+.hoverActive
+  border: 1px dashed #000
+
+.main-edit
+  +main-edit
+  +margin-edit
+  border-right: 1px solid $light_grey_border
+
+.sidebar-edit
+  +sidebar-edit
+  +margin-edit
+
+.wrapper-edit
+  +float-left
+  width: 538px
+  border: 1px solid $light_grey_border
+  margin-bottom: 32px
+
+.wrapper-edit h4
+  font-size: 14px
+  letter-spacing: 0.3px
+
+h3.edit
+  margin-bottom: 12px
+
+li.widget
+  +float-left
+  +border-radius(8px) 
+  background: $orange05 50%
+  border: 2px solid $orange20
+  color: $orange 
+  width: 264px
+  height: 48px
+  margin-bottom: 18px
+  cursor: move
+  a
+    color: $orange 
+  .left
+    padding: 8px 0 6px 8px
+    height: 34px
+    width: 210px
+    border-right: 1px dotted $orange20
+
+li.widget span 
+  +float-right
+  margin-top: 13px
+  width: 30px 
+
+li.widget a.small_icon
+  position: relative
+  background-position: 0 50%
+
+li.widget a.small_icon:hover
+  +opacity(0.5)
+
+#sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage
+  +clearfix
+  position: relative
+
+#sort_list_main, #sort_list_sidebar
+  margin-bottom: 10px
+
+#sort_list_main_storage, #sort_list_sidebar_storage
+  h3.edit
+    color: #999
+    padding-bottom: 10px
+  li.widget
+    background: #f5f5f5
+    border: 2px solid $pale-grey
+    color: $text-light
+    a
+      color: $text-light
+    .left
+      border-right: 1px dotted $pale-grey
+
+#sort_list_sidebar li.widget, #sort_list_sidebar_storage li.widget
+  width: 196px
+  .left
+    width: 142px
+
+#sort_list_main, #sort_list_main_storage
+  li.small
+    width: 126px
+    margin-right: 8px
+    .left
+      width: 80px
+
+#sort_list_main_storage h4, #sort_list_sidebar_storage h4
+  color: $text-light
+
+a.right
+  +float-right
+  +clearfix
+  margin-top: -18px
+
+a.new
+  padding: 0 18px
+  background: url(/images/png/16/plus.png) no-repeat
+
+a.back
+  padding: 0 18px
+  background: url(/images/png/16/left.png) no-repeat
+
+//
+//Modal box for widget settings edit 
+// 
+
+#MB_content
+  position: relative
+  label
+    +bordered-btm(1px, $medium_grey_border)
+    font-weight: bold
+    padding: 0 0 2px
+    span
+      font-weight: normal
+  ul
+    +clearfix
+    float: none
+    padding-bottom: 16px
+    margin-bottom: 16px
+    li
+      +clearfix
+      &.image-title input
+        width: 300px
+      &.checkbox-edit
+        input
+          +float-left
+        label
+          +float-left
+          margin: 0 0 0 10px
+    input, select, textarea
+      margin-left: 10px
+    span.statement
+      display: block
+      white-space: none
+  div.wrap
+    +float-left
+    width: 490px
+    div.wrap-inner
+      +float-left
+      width: 180px
+      select
+        margin: 4px 10px
+  #city_text
+    +float-left
+    height: 34px
+    margin-top: 30px
+    input
+      margin-left: 6px
+  input#widget_map_center_latitude, input#widget_map_center_longitude
+    +float-left
+    margin: 6px 260px 0 0
+    width: 90px
+  span.label
+    +float-left
+    width: 70px
+    padding: 6px 0 0 10px
+  #mb-header
+    +bordered-btm($medium_grey_border, solid)
+    padding-bottom: 6px
+    margin-bottom: 6px
+  #mb-footer
+    +bordered-top(1px, $medium_grey_border)
+    margin-top: 20px
+    padding: 20px 0 23px 10px
+    input#widget_submit
+      +float-left
+  #mb-footer-absolute
+    +bordered-top(1px, $medium_grey_border)
+    bottom: 0
+    height: 24px
+    padding: 20px 0 23px 10px
+    position: absolute
+    width: 486px   
+  a.destroy
+    +float-right
+    background: url(/images/png/16/trash.png) no-repeat 0 2px
+    bottom: 25px
+    padding-left: 20px
+    position: absolute
+    right: 20px
+  li.left-col
+    +float-left
+    width: 240px
+  li.left-col, li.right-col
+    input
+      margin-left: 4px
+  .footer-height
+    width: 100%
+    height: 46px
+  .other
+    margin: 18px 0 14px
+  h4.menu_entries
+    font-size: 14px
+    color: $header
+    line-height: 2
+  #menu_items_form
+    li.menu_item_drag_handle
+      width: 476px
+      background: $white
+      font-weight: bold
+      padding: 6px 10px
+      margin: 4px 0
+      cursor: move
+      .edit
+        +float-right
+        font-weight: normal
+  #list_menu_item_new.add 
+    padding: 18px 10px
+    a
+      background: url(/images/png/16/plus.png) no-repeat
+      padding: 0 18px
+  #form_menu_item_new, form.edit_menu_item, #list_menu_item_new 
+    +clearfix
+    background: $white
+    padding: 6px 10px
+    margin: 4px 0
+    width: 476px !important
+    .edit
+      +float-right
+      margin-top: 28px
+    div.new-entry
+      +clearfix
+      margin-bottom: 6px
+      .add-form-label
+        +float-left
+        font-weight: normal
+        width: 70px
+      .add-form-text-field
+        +float-left
+  h4.text
+    font-size: 14px
+    font-weight: normal
+    line-height: 2
+  ul.create_widget
+    width: 500px
+    li.widget-name-left, li.widget-name-right
+      +float-left
+      margin: 12px 0 0 0
+      a
+        display: block
+        padding: 0.5em
+        background: $white
+        width: 220px
+        font-size: 14px
+        font-weight: bold
+        color: $text
+        text-decoration: none
+        border: 1px solid $white
+        &:hover
+          color: $orange      
+          background: $orange05
+          border: 1px solid $orange20
+    li.widget-name-right
+      +float-right
+
+#main-entry-edit h3
+  color: $header
+#sub-entries 
+  margin: 18px 0 70px
+  #menu_items_form li.menu_item_drag_handle
+    font-weight: normal
+    form.edit_menu_item 
+      padding: 0
+  
+  

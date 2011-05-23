@@ -1,0 +1,29 @@
+%h1 Edit the Sitehome Structure
+.wrapper-edit
+  .main-edit
+    .left
+      %h3.edit Main Section
+      %ul#sort_list_main.section
+        = render :partial => '/widgets/widget', :collection => @main_widgets
+      
+      %ul#sort_list_main_storage.section
+        %h3.edit Main Section Storage
+        = new_widget_link
+        = render :partial => '/widgets/widget', :collection => @main_storage_widgets
+      = sortable_list 'main'
+      = sortable_list 'main', true
+    
+  .sidebar-edit
+    .left
+      %h3.edit Sidebar
+      %ul#sort_list_sidebar.section
+        = render :partial => '/widgets/widget', :collection => @sidebar_widgets
+      
+      %ul#sort_list_sidebar_storage.section
+        %h3.edit Sidebar Storage
+        = new_widget_link :sidebar
+        = render :partial => '/widgets/widget', :collection => @sidebar_storage_widgets
+      = sortable_list 'sidebar'
+      = sortable_list 'sidebar', true
+  
+

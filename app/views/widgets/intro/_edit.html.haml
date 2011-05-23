@@ -1,0 +1,15 @@
+- form_for @widget do |f|
+  = yield :widget_fields
+  %ul
+    %li 
+      = f.label :title
+      = f.text_field :title
+    %li 
+      = f.label :display_title
+      = f.check_box :display_title
+    %li 
+      = f.label :text
+      = f.text_area :text, :size => '50x16'
+      = yield :widget_fields
+  %div#mb-footer
+    = f.submit

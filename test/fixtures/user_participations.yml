@@ -192,7 +192,7 @@ rate_many_<%= id+=1 %>:
 
 <% 
 time=1 
-owner_group_ids = [5000,7,8,72,82,71,81]
+owner_group_ids = [5001,7,8,72,82,71,81]
 %>
 <% for i in 1001..1100 %>
   <% people = [6, 5, 4, 3, 2, 1].select{|u| i%(u+6)==0} %>

@@ -109,6 +109,7 @@ Rails::Initializer.run do |config|
   #config.gem "haml"
   #config.gem "chriseppstein-compass", :lib => "compass"
   #config.gem "ericam-compass-susy-plugin", :lib => "susy"
+  config.gem "compass", :version => '~> 0.10'
 
 
   # see http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html
@@ -168,3 +169,5 @@ PAGES = PageClassRegistrar.proxies.dup.freeze
 Conf.available_page_types = PAGES.keys if Conf.available_page_types.empty?
 
 Haml::Template.options[:format] = :html5
+
+Mime::Type.register "application/vnd.google-earth.kml+xml", :kml

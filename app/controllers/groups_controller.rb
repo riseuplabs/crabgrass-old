@@ -1,3 +1,4 @@
+
 class GroupsController < Groups::BaseController
 
   stylesheet 'groups'
@@ -10,7 +11,7 @@ class GroupsController < Groups::BaseController
   helper 'groups', 'wiki', 'base_page'
   helper 'groups/search'
 
-  before_filter :fetch_group, :except => [:create, :new, :index]
+  before_filter :fetch_group, :except => [:create, :new, :index, :autocomplete]
   before_filter :login_required, :except => [:index, :show, :archive, :tags, :search, :pages]
   verify :method => [:post, :put], :only => [:create, :update]
   verify :method => :delete, :only => :destroy
@@ -18,7 +19,7 @@ class GroupsController < Groups::BaseController
   cache_sweeper :social_activities_sweeper, :only => [:update, :create, :destroy]
 
   ## TODO: remove all task list stuff from this controller
-    helper 'task_list_page' # :only => ['tasks']
+    helper 'task_list_page', 'map' # :only => ['tasks']
     stylesheet 'tasks', :action => :tasks
     javascript :extra, :action => :tasks
   ## end task list cruft
@@ -32,16 +33,23 @@ class GroupsController < Groups::BaseController
   end
 
   def index
-    redirect_to group_directory_url
+    respond_to do |format|
+      format.kml { render_kml_for_entities Group.visible_by(@current_user).only_groups }
+      format.html { redirect_to group_directory_url }
+    end
   end
 
   def show
-    group_landing_instance_vars()
-    @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
-    #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
-    @wiki = private_or_public_wiki()
-    #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
-    render :layout => 'header_for_sidebar'
+    if request.xhr? and params[:map_summary]
+      show_map_summary
+    else
+      group_landing_instance_vars()
+      @pages = Page.paginate_by_path(search_path, options_for_group(@group).merge(pagination_params(:per_page => 10)))
+      #@announcements = Page.find_by_path([["descending", "created_at"], ["limit", "2"]], options_for_group(@group, :flow => :announcement))
+      @wiki = private_or_public_wiki()
+      #@activities = Activity.for_group(@group, (current_user if logged_in?)).newest.unique.find(:all)
+      render :layout => 'header_for_sidebar'
+    end
   end
 
   def people
@@ -188,6 +196,17 @@ class GroupsController < Groups::BaseController
   def active_admin_tabs
     @second_nav = 'administration'
     @third_nav = 'settings'
+  end
+
+  def show_map_summary
+    @place = GeoPlace.find(params[:place_id])
+    render :update do |page|
+      # in case there are any of these already loaded, remove them
+      page << "if ( $('popup_entity_"+@group.id.to_s+"') == undefined ) {"
+      page.insert_html(:after, 'popup_entities_list', :partial => '/groups/profiles/map_summary')
+      page << "}else { $('popup_entity_"+@group.id.to_s+"').show(); }"
+      page.hide 'popup_entities_list'
+    end
   end
 
   #def provide_rss

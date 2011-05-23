@@ -75,7 +75,7 @@ networkpage_<%=i%>:
 
 ### Connecting Classrooms ###
 
-<% group_ids = [5000,7,8,72,82,71,81] %>
+<% group_ids = [5001,7,8,72,82,71,81] %>
 <% i=100 %>
 <% for p in 1001..1100 %>
   <% indexes = (0..6).to_a.select{|g| p%(g+7)==0} %>

@@ -1,7 +1,6 @@
 <%
   # a set of avatar boxes for groups or users, with a link to more of them.
   # requires locals: header, entities
-
   more_url = nil  if more_url.nil?
   more_link = nil if more_link.nil?
   if more_url
@@ -16,18 +15,17 @@
   entities = entities.select { |e| ! ( e.kind_of?(Network) and current_site.network == e ) }
 %>
 <% if entities.any? or show_empty -%>
-<div class="dash_box">
-  <h5>
-    <%= header %>
-    <%= link_span(:bullet, links, more_link) %>
-  </h5>
-  <%- if entities.any? -%>
-    <%= render :partial => 'avatars/boxes', :locals => {:entities => entities} %>
-  <%- else -%>
-    <%= I18n.t(:empty_results) %>
-  <%- end -%>
-  <div class='clear'></div>
-  <%= after %>
-</div>
+<h4 class='subheading'>
+  <%= header %>
+  <%= link_span(:bullet, links, more_link) %>
+</h4>
+<%- if entities.any? -%>
+  <%= render :partial => 'avatars/boxes', :locals => {:entities => entities, :size => 'medium'} %>
+<%- else -%>
+  <%= I18n.t(:empty_results) %>
+<%- end -%>
+<div class='clear'></div>
+<%= after %>
+
 <% end %>
 

@@ -22,7 +22,7 @@ packages from [http://backports.org].
 | tzinfo              | libtzinfo-ruby          | timezone support                              |
 | RedCloth            | libredcloth-ruby        | for crabgrass markup: (GreenCloth) >=4.2.2    |
 | haml                | libhaml-ruby            | app templating; includes sass; >=2.2.20       |
-| compass             | libcompass-ruby         | a semantic CSS system =>0.8.5 <= 0.8.17       |
+| compass             | libcompass-ruby         | a semantic CSS system >= 0.10.0 <= 0.10.6     |
 | compass-susy-plugin | compass-susy-plugin1.8  | =>0.6.3                                       |
 | hpricot             | libhpricot-ruby         | xml and html parser needed for wysiwyg >=0.8.1|
 | chronic             | libchronic-ruby         | required by backgroundrb                      |
@@ -63,12 +63,14 @@ Crabgrass currently only works with mysql.
 
 OS X Note: usually in OS X mysql will be installed without /etc/my.cnf. You need to copy /usr/local/mysql/support-files/my-small.cnf to /etc/my.cnf. In some cases the mysql installation path might be different. Try the command `which mysql` to find it.
 
-* Configure mysql server character set
+* Configure mysql server character set (deprecated but kept for historical reasons)
 
 Add these lines if they don't already exist to /etc/my.cnf (under [mysqld] section):
 
   character-set-server=utf8
   collation-server=utf8_general_ci
+
+Note: In recent installs on Debian and RHEL/CentOS systems, this step has not been necessary - crabgrass works with the default mysqld configuration.
 
 * Create the database:
 

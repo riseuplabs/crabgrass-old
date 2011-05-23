@@ -46,8 +46,8 @@ inactive_user:
   crypted_password: <%= Digest::SHA1.hexdigest("--#{salt}--inactive_user--") %>
   last_seen_at: <%= 5.months.ago %>
 
-
 ### Connecting Classrooms ###
+
 # just to make sure additional users do not interfere with the numbering scheme for cc
 <% i = 100 %>
 <% for login in %w[student teacher visitor other_student other_teacher other_visitor] do %>

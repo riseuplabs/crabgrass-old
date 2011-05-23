@@ -207,6 +207,9 @@ signup_mode:
   (2) closed  --> no one can sign up
   (3) invite_only --> you can sign up only if you were invited to join a group.
 
+all_profiles_visible:
+  removes the ability to hide a profile in the profile settings, default is 0 (not enabled)
+
 Unfrequently modified options:
 
   :pagination_size -- how many items to show before paginating

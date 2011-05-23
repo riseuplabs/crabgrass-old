@@ -16,7 +16,7 @@
       padding-left: 2px
       font-style: italic
     textarea
-      +bordered(!warm_grey_border)
+      +bordered($warm_grey_border)
       overflow: visible
       float: left
     .textinput
@@ -37,12 +37,9 @@
     height: 18px
     width: 9px
 
-
 // this is for me/messages
 // these should be consolidated later - they are too similar (one is underscore other is dash!)
 #say-box
   #say
     textarea#say_msg.tall
       height: 5em
-
-

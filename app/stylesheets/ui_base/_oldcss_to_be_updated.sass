@@ -1,15 +1,16 @@
 // were	 in constants.sass
-!z_autocomplete = 400
-!z_tooltip = 300
-!title_box_border_color = #D0E3F7
-!post_alternate_bg_color = #eef5fc
-!body_text_font_family = "verdana, bitstream vera sans, helvetica, sans-serif"
-!body_text_line_height = 18px
-!body_text_font_size = 13px
-!left_column_bg_color = #FAFDF9
-!left_column_dividing_border = "1px solid #ccc"
-!left_column_width = 19em
-!left_column_margin = 1em
+
+$z_autocomplete: 400
+$z_tooltip: 300
+$title_box_border_color: #d0e3f7
+$post_alternate_bg_color: #eef5fc
+$body_text_font_family: unquote("verdana, bitstream vera sans, helvetica, sans-serif")
+$body_text_line_height: 18px
+$body_text_font_size: 13px
+$left_column_bg_color: #fafdf9
+$left_column_dividing_border: unquote("1px solid #ccc")
+$left_column_width: 19em
+$left_column_margin: 1em
 
 form.login_dialog
   label
@@ -31,7 +32,6 @@ table.page_types
   a
     +blue-link(12px)
 
-
 //
 // FORMS
 //
@@ -45,11 +45,11 @@ table.form
     border-top: 0
   & > tbody > tr > td
     vertical-align: top
-    border-top: 1px dotted #ccc
+    border-top: 1px dotted #cccccc
   td.heading
     padding: 0.5em 0
     h2
-      color: #666
+      color: #666666
       font-size: 1.5em
       margin: 0
   td.label
@@ -68,7 +68,7 @@ table.form
   .info
     font-size: 0.9em
     font-style: italic
-    color: #777
+    color: #777777
   input[type=text], textarea
     +general-font
     font-size: 1.2em
@@ -79,7 +79,7 @@ table.form
   margin-top: 2em
   margin-bottom: 0
   text-align: right
-  border-top: 1px dotted #ccc
+  border-top: 1px dotted #cccccc
   input
     font-size: 1.25em
     padding: 0.1em 0.5em
@@ -89,7 +89,6 @@ table.form
 // ICONS
 //
 
-
 //
 // AUTO COMPLETE
 //
@@ -97,13 +96,13 @@ table.form
 .autocomplete-w1
   background: url(/images/ui/shadow.png) no-repeat bottom right
   position: absolute
-  top: 7px
-  left: 6px
-  z-index= !z_autocomplete
+  top: -10px
+  left: 44px
+  z-index: $z_autocomplete
 
 .autocomplete
   width: 300px
-  border: 1px solid #999
+  border: 1px solid #999999
   background-color: white
   cursor: pointer
   text-align: left
@@ -112,20 +111,18 @@ table.form
   margin: -6px 6px 6px -6px
   overflow-x: hidden
   .selected
-    background: #eee
+    background: #eeeeee
   div
-    padding: 1px 0 1px 5px
+    padding: 3px 6px
     white-space: nowrap
   p
     margin: 0
   ins
     text-decoration: none
-    color: #3399FF
+    color: #3399ff
   em
     font-weight: bold
     font-style: normal
-
-
 
 //
 // name icons are for showing an icon with a user or group.
@@ -171,7 +168,7 @@ table.form
     color: white
     bottom: 25px
     left: -5px
-    z-index= !z_tooltip
+    z-index: $z_tooltip
     padding: 3px 5px 9px 5px
     // ^^ must be in px to match gif bg
     &:hover
@@ -190,7 +187,6 @@ table.form
         margin-top: 13px
         margin-bottom: 13px
 
-
 //
 // TABS
 //
@@ -204,7 +200,7 @@ table.form
 #MB_content
   .tab_area
     padding: 1em
-    border: 1px solid #999
+    border: 1px solid #999999
     border-top: 0
 
 ul.tabset
@@ -213,6 +209,7 @@ ul.tabset
   li
     display: inline
     float: none
+
 
 ul.tabset.top
   margin: 0 0 0 -30px
@@ -241,9 +238,14 @@ ul.tabset.top
       background-position: 8px 50%
     &.active
       background-color: white
-      border: 1px solid #999
+      border: 1px solid #999999
       border-bottom: 0
       font-weight: bold
+
+#main-content-full .col2 ul.tabset.top
+  width: 500px
+  margin: 0
+  padding: 0
 
 .sub_tabs a
   +blue-link
@@ -252,7 +254,6 @@ ul.tabset.top
   margin: 0
   width: 540px
   padding-left: 0
-
 
 ul.tabset.simple
   margin-top: 0
@@ -266,7 +267,7 @@ ul.tabset.simple
 
 .info_box
   padding: 1em
-  border-bottom= "1px solid" !title_box_border_color
+  border-bottom: unquote("1px solid") $title_box_border_color
   table.columns
     width: 100%
   td
@@ -284,14 +285,14 @@ ul.tabset.simple
     padding: 0 0 0 30px
     overflow: hidden
     border-bottom: 0
-    background= !page_title_tabs_bg
+    background: $page_title_tabs_bg
     & li.tab a
       +blue-link(12px)
 
 .info_box .description,
 .inset_box .description
   // color: #738899
-  color: #697D8C
+  color: #697d8c
   font-family: georgia, times
   font-style: italic
   font-size: 1.1em
@@ -299,14 +300,13 @@ ul.tabset.simple
   letter-spacing: 1px
   word-spacing: 2px
 
-
 //
 // UI ELEMENTS
 //
 
-
 .handle
   cursor: move
+
 .not_handle
   cursor: default
 
@@ -315,8 +315,7 @@ ul.tabset.simple
 //
 .content_box
   padding: 1em
-  background: #FFFFFF none repeat scroll 0 0
-
+  background: white none repeat scroll 0 0
 
 //
 // FORMATTED TABLES
@@ -328,7 +327,7 @@ table.pretty
   float: left
   & > tbody > tr
     &.even
-      background-color: #F2F2F2
+      background-color: #f2f2f2
     &.odd
       background-color: white
     &.unread
@@ -341,18 +340,18 @@ table.pretty
     & > th
       padding: 0.5em
       text-align: left
-      background: #FFF4E8
-      color: #F28367
+      background: #fff4e8
+      color: #f28367
       text-transform: capitalize
       font-weight: bold
-      border-bottom: 1px solid #ccc
+      border-bottom: 1px solid #cccccc
   & > tbody > tr.heading > th
     img
       vertical-align: bottom
     a
-      color: #333
+      color: #333333
     &.selected
-      background: #888
+      background: #888888
       a
         color: white
   a
@@ -371,7 +370,7 @@ table.plain
 
 //
 // used in admin pages
-//
+
 div.side_list
   padding: 0
   margin: 0
@@ -387,7 +386,6 @@ div.side_list
   &.commands a
     text-transform: capitalize
   span
-    &.active, &:hover
     &.small_icon
       padding-left: 19px
       background-position: 0 50%
@@ -396,8 +394,7 @@ div.side_list
     font-size: 12px
 
 td.left_column
-  background-color: #FAFDF9
+  background-color: #fafdf9
   width: 19em
   border-right: 0
   padding: 1em
-

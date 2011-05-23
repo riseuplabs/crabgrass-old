@@ -2,7 +2,7 @@
 Defines customizable themes that override the default crabgrass appearances
 
 This is donye by storing variables in the +parameters+ hash.
-These variables are used to override SASS constants defined in public/stylesheets/sass/constants.sass
+These variables are used to override SCSS constants defined in public/stylesheets/sass/constants.scss
 
 create_table "custom_appearances", :force => true do |t|
   t.text     "parameters"

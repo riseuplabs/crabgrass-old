@@ -160,7 +160,6 @@ module ContextHelper
         me_context('small', true)
       end
     end
-
   end
 
   def search_context

@@ -30,6 +30,10 @@ enabled_mods:
   - moderation
   - no_private_messages
   - enhanced_stats
+  # - openlayers
+  # - ui_tester
+  # - design_tester
+  # - translator
 
 email:
   delivery_method: :sendmail

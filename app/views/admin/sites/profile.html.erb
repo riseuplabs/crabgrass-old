@@ -5,12 +5,11 @@
 <%= f.error_messages %>
 <span><i><%= flash[:notice] %></i></span>
 <br />
-<span><b>Profile Visibility:</b></span>
-<br>Use this option to make all private profiles visible to logged-in users. 
+<span><b>Profile Options:</b></span>
 <ul style="list-style-type: none;">
   <li> 
     <%= check_box :site, :all_profiles_visible, {:checked => current_site.all_profiles_visible } %>
-    <%= label :all_profiles_visible, 'Make all profiles visible to logged in users' %>
+    <%= label :all_profiles_visible, 'Disable invisible option. Checking this will disable the ability for users to make their profile invisible.' %>
   </li>
 </ul>
 <span><b>Profiles:</b></span>

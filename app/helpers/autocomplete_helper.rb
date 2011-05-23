@@ -18,19 +18,25 @@ module AutocompleteHelper
   #
   def autocomplete_entity_tag(field_id, options={})
     options[:url] ||= '/autocomplete/entities'
+    # sometimes we might want to make some fancy serviceURL involving some js
+    serviceurl = options[:serviceurl] || "serviceUrl:'#{options[:url]}'"
     options[:onselect] ||= 'null'
+    options[:renderer] ||= render_entity_row_function
+    options[:selectvalue] ||= extract_value_from_entity_row_function
+    preload = options[:nopreload] ? false : true
     auto_complete_js = %Q[
+      #{options[:additional_js]}
       new Autocomplete('#{field_id}', {
-        serviceUrl:'#{options[:url]}',
+        #{serviceurl},
         minChars:2,
         maxHeight:400,
-        width:300,
+        width:340,
         onSelect: #{options[:onselect]},
         message: '#{escape_javascript(options[:message])}',
         container: '#{options[:container]}',
-        preloadedOnTop: true,
-        rowRenderer: #{render_entity_row_function},
-        selectValue: #{extract_value_from_entity_row_function}
+        preloadedOnTop: #{preload},
+        rowRenderer: #{options[:renderer]},
+        selectValue: #{options[:selectvalue]}
       }, #{autocomplete_id_number});
     ]
     javascript_tag(auto_complete_js)
@@ -44,10 +50,57 @@ module AutocompleteHelper
     autocomplete_entity_tag(field_id, options.merge(:url => '/autocomplete/friends'))
   end
 
+  def autocomplete_networks_tag(field_id = 'network_select', options={})
+    options[:container] ||= 'autocomplete_container'
+    url = formatted_autocomplete_networks_path(:format => 'json')
+    autocomplete_entity_tag field_id,
+      options.merge(:url => url)
+  end
+
+  def autocomplete_locations_tag(field_id, options={})
+    find_selected_country_js = "function getCountry() { if ($$('option.newselected')[0]) { return $$('option.newselected')[0].readAttribute('value'); } else { return $('select_country_id').getValue(); } }"
+    after_update_function = "function(value, data) {#{locations_autocomplete_afterupdate(options)}; }"# if @profile
+    autocomplete_entity_tag(field_id,
+      options.merge(:serviceurl => "serviceUrl:'/autocomplete/locations/?country='+getCountry()",
+        :renderer => render_location_row_function,
+        :additional_js => find_selected_country_js,
+        :selectvalue => extract_value_from_locations_row_function,
+        :onselect => after_update_function,
+        :nopreload => true )
+    )
+  end
+
+  def locations_autocomplete_afterupdate(options)
+    if options[:update_form_for] == 'profile' 
+      return js_for_edit_geo_location
+    elsif options[:update_form_for] == 'widget'
+      remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
+    else
+      remote_url = {:controller => 'locations', :action => 'update_city_id'}
+    end
+    add_action = {
+      :url => remote_url,
+      :with => %{'location_only=1&country_id='+getCountry()+'&city_id=' + data }
+      #:loading => spinner_icon_on('plus', add_button_id),
+      #:complete => spinner_icon_off('plus', add_button_id)
+    }
+    remote_function(add_action)
+  end
+
+  def entity_autocomplete_line(entity)
+    "<em>%s</em>%s" % [entity.display_name,
+      ('<br/>' + entity.name if entity.name != entity.display_name)]
+  end
+
   private
 
   def autocomplete_id_number
     rand(100000000)
+  end
+
+  # the javascript to insert a hidden field with the city id in the edit location form
+  def js_for_edit_geo_location
+    %Q[$('city_id_field').value = data;]
   end
 
   # called in order to render a popup row. it is a little too complicated.
@@ -59,9 +112,17 @@ module AutocompleteHelper
     %Q[function(value, re, data) {return '<p class=\"name_icon xsmall\" style=\"background-image: url(/avatars/'+data+'/xsmall.jpg)\">' + value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? '<br/>' + Autocomplete.highlight(m3, re) : '')}) + '</p>';}]
   end
 
+  def render_location_row_function
+    %Q[function(value, re, data) {return value.replace(/^<em>(.*)<\\/em>(<br\\/>(.*))?$/gi, function(m, m1, m2, m3){return '<em>' + Autocomplete.highlight(m1,re) + '</em>' + (m3 ? ', ' + Autocomplete.highlight(m3, re) : '')});}]
+  end
+
   # called to convert the row data into a value
   def extract_value_from_entity_row_function
     %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /.*<br\\/>(\\S+).*/g; }else { reEntity = /<em>(.*)<\\/em>.*/g; } return value.replace(reEntity,'$1');}]
+  end
+
+  def extract_value_from_locations_row_function
+    %Q[function(value){ var reEntity = new RegExp; if (value.match(/<br\\/>/)) { reEntity = /<em>(.*)<\\/em><br\\/>(.*)/g; return value.replace(reEntity,'$1, $2');}else { reEntity = /<em>(.*)<\\/em>.*/g; return value.replace(reEntity, '$1');  }}]
   end
 
 end

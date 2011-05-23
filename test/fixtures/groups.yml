@@ -63,7 +63,7 @@ committee_of_group_to_be_deleted:
   name: committee_of_group_to_be_deleted
   created_at: <%= rand(4).days.ago.to_s :db %>
   type: Committee
-  parent: 34
+  parent_id: 34
 
 public_group:
   id: 1000
@@ -129,12 +129,17 @@ super_admin_group:
   site_id: 1
   created_at: <%= rand(30).days.ago.to_s :db %>
 
+group_with_long_wiki:
+  id: 5000
+  name: 'group_with_long_wiki'
+  type: Group
+
 #
 # for testing connecting classrooms
 #
 
 teachers:
-  id: 5000
+  id: 5001
   name: teachers
   full_name: group of teachers for cc testing
   type: Group
@@ -194,8 +199,3 @@ class2_workgroup:
   type: Committee
   site_id: 1
   created_at: <%= rand(30).days.ago.to_s :db %>
-
-group_with_long_wiki:
-  id: 6000
-  name: 'group_with_long_wiki'
-  type: Group
