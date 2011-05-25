@@ -27,6 +27,7 @@ enabled_mods:
   - no_private_messages
   - evil_mod
   - enhanced_stats
+  - openlayers
 enabled_tools:
   - asset_tool
   - core_tools
