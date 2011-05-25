@@ -4,8 +4,7 @@ class Widget < ActiveRecord::Base
   # Class methods for Widget registry
   #
 
-  def self.initialize_registry(filename)
-    seed_filename = [RAILS_ROOT, 'config', filename].join('/')
+  def self.initialize_registry(seed_filename)
     widgets = YAML.load_file(seed_filename) || {}
     widgets.each do |name, options|
       self.register(name,options)

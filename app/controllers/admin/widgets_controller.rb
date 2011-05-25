@@ -4,7 +4,6 @@ class Admin::WidgetsController < Admin::BaseController
   permissions 'widgets'
   before_filter :fetch_profile
   javascript :extra
-  javascript 'OpenLayers', 'OpenStreetMap', :plugin => 'openlayers'
   stylesheet 'widgets'
 
   # GET /admin/widgets
