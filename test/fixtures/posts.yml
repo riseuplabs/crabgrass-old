@@ -8,3 +8,9 @@ gerrard_to_blue:
 <% updated = created = rand(46080) %>
   updated_at: "<%= 10.minutes.ago.to_s(:db) %>"
   created_at: "<%= 10.minutes.ago.to_s(:db) %>"
+
+reds_post:
+  body: "Test Post for posts controller"
+  body_html: "Test Post for posts controller"
+  user_id: 8
+  discussion_id: 1
