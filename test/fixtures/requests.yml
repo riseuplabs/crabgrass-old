@@ -49,3 +49,18 @@ invite_from_animals:
 <% updated = created = rand(4320) %>
   updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
   created_at: "<%= created.minutes.ago.to_s(:db) %>"
+
+<% {'orange' => 5, 'purple' => 6, 'yellow' => 7}.each do |name, user_id| %>
+<%= "invite_#{name}_to_tru_levellers:" %>
+  id: <%= id+=1 %>
+  recipient_id: <%= user_id %>
+  created_by_id: 3
+  recipient_type: User
+  requestable_type: Group
+  requestable_id: 1
+  state: "pending"
+  type: RequestToJoinUs
+<% updated = created = rand(4320) %>
+  updated_at: "<%= updated.minutes.ago.to_s(:db) %>"
+  created_at: "<%= created.minutes.ago.to_s(:db) %>"
+<% end %>
