@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GeoLocationsControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships, :profiles, :federatings, :geo_countries, :geo_places, :geo_locations
+  fixtures :users, :groups, :memberships, :profiles, :federatings, :geo_countries, :geo_places, :geo_locations, :sites
 
   def setup
-    enable_site_testing
+    enable_site_testing :unlimited
   end
 
   def teardown

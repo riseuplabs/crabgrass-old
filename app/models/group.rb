@@ -115,6 +115,16 @@ class Group < ActiveRecord::Base
     {:conditions => ['groups.id IN (?)', ids]}
   }
 
+
+  named_scope :visible_in_place, lambda { |place|
+    group_ids = User.current ? 
+      Group.namespace_ids(User.current.all_group_ids) : []
+    { :joins => :geo_locations, 
+      :group => "groups.id",
+      :conditions => ["((profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))) AND geo_locations.geo_place_id = ?", true, true, group_ids, place.id]
+    }
+  }
+
   ##
   ## GROUP INFORMATION
   ##
@@ -170,6 +180,8 @@ class Group < ActiveRecord::Base
   ##
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+
+  has_many :geo_locations, :through => :profiles
 
   def profile
     self.profiles.visible_by(User.current)

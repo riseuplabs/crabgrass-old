@@ -30,13 +30,8 @@ class GeoLocationsController < ApplicationController
       render :nothing => true
       return
     end
-    @groups = @place.group_profiles(current_user)
-    if @network
-      @groups = @groups.members_of(@network)
-    else
-      # i think this is covered by the group_profiles method now
-      #@groups = @groups.visible_by(current_user)
-    end
+    @groups = Group.visible_in_place(@place)
+    @groups = @groups.members_of(@network) if @network
     @group_count = @groups.count
     @groups = @groups.slice!(0,12).paginate(:per_page => 4, :page => params[:page])
     respond_to do |format|
