@@ -1,12 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'root_controller'
-#showlog
-# Re-raise errors caught by the controller.
-class RootController; def rescue_action(e) raise e end; end
 
 class RootControllerTest < ActionController::TestCase
   fixtures :groups, :users, :pages, :memberships,
-            :user_participations, :page_terms, :sites
+            :user_participations, :page_terms, :sites, :widgets
 
   include UrlHelper
 
