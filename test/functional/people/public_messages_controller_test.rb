@@ -51,22 +51,37 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
     end
   end
 
-  def test_destroy
-    # both blue and red should be able to destroy blue's post to red's wall
-    [:blue, :red].each do |user|
-      post = create_post( :from => users(:blue), :to => users(:red) )
-      login_as :yellow
-      assert_no_difference 'Post.count', '+0 post' do
+
+  def test_other_may_not_destroy
+    post = create_post( :from => users(:blue), :to => users(:red) )
+    login_as :yellow
+    assert_no_difference 'Post.count', 
+      'yellow should not be able to destroy blues post to red' do
+      delete :destroy, :person_id => 'red', :id => post.id
+    end
+  end
+
+  def test_sender_may_destroy
+    post = create_post( :from => users(:blue), :to => users(:red) )
+    login_as :blue
+    assert_difference 'Post.count', -1 do
+      assert_difference 'MessageWallActivity.count', -1 do
         delete :destroy, :person_id => 'red', :id => post.id
       end
+    end
+  end
 
-      login_as user
-      assert_difference 'Post.count', -1, '-1 post' do
-        assert_difference 'MessageWallActivity.count', -1, '-1 activity' do
-          delete :destroy, :person_id => 'red', :id => post.id
-        end
+  def test_recipient_may_destroy
+    post = create_post( :from => users(:blue), :to => users(:red) )
+    login_as :blue
+    assert_difference 'Post.count', -1 do
+      assert_difference 'MessageWallActivity.count', -1 do
+        delete :destroy, :person_id => 'red', :id => post.id
       end
     end
+  end
+
+  def test_not_found
     delete :destroy, :person_id => 'red', :id => 4444
     assert :not_found
   end
