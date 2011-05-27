@@ -125,6 +125,19 @@ class Group < ActiveRecord::Base
     }
   }
 
+    LOCATIONS_JOIN = <<EOSQL
+INNER JOIN `geo_locations`
+  ON (`geo_locations`.`profile_id` = `profiles`.`id`)
+EOSQL
+
+  # this only works together with a scope that joins in the profiles
+  # usually this will be visible_by
+  named_scope :located_in, lambda { |params|
+    { :joins => LOCATIONS_JOIN, 
+      :conditions => Group.conditions_for_location(params)
+    }
+  }
+
   ##
   ## GROUP INFORMATION
   ##
@@ -323,6 +336,18 @@ class Group < ActiveRecord::Base
         c.save if c.name_changed?
       }
       User.increment_version(self.user_ids)
+    end
+  end
+
+
+  def self.conditions_for_location(params)
+    param_to_column_map = { 
+      :country_id => 'geo_country_id',
+      :state_id => 'geo_admin_code_id',
+      :city_id => 'geo_place_id' }
+    param_to_column_map.inject({}) do |cond, (param, column)|
+      cond["geo_locations.#{column}"] = params[param] if params[param]
+      cond
     end
   end
 
