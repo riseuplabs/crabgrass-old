@@ -133,9 +133,13 @@ EOSQL
   # this only works together with a scope that joins in the profiles
   # usually this will be visible_by
   named_scope :located_in, lambda { |params|
-    { :joins => LOCATIONS_JOIN, 
-      :conditions => Group.conditions_for_location(params)
-    }
+    if params.slice(:country_id, :state_id, :city_id).any?
+      { :joins => LOCATIONS_JOIN, 
+        :conditions => Group.conditions_for_location(params)
+      }
+    else
+      {}
+    end
   }
 
   ##
