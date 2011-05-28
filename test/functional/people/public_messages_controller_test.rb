@@ -18,12 +18,14 @@ class People::PublicMessagesControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
-  def test_create
+  def test_create_requires_login
     assert_no_difference 'Post.count' do
       post :create, :post => {:body => 'x'}, :person_id => 'blue'
       assert_login_required
     end
+  end
 
+  def test_create 
     login_as :red
 
     assert_difference 'Post.count', 1, '+1 post' do
