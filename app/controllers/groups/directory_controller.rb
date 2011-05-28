@@ -60,7 +60,7 @@ class Groups::DirectoryController < Groups::BaseController
 
   def fetch_groups
     @location_params = params.slice(:country_id, :state_id, :city_id)
-    @all_groups = Group.only_type(@group_type, current_site)
+    @all_groups = Group.only_type(@group_type).without_site_network
     @all_groups = @all_groups.visible_by(current_user)
     @all_groups = @all_groups.located_in(@location_params)
   end

@@ -8,7 +8,8 @@ class Networks::DirectoryController < Groups::DirectoryController
   protected
 
   def my_groups
-    @groups = current_user.groups.only_type(@group_type, @current_site).alphabetized('').paginate(:all, :page => params[:page])
+    @groups = current_user.groups.only_type(@group_type).without_site_network
+    @groups = @groups.alphabetized('').paginate(:all, :page => params[:page])
   end
 
   def context

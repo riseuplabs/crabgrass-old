@@ -70,16 +70,22 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope(:only_type, lambda do |*args|
-    group_type = args.first.to_s.capitalize
+  named_scope :only_type, lambda do |group_type|
+    group_type = group_type.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
-    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
-      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
     else
       {:conditions => ['groups.type = ?', group_type]}
     end
-  end)
+  end
+
+  named_scope :without_site_network, lambda do
+    if Site.current && network_id = Site.current.network_id
+      {:conditions => ['groups.id != ?', network_id]}
+    else
+      {}
+    end
+  end
 
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
