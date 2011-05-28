@@ -70,22 +70,22 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope :only_type, lambda do |group_type|
+  named_scope :only_type, lambda { |group_type|
     group_type = group_type.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
     else
       {:conditions => ['groups.type = ?', group_type]}
     end
-  end
+  }
 
-  named_scope :without_site_network, lambda do
+  named_scope :without_site_network, lambda {
     if Site.current && network_id = Site.current.network_id
       {:conditions => ['groups.id != ?', network_id]}
     else
       {}
     end
-  end
+  }
 
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
@@ -121,15 +121,6 @@ class Group < ActiveRecord::Base
     {:conditions => ['groups.id IN (?)', ids]}
   }
 
-
-  named_scope :visible_in_place, lambda { |place|
-    group_ids = User.current ? 
-      Group.namespace_ids(User.current.all_group_ids) : []
-    { :joins => :geo_locations, 
-      :group => "groups.id",
-      :conditions => ["((profiles.stranger = ? AND profiles.may_see = ?) OR (groups.id IN (?))) AND geo_locations.geo_place_id = ?", true, true, group_ids, place.id]
-    }
-  }
 
     LOCATIONS_JOIN = <<EOSQL
 INNER JOIN `geo_locations`

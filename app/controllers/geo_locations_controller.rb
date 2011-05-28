@@ -30,7 +30,7 @@ class GeoLocationsController < ApplicationController
       render :nothing => true
       return
     end
-    @groups = Group.visible_in_place(@place)
+    @groups = Group.visible_by(current_user).located_in(:city_id => @place.id)
     @groups = @groups.members_of(@network) if @network
     @group_count = @groups.count
     @groups = @groups.slice!(0,12).paginate(:per_page => 4, :page => params[:page])
