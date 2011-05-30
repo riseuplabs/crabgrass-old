@@ -181,7 +181,8 @@ class ProfileTest < Test::Unit::TestCase
   end
 
   def test_new_public_profiles_should_be_visible_if_site_has_all_profiles_visible
-    with_site('connectingclassrooms') do
+    
+    with_site('site1', :all_profiles_visible => true) do
       user = User.create(:login => 'foobar')
       user.save
       assert user.profiles.public.may_see? 

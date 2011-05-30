@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GeoLocationsControllerTest < ActionController::TestCase
-  fixtures :users, :groups, :memberships, :profiles, :geo_countries, :geo_places, :geo_locations
+  fixtures :users, :groups, :memberships, :profiles, :federatings, :geo_countries, :geo_places, :geo_locations, :sites
 
   def setup
-    enable_site_testing
+    enable_site_testing :unlimited
   end
 
   def teardown
@@ -18,7 +18,7 @@ class GeoLocationsControllerTest < ActionController::TestCase
     login_as :blue
     get :index, :format => 'kml'
     assert_response :success
-    assert_equal 3, assigns['locations'].first.group_count, "Three groups in the first location for blue."
+    assert_equal 4, assigns['locations'].first.group_profiles(users(:blue)).count, "Four groups in the first location for blue."
     assert @response.body.index '<description>ajax:/geo_locations/show/1</description>'
   end
 
@@ -28,25 +28,22 @@ class GeoLocationsControllerTest < ActionController::TestCase
 
     get :index, :format => 'kml'
     assert_response :success
-    assert_equal 2, assigns['locations'].first.group_count, "Two public groups in the first location."
+    assert_equal 3, assigns['locations'].first.group_profiles(nil).count, "Three public groups in the first location."
     assert @response.body.index '<description>ajax:/geo_locations/show/1</description>'
   end
 
   def test_index_for_network_without_login
     get :index, :format => 'kml', :network_id => 'cnt'
     assert_response :success
-
-    get :index, :format => 'kml'
-    assert_response :success
-    assert_equal 1, assigns['locations'].first.group_count,
-      "One public groups in the first location is part of CNT network."
+    assert_equal 3, assigns['locations'].first.group_profiles(nil).count,
+      "Three public groups in the first location is part of CNT network."
     assert @response.body.index '<description>ajax:/geo_locations/show/1</description>'
   end
 
   def test_show_without_network
     get :show, :id => 1
     assert_response :success
-    assert_equal ['rainbow','recent_group'], assigns['groups'].map(&:name).sort,
+    assert_equal ['animals', 'rainbow','recent_group'], assigns['groups'].map(&:name).sort,
       "Rainbow and Recent Group should be listed as public groups in location 1"
   end
 

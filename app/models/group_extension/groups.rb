@@ -15,6 +15,10 @@ module GroupExtension::Groups
       belongs_to :council, :class_name => 'Group'
       before_destroy :destroy_council
 
+      named_scope :members_of, lambda {|network|
+        { :conditions => ['groups.id IN (?)', network.group_ids] }
+      }
+
       # Committees are children! They must respect their parent group.
       # This uses better_acts_as_tree, which allows callbacks.
       acts_as_tree(

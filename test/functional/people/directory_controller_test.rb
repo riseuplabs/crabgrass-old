@@ -3,9 +3,6 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class People::DirectoryControllerTest < ActionController::TestCase
   fixtures :users, :relationships
 
-  def setup
-  end
-
   def test_show
     login_as :quentin
     %w(friends peers browse recent).each do |action|
@@ -18,11 +15,13 @@ class People::DirectoryControllerTest < ActionController::TestCase
     assert_permission_denied
   end
 
-  def test_index
+  def test_index_with_friends
     login_as :blue
     get :index
     assert_redirected_to(:action => 'show', :id => :friends)
+  end
 
+  def test_index_without_friends
     login_as :quentin
     get :index
     assert_redirected_to(:action => 'show', :id => :browse)

@@ -50,14 +50,6 @@ contribute_button_<%= name %>:
   options:
     :title: Contribute to Site
     :link: /groups/unido/pages/new
-add_job_button_<%= name %>:
-  name: ButtonWidget
-  profile_id: <%= profile_id %>
-  position: 2
-  section: 2
-  options:
-    :title: Add a job opportunity
-    :link: /job/add
 quickfinder_<%= name %>:
   name: MenuWidget
   profile_id: <%= profile_id %>
@@ -81,7 +73,7 @@ active_groups_<%= name %>:
   section: 2
   options:
     :title: Most Active Groups
-    :type: Groups
+    :entities: Groups
     :recent: false
 what_is_new_<%= name %>:
   name: TextBoxWidget

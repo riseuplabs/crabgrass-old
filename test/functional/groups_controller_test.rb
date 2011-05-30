@@ -36,10 +36,12 @@ class GroupsControllerTest < ActionController::TestCase
     assert_select "a[href='/groups/tags/rainbow/Tag+me+baby!']", "Tag me baby!"
   end
 
-  def test_create_group
+  def test_create_group_requires_login
     get :new
     assert_login_required
+  end
 
+  def test_create_group
     login_as :gerrard
     get :new
     assert_response :success
@@ -638,22 +640,6 @@ editing tools on a group basis has been abandoned iirc, azul
     login_as :red
     get :list_groups, :id => groups(:fai).name
     assert_response :success, "list groups of network fai should succeed, because user red in network rainbow"
-  end
-
-  def test_index_kml
-    # non-logged in user should see  rainbow but not private_group
-    get :index, :format => 'kml'
-    assert_response :success
-    assert @response.body =~ /rainbow/
-    assert @response.body !~ /private/
-
-    # blue should see some  kml data for rainbow
-    login_as :blue
-    get :index, :format => 'kml'
-    assert_response :success
-    assert @response.body =~ /Placemark/
-    assert @response.body =~ /rainbow/
-    assert @response.body =~ /private/
   end
 
 end

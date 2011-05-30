@@ -3,10 +3,12 @@ require File.dirname(__FILE__) + '/../../test_helper'
 class Me::MessagesControllerTest < ActionController::TestCase
   fixtures :users, :relationships, :discussions
 
-  def test_should_get_index
+  def test_index_requires_login
     get :index
     assert_login_required
+  end
 
+  def test_index
     login_as :blue
     get :index
     assert_response :success
@@ -30,25 +32,34 @@ class Me::MessagesControllerTest < ActionController::TestCase
     assert_redirected_to :action => :index
   end
 
-  def test_should_show_conversation
+  def test_show_requires_login
+
+    get :show, :id => users(:orange).to_param
+    assert_login_required
+  end
+
+  def test_show_conversation
     blue = users(:blue)
     orange = users(:orange)
 
     relationship = orange.relationships.with(blue)
 
-    get :show, :id => users(:orange).to_param
-    assert_login_required
-
-    # should assign discussion
     login_as :blue
-    get :show, :id => users(:orange).to_param
+    get :show, :id => orange.to_param
     assert_response :success
     assert_equal relationship.discussion, assigns(:discussion)
     # test for #1919
-    assert_equal users(:blue), assigns(:user)
-    assert_equal users(:orange), assigns(:recipient)
+    assert_equal blue, assigns(:user)
+    assert_equal orange, assigns(:recipient)
     # test for #1918
     assert_select "a[href=#{messages_path}]", 'Back to Messages'
+  end
+
+  def test_show_conversation_inverse
+    blue = users(:blue)
+    orange = users(:orange)
+
+    relationship = orange.relationships.with(blue)
 
     # same discussion, from a different perspective
     login_as :orange

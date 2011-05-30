@@ -48,7 +48,7 @@ class Group < ActiveRecord::Base
 
   # finds groups that user may see
   named_scope :visible_by, lambda { |user|
-    group_ids = user ? Group.namespace_ids(user.all_group_ids) : []
+    group_ids = user && user.real? ? Group.namespace_ids(user.all_group_ids) : []
     # The grouping serves as a distinct.
     # A DISTINCT term in the select seems to get striped of by rails.
     # The other way to solve duplicates would be to put profiles.friend = true
@@ -70,16 +70,22 @@ class Group < ActiveRecord::Base
   # finds groups that are of type Group (but not Committee or Network)
   named_scope :only_groups, :conditions => 'groups.type IS NULL'
 
-  named_scope(:only_type, lambda do |*args|
-    group_type = args.first.to_s.capitalize
+  named_scope :only_type, lambda { |group_type|
+    group_type = group_type.to_s.capitalize
     if group_type == 'Group'
       {:conditions => 'groups.type IS NULL'}
-    elsif group_type == 'Network' and (!args[1].nil? and args[1].network_id)
-      {:conditions => ['groups.type = ? and groups.id != ?', group_type, args[1].network_id] }
     else
       {:conditions => ['groups.type = ?', group_type]}
     end
-  end)
+  }
+
+  named_scope :without_site_network, lambda {
+    if Site.current && network_id = Site.current.network_id
+      {:conditions => ['groups.id != ?', network_id]}
+    else
+      {}
+    end
+  }
 
   named_scope :all_networks_for, lambda { |user|
     {:conditions => ["groups.type = 'Network' AND groups.id IN (?)", user.all_group_id_cache]}
@@ -113,6 +119,24 @@ class Group < ActiveRecord::Base
 
   named_scope :with_ids, lambda { |ids|
     {:conditions => ['groups.id IN (?)', ids]}
+  }
+
+
+    LOCATIONS_JOIN = <<EOSQL
+INNER JOIN `geo_locations`
+  ON (`geo_locations`.`profile_id` = `profiles`.`id`)
+EOSQL
+
+  # this only works together with a scope that joins in the profiles
+  # usually this will be visible_by
+  named_scope :located_in, lambda { |params|
+    if params.slice(:country_id, :state_id, :city_id).any?
+      { :joins => LOCATIONS_JOIN, 
+        :conditions => Group.conditions_for_location(params)
+      }
+    else
+      {}
+    end
   }
 
   ##
@@ -170,6 +194,8 @@ class Group < ActiveRecord::Base
   ##
 
   has_many :profiles, :as => 'entity', :dependent => :destroy, :extend => ProfileMethods
+
+  has_many :geo_locations, :through => :profiles
 
   def profile
     self.profiles.visible_by(User.current)
@@ -311,6 +337,18 @@ class Group < ActiveRecord::Base
         c.save if c.name_changed?
       }
       User.increment_version(self.user_ids)
+    end
+  end
+
+
+  def self.conditions_for_location(params)
+    param_to_column_map = { 
+      :country_id => 'geo_country_id',
+      :state_id => 'geo_admin_code_id',
+      :city_id => 'geo_place_id' }
+    param_to_column_map.inject({}) do |cond, (param, column)|
+      cond["geo_locations.#{column}"] = params[param] if params[param]
+      cond
     end
   end
 
