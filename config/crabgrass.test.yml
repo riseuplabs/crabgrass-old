@@ -10,6 +10,9 @@
 # 
 
 title: "Crabgrass Testing"
+
+enabled_mods:
+  - moderation
 sites:
 # bound to localhost:
 #  - name: site1
