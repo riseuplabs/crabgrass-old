@@ -43,8 +43,8 @@ class Admin::UsersControllerTest < ActionController::TestCase
   def test_index
     login_as :blue
     get :index, :show => 'active'
-    assert (assigns[:users]).include?(:red)
-    assert !(assigns[:users]).include?(:inactive_user)
+    assert (assigns['users']).include?(users(:blue))
+    assert !(assigns['users']).include?(users(:inactive_user))
   end
 
   protected
