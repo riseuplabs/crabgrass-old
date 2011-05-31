@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
+# This file is auto-generated from the current state of the database. Instead of editing this file,
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -375,8 +375,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.string   "sender_name"
     t.string   "level"
     t.datetime "deleted_at"
-    t.integer  "yuck_count",  :limit => 11,         :default => 0
-    t.boolean  "vetted",                            :default => false
   end
 
   add_index "messages", ["channel_id"], :name => "index_messages_on_channel_id"
@@ -470,9 +468,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.integer  "site_id",            :limit => 11
     t.datetime "happens_at"
     t.integer  "cover_id",           :limit => 11
-    t.boolean  "public_requested",                         :default => false
-    t.boolean  "vetted",                                   :default => false
-    t.integer  "yuck_count",         :limit => 11,         :default => 0
   end
 
   add_index "pages", ["type"], :name => "index_pages_on_type"
@@ -516,8 +511,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "type"
-    t.boolean  "vetted",                              :default => false
-    t.integer  "yuck_count",    :limit => 11,         :default => 0
     t.integer  "page_terms_id", :limit => 11
   end
 
@@ -573,7 +566,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.string   "place"
     t.integer  "video_id",               :limit => 11
     t.text     "summary_html",           :limit => 2147483647
-    t.boolean  "admins_may_moderate"
     t.boolean  "members_may_edit_wiki",                        :default => true
   end
 
@@ -671,7 +663,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.string  "email_sender_name",         :limit => 40
     t.string  "profiles"
     t.string  "profile_fields"
-    t.integer "moderation_group_id",       :limit => 11
     t.boolean "require_user_full_info"
     t.boolean "never_pester_users",                              :default => false
     t.boolean "show_expanded_group_wikis"
@@ -883,7 +874,6 @@ ActiveRecord::Schema.define(:version => 20110426233945) do
     t.binary   "admin_for_group_id_cache"
     t.boolean  "unverified",                              :default => false
     t.string   "receive_notifications"
-    t.binary   "student_id_cache"
     t.boolean  "encrypt_emails",                          :default => false
   end
 
