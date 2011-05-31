@@ -151,7 +151,19 @@ If an integration test modifies the page_terms table somehow (adding new permiss
 
 A great deal of the crabgrass code is in the form of engines-enhanced
 and crabgrass-specific plugins. See docs/MODS and docs/TOOLS for
-more information. To run the tests for these special plugins:
+more information.
+
+== Preperation
+
+To test these plugins you have to enable them in config/crabgrass.test.yml
+If the mods require migrations you need to run these as well:
+
+  rake script/generate plugin_migration RAILS_ENV=test
+  rake db:migrate RAILS_ENV=test
+
+== Running the tests
+
+To run the tests for these special plugins:
 
   rake test:tools:all
   rake test:mods:all
