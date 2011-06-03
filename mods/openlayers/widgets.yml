@@ -1,6 +1,5 @@
 MapWidget:
   :columns:
-    - 1
     - 2
   :settings:
     - :title
