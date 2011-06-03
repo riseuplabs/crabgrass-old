@@ -926,6 +926,7 @@ en:
   widget_index: "Widget {{index}}"
 
   create_widget: "Create a Widget"
+  tag_cloud_limit: "Enter number of tags you want displayed"
 
   # profiles
 
