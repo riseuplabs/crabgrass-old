@@ -91,9 +91,6 @@ TagCloudWidget:
 WikiWidget:
   :columns:
     - 2
-AdminLinksWidget:
-  :columns:
-    - 1
 MenuBarWidget:
   :columns:
     - 3
