@@ -14,13 +14,13 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/new
   def new
-    @widget_names = Widget.for_columns(2).keys
+    @widget_names = Widget.for_columns(2).keys.sort
     @widget = @profile.widgets.build(:section => 3)
   end
 
   # GET /widgets/new/sidebar
   def sidebar
-    @widget_names = Widget.for_columns(1).keys
+    @widget_names = Widget.for_columns(1).keys.sort
     @widget = @profile.widgets.build(:section => 4)
     render :action => :new
   end
