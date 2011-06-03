@@ -1,5 +1,5 @@
 .col2
-  %h2.opening=widget.title if widget.display_title
+  %h2.opening=h(widget.title) if widget.display_title
   .top{'style'=>"padding-left: 1em; float: right;"}
     = display_media(@group.profiles.public.cover)
   .top

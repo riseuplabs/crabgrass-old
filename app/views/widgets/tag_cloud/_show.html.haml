@@ -2,7 +2,7 @@
 - limit = widget.limit || 20
 .right
   .col1
-    %h4.orange20-border-btm.subheading=widget.title
+    %h4.orange20-border-btm.subheading=h widget.title
     %ul#tag-cloud-widget
       - tag_cloud tags, %w(tag1 tag2 tag3 tag4), limit.to_i do |tag, css_class|
         %li= link_to_group_tag tag, :class => css_class

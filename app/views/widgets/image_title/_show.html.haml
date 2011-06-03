@@ -1,4 +1,4 @@
 .col2
   .opinion-bg
     %h2.opinion
-      = widget.link ? link_to(widget.title, widget.link) : widget.title
+      = widget.link ? link_to(h(widget.title), widget.link) : h(widget.title)

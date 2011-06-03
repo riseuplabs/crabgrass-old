@@ -1,5 +1,5 @@
 - widget = @widget unless local_assigns[:widget]
 .col2
-  %h3.map-blue-bg.col-heading=widget.title
+  %h3.map-blue-bg.col-heading=h widget.title
   - @map = OpenlayersMap.new(map_widget_options(widget))
   = render :partial => @map.map_partial, :locals => {:widget => widget}
