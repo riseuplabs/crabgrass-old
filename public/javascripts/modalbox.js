@@ -440,7 +440,7 @@ Modalbox.Methods = {
 
 	_setPosition: function () {
 		this.MBwindow.setStyle({left: ((this.MBoverlay.getWidth() - this.MBwindow.getWidth()) / 2 ) + "px"});
-		var height = document.viewport.getHeight()
+		var height = document.viewport.getHeight() - 50
 		if (this.MBcontent.getHeight() + this.MBheader.getHeight() > height) {
 			this.MBframe.setStyle({overflow: 'auto', height: height + 'px'});
 		} else {

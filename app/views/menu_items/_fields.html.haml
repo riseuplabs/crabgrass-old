@@ -1,8 +1,8 @@
-%div.new-entry
-  = f.label :title, I18n.t(:entry_title), :class => 'add-form-label'
-  = f.text_field :title, :size => 30, :class => 'add-form-text-field'
-%div.new-entry
-  = f.label :link, I18n.t(:entry_link), :class => 'add-form-label'
-  = f.text_field :link, :size => 30, :class => 'add-form-text-field'
+%div.fields.title
+  %span.description= f.label :title, I18n.t(:title), :class => 'add-form-label'
+  = f.text_field :title, :size => 25, :class => 'add-form-text-field'
+%div.fields.label
+  %span.description= f.label :link, I18n.t(:link), :class => 'add-form-label'
+  = f.text_field :link, :size => 25, :class => 'add-form-text-field'
   = f.hidden_field :id 
   = f.hidden_field :parent_id

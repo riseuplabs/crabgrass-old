@@ -1,4 +1,4 @@
 .col1
   %h4.orange20-border-btm.subheading
-    = widget.link ? link_to(widget.title, widget.link) : widget.title
+    = widget.link ? link_to(h(widget.title), widget.link) : h(widget.title)
   .text=widget.text

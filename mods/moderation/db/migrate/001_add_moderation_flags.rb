@@ -5,10 +5,6 @@ class AddModerationFlags < ActiveRecord::Migration
   # of superadmin but rails can't tell because now its part of moderation.
   # So we first check if it has been run already and only run if it has not.
   def self.up
-    self.really_up unless Page.columns.collect{|p| p.name}.include?("public_requested")
-  end
-
-  def self.really_up
     add_column :pages, :public_requested, :boolean, :default => false
     add_column :pages, :vetted, :boolean, :default => false
     add_column :pages, :yuck_count, :integer, :default => 0

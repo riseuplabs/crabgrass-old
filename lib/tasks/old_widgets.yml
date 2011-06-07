@@ -38,8 +38,3 @@
     :title: Most Active Groups
     :entities: 'Groups'
     :recent: false
--
-  name: AdminLinksWidget
-  section: 2
-  options:
-    :title: Admin Links

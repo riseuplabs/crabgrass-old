@@ -926,6 +926,8 @@ en:
   widget_index: "Widget {{index}}"
 
   create_widget: "Create a Widget"
+  tag_cloud_limit: "Enter number of tags you want displayed"
+  networking_recently_active: "Select by activity in the recent time"
 
   # profiles
 

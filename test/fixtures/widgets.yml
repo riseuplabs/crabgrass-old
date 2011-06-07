@@ -28,13 +28,6 @@ tag_cloud_<%= name %>:
   section: 1
   options:
     :title: Most Used Tags
-wide_teaser_<%= name %>:
-  name: ImageTitleWidget
-  profile_id: <%= profile_id %>
-  position: 5
-  section: 1
-  options:
-    :title: Your Opinion Counts &ndash;<br>talk to us
 page_list_<%= name %>:
   name: PageListWidget
   profile_id: <%= profile_id %>

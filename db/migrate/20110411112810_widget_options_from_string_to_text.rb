@@ -1,4 +1,4 @@
-class WikiOptionsFromStingToText < ActiveRecord::Migration
+class WidgetOptionsFromStringToText < ActiveRecord::Migration
   def self.up
     remove_column :widgets, :options
     add_column :widgets, :options, :text

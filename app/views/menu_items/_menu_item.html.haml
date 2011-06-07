@@ -5,8 +5,12 @@
       - spinner_id = dom_id(menu_item, :delete_button) # id used to show the spinner
       = spinner(spinner_id)
       = link_to_function(I18n.t(:delete), destroy_menu_item_remote_function(menu_item, spinner_id))
-    .title= menu_item.title
-    .link= menu_item.link
+    .title
+      %span.description= I18n.t(:title) + ':'
+      %span.value= menu_item.title
+    .link
+      %span.description= I18n.t(:link) + ':'
+      %span.value= menu_item.link
   - unless menu_item.may_have_children?
     .hover[menu_item, :form]{:style => 'display:none'}
       = render :partial => '/menu_items/form', :locals => {:menu_item => menu_item}
