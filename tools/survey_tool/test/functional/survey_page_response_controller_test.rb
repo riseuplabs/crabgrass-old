@@ -118,23 +118,35 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     get :rate, :page_id => page.id
     assert_active_tab "Rate Responses"
     assert_equal survey.responses[0].id, assigns("response").id
-    first_rated_response_id = assigns("response").id
+    response = assigns("response")
 
     # rate it
-    post :rate, :page_id => page.id, :id => first_rated_response_id, :rating => "10"
-    assert_response :success
+    assert_difference 'response.ratings.count' do
+      post :rate, :page_id => page.id, :id => response.id, :rating => "10"
+      assert_response :success
+    end
+  end
+
+  def test_build_average_rate
+    page = pages(:survey1)
+    survey = page.data
+    survey.admin_may_rate = "1"
+    survey.save
+
+    response = survey.responses.unrated_by(users(:blue), 1).first
+    response.ratings.create! :rating => 10, :user => users(:blue)
 
     # rate it as different user
     login_as :orange
 
     # rate again
-    post :rate, :page_id => page.id, :id => first_rated_response_id, :rating => "2"
+    post :rate, :page_id => page.id, :id => response.id, :rating => "2"
     assert_response :success
 
     # check that the average rating is listed
     get :list, :page_id => page.id
     assert_response :success
-    rated_response = assigns("responses").detect {|r| r.id == first_rated_response_id}
+    rated_response = assigns("responses").detect {|r| r.id == response.id}
 
     assert_not_nil rated_response
     assert_equal 6.0, rated_response.rating
@@ -172,12 +184,10 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     assert_not_nil rated_response
     assert_equal 10.0, rated_response.rating
 
-    # re-rate everything
-    survey.responses.each do |response|
-      unless response.user_id == users(:blue).id
-        post :rate, :page_id => page.id, :id => response.id, :rating => "7"
-        assert_response :success
-      end
+    # re-rate that response
+    assert_no_difference 'Rating.count' do
+      post :rate, :page_id => page.id, :id => rated_response.id, :rating => "7"
+      assert_response :success
     end
 
     # check that the rating is over written
@@ -189,7 +199,7 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     assert_equal 7.0, rated_response.rating
   end
 
-  def test_private_questions
+  def test_private_questions_visible_to_admin
     # make a question private
     page = pages(:survey1)
     question = page.data.questions.find_by_label("Another Question")
@@ -198,6 +208,13 @@ class SurveyPageResponseControllerTest < ActionController::TestCase
     login_as :blue
     get :show, :page_id => page.id, :id => 5
     assert_select "h2.question_label", /Another Question/, 'blue should see private question'
+
+  end
+
+  def test_private_questions_invisible_to_normal_user
+    page = pages(:survey1)
+    question = page.data.questions.find_by_label("Another Question")
+    question.update_attribute(:private, true)
 
     login_as :dolphin
     get :show, :page_id => page.id, :id => 5
