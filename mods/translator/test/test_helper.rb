@@ -40,7 +40,7 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   def valid_translation
-    { :key => keys(:hello), :language => languages(:english), :user => users(:abie), :text => "Hey d00d" }
+    { :key => keys(:hello), :language => languages(:en), :text => "Hey d00d" }
   end
 
   def valid_key

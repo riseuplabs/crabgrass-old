@@ -1,6 +1,17 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class Translator::TranslationsControllerTest < ActionController::TestCase
+
+  def setup
+    # animals are translation group...
+    enable_site_testing :test
+    login_as :penguin
+  end
+
+  def teardown
+    disable_site_testing
+  end
+
   def test_should_get_index
     get :index
     assert_response :success
@@ -8,7 +19,7 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
   end
 
   def test_should_get_new
-    get :new
+    get :new, :key => 'hello', :site_id => 2, :language => 'fr'
     assert_response :success
   end
 
@@ -54,7 +65,7 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
 
   def test_should_update_translation
     put :update, :id => translations(:hello_en).id, :translation => { }
-    assert_redirected_to translation_path(assigns(:translation))
+    assert_redirected_to translator_translation_path(assigns(:translation))
   end
 
   def test_should_destroy_translation
@@ -62,6 +73,6 @@ class Translator::TranslationsControllerTest < ActionController::TestCase
       delete :destroy, :id => translations(:hello_en).id
     end
 
-    assert_redirected_to translations_path
+    assert_redirected_to translator_translations_path
   end
 end
