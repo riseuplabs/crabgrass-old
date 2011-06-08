@@ -25,10 +25,10 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
 
   def test_should_create_language
     assert_difference('Language.count') do
-      post :create, :language => { }
+      post :create, :language => {:name => 'new', :code => 'nu' }
     end
 
-    assert_redirected_to translator_language_path(assigns(:language))
+    assert_redirected_to translator_languages_path
   end
 
   def test_should_show_language
@@ -42,8 +42,8 @@ class Translator::LanguagesControllerTest < ActionController::TestCase
   end
 
   def test_should_update_language
-    put :update, :id => 'en', :language => { }
-    assert_redirected_to translator_language_path(assigns(:language))
+    put :update, :id => 'en', :language => { :name => 'new', :code => 'nu' }
+    assert_redirected_to translator_languages_path
   end
 
   def test_should_destroy_language

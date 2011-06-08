@@ -34,7 +34,7 @@ class Translator::KeysControllerTest < ActionController::TestCase
   end
 
   def test_should_update_key
-    put :update, :id => 'hello', :key => { }
+    put :update, :id => 'hello', :key => { }, :update => true
     assert_redirected_to translator_key_path(assigns(:key))
   end
 
