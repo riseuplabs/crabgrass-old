@@ -3,7 +3,8 @@
 <% end -%>
 
 <h2><%=I18n.t(:upload_images_link)%> |     <%= link_to_remote(I18n.t(:upload_a_zip_file_link), :url => page_url(@page, :action => 'upload_zip'))%></h2>
-<% form_tag page_url(@page, :action => 'upload'), :method => :post, :multipart => true do -%>
+<% form_tag page_url(@page, :action => 'upload', 'X-Progress-ID' => @upload_id), :method => :post, :multipart => true do -%>
+  <%= hidden_field_tag 'X-Progress-ID', @upload_id %>
   <table>
     <%= render :partial => 'upload' -%>
   </table>

@@ -38,6 +38,10 @@ class GalleryControllerTest < ActionController::TestCase
       assert_select '#bar[style="width: 0%;"]', "0 %",
         "the progress bar should contain a bar"
       end
+    upload_id = assigns['upload_id']
+    assert_select 'form[action*="X-Progress-ID"]' do
+      assert_select 'input[type="hidden"][value="' + upload_id + '"]'
+    end
   end
 
 # this controller does not really even exist yet:
