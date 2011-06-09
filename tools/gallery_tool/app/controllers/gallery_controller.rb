@@ -2,6 +2,7 @@ class GalleryController < BasePageController
 
   stylesheet 'gallery'
   javascript :extra, 'page'
+  javascript :upload, :only => :edit
   permissions 'gallery'
 
   include GalleryHelper
