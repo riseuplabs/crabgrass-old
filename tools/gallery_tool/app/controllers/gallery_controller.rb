@@ -54,12 +54,6 @@ class GalleryController < BasePageController
     render :text => I18n.t(:error_saving_new_order_message) %{ :error_message => exc.message}
   end
 
-  def destroy
-    destroy_page_data
-    @page.delete
-  end
-
-
   protected
 
   def setup_view

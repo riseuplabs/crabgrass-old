@@ -25,15 +25,19 @@ class GalleryControllerTest < ActionController::TestCase
     assert_equal [], assigns['images']
   end
 
-  def test_edit_with_upload_id
+  def test_upload_ready_for_progress_bar
     login_as :blue
     gallery = Gallery.create!( :user => users(:blue),
       :title => "Empty Gallery")
-    get :edit, :page_id => gallery.id
+    get :upload, :page_id => gallery.id
     assert_response :success
-    assert_equal [], assigns['images']
     assert_not_nil assigns['upload_id'],
       "edit action should create upload-id"
+    assert_select '#progress[style="display: none;"]', 1,
+      "a hidden progress bar should be displayed" do
+      assert_select '#bar[style="width: 0%;"]', "0 %",
+        "the progress bar should contain a bar"
+      end
   end
 
 # this controller does not really even exist yet:
