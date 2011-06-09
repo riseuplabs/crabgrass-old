@@ -16,6 +16,26 @@ class GalleryControllerTest < ActionController::TestCase
     @asset.save!
   end
 
+  def test_show
+    login_as :blue
+    gallery = Gallery.create!( :user => users(:blue),
+      :title => "Empty Gallery")
+    get :show, :page_id => gallery.id
+    assert_response :success
+    assert_equal [], assigns['images']
+  end
+
+  def test_edit_with_upload_id
+    login_as :blue
+    gallery = Gallery.create!( :user => users(:blue),
+      :title => "Empty Gallery")
+    get :edit, :page_id => gallery.id
+    assert_response :success
+    assert_equal [], assigns['images']
+    assert_not_nil assigns['upload_id'],
+      "edit action should create upload-id"
+  end
+
 # this controller does not really even exist yet:
   #azul: I think it does - at least there is some base page magic
   def test_create
