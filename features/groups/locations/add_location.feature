@@ -1,4 +1,4 @@
-@plain
+@plain @wip
 Feature: Adding a location to a group
   In order to add a location to a group
   as an administrator of that group
