@@ -1,4 +1,4 @@
-@plain 
+@plain @wip 
 Feature: Filter groups and networks by location
   In order to see groups in a certain location
   as a user
