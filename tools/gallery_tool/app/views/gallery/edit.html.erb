@@ -83,6 +83,17 @@ function saving_changes_notifier() {
 
 <% render :partial => 'gallery/tabs' %>
 
+<h2 id="add-images-heading" class="big_icon page_gallery_48">
+  <%= I18n.t :add_images %>
+</h2>
+
+<%= choose_files_link %>
+
+<h2 id="edit-images-heading" class="big_icon page_gallery_48">
+  <%= I18n.t :edit_images %>
+</h2>
+
+
 <%= spinner('gallery') %>
 <div id="gallery_notify_area">
   <noscript>

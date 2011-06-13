@@ -507,9 +507,11 @@ en:
   no_title_given: (no title given)
   saving_your_changes: Saving your changes...
   activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
-  drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
+  drag_and_drop_to_rearrange_photos: Drag images to rearrange their order. Click pencil to edit image or audio.
   no_images_in_gallery: No images in Gallery
   add_existing_image: Add Photo
+  add_images: Add Images
+  edit_images: Edit Images
   upload_new_image: "upload new image"
   type_your_messages_here: "Type your messages here and press enter..."
   add_photo_to_gallery: "Click on a Photo to add it"
@@ -523,7 +525,7 @@ en:
   album_cover_changed: "Album Cover Changed"
   image_title: "Image title: {{title}}"
   upload_zip_file_link: "Upload a ZIP-File"
-  upload_images_link: "Upload Images"
+  upload_images_link: "Choose files"
   too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
   too_wide_image_error: "Uploaded image must be exactly  {{count}} pixels wide"
   cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"

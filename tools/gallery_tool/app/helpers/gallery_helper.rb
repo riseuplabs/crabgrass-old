@@ -52,20 +52,6 @@ module GalleryHelper
       :detail_view => lambda {
         @detail_view_navigation or ""
       },
-      :upload => lambda {
-        javascript_tag("upload_target = document.createElement('div');
-                        upload_target.id = 'target_for_upload';
-                        upload_target.hide();
-                        $$('body').first().appendChild(upload_target);")+
-        spinner('show_upload')+
-        link_to_remote(I18n.t(:upload_images_link),
-                       { :url => page_url(@page, :action => 'upload'),
-                         :update => 'target_for_upload',
-                         :loading =>'$(\'show_upload_spinner\').show();',
-                         :success => 'upload_target.show();',
-                         :complete => '$(\'show_upload_spinner\').hide();'},
-                       :class => "small_icon page_gallery_16")
-      },
       :add_existing => lambda {
         link_to(I18n.t(:add_existing_image),
                 page_url(@page, :action => 'find'),
@@ -80,11 +66,25 @@ module GalleryHelper
     output << available_elements[:edit].call unless params[:action] == 'edit'
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
     # output << available_elements[:add_existing].call unless params[:action] == 'find'
-    output << available_elements[:upload].call
     output << '</span>'
     output << '</div>'
 
     return output
+  end
+
+  def choose_files_link
+    javascript_tag("upload_target = document.createElement('div');
+      upload_target.id = 'target_for_upload';
+      upload_target.hide();
+      $$('body').first().appendChild(upload_target);")+
+    spinner('show_upload')+
+    link_to_remote(I18n.t(:upload_images_link),
+      { :url => page_url(@page, :action => 'upload'),
+        :update => 'target_for_upload',
+        :loading =>'$(\'show_upload_spinner\').show();',
+        :success => 'upload_target.show();',
+        :complete => '$(\'show_upload_spinner\').hide();'},
+      :class => "small_icon plus_16")
   end
 
   def undo_remove_link(image_id, position)
