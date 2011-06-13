@@ -1,7 +1,0 @@
-<% if @image -%>
-  <%= thumbnail_img_tag(@image, 'large',{}, :style => 'display:none', :id => 'image') %>
-
-  <%= javascript_tag "next_image_id = #{@next_id or 0};ready_for_next = true;" %>
-<% else -%>
-  <%= I18n.t(:no_images_in_gallery) %>
-<% end -%>

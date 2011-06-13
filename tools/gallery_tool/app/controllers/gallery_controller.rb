@@ -81,24 +81,6 @@ class GalleryController < BasePageController
     end
   end
 
-  def slideshow
-    if params[:image_id] && params[:image_id] != 0
-      showing = @page.showings.find(:first, :conditions => { :asset_id =>
-                                      params[:image_id]})
-    else
-      showing = @page.showings.first
-    end
-    @image = @page.images.find(showing.asset_id) if showing
-    @next_id = @page.showings.find(:first, :conditions => {
-                                     :position => showing.position+1
-                                   }, :select => 'asset_id').asset_id rescue nil
-    if request.xhr?
-      render :layout => false
-    else
-      render :layout => 'gallery_slideshow'
-    end
-  end
-
   def edit
     @images = paginate_images
   end
@@ -134,46 +116,6 @@ class GalleryController < BasePageController
   rescue => exc
     flash_message :exception => exc
     redirect_to :action => 'show', :page_id => @page.id
-  end
-
-  def download
-    if params[:image_id]
-      image = Asset.find(params[:image_id])
-      unless image
-        raise "Image not found."
-      end
-      current_user.may! :view, image
-      filepath = image.private_filename
-      filename = (image.page ?
-                  image.page.title.sub(' ', '_')+'.'+
-                  image.filename.split('.').last :
-                  image.filename)
-      filename = "#{image.page.title.sub(' ','_')}.#{image.filename.split('.').last}"
-    else
-      name_base = @page.title.gsub(/\s/,'-')
-      file = (Dir.entries(GALLERY_ZIP_PATH) - %w{. ..}).map { |e|
-        (m = e.match(/^#{name_base}_(\d+).zip/)) ? [m[1].to_i, e] : nil
-      }.compact.sort { |x,y| x[0] <=> y[0] }.last
-      filename = "#{name_base}.zip"
-      if file && file[0] >= @page.updated_at.to_i
-        filepath = "#{GALLERY_ZIP_PATH}/#{file[1]}"
-      else
-        filepath = "#{GALLERY_ZIP_PATH}/#{name_base}_#{Time.now.to_i}.zip"
-        Zip::ZipFile.open(filepath, Zip::ZipFile::CREATE) { |zip|
-          @page.images.each do |image|
-            # multiple images could have the same name, so add the ID
-            image_filename = image.filename
-            extension = image_filename.split('.').last
-            image_name = image_filename[0..(image_filename.size-extension.length-2)]+"_#{image.id}.#{extension}"
-
-            zip.get_output_stream(image_name) { |f|
-              f.write File.read(image.private_filename)
-            }
-          end
-        }
-      end
-    end
-    send_file(filepath, :filename => filename)
   end
 
   def update_order

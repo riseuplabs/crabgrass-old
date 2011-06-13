@@ -40,25 +40,6 @@ module GalleryHelper
                              I18n.t(:image_count_total, :count => @image_count.to_s )
                            end+'</p>'
       },
-      :download => lambda {
-        if @showing || @image
-          image = (@showing ? @showing.image : @image)
-          link_to(I18n.t(:download),
-                  page_url(@page,
-                           :action => 'download',
-                           :image_id => image.id),
-                  :class => "small_icon folder_picture_16")
-        else
-          link_to(I18n.t(:download_gallery),
-                  page_url(@page, :action => 'download'),
-                  :class => "small_icon folder_picture_16")
-        end
-      },
-      :slideshow => lambda {
-        link_to(I18n.t(:view_slideshow),
-                page_url(@page, :action => 'slideshow'),
-                :target => '_blank', :class => "small_icon application_view_gallery_16")
-      },
       :edit => lambda {
         unless params[:action] == 'edit'
           link_to(I18n.t(:edit_gallery),
@@ -97,8 +78,6 @@ module GalleryHelper
     output << available_elements[:count].call
     output << '<span class="gallery-actions">'
     output << available_elements[:edit].call unless params[:action] == 'edit'
-    output << available_elements[:download].call
-    output << available_elements[:slideshow].call
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
     # output << available_elements[:add_existing].call unless params[:action] == 'find'
     output << available_elements[:upload].call
