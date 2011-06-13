@@ -8,6 +8,8 @@
   <%= render :partial => 'base_page/sidebar' %>
 <% end %>
 
+<% render :partial => 'gallery/tabs' %>
+
 <div class="swatches">
   <%- if @images.any? -%>
     <%= render :partial => 'image', :collection => @images %>
