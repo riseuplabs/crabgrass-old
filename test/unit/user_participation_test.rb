@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserParticipationTest < Test::Unit::TestCase
 
-  fixtures :groups, :users, :pages, :user_participations
+  fixtures :groups, :users, :pages, :user_participations, :sites
 
   def setup
     Time.zone = TimeZone["Pacific Time (US & Canada)"]
@@ -62,7 +62,7 @@ class UserParticipationTest < Test::Unit::TestCase
   end
 
   def test_user_destroyed
-    user = User.make 
+    user = User.make
     page = Page.make :title => 'boing'
     page.add(user)
     page.save!
@@ -105,5 +105,15 @@ class UserParticipationTest < Test::Unit::TestCase
     assert !user.may_admin_page_without?(page, gpart), 'cannot remove gpart'
   end
 
+  def test_most_active_users_on_unlimited_site
+    assert_equal 13, User.most_active_on(Site.first, Time.now - 30.days).all.count
+  end
+
+  def test_most_active_users_on_limited_site
+    s = Site.first
+    s.limited = true
+    s.save
+    assert_equal 0, User.most_active_on(Site.first, Time.now - 30.days).all.count
+  end
 end
 
