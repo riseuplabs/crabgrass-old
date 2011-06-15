@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../../../test/test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class RootControllerTest < ActionController::TestCase
   fixtures :groups, :users, :pages, :memberships,
@@ -26,9 +26,13 @@ class RootControllerTest < ActionController::TestCase
       get :index
       assert_site_home
     end
+  end
 
+  def test_normal_login_without_site
     get :index
     assert_response :success
+    assert_nil assigns["current_site"].id
+    assert_template 'account/index'
   end
 
   def test_normal_login_without_site
@@ -63,7 +67,8 @@ class RootControllerTest < ActionController::TestCase
 
       assert_not_equal @controller.send(:most_active_groups), [],
         "Expecting a list of most recent groups."
-      assert_nil @controller.send(:most_active_groups).detect{|u| u.site_id != current_site.id},
+      assert_nil @controller.send(:most_active_groups).detect{ |u|
+        u.site_id != Site.current.id},
         "All groups should be on current_site."
       # testing for #1929
       assert_select "a[href='/groups/directory/search']", "View All"

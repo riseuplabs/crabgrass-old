@@ -3,8 +3,12 @@
 #
 class RootController < ApplicationController
   def index
-    if current_site.network
-      site_home
+    if net = current_site.network
+      if logged_in? or net.profile.may_see?
+        site_home
+      else
+        login_page
+      end
     elsif !logged_in?
       login_page
     else

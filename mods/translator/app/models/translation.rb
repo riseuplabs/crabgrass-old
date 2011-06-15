@@ -16,6 +16,7 @@ class Translation < ActiveRecord::Base
   }
 
   def validate_on_create
+    return if key_id.blank?
     # check for an existing translation for this key
     similar_translations = Key.find(key_id).translations.select do |translation|
       (translation.language_id == language_id) && (translation.site_id == site_id)

@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
+
 class ProfileTest < Test::Unit::TestCase
 
   fixtures :users, :groups, :profiles, :external_videos, :geo_countries, :geo_places, :sites
@@ -181,15 +182,19 @@ class ProfileTest < Test::Unit::TestCase
   end
 
   def test_new_public_profiles_should_be_visible_if_site_has_all_profiles_visible
-    
     with_site('site1', :all_profiles_visible => true) do
       user = User.create(:login => 'foobar')
       user.save
-      assert user.profiles.public.may_see? 
+      assert user.profiles.public.may_see?
     end
-    user = User.create(:login => 'foobar2')
-    user.save
-    assert !user.profiles.public.may_see?
+  end
+
+  def test_new_public_profile_should_be_visible_with_default_site
+    with_site('site1') do
+      user = User.create(:login => 'foobar2')
+      user.save
+      assert user.profiles.public.may_see?
+    end
   end
 
 end

@@ -30,15 +30,17 @@ module UserExtension::Pages
       has_many :pages_created, :class_name => 'Page', :foreign_key => :created_by_id, :dependent => :nullify
       has_many :pages_updated, :class_name => 'Page', :foreign_key => :updated_by_id, :dependent => :nullify
 
-      named_scope(:most_active_on, lambda do |site, time|
-        ret = {
-          :joins => "
-            INNER JOIN user_participations
-              ON users.id = user_participations.user_id
-            INNER JOIN pages
-              ON pages.id = user_participations.page_id AND
-              pages.site_id = #{site.id} AND
-              pages.type != 'AssetPage'",
+      named_scope :most_active_on, lambda { |site, time|
+        joins = <<-EOSQL
+          INNER JOIN user_participations
+            ON users.id = user_participations.user_id
+          INNER JOIN pages
+            ON pages.id = user_participations.page_id AND
+            pages.type != 'AssetPage'
+          EOSQL
+        joins << "AND pages.site_id = #{site.id}" if site.limited?
+
+        { :joins => joins,
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
           :select => "users.*, user_participations.changed_at",
@@ -46,23 +48,23 @@ module UserExtension::Pages
             ["user_participations.changed_at >= ?", time] :
             "user_participations.changed_at IS NOT NULL"
         }
-      end)
+      }
 
-      named_scope(:most_active_since, lambda do |time|
+      named_scope :most_active_since, lambda { |time|
         { :joins => "INNER JOIN user_participations ON users.id = user_participations.user_id",
           :group => "users.id",
           :order => 'count(user_participations.id) DESC',
           :conditions => ["user_participations.changed_at >= ?", time],
           :select => "users.*" }
-      end)
+      }
 
-      named_scope(:not_inactive, lambda do
+      named_scope :not_inactive, lambda {
         if self.respond_to? :inactive_user_ids
           {:conditions => ["users.id NOT IN (?)", inactive_user_ids]}
         else
           {}
         end
-      end)
+      }
 
       # some page data objects belong to users.
       # These need has many relationships so they get cleaned up if a user

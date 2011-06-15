@@ -51,7 +51,13 @@ class Translator::TranslationsController < Translator::BaseController
       redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
     else
       flash_message_now :object => @translation
-      render :action => 'new'
+      if @translation.language.nil?
+        redirect_to :controller => :languages
+      elsif @translation.key.nil?
+        redirect_to :controller => :keys, :language => @translation.language, :filter => 'untranslated'
+      else
+        render :action => 'new'
+      end
     end
   end
 
