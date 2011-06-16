@@ -927,7 +927,7 @@ en:
 
   create_widget: "Create a Widget"
   tag_cloud_limit: "Enter number of tags you want displayed"
-  networking_recently_active: "Select by activity in the recent time"
+  networking_recently_active: "View based on degree of recent activity. User activity is based on page_participations, group activity is based on group home page visits."
 
   # profiles
 

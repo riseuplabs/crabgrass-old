@@ -23,7 +23,7 @@
         display: inline
         margin-top: 12px
       form#search
-        margin-top: 45px
+        margin-top: 12px
         float: right
         display: inline
         text-align: right
@@ -67,7 +67,8 @@ nav.page
   overflow: visible
   #global-nav-container
     +container
-    +bordered-btm($masthead_background, solid)
+    +bordered-btm($global_nav_btm_brdr)
+    +bordered-top($global_nav_top_brdr)
     background: $global_nav_bg
     height: 29px
     overflow: visible
