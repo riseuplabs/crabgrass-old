@@ -110,8 +110,8 @@ $left_column_margin: 1em
 =bordered-btm($border_color: $warm_grey_border, $border_style: solid)
   border-bottom: 1px $border_style $border_color
 
-=bordered-top($border_width: 1px, $border_color: $warm_grey_border)
-  border-top: $border_width solid $border_color
+=bordered-top($border_color: $warm_grey_border, $border_style: solid, $border_width: 1px)
+  border-top: $border_width $border_style $border_color
 
 =bordered-2sides($border_color: $warm_grey_border)
   border-top: 1px solid white
