@@ -491,6 +491,8 @@ en:
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
+  edit_gallery_explaination: "Add new images or drag images to rearrange their order. Click thumbnail
+to edit image or audio."
   back_to_gallery_link: "Back to Gallery"
   gallery_changing_cover_message: "Changing cover..."
   download: Download

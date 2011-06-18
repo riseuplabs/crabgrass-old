@@ -118,6 +118,11 @@ class GalleryController < BasePageController
     redirect_to :action => 'show', :page_id => @page.id
   end
 
+  def sort
+    ids = params[:sort_gallery]
+    debugger
+  end
+
   def update_order
     if params[:images]
       text =""
