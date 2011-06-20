@@ -43,12 +43,15 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_update
     login_as :blue
-    post :update, :id => @asset.id, :title => 'New Title'
-    assert_response :success
-    assert assigns(:image).title == 'New Title'
+    post :update, :page_id => @gallery.id, :id => @asset.id,
+      :title => 'New Title'
+    assert_response :redirect
+    assert_equal 'New Title',  assigns(:image).page.title
 
-    post :update, :id => @asset.id, :cover => 1
-    assert_response :success
+    post :update, :page_id => @gallery.id, :id => @asset.id,
+      :cover => 1
+    assert_response :redirect
+    assert assigns(:image).cover
   end
 
   def test_destroy
