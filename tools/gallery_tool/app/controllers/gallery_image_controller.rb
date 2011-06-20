@@ -45,7 +45,9 @@ class GalleryImageController < BasePageController
   end
 
   def new
-    # TODO: move the upload template from the Gallery controller here
+    if request.xhr?
+      render :layout => false
+    end
   end
 
   def create
