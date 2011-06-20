@@ -19,11 +19,24 @@
   .thumbnail
     margin: 0 auto
 
-li.image_asset
-  margin: 0 1em 1em 0
-  float: left
-  span
-    display: none
+ul#sort_gallery
+  width: 532px
+  li.image_asset
+    margin: 0 16px 10px 0
+    float: left
+    max-width: 90px
+    max-height: 111px
+    overflow: hidden
+    div.control_image_asset
+      height: 21px
+      span.right
+        float: right
+    span
+      display: none
+  li.image_asset:hover
+    span
+      display: block
+
 
 .gallery_swatch_portrait, .gallery_swatch_landscape
   a

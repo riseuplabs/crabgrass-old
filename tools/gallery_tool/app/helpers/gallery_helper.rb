@@ -111,7 +111,7 @@ module GalleryHelper
                      :update => 'gallery_notify_area',
                      :loading => "update_notifier('#{I18n.t(:removing_image)}', true);"
                    }, :title => I18n.t(:remove_from_gallery),
-                   :class => 'small_icon minus_16')
+                   :class => 'small_icon trash_16')
   end
 
   def gallery_move_image_without_js(image)
