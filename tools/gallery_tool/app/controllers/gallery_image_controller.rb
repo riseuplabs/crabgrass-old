@@ -59,10 +59,11 @@ class GalleryImageController < BasePageController
       end
       redirect_to page_url(@page)
     elsif request.post?
-  		file = params[:file]
-      return if file.size == 0
-      asset = Asset.create_from_params(:uploaded_data => params[:file])
-      @page.add_image!(asset, current_user)
+      params[:assets].each do |file|
+        next if file.size == 0
+        asset = Asset.create_from_params(:uploaded_data => file)
+        @page.add_image!(asset, current_user)
+      end
       redirect_to page_url(@page)
     end
   end

@@ -32,7 +32,7 @@ class GalleryImageControllerTest < ActionController::TestCase
   def test_create
     login_as :blue
     assert_difference '@gallery.assets.count' do 
-      post :create, :page_id => @gallery.id, :file => upload_data('photo.jpg')
+      post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
     end
   end
 
