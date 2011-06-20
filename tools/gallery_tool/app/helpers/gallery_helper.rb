@@ -78,8 +78,8 @@ module GalleryHelper
       upload_target.hide();
       $$('body').first().appendChild(upload_target);")+
     spinner('show_upload')+
-    link_to_remote(I18n.t(:add_images_to_gallery_link),
-      { :url => page_url(@page, :action => 'upload'),
+    link_to_modal(I18n.t(:add_images_to_gallery_link),
+      { :url => page_url(@page, :action => 'image-new'),
         :update => 'target_for_upload',
         :loading =>'$(\'show_upload_spinner\').show();',
         :success => 'upload_target.show();',
