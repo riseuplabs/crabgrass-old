@@ -35,11 +35,12 @@ class GalleryImageController < BasePageController
       # whoever may edit the gallery, may edit the assets too.
       raise PermissionDenied unless current_user.may?(:edit, @page)
       @image = @page.images.find(params[:id])
-      page = @image.page
-      page.title = params[:title]
-      current_user.updated(page)
-      page.save!
-      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
+      # params[:image] would be something like {:cover => 1} or {:title => 'some title'}
+      if @image.update_attributes!(params[:image])
+        redirect_to page_url(@page, :action => 'image-show', :id => @image.id)
+      else
+        # raise an error
+      end
     end
   end
 
@@ -67,11 +68,13 @@ class GalleryImageController < BasePageController
     end
   end
 
-  # TODO: we can remove the assets all together now that we
+  # TODO: we cddan remove the assets all together now that we
   # only allow them to be attached to one gallery
-  def remove
+  # kclair: doesn't this only remove the one image since it's in the GalleryImageController  ?
+  def destroy
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
+    asset.destroy!  ## ???
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
@@ -83,32 +86,8 @@ class GalleryImageController < BasePageController
   end
 
   # TODO: turn these into more restful actions
-
-  def make_cover
-    unless current_user.may?(:admin, @page)
-      if request.xhr?
-        render(:text => I18n.t(:you_are_not_allowed_to_do_that),
-               :layout => false) and return
-      else
-        raise PermissionDenied
-      end
-    end
-    asset = Asset.find_by_id(params[:id])
-
-    @page.cover = asset
-    current_user.updated(@page)
-    @page.save!
-
-    if request.xhr?
-      render :text => I18n.t(:album_cover_changed), :layout => false
-    else
-      flash_message(I18n.t(:album_cover_changed))
-      redirect_to page_url(@page, :action => 'edit')
-    end
-  rescue ArgumentError # happens with wrong ID
-    raise PermissionDenied
-  end
-
+  # kclair: hmm these are actions that viewers can add, not necessarily ppl who can edit the gallery
+  # kclair: so i'm not sure they belong in update?
   def comment
     @image = @page.images.find(params[:id])
     @post = Post.build(:page => @image.page,
