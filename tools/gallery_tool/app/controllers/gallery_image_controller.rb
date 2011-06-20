@@ -2,6 +2,7 @@ class GalleryImageController < BasePageController
 
   # TODO: check if these still work with the new controller and action names
   permissions 'gallery'
+  helper 'gallery'
 
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create, :destroy]
