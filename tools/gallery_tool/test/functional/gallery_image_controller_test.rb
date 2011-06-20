@@ -25,7 +25,7 @@ class GalleryImageControllerTest < ActionController::TestCase
   def test_create_zip
     login_as :blue
     assert_difference '@gallery.assets.count' do
-      post :create, :page_id => @gallery.id, :file => upload_data('subdir.zip')
+      post :create, :page_id => @gallery.id, :zipfile => upload_data('subdir.zip')
     end
   end
 
