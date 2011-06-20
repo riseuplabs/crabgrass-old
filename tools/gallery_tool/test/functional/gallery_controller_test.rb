@@ -22,7 +22,7 @@ class GalleryControllerTest < ActionController::TestCase
     login_as :blue
 
     assert_difference 'Gallery.count' do
-      post :create, :page_id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
+      post :create, :id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
     end
 
     assert_not_nil assigns(:page)
@@ -45,11 +45,18 @@ class GalleryControllerTest < ActionController::TestCase
   end
 
   def test_update
+    # we need two images
+    @asset2 = Asset.create_from_params({
+      :uploaded_data => upload_data('photo.jpg')}) do |asset|
+        asset.parent_page = @gallery
+      end
+    @gallery.add_image!(@asset2, users(:blue))
+    @asset2.save!
     login_as :blue
-    post :update, :page_id => Gallery.find(:first).id, :title => 'New Gallery Title'
-    assert_response :success
-    assert assigns(:page).title == 'New Gallery Title'
-    # what else do we update for the gallery?
+    post :update, :page_id => Gallery.find(:first).id,
+      :sort_gallery => [@asset2.id, @asset.id]
+    assert_response :redirect
+    assert_equal [@asset2, @asset], @gallery.images
   end
 
   def test_destroy
