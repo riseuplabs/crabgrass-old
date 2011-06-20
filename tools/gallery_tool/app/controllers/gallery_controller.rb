@@ -21,7 +21,7 @@ class GalleryController < BasePageController
   # maybe call this update?
   # TODO: this has not been tested or played with
   # what exactly is this updating?
-  def update 
+  def update
     # kclair: i think all of the sort functionality should really update the images directly and use the GalleryImageController
     if ids = params[:sort_gallery]
       text =""
@@ -64,9 +64,6 @@ class GalleryController < BasePageController
   def setup_view
     @image_count = @page.images.size if @page
     @show_right_column = true
-    if !action?(:show) && @page
-      @title_addendum = render_to_string(:partial => 'back_link')
-    end
   end
 
   def build_page_data
