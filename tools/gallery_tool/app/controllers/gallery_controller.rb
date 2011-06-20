@@ -20,7 +20,9 @@ class GalleryController < BasePageController
 
   # maybe call this update?
   # TODO: this has not been tested or played with
-  def sort
+  # what exactly is this updating?
+  def update 
+    # kclair: i think all of the sort functionality should really update the images directly and use the GalleryImageController
     if ids = params[:sort_gallery]
       text =""
       ids.each_with_index do |id, index|
@@ -37,6 +39,7 @@ class GalleryController < BasePageController
       new_pos = 0 if new_pos > new_pos.size-1
       showing.insert_at(new_pos)
     end
+    @page.update_attributes!(params[:page])
     current_user.updated(@page)
     if request.xhr?
       render :text => I18n.t(:order_changed), :layout => false
@@ -48,6 +51,11 @@ class GalleryController < BasePageController
     end
   rescue => exc
     render :text => I18n.t(:error_saving_new_order_message) %{ :error_message => exc.message}
+  end
+
+  def destroy
+    destroy_page_data
+    @page.delete
   end
 
 
