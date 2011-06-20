@@ -4,6 +4,7 @@ class GalleryControllerTest < ActionController::TestCase
   fixtures :pages, :users
 
   def setup
+    # make some galleries? there are no galleries in fixtures.
   end
 
 # this controller does not really even exist yet:
@@ -43,24 +44,29 @@ class GalleryControllerTest < ActionController::TestCase
     end
   end
 
-  def test_upload_zipfile
+  def test_show
+    gallery = Gallery.find(:first)
     login_as :blue
+    get :show, :id => gallery.id
+    assert_response :success
+    assert_not_nil assigns(:images)
+  end
 
-    assert_difference 'Gallery.count' do
-      post :create, :id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
-    end
+  def test_edit
+    login_as :blue
+    get :edit, :id => Gallery.find(:first).id
+    assert_response :success
+  end
 
-    assert_difference 'Asset.count' do
-      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('no-subdir.zip')
-    end
+  def test_update
+    login_as :blue
+    post :update, :id => Galler.find(:first).id, :title => 'New Gallery Title'
+    assert_response :success
+    assert assigns(:page).title == 'New Gallery Title'
+    # what else do we update for the gallery?
+  end
 
-    assert_difference 'Asset.count' do
-      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('subdir.zip')
-    end
-
-    assert_equal 3, assigns(:page).images.count
-    assert_not_nil assigns(:page).page_terms
-    assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
+  def test_destroy
   end
 
 end
