@@ -24,14 +24,16 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_create_zip
     login_as :blue
-    post :create, :page_id => @gallery.id, :file => upload_data('subdir.zip')
-    assert_response :success  # or does this redirect to the edit page?
+    assert_difference '@gallery.assets.count' do
+      post :create, :page_id => @gallery.id, :zipfile => upload_data('subdir.zip')
+    end
   end
 
   def test_create
     login_as :blue
-    post :create, :page_id => @gallery.id, :file => upload_data('photo.jpg')
-    assert_response :success # or does this redirect to the edit page?
+    assert_difference '@gallery.assets.count' do 
+      post :create, :page_id => @gallery.id, :file => upload_data('photo.jpg')
+    end
   end
 
   def test_edit
