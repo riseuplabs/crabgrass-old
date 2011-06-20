@@ -5,7 +5,8 @@ class GalleryImageController < BasePageController
   helper 'gallery'
 
   # could we verify delete as the method on destry?
-  verify :method => :post, :only => [:create, :destroy]
+  verify :method => :post, :only => [:create]
+  verify :method => :delete, :only => [:destroy]
 
 
   def show
@@ -76,7 +77,7 @@ class GalleryImageController < BasePageController
   def destroy
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
-    asset.destroy!  ## ???
+    asset.destroy  ## ???
     if request.xhr?
       undo_link = undo_remove_link(params[:id], params[:position])
       js = javascript_tag("remove_image(#{params[:id]});")
