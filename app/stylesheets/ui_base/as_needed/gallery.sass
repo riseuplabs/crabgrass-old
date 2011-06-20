@@ -9,15 +9,21 @@
       &:hover
         text-decoration: underline
 
-.swatches
-  .gallery_swatch_portrait, .gallery_swatch_landscape
-    a
-      border-width: 3px
-
 .cover
   margin-bottom: 1em
   .thumbnail
     margin: 0 auto
+
+h2.title
+  margin-top: 30px
+  margin-bottom: 5px
+
+.info
+  font-style: italic
+
+.action
+  margin-top: 20px
+  margin-bottom: 20px
 
 ul#sort_gallery
   width: 532px
@@ -37,138 +43,3 @@ ul#sort_gallery
     span
       display: block
 
-
-.gallery_swatch_portrait, .gallery_swatch_landscape
-  a
-    clip: border
-    background: white none repeat scroll 0 0
-    border: 1px solid white
-    display: block
-    margin: 0 5px 5px 0
-    outline: #999999 solid 1px
-    overflow: hidden
-  span
-    display: none
-
-.cover a.thumbnail
-  border-width: 3px
-
-.gallery-nav
-  .button
-    float: right
-    height: 26px
-    line-height: 26px
-    display: block
-    font-size: 11px
-    color: #5a99c9
-    font-weight: bold
-    border: 1px solid #e1e1e1
-    background-color: white
-    &:hover
-      background-color: #eff9fe
-      color: #266e94
-      text-decoration: none
-  .next
-    -webkit-border-top-right-radius: 4px
-    -webkit-border-bottom-right-radius: 4px
-    -moz-border-radius-topright: 4px
-    -moz-border-radius-bottomright: 4px
-    border-left-style: dotted
-    padding-right: 10px
-    padding-left: 10px
-  .previous
-    padding-left: 10px
-    padding-right: 10px
-    border-right: none
-    -webkit-border-top-left-radius: 4px
-    -webkit-border-bottom-left-radius: 4px
-    -moz-border-radius-topleft: 4px
-    -moz-border-radius-bottomleft: 4px
-  .meta
-    margin-right: 16px
-    color: #898989
-    display: inline
-    margin-top: 9px
-    font-size: 11px
-  a
-    color: #5a98c8
-    font-size: 11px
-    text-decoration: none
-    &:hover
-      text-decoration: underline
-  .gallery-actions a
-    padding: 2px 0px 4px 24px
-    margin-right: 16px
-  .gallery-nav .meta
-    float: right
-
-.gallery-item
-  padding: 20px
-  text-align: center
-  background: white
-  .description
-    color: #73879a
-    font-style: italic
-    font-family: Times
-    font-size: 16px
-    text-align: center
-    margin-top: 10px
-    background: white
-  .meta
-    text-align: right
-    margin: 10px 0px 0px
-    color: #99a9b7
-
-.title2
-  text-align: left
-
-div.gallery_edit .gallery_swatch
-  position: relative
-  width: 7em
-  height: 7em
-  max-width: 7em
-  max-height: 7em
-  border-style: solid
-  border-width: 1px
-  border-color: #cccccc
-  text-align: center
-  overflow: hidden
-  margin: 1em
-
-.swatch_container
-  position: relative
-  max-height: 7em
-  max-width: 7em
-  height: 7em
-  width: 7em
-  float: left
-  margin: 1em
-  padding: 0em
-  &:hover .image_control
-    display: block
-
-.swatch_container_hover
-  border: dashed 2px #cccccc
-  height: 8em
-  width: 8em
-
-.image_control
-  position: absolute
-  bottom: 0px
-  display: none
-  a img
-    margin-left: 0.2em
-
-#target_for_upload
-  position: absolute
-  left: 40%
-  width: 40em
-  top: 55%
-  padding: 10px
-  border: solid 2px #bbbbbb
-  background: white
-  margin-left: -20em
-
-.gallery_swatch_edit
-  position: absolute !important
-  margin: 0em !important

@@ -72,13 +72,13 @@ module GalleryHelper
     return output
   end
 
-  def choose_files_link
+  def upload_images_link
     javascript_tag("upload_target = document.createElement('div');
       upload_target.id = 'target_for_upload';
       upload_target.hide();
       $$('body').first().appendChild(upload_target);")+
     spinner('show_upload')+
-    link_to_remote(I18n.t(:upload_images_link),
+    link_to_remote(I18n.t(:add_images_to_gallery_link),
       { :url => page_url(@page, :action => 'upload'),
         :update => 'target_for_upload',
         :loading =>'$(\'show_upload_spinner\').show();',
