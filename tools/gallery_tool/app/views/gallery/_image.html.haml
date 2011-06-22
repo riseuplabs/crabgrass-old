@@ -1,2 +1,3 @@
 %li[image]
-  = link_to_asset image, :medium, :crop => '128x128', :url => page_url(@page, :action => 'image-show', :id => image.id)
+  %div[image, :control]
+  = link_to_asset image, :medium, :crop => '90x90', :url => page_url(@page, :action => 'image-show', :id => image.id)
