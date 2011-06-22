@@ -127,7 +127,7 @@ Element.addMethods({
 		}
 		if(!delta) { return; }
 		element = Event.extend(event).target;
-		element = Element.extend(element.nodeType === Node.TEXT_NODE ? element.parentNode : element);
+		element = Element.extend(element.fire == undefined ? element.parentNode : element);
 		custom_event = element.fire('mouse:wheel',{ delta: delta });
 		if(custom_event.stopped) {
 			Event.stop(event);
