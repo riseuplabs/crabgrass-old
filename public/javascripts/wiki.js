@@ -1,451 +1,8837 @@
-var HtmlEditor=Class.create({initialize:function(a){this.editor=Xinha.getEditor("wiki_body_html-"+a)},valid:function(){return this.editor},refresh:function(){this.editor.sizeEditor();this.editor.activateEditor();
-this.editor.focusEditor()},area:function(){return this.editor._iframe},content:function(){return this.editor.getEditorContent()},selectedContent:function(){return this.editor.getSelectedHTML()},selectedAnchor:function(){var d=null;
-var e=this.editor.getSelection();var c=this.editor.createRange(e);var b=this.editor.activeElement(e);if(b!=null&&b.tagName.toLowerCase()=="a"){d=b}else{b=this.editor._getFirstAncestor(e,"a");if(b!=null){d=b
-}}if(d){d.setAttribute("href",this.relativeHref(d.getAttribute("href")));return d}else{return null}},relativeHref:function(a){var b=location.href.replace(/(https?:\/\/[^\/]*)\/.*/,"$1")+"/";return a.replace(b,"")
-},saveSelection:function(){current_editor_range=this.editor.saveSelection()},restoreSelection:function(){this.editor.restoreSelection(current_editor_range)},setContent:function(a){this.editor.setEditorContent(a)
-},execCommand:function(a,b){this.editor.execCommand(a,false,b)},insert:function(a){this.editor.insertHTML(a)},insertImage:function(a,b){if(b){this.insert('<a href="#{link}"><img src="#{url}" /></a>'.interpolate({url:a,link:b}))
-}else{this.insert('<img src="#{url}" />'.interpolate({url:a}))}},insertAnchor:function(c,a){var b=this.selectedAnchor();if(b){b.href=a;b.innerHTML=c}else{if(c){this.insert('<a href="#{href}">#{label}</a>'.interpolate({href:a,label:c}))
-}}},clearAnchor:function(){var b=this.selectedAnchor();var c=b.parentNode;while(b.hasChildNodes()){c.insertBefore(b.removeChild(b.childNodes[0]),b)}c.removeChild(b);this.editor.updateToolbar()}});if(typeof(Control)=="undefined"){Control={}
-}var $proc=function(a){return typeof(a)=="function"?a:function(){return a}};var $value=function(a){return typeof(a)=="function"?a():a};Object.Event={extend:function(a){a._objectEventSetup=function(b){this._observers=this._observers||{};
-this._observers[b]=this._observers[b]||[]};a.observe=function(d,b){if(typeof(d)=="string"&&typeof(b)!="undefined"){this._objectEventSetup(d);if(!this._observers[d].include(b)){this._observers[d].push(b)
-}}else{for(var c in d){this.observe(c,d[c])}}};a.stopObserving=function(c,b){this._objectEventSetup(c);if(c&&b){this._observers[c]=this._observers[c].without(b)}else{if(c){this._observers[c]=[]}else{this._observers={}
-}}};a.observeOnce=function(d,c){var b=function(){c.apply(this,arguments);this.stopObserving(d,b)}.bind(this);this._objectEventSetup(d);this._observers[d].push(b)};a.notify=function(g){this._objectEventSetup(g);
-var d=[];var b=$A(arguments).slice(1);try{for(var c=0;c<this._observers[g].length;++c){d.push(this._observers[g][c].apply(this._observers[g][c],b)||null)}}catch(f){if(f==$break){return false}else{throw f
-}}return d};if(a.prototype){a.prototype._objectEventSetup=a._objectEventSetup;a.prototype.observe=a.observe;a.prototype.stopObserving=a.stopObserving;a.prototype.observeOnce=a.observeOnce;a.prototype.notify=function(g){if(a.notify){var b=$A(arguments).slice(1);
-b.unshift(this);b.unshift(g);a.notify.apply(a,b)}this._objectEventSetup(g);var b=$A(arguments).slice(1);var d=[];try{if(this.options&&this.options[g]&&typeof(this.options[g])=="function"){d.push(this.options[g].apply(this,b)||null)
-}for(var c=0;c<this._observers[g].length;++c){d.push(this._observers[g][c].apply(this._observers[g][c],b)||null)}}catch(f){if(f==$break){return false}else{throw f}}return d}}}};Element.addMethods({observeOnce:function(c,d,b){var a=function(){b.apply(this,arguments);
-Element.stopObserving(c,d,a)};Element.observe(c,d,a)}});Object.extend(Event,(function(){var b=Event.cache;function c(j){if(j._prototypeEventID){return j._prototypeEventID[0]}arguments.callee.id=arguments.callee.id||1;
-return j._prototypeEventID=[++arguments.callee.id]}function g(j){if(j&&j.include(":")){return"dataavailable"}if(!Prototype.Browser.IE){j={mouseenter:"mouseover",mouseleave:"mouseout"}[j]||j}return j}function a(j){return b[j]=b[j]||{}
-}function f(l,j){var k=a(l);return k[j]=k[j]||[]}function h(k,j,l){var o=c(k);var n=f(o,j);if(n.pluck("handler").include(l)){return false}var m=function(p){if(!Event||!Event.extend||(p.eventName&&p.eventName!=j)){return false
-}Event.extend(p);l.call(k,p)};if(!(Prototype.Browser.IE)&&["mouseenter","mouseleave"].include(j)){m=m.wrap(function(r,q){var p=q.relatedTarget;var s=q.currentTarget;if(p&&p.nodeType==Node.TEXT_NODE){p=p.parentNode
-}if(p&&p!=s&&!p.descendantOf(s)){return r(q)}})}m.handler=l;n.push(m);return m}function i(m,j,k){var l=f(m,j);return l.find(function(n){return n.handler==k})}function d(m,j,k){var l=a(m);if(!l[j]){return false
-}l[j]=l[j].without(i(m,j,k))}function e(){for(var k in b){for(var j in b[k]){b[k][j]=null}}}if(window.attachEvent){window.attachEvent("onunload",e)}return{observe:function(l,j,m){l=$(l);var k=g(j);var n=h(l,j,m);
-if(!n){return l}if(l.addEventListener){l.addEventListener(k,n,false)}else{l.attachEvent("on"+k,n)}return l},stopObserving:function(l,j,m){l=$(l);var o=c(l),k=g(j);if(!m&&j){f(o,j).each(function(p){l.stopObserving(j,p.handler)
-});return l}else{if(!j){Object.keys(a(o)).each(function(p){l.stopObserving(p)});return l}}var n=i(o,j,m);if(!n){return l}if(l.removeEventListener){l.removeEventListener(k,n,false)}else{l.detachEvent("on"+k,n)
-}d(o,j,m);return l},fire:function(l,k,j){l=$(l);if(l==document&&document.createEvent&&!l.dispatchEvent){l=document.documentElement}var m;if(document.createEvent){m=document.createEvent("HTMLEvents");m.initEvent("dataavailable",true,true)
-}else{m=document.createEventObject();m.eventType="ondataavailable"}m.eventName=k;m.memo=j||{};if(document.createEvent){l.dispatchEvent(m)}else{l.fireEvent(m.eventType,m)}return Event.extend(m)}}})());Object.extend(Event,Event.Methods);
-Element.addMethods({fire:Event.fire,observe:Event.observe,stopObserving:Event.stopObserving});Object.extend(document,{fire:Element.Methods.fire.methodize(),observe:Element.Methods.observe.methodize(),stopObserving:Element.Methods.stopObserving.methodize()});
-(function(){function a(c){var d;if(c.wheelDelta){d=c.wheelDelta/120}else{if(c.detail){d=-c.detail/3}}if(!d){return}var b=Event.element(c).fire("mouse:wheel",{delta:d});if(b.stopped){c.stop();return false
-}}document.observe("mousewheel",a);document.observe("DOMMouseScroll",a)})();var IframeShim=Class.create({initialize:function(){this.element=new Element("iframe",{style:"position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);display:none",src:"javascript:void(0);",frameborder:0});
-$(document.body).insert(this.element)},hide:function(){this.element.hide();return this},show:function(){this.element.show();return this},positionUnder:function(a){var a=$(a);var c=a.cumulativeOffset();
-var b=a.getDimensions();this.element.setStyle({left:c[0]+"px",top:c[1]+"px",width:b.width+"px",height:b.height+"px",zIndex:a.getStyle("zIndex")-1}).show();return this},setBounds:function(a){for(prop in a){a[prop]+="px"
-}this.element.setStyle(a);return this},destroy:function(){if(this.element){this.element.remove()}return this}});if(typeof(Prototype)=="undefined"){throw"Control.TextArea requires Prototype to be loaded."
-}if(typeof(Object.Event)=="undefined"){throw"Control.TextArea requires Object.Event to be loaded."}Control.TextArea=Class.create({initialize:function(a){this.onChangeTimeout=false;this.element=$(a);$(this.element).observe("keyup",this.doOnChange.bindAsEventListener(this));
-$(this.element).observe("paste",this.doOnChange.bindAsEventListener(this));$(this.element).observe("input",this.doOnChange.bindAsEventListener(this));if(!!document.selection){$(this.element).observe("mouseup",this.saveRange.bindAsEventListener(this));
-$(this.element).observe("keyup",this.saveRange.bindAsEventListener(this))}},doOnChange:function(a){if(this.onChangeTimeout){window.clearTimeout(this.onChangeTimeout)}this.onChangeTimeout=window.setTimeout(function(){this.notify("change",this.getValue())
-}.bind(this),Control.TextArea.onChangeTimeoutLength)},saveRange:function(){this.range=document.selection.createRange()},getValue:function(){return this.element.value},getSelection:function(){if(!!document.selection){return document.selection.createRange().text
-}else{if(!!this.element.setSelectionRange){return this.element.value.substring(this.element.selectionStart,this.element.selectionEnd)}else{return false}}},replaceSelection:function(c){var b=this.element.scrollTop;
-if(!!document.selection){this.element.focus();var a=(this.range)?this.range:document.selection.createRange();a.text=c;a.select()}else{if(!!this.element.setSelectionRange){var d=this.element.selectionStart;
-this.element.value=this.element.value.substring(0,d)+c+this.element.value.substring(this.element.selectionEnd);this.element.setSelectionRange(d+c.length,d+c.length)}}this.doOnChange();this.element.focus();
-this.element.scrollTop=b},wrapSelection:function(a,b){this.replaceSelection(a+this.getSelection()+b)},insertBeforeSelection:function(a){this.replaceSelection(a+this.getSelection())},insertAfterSelection:function(a){this.replaceSelection(this.getSelection()+a)
-},collectFromEachSelectedLine:function(c,a,b){this.replaceSelection((a||"")+$A(this.getSelection().split("\n")).collect(c).join("\n")+(b||""))},insertBeforeEachSelectedLine:function(c,a,b){this.collectFromEachSelectedLine(function(d){},a,b)
-}});Object.extend(Control.TextArea,{onChangeTimeoutLength:500});Object.Event.extend(Control.TextArea);Control.TextArea.ToolBar=Class.create({initialize:function(a,b){this.textarea=a;if(b){this.container=$(b)
-}else{this.container=$(document.createElement("ul"));this.textarea.element.parentNode.insertBefore(this.container,this.textarea.element)}},attachButton:function(a,b){a.onclick=function(){return false};
-$(a).observe("click",b.bindAsEventListener(this.textarea))},addButton:function(d,g,e){var b=document.createElement("li");var c=document.createElement("a");c.href="#";c.title=d;if(e["class"]){Element.extend(c).addClassName(e["class"]);
-e["class"]=null}this.attachButton(c,g);b.appendChild(c);Object.extend(c,e||{});if(d){var f=document.createElement("span");f.innerHTML=d;c.appendChild(f)}this.container.appendChild(b)}});function wikiEditAddToolbar(f,b,e,d){var a=new Control.TextArea(f);
-var c=new Control.TextArea.ToolBar(a);c.container.addClassName("markdown_toolbar");c.container.id=b;c.addButton("Emphasis",function(){this.wrapSelection("_","_")},{"class":"markdown_italics_button",id:"markdown_italics_button-"+e});
-c.addButton("Strong emphasis",function(){this.wrapSelection("*","*")},{"class":"markdown_bold_button",id:"markdown_bold_button-"+e});c.addButton("Link",function(){var h=this.getSelection();var g=prompt("Enter Link Target","");
-if(g==null){return}this.replaceSelection("["+(h==""?"Link Text":h)+"->"+(g==""?"http://link_url/":g)+"]")},{"class":"markdown_link_button",id:"markdown_link_button-"+e});c.addButton("Image",function(){d()
-},{"class":"markdown_image_button",id:"markdown_image_button-"+e});c.addButton("Heading",function(){var g=this.getSelection();if(g==""){g="Heading"}this.replaceSelection("\nh1. "+g+"\n")},{"class":"markdown_heading_button",id:"markdown_heading_button-"+e});
-c.addButton("Unordered List",function(g){this.collectFromEachSelectedLine(function(h){return g.shiftKey?(h.match(/^\*{2,}/)?h.replace(/^\*/,""):h.replace(/^\*\s/,"")):(h.match(/\*+\s/)?"*":"* ")+h})},{"class":"markdown_unordered_list_button",id:"markdown_unordered_list_button-"+e});
-c.addButton("Ordered List",function(h){var g=0;this.collectFromEachSelectedLine(function(i){return h.shiftKey?(i.match(/^\#{2,}/)?i.replace(/^\#/,""):i.replace(/^\#\s/,"")):(i.match(/\#+\s/)?"#":"# ")+i
-})},{"class":"markdown_ordered_list_button",id:"markdown_ordered_list_button-"+e});c.addButton("Block Quote",function(g){this.collectFromEachSelectedLine(function(h){return g.shiftKey?h.replace(/^\> /,""):"> "+h
-})},{"class":"markdown_quote_button",id:"markdown_quote_button-"+e});c.addButton("Code Block",function(g){this.wrapSelection("<code>","</code>")},{"class":"markdown_code_button",id:"markdown_code_button-"+e});
-c.addButton("Help",quickRedReference,{"class":"markdown_help_button",id:"markdown_help_button-"+e})}_editor_url="/javascripts/wiki/xinha/";function activeRadioValue(a){try{return $$("input[name="+a+"]").detect(function(c){return $F(c)
-}).value}catch(b){}}function insertImage(d){var f=new HtmlEditor(d);var i=$("wiki_body-"+d);try{var j=activeRadioValue("image");var h=$("link_to_image").checked;var k=activeRadioValue("image_size");var c=$(j+"_thumbnail_data").value.evalJSON();
-var b=c[k];if(f.valid()&&isTabVisible(f.area())){f.restoreSelection();f.insertImage(b,h)}else{if(i&&isTabVisible(i)){var a="\n!"+b+"!";if(h){a+=":"+c.full}a+="\n";insertAtCursor(i,a)}}}catch(g){}}function updateLink(a,c){var b=new HtmlEditor(a);
-b.restoreSelection();if(c=="create"||c=="update"){b.insertAnchor($("link_label").value,$("link_url").value)}else{if(c=="clear"){b.clearAnchor()}}}function insertAtCursor(a,f){var d=$(a);if(document.selection){var e=document.selection.createRange();
-e.text=f}else{if(d.selectionStart||d.selectionStart=="0"){var c=d.selectionStart;var b=d.selectionEnd;d.value=d.value.substring(0,c)+f+d.value.substring(b,d.value.length);d.setSelectionRange(c,b+f.length);
-d.scrollTop=c}else{d.value+=f}}d.focus()}function updateEditor(b,d,f){if(b.status!=200){return false}var c=new HtmlEditor(f);var a=$("wiki_body-"+f);var e=$("wiki_preview-"+f);if(b.responseJSON.body_preview){e.update(getBackNewLines(b.responseJSON.body_preview))
-}else{e.update("");c.setContent(getBackNewLines(b.responseJSON.body_html)||"");a.setValue(getBackNewLines(b.responseJSON.body)||"")}if(d=="greencloth"){showTab($("link-tab-greencloth"),$("tab-edit-greencloth"));
-a.focus()}else{if(d=="html"){showTab($("link-tab-html"),$("tab-edit-html"));c.refresh()}else{if(d=="preview"){showTab($("link-tab-preview"),$("tab-edit-preview"))}}}}function getBackNewLines(a){if(a){return a.replace(/__NEW_LINE__/g,"\n").replace(/__TAB_CHAR__/g,"\t")
-}}function isTabSelected(a){return $(a).hasClassName("active")}function encodedEditorData(c){var b=$("wiki_body-"+c);var a=new HtmlEditor(c);if(b&&b.getValue()){return b.serialize()}if(a.content()){return $H({"wiki[body_html]":a.content()}).toQueryString()
-}}function editorData(b,a){var c="";if(b=="greencloth"){c=$("wiki_body-"+a).getValue()}else{if(b=="html"){b=new HtmlEditor(a);c=b.content();if(c=="<br>"){c=""}}}return c}function selectWikiEditorTab(b,a){if(isTabSelected(a.tab_id)){return false
-}else{if(editorData(a.editor,a.wiki_id)){showTab(a.tab_id,a.area_id)}else{new Ajax.Request(b,{asynchronous:true,evalScripts:true,method:"post",onComplete:function(c){updateEditor(c,a.editor,a.wiki_id)},onLoading:function(c){showTab(a.tab_id,"tab-edit-loading")
-},parameters:encodedEditorData(a.wiki_id)+"&authenticity_token="+encodeURIComponent(a.token)})}}return true}Xinha.version={Release:"Trunk",Head:"$HeadURL: http://svn.xinha.webfactional.com/trunk/XinhaCore.js $".replace(/^[^:]*:\s*(.*)\s*\$$/,"$1"),Date:"$LastChangedDate: 2009-04-24 07:50:25 +1200 (Fri, 24 Apr 2009) $".replace(/^[^:]*:\s*([0-9\-]*) ([0-9:]*) ([+0-9]*) \((.*)\)\s*\$/,"$4 $2 $3"),Revision:"$LastChangedRevision: 1188 $".replace(/^[^:]*:\s*(.*)\s*\$$/,"$1"),RevisionBy:"$LastChangedBy: douglas $".replace(/^[^:]*:\s*(.*)\s*\$$/,"$1")};
-Xinha._resolveRelativeUrl=function(d,c){if(c.match(/^([^:]+\:)?\/\//)){return c}else{var a=d.split("/");if(a[a.length-1]===""){a.pop()}var e=c.split("/");if(e[0]=="."){e.shift()}while(e[0]==".."){a.pop();
-e.shift()}return a.join("/")+"/"+e.join("/")}};if(typeof _editor_url=="string"){_editor_url=_editor_url.replace(/\x2f*$/,"/");if(!_editor_url.match(/^([^:]+\:)?\//)){(function(){var a=window.location.toString().replace(/\?.*$/,"").split("/");
-a.pop();_editor_url=Xinha._resolveRelativeUrl(a.join("/"),_editor_url)})()}}else{alert("WARNING: _editor_url is not set!  You should set this variable to the editor files path; it should preferably be an absolute path, like in '/xinha/', but it can be relative if you prefer.  Further we will try to load the editor files correctly but we'll probably fail.");
-_editor_url=""}if(typeof _editor_lang=="string"){_editor_lang=_editor_lang.toLowerCase()}else{_editor_lang="en"}if(typeof _editor_skin!=="string"){_editor_skin=""}if(typeof _editor_icons!=="string"){_editor_icons=""
-}var __xinhas=[];Xinha.agt=navigator.userAgent.toLowerCase();Xinha.is_ie=((Xinha.agt.indexOf("msie")!=-1)&&(Xinha.agt.indexOf("opera")==-1));Xinha.ie_version=parseFloat(Xinha.agt.substring(Xinha.agt.indexOf("msie")+5));
-Xinha.is_opera=(Xinha.agt.indexOf("opera")!=-1);if(Xinha.is_opera&&Xinha.agt.match(/opera[\/ ]([0-9.]+)/)){Xinha.opera_version=parseFloat(RegExp.$1)}else{Xinha.opera_version=0}Xinha.is_khtml=(Xinha.agt.indexOf("khtml")!=-1);
-Xinha.is_webkit=(Xinha.agt.indexOf("applewebkit")!=-1);Xinha.webkit_version=parseInt(navigator.appVersion.replace(/.*?AppleWebKit\/([\d]).*?/,"$1"),10);Xinha.is_safari=(Xinha.agt.indexOf("safari")!=-1);
-Xinha.is_chrome=(Xinha.agt.indexOf("chrome")!=-1);Xinha.is_mac=(Xinha.agt.indexOf("mac")!=-1);Xinha.is_mac_ie=(Xinha.is_ie&&Xinha.is_mac);Xinha.is_win_ie=(Xinha.is_ie&&!Xinha.is_mac);Xinha.is_gecko=(navigator.product=="Gecko")||Xinha.is_opera;
-Xinha.is_real_gecko=(navigator.product=="Gecko"&&!Xinha.is_webkit);Xinha.is_ff3=Xinha.is_real_gecko&&parseInt(navigator.productSub,10)>=2007121016;Xinha.is_ff2=Xinha.is_real_gecko&&parseInt(navigator.productSub,10)<2007121016;
-Xinha.isRunLocally=document.URL.toLowerCase().search(/^file:/)!=-1;Xinha.is_designMode=(typeof document.designMode!="undefined"&&!Xinha.is_ie);Xinha.checkSupportedBrowser=function(){return Xinha.is_real_gecko||(Xinha.is_opera&&Xinha.opera_version>=9.2)||Xinha.ie_version>=5.5||Xinha.webkit_version>=522
-};Xinha.isSupportedBrowser=Xinha.checkSupportedBrowser();if(Xinha.isRunLocally&&Xinha.isSupportedBrowser){alert('Xinha *must* be installed on a web server. Locally opened files (those that use the "file://" protocol) cannot properly function. Xinha will try to initialize but may not be correctly loaded.')
-}function Xinha(a,c){if(!Xinha.isSupportedBrowser){return}if(!a){throw new Error("Tried to create Xinha without textarea specified.")}if(typeof c=="undefined"){this.config=new Xinha.Config()}else{this.config=c
-}if(typeof a!="object"){a=Xinha.getElementById("textarea",a)}this._textArea=a;this._textArea.spellcheck=false;Xinha.freeLater(this,"_textArea");this._initial_ta_size={w:a.style.width?a.style.width:(a.offsetWidth?(a.offsetWidth+"px"):(a.cols+"em")),h:a.style.height?a.style.height:(a.offsetHeight?(a.offsetHeight+"px"):(a.rows+"em"))};
-if(document.getElementById("loading_"+a.id)||this.config.showLoading){if(!document.getElementById("loading_"+a.id)){Xinha.createLoadingMessage(a)}this.setLoadingMessage(Xinha._lc("Constructing object"))
-}this._editMode="wysiwyg";this.plugins={};this._timerToolbar=null;this._timerUndo=null;this._undoQueue=[this.config.undoSteps];this._undoPos=-1;this._customUndo=true;this._mdoc=document;this.doctype="";
-this.__htmlarea_id_num=__xinhas.length;__xinhas[this.__htmlarea_id_num]=this;this._notifyListeners={};var b={right:{on:true,container:document.createElement("td"),panels:[]},left:{on:true,container:document.createElement("td"),panels:[]},top:{on:true,container:document.createElement("td"),panels:[]},bottom:{on:true,container:document.createElement("td"),panels:[]}};
-for(var d in b){if(!b[d].container){continue}b[d].div=b[d].container;b[d].container.className="panels panels_"+d;Xinha.freeLater(b[d],"container");Xinha.freeLater(b[d],"div")}this._panels=b;this._statusBar=null;
-this._statusBarTree=null;this._statusBarTextMode=null;this._statusBarItems=[];this._framework={};this._htmlArea=null;this._iframe=null;this._doc=null;this._toolBar=this._toolbar=null;this._toolbarObjects={};
-this.plugins.Events={name:"Events",developer:"The Xinha Core Developer Team",instance:c.Events}}Xinha.onload=function(){};Xinha.init=function(){Xinha.onload()};Xinha.RE_tagName=/(<\/|<)\s*([^ \t\n>]+)/ig;
-Xinha.RE_doctype=/(<!doctype((.|\n)*?)>)\n?/i;Xinha.RE_head=/<head>((.|\n)*?)<\/head>/i;Xinha.RE_body=/<body[^>]*>((.|\n|\r|\t)*?)<\/body>/i;Xinha.RE_Specials=/([\/\^$*+?.()|{}\[\]])/g;Xinha.escapeStringForRegExp=function(a){return a.replace(Xinha.RE_Specials,"\\$1")
-};Xinha.RE_email=/^[_a-z\d\-\.]{3,}@[_a-z\d\-]{2,}(\.[_a-z\d\-]{2,})+$/i;Xinha.RE_url=/(https?:\/\/)?(([a-z0-9_]+:[a-z0-9_]+@)?[a-z0-9_\-]{2,}(\.[a-z0-9_\-]{2,}){2,}(:[0-9]+)?(\/\S+)*)/i;Xinha.Config=function(){this.version=Xinha.version.Revision;
-this.width="auto";this.height="auto";this.sizeIncludesBars=true;this.sizeIncludesPanels=true;this.panel_dimensions={left:"200px",right:"200px",top:"100px",bottom:"100px"};this.iframeWidth=null;this.statusBar=true;
-this.htmlareaPaste=false;this.mozParaHandler="best";this.getHtmlMethod="DOMwalk";this.undoSteps=20;this.undoTimeout=500;this.changeJustifyWithDirection=false;this.fullPage=false;this.pageStyle="";this.pageStyleSheets=[];
-this.baseHref=null;this.expandRelativeUrl=true;this.stripBaseHref=true;this.stripSelfNamedAnchors=true;this.only7BitPrintablesInURLs=true;this.sevenBitClean=false;this.specialReplacements={};this.inwardHtml=function(c){return c
-};this.outwardHtml=function(c){return c};this.autofocus=false;this.killWordOnPaste=true;this.makeLinkShowsTarget=true;this.charSet=(typeof document.characterSet!="undefined")?document.characterSet:document.charset;
-this.browserQuirksMode=null;this.imgURL="images/";this.popupURL="popups/";this.htmlRemoveTags=null;this.flowToolbars=true;this.toolbarAlign="left";this.showLoading=false;this.stripScripts=true;this.convertUrlsToLinks=true;
-this.colorPickerCellSize="6px";this.colorPickerGranularity=18;this.colorPickerPosition="bottom,right";this.colorPickerWebSafe=false;this.colorPickerSaveColors=20;this.fullScreen=false;this.fullScreenMargins=[0,0,0,0];
-this.toolbar=[["popupeditor"],["separator","formatblock","fontname","fontsize","bold","italic","underline","strikethrough"],["separator","forecolor","hilitecolor","textindicator"],["separator","subscript","superscript"],["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],["separator","insertorderedlist","insertunorderedlist","outdent","indent"],["separator","inserthorizontalrule","createlink","insertimage","inserttable"],["linebreak","separator","undo","redo","selectall","print"],(Xinha.is_gecko?[]:["cut","copy","paste","overwrite","saveas"]),["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright","righttoleft"],["separator","htmlmode","showhelp","about"]];
-this.fontname={"&mdash; font &mdash;":"",Arial:"arial,helvetica,sans-serif","Courier New":"courier new,courier,monospace",Georgia:"georgia,times new roman,times,serif",Tahoma:"tahoma,arial,helvetica,sans-serif","Times New Roman":"times new roman,times,serif",Verdana:"verdana,arial,helvetica,sans-serif",impact:"impact",WingDings:"wingdings"};
-this.fontsize={"&mdash; size &mdash;":"","1 (8 pt)":"1","2 (10 pt)":"2","3 (12 pt)":"3","4 (14 pt)":"4","5 (18 pt)":"5","6 (24 pt)":"6","7 (36 pt)":"7"};this.formatblock={"&mdash; format &mdash;":"","Heading 1":"h1","Heading 2":"h2","Heading 3":"h3","Heading 4":"h4","Heading 5":"h5","Heading 6":"h6",Normal:"p",Address:"address",Formatted:"pre"};
-this.dialogOptions={centered:true,greyout:true,closeOnEscape:true};this.Events={};this.customSelects={};this.debug=false;this.URIs={blank:_editor_url+"popups/blank.html",link:_editor_url+"modules/CreateLink/link.html",insert_image:_editor_url+"modules/InsertImage/insert_image.html",insert_table:_editor_url+"modules/InsertTable/insert_table.html",select_color:_editor_url+"popups/select_color.html",help:_editor_url+"popups/editor_help.html"};
-this.btnList={bold:["Bold",Xinha._lc({key:"button_bold",string:["ed_buttons_main.png",3,2]},"Xinha"),false,function(c){c.execCommand("bold")}],italic:["Italic",Xinha._lc({key:"button_italic",string:["ed_buttons_main.png",2,2]},"Xinha"),false,function(c){c.execCommand("italic")
-}],underline:["Underline",Xinha._lc({key:"button_underline",string:["ed_buttons_main.png",2,0]},"Xinha"),false,function(c){c.execCommand("underline")}],strikethrough:["Strikethrough",Xinha._lc({key:"button_strikethrough",string:["ed_buttons_main.png",3,0]},"Xinha"),false,function(c){c.execCommand("strikethrough")
-}],subscript:["Subscript",Xinha._lc({key:"button_subscript",string:["ed_buttons_main.png",3,1]},"Xinha"),false,function(c){c.execCommand("subscript")}],superscript:["Superscript",Xinha._lc({key:"button_superscript",string:["ed_buttons_main.png",2,1]},"Xinha"),false,function(c){c.execCommand("superscript")
-}],justifyleft:["Justify Left",["ed_buttons_main.png",0,0],false,function(c){c.execCommand("justifyleft")}],justifycenter:["Justify Center",["ed_buttons_main.png",1,1],false,function(c){c.execCommand("justifycenter")
-}],justifyright:["Justify Right",["ed_buttons_main.png",1,0],false,function(c){c.execCommand("justifyright")}],justifyfull:["Justify Full",["ed_buttons_main.png",0,1],false,function(c){c.execCommand("justifyfull")
-}],orderedlist:["Ordered List",["ed_buttons_main.png",0,3],false,function(c){c.execCommand("insertorderedlist")}],unorderedlist:["Bulleted List",["ed_buttons_main.png",1,3],false,function(c){c.execCommand("insertunorderedlist")
-}],insertorderedlist:["Ordered List",["ed_buttons_main.png",0,3],false,function(c){c.execCommand("insertorderedlist")}],insertunorderedlist:["Bulleted List",["ed_buttons_main.png",1,3],false,function(c){c.execCommand("insertunorderedlist")
-}],outdent:["Decrease Indent",["ed_buttons_main.png",1,2],false,function(c){c.execCommand("outdent")}],indent:["Increase Indent",["ed_buttons_main.png",0,2],false,function(c){c.execCommand("indent")}],forecolor:["Font Color",["ed_buttons_main.png",3,3],false,function(c){c.execCommand("forecolor")
-}],hilitecolor:["Background Color",["ed_buttons_main.png",2,3],false,function(c){c.execCommand("hilitecolor")}],undo:["Undoes your last action",["ed_buttons_main.png",4,2],false,function(c){c.execCommand("undo")
-}],redo:["Redoes your last action",["ed_buttons_main.png",5,2],false,function(c){c.execCommand("redo")}],cut:["Cut selection",["ed_buttons_main.png",5,0],false,function(d,c){d.execCommand(c)}],copy:["Copy selection",["ed_buttons_main.png",4,0],false,function(d,c){d.execCommand(c)
-}],paste:["Paste from clipboard",["ed_buttons_main.png",4,1],false,function(d,c){d.execCommand(c)}],selectall:["Select all",["ed_buttons_main.png",3,5],false,function(c){c.execCommand("selectall")}],inserthorizontalrule:["Horizontal Rule",["ed_buttons_main.png",6,0],false,function(c){c.execCommand("inserthorizontalrule")
-}],createlink:["Insert Web Link",["ed_buttons_main.png",6,1],false,function(c){c._createLink()}],insertimage:["Insert/Modify Image",["ed_buttons_main.png",6,3],false,function(c){c.execCommand("insertimage")
-}],inserttable:["Insert Table",["ed_buttons_main.png",6,2],false,function(c){c.execCommand("inserttable")}],htmlmode:["Toggle HTML Source",["ed_buttons_main.png",7,0],true,function(c){c.execCommand("htmlmode")
-}],toggleborders:["Toggle Borders",["ed_buttons_main.png",7,2],false,function(c){c._toggleBorders()}],print:["Print document",["ed_buttons_main.png",8,1],false,function(c){if(Xinha.is_gecko){c._iframe.contentWindow.print()
-}else{c.focusEditor();print()}}],saveas:["Save as","ed_saveas.png",false,function(c){c.execCommand("saveas",false,"noname.htm")}],about:["About this editor",["ed_buttons_main.png",8,2],true,function(c){c.getPluginInstance("AboutBox").show()
-}],showhelp:["Help using editor",["ed_buttons_main.png",9,2],true,function(c){c.execCommand("showhelp")}],splitblock:["Split Block","ed_splitblock.gif",false,function(c){c._splitBlock()}],lefttoright:["Direction left to right",["ed_buttons_main.png",0,2],false,function(c){c.execCommand("lefttoright")
-}],righttoleft:["Direction right to left",["ed_buttons_main.png",1,2],false,function(c){c.execCommand("righttoleft")}],overwrite:["Insert/Overwrite","ed_overwrite.gif",false,function(c){c.execCommand("overwrite")
-}],wordclean:["MS Word Cleaner",["ed_buttons_main.png",5,3],false,function(c){c._wordClean()}],clearfonts:["Clear Inline Font Specifications",["ed_buttons_main.png",5,4],true,function(c){c._clearFonts()
-}],removeformat:["Remove formatting",["ed_buttons_main.png",4,4],false,function(c){c.execCommand("removeformat")}],killword:["Clear MSOffice tags",["ed_buttons_main.png",4,3],false,function(c){c.execCommand("killword")
-}]};this.iconList={dialogCaption:_editor_url+"images/xinha-small-icon.gif",wysiwygmode:[_editor_url+"images/ed_buttons_main.png",7,1]};for(var b in this.btnList){var a=this.btnList[b];if(typeof a!="object"){continue
-}if(typeof a[1]!="string"){a[1][0]=_editor_url+this.imgURL+a[1][0]}else{a[1]=_editor_url+this.imgURL+a[1]}a[0]=Xinha._lc(a[0])}};Xinha.Config.prototype.registerIcon=function(b,a){this.iconList[b]=a};Xinha.Config.prototype.registerButton=function(f,d,e,a,c,b){if(typeof f=="string"){this.btnList[f]=[d,e,a,c,b]
-}else{if(typeof f=="object"){this.btnList[f.id]=[f.tooltip,f.image,f.textMode,f.action,f.context]}else{alert("ERROR [Xinha.Config::registerButton]:\ninvalid arguments");return false}}};Xinha.prototype.registerPanel=function(c,b){if(!c){c="right"
-}this.setLoadingMessage("Register "+c+" panel ");var a=this.addPanel(c);if(b){b.drawPanelIn(a)}};Xinha.Config.prototype.registerDropdown=function(a){this.customSelects[a.id]=a};Xinha.Config.prototype.hideSomeButtons=function(b){var f=this.toolbar;
-for(var e=f.length;--e>=0;){var c=f[e];for(var d=c.length;--d>=0;){if(b.indexOf(" "+c[d]+" ")>=0){var a=1;if(/separator|space/.test(c[d+1])){a=2}c.splice(d,a)}}}};Xinha.Config.prototype.addToolbarElement=function(d,h,k){var p=this.toolbar;
-var q,g,f,e,c;var n=false;var b=false;var t=0;var l=0;var m=0;var r=false;var s=false;if((d&&typeof d=="object")&&(d.constructor==Array)){n=true}if((h&&typeof h=="object")&&(h.constructor==Array)){b=true;
-t=h.length}if(n){for(g=0;g<d.length;++g){if((d[g]!="separator")&&(d[g].indexOf("T[")!==0)){c=d[g]}}}else{c=d}for(g=0;g<p.length;++g){q=p[g];for(f=0;f<q.length;++f){if(q[f]==c){return}}}for(g=0;!s&&g<p.length;
-++g){q=p[g];for(f=0;!s&&f<q.length;++f){if(b){for(e=0;e<t;++e){if(q[f]==h[e]){if(e===0){s=true;f--;break}else{m=g;l=f;t=e}}}}else{if(q[f]==h){s=true;break}}}}if(!s&&b){if(h.length!=t){f=l;q=p[m];s=true
-}}if(s){if(k===0){if(n){q[f]=d[d.length-1];for(g=d.length-1;--g>=0;){q.splice(f,0,d[g])}}else{q[f]=d}}else{if(k<0){f=f+k+1}else{if(k>0){f=f+k}}if(n){for(g=d.length;--g>=0;){q.splice(f,0,d[g])}}else{q.splice(f,0,d)
-}}}else{p[0].splice(0,0,"separator");if(n){for(g=d.length;--g>=0;){p[0].splice(0,0,d[g])}}else{p[0].splice(0,0,d)}}};Xinha.Config.prototype.removeToolbarElement=Xinha.Config.prototype.hideSomeButtons;Xinha.replaceAll=function(a){var c=document.getElementsByTagName("textarea");
-for(var b=c.length;b>0;new Xinha(c[--b],a).generate()){}};Xinha.replace=function(c,b){var a=Xinha.getElementById("textarea",c);return a?new Xinha(a,b).generate():null};Xinha.prototype._createToolbar=function(){this.setLoadingMessage(Xinha._lc("Create Toolbar"));
-var b=this;var c=document.createElement("div");this._toolBar=this._toolbar=c;c.className="toolbar";c.unselectable="1";c.align=this.config.toolbarAlign;Xinha.freeLater(this,"_toolBar");Xinha.freeLater(this,"_toolbar");
-var a=null;var d={};this._toolbarObjects=d;this._createToolbar1(b,c,d);this._htmlArea.appendChild(c);return c};Xinha.prototype._setConfig=function(a){this.config=a};Xinha.prototype._rebuildToolbar=function(){this._createToolbar1(this,this._toolbar,this._toolbarObjects);
-if(Xinha._currentlyActiveEditor){if(Xinha._currentlyActiveEditor==this){this.activateEditor()}}else{this.disableToolbar()}};Xinha._createToolbarBreakingElement=function(){var a=document.createElement("div");
-a.style.height="1px";a.style.width="1px";a.style.lineHeight="1px";a.style.fontSize="1px";a.style.clear="both";return a};Xinha.prototype._createToolbar1=function(m,p,s){while(p.lastChild){p.removeChild(p.lastChild)
-}var d;if(m.config.flowToolbars){p.appendChild(Xinha._createToolbarBreakingElement())}function l(){if(typeof d!="undefined"&&d.childNodes.length===0){return}var i=document.createElement("table");i.border="0px";
-i.cellSpacing="0px";i.cellPadding="0px";if(m.config.flowToolbars){if(Xinha.is_ie){i.style.styleFloat="left"}else{i.style.cssFloat="left"}}p.appendChild(i);var j=document.createElement("tbody");i.appendChild(j);
-d=document.createElement("tr");j.appendChild(d);i.className="toolbarRow"}l();function c(u,t){var j=this[u];var i=this.element;if(j!=t){switch(u){case"enabled":if(t){Xinha._removeClass(i,"buttonDisabled");
-i.disabled=false}else{Xinha._addClass(i,"buttonDisabled");i.disabled=true}break;case"active":if(t){Xinha._addClass(i,"buttonPressed")}else{Xinha._removeClass(i,"buttonPressed")}break}this[u]=t}}function b(x){var C=null;
-var t=null;var u=null;var z=m.config.customSelects;var j=null;var B="";switch(x){case"fontsize":case"fontname":case"formatblock":C=m.config[x];u=x;break;default:u=x;var A=z[u];if(typeof A!="undefined"){C=A.options;
-j=A.context;if(typeof A.tooltip!="undefined"){B=A.tooltip}}else{alert("ERROR [createSelect]:\nCan't find the requested dropdown definition")}break}if(C){t=document.createElement("select");t.title=B;t.style.width="auto";
-t.name=x;var w={name:x,element:t,enabled:true,text:false,cmd:u,state:c,context:j};Xinha.freeLater(w);s[x]=w;for(var v in C){if(typeof C[v]!="string"){continue}var y=document.createElement("option");y.innerHTML=Xinha._lc(v);
-y.value=C[v];t.appendChild(y)}Xinha._addEvent(t,"change",function(){m._comboSelected(t,x)})}return t}function q(i){var u,t,v=null;switch(i){case"separator":if(m.config.flowToolbars){l()}u=document.createElement("div");
-u.className="separator";break;case"space":u=document.createElement("div");u.className="space";break;case"linebreak":l();return false;case"textindicator":u=document.createElement("div");u.appendChild(document.createTextNode("A"));
-u.className="indicator";u.title=Xinha._lc("Current style");v={name:i,element:u,enabled:true,active:false,text:false,cmd:"textindicator",state:c};Xinha.freeLater(v);s[i]=v;break;default:t=m.config.btnList[i]
-}if(!u&&t){u=document.createElement("a");u.style.display="block";u.href="javascript:void(0)";u.style.textDecoration="none";u.title=t[0];u.className="button";u.style.direction="ltr";v={name:i,element:u,enabled:true,active:false,text:t[2],cmd:t[3],state:c,context:t[4]||null};
-Xinha.freeLater(u);Xinha.freeLater(v);s[i]=v;u.ondrag=function(){return false};Xinha._addEvent(u,"mouseout",function(x){if(v.enabled){Xinha._removeClass(u,"buttonActive");if(v.active){Xinha._addClass(u,"buttonPressed")
-}}});Xinha._addEvent(u,"mousedown",function(x){if(v.enabled){Xinha._addClass(u,"buttonActive");Xinha._removeClass(u,"buttonPressed");Xinha._stopEvent(Xinha.is_ie?window.event:x)}});Xinha._addEvent(u,"click",function(x){x=x||window.event;
-m.btnClickEvent={clientX:x.clientX,clientY:x.clientY};if(v.enabled){Xinha._removeClass(u,"buttonActive");if(Xinha.is_gecko){m.activateEditor()}v.cmd(m,v.name,v,x);Xinha._stopEvent(x)}});var w=Xinha.makeBtnImg(t[1]);
-var j=w.firstChild;Xinha.freeLater(w);Xinha.freeLater(j);u.appendChild(w);v.imgel=j;v.swapImage=function(x){if(typeof x!="string"){j.src=x[0];j.style.position="relative";j.style.top=x[2]?("-"+(18*(x[2]+1))+"px"):"-18px";
-j.style.left=x[1]?("-"+(18*(x[1]+1))+"px"):"-18px"}else{v.imgel.src=x;j.style.top="0px";j.style.left="0px"}}}else{if(!u){u=b(i)}}return u}var k=true;for(var h=0;h<this.config.toolbar.length;++h){if(!k){}else{k=false
-}if(this.config.toolbar[h]===null){this.config.toolbar[h]=["separator"]}var r=this.config.toolbar[h];for(var f=0;f<r.length;++f){var a=r[f];var n;if(/^([IT])\[(.*?)\]/.test(a)){var e=RegExp.$1=="I";var o=RegExp.$2;
-if(e){o=Xinha._lc(o)}n=document.createElement("td");d.appendChild(n);n.className="label";n.innerHTML=o}else{if(typeof a!="function"){var g=q(a);if(g){n=document.createElement("td");n.className="toolbarElement";
-d.appendChild(n);n.appendChild(g)}else{if(g===null){alert("FIXME: Unknown toolbar item: "+a)}}}}}}if(m.config.flowToolbars){p.appendChild(Xinha._createToolbarBreakingElement())}return p};Xinha.makeBtnImg=function(b,c){if(!c){c=document
-}if(!c._xinhaImgCache){c._xinhaImgCache={};Xinha.freeLater(c._xinhaImgCache)}var d=null;if(Xinha.is_ie&&((!c.compatMode)||(c.compatMode&&c.compatMode=="BackCompat"))){d=c.createElement("span")}else{d=c.createElement("div");
-d.style.position="relative"}d.style.overflow="hidden";d.style.width="18px";d.style.height="18px";d.className="buttonImageContainer";var a=null;if(typeof b=="string"){if(c._xinhaImgCache[b]){a=c._xinhaImgCache[b].cloneNode()
-}else{if(Xinha.ie_version<7&&/\.png$/.test(b[0])){a=c.createElement("span");a.style.display="block";a.style.width="18px";a.style.height="18px";a.style.filter='progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+b+'")';
-a.unselectable="on"}else{a=c.createElement("img");a.src=b}}}else{if(c._xinhaImgCache[b[0]]){a=c._xinhaImgCache[b[0]].cloneNode()}else{if(Xinha.ie_version<7&&/\.png$/.test(b[0])){a=c.createElement("span");
-a.style.display="block";a.style.width="18px";a.style.height="18px";a.style.filter='progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+b[0]+'")';a.unselectable="on"}else{a=c.createElement("img");
-a.src=b[0]}a.style.position="relative"}a.style.top=b[2]?("-"+(18*(b[2]+1))+"px"):"-18px";a.style.left=b[1]?("-"+(18*(b[1]+1))+"px"):"-18px"}d.appendChild(a);return d};Xinha.prototype._createStatusBar=function(){this.setLoadingMessage(Xinha._lc("Create Statusbar"));
-var b=document.createElement("div");b.style.position="relative";b.className="statusBar";b.style.width="100%";Xinha.freeLater(this,"_statusBar");var d=document.createElement("div");d.className="statusBarWidgetContainer";
-d.style.position="absolute";d.style.right="0";d.style.top="0";d.style.padding="3px 3px 3px 10px";b.appendChild(d);var e=document.createElement("span");e.className="statusBarTree";e.innerHTML=Xinha._lc("Path")+": ";
-this._statusBarTree=e;Xinha.freeLater(this,"_statusBarTree");b.appendChild(e);var c=document.createElement("span");c.innerHTML=Xinha._lc("You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.");
-c.style.display="none";this._statusBarTextMode=c;Xinha.freeLater(this,"_statusBarTextMode");b.appendChild(c);b.style.whiteSpace="nowrap";var a=this;this.notifyOn("before_resize",function(f,g){a._statusBar.style.width=null
-});this.notifyOn("resize",function(f,g){if(Xinha.is_ie&&Xinha.ie_version==6){a._statusBar.style.width="100%"}else{var h=g.width;a._statusBar.style.width=h+"px"}});this.notifyOn("modechange",function(f,l){for(var h in a._statusWidgets){var k=a._statusWidgets[h];
-for(var g=0;g<k.modes.length;g++){if(k.modes[g]==l.mode){var j=true}}if(typeof j=="undefined"){k.block.style.display="none"}else{k.block.style.display=""}}});if(!this.config.statusBar){b.style.display="none"
-}return b};Xinha.prototype.registerStatusWidget=function(e,c){c=c||["wysiwyg"];if(!this._statusWidgets){this._statusWidgets={}}var d=document.createElement("div");d.className="statusBarWidget";d=this._statusBar.firstChild.appendChild(d);
-var b=false;for(var a=0;a<c.length;a++){if(c[a]==this._editMode){b=true}}d.style.display=b==true?"":"none";this._statusWidgets[e]={block:d,modes:c};return d};Xinha.prototype.generate=function(){if(!Xinha.isSupportedBrowser){return
-}var w;var d=this;var e;var n=false;var a=document.getElementsByTagName("link");if(!document.getElementById("XinhaCoreDesign")){_editor_css=(typeof _editor_css=="string")?_editor_css:"Xinha.css";for(w=0;
-w<a.length;w++){if((a[w].rel=="stylesheet")&&(a[w].href==_editor_url+_editor_css)){n=true}}if(!n){Xinha.loadStyle(_editor_css,null,"XinhaCoreDesign",true)}}if(_editor_skin!==""&&!document.getElementById("XinhaSkin")){n=false;
-for(w=0;w<a.length;w++){if((a[w].rel=="stylesheet")&&(a[w].href==_editor_url+"skins/"+_editor_skin+"/skin.css")){n=true}}if(!n){Xinha.loadStyle("skins/"+_editor_skin+"/skin.css",null,"XinhaSkin")}}var f=function(){d.generate()
-};if(Xinha.is_ie){e=_editor_url+"modules/InternetExplorer/InternetExplorer.js";if(!Xinha.loadPlugins([{plugin:"InternetExplorer",url:e}],f)){return false}if(!this.plugins.InternetExplorer){d._browserSpecificPlugin=d.registerPlugin("InternetExplorer")
-}}else{if(Xinha.is_webkit){e=_editor_url+"modules/WebKit/WebKit.js";if(!Xinha.loadPlugins([{plugin:"WebKit",url:e}],f)){return false}if(!this.plugins.Webkit){d._browserSpecificPlugin=d.registerPlugin("WebKit")
-}}else{if(Xinha.is_opera){e=_editor_url+"modules/Opera/Opera.js";if(!Xinha.loadPlugins([{plugin:"Opera",url:e}],f)){return false}if(!this.plugins.Opera){d._browserSpecificPlugin=d.registerPlugin("Opera")
-}}else{if(Xinha.is_gecko){e=_editor_url+"modules/Gecko/Gecko.js";if(!Xinha.loadPlugins([{plugin:"Gecko",url:e}],f)){return false}if(!this.plugins.Gecko){d._browserSpecificPlugin=d.registerPlugin("Gecko")
-}}}}}if(typeof Dialog=="undefined"&&!Xinha._loadback(_editor_url+"modules/Dialogs/dialog.js",f,this)){return false}if(typeof Xinha.Dialog=="undefined"&&!Xinha._loadback(_editor_url+"modules/Dialogs/XinhaDialog.js",f,this)){return false
-}e=_editor_url+"modules/FullScreen/full-screen.js";if(!Xinha.loadPlugins([{plugin:"FullScreen",url:e}],f)){return false}e=_editor_url+"modules/ColorPicker/ColorPicker.js";if(!Xinha.loadPlugins([{plugin:"ColorPicker",url:e}],f)){return false
-}else{if(typeof Xinha.getPluginConstructor("ColorPicker")!="undefined"&&!this.plugins.colorPicker){d.registerPlugin("ColorPicker")}}var o=d.config.toolbar;for(w=o.length;--w>=0;){for(var v=o[w].length;
---v>=0;){switch(o[w][v]){case"popupeditor":if(!this.plugins.FullScreen){d.registerPlugin("FullScreen")}break;case"insertimage":e=_editor_url+"modules/InsertImage/insert_image.js";if(typeof Xinha.prototype._insertImage=="undefined"&&!Xinha.loadPlugins([{plugin:"InsertImage",url:e}],f)){return false
-}else{if(typeof Xinha.getPluginConstructor("InsertImage")!="undefined"&&!this.plugins.InsertImage){d.registerPlugin("InsertImage")}}break;case"createlink":e=_editor_url+"modules/CreateLink/link.js";if(typeof Xinha.getPluginConstructor("Linker")=="undefined"&&!Xinha.loadPlugins([{plugin:"CreateLink",url:e}],f)){return false
-}else{if(typeof Xinha.getPluginConstructor("CreateLink")!="undefined"&&!this.plugins.CreateLink){d.registerPlugin("CreateLink")}}break;case"inserttable":e=_editor_url+"modules/InsertTable/insert_table.js";
-if(!Xinha.loadPlugins([{plugin:"InsertTable",url:e}],f)){return false}else{if(typeof Xinha.getPluginConstructor("InsertTable")!="undefined"&&!this.plugins.InsertTable){d.registerPlugin("InsertTable")}}break;
-case"about":e=_editor_url+"modules/AboutBox/AboutBox.js";if(!Xinha.loadPlugins([{plugin:"AboutBox",url:e}],f)){return false}else{if(typeof Xinha.getPluginConstructor("AboutBox")!="undefined"&&!this.plugins.AboutBox){d.registerPlugin("AboutBox")
-}}break}}}if(Xinha.is_gecko&&d.config.mozParaHandler!="built-in"){if(!Xinha.loadPlugins([{plugin:"EnterParagraphs",url:_editor_url+"modules/Gecko/paraHandlerBest.js"}],f)){return false}if(!this.plugins.EnterParagraphs){d.registerPlugin("EnterParagraphs")
-}}var E=this.config.getHtmlMethod=="TransformInnerHTML"?_editor_url+"modules/GetHtml/TransformInnerHTML.js":_editor_url+"modules/GetHtml/DOMwalk.js";if(!Xinha.loadPlugins([{plugin:"GetHtmlImplementation",url:E}],f)){return false
-}else{if(!this.plugins.GetHtmlImplementation){d.registerPlugin("GetHtmlImplementation")}}function s(i){return i.textContent||i.text}if(_editor_skin){this.skinInfo={};var u=Xinha._geturlcontent(_editor_url+"skins/"+_editor_skin+"/skin.xml",true);
-if(u){var p=u.getElementsByTagName("meta");for(w=0;w<p.length;w++){this.skinInfo[p[w].getAttribute("name")]=p[w].getAttribute("value")}var B=u.getElementsByTagName("recommendedIcons");if(!_editor_icons&&B.length&&s(B[0])){_editor_icons=s(B[0])
-}}}if(_editor_icons){var m=Xinha._geturlcontent(_editor_url+"iconsets/"+_editor_icons+"/iconset.xml",true);if(m){var F=m.getElementsByTagName("icon");var C,t,r,c,l,k;for(w=0;w<F.length;w++){C=F[w];t=C.getAttribute("id");
-if(C.getElementsByTagName(_editor_lang).length){C=C.getElementsByTagName(_editor_lang)[0]}else{C=C.getElementsByTagName("default")[0]}r=s(C.getElementsByTagName("path")[0]);r=(!/^\//.test(r)?_editor_url:"")+r;
-c=C.getAttribute("type");if(c=="map"){l=parseInt(s(C.getElementsByTagName("x")[0]),10);k=parseInt(s(C.getElementsByTagName("y")[0]),10);if(this.config.btnList[t]){this.config.btnList[t][1]=[r,l,k]}if(this.config.iconList[t]){this.config.iconList[t]=[r,l,k]
-}}else{if(this.config.btnList[t]){this.config.btnList[t][1]=r}if(this.config.iconList[t]){this.config.iconList[t]=r}}}}}this.setLoadingMessage(Xinha._lc("Generate Xinha framework"));this._framework={table:document.createElement("table"),tbody:document.createElement("tbody"),tb_row:document.createElement("tr"),tb_cell:document.createElement("td"),tp_row:document.createElement("tr"),tp_cell:this._panels.top.container,ler_row:document.createElement("tr"),lp_cell:this._panels.left.container,ed_cell:document.createElement("td"),rp_cell:this._panels.right.container,bp_row:document.createElement("tr"),bp_cell:this._panels.bottom.container,sb_row:document.createElement("tr"),sb_cell:document.createElement("td")};
-Xinha.freeLater(this._framework);var b=this._framework;b.table.border="0";b.table.cellPadding="0";b.table.cellSpacing="0";b.tb_row.style.verticalAlign="top";b.tp_row.style.verticalAlign="top";b.ler_row.style.verticalAlign="top";
-b.bp_row.style.verticalAlign="top";b.sb_row.style.verticalAlign="top";b.ed_cell.style.position="relative";b.tb_row.appendChild(b.tb_cell);b.tb_cell.colSpan=3;b.tp_row.appendChild(b.tp_cell);b.tp_cell.colSpan=3;
-b.ler_row.appendChild(b.lp_cell);b.ler_row.appendChild(b.ed_cell);b.ler_row.appendChild(b.rp_cell);b.bp_row.appendChild(b.bp_cell);b.bp_cell.colSpan=3;b.sb_row.appendChild(b.sb_cell);b.sb_cell.colSpan=3;
-b.tbody.appendChild(b.tb_row);b.tbody.appendChild(b.tp_row);b.tbody.appendChild(b.ler_row);b.tbody.appendChild(b.bp_row);b.tbody.appendChild(b.sb_row);b.table.appendChild(b.tbody);var D=b.table;this._htmlArea=D;
-Xinha.freeLater(this,"_htmlArea");D.className="htmlarea";b.tb_cell.appendChild(this._createToolbar());var g=document.createElement("iframe");g.src=this.popupURL(d.config.URIs.blank);g.id="XinhaIFrame_"+this._textArea.id;
-b.ed_cell.appendChild(g);this._iframe=g;this._iframe.className="xinha_iframe";Xinha.freeLater(this,"_iframe");var A=this._createStatusBar();this._statusBar=b.sb_cell.appendChild(A);var q=this._textArea;
-q.parentNode.insertBefore(D,q);q.className="xinha_textarea";Xinha.removeFromParent(q);b.ed_cell.appendChild(q);Xinha.addDom0Event(this._textArea,"click",function(){if(Xinha._currentlyActiveEditor!=this){d.updateToolbar()
-}return true});if(q.form){Xinha.prependDom0Event(this._textArea.form,"submit",function(){d.firePluginEvent("onBeforeSubmit");d._textArea.value=d.outwardHtml(d.getHTML());return true});var h=q.value;Xinha.prependDom0Event(this._textArea.form,"reset",function(){d.setHTML(d.inwardHtml(h));
-d.updateToolbar();return true});if(!q.form.xinha_submit){try{q.form.xinha_submit=q.form.submit;q.form.submit=function(){this.onsubmit();this.xinha_submit()}}catch(z){}}}Xinha.prependDom0Event(window,"unload",function(){d.firePluginEvent("onBeforeUnload");
-q.value=d.outwardHtml(d.getHTML());if(!Xinha.is_ie){D.parentNode.replaceChild(q,D)}return true});q.style.display="none";d.initSize();this.setLoadingMessage(Xinha._lc("Finishing"));d._iframeLoadDone=false;
-if(Xinha.is_opera){d.initIframe()}else{Xinha._addEvent(this._iframe,"load",function(i){if(!d._iframeLoadDone){d._iframeLoadDone=true;d.initIframe()}return true})}};Xinha.prototype.initSize=function(){this.setLoadingMessage(Xinha._lc("Init editor size"));
-var c=this;var b=null;var a=null;switch(this.config.width){case"auto":b=this._initial_ta_size.w;break;case"toolbar":b=this._toolBar.offsetWidth+"px";break;default:b=/[^0-9]/.test(this.config.width)?this.config.width:this.config.width+"px";
-break}a=this.config.height=="auto"?this._initial_ta_size.h:/[^0-9]/.test(this.config.height)?this.config.height:this.config.height+"px";this.sizeEditor(b,a,this.config.sizeIncludesBars,this.config.sizeIncludesPanels);
-this.notifyOn("panel_change",function(){c.sizeEditor()})};Xinha.prototype.sizeEditor=function(d,o,a,c){if(this._risizing){return}this._risizing=true;var l=this._framework;this.notifyOf("before_resize",{width:d,height:o});
-this.firePluginEvent("onBeforeResize",d,o);this._iframe.style.height="100%";this._textArea.style.height="1px";this._iframe.style.width="";this._textArea.style.width="";if(a!==null){this._htmlArea.sizeIncludesToolbars=a
-}if(c!==null){this._htmlArea.sizeIncludesPanels=c}if(d){this._htmlArea.style.width=d;if(!this._htmlArea.sizeIncludesPanels){var k=this._panels.right;if(k.on&&k.panels.length&&Xinha.hasDisplayedChildren(k.div)){this._htmlArea.style.width=(this._htmlArea.offsetWidth+parseInt(this.config.panel_dimensions.right,10))+"px"
-}var p=this._panels.left;if(p.on&&p.panels.length&&Xinha.hasDisplayedChildren(p.div)){this._htmlArea.style.width=(this._htmlArea.offsetWidth+parseInt(this.config.panel_dimensions.left,10))+"px"}}}if(o){this._htmlArea.style.height=o;
-if(!this._htmlArea.sizeIncludesToolbars){this._htmlArea.style.height=(this._htmlArea.offsetHeight+this._toolbar.offsetHeight+this._statusBar.offsetHeight)+"px"}if(!this._htmlArea.sizeIncludesPanels){var f=this._panels.top;
-if(f.on&&f.panels.length&&Xinha.hasDisplayedChildren(f.div)){this._htmlArea.style.height=(this._htmlArea.offsetHeight+parseInt(this.config.panel_dimensions.top,10))+"px"}var n=this._panels.bottom;if(n.on&&n.panels.length&&Xinha.hasDisplayedChildren(n.div)){this._htmlArea.style.height=(this._htmlArea.offsetHeight+parseInt(this.config.panel_dimensions.bottom,10))+"px"
-}}}d=this._htmlArea.offsetWidth;o=this._htmlArea.offsetHeight;var j=this._panels;var i=this;var b=1;function h(q){if(j[q].on&&j[q].panels.length&&Xinha.hasDisplayedChildren(j[q].container)){j[q].container.style.display="";
-return true}else{j[q].container.style.display="none";return false}}if(h("left")){b+=1}if(h("right")){b+=1}l.tb_cell.colSpan=b;l.tp_cell.colSpan=b;l.bp_cell.colSpan=b;l.sb_cell.colSpan=b;if(!l.tp_row.childNodes.length){Xinha.removeFromParent(l.tp_row)
-}else{if(!Xinha.hasParentNode(l.tp_row)){l.tbody.insertBefore(l.tp_row,l.ler_row)}}if(!l.bp_row.childNodes.length){Xinha.removeFromParent(l.bp_row)}else{if(!Xinha.hasParentNode(l.bp_row)){l.tbody.insertBefore(l.bp_row,l.ler_row.nextSibling)
-}}if(!this.config.statusBar){Xinha.removeFromParent(l.sb_row)}else{if(!Xinha.hasParentNode(l.sb_row)){l.table.appendChild(l.sb_row)}}l.lp_cell.style.width=this.config.panel_dimensions.left;l.rp_cell.style.width=this.config.panel_dimensions.right;
-l.tp_cell.style.height=this.config.panel_dimensions.top;l.bp_cell.style.height=this.config.panel_dimensions.bottom;l.tb_cell.style.height=this._toolBar.offsetHeight+"px";l.sb_cell.style.height=this._statusBar.offsetHeight+"px";
-var m=o-this._toolBar.offsetHeight-this._statusBar.offsetHeight;if(h("top")){m-=parseInt(this.config.panel_dimensions.top,10)}if(h("bottom")){m-=parseInt(this.config.panel_dimensions.bottom,10)}this._iframe.style.height=m+"px";
-var e=d;if(h("left")){e-=parseInt(this.config.panel_dimensions.left,10)}if(h("right")){e-=parseInt(this.config.panel_dimensions.right,10)}var g=this.config.iframeWidth?parseInt(this.config.iframeWidth,10):null;
-this._iframe.style.width=(g&&g<e)?g+"px":e+"px";this._textArea.style.height=this._iframe.style.height;this._textArea.style.width=this._iframe.style.width;this.notifyOf("resize",{width:this._htmlArea.offsetWidth,height:this._htmlArea.offsetHeight});
-this.firePluginEvent("onResize",this._htmlArea.offsetWidth,this._htmlArea.offsetWidth);this._risizing=false};Xinha.prototype.registerPanel=function(c,b){if(!c){c="right"}this.setLoadingMessage("Register "+c+" panel ");
-var a=this.addPanel(c);if(b){b.drawPanelIn(a)}};Xinha.prototype.addPanel=function(a){var b=document.createElement("div");b.side=a;if(a=="left"||a=="right"){b.style.width=this.config.panel_dimensions[a];
-if(this._iframe){b.style.height=this._iframe.style.height}}Xinha.addClasses(b,"panel");this._panels[a].panels.push(b);this._panels[a].div.appendChild(b);this.notifyOf("panel_change",{action:"add",panel:b});
-this.firePluginEvent("onPanelChange","add",b);return b};Xinha.prototype.removePanel=function(a){this._panels[a.side].div.removeChild(a);var c=[];for(var b=0;b<this._panels[a.side].panels.length;b++){if(this._panels[a.side].panels[b]!=a){c.push(this._panels[a.side].panels[b])
-}}this._panels[a.side].panels=c;this.notifyOf("panel_change",{action:"remove",panel:a});this.firePluginEvent("onPanelChange","remove",a)};Xinha.prototype.hidePanel=function(a){if(a&&a.style.display!="none"){try{var c=this.scrollPos(this._iframe.contentWindow)
-}catch(b){}a.style.display="none";this.notifyOf("panel_change",{action:"hide",panel:a});this.firePluginEvent("onPanelChange","hide",a);try{this._iframe.contentWindow.scrollTo(c.x,c.y)}catch(b){}}};Xinha.prototype.showPanel=function(a){if(a&&a.style.display=="none"){try{var c=this.scrollPos(this._iframe.contentWindow)
-}catch(b){}a.style.display="";this.notifyOf("panel_change",{action:"show",panel:a});this.firePluginEvent("onPanelChange","show",a);try{this._iframe.contentWindow.scrollTo(c.x,c.y)}catch(b){}}};Xinha.prototype.hidePanels=function(b){if(typeof b=="undefined"){b=["left","right","top","bottom"]
-}var c=[];for(var a=0;a<b.length;a++){if(this._panels[b[a]].on){c.push(b[a]);this._panels[b[a]].on=false}}this.notifyOf("panel_change",{action:"multi_hide",sides:b});this.firePluginEvent("onPanelChange","multi_hide",b)
-};Xinha.prototype.showPanels=function(c){if(typeof c=="undefined"){c=["left","right","top","bottom"]}var a=[];for(var b=0;b<c.length;b++){if(!this._panels[c[b]].on){a.push(c[b]);this._panels[c[b]].on=true
-}}this.notifyOf("panel_change",{action:"multi_show",sides:c});this.firePluginEvent("onPanelChange","multi_show",c)};Xinha.objectProperties=function(c){var b=[];for(var a in c){b[b.length]=a}return b};Xinha.prototype.editorIsActivated=function(){try{return Xinha.is_designMode?this._doc.designMode=="on":this._doc.body.contentEditable
-}catch(a){return false}};Xinha._someEditorHasBeenActivated=false;Xinha._currentlyActiveEditor=null;Xinha.prototype.activateEditor=function(){if(this.currentModal){return}if(Xinha._currentlyActiveEditor){if(Xinha._currentlyActiveEditor==this){return true
-}Xinha._currentlyActiveEditor.deactivateEditor()}if(Xinha.is_designMode&&this._doc.designMode!="on"){try{if(this._iframe.style.display=="none"){this._iframe.style.display="";this._doc.designMode="on";this._iframe.style.display="none"
-}else{this._doc.designMode="on"}}catch(a){}}else{if(Xinha.is_ie&&this._doc.body.contentEditable!==true){this._doc.body.contentEditable=true}}Xinha._someEditorHasBeenActivated=true;Xinha._currentlyActiveEditor=this;
-var b=this;this.enableToolbar()};Xinha.prototype.deactivateEditor=function(){this.disableToolbar();if(Xinha.is_designMode&&this._doc.designMode!="off"){try{this._doc.designMode="off"}catch(a){}}else{if(!Xinha.is_designMode&&this._doc.body.contentEditable!==false){this._doc.body.contentEditable=false
-}}if(Xinha._currentlyActiveEditor!=this){return}Xinha._currentlyActiveEditor=false};Xinha.prototype.initIframe=function(){this.disableToolbar();var g=null;var f=this;try{if(f._iframe.contentDocument){this._doc=f._iframe.contentDocument
-}else{this._doc=f._iframe.contentWindow.document}g=this._doc;if(!g){if(Xinha.is_gecko){setTimeout(function(){f.initIframe()},50);return false}else{alert("ERROR: IFRAME can't be initialized.")}}}catch(e){setTimeout(function(){f.initIframe()
-},50)}Xinha.freeLater(this,"_doc");g.open("text/html","replace");var d="",a;if(f.config.browserQuirksMode===false){a='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'
-}else{if(f.config.browserQuirksMode===true){a=""}else{a=Xinha.getDoctype(document)}}if(!f.config.fullPage){d+=a+"\n";d+="<html>\n";d+="<head>\n";d+='<meta http-equiv="Content-Type" content="text/html; charset='+f.config.charSet+'">\n';
-if(typeof f.config.baseHref!="undefined"&&f.config.baseHref!==null){d+='<base href="'+f.config.baseHref+'"/>\n'}d+=Xinha.addCoreCSS();if(typeof f.config.pageStyleSheets!=="undefined"){for(var c=0;c<f.config.pageStyleSheets.length;
-c++){if(f.config.pageStyleSheets[c].length>0){d+='<link rel="stylesheet" type="text/css" href="'+f.config.pageStyleSheets[c]+'">'}}}if(f.config.pageStyle){d+='<style type="text/css">\n'+f.config.pageStyle+"\n</style>"
-}d+="</head>\n";d+="<body"+(f.config.bodyID?(' id="'+f.config.bodyID+'"'):"")+(f.config.bodyClass?(' class="'+f.config.bodyClass+'"'):"")+">\n";d+=f.inwardHtml(f._textArea.value);d+="</body>\n";d+="</html>"
-}else{d=f.inwardHtml(f._textArea.value);if(d.match(Xinha.RE_doctype)){f.setDoctype(RegExp.$1)}var b=d.match(/<link\s+[\s\S]*?["']\s*\/?>/gi);d=d.replace(/<link\s+[\s\S]*?["']\s*\/?>\s*/gi,"");if(b){d=d.replace(/<\/head>/i,b.join("\n")+"\n</head>")
-}}g.write(d);g.close();if(this.config.fullScreen){this._fullScreen()}this.setEditorEvents();if((typeof f.config.autofocus!="undefined")&&((f.config.autofocus==f._textArea.id)||f.config.autofocus==true)){f.activateEditor();
-f.focusEditor()}};Xinha.prototype.whenDocReady=function(a){var b=this;if(this._doc&&this._doc.body){a()}else{setTimeout(function(){b.whenDocReady(a)},50)}};Xinha.prototype.setMode=function(b){var a;if(typeof b=="undefined"){b=this._editMode=="textmode"?"wysiwyg":"textmode"
-}switch(b){case"textmode":this.firePluginEvent("onBeforeMode","textmode");this._toolbarObjects.htmlmode.swapImage(this.config.iconList.wysiwygmode);this.setCC("iframe");a=this.outwardHtml(this.getHTML());
-this.setHTML(a);this.deactivateEditor();this._iframe.style.display="none";this._textArea.style.display="";if(this.config.statusBar){this._statusBarTree.style.display="none";this._statusBarTextMode.style.display=""
-}this.findCC("textarea");this.notifyOf("modechange",{mode:"text"});this.firePluginEvent("onMode","textmode");break;case"wysiwyg":this.firePluginEvent("onBeforeMode","wysiwyg");this._toolbarObjects.htmlmode.swapImage([this.imgURL("images/ed_buttons_main.png"),7,0]);
-this.setCC("textarea");a=this.inwardHtml(this.getHTML());this.deactivateEditor();this.setHTML(a);this._iframe.style.display="";this._textArea.style.display="none";this.activateEditor();if(this.config.statusBar){this._statusBarTree.style.display="";
-this._statusBarTextMode.style.display="none"}this.findCC("iframe");this.notifyOf("modechange",{mode:"wysiwyg"});this.firePluginEvent("onMode","wysiwyg");break;default:alert("Mode <"+b+"> not defined!");
-return false}this._editMode=b};Xinha.prototype.setFullHTML=function(c){var a=RegExp.multiline;RegExp.multiline=true;if(c.match(Xinha.RE_doctype)){this.setDoctype(RegExp.$1)}RegExp.multiline=a;if(0){if(c.match(Xinha.RE_head)){this._doc.getElementsByTagName("head")[0].innerHTML=RegExp.$1
-}if(c.match(Xinha.RE_body)){this._doc.getElementsByTagName("body")[0].innerHTML=RegExp.$1}}else{var d=this.editorIsActivated();if(d){this.deactivateEditor()}var b=/<html>((.|\n)*?)<\/html>/i;c=c.replace(b,"$1");
-this._doc.open("text/html","replace");this._doc.write(c);this._doc.close();if(d){this.activateEditor()}this.setEditorEvents();return true}};Xinha.prototype.setEditorEvents=function(){var a=this;var b=this._doc;
-a.whenDocReady(function(){Xinha._addEvents(b,["mousedown"],function(){a.activateEditor();return true});if(Xinha.is_ie){Xinha._addEvent(a._doc.getElementsByTagName("html")[0],"click",function(){if(a._iframe.contentWindow.event.srcElement.tagName.toLowerCase()=="html"){var e=a._doc.body.createTextRange();
-e.collapse();e.select()}return true})}Xinha._addEvents(b,["keydown","keypress","mousedown","mouseup","drag"],function(e){return a._editorEvent(Xinha.is_ie?a._iframe.contentWindow.event:e)});for(var c in a.plugins){var d=a.plugins[c].instance;
-Xinha.refreshPlugin(d)}if(typeof a._onGenerate=="function"){a._onGenerate()}Xinha.addDom0Event(window,"resize",function(f){if(Xinha.ie_version>7&&!window.parent){if(a.execResize){a.sizeEditor();a.execResize=false
-}else{a.execResize=true}}else{a.sizeEditor()}});a.removeLoadingMessage()})};Xinha.getPluginConstructor=function(a){return Xinha.plugins[a]||window[a]};Xinha.prototype.registerPlugin=function(){if(!Xinha.isSupportedBrowser){return
-}var c=arguments[0];if(c===null||typeof c=="undefined"||(typeof c=="string"&&Xinha.getPluginConstructor(c)=="undefined")){return false}var a=[];for(var b=1;b<arguments.length;++b){a.push(arguments[b])}return this.registerPlugin2(c,a)
-};Xinha.prototype.registerPlugin2=function(c,a){if(typeof c=="string"&&typeof Xinha.getPluginConstructor(c)=="function"){var d=c;c=Xinha.getPluginConstructor(c)}if(typeof c=="undefined"){return false}if(!c._pluginInfo){c._pluginInfo={name:d}
-}var f=new c(this,a);if(f){var g={};var e=c._pluginInfo;for(var b in e){g[b]=e[b]}g.instance=f;g.args=a;this.plugins[c._pluginInfo.name]=g;return f}else{Xinha.debugMsg("Can't register plugin "+c.toString()+".","warn")
-}};Xinha.getPluginDir=function(b,a){if(Xinha.externalPlugins[b]){return Xinha.externalPlugins[b][0]}if(a||(Xinha.getPluginConstructor(b)&&(typeof Xinha.getPluginConstructor(b).supported!="undefined")&&!Xinha.getPluginConstructor(b).supported)){return _editor_url+"unsupported_plugins/"+b
-}return _editor_url+"plugins/"+b};Xinha.loadPlugin=function(d,e,a){if(!Xinha.isSupportedBrowser){return}Xinha.setLoadingMessage(Xinha._lc("Loading plugin $plugin="+d+"$"));if(typeof Xinha.getPluginConstructor(d)!="undefined"){if(e){e(d)
-}return true}Xinha._pluginLoadStatus[d]="loading";function c(j,m){var l,i,k,h;switch(j){case"start":l="old_naming";i=Xinha.getPluginDir(m);k=m+".js";break;case"old_naming":l="unsupported";i=Xinha.getPluginDir(m);
-k=m.replace(/([a-z])([A-Z])([a-z])/g,function(p,o,n,q){return o+"-"+n.toLowerCase()+q}).toLowerCase()+".js";h="You are using an obsolete naming scheme for the Xinha plugin "+m+". Please rename "+k+" to "+m+".js";
-break;case"unsupported":l="unsupported_old_name";i=Xinha.getPluginDir(m,true);k=m+".js";h="You are using the unsupported Xinha plugin "+m+". If you wish continued support, please see http://trac.xinha.org/ticket/1297";
-break;case"unsupported_old_name":l="";i=Xinha.getPluginDir(m,true);k=m.replace(/([a-z])([A-Z])([a-z])/g,function(p,o,n,q){return o+"-"+n.toLowerCase()+q}).toLowerCase()+".js";h="You are using the unsupported Xinha plugin "+m+". If you wish continued support, please see http://trac.xinha.org/ticket/1297";
-break;default:Xinha._pluginLoadStatus[m]="failed";Xinha.debugMsg("Xinha was not able to find the plugin "+m+". Please make sure the plugin exists.","warn");return}var g=i+"/"+k;function f(n){Xinha.getPluginConstructor(n).supported=j.indexOf("unsupported")!==0;
-e(n)}Xinha._loadback(g,f,this,m);Xinha.ping(g,function(){if(h){Xinha.debugMsg(h)}},function(){Xinha.removeFromParent(document.getElementById(g));c(l,m)})}if(!a){if(Xinha.externalPlugins[d]){Xinha._loadback(Xinha.externalPlugins[d][0]+Xinha.externalPlugins[d][1],e,this,d)
-}else{var b=this;c("start",d)}}else{Xinha._loadback(a,e,this,d)}return false};Xinha._pluginLoadStatus={};Xinha.externalPlugins={};Xinha.plugins={};Xinha.loadPlugins=function(c,f,d){if(!Xinha.isSupportedBrowser){return
-}var b,e;for(e=0;e<c.length;e++){if(typeof c[e]=="object"){b=c[e].url.match(/(.*)(\/[^\/]*)$/);Xinha.externalPlugins[c[e].plugin]=[b[1],b[2]];c[e]=c[e].plugin}}var h=true;var a=Xinha.cloneObject(c);for(e=0;
-e<a.length;e++){var g=a[e];if(g=="FullScreen"&&!Xinha.externalPlugins.FullScreen){continue}if(typeof Xinha._pluginLoadStatus[g]=="undefined"){Xinha.loadPlugin(g,function(i){Xinha.setLoadingMessage(Xinha._lc("Finishing"));
-if(typeof Xinha.getPluginConstructor(i)!="undefined"){Xinha._pluginLoadStatus[i]="ready"}else{Xinha._pluginLoadStatus[i]="failed"}},d);h=false}else{if(Xinha._pluginLoadStatus[g]=="loading"){h=false}}}if(h){return true
-}if(f){setTimeout(function(){if(Xinha.loadPlugins(c,f)){f()}},50)}return h};Xinha.refreshPlugin=function(a){if(a&&typeof a.onGenerate=="function"){a.onGenerate()}if(a&&typeof a.onGenerateOnce=="function"){a._ongenerateOnce=a.onGenerateOnce;
-delete (a.onGenerateOnce);a._ongenerateOnce();delete (a._ongenerateOnce)}};Xinha.prototype.firePluginEvent=function(b){var e=[];for(var c=1;c<arguments.length;c++){e[c-1]=arguments[c]}for(c in this.plugins){var d=this.plugins[c].instance;
-if(d==this._browserSpecificPlugin){continue}if(d&&typeof d[b]=="function"){var a=(c=="Events")?this:d;if(d[b].apply(a,e)){return true}}}d=this._browserSpecificPlugin;if(d&&typeof d[b]=="function"){if(d[b].apply(d,e)){return true
-}}return false};Xinha.loadStyle=function(d,f,g,a){var b=_editor_url||"";if(f){b=Xinha.getPluginDir(f)+"/"}b+=d;if(/^\//.test(d)){b=d}var c=document.getElementsByTagName("head")[0];var e=document.createElement("link");
-e.rel="stylesheet";e.href=b;e.type="text/css";if(g){e.id=g}if(a&&c.getElementsByTagName("link")[0]){c.insertBefore(e,c.getElementsByTagName("link")[0])}else{c.appendChild(e)}};Xinha.prototype.debugTree=function(){var c=document.createElement("textarea");
-c.style.width="100%";c.style.height="20em";c.value="";function b(d,e){for(;--d>=0;){c.value+=" "}c.value+=e+"\n"}function a(e,h){var d=e.tagName.toLowerCase(),f;var g=Xinha.is_ie?e.scopeName:e.prefix;b(h,"- "+d+" ["+g+"]");
-for(f=e.firstChild;f;f=f.nextSibling){if(f.nodeType==1){a(f,h+2)}}}a(this._doc.body,0);document.body.appendChild(c)};Xinha.getInnerText=function(c){var a="",b;for(b=c.firstChild;b;b=b.nextSibling){if(b.nodeType==3){a+=b.data
-}else{if(b.nodeType==1){a+=Xinha.getInnerText(b)}}}return a};Xinha.prototype._wordClean=function(){var e=this;var c={empty_tags:0,cond_comm:0,mso_elmts:0,mso_class:0,mso_style:0,mso_xmlel:0,orig_len:this._doc.body.innerHTML.length,T:new Date().getTime()};
-var h={empty_tags:"Empty tags removed: ",cond_comm:"Conditional comments removed",mso_elmts:"MSO invalid elements removed",mso_class:"MSO class names removed: ",mso_style:"MSO inline style removed: ",mso_xmlel:"MSO XML elements stripped: "};
-function a(){var j="Xinha word cleaner stats: \n\n";for(var k in c){if(h[k]){j+=h[k]+c[k]+"\n"}}j+="\nInitial document length: "+c.orig_len+"\n";j+="Final document length: "+e._doc.body.innerHTML.length+"\n";
-j+="Clean-up took "+((new Date().getTime()-c.T)/1000)+" seconds";alert(j)}function i(j){var k=j.className.replace(/(^|\s)mso.*?(\s|$)/ig," ");if(k!=j.className){j.className=k;if(!/\S/.test(j.className)){j.removeAttribute("className");
-++c.mso_class}}}function f(k){var l=k.style.cssText.split(/\s*;\s*/);for(var j=l.length;--j>=0;){if(/^mso|^tab-stops/i.test(l[j])||/^margin\s*:\s*0..\s+0..\s+0../i.test(l[j])){++c.mso_style;l.splice(j,1)
-}}k.style.cssText=l.join("; ")}function d(j){if(("link"==j.tagName.toLowerCase()&&(j.attributes&&/File-List|Edit-Time-Data|themeData|colorSchemeMapping/.test(j.attributes.rel.nodeValue)))||/^(style|meta)$/i.test(j.tagName)){Xinha.removeFromParent(j);
-++c.mso_elmts;return true}return false}function b(j){if(/^(a|span|b|strong|i|em|font|div|p)$/i.test(j.tagName)&&!j.firstChild){Xinha.removeFromParent(j);++c.empty_tags;return true}return false}function g(j){i(j);
-f(j);var m;for(var l=j.firstChild;l;l=m){m=l.nextSibling;if(l.nodeType==1&&g(l)){if((Xinha.is_ie&&j.scopeName!="HTML")||(!Xinha.is_ie&&/:/.test(l.tagName))){for(var k=l.childNodes&&l.childNodes.length-1;
-l.childNodes&&l.childNodes.length&&l.childNodes[k];--k){if(l.nextSibling){l.parentNode.insertBefore(l.childNodes[k],l.nextSibling)}else{l.parentNode.appendChild(l.childNodes[k])}}Xinha.removeFromParent(l);
-continue}if(b(l)){continue}if(d(l)){continue}}else{if(l.nodeType==8){if(/(\s*\[\s*if\s*(([gl]te?|!)\s*)?(IE|mso)\s*(\d+(\.\d+)?\s*)?\]>)/.test(l.nodeValue)){Xinha.removeFromParent(l);++c.cond_comm}}}}return true
-}g(this._doc.body);this.updateToolbar()};Xinha.prototype._clearFonts=function(){var a=this.getInnerHTML();if(confirm(Xinha._lc("Would you like to clear font typefaces?"))){a=a.replace(/face="[^"]*"/gi,"");
-a=a.replace(/font-family:[^;}"']+;?/gi,"")}if(confirm(Xinha._lc("Would you like to clear font sizes?"))){a=a.replace(/size="[^"]*"/gi,"");a=a.replace(/font-size:[^;}"']+;?/gi,"")}if(confirm(Xinha._lc("Would you like to clear font colours?"))){a=a.replace(/color="[^"]*"/gi,"");
-a=a.replace(/([^\-])color:[^;}"']+;?/gi,"$1")}a=a.replace(/(style|class)="\s*"/gi,"");a=a.replace(/<(font|span)\s*>/gi,"");this.setHTML(a);this.updateToolbar()};Xinha.prototype._splitBlock=function(){this._doc.execCommand("formatblock",false,"div")
-};Xinha.prototype.forceRedraw=function(){this._doc.body.style.visibility="hidden";this._doc.body.style.visibility=""};Xinha.prototype.focusEditor=function(){switch(this._editMode){case"wysiwyg":try{if(Xinha._someEditorHasBeenActivated){this.activateEditor();
-this._iframe.contentWindow.focus()}}catch(a){}break;case"textmode":try{this._textArea.focus()}catch(b){}break;default:alert("ERROR: mode "+this._editMode+" is not defined")}return this._doc};Xinha.prototype._undoTakeSnapshot=function(){++this._undoPos;
-if(this._undoPos>=this.config.undoSteps){this._undoQueue.shift();--this._undoPos}var b=true;var a=this.getInnerHTML();if(this._undoPos>0){b=(this._undoQueue[this._undoPos-1]!=a)}if(b){this._undoQueue[this._undoPos]=a
-}else{this._undoPos--}};Xinha.prototype.undo=function(){if(this._undoPos>0){var a=this._undoQueue[--this._undoPos];if(a){this.setHTML(a)}else{++this._undoPos}}};Xinha.prototype.redo=function(){if(this._undoPos<this._undoQueue.length-1){var a=this._undoQueue[++this._undoPos];
-if(a){this.setHTML(a)}else{--this._undoPos}}};Xinha.prototype.disableToolbar=function(c){if(this._timerToolbar){clearTimeout(this._timerToolbar)}if(typeof c=="undefined"){c=[]}else{if(typeof c!="object"){c=[c]
-}}for(var b in this._toolbarObjects){var a=this._toolbarObjects[b];if(c.contains(b)){continue}if(typeof a.state!="function"){continue}a.state("enabled",false)}};Xinha.prototype.enableToolbar=function(){this.updateToolbar()
-};Xinha.prototype.updateToolbar=function(noStatus){if(this.suspendUpdateToolbar){return}var doc=this._doc;var text=(this._editMode=="textmode");var ancestors=null;if(!text){ancestors=this.getAllAncestors();
-if(this.config.statusBar&&!noStatus){while(this._statusBarItems.length){var item=this._statusBarItems.pop();item.el=null;item.editor=null;item.onclick=null;item.oncontextmenu=null;item._xinha_dom0Events.click=null;
-item._xinha_dom0Events.contextmenu=null;item=null}this._statusBarTree.innerHTML=Xinha._lc("Path")+": ";for(var i=ancestors.length;--i>=0;){var el=ancestors[i];if(!el){continue}var a=document.createElement("a");
-a.href="javascript:void(0);";a.el=el;a.editor=this;this._statusBarItems.push(a);Xinha.addDom0Event(a,"click",function(){this.blur();this.editor.selectNodeContents(this.el);this.editor.updateToolbar(true);
-return false});Xinha.addDom0Event(a,"contextmenu",function(){this.blur();var info="Inline style:\n\n";info+=this.el.style.cssText.split(/;\s*/).join(";\n");alert(info);return false});var txt=el.tagName.toLowerCase();
-switch(txt){case"b":txt="strong";break;case"i":txt="em";break;case"strike":txt="del";break}if(typeof el.style!="undefined"){a.title=el.style.cssText}if(el.id){txt+="#"+el.id}if(el.className){txt+="."+el.className
-}a.appendChild(document.createTextNode(txt));this._statusBarTree.appendChild(a);if(i!==0){this._statusBarTree.appendChild(document.createTextNode(String.fromCharCode(187)))}Xinha.freeLater(a)}}}for(var cmd in this._toolbarObjects){var btn=this._toolbarObjects[cmd];
-var inContext=true;if(typeof btn.state!="function"){continue}if(btn.context&&!text){inContext=false;var context=btn.context;var attrs=[];if(/(.*)\[(.*?)\]/.test(context)){context=RegExp.$1;attrs=RegExp.$2.split(",")
-}context=context.toLowerCase();var match=(context=="*");for(var k=0;k<ancestors.length;++k){if(!ancestors[k]){continue}if(match||(ancestors[k].tagName.toLowerCase()==context)){inContext=true;var contextSplit=null;
-var att=null;var comp=null;var attVal=null;for(var ka=0;ka<attrs.length;++ka){contextSplit=attrs[ka].match(/(.*)(==|!=|===|!==|>|>=|<|<=)(.*)/);att=contextSplit[1];comp=contextSplit[2];attVal=contextSplit[3];
-if(!eval(ancestors[k][att]+comp+attVal)){inContext=false;break}}if(inContext){break}}}}btn.state("enabled",(!text||btn.text)&&inContext);if(typeof cmd=="function"){continue}var dropdown=this.config.customSelects[cmd];
-if((!text||btn.text)&&(typeof dropdown!="undefined")){dropdown.refresh(this);continue}switch(cmd){case"fontname":case"fontsize":if(!text){try{var value=(""+doc.queryCommandValue(cmd)).toLowerCase();if(!value){btn.element.selectedIndex=0;
-break}var options=this.config[cmd];var sIndex=0;for(var j in options){if((j.toLowerCase()==value)||(options[j].substr(0,value.length).toLowerCase()==value)){btn.element.selectedIndex=sIndex;throw"ok"}++sIndex
-}btn.element.selectedIndex=0}catch(ex){}}break;case"formatblock":var blocks=[];for(var indexBlock in this.config.formatblock){if(typeof this.config.formatblock[indexBlock]=="string"){blocks[blocks.length]=this.config.formatblock[indexBlock]
-}}var deepestAncestor=this._getFirstAncestor(this.getSelection(),blocks);if(deepestAncestor){for(var x=0;x<blocks.length;x++){if(blocks[x].toLowerCase()==deepestAncestor.tagName.toLowerCase()){btn.element.selectedIndex=x
-}}}else{btn.element.selectedIndex=0}break;case"textindicator":if(!text){try{var style=btn.element.style;style.backgroundColor=Xinha._makeColor(doc.queryCommandValue(Xinha.is_ie?"backcolor":"hilitecolor"));
-if(/transparent/i.test(style.backgroundColor)){style.backgroundColor=Xinha._makeColor(doc.queryCommandValue("backcolor"))}style.color=Xinha._makeColor(doc.queryCommandValue("forecolor"));style.fontFamily=doc.queryCommandValue("fontname");
-style.fontWeight=doc.queryCommandState("bold")?"bold":"normal";style.fontStyle=doc.queryCommandState("italic")?"italic":"normal"}catch(ex){}}break;case"htmlmode":btn.state("active",text);break;case"lefttoright":case"righttoleft":var eltBlock=this.getParentElement();
-while(eltBlock&&!Xinha.isBlockElement(eltBlock)){eltBlock=eltBlock.parentNode}if(eltBlock){btn.state("active",(eltBlock.style.direction==((cmd=="righttoleft")?"rtl":"ltr")))}break;default:cmd=cmd.replace(/(un)?orderedlist/i,"insert$1orderedlist");
-try{btn.state("active",(!text&&doc.queryCommandState(cmd)))}catch(ex){}break}}if(this._customUndo&&!this._timerUndo){this._undoTakeSnapshot();var editor=this;this._timerUndo=setTimeout(function(){editor._timerUndo=null
-},this.config.undoTimeout)}this.firePluginEvent("onUpdateToolbar")};Xinha.getEditor=function(c){for(var a=__xinhas.length;a--;){var b=__xinhas[a];if(b&&(b._textArea.id==c||b._textArea.name==c||b._textArea==c)){return b
-}}return null};Xinha.prototype.getPluginInstance=function(a){if(this.plugins[a]){return this.plugins[a].instance}else{return null}};Xinha.prototype.getAllAncestors=function(){var c=this.getParentElement();
-var b=[];while(c&&(c.nodeType==1)&&(c.tagName.toLowerCase()!="body")){b.push(c);c=c.parentNode}b.push(this._doc.body);return b};Xinha.prototype._getFirstAncestor=function(e,d){var c=this.activeElement(e);
-if(c===null){try{c=(Xinha.is_ie?this.createRange(e).parentElement():this.createRange(e).commonAncestorContainer)}catch(b){return null}}if(typeof d=="string"){d=[d]}while(c){if(c.nodeType==1){if(d===null){return c
-}for(var a=0;a<d.length;++a){if(typeof d[a]=="string"&&d[a]==c.tagName.toLowerCase()){return c}else{if(typeof d[a]=="function"&&d[a](this,c)){return c}}}if(c.tagName.toLowerCase()=="body"){break}if(c.tagName.toLowerCase()=="table"){break
-}}c=c.parentNode}return null};Xinha.prototype._getAncestorBlock=function(b){var a=(Xinha.is_ie?this.createRange(b).parentElement:this.createRange(b).commonAncestorContainer);while(a&&(a.nodeType==1)){switch(a.tagName.toLowerCase()){case"div":case"p":case"address":case"blockquote":case"center":case"del":case"ins":case"pre":case"h1":case"h2":case"h3":case"h4":case"h5":case"h6":case"h7":return a;
-case"body":case"noframes":case"dd":case"li":case"th":case"td":case"noscript":return null;default:break}}return null};Xinha.prototype._createImplicitBlock=function(b){var c=this.getSelection();if(Xinha.is_ie){c.empty()
-}else{c.collapseToStart()}var a=this.createRange(c)};Xinha.prototype.surroundHTML=function(c,b){var a=this.getSelectedHTML();this.insertHTML(c+a+b)};Xinha.prototype.hasSelectedText=function(){return this.getSelectedHTML()!==""
-};Xinha.prototype._comboSelected=function(b,a){this.focusEditor();var c=b.options[b.selectedIndex].value;switch(a){case"fontname":case"fontsize":this.execCommand(a,false,c);break;case"formatblock":if(!c){this.updateToolbar();
-break}if(!Xinha.is_gecko||c!=="blockquote"){c="<"+c+">"}this.execCommand(a,false,c);break;default:var d=this.config.customSelects[a];if(typeof d!="undefined"){d.action(this)}else{alert("FIXME: combo box "+a+" not implemented")
-}break}};Xinha.prototype._colorSelector=function(h){var g=this;if(Xinha.is_gecko){try{g._doc.execCommand("useCSS",false,false);g._doc.execCommand("styleWithCSS",false,true)}catch(e){}}var d=g._toolbarObjects[h].element;
-var f;if(h=="hilitecolor"){if(Xinha.is_ie){h="backcolor";f=Xinha._colorToRgb(g._doc.queryCommandValue("backcolor"))}else{f=Xinha._colorToRgb(g._doc.queryCommandValue("hilitecolor"))}}else{f=Xinha._colorToRgb(g._doc.queryCommandValue("forecolor"))
-}var b=function(i){g._doc.execCommand(h,false,i)};if(Xinha.is_ie){var a=g.createRange(g.getSelection());b=function(i){a.select();g._doc.execCommand(h,false,i)}}var c=new Xinha.colorPicker({cellsize:g.config.colorPickerCellSize,callback:b,granularity:g.config.colorPickerGranularity,websafe:g.config.colorPickerWebSafe,savecolors:g.config.colorPickerSaveColors});
-c.open(g.config.colorPickerPosition,d,f)};Xinha.prototype.execCommand=function(h,f,g){var e=this;this.focusEditor();h=h.toLowerCase();if(this.firePluginEvent("onExecCommand",h,f,g)){this.updateToolbar();
-return false}switch(h){case"htmlmode":this.setMode();break;case"hilitecolor":case"forecolor":this._colorSelector(h);break;case"createlink":this._createLink();break;case"undo":case"redo":if(this._customUndo){this[h]()
-}else{this._doc.execCommand(h,f,g)}break;case"inserttable":this._insertTable();break;case"insertimage":this._insertImage();break;case"showhelp":this._popupDialog(e.config.URIs.help,null,this);break;case"killword":this._wordClean();
-break;case"cut":case"copy":case"paste":this._doc.execCommand(h,f,g);if(this.config.killWordOnPaste){this._wordClean()}break;case"lefttoright":case"righttoleft":if(this.config.changeJustifyWithDirection){this._doc.execCommand((h=="righttoleft")?"justifyright":"justifyleft",f,g)
-}var a=(h=="righttoleft")?"rtl":"ltr";var d=this.getParentElement();while(d&&!Xinha.isBlockElement(d)){d=d.parentNode}if(d){if(d.style.direction==a){d.style.direction=""}else{d.style.direction=a}}break;
-case"justifyleft":case"justifyright":h.match(/^justify(.*)$/);var c=this.activeElement(this.getSelection());if(c&&c.tagName.toLowerCase()=="img"){c.align=c.align==RegExp.$1?"":RegExp.$1}else{this._doc.execCommand(h,f,g)
-}break;default:try{this._doc.execCommand(h,f,g)}catch(b){if(this.config.debug){alert(b+"\n\nby execCommand("+h+");")}}break}this.updateToolbar();return false};Xinha.prototype._editorEvent=function(b){var a=this;
-if(typeof a._textArea["on"+b.type]=="function"){a._textArea["on"+b.type](b)}if(this.isKeyEvent(b)){if(a.firePluginEvent("onKeyPress",b)){return false}if(this.isShortCut(b)){this._shortCuts(b)}}if(b.type=="mousedown"){if(a.firePluginEvent("onMouseDown",b)){return false
-}}if(a._timerToolbar){clearTimeout(a._timerToolbar)}if(!this.suspendUpdateToolbar){a._timerToolbar=setTimeout(function(){a.updateToolbar();a._timerToolbar=null},250)}};Xinha.prototype._shortCuts=function(b){var a=this.getKey(b).toLowerCase();
-var d=null;var c=null;switch(a){case"b":d="bold";break;case"i":d="italic";break;case"u":d="underline";break;case"s":d="strikethrough";break;case"l":d="justifyleft";break;case"e":d="justifycenter";break;
-case"r":d="justifyright";break;case"j":d="justifyfull";break;case"z":d="undo";break;case"y":d="redo";break;case"v":d="paste";break;case"n":d="formatblock";c="p";break;case"0":d="killword";break;case"1":case"2":case"3":case"4":case"5":case"6":d="formatblock";
-c="h"+a;break}if(d){this.execCommand(d,false,c);Xinha._stopEvent(b)}};Xinha.prototype.convertNode=function(a,c){var b=this._doc.createElement(c);while(a.firstChild){b.appendChild(a.firstChild)}return b
-};Xinha.prototype.scrollToElement=function(b){if(!b){b=this.getParentElement();if(!b){return}}var a=Xinha.getElementTopLeft(b);this._iframe.contentWindow.scrollTo(a.left,a.top)};Xinha.prototype.getEditorContent=function(){return this.outwardHtml(this.getHTML())
-};Xinha.prototype.setEditorContent=function(a){this.setHTML(this.inwardHtml(a))};Xinha.updateTextareas=function(){var b;for(var a=0;a<__xinhas.length;a++){b=__xinhas[a];b._textArea.value=b.getEditorContent()
-}};Xinha.prototype.getHTML=function(){var a="";switch(this._editMode){case"wysiwyg":if(!this.config.fullPage){a=Xinha.getHTML(this._doc.body,false,this).trim()}else{a=this.doctype+"\n"+Xinha.getHTML(this._doc.documentElement,true,this)
-}break;case"textmode":a=this._textArea.value;break;default:alert("Mode <"+this._editMode+"> not defined!");return false}return a};Xinha.prototype.outwardHtml=function(c){for(var b in this.plugins){var d=this.plugins[b].instance;
-if(d&&typeof d.outwardHtml=="function"){c=d.outwardHtml(c)}}c=c.replace(/<(\/?)b(\s|>|\/)/ig,"<$1strong$2");c=c.replace(/<(\/?)i(\s|>|\/)/ig,"<$1em$2");c=c.replace(/<(\/?)strike(\s|>|\/)/ig,"<$1del$2");
-c=c.replace(/(<[^>]*on(click|mouse(over|out|up|down))=['"])if\(window\.parent &amp;&amp; window\.parent\.Xinha\)\{return false\}/gi,"$1");var a=location.href.replace(/(https?:\/\/[^\/]*)\/.*/,"$1")+"/";
-c=c.replace(/https?:\/\/null\//g,a);c=c.replace(/((href|src|background)=[\'\"])\/+/ig,"$1"+a);c=this.outwardSpecialReplacements(c);c=this.fixRelativeLinks(c);if(this.config.sevenBitClean){c=c.replace(/[^ -~\r\n\t]/g,function(e){return(e!=Xinha.cc)?"&#"+e.charCodeAt(0)+";":e
-})}c=c.replace(/(<script[^>]*((type=[\"\']text\/)|(language=[\"\'])))(freezescript)/gi,"$1javascript");if(this.config.fullPage){c=Xinha.stripCoreCSS(c)}if(typeof this.config.outwardHtml=="function"){c=this.config.outwardHtml(c)
-}return c};Xinha.prototype.inwardHtml=function(b){for(var a in this.plugins){var c=this.plugins[a].instance;if(c&&typeof c.inwardHtml=="function"){b=c.inwardHtml(b)}}b=b.replace(/<(\/?)del(\s|>|\/)/ig,"<$1strike$2");
-b=b.replace(/(<[^>]*on(click|mouse(over|out|up|down))=["'])/gi,"$1if(window.parent &amp;&amp; window.parent.Xinha){return false}");b=this.inwardSpecialReplacements(b);b=b.replace(/(<script[^>]*((type=[\"\']text\/)|(language=[\"\'])))(javascript)/gi,"$1freezescript");
-var d=new RegExp("((href|src|background)=['\"])/+","gi");b=b.replace(d,"$1"+location.href.replace(/(https?:\/\/[^\/]*)\/.*/,"$1")+"/");b=this.fixRelativeLinks(b);if(this.config.fullPage){b=Xinha.addCoreCSS(b)
-}if(typeof this.config.inwardHtml=="function"){b=this.config.inwardHtml(b)}return b};Xinha.prototype.outwardSpecialReplacements=function(b){for(var a in this.config.specialReplacements){var e=this.config.specialReplacements[a];
-var d=a;if(typeof e.replace!="function"||typeof d.replace!="function"){continue}var c=new RegExp(Xinha.escapeStringForRegExp(e),"g");b=b.replace(c,d.replace(/\$/g,"$$$$"))}return b};Xinha.prototype.inwardSpecialReplacements=function(b){for(var a in this.config.specialReplacements){var e=a;
-var d=this.config.specialReplacements[a];if(typeof e.replace!="function"||typeof d.replace!="function"){continue}var c=new RegExp(Xinha.escapeStringForRegExp(e),"g");b=b.replace(c,d.replace(/\$/g,"$$$$"))
-}return b};Xinha.prototype.fixRelativeLinks=function(g){if(typeof this.config.expandRelativeUrl!="undefined"&&this.config.expandRelativeUrl){if(g==null){return""}var a=g.match(/(src|href)="([^"]*)"/gi);
-var j=document.location.href;if(a){var d,k,l,m,c;for(var f=0;f<a.length;++f){d=a[f].match(/(src|href)="([^"]*)"/i);k=d[2].match(/\.\.\//g);if(k){l=new RegExp("(.*?)(([^/]*/){"+k.length+"})[^/]*$");m=j.match(l);
-c=d[2].replace(/(\.\.\/)*/,m[1]);g=g.replace(new RegExp(Xinha.escapeStringForRegExp(d[2])),c)}}}}if(typeof this.config.stripSelfNamedAnchors!="undefined"&&this.config.stripSelfNamedAnchors){var e=new RegExp('((href|src|background)=")('+Xinha.escapeStringForRegExp(window.unescape(document.location.href.replace(/&/g,"&amp;")))+")([#?][^'\" ]*)","g");
-g=g.replace(e,"$1$4")}if(typeof this.config.stripBaseHref!="undefined"&&this.config.stripBaseHref){var h=null;if(typeof this.config.baseHref!="undefined"&&this.config.baseHref!==null){h=new RegExp('((href|src|background|action)=")('+Xinha.escapeStringForRegExp(this.config.baseHref.replace(/([^\/]\/)(?=.+\.)[^\/]*$/,"$1"))+")","g");
-g=g.replace(h,"$1")}h=new RegExp('((href|src|background|action)=")('+Xinha.escapeStringForRegExp(document.location.href.replace(/^(https?:\/\/[^\/]*)(.*)/,"$1"))+")","g");g=g.replace(h,"$1")}return g};
-Xinha.prototype.getInnerHTML=function(){if(!this._doc.body){return""}var a="";switch(this._editMode){case"wysiwyg":if(!this.config.fullPage){a=this._doc.body.innerHTML}else{a=this.doctype+"\n"+this._doc.documentElement.innerHTML
-}break;case"textmode":a=this._textArea.value;break;default:alert("Mode <"+this._editMode+"> not defined!");return false}return a};Xinha.prototype.setHTML=function(a){if(!this.config.fullPage){this._doc.body.innerHTML=a
-}else{this.setFullHTML(a)}this._textArea.value=a};Xinha.prototype.setDoctype=function(a){this.doctype=a};Xinha._object=null;Array.prototype.isArray=true;RegExp.prototype.isRegExp=true;Xinha.cloneObject=function(obj){if(!obj){return null
-}var newObj=obj.isArray?[]:{};if(obj.constructor.toString().match(/\s*function Function\(/)||typeof obj=="function"){newObj=obj}else{if(obj.isRegExp){newObj=eval(obj.toString())}else{for(var n in obj){var node=obj[n];
-if(typeof node=="object"){newObj[n]=Xinha.cloneObject(node)}else{newObj[n]=node}}}}return newObj};Xinha.flushEvents=function(){var a=0;var c=Xinha._eventFlushers.pop();while(c){try{if(c.length==3){Xinha._removeEvent(c[0],c[1],c[2]);
-a++}else{if(c.length==2){c[0]["on"+c[1]]=null;c[0]._xinha_dom0Events[c[1]]=null;a++}}}catch(b){}c=Xinha._eventFlushers.pop()}};Xinha._eventFlushers=[];if(document.addEventListener){Xinha._addEvent=function(a,c,b){a.addEventListener(c,b,false);
-Xinha._eventFlushers.push([a,c,b])};Xinha._removeEvent=function(a,c,b){a.removeEventListener(c,b,false)};Xinha._stopEvent=function(a){a.preventDefault();a.stopPropagation()}}else{if(document.attachEvent){Xinha._addEvent=function(a,c,b){a.attachEvent("on"+c,b);
-Xinha._eventFlushers.push([a,c,b])};Xinha._removeEvent=function(a,c,b){a.detachEvent("on"+c,b)};Xinha._stopEvent=function(b){try{b.cancelBubble=true;b.returnValue=false}catch(a){}}}else{Xinha._addEvent=function(a,c,b){alert("_addEvent is not supported")
-};Xinha._removeEvent=function(a,c,b){alert("_removeEvent is not supported")};Xinha._stopEvent=function(a){alert("_stopEvent is not supported")}}}Xinha._addEvents=function(c,a,d){for(var b=a.length;--b>=0;
-){Xinha._addEvent(c,a[b],d)}};Xinha._removeEvents=function(c,a,d){for(var b=a.length;--b>=0;){Xinha._removeEvent(c,a[b],d)}};Xinha.addOnloadHandler=function(b,a){a=a?a:window;var c=function(){if(arguments.callee.done){return
-}arguments.callee.done=true;if(Xinha.onloadTimer){clearInterval(Xinha.onloadTimer)}b()};if(Xinha.is_ie){document.attachEvent("onreadystatechange",function(){if(document.readyState==="complete"){document.detachEvent("onreadystatechange",arguments.callee);
-c()}});if(document.documentElement.doScroll&&typeof window.frameElement==="undefined"){(function(){if(arguments.callee.done){return}try{document.documentElement.doScroll("left")}catch(d){setTimeout(arguments.callee,0);
-return}c()})()}}else{if(/applewebkit|KHTML/i.test(navigator.userAgent)){Xinha.onloadTimer=a.setInterval(function(){if(/loaded|complete/.test(a.document.readyState)){c()}},10)}else{a.document.addEventListener("DOMContentLoaded",c,false)
-}}Xinha._addEvent(a,"load",c)};Xinha.addDom0Event=function(b,c,a){Xinha._prepareForDom0Events(b,c);b._xinha_dom0Events[c].unshift(a)};Xinha.prependDom0Event=function(b,c,a){Xinha._prepareForDom0Events(b,c);
-b._xinha_dom0Events[c].push(a)};Xinha.getEvent=function(a){return a||window.event};Xinha._prepareForDom0Events=function(a,b){if(typeof a._xinha_dom0Events=="undefined"){a._xinha_dom0Events={};Xinha.freeLater(a,"_xinha_dom0Events")
-}if(typeof a._xinha_dom0Events[b]=="undefined"){a._xinha_dom0Events[b]=[];if(typeof a["on"+b]=="function"){a._xinha_dom0Events[b].push(a["on"+b])}a["on"+b]=function(e){var c=a._xinha_dom0Events[b];var f=true;
-for(var d=c.length;--d>=0;){a._xinha_tempEventHandler=c[d];if(a._xinha_tempEventHandler(e)===false){a._xinha_tempEventHandler=null;f=false;break}a._xinha_tempEventHandler=null}return f};Xinha._eventFlushers.push([a,b])
-}};Xinha.prototype.notifyOn=function(b,a){if(typeof this._notifyListeners[b]=="undefined"){this._notifyListeners[b]=[];Xinha.freeLater(this,"_notifyListeners")}this._notifyListeners[b].push(a)};Xinha.prototype.notifyOf=function(c,a){if(this._notifyListeners[c]){for(var b=0;
-b<this._notifyListeners[c].length;b++){this._notifyListeners[c][b](c,a)}}};Xinha._blockTags=" body form textarea fieldset ul ol dl li div p h1 h2 h3 h4 h5 h6 quote pre table thead tbody tfoot tr td th iframe address blockquote title meta link style head ";
-Xinha.isBlockElement=function(a){return a&&a.nodeType==1&&(Xinha._blockTags.indexOf(" "+a.tagName.toLowerCase()+" ")!=-1)};Xinha._paraContainerTags=" body td th caption fieldset div ";Xinha.isParaContainer=function(a){return a&&a.nodeType==1&&(Xinha._paraContainerTags.indexOf(" "+a.tagName.toLowerCase()+" ")!=-1)
-};Xinha._closingTags=" a abbr acronym address applet b bdo big blockquote button caption center cite code del dfn dir div dl em fieldset font form frameset h1 h2 h3 h4 h5 h6 i iframe ins kbd label legend map menu noframes noscript object ol optgroup pre q s samp script select small span strike strong style sub sup table textarea title tt u ul var ";
-Xinha.needsClosingTag=function(a){return a&&a.nodeType==1&&(Xinha._closingTags.indexOf(" "+a.tagName.toLowerCase()+" ")!=-1)};Xinha.htmlEncode=function(a){if(!a){return""}if(typeof a.replace=="undefined"){a=a.toString()
-}a=a.replace(/&/ig,"&amp;");a=a.replace(/</ig,"&lt;");a=a.replace(/>/ig,"&gt;");a=a.replace(/\xA0/g,"&nbsp;");a=a.replace(/\x22/g,"&quot;");return a};Xinha.prototype.stripBaseURL=function(a){if(this.config.baseHref===null||!this.config.stripBaseHref){return a
-}var c=this.config.baseHref.replace(/^(https?:\/\/[^\/]+)(.*)$/,"$1");var b=new RegExp(c);return a.replace(b,"")};if(typeof String.prototype.trim!="function"){String.prototype.trim=function(){return this.replace(/^\s+/,"").replace(/\s+$/,"")
-}}Xinha._makeColor=function(c){if(typeof c!="number"){return c}var e=c&255;var d=(c>>8)&255;var a=(c>>16)&255;return"rgb("+e+","+d+","+a+")"};Xinha._colorToRgb=function(c){if(!c){return""}var h,f,a;function e(b){return(b<16)?("0"+b.toString(16)):b.toString(16)
-}if(typeof c=="number"){h=c&255;f=(c>>8)&255;a=(c>>16)&255;return"#"+e(h)+e(f)+e(a)}if(c.substr(0,3)=="rgb"){var d=/rgb\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*\)/;if(c.match(d)){h=parseInt(RegExp.$1,10);
-f=parseInt(RegExp.$2,10);a=parseInt(RegExp.$3,10);return"#"+e(h)+e(f)+e(a)}return null}if(c.substr(0,1)=="#"){return c}return null};Xinha.prototype._popupDialog=function(a,b,c){Dialog(this.popupURL(a),b,c)
-};Xinha.prototype.imgURL=function(a,b){if(typeof b=="undefined"){return _editor_url+a}else{return Xinha.getPluginDir(b)+"/img/"+a}};Xinha.prototype.popupURL=function(c){var b="";if(c.match(/^plugin:\/\/(.*?)\/(.*)/)){var d=RegExp.$1;
-var a=RegExp.$2;if(!/\.(html?|php)$/.test(a)){a+=".html"}b=Xinha.getPluginDir(d)+"/popups/"+a}else{if(c.match(/^\/.*?/)||c.match(/^https?:\/\//)){b=c}else{b=_editor_url+this.config.popupURL+c}}return b
-};Xinha.getElementById=function(a,e){var c,b,d=document.getElementsByTagName(a);for(b=d.length;--b>=0&&(c=d[b]);){if(c.id==e){return c}}return null};Xinha.prototype._toggleBorders=function(){var b=this._doc.getElementsByTagName("TABLE");
-if(b.length!==0){if(!this.borders){this.borders=true}else{this.borders=false}for(var a=0;a<b.length;a++){if(this.borders){Xinha._addClass(b[a],"htmtableborders")}else{Xinha._removeClass(b[a],"htmtableborders")
-}}}return true};Xinha.addCoreCSS=function(b){var a='<style title="XinhaInternalCSS" type="text/css">.htmtableborders, .htmtableborders td, .htmtableborders th {border : 1px dashed lightgrey ! important;}\nhtml, body { border: 0px; } \nbody { background-color: #ffffff; } \nimg, hr { cursor: default } \n</style>\n';
-if(b&&/<head>/i.test(b)){return b.replace(/<head>/i,"<head>"+a)}else{if(b){return a+b}else{return a}}};Xinha.prototype.addEditorStylesheet=function(a){var b=this._doc.createElement("link");b.rel="stylesheet";
-b.type="text/css";b.title="XinhaInternalCSS";b.href=a;this._doc.getElementsByTagName("HEAD")[0].appendChild(b)};Xinha.stripCoreCSS=function(a){return a.replace(/<style[^>]+title="XinhaInternalCSS"(.|\n)*?<\/style>/ig,"").replace(/<link[^>]+title="XinhaInternalCSS"(.|\n)*?>/ig,"")
-};Xinha._removeClass=function(e,d){if(!(e&&e.className)){return}var a=e.className.split(" ");var b=[];for(var c=a.length;c>0;){if(a[--c]!=d){b[b.length]=a[c]}}e.className=b.join(" ")};Xinha._addClass=function(b,a){Xinha._removeClass(b,a);
-b.className+=" "+a};Xinha.addClasses=function(f,e){if(f!==null){var b=f.className.trim().split(" ");var d=e.split(" ");for(var a=0;a<d.length;a++){var g=false;for(var c=0;g===false&&c<b.length;c++){if(b[c]==d[a]){g=true
-}}if(g===false){b[b.length]=d[a]}}f.className=b.join(" ").trim()}};Xinha.removeClasses=function(e,d){var g=e.className.trim().split();var f=[];var b=d.trim().split();for(var c=0;c<g.length;c++){var h=false;
-for(var a=0;a<b.length&&!h;a++){if(g[c]==b[a]){h=true}}if(!h){f[f.length]=g[c]}}return f.join(" ")};Xinha.addClass=Xinha._addClass;Xinha.removeClass=Xinha._removeClass;Xinha._addClasses=Xinha.addClasses;
-Xinha._removeClasses=Xinha.removeClasses;Xinha._hasClass=function(d,c){if(!(d&&d.className)){return false}var a=d.className.split(" ");for(var b=a.length;b>0;){if(a[--b]==c){return true}}return false};
-Xinha._postback_send_charset=true;Xinha._postback=function(b,g,h,a){var e=null;e=Xinha.getXMLHTTPRequestObject();var d="";if(typeof g=="string"){d=g}else{if(typeof g=="object"){for(var c in g){d+=(d.length?"&":"")+c+"="+encodeURIComponent(g[c])
-}}}function f(){if(e.readyState==4){if(((e.status/100)==2)||Xinha.isRunLocally&&e.status===0){if(typeof h=="function"){h(e.responseText,e)}}else{if(Xinha._postback_send_charset){Xinha._postback_send_charset=false;
-Xinha._postback(b,g,h,a)}else{if(typeof a=="function"){a(e)}else{alert("An error has occurred: "+e.statusText+"\nURL: "+b)}}}}}e.onreadystatechange=f;e.open("POST",b,true);e.setRequestHeader("Content-Type","application/x-www-form-urlencoded"+(Xinha._postback_send_charset?"; charset=UTF-8":""));
-e.send(d)};Xinha._getback=function(b,e,a){var c=null;c=Xinha.getXMLHTTPRequestObject();function d(){if(c.readyState==4){if(((c.status/100)==2)||Xinha.isRunLocally&&c.status===0){e(c.responseText,c)}else{if(typeof a=="function"){a(c)
-}else{alert("An error has occurred: "+c.statusText+"\nURL: "+b)}}}}c.onreadystatechange=d;c.open("GET",b,true);c.send(null)};Xinha.ping=function(c,b,a){var d=null;d=Xinha.getXMLHTTPRequestObject();function e(){if(d.readyState==4){if(((d.status/100)==2)||Xinha.isRunLocally&&d.status===0){if(b){b(d)
-}}else{if(a){a(d)}}}}var f="GET";d.onreadystatechange=e;d.open(f,c,true);d.send(null)};Xinha._geturlcontent=function(b,a){var c=null;c=Xinha.getXMLHTTPRequestObject();c.open("GET",b,false);c.send(null);
-if(((c.status/100)==2)||Xinha.isRunLocally&&c.status===0){return(a)?c.responseXML:c.responseText}else{return""}};if(typeof dumpValues=="undefined"){dumpValues=function(c){var b="";for(var d in c){if(window.console&&typeof window.console.log=="function"){if(typeof console.firebug!="undefined"){console.log(c)
-}else{console.log(d+" = "+c[d]+"\n")}}else{b+=d+" = "+c[d]+"\n"}}if(b){if(document.getElementById("errors")){document.getElementById("errors").value+=b}else{var a=window.open("","debugger");a.document.write("<pre>"+b+"</pre>")
-}}}}if(!Array.prototype.contains){Array.prototype.contains=function(c){var b=this;for(var a=0;a<b.length;a++){if(c==b[a]){return true}}return false}}if(!Array.prototype.indexOf){Array.prototype.indexOf=function(c){var b=this;
-for(var a=0;a<b.length;a++){if(c==b[a]){return a}}return null}}if(!Array.prototype.append){Array.prototype.append=function(b){for(var c=0;c<b.length;c++){this.push(b[c])}return this}}if(!Array.prototype.forEach){Array.prototype.forEach=function(d){var a=this.length;
-if(typeof d!="function"){throw new TypeError()}var b=arguments[1];for(var c=0;c<a;c++){if(c in this){d.call(b,this[c],c,this)}}}}Xinha.getElementsByClassName=function(e,d){if(e.getElementsByClassName){return Array.prototype.slice.call(e.getElementsByClassName(d))
-}else{var c=e.getElementsByTagName("*");var a=[];var f;for(var b=0;b<c.length;b++){f=c[b].className.split(" ");if(f.contains(d)){a.push(c[b])}}return a}};Xinha.arrayContainsArray=function(d,b){var c=true;
-for(var a=0;a<b.length;a++){var f=false;for(var e=0;e<d.length;e++){if(d[e]==b[a]){f=true;break}}if(!f){c=false;break}}return c};Xinha.arrayFilter=function(b,d){var c=[];for(var a=0;a<b.length;a++){if(d(b[a])){c[c.length]=b[a]
-}}return c};Xinha.collectionToArray=function(c){try{return c.length?Array.prototype.slice.call(c):[]}catch(b){}var d=[];for(var a=0;a<c.length;a++){d.push(c.item(a))}return d};Xinha.uniq_count=0;Xinha.uniq=function(a){return a+Xinha.uniq_count++
-};Xinha._loadlang=function(context,url){var lang;if(typeof _editor_lcbackend=="string"){url=_editor_lcbackend;url=url.replace(/%lang%/,_editor_lang);url=url.replace(/%context%/,context)}else{if(!url){if(context!="Xinha"){url=Xinha.getPluginDir(context)+"/lang/"+_editor_lang+".js"
-}else{Xinha.setLoadingMessage("Loading language");url=_editor_url+"lang/"+_editor_lang+".js"}}}var langData=Xinha._geturlcontent(url);if(langData!==""){try{eval("lang = "+langData)}catch(ex){alert("Error reading Language-File ("+url+"):\n"+Error.toString());
-lang={}}}else{lang={}}return lang};Xinha._lc=function(g,b,c){var a,h;if(typeof b=="object"&&b.url&&b.context){a=b.url+_editor_lang+".js";b=b.context}var e=null;if(typeof g=="string"){e=g.match(/\$(.*?)=(.*?)\$/g)
-}if(e){if(!c){c={}}for(var f=0;f<e.length;f++){var d=e[f].match(/\$(.*?)=(.*?)\$/);c[d[1]]=d[2];g=g.replace(d[0],"$"+d[1])}}if(_editor_lang=="en"){if(typeof g=="object"&&g.string){h=g.string}else{h=g}}else{if(typeof Xinha._lc_catalog=="undefined"){Xinha._lc_catalog=[]
-}if(typeof b=="undefined"){b="Xinha"}if(typeof Xinha._lc_catalog[b]=="undefined"){Xinha._lc_catalog[b]=Xinha._loadlang(b,a)}var j;if(typeof g=="object"&&g.key){j=g.key}else{if(typeof g=="object"&&g.string){j=g.string
-}else{j=g}}if(typeof Xinha._lc_catalog[b][j]=="undefined"){if(b=="Xinha"){if(typeof g=="object"&&g.string){h=g.string}else{h=g}}else{return Xinha._lc(g,"Xinha",c)}}else{h=Xinha._lc_catalog[b][j]}}if(typeof g=="object"&&g.replace){c=g.replace
-}if(typeof c!="undefined"){for(f in c){h=h.replace("$"+f,c[f])}}return h};Xinha.hasDisplayedChildren=function(c){var b=c.childNodes;for(var a=0;a<b.length;a++){if(b[a].tagName){if(b[a].style.display!="none"){return true
-}}}return false};Xinha._loadback=function(a,f,d,e){if(document.getElementById(a)){return true}var b=!Xinha.is_ie?"onload":"onreadystatechange";var c=document.createElement("script");c.type="text/javascript";
-c.src=a;c.id=a;if(f){c[b]=function(){if(Xinha.is_ie&&(!/loaded|complete/.test(window.event.srcElement.readyState))){return}f.call(d?d:this,e);c[b]=null}}document.getElementsByTagName("head")[0].appendChild(c);
-return false};Xinha.makeEditors=function(c,f,g){if(!Xinha.isSupportedBrowser){return}if(typeof f=="function"){f=f()}var e={};var b;for(var a=0;a<c.length;a++){if(typeof c[a]=="string"){b=Xinha.getElementById("textarea",c[a]);
-if(!b){c[a]=null;continue}}else{if(typeof c[a]=="object"&&c[a].tagName&&c[a].tagName.toLowerCase()=="textarea"){b=c[a];if(!b.id){b.id="xinha_id_"+a}}}var d=new Xinha(b,Xinha.cloneObject(f));d.registerPlugins(g);
-e[b.id]=d}return e};Xinha.startEditors=function(b){if(!Xinha.isSupportedBrowser){return}for(var a in b){if(b[a].generate){b[a].generate()}}};Xinha.prototype.registerPlugins=function(b){if(!Xinha.isSupportedBrowser){return
-}if(b){for(var a=0;a<b.length;a++){this.setLoadingMessage(Xinha._lc("Register plugin $plugin","Xinha",{plugin:b[a]}));this.registerPlugin(b[a])}}};Xinha.base64_encode=function(d){var b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-var a="";var l,j,g;var k,h,f,e;var c=0;do{l=d.charCodeAt(c++);j=d.charCodeAt(c++);g=d.charCodeAt(c++);k=l>>2;h=((l&3)<<4)|(j>>4);f=((j&15)<<2)|(g>>6);e=g&63;if(isNaN(j)){f=e=64}else{if(isNaN(g)){e=64}}a=a+b.charAt(k)+b.charAt(h)+b.charAt(f)+b.charAt(e)
-}while(c<d.length);return a};Xinha.base64_decode=function(d){var b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";var a="";var l,j,g;var k,h,f,e;var c=0;d=d.replace(/[^A-Za-z0-9\+\/\=]/g,"");
-do{k=b.indexOf(d.charAt(c++));h=b.indexOf(d.charAt(c++));f=b.indexOf(d.charAt(c++));e=b.indexOf(d.charAt(c++));l=(k<<2)|(h>>4);j=((h&15)<<4)|(f>>2);g=((f&3)<<6)|e;a=a+String.fromCharCode(l);if(f!=64){a=a+String.fromCharCode(j)
-}if(e!=64){a=a+String.fromCharCode(g)}}while(c<d.length);return a};Xinha.removeFromParent=function(b){if(!b.parentNode){return}var a=b.parentNode;return a.removeChild(b)};Xinha.hasParentNode=function(a){if(a.parentNode){if(a.parentNode.nodeType==11){return false
-}return true}return false};Xinha.viewportSize=function(b){b=(b)?b:window;var a,c;if(b.innerHeight){a=b.innerWidth;c=b.innerHeight}else{if(b.document.documentElement&&b.document.documentElement.clientHeight){a=b.document.documentElement.clientWidth;
-c=b.document.documentElement.clientHeight}else{if(b.document.body){a=b.document.body.clientWidth;c=b.document.body.clientHeight}}}return{x:a,y:c}};Xinha.pageSize=function(d){d=(d)?d:window;var a,e;var c=d.document.body.scrollHeight;
-var b=d.document.documentElement.scrollHeight;if(c>b){a=d.document.body.scrollWidth;e=d.document.body.scrollHeight}else{a=d.document.documentElement.scrollWidth;e=d.document.documentElement.scrollHeight
-}return{x:a,y:e}};Xinha.prototype.scrollPos=function(b){b=(b)?b:window;var a,c;if(typeof b.pageYOffset!="undefined"){a=b.pageXOffset;c=b.pageYOffset}else{if(b.document.documentElement&&typeof document.documentElement.scrollTop!="undefined"){a=b.document.documentElement.scrollLeft;
-c=b.document.documentElement.scrollTop}else{if(b.document.body){a=b.document.body.scrollLeft;c=b.document.body.scrollTop}}}return{x:a,y:c}};Xinha.getElementTopLeft=function(a){var c=0;var b=0;if(a.offsetParent){c=a.offsetLeft;
-b=a.offsetTop;while(a=a.offsetParent){c+=a.offsetLeft;b+=a.offsetTop}}return{top:b,left:c}};Xinha.findPosX=function(a){var b=0;if(a.offsetParent){return Xinha.getElementTopLeft(a).left}else{if(a.x){b+=a.x
-}}return b};Xinha.findPosY=function(b){var a=0;if(b.offsetParent){return Xinha.getElementTopLeft(b).top}else{if(b.y){a+=b.y}}return a};Xinha.createLoadingMessages=function(b){if(Xinha.loadingMessages||!Xinha.isSupportedBrowser){return
-}Xinha.loadingMessages=[];for(var a=0;a<b.length;a++){if(!document.getElementById(b[a])){continue}Xinha.loadingMessages.push(Xinha.createLoadingMessage(Xinha.getElementById("textarea",b[a])))}};Xinha.createLoadingMessage=function(a,e){if(document.getElementById("loading_"+a.id)||!Xinha.isSupportedBrowser){return
-}var d=document.createElement("div");d.id="loading_"+a.id;d.className="loading";d.style.left=(Xinha.findPosX(a)+a.offsetWidth/2)-106+"px";d.style.top=(Xinha.findPosY(a)+a.offsetHeight/2)-50+"px";var c=document.createElement("div");
-c.className="loading_main";c.id="loading_main_"+a.id;c.appendChild(document.createTextNode(Xinha._lc("Loading in progress. Please wait!")));var b=document.createElement("div");b.className="loading_sub";
-b.id="loading_sub_"+a.id;e=e?e:Xinha._lc("Loading Core");b.appendChild(document.createTextNode(e));d.appendChild(c);d.appendChild(b);document.body.appendChild(d);Xinha.freeLater(d);Xinha.freeLater(c);Xinha.freeLater(b);
-return b};Xinha.prototype.setLoadingMessage=function(a,b){if(!document.getElementById("loading_sub_"+this._textArea.id)){return}document.getElementById("loading_main_"+this._textArea.id).innerHTML=b?b:Xinha._lc("Loading in progress. Please wait!");
-document.getElementById("loading_sub_"+this._textArea.id).innerHTML=a};Xinha.setLoadingMessage=function(a){if(!Xinha.loadingMessages){return}for(var b=0;b<Xinha.loadingMessages.length;b++){Xinha.loadingMessages[b].innerHTML=a
-}};Xinha.prototype.removeLoadingMessage=function(){if(document.getElementById("loading_"+this._textArea.id)){document.body.removeChild(document.getElementById("loading_"+this._textArea.id))}};Xinha.removeLoadingMessages=function(c){for(var b=0;
-b<c.length;b++){if(!document.getElementById(c[b])){continue}var a=document.getElementById("loading_"+document.getElementById(c[b]).id);a.parentNode.removeChild(a)}Xinha.loadingMessages=null};Xinha.toFree=[];
-Xinha.freeLater=function(a,b){Xinha.toFree.push({o:a,p:b})};Xinha.free=function(c,d){if(c&&!d){for(var b in c){Xinha.free(c,b)}}else{if(c){if(d.indexOf("src")==-1){try{c[d]=null}catch(a){}}}}};Xinha.collectGarbageForIE=function(){Xinha.flushEvents();
-for(var a=0;a<Xinha.toFree.length;a++){Xinha.free(Xinha.toFree[a].o,Xinha.toFree[a].p);Xinha.toFree[a].o=null}};Xinha.prototype.insertNodeAtSelection=function(a){Xinha.notImplemented("insertNodeAtSelection")
-};Xinha.prototype.getParentElement=function(a){Xinha.notImplemented("getParentElement")};Xinha.prototype.activeElement=function(a){Xinha.notImplemented("activeElement")};Xinha.prototype.selectionEmpty=function(a){Xinha.notImplemented("selectionEmpty")
-};Xinha.prototype.saveSelection=function(){Xinha.notImplemented("saveSelection")};Xinha.prototype.restoreSelection=function(a){Xinha.notImplemented("restoreSelection")};Xinha.prototype.selectNodeContents=function(a,b){Xinha.notImplemented("selectNodeContents")
-};Xinha.prototype.insertHTML=function(a){Xinha.notImplemented("insertHTML")};Xinha.prototype.getSelectedHTML=function(){Xinha.notImplemented("getSelectedHTML")};Xinha.prototype.getSelection=function(){Xinha.notImplemented("getSelection")
-};Xinha.prototype.createRange=function(a){Xinha.notImplemented("createRange")};Xinha.prototype.isKeyEvent=function(a){Xinha.notImplemented("isKeyEvent")};Xinha.prototype.isShortCut=function(a){if(a.ctrlKey&&!a.altKey){return true
-}return false};Xinha.prototype.getKey=function(a){Xinha.notImplemented("getKey")};Xinha.getOuterHTML=function(a){Xinha.notImplemented("getOuterHTML")};Xinha.getXMLHTTPRequestObject=function(){try{if(typeof XMLHttpRequest!="undefined"&&typeof XMLHttpRequest.constructor=="function"){return new XMLHttpRequest()
-}else{if(typeof ActiveXObject=="function"){return new ActiveXObject("Microsoft.XMLHTTP")}}}catch(a){Xinha.notImplemented("getXMLHTTPRequestObject")}};Xinha.prototype._activeElement=function(a){return this.activeElement(a)
-};Xinha.prototype._selectionEmpty=function(a){return this.selectionEmpty(a)};Xinha.prototype._getSelection=function(){return this.getSelection()};Xinha.prototype._createRange=function(a){return this.createRange(a)
-};HTMLArea=Xinha;Xinha.init();if(Xinha.ie_version<8){Xinha.addDom0Event(window,"unload",Xinha.collectGarbageForIE)}Xinha.debugMsg=function(a,b){if(typeof console!="undefined"&&typeof console.log=="function"){if(b&&b=="warn"&&typeof console.warn=="function"){console.warn(a)
-}else{if(b&&b=="info"&&typeof console.info=="function"){console.info(a)}else{console.log(a)}}}else{if(typeof opera!="undefined"&&typeof opera.postError=="function"){opera.postError(a)}}};Xinha.notImplemented=function(a){throw new Error("Method Not Implemented","Part of Xinha has tried to call the "+a+" method which has not been implemented.")
+//
+// HtmlEditor: a wysiwyg class wrapper.
+//
+// This class abstracts away the specific calls to particular wysiwyg html
+// editors so that we can change editors without changing too much code.
+//
+
+var HtmlEditor = Class.create({
+
+  // create the wrapper using the wiki id
+  initialize: function(wiki_id) {
+    this.editor = Xinha.getEditor("wiki_body_html-" + wiki_id);
+  },
+
+  // return true if the editor was actually found.
+  valid: function() {
+    return this.editor;
+  },
+
+  // called in case the editor needs a nudge when its panel is made visible.
+  refresh: function() {
+    this.editor.sizeEditor();
+    this.editor.activateEditor();
+    this.editor.focusEditor();
+  },
+
+  // returns the content area where the html lives in the dom.
+  area: function() {
+    return this.editor._iframe;
+  },
+
+  // returns the html text that is being edited
+  content: function() {
+    return this.editor.getEditorContent();
+  },
+
+  // get the currently selected HTML
+  selectedContent: function() {
+    return this.editor.getSelectedHTML();
+  },
+
+  // returns the currently selected <a> element, if there are any.
+  selectedAnchor: function() {
+    var ret  = null;
+    var sel  = this.editor.getSelection();
+    var rng  = this.editor.createRange(sel);
+    var a    = this.editor.activeElement(sel);
+    if (a != null && a.tagName.toLowerCase() == 'a') {
+      ret = a;
+    } else {
+      a = this.editor._getFirstAncestor(sel, 'a');
+      if (a != null) {
+        ret = a;
+      }
+    }
+    if (ret) {
+      ret.setAttribute('href', this.relativeHref(ret.getAttribute('href')));
+      return ret;
+    } else {
+      return null;
+    }
+  },
+
+  // returns a relative href. This is needed because IE this returns a horrible mess.
+  relativeHref: function(href) {
+    // return this.editor.fixRelativeLinks(this.selectedAnchor().getAttribute('href'));
+    var serverBase = location.href.replace(/(https?:\/\/[^\/]*)\/.*/, '$1') + '/';
+    return href.replace(serverBase, '');
+  },
+
+  saveSelection: function() {
+    current_editor_range = this.editor.saveSelection();
+  },
+
+  restoreSelection: function() {
+    this.editor.restoreSelection(current_editor_range);
+  },
+
+  // update the html content being edited
+  setContent: function(content) {
+    this.editor.setEditorContent(content);
+  },
+
+  // run execCommand on the html area.
+  // see: http://www.mozilla.org/editor/midas-spec.html
+  //      http://msdn.microsoft.com/workshop/author/dhtml/reference/methods/execcommand.asp
+  execCommand: function(cmd,param) {
+    this.editor.execCommand(cmd, false, param);
+  },
+
+  // insert some raw html into the content at the cursor
+  insert: function(html) {
+    this.editor.insertHTML(html);
+  },
+
+  // inserts an new image tag
+  insertImage: function(url, link) {
+    if (link) {
+      this.insert('<a href="#{link}"><img src="#{url}" /></a>'.interpolate({url:url,link:link}));
+    } else {
+      this.insert('<img src="#{url}" />'.interpolate({url:url}));
+    }
+  },
+
+  // inserts a new anchor tag or updates an existing anchor tag (if one is selected)
+  insertAnchor: function(label, href) {
+    var anchor = this.selectedAnchor();
+    if (anchor) {
+      anchor.href = href;
+      anchor.innerHTML = label;
+    } else if (label) {
+      this.insert('<a href="#{href}">#{label}</a>'.interpolate({href:href,label:label}));
+    }
+  },
+
+  // removes an anchor tag from the selection.
+  clearAnchor: function() {
+    var a = this.selectedAnchor();
+    var p = a.parentNode;
+    while(a.hasChildNodes()) {
+      p.insertBefore(a.removeChild(a.childNodes[0]), a);
+    }
+    p.removeChild(a);
+    this.editor.updateToolbar();
+  }
+
+});
+
+/*
+ * wiki editing javascript
+ * stolen and modified from http://livepipe.net/control/textarea
+ */
+
+/**
+ * @author Ryan Johnson <http://saucytiger.com/>
+ * @copyright 2008 PersonalGrid Corporation <http://personalgrid.com/>
+ * @package LivePipe UI
+ * @license MIT
+ * @url http://livepipe.net/core
+ * @require prototype.js
+ */
+
+if(typeof(Control) == 'undefined')
+	Control = {};
+
+var $proc = function(proc){
+	return typeof(proc) == 'function' ? proc : function(){return proc};
+};
+
+var $value = function(value){
+	return typeof(value) == 'function' ? value() : value;
+};
+
+Object.Event = {
+	extend: function(object){
+		object._objectEventSetup = function(event_name){
+			this._observers = this._observers || {};
+			this._observers[event_name] = this._observers[event_name] || [];
+		};
+		object.observe = function(event_name,observer){
+			if(typeof(event_name) == 'string' && typeof(observer) != 'undefined'){
+				this._objectEventSetup(event_name);
+				if(!this._observers[event_name].include(observer))
+					this._observers[event_name].push(observer);
+			}else
+				for(var e in event_name)
+					this.observe(e,event_name[e]);
+		};
+		object.stopObserving = function(event_name,observer){
+			this._objectEventSetup(event_name);
+			if(event_name && observer)
+				this._observers[event_name] = this._observers[event_name].without(observer);
+			else if(event_name)
+				this._observers[event_name] = [];
+			else
+				this._observers = {};
+		};
+		object.observeOnce = function(event_name,outer_observer){
+			var inner_observer = function(){
+				outer_observer.apply(this,arguments);
+				this.stopObserving(event_name,inner_observer);
+			}.bind(this);
+			this._objectEventSetup(event_name);
+			this._observers[event_name].push(inner_observer);
+		};
+		object.notify = function(event_name){
+			this._objectEventSetup(event_name);
+			var collected_return_values = [];
+			var args = $A(arguments).slice(1);
+			try{
+				for(var i = 0; i < this._observers[event_name].length; ++i)
+					collected_return_values.push(this._observers[event_name][i].apply(this._observers[event_name][i],args) || null);
+			}catch(e){
+				if(e == $break)
+					return false;
+				else
+					throw e;
+			}
+			return collected_return_values;
+		};
+		if(object.prototype){
+			object.prototype._objectEventSetup = object._objectEventSetup;
+			object.prototype.observe = object.observe;
+			object.prototype.stopObserving = object.stopObserving;
+			object.prototype.observeOnce = object.observeOnce;
+			object.prototype.notify = function(event_name){
+				if(object.notify){
+					var args = $A(arguments).slice(1);
+					args.unshift(this);
+					args.unshift(event_name);
+					object.notify.apply(object,args);
+				}
+				this._objectEventSetup(event_name);
+				var args = $A(arguments).slice(1);
+				var collected_return_values = [];
+				try{
+					if(this.options && this.options[event_name] && typeof(this.options[event_name]) == 'function')
+						collected_return_values.push(this.options[event_name].apply(this,args) || null);
+					for(var i = 0; i < this._observers[event_name].length; ++i)
+						collected_return_values.push(this._observers[event_name][i].apply(this._observers[event_name][i],args) || null);
+				}catch(e){
+					if(e == $break)
+						return false;
+					else
+						throw e;
+				}
+				return collected_return_values;
+			};
+		}
+	}
+};
+
+/* Begin Core Extensions */
+
+//Element.observeOnce
+Element.addMethods({
+	observeOnce: function(element,event_name,outer_callback){
+		var inner_callback = function(){
+			outer_callback.apply(this,arguments);
+			Element.stopObserving(element,event_name,inner_callback);
+		};
+		Element.observe(element,event_name,inner_callback);
+	}
+});
+
+//mouseenter, mouseleave
+//from http://dev.rubyonrails.org/attachment/ticket/8354/event_mouseenter_106rc1.patch
+Object.extend(Event, (function() {
+	var cache = Event.cache;
+
+	function getEventID(element) {
+		if (element._prototypeEventID) return element._prototypeEventID[0];
+		arguments.callee.id = arguments.callee.id || 1;
+		return element._prototypeEventID = [++arguments.callee.id];
+	}
+
+	function getDOMEventName(eventName) {
+		if (eventName && eventName.include(':')) return "dataavailable";
+		//begin extension
+		if(!Prototype.Browser.IE){
+			eventName = {
+				mouseenter: 'mouseover',
+				mouseleave: 'mouseout'
+			}[eventName] || eventName;
+		}
+		//end extension
+		return eventName;
+	}
+
+	function getCacheForID(id) {
+		return cache[id] = cache[id] || { };
+	}
+
+	function getWrappersForEventName(id, eventName) {
+		var c = getCacheForID(id);
+		return c[eventName] = c[eventName] || [];
+	}
+
+	function createWrapper(element, eventName, handler) {
+		var id = getEventID(element);
+		var c = getWrappersForEventName(id, eventName);
+		if (c.pluck("handler").include(handler)) return false;
+
+		var wrapper = function(event) {
+			if (!Event || !Event.extend ||
+				(event.eventName && event.eventName != eventName))
+					return false;
+
+			Event.extend(event);
+			handler.call(element, event);
+		};
+
+		//begin extension
+		if(!(Prototype.Browser.IE) && ['mouseenter','mouseleave'].include(eventName)){
+			wrapper = wrapper.wrap(function(proceed,event) {
+				var rel = event.relatedTarget;
+				var cur = event.currentTarget;
+				if(rel && rel.nodeType == Node.TEXT_NODE)
+					rel = rel.parentNode;
+				if(rel && rel != cur && !rel.descendantOf(cur))
+					return proceed(event);
+			});
+		}
+		//end extension
+
+		wrapper.handler = handler;
+		c.push(wrapper);
+		return wrapper;
+	}
+
+	function findWrapper(id, eventName, handler) {
+		var c = getWrappersForEventName(id, eventName);
+		return c.find(function(wrapper) { return wrapper.handler == handler });
+	}
+
+	function destroyWrapper(id, eventName, handler) {
+		var c = getCacheForID(id);
+		if (!c[eventName]) return false;
+		c[eventName] = c[eventName].without(findWrapper(id, eventName, handler));
+	}
+
+	function destroyCache() {
+		for (var id in cache)
+			for (var eventName in cache[id])
+				cache[id][eventName] = null;
+	}
+
+	if (window.attachEvent) {
+		window.attachEvent("onunload", destroyCache);
+	}
+
+	return {
+		observe: function(element, eventName, handler) {
+			element = $(element);
+			var name = getDOMEventName(eventName);
+
+			var wrapper = createWrapper(element, eventName, handler);
+			if (!wrapper) return element;
+
+			if (element.addEventListener) {
+				element.addEventListener(name, wrapper, false);
+			} else {
+				element.attachEvent("on" + name, wrapper);
+			}
+
+			return element;
+		},
+
+		stopObserving: function(element, eventName, handler) {
+			element = $(element);
+			var id = getEventID(element), name = getDOMEventName(eventName);
+
+			if (!handler && eventName) {
+				getWrappersForEventName(id, eventName).each(function(wrapper) {
+					element.stopObserving(eventName, wrapper.handler);
+				});
+				return element;
+
+			} else if (!eventName) {
+				Object.keys(getCacheForID(id)).each(function(eventName) {
+					element.stopObserving(eventName);
+				});
+				return element;
+			}
+
+			var wrapper = findWrapper(id, eventName, handler);
+			if (!wrapper) return element;
+
+			if (element.removeEventListener) {
+				element.removeEventListener(name, wrapper, false);
+			} else {
+				element.detachEvent("on" + name, wrapper);
+			}
+
+			destroyWrapper(id, eventName, handler);
+
+			return element;
+		},
+
+		fire: function(element, eventName, memo) {
+			element = $(element);
+			if (element == document && document.createEvent && !element.dispatchEvent)
+				element = document.documentElement;
+
+			var event;
+			if (document.createEvent) {
+				event = document.createEvent("HTMLEvents");
+				event.initEvent("dataavailable", true, true);
+			} else {
+				event = document.createEventObject();
+				event.eventType = "ondataavailable";
+			}
+
+			event.eventName = eventName;
+			event.memo = memo || { };
+
+			if (document.createEvent) {
+				element.dispatchEvent(event);
+			} else {
+				element.fireEvent(event.eventType, event);
+			}
+
+			return Event.extend(event);
+		}
+	};
+})());
+
+Object.extend(Event, Event.Methods);
+
+Element.addMethods({
+	fire:			Event.fire,
+	observe:		Event.observe,
+	stopObserving:	Event.stopObserving
+});
+
+Object.extend(document, {
+	fire:			Element.Methods.fire.methodize(),
+	observe:		Element.Methods.observe.methodize(),
+	stopObserving:	Element.Methods.stopObserving.methodize()
+});
+
+//mouse:wheel
+(function(){
+	function wheel(event){
+		var delta;
+		// normalize the delta
+		if(event.wheelDelta) // IE & Opera
+			delta = event.wheelDelta / 120;
+		else if (event.detail) // W3C
+			delta =- event.detail / 3;
+		if(!delta)
+			return;
+		/* CRABGRASS HACK: Prototype's 'Event.element(event)' works
+											used to be 'event.element()' which did not work */
+		var custom_event = Event.element(event).fire('mouse:wheel',{
+			delta: delta
+		});
+		if(custom_event.stopped){
+			event.stop();
+			return false;
+		}
+	}
+	document.observe('mousewheel',wheel);
+	document.observe('DOMMouseScroll',wheel);
+})();
+
+/* End Core Extensions */
+
+//from PrototypeUI
+var IframeShim = Class.create({
+	initialize: function() {
+		this.element = new Element('iframe',{
+			style: 'position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);display:none',
+			src: 'javascript:void(0);',
+			frameborder: 0
+		});
+		$(document.body).insert(this.element);
+	},
+	hide: function() {
+		this.element.hide();
+		return this;
+	},
+	show: function() {
+		this.element.show();
+		return this;
+	},
+	positionUnder: function(element) {
+		var element = $(element);
+		var offset = element.cumulativeOffset();
+		var dimensions = element.getDimensions();
+		this.element.setStyle({
+			left: offset[0] + 'px',
+			top: offset[1] + 'px',
+			width: dimensions.width + 'px',
+			height: dimensions.height + 'px',
+			zIndex: element.getStyle('zIndex') - 1
+		}).show();
+		return this;
+	},
+	setBounds: function(bounds) {
+		for(prop in bounds)
+			bounds[prop] += 'px';
+		this.element.setStyle(bounds);
+		return this;
+	},
+	destroy: function() {
+		if(this.element)
+			this.element.remove();
+		return this;
+	}
+});
+
+/**
+ * @author Ryan Johnson <http://saucytiger.com/>
+ * @copyright 2008 PersonalGrid Corporation <http://personalgrid.com/>
+ * @package LivePipe UI
+ * @license MIT
+ * @url http://livepipe.net/control/textarea
+ * @require prototype.js, livepipe.js
+ */
+
+if(typeof(Prototype) == "undefined")
+	throw "Control.TextArea requires Prototype to be loaded.";
+if(typeof(Object.Event) == "undefined")
+	throw "Control.TextArea requires Object.Event to be loaded.";
+
+Control.TextArea = Class.create({
+	initialize: function(textarea){
+		this.onChangeTimeout = false;
+		this.element = $(textarea);
+		$(this.element).observe('keyup',this.doOnChange.bindAsEventListener(this));
+		$(this.element).observe('paste',this.doOnChange.bindAsEventListener(this));
+		$(this.element).observe('input',this.doOnChange.bindAsEventListener(this));
+		if(!!document.selection){
+			$(this.element).observe('mouseup',this.saveRange.bindAsEventListener(this));
+			$(this.element).observe('keyup',this.saveRange.bindAsEventListener(this));
+		}
+	},
+	doOnChange: function(event){
+		if(this.onChangeTimeout)
+			window.clearTimeout(this.onChangeTimeout);
+		this.onChangeTimeout = window.setTimeout(function(){
+			this.notify('change',this.getValue());
+		}.bind(this),Control.TextArea.onChangeTimeoutLength);
+	},
+	saveRange: function(){
+		this.range = document.selection.createRange();
+	},
+	getValue: function(){
+		return this.element.value;
+	},
+	getSelection: function(){
+		if(!!document.selection)
+			return document.selection.createRange().text;
+		else if(!!this.element.setSelectionRange)
+			return this.element.value.substring(this.element.selectionStart,this.element.selectionEnd);
+		else
+			return false;
+	},
+	replaceSelection: function(text){
+		var scroll_top = this.element.scrollTop;
+		if(!!document.selection){
+			this.element.focus();
+			var range = (this.range) ? this.range : document.selection.createRange();
+			range.text = text;
+			range.select();
+		}else if(!!this.element.setSelectionRange){
+			var selection_start = this.element.selectionStart;
+			this.element.value = this.element.value.substring(0,selection_start) + text + this.element.value.substring(this.element.selectionEnd);
+			this.element.setSelectionRange(selection_start + text.length,selection_start + text.length);
+		}
+		this.doOnChange();
+		this.element.focus();
+		this.element.scrollTop = scroll_top;
+	},
+	wrapSelection: function(before,after){
+		this.replaceSelection(before + this.getSelection() + after);
+	},
+	insertBeforeSelection: function(text){
+		this.replaceSelection(text + this.getSelection());
+	},
+	insertAfterSelection: function(text){
+		this.replaceSelection(this.getSelection() + text);
+	},
+	collectFromEachSelectedLine: function(callback,before,after){
+		this.replaceSelection((before || '') + $A(this.getSelection().split("\n")).collect(callback).join("\n") + (after || ''));
+	},
+	insertBeforeEachSelectedLine: function(text,before,after){
+		this.collectFromEachSelectedLine(function(line){
+		},before,after);
+	}
+});
+Object.extend(Control.TextArea,{
+	onChangeTimeoutLength: 500
+});
+Object.Event.extend(Control.TextArea);
+
+Control.TextArea.ToolBar = Class.create(	{
+	initialize: function(textarea,toolbar){
+		this.textarea = textarea;
+		if(toolbar)
+			this.container = $(toolbar);
+		else{
+			this.container = $(document.createElement('ul'));
+			this.textarea.element.parentNode.insertBefore(this.container,this.textarea.element);
+		}
+	},
+	attachButton: function(node,callback){
+		node.onclick = function(){return false;}
+		$(node).observe('click',callback.bindAsEventListener(this.textarea));
+	},
+	addButton: function(link_text,callback,attrs){
+		var li = document.createElement('li');
+		var a = document.createElement('a');
+		a.href = '#';
+    a.title = link_text; // crabgrass addition
+    // crabgrass addition
+    if(attrs['class']) {
+      Element.extend(a).addClassName(attrs['class']);
+      attrs['class'] = null;
+    }
+		this.attachButton(a,callback);
+		li.appendChild(a);
+		Object.extend(a,attrs || {});
+		if(link_text){
+			var span = document.createElement('span');
+			span.innerHTML = link_text;
+			a.appendChild(span);
+		}
+		this.container.appendChild(li);
+	}
+});
+
+// --- ACTUAL CUSTOM CODE BEGINS HERE ---
+
+// add the toolbar controlling wiki body
+// each id used by the toolbar has a prefix, so that multiple toolbars
+// can be used on the same page
+function wikiEditAddToolbar(wiki_body_id, toolbar_id, button_id_suffix, image_popup_func)
+{
+  //setup
+  var textarea = new Control.TextArea(wiki_body_id);
+  var toolbar = new Control.TextArea.ToolBar(textarea);
+
+  toolbar.container.addClassName('markdown_toolbar'); //for css styles
+  toolbar.container.id = toolbar_id; //for css styles
+
+  //buttons
+  toolbar.addButton('Emphasis',function(){
+          this.wrapSelection('_','_');
+  },{
+          'class': 'markdown_italics_button',
+          id: 'markdown_italics_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Strong emphasis',function(){
+          this.wrapSelection('*','*');
+  },{
+          'class': 'markdown_bold_button',
+          id: 'markdown_bold_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Link',function(){
+          var selection = this.getSelection();
+          var response = prompt('Enter Link Target','');
+          if(response == null)
+                  return;
+          this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '->' + (response == '' ? 'http://link_url/' : response) + ']');
+  },{
+          'class': 'markdown_link_button',
+          id: 'markdown_link_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Image',function(){
+          // img_button_clicked();
+          image_popup_func();
+  },{
+          'class': 'markdown_image_button',
+          id: 'markdown_image_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Heading',function(){
+          var selection = this.getSelection();
+          if(selection == '')
+                  selection = 'Heading';
+          this.replaceSelection("\nh1. " + selection + "\n");
+  },{
+          'class': 'markdown_heading_button',
+          id: 'markdown_heading_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Unordered List',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\*{2,}/) ? line.replace(/^\*/,'') : line.replace(/^\*\s/,'')) : (line.match(/\*+\s/) ? '*' : '* ') + line;
+          });
+  },{
+          'class': 'markdown_unordered_list_button',
+          id: 'markdown_unordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Ordered List',function(event){
+          var i = 0;
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? (line.match(/^\#{2,}/) ? line.replace(/^\#/,'') : line.replace(/^\#\s/,'')) : (line.match(/\#+\s/) ? '#' : '# ') + line;
+          });
+  },{
+          'class': 'markdown_ordered_list_button',
+          id: 'markdown_ordered_list_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Block Quote',function(event){
+          this.collectFromEachSelectedLine(function(line){
+                  return event.shiftKey ? line.replace(/^\> /,'') : '> ' + line;
+          });
+  },{
+          'class': 'markdown_quote_button',
+          id: 'markdown_quote_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Code Block',function(event){
+          this.wrapSelection('<code>', '</code>');
+  },{
+          'class': 'markdown_code_button',
+          id: 'markdown_code_button-' + button_id_suffix
+  });
+
+  toolbar.addButton('Help',quickRedReference,{
+          'class': 'markdown_help_button',
+          id: 'markdown_help_button-' + button_id_suffix
+  });
+}
+
+//document.observe('dom:loaded', function() {
+  //
+//});
+//
+// Javascript needed for wiki editings.
+// If you modify this file, or any of the wiki js files, make sure to run 'rake minify'.
+//
+//
+
+//
+// XINHA BOOTSTRAP
+//
+
+_editor_url = "/javascripts/wiki/xinha/";
+
+//
+// WIKI EDITING POPUPS
+//
+
+// give a radio button group name, return the value of the currently
+// selected button.
+function activeRadioValue(name) {
+  try { return $$('input[name='+name+']').detect(function(e){return $F(e)}).value; } catch(e) {}
+}
+
+function insertImage(wikiId) {
+  var editor = new HtmlEditor(wikiId);
+  var textarea = $('wiki_body-' + wikiId);
+
+  try {
+    var assetId = activeRadioValue('image');
+    var link = $('link_to_image').checked;
+    var size = activeRadioValue('image_size');
+    var thumbnails = $(assetId+'_thumbnail_data').value.evalJSON();
+    var url = thumbnails[size];
+    if (editor.valid() && isTabVisible(editor.area())) {
+      editor.restoreSelection();
+      editor.insertImage(url, link)
+    } else if (textarea && isTabVisible(textarea)) {
+      var insertText = '\n!' + url + '!';
+      if (link)
+        insertText += ':' + thumbnails['full'];
+      insertText += '\n';
+      insertAtCursor(textarea, insertText);
+    }
+  } catch(e) {}
+}
+
+function updateLink(wikiId,action) {
+  var editor = new HtmlEditor(wikiId);
+  editor.restoreSelection();
+  if (action == 'create' || action == 'update') {
+    editor.insertAnchor($('link_label').value, $('link_url').value);
+  } else if (action == 'clear') {
+    editor.clearAnchor();
+  }
+}
+
+//
+// TEXTAREA HELPERS
+//
+
+function insertAtCursor(textarea, text) {
+  var element = $(textarea);
+  if (document.selection) {
+    //IE support
+    var sel = document.selection.createRange();
+    sel.text = text;
+  } else if (element.selectionStart || element.selectionStart == '0') {
+    //Mozilla/Firefox/Netscape 7+ support
+    var startPos = element.selectionStart;
+    var endPos   = element.selectionEnd;
+    element.value = element.value.substring(0, startPos) + text + element.value.substring(endPos, element.value.length);
+    element.setSelectionRange(startPos, endPos+text.length);
+    element.scrollTop = startPos
+  } else {
+    element.value += text;
+  }
+  element.focus();
+}
+
+//
+// WIKI EDITOR TABS
+//
+
+// updates the editor data from json returned by ajax request.
+function updateEditor(response, tab, id) {
+  if(response.status != 200)
+    return false;
+
+  var editor   = new HtmlEditor(id);
+  var textarea = $("wiki_body-" + id);
+  var preview  = $("wiki_preview-" + id);
+
+  if (response.responseJSON.body_preview)
+    preview.update(getBackNewLines(response.responseJSON.body_preview));
+  else {
+    preview.update("");
+    editor.setContent( getBackNewLines(response.responseJSON.body_html) || "" );
+    textarea.setValue( getBackNewLines(response.responseJSON.body)      || "" );
+  }
+
+  if (tab == 'greencloth') {
+    showTab($('link-tab-greencloth'), $('tab-edit-greencloth'));
+    textarea.focus();
+  }
+  else if (tab == 'html') {
+    showTab($('link-tab-html'), $('tab-edit-html'));
+    editor.refresh();
+  }
+  else if (tab == 'preview') {
+    showTab($('link-tab-preview'), $('tab-edit-preview'));
+  }
+}
+
+function getBackNewLines(str) {
+  if (str)
+    return str.replace(/__NEW_LINE__/g, '\n').replace(/__TAB_CHAR__/g, '\t');
+}
+
+function isTabSelected(link) {return $(link).hasClassName('active')}
+
+function encodedEditorData(wiki_id) {
+  var textarea = $('wiki_body-'+wiki_id);
+  var visual_editor = new HtmlEditor(wiki_id);
+  if (textarea && textarea.getValue())
+    return textarea.serialize();
+  if (visual_editor.content())
+    return $H({'wiki[body_html]': visual_editor.content()}).toQueryString();
+}
+
+function editorData(editor, wiki_id) {
+  var data = "";
+  if (editor == 'greencloth')
+    data = $('wiki_body-'+wiki_id).getValue();
+  else if (editor == 'html') {
+    editor = new HtmlEditor(wiki_id);
+    data = editor.content();
+    if (data == "<br>")
+      data = "";
+  }
+  return data;
+}
+
+// requires: :wiki_id, :tab_id, :area_id, :editor, :url, :token
+function selectWikiEditorTab(url, options) {
+  if (isTabSelected(options.tab_id))
+    return false;
+  else if (editorData(options.editor, options.wiki_id))
+    showTab(options.tab_id, options.area_id);
+  else {
+    new Ajax.Request(url, {
+      asynchronous:true, evalScripts:true, method:'post',
+      onComplete:function(request){updateEditor(request, options.editor, options.wiki_id)},
+      onLoading:function(request){showTab(options.tab_id, 'tab-edit-loading')},
+      parameters:encodedEditorData(options.wiki_id) +
+        '&authenticity_token=' +
+        encodeURIComponent(options.token)
+    });
+  }
+  return true;
+}
+
+/*
+if (typeof(nicEditors) != 'undefined') {
+  //
+  // A generic nicedit button that calls a js function.
+  //
+  var nicFunctionButton = nicEditorButton.extend({
+    mouseClick: function() {
+      this.ne.options[this.options.onclick]();
+    }
+  });
+
+  //
+  // nicEdit plugin for crabgrass image popup
+  //
+  var nicCgImageOptions = {
+    buttons: {
+      image: {name: 'Add Image', type: 'nicFunctionButton', onclick: 'onImgButtonClick'}
+    }
+  };
+  nicEditors.registerPlugin(nicPlugin,nicCgImageOptions);
+}
+*/
+ 
+  /*--------------------------------------:noTabs=true:tabSize=2:indentSize=2:--
+    --  Xinha (is not htmlArea) - http://xinha.org
+    --
+    --  Use of Xinha is granted by the terms of the htmlArea License (based on
+    --  BSD license)  please read license.txt in this package for details.
+    --
+    --  Copyright (c) 2005-2008 Xinha Developer Team and contributors
+    --  
+    --  Xinha was originally based on work by Mihai Bazon which is:
+    --      Copyright (c) 2003-2004 dynarch.com.
+    --      Copyright (c) 2002-2003 interactivetools.com, inc.
+    --      This copyright notice MUST stay intact for use.
+    --
+    --  Developers - Coding Style: 
+    --         Before you are going to work on Xinha code, please see http://trac.xinha.org/wiki/Documentation/StyleGuide
+    --
+    --  $HeadURL: http://svn.xinha.webfactional.com/trunk/XinhaCore.js $
+    --  $LastChangedDate: 2009-04-24 07:50:25 +1200 (Fri, 24 Apr 2009) $
+    --  $LastChangedRevision: 1188 $
+    --  $LastChangedBy: douglas $
+    --------------------------------------------------------------------------*/
+/*jslint regexp: false, rhino: false, browser: true, bitwise: false, forin: true, adsafe: false, evil: true, nomen: false, 
+glovar: false, debug: false, eqeqeq: false, passfail: false, sidebar: false, laxbreak: false, on: false, cap: true, 
+white: false, widget: false, undef: true, plusplus: false*/
+/*global  Dialog , _editor_css , _editor_icons, _editor_lang , _editor_skin , _editor_url, dumpValues, ActiveXObject, HTMLArea, _editor_lcbackend*/
+
+/** Information about the Xinha version 
+ * @type Object
+ */
+Xinha.version =
+{
+  'Release'   : 'Trunk',
+  'Head'      : '$HeadURL: http://svn.xinha.webfactional.com/trunk/XinhaCore.js $'.replace(/^[^:]*:\s*(.*)\s*\$$/, '$1'),
+  'Date'      : '$LastChangedDate: 2009-04-24 07:50:25 +1200 (Fri, 24 Apr 2009) $'.replace(/^[^:]*:\s*([0-9\-]*) ([0-9:]*) ([+0-9]*) \((.*)\)\s*\$/, '$4 $2 $3'),
+  'Revision'  : '$LastChangedRevision: 1188 $'.replace(/^[^:]*:\s*(.*)\s*\$$/, '$1'),
+  'RevisionBy': '$LastChangedBy: douglas $'.replace(/^[^:]*:\s*(.*)\s*\$$/, '$1')
+};
+
+//must be here. it is called while converting _editor_url to absolute
+Xinha._resolveRelativeUrl = function( base, url )
+{
+  if(url.match(/^([^:]+\:)?\/\//))
+  {
+    return url;
+  }
+  else
+  {
+    var b = base.split("/");
+    if(b[b.length - 1] === "")
+    {
+      b.pop();
+    }
+    var p = url.split("/");
+    if(p[0] == ".")
+    {
+      p.shift();
+    }
+    while(p[0] == "..")
+    {
+      b.pop();
+      p.shift();
+    }
+    return b.join("/") + "/" + p.join("/");
+  }
+};
+
+if ( typeof _editor_url == "string" )
+{
+  // Leave exactly one backslash at the end of _editor_url
+  _editor_url = _editor_url.replace(/\x2f*$/, '/');
+  
+  // convert _editor_url to absolute
+  if(!_editor_url.match(/^([^:]+\:)?\//))
+  {
+    (function()
+    {
+      var tmpPath = window.location.toString().replace(/\?.*$/,'').split("/");
+      tmpPath.pop();
+      _editor_url = Xinha._resolveRelativeUrl(tmpPath.join("/"), _editor_url);
+    })();
+  }
+}
+else
+{
+  alert("WARNING: _editor_url is not set!  You should set this variable to the editor files path; it should preferably be an absolute path, like in '/xinha/', but it can be relative if you prefer.  Further we will try to load the editor files correctly but we'll probably fail.");
+  _editor_url = '';
+}
+
+// make sure we have a language
+if ( typeof _editor_lang == "string" )
+{
+  _editor_lang = _editor_lang.toLowerCase();
+}
+else
+{
+  _editor_lang = "en";
+}
+
+// skin stylesheet to load
+if ( typeof _editor_skin !== "string" )
+{
+  _editor_skin = "";
+}
+
+if ( typeof _editor_icons !== "string" )
+{
+  _editor_icons = "";
+}
+/**
+* The list of Xinha editors on the page. May be multiple editors.
+* You can access each editor object through this global variable.
+*
+* Example:<br />
+* <code>
+*	var html = __xinhas[0].getEditorContent(); // gives you the HTML of the first editor in the page
+* </code>
+*/
+var __xinhas = [];
+
+// browser identification
+/** Cache the user agent for the following checks
+ * @type String
+ * @private
+ */
+Xinha.agt       = navigator.userAgent.toLowerCase();
+/** Browser is Microsoft Internet Explorer
+ * @type Boolean 
+ */
+Xinha.is_ie    = ((Xinha.agt.indexOf("msie") != -1) && (Xinha.agt.indexOf("opera") == -1));
+/** Version Number, if browser is Microsoft Internet Explorer
+ * @type Float 
+ */
+Xinha.ie_version= parseFloat(Xinha.agt.substring(Xinha.agt.indexOf("msie")+5));
+/** Browser is Opera
+ * @type Boolean 
+ */
+Xinha.is_opera  = (Xinha.agt.indexOf("opera") != -1);
+/** Version Number, if browser is Opera 
+  * @type Float 
+  */
+if(Xinha.is_opera && Xinha.agt.match(/opera[\/ ]([0-9.]+)/))
+{
+  Xinha.opera_version = parseFloat(RegExp.$1);
+}
+else
+{
+  Xinha.opera_version = 0;
+}
+/** Browserengine is KHTML (Konqueror, Safari)
+ * @type Boolean 
+ */
+Xinha.is_khtml  = (Xinha.agt.indexOf("khtml") != -1);
+/** Browser is WebKit
+ * @type Boolean 
+ */
+Xinha.is_webkit  = (Xinha.agt.indexOf("applewebkit") != -1);
+/** Webkit build number
+ * @type Integer
+ */
+Xinha.webkit_version = parseInt(navigator.appVersion.replace(/.*?AppleWebKit\/([\d]).*?/,'$1'), 10);
+
+/** Browser is Safari
+ * @type Boolean 
+ */
+Xinha.is_safari  = (Xinha.agt.indexOf("safari") != -1);
+
+/** Browser is Google Chrome
+ * @type Boolean 
+ */
+Xinha.is_chrome = (Xinha.agt.indexOf("chrome") != -1);
+
+/** OS is MacOS
+ * @type Boolean 
+ */
+Xinha.is_mac	   = (Xinha.agt.indexOf("mac") != -1);
+/** Browser is Microsoft Internet Explorer Mac
+ * @type Boolean 
+ */
+Xinha.is_mac_ie = (Xinha.is_ie && Xinha.is_mac);
+/** Browser is Microsoft Internet Explorer Windows
+ * @type Boolean 
+ */
+Xinha.is_win_ie = (Xinha.is_ie && !Xinha.is_mac);
+/** Browser engine is Gecko (Mozilla), applies also to Safari and Opera which work
+ *  largely similar.
+ *@type Boolean 
+ */
+Xinha.is_gecko  = (navigator.product == "Gecko") || Xinha.is_opera;
+/** Browser engine is really Gecko, i.e. Browser is Firefox (or Netscape, SeaMonkey, Flock, Songbird, Beonex, K-Meleon, Camino, Galeon, Kazehakase, Skipstone, or whatever derivate might exist out there...)
+ * @type Boolean 
+ */
+Xinha.is_real_gecko = (navigator.product == "Gecko" && !Xinha.is_webkit);
+/** Gecko version 1.9 (or greater)
+ * @type Boolean 
+ */
+Xinha.is_ff3 = Xinha.is_real_gecko && parseInt(navigator.productSub, 10) >= 2007121016;
+/** Gecko version lower than 1.9
+ * @type Boolean 
+ */
+Xinha.is_ff2 = Xinha.is_real_gecko && parseInt(navigator.productSub, 10) < 2007121016;
+
+/** File is opened locally opened ("file://" protocol)
+ * @type Boolean
+ * @private
+ */
+Xinha.isRunLocally = document.URL.toLowerCase().search(/^file:/) != -1;
+/** Editing is enabled by document.designMode (Gecko, Opera), as opposed to contenteditable (IE)
+ * @type Boolean
+ * @private
+ */
+Xinha.is_designMode = (typeof document.designMode != 'undefined' && !Xinha.is_ie); // IE has designMode, but we're not using it
+
+/** Check if Xinha can run in the used browser, otherwise the textarea will be remain unchanged
+ * @type Boolean
+ * @private
+ */
+Xinha.checkSupportedBrowser = function()
+{
+  return Xinha.is_real_gecko || (Xinha.is_opera && Xinha.opera_version >= 9.2) || Xinha.ie_version >= 5.5 || Xinha.webkit_version >= 522;
+};
+/** Cache result of checking for browser support
+ * @type Boolean
+ * @private
+ */
+Xinha.isSupportedBrowser = Xinha.checkSupportedBrowser();
+
+if ( Xinha.isRunLocally && Xinha.isSupportedBrowser)
+{
+  alert('Xinha *must* be installed on a web server. Locally opened files (those that use the "file://" protocol) cannot properly function. Xinha will try to initialize but may not be correctly loaded.');
+}
+
+/** Creates a new Xinha object
+ * @version $Rev: 1188 $ $LastChangedDate: 2009-04-24 07:50:25 +1200 (Fri, 24 Apr 2009) $
+ * @constructor
+ * @param {String|DomNode}   textarea the textarea to replace; can be either only the id or the DOM object as returned by document.getElementById()
+ * @param {Xinha.Config} config optional if no Xinha.Config object is passed, the default config is used
+ */
+function Xinha(textarea, config)
+{ 
+  if ( !Xinha.isSupportedBrowser )
+  {
+    return;
+  }
+  
+  if ( !textarea )
+  {
+    throw new Error ("Tried to create Xinha without textarea specified.");
+  }
+
+  if ( typeof config == "undefined" )
+  {
+		/** The configuration used in the editor
+		 * @type Xinha.Config
+		 */
+    this.config = new Xinha.Config();
+  }
+  else
+  {
+    this.config = config;
+  }
+
+  if ( typeof textarea != 'object' )
+  {
+    textarea = Xinha.getElementById('textarea', textarea);
+  }
+  /** This property references the original textarea, which is at the same time the editor in text mode
+   * @type DomNode textarea
+   */
+  this._textArea = textarea;
+  this._textArea.spellcheck = false;
+  Xinha.freeLater(this, '_textArea');
+  
+  // 
+  /** Before we modify anything, get the initial textarea size
+   * @private
+   * @type Object w,h 
+   */
+  this._initial_ta_size =
+  {
+    w: textarea.style.width  ? textarea.style.width  : ( textarea.offsetWidth  ? ( textarea.offsetWidth  + 'px' ) : ( textarea.cols + 'em') ),
+    h: textarea.style.height ? textarea.style.height : ( textarea.offsetHeight ? ( textarea.offsetHeight + 'px' ) : ( textarea.rows + 'em') )
+  };
+
+  if ( document.getElementById("loading_" + textarea.id) || this.config.showLoading )
+  {
+    if (!document.getElementById("loading_" + textarea.id))
+    {
+      Xinha.createLoadingMessage(textarea);
+    }
+    this.setLoadingMessage(Xinha._lc("Constructing object"));
+  }
+
+  /** the current editing mode
+  * @private 
+  * @type string "wysiwyg"|"text"
+  */
+  this._editMode = "wysiwyg";
+  /** this object holds the plugins used in the editor
+  * @private 
+  * @type Object
+  */
+  this.plugins = {};
+  /** periodically updates the toolbar
+  * @private 
+  * @type timeout
+  */
+  this._timerToolbar = null;
+  /** periodically takes a snapshot of the current editor content
+  * @private 
+  * @type timeout
+  */
+  this._timerUndo = null;
+  /** holds the undo snapshots
+  * @private 
+  * @type Array
+  */
+  this._undoQueue = [this.config.undoSteps];
+  /** the current position in the undo queue 
+  * @private 
+  * @type integer
+  */
+  this._undoPos = -1;
+  /** use our own undo implementation (true) or the browser's (false) 
+  * @private 
+  * @type Boolean
+  */
+  this._customUndo = true;
+  /** the document object of the page Xinha is embedded in
+  * @private 
+  * @type document
+  */
+  this._mdoc = document; // cache the document, we need it in plugins
+  /** doctype of the edited document (fullpage mode)
+  * @private 
+  * @type string
+  */
+  this.doctype = '';
+  /** running number that identifies the current editor
+  * @public 
+  * @type integer
+  */
+  this.__htmlarea_id_num = __xinhas.length;
+  __xinhas[this.__htmlarea_id_num] = this;
+	
+  /** holds the events for use with the notifyOn/notifyOf system
+  * @private 
+  * @type Object
+  */
+  this._notifyListeners = {};
+
+  // Panels
+  var panels = 
+  {
+    right:
+    {
+      on: true,
+      container: document.createElement('td'),
+      panels: []
+    },
+    left:
+    {
+      on: true,
+      container: document.createElement('td'),
+      panels: []
+    },
+    top:
+    {
+      on: true,
+      container: document.createElement('td'),
+      panels: []
+    },
+    bottom:
+    {
+      on: true,
+      container: document.createElement('td'),
+      panels: []
+    }
+  };
+
+  for ( var i in panels )
+  {
+    if(!panels[i].container) { continue; } // prevent iterating over wrong type
+    panels[i].div = panels[i].container; // legacy
+    panels[i].container.className = 'panels panels_' + i;
+    Xinha.freeLater(panels[i], 'container');
+    Xinha.freeLater(panels[i], 'div');
+  }
+  /** holds the panels
+  * @private 
+  * @type Array
+  */
+  // finally store the variable
+  this._panels = panels;
+	
+  // Init some properties that are defined later
+  /** The statusbar container
+   * @type DomNode statusbar div
+   */
+  this._statusBar = null;
+  /** The DOM path that is shown in the statusbar in wysiwyg mode
+   * @private
+   * @type DomNode
+   */
+  this._statusBarTree = null;
+  /** The message that is shown in the statusbar in text mode
+   * @private
+   * @type DomNode
+   */
+  this._statusBarTextMode = null;
+  /** Holds the items of the DOM path that is shown in the statusbar in wysiwyg mode
+   * @private
+   * @type Array tag names
+   */
+  this._statusBarItems = [];
+  /** Holds the parts (table cells) of the UI (toolbar, panels, statusbar)
+
+   * @type Object framework parts
+   */
+  this._framework = {};
+  /** Them whole thing (table)
+   * @private
+   * @type DomNode
+   */
+  this._htmlArea = null;
+  /** This is the actual editable area.<br />
+   *  Technically it's an iframe that's made editable using window.designMode = 'on', respectively document.body.contentEditable = true (IE).<br />
+   *  Use this property to get a grip on the iframe's window features<br />
+   *
+   * @type window
+   */
+  this._iframe = null;
+  /** The document object of the iframe.<br />
+  *   Use this property to perform DOM operations on the edited document
+  * @type document
+  */
+  this._doc = null;
+  /** The toolbar
+   *  @private
+   *  @type DomNode 
+   */
+  this._toolBar = this._toolbar = null; //._toolbar is for legacy, ._toolBar is better thanks.
+  /** Holds the botton objects
+   *  @private
+   *  @type Object
+   */
+  this._toolbarObjects = {};
+  
+  //hook in config.Events as as a "plugin"
+  this.plugins.Events = 
+  {
+    name: 'Events',
+    developer : 'The Xinha Core Developer Team',
+    instance: config.Events
+  };
+};
+// ray: What is this for? Do we need it?
+Xinha.onload = function() { };
+Xinha.init = function() { Xinha.onload(); };
+
+// cache some regexps
+/** Identifies HTML tag names
+* @type RegExp
+*/
+Xinha.RE_tagName  = /(<\/|<)\s*([^ \t\n>]+)/ig;
+/** Exracts DOCTYPE string from HTML
+* @type RegExp
+*/
+Xinha.RE_doctype  = /(<!doctype((.|\n)*?)>)\n?/i;
+/** Finds head section in HTML
+* @type RegExp
+*/
+Xinha.RE_head     = /<head>((.|\n)*?)<\/head>/i;
+/** Finds body section in HTML
+* @type RegExp
+*/
+Xinha.RE_body     = /<body[^>]*>((.|\n|\r|\t)*?)<\/body>/i;
+/** Special characters that need to be escaped when dynamically creating a RegExp from an arbtrary string
+* @private
+* @type RegExp
+*/
+Xinha.RE_Specials = /([\/\^$*+?.()|{}\[\]])/g;
+/** When dynamically creating a RegExp from an arbtrary string, some charactes that have special meanings in regular expressions have to be escaped.
+*   Run any string through this function to escape reserved characters.
+* @param {string} string the string to be escaped
+* @returns string
+*/
+Xinha.escapeStringForRegExp = function (string)
+{
+  return string.replace(Xinha.RE_Specials, '\\$1');
+};
+/** Identifies email addresses
+* @type RegExp
+*/
+Xinha.RE_email    = /^[_a-z\d\-\.]{3,}@[_a-z\d\-]{2,}(\.[_a-z\d\-]{2,})+$/i;
+/** Identifies URLs
+* @type RegExp
+*/
+Xinha.RE_url      = /(https?:\/\/)?(([a-z0-9_]+:[a-z0-9_]+@)?[a-z0-9_\-]{2,}(\.[a-z0-9_\-]{2,}){2,}(:[0-9]+)?(\/\S+)*)/i;
+
+
+
+/**
+ * This class creates an object that can be passed to the Xinha constructor as a parameter.
+ * Set the object's properties as you need to configure the editor (toolbar etc.)
+ * @version $Rev: 1188 $ $LastChangedDate: 2009-04-24 07:50:25 +1200 (Fri, 24 Apr 2009) $
+ * @constructor
+ */
+Xinha.Config = function()
+{
+  /** The svn revision number 
+   * @type Number
+   */
+  this.version = Xinha.version.Revision;
+  
+ /** This property controls the width of the editor.<br />
+  *  Allowed values are 'auto', 'toolbar' or a numeric value followed by "px".<br />
+  *  <code>auto</code>: let Xinha choose the width to use.<br />
+  *  <code>toolbar</code>: compute the width size from the toolbar width.<br />
+  *  <code>numeric value</code>: forced width in pixels ('600px').<br />
+  * 
+  *  Default: <code>"auto"</code>
+  * @type String
+  */
+  this.width  = "auto";
+ /** This property controls the height of the editor.<br />
+  *  Allowed values are 'auto' or a numeric value followed by px.<br />
+  *  <code>"auto"</code>: let Xinha choose the height to use.<br />
+  *  <code>numeric value</code>: forced height in pixels ('200px').<br />
+  *  Default: <code>"auto"</code> 
+  * @type String
+  */
+  this.height = "auto";
+
+ /** Specifies whether the toolbar should be included
+  *  in the size, or are extra to it.  If false then it's recommended
+  *  to have the size set as explicit pixel sizes (either in Xinha.Config or on your textarea)<br />
+  *
+  *  Default: <code>true</code>
+  *
+  *  @type Boolean
+  */
+  this.sizeIncludesBars = true;
+ /**
+  * Specifies whether the panels should be included
+  * in the size, or are extra to it.  If false then it's recommended
+  * to have the size set as explicit pixel sizes (either in Xinha.Config or on your textarea)<br />
+  *  
+  *  Default: <code>true</code>
+  *
+  *  @type Boolean
+  */
+  this.sizeIncludesPanels = true;
+
+ /**
+  * each of the panels has a dimension, for the left/right it's the width
+  * for the top/bottom it's the height.
+  *
+  * WARNING: PANEL DIMENSIONS MUST BE SPECIFIED AS PIXEL WIDTHS<br />
+  *Default values:  
+  *<pre>
+  *	  xinha_config.panel_dimensions =
+  *   {
+  *	    left:   '200px', // Width
+  *	    right:  '200px',
+  *	    top:    '100px', // Height
+  *	    bottom: '100px'
+  *	  }
+  *</pre>
+  *  @type Object
+  */
+  this.panel_dimensions =
+  {
+    left:   '200px', // Width
+    right:  '200px',
+    top:    '100px', // Height
+    bottom: '100px'
+  };
+
+ /**  To make the iframe width narrower than the toolbar width, e.g. to maintain
+  *   the layout when editing a narrow column of text, set the next parameter (in pixels).<br />
+  *
+  *  Default: <code>true</code>
+  *
+  *  @type Integer|null
+  */
+  this.iframeWidth = null;
+ 
+ /** Enable creation of the status bar?<br />
+  *
+  *  Default: <code>true</code>
+  *
+  *  @type Boolean 
+  */
+  this.statusBar = true;
+
+ /** Intercept ^V and use the Xinha paste command
+  *  If false, then passes ^V through to browser editor widget, which is the only way it works without problems in Mozilla<br />
+  *
+  *  Default: <code>false</code>
+  *
+  *  @type Boolean
+  */
+  this.htmlareaPaste = false;
+  
+ /** <strong>Gecko only:</strong> Let the built-in routine for handling the <em>return</em> key decide if to enter <em>br</em> or <em>p</em> tags,
+  *  or use a custom implementation.<br />
+  *  For information about the rules applied by Gecko, <a href="http://www.mozilla.org/editor/rules.html">see Mozilla website</a> <br />
+  *  Possible values are <em>built-in</em> or <em>best</em><br />
+  *
+  *  Default: <code>"best"</code>
+  *
+  *  @type String
+  */
+  this.mozParaHandler = 'best'; 
+  
+ /** This determines the method how the HTML output is generated.
+  *  There are two choices:
+  * 
+  *<table border="1">
+  *   <tr>
+  *       <td><em>DOMwalk</em></td>
+  *       <td>This is the classic and proven method. It recusively traverses the DOM tree 
+  *           and builds the HTML string "from scratch". Tends to be a bit slow, especially in IE.</td>
+  *   </tr>
+  *   <tr>
+  *       <td><em>TransformInnerHTML</em></td>
+  *       <td>This method uses the JavaScript innerHTML property and relies on Regular Expressions to produce
+  *            clean XHTML output. This method is much faster than the other one.</td>
+  *     </tr>
+  * </table>
+  *
+  *  Default: <code>"DOMwalk"</code>
+  *
+  * @type String
+  */
+  this.getHtmlMethod = 'DOMwalk';
+  
+  /** Maximum size of the undo queue<br />
+   *  Default: <code>20</code>
+   *  @type Integer
+   */
+  this.undoSteps = 20;
+
+  /** The time interval at which undo samples are taken<br />
+   *  Default: <code>500</code> (1/2 sec)
+   *  @type Integer milliseconds
+   */
+  this.undoTimeout = 500;
+
+  /** Set this to true if you want to explicitly right-justify when setting the text direction to right-to-left<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.changeJustifyWithDirection = false;
+
+  /** If true then Xinha will retrieve the full HTML, starting with the &lt;HTML&gt; tag.<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.fullPage = false;
+
+  /** Raw style definitions included in the edited document<br />
+   *  When a lot of inline style is used, perhaps it is wiser to use one or more external stylesheets.<br />
+   *  To set tags P in red, H1 in blue andn A not underlined, we may do the following
+   *<pre>
+   * xinha_config.pageStyle =
+   *  'p { color:red; }\n' +
+   *  'h1 { color:bleu; }\n' +
+   *  'a {text-decoration:none; }';
+   *</pre>
+   *  Default: <code>""</code> (empty)
+   *  @type String
+   */
+  this.pageStyle = "";
+
+  /** Array of external stylesheets to load. (Reference these absolutely)<br />
+   *  Example<br />
+   *  <pre>xinha_config.pageStyleSheets = ["/css/myPagesStyleSheet.css","/css/anotherOne.css"];</pre>
+   *  Default: <code>[]</code> (empty)
+   *  @type Array
+   */
+  this.pageStyleSheets = [];
+
+  // specify a base href for relative links
+  /** Specify a base href for relative links<br />
+   *  ATTENTION: this does not work as expected and needs t be changed, see Ticket #961 <br />
+   *  Default: <code>null</code>
+   *  @type String|null
+   */
+  this.baseHref = null;
+
+  /** If true, relative URLs (../) will be made absolute. 
+   *  When the editor is in different directory depth 
+   *  as the edited page relative image sources will break the display of your images.
+   *  this fixes an issue where Mozilla converts the urls of images and links that are on the same server 
+   *  to relative ones (../) when dragging them around in the editor (Ticket #448)<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.expandRelativeUrl = true;
+  
+ /**  We can strip the server part out of URL to make/leave them semi-absolute, reason for this
+   *  is that the browsers will prefix  the server to any relative links to make them absolute, 
+   *  which isn't what you want most the time.<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.stripBaseHref = true;
+
+   /**  We can strip the url of the editor page from named links (eg &lt;a href="#top"&gt;...&lt;/a&gt;) and links 
+   *  that consist only of URL parameters (eg &lt;a href="?parameter=value"&gt;...&lt;/a&gt;)
+   *  reason for this is that browsers tend to prefixe location.href to any href that
+   *  that don't have a full url<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.stripSelfNamedAnchors = true;
+
+  /** In URLs all characters above ASCII value 127 have to be encoded using % codes<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.only7BitPrintablesInURLs = true;
+
+ 
+  /** If you are putting the HTML written in Xinha into an email you might want it to be 7-bit
+   *  characters only.  This config option will convert all characters consuming
+   *  more than 7bits into UNICODE decimal entity references (actually it will convert anything
+   *  below <space> (chr 20) except cr, lf and tab and above <tilde> (~, chr 7E))<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.sevenBitClean = false;
+
+
+  /** Sometimes we want to be able to replace some string in the html coming in and going out
+   *  so that in the editor we use the "internal" string, and outside and in the source view
+   *  we use the "external" string  this is useful for say making special codes for
+   *  your absolute links, your external string might be some special code, say "{server_url}"
+   *  an you say that the internal represenattion of that should be http://your.server/<br />
+   *  Example:  <code>{ 'html_string' : 'wysiwyg_string' }</code><br />
+   *  Default: <code>{}</code> (empty)
+   *  @type Object
+   */
+  this.specialReplacements = {}; //{ 'html_string' : 'wysiwyg_string' }
+  
+  /** A filter function for the HTML used inside the editor<br />
+   * Default: function (html) { return html }
+   * 
+   * @param {String} html The whole document's HTML content
+   * @return {String} The processed HTML 
+   */
+  this.inwardHtml = function (html) { return html; };
+  
+  /** A filter function for the generated HTML<br />
+   * Default: function (html) { return html }
+   * 
+   * @param {String} html The whole document's HTML content
+   * @return {String} The processed HTML 
+   */
+  this.outwardHtml = function (html) { return html; };
+  
+  /** This setting determines whether or not the editor will be automatically activated and focused when the page loads. 
+   *  If the page contains only a single editor, autofocus can be set to true to focus it. 
+   *  Alternatively, if the page contains multiple editors, autofocus may be set to the ID of the text area of the editor to be focused. 
+   *  For example, the following setting would focus the editor attached to the text area whose ID is "myTextArea": 
+   *  <code>xinha_config.autofocus = "myTextArea";</code>
+   *  Default: <code>false</code>
+   *  @type Boolean|String
+   */
+  this.autofocus = false;
+  
+ /** Set to true if you want Word code to be cleaned upon Paste. This only works if 
+   * you use the toolbr button to paste, not ^V. This means that due to the restrictions
+   * regarding pasting, this actually has no real effect in Mozilla <br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.killWordOnPaste = true;
+
+  /** Enable the 'Target' field in the Make Link dialog. Note that the target attribute is invalid in (X)HTML strict<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.makeLinkShowsTarget = true;
+
+  /** CharSet of the iframe, default is the charset of the document
+   *  @type String
+   */
+  this.charSet = (typeof document.characterSet != 'undefined') ? document.characterSet : document.charset;
+
+ /** Whether the edited document should be rendered in Quirksmode or Standard Compliant (Strict) Mode.<br />
+   * This is commonly known as the "doctype switch"<br />
+   * for details read here http://www.quirksmode.org/css/quirksmode.html
+   *
+   * Possible values:<br />
+   *    true     :  Quirksmode is used<br />
+   *    false    :  Strict mode is used<br />
+   *    null (default):  the mode of the document Xinha is in is used
+   * @type Boolean|null
+   */
+  this.browserQuirksMode = null;
+
+  // URL-s
+  this.imgURL = "images/";
+  this.popupURL = "popups/";
+
+  /** RegExp allowing to remove certain HTML tags when rendering the HTML.<br />
+   *  Example: remove span and font tags
+   *  <code>
+   *    xinha_config.htmlRemoveTags = /span|font/;
+   *  </code>
+   *  Default: <code>null</code>
+   *  @type RegExp|null
+   */
+  this.htmlRemoveTags = null;
+
+ /** Turning this on will turn all "linebreak" and "separator" items in your toolbar into soft-breaks,
+   * this means that if the items between that item and the next linebreak/separator can
+   * fit on the same line as that which came before then they will, otherwise they will
+   * float down to the next line.
+
+   * If you put a linebreak and separator next to each other, only the separator will
+   * take effect, this allows you to have one toolbar that works for both flowToolbars = true and false
+   * infact the toolbar below has been designed in this way, if flowToolbars is false then it will
+   * create explictly two lines (plus any others made by plugins) breaking at justifyleft, however if
+   * flowToolbars is false and your window is narrow enough then it will create more than one line
+   * even neater, if you resize the window the toolbars will reflow.  <br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.flowToolbars = true;
+  
+  /** Set to center or right to change button alignment in toolbar
+   *  @type String
+   */
+  this.toolbarAlign = "left";
+  
+  /** Set to true if you want the loading panel to show at startup<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.showLoading = false;
+  
+  /** Set to false if you want to allow JavaScript in the content, otherwise &lt;script&gt; tags are stripped out.<br />
+   *  This currently only affects the "DOMwalk" getHtmlMethod.<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+  this.stripScripts = true;
+
+ /** See if the text just typed looks like a URL, or email address
+   * and link it appropriatly
+   * Note: Setting this option to false only affects Mozilla based browsers.
+   * In InternetExplorer this is native behaviour and cannot be turned off.<br />
+   *  Default: <code>true</code>
+   *  @type Boolean
+   */
+   this.convertUrlsToLinks = true;
+
+
+ /** Size of color picker cells<br />
+   * Use number + "px"<br />
+   *  Default: <code>"6px"</code>
+   *  @type String
+   */
+  this.colorPickerCellSize = '6px';
+ /** Granularity of color picker cells (number per column/row)<br />
+   *  Default: <code>18</code>
+   *  @type Integer
+   */
+  this.colorPickerGranularity = 18;
+ /** Position of color picker from toolbar button<br />
+   *  Default: <code>"bottom,right"</code>
+   *  @type String
+   */
+  this.colorPickerPosition = 'bottom,right';
+  /** Set to true to show only websafe checkbox in picker<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.colorPickerWebSafe = false;
+ /** Number of recent colors to remember<br />
+   *  Default: <code>20</code>
+   *  @type Integer
+   */
+  this.colorPickerSaveColors = 20;
+
+  /** Start up the editor in fullscreen mode<br />
+   *  Default: <code>false</code>
+   *  @type Boolean
+   */
+  this.fullScreen = false;
+  
+ /** You can tell the fullscreen mode to leave certain margins on each side.<br />
+   *  The value is an array with the values for <code>[top,right,bottom,left]</code> in that order<br />
+   *  Default: <code>[0,0,0,0]</code>
+   *  @type Array
+   */
+  this.fullScreenMargins = [0,0,0,0];
+  
+  /** This array orders all buttons except plugin buttons in the toolbar. Plugin buttons typically look for one 
+   *  a certain button in the toolbar and place themselves next to it.
+   * Default value:
+   *<pre>
+   *xinha_config.toolbar =
+   * [
+   *   ["popupeditor"],
+   *   ["separator","formatblock","fontname","fontsize","bold","italic","underline","strikethrough"],
+   *   ["separator","forecolor","hilitecolor","textindicator"],
+   *   ["separator","subscript","superscript"],
+   *   ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
+   *   ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
+   *   ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
+   *   ["linebreak","separator","undo","redo","selectall","print"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+   *   ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
+   *   ["separator","htmlmode","showhelp","about"]
+   * ];
+   *</pre>
+   * @type Array
+   */  
+  this.toolbar =
+  [
+    ["popupeditor"],
+    ["separator","formatblock","fontname","fontsize","bold","italic","underline","strikethrough"],
+    ["separator","forecolor","hilitecolor","textindicator"],
+    ["separator","subscript","superscript"],
+    ["linebreak","separator","justifyleft","justifycenter","justifyright","justifyfull"],
+    ["separator","insertorderedlist","insertunorderedlist","outdent","indent"],
+    ["separator","inserthorizontalrule","createlink","insertimage","inserttable"],
+    ["linebreak","separator","undo","redo","selectall","print"], (Xinha.is_gecko ? [] : ["cut","copy","paste","overwrite","saveas"]),
+    ["separator","killword","clearfonts","removeformat","toggleborders","splitblock","lefttoright", "righttoleft"],
+    ["separator","htmlmode","showhelp","about"]
+  ];
+
+  /** The fontnames listed in the fontname dropdown
+   * Default value:
+   *<pre>
+   *xinha_config.fontname =
+   *{
+   *  "&mdash; font &mdash;" : '',
+   *  "Arial"                : 'arial,helvetica,sans-serif',
+   *  "Courier New"          : 'courier new,courier,monospace',
+   *  "Georgia"              : 'georgia,times new roman,times,serif',
+   *  "Tahoma"               : 'tahoma,arial,helvetica,sans-serif',
+   *  "Times New Roman"      : 'times new roman,times,serif',
+   *  "Verdana"              : 'verdana,arial,helvetica,sans-serif',
+   *  "impact"               : 'impact',
+   *  "WingDings"            : 'wingdings'
+   *};
+   *</pre>
+   * @type Object
+   */
+  this.fontname =
+  {
+    "&mdash; font &mdash;": '',
+    "Arial"           :	'arial,helvetica,sans-serif',
+    "Courier New"     :	'courier new,courier,monospace',
+    "Georgia"         :	'georgia,times new roman,times,serif',
+    "Tahoma"          :	'tahoma,arial,helvetica,sans-serif',
+    "Times New Roman" : 'times new roman,times,serif',
+    "Verdana"         :	'verdana,arial,helvetica,sans-serif',
+    "impact"          :	'impact',
+    "WingDings"       : 'wingdings' 
+  };
+
+  /** The fontsizes listed in the fontsize dropdown
+   * Default value:
+   *<pre>
+   *xinha_config.fontsize =
+   *{
+   *  "&mdash; size &mdash;": "",
+   *  "1 (8 pt)" : "1",
+   *  "2 (10 pt)": "2",
+   *  "3 (12 pt)": "3",
+   *  "4 (14 pt)": "4",
+   *  "5 (18 pt)": "5",
+   *  "6 (24 pt)": "6",
+   *  "7 (36 pt)": "7"
+   *};
+   *</pre>
+   * @type Object
+   */
+  this.fontsize =
+  {
+    "&mdash; size &mdash;": "",
+    "1 (8 pt)" : "1",
+    "2 (10 pt)": "2",
+    "3 (12 pt)": "3",
+    "4 (14 pt)": "4",
+    "5 (18 pt)": "5",
+    "6 (24 pt)": "6",
+    "7 (36 pt)": "7"
+  };
+  /** The tags listed in the formatblock dropdown
+   * Default value:
+   *<pre>
+   *xinha_config.formatblock =
+   *{
+   *  "&mdash; size &mdash;": "",
+   *  "1 (8 pt)" : "1",
+   *  "2 (10 pt)": "2",
+   *  "3 (12 pt)": "3",
+   *  "4 (14 pt)": "4",
+   *  "5 (18 pt)": "5",
+   *  "6 (24 pt)": "6",
+   *  "7 (36 pt)": "7"
+   *};
+   *</pre>
+   * @type Object
+   */
+  this.formatblock =
+  {
+    "&mdash; format &mdash;": "",
+    "Heading 1": "h1",
+    "Heading 2": "h2",
+    "Heading 3": "h3",
+    "Heading 4": "h4",
+    "Heading 5": "h5",
+    "Heading 6": "h6",
+    "Normal"   : "p",
+    "Address"  : "address",
+    "Formatted": "pre"
+  };
+  
+  this.dialogOptions =
+  { 
+    'centered' : true, //true: dialog is shown in the center the screen, false dialog is shown near the clicked toolbar button
+    'greyout':true, //true: when showing modal dialogs, the page behind the dialoge is greyed-out
+    'closeOnEscape':true
+  };
+  /** You can add functions to this object to be executed on specific events
+   * Example:
+   * <pre>
+   * xinha_config.Events.onKeyPress = function (event)
+   * {
+   *    //do something 
+   *    return false;
+   * }
+   * </pre>
+   * Note that <em>this</em> inside the function refers to the respective Xinha object
+   * The possible function names are documented at <a href="http://trac.xinha.org/wiki/Documentation/EventHooks">http://trac.xinha.org/wiki/Documentation/EventHooks</a>
+   */
+  this.Events = {};
+  
+  /** ??
+   * Default: <code>{}</code>
+   * @type Object
+   */
+  this.customSelects = {};
+
+  /** Switches on some debugging (only in execCommand() as far as I see at the moment)<br />
+   *
+   * Default: <code>false</code>
+   * @type Boolean
+   */
+  this.debug = false;
+
+  this.URIs =
+  {
+   "blank": _editor_url + "popups/blank.html",
+   "link":  _editor_url + "modules/CreateLink/link.html",
+   "insert_image": _editor_url + "modules/InsertImage/insert_image.html",
+   "insert_table":  _editor_url + "modules/InsertTable/insert_table.html",
+   "select_color": _editor_url + "popups/select_color.html",
+   "help": _editor_url + "popups/editor_help.html"
+  };
+
+   /** The button list conains the definitions of the toolbar button. Normally, there's nothing to change here :) 
+   * <div style="white-space:pre">ADDING CUSTOM BUTTONS: please read below!
+   * format of the btnList elements is "ID: [ ToolTip, Icon, Enabled in text mode?, ACTION ]"
+   *    - ID: unique ID for the button.  If the button calls document.execCommand
+   *	    it's wise to give it the same name as the called command.
+   *    - ACTION: function that gets called when the button is clicked.
+   *              it has the following prototype:
+   *                 function(editor, buttonName)
+   *              - editor is the Xinha object that triggered the call
+   *              - buttonName is the ID of the clicked button
+   *              These 2 parameters makes it possible for you to use the same
+   *              handler for more Xinha objects or for more different buttons.
+   *    - ToolTip: tooltip, will be translated below
+   *    - Icon: path to an icon image file for the button
+   *            OR; you can use an 18x18 block of a larger image by supllying an array
+   *            that has three elemtents, the first is the larger image, the second is the column
+   *            the third is the row.  The ros and columns numbering starts at 0 but there is
+   *            a header row and header column which have numbering to make life easier.
+   *            See images/buttons_main.gif to see how it's done.
+   *    - Enabled in text mode: if false the button gets disabled for text-only mode; otherwise enabled all the time.</div>
+   * @type Object
+   */
+  this.btnList =
+  {
+    bold: [ "Bold", Xinha._lc({key: 'button_bold', string: ["ed_buttons_main.png",3,2]}, 'Xinha'), false, function(e) { e.execCommand("bold"); } ],
+    italic: [ "Italic", Xinha._lc({key: 'button_italic', string: ["ed_buttons_main.png",2,2]}, 'Xinha'), false, function(e) { e.execCommand("italic"); } ],
+    underline: [ "Underline", Xinha._lc({key: 'button_underline', string: ["ed_buttons_main.png",2,0]}, 'Xinha'), false, function(e) { e.execCommand("underline"); } ],
+    strikethrough: [ "Strikethrough", Xinha._lc({key: 'button_strikethrough', string: ["ed_buttons_main.png",3,0]}, 'Xinha'), false, function(e) { e.execCommand("strikethrough"); } ],
+    subscript: [ "Subscript", Xinha._lc({key: 'button_subscript', string: ["ed_buttons_main.png",3,1]}, 'Xinha'), false, function(e) { e.execCommand("subscript"); } ],
+    superscript: [ "Superscript", Xinha._lc({key: 'button_superscript', string: ["ed_buttons_main.png",2,1]}, 'Xinha'), false, function(e) { e.execCommand("superscript"); } ],
+
+    justifyleft: [ "Justify Left", ["ed_buttons_main.png",0,0], false, function(e) { e.execCommand("justifyleft"); } ],
+    justifycenter: [ "Justify Center", ["ed_buttons_main.png",1,1], false, function(e){ e.execCommand("justifycenter"); } ],
+    justifyright: [ "Justify Right", ["ed_buttons_main.png",1,0], false, function(e) { e.execCommand("justifyright"); } ],
+    justifyfull: [ "Justify Full", ["ed_buttons_main.png",0,1], false, function(e) { e.execCommand("justifyfull"); } ],
+
+    orderedlist: [ "Ordered List", ["ed_buttons_main.png",0,3], false, function(e) { e.execCommand("insertorderedlist"); } ],
+    unorderedlist: [ "Bulleted List", ["ed_buttons_main.png",1,3], false, function(e) { e.execCommand("insertunorderedlist"); } ],
+    insertorderedlist: [ "Ordered List", ["ed_buttons_main.png",0,3], false, function(e) { e.execCommand("insertorderedlist"); } ],
+    insertunorderedlist: [ "Bulleted List", ["ed_buttons_main.png",1,3], false, function(e) { e.execCommand("insertunorderedlist"); } ],
+
+    outdent: [ "Decrease Indent", ["ed_buttons_main.png",1,2], false, function(e) { e.execCommand("outdent"); } ],
+    indent: [ "Increase Indent",["ed_buttons_main.png",0,2], false, function(e) { e.execCommand("indent"); } ],
+    forecolor: [ "Font Color", ["ed_buttons_main.png",3,3], false, function(e) { e.execCommand("forecolor"); } ],
+    hilitecolor: [ "Background Color", ["ed_buttons_main.png",2,3], false, function(e) { e.execCommand("hilitecolor"); } ],
+
+    undo: [ "Undoes your last action", ["ed_buttons_main.png",4,2], false, function(e) { e.execCommand("undo"); } ],
+    redo: [ "Redoes your last action", ["ed_buttons_main.png",5,2], false, function(e) { e.execCommand("redo"); } ],
+    cut: [ "Cut selection", ["ed_buttons_main.png",5,0], false,  function (e, cmd) { e.execCommand(cmd); } ],
+    copy: [ "Copy selection", ["ed_buttons_main.png",4,0], false,  function (e, cmd) { e.execCommand(cmd); } ],
+    paste: [ "Paste from clipboard", ["ed_buttons_main.png",4,1], false,  function (e, cmd) { e.execCommand(cmd); } ],
+    selectall: [ "Select all", ["ed_buttons_main.png",3,5], false, function(e) {e.execCommand("selectall");} ],
+
+    inserthorizontalrule: [ "Horizontal Rule", ["ed_buttons_main.png",6,0], false, function(e) { e.execCommand("inserthorizontalrule"); } ],
+    createlink: [ "Insert Web Link", ["ed_buttons_main.png",6,1], false, function(e) { e._createLink(); } ],
+    insertimage: [ "Insert/Modify Image", ["ed_buttons_main.png",6,3], false, function(e) { e.execCommand("insertimage"); } ],
+    inserttable: [ "Insert Table", ["ed_buttons_main.png",6,2], false, function(e) { e.execCommand("inserttable"); } ],
+
+    htmlmode: [ "Toggle HTML Source", ["ed_buttons_main.png",7,0], true, function(e) { e.execCommand("htmlmode"); } ],
+    toggleborders: [ "Toggle Borders", ["ed_buttons_main.png",7,2], false, function(e) { e._toggleBorders(); } ],
+    print: [ "Print document", ["ed_buttons_main.png",8,1], false, function(e) { if(Xinha.is_gecko) {e._iframe.contentWindow.print(); } else { e.focusEditor(); print(); } } ],
+    saveas: [ "Save as", "ed_saveas.png", false, function(e) { e.execCommand("saveas",false,"noname.htm"); } ],
+    about: [ "About this editor", ["ed_buttons_main.png",8,2], true, function(e) { e.getPluginInstance("AboutBox").show(); } ],
+    showhelp: [ "Help using editor", ["ed_buttons_main.png",9,2], true, function(e) { e.execCommand("showhelp"); } ],
+
+    splitblock: [ "Split Block", "ed_splitblock.gif", false, function(e) { e._splitBlock(); } ],
+    lefttoright: [ "Direction left to right", ["ed_buttons_main.png",0,2], false, function(e) { e.execCommand("lefttoright"); } ],
+    righttoleft: [ "Direction right to left", ["ed_buttons_main.png",1,2], false, function(e) { e.execCommand("righttoleft"); } ],
+    overwrite: [ "Insert/Overwrite", "ed_overwrite.gif", false, function(e) { e.execCommand("overwrite"); } ],
+
+    wordclean: [ "MS Word Cleaner", ["ed_buttons_main.png",5,3], false, function(e) { e._wordClean(); } ],
+    clearfonts: [ "Clear Inline Font Specifications", ["ed_buttons_main.png",5,4], true, function(e) { e._clearFonts(); } ],
+    removeformat: [ "Remove formatting", ["ed_buttons_main.png",4,4], false, function(e) { e.execCommand("removeformat"); } ],
+    killword: [ "Clear MSOffice tags", ["ed_buttons_main.png",4,3], false, function(e) { e.execCommand("killword"); } ]
+  };
+  /** A container for additional icons that may be swapped within one button (like fullscreen)
+   * @private
+   */
+  this.iconList = 
+  {
+    dialogCaption : _editor_url + 'images/xinha-small-icon.gif',
+    wysiwygmode : [_editor_url + 'images/ed_buttons_main.png',7,1]
+  };
+  // initialize tooltips from the I18N module and generate correct image path
+  for ( var i in this.btnList )
+  {
+    var btn = this.btnList[i];
+    // prevent iterating over wrong type
+    if ( typeof btn != 'object' )
+    {
+      continue;
+    } 
+    if ( typeof btn[1] != 'string' )
+    {
+      btn[1][0] = _editor_url + this.imgURL + btn[1][0];
+    }
+    else
+    {
+      btn[1] = _editor_url + this.imgURL + btn[1];
+    }
+    btn[0] = Xinha._lc(btn[0]); //initialize tooltip
+  }
+};
+/** A plugin may require more than one icon for one button, this has to be registered in order to work with the iconsets (see FullScreen)
+ * 
+ * @param {String} id
+ * @param {String|Array} icon definition like in registerButton
+ */
+Xinha.Config.prototype.registerIcon = function (id, icon)
+{
+  this.iconList[id] = icon;
+};
+/** ADDING CUSTOM BUTTONS
+*   ---------------------
+*
+*
+* Example on how to add a custom button when you construct the Xinha:
+*
+*   var editor = new Xinha("your_text_area_id");
+*   var cfg = editor.config; // this is the default configuration
+*   cfg.btnList["my-hilite"] =
+*	[ "Highlight selection", // tooltip
+*	  "my_hilite.gif", // image
+*	  false // disabled in text mode
+*	  function(editor) { editor.surroundHTML('<span style="background:yellow">', '</span>'); }, // action
+*	];
+*   cfg.toolbar.push(["linebreak", "my-hilite"]); // add the new button to the toolbar
+*
+* An alternate (also more convenient and recommended) way to
+* accomplish this is to use the registerButton function below.
+*/
+/** Helper function: register a new button with the configuration.  It can be
+ * called with all 5 arguments, or with only one (first one).  When called with
+ * only one argument it must be an object with the following properties: id,
+ * tooltip, image, textMode, action.<br />  
+ * 
+ * Examples:<br />
+ *<pre>
+ * config.registerButton("my-hilite", "Hilite text", "my-hilite.gif", false, function(editor) {...});
+ * config.registerButton({
+ *      id       : "my-hilite",      // the ID of your button
+ *      tooltip  : "Hilite text",    // the tooltip
+ *      image    : "my-hilite.gif",  // image to be displayed in the toolbar
+ *      textMode : false,            // disabled in text mode
+ *      action   : function(editor) { // called when the button is clicked
+ *                   editor.surroundHTML('<span class="hilite">', '</span>');
+ *                 },
+ *      context  : "p"               // will be disabled if outside a <p> element
+ *    });</pre>
+ */
+Xinha.Config.prototype.registerButton = function(id, tooltip, image, textMode, action, context)
+{
+  if ( typeof id == "string" )
+  {
+    this.btnList[id] = [ tooltip, image, textMode, action, context ];
+  }
+  else if ( typeof id == "object" )
+  {
+    this.btnList[id.id] = [ id.tooltip, id.image, id.textMode, id.action, id.context ];
+  }
+  else
+  {
+    alert("ERROR [Xinha.Config::registerButton]:\ninvalid arguments");
+    return false;
+  }
+};
+
+Xinha.prototype.registerPanel = function(side, object)
+{
+  if ( !side )
+  {
+    side = 'right';
+  }
+  this.setLoadingMessage('Register ' + side + ' panel ');
+  var panel = this.addPanel(side);
+  if ( object )
+  {
+    object.drawPanelIn(panel);
+  }
+};
+
+/** The following helper function registers a dropdown box with the editor
+ * configuration.  You still have to add it to the toolbar, same as with the
+ * buttons.  Call it like this:
+ *
+ * FIXME: add example
+ */
+Xinha.Config.prototype.registerDropdown = function(object)
+{
+  // check for existing id
+//  if ( typeof this.customSelects[object.id] != "undefined" )
+//  {
+    // alert("WARNING [Xinha.Config::registerDropdown]:\nA dropdown with the same ID already exists.");
+//  }
+//  if ( typeof this.btnList[object.id] != "undefined" )
+//  {
+    // alert("WARNING [Xinha.Config::registerDropdown]:\nA button with the same ID already exists.");
+//  }
+  this.customSelects[object.id] = object;
+};
+
+/** Call this function to remove some buttons/drop-down boxes from the toolbar.
+ * Pass as the only parameter a string containing button/drop-down names
+ * delimited by spaces.  Note that the string should also begin with a space
+ * and end with a space.  Example:
+ *
+ *   config.hideSomeButtons(" fontname fontsize textindicator ");
+ *
+ * It's useful because it's easier to remove stuff from the defaul toolbar than
+ * create a brand new toolbar ;-)
+ */
+Xinha.Config.prototype.hideSomeButtons = function(remove)
+{
+  var toolbar = this.toolbar;
+  for ( var i = toolbar.length; --i >= 0; )
+  {
+    var line = toolbar[i];
+    for ( var j = line.length; --j >= 0; )
+    {
+      if ( remove.indexOf(" " + line[j] + " ") >= 0 )
+      {
+        var len = 1;
+        if ( /separator|space/.test(line[j + 1]) )
+        {
+          len = 2;
+        }
+        line.splice(j, len);
+      }
+    }
+  }
+};
+
+/** Helper Function: add buttons/drop-downs boxes with title or separator to the toolbar
+ * if the buttons/drop-downs boxes doesn't allready exists.
+ * id: button or selectbox (as array with separator or title)
+ * where: button or selectbox (as array if the first is not found take the second and so on)
+ * position:
+ * -1 = insert button (id) one position before the button (where)
+ * 0 = replace button (where) by button (id)
+ * +1 = insert button (id) one position after button (where)
+ *
+ * cfg.addToolbarElement(["T[title]", "button_id", "separator"] , ["first_id","second_id"], -1);
+*/
+
+Xinha.Config.prototype.addToolbarElement = function(id, where, position)
+{
+  var toolbar = this.toolbar;
+  var a, i, j, o, sid;
+  var idIsArray = false;
+  var whereIsArray = false;
+  var whereLength = 0;
+  var whereJ = 0;
+  var whereI = 0;
+  var exists = false;
+  var found = false;
+  // check if id and where are arrys
+  if ( ( id && typeof id == "object" ) && ( id.constructor == Array ) )
+  {
+    idIsArray = true;
+  }
+  if ( ( where && typeof where == "object" ) && ( where.constructor == Array ) )
+  {
+    whereIsArray = true;
+    whereLength = where.length;
+	}
+
+  if ( idIsArray ) //find the button/select box in input array
+  {
+    for ( i = 0; i < id.length; ++i )
+    {
+      if ( ( id[i] != "separator" ) && ( id[i].indexOf("T[") !== 0) )
+      {
+        sid = id[i];
+      }
+    }
+  }
+  else
+  {
+    sid = id;
+  }
+  
+  for ( i = 0; i < toolbar.length; ++i ) {
+    a = toolbar[i];
+    for ( j = 0; j < a.length; ++j ) {
+      // check if button/select box exists
+      if ( a[j] == sid ) {
+        return; // cancel to add elements if same button already exists
+      }
+    }
+  }
+  
+
+  for ( i = 0; !found && i < toolbar.length; ++i )
+  {
+    a = toolbar[i];
+    for ( j = 0; !found && j < a.length; ++j )
+    {
+      if ( whereIsArray )
+      {
+        for ( o = 0; o < whereLength; ++o )
+        {
+          if ( a[j] == where[o] )
+          {
+            if ( o === 0 )
+            {
+              found = true;
+              j--;
+              break;
+            }
+            else
+            {
+              whereI = i;
+              whereJ = j;
+              whereLength = o;
+            }
+          }
+        }
+      }
+      else
+      {
+        // find the position to insert
+        if ( a[j] == where )
+        { 
+          found = true;
+          break;
+        }
+      }
+    }
+  }
+
+  //if check found any other as the first button
+  if ( !found && whereIsArray )
+  { 
+    if ( where.length != whereLength )
+    {
+      j = whereJ;
+      a = toolbar[whereI];
+      found = true;
+    }
+  }
+  if ( found )
+  {
+    // replace the found button
+    if ( position === 0 )
+    {
+      if ( idIsArray)
+      {
+        a[j] = id[id.length-1];
+        for ( i = id.length-1; --i >= 0; )
+        {
+          a.splice(j, 0, id[i]);
+        }
+      }
+      else
+      {
+        a[j] = id;
+      }
+    }
+    else
+    { 
+      // insert before/after the found button
+      if ( position < 0 )
+      {
+        j = j + position + 1; //correct position before
+      }
+      else if ( position > 0 )
+      {
+        j = j + position; //correct posion after
+      }
+      if ( idIsArray )
+      {
+        for ( i = id.length; --i >= 0; )
+        {
+          a.splice(j, 0, id[i]);
+        }
+      }
+      else
+      {
+        a.splice(j, 0, id);
+      }
+    }
+  }
+  else
+  {
+    // no button found
+    toolbar[0].splice(0, 0, "separator");
+    if ( idIsArray)
+    {
+      for ( i = id.length; --i >= 0; )
+      {
+        toolbar[0].splice(0, 0, id[i]);
+      }
+    }
+    else
+    {
+      toolbar[0].splice(0, 0, id);
+    }
+  }
+};
+/** Alias of Xinha.Config.prototype.hideSomeButtons()
+* @type Function
+*/
+Xinha.Config.prototype.removeToolbarElement = Xinha.Config.prototype.hideSomeButtons;
+
+/** Helper function: replace all TEXTAREA-s in the document with Xinha-s. 
+* @param {Xinha.Config} optional config 
+*/
+Xinha.replaceAll = function(config)
+{
+  var tas = document.getElementsByTagName("textarea");
+  // @todo: weird syntax, doesnt help to read the code, doesnt obfuscate it and doesnt make it quicker, better rewrite this part
+  for ( var i = tas.length; i > 0; new Xinha(tas[--i], config).generate() )
+  {
+    // NOP
+  }
+};
+
+/** Helper function: replaces the TEXTAREA with the given ID with Xinha. 
+* @param {string} id id of the textarea to replace 
+* @param {Xinha.Config} optional config 
+*/
+Xinha.replace = function(id, config)
+{
+  var ta = Xinha.getElementById("textarea", id);
+  return ta ? new Xinha(ta, config).generate() : null;
+};
+ 
+/** Creates the toolbar and appends it to the _htmlarea
+* @private
+* @returns {DomNode} toolbar
+*/
+Xinha.prototype._createToolbar = function ()
+{
+  this.setLoadingMessage(Xinha._lc('Create Toolbar'));
+  var editor = this;	// to access this in nested functions
+
+  var toolbar = document.createElement("div");
+  // ._toolbar is for legacy, ._toolBar is better thanks.
+  this._toolBar = this._toolbar = toolbar;
+  toolbar.className = "toolbar";
+  toolbar.unselectable = "1";
+  toolbar.align = this.config.toolbarAlign;
+  
+  Xinha.freeLater(this, '_toolBar');
+  Xinha.freeLater(this, '_toolbar');
+  
+  var tb_row = null;
+  var tb_objects = {};
+  this._toolbarObjects = tb_objects;
+
+	this._createToolbar1(editor, toolbar, tb_objects);
+	this._htmlArea.appendChild(toolbar);      
+  
+  return toolbar;
+};
+
+/** FIXME : function never used, can probably be removed from source
+* @private
+* @deprecated
+*/
+Xinha.prototype._setConfig = function(config)
+{
+	this.config = config;
+};
+/** FIXME: How can this be used??
+* @private
+*/
+Xinha.prototype._rebuildToolbar = function()
+{
+	this._createToolbar1(this, this._toolbar, this._toolbarObjects);
+
+  // We only want ONE editor at a time to be active
+  if ( Xinha._currentlyActiveEditor )
+  {
+    if ( Xinha._currentlyActiveEditor == this )
+    {
+      this.activateEditor();
+    }
+  }
+  else
+  {
+    this.disableToolbar();
+  }
+};
+
+/**
+ * Create a break element to add in the toolbar
+ *
+ * @return {DomNode} HTML element to add
+ * @private
+ */
+Xinha._createToolbarBreakingElement = function()
+{
+  var brk = document.createElement('div');
+  brk.style.height = '1px';
+  brk.style.width = '1px';
+  brk.style.lineHeight = '1px';
+  brk.style.fontSize = '1px';
+  brk.style.clear = 'both';
+  return brk;
+};
+
+
+/** separate from previous createToolBar to allow dynamic change of toolbar
+ * @private
+ * @return {DomNode} toolbar
+ */
+Xinha.prototype._createToolbar1 = function (editor, toolbar, tb_objects)
+{
+  // We will clean out any existing toolbar elements.
+  while (toolbar.lastChild)
+  {
+    toolbar.removeChild(toolbar.lastChild);
+  }
+
+  var tb_row;
+  // This shouldn't be necessary, but IE seems to float outside of the container
+  // when we float toolbar sections, so we have to clear:both here as well
+  // as at the end (which we do have to do).
+  if ( editor.config.flowToolbars )
+  {
+    toolbar.appendChild(Xinha._createToolbarBreakingElement());
+  }
+
+  // creates a new line in the toolbar
+  function newLine()
+  {
+    if ( typeof tb_row != 'undefined' && tb_row.childNodes.length === 0)
+    {
+      return;
+    }
+
+    var table = document.createElement("table");
+    table.border = "0px";
+    table.cellSpacing = "0px";
+    table.cellPadding = "0px";
+    if ( editor.config.flowToolbars )
+    {
+      if ( Xinha.is_ie )
+      {
+        table.style.styleFloat = "left";
+      }
+      else
+      {
+        table.style.cssFloat = "left";
+      }
+    }
+
+    toolbar.appendChild(table);
+    // TBODY is required for IE, otherwise you don't see anything
+    // in the TABLE.
+    var tb_body = document.createElement("tbody");
+    table.appendChild(tb_body);
+    tb_row = document.createElement("tr");
+    tb_body.appendChild(tb_row);
+
+    table.className = 'toolbarRow'; // meh, kinda.
+  } // END of function: newLine
+
+  // init first line
+  newLine();
+
+  // updates the state of a toolbar element.  This function is member of
+  // a toolbar element object (unnamed objects created by createButton or
+  // createSelect functions below).
+  function setButtonStatus(id, newval)
+  {
+    var oldval = this[id];
+    var el = this.element;
+    if ( oldval != newval )
+    {
+      switch (id)
+      {
+        case "enabled":
+          if ( newval )
+          {
+            Xinha._removeClass(el, "buttonDisabled");
+            el.disabled = false;
+          }
+          else
+          {
+            Xinha._addClass(el, "buttonDisabled");
+            el.disabled = true;
+          }
+        break;
+        case "active":
+          if ( newval )
+          {
+            Xinha._addClass(el, "buttonPressed");
+          }
+          else
+          {
+            Xinha._removeClass(el, "buttonPressed");
+          }
+        break;
+      }
+      this[id] = newval;
+    }
+  } // END of function: setButtonStatus
+
+  // this function will handle creation of combo boxes.  Receives as
+  // parameter the name of a button as defined in the toolBar config.
+  // This function is called from createButton, above, if the given "txt"
+  // doesn't match a button.
+  function createSelect(txt)
+  {
+    var options = null;
+    var el = null;
+    var cmd = null;
+    var customSelects = editor.config.customSelects;
+    var context = null;
+    var tooltip = "";
+    switch (txt)
+    {
+      case "fontsize":
+      case "fontname":
+      case "formatblock":
+        // the following line retrieves the correct
+        // configuration option because the variable name
+        // inside the Config object is named the same as the
+        // button/select in the toolbar.  For instance, if txt
+        // == "formatblock" we retrieve config.formatblock (or
+        // a different way to write it in JS is
+        // config["formatblock"].
+        options = editor.config[txt];
+        cmd = txt;
+      break;
+      default:
+        // try to fetch it from the list of registered selects
+        cmd = txt;
+        var dropdown = customSelects[cmd];
+        if ( typeof dropdown != "undefined" )
+        {
+          options = dropdown.options;
+          context = dropdown.context;
+          if ( typeof dropdown.tooltip != "undefined" )
+          {
+            tooltip = dropdown.tooltip;
+          }
+        }
+        else
+        {
+          alert("ERROR [createSelect]:\nCan't find the requested dropdown definition");
+        }
+      break;
+    }
+    if ( options )
+    {
+      el = document.createElement("select");
+      el.title = tooltip;
+      el.style.width = 'auto';
+      el.name = txt;
+      var obj =
+      {
+        name	: txt, // field name
+        element : el,	// the UI element (SELECT)
+        enabled : true, // is it enabled?
+        text	: false, // enabled in text mode?
+        cmd	: cmd, // command ID
+        state	: setButtonStatus, // for changing state
+        context : context
+      };
+      
+      Xinha.freeLater(obj);
+      
+      tb_objects[txt] = obj;
+      
+      for ( var i in options )
+      {
+        // prevent iterating over wrong type
+        if ( typeof options[i] != 'string' )
+        {
+          continue;
+        }
+        var op = document.createElement("option");
+        op.innerHTML = Xinha._lc(i);
+        op.value = options[i];
+        el.appendChild(op);
+      }
+      Xinha._addEvent(el, "change", function () { editor._comboSelected(el, txt); } );
+    }
+    return el;
+  } // END of function: createSelect
+
+  // appends a new button to toolbar
+  function createButton(txt)
+  {
+    // the element that will be created
+    var el, btn, obj = null;
+    switch (txt)
+    {
+      case "separator":
+        if ( editor.config.flowToolbars )
+        {
+          newLine();
+        }
+        el = document.createElement("div");
+        el.className = "separator";
+      break;
+      case "space":
+        el = document.createElement("div");
+        el.className = "space";
+      break;
+      case "linebreak":
+        newLine();
+        return false;
+      case "textindicator":
+        el = document.createElement("div");
+        el.appendChild(document.createTextNode("A"));
+        el.className = "indicator";
+        el.title = Xinha._lc("Current style");
+        obj =
+        {
+          name	: txt, // the button name (i.e. 'bold')
+          element : el, // the UI element (DIV)
+          enabled : true, // is it enabled?
+          active	: false, // is it pressed?
+          text	: false, // enabled in text mode?
+          cmd	: "textindicator", // the command ID
+          state	: setButtonStatus // for changing state
+        };
+      
+        Xinha.freeLater(obj);
+      
+        tb_objects[txt] = obj;
+      break;
+      default:
+        btn = editor.config.btnList[txt];
+    }
+    if ( !el && btn )
+    {
+      el = document.createElement("a");
+      el.style.display = 'block';
+      el.href = 'javascript:void(0)';
+      el.style.textDecoration = 'none';
+      el.title = btn[0];
+      el.className = "button";
+      el.style.direction = "ltr";
+      // let's just pretend we have a button object, and
+      // assign all the needed information to it.
+      obj =
+      {
+        name : txt, // the button name (i.e. 'bold')
+        element : el, // the UI element (DIV)
+        enabled : true, // is it enabled?
+        active : false, // is it pressed?
+        text : btn[2], // enabled in text mode?
+        cmd	: btn[3], // the command ID
+        state	: setButtonStatus, // for changing state
+        context : btn[4] || null // enabled in a certain context?
+      };
+      Xinha.freeLater(el);
+      Xinha.freeLater(obj);
+
+      tb_objects[txt] = obj;
+
+      // prevent drag&drop of the icon to content area
+      el.ondrag = function() { return false; };
+
+      // handlers to emulate nice flat toolbar buttons
+      Xinha._addEvent(
+        el,
+        "mouseout",
+        function(ev)
+        {
+          if ( obj.enabled )
+          {
+            //Xinha._removeClass(el, "buttonHover");
+            Xinha._removeClass(el, "buttonActive");
+            if ( obj.active )
+            {
+              Xinha._addClass(el, "buttonPressed");
+            }
+          }
+        }
+      );
+
+      Xinha._addEvent(
+        el,
+        "mousedown",
+        function(ev)
+        {
+          if ( obj.enabled )
+          {
+            Xinha._addClass(el, "buttonActive");
+            Xinha._removeClass(el, "buttonPressed");
+            Xinha._stopEvent(Xinha.is_ie ? window.event : ev);
+          }
+        }
+      );
+
+      // when clicked, do the following:
+      Xinha._addEvent(
+        el,
+        "click",
+        function(ev)
+        {
+          ev = ev || window.event;
+          editor.btnClickEvent = {clientX : ev.clientX, clientY : ev.clientY};
+          if ( obj.enabled )
+          {
+            Xinha._removeClass(el, "buttonActive");
+            //Xinha._removeClass(el, "buttonHover");
+            if ( Xinha.is_gecko )
+            {
+              editor.activateEditor();
+            }
+            // We pass the event to the action so they can can use it to
+            // enhance the UI (e.g. respond to shift or ctrl-click)
+            obj.cmd(editor, obj.name, obj, ev);
+            Xinha._stopEvent(ev);
+          }
+        }
+      );
+
+      var i_contain = Xinha.makeBtnImg(btn[1]);
+      var img = i_contain.firstChild;
+      Xinha.freeLater(i_contain);
+      Xinha.freeLater(img);
+      
+      el.appendChild(i_contain);
+
+      obj.imgel = img;      
+      obj.swapImage = function(newimg)
+      {
+        if ( typeof newimg != 'string' )
+        {
+          img.src = newimg[0];
+          img.style.position = 'relative';
+          img.style.top  = newimg[2] ? ('-' + (18 * (newimg[2] + 1)) + 'px') : '-18px';
+          img.style.left = newimg[1] ? ('-' + (18 * (newimg[1] + 1)) + 'px') : '-18px';
+        }
+        else
+        {
+          obj.imgel.src = newimg;
+          img.style.top = '0px';
+          img.style.left = '0px';
+        }
+      };
+      
+    }
+    else if( !el )
+    {
+      el = createSelect(txt);
+    }
+
+    return el;
+  }
+
+  var first = true;
+  for ( var i = 0; i < this.config.toolbar.length; ++i )
+  {
+    if ( !first )
+    {
+      // createButton("linebreak");
+    }
+    else
+    {
+      first = false;
+    }
+    if ( this.config.toolbar[i] === null )
+    {
+      this.config.toolbar[i] = ['separator'];
+    }
+    var group = this.config.toolbar[i];
+
+    for ( var j = 0; j < group.length; ++j )
+    {
+      var code = group[j];
+      var tb_cell;
+      if ( /^([IT])\[(.*?)\]/.test(code) )
+      {
+        // special case, create text label
+        var l7ed = RegExp.$1 == "I"; // localized?
+        var label = RegExp.$2;
+        if ( l7ed )
+        {
+          label = Xinha._lc(label);
+        }
+        tb_cell = document.createElement("td");
+        tb_row.appendChild(tb_cell);
+        tb_cell.className = "label";
+        tb_cell.innerHTML = label;
+      }
+      else if ( typeof code != 'function' )
+      {
+        var tb_element = createButton(code);
+        if ( tb_element )
+        {
+          tb_cell = document.createElement("td");
+          tb_cell.className = 'toolbarElement';
+          tb_row.appendChild(tb_cell);
+          tb_cell.appendChild(tb_element);
+        }
+        else if ( tb_element === null )
+        {
+          alert("FIXME: Unknown toolbar item: " + code);
+        }
+      }
+    }
+  }
+
+  if ( editor.config.flowToolbars )
+  {
+    toolbar.appendChild(Xinha._createToolbarBreakingElement());
+  }
+
+  return toolbar;
+};
+
+/** creates a button (i.e. container element + image)
+ * @private
+ * @return {DomNode} conteainer element
+ */
+Xinha.makeBtnImg = function(imgDef, doc)
+{
+  if ( !doc )
+  {
+    doc = document;
+  }
+
+  if ( !doc._xinhaImgCache )
+  {
+    doc._xinhaImgCache = {};
+    Xinha.freeLater(doc._xinhaImgCache);
+  }
+
+  var i_contain = null;
+  if ( Xinha.is_ie && ( ( !doc.compatMode ) || ( doc.compatMode && doc.compatMode == "BackCompat" ) ) )
+  {
+    i_contain = doc.createElement('span');
+  }
+  else
+  {
+    i_contain = doc.createElement('div');
+    i_contain.style.position = 'relative';
+  }
+
+  i_contain.style.overflow = 'hidden';
+  i_contain.style.width = "18px";
+  i_contain.style.height = "18px";
+  i_contain.className = 'buttonImageContainer';
+
+  var img = null;
+  if ( typeof imgDef == 'string' )
+  {
+    if ( doc._xinhaImgCache[imgDef] )
+    {
+      img = doc._xinhaImgCache[imgDef].cloneNode();
+    }
+    else
+    {
+      if (Xinha.ie_version < 7 && /\.png$/.test(imgDef[0]))
+      {
+        img = doc.createElement("span");
+      
+        img.style.display = 'block';
+        img.style.width = '18px';
+        img.style.height = '18px';
+        img.style.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+imgDef+'")';
+		img.unselectable = 'on';
+      }
+      else
+      {
+        img = doc.createElement("img");
+        img.src = imgDef;
+      }
+    }
+  }
+  else
+  {
+    if ( doc._xinhaImgCache[imgDef[0]] )
+    {
+      img = doc._xinhaImgCache[imgDef[0]].cloneNode();
+    }
+    else
+    {
+      if (Xinha.ie_version < 7 && /\.png$/.test(imgDef[0]))
+      {
+        img = doc.createElement("span");
+        img.style.display = 'block';
+        img.style.width = '18px';
+        img.style.height = '18px';
+        img.style.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+imgDef[0]+'")';
+		img.unselectable = 'on';
+      }
+      else
+      {
+        img = doc.createElement("img");
+        img.src = imgDef[0];
+      }
+      img.style.position = 'relative';
+    }
+    // @todo: Using 18 dont let us use a theme with its own icon toolbar height
+    //        and width. Probably better to calculate this value 18
+    //        var sizeIcon = img.width / nb_elements_per_image;
+    img.style.top  = imgDef[2] ? ('-' + (18 * (imgDef[2] + 1)) + 'px') : '-18px';
+    img.style.left = imgDef[1] ? ('-' + (18 * (imgDef[1] + 1)) + 'px') : '-18px';
+  }
+  i_contain.appendChild(img);
+  return i_contain;
+};
+/** creates the status bar 
+ * @private
+ * @return {DomNode} status bar
+ */
+Xinha.prototype._createStatusBar = function()
+{
+  // TODO: Move styling into separate stylesheet
+  this.setLoadingMessage(Xinha._lc('Create Statusbar'));
+  var statusBar = document.createElement("div");
+  statusBar.style.position = "relative";
+  statusBar.className = "statusBar";
+  statusBar.style.width = "100%";
+  Xinha.freeLater(this, '_statusBar');
+
+  var widgetContainer = document.createElement("div");
+  widgetContainer.className = "statusBarWidgetContainer";
+  widgetContainer.style.position = "absolute";
+  widgetContainer.style.right = "0";
+  widgetContainer.style.top = "0";
+  widgetContainer.style.padding = "3px 3px 3px 10px";
+  statusBar.appendChild(widgetContainer);
+
+  // statusbar.appendChild(document.createTextNode(Xinha._lc("Path") + ": "));
+  // creates a holder for the path view
+  var statusBarTree = document.createElement("span");
+  statusBarTree.className = "statusBarTree";
+  statusBarTree.innerHTML = Xinha._lc("Path") + ": ";
+
+  this._statusBarTree = statusBarTree;
+  Xinha.freeLater(this, '_statusBarTree');
+  statusBar.appendChild(statusBarTree);
+  var statusBarTextMode = document.createElement("span");
+  statusBarTextMode.innerHTML = Xinha._lc("You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWYG.");
+  statusBarTextMode.style.display = "none";
+
+  this._statusBarTextMode = statusBarTextMode;
+  Xinha.freeLater(this, '_statusBarTextMode');
+  statusBar.appendChild(statusBarTextMode);
+
+  statusBar.style.whiteSpace = "nowrap";
+
+  var self = this;
+  this.notifyOn("before_resize", function(evt, size) {
+    self._statusBar.style.width = null;
+  });
+  this.notifyOn("resize", function(evt, size) {
+    // HACK! IE6 doesn't update the width properly when resizing if it's 
+    // given in pixels, but does hide the overflow content correctly when 
+    // using 100% as the width. (FF, Safari and IE7 all require fixed
+    // pixel widths to do the overflow hiding correctly.)
+    if (Xinha.is_ie && Xinha.ie_version == 6)
+    {
+      self._statusBar.style.width = "100%";
+    } 
+    else
+    {
+      var width = size['width'];
+      self._statusBar.style.width = width + "px";
+    }
+  });
+
+  this.notifyOn("modechange", function(evt, mode) {
+    // Loop through all registered status bar items
+    // and show them only if they're turned on for
+    // the new mode.
+    for (var i in self._statusWidgets)
+    {
+      var widget = self._statusWidgets[i];
+      for (var index=0; index<widget.modes.length; index++)
+      {
+        if (widget.modes[index] == mode.mode)
+        {
+          var found = true;
+        }
+      }
+      if (typeof found == 'undefined')
+      {
+        widget.block.style.display = "none";  
+      }
+      else
+      {
+        widget.block.style.display = "";
+      }
+    }
+  });
+
+  if ( !this.config.statusBar )
+  {
+    // disable it...
+    statusBar.style.display = "none";
+  }
+  return statusBar;
+};
+
+/** Registers and inserts a new block for a widget in the status bar
+ @param id unique string identifer for this block
+ @param modes list of modes this block should be shown in
+
+ @returns reference to HTML element inserted into the status bar
+ */
+Xinha.prototype.registerStatusWidget = function(id, modes)
+{
+  modes = modes || ['wysiwyg'];
+  if (!this._statusWidgets)
+  {
+    this._statusWidgets = {};
+  }
+
+  var block = document.createElement("div");
+  block.className = "statusBarWidget";
+  block = this._statusBar.firstChild.appendChild(block);
+
+  var showWidget = false;
+  for (var i=0; i<modes.length; i++)
+  {
+    if (modes[i] == this._editMode)
+    {
+      showWidget = true;
+    }
+  }
+  block.style.display = showWidget == true ? "" : "none";
+
+  this._statusWidgets[id] = {block: block, modes: modes};
+  return block;
+};
+
+/** Creates the Xinha object and replaces the textarea with it. Loads required files.
+ *  @returns {Boolean}
+ */
+Xinha.prototype.generate = function ()
+{
+  if ( !Xinha.isSupportedBrowser )
+  {
+    return;
+  }
+  
+  var i;
+  var editor = this;  // we'll need "this" in some nested functions
+  var url;
+  var found = false;
+  var links = document.getElementsByTagName("link");
+
+  if (!document.getElementById("XinhaCoreDesign"))
+  {
+    _editor_css = (typeof _editor_css == "string") ? _editor_css : "Xinha.css";
+    for(i = 0; i<links.length; i++)
+    {
+      if ( ( links[i].rel == "stylesheet" ) && ( links[i].href == _editor_url + _editor_css ) )
+      {
+        found = true;
+      }
+    }
+    if ( !found )
+    {
+      Xinha.loadStyle(_editor_css,null,"XinhaCoreDesign",true);
+    }
+  }
+  
+  if ( _editor_skin !== "" && !document.getElementById("XinhaSkin"))
+  {
+    found = false;
+    for(i = 0; i<links.length; i++)
+    {
+      if ( ( links[i].rel == "stylesheet" ) && ( links[i].href == _editor_url + 'skins/' + _editor_skin + '/skin.css' ) )
+      {
+        found = true;
+      }
+    }
+    if ( !found )
+    {
+      Xinha.loadStyle('skins/' + _editor_skin + '/skin.css',null,"XinhaSkin");
+    }
+  }
+  var callback = function() { editor.generate(); };
+  // Now load a specific browser plugin which will implement the above for us.
+  if (Xinha.is_ie)
+  {
+    url = _editor_url + 'modules/InternetExplorer/InternetExplorer.js';
+    if ( !Xinha.loadPlugins([{plugin:"InternetExplorer",url:url}], callback ) )
+    {            
+      return false;
+    }
+    if (!this.plugins.InternetExplorer)
+    {
+      editor._browserSpecificPlugin = editor.registerPlugin('InternetExplorer');
+    }
+  }
+  else if (Xinha.is_webkit)
+  {
+    url = _editor_url + 'modules/WebKit/WebKit.js';
+    if ( !Xinha.loadPlugins([{plugin:"WebKit",url:url}], callback ) )
+    {
+      return false;
+    }
+    if (!this.plugins.Webkit)
+    {
+      editor._browserSpecificPlugin = editor.registerPlugin('WebKit');
+    }
+  }
+  else if (Xinha.is_opera)
+  {
+    url = _editor_url + 'modules/Opera/Opera.js';
+    if ( !Xinha.loadPlugins([{plugin:"Opera",url:url}], callback ) )
+    {            
+      return false;
+    }
+    if (!this.plugins.Opera)
+    {
+      editor._browserSpecificPlugin = editor.registerPlugin('Opera');
+    }
+  }
+  else if (Xinha.is_gecko)
+  {
+    url = _editor_url + 'modules/Gecko/Gecko.js';
+    if ( !Xinha.loadPlugins([{plugin:"Gecko",url:url}], callback ) )
+    {            
+      return false;
+    }
+    if (!this.plugins.Gecko) 
+    {
+      editor._browserSpecificPlugin = editor.registerPlugin('Gecko');
+    }
+  }
+
+  if ( typeof Dialog == 'undefined' && !Xinha._loadback( _editor_url + 'modules/Dialogs/dialog.js', callback, this ) )
+  {    
+    return false;
+  }
+
+  if ( typeof Xinha.Dialog == 'undefined' &&  !Xinha._loadback( _editor_url + 'modules/Dialogs/XinhaDialog.js' , callback, this ) )
+  {    
+    return false;
+  }
+  
+  url = _editor_url + 'modules/FullScreen/full-screen.js';
+  if ( !Xinha.loadPlugins([{plugin:"FullScreen",url:url}], callback ))
+  {
+    return false;
+  }
+  
+  url = _editor_url + 'modules/ColorPicker/ColorPicker.js';
+  if ( !Xinha.loadPlugins([{plugin:"ColorPicker",url:url}], callback ) )
+  {
+    return false;
+  }
+  else if ( typeof Xinha.getPluginConstructor('ColorPicker') != 'undefined' && !this.plugins.colorPicker)
+  {
+    editor.registerPlugin('ColorPicker');
+  }
+
+  var toolbar = editor.config.toolbar;
+  for ( i = toolbar.length; --i >= 0; )
+  {
+    for ( var j = toolbar[i].length; --j >= 0; )
+    {
+      switch (toolbar[i][j])
+      {
+        case "popupeditor":
+          if (!this.plugins.FullScreen) 
+          {
+            editor.registerPlugin('FullScreen');
+          }
+        break;
+        case "insertimage":
+          url = _editor_url + 'modules/InsertImage/insert_image.js';
+          if ( typeof Xinha.prototype._insertImage == 'undefined' && !Xinha.loadPlugins([{plugin:"InsertImage",url:url}], callback ) )
+          {
+            return false;
+          }
+          else if ( typeof Xinha.getPluginConstructor('InsertImage') != 'undefined' && !this.plugins.InsertImage)
+          {
+            editor.registerPlugin('InsertImage');
+          }
+        break;
+        case "createlink":
+          url = _editor_url + 'modules/CreateLink/link.js';
+          if ( typeof Xinha.getPluginConstructor('Linker') == 'undefined' && !Xinha.loadPlugins([{plugin:"CreateLink",url:url}], callback ))
+          {
+            return false;
+          }
+          else if ( typeof Xinha.getPluginConstructor('CreateLink') != 'undefined' && !this.plugins.CreateLink) 
+          {
+            editor.registerPlugin('CreateLink');
+          }
+        break;
+        case "inserttable":
+          url = _editor_url + 'modules/InsertTable/insert_table.js';
+          if ( !Xinha.loadPlugins([{plugin:"InsertTable",url:url}], callback ) )
+          {
+            return false;
+          }
+          else if ( typeof Xinha.getPluginConstructor('InsertTable') != 'undefined' && !this.plugins.InsertTable)
+          {
+            editor.registerPlugin('InsertTable');
+          }
+        break;
+        case "about":
+          url = _editor_url + 'modules/AboutBox/AboutBox.js';
+          if ( !Xinha.loadPlugins([{plugin:"AboutBox",url:url}], callback ) )
+          {
+            return false;
+          }
+          else if ( typeof Xinha.getPluginConstructor('AboutBox') != 'undefined' && !this.plugins.AboutBox)
+          {
+            editor.registerPlugin('AboutBox');
+          }
+        break;
+      }
+    }
+  }
+
+  // If this is gecko, set up the paragraph handling now
+  if ( Xinha.is_gecko &&  editor.config.mozParaHandler != 'built-in' )
+  {
+    if (  !Xinha.loadPlugins([{plugin:"EnterParagraphs",url: _editor_url + 'modules/Gecko/paraHandlerBest.js'}], callback ) )
+    {
+      return false;
+    }
+    if (!this.plugins.EnterParagraphs) 
+    {
+      editor.registerPlugin('EnterParagraphs');
+    }
+  }
+  var getHtmlMethodPlugin = this.config.getHtmlMethod == 'TransformInnerHTML' ? _editor_url + 'modules/GetHtml/TransformInnerHTML.js' :  _editor_url + 'modules/GetHtml/DOMwalk.js';
+
+  if ( !Xinha.loadPlugins([{plugin:"GetHtmlImplementation",url:getHtmlMethodPlugin}], callback))
+  {
+    return false;
+  }
+  else if (!this.plugins.GetHtmlImplementation)
+  {
+    editor.registerPlugin('GetHtmlImplementation');
+  }
+  function getTextContent(node)
+  {
+    return node.textContent || node.text;
+  }
+  if (_editor_skin)
+  {
+    this.skinInfo = {};
+    var skinXML = Xinha._geturlcontent(_editor_url + 'skins/' + _editor_skin + '/skin.xml', true);
+    if (skinXML)
+    {
+      var meta = skinXML.getElementsByTagName('meta');
+      for (i=0;i<meta.length;i++)
+      {
+        this.skinInfo[meta[i].getAttribute('name')] = meta[i].getAttribute('value');
+      }
+      var recommendedIcons = skinXML.getElementsByTagName('recommendedIcons');
+      if (!_editor_icons && recommendedIcons.length && getTextContent(recommendedIcons[0]))
+      {
+        _editor_icons = getTextContent(recommendedIcons[0]);
+      }
+    }
+  }
+  if (_editor_icons) 
+  {
+    var iconsXML = Xinha._geturlcontent(_editor_url + 'iconsets/' + _editor_icons + '/iconset.xml', true);
+
+    if (iconsXML)
+    {
+      var icons = iconsXML.getElementsByTagName('icon');
+      var icon, id, path, type, x, y;
+
+      for (i=0;i<icons.length;i++)
+      {
+        icon = icons[i];
+        id = icon.getAttribute('id');
+        
+        if (icon.getElementsByTagName(_editor_lang).length)
+        {
+          icon = icon.getElementsByTagName(_editor_lang)[0];
+        }
+        else
+        {
+          icon = icon.getElementsByTagName('default')[0];
+        }
+        path = getTextContent(icon.getElementsByTagName('path')[0]);
+        path = (!/^\//.test(path) ? _editor_url : '') + path;
+        type = icon.getAttribute('type');
+        if (type == 'map')
+        {
+          x = parseInt(getTextContent(icon.getElementsByTagName('x')[0]), 10);
+          y = parseInt(getTextContent(icon.getElementsByTagName('y')[0]), 10);
+          if (this.config.btnList[id]) 
+          {
+            this.config.btnList[id][1] = [path, x, y];
+          }
+          if (this.config.iconList[id]) 
+          {
+            this.config.iconList[id] = [path, x, y];
+          }
+          
+        }
+        else
+        {
+          if (this.config.btnList[id]) 
+          {
+            this.config.btnList[id][1] = path;
+          }
+          if (this.config.iconList[id]) 
+          {
+            this.config.iconList[id] = path;
+          }
+        }
+      }
+    }
+  }
+  
+  // create the editor framework, yah, table layout I know, but much easier
+  // to get it working correctly this way, sorry about that, patches welcome.
+  
+  this.setLoadingMessage(Xinha._lc('Generate Xinha framework'));
+  
+  this._framework =
+  {
+    'table':   document.createElement('table'),
+    'tbody':   document.createElement('tbody'), // IE will not show the table if it doesn't have a tbody!
+    'tb_row':  document.createElement('tr'),
+    'tb_cell': document.createElement('td'), // Toolbar
+
+    'tp_row':  document.createElement('tr'),
+    'tp_cell': this._panels.top.container,   // top panel
+
+    'ler_row': document.createElement('tr'),
+    'lp_cell': this._panels.left.container,  // left panel
+    'ed_cell': document.createElement('td'), // editor
+    'rp_cell': this._panels.right.container, // right panel
+
+    'bp_row':  document.createElement('tr'),
+    'bp_cell': this._panels.bottom.container,// bottom panel
+
+    'sb_row':  document.createElement('tr'),
+    'sb_cell': document.createElement('td')  // status bar
+
+  };
+  Xinha.freeLater(this._framework);
+  
+  var fw = this._framework;
+  fw.table.border = "0";
+  fw.table.cellPadding = "0";
+  fw.table.cellSpacing = "0";
+
+  fw.tb_row.style.verticalAlign = 'top';
+  fw.tp_row.style.verticalAlign = 'top';
+  fw.ler_row.style.verticalAlign= 'top';
+  fw.bp_row.style.verticalAlign = 'top';
+  fw.sb_row.style.verticalAlign = 'top';
+  fw.ed_cell.style.position     = 'relative';
+
+  // Put the cells in the rows        set col & rowspans
+  // note that I've set all these so that all panels are showing
+  // but they will be redone in sizeEditor() depending on which
+  // panels are shown.  It's just here to clarify how the thing
+  // is put togethor.
+  fw.tb_row.appendChild(fw.tb_cell);
+  fw.tb_cell.colSpan = 3;
+
+  fw.tp_row.appendChild(fw.tp_cell);
+  fw.tp_cell.colSpan = 3;
+
+  fw.ler_row.appendChild(fw.lp_cell);
+  fw.ler_row.appendChild(fw.ed_cell);
+  fw.ler_row.appendChild(fw.rp_cell);
+
+  fw.bp_row.appendChild(fw.bp_cell);
+  fw.bp_cell.colSpan = 3;
+
+  fw.sb_row.appendChild(fw.sb_cell);
+  fw.sb_cell.colSpan = 3;
+
+  // Put the rows in the table body
+  fw.tbody.appendChild(fw.tb_row);  // Toolbar
+  fw.tbody.appendChild(fw.tp_row); // Left, Top, Right panels
+  fw.tbody.appendChild(fw.ler_row);  // Editor/Textarea
+  fw.tbody.appendChild(fw.bp_row);  // Bottom panel
+  fw.tbody.appendChild(fw.sb_row);  // Statusbar
+
+  // and body in the table
+  fw.table.appendChild(fw.tbody);
+
+  var xinha = fw.table;
+  this._htmlArea = xinha;
+  Xinha.freeLater(this, '_htmlArea');
+  xinha.className = "htmlarea";
+
+    // create the toolbar and put in the area
+  fw.tb_cell.appendChild( this._createToolbar() );
+
+    // create the IFRAME & add to container
+  var iframe = document.createElement("iframe");
+  iframe.src = this.popupURL(editor.config.URIs.blank);
+  iframe.id = "XinhaIFrame_" + this._textArea.id;
+  fw.ed_cell.appendChild(iframe);
+  this._iframe = iframe;
+  this._iframe.className = 'xinha_iframe';
+  Xinha.freeLater(this, '_iframe');
+  
+    // creates & appends the status bar
+  var statusbar = this._createStatusBar();
+  this._statusBar = fw.sb_cell.appendChild(statusbar);
+
+
+  // insert Xinha before the textarea.
+  var textarea = this._textArea;
+  textarea.parentNode.insertBefore(xinha, textarea);
+  textarea.className = 'xinha_textarea';
+
+  // extract the textarea and insert it into the xinha framework
+  Xinha.removeFromParent(textarea);
+  fw.ed_cell.appendChild(textarea);
+
+  // if another editor is activated while this one is in text mode, toolbar is disabled   
+  Xinha.addDom0Event(
+  this._textArea,
+  'click',
+  function()
+  {
+  	if ( Xinha._currentlyActiveEditor != this)
+  	{
+  	  editor.updateToolbar();
+  	}
+    return true;
+  });
+  
+  // Set up event listeners for saving the iframe content to the textarea
+  if ( textarea.form )
+  {
+    // onsubmit get the Xinha content and update original textarea.
+    Xinha.prependDom0Event(
+      this._textArea.form,
+      'submit',
+      function()
+      {
+        editor.firePluginEvent('onBeforeSubmit');
+        editor._textArea.value = editor.outwardHtml(editor.getHTML());
+        return true;
+      }
+    );
+
+    var initialTAContent = textarea.value;
+
+    // onreset revert the Xinha content to the textarea content
+    Xinha.prependDom0Event(
+      this._textArea.form,
+      'reset',
+      function()
+      {
+        editor.setHTML(editor.inwardHtml(initialTAContent));
+        editor.updateToolbar();
+        return true;
+      }
+    );
+
+    // attach onsubmit handler to form.submit()
+    // note: catch error in IE if any form element has id="submit"
+    if ( !textarea.form.xinha_submit )
+    {
+      try 
+      {
+        textarea.form.xinha_submit = textarea.form.submit;
+        textarea.form.submit = function() 
+        {
+          this.onsubmit();
+          this.xinha_submit();
+        };
+      } catch(ex) {}
+    }
+  }
+
+  // add a handler for the "back/forward" case -- on body.unload we save
+  // the HTML content into the original textarea and restore it in its place.
+  // apparently this does not work in IE?
+  Xinha.prependDom0Event(
+    window,
+    'unload',
+    function()
+    {
+      editor.firePluginEvent('onBeforeUnload');
+      textarea.value = editor.outwardHtml(editor.getHTML());
+      if (!Xinha.is_ie)
+      {
+        xinha.parentNode.replaceChild(textarea,xinha);
+      }
+      return true;
+    }
+  );
+
+  // Hide textarea
+  textarea.style.display = "none";
+
+  // Initalize size
+  editor.initSize();
+  this.setLoadingMessage(Xinha._lc('Finishing'));
+  // Add an event to initialize the iframe once loaded.
+  editor._iframeLoadDone = false;
+  if (Xinha.is_opera) 
+  {
+    editor.initIframe();
+  }
+  else 
+  {
+    Xinha._addEvent(
+      this._iframe,
+      'load',
+      function(e)
+      {
+        if ( !editor._iframeLoadDone )
+        {
+          editor._iframeLoadDone = true;
+          editor.initIframe();
+        }
+        return true;
+      }
+    );
+  }
+};
+
+/**
+ * Size the editor according to the INITIAL sizing information.
+ * config.width
+ *    The width may be set via three ways
+ *    auto    = the width is inherited from the original textarea
+ *    toolbar = the width is set to be the same size as the toolbar
+ *    <set size> = the width is an explicit size (any CSS measurement, eg 100em should be fine)
+ *
+ * config.height
+ *    auto    = the height is inherited from the original textarea
+ *    <set size> = an explicit size measurement (again, CSS measurements)
+ *
+ * config.sizeIncludesBars
+ *    true    = the tool & status bars will appear inside the width & height confines
+ *    false   = the tool & status bars will appear outside the width & height confines
+ *
+ * @private
+ */
+
+Xinha.prototype.initSize = function()
+{
+  this.setLoadingMessage(Xinha._lc('Init editor size'));
+  var editor = this;
+  var width = null;
+  var height = null;
+
+  switch ( this.config.width )
+  {
+    case 'auto':
+      width = this._initial_ta_size.w;
+    break;
+
+    case 'toolbar':
+      width = this._toolBar.offsetWidth + 'px';
+    break;
+
+    default :
+      // @todo: check if this is better :
+      // width = (parseInt(this.config.width, 10) == this.config.width)? this.config.width + 'px' : this.config.width;
+      width = /[^0-9]/.test(this.config.width) ? this.config.width : this.config.width + 'px';
+    break;
+  }
+      // @todo: check if this is better :
+      // height = (parseInt(this.config.height, 10) == this.config.height)? this.config.height + 'px' : this.config.height;
+  height = this.config.height == 'auto' ? this._initial_ta_size.h : /[^0-9]/.test(this.config.height) ? this.config.height : this.config.height + 'px';
+  
+  this.sizeEditor(width, height, this.config.sizeIncludesBars, this.config.sizeIncludesPanels);
+
+  // why can't we use the following line instead ?
+//  this.notifyOn('panel_change',this.sizeEditor);
+  this.notifyOn('panel_change',function() { editor.sizeEditor(); });
+};
+
+/**
+ *  Size the editor to a specific size, or just refresh the size (when window resizes for example)
+ *  @param {string} width optional width (CSS specification)
+ *  @param {string} height optional height (CSS specification)
+ *  @param {Boolean} includingBars optional to indicate if the size should include or exclude tool & status bars
+ *  @param {Boolean} includingPanels optional to indicate if the size should include or exclude panels
+ */
+Xinha.prototype.sizeEditor = function(width, height, includingBars, includingPanels)
+{
+  if (this._risizing) 
+  {
+    return;
+  }
+  this._risizing = true;
+  
+  var framework = this._framework;
+  
+  this.notifyOf('before_resize', {width:width, height:height});
+  this.firePluginEvent('onBeforeResize', width, height);
+  // We need to set the iframe & textarea to 100% height so that the htmlarea
+  // isn't "pushed out" when we get it's height, so we can change them later.
+  this._iframe.style.height   = '100%';
+  //here 100% can lead to an effect that the editor is considerably higher in text mode
+  this._textArea.style.height = '1px';
+  
+  this._iframe.style.width    = '';
+  this._textArea.style.width  = '';
+
+  if ( includingBars !== null )
+  {
+    this._htmlArea.sizeIncludesToolbars = includingBars;
+  }
+  if ( includingPanels !== null )
+  {
+    this._htmlArea.sizeIncludesPanels = includingPanels;
+  }
+
+  if ( width )
+  {
+    this._htmlArea.style.width = width;
+    if ( !this._htmlArea.sizeIncludesPanels )
+    {
+      // Need to add some for l & r panels
+      var rPanel = this._panels.right;
+      if ( rPanel.on && rPanel.panels.length && Xinha.hasDisplayedChildren(rPanel.div) )
+      {
+        this._htmlArea.style.width = (this._htmlArea.offsetWidth + parseInt(this.config.panel_dimensions.right, 10)) + 'px';
+      }
+
+      var lPanel = this._panels.left;
+      if ( lPanel.on && lPanel.panels.length && Xinha.hasDisplayedChildren(lPanel.div) )
+      {
+        this._htmlArea.style.width = (this._htmlArea.offsetWidth + parseInt(this.config.panel_dimensions.left, 10)) + 'px';
+      }
+    }
+  }
+
+  if ( height )
+  {
+    this._htmlArea.style.height = height;
+    if ( !this._htmlArea.sizeIncludesToolbars )
+    {
+      // Need to add some for toolbars
+      this._htmlArea.style.height = (this._htmlArea.offsetHeight + this._toolbar.offsetHeight + this._statusBar.offsetHeight) + 'px';
+    }
+
+    if ( !this._htmlArea.sizeIncludesPanels )
+    {
+      // Need to add some for t & b panels
+      var tPanel = this._panels.top;
+      if ( tPanel.on && tPanel.panels.length && Xinha.hasDisplayedChildren(tPanel.div) )
+      {
+        this._htmlArea.style.height = (this._htmlArea.offsetHeight + parseInt(this.config.panel_dimensions.top, 10)) + 'px';
+      }
+
+      var bPanel = this._panels.bottom;
+      if ( bPanel.on && bPanel.panels.length && Xinha.hasDisplayedChildren(bPanel.div) )
+      {
+        this._htmlArea.style.height = (this._htmlArea.offsetHeight + parseInt(this.config.panel_dimensions.bottom, 10)) + 'px';
+      }
+    }
+  }
+
+  // At this point we have this._htmlArea.style.width & this._htmlArea.style.height
+  // which are the size for the OUTER editor area, including toolbars and panels
+  // now we size the INNER area and position stuff in the right places.
+  width  = this._htmlArea.offsetWidth;
+  height = this._htmlArea.offsetHeight;
+
+  // Set colspan for toolbar, and statusbar, rowspan for left & right panels, and insert panels to be displayed
+  // into thier rows
+  var panels = this._panels;
+  var editor = this;
+  var col_span = 1;
+
+  function panel_is_alive(pan)
+  {
+    if ( panels[pan].on && panels[pan].panels.length && Xinha.hasDisplayedChildren(panels[pan].container) )
+    {
+      panels[pan].container.style.display = '';
+      return true;
+    }
+    // Otherwise make sure it's been removed from the framework
+    else
+    {
+      panels[pan].container.style.display='none';
+      return false;
+    }
+  }
+
+  if ( panel_is_alive('left') )
+  {
+    col_span += 1;      
+  }
+
+//  if ( panel_is_alive('top') )
+//  {
+    // NOP
+//  }
+
+  if ( panel_is_alive('right') )
+  {
+    col_span += 1;
+  }
+
+//  if ( panel_is_alive('bottom') )
+//  {
+    // NOP
+//  }
+
+  framework.tb_cell.colSpan = col_span;
+  framework.tp_cell.colSpan = col_span;
+  framework.bp_cell.colSpan = col_span;
+  framework.sb_cell.colSpan = col_span;
+
+  // Put in the panel rows, top panel goes above editor row
+  if ( !framework.tp_row.childNodes.length )
+  {
+    Xinha.removeFromParent(framework.tp_row);
+  }
+  else
+  {
+    if ( !Xinha.hasParentNode(framework.tp_row) )
+    {
+      framework.tbody.insertBefore(framework.tp_row, framework.ler_row);
+    }
+  }
+
+  // bp goes after the editor
+  if ( !framework.bp_row.childNodes.length )
+  {
+    Xinha.removeFromParent(framework.bp_row);
+  }
+  else
+  {
+    if ( !Xinha.hasParentNode(framework.bp_row) )
+    {
+      framework.tbody.insertBefore(framework.bp_row, framework.ler_row.nextSibling);
+    }
+  }
+
+  // finally if the statusbar is on, insert it
+  if ( !this.config.statusBar )
+  {
+    Xinha.removeFromParent(framework.sb_row);
+  }
+  else
+  {
+    if ( !Xinha.hasParentNode(framework.sb_row) )
+    {
+      framework.table.appendChild(framework.sb_row);
+    }
+  }
+
+  // Size and set colspans, link up the framework
+  framework.lp_cell.style.width  = this.config.panel_dimensions.left;
+  framework.rp_cell.style.width  = this.config.panel_dimensions.right;
+  framework.tp_cell.style.height = this.config.panel_dimensions.top;
+  framework.bp_cell.style.height = this.config.panel_dimensions.bottom;
+  framework.tb_cell.style.height = this._toolBar.offsetHeight + 'px';
+  framework.sb_cell.style.height = this._statusBar.offsetHeight + 'px';
+
+  var edcellheight = height - this._toolBar.offsetHeight - this._statusBar.offsetHeight;
+  if ( panel_is_alive('top') )
+  {
+    edcellheight -= parseInt(this.config.panel_dimensions.top, 10);
+  }
+  if ( panel_is_alive('bottom') )
+  {
+    edcellheight -= parseInt(this.config.panel_dimensions.bottom, 10);
+  }
+  this._iframe.style.height = edcellheight + 'px';  
+  
+  var edcellwidth = width;
+  if ( panel_is_alive('left') )
+  {
+    edcellwidth -= parseInt(this.config.panel_dimensions.left, 10);
+  }
+  if ( panel_is_alive('right') )
+  {
+    edcellwidth -= parseInt(this.config.panel_dimensions.right, 10);    
+  }
+  var iframeWidth = this.config.iframeWidth ? parseInt(this.config.iframeWidth,10) : null; 
+  this._iframe.style.width = (iframeWidth && iframeWidth < edcellwidth) ? iframeWidth + "px": edcellwidth + "px"; 
+
+  this._textArea.style.height = this._iframe.style.height;
+  this._textArea.style.width  = this._iframe.style.width;
+     
+  this.notifyOf('resize', {width:this._htmlArea.offsetWidth, height:this._htmlArea.offsetHeight});
+  this.firePluginEvent('onResize',this._htmlArea.offsetWidth, this._htmlArea.offsetWidth);
+  this._risizing = false;
+};
+/** FIXME: Never used, what is this for? 
+* @param {string} side 
+* @param {Object}
+*/
+Xinha.prototype.registerPanel = function(side, object)
+{
+  if ( !side )
+  {
+    side = 'right';
+  }
+  this.setLoadingMessage('Register ' + side + ' panel ');
+  var panel = this.addPanel(side);
+  if ( object )
+  {
+    object.drawPanelIn(panel);
+  }
+};
+/** Creates a panel in the panel container on the specified side
+* @param {String} side the panel container to which the new panel will be added<br />
+*									Possible values are: "right","left","top","bottom"
+* @returns {DomNode} Panel div
+*/
+Xinha.prototype.addPanel = function(side)
+{
+  var div = document.createElement('div');
+  div.side = side;
+  if ( side == 'left' || side == 'right' )
+  {
+    div.style.width  = this.config.panel_dimensions[side];
+    if (this._iframe) 
+    {
+      div.style.height = this._iframe.style.height;
+    }
+  }
+  Xinha.addClasses(div, 'panel');
+  this._panels[side].panels.push(div);
+  this._panels[side].div.appendChild(div);
+
+  this.notifyOf('panel_change', {'action':'add','panel':div});
+  this.firePluginEvent('onPanelChange','add',div);
+  return div;
+};
+/** Removes a panel
+* @param {DomNode} panel object as returned by Xinha.prototype.addPanel()
+*/
+Xinha.prototype.removePanel = function(panel)
+{
+  this._panels[panel.side].div.removeChild(panel);
+  var clean = [];
+  for ( var i = 0; i < this._panels[panel.side].panels.length; i++ )
+  {
+    if ( this._panels[panel.side].panels[i] != panel )
+    {
+      clean.push(this._panels[panel.side].panels[i]);
+    }
+  }
+  this._panels[panel.side].panels = clean;
+  this.notifyOf('panel_change', {'action':'remove','panel':panel});
+  this.firePluginEvent('onPanelChange','remove',panel);
+};
+/** Hides a panel
+* @param {DomNode} panel object as returned by Xinha.prototype.addPanel()
+*/
+Xinha.prototype.hidePanel = function(panel)
+{
+  if ( panel && panel.style.display != 'none' )
+  {
+    try { var pos = this.scrollPos(this._iframe.contentWindow); } catch(e) { }
+    panel.style.display = 'none';
+    this.notifyOf('panel_change', {'action':'hide','panel':panel});
+    this.firePluginEvent('onPanelChange','hide',panel);
+    try { this._iframe.contentWindow.scrollTo(pos.x,pos.y); } catch(e) { }
+  }
+};
+/** Shows a panel
+* @param {DomNode} panel object as returned by Xinha.prototype.addPanel()
+*/
+Xinha.prototype.showPanel = function(panel)
+{
+  if ( panel && panel.style.display == 'none' )
+  {
+    try { var pos = this.scrollPos(this._iframe.contentWindow); } catch(e) {}
+    panel.style.display = '';
+    this.notifyOf('panel_change', {'action':'show','panel':panel});
+    this.firePluginEvent('onPanelChange','show',panel);
+    try { this._iframe.contentWindow.scrollTo(pos.x,pos.y); } catch(e) { }
+  }
+};
+/** Hides the panel(s) on one or more sides
+* @param {Array} sides the sides on which the panels shall be hidden
+*/
+Xinha.prototype.hidePanels = function(sides)
+{
+  if ( typeof sides == 'undefined' )
+  {
+    sides = ['left','right','top','bottom'];
+  }
+
+  var reShow = [];
+  for ( var i = 0; i < sides.length;i++ )
+  {
+    if ( this._panels[sides[i]].on )
+    {
+      reShow.push(sides[i]);
+      this._panels[sides[i]].on = false;
+    }
+  }
+  this.notifyOf('panel_change', {'action':'multi_hide','sides':sides});
+  this.firePluginEvent('onPanelChange','multi_hide',sides);
+};
+/** Shows the panel(s) on one or more sides
+* @param {Array} sides the sides on which the panels shall be hidden
+*/
+Xinha.prototype.showPanels = function(sides)
+{
+  if ( typeof sides == 'undefined' )
+  {
+    sides = ['left','right','top','bottom'];
+  }
+
+  var reHide = [];
+  for ( var i = 0; i < sides.length; i++ )
+  {
+    if ( !this._panels[sides[i]].on )
+    {
+      reHide.push(sides[i]);
+      this._panels[sides[i]].on = true;
+    }
+  }
+  this.notifyOf('panel_change', {'action':'multi_show','sides':sides});
+  this.firePluginEvent('onPanelChange','multi_show',sides);
+};
+/** Returns an array containig all properties that are set in an object
+* @param {Object} obj
+* @returns {Array}
+*/
+Xinha.objectProperties = function(obj)
+{
+  var props = [];
+  for ( var x in obj )
+  {
+    props[props.length] = x;
+  }
+  return props;
+};
+
+/** Checks if editor is active
+ *<br />
+ * EDITOR ACTIVATION NOTES:<br />
+ *  when a page has multiple Xinha editors, ONLY ONE should be activated at any time (this is mostly to
+ *  work around a bug in Mozilla, but also makes some sense).  No editor should be activated or focused
+ *  automatically until at least one editor has been activated through user action (by mouse-clicking in
+ *  the editor).
+ * @private
+ * @returns {Boolean}
+ */
+Xinha.prototype.editorIsActivated = function()
+{
+  try
+  {
+    return Xinha.is_designMode ? this._doc.designMode == 'on' : this._doc.body.contentEditable;
+  }
+  catch (ex)
+  {
+    return false;
+  }
+};
+/**  We need to know that at least one editor on the page has been activated
+*    this is because we will not focus any editor until an editor has been activated
+* @private
+* @type {Boolean}
+*/
+Xinha._someEditorHasBeenActivated = false;
+/**  Stores a reference to the currently active editor
+* @private
+* @type {Xinha}
+*/
+Xinha._currentlyActiveEditor      = null;
+/** Enables one editor for editing, e.g. by a click in the editing area or after it has been 
+ *  deactivated programmatically before 
+ * @private
+ * @returns {Boolean}
+ */
+Xinha.prototype.activateEditor = function()
+{
+  if (this.currentModal) 
+  {
+    return;
+  }
+  // We only want ONE editor at a time to be active
+  if ( Xinha._currentlyActiveEditor )
+  {
+    if ( Xinha._currentlyActiveEditor == this )
+    {
+      return true;
+    }
+    Xinha._currentlyActiveEditor.deactivateEditor();
+  }
+
+  if ( Xinha.is_designMode && this._doc.designMode != 'on' )
+  {
+    try
+    {
+      // cannot set design mode if no display
+      if ( this._iframe.style.display == 'none' )
+      {
+        this._iframe.style.display = '';
+        this._doc.designMode = 'on';
+        this._iframe.style.display = 'none';
+      }
+      else
+      {
+        this._doc.designMode = 'on';
+      }
+    } catch (ex) {}
+  }
+  else if ( Xinha.is_ie&& this._doc.body.contentEditable !== true )
+  {
+    this._doc.body.contentEditable = true;
+  }
+
+  Xinha._someEditorHasBeenActivated = true;
+  Xinha._currentlyActiveEditor      = this;
+
+  var editor = this;
+  this.enableToolbar();
+};
+/** Disables the editor 
+ * @private
+ */
+Xinha.prototype.deactivateEditor = function()
+{
+  // If the editor isn't active then the user shouldn't use the toolbar
+  this.disableToolbar();
+
+  if ( Xinha.is_designMode && this._doc.designMode != 'off' )
+  {
+    try
+    {
+      this._doc.designMode = 'off';
+    } catch (ex) {}
+  }
+  else if ( !Xinha.is_designMode && this._doc.body.contentEditable !== false )
+  {
+    this._doc.body.contentEditable = false;
+  }
+
+  if ( Xinha._currentlyActiveEditor != this )
+  {
+    // We just deactivated an editor that wasn't marked as the currentlyActiveEditor
+
+    return; // I think this should really be an error, there shouldn't be a situation where
+            // an editor is deactivated without first being activated.  but it probably won't
+            // hurt anything.
+  }
+
+  Xinha._currentlyActiveEditor = false;
+};
+/** Creates the iframe (editable area)
+ * @private
+ */
+Xinha.prototype.initIframe = function()
+{
+  this.disableToolbar();
+  var doc = null;
+  var editor = this;
+  try
+  {
+    if ( editor._iframe.contentDocument )
+    {
+      this._doc = editor._iframe.contentDocument;        
+    }
+    else
+    {
+      this._doc = editor._iframe.contentWindow.document;
+    }
+    doc = this._doc;
+    // try later
+    if ( !doc )
+    {
+      if ( Xinha.is_gecko )
+      {
+        setTimeout(function() { editor.initIframe(); }, 50);
+        return false;
+      }
+      else
+      {
+        alert("ERROR: IFRAME can't be initialized.");
+      }
+    }
+  }
+  catch(ex)
+  { // try later
+    setTimeout(function() { editor.initIframe(); }, 50);
+  }
+  
+  Xinha.freeLater(this, '_doc');
+
+  doc.open("text/html","replace");
+  var html = '', doctype;
+  if ( editor.config.browserQuirksMode === false )
+  {
+    doctype = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+  }
+  else if ( editor.config.browserQuirksMode === true )
+  {
+    doctype = '';
+  }
+  else
+  {
+    doctype = Xinha.getDoctype(document);
+  }
+  
+  if ( !editor.config.fullPage )
+  {
+    html += doctype + "\n";
+    html += "<html>\n";
+    html += "<head>\n";
+    html += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" + editor.config.charSet + "\">\n";
+    if ( typeof editor.config.baseHref != 'undefined' && editor.config.baseHref !== null )
+    {
+      html += "<base href=\"" + editor.config.baseHref + "\"/>\n";
+    }
+    
+    html += Xinha.addCoreCSS();
+    
+    if ( typeof editor.config.pageStyleSheets !== 'undefined' )
+    {
+      for ( var i = 0; i < editor.config.pageStyleSheets.length; i++ )
+      {
+        if ( editor.config.pageStyleSheets[i].length > 0 )
+        {
+          html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + editor.config.pageStyleSheets[i] + "\">";
+          //html += "<style> @import url('" + editor.config.pageStyleSheets[i] + "'); </style>\n";
+        }
+      }
+    }
+    
+    if ( editor.config.pageStyle )
+    {
+      html += "<style type=\"text/css\">\n" + editor.config.pageStyle + "\n</style>";
+    }
+    
+    html += "</head>\n";
+    html += "<body" + (editor.config.bodyID ? (" id=\"" + editor.config.bodyID + "\"") : '') + (editor.config.bodyClass ? (" class=\"" + editor.config.bodyClass + "\"") : '') + ">\n";
+    html +=   editor.inwardHtml(editor._textArea.value);
+    html += "</body>\n";
+    html += "</html>";
+  }
+  else
+  {
+    html = editor.inwardHtml(editor._textArea.value);
+    if ( html.match(Xinha.RE_doctype) )
+    {
+      editor.setDoctype(RegExp.$1);
+      //html = html.replace(Xinha.RE_doctype, "");
+    }
+    
+    //Fix Firefox problem with link elements not in right place (just before head)
+    var match = html.match(/<link\s+[\s\S]*?["']\s*\/?>/gi);
+    html = html.replace(/<link\s+[\s\S]*?["']\s*\/?>\s*/gi, '');
+    if (match)
+    {
+      html = html.replace(/<\/head>/i, match.join('\n') + "\n</head>");
+    }
+  }
+  doc.write(html);
+  doc.close();
+  if ( this.config.fullScreen )
+  {
+    this._fullScreen();
+  }
+  this.setEditorEvents();
+
+
+  // If this IFRAME had been configured for autofocus, we'll focus it now,
+  // since everything needed to do so is now fully loaded.
+  if ((typeof editor.config.autofocus != "undefined") &&
+      ((editor.config.autofocus == editor._textArea.id) || editor.config.autofocus == true))
+  {
+    editor.activateEditor();
+    editor.focusEditor();
+  }
+};
+  
+/**
+ * Delay a function until the document is ready for operations.
+ * See ticket:547
+ * @public
+ * @param {Function} f  The function to call once the document is ready
+ */
+Xinha.prototype.whenDocReady = function(f)
+{
+  var e = this;
+  if ( this._doc && this._doc.body )
+  {
+    f();
+  }
+  else
+  {
+    setTimeout(function() { e.whenDocReady(f); }, 50);
+  }
+};
+
+
+/** Switches editor mode between wysiwyg and text (HTML)
+ * @param {String} mode optional "textmode" or "wysiwyg", if omitted, toggles between modes.
+ */
+Xinha.prototype.setMode = function(mode)
+{
+  var html;
+  if ( typeof mode == "undefined" )
+  {
+    mode = this._editMode == "textmode" ? "wysiwyg" : "textmode";
+  }
+  switch ( mode )
+  {
+    case "textmode":
+      this.firePluginEvent('onBeforeMode', 'textmode');
+      this._toolbarObjects.htmlmode.swapImage(this.config.iconList.wysiwygmode); 
+      this.setCC("iframe");
+      html = this.outwardHtml(this.getHTML());
+      this.setHTML(html);
+
+      // Hide the iframe
+      this.deactivateEditor();
+      this._iframe.style.display   = 'none';
+      this._textArea.style.display = '';
+
+      if ( this.config.statusBar )
+      {
+        this._statusBarTree.style.display = "none";
+        this._statusBarTextMode.style.display = "";
+      }
+      this.findCC("textarea");
+      this.notifyOf('modechange', {'mode':'text'});
+      this.firePluginEvent('onMode', 'textmode');
+    break;
+
+    case "wysiwyg":
+      this.firePluginEvent('onBeforeMode', 'wysiwyg');
+      this._toolbarObjects.htmlmode.swapImage([this.imgURL('images/ed_buttons_main.png'),7,0]); 
+      this.setCC("textarea");
+      html = this.inwardHtml(this.getHTML());
+      this.deactivateEditor();
+      this.setHTML(html);
+      this._iframe.style.display   = '';
+      this._textArea.style.display = "none";
+      this.activateEditor();
+      if ( this.config.statusBar )
+      {
+        this._statusBarTree.style.display = "";
+        this._statusBarTextMode.style.display = "none";
+      }
+      this.findCC("iframe");
+      this.notifyOf('modechange', {'mode':'wysiwyg'});
+      this.firePluginEvent('onMode', 'wysiwyg');
+
+    break;
+
+    default:
+      alert("Mode <" + mode + "> not defined!");
+      return false;
+  }
+  this._editMode = mode;
+};
+/** Sets the HTML in fullpage mode. Actually the whole iframe document is rewritten.
+ * @private
+ * @param {String} html
+ */
+Xinha.prototype.setFullHTML = function(html)
+{
+  var save_multiline = RegExp.multiline;
+  RegExp.multiline = true;
+  if ( html.match(Xinha.RE_doctype) )
+  {
+    this.setDoctype(RegExp.$1);
+   // html = html.replace(Xinha.RE_doctype, "");
+  }
+  RegExp.multiline = save_multiline;
+  // disabled to save body attributes see #459
+  if ( 0 )
+  {
+    if ( html.match(Xinha.RE_head) )
+    {
+      this._doc.getElementsByTagName("head")[0].innerHTML = RegExp.$1;
+    }
+    if ( html.match(Xinha.RE_body) )
+    {
+      this._doc.getElementsByTagName("body")[0].innerHTML = RegExp.$1;
+    }
+  }
+  else
+  {
+    // FIXME - can we do this without rewriting the entire document
+    //  does the above not work for IE?
+    var reac = this.editorIsActivated();
+    if ( reac )
+    {
+      this.deactivateEditor();
+    }
+    var html_re = /<html>((.|\n)*?)<\/html>/i;
+    html = html.replace(html_re, "$1");
+    this._doc.open("text/html","replace");
+    this._doc.write(html);
+    this._doc.close();
+    if ( reac )
+    {
+      this.activateEditor();
+    }        
+    this.setEditorEvents();
+    return true;
+  }
+};
+/** Initialize some event handlers
+ * @private
+ */
+Xinha.prototype.setEditorEvents = function()
+{
+  var editor=this;
+  var doc = this._doc;
+
+  editor.whenDocReady(
+    function()
+    {
+      // if we have multiple editors some bug in Mozilla makes some lose editing ability
+      Xinha._addEvents(
+        doc,
+        ["mousedown"],
+        function()
+        {
+          editor.activateEditor();
+          return true;
+        }
+      );
+      if (Xinha.is_ie)
+      { // #1019 Cusor not jumping to editable part of window when clicked in IE, see also #1039
+        Xinha._addEvent(
+        editor._doc.getElementsByTagName("html")[0],
+        "click",
+          function()
+          {
+            if (editor._iframe.contentWindow.event.srcElement.tagName.toLowerCase() == 'html') // if  clicked below the text (=body), the text cursor does not appear, see #1019
+            {
+               var r = editor._doc.body.createTextRange();
+               r.collapse();
+               r.select();
+               //setTimeout (function () { r.collapse();  r.select();},100); // won't do without timeout, dunno why
+             }
+             return true;
+          }
+        );
+      }
+
+      // intercept some events; for updating the toolbar & keyboard handlers
+      Xinha._addEvents(
+        doc,
+        ["keydown", "keypress", "mousedown", "mouseup", "drag"],
+        function (event)
+        {
+          return editor._editorEvent(Xinha.is_ie ? editor._iframe.contentWindow.event : event);
+        }
+      );
+
+      // FIXME - this needs to be cleaned up and use editor.firePluginEvent
+      //  I don't like both onGenerate and onGenerateOnce, we should only
+      //  have onGenerate and it should only be called when the editor is 
+      //  generated (once and only once)
+      // check if any plugins have registered refresh handlers
+      for ( var i in editor.plugins )
+      {
+        var plugin = editor.plugins[i].instance;
+        Xinha.refreshPlugin(plugin);
+      }
+
+      // specific editor initialization
+      if ( typeof editor._onGenerate == "function" )
+      {
+        editor._onGenerate();
+      }
+      //ticket #1407 IE8 fires two resize events on one actual resize, seemingly causing an infinite loop (but not  when Xinha is in an frame/iframe) 
+      Xinha.addDom0Event(window, 'resize', function(e) 
+      {
+        if (Xinha.ie_version > 7 && !window.parent)
+        {
+          if (editor.execResize)
+          {
+            editor.sizeEditor(); 
+            editor.execResize = false;
+          }
+          else
+          {
+            editor.execResize = true;
+          }
+        }
+        else
+        {
+          editor.sizeEditor(); 
+        }
+      });
+      editor.removeLoadingMessage();
+    }
+  );
+};
+  
+/***************************************************
+ *  Category: PLUGINS
+ ***************************************************/
+/** Plugins may either reside in the golbal scope (not recommended) or in Xinha.plugins. 
+ *  This function looks in both locations and is used to check the loading status and finally retrieve the plugin's constructor
+ * @private
+ * @type {Function|undefined}
+ * @param {String} pluginName
+ */
+Xinha.getPluginConstructor = function(pluginName)
+{
+  return Xinha.plugins[pluginName] || window[pluginName];
+};
+
+/** Create the specified plugin and register it with this Xinha
+ *  return the plugin created to allow refresh when necessary.<br />
+ *  <strong>This is only useful if Xinha is generated without using Xinha.makeEditors()</strong>
+ */
+Xinha.prototype.registerPlugin = function()
+{
+  if (!Xinha.isSupportedBrowser)
+  {
+    return;
+  }
+  var plugin = arguments[0];
+
+  // We can only register plugins that have been succesfully loaded
+  if ( plugin === null || typeof plugin == 'undefined' || (typeof plugin == 'string' && Xinha.getPluginConstructor(plugin) == 'undefined') )
+  {
+    return false;
+  }
+  var args = [];
+  for ( var i = 1; i < arguments.length; ++i )
+  {
+    args.push(arguments[i]);
+  }
+  return this.registerPlugin2(plugin, args);
+};
+/** This is the variant of the function above where the plugin arguments are
+ * already packed in an array.  Externally, it should be only used in the
+ * full-screen editor code, in order to initialize plugins with the same
+ * parameters as in the opener window.
+ * @private
+ */
+Xinha.prototype.registerPlugin2 = function(plugin, args)
+{
+  if ( typeof plugin == "string" && typeof Xinha.getPluginConstructor(plugin) == 'function' )
+  {
+    var pluginName = plugin;
+    plugin = Xinha.getPluginConstructor(plugin);
+  }
+  if ( typeof plugin == "undefined" )
+  {
+    /* FIXME: This should never happen. But why does it do? */
+    return false;
+  }
+  if (!plugin._pluginInfo) 
+  {
+    plugin._pluginInfo = 
+    {
+      name: pluginName
+    };
+  }
+  var obj = new plugin(this, args);
+  if ( obj )
+  {
+    var clone = {};
+    var info = plugin._pluginInfo;
+    for ( var i in info )
+    {
+      clone[i] = info[i];
+    }
+    clone.instance = obj;
+    clone.args = args;
+    this.plugins[plugin._pluginInfo.name] = clone;
+    return obj;
+  }
+  else
+  {
+    Xinha.debugMsg("Can't register plugin " + plugin.toString() + ".", 'warn');
+  }
+};
+
+
+/** Dynamically returns the directory from which the plugins are loaded<br />
+ *  This could be overridden to change the dir<br />
+ *  @TODO: Wouldn't this be better as a config option?
+ * @private
+ * @param {String} pluginName
+ * @param {Boolean} return the directory for an unsupported plugin
+ * @returns {String} path to plugin
+ */
+Xinha.getPluginDir = function(plugin, forceUnsupported)
+{
+  if (Xinha.externalPlugins[plugin])
+  {
+    return Xinha.externalPlugins[plugin][0];
+  }
+  if (forceUnsupported ||
+      // If the plugin is fully loaded, it's supported status is already set.
+      (Xinha.getPluginConstructor(plugin) && (typeof Xinha.getPluginConstructor(plugin).supported != 'undefined') && !Xinha.getPluginConstructor(plugin).supported))
+  {
+    return _editor_url + "unsupported_plugins/" + plugin ;
+  }
+  return _editor_url + "plugins/" + plugin ;
+};
+/** Static function that loads the given plugin
+ * @param {String} pluginName
+ * @param {Function} callback function to be called when file is loaded
+ * @param {String} plugin_file URL of the file to load
+ * @returns {Boolean} true if plugin loaded, false otherwise
+ */
+Xinha.loadPlugin = function(pluginName, callback, url)
+{
+  if (!Xinha.isSupportedBrowser) 
+  {
+    return;
+  }
+  Xinha.setLoadingMessage (Xinha._lc("Loading plugin $plugin="+pluginName+"$"));
+
+  // Might already be loaded
+  if ( typeof Xinha.getPluginConstructor(pluginName) != 'undefined' )
+  {
+    if ( callback )
+    {
+      callback(pluginName);
+    }
+    return true;
+  }
+  Xinha._pluginLoadStatus[pluginName] = 'loading';
+  
+  // This function will try to load a plugin in multiple passes.  It tries to
+  // load the plugin from either the plugin or unsupported directory, using
+  // both naming schemes in this order:
+  // 1. /plugins -> CurrentNamingScheme
+  // 2. /plugins -> old-naming-scheme
+  // 3. /unsupported -> CurrentNamingScheme
+  // 4. /unsupported -> old-naming-scheme
+
+  function multiStageLoader(stage,pluginName)
+  {
+    var nextstage, dir, file, success_message;
+    switch (stage)
+    {
+      case 'start':
+        nextstage = 'old_naming';
+        dir = Xinha.getPluginDir(pluginName);
+        file = pluginName + ".js";
+        break;
+      case 'old_naming':
+        nextstage = 'unsupported';
+        dir = Xinha.getPluginDir(pluginName);
+        file = pluginName.replace(/([a-z])([A-Z])([a-z])/g, function (str, l1, l2, l3) { return l1 + "-" + l2.toLowerCase() + l3; }).toLowerCase() + ".js";
+        success_message = 'You are using an obsolete naming scheme for the Xinha plugin '+pluginName+'. Please rename '+file+' to '+pluginName+'.js';
+        break;
+      case 'unsupported':
+        nextstage = 'unsupported_old_name';
+        dir = Xinha.getPluginDir(pluginName, true);
+        file = pluginName + ".js";
+        success_message = 'You are using the unsupported Xinha plugin '+pluginName+'. If you wish continued support, please see http://trac.xinha.org/ticket/1297';
+        break;
+      case 'unsupported_old_name':
+        nextstage = '';
+        dir = Xinha.getPluginDir(pluginName, true);
+        file = pluginName.replace(/([a-z])([A-Z])([a-z])/g, function (str, l1, l2, l3) { return l1 + "-" + l2.toLowerCase() + l3; }).toLowerCase() + ".js";
+        success_message = 'You are using the unsupported Xinha plugin '+pluginName+'. If you wish continued support, please see http://trac.xinha.org/ticket/1297';
+        break;
+      default:
+        Xinha._pluginLoadStatus[pluginName] = 'failed';
+        Xinha.debugMsg('Xinha was not able to find the plugin '+pluginName+'. Please make sure the plugin exists.', 'warn');
+        return;
+    }
+    var url = dir + "/" + file;
+
+    // This is a callback wrapper that allows us to set the plugin's status
+    // once it loads.
+    function statusCallback(pluginName)
+    {
+      Xinha.getPluginConstructor(pluginName).supported = stage.indexOf('unsupported') !== 0;
+      callback(pluginName);
+    }
+
+    // To speed things up, we start loading the script file before pinging it.
+    // If the load fails, we'll just clean up afterwards.
+    Xinha._loadback(url, statusCallback, this, pluginName); 
+
+    Xinha.ping(url,
+               // On success, we'll display a success message if there is one.
+               function()
+               {
+                 if (success_message) 
+                 {
+                   Xinha.debugMsg(success_message);
+                 }
+               },
+               // On failure, we'll clean up the failed load and try the next stage
+               function()
+               {
+                 Xinha.removeFromParent(document.getElementById(url));
+                 multiStageLoader(nextstage, pluginName);
+               });
+  }
+  
+  if(!url)
+  {
+    if (Xinha.externalPlugins[pluginName])
+    {
+      Xinha._loadback(Xinha.externalPlugins[pluginName][0]+Xinha.externalPlugins[pluginName][1], callback, this, pluginName);
+    }
+    else
+    {
+      var editor = this;
+      multiStageLoader('start',pluginName);
+    }
+  }
+  else
+  {
+    Xinha._loadback(url, callback, this, pluginName);
+  }
+  
+  return false;
+};
+/** Stores a status for each loading plugin that may be one of "loading","ready", or "failed"
+ * @private
+ * @type {Object} 
+ */
+Xinha._pluginLoadStatus = {};
+/** Stores the paths to plugins that are not in the default location
+ * @private
+ * @type {Object}
+ */
+Xinha.externalPlugins = {};
+/** The namespace for plugins
+ * @private
+ * @type {Object}
+ */
+Xinha.plugins = {};
+
+/** Static function that loads the plugins (see xinha_plugins in NewbieGuide)
+ * @param {Array} plugins
+ * @param {Function} callbackIfNotReady function that is called repeatedly until all files are
+ * @param {String} optional url URL of the plugin file; obviously plugins should contain only one item if url is given
+ * @returns {Boolean} true if all plugins are loaded, false otherwise
+ */
+Xinha.loadPlugins = function(plugins, callbackIfNotReady,url)
+{
+  if (!Xinha.isSupportedBrowser) 
+  {
+    return;
+  }
+  //Xinha.setLoadingMessage (Xinha._lc("Loading plugins"));
+  var m,i;
+  for (i=0;i<plugins.length;i++)
+  {
+    if (typeof plugins[i] == 'object')
+    {
+      m = plugins[i].url.match(/(.*)(\/[^\/]*)$/);
+      Xinha.externalPlugins[plugins[i].plugin] = [m[1],m[2]];
+      plugins[i] = plugins[i].plugin;
+    }
+  }
+  
+  // Rip the ones that are loaded and look for ones that have failed
+  var retVal = true;
+  var nuPlugins = Xinha.cloneObject(plugins);
+  for (i=0;i<nuPlugins.length;i++ )
+  {
+    var p = nuPlugins[i];
+    
+    if (p == 'FullScreen' && !Xinha.externalPlugins.FullScreen)
+    {
+      continue; //prevent trying to load FullScreen plugin from the plugins folder
+    } 
+   
+    if ( typeof Xinha._pluginLoadStatus[p] == 'undefined')
+    {
+      // Load it
+      Xinha.loadPlugin(p,
+        function(plugin)
+        {
+          Xinha.setLoadingMessage (Xinha._lc("Finishing"));
+
+          if ( typeof Xinha.getPluginConstructor(plugin) != 'undefined' )
+          {
+            Xinha._pluginLoadStatus[plugin] = 'ready';
+          }
+          else
+          {
+            Xinha._pluginLoadStatus[plugin] = 'failed';
+          }
+        }, url);
+      retVal = false;
+    }
+    else if ( Xinha._pluginLoadStatus[p] == 'loading')
+    {
+      retVal = false;
+    }
+  }
+  
+  // All done, just return
+  if ( retVal )
+  {
+    return true;
+  }
+
+  // Waiting on plugins to load, return false now and come back a bit later
+  // if we have to callback
+  if ( callbackIfNotReady )
+  {
+    setTimeout(function() 
+    { 
+      if ( Xinha.loadPlugins(plugins, callbackIfNotReady) ) 
+      { 
+        callbackIfNotReady(); 
+      } 
+    }, 50);
+  }
+  return retVal;
+};
+
+// 
+/** Refresh plugin by calling onGenerate or onGenerateOnce method.
+ * @private
+ * @param {PluginInstance} plugin
+ */
+Xinha.refreshPlugin = function(plugin)
+{
+  if ( plugin && typeof plugin.onGenerate == "function" )
+  {
+    plugin.onGenerate();
+  }
+  if ( plugin && typeof plugin.onGenerateOnce == "function" )
+  {
+    //#1392: in fullpage mode this function is called recusively by setFullHTML() when it is used to set the editor content
+	// this is a temporary fix, that should better be handled by a better implemetation of setFullHTML
+	plugin._ongenerateOnce = plugin.onGenerateOnce;
+    delete(plugin.onGenerateOnce);
+	plugin._ongenerateOnce();
+	delete(plugin._ongenerateOnce);
+  }
+};
+
+/** Call a method of all plugins which define the method using the supplied arguments.<br /><br />
+ *
+ *  Example: <code>editor.firePluginEvent('onExecCommand', 'paste')</code><br />
+ *           The plugin would then define a method<br />
+ *           <code>PluginName.prototype.onExecCommand = function (cmdID, UI, param) {do something...}</code><br /><br />
+ *           The following methodNames are currently available:<br />
+ *  <table border="1">
+ *    <tr>
+ *       <th>methodName</th><th>Parameters</th>
+ *     </tr>
+ *     <tr>
+ *       <td>onExecCommand</td><td> cmdID, UI, param</td>
+ *     </tr>
+ *     <tr>
+ *       <td>onKeyPress</td><td>ev</td>
+ *     </tr> 
+ *     <tr>
+ *       <td>onMouseDown</td><td>ev</td>
+ *     </tr>
+ * </table><br /><br />
+ *  
+ *  The browser specific plugin (if any) is called last.  The result of each call is 
+ *  treated as boolean.  A true return means that the event will stop, no further plugins
+ *  will get the event, a false return means the event will continue to fire.
+ *
+ *  @param {String} methodName
+ *  @param {mixed} arguments to pass to the method, optional [2..n] 
+ *  @returns {Boolean}
+ */
+
+Xinha.prototype.firePluginEvent = function(methodName)
+{
+  // arguments is not a real array so we can't just .shift() it unfortunatly.
+  var argsArray = [ ];
+  for(var i = 1; i < arguments.length; i++)
+  {
+    argsArray[i-1] = arguments[i];
+  }
+  
+  for ( i in this.plugins )
+  {
+    var plugin = this.plugins[i].instance;
+
+    // Skip the browser specific plugin
+    if (plugin == this._browserSpecificPlugin) 
+    {
+      continue;
+    }
+    if ( plugin && typeof plugin[methodName] == "function" )
+    {
+      var thisArg = (i == 'Events') ? this : plugin;
+      if ( plugin[methodName].apply(thisArg, argsArray) )
+      {
+        return true;
+      }
+    }
+  }
+  
+  // Now the browser speific
+  plugin = this._browserSpecificPlugin;
+  if ( plugin && typeof plugin[methodName] == "function" )
+  {
+    if ( plugin[methodName].apply(plugin, argsArray) )
+    {
+      return true;
+    }
+  }
+  return false;
+};
+/** Adds a stylesheet to the document
+ * @param {String} style name of the stylesheet file
+ * @param {String} plugin optional name of a plugin; if passed this function looks for the stylesheet file in the plugin directory 
+ * @param {String} id optional a unique id for identifiing the created link element, e.g. for avoiding double loading 
+ *                 or later removing it again
+ */
+Xinha.loadStyle = function(style, plugin, id,prepend)
+{
+  var url = _editor_url || '';
+  if ( plugin )
+  {
+    url = Xinha.getPluginDir( plugin ) + "/";
+  }
+  url += style;
+  // @todo: would not it be better to check the first character instead of a regex ?
+  // if ( typeof style == 'string' && style.charAt(0) == '/' )
+  // {
+  //   url = style;
+  // }
+  if ( /^\//.test(style) )
+  {
+    url = style;
+  }
+  var head = document.getElementsByTagName("head")[0];
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = url;
+  link.type = "text/css";
+  if (id)
+  {
+    link.id = id;
+  }
+  if (prepend && head.getElementsByTagName('link')[0])
+  {
+    head.insertBefore(link,head.getElementsByTagName('link')[0]);
+  }
+  else
+  {
+    head.appendChild(link);
+  }
+  
+};
+
+
+/***************************************************
+ *  Category: EDITOR UTILITIES
+ ***************************************************/
+/** Utility function: Outputs the structure of the edited document */
+Xinha.prototype.debugTree = function()
+{
+  var ta = document.createElement("textarea");
+  ta.style.width = "100%";
+  ta.style.height = "20em";
+  ta.value = "";
+  function debug(indent, str)
+  {
+    for ( ; --indent >= 0; )
+    {
+      ta.value += " ";
+    }
+    ta.value += str + "\n";
+  }
+  function _dt(root, level)
+  {
+    var tag = root.tagName.toLowerCase(), i;
+    var ns = Xinha.is_ie ? root.scopeName : root.prefix;
+    debug(level, "- " + tag + " [" + ns + "]");
+    for ( i = root.firstChild; i; i = i.nextSibling )
+    {
+      if ( i.nodeType == 1 )
+      {
+        _dt(i, level + 2);
+      }
+    }
+  }
+  _dt(this._doc.body, 0);
+  document.body.appendChild(ta);
+};
+/** Extracts the textual content of a given node
+ * @param {DomNode} el
+ */
+
+Xinha.getInnerText = function(el)
+{
+  var txt = '', i;
+  for ( i = el.firstChild; i; i = i.nextSibling )
+  {
+    if ( i.nodeType == 3 )
+    {
+      txt += i.data;
+    }
+    else if ( i.nodeType == 1 )
+    {
+      txt += Xinha.getInnerText(i);
+    }
+  }
+  return txt;
+};
+/** Cleans dirty HTML from MS word; always cleans the whole editor content
+ *  @TODO: move this in a separate file
+ *  @TODO: turn this into a static function that cleans a given string
+ */
+Xinha.prototype._wordClean = function()
+{
+  var editor = this;
+  var stats =
+  {
+    empty_tags : 0,
+    cond_comm  : 0,
+    mso_elmts  : 0,
+    mso_class  : 0,
+    mso_style  : 0,
+    mso_xmlel  : 0,
+    orig_len   : this._doc.body.innerHTML.length,
+    T          : new Date().getTime()
+  };
+  var stats_txt =
+  {
+    empty_tags : "Empty tags removed: ",
+    cond_comm  : "Conditional comments removed",
+    mso_elmts  : "MSO invalid elements removed",
+    mso_class  : "MSO class names removed: ",
+    mso_style  : "MSO inline style removed: ",
+    mso_xmlel  : "MSO XML elements stripped: "
+  };
+
+  function showStats()
+  {
+    var txt = "Xinha word cleaner stats: \n\n";
+    for ( var i in stats )
+    {
+      if ( stats_txt[i] )
+      {
+        txt += stats_txt[i] + stats[i] + "\n";
+      }
+    }
+    txt += "\nInitial document length: " + stats.orig_len + "\n";
+    txt += "Final document length: " + editor._doc.body.innerHTML.length + "\n";
+    txt += "Clean-up took " + ((new Date().getTime() - stats.T) / 1000) + " seconds";
+    alert(txt);
+  }
+
+  function clearClass(node)
+  {
+    var newc = node.className.replace(/(^|\s)mso.*?(\s|$)/ig, ' ');
+    if ( newc != node.className )
+    {
+      node.className = newc;
+      if ( !/\S/.test(node.className))
+      {
+        node.removeAttribute("className");
+        ++stats.mso_class;
+      }
+    }
+  }
+
+  function clearStyle(node)
+  {
+    var declarations = node.style.cssText.split(/\s*;\s*/);
+    for ( var i = declarations.length; --i >= 0; )
+    {
+      if ( /^mso|^tab-stops/i.test(declarations[i]) || /^margin\s*:\s*0..\s+0..\s+0../i.test(declarations[i]) )
+      {
+        ++stats.mso_style;
+        declarations.splice(i, 1);
+      }
+    }
+    node.style.cssText = declarations.join("; ");
+  }
+
+  function removeElements(el)
+  {
+    if (('link' == el.tagName.toLowerCase() &&
+        (el.attributes && /File-List|Edit-Time-Data|themeData|colorSchemeMapping/.test(el.attributes.rel.nodeValue))) ||
+        /^(style|meta)$/i.test(el.tagName))
+    {
+      Xinha.removeFromParent(el);
+      ++stats.mso_elmts;
+      return true;
+    }
+    return false;
+  }
+
+  function checkEmpty(el)
+  {
+    // @todo : check if this is quicker
+    //  if (!['A','SPAN','B','STRONG','I','EM','FONT'].contains(el.tagName) && !el.firstChild)
+    if ( /^(a|span|b|strong|i|em|font|div|p)$/i.test(el.tagName) && !el.firstChild)
+    {
+      Xinha.removeFromParent(el);
+      ++stats.empty_tags;
+      return true;
+    }
+    return false;
+  }
+
+  function parseTree(root)
+  {
+    clearClass(root);
+    clearStyle(root);
+    var next;
+    for (var i = root.firstChild; i; i = next )
+    {
+      next = i.nextSibling;
+      if ( i.nodeType == 1 && parseTree(i) )
+      {
+        if ((Xinha.is_ie && root.scopeName != 'HTML') || (!Xinha.is_ie && /:/.test(i.tagName)))
+        {
+          // Nowadays, Word spits out tags like '<o:something />'.  Since the
+          // document being cleaned might be HTML4 and not XHTML, this tag is
+          // interpreted as '<o:something /="/">'.  For HTML tags without
+          // closing elements (e.g. IMG) these two forms are equivalent.  Since
+          // HTML does not recognize these tags, however, they end up as
+          // parents of elements that should be their siblings.  We reparent
+          // the children and remove them from the document.
+          for (var index=i.childNodes && i.childNodes.length-1; i.childNodes && i.childNodes.length && i.childNodes[index]; --index)
+          {
+            if (i.nextSibling)
+            {
+              i.parentNode.insertBefore(i.childNodes[index],i.nextSibling);
+            }
+            else
+            {
+              i.parentNode.appendChild(i.childNodes[index]);
+            }
+          }
+          Xinha.removeFromParent(i);
+          continue;
+        }
+        if (checkEmpty(i))
+        {
+          continue;
+        }
+        if (removeElements(i))
+        {
+          continue;
+        }
+      }
+      else if (i.nodeType == 8)
+      {
+        // 8 is a comment node, and can contain conditional comments, which
+        // will be interpreted by IE as if they were not comments.
+        if (/(\s*\[\s*if\s*(([gl]te?|!)\s*)?(IE|mso)\s*(\d+(\.\d+)?\s*)?\]>)/.test(i.nodeValue))
+        {
+          // We strip all conditional comments directly from the tree.
+          Xinha.removeFromParent(i);
+          ++stats.cond_comm;
+        }
+      }
+    }
+    return true;
+  }
+  parseTree(this._doc.body);
+  // showStats();
+  // this.debugTree();
+  // this.setHTML(this.getHTML());
+  // this.setHTML(this.getInnerHTML());
+  // this.forceRedraw();
+  this.updateToolbar();
+};
+
+/** Removes &lt;font&gt; tags; always cleans the whole editor content
+ *  @TODO: move this in a separate file
+ *  @TODO: turn this into a static function that cleans a given string
+ */
+Xinha.prototype._clearFonts = function()
+{
+  var D = this.getInnerHTML();
+
+  if ( confirm(Xinha._lc("Would you like to clear font typefaces?")) )
+  {
+    D = D.replace(/face="[^"]*"/gi, '');
+    D = D.replace(/font-family:[^;}"']+;?/gi, '');
+  }
+
+  if ( confirm(Xinha._lc("Would you like to clear font sizes?")) )
+  {
+    D = D.replace(/size="[^"]*"/gi, '');
+    D = D.replace(/font-size:[^;}"']+;?/gi, '');
+  }
+
+  if ( confirm(Xinha._lc("Would you like to clear font colours?")) )
+  {
+    D = D.replace(/color="[^"]*"/gi, '');
+    D = D.replace(/([^\-])color:[^;}"']+;?/gi, '$1');
+  }
+
+  D = D.replace(/(style|class)="\s*"/gi, '');
+  D = D.replace(/<(font|span)\s*>/gi, '');
+  this.setHTML(D);
+  this.updateToolbar();
+};
+
+Xinha.prototype._splitBlock = function()
+{
+  this._doc.execCommand('formatblock', false, 'div');
+};
+
+/** Sometimes the display has to be refreshed to make DOM changes visible (?) (Gecko bug?)  */
+Xinha.prototype.forceRedraw = function()
+{
+  this._doc.body.style.visibility = "hidden";
+  this._doc.body.style.visibility = "";
+  // this._doc.body.innerHTML = this.getInnerHTML();
+};
+
+/** Focuses the iframe window. 
+ * @returns {document} a reference to the editor document
+ */
+Xinha.prototype.focusEditor = function()
+{
+  switch (this._editMode)
+  {
+    // notice the try { ... } catch block to avoid some rare exceptions in FireFox
+    // (perhaps also in other Gecko browsers). Manual focus by user is required in
+    // case of an error. Somebody has an idea?
+    case "wysiwyg" :
+      try
+      {
+        // We don't want to focus the field unless at least one field has been activated.
+        if ( Xinha._someEditorHasBeenActivated )
+        {
+          this.activateEditor(); // Ensure *this* editor is activated
+          this._iframe.contentWindow.focus(); // and focus it
+        }
+      } catch (ex) {}
+    break;
+    case "textmode":
+      try
+      {
+        this._textArea.focus();
+      } catch (e) {}
+    break;
+    default:
+      alert("ERROR: mode " + this._editMode + " is not defined");
+  }
+  return this._doc;
+};
+
+/** Takes a snapshot of the current text (for undo)
+ * @private
+ */
+Xinha.prototype._undoTakeSnapshot = function()
+{
+  ++this._undoPos;
+  if ( this._undoPos >= this.config.undoSteps )
+  {
+    // remove the first element
+    this._undoQueue.shift();
+    --this._undoPos;
+  }
+  // use the fasted method (getInnerHTML);
+  var take = true;
+  var txt = this.getInnerHTML();
+  if ( this._undoPos > 0 )
+  {
+    take = (this._undoQueue[this._undoPos - 1] != txt);
+  }
+  if ( take )
+  {
+    this._undoQueue[this._undoPos] = txt;
+  }
+  else
+  {
+    this._undoPos--;
+  }
+};
+/** Custom implementation of undo functionality
+ * @private
+ */
+Xinha.prototype.undo = function()
+{
+  if ( this._undoPos > 0 )
+  {
+    var txt = this._undoQueue[--this._undoPos];
+    if ( txt )
+    {
+      this.setHTML(txt);
+    }
+    else
+    {
+      ++this._undoPos;
+    }
+  }
+};
+/** Custom implementation of redo functionality
+ * @private
+ */
+Xinha.prototype.redo = function()
+{
+  if ( this._undoPos < this._undoQueue.length - 1 )
+  {
+    var txt = this._undoQueue[++this._undoPos];
+    if ( txt )
+    {
+      this.setHTML(txt);
+    }
+    else
+    {
+      --this._undoPos;
+    }
+  }
+};
+/** Disables (greys out) the buttons of the toolbar
+ * @param {Array} except this array contains ids of toolbar objects that will not be disabled
+ */
+Xinha.prototype.disableToolbar = function(except)
+{
+  if ( this._timerToolbar )
+  {
+    clearTimeout(this._timerToolbar);
+  }
+  if ( typeof except == 'undefined' )
+  {
+    except = [ ];
+  }
+  else if ( typeof except != 'object' )
+  {
+    except = [except];
+  }
+
+  for ( var i in this._toolbarObjects )
+  {
+    var btn = this._toolbarObjects[i];
+    if ( except.contains(i) )
+    {
+      continue;
+    }
+    // prevent iterating over wrong type
+    if ( typeof btn.state != 'function' )
+    {
+      continue;
+    }
+    btn.state("enabled", false);
+  }
+};
+/** Enables the toolbar again when disabled by disableToolbar() */
+Xinha.prototype.enableToolbar = function()
+{
+  this.updateToolbar();
+};
+
+/** Updates enabled/disable/active state of the toolbar elements, the statusbar and other things
+ *  This function is called on every key stroke as well as by a timer on a regular basis.<br />
+ *  Plugins have the opportunity to implement a prototype.onUpdateToolbar() method, which will also
+ *  be called by this function.
+ * @param {Boolean} noStatus private use Exempt updating of statusbar
+ */
+// FIXME : this function needs to be splitted in more functions.
+// It is actually to heavy to be understable and very scary to manipulate
+Xinha.prototype.updateToolbar = function(noStatus)
+{
+  if (this.suspendUpdateToolbar)
+  {
+    return;
+  }
+  var doc = this._doc;
+  var text = (this._editMode == "textmode");
+  var ancestors = null;
+  if ( !text )
+  {
+    ancestors = this.getAllAncestors();
+    if ( this.config.statusBar && !noStatus )
+    {
+      while ( this._statusBarItems.length )
+      { 
+        var item = this._statusBarItems.pop();
+        item.el = null;
+        item.editor = null;
+        item.onclick = null;
+        item.oncontextmenu = null;
+        item._xinha_dom0Events.click = null;
+        item._xinha_dom0Events.contextmenu = null;
+        item = null;
+      }
+
+      this._statusBarTree.innerHTML = Xinha._lc("Path") + ": "; // clear
+      for ( var i = ancestors.length; --i >= 0; )
+      {
+        var el = ancestors[i];
+        if ( !el )
+        {
+          // hell knows why we get here; this
+          // could be a classic example of why
+          // it's good to check for conditions
+          // that are impossible to happen ;-)
+          continue;
+        }
+        var a = document.createElement("a");
+        a.href = "javascript:void(0);";
+        a.el = el;
+        a.editor = this;
+        this._statusBarItems.push(a);
+        Xinha.addDom0Event(
+          a,
+          'click',
+          function() {
+            this.blur();
+            this.editor.selectNodeContents(this.el);
+            this.editor.updateToolbar(true);
+            return false;
+          }
+        );
+        Xinha.addDom0Event(
+          a,
+          'contextmenu',
+          function()
+          {
+            // TODO: add context menu here
+            this.blur();
+            var info = "Inline style:\n\n";
+            info += this.el.style.cssText.split(/;\s*/).join(";\n");
+            alert(info);
+            return false;
+          }
+        );
+        var txt = el.tagName.toLowerCase();
+        switch (txt)
+        {
+          case 'b':
+            txt = 'strong';
+          break;
+          case 'i':
+            txt = 'em';
+          break;
+          case 'strike':
+            txt = 'del';
+          break;
+        }
+        if (typeof el.style != 'undefined')
+        {
+          a.title = el.style.cssText;
+        }
+        if ( el.id )
+        {
+          txt += "#" + el.id;
+        }
+        if ( el.className )
+        {
+          txt += "." + el.className;
+        }
+        a.appendChild(document.createTextNode(txt));
+        this._statusBarTree.appendChild(a);
+        if ( i !== 0 )
+        {
+          this._statusBarTree.appendChild(document.createTextNode(String.fromCharCode(0xbb)));
+        }
+        Xinha.freeLater(a);
+      }
+    }
+  }
+
+  for ( var cmd in this._toolbarObjects )
+  {
+    var btn = this._toolbarObjects[cmd];
+    var inContext = true;
+    // prevent iterating over wrong type
+    if ( typeof btn.state != 'function' )
+    {
+      continue;
+    }
+    if ( btn.context && !text )
+    {
+      inContext = false;
+      var context = btn.context;
+      var attrs = [];
+      if ( /(.*)\[(.*?)\]/.test(context) )
+      {
+        context = RegExp.$1;
+        attrs = RegExp.$2.split(",");
+      }
+      context = context.toLowerCase();
+      var match = (context == "*");
+      for ( var k = 0; k < ancestors.length; ++k )
+      {
+        if ( !ancestors[k] )
+        {
+          // the impossible really happens.
+          continue;
+        }
+        if ( match || ( ancestors[k].tagName.toLowerCase() == context ) )
+        {
+          inContext = true;
+          var contextSplit = null;
+          var att = null;
+          var comp = null;
+          var attVal = null;
+          for ( var ka = 0; ka < attrs.length; ++ka )
+          {
+            contextSplit = attrs[ka].match(/(.*)(==|!=|===|!==|>|>=|<|<=)(.*)/);
+            att = contextSplit[1];
+            comp = contextSplit[2];
+            attVal = contextSplit[3];
+
+            if (!eval(ancestors[k][att] + comp + attVal))
+            {
+              inContext = false;
+              break;
+            }
+          }
+          if ( inContext )
+          {
+            break;
+          }
+        }
+      }
+    }
+    btn.state("enabled", (!text || btn.text) && inContext);
+    if ( typeof cmd == "function" )
+    {
+      continue;
+    }
+    // look-it-up in the custom dropdown boxes
+    var dropdown = this.config.customSelects[cmd];
+    if ( ( !text || btn.text ) && ( typeof dropdown != "undefined" ) )
+    {
+      dropdown.refresh(this);
+      continue;
+    }
+    switch (cmd)
+    {
+      case "fontname":
+      case "fontsize":
+        if ( !text )
+        {
+          try
+          {
+            var value = ("" + doc.queryCommandValue(cmd)).toLowerCase();
+            if ( !value )
+            {
+              btn.element.selectedIndex = 0;
+              break;
+            }
+
+            // HACK -- retrieve the config option for this
+            // combo box.  We rely on the fact that the
+            // variable in config has the same name as
+            // button name in the toolbar.
+            var options = this.config[cmd];
+            var sIndex = 0;
+            for ( var j in options )
+            {
+            // FIXME: the following line is scary.
+              if ( ( j.toLowerCase() == value ) || ( options[j].substr(0, value.length).toLowerCase() == value ) )
+              {
+                btn.element.selectedIndex = sIndex;
+                throw "ok";
+              }
+              ++sIndex;
+            }
+            btn.element.selectedIndex = 0;
+          } catch(ex) {}
+        }
+      break;
+
+      // It's better to search for the format block by tag name from the
+      //  current selection upwards, because IE has a tendancy to return
+      //  things like 'heading 1' for 'h1', which breaks things if you want
+      //  to call your heading blocks 'header 1'.  Stupid MS.
+      case "formatblock":
+        var blocks = [];
+        for ( var indexBlock in this.config.formatblock )
+        {
+          // prevent iterating over wrong type
+          if ( typeof this.config.formatblock[indexBlock] == 'string' )
+          {
+            blocks[blocks.length] = this.config.formatblock[indexBlock];
+          }
+        }
+
+        var deepestAncestor = this._getFirstAncestor(this.getSelection(), blocks);
+        if ( deepestAncestor )
+        {
+          for ( var x = 0; x < blocks.length; x++ )
+          {
+            if ( blocks[x].toLowerCase() == deepestAncestor.tagName.toLowerCase() )
+            {
+              btn.element.selectedIndex = x;
+            }
+          }
+        }
+        else
+        {
+          btn.element.selectedIndex = 0;
+        }
+      break;
+
+      case "textindicator":
+        if ( !text )
+        {
+          try
+          {
+            var style = btn.element.style;
+            style.backgroundColor = Xinha._makeColor(doc.queryCommandValue(Xinha.is_ie ? "backcolor" : "hilitecolor"));
+            if ( /transparent/i.test(style.backgroundColor) )
+            {
+              // Mozilla
+              style.backgroundColor = Xinha._makeColor(doc.queryCommandValue("backcolor"));
+            }
+            style.color = Xinha._makeColor(doc.queryCommandValue("forecolor"));
+            style.fontFamily = doc.queryCommandValue("fontname");
+            style.fontWeight = doc.queryCommandState("bold") ? "bold" : "normal";
+            style.fontStyle = doc.queryCommandState("italic") ? "italic" : "normal";
+          } catch (ex) {
+            // alert(e + "\n\n" + cmd);
+          }
+        }
+      break;
+
+      case "htmlmode":
+        btn.state("active", text);
+      break;
+
+      case "lefttoright":
+      case "righttoleft":
+        var eltBlock = this.getParentElement();
+        while ( eltBlock && !Xinha.isBlockElement(eltBlock) )
+        {
+          eltBlock = eltBlock.parentNode;
+        }
+        if ( eltBlock )
+        {
+          btn.state("active", (eltBlock.style.direction == ((cmd == "righttoleft") ? "rtl" : "ltr")));
+        }
+      break;
+
+      default:
+        cmd = cmd.replace(/(un)?orderedlist/i, "insert$1orderedlist");
+        try
+        {
+          btn.state("active", (!text && doc.queryCommandState(cmd)));
+        } catch (ex) {}
+      break;
+    }
+  }
+  // take undo snapshots
+  if ( this._customUndo && !this._timerUndo )
+  {
+    this._undoTakeSnapshot();
+    var editor = this;
+    this._timerUndo = setTimeout(function() { editor._timerUndo = null; }, this.config.undoTimeout);
+  }
+  this.firePluginEvent('onUpdateToolbar');
+};
+
+/** Returns a editor object referenced by the id or name of the textarea or the textarea node itself
+ * For example to retrieve the HTML of an editor made out of the textarea with the id "myTextArea" you would do<br />
+ * <code>
+ *	 var editor = Xinha.getEditor("myTextArea");
+ *   var html = editor.getEditorContent(); 
+ * </code>
+ * @returns {Xinha|null} 
+ * @param {String|DomNode} ref id or name of the textarea or the textarea node itself
+ */
+Xinha.getEditor = function(ref)
+{
+  for ( var i = __xinhas.length; i--; )
+  {
+    var editor = __xinhas[i];
+    if ( editor && ( editor._textArea.id == ref || editor._textArea.name == ref || editor._textArea == ref ) )
+    {
+      return editor;
+    }
+  }
+  return null;
+};
+/** Sometimes one wants to call a plugin method directly, e.g. from outside the editor.
+ * This function returns the respective editor's instance of a plugin.
+ * For example you might want to have a button to trigger SaveSubmit's save() method:<br />
+ * <code>
+ *	 &lt;button type="button" onclick="Xinha.getEditor('myTextArea').getPluginInstance('SaveSubmit').save();return false;"&gt;Save&lt;/button&gt;
+ * </code>
+ * @returns {PluginObject|null} 
+ * @param {String} plugin name of the plugin
+ */
+Xinha.prototype.getPluginInstance = function (plugin)
+{
+  if (this.plugins[plugin])
+  {
+    return this.plugins[plugin].instance;
+  }
+  else
+  {
+    return null;
+  }
+};
+/** Returns an array with all the ancestor nodes of the selection or current cursor position.
+* @returns {Array}
+*/
+Xinha.prototype.getAllAncestors = function()
+{
+  var p = this.getParentElement();
+  var a = [];
+  while ( p && (p.nodeType == 1) && ( p.tagName.toLowerCase() != 'body' ) )
+  {
+    a.push(p);
+    p = p.parentNode;
+  }
+  a.push(this._doc.body);
+  return a;
+};
+
+/** Traverses the DOM upwards and returns the first element that is of one of the specified types
+ *  @param {Selection} sel  Selection object as returned by getSelection
+ *  @param {Array} types Array of matching criteria.  Each criteria is either a string containing the tag name, or a callback used to select the element.
+ *  @returns {DomNode|null} 
+ */
+Xinha.prototype._getFirstAncestor = function(sel, types)
+{
+  var prnt = this.activeElement(sel);
+  if ( prnt === null )
+  {
+    // Hmm, I think Xinha.getParentElement() would do the job better?? - James
+    try
+    {
+      prnt = (Xinha.is_ie ? this.createRange(sel).parentElement() : this.createRange(sel).commonAncestorContainer);
+    }
+    catch(ex)
+    {
+      return null;
+    }
+  }
+
+  if ( typeof types == 'string' )
+  {
+    types = [types];
+  }
+
+  while ( prnt )
+  {
+    if ( prnt.nodeType == 1 )
+    {
+      if ( types === null )
+      {
+        return prnt;
+      }
+      for (var index=0; index<types.length; ++index) {
+        if (typeof types[index] == 'string' && types[index] == prnt.tagName.toLowerCase()){
+          // Criteria is a tag name.  It matches
+        return prnt;
+      }
+        else if (typeof types[index] == 'function' && types[index](this, prnt)) {
+          // Criteria is a callback.  It matches
+          return prnt;
+        }
+      }
+
+      if ( prnt.tagName.toLowerCase() == 'body' )
+      {
+        break;
+      }
+      if ( prnt.tagName.toLowerCase() == 'table' )
+      {
+        break;
+      }
+    }
+    prnt = prnt.parentNode;
+  }
+
+  return null;
+};
+
+/** Traverses the DOM upwards and returns the first element that is a block level element
+ *  @param {Selection} sel  Selection object as returned by getSelection
+ *  @returns {DomNode|null} 
+ */
+Xinha.prototype._getAncestorBlock = function(sel)
+{
+  // Scan upwards to find a block level element that we can change or apply to
+  var prnt = (Xinha.is_ie ? this.createRange(sel).parentElement : this.createRange(sel).commonAncestorContainer);
+
+  while ( prnt && ( prnt.nodeType == 1 ) )
+  {
+    switch ( prnt.tagName.toLowerCase() )
+    {
+      case 'div':
+      case 'p':
+      case 'address':
+      case 'blockquote':
+      case 'center':
+      case 'del':
+      case 'ins':
+      case 'pre':
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+      case 'h7':
+        // Block Element
+        return prnt;
+
+      case 'body':
+      case 'noframes':
+      case 'dd':
+      case 'li':
+      case 'th':
+      case 'td':
+      case 'noscript' :
+        // Halting element (stop searching)
+        return null;
+
+      default:
+        // Keep lookin
+        break;
+    }
+  }
+
+  return null;
+};
+
+/** What's this? does nothing, has to be removed
+ * 
+ * @deprecated
+ */
+Xinha.prototype._createImplicitBlock = function(type)
+{
+  // expand it until we reach a block element in either direction
+  // then wrap the selection in a block and return
+  var sel = this.getSelection();
+  if ( Xinha.is_ie )
+  {
+    sel.empty();
+  }
+  else
+  {
+    sel.collapseToStart();
+  }
+
+  var rng = this.createRange(sel);
+
+  // Expand UP
+
+  // Expand DN
+};
+
+
+
+/**
+ *  Call this function to surround the existing HTML code in the selection with
+ *  your tags.  FIXME: buggy! Don't use this 
+ * @todo: when will it be deprecated ? Can it be removed already ?
+ * @private (tagged private to not further promote use of this function)
+ * @deprecated
+ */
+Xinha.prototype.surroundHTML = function(startTag, endTag)
+{
+  var html = this.getSelectedHTML();
+  // the following also deletes the selection
+  this.insertHTML(startTag + html + endTag);
+};
+
+/** Return true if we have some selection
+ *  @returns {Boolean} 
+ */
+Xinha.prototype.hasSelectedText = function()
+{
+  // FIXME: come _on_ mishoo, you can do better than this ;-)
+  return this.getSelectedHTML() !== '';
+};
+
+/***************************************************
+ *  Category: EVENT HANDLERS
+ ***************************************************/
+
+/** onChange handler for dropdowns in toolbar 
+ *  @private
+ *  @param {DomNode} el Reference to the SELECT object
+ *  @param {String} txt  The name of the select field, as in config.toolbar
+ *  @returns {DomNode|null} 
+ */
+Xinha.prototype._comboSelected = function(el, txt)
+{
+  this.focusEditor();
+  var value = el.options[el.selectedIndex].value;
+  switch (txt)
+  {
+    case "fontname":
+    case "fontsize":
+      this.execCommand(txt, false, value);
+    break;
+    case "formatblock":
+      // Mozilla inserts an empty tag (<>) if no parameter is passed  
+      if ( !value )
+      {
+      	this.updateToolbar();
+      	break;
+      }
+      if( !Xinha.is_gecko || value !== 'blockquote' )
+      {
+        value = "<" + value + ">";
+      }
+      this.execCommand(txt, false, value);
+    break;
+    default:
+      // try to look it up in the registered dropdowns
+      var dropdown = this.config.customSelects[txt];
+      if ( typeof dropdown != "undefined" )
+      {
+        dropdown.action(this);
+      }
+      else
+      {
+        alert("FIXME: combo box " + txt + " not implemented");
+      }
+    break;
+  }
+};
+
+/** Open a popup to select the hilitecolor or forecolor
+ * @private
+ * @param {String} cmdID The commande ID (hilitecolor or forecolor)
+ */
+Xinha.prototype._colorSelector = function(cmdID)
+{
+  var editor = this;	// for nested functions
+
+  // backcolor only works with useCSS/styleWithCSS (see mozilla bug #279330 & Midas doc)
+  // and its also nicer as <font>
+  if ( Xinha.is_gecko )
+  {
+    try
+    {
+     editor._doc.execCommand('useCSS', false, false); // useCSS deprecated & replaced by styleWithCSS 
+     editor._doc.execCommand('styleWithCSS', false, true); 
+
+    } catch (ex) {}
+  }
+  
+  var btn = editor._toolbarObjects[cmdID].element;
+  var initcolor;
+  if ( cmdID == 'hilitecolor' )
+  {
+    if ( Xinha.is_ie )
+    {
+      cmdID = 'backcolor';
+      initcolor = Xinha._colorToRgb(editor._doc.queryCommandValue("backcolor"));
+    }
+    else
+    {
+      initcolor = Xinha._colorToRgb(editor._doc.queryCommandValue("hilitecolor"));
+    }
+  }
+  else
+  {
+  	initcolor = Xinha._colorToRgb(editor._doc.queryCommandValue("forecolor"));
+  }
+  var cback = function(color) { editor._doc.execCommand(cmdID, false, color); };
+  if ( Xinha.is_ie )
+  {
+    var range = editor.createRange(editor.getSelection());
+    cback = function(color)
+    {
+      range.select();
+      editor._doc.execCommand(cmdID, false, color);
+    };
+  }
+  var picker = new Xinha.colorPicker(
+  {
+  	cellsize:editor.config.colorPickerCellSize,
+  	callback:cback,
+  	granularity:editor.config.colorPickerGranularity,
+  	websafe:editor.config.colorPickerWebSafe,
+  	savecolors:editor.config.colorPickerSaveColors
+  });
+  picker.open(editor.config.colorPickerPosition, btn, initcolor);
+};
+
+/** This is a wrapper for the browser's execCommand function that handles things like 
+ *  formatting, inserting elements, etc.<br />
+ *  It intercepts some commands and replaces them with our own implementation.<br />
+ *  It provides a hook for the "firePluginEvent" system ("onExecCommand").<br /><br />
+ *  For reference see:<br />
+ *     <a href="http://www.mozilla.org/editor/midas-spec.html">Mozilla implementation</a><br />
+ *     <a href="http://msdn.microsoft.com/workshop/author/dhtml/reference/methods/execcommand.asp">MS implementation</a>
+ *
+ *  @see Xinha#firePluginEvent
+ *  @param {String} cmdID command to be executed as defined in the browsers implemantations or Xinha custom
+ *  @param {Boolean} UI for compatibility with the execCommand syntax; false in most (all) cases
+ *  @param {Mixed} param Some commands require parameters
+ *  @returns {Boolean} always false 
+ */
+Xinha.prototype.execCommand = function(cmdID, UI, param)
+{
+  var editor = this;	// for nested functions
+  this.focusEditor();
+  cmdID = cmdID.toLowerCase();
+  
+  // See if any plugins want to do something special
+  if(this.firePluginEvent('onExecCommand', cmdID, UI, param))
+  {
+    this.updateToolbar();
+    return false;
+  }
+
+  switch (cmdID)
+  {
+    case "htmlmode":
+      this.setMode();
+    break;
+
+    case "hilitecolor":
+    case "forecolor":
+      this._colorSelector(cmdID);
+    break;
+
+    case "createlink":
+      this._createLink();
+    break;
+
+    case "undo":
+    case "redo":
+      if (this._customUndo)
+      {
+        this[cmdID]();
+      }
+      else
+      {
+        this._doc.execCommand(cmdID, UI, param);
+      }
+    break;
+
+    case "inserttable":
+      this._insertTable();
+    break;
+
+    case "insertimage":
+      this._insertImage();
+    break;
+
+    case "showhelp":
+      this._popupDialog(editor.config.URIs.help, null, this);
+    break;
+
+    case "killword":
+      this._wordClean();
+    break;
+
+    case "cut":
+    case "copy":
+    case "paste":
+      this._doc.execCommand(cmdID, UI, param);
+      if ( this.config.killWordOnPaste )
+      {
+        this._wordClean();
+      }
+    break;
+    case "lefttoright":
+    case "righttoleft":
+      if (this.config.changeJustifyWithDirection) 
+      {
+        this._doc.execCommand((cmdID == "righttoleft") ? "justifyright" : "justifyleft", UI, param);
+      }
+      var dir = (cmdID == "righttoleft") ? "rtl" : "ltr";
+      var el = this.getParentElement();
+      while ( el && !Xinha.isBlockElement(el) )
+      {
+        el = el.parentNode;
+      }
+      if ( el )
+      {
+        if ( el.style.direction == dir )
+        {
+          el.style.direction = "";
+        }
+        else
+        {
+          el.style.direction = dir;
+        }
+      }
+    break;
+    
+    case 'justifyleft'  :
+    case 'justifyright' :
+      cmdID.match(/^justify(.*)$/);
+      var ae = this.activeElement(this.getSelection());      
+      if(ae && ae.tagName.toLowerCase() == 'img')
+      {
+        ae.align = ae.align == RegExp.$1 ? '' : RegExp.$1;
+      }
+      else
+      {
+        this._doc.execCommand(cmdID, UI, param);
+      }
+    break;
+    
+    default:
+      try
+      {
+        this._doc.execCommand(cmdID, UI, param);
+      }
+      catch(ex)
+      {
+        if ( this.config.debug )
+        {
+          alert(ex + "\n\nby execCommand(" + cmdID + ");");
+        }
+      }
+    break;
+  }
+
+  this.updateToolbar();
+  return false;
+};
+
+/** A generic event handler for things that happen in the IFRAME's document.<br />
+ *  It provides two hooks for the "firePluginEvent" system:<br />
+ *   "onKeyPress"<br />
+ *   "onMouseDown"
+ *  @see Xinha#firePluginEvent
+ *  @param {Event} ev
+ */
+Xinha.prototype._editorEvent = function(ev)
+{
+  var editor = this;
+
+  //call events of textarea
+  if ( typeof editor._textArea['on'+ev.type] == "function" )
+  {
+    editor._textArea['on'+ev.type](ev);
+  }
+  
+  if ( this.isKeyEvent(ev) )
+  {
+    // Run the ordinary plugins first
+    if(editor.firePluginEvent('onKeyPress', ev))
+    {
+      return false;
+    }
+    
+    // Handle the core shortcuts
+    if ( this.isShortCut( ev ) )
+    {
+      this._shortCuts(ev);
+    }
+  }
+
+  if ( ev.type == 'mousedown' )
+  {
+    if(editor.firePluginEvent('onMouseDown', ev))
+    {
+      return false;
+    }
+  }
+
+  // update the toolbar state after some time
+  if ( editor._timerToolbar )
+  {
+    clearTimeout(editor._timerToolbar);
+  }
+  if (!this.suspendUpdateToolbar)
+  {
+  editor._timerToolbar = setTimeout(
+    function()
+    {
+      editor.updateToolbar();
+      editor._timerToolbar = null;
+    },
+    250);
+  }
+};
+
+/** Handles ctrl + key shortcuts 
+ *  @TODO: make this mor flexible
+ *  @private
+ *  @param {Event} ev
+ */
+Xinha.prototype._shortCuts = function (ev)
+{
+  var key = this.getKey(ev).toLowerCase();
+  var cmd = null;
+  var value = null;
+  switch (key)
+  {
+    // simple key commands follow
+
+    case 'b': cmd = "bold"; break;
+    case 'i': cmd = "italic"; break;
+    case 'u': cmd = "underline"; break;
+    case 's': cmd = "strikethrough"; break;
+    case 'l': cmd = "justifyleft"; break;
+    case 'e': cmd = "justifycenter"; break;
+    case 'r': cmd = "justifyright"; break;
+    case 'j': cmd = "justifyfull"; break;
+    case 'z': cmd = "undo"; break;
+    case 'y': cmd = "redo"; break;
+    case 'v': cmd = "paste"; break;
+    case 'n':
+    cmd = "formatblock";
+    value = "p";
+    break;
+
+    case '0': cmd = "killword"; break;
+
+    // headings
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    cmd = "formatblock";
+    value = "h" + key;
+    break;
+  }
+  if ( cmd )
+  {
+    // execute simple command
+    this.execCommand(cmd, false, value);
+    Xinha._stopEvent(ev);
+  }
+};
+/** Changes the type of a given node
+ *  @param {DomNode} el The element to convert
+ *  @param {String} newTagName The type the element will be converted to
+ *  @returns {DomNode} A reference to the new element
+ */
+Xinha.prototype.convertNode = function(el, newTagName)
+{
+  var newel = this._doc.createElement(newTagName);
+  while ( el.firstChild )
+  {
+    newel.appendChild(el.firstChild);
+  }
+  return newel;
+};
+
+/** Scrolls the editor iframe to a given element or to the cursor
+ *  @param {DomNode} e optional The element to scroll to; if ommitted, element the element the cursor is in
+ */
+Xinha.prototype.scrollToElement = function(e)
+{
+  if(!e)
+  {
+    e = this.getParentElement();
+    if(!e)
+    {
+      return;
+    }
+  }
+  
+  // This was at one time limited to Gecko only, but I see no reason for it to be. - James
+  var position = Xinha.getElementTopLeft(e);  
+  this._iframe.contentWindow.scrollTo(position.left, position.top);
+};
+
+/** Get the edited HTML
+ *  
+ *  @public
+ *  @returns {String} HTML content
+ */
+Xinha.prototype.getEditorContent = function()
+{
+  return this.outwardHtml(this.getHTML());
+};
+
+/** Completely change the HTML inside the editor
+ *
+ *  @public
+ *  @param {String} html new content
+ */
+Xinha.prototype.setEditorContent = function(html)
+{
+  this.setHTML(this.inwardHtml(html));
+};
+/** Saves the contents of all Xinhas to their respective textareas
+ *  @public 
+ */
+Xinha.updateTextareas = function()
+{
+  var e;
+  for (var i=0;i<__xinhas.length;i++)
+  {
+    e = __xinhas[i];
+    e._textArea.value = e.getEditorContent();
+  }
+}
+/** Get the raw edited HTML, should not be used without Xinha.prototype.outwardHtml()
+ *  
+ *  @private
+ *  @returns {String} HTML content
+ */
+Xinha.prototype.getHTML = function()
+{
+  var html = '';
+  switch ( this._editMode )
+  {
+    case "wysiwyg":
+      if ( !this.config.fullPage )
+      {
+        html = Xinha.getHTML(this._doc.body, false, this).trim();
+      }
+      else
+      {
+        html = this.doctype + "\n" + Xinha.getHTML(this._doc.documentElement, true, this);
+      }
+    break;
+    case "textmode":
+      html = this._textArea.value;
+    break;
+    default:
+      alert("Mode <" + this._editMode + "> not defined!");
+      return false;
+  }
+  return html;
+};
+
+/** Performs various transformations of the HTML used internally, complement to Xinha.prototype.inwardHtml()  
+ *  Plugins can provide their own, additional transformations by defining a plugin.prototype.outwardHtml() implematation,
+ *  which is called by this function
+ *
+ *  @private
+ *  @see Xinha#inwardHtml
+ *  @param {String} html
+ *  @returns {String} HTML content
+ */
+Xinha.prototype.outwardHtml = function(html)
+{
+  for ( var i in this.plugins )
+  {
+    var plugin = this.plugins[i].instance;    
+    if ( plugin && typeof plugin.outwardHtml == "function" )
+    {
+      html = plugin.outwardHtml(html);
+    }
+  }
+  
+  html = html.replace(/<(\/?)b(\s|>|\/)/ig, "<$1strong$2");
+  html = html.replace(/<(\/?)i(\s|>|\/)/ig, "<$1em$2");
+  html = html.replace(/<(\/?)strike(\s|>|\/)/ig, "<$1del$2");
+  
+  // remove disabling of inline event handle inside Xinha iframe
+  html = html.replace(/(<[^>]*on(click|mouse(over|out|up|down))=['"])if\(window\.parent &amp;&amp; window\.parent\.Xinha\)\{return false\}/gi,'$1');
+
+  // Figure out what our server name is, and how it's referenced
+  var serverBase = location.href.replace(/(https?:\/\/[^\/]*)\/.*/, '$1') + '/';
+
+  // IE puts this in can't figure out why
+  //  leaving this in the core instead of InternetExplorer 
+  //  because it might be something we are doing so could present itself
+  //  in other browsers - James 
+  html = html.replace(/https?:\/\/null\//g, serverBase);
+
+  // Make semi-absolute links to be truely absolute
+  //  we do this just to standardize so that special replacements knows what
+  //  to expect
+  html = html.replace(/((href|src|background)=[\'\"])\/+/ig, '$1' + serverBase);
+
+  html = this.outwardSpecialReplacements(html);
+
+  html = this.fixRelativeLinks(html);
+
+  if ( this.config.sevenBitClean )
+  {
+    html = html.replace(/[^ -~\r\n\t]/g, function(c) { return (c != Xinha.cc) ? '&#'+c.charCodeAt(0)+';' : c; });
+  }
+
+  //prevent execution of JavaScript (Ticket #685)
+  html = html.replace(/(<script[^>]*((type=[\"\']text\/)|(language=[\"\'])))(freezescript)/gi,"$1javascript");
+
+  // If in fullPage mode, strip the coreCSS
+  if(this.config.fullPage)
+  {
+    html = Xinha.stripCoreCSS(html);
+  }
+
+  if (typeof this.config.outwardHtml == 'function' )
+  {
+    html = this.config.outwardHtml(html);
+  }
+
+  return html;
+};
+
+/** Performs various transformations of the HTML to be edited 
+ *  Plugins can provide their own, additional transformations by defining a plugin.prototype.inwardHtml() implematation,
+ *  which is called by this function
+ *  
+ *  @private
+ *  @see Xinha#outwardHtml
+ *  @param {String} html  
+ *  @returns {String} transformed HTML
+ */
+Xinha.prototype.inwardHtml = function(html)
+{  
+  for ( var i in this.plugins )
+  {
+    var plugin = this.plugins[i].instance;    
+    if ( plugin && typeof plugin.inwardHtml == "function" )
+    {
+      html = plugin.inwardHtml(html);
+    }    
+  }
+    
+  // Both IE and Gecko use strike instead of del (#523)
+  html = html.replace(/<(\/?)del(\s|>|\/)/ig, "<$1strike$2");
+
+  // disable inline event handle inside Xinha iframe
+  html = html.replace(/(<[^>]*on(click|mouse(over|out|up|down))=["'])/gi,'$1if(window.parent &amp;&amp; window.parent.Xinha){return false}');
+  
+  html = this.inwardSpecialReplacements(html);
+
+  html = html.replace(/(<script[^>]*((type=[\"\']text\/)|(language=[\"\'])))(javascript)/gi,"$1freezescript");
+
+  // For IE's sake, make any URLs that are semi-absolute (="/....") to be
+  // truely absolute
+  var nullRE = new RegExp('((href|src|background)=[\'"])/+', 'gi');
+  html = html.replace(nullRE, '$1' + location.href.replace(/(https?:\/\/[^\/]*)\/.*/, '$1') + '/');
+
+  html = this.fixRelativeLinks(html);
+  
+  // If in fullPage mode, add the coreCSS
+  if(this.config.fullPage)
+  {
+    html = Xinha.addCoreCSS(html);
+  }
+
+  if (typeof this.config.inwardHtml == 'function' )
+  {
+    html = this.config.inwardHtml(html);
+  }
+
+  return html;
+};
+/** Apply the replacements defined in Xinha.Config.specialReplacements
+ *  
+ *  @private
+ *  @see Xinha#inwardSpecialReplacements
+ *  @param {String} html
+ *  @returns {String}  transformed HTML
+ */
+Xinha.prototype.outwardSpecialReplacements = function(html)
+{
+  for ( var i in this.config.specialReplacements )
+  {
+    var from = this.config.specialReplacements[i];
+    var to   = i; // why are declaring a new variable here ? Seems to be better to just do : for (var to in config)
+    // prevent iterating over wrong type
+    if ( typeof from.replace != 'function' || typeof to.replace != 'function' )
+    {
+      continue;
+    } 
+    // alert('out : ' + from + '=>' + to);
+    var reg = new RegExp(Xinha.escapeStringForRegExp(from), 'g');
+    html = html.replace(reg, to.replace(/\$/g, '$$$$'));
+    //html = html.replace(from, to);
+  }
+  return html;
+};
+/** Apply the replacements defined in Xinha.Config.specialReplacements
+ *  
+ *  @private
+ *  @see Xinha#outwardSpecialReplacements
+ *  @param {String} html
+ *  @returns {String}  transformed HTML
+ */
+Xinha.prototype.inwardSpecialReplacements = function(html)
+{
+  // alert("inward");
+  for ( var i in this.config.specialReplacements )
+  {
+    var from = i; // why are declaring a new variable here ? Seems to be better to just do : for (var from in config)
+    var to   = this.config.specialReplacements[i];
+    // prevent iterating over wrong type
+    if ( typeof from.replace != 'function' || typeof to.replace != 'function' )
+    {
+      continue;
+    }
+    // alert('in : ' + from + '=>' + to);
+    //
+    // html = html.replace(reg, to);
+    // html = html.replace(from, to);
+    var reg = new RegExp(Xinha.escapeStringForRegExp(from), 'g');
+    html = html.replace(reg, to.replace(/\$/g, '$$$$')); // IE uses doubled dollar signs to escape backrefs, also beware that IE also implements $& $_ and $' like perl.
+  }
+  return html;
+};
+/** Transforms the paths in src & href attributes
+ *  
+ *  @private
+ *  @see Xinha.Config#expandRelativeUrl
+ *  @see Xinha.Config#stripSelfNamedAnchors
+ *  @see Xinha.Config#stripBaseHref
+ *  @see Xinha.Config#baseHref
+ *  @param {String} html 
+ *  @returns {String} transformed HTML
+ */
+Xinha.prototype.fixRelativeLinks = function(html)
+{
+  if ( typeof this.config.expandRelativeUrl != 'undefined' && this.config.expandRelativeUrl ) 
+  {
+    if (html == null)
+    {
+      return "";
+    }
+    var src = html.match(/(src|href)="([^"]*)"/gi);
+    var b = document.location.href;
+    if ( src )
+    {
+      var url,url_m,relPath,base_m,absPath;
+      for ( var i=0;i<src.length;++i )
+      {
+        url = src[i].match(/(src|href)="([^"]*)"/i);
+        url_m = url[2].match( /\.\.\//g );
+        if ( url_m )
+        {
+          relPath = new RegExp( "(.*?)(([^\/]*\/){"+ url_m.length+"})[^\/]*$" );
+          base_m = b.match( relPath );
+          absPath = url[2].replace(/(\.\.\/)*/,base_m[1]);
+          html = html.replace( new RegExp(Xinha.escapeStringForRegExp(url[2])),absPath );
+        }
+      }
+    }
+  }
+  
+  if ( typeof this.config.stripSelfNamedAnchors != 'undefined' && this.config.stripSelfNamedAnchors )
+  {
+    var stripRe = new RegExp("((href|src|background)=\")("+Xinha.escapeStringForRegExp(window.unescape(document.location.href.replace(/&/g,'&amp;'))) + ')([#?][^\'" ]*)', 'g');
+    html = html.replace(stripRe, '$1$4');
+  }
+
+  if ( typeof this.config.stripBaseHref != 'undefined' && this.config.stripBaseHref )
+  {
+    var baseRe = null;
+    if ( typeof this.config.baseHref != 'undefined' && this.config.baseHref !== null )
+    {
+      baseRe = new RegExp( "((href|src|background|action)=\")(" + Xinha.escapeStringForRegExp(this.config.baseHref.replace(/([^\/]\/)(?=.+\.)[^\/]*$/, "$1")) + ")", 'g' );
+	  html = html.replace(baseRe, '$1');
+    }
+    baseRe = new RegExp( "((href|src|background|action)=\")(" +  Xinha.escapeStringForRegExp(document.location.href.replace( /^(https?:\/\/[^\/]*)(.*)/, '$1' )) + ")", 'g' );
+    html = html.replace(baseRe, '$1');
+  }
+
+  return html;
+};
+
+/** retrieve the HTML (fastest version, but uses innerHTML)
+ *  
+ *  @private
+ *  @returns {String} HTML content
+ */
+Xinha.prototype.getInnerHTML = function()
+{
+  if ( !this._doc.body )
+  {
+    return '';
+  }
+  var html = "";
+  switch ( this._editMode )
+  {
+    case "wysiwyg":
+      if ( !this.config.fullPage )
+      {
+        // return this._doc.body.innerHTML;
+        html = this._doc.body.innerHTML;
+      }
+      else
+      {
+        html = this.doctype + "\n" + this._doc.documentElement.innerHTML;
+      }
+    break;
+    case "textmode" :
+      html = this._textArea.value;
+    break;
+    default:
+      alert("Mode <" + this._editMode + "> not defined!");
+      return false;
+  }
+
+  return html;
+};
+
+/** Completely change the HTML inside
+ *
+ *  @private
+ *  @param {String} html new content, should have been run through inwardHtml() first
+ */
+Xinha.prototype.setHTML = function(html)
+{
+  if ( !this.config.fullPage )
+  {
+    this._doc.body.innerHTML = html;
+  }
+  else
+  {
+    this.setFullHTML(html);
+  }
+  this._textArea.value = html;
+};
+
+/** sets the given doctype (useful only when config.fullPage is true)
+ *  
+ *  @private
+ *  @param {String} doctype
+ */
+Xinha.prototype.setDoctype = function(doctype)
+{
+  this.doctype = doctype;
+};
+
+/***************************************************
+ *  Category: UTILITY FUNCTIONS
+ ***************************************************/
+
+/** Variable used to pass the object to the popup editor window.
+ *  @FIXME: Is this in use?
+ *  @deprecated 
+ *  @private
+ *  @type {Object}
+ */
+Xinha._object = null;
+
+/** Arrays are identified as "object" in typeof calls. Adding this tag to the Array prototype allows to distinguish between the two
+ */
+Array.prototype.isArray = true;
+/** RegExps are identified as "object" in typeof calls. Adding this tag to the RegExp prototype allows to distinguish between the two
+ */
+RegExp.prototype.isRegExp = true;
+/** function that returns a clone of the given object
+ *  
+ *  @private
+ *  @param {Object} obj
+ *  @returns {Object} cloned object
+ */
+Xinha.cloneObject = function(obj)
+{
+  if ( !obj )
+  {
+    return null;
+  }
+  var newObj = obj.isArray ? [] : {};
+
+  // check for function and RegExp objects (as usual, IE is fucked up)
+  if ( obj.constructor.toString().match( /\s*function Function\(/ ) || typeof obj == 'function' )
+  {
+    newObj = obj; // just copy reference to it
+  }
+  else if (  obj.isRegExp )
+  {
+    newObj = eval( obj.toString() ); //see no way without eval
+  }
+  else
+  {
+    for ( var n in obj )
+    {
+      var node = obj[n];
+      if ( typeof node == 'object' )
+      {
+        newObj[n] = Xinha.cloneObject(node);
+      }
+      else
+      {
+        newObj[n] = node;
+      }
+    }
+  }
+
+  return newObj;
+};
+
+/** Event Flushing
+ *  To try and work around memory leaks in the rather broken
+ *  garbage collector in IE, Xinha.flushEvents can be called
+ *  onunload, it will remove any event listeners (that were added
+ *  through _addEvent(s)) and clear any DOM-0 events.
+ *  @private
+ *
+ */
+Xinha.flushEvents = function()
+{
+  var x = 0;
+  // @todo : check if Array.prototype.pop exists for every supported browsers
+  var e = Xinha._eventFlushers.pop();
+  while ( e )
+  {
+    try
+    {
+      if ( e.length == 3 )
+      {
+        Xinha._removeEvent(e[0], e[1], e[2]);
+        x++;
+      }
+      else if ( e.length == 2 )
+      {
+        e[0]['on' + e[1]] = null;
+        e[0]._xinha_dom0Events[e[1]] = null;
+        x++;
+      }
+    }
+    catch(ex)
+    {
+      // Do Nothing
+    }
+    e = Xinha._eventFlushers.pop();
+  }
+  
+  /* 
+    // This code is very agressive, and incredibly slow in IE, so I've disabled it.
+    
+    if(document.all)
+    {
+      for(var i = 0; i < document.all.length; i++)
+      {
+        for(var j in document.all[i])
+        {
+          if(/^on/.test(j) && typeof document.all[i][j] == 'function')
+          {
+            document.all[i][j] = null;
+            x++;
+          }
+        }
+      }
+    }
+  */
+  
+  // alert('Flushed ' + x + ' events.');
+};
+ /** Holds the events to be flushed
+  * @type Array
+  */
+Xinha._eventFlushers = [];
+
+if ( document.addEventListener )
+{
+ /** adds an event listener for the specified element and event type
+ *  
+ *  @public
+ *  @see   Xinha#_addEvents
+ *  @see   Xinha#addDom0Event
+ *  @see   Xinha#prependDom0Event
+ *  @param {DomNode}  el the DOM element the event should be attached to 
+ *  @param {String}   evname the name of the event to listen for (without leading "on")
+ *  @param {function} func the function to be called when the event is fired
+ */
+  Xinha._addEvent = function(el, evname, func)
+  {
+    el.addEventListener(evname, func, false);
+    Xinha._eventFlushers.push([el, evname, func]);
+  };
+ 
+ /** removes an event listener previously added
+ *  
+ *  @public
+ *  @see   Xinha#_removeEvents
+ *  @param {DomNode}  el the DOM element the event should be removed from 
+ *  @param {String}   evname the name of the event the listener should be removed from (without leading "on")
+ *  @param {function} func the function to be removed
+ */
+  Xinha._removeEvent = function(el, evname, func)
+  {
+    el.removeEventListener(evname, func, false);
+  };
+ 
+ /** stops bubbling of the event, if no further listeners should be triggered
+ *  
+ *  @public
+ *  @param {event} ev the event to be stopped
+ */
+  Xinha._stopEvent = function(ev)
+  {
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
+}
+ /** same as above, for IE
+ *  
+ */
+else if ( document.attachEvent )
+{
+  Xinha._addEvent = function(el, evname, func)
+  {
+    el.attachEvent("on" + evname, func);
+    Xinha._eventFlushers.push([el, evname, func]);
+  };
+  Xinha._removeEvent = function(el, evname, func)
+  {
+    el.detachEvent("on" + evname, func);
+  };
+  Xinha._stopEvent = function(ev)
+  {
+    try
+    {
+      ev.cancelBubble = true;
+      ev.returnValue = false;
+    }
+    catch (ex)
+    {
+      // Perhaps we could try here to stop the window.event
+      // window.event.cancelBubble = true;
+      // window.event.returnValue = false;
+    }
+  };
+}
+else
+{
+  Xinha._addEvent = function(el, evname, func)
+  {
+    alert('_addEvent is not supported');
+  };
+  Xinha._removeEvent = function(el, evname, func)
+  {
+    alert('_removeEvent is not supported');
+  };
+  Xinha._stopEvent = function(ev)
+  {
+    alert('_stopEvent is not supported');
+  };
+}
+ /** add several events at once to one element
+ *  
+ *  @public
+ *  @see Xinha#_addEvent
+ *  @param {DomNode}  el the DOM element the event should be attached to 
+ *  @param {Array}    evs the names of the event to listen for (without leading "on")
+ *  @param {function} func the function to be called when the event is fired
+ */
+Xinha._addEvents = function(el, evs, func)
+{
+  for ( var i = evs.length; --i >= 0; )
+  {
+    Xinha._addEvent(el, evs[i], func);
+  }
+};
+ /** remove several events at once to from element
+ *  
+ *  @public
+ *  @see Xinha#_removeEvent
+ *  @param {DomNode}  el the DOM element the events should be remove from
+ *  @param {Array}    evs the names of the events the listener should be removed from (without leading "on")
+ *  @param {function} func the function to be removed
+ */
+Xinha._removeEvents = function(el, evs, func)
+{
+  for ( var i = evs.length; --i >= 0; )
+  {
+    Xinha._removeEvent(el, evs[i], func);
+  }
+};
+
+/** Adds a function that is executed in the moment the DOM is ready, but as opposed to window.onload before images etc. have been loaded
+*   http://dean.edwards.name/weblog/2006/06/again/
+*   IE part from jQuery
+*  @public
+*  @author Dean Edwards/Matthias Miller/ John Resig / Diego Perini
+*  @param {Function}  func the function to be executed
+*  @param {Window}    scope the window that is listened to
+*/
+Xinha.addOnloadHandler = function (func, scope)
+{
+ scope = scope ? scope : window;
+
+ var init = function ()
+ {
+   // quit if this function has already been called
+   if (arguments.callee.done) 
+   {
+     return;
+   }
+   // flag this function so we don't do the same thing twice
+   arguments.callee.done = true;
+   // kill the timer
+   if (Xinha.onloadTimer)
+   {
+     clearInterval(Xinha.onloadTimer);
+   }
+
+   func();
+ };
+  if (Xinha.is_ie)
+  {
+    // ensure firing before onload,
+    // maybe late but safe also for iframes
+    document.attachEvent("onreadystatechange", function(){
+      if ( document.readyState === "complete" ) {
+        document.detachEvent( "onreadystatechange", arguments.callee );
+        init();
+      }
+    });
+    if ( document.documentElement.doScroll && typeof window.frameElement === "undefined" ) (function(){
+      if (arguments.callee.done) return;
+      try {
+        // If IE is used, use the trick by Diego Perini
+        // http://javascript.nwbox.com/IEContentLoaded/
+        document.documentElement.doScroll("left");
+      } catch( error ) {
+        setTimeout( arguments.callee, 0 );
+        return;
+      }
+      // and execute any waiting functions
+      init();
+    })();
+  }
+ else if (/applewebkit|KHTML/i.test(navigator.userAgent) ) /* Safari/WebKit/KHTML */
+ {
+   Xinha.onloadTimer = scope.setInterval(function()
+   {
+     if (/loaded|complete/.test(scope.document.readyState))
+     {
+       init(); // call the onload handler
+     }
+   }, 10);
+ }
+ else /* for Mozilla/Opera9 */
+ {
+   scope.document.addEventListener("DOMContentLoaded", init, false);
+
+ }
+ Xinha._addEvent(scope, 'load', init); // incase anything went wrong
+};
+
+/**
+ * Adds a standard "DOM-0" event listener to an element.
+ * The DOM-0 events are those applied directly as attributes to
+ * an element - eg element.onclick = stuff;
+ *
+ * By using this function instead of simply overwriting any existing
+ * DOM-0 event by the same name on the element it will trigger as well
+ * as the existing ones.  Handlers are triggered one after the other
+ * in the order they are added.
+ *
+ * Remember to return true/false from your handler, this will determine
+ * whether subsequent handlers will be triggered (ie that the event will
+ * continue or be canceled).
+ *  
+ *  @public
+ *  @see Xinha#_addEvent
+ *  @see Xinha#prependDom0Event
+ *  @param {DomNode}  el the DOM element the event should be attached to 
+ *  @param {String}   ev the name of the event to listen for (without leading "on")
+ *  @param {function} fn the function to be called when the event is fired
+ */
+
+Xinha.addDom0Event = function(el, ev, fn)
+{
+  Xinha._prepareForDom0Events(el, ev);
+  el._xinha_dom0Events[ev].unshift(fn);
+};
+
+
+/** See addDom0Event, the difference is that handlers registered using
+ *  prependDom0Event will be triggered before existing DOM-0 events of the
+ *  same name on the same element.
+ *  
+ *  @public
+ *  @see Xinha#_addEvent
+ *  @see Xinha#addDom0Event
+ *  @param {DomNode}  the DOM element the event should be attached to 
+ *  @param {String}   the name of the event to listen for (without leading "on")
+ *  @param {function} the function to be called when the event is fired
+ */
+
+Xinha.prependDom0Event = function(el, ev, fn)
+{
+  Xinha._prepareForDom0Events(el, ev);
+  el._xinha_dom0Events[ev].push(fn);
+};
+
+Xinha.getEvent = function(ev)
+{
+  return ev || window.event;
+};
+/**
+ * Prepares an element to receive more than one DOM-0 event handler
+ * when handlers are added via addDom0Event and prependDom0Event.
+ *
+ * @private
+ */
+Xinha._prepareForDom0Events = function(el, ev)
+{
+  // Create a structure to hold our lists of event handlers
+  if ( typeof el._xinha_dom0Events == 'undefined' )
+  {
+    el._xinha_dom0Events = {};
+    Xinha.freeLater(el, '_xinha_dom0Events');
+  }
+
+  // Create a list of handlers for this event type
+  if ( typeof el._xinha_dom0Events[ev] == 'undefined' )
+  {
+    el._xinha_dom0Events[ev] = [ ];
+    if ( typeof el['on'+ev] == 'function' )
+    {
+      el._xinha_dom0Events[ev].push(el['on'+ev]);
+    }
+
+    // Make the actual event handler, which runs through
+    // each of the handlers in the list and executes them
+    // in the correct context.
+    el['on'+ev] = function(event)
+    {
+      var a = el._xinha_dom0Events[ev];
+      // call previous submit methods if they were there.
+      var allOK = true;
+      for ( var i = a.length; --i >= 0; )
+      {
+        // We want the handler to be a member of the form, not the array, so that "this" will work correctly
+        el._xinha_tempEventHandler = a[i];
+        if ( el._xinha_tempEventHandler(event) === false )
+        {
+          el._xinha_tempEventHandler = null;
+          allOK = false;
+          break;
+        }
+        el._xinha_tempEventHandler = null;
+      }
+      return allOK;
+    };
+
+    Xinha._eventFlushers.push([el, ev]);
+  }
+};
+
+Xinha.prototype.notifyOn = function(ev, fn)
+{
+  if ( typeof this._notifyListeners[ev] == 'undefined' )
+  {
+    this._notifyListeners[ev] = [];
+    Xinha.freeLater(this, '_notifyListeners');
+  }
+  this._notifyListeners[ev].push(fn);
+};
+
+Xinha.prototype.notifyOf = function(ev, args)
+{
+  if ( this._notifyListeners[ev] )
+  {
+    for ( var i = 0; i < this._notifyListeners[ev].length; i++ )
+    {
+      this._notifyListeners[ev][i](ev, args);
+    }
+  }
+};
+
+/** List of tag names that are defined as block level elements in HTML
+ *  
+ *  @private
+ *  @see Xinha#isBlockElement
+ *  @type {String}
+ */
+Xinha._blockTags = " body form textarea fieldset ul ol dl li div " +
+"p h1 h2 h3 h4 h5 h6 quote pre table thead " +
+"tbody tfoot tr td th iframe address blockquote title meta link style head ";
+
+/** Checks if one element is in the list of elements that are defined as block level elements in HTML
+ *  
+ *  @param {DomNode}  el The DOM element to check
+ *  @returns {Boolean}
+ */
+Xinha.isBlockElement = function(el)
+{
+  return el && el.nodeType == 1 && (Xinha._blockTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
+};
+/** List of tag names that are allowed to contain a paragraph
+ *  
+ *  @private
+ *  @see Xinha#isParaContainer
+ *  @type {String}
+ */
+Xinha._paraContainerTags = " body td th caption fieldset div ";
+/** Checks if one element is in the list of elements that are allowed to contain a paragraph in HTML
+ *  
+ *  @param {DomNode}  el The DOM element to check
+ *  @returns {Boolean}
+ */
+Xinha.isParaContainer = function(el)
+{
+  return el && el.nodeType == 1 && (Xinha._paraContainerTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
+};
+
+
+/** These are all the tags for which the end tag is not optional or  forbidden, taken from the list at:
+ *   http: www.w3.org/TR/REC-html40/index/elements.html
+ *  
+ *  @private
+ *  @see Xinha#needsClosingTag
+ *  @type String
+ */
+Xinha._closingTags = " a abbr acronym address applet b bdo big blockquote button caption center cite code del dfn dir div dl em fieldset font form frameset h1 h2 h3 h4 h5 h6 i iframe ins kbd label legend map menu noframes noscript object ol optgroup pre q s samp script select small span strike strong style sub sup table textarea title tt u ul var ";
+
+/** Checks if one element is in the list of elements for which the end tag is not optional or  forbidden in HTML
+ *  
+ *  @param {DomNode}  el The DOM element to check
+ *  @returns {Boolean}
+ */
+Xinha.needsClosingTag = function(el)
+{
+  return el && el.nodeType == 1 && (Xinha._closingTags.indexOf(" " + el.tagName.toLowerCase() + " ") != -1);
+};
+
+/** Performs HTML encoding of some given string (converts HTML special characters to entities)
+ *  
+ *  @param {String}  str The unencoded input
+ *  @returns {String} The encoded output
+ */
+Xinha.htmlEncode = function(str)
+{
+  if (!str)
+  {
+    return '';
+  }  if ( typeof str.replace == 'undefined' )
+  {
+    str = str.toString();
+  }
+  // we don't need regexp for that, but.. so be it for now.
+  str = str.replace(/&/ig, "&amp;");
+  str = str.replace(/</ig, "&lt;");
+  str = str.replace(/>/ig, "&gt;");
+  str = str.replace(/\xA0/g, "&nbsp;"); // Decimal 160, non-breaking-space
+  str = str.replace(/\x22/g, "&quot;");
+  // \x22 means '"' -- we use hex reprezentation so that we don't disturb
+  // JS compressors (well, at least mine fails.. ;)
+  return str;
+};
+
+/** Strips host-part of URL which is added by browsers to links relative to server root
+ *  
+ *  @param {String}  string 
+ *  @returns {String} 
+ */
+Xinha.prototype.stripBaseURL = function(string)
+{
+  if ( this.config.baseHref === null || !this.config.stripBaseHref )
+  {
+    return string;
+  }
+  var baseurl = this.config.baseHref.replace(/^(https?:\/\/[^\/]+)(.*)$/, '$1');
+  var basere = new RegExp(baseurl);
+  return string.replace(basere, "");
+};
+
+if (typeof String.prototype.trim != 'function')
+{
+  /** Removes whitespace from beginning and end of a string. Custom implementation for JS engines that don't support it natively
+   *  
+   *  @returns {String} 
+   */
+  String.prototype.trim = function()
+  {
+    return this.replace(/^\s+/, '').replace(/\s+$/, '');
+  };
+}
+
+/** Creates a rgb-style rgb(r,g,b) color from a (24bit) number
+ *  
+ *  @param {Integer}
+ *  @returns {String} rgb(r,g,b) color definition
+ */
+Xinha._makeColor = function(v)
+{
+  if ( typeof v != "number" )
+  {
+    // already in rgb (hopefully); IE doesn't get here.
+    return v;
+  }
+  // IE sends number; convert to rgb.
+  var r = v & 0xFF;
+  var g = (v >> 8) & 0xFF;
+  var b = (v >> 16) & 0xFF;
+  return "rgb(" + r + "," + g + "," + b + ")";
+};
+
+/** Returns hexadecimal color representation from a number or a rgb-style color.
+ *  
+ *  @param {String|Integer} v rgb(r,g,b) or 24bit color definition
+ *  @returns {String} #RRGGBB color definition
+ */
+Xinha._colorToRgb = function(v)
+{
+  if ( !v )
+  {
+    return '';
+  }
+  var r,g,b;
+  // @todo: why declaring this function here ? This needs to be a public methode of the object Xinha._colorToRgb
+  // returns the hex representation of one byte (2 digits)
+  function hex(d)
+  {
+    return (d < 16) ? ("0" + d.toString(16)) : d.toString(16);
+  }
+
+  if ( typeof v == "number" )
+  {
+    // we're talking to IE here
+    r = v & 0xFF;
+    g = (v >> 8) & 0xFF;
+    b = (v >> 16) & 0xFF;
+    return "#" + hex(r) + hex(g) + hex(b);
+  }
+
+  if ( v.substr(0, 3) == "rgb" )
+  {
+    // in rgb(...) form -- Mozilla
+    var re = /rgb\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*\)/;
+    if ( v.match(re) )
+    {
+      r = parseInt(RegExp.$1, 10);
+      g = parseInt(RegExp.$2, 10);
+      b = parseInt(RegExp.$3, 10);
+      return "#" + hex(r) + hex(g) + hex(b);
+    }
+    // doesn't match RE?!  maybe uses percentages or float numbers
+    // -- FIXME: not yet implemented.
+    return null;
+  }
+
+  if ( v.substr(0, 1) == "#" )
+  {
+    // already hex rgb (hopefully :D )
+    return v;
+  }
+
+  // if everything else fails ;)
+  return null;
+};
+
+/** Modal popup dialogs
+ *  
+ *  @param {String} url URL to the popup dialog
+ *  @param {Function} action A function that receives one value; this function will get called 
+ *                    after the dialog is closed, with the return value of the dialog.
+ *  @param {Mixed} init A variable that is passed to the popup window to pass arbitrary data
+ */
+Xinha.prototype._popupDialog = function(url, action, init)
+{
+  Dialog(this.popupURL(url), action, init);
+};
+
+/** Creates a path in the form _editor_url + "plugins/" + plugin + "/img/" + file
+ *  
+ *  @deprecated
+ *  @param {String} file Name of the image
+ *  @param {String} plugin optional If omitted, simply _editor_url + file is returned 
+ *  @returns {String}
+ */
+Xinha.prototype.imgURL = function(file, plugin)
+{
+  if ( typeof plugin == "undefined" )
+  {
+    return _editor_url + file;
+  }
+  else
+  {
+    return Xinha.getPluginDir(plugin) + "/img/" + file;
+  }
+};
+/** Creates a path
+ *  
+ *  @deprecated
+ *  @param {String} file Name of the popup
+ *  @returns {String}
+ */
+Xinha.prototype.popupURL = function(file)
+{
+  var url = "";
+  if ( file.match(/^plugin:\/\/(.*?)\/(.*)/) )
+  {
+    var plugin = RegExp.$1;
+    var popup = RegExp.$2;
+    if ( !/\.(html?|php)$/.test(popup) )
+    {
+      popup += ".html";
+    }
+    url = Xinha.getPluginDir(plugin) + "/popups/" + popup;
+  }
+  else if ( file.match(/^\/.*?/) || file.match(/^https?:\/\//))
+  {
+    url = file;
+  }
+  else
+  {
+    url = _editor_url + this.config.popupURL + file;
+  }
+  return url;
+};
+
+
+
+/** FIX: Internet Explorer returns an item having the _name_ equal to the given
+ * id, even if it's not having any id.  This way it can return a different form
+ * field, even if it's not a textarea.  This workarounds the problem by
+ * specifically looking to search only elements having a certain tag name.
+ * @param {String} tag The tag name to limit the return to
+ * @param {String} id
+ * @returns {DomNode}
+ */
+Xinha.getElementById = function(tag, id)
+{
+  var el, i, objs = document.getElementsByTagName(tag);
+  for ( i = objs.length; --i >= 0 && (el = objs[i]); )
+  {
+    if ( el.id == id )
+    {
+      return el;
+    }
+  }
+  return null;
+};
+
+
+/** Use some CSS trickery to toggle borders on tables 
+ *	@returns {Boolean} always true
+ */
+
+Xinha.prototype._toggleBorders = function()
+{
+  var tables = this._doc.getElementsByTagName('TABLE');
+  if ( tables.length !== 0 )
+  {
+   if ( !this.borders )
+   {    
+    this.borders = true;
+   }
+   else
+   {
+     this.borders = false;
+   }
+
+   for ( var i=0; i < tables.length; i++ )
+   {
+     if ( this.borders )
+     {
+        Xinha._addClass(tables[i], 'htmtableborders');
+     }
+     else
+     {
+       Xinha._removeClass(tables[i], 'htmtableborders');
+     }
+   }
+  }
+  return true;
+};
+/** Adds the styles for table borders to the iframe during generation
+ *  
+ *  @private
+ *  @see Xinha#stripCoreCSS
+ *  @param {String} html optional  
+ *  @returns {String} html HTML with added styles or only styles if html omitted
+ */
+Xinha.addCoreCSS = function(html)
+{
+    var coreCSS = "<style title=\"XinhaInternalCSS\" type=\"text/css\">" +
+    ".htmtableborders, .htmtableborders td, .htmtableborders th {border : 1px dashed lightgrey ! important;}\n" +
+    "html, body { border: 0px; } \n" +
+    "body { background-color: #ffffff; } \n" +
+    "img, hr { cursor: default } \n" +
+    "</style>\n";
+    
+    if( html && /<head>/i.test(html))
+    {
+      return html.replace(/<head>/i, '<head>' + coreCSS);      
+    }
+    else if ( html)
+    {
+      return coreCSS + html;
+    }
+    else
+    {
+      return coreCSS;
+    }
+};
+/** Allows plugins to add a stylesheet for internal use to the edited document that won't appear in the HTML output
+ *  
+ *  @see Xinha#stripCoreCSS
+ *  @param {String} stylesheet URL of the styleshett to be added
+ */
+Xinha.prototype.addEditorStylesheet = function (stylesheet)
+{
+    var style = this._doc.createElement("link");
+    style.rel = 'stylesheet';
+    style.type = 'text/css';
+    style.title = 'XinhaInternalCSS';
+    style.href = stylesheet;
+    this._doc.getElementsByTagName("HEAD")[0].appendChild(style);
+};
+/** Remove internal styles
+ *  
+ *  @private
+ *  @see Xinha#addCoreCSS
+ *  @param {String} html 
+ *  @returns {String} 
+ */
+Xinha.stripCoreCSS = function(html)
+{
+  return html.replace(/<style[^>]+title="XinhaInternalCSS"(.|\n)*?<\/style>/ig, '').replace(/<link[^>]+title="XinhaInternalCSS"(.|\n)*?>/ig, ''); 
+};
+/** Removes one CSS class (that is one of possible more parts 
+ *   separated by spaces) from a given element
+ *  
+ *  @see Xinha#_removeClasses
+ *  @param {DomNode}  el The DOM element the class will be removed from
+ *  @param {String}   className The class to be removed
+ */
+Xinha._removeClass = function(el, className)
+{
+  if ( ! ( el && el.className ) )
+  {
+    return;
+  }
+  var cls = el.className.split(" ");
+  var ar = [];
+  for ( var i = cls.length; i > 0; )
+  {
+    if ( cls[--i] != className )
+    {
+      ar[ar.length] = cls[i];
+    }
+  }
+  el.className = ar.join(" ");
+};
+/** Adds one CSS class  to a given element (that is, it expands its className property by the given string,
+ *  separated by a space)
+ *  
+ *  @see Xinha#addClasses
+ *  @param {DomNode}  el The DOM element the class will be added to
+ *  @param {String}   className The class to be added
+ */
+Xinha._addClass = function(el, className)
+{
+  // remove the class first, if already there
+  Xinha._removeClass(el, className);
+  el.className += " " + className;
+};
+
+/** Adds CSS classes  to a given element (that is, it expands its className property by the given string,
+ *  separated by a space, thereby checking that no class is doubly added)
+ *  
+ *  @see Xinha#addClass
+ *  @param {DomNode}  el The DOM element the classes will be added to
+ *  @param {String}   classes The classes to be added
+ */
+Xinha.addClasses = function(el, classes)
+{
+  if ( el !== null )
+  {
+    var thiers = el.className.trim().split(' ');
+    var ours   = classes.split(' ');
+    for ( var x = 0; x < ours.length; x++ )
+    {
+      var exists = false;
+      for ( var i = 0; exists === false && i < thiers.length; i++ )
+      {
+        if ( thiers[i] == ours[x] )
+        {
+          exists = true;
+        }
+      }
+      if ( exists === false )
+      {
+        thiers[thiers.length] = ours[x];
+      }
+    }
+    el.className = thiers.join(' ').trim();
+  }
+};
+
+/** Removes CSS classes (that is one or more of possibly several parts 
+ *   separated by spaces) from a given element
+ *  
+ *  @see Xinha#_removeClasses
+ *  @param {DomNode}  el The DOM element the class will be removed from
+ *  @param {String}   className The class to be removed
+ */
+Xinha.removeClasses = function(el, classes)
+{
+  var existing    = el.className.trim().split();
+  var new_classes = [];
+  var remove      = classes.trim().split();
+
+  for ( var i = 0; i < existing.length; i++ )
+  {
+    var found = false;
+    for ( var x = 0; x < remove.length && !found; x++ )
+    {
+      if ( existing[i] == remove[x] )
+      {
+        found = true;
+      }
+    }
+    if ( !found )
+    {
+      new_classes[new_classes.length] = existing[i];
+    }
+  }
+  return new_classes.join(' ');
+};
+
+/** Alias of Xinha._addClass()
+ *  @see Xinha#_addClass
+ */
+Xinha.addClass       = Xinha._addClass;
+/** Alias of Xinha.Xinha._removeClass()
+ *  @see Xinha#_removeClass
+ */
+Xinha.removeClass    = Xinha._removeClass;
+/** Alias of Xinha.addClasses()
+ *  @see Xinha#addClasses
+ */
+Xinha._addClasses    = Xinha.addClasses;
+/** Alias of Xinha.removeClasses()
+ *  @see Xinha#removeClasses
+ */
+Xinha._removeClasses = Xinha.removeClasses;
+
+/** Checks if one element has set the given className
+ *  
+ *  @param {DomNode}  el The DOM element to check
+ *  @param {String}   className The class to be looked for
+ *  @returns {Boolean}
+ */
+Xinha._hasClass = function(el, className)
+{
+  if ( ! ( el && el.className ) )
+  {
+    return false;
+  }
+  var cls = el.className.split(" ");
+  for ( var i = cls.length; i > 0; )
+  {
+    if ( cls[--i] == className )
+    {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * Use XMLHTTPRequest to post some data back to the server and do something
+ * with the response (asyncronously!), this is used by such things as the tidy
+ * functions
+ * @param {String} url The address for the HTTPRequest
+ * @param {Object} data The data to be passed to the server like {name:"value"}
+ * @param {Function} success A function that is called when an answer is
+ *                           received from the server with the responseText as argument.
+ * @param {Function} failure A function that is called when we fail to receive
+ *                           an answer from the server. We pass it the request object.
+ */
+ 
+/** mod_security (an apache module which scans incoming requests for potential hack attempts)
+ *  has a rule which triggers when it gets an incoming Content-Type with a charset
+ *  see ticket:1028 to try and work around this, if we get a failure in a postback
+ *  then Xinha._postback_send_charset will be set to false and the request tried again (once)
+ *  @type Boolean
+ *  @private
+ */ 
+// 
+// 
+// 
+Xinha._postback_send_charset = true;
+/** Use XMLHTTPRequest to send some some data to the server and do something
+ *  with the getback (asyncronously!)
+ * @param {String} url The address for the HTTPRequest
+ * @param {Function} success A function that is called when an answer is
+ *                           received from the server with the responseText as argument.
+ * @param {Function} failure A function that is called when we fail to receive
+ *                           an answer from the server. We pass it the request object.
+ */
+Xinha._postback = function(url, data, success, failure)
+{
+  var req = null;
+  req = Xinha.getXMLHTTPRequestObject();
+
+  var content = '';
+  if (typeof data == 'string')
+  {
+    content = data;
+  }
+  else if(typeof data == "object")
+  {
+    for ( var i in data )
+    {
+      content += (content.length ? '&' : '') + i + '=' + encodeURIComponent(data[i]);
+    }
+  }
+
+  function callBack()
+  {
+    if ( req.readyState == 4 )
+    {
+      if ( ((req.status / 100) == 2) || Xinha.isRunLocally && req.status === 0 )
+      {
+        if ( typeof success == 'function' )
+        {
+          success(req.responseText, req);
+        }
+      }
+      else if(Xinha._postback_send_charset)
+      {        
+        Xinha._postback_send_charset = false;
+        Xinha._postback(url,data,success, failure);
+      }
+      else if (typeof failure == 'function')
+      {
+        failure(req);
+      }
+      else
+      {
+        alert('An error has occurred: ' + req.statusText + '\nURL: ' + url);
+      }
+    }
+  }
+
+  req.onreadystatechange = callBack;
+
+  req.open('POST', url, true);
+  req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'+(Xinha._postback_send_charset ? '; charset=UTF-8' : ''));
+
+  req.send(content);
+};
+
+/** Use XMLHTTPRequest to receive some data from the server and do something
+ * with the it (asyncronously!)
+ * @param {String} url The address for the HTTPRequest
+ * @param {Function} success A function that is called when an answer is
+ *                           received from the server with the responseText as argument.
+ * @param {Function} failure A function that is called when we fail to receive
+ *                           an answer from the server. We pass it the request object.
+ */
+Xinha._getback = function(url, success, failure)
+{
+  var req = null;
+  req = Xinha.getXMLHTTPRequestObject();
+
+  function callBack()
+  {
+    if ( req.readyState == 4 )
+    {
+      if ( ((req.status / 100) == 2) || Xinha.isRunLocally && req.status === 0 )
+      {
+        success(req.responseText, req);
+      }
+      else if (typeof failure == 'function')
+      {
+        failure(req);
+      }
+      else
+      {
+        alert('An error has occurred: ' + req.statusText + '\nURL: ' + url);
+      }
+    }
+  }
+
+  req.onreadystatechange = callBack;
+  req.open('GET', url, true);
+  req.send(null);
+};
+
+Xinha.ping = function(url, successHandler, failHandler)
+{
+  var req = null;
+  req = Xinha.getXMLHTTPRequestObject();
+
+  function callBack()
+  {
+    if ( req.readyState == 4 )
+    {
+      if ( ((req.status / 100) == 2) || Xinha.isRunLocally && req.status === 0 )
+      {
+        if (successHandler) 
+        {
+          successHandler(req);
+        }
+      }
+      else
+      {
+        if (failHandler) 
+        {
+          failHandler(req);
+        }
+      }
+    }
+  }
+
+  // Opera seems to have some problems mixing HEAD requests with GET requests.
+  // The GET is slower, so it's a net slowdown for Opera, but it keeps things
+  // from breaking.
+  var method = 'GET';
+  req.onreadystatechange = callBack;
+  req.open(method, url, true);
+  req.send(null);
+};
+
+/** Use XMLHTTPRequest to receive some data from the server syncronously
+ *  @param {String} url The address for the HTTPRequest
+ */
+Xinha._geturlcontent = function(url, returnXML)
+{
+  var req = null;
+  req = Xinha.getXMLHTTPRequestObject();
+
+  // Synchronous!
+  req.open('GET', url, false);
+  req.send(null);
+  if ( ((req.status / 100) == 2) || Xinha.isRunLocally && req.status === 0 )
+  {
+    return (returnXML) ? req.responseXML : req.responseText;
+  }
+  else
+  {
+    return '';
+  }
+};
+
+// Unless somebody already has, make a little function to debug things
+
+if (typeof dumpValues == 'undefined') 
+{
+  dumpValues = function(o)
+  {
+    var s = '';
+    for (var prop in o) 
+    {
+      if (window.console && typeof window.console.log == 'function') 
+      {
+        if (typeof console.firebug != 'undefined') 
+        {
+          console.log(o);
+        }
+        else 
+        {
+          console.log(prop + ' = ' + o[prop] + '\n');
+        }
+      }
+      else
+      {
+        s += prop + ' = ' + o[prop] + '\n';
+      }
+    }
+    if (s) 
+    {
+      if (document.getElementById('errors'))
+      {
+        document.getElementById('errors').value += s;
+      }
+      else
+      {
+        var x = window.open("", "debugger");
+        x.document.write('<pre>' + s + '</pre>');
+      }
+
+    }
+  };
+}
+if ( !Array.prototype.contains )
+{
+  /** Walks through an array and checks if the specified item exists in it
+  * @param {String} needle The string to search for
+  * @returns {Boolean} True if item found, false otherwise 
+  */
+  Array.prototype.contains = function(needle)
+  {
+    var haystack = this;
+    for ( var i = 0; i < haystack.length; i++ )
+    {
+      if ( needle == haystack[i] )
+      {
+        return true;
+      }
+    }
+    return false;
+  };
+}
+
+if ( !Array.prototype.indexOf )
+{
+  /** Walks through an array and, if the specified item exists in it, returns the position
+  * @param {String} needle The string to search for
+  * @returns {Integer|null} Index position if item found, null otherwise 
+  */
+  Array.prototype.indexOf = function(needle)
+  {
+    var haystack = this;
+    for ( var i = 0; i < haystack.length; i++ )
+    {
+      if ( needle == haystack[i] )
+      {
+        return i;
+      }
+    }
+    return null;
+  };
+}
+if ( !Array.prototype.append )
+{
+  /** Adds an item to an array
+   * @param {Mixed} a Item to add
+   * @returns {Array} The array including the newly added item
+   */
+  Array.prototype.append  = function(a)
+  {
+    for ( var i = 0; i < a.length; i++ )
+    {
+      this.push(a[i]);
+    }
+    return this;
+  };
+}
+/** Executes a provided function once per array element.
+ *  Custom implementation for JS engines that don't support it natively
+ * @source http://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/Array/ForEach
+ * @param {Function} fn Function to execute for each element
+ * @param {Object} thisObject Object to use as this when executing callback. 
+ */
+if (!Array.prototype.forEach)
+{
+  Array.prototype.forEach = function(fn /*, thisObject*/)
+  {
+    var len = this.length;
+    if (typeof fn != "function")
+    {
+      throw new TypeError();
+    }
+
+    var thisObject = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+      {
+        fn.call(thisObject, this[i], i, this);
+      }
+    }
+  };
+}
+/** Returns all elements within a given class name inside an element
+ * @type Array
+ * @param {DomNode|document} el wherein to search
+ * @param {Object} className
+ */
+Xinha.getElementsByClassName = function(el,className)
+{
+  if (el.getElementsByClassName)
+  {
+    return Array.prototype.slice.call(el.getElementsByClassName(className));
+  }
+  else
+  {
+    var els = el.getElementsByTagName('*');
+    var result = [];
+    var classNames;
+    for (var i=0;i<els.length;i++)
+    {
+      classNames = els[i].className.split(' ');
+      if (classNames.contains(className)) 
+      {
+        result.push(els[i]);
+      }
+    }
+    return result;
+  }
+};
+
+/** Returns true if all elements of <em>a2</em> are also contained in <em>a1</em> (at least I think this is what it does)
+* @param {Array} a1
+* @param {Array} a2
+* @returns {Boolean}
+*/
+Xinha.arrayContainsArray = function(a1, a2)
+{
+  var all_found = true;
+  for ( var x = 0; x < a2.length; x++ )
+  {
+    var found = false;
+    for ( var i = 0; i < a1.length; i++ )
+    {
+      if ( a1[i] == a2[x] )
+      {
+        found = true;
+        break;
+      }
+    }
+    if ( !found )
+    {
+      all_found = false;
+      break;
+    }
+  }
+  return all_found;
+};
+/** Walks through an array and applies a filter function to each item
+* @param {Array} a1 The array to filter
+* @param {Function} filterfn If this function returns true, the item is added to the new array
+* @returns {Array} Filtered array
+*/
+Xinha.arrayFilter = function(a1, filterfn)
+{
+  var new_a = [ ];
+  for ( var x = 0; x < a1.length; x++ )
+  {
+    if ( filterfn(a1[x]) )
+    {
+      new_a[new_a.length] = a1[x];
+    }
+  }
+  return new_a;
+};
+/** Converts a Collection object to an array 
+* @param {Collection} collection The array to filter
+* @returns {Array} Array containing the item of collection
+*/
+Xinha.collectionToArray = function(collection)
+{
+  try
+  {
+    return collection.length ? Array.prototype.slice.call(collection) : []; //Collection to Array
+  }
+  catch(e)
+  {
+    // In certain implementations (*cough* IE), you can't call slice on a
+    // collection.  We'll fallback to using the simple, non-native iterative
+    // approach.
+  }
+
+  var array = [ ];
+  for ( var i = 0; i < collection.length; i++ )
+  {
+    array.push(collection.item(i));
+  }
+  return array;
+};
+
+/** Index for Xinha.uniq function 
+*	@private
+*/
+Xinha.uniq_count = 0;
+/** Returns a string that is unique on the page
+*	@param {String} prefix This string is prefixed to a running number
+*   @returns {String}
+*/
+Xinha.uniq = function(prefix)
+{
+  return prefix + Xinha.uniq_count++;
+};
+
+// New language handling functions
+
+/** Load a language file.
+ *  This function should not be used directly, Xinha._lc will use it when necessary.
+ *  @private
+ *  @param {String} context Case sensitive context name, eg 'Xinha', 'TableOperations', ...
+ *  @returns {Object}
+ */
+Xinha._loadlang = function(context,url)
+{
+  var lang;
+  
+  if ( typeof _editor_lcbackend == "string" )
+  {
+    //use backend
+    url = _editor_lcbackend;
+    url = url.replace(/%lang%/, _editor_lang);
+    url = url.replace(/%context%/, context);
+  }
+  else if (!url)
+  {
+    //use internal files
+    if ( context != 'Xinha')
+    {
+      url = Xinha.getPluginDir(context)+"/lang/"+_editor_lang+".js";
+    }
+    else
+    {
+      Xinha.setLoadingMessage("Loading language");
+      url = _editor_url+"lang/"+_editor_lang+".js";
+    }
+  }
+
+  var langData = Xinha._geturlcontent(url);
+  if ( langData !== "" )
+  {
+    try
+    {
+      eval('lang = ' + langData);
+    }
+    catch(ex)
+    {
+      alert('Error reading Language-File ('+url+'):\n'+Error.toString());
+      lang = {};
+    }
+  }
+  else
+  {
+    lang = {};
+  }
+
+  return lang;
+};
+
+/** Return a localised string.
+ * @param {String} string English language string. It can also contain variables in the form "Some text with $variable=replaced text$". 
+ *                  This replaces $variable in "Some text with $variable" with "replaced text"
+ * @param {String} context   Case sensitive context name, eg 'Xinha' (default), 'TableOperations'...
+ * @param {Object} replace   Replace $variables in String, eg {foo: 'replaceText'} ($foo in string will be replaced by replaceText)
+ */
+Xinha._lc = function(string, context, replace)
+{
+  var url,ret;
+  if (typeof context == 'object' && context.url && context.context)
+  {
+    url = context.url + _editor_lang + ".js";
+    context = context.context;
+  }
+
+  var m = null;
+  if (typeof string == 'string') 
+  {
+    m = string.match(/\$(.*?)=(.*?)\$/g);
+  }
+  if (m) 
+  {
+    if (!replace) 
+    {
+      replace = {};
+    }
+    for (var i = 0;i<m.length;i++)
+    {
+      var n = m[i].match(/\$(.*?)=(.*?)\$/);
+      replace[n[1]] = n[2];
+      string = string.replace(n[0],'$'+n[1]);
+    }
+  }
+  if ( _editor_lang == "en" )
+  {
+    if ( typeof string == 'object' && string.string )
+    {
+      ret = string.string;
+    }
+    else
+    {
+      ret = string;
+    }
+  }
+  else
+  {
+    if ( typeof Xinha._lc_catalog == 'undefined' )
+    {
+      Xinha._lc_catalog = [ ];
+    }
+
+    if ( typeof context == 'undefined' )
+    {
+      context = 'Xinha';
+    }
+
+    if ( typeof Xinha._lc_catalog[context] == 'undefined' )
+    {
+      Xinha._lc_catalog[context] = Xinha._loadlang(context,url);
+    }
+
+    var key;
+    if ( typeof string == 'object' && string.key )
+    {
+      key = string.key;
+    }
+    else if ( typeof string == 'object' && string.string )
+    {
+      key = string.string;
+    }
+    else
+    {
+      key = string;
+    }
+
+    if ( typeof Xinha._lc_catalog[context][key] == 'undefined' )
+    {
+      if ( context=='Xinha' )
+      {
+        // Indicate it's untranslated
+        if ( typeof string == 'object' && string.string )
+        {
+          ret = string.string;
+        }
+        else
+        {
+          ret = string;
+        }
+      }
+      else
+      {
+        //if string is not found and context is not Xinha try if it is in Xinha
+        return Xinha._lc(string, 'Xinha', replace);
+      }
+    }
+    else
+    {
+      ret = Xinha._lc_catalog[context][key];
+    }
+  }
+
+  if ( typeof string == 'object' && string.replace )
+  {
+    replace = string.replace;
+  }
+  if ( typeof replace != "undefined" )
+  {
+    for ( i in replace )
+    {
+      ret = ret.replace('$'+i, replace[i]);
+    }
+  }
+
+  return ret;
+};
+/** Walks through the children of a given element and checks if any of the are visible (= not display:none)
+ * @param {DomNode} el 
+ * @returns {Boolean} 
+ */
+Xinha.hasDisplayedChildren = function(el)
+{
+  var children = el.childNodes;
+  for ( var i = 0; i < children.length; i++ )
+  {
+    if ( children[i].tagName )
+    {
+      if ( children[i].style.display != 'none' )
+      {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+/** Load a javascript file by inserting it in the HEAD tag and eventually call a function when loaded
+ *
+ *  Note that this method cannot be abstracted into browser specific files
+ *  because this method LOADS the browser specific files.  Hopefully it should work for most
+ *  browsers as it is.
+ *
+ * @param {String} url               Source url of the file to load
+ * @param {Object} callback optional Callback function to launch once ready 
+ * @param {Object} scope    optional Application scope for the callback function
+ * @param {Object} bonus    optional Arbitrary object send as a param to the callback function
+ */
+Xinha._loadback = function(url, callback, scope, bonus)
+{  
+  if ( document.getElementById(url) )
+  {
+    return true;
+  }
+  var t = !Xinha.is_ie ? "onload" : 'onreadystatechange';
+  var s = document.createElement("script");
+  s.type = "text/javascript";
+  s.src = url;
+  s.id = url;
+  if ( callback )
+  {
+    s[t] = function()
+    {      
+      if (Xinha.is_ie && (!/loaded|complete/.test(window.event.srcElement.readyState)))
+      {
+        return;
+      }
+      
+      callback.call(scope ? scope : this, bonus);
+      s[t] = null;
+    };
+  }
+  document.getElementsByTagName("head")[0].appendChild(s);
+  return false;
+};
+
+/** Xinha's main loading function (see NewbieGuide)
+ * @param {Array} editor_names
+ * @param {Xinha.Config} default_config
+ * @param {Array} plugin_names
+ * @returns {Object} An object that contains references to all created editors indexed by the IDs of the textareas 
+ */
+Xinha.makeEditors = function(editor_names, default_config, plugin_names)
+{
+  if (!Xinha.isSupportedBrowser) 
+  {
+    return;
+  }
+  
+  if ( typeof default_config == 'function' )
+  {
+    default_config = default_config();
+  }
+
+  var editors = {};
+  var textarea;
+  for ( var x = 0; x < editor_names.length; x++ )
+  {
+    if ( typeof editor_names[x] == 'string' ) // the regular case, an id of a textarea
+    {
+      textarea = Xinha.getElementById('textarea', editor_names[x] );
+      if (!textarea) // the id may be specified for a textarea that is maybe on another page; we simply skip it and go on
+      {
+        editor_names[x] = null;
+        continue;
+      }
+    }
+	 // make it possible to pass a reference instead of an id, for example from  document.getElementsByTagName('textarea')
+    else if ( typeof editor_names[x] == 'object' && editor_names[x].tagName && editor_names[x].tagName.toLowerCase() == 'textarea' )
+    {
+      textarea =  editor_names[x];
+      if ( !textarea.id ) // we'd like to have the textarea have an id
+      {
+        textarea.id = 'xinha_id_' + x;
+      } 
+    }
+    var editor = new Xinha(textarea, Xinha.cloneObject(default_config));
+    editor.registerPlugins(plugin_names);
+    editors[textarea.id] = editor;
+  }
+  return editors;
+};
+/** Another main loading function (see NewbieGuide)
+ * @param {Object} editors As returned by Xinha.makeEditors()
+ */
+Xinha.startEditors = function(editors)
+{
+  if (!Xinha.isSupportedBrowser) 
+  {
+    return;
+  }
+  
+  for ( var i in editors )
+  {
+    if ( editors[i].generate )
+    {
+      editors[i].generate();
+    }
+  }
+};
+/** Registers the loaded plugins with the editor
+ * @private
+ * @param {Array} plugin_names
+ */
+Xinha.prototype.registerPlugins = function(plugin_names)
+{
+  if (!Xinha.isSupportedBrowser) 
+  {
+    return;
+  }
+  
+  if ( plugin_names )
+  {
+    for ( var i = 0; i < plugin_names.length; i++ )
+    {
+      this.setLoadingMessage(Xinha._lc('Register plugin $plugin', 'Xinha', {'plugin': plugin_names[i]}));
+      this.registerPlugin(plugin_names[i]);
+    }
+  }
+};
+
+/** Utility function to base64_encode some arbitrary data, uses the builtin btoa() if it exists (Moz) 
+*  @param {String} input
+*  @returns {String}
+*/
+Xinha.base64_encode = function(input)
+{
+  var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var output = "";
+  var chr1, chr2, chr3;
+  var enc1, enc2, enc3, enc4;
+  var i = 0;
+
+  do
+  {
+    chr1 = input.charCodeAt(i++);
+    chr2 = input.charCodeAt(i++);
+    chr3 = input.charCodeAt(i++);
+
+    enc1 = chr1 >> 2;
+    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+    enc4 = chr3 & 63;
+
+    if ( isNaN(chr2) )
+    {
+      enc3 = enc4 = 64;
+    }
+    else if ( isNaN(chr3) )
+    {
+      enc4 = 64;
+    }
+
+    output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+  } while ( i < input.length );
+
+  return output;
+};
+
+/** Utility function to base64_decode some arbitrary data, uses the builtin atob() if it exists (Moz)
+ *  @param {String} input
+ *  @returns {String}
+ */
+Xinha.base64_decode = function(input)
+{
+  var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  var output = "";
+  var chr1, chr2, chr3;
+  var enc1, enc2, enc3, enc4;
+  var i = 0;
+
+  // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+  input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+  do
+  {
+    enc1 = keyStr.indexOf(input.charAt(i++));
+    enc2 = keyStr.indexOf(input.charAt(i++));
+    enc3 = keyStr.indexOf(input.charAt(i++));
+    enc4 = keyStr.indexOf(input.charAt(i++));
+
+    chr1 = (enc1 << 2) | (enc2 >> 4);
+    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+    chr3 = ((enc3 & 3) << 6) | enc4;
+
+    output = output + String.fromCharCode(chr1);
+
+    if ( enc3 != 64 )
+    {
+      output = output + String.fromCharCode(chr2);
+    }
+    if ( enc4 != 64 )
+    {
+      output = output + String.fromCharCode(chr3);
+    }
+  } while ( i < input.length );
+
+  return output;
+};
+/** Removes a node from the DOM
+ *  @param {DomNode} el The element to be removed
+ *  @returns {DomNode} The removed element
+ */
+Xinha.removeFromParent = function(el)
+{
+  if ( !el.parentNode )
+  {
+    return;
+  }
+  var pN = el.parentNode;
+  return pN.removeChild(el);
+};
+/** Checks if some element has a parent node
+ *  @param {DomNode} el 
+ *  @returns {Boolean}
+ */
+Xinha.hasParentNode = function(el)
+{
+  if ( el.parentNode )
+  {
+    // When you remove an element from the parent in IE it makes the parent
+    // of the element a document fragment.  Moz doesn't.
+    if ( el.parentNode.nodeType == 11 )
+    {
+      return false;
+    }
+    return true;
+  }
+
+  return false;
+};
+
+/** Detect the size of visible area
+ *  @param {Window} scope optional When calling from a popup window, pass its window object to get the values of the popup
+ *  @returns {Object} Object with Integer properties x and y
+ */
+Xinha.viewportSize = function(scope)
+{
+  scope = (scope) ? scope : window;
+  var x,y;
+  if (scope.innerHeight) // all except Explorer
+  {
+    x = scope.innerWidth;
+    y = scope.innerHeight;
+  }
+  else if (scope.document.documentElement && scope.document.documentElement.clientHeight)
+  // Explorer 6 Strict Mode
+  {
+    x = scope.document.documentElement.clientWidth;
+    y = scope.document.documentElement.clientHeight;
+  }
+  else if (scope.document.body) // other Explorers
+  {
+    x = scope.document.body.clientWidth;
+    y = scope.document.body.clientHeight;
+  }
+  return {'x':x,'y':y};
+};
+/** Detect the size of the whole document
+ *  @param {Window} scope optional When calling from a popup window, pass its window object to get the values of the popup
+ *  @returns {Object} Object with Integer properties x and y
+ */
+Xinha.pageSize = function(scope)
+{
+  scope = (scope) ? scope : window;
+  var x,y;
+ 
+  var test1 = scope.document.body.scrollHeight; //IE Quirks
+  var test2 = scope.document.documentElement.scrollHeight; // IE Standard + Moz Here quirksmode.org errs! 
+
+  if (test1 > test2) 
+  {
+    x = scope.document.body.scrollWidth;
+    y = scope.document.body.scrollHeight;
+  }
+  else
+  {
+    x = scope.document.documentElement.scrollWidth;
+    y = scope.document.documentElement.scrollHeight;
+  }  
+  return {'x':x,'y':y};
+};
+/** Detect the current scroll position
+ *  @param {Window} scope optional When calling from a popup window, pass its window object to get the values of the popup
+ *  @returns {Object} Object with Integer properties x and y
+ */
+Xinha.prototype.scrollPos = function(scope)
+{
+  scope = (scope) ? scope : window;
+  var x,y;
+  if (typeof scope.pageYOffset != 'undefined') // all except Explorer
+  {
+    x = scope.pageXOffset;
+    y = scope.pageYOffset;
+  }
+  else if (scope.document.documentElement && typeof document.documentElement.scrollTop != 'undefined')
+    // Explorer 6 Strict
+  {
+    x = scope.document.documentElement.scrollLeft;
+    y = scope.document.documentElement.scrollTop;
+  }
+  else if (scope.document.body) // all other Explorers
+  {
+    x = scope.document.body.scrollLeft;
+    y = scope.document.body.scrollTop;
+  }
+  return {'x':x,'y':y};
+};
+
+/** Calculate the top and left pixel position of an element in the DOM.
+ *  @param  {DomNode} element HTML Element
+ *  @returns {Object} Object with Integer properties top and left
+ */
+ 
+Xinha.getElementTopLeft = function(element) 
+{
+  var curleft = 0;
+  var curtop =  0;
+  if (element.offsetParent) 
+  {
+    curleft = element.offsetLeft;
+    curtop = element.offsetTop;
+    while (element = element.offsetParent) 
+    {
+      curleft += element.offsetLeft;
+      curtop += element.offsetTop;
+    }
+  }
+  return { top:curtop, left:curleft };
+};
+/** Find left pixel position of an element in the DOM.
+ *  @param  {DomNode} element HTML Element
+ *  @returns {Integer} 
+ */
+Xinha.findPosX = function(obj)
+{
+  var curleft = 0;
+  if ( obj.offsetParent )
+  {
+    return Xinha.getElementTopLeft(obj).left;
+  }
+  else if ( obj.x )
+  {
+    curleft += obj.x;
+  }
+  return curleft;
+};
+/** Find top pixel position of an element in the DOM.
+ *  @param  {DomNode} element HTML Element
+ *  @returns {Integer} 
+ */
+Xinha.findPosY = function(obj)
+{
+  var curtop = 0;
+  if ( obj.offsetParent )
+  {
+    return Xinha.getElementTopLeft(obj).top;    
+  }
+  else if ( obj.y )
+  {
+    curtop += obj.y;
+  }
+  return curtop;
+};
+
+Xinha.createLoadingMessages = function(xinha_editors)
+{
+  if ( Xinha.loadingMessages || !Xinha.isSupportedBrowser ) 
+  {
+    return;
+  }
+  Xinha.loadingMessages = [];
+  
+  for (var i=0;i<xinha_editors.length;i++)
+  {
+    if (!document.getElementById(xinha_editors[i])) 
+    {
+      continue;
+    }
+    Xinha.loadingMessages.push(Xinha.createLoadingMessage(Xinha.getElementById('textarea', xinha_editors[i])));
+  }
+};
+
+Xinha.createLoadingMessage = function(textarea,text)
+{ 
+  if ( document.getElementById("loading_" + textarea.id) || !Xinha.isSupportedBrowser)
+  {
+    return;
+  }
+  // Create and show the main loading message and the sub loading message for details of loading actions
+  // global element
+  var loading_message = document.createElement("div");
+  loading_message.id = "loading_" + textarea.id;
+  loading_message.className = "loading";
+  
+  loading_message.style.left = (Xinha.findPosX(textarea) + textarea.offsetWidth / 2) - 106 +  'px';
+  loading_message.style.top = (Xinha.findPosY(textarea) + textarea.offsetHeight / 2) - 50 +  'px';
+  // main static message
+  var loading_main = document.createElement("div");
+  loading_main.className = "loading_main";
+  loading_main.id = "loading_main_" + textarea.id;
+  loading_main.appendChild(document.createTextNode(Xinha._lc("Loading in progress. Please wait!")));
+  // sub dynamic message
+  var loading_sub = document.createElement("div");
+  loading_sub.className = "loading_sub";
+  loading_sub.id = "loading_sub_" + textarea.id;
+  text = text ? text : Xinha._lc("Loading Core");
+  loading_sub.appendChild(document.createTextNode(text));
+  loading_message.appendChild(loading_main);
+  loading_message.appendChild(loading_sub);
+  document.body.appendChild(loading_message);
+  
+  Xinha.freeLater(loading_message);
+  Xinha.freeLater(loading_main);
+  Xinha.freeLater(loading_sub);
+  
+  return loading_sub;
+};
+
+Xinha.prototype.setLoadingMessage = function(subMessage, mainMessage)
+{
+  if ( !document.getElementById("loading_sub_" + this._textArea.id) )
+  {
+    return;
+  }
+  document.getElementById("loading_main_" + this._textArea.id).innerHTML = mainMessage ? mainMessage : Xinha._lc("Loading in progress. Please wait!");
+  document.getElementById("loading_sub_" + this._textArea.id).innerHTML = subMessage;
+};
+
+Xinha.setLoadingMessage = function(string)
+{
+  if (!Xinha.loadingMessages) 
+  {
+    return;
+  }
+  for ( var i = 0; i < Xinha.loadingMessages.length; i++ )
+  {
+    Xinha.loadingMessages[i].innerHTML = string;
+  }
+};
+
+Xinha.prototype.removeLoadingMessage = function()
+{
+  if (document.getElementById("loading_" + this._textArea.id) )
+  {
+   document.body.removeChild(document.getElementById("loading_" + this._textArea.id));
+  }
+};
+
+Xinha.removeLoadingMessages = function(xinha_editors)
+{
+  for (var i=0;i< xinha_editors.length;i++)
+  {
+     if (!document.getElementById(xinha_editors[i])) 
+     {
+       continue;
+     }
+     var main = document.getElementById("loading_" + document.getElementById(xinha_editors[i]).id);
+     main.parentNode.removeChild(main);
+  }
+  Xinha.loadingMessages = null;
+};
+
+/** List of objects that have to be trated on page unload in order to work around the broken 
+ * Garbage Collector in IE
+ * @private
+ * @see Xinha#freeLater
+ * @see Xinha#free
+ * @see Xinha#collectGarbageForIE
+ */
+Xinha.toFree = [];
+/** Adds objects to Xinha.toFree 
+ * @param {Object} object The object to free memory
+ * @param (String} prop optional  The property to release
+ * @private
+ * @see Xinha#toFree
+ * @see Xinha#free
+ * @see Xinha#collectGarbageForIE
+ */
+Xinha.freeLater = function(obj,prop)
+{
+  Xinha.toFree.push({o:obj,p:prop});
+};
+
+/** Release memory properties from object
+ * @param {Object} object The object to free memory
+ * @param (String} prop optional The property to release
+ * @private
+ * @see Xinha#collectGarbageForIE
+ * @see Xinha#free
+ */
+Xinha.free = function(obj, prop)
+{
+  if ( obj && !prop )
+  {
+    for ( var p in obj )
+    {
+      Xinha.free(obj, p);
+    }
+  }
+  else if ( obj )
+  {
+    if ( prop.indexOf('src') == -1 ) // if src (also lowsrc, and maybe dynsrc ) is set to null, a file named "null" is requested from the server (see #1001)
+    {
+      try { obj[prop] = null; } catch(x) {}
+    }
+  }
+};
+
+/** IE's Garbage Collector is broken very badly.  We will do our best to 
+ *   do it's job for it, but we can't be perfect. Takes all objects from Xinha.free and releases sets the null
+ * @private
+ * @see Xinha#toFree
+ * @see Xinha#free
+ */
+
+Xinha.collectGarbageForIE = function() 
+{  
+  Xinha.flushEvents();   
+  for ( var x = 0; x < Xinha.toFree.length; x++ )
+  {
+    Xinha.free(Xinha.toFree[x].o, Xinha.toFree[x].p);
+    Xinha.toFree[x].o = null;
+  }
+};
+
+
+// The following methods may be over-ridden or extended by the browser specific
+// javascript files.
+
+
+/** Insert a node at the current selection point. 
+ * @param {DomNode} toBeInserted
+ */
+
+Xinha.prototype.insertNodeAtSelection = function(toBeInserted) { Xinha.notImplemented("insertNodeAtSelection"); };
+
+/** Get the parent element of the supplied or current selection. 
+ *  @param {Selection} sel optional selection as returned by getSelection
+ *  @returns {DomNode}
+ */
+  
+Xinha.prototype.getParentElement      = function(sel) { Xinha.notImplemented("getParentElement"); };
+
+/**
+ * Returns the selected element, if any.  That is,
+ * the element that you have last selected in the "path"
+ * at the bottom of the editor, or a "control" (eg image)
+ *
+ * @returns {DomNode|null}
+ */
+ 
+Xinha.prototype.activeElement         = function(sel) { Xinha.notImplemented("activeElement"); };
+
+/** 
+ * Determines if the given selection is empty (collapsed).
+ * @param {Selection} sel Selection object as returned by getSelection
+ * @returns {Boolean}
+ */
+ 
+Xinha.prototype.selectionEmpty        = function(sel) { Xinha.notImplemented("selectionEmpty"); };
+/** 
+ * Returns a range object to be stored 
+ * and later restored with Xinha.prototype.restoreSelection()
+ * @returns {Range}
+ */
+
+Xinha.prototype.saveSelection = function() { Xinha.notImplemented("saveSelection"); };
+
+/** Restores a selection previously stored
+ * @param {Range} savedSelection Range object as returned by Xinha.prototype.restoreSelection()
+ */
+Xinha.prototype.restoreSelection = function(savedSelection)  { Xinha.notImplemented("restoreSelection"); };
+
+/**
+ * Selects the contents of the given node.  If the node is a "control" type element, (image, form input, table)
+ * the node itself is selected for manipulation.
+ *
+ * @param {DomNode} node 
+ * @param {Integer} pos  Set to a numeric position inside the node to collapse the cursor here if possible. 
+ */
+Xinha.prototype.selectNodeContents    = function(node,pos) { Xinha.notImplemented("selectNodeContents"); };
+
+/** Insert HTML at the current position, deleting the selection if any. 
+ *  
+ *  @param {String} html
+ */
+ 
+Xinha.prototype.insertHTML            = function(html) { Xinha.notImplemented("insertHTML"); };
+
+/** Get the HTML of the current selection.  HTML returned has not been passed through outwardHTML.
+ *
+ * @returns {String}
+ */
+Xinha.prototype.getSelectedHTML       = function() { Xinha.notImplemented("getSelectedHTML"); };
+
+/** Get a Selection object of the current selection.  Note that selection objects are browser specific.
+ *
+ * @returns {Selection}
+ */
+ 
+Xinha.prototype.getSelection          = function() { Xinha.notImplemented("getSelection"); };
+
+/** Create a Range object from the given selection.  Note that range objects are browser specific.
+ *  @see Xinha#getSelection
+ *  @param {Selection} sel Selection object 
+ *  @returns {Range}
+ */
+Xinha.prototype.createRange           = function(sel) { Xinha.notImplemented("createRange"); };
+
+/** Determine if the given event object is a keydown/press event.
+ *
+ *  @param {Event} event 
+ *  @returns {Boolean}
+ */
+ 
+Xinha.prototype.isKeyEvent            = function(event) { Xinha.notImplemented("isKeyEvent"); };
+
+/** Determines if the given key event object represents a combination of CTRL-<key>,
+ *  which for Xinha is a shortcut.  Note that CTRL-ALT-<key> is not a shortcut.
+ *
+ *  @param    {Event} keyEvent
+ *  @returns  {Boolean}
+ */
+ 
+Xinha.prototype.isShortCut = function(keyEvent)
+{
+  if(keyEvent.ctrlKey && !keyEvent.altKey)
+  {
+    return true;
+  }
+  
+  return false;
+};
+
+/** Return the character (as a string) of a keyEvent  - ie, press the 'a' key and
+ *  this method will return 'a', press SHIFT-a and it will return 'A'.
+ * 
+ *  @param   {Event} keyEvent
+ *  @returns {String}
+ */
+                                   
+Xinha.prototype.getKey = function(keyEvent) { Xinha.notImplemented("getKey"); };
+
+/** Return the HTML string of the given Element, including the Element.
+ * 
+ * @param {DomNode} element HTML Element
+ * @returns {String}
+ */
+ 
+Xinha.getOuterHTML = function(element) { Xinha.notImplemented("getOuterHTML"); };
+
+/** Get a new XMLHTTPRequest Object ready to be used. 
+ *
+ * @returns {XMLHTTPRequest}
+ */
+
+Xinha.getXMLHTTPRequestObject = function() 
+{
+  try
+  {    
+    if (typeof XMLHttpRequest != "undefined" && typeof XMLHttpRequest.constructor == 'function' ) // Safari's XMLHttpRequest is typeof object
+    {
+  	  return new XMLHttpRequest();
+    }
+  	else if (typeof ActiveXObject == "function")
+  	{
+  	  return new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+  }
+  catch(e)
+  {
+    Xinha.notImplemented('getXMLHTTPRequestObject');
+  }
+};
+ 
+// Compatability - all these names are deprecated and will be removed in a future version
+/** Alias of activeElement()
+ * @see Xinha#activeElement
+ * @deprecated
+ * @returns {DomNode|null}
+ */
+Xinha.prototype._activeElement  = function(sel) { return this.activeElement(sel); };
+/** Alias of selectionEmpty()
+ * @see Xinha#selectionEmpty
+ * @deprecated
+ * @param {Selection} sel Selection object as returned by getSelection
+ * @returns {Boolean}
+ */
+Xinha.prototype._selectionEmpty = function(sel) { return this.selectionEmpty(sel); };
+/** Alias of getSelection()
+ * @see Xinha#getSelection
+ * @deprecated
+ * @returns {Selection}
+ */
+Xinha.prototype._getSelection   = function() { return this.getSelection(); };
+/** Alias of createRange()
+ * @see Xinha#createRange
+ * @deprecated
+ * @param {Selection} sel Selection object
+ * @returns {Range}
+ */
+Xinha.prototype._createRange    = function(sel) { return this.createRange(sel); };
+HTMLArea = Xinha;
+
+//what is this for? Do we need it?
+Xinha.init();
+
+if ( Xinha.ie_version < 8 )
+{
+  Xinha.addDom0Event(window,'unload',Xinha.collectGarbageForIE);
+}
+/** Print some message to Firebug, Webkit, Opera, or IE8 console
+ * 
+ * @param {String} text
+ * @param {String} level one of 'warn', 'info', or empty 
+ */
+Xinha.debugMsg = function(text, level)
+{
+  if (typeof console != 'undefined' && typeof console.log == 'function') 
+  {
+    if (level && level == 'warn' && typeof console.warn == 'function') 
+    {
+      console.warn(text);
+    }
+    else 
+      if (level && level == 'info' && typeof console.info == 'function') 
+      {
+        console.info(text);
+      }
+      else 
+      {
+        console.log(text);
+      }
+  }
+  else if (typeof opera != 'undefined' && typeof opera.postError == 'function') 
+  {
+    opera.postError(text);
+  }
+};
+Xinha.notImplemented = function(methodName) 
+{
+  throw new Error("Method Not Implemented", "Part of Xinha has tried to call the " + methodName + " method which has not been implemented.");
 };
