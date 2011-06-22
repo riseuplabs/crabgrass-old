@@ -246,21 +246,19 @@ Element.addMethods({
 //mouse:wheel
 (function(){
 	function wheel(event){
-		var delta;
+		var delta, element, custom_event;
 		// normalize the delta
-		if(event.wheelDelta) // IE & Opera
+		if(event.wheelDelta) { // IE & Opera
 			delta = event.wheelDelta / 120;
-		else if (event.detail) // W3C
+		} else if (event.detail) { // W3C
 			delta =- event.detail / 3;
-		if(!delta)
-			return;
-		/* CRABGRASS HACK: Prototype's 'Event.element(event)' works
-											used to be 'event.element()' which did not work */
-		var custom_event = Event.element(event).fire('mouse:wheel',{
-			delta: delta
-		});
-		if(custom_event.stopped){
-			event.stop();
+		}
+		if(!delta) { return; }
+		element = Event.extend(event).target;
+		element = Element.extend(element.fire == undefined ? element.parentNode : element);
+		custom_event = element.fire('mouse:wheel',{ delta: delta });
+		if(custom_event.stopped) {
+			Event.stop(event);
 			return false;
 		}
 	}
