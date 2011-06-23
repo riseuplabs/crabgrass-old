@@ -185,17 +185,17 @@ module LayoutHelper
     end
 
     bundles = JS_BUNDLE_LOAD_ORDER & bundles.keys    # sort the bundles
+    if from_plugin.any?
+      from_plugin.each do |plugin, js|
+        js.each { |j| includes << javascript_include_tag(j, :plugin => plugin) }
+      end
+    end
     bundles.each do |bundle|
       args = JS_BUNDLES_COMBINED[bundle] + [{:cache => bundle.to_s}]  # ie ['dragdrop', 'builder', {:cache => 'extra'}]
       includes << javascript_include_tag(*args)
     end
     if as_needed.any?
       includes << javascript_include_tag(*as_needed.keys)
-    end
-    if from_plugin.any?
-      from_plugin.each do |plugin, js|
-        js.each { |j| includes << javascript_include_tag(j, :plugin => plugin) }
-      end
     end
     remotes.each do |remote|
       # can't use javascript_include tag here as we might have paths that do
