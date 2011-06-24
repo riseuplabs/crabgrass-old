@@ -11,7 +11,19 @@ Event.observe(window, 'load',
   }
 );
 
-// $('upload_button').observe('click', startProgressBar);
+function observeRealUpload() {
+  $$('.real-upload').each( function (upload) {
+    upload.observe('change', updateFakeUpload);
+  });
+}
+
+function updateFakeUpload(event) {
+  real = event.element();
+  var fake = real.form.fakeupload;
+  fake.value = real.value.split('\\').pop().split('/').pop();
+  fake.addClassName('filled');
+  fake.addClassName(fake.value.split('.').pop().toLowerCase());
+}
 
 function startProgressBar(button) {
   $('progress').show();
@@ -25,7 +37,7 @@ function startProgressBar(button) {
   //update the progress bar
   var uuid = $('X-Progress-ID').value;
   new PeriodicalExecuter(
-    function(){
+    function(pe){
       if(Ajax.activeRequestCount == 0){
         new Ajax.Request("/progress",{
           method: 'get',
@@ -36,6 +48,11 @@ function startProgressBar(button) {
               upload.percent = Math.floor((upload.received / upload.size) * 100);
               $('bar').setStyle({width: upload.percent + "%"});
               $('bar').update(upload.percent + "%");
+            }
+            if(upload.state == 'done'){
+              $('bar').setStyle({width: "100%"});
+              $('bar').update("100 % - done");
+              pe.stop();
             }
           }
         })

@@ -494,6 +494,8 @@ en:
   edit_gallery_explaination: "Add new images or drag images to rearrange their order. Click thumbnail to edit image or audio."
   show_gallery_explaination: "Click thumbnail to see full image or hear attached audio."
   back_to_gallery_link: "Back to Gallery"
+  add_images_or_zips: "Add Images or Zip File"
+  add_images_or_zips_explaination: "Zip file will automatically be extracted and put into the gallery"
   gallery_changing_cover_message: "Changing cover..."
   download: Download
   download_gallery: Download Gallery

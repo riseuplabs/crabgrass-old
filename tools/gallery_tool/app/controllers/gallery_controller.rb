@@ -1,6 +1,7 @@
 class GalleryController < BasePageController
 
   stylesheet 'gallery'
+  stylesheet 'upload', :only => :edit
   javascript :extra, 'page'
   javascript :upload, :only => :edit
   permissions 'gallery'
@@ -17,7 +18,6 @@ class GalleryController < BasePageController
 
   def edit
     @images = paginate_images
-    @upload_id = (0..29).to_a.map {|x| rand(10)}
   end
 
   # maybe call this update?

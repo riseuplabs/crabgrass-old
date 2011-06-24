@@ -46,6 +46,7 @@ class GalleryImageController < BasePageController
   end
 
   def new
+    @upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
       render :layout => false
     end
