@@ -22,7 +22,42 @@ function updateFakeUpload(event) {
   var fake = real.form.fakeupload;
   fake.value = real.value.split('\\').pop().split('/').pop();
   fake.addClassName('filled');
-  fake.addClassName(fake.value.split('.').pop().toLowerCase());
+  fake.addClassName(classNameForFile(fake.value));
+}
+
+function classNameForFile(filename) {
+  var ext = filename.split('.').pop().toLowerCase();
+  switch(ext) {
+    case 'tar': return 'mime_archive_16';
+    case 'zip': return 'mime_archive_16';
+    case 'gz': return 'mime_archive_16';
+    case 'gzip': return 'mime_archive_16';
+    case 'wav': return 'mime_audio_16';
+    case 'mp3': return 'mime_audio_16';
+    case 'ogg': return 'mime_audio_16';
+    case 'bin': return 'mime_binary_16';
+    case 'doc': return 'mime_doc_16';
+    case 'html': return 'mime_html_16';
+    case 'htm': return 'mime_html_16';
+    case 'jpg': return 'mime_image_16';
+    case 'jpeg': return 'mime_image_16';
+    case 'png': return 'mime_image_16';
+    case 'gif': return 'mime_image_16';
+    case 'xl': return 'mime_msexcel_16';
+    case 'ppt': return 'mime_mspowerpoint_16';
+    case 'pps': return 'mime_mspowerpoint_16';
+    case 'docx': return 'mime_msword_16';
+    case 'odt': return 'mime_oo_document_16';
+    case 'odp': return 'mime_oo_presentation_16';
+    case 'ods': return 'mime_oo_spreadsheet_16';
+    case 'pdf': return 'mime_pdf_16';
+    case 'rtf': return 'mime_rtf_16';
+    case 'svg': return 'mime_vector_16';
+    case 'avi': return 'mime_video_16';
+    case 'ogm': return 'mime_video_16';
+    case 'mpeg': return 'mime_video_16';
+    default: return 'mime_default_16';
+  }
 }
 
 function startProgressBar(button) {
