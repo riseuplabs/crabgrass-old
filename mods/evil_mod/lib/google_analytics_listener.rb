@@ -4,7 +4,7 @@ class GoogleAnalyticsListener < Crabgrass::Hook::ViewListener
   def footer_content(context)
     if enabled?
       %Q(
-<script src="#{config["https"] ? "https" : "http"}://www.google-analytics.com/urchin.js" type="text/javascript">
+<script src="#{config["https"] ? "https://ssl." : "http://www."}google-analytics.com/urchin.js" type="text/javascript">
 </script>
 <script type="text/javascript">
 _uacct = "#{config["site_id"]}";
