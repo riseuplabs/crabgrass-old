@@ -37,7 +37,7 @@ class People::DirectoryController < People::BaseController
   end
 
   def friends_list
-    @users = (@current_site ? @current_site.all_profiles_visible : nil) ? nil : (User.friends_of(current_user).on(current_site).alphabetized(@letter_page)).paginate(pagination_params)
+    @users = User.friends_of(current_user).on(current_site).alphabetized(@letter_page).paginate(pagination_params)
   end
 
   def peers
