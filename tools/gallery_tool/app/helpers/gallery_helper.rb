@@ -1,10 +1,10 @@
 module GalleryHelper
   def detail_view_navigation gallery, previous, this, after # next is reserved
-    @detail_view_navigation = ''
+    @detail_view_navigation = link_to('Gallery', page_url(@page,:action=>'show'))
+    @detail_view_navigation += '&nbsp;&nbsp;' + 
+      link_to_remote(I18n.t(:previous), :url => page_url(@page, :action => 'image-show', :id => previous.asset_id), :class => 'previous button' ) if !previous.nil?
     @detail_view_navigation += 
-      link_to_remote(I18n.t(:previous), :url => page_url(@page, :action => 'image-show', :id => previous.id), :class => 'previous button' ) if !previous.nil?
-    @detail_view_navigation += 
-      link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.id), :class => 'next button') if !after.nil?
+      '&nbsp; &nbsp;' + link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.asset_id), :class => 'next button') if !after.nil?
     ""
   end
 

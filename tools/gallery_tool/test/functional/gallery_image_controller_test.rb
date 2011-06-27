@@ -66,7 +66,9 @@ class GalleryImageControllerTest < ActionController::TestCase
   def test_show
     login_as :blue
     image = @gallery.assets.first
-    xhr :show, :id => image.id, :page_id => @gallery.id
+    xhr :get, :show, :id => image.id, :page_id => @gallery.id
+    assert_response :success
+    assert assigns(:showing)
   end
 
 end
