@@ -10,21 +10,17 @@ class GalleryImageController < BasePageController
 
 
   def show
+    return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
     @image_index = @showing.position
+    @image_count = @page.showings.count
     @next = @showing.lower_item
     @previous = @showing.higher_item
-
-    # we need to set @upart manually as we are not working on @page
-    @upart = @image.page.participation_for_user(current_user)
-
-    # the discussion for the detail view is not the discussion of the gallery,
-    # it is attached to the asset's hidden page:
-    @discussion = @image.page.discussion rescue nil
-    @discussion ||= Discussion.new
-    @create_post_url = url_for(:controller => 'gallery', :action => 'comment_image', :id => @image.id)
-    load_posts()
+    #raise 'next is '+@next.inspect+' and previous is '+@previous.inspect
+    render :update do |page|
+      page.replace_html 'gallery-container', :partial => 'show'
+    end
   end
 
   # TODO we still lack an edit action so far

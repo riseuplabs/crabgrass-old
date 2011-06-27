@@ -1,12 +1,10 @@
 module GalleryHelper
   def detail_view_navigation gallery, previous, this, after # next is reserved
-    @detail_view_navigation = link_to(I18n.t(:next)+"&rsaquo;",
-                                      gallery_detail_view_url(gallery, after,
-                                                              this.id),
-                                      :class => 'next button')+
-      link_to("&lsaquo;"+I18n.t(:previous),
-              gallery_detail_view_url(gallery, previous, this.id),
-              :class => 'previous button')
+    @detail_view_navigation = ''
+    @detail_view_navigation += 
+      link_to_remote(I18n.t(:previous), :url => page_url(@page, :action => 'image-show', :id => previous.id), :class => 'previous button' ) if !previous.nil?
+    @detail_view_navigation += 
+      link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.id), :class => 'next button') if !after.nil?
     ""
   end
 
@@ -33,22 +31,6 @@ module GalleryHelper
   # Raises an argument error if the element doesn't exist.
   def gallery_navigation *elements
     available_elements = {
-      :count => lambda {
-        '<p class="meta">'+if @image_index
-                             I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
-                           else
-                             I18n.t(:image_count_total, :count => @image_count.to_s )
-                           end+'</p>'
-      },
-      :edit => lambda {
-        unless params[:action] == 'edit'
-          link_to(I18n.t(:edit_gallery),
-                  page_url(@page, :action => 'edit'),
-                  :class => "small_icon picture_edit_16")
-        else
-          available_elements[:show].call
-        end
-      },
       :detail_view => lambda {
         @detail_view_navigation or ""
       },
@@ -61,15 +43,21 @@ module GalleryHelper
 
     output  = '<div class="gallery-nav">'
     output << available_elements[:detail_view].call
-    output << available_elements[:count].call
     output << '<span class="gallery-actions">'
-    output << available_elements[:edit].call unless params[:action] == 'edit'
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
     # output << available_elements[:add_existing].call unless params[:action] == 'find'
     output << '</span>'
     output << '</div>'
 
     return output
+  end
+  
+  def gallery_display_image_position
+    '<p class="meta">'+if @image_index
+                         I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
+                       else
+                         I18n.t(:image_count_total, :count => @image_count.to_s )
+                       end+'</p>'    
   end
 
   def upload_images_link

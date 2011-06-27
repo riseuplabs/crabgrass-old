@@ -1,0 +1,13 @@
+<%
+  detail_view_navigation(@page, @previous, @showing.image, @next)
+-%>
+
+<%= gallery_navigation %>
+
+<div class="gallery-item">
+  <%= link_to thumbnail_img_tag(@showing.image, 'large'), @showing.image.url %>
+  <%= image_title(@showing.image) %>
+</div>
+
+<%= gallery_display_image_position %>
+
