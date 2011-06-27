@@ -16,7 +16,7 @@ module WidgetsHelper
     # link_to_remote I18n.t(:edit),
     #  :url => edit_admin_widget_path(widget),
     #  :method => :get
-    link_to_modal '',
+    link_to_modal '&nbsp;',
       :url => edit_widget_url(widget),
       :title => escape_javascript(widget.title_or_name),
       :icon => 'pencil'

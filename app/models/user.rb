@@ -294,6 +294,7 @@ class User < ActiveRecord::Base
 
   # DEPRECATED
   named_scope(:on, lambda do |site|
+    return if site.nil?
     if site.limited?
       { :select => "users.*",
         :joins => :memberships,
