@@ -1,0 +1,1 @@
+map.connect 'gallery-assets/:id/*path',                   :controller => 'gallery-assets', :action => 'show'

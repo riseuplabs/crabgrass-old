@@ -5,7 +5,7 @@
 <%= gallery_navigation %>
 
 <div class="gallery-item">
-  <%= link_to thumbnail_img_tag(@showing.image, 'large'), @showing.image.url %>
+  <%= link_to thumbnail_img_tag(@showing.image, 'large'), @image.url_from_gallery(@page.id) %>
   <%= h(@showing.image.caption) %>
 </div>
 

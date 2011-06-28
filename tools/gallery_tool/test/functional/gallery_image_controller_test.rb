@@ -76,8 +76,8 @@ class GalleryImageControllerTest < ActionController::TestCase
     @gallery.reload
     login_as :red
     post :update, :page_id => @gallery.id, :id => @asset.id,
-      :caption => 'New Title'
-    assert_response :success
+      'image[caption]' => 'New Title'
+    assert_response :redirect
     assert_equal 'New Title',  @asset.reload.caption
   end
 
