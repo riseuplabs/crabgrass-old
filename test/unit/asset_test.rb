@@ -283,6 +283,13 @@ class AssetTest < Test::Unit::TestCase
     assert_equal 'application/octet-stream', Asset.new.content_type
   end
 
+  def test_asset_with_caption
+    asset = Asset.build :uploaded_data => upload_data('photo.jpg'),
+      :caption => "This is a Photo - isn't it?"
+    asset.save
+    assert_equal "This is a Photo - isn't it?", asset.reload.caption
+  end
+
   protected
 
   def debug
