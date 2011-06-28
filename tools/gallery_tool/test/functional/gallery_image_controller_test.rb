@@ -90,7 +90,7 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_destroy
     login_as :blue
-    assert_difference '@gallery.assets.count' do
+    assert_difference '@gallery.assets.count', -1 do
       delete :destroy, :id => @asset.id, :page_id => @gallery.id
     end
   end
