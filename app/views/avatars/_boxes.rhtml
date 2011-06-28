@@ -16,7 +16,7 @@
     url = url_for_user(entity) if entity.is_a? User
     online = entity.respond_to?(:online?) && entity.online? ? 'online' : ''
 -%>
-<li class='<%=side%> <%=online%> <%=size%>'>
+<li class='<%=side%> <%=online%> <%=size%>_avatar'>
     <%= link_to avatar_for(entity, size), url %>
     <div><span class='round'><%=h entity.both_names %></span></div>
   </li>
