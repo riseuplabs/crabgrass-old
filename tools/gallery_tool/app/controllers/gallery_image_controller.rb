@@ -25,6 +25,11 @@ class GalleryImageController < BasePageController
 
   # TODO we still lack an edit action so far
   def edit
+    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @image = @showing.asset
+    if request.xhr?
+      render :layout => false
+    end
   end
 
   def update
