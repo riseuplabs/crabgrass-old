@@ -1,3 +1,8 @@
 .gallery_item
   = link_to thumbnail_img_tag(@image, 'large'), @image.url
-  = image_title(@image)
+  = form_tag(page_url(@page, :action => 'image-update', :id => @image.id))
+  %p
+  = text_area_tag 'image[caption]', h(@image.caption), :cols => 68
+  %p
+  = submit_tag
+  = button_to_function I18n.t(:cancel), "$('change_title_form').hide();$('detail_image_title').show();"

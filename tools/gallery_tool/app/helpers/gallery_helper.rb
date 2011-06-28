@@ -41,7 +41,7 @@ module GalleryHelper
       },
     }
 
-    output  = '<div class="gallery-nav">'
+    output  = '<div class="gallery-nav" align="right">'
     output << available_elements[:detail_view].call
     output << '<span class="gallery-actions">'
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
@@ -53,7 +53,7 @@ module GalleryHelper
   end
 
   def gallery_display_image_position
-    '<p class="meta">'+if @image_index
+    '<p class="meta" align="right">'+if @image_index
                          I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
                        else
                          I18n.t(:image_count_total, :count => @image_count.to_s )
@@ -155,14 +155,6 @@ module GalleryHelper
                    options, html_options)+extra_output
   end
 
-  def image_title image
-    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
-    output = content_tag :p, image.page.title, :class => 'description',
-       :id => 'detail_image_title', :onclick => change_title
-    output << render(:partial => 'change_image_title', :locals => { :image => image })
-    return output
-  end
-
   def star_for_image image
     star = (@upart and @upart.star?)
     add_options = {
@@ -185,4 +177,15 @@ module GalleryHelper
                                           :id => image.id),
                                         :update => 'tfjs'), remove_options)
   end
+
+  # DEPRECATED
+#  def image_title image
+#    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
+#    caption = image.caption ? h(image.caption) : '[click here to edit caption]'
+#    output = content_tag :p, caption, :class => 'description',
+#       :id => 'detail_image_title', :onclick => change_title
+#    output << render(:partial => 'change_image_title', :locals => { :image => image })
+#    return output
+#  end
+
 end

@@ -268,7 +268,11 @@ module ImageHelper
     url     = options[:url] || asset.url
     method  = options[:method] || 'get'
     span = content_tag(:span, asset.filename)
-    link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+    if options[:xhr]
+      link_to_remote img + span, {:url => url}, :class => klass, :title => asset.filename, :style => style
+    else
+      link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+    end
   end
 
   # links to an asset with a thumbnail preview

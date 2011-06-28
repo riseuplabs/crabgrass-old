@@ -6,7 +6,7 @@
 
 <div class="gallery-item">
   <%= link_to thumbnail_img_tag(@showing.image, 'large'), @showing.image.url %>
-  <%= image_title(@showing.image) %>
+  <%= h(@showing.image.caption) %>
 </div>
 
 <%= gallery_display_image_position %>
