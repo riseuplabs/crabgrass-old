@@ -1,9 +1,9 @@
 module GalleryHelper
   def detail_view_navigation gallery, previous, this, after # next is reserved
     @detail_view_navigation = link_to('Gallery', page_url(@page,:action=>'show'))
-    @detail_view_navigation += '&nbsp;&nbsp;' + 
+    @detail_view_navigation += '&nbsp;&nbsp;' +
       link_to_remote(I18n.t(:previous), :url => page_url(@page, :action => 'image-show', :id => previous.asset_id), :class => 'previous button' ) if !previous.nil?
-    @detail_view_navigation += 
+    @detail_view_navigation +=
       '&nbsp; &nbsp;' + link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.asset_id), :class => 'next button') if !after.nil?
     ""
   end
@@ -51,13 +51,13 @@ module GalleryHelper
 
     return output
   end
-  
+
   def gallery_display_image_position
     '<p class="meta">'+if @image_index
                          I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
                        else
                          I18n.t(:image_count_total, :count => @image_count.to_s )
-                       end+'</p>'    
+                       end+'</p>'
   end
 
   def upload_images_link
@@ -80,18 +80,27 @@ module GalleryHelper
   end
 
   def gallery_delete_image(image, position)
-    link_to_remote('', {
-                     :url => {
-                       :controller => 'gallery',
-                       :action => 'remove',
-                       :page_id => @page.id,
-                       :id => image.id,
-                       :position => position
-                     },
+    url = { :controller => 'gallery',
+      :action => 'remove',
+      :page_id => @page.id,
+      :id => image.id,
+      :position => position
+    }
+    link_to_remote('&nbsp;', {
+                     :url => url,
                      :update => 'gallery_notify_area',
                      :loading => "update_notifier('#{I18n.t(:removing_image)}', true);"
                    }, :title => I18n.t(:remove_from_gallery),
                    :class => 'small_icon trash_16')
+  end
+
+  def gallery_edit_image(image)
+    url = page_url @page,
+      :action => 'image-edit',
+      :id => image.id
+    link_to_modal('&nbsp;',
+      {:url => url, :title => I18n.t(:edit_image)},
+      :class => 'small_icon pencil_16')
   end
 
   def gallery_move_image_without_js(image)

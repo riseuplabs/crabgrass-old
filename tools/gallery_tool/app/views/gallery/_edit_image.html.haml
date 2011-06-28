@@ -1,6 +1,7 @@
 %li[edit_image]
   %div[edit_image, :control]
     %span.right
+      = gallery_edit_image edit_image
       = gallery_delete_image edit_image, edit_image_counter
     = # gallery_move_image_without_js edit_image
   = thumbnail_img_tag(edit_image, :medium, :crop => '90x90')
