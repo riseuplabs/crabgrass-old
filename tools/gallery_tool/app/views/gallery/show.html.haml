@@ -3,11 +3,12 @@
 
 = render :partial => 'gallery/tabs'
 
-.info
-  = I18n.t :show_gallery_explaination
-
 - if @images.any?
   #gallery-container
+
+    .info
+      = I18n.t :show_gallery_explaination
+
     %ul#show_gallery
       = render :partial => 'image', :collection => @images
       %br{:style => 'clear:both'}/

@@ -39,7 +39,11 @@ class GalleryImageController < BasePageController
       @image = @page.images.find(params[:id])
       # params[:image] would be something like {:cover => 1} or {:title => 'some title'}
       if @image.update_attributes!(params[:image])
-        redirect_to page_url(@page,:action=>'show')
+        @image.reload
+        respond_to do |format|
+          format.html { redirect_to page_url(@page,:action=>'show') }
+          format.js { render :partial => 'update', :locals => {:params => params} }
+        end
       else
         # raise an error
       end

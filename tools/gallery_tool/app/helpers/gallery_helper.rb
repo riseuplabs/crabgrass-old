@@ -1,12 +1,4 @@
 module GalleryHelper
-  def detail_view_navigation gallery, previous, this, after # next is reserved
-    @detail_view_navigation = link_to('Gallery', page_url(@page,:action=>'show'))
-    @detail_view_navigation += '&nbsp;&nbsp;' +
-      link_to_remote(I18n.t(:previous), :url => page_url(@page, :action => 'image-show', :id => previous.asset_id), :class => 'previous button' ) if !previous.nil?
-    @detail_view_navigation +=
-      '&nbsp; &nbsp;' + link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.asset_id), :class => 'next button') if !after.nil?
-    ""
-  end
 
   def gallery_detail_view_url gallery, image=nil, this_id=nil
     image = (image.is_a?(Showing) ? image.asset : image)
@@ -178,14 +170,35 @@ module GalleryHelper
                                         :update => 'tfjs'), remove_options)
   end
 
-  # DEPRECATED
-#  def image_title image
-#    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
-#    caption = image.caption ? h(image.caption) : '[click here to edit caption]'
-#    output = content_tag :p, caption, :class => 'description',
-#       :id => 'detail_image_title', :onclick => change_title
-#    output << render(:partial => 'change_image_title', :locals => { :image => image })
-#    return output
-#  end
+  def image_title image
+    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
+    caption = image.caption ? h(image.caption) : '[click here to edit caption]'
+    output = content_tag :p, caption, :class => 'description small_icon pencil_16', 
+       :id => 'detail_image_title', :onclick => change_title, :style => 'none'
+    output << render(:partial => 'change_image_title', :locals => { :image => image })
+    return output
+  end
 
+  #form_options = {
+  #  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+  #  :update => 'detail_image_title',
+  #	:complete => "$('detail_image_title').show()",
+  #  :pending => "$('change_title_spinner').show()"
+  #}
+  def save_caption_form_options page, image
+    {:url => page_url(page, :action => 'image-update', :id => image.id),
+     :update => 'detail_image_title',
+     :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
+     :pending => "$('change_title_spinner').show()" }
+  end
+  
+    # DEPRECATED
+  #  def detail_view_navigation gallery, previous, this, after # next is reserved
+  #    @detail_view_navigation = link_to_icon('grey-arrow-up', page_url(@page,:action=>'show'))
+  #    @detail_view_navigation += '&nbsp;&nbsp;' +
+  #      link_to_remote_icon('grey-arrow-left', :url => page_url(@page, :action => 'image-show', :id => previous.asset_id), :class => 'previous button' ) if !previous.nil?
+  #    @detail_view_navigation +=
+  #      '&nbsp; &nbsp;' + link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.asset_id), :class => 'next button') if !after.nil?
+  #    ""
+  #  end
 end

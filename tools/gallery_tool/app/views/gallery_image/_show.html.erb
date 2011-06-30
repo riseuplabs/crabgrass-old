@@ -1,11 +1,7 @@
-<%
-  detail_view_navigation(@page, @previous, @showing.image, @next)
--%>
-
-<%= gallery_navigation %>
+<%= render :partial => 'gallery_navigation' %>
 
 <div class="gallery-item">
-  <%= link_to thumbnail_img_tag(@showing.image, 'large'), @image.url_from_gallery(@page.id) %>
+  <%= link_to thumbnail_img_tag(@showing.image, 'large'), @image.url %>
   <%= h(@showing.image.caption) %>
 </div>
 
