@@ -19,7 +19,7 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_new
     login_as :blue
-    get :new, @page_id => @gallery.id
+    get :new, :page_id => @gallery.id
     assert_response :success
   end
 
