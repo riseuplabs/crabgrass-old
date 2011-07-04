@@ -23,6 +23,23 @@ class GalleryImageControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_new_ready_for_progress_bar
+    login_as :blue
+    get :new, :page_id => @gallery.id
+    assert_response :success
+    assert_not_nil assigns['upload_id'],
+      "new action should create upload-id"
+    assert_select '#progress[style="display: none;"]', 1,
+      "a hidden progress bar should be displayed" do
+      assert_select '#bar[style="width: 0%;"]', "0 %",
+        "the progress bar should contain a bar"
+      end
+    upload_id = assigns['upload_id']
+    assert_select 'form[action*="X-Progress-ID"]' do
+      assert_select 'input[type="hidden"][value="' + upload_id + '"]'
+    end
+  end
+
   def test_create_zip
     login_as :blue
     assert_difference '@gallery.assets.count' do
@@ -37,6 +54,7 @@ class GalleryImageControllerTest < ActionController::TestCase
     assert_difference '@gallery.assets.count' do
       post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
     end
+    assert_equal @gallery.id, Asset.last.page_id
   end
 
   def test_may_not_create
@@ -82,17 +100,10 @@ class GalleryImageControllerTest < ActionController::TestCase
     @gallery.add(groups(:rainbow), :access => :edit).save!
     @gallery.save!
     login_as :red
-    xhr :post, :update, :page_id => @gallery.id, :id => @asset.id,
-      :image => {:caption => 'New Title'}
-    assert_response :success
-    assert_equal 'New Title',  @asset.reload.caption
-  end
-
-  def test_update_cover
     post :update, :page_id => @gallery.id, :id => @asset.id,
-      :cover => 1
+      'image[caption]' => 'New Title'
     assert_response :redirect
-    assert @asset.reload.cover
+    assert_equal 'New Title',  @asset.reload.caption
   end
 
   def test_destroy

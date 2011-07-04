@@ -31,7 +31,7 @@ class GalleryController < BasePageController
         showing = @page.showings.find_by_asset_id(id)
         showing.insert_at(index)
       end
-    else
+    elsif params[:id]
       # TODO: make sure the non ajax fallback still works
       # This should most likely move into the GalleryImageController
       showing = @page.showings.find_by_asset_id(params[:id])
