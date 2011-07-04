@@ -82,9 +82,9 @@ class GalleryImageControllerTest < ActionController::TestCase
     @gallery.add(groups(:rainbow), :access => :edit).save!
     @gallery.save!
     login_as :red
-    post :update, :page_id => @gallery.id, :id => @asset.id,
-      'image[caption]' => 'New Title'
-    assert_response :redirect
+    xhr :post, :update, :page_id => @gallery.id, :id => @asset.id,
+      :image => {:caption => 'New Title'}
+    assert_response :success
     assert_equal 'New Title',  @asset.reload.caption
   end
 
