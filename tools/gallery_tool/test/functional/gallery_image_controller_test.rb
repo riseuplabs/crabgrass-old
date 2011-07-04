@@ -13,6 +13,7 @@ class GalleryImageControllerTest < ActionController::TestCase
         asset.parent_page = @gallery
       end
     @gallery.add_image!(@asset, users(:blue))
+    @gallery.save!
     @asset.save!
   end
 
@@ -30,7 +31,8 @@ class GalleryImageControllerTest < ActionController::TestCase
   end
 
   def test_may_create
-    @gallery.add(groups(:rainbow), :access => :edit)
+    @gallery.add(groups(:rainbow), :access => :edit).save!
+    @gallery.save!
     login_as :red
     assert_difference '@gallery.assets.count' do
       post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
@@ -38,42 +40,47 @@ class GalleryImageControllerTest < ActionController::TestCase
   end
 
   def test_may_not_create
-    @gallery.add(groups(:rainbow), :access => :view)
+    @gallery.add(groups(:rainbow), :access => :view).save!
+    @gallery.save!
     login_as :red
     assert_no_difference '@gallery.assets.count' do
       post :create, :page_id => @gallery.id, :assets => [upload_data('photo.jpg')]
+      assert_permission_denied
     end
   end
 
   def test_may_not_edit
-    @gallery.add(groups(:rainbow), :access => :view)
+    @gallery.add(groups(:rainbow), :access => :view).save!
+    @gallery.save!
     login_as :red
     xhr :get, :edit, :id => @asset.id, :page_id => @gallery.id
-    assert_response :redirect
+    assert_permission_denied
   end
 
   def test_may_edit
-    @gallery.add(groups(:rainbow), :access => :edit)
+    @gallery.add(groups(:rainbow), :access => :edit).save!
+    @gallery.save!
     login_as :red
     xhr :get, :edit, :id => @asset.id, :page_id => @gallery.id
     assert_response :success
+    assert assigns(:image)
     assert_equal assigns(:image).id, @asset.id
     assert assigns(:image).caption.blank?
   end
 
   def test_may_not_update_caption
-    @gallery.add(groups(:rainbow), :access => :view)
-    @gallery.reload
+    @gallery.add(groups(:rainbow), :access => :view).save!
+    @gallery.save!
     login_as :red
     post :update, :page_id => @gallery.id, :id => @asset.id,
       :caption => 'New Title'
-    assert_response :redirect
+    assert_permission_denied
     assert @asset.reload.caption.blank?
   end
 
   def test_may_update_caption
-    @gallery.add(groups(:rainbow), :access => :edit)
-    @gallery.reload
+    @gallery.add(groups(:rainbow), :access => :edit).save!
+    @gallery.save!
     login_as :red
     post :update, :page_id => @gallery.id, :id => @asset.id,
       'image[caption]' => 'New Title'
@@ -106,11 +113,12 @@ class GalleryImageControllerTest < ActionController::TestCase
   def test_may_not_show
     login_as :red
     xhr :get, :show, :id => @asset.id, :page_id => @gallery.id
-    assert_response :redirect
+    assert_permission_denied
   end
 
   def test_may_show
-    @gallery.add(groups(:rainbow), :access => :view)
+    @gallery.add(groups(:rainbow), :access => :view).save!
+    @gallery.save!
     login_as :red
     xhr :get, :show, :id => @asset.id, :page_id => @gallery.id
     assert_response :success
