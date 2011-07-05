@@ -51,6 +51,7 @@ module AssetExtension
 
       def make_from_zip(file)
         file=ensure_temp_file(file)
+        debugger
         zipfile = Zip::ZipFile.new(file.path)
         assets = []
         # array of filenames for which processing failed
