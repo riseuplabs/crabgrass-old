@@ -58,23 +58,13 @@ class GalleryImageController < BasePageController
   end
 
   def create
-    if request.xhr?
-      render :layout => false
-    # TODO: make sure zip upload works with server side detection
-    elsif request.post? && params[:zipfile]
-      @assets, @failures = Asset.make_from_zip(params[:zipfile])
-      @assets.each do |asset|
+    params[:assets].each do |param|
+      assets = Asset.create_from_param_with_zip_extraction(param)
+      assets.each do |asset|
         @page.add_image!(asset, current_user)
       end
-      redirect_to page_url(@page)
-    elsif request.post?
-      params[:assets].each do |file|
-        next if file.size == 0
-        asset = Asset.create_from_params(:uploaded_data => file)
-        @page.add_image!(asset, current_user)
-      end
-      redirect_to page_url(@page)
     end
+    redirect_to page_url(@page)
   end
 
   # TODO: we cddan remove the assets all together now that we
