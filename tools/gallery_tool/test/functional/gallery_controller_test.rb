@@ -25,24 +25,6 @@ class GalleryControllerTest < ActionController::TestCase
     assert_equal [], assigns['images']
   end
 
-  def test_upload_ready_for_progress_bar
-    login_as :blue
-    gallery = Gallery.create!( :user => users(:blue),
-      :title => "Empty Gallery")
-    get :upload, :page_id => gallery.id
-    assert_response :success
-    assert_not_nil assigns['upload_id'],
-      "edit action should create upload-id"
-    assert_select '#progress[style="display: none;"]', 1,
-      "a hidden progress bar should be displayed" do
-      assert_select '#bar[style="width: 0%;"]', "0 %",
-        "the progress bar should contain a bar"
-      end
-    upload_id = assigns['upload_id']
-    assert_select 'form[action*="X-Progress-ID"]' do
-      assert_select 'input[type="hidden"][value="' + upload_id + '"]'
-    end
-  end
 
 # this controller does not really even exist yet:
   #azul: I think it does - at least there is some base page magic
@@ -87,7 +69,13 @@ class GalleryControllerTest < ActionController::TestCase
     assert_equal [@asset2, @asset], @gallery.images
   end
 
-  def test_destroy
+  def test_update_cover
+    login_as :blue
+    post :update, :page_id => @gallery.id,
+      :page => {:cover_id => @asset.id}
+    assert_response :redirect
+    assert_equal @asset, @gallery.reload.cover
   end
+
 
 end
