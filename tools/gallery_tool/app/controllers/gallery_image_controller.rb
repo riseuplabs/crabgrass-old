@@ -5,7 +5,8 @@ class GalleryImageController < BasePageController
   helper 'gallery'
 
   # could we verify delete as the method on destry?
-  verify :method => :post, :only => [:create, :update]
+  verify :method => :post, :only => [:create]
+  verify :method => [:post, :put], :only => [:update]
   verify :method => :delete, :only => [:destroy]
 
 
@@ -33,19 +34,25 @@ class GalleryImageController < BasePageController
   end
 
   def update
-    if request.post?
-      # whoever may edit the gallery, may edit the assets too.
-      raise PermissionDenied unless current_user.may?(:edit, @page)
-      @image = @page.images.find(params[:id])
-      # params[:image] would be something like {:cover => 1} or {:title => 'some title'}
-      if @image.update_attributes!(params[:image])
+    # whoever may edit the gallery, may edit the assets too.
+    raise PermissionDenied unless current_user.may?(:edit, @page)
+    @image = @page.images.find(params[:id])
+    if params[:image] and params[:image][:upload_file] #and request.xhr?
+      @image.uploaded_data = params[:image][:upload_file]
+      if @image.save!
         @image.reload
-        respond_to do |format|
-          format.html { redirect_to page_url(@page,:action=>'show') }
-          format.js { render :partial => 'update', :locals => {:params => params} }
+        responds_to_parent do
+          render :update do |page|
+            page.replace_html 'show-image', :partial => 'show_image'
+          end
         end
-      else
-        # raise an error
+      end
+    # params[:image] would be something like {:cover => 1} or {:title => 'some title'}
+    elsif params[:image] and @image.update_attributes!(params[:image])
+      @image.reload
+      respond_to do |format|
+        format.html { redirect_to page_url(@page,:action=>'show') }
+        format.js { render :partial => 'update', :locals => {:params => params[:image]} }
       end
     end
   end

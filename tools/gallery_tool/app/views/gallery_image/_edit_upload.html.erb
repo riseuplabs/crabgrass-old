@@ -1,0 +1,11 @@
+<% upload_image_form = capture do %>
+  <% form_for(:image, :url => page_url(@page, :action => 'image-update', 'X-Progress-ID' => @upload_id, :id => @image.id), 
+         :html => {:multipart => true, :target => 'upload_frame'}) do |f| -%>
+     <%= f.file_field 'upload_file', :size => '12' %>
+     <%= submit_tag 'Upload' %>
+     <%= spinner 'upload' %>
+  <% end -%>
+  <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+<% end %>
+
+<%= upload_image_form %>

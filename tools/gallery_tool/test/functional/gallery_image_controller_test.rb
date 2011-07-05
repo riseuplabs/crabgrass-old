@@ -125,5 +125,11 @@ class GalleryImageControllerTest < ActionController::TestCase
     assert assigns(:showing)
   end
 
+  def test_may_upload
+    login_as :blue
+    xhr :put, :update, :id => @asset.id, :page_id => @gallery.id, 
+        :image => {:upload_file => upload_data('photo.jpg')}
+    assert_response :success
+  end
 
 end
