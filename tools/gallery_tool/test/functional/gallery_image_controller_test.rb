@@ -31,7 +31,7 @@ class GalleryImageControllerTest < ActionController::TestCase
       "new action should create upload-id"
     assert_select '#progress[style="display: none;"]', 1,
       "a hidden progress bar should be displayed" do
-      assert_select '#bar[style="width: 0%;"]', "0 %",
+      assert_select '#bar[style="width: 10%;"]', "0 %",
         "the progress bar should contain a bar"
       end
     upload_id = assigns['upload_id']
@@ -101,7 +101,7 @@ class GalleryImageControllerTest < ActionController::TestCase
     @gallery.save!
     login_as :red
     post :update, :page_id => @gallery.id, :id => @asset.id,
-      'image[caption]' => 'New Title'
+      :image => {:caption => 'New Title' }
     assert_response :redirect
     assert_equal 'New Title',  @asset.reload.caption
   end
