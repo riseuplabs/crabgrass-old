@@ -74,18 +74,12 @@ class GalleryImageController < BasePageController
     redirect_to page_url(@page)
   end
 
-  # TODO: we cddan remove the assets all together now that we
-  # only allow them to be attached to one gallery
-  # kclair: doesn't this only remove the one image since it's in the GalleryImageController  ?
   def destroy
     asset = Asset.find(params[:id])
     @page.remove_image!(asset)
-    asset.destroy  ## ???
+    asset.destroy
     if request.xhr?
-      undo_link = undo_remove_link(params[:id], params[:position])
-      js = javascript_tag("remove_image(#{params[:id]});")
-      render(:text => I18n.t(:successfully_removed_image, :undo_link => undo_link) + js,
-             :layout => false)
+      render :layout => false
     else
       redirect_to page_url(@page)
     end

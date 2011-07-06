@@ -72,7 +72,7 @@ module GalleryHelper
   end
 
   def gallery_delete_image(image, position)
-    url = page_url(@page, :action => 'image-destroy', :id => image.id)
+    url = page_url(@page, :action => 'image-destroy', :id => image.id, :method => :delete)
     link_to_remote('&nbsp;', {
                      :url => url,
                      :update => 'gallery_notify_area',
