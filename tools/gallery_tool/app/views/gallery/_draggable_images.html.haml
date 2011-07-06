@@ -1,7 +1,7 @@
 - if @images.any?
   %ul#sort_gallery
     = render :partial => 'edit_image', :collection => @images
-  = sortable_element "sort_gallery", :constraint => false, :overlap => :horizontal, :url => {:action => :update, :controller => :gallery, :id => @page.id}
+  = sortable_element "sort_gallery", :constraint => false, :overlap => :horizontal, :url => page_url(@page, :action => :update)
   %br{:style => 'clear:both'}/
 - else
   = I18n.t(:no_images_in_gallery)

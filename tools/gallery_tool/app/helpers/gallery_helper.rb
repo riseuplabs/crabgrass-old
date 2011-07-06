@@ -72,12 +72,7 @@ module GalleryHelper
   end
 
   def gallery_delete_image(image, position)
-    url = { :controller => 'gallery',
-      :action => 'remove',
-      :page_id => @page.id,
-      :id => image.id,
-      :position => position
-    }
+    url = page_url(@page, :action => 'image-destroy', :id => image.id)
     link_to_remote('&nbsp;', {
                      :url => url,
                      :update => 'gallery_notify_area',
@@ -173,7 +168,7 @@ module GalleryHelper
   def image_title image
     change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
     caption = image.caption ? h(image.caption) : '[click here to edit caption]'
-    output = content_tag :p, caption, :class => 'description small_icon pencil_16', 
+    output = content_tag :p, caption, :class => 'description small_icon pencil_16',
        :id => 'detail_image_title', :onclick => change_title, :style => 'none'
     output << render(:partial => 'change_image_title', :locals => { :image => image })
     return output
@@ -191,7 +186,7 @@ module GalleryHelper
      :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
      :pending => "$('change_title_spinner').show()" }
   end
-  
+
     # DEPRECATED
   #  def detail_view_navigation gallery, previous, this, after # next is reserved
   #    @detail_view_navigation = link_to_icon('grey-arrow-up', page_url(@page,:action=>'show'))
