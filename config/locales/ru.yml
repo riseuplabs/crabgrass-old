@@ -615,7 +615,7 @@ ru:
   subject: тема
   subject_must_not_be_empty: "тема не должна быть пустой"
   successful_undelete_image: "Изображение успешно восстановлено."
-  successfully_removed_image: "Изображение успешно удалено! ({{undo_link}})"
+  successfully_removed_image: "Изображение успешно удалено!"
   summary: Сводка
   sunday: Воскресенье
   survey_edit_tab: "Разработать опрос"

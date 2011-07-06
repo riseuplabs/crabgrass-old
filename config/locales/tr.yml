@@ -617,7 +617,7 @@ tr:
   subject: Konu
   subject_must_not_be_empty: "alan boş bırakılamaz"
   successful_undelete_image: "Görüntü başarıyla geri alındı."
-  successfully_removed_image: "Görüntü başarıyla kaldırıldı! ({{undo_link}})"
+  successfully_removed_image: "Görüntü başarıyla kaldırıldı!"
   summary: Özet
   summary_help: "İsteğe bağlı. Özet, bu sayfanın içeriğini kısaca tanımlayan bir cümle ya da paragraftan oluşur."
   sunday: Pazar

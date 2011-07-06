@@ -7,7 +7,7 @@ class GalleryImageController < BasePageController
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create]
   verify :method => [:post, :put], :only => [:update]
-  verify :method => :delete, :only => [:destroy]
+  verify :method => [:post, :delete], :only => [:destroy]
 
 
   def show

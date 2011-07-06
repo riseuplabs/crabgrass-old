@@ -900,7 +900,7 @@ fr:
   subject: sujet
   subject_must_not_be_empty: "Le sujet ne doit pas être vide"
   successful_undelete_image: "Récupération de l'image réussie"
-  successfully_removed_image: "Image retirée ! ({{undo_link}})"
+  successfully_removed_image: "Image retirée !"
   summary: Sommaire
   summary_help: "Optionnel. Le sommaire est une phrase ou un paragraphe qui décrit brièvement le contenu de cette page."
   sunday: Dimanche
