@@ -31,9 +31,8 @@ class Gallery < Page
   # This method always returns true. On failure an error is raised.
   def add_image!(asset, user, position = nil)
     check_type!(asset)
-    raise PermissionDenied if asset.page
+    assure_page(asset)
 
-    self.add_attachment! asset
     Showing.create! :gallery => self, :asset => asset, :position => position
     if user
       user.updated(self)
@@ -55,4 +54,11 @@ class Gallery < Page
     raise ErrorMessage.new(I18n.t(:file_must_be_image_error)) unless asset.is_image?
   end
 
+  def assure_page(asset)
+    if asset.page
+      raise PermissionDenied if asset.page != self
+    else
+      self.add_attachment! asset
+    end
+  end
 end
