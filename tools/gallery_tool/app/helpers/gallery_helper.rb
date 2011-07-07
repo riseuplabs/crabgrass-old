@@ -65,8 +65,6 @@ module GalleryHelper
         :url => url,
         :confirm => I18n.t(:confirm_image_delete),
         :update => 'gallery_notify_area',
-        :loading => "$('gallery_notify_area').innerHTML = '#{I18n.t(:removing_image)}';
-          $('gallery_spinner').show();",
         :success => "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
       }, :title => I18n.t(:remove_from_gallery),
       :class => 'small_icon empty trash_16')
