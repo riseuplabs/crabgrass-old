@@ -501,12 +501,11 @@ en:
   download: Download
   download_gallery: Download Gallery
   gallery_slideshow_apply_settings_button: "apply"
-  gallery_undo_link: "undo"
+  confirm_image_delete: Do you really want to delete this image? This action can not be undone.
   remove_from_gallery: Remove from gallery
   removing_image: Removing Image...
   move_image_left: Move image left
   move_image_right: Move image right
-  successful_undelete_image: Successfully undeleted image.
   saved_new_order: Saved new order!
   error_saving_new_order: Error saving new order!
   no_title_given: (no title given)

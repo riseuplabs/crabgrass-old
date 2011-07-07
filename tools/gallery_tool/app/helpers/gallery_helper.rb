@@ -59,26 +59,17 @@ module GalleryHelper
       :class => "small_icon plus_16")
   end
 
-  def undo_remove_link(image_id, position)
-    link_to_remote(I18n.t(:gallery_undo_link),
-                   :url => {
-                     :controller => 'gallery',
-                     :action => 'add',
-                     :page_id => @page.id,
-                     :id => image_id,
-                     :position => position
-                   },
-                   :success => "update_notifier('#{I18n.t(:successful_undelete_image)};');undo_remove(#{image_id}, #{position});")
-  end
-
   def gallery_delete_image(image, position)
     url = page_url(@page, :action => 'image-destroy', :id => image.id, :method => :delete)
     link_to_remote('&nbsp;', {
-                     :url => url,
-                     :update => 'gallery_notify_area',
-                     :loading => "update_notifier('#{I18n.t(:removing_image)}', true);"
-                   }, :title => I18n.t(:remove_from_gallery),
-                   :class => 'small_icon trash_16')
+        :url => url,
+        :confirm => I18n.t(:confirm_image_delete),
+        :update => 'gallery_notify_area',
+        :loading => "$('gallery_notify_area').innerHTML = '#{I18n.t(:removing_image)}';
+          $('gallery_spinner').show();",
+        :success => "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
+      }, :title => I18n.t(:remove_from_gallery),
+      :class => 'small_icon empty trash_16')
   end
 
   def gallery_edit_image(image)
@@ -87,7 +78,7 @@ module GalleryHelper
       :id => image.id
     link_to_modal('&nbsp;',
       {:url => url, :title => I18n.t(:edit_image)},
-      :class => 'small_icon pencil_16')
+      :class => 'small_icon empty pencil_16')
   end
 
   def gallery_move_image_without_js(image)
@@ -187,13 +178,4 @@ module GalleryHelper
      :pending => "$('change_title_spinner').show()" }
   end
 
-    # DEPRECATED
-  #  def detail_view_navigation gallery, previous, this, after # next is reserved
-  #    @detail_view_navigation = link_to_icon('grey-arrow-up', page_url(@page,:action=>'show'))
-  #    @detail_view_navigation += '&nbsp;&nbsp;' +
-  #      link_to_remote_icon('grey-arrow-left', :url => page_url(@page, :action => 'image-show', :id => previous.asset_id), :class => 'previous button' ) if !previous.nil?
-  #    @detail_view_navigation +=
-  #      '&nbsp; &nbsp;' + link_to_remote(I18n.t(:next), :url => page_url(@page, :action => 'image-show', :id => after.asset_id), :class => 'next button') if !after.nil?
-  #    ""
-  #  end
 end
