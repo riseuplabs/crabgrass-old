@@ -1,6 +1,5 @@
 class GalleryImageController < BasePageController
 
-  # TODO: check if these still work with the new controller and action names
   permissions 'gallery'
   helper 'gallery'
 
@@ -24,7 +23,6 @@ class GalleryImageController < BasePageController
     end
   end
 
-  # TODO we still lack an edit action so far
   def edit
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
@@ -76,8 +74,7 @@ class GalleryImageController < BasePageController
 
   def destroy
     asset = Asset.find(params[:id])
-    @page.remove_image!(asset)
-    asset.destroy
+    @page.remove_image!(asset)  # this also destroys the asset
     if request.xhr?
       render :layout => false
     else
@@ -85,44 +82,6 @@ class GalleryImageController < BasePageController
     end
   end
 
-  # TODO: turn these into more restful actions
-  # kclair: hmm these are actions that viewers can add, not necessarily ppl who can edit the gallery
-  # kclair: so i'm not sure they belong in update?
-  def comment
-    @image = @page.images.find(params[:id])
-    @post = Post.build(:page => @image.page,
-                       :user => current_user,
-                       :body => params[:post][:body])
-    current_user.updated(@image.page)
-    @post.save!
-    redirect_to page_url(@page,
-                         :action => 'detail_view',
-                         :id => @image.id)
-  end
-
-
-  def add_star
-    @image = @page.images.find(params[:id])
-    @image.page.add(current_user, :star => true).save!
-    if request.xhr?
-      render :text => javascript_tag("$('add_star_link').hide();$('remove_star_link').show();"), :layout => false
-    else
-      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
-    end
-  end
-
-
-  def remove_star
-    @image = @page.images.find(params[:id])
-    @image.page.add(current_user, :star => false).save!
-    if request.xhr?
-      render :text => javascript_tag("$('remove_star_link').hide();$('add_star_link').show();"), :layout => false
-    else
-      redirect_to page_url(@page, :action => 'detail_view', :id => @image.id)
-    end
-  end
-
-  protected
   # just carrying over stuff from the old gallery controller here
   def setup_view
     @show_right_column = true

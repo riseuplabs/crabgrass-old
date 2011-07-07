@@ -91,19 +91,6 @@ class Asset < ActiveRecord::Base
 
 
   ##
-  ## ACCESS
-  ##
-
-  def participation_for_groups ids
-    gparts = self.page.participation_for_groups(ids)
-    if(self.galleries.any?)
-      gparts += self.galleries.map(&:participation_for_groups)
-    end
-    return gparts.flatten
-  end
-
-
-  ##
   ## FINDERS
   ##
 
