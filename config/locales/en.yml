@@ -485,31 +485,37 @@ en:
 
   order_changed: Order changed.
   error_saving_new_order_message: "Error saving new order: {{error_message}}"
-  successfully_removed_image: Successfully removed image! ({{undo_link}})
-  image_count: Photo {{number}} of {{count}}
+  successfully_removed_image: Successfully removed image!
+  image_count: Image {{number}} of {{count}}
   image_count_total: "{{count}} Photos"
   view_slideshow: View Slideshow
   show_gallery: Show Gallery
   edit_gallery: Edit Gallery
+  edit_gallery_explaination: "Add new images or drag images to rearrange their order. Click thumbnail to edit image or audio."
+  edit_image: Edit Image
+  show_gallery_explaination: "Click thumbnail to see full image or hear attached audio."
   back_to_gallery_link: "Back to Gallery"
+  add_images_or_zips: "Add Images or Zip File"
+  add_images_or_zips_explaination: "Zip file will automatically be extracted and put into the gallery"
   gallery_changing_cover_message: "Changing cover..."
   download: Download
   download_gallery: Download Gallery
   gallery_slideshow_apply_settings_button: "apply"
-  gallery_undo_link: "undo"
+  confirm_image_delete: Do you really want to delete this image? This action can not be undone.
   remove_from_gallery: Remove from gallery
   removing_image: Removing Image...
   move_image_left: Move image left
   move_image_right: Move image right
-  successful_undelete_image: Successfully undeleted image.
   saved_new_order: Saved new order!
   error_saving_new_order: Error saving new order!
   no_title_given: (no title given)
   saving_your_changes: Saving your changes...
   activate_js_to_rearrange_photos: Activate JavaScript to use Drag&amp;Drop to rearrange photos!
-  drag_and_drop_to_rearrange_photos: Drag &amp; Drop images to rearrange them
+  drag_and_drop_to_rearrange_photos: Drag images to rearrange their order. Click pencil to edit image or audio.
   no_images_in_gallery: No images in Gallery
   add_existing_image: Add Photo
+  add_images: Add Images
+  edit_images: Edit Images
   upload_new_image: "upload new image"
   type_your_messages_here: "Type your messages here and press enter..."
   add_photo_to_gallery: "Click on a Photo to add it"
@@ -523,13 +529,14 @@ en:
   album_cover_changed: "Album Cover Changed"
   image_title: "Image title: {{title}}"
   upload_zip_file_link: "Upload a ZIP-File"
-  upload_images_link: "Upload Images"
+  add_images_to_gallery_link: "Add Images to gallery"
   too_tall_image_error: "Uploaded image is too tall ({{count}} pixels is the max height)"
   too_wide_image_error: "Uploaded image must be exactly  {{count}} pixels wide"
   cant_detect_image_height_error: "Can't detect image height. Either the image is corrupted or the server has experienced an error"
   upload_a_zip_file_link: "Upload a ZIP-File"
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
+  edit_image_header: Change Image and Caption
 
   ##
   ## ACTION BAR

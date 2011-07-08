@@ -1,0 +1,18 @@
+- content_for :right_sidebar do
+  = render :partial => 'base_page/sidebar'
+
+= render :partial => 'gallery/tabs'
+
+- if @images.any?
+  #gallery-container
+
+    .info
+      = I18n.t :show_gallery_explaination
+
+    %ul#show_gallery
+      = render :partial => 'image', :collection => @images
+      %br{:style => 'clear:both'}/
+      = pagination_links @images
+- else
+  = I18n.t :no_images_in_gallery
+

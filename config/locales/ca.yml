@@ -703,7 +703,7 @@ ca:
   subject: títol
   subject_must_not_be_empty: "el títol no pot ser buit"
   successful_undelete_image: "S'ha eliminat la imatge amb èxit."
-  successfully_removed_image: "S'ha mogut la imatge amb èxit {{undo_link}}"
+  successfully_removed_image: "S'ha mogut la imatge amb èxit"
   summary: Resum
   summary_help: "Opcional. El resum és una frase o paràgraf que descriu el contingut d'aquesta pàgina. "
   sunday: Diumenge

@@ -4,9 +4,30 @@ class GalleryControllerTest < ActionController::TestCase
   fixtures :pages, :users
 
   def setup
+    # let's make some gallery
+    # there are no galleries in fixtures yet.
+    #
+    @gallery = Gallery.create! :title => 'gimme pictures', :user => users(:blue)
+    @asset = Asset.create_from_params({
+      :uploaded_data => upload_data('photo.jpg')}) do |asset|
+        asset.parent_page = @gallery
+      end
+    @gallery.add_image!(@asset, users(:blue))
+    @asset.save!
   end
 
+  def test_show
+    login_as :blue
+    gallery = Gallery.create!( :user => users(:blue),
+      :title => "Empty Gallery")
+    get :show, :page_id => gallery.id
+    assert_response :success
+    assert_equal [], assigns['images']
+  end
+
+
 # this controller does not really even exist yet:
+  #azul: I think it does - at least there is some base page magic
   def test_create
     login_as :blue
 
@@ -20,47 +41,41 @@ class GalleryControllerTest < ActionController::TestCase
     assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
   end
 
-  def test_create_same_name
-    login_as :gerrard
-
-    data_ids, page_ids, page_urls = [],[],[]
-    3.times do
-      post 'create', :page => {:title => "dupe", :summary => ""}, :id => Gallery.param_id
-      page = assigns(:page)
-
-      assert_equal "dupe", page.title
-      assert_not_nil page.id
-
-      # check that we have:
-      # a new page
-      assert !page_ids.include?(page.id)
-      # a new url
-      assert !page_urls.include?(page.name_url)
-
-      # remember the values we saw
-      page_ids << page.id
-      page_urls << page.name_url
-    end
-  end
-
-  def test_upload_zipfile
+  def test_show
     login_as :blue
-
-    assert_difference 'Gallery.count' do
-      post :create, :id => Gallery.param_id, :page => {:title => 'pictures'}, :assets => [upload_data('photo.jpg')]
-    end
-
-    assert_difference 'Asset.count' do
-      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('no-subdir.zip')
-    end
-
-    assert_difference 'Asset.count' do
-      post :upload_zip, :id => Gallery.param_id, :zipfile => upload_data('subdir.zip')
-    end
-
-    assert_equal 3, assigns(:page).images.count
-    assert_not_nil assigns(:page).page_terms
-    assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
+    get :show, :page_id => @gallery.id
+    assert_response :success
+    assert_not_nil assigns(:images)
   end
+
+  def test_edit
+    login_as :blue
+    get :edit, :page_id => @gallery.id
+    assert_response :success
+  end
+
+  def test_update
+    # we need two images
+    @asset2 = Asset.create_from_params({
+      :uploaded_data => upload_data('photo.jpg')}) do |asset|
+        asset.parent_page = @gallery
+      end
+    @gallery.add_image!(@asset2, users(:blue))
+    @asset2.save!
+    login_as :blue
+    post :update, :page_id => Gallery.find(:first).id,
+      :sort_gallery => [@asset2.id, @asset.id]
+    assert_response :redirect
+    assert_equal [@asset2, @asset], @gallery.images
+  end
+
+  def test_update_cover
+    login_as :blue
+    post :update, :page_id => @gallery.id,
+      :page => {:cover_id => @asset.id}
+    assert_response :redirect
+    assert_equal @asset, @gallery.reload.cover
+  end
+
 
 end

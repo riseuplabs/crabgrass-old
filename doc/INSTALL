@@ -202,6 +202,28 @@ Then to start sphinx, you can do:
 
 For further details, see SPHINX[link:files/doc/SPHINX.html]
 
+== Enabeling progress reports for uploads
+
+Crabgrass can use the apache upload-progress module to report progress
+of uploading files.
+
+First install the apache module:
+
+  aptitude install libapache2-mod-upload-progress
+
+Next you need to enable it in your crabgrass vhost config:
+
+  # needed for tracking upload progess
+  <Location />
+    # enable tracking uploads in /
+    TrackUploads On
+  </Location>
+
+  <Location /progress>
+    # enable upload progress reports in /progress
+    ReportUploads On
+  </Location>
+
 = Next steps: Configuration
 
 Now you are are going to want to configure crabgrass: enable/disable

@@ -1002,7 +1002,7 @@ de:
   succesfully_updated_custom_appearance: "Benutzer_Innendefiniertes Erscheinungsbild #{{appearance_id}} Optionen aktualisiert!"
   success: Erfolg
   successful_undelete_image: "L&ouml;schen erfolgreich r&uuml;ckg&auml;ngig gemacht."
-  successfully_removed_image: "Bild erfolgreich entfernt ({{undo_link}})"
+  successfully_removed_image: "Bild erfolgreich entfernt"
   successfully_verified_email_message: "E-Mail-Adresse erfolgreich bestätigt"
   summary: Zusammenfassung
   summary_help: "Optional. Die Zusammenfassung kann ein Satz oder ein Absatz sein, welcher kurz den Inhalt der Seite beschreibt."

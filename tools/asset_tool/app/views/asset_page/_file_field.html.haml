@@ -1,0 +1,6 @@
+- size = local_assigns[:size] || 38
+.action.styled-upload
+  %input.real-upload#assets(name="assets[]" size="<%= size %>" type="file")/
+  .fake-upload
+    %input(type="submit")
+    %input(type="text" size="<%= size %>" name='fakeupload' class='small_icon' readonly)

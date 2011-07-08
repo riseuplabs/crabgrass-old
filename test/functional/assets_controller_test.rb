@@ -1,19 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'assets_controller'
 
-# Re-raise errors caught by the controller.
-class AssetsController; def rescue_action(e) raise e end; end
-
-class AssetsControllerTest < Test::Unit::TestCase
+class AssetsControllerTest < ActionController::TestCase
   fixtures :users, :pages, :user_participations, :assets, :sites
 
   @@private = AssetExtension::Storage.private_storage = "#{RAILS_ROOT}/tmp/private_assets"
   @@public = AssetExtension::Storage.public_storage = "#{RAILS_ROOT}/tmp/public_assets"
 
   def setup
-    @controller = AssetsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     FileUtils.mkdir_p(@@private)
     FileUtils.mkdir_p(@@public)
     Media::Process::Base.log_to_stdout_when = :on_error
@@ -101,7 +94,7 @@ class AssetsControllerTest < Test::Unit::TestCase
       post 'create', :asset => {:uploaded_data => upload_data('photo.jpg'), :page_id => 1}
     end
 
-    @request.accept = format 
+    @request.accept = format
     assert_difference 'Page.find(1).assets.length', -1 do
       post 'destroy', :id => assigns(:asset).id
       if format == "text/javascript"
@@ -113,7 +106,22 @@ class AssetsControllerTest < Test::Unit::TestCase
   end
 
   def test_destroy_html
-     test_destroy("text/html")    
+     test_destroy("text/html")
+  end
+
+  def test_everyone_may_see_public_gallery_images
+    gallery = Gallery.create! :title => 'gimme pictures', :user => users(:blue)
+    asset = Asset.create_from_params({
+      :uploaded_data => upload_data('photo.jpg')}) do |asset|
+        asset.parent_page = gallery
+      end
+    gallery.add_image!(asset, users(:blue))
+    asset.save!
+    gallery.public = true
+    gallery.save!
+    post :show, :id => asset.id, :filename => [asset.filename]
+    assert_response :success
+    assert_equal asset.content_type, @response.content_type
   end
 
   protected

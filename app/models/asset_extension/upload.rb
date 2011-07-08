@@ -36,6 +36,19 @@ module AssetExtension
     end
 
     module ClassMethods
+
+      ZIP_MIME_TYPES = %w(application/zip multipart/zip application/zip-compressed)
+
+      def create_from_param_with_zip_extraction(param)
+        return [] if param.size == 0
+        begin
+          make_from_zip(param).first
+        rescue Zip::ZipError
+          asset = create_from_params(:uploaded_data => param)
+          [asset]
+        end
+      end
+
       def make_from_zip(file)
         file=ensure_temp_file(file)
         zipfile = Zip::ZipFile.new(file.path)

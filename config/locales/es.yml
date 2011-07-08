@@ -1003,7 +1003,7 @@ es:
   succesfully_updated_custom_appearance: "Se actualizó un ajuste personal #{{appearance_id}} options!"
   success: Éxito
   successful_undelete_image: "La foto ha sido recuperada exitosamente"
-  successfully_removed_image: "Foto ha sido exitosamente eliminada! ({{undo_link}})"
+  successfully_removed_image: "Foto ha sido exitosamente eliminada!"
   successfully_verified_email_message: "Correo electrónico verificado!"
   summary: Resumen
   summary_help: "Opcional. El resumen es una frase o párrafo en el que se describe brevemente el contenido de esta página."

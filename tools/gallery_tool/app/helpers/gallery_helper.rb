@@ -1,14 +1,4 @@
 module GalleryHelper
-  def detail_view_navigation gallery, previous, this, after # next is reserved
-    @detail_view_navigation = link_to(I18n.t(:next)+"&rsaquo;",
-                                      gallery_detail_view_url(gallery, after,
-                                                              this.id),
-                                      :class => 'next button')+
-      link_to("&lsaquo;"+I18n.t(:previous),
-              gallery_detail_view_url(gallery, previous, this.id),
-              :class => 'previous button')
-    ""
-  end
 
   def gallery_detail_view_url gallery, image=nil, this_id=nil
     image = (image.is_a?(Showing) ? image.asset : image)
@@ -33,57 +23,8 @@ module GalleryHelper
   # Raises an argument error if the element doesn't exist.
   def gallery_navigation *elements
     available_elements = {
-      :count => lambda {
-        '<p class="meta">'+if @image_index
-                             I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
-                           else
-                             I18n.t(:image_count_total, :count => @image_count.to_s )
-                           end+'</p>'
-      },
-      :download => lambda {
-        if @showing || @image
-          image = (@showing ? @showing.image : @image)
-          link_to(I18n.t(:download),
-                  page_url(@page,
-                           :action => 'download',
-                           :image_id => image.id),
-                  :class => "small_icon folder_picture_16")
-        else
-          link_to(I18n.t(:download_gallery),
-                  page_url(@page, :action => 'download'),
-                  :class => "small_icon folder_picture_16")
-        end
-      },
-      :slideshow => lambda {
-        link_to(I18n.t(:view_slideshow),
-                page_url(@page, :action => 'slideshow'),
-                :target => '_blank', :class => "small_icon application_view_gallery_16")
-      },
-      :edit => lambda {
-        unless params[:action] == 'edit'
-          link_to(I18n.t(:edit_gallery),
-                  page_url(@page, :action => 'edit'),
-                  :class => "small_icon picture_edit_16")
-        else
-          available_elements[:show].call
-        end
-      },
       :detail_view => lambda {
         @detail_view_navigation or ""
-      },
-      :upload => lambda {
-        javascript_tag("upload_target = document.createElement('div');
-                        upload_target.id = 'target_for_upload';
-                        upload_target.hide();
-                        $$('body').first().appendChild(upload_target);")+
-        spinner('show_upload')+
-        link_to_remote(I18n.t(:upload_images_link),
-                       { :url => page_url(@page, :action => 'upload'),
-                         :update => 'target_for_upload',
-                         :loading =>'$(\'show_upload_spinner\').show();',
-                         :success => 'upload_target.show();',
-                         :complete => '$(\'show_upload_spinner\').hide();'},
-                       :class => "small_icon page_gallery_16")
       },
       :add_existing => lambda {
         link_to(I18n.t(:add_existing_image),
@@ -92,47 +33,50 @@ module GalleryHelper
       },
     }
 
-    output  = '<div class="gallery-nav">'
+    output  = '<div class="gallery-nav" align="right">'
     output << available_elements[:detail_view].call
-    output << available_elements[:count].call
     output << '<span class="gallery-actions">'
-    output << available_elements[:edit].call unless params[:action] == 'edit'
-    output << available_elements[:download].call
-    output << available_elements[:slideshow].call
     # TODO: We are not allowing to selected uploaded photos for now see ticket #1654
     # output << available_elements[:add_existing].call unless params[:action] == 'find'
-    output << available_elements[:upload].call
     output << '</span>'
     output << '</div>'
 
     return output
   end
 
-  def undo_remove_link(image_id, position)
-    link_to_remote(I18n.t(:gallery_undo_link),
-                   :url => {
-                     :controller => 'gallery',
-                     :action => 'add',
-                     :page_id => @page.id,
-                     :id => image_id,
-                     :position => position
-                   },
-                   :success => "update_notifier('#{I18n.t(:successful_undelete_image)};');undo_remove(#{image_id}, #{position});")
+  def gallery_display_image_position
+    '<p class="meta" align="right">'+if @image_index
+                         I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
+                       else
+                         I18n.t(:image_count_total, :count => @image_count.to_s )
+                       end+'</p>'
+  end
+
+  def upload_images_link
+    link_to_modal(I18n.t(:add_images_to_gallery_link),
+      { :url => page_url(@page, :action => 'image-new'),
+        :complete => 'observeRealUpload();'},
+      :class => "small_icon plus_16")
   end
 
   def gallery_delete_image(image, position)
-    link_to_remote('', {
-                     :url => {
-                       :controller => 'gallery',
-                       :action => 'remove',
-                       :page_id => @page.id,
-                       :id => image.id,
-                       :position => position
-                     },
-                     :update => 'gallery_notify_area',
-                     :loading => "update_notifier('#{I18n.t(:removing_image)}', true);"
-                   }, :title => I18n.t(:remove_from_gallery),
-                   :class => 'small_icon minus_16')
+    url = page_url(@page, :action => 'image-destroy', :id => image.id, :method => :delete)
+    link_to_remote('&nbsp;', {
+        :url => url,
+        :confirm => I18n.t(:confirm_image_delete),
+        :update => 'gallery_notify_area',
+        :success => "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
+      }, :title => I18n.t(:remove_from_gallery),
+      :class => 'small_icon empty trash_16')
+  end
+
+  def gallery_edit_image(image)
+    url = page_url @page,
+      :action => 'image-edit',
+      :id => image.id
+    link_to_modal('&nbsp;',
+      {:url => url, :title => I18n.t(:edit_image)},
+      :class => 'small_icon empty pencil_16')
   end
 
   def gallery_move_image_without_js(image)
@@ -187,14 +131,6 @@ module GalleryHelper
                    options, html_options)+extra_output
   end
 
-  def image_title image
-    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
-    output = content_tag :p, image.page.title, :class => 'description',
-       :id => 'detail_image_title', :onclick => change_title
-    output << render(:partial => 'change_image_title', :locals => { :image => image })
-    return output
-  end
-
   def star_for_image image
     star = (@upart and @upart.star?)
     add_options = {
@@ -217,4 +153,27 @@ module GalleryHelper
                                           :id => image.id),
                                         :update => 'tfjs'), remove_options)
   end
+
+  def image_title image
+    change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
+    caption = image.caption ? h(image.caption) : '[click here to edit caption]'
+    output = content_tag :p, caption, :class => 'description small_icon pencil_16',
+       :id => 'detail_image_title', :onclick => change_title, :style => 'none'
+    output << render(:partial => 'change_image_title', :locals => { :image => image })
+    return output
+  end
+
+  #form_options = {
+  #  :url => page_xurl(@page, :action => 'change_image_title', :id => image.id)
+  #  :update => 'detail_image_title',
+  #	:complete => "$('detail_image_title').show()",
+  #  :pending => "$('change_title_spinner').show()"
+  #}
+  def save_caption_form_options page, image
+    {:url => page_url(page, :action => 'image-update', :id => image.id),
+     :update => 'detail_image_title',
+     :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
+     :pending => "$('change_title_spinner').show()" }
+  end
+
 end

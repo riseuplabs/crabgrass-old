@@ -683,7 +683,7 @@ bg:
   subject: тема
   subject_must_not_be_empty: "темата не трябва да е празна"
   successful_undelete_image: "Изображението е възстановено успешно."
-  successfully_removed_image: "Изображението е премахнато успешно! ({{undo_link}})"
+  successfully_removed_image: "Изображението е премахнато успешно!"
   summary: "Кратко описание"
   summary_help: "Незадължително поле. Това е изречение или параграф, описващи на кратко съдържанието на новата страница."
   sunday: Неделя

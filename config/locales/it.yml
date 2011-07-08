@@ -621,7 +621,7 @@ it:
   subject: oggetto
   subject_must_not_be_empty: "l'oggetto non deve essere vuoto"
   successful_undelete_image: "Imagine recuperata con successo."
-  successfully_removed_image: "Immagine rimossa con successo! ({{undo_link}})"
+  successfully_removed_image: "Immagine rimossa con successo!"
   summary: Sommario
   sunday: Domenica
   tags: Tag

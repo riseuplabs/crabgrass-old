@@ -1,0 +1,19 @@
+<%- @info_box_class = 'tabs' -%>
+<%- @info_box = capture do -%>
+<%= Formy.tabs do |f|
+  f.tab do |t|
+    t.label I18n.t(:show)
+    t.url page_url(@page,:action=>'show')
+    t.selected action?(:show)
+    t.class 'page_url'
+  end
+  if logged_in? and current_user.may?(:edit, @page)
+  f.tab do |t|
+      t.label I18n.t(:edit)
+      t.url page_url(@page,:action => 'edit')
+      t.selected action?(:edit) || action?(:update)
+      t.class 'page_url'
+    end
+  end
+end -%>
+<%- end -%>

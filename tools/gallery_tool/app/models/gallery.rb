@@ -3,8 +3,6 @@ class Gallery < Page
 
   # A gallery is a collection of images, being presented to the user by a cover
   # page, an overview or a slideshow.
-  # The GalleryController also supports downloading a specific Gallery as a ZIP
-  # archive file.
 
   has_many :showings, :order => 'position', :dependent => :destroy
   has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
@@ -33,58 +31,34 @@ class Gallery < Page
   # This method always returns true. On failure an error is raised.
   def add_image!(asset, user, position = nil)
     check_type!(asset)
-    if asset.page
-      raise PermissionDenied unless user.may?(:view, asset.page)
-    else
-      self.add_attachment! asset
-    end
+    assure_page(asset)
+
     Showing.create! :gallery => self, :asset => asset, :position => position
-    reset_associations(asset)
     if user
       user.updated(self)
     end
     true
   end
 
-  # like add_image!, but does not save the page. Used to build
-  # the associations in memory when creating a new page.
-  #def add_image(asset, position = nil)
-  #  asset.showings.build(:gallery => self, :position => position)
-  #end
-
   # Removes an image from this Gallery by destroying the associating Showing.
-  # the Asset's associations are resetted, the return value is the one of
-  # Showing#destroy
+  # Also destroys the asset itself.
   def remove_image!(asset)
     showing = self.showings.detect{|showing| showing.asset_id == asset.id}
     showing.destroy
-    if asset.is_attachment? and asset.page == self
-      asset.destroy
-    else
-      reset_associations(asset)
-    end
+    asset.destroy
   end
 
   private
-
-  # resets the associations of the given Asset, as well as the ones of this
-  # Gallery. This is currently deactivated.
-  def reset_associations(asset)
-    #asset.showings.reset
-    #asset.galleries.reset
-    #self.showings.reset
-    #self.images.reset
-  end
-
-#  def check_permissions!(asset, user)
-#    unless user.may?(:view, asset)
-#      raise PermissionDenied.new
-#(I18n.t(:group_not_allowed_to_view_image_error))
-#    end
-#  end
 
   def check_type!(asset)
     raise ErrorMessage.new(I18n.t(:file_must_be_image_error)) unless asset.is_image?
   end
 
+  def assure_page(asset)
+    if asset.page
+      raise PermissionDenied if asset.page != self
+    else
+      self.add_attachment! asset
+    end
+  end
 end

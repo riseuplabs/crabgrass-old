@@ -91,47 +91,6 @@ class Asset < ActiveRecord::Base
 
 
   ##
-  ## ACCESS
-  ##
-
-  # checks wether the given `user' has permission `perm' on this Asset.
-  #
-  # there is only one way that a user may have access to an asset:
-  #
-  #    if the user also has access to the asset's page
-  #
-  # not all assets have a page. for them, this test will fail.
-  # (for example, assets that are part of profiles).
-  #
-  # Adding an asset to a gallery does not confir any special access.
-  # If you have access to the gallery, but not an asset in the gallery, then
-  # you are not able to see the asset.
-  #
-  # Return value:
-  #   returns always true
-  #   raises PermissionDenied if the user has no access.
-  #
-  # has_access! is called by User.may?
-  #
-  def has_access!(perm, user)
-    # If the perm is :view, use the quick visibility check
-    if perm == :view
-      return true if self.visible?(user)
-    end
-    raise PermissionDenied unless self.page
-    self.page.has_access!(perm, user)
-  end
-
-  def participation_for_groups ids
-    gparts = self.page.participation_for_groups(ids)
-    if(self.galleries.any?)
-      gparts += self.galleries.map(&:participation_for_groups)
-    end
-    return gparts.flatten
-  end
-
-
-  ##
   ## FINDERS
   ##
 

@@ -648,7 +648,7 @@ ar:
   subject: الموضوع
   subject_must_not_be_empty: "الرجاء ادخال الموضوع"
   successful_undelete_image: "تمَّ الغاء حذف الصورة"
-  successfully_removed_image: "تمت إزالة الصورة! ({{undo_link}})"
+  successfully_removed_image: "تمت إزالة الصورة!"
   summary: الخلاصة
   summary_help: "اختياري. الخلاصة هي أن الجملة أو الفقرة تقدم  وصفا موجزا لمضمون هذه الصفحة."
   sunday: الأحد
