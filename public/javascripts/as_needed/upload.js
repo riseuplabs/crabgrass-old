@@ -19,10 +19,10 @@ function observeRealUpload() {
 
 function updateFakeUpload(event) {
   real = event.element();
-  var fake = real.form.fakeupload;
-  fake.value = real.value.split('\\').pop().split('/').pop();
-  fake.addClassName('filled');
-  fake.addClassName(classNameForFile(fake.value));
+  var fake_text = real.next('.fake-upload').down('input.small_icon')
+  fake_text.value = real.value.split('\\').pop().split('/').pop();
+  fake_text.addClassName('filled');
+  fake_text.addClassName(classNameForFile(fake_text.value));
 }
 
 function classNameForFile(filename) {
