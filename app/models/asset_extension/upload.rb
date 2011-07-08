@@ -41,11 +41,11 @@ module AssetExtension
 
       def create_from_param_with_zip_extraction(param)
         return [] if param.size == 0
-        if ZIP_MIME_TYPES.include? mime_type_from_data(param)
+        begin
           make_from_zip(param).first
-        else
+        rescue Zip::ZipError
           asset = create_from_params(:uploaded_data => param)
-          return [asset]
+          [asset]
         end
       end
 
