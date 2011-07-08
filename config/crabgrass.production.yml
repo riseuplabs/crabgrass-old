@@ -28,6 +28,7 @@ enabled_mods:
   - evil_mod
   - enhanced_stats
   - openlayers
+  - public_home
 enabled_tools:
   - asset_tool
   - core_tools
