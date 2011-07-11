@@ -3,11 +3,13 @@
 
 #show-image= render :partial => 'show_image'
 
-.gallery_item
+%div.gallery_item
   = image_title @image
-
+%br
 #upload-new-image
   = render :partial => 'edit_upload'
 
-#div{:align => 'right'}
-  = button_to_function(I18n.t(:close_button), "window.location='"+page_url(@page,:action => 'edit')+"'")
+%div{:align => 'right'}
+  = spinner('close_button')
+  #close_button
+    = button_to_function(I18n.t(:close_button), "$('close_button').hide(); $('close_button_spinner').show(); window.location='"+page_url(@page,:action => 'edit')+"';")
