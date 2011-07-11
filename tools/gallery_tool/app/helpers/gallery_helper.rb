@@ -173,7 +173,18 @@ module GalleryHelper
     {:url => page_url(page, :action => 'image-update', :id => image.id),
      :update => 'detail_image_title',
      :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
-     :pending => "$('change_title_spinner').show()" }
+     :loading => "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
 
+  def nav_to_gallery_image(to, page, image)
+    nav_image = (to == :next) ? '/images/png/16/grey-arrow-right.png' : '/images/png/16/grey-arrow-left.png'
+    button = (to == :next) ? 'next button' : 'previous button'
+    id = 'load_' + to.to_s + '_image'
+    spinner = 'load_' + to.to_s + '_image_spinner'
+    link_to_remote(
+      image_tag(nav_image), 
+      :url => page_url(page, :action => 'image-show', :id => image.asset_id), 
+      :html => {:class => button, :id => id},
+      :loading => "$('#{id}').hide(); $('#{spinner}').show();")  
+  end
 end
