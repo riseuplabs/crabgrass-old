@@ -12,9 +12,8 @@ Event.observe(window, 'load',
 );
 
 function observeRealUpload() {
-  var real = $('add_file_field').previous('.styled-upload').down('.real-upload')
+  var real = $('add_file_field').previous('.styled-upload').down('.real-upload');
   real.observe('change', updateFakeUpload);
-  });
 }
 
 function updateFakeUpload(event) {
