@@ -173,7 +173,7 @@ module GalleryHelper
     {:url => page_url(page, :action => 'image-update', :id => image.id),
      :update => 'detail_image_title',
      :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
-     :pending => "$('change_title_spinner').show()" }
+     :loading => "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
 
   def nav_to_gallery_image(to, page, image)

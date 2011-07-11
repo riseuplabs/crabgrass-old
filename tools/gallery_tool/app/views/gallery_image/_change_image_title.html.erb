@@ -7,9 +7,11 @@ cancel_action = "$('change_title_form').hide();$('detail_image_title').show();"
 <div id="change_title_form" style='display:none' class='p'>
 <% form_remote_tag(save_caption_form_options(@page, @image)) do -%>
     <%= text_area_tag 'image[caption]', h(@image.caption), :cols => '50' %>
-    <input type="submit", value="<%= I18n.t(:save_button) %>" />
-    <%= button_to_function I18n.t(:cancel), cancel_action %>
     <%= spinner('change_title') %>
+    <span id='save_caption_buttons'>
+      <input type="submit" value="<%= I18n.t(:save_button) %>" id='save_caption_button' />
+      <%= button_to_function I18n.t(:cancel), cancel_action %>
+    </div>
 <% end -%>
 </div>
 
