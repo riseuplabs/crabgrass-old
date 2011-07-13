@@ -160,7 +160,7 @@ module Media
       'multipart/zip'    => [:zip,:archive,nil,'Archive'],
       'multipart/gzip'   => [:gzip,:archive,nil,'Archive'],
       'multipart/tar'    => [:tar,:archive,nil,'Archive'],
-      'application/zip'  => [:gzip,:archive,nil,'Archive'],
+      'application/zip'  => [:zip,:archive,nil,'Archive'],
       'application/gzip' => [:gzip,:archive,nil,'Archive'],
       'application/rar'  => [:rar,:archive,nil,'Archive'],
       'application/deb'  => [:deb,:archive,nil,'Archive'],
@@ -176,7 +176,7 @@ module Media
       'image/'                   => [nil,:image,:image_asset,'Image'],
       'image/jpeg'               => [:jpg,:image,:image_asset],
       'image/png'                => [:png,:image,:png_asset],
-      'image/gif'                => [:png,:image,:gif_asset],
+      'image/gif'                => [:gif,:image,:gif_asset],
 
       'image/svg+xml'            => [:svg,:vector,:svg_asset,'Vector Image'],
       'image/svg+xml-compressed' => [:svg,:vector,:svg_asset,'Vector Image'],

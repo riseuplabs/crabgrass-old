@@ -1,11 +1,11 @@
 #gallery-navigation{:align => 'right'}
   %ul
-    %li= link_to(image_tag('/images/png/16/grey-arrow-up.png'), page_url(@page,:action=>'show') )
+    %li.up-arrow= link_to(image_tag('/images/png/16/grey-arrow-up.png'), page_url(@page,:action=>'show') )
     - if @previous
-      %li
+      %li.left-arrow
         = nav_to_gallery_image(:previous, @page, @previous)
         = spinner('load_previous_image')
     - if @next
-      %li
+      %li.right-arrow
         = nav_to_gallery_image(:next, @page, @next)
         = spinner('load_next_image')
