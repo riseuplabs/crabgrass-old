@@ -1,3 +1,7 @@
+#MB_content hr
+  width: 140%
+  margin-left: -2em
+
 #title
   span
     a
@@ -73,17 +77,26 @@ ul#sort_gallery, ul#show_gallery
     span
       display: none
       
-      
-      
-      
-      
-      
-  li.image_asset:hover, li.png_asset:hover, li.gif_asset:hover
-    div.control_image_asset, div.control_png_asset, div.control_gif_asset
+  
+  li.image_asset:hover
+    div.control_image_asset
+      span
+        display: block
+  li.png_asset:hover
+    div.control_png_asset
+      span
+        display: block
+  li.gif_asset:hover
+    div.control_gif_asset
       span
         display: block
 
+#show-image
+  margin-bottom: 20px
 
+#save_caption_buttons
+  display: block
+  
 #progress
   border: 1px #CCC solid
   #bar
