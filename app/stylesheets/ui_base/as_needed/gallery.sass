@@ -15,8 +15,9 @@
     margin: 0 auto
 
 h2.title
-  margin-top: 30px
-
+  height: 48px
+  line-height: 2.6
+  
 .info
   font-style: italic
   margin-bottom: 10px
@@ -29,18 +30,54 @@ h2.title
 
 ul#sort_gallery, ul#show_gallery
   width: 532px
-  li.image_asset, li.png_asset, li.gif_asset
+  li.image_asset
     margin: 0 16px 10px 0
     float: left
     max-width: 90px
     max-height: 111px
     overflow: hidden
-    div.control_image_asset, div.control_png_asset, div.control_gif_asset
+    div.control_image_asset
       height: 21px
       span.right
         float: right
+        a
+          text-decoration: none
     span
       display: none
+  li.png_asset
+    margin: 0 16px 10px 0
+    float: left
+    max-width: 90px
+    max-height: 111px
+    overflow: hidden
+    div.control_png_asset
+      height: 21px
+      span.right
+        float: right
+        a
+          text-decoration: none
+    span
+      display: none
+  li.gif_asset
+    margin: 0 16px 10px 0
+    float: left
+    max-width: 90px
+    max-height: 111px
+    overflow: hidden
+    div.control_gif_asset
+      height: 21px
+      span.right
+        float: right
+        a
+          text-decoration: none
+    span
+      display: none
+      
+      
+      
+      
+      
+      
   li.image_asset:hover, li.png_asset:hover, li.gif_asset:hover
     div.control_image_asset, div.control_png_asset, div.control_gif_asset
       span
