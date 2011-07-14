@@ -78,7 +78,6 @@ function startProgressBar(button) {
           parameters: 'X-Progress-ID=' + uuid,
           onSuccess: function(xhr){
             var upload = xhr.responseText.evalJSON();
-						console.log("upload received", upload);
             if(upload.state == 'uploading'){
               upload.percent = Math.floor((upload.received / upload.size) * 100);
               $('bar').setStyle({width: upload.percent + "%"});
