@@ -91,7 +91,7 @@ function startProgressBar(button) {
           }
         })
       }
-    },2);
+    },1);
 
   return false; 
 }
