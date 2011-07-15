@@ -1290,7 +1290,7 @@ en:
   folder_class_description: "Create a folder to organize other pages."
   folder_display: "Folder"
 
-  gallery_description: "Upload multiple images or organize existing images into a set."
+  gallery_description: "Upload multiple images into a gallery."
   gallery_display: "Gallery"
 
   asset_page_description: "Upload an image, document, spreadsheet, presentation, or any file."
