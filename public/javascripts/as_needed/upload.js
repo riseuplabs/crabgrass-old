@@ -80,8 +80,12 @@ function startProgressBar(button) {
             var upload = xhr.responseText.evalJSON();
             if(upload.state == 'uploading'){
               upload.percent = Math.floor((upload.received / upload.size) * 100);
+							var processing = '';
+							if (upload.percent == 100) {
+							  processing = " - processing...";
+							}
               $('bar').setStyle({width: upload.percent + "%"});
-              $('bar').update(upload.percent + "%");
+              $('bar').update(upload.percent + "%" + processing);
             }
             if(upload.state == 'done'){
               $('bar').setStyle({width: "100%"});
