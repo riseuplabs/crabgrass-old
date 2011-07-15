@@ -1,0 +1,56 @@
+NEW
+
+only for MENU widget
+
+
+#MB_content ul {
+    display: block;
+    float: left;
+    margin-bottom: 46px;
+    overflow: visible;
+    padding-bottom: 16px;
+}
+
+#MB_content #mb-footer-absolute {
+    border-top: 1px solid #BBBBBB;
+    bottom: 0;
+    height: 20px;
+    padding: 20px 0 23px 10px;
+    position: absolute;
+    width: 464px;
+}
+
+#MB_content a.destroy {
+    background: url("/images/png/16/trash.png") no-repeat scroll 0 2px transparent;
+    bottom: 25px;
+    display: inline;
+    float: right;
+    padding-left: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+%li.menu_item_drag_handle[menu_item]{:style=>'width:30em'}
+
+ %div(style="float: right; width: 7em; text-align: right; background: white; ")
+
+OLD
+
+#mb-footer
+  +bordered-top(1px, $medium_grey_border)
+  margin-top: 20px
+  padding: 20px 0 23px 10px
+  input#widget_submit
+    +float-left
+
+a.destroy
+  +float-right
+  background: url(/images/png/16/trash.png) no-repeat 0 2px
+  padding-left: 20px
+  margin: -24px 12px 0 0
+  
+ul
+  +clearfix
+  float: none
+  padding-bottom: 16px
+  margin-bottom: 16px
