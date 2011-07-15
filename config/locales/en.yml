@@ -537,7 +537,7 @@ en:
   upload_images_link: "Upload"
   you_are_not_allowed_to_do_that: "You are not allowed to do that!"
   edit_image_header: Change Image and Caption
-  upload_images_or_zip_files: "Optional: Select image or zip files to upload."
+  upload_images_or_zip_files_help: "Optional: Select image or zip files to upload."
 
   ##
   ## ACTION BAR
