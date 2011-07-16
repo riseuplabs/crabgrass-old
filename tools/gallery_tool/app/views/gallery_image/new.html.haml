@@ -13,3 +13,4 @@
     = submit_tag I18n.t(:upload), :onClick => "startProgressBar(this);", :id => 'upload_button'
   = # button_to_function I18n.t(:cancel), "new Effect.SlideUp($('target_for_upload'));"
 
+= render :partial => 'close_and_reload_button'

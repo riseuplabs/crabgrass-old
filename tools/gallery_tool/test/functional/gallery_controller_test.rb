@@ -40,6 +40,18 @@ class GalleryControllerTest < ActionController::TestCase
     assert_not_nil assigns(:page).page_terms
     assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
   end
+  
+  def test_create_from_zip
+    login_as :blue
+
+    assert_difference 'Gallery.count' do
+      post :create, :id => Gallery.param_id, :page => {:title => 'pictures 2'}, 
+           :assets => [upload_data('photo.jpg'), upload_data('subdir.zip')]
+    end
+    
+    assert_not_nil assigns(:page)
+    assert_equal 2, assigns(:page).images.count
+  end
 
   def test_show
     login_as :blue

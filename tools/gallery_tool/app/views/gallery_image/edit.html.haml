@@ -8,8 +8,5 @@
 %br
 #upload-new-image
   = render :partial => 'edit_upload'
-%hr
-%div{:align => 'right'}
-  = spinner('close_button')
-  #close_button
-    = button_to_function(I18n.t(:close_button), "$('close_button').hide(); $('close_button_spinner').show(); window.location='"+page_url(@page,:action => 'edit')+"';")
+
+= render :partial => 'close_and_reload_button'

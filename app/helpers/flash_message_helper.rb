@@ -107,6 +107,14 @@ module FlashMessageHelper
   end
 
   ##
+  ## CLEARING NOTICES
+  ##
+  def clear_flash_messages
+    flash[:title] = nil
+    flash[:text] = nil
+  end
+
+  ##
   ## BUILDING THE MESSAGE
   ## normally, this should not be called directly, but there are a few times
   ## when it is useful.
