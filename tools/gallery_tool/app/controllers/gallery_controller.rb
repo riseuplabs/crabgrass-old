@@ -80,9 +80,12 @@ class GalleryController < BasePageController
     asset = Asset.create_from_param_with_zip_extraction(file) do |asset|
       asset.parent_page = @page
     end
-    @assets << asset
-    @page.add_image!(asset, current_user)
-    asset.save!
+    asset.each do |a|
+      @assets << a
+      @page.add_image!(a, current_user)
+      a.save!
+    end
+    @assets
   end
 
   def build_zip_file_data(assets, file)
