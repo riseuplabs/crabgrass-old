@@ -68,9 +68,6 @@ class GalleryController < BasePageController
       next if file.size == 0 # happens if no file was selected
       build_asset_data(@assets, file)
     end
-    #if params[:asset] and params[:asset][:zipfile] and params[:asset][:zipfile].size != 0
-    #  build_zip_file_data(@assets, params[:asset][:zipfile])
-    #end
 
     # gallery page has no 'data' field
     return nil

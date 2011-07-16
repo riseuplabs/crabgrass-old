@@ -64,7 +64,7 @@ module GalleryHelper
     link_to_remote('&nbsp;', {
         :url => url,
         :confirm => I18n.t(:confirm_image_delete),
-        :update => 'gallery_notify_area',
+        :update => 'message-container',
         :success => "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
       }, :title => I18n.t(:remove_from_gallery),
       :class => 'small_icon empty trash_16')
