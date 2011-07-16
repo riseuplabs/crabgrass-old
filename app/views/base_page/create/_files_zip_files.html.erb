@@ -4,11 +4,13 @@
     r.input %Q{
       <p style='margin-top: 0'><input name="assets[]" size="29" type="file" /></p>
       <p><input name="assets[]" size="29" type="file" /></p>
-      <p id='add_file_field'>
+      <p id='add_file_field' style='padding-top: 10px'>
         #{link_to_function(I18n.t(:add_another_file), %[$('add_file_field').insert({before: '<p><input name=\\'assets[]\\' size=\\'29\\' type=\\'file\\' /></p>'})])}
       </p>
+      <br>
     }
     r.info help(:upload_images_and_zip_files)
   end
 %>
+
 
