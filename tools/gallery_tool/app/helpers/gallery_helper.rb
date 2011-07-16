@@ -172,7 +172,10 @@ module GalleryHelper
   def save_caption_form_options page, image
     {:url => page_url(page, :action => 'image-update', :id => image.id),
      :update => 'detail_image_title',
-     :complete => "$('detail_image_title').show(); $('change_title_form').hide();",
+     :complete => %Q{$('detail_image_title').show(); 
+                    $('change_title_form').hide(); 
+                    $('save_caption_buttons').show(); 
+                    $('change_title_spinner').hide();},
      :loading => "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
 
