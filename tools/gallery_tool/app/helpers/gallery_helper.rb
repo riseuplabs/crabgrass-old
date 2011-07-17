@@ -46,7 +46,7 @@ module GalleryHelper
 
   def gallery_display_image_position
     '<p class="meta" align="right">'+if @image_index
-                         I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
+                         I18n.t(:image_count, :number => @image_index.next.to_s, :count => @image_count.to_s )
                        else
                          I18n.t(:image_count_total, :count => @image_count.to_s )
                        end+'</p>'
