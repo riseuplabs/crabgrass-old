@@ -32,7 +32,16 @@ function selectFile(event){
   var el = event.element()
   fake = el.hasClassName('fake-upload') ? el: el.up('.fake-upload');
   real = fake.previous('.real-upload');
-  real.click();
+  // IE does not support the event approach below
+  try {
+    real.click();
+  }
+  // Chrome does not support .click() method
+  catch(e) {
+    var ev = document.createEvent("MouseEvents");
+    ev.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    real.dispatchEvent(event);
+  }
   event.stop();
 }
 
