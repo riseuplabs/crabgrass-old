@@ -46,7 +46,7 @@ class AssetPageController < BasePageController
   def add_file_field
     render :update do |page|
       page.insert_html :before, 'add_file_field', render(:partial => 'file_field')
-      page.call 'observeRealUpload'
+      page.call 'styleUpload'
     end
   end
 
