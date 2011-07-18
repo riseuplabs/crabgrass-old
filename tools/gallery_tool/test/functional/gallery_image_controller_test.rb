@@ -142,8 +142,15 @@ class GalleryImageControllerTest < ActionController::TestCase
 
   def test_may_upload
     login_as :blue
-    xhr :put, :update, :id => @asset.id, :page_id => @gallery.id, 
-        :image => {:upload_file => upload_data('photo.jpg')}
+    xhr :put, :update, :id => @asset.id, :page_id => @gallery.id,
+        :assets => [upload_data('photo.jpg')]
+    assert_response :success
+  end
+
+  def test_can_change_file_type
+    login_as :blue
+    xhr :put, :update, :id => @asset.id, :page_id => @gallery.id,
+        :assets => [upload_data('cc.gif')]
     assert_response :success
   end
 
