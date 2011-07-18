@@ -39,7 +39,8 @@ class GalleryImageController < BasePageController
     if params[:assets] #and request.xhr?
       @image.uploaded_data = params[:assets].first
       if @image.save!
-        @image.reload
+        # reload might not work if the class changed...
+        @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
             page.replace_html 'show-image', :partial => 'show_image'
