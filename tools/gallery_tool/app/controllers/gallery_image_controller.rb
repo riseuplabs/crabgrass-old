@@ -43,6 +43,7 @@ class GalleryImageController < BasePageController
         responds_to_parent do
           render :update do |page|
             page.replace_html 'show-image', :partial => 'show_image'
+            page.hide('progress')
           end
         end
       end
