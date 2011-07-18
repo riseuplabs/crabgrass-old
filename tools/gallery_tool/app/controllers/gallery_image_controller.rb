@@ -12,7 +12,8 @@ class GalleryImageController < BasePageController
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @image_index = @showing.position
+    # position sometimes starts at 0 and sometimes at 1?
+    @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
     @next = @showing.lower_item
     @previous = @showing.higher_item
@@ -39,7 +40,8 @@ class GalleryImageController < BasePageController
     if params[:assets] #and request.xhr?
       @image.uploaded_data = params[:assets].first
       if @image.save!
-        @image.reload
+        # reload might not work if the class changed...
+        @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
             page.replace_html 'show-image', :partial => 'show_image'
