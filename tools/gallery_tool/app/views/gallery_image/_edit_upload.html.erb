@@ -5,7 +5,7 @@
          :html => {:multipart => true, :target => 'upload_frame'}) do |f| -%>
      <%= hidden_field_tag 'X-Progress-ID', @upload_id %>
      <div class='action'>
-       <%= f.file_field 'upload_file', :size => '12' %>
+       <%= render :partial => 'asset_page/file_field', :locals => {:size => 25} %>
      </div>
      <%= submit_tag 'Upload', :onClick => "startProgressBar(this);" %>
      <%= spinner 'upload' %>

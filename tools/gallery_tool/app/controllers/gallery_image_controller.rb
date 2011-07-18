@@ -36,8 +36,8 @@ class GalleryImageController < BasePageController
     # whoever may edit the gallery, may edit the assets too.
     raise PermissionDenied unless current_user.may?(:edit, @page)
     @image = @page.images.find(params[:id])
-    if params[:image] and params[:image][:upload_file] #and request.xhr?
-      @image.uploaded_data = params[:image][:upload_file]
+    if params[:assets] #and request.xhr?
+      @image.uploaded_data = params[:assets].first
       if @image.save!
         @image.reload
         responds_to_parent do
