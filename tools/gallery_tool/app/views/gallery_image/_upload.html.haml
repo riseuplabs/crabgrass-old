@@ -8,6 +8,6 @@
     %input(type="checkbox" name="add_more_files")/
     %label(for="add_more_files")
       add more files
-#progress(style="display: none;")
-  #bar(style="width: 10%;")
-    0 %
+
+= render :partial => 'common/upload_progress_bar'
+

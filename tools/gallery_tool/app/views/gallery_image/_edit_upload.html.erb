@@ -11,11 +11,8 @@
      <%= spinner 'upload' %>
   <% end -%>
   <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
-  <div id='progress', style="display: none;">
-    <div id='bar' style="width: 10%;">
-	    0 %
-    </div>
-  </div>
+  <%= render :partial => 'common/upload_progress_bar' %>
+
 <% end %>
 
 <%= upload_image_form %>
