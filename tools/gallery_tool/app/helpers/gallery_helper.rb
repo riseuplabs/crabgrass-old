@@ -55,7 +55,7 @@ module GalleryHelper
   def upload_images_link
     link_to_modal(I18n.t(:add_images_to_gallery_link),
       { :url => page_url(@page, :action => 'image-new'),
-        :complete => 'observeRealUpload();'},
+        :complete => 'styleUpload();'},
       :class => "small_icon plus_16")
   end
 
@@ -172,9 +172,9 @@ module GalleryHelper
   def save_caption_form_options page, image
     {:url => page_url(page, :action => 'image-update', :id => image.id),
      :update => 'detail_image_title',
-     :complete => %Q{$('detail_image_title').show(); 
-                    $('change_title_form').hide(); 
-                    $('save_caption_buttons').show(); 
+     :complete => %Q{$('detail_image_title').show();
+                    $('change_title_form').hide();
+                    $('save_caption_buttons').show();
                     $('change_title_spinner').hide();},
      :loading => "$('save_caption_buttons').hide(); $('change_title_spinner').show();" }
   end
@@ -185,9 +185,9 @@ module GalleryHelper
     id = 'load_' + to.to_s + '_image'
     spinner = 'load_' + to.to_s + '_image_spinner'
     link_to_remote(
-      image_tag(nav_image), 
-      :url => page_url(page, :action => 'image-show', :id => image.asset_id), 
+      image_tag(nav_image),
+      :url => page_url(page, :action => 'image-show', :id => image.asset_id),
       :html => {:class => button, :id => id},
-      :loading => "$('#{id}').hide(); $('#{spinner}').show();")  
+      :loading => "$('#{id}').hide(); $('#{spinner}').show();")
   end
 end

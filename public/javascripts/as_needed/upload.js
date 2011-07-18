@@ -11,9 +11,29 @@ Event.observe(window, 'load',
   }
 );
 
-function observeRealUpload() {
-  var real = $('add_file_field').previous('.styled-upload').down('.real-upload');
+function styleUpload() {
+  var styled = $('add_file_field').previous('.styled-upload');
+  var real = styled.down('.real-upload');
+  if (real == undefined) { return; }
+  styled.insert('<div class="fake-upload">' +
+      '<input type="submit"></input>' +
+      '<input type="text" class="small_icon" name="fakeupload" readonly></input>' +
+    '</div>')
+  var fake = styled.down('.fake-upload');
+  var text = fake.down('.small_icon');
+  text.writeAttribute('size', real.readAttribute('size'));
+  fake.observe('click', selectFile);
   real.observe('change', updateFakeUpload);
+  fake.show();
+  real.hide();
+}
+
+function selectFile(event){
+  var el = event.element()
+  fake = el.hasClassName('fake-upload') ? el: el.up('.fake-upload');
+  real = fake.previous('.real-upload');
+  real.click();
+  event.stop();
 }
 
 function updateFakeUpload(event) {
