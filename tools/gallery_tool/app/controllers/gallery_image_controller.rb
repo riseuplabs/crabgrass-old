@@ -12,7 +12,8 @@ class GalleryImageController < BasePageController
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @image_index = @showing.position
+    # position sometimes starts at 0 and sometimes at 1?
+    @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
     @next = @showing.lower_item
     @previous = @showing.higher_item

@@ -46,7 +46,7 @@ module GalleryHelper
 
   def gallery_display_image_position
     '<p class="meta" align="right">'+if @image_index
-                         I18n.t(:image_count, :number => @image_index.next.to_s, :count => @image_count.to_s )
+                         I18n.t(:image_count, :number => @image_index.to_s, :count => @image_count.to_s )
                        else
                          I18n.t(:image_count_total, :count => @image_count.to_s )
                        end+'</p>'
@@ -158,7 +158,7 @@ module GalleryHelper
     change_title = "$('change_title_form').show();$('detail_image_title').hide();return false;"
     caption = image.caption ? h(image.caption) : '[click here to edit caption]'
     output = content_tag :p, caption, :class => 'description small_icon pencil_16',
-       :id => 'detail_image_title', :onclick => change_title, :style => 'none'
+       :id => 'detail_image_title', :onclick => change_title
     output << render(:partial => 'change_image_title', :locals => { :image => image })
     return output
   end
