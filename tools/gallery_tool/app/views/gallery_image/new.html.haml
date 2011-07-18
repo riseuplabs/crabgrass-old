@@ -6,8 +6,7 @@
 
 - form_tag page_url(@page, :action => 'image-create', 'X-Progress-ID' => @upload_id), :method => :post, :multipart => true do
   = hidden_field_tag 'X-Progress-ID', @upload_id
-  .action 
-    = render :partial => 'upload'
+  = render :partial => 'upload'
   = spinner('upload')
   .submit
     = submit_tag I18n.t(:upload), :onClick => "startProgressBar(this);", :id => 'upload_button'

@@ -12,12 +12,12 @@ class GalleryController < BasePageController
 
 
   def show
-    @images = paginate_images
+    @images = @page.images.paginate(:page => params[:page])
     #@cover = @page.cover
   end
 
   def edit
-    @images = paginate_images
+    @images = @page.images.paginate(:page => params[:page])
   end
 
   # maybe call this update?
@@ -123,6 +123,7 @@ class GalleryController < BasePageController
   #
   # The first query just grabs all the potential image ids (@page.image_ids)
   #
+  # this is no longer used but is here for legacy reasons, temporarily
   def paginate_images
     params[:page] ||= 1
     Asset.visible_to(current_user).paginate(:page => params[:page], :conditions => ['assets.id IN (?)', @page.image_ids])
