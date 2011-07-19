@@ -16,41 +16,25 @@ function styleUpload() {
   var real = styled.down('.real-upload');
   if (real == undefined) { return; }
   styled.insert('<div class="fake-upload">' +
-      '<input type="submit"></input>' +
+//      '<input type="submit"></input>' +
       '<input type="text" class="small_icon" name="fakeupload" readonly></input>' +
     '</div>')
   var fake = styled.down('.fake-upload');
   var text = fake.down('.small_icon');
   text.writeAttribute('size', real.readAttribute('size'));
-  fake.observe('click', selectFile);
-  real.observe('change', updateFakeUpload);
-  fake.show();
-  real.hide();
+  real.observe('change', showFakeUpload);
+  fake.hide();
 }
 
-function selectFile(event){
-  var el = event.element()
-  fake = el.hasClassName('fake-upload') ? el: el.up('.fake-upload');
-  real = fake.previous('.real-upload');
-  // IE does not support the event approach below
-  try {
-    real.click();
-  }
-  // Chrome does not support .click() method
-  catch(e) {
-    var ev = document.createEvent("MouseEvents");
-    ev.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    real.dispatchEvent(event);
-  }
-  event.stop();
-}
-
-function updateFakeUpload(event) {
-  real = event.element();
-  var fake_text = real.next('.fake-upload').down('input.small_icon')
+function showFakeUpload(event) {
+  var real = event.element();
+  var fake = real.next('.fake-upload')
+  var fake_text = fake.down('input.small_icon')
   fake_text.value = real.value.split('\\').pop().split('/').pop();
   fake_text.addClassName('filled');
   fake_text.addClassName(classNameForFile(fake_text.value));
+  fake.show();
+  real.hide();
 }
 
 function classNameForFile(filename) {
