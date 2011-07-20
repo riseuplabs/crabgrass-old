@@ -106,6 +106,12 @@ function startProgressBar(button) {
           method: 'get',
           parameters: 'X-Progress-ID=' + uuid,
           onSuccess: function(xhr){
+            // stop this thing if the response is blank 
+            // likely the upload failed or server doesn't support it
+            // and it goes on forever
+            if(xhr.responseText == "") {
+	            pe.stop();
+            }
             var upload = xhr.responseText.evalJSON();
             if(upload.state == 'uploading'){
               upload.percent = Math.floor((upload.received / upload.size) * 100);
