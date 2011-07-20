@@ -38,14 +38,22 @@ class GalleryImageController < BasePageController
     raise PermissionDenied unless current_user.may?(:edit, @page)
     @image = @page.images.find(params[:id])
     if params[:assets] #and request.xhr?
-      @image.uploaded_data = params[:assets].first
-      if @image.save!
+      begin
+        @image.change_source_file(params[:assets].first)
         # reload might not work if the class changed...
         @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
             page.replace_html 'show-image', :partial => 'show_image'
             page.hide('progress')
+            page.hide('update_message')
+          end
+        end
+      rescue Exception => exc
+        responds_to_parent do
+          render :update do |page|
+            page.hide('progress')
+            page.replace_html 'update_message', $!
           end
         end
       end
