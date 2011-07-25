@@ -6,7 +6,7 @@ class Me::BaseController < ApplicationController
   before_filter :login_required, :fetch_user
   stylesheet 'me'
   stylesheet 'messages'
-  permissions 'me'
+  permissions 'me', 'public_messages'
   layout 'header'
 
   protected
