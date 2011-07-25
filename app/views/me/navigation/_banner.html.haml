@@ -1,5 +1,6 @@
 %div.left
   %h1= current_user.display_name
-  = render :partial => 'common/say_form', :locals => {:submit => I18n.t(:say_message_button), :url => '/me/public_messages', :text => current_user.current_status}
+  - if may_create_public_messages?
+    = render :partial => 'common/say_form', :locals => {:submit => I18n.t(:say_message_button), :url => '/me/public_messages', :text => current_user.current_status}
 %div.right
   = create_page_link
