@@ -8,7 +8,6 @@ class GalleryImageController < BasePageController
   verify :method => [:post, :put], :only => [:update]
   verify :method => [:post, :delete], :only => [:destroy]
 
-
   def show
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
@@ -26,6 +25,7 @@ class GalleryImageController < BasePageController
   def edit
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
+    @upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
       render :layout => false
     end
