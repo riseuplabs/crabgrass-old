@@ -45,10 +45,10 @@ enabled_tools:
 ##
 
 #sites:
-#  - name: site1
-#    admin_group: rainbow
-#    moderation_group: rainbow
-#    translation_group: animals
+  - name: site1
+    admin_group: rainbow
+    moderation_group: rainbow
+    translation_group: animals
 #  - name: red
 #    admin_group: redadmins
 
