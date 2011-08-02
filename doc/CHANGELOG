@@ -463,6 +463,9 @@ complete information on any of the issues listed below.
   * Feature #1885: tag display box on groups / pages needs to be smaller and have a see all link
   * Feature #1903: fill in metabox and page sidebar with a light color
 
+0.4.7.1 -- 2009 November 16
+  * Bug #1419: wiki update permissions were not working correctly
+
 0.4.7 -- 2009 November 5
   * Bug #488: Pages are being shown as updated when they were not
   * Bug #975: Pages Have No Owner If Owning Group Destroyed = Headtrauma
