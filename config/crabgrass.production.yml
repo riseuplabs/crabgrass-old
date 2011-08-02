@@ -44,7 +44,7 @@ enabled_tools:
 ## SITES
 ##
 
-#sites:
+sites:
   - name: site1
     admin_group: rainbow
     moderation_group: rainbow
