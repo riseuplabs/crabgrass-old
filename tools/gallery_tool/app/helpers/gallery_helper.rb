@@ -64,6 +64,7 @@ module GalleryHelper
     link_to_remote('&nbsp;', {
         :url => url,
         :confirm => I18n.t(:confirm_image_delete),
+        :title => I18n.t(:remove_from_gallery),
         :update => 'message-container',
         :success => "$('#{dom_id(image)}').remove(); $('gallery_spinner').hide();"
       }, :title => I18n.t(:remove_from_gallery),
@@ -76,7 +77,8 @@ module GalleryHelper
       :id => image.id
     link_to_modal('&nbsp;',
       {:url => url, :title => I18n.t(:edit_image)},
-      :class => 'small_icon empty pencil_16')
+      :class => 'small_icon empty pencil_16',
+      :title => I18n.t(:edit_image))
   end
 
   def gallery_move_image_without_js(image)

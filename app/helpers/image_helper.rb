@@ -263,15 +263,18 @@ module ImageHelper
       target_width = 32;
       target_height = 32;
     end
-    style   = "height:#{target_height}px;width:#{target_width}px"
-    klass   = options[:class] || 'thumbnail'
     url     = options[:url] || asset.url
-    method  = options[:method] || 'get'
+    options[:style]    = "height:#{target_height}px;width:#{target_width}px"
+    options[:class]  ||= 'thumbnail'
+    options[:method] ||= 'get'
+    options[:title]  ||= asset.filename
     span = content_tag(:span, asset.filename)
     if options[:xhr]
-      link_to_remote img + span, {:url => url}, :class => klass, :title => asset.filename, :style => style
+      link_to_remote img + span, {:url => url},
+        options.slice(:class, :title, :style)
     else
-      link_to img + span, url, :class => klass, :title => asset.filename, :style => style, :method => method
+      link_to img + span, url,
+        options.slice(:class, :title, :style, :method)
     end
   end
 
