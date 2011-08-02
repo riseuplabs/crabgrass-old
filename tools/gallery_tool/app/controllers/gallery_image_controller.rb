@@ -44,7 +44,8 @@ class GalleryImageController < BasePageController
         @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
-            page.replace_html 'show-image', :partial => 'show_image'
+            page.replace_html 'show-image', :partial => 'show_image',
+              :locals => {:size => 'medium', :no_link => true}
             page.hide('progress')
             page.hide('update_message')
           end
