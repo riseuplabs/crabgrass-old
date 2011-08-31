@@ -1,0 +1,4 @@
+- remote_form_for(:track, :url => gallery_audio_form_url) do |f|
+  = hidden_field_tag 'showing_id', @showing.id
+  = f.text_field :permalink_url
+  = f.submit
