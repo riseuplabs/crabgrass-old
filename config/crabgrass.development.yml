@@ -24,10 +24,10 @@ enabled_languages:
   - ar
   - fr
 enabled_mods:
-  - super_admin
-  - student
-  - connectingclassrooms
-  - moderation
+#  - super_admin
+#  - student
+#  - connectingclassrooms
+#  - moderation
   - no_private_messages
   - enhanced_stats
   # - openlayers

@@ -101,6 +101,12 @@ module GalleryHelper
     return output
   end
 
+  def gallery_audio_form_url
+    page_url @page,
+      :action => @track.new_record? ? 'audio-create' : 'audio-update',
+      :id => @track.id
+  end
+
   def js_style var, style
     output = []
     style.split(';').each do |part|

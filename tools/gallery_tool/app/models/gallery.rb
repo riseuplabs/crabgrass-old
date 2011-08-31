@@ -6,6 +6,7 @@ class Gallery < Page
 
   has_many :showings, :order => 'position', :dependent => :destroy
   has_many :images, :through => :showings, :source => :asset, :order => 'showings.position'
+  has_many :tracks, :through => :showings, :order => 'showings.position'
 
   def update_media_flags
     self.is_image = true
