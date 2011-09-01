@@ -12,13 +12,16 @@ class GalleryImageController < BasePageController
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @image_index = @showing.position
+    @track = @showing.track
+    # position sometimes starts at 0 and sometimes at 1?
+    @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
     @next = @showing.lower_item
     @previous = @showing.higher_item
     #raise 'next is '+@next.inspect+' and previous is '+@previous.inspect
     render :update do |page|
       page.replace_html 'gallery-container', :partial => 'show'
+      page.hide 'posts'
     end
   end
 

@@ -1,0 +1,10 @@
+= render :partial => 'gallery_navigation'
+
+%h2=h @showing.image.caption
+.gallery-item
+  = render :partial => 'show_image'
+
+  - if @track
+    = render :partial => '/gallery_audio/show'
+
+%span= gallery_display_image_position
