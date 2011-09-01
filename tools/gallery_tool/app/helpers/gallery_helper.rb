@@ -107,6 +107,10 @@ module GalleryHelper
       :id => @track.id
   end
 
+  def gallery_audio_player
+    "http://player.soundcloud.com/player.swf?&url=#{@track.permalink_url}"
+  end
+
   def js_style var, style
     output = []
     style.split(';').each do |part|

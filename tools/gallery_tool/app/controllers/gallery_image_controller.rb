@@ -12,6 +12,7 @@ class GalleryImageController < BasePageController
     return unless request.xhr?
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
+    @track = @showing.track
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
