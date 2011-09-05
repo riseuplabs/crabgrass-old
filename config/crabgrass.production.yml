@@ -63,6 +63,7 @@ show_exceptions: false
 email_sender: "robot@$current_host"
 tracking: true
 available_page_types:
+  - WikiPage
   - AssetPage
   #- EventPage
   - ExternalVideoPage
@@ -75,5 +76,4 @@ available_page_types:
   - RankedVotePage
   - ArticlePage
   - Gallery
-  - WikiPage
 
