@@ -30,6 +30,7 @@ enabled_mods:
 #  - moderation
   - no_private_messages
   - enhanced_stats
+  - soundcloud
   # - openlayers
   # - ui_tester
   # - design_tester
@@ -63,9 +64,15 @@ all_profiles_visible: 1
 ##
 
 sites:
-  - name: connectingclassrooms
+  - name: site1
     admin_group: rainbow
     moderation_group: rainbow
+    evil:
+       soundcloud:
+         client_id: eee3f3174759328707c73a0be2652fce
+         client_secret: bce994a5f79e241cbe94e4035e4a224b
+         refresh_token: b17a733ff2426f8adb319fb9fc8eb068
+         enabled: true
 
 # bound to test.host
 #  - name: site2
