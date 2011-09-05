@@ -1,0 +1,11 @@
+#audio-embed
+  -if @track && !@track.new_record?
+    = render :partial => 'gallery_audio/show'
+  -else
+    Please enter a Soundcloud url below to include the audio!
+
+#connect-to-audio
+- remote_form_for(@track, :url => gallery_audio_form_url) do |f|
+  = hidden_field_tag 'showing_id', @showing.id
+  = f.text_field :permalink_url
+  = f.submit

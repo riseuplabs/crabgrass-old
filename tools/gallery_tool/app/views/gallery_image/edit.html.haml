@@ -1,17 +1,24 @@
-%h2.big_icon.page_gallery_48.title
-  = I18n.t :edit_image_header
+= Formy.tabs do |tabs|
+  - tabs.tab do |tab|
+    - tab.label I18n.t :media_image
+    - tab.show_tab 'image-tab'
+    - tab.selected true
+  - tabs.tab do |tab|
+    - tab.label I18n.t :media_audio
+    - tab.show_tab 'audio-tab'
+    - tab.selected false
+    %h2.big_icon.page_gallery_48.title
+      = I18n.t :edit_image_header
 
-#update_message{:style => "color: red;"}
+#image-tab.tab_content
+  #update_message{:style => "color: red;"}
+  #show-image= render :partial => 'show_image', :locals => {:size => 'medium', :no_link => true}
+  #upload-new-image
+    = render :partial => 'edit_upload'
+  %div.gallery_item
+    = image_title @image
 
-#show-image= render :partial => 'show_image', :locals => {:size => 'medium', :no_link => true}
-
-%div.gallery_item
-  = image_title @image
-%br
-#upload-new-image
-  = render :partial => 'edit_upload'
-
-#connect-to-audio
-  = render :partial => 'edit_audio'
+#audio-tab.tab_content{:style => 'display:none;'}
+  = render :partial => 'gallery_audio/edit'
 
 = render :partial => 'close_and_reload_button'
