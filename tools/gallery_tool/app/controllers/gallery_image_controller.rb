@@ -86,6 +86,8 @@ class GalleryImageController < BasePageController
     end
   end
 
+  protected
+
   # just carrying over stuff from the old gallery controller here
   def setup_view
     @show_right_column = true

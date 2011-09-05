@@ -1,0 +1,3 @@
+page.replace_html 'audio-embed',
+  render(:partial => 'gallery_audio/show')
+page.call('showNoticeMessage', display_messages)
