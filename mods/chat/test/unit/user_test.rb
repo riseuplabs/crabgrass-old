@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class UserTest < Test::Unit::TestCase
+class UserTest < ActiveSupport::TestCase
   fixtures :users
 
   # We need a hostname in order to construct a Jabber ID for each user.
