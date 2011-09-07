@@ -12,14 +12,7 @@ class Admin::SoundcloudController < Admin::BaseController
     if params[:error].nil? && params[:code]
       remote.exchange_token(:code => params[:code])
     end
-    if @client.connected?
-      @me = remote.get '/me'
-    end
-  end
-
-  def destroy
-    @client.destroy
-    redirect_to :action => :show
+    @me = remote.get '/me'
   end
 
   protected
