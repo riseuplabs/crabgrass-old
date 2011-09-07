@@ -360,8 +360,8 @@ var DropSocial = Class.create({
 
 var LoadSocial = Class.create({
   initialize: function() {
-    this.doRequest();
-    new PeriodicalExecuter(this.doRequest, 120);
+//    this.doRequest();
+//    new PeriodicalExecuter(this.doRequest, 120);
   },
   doRequest: function() {
     if (!$('social-activities-dropdown')) return;
