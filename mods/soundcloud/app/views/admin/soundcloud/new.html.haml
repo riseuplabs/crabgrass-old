@@ -1,0 +1,10 @@
+%h1 Soundcloud Status
+%div.stats_container
+  %h2 Connection
+  There is no connection to soundcloud yet. Please specify your soundcloud credentials to connect:
+  - form_for @client, :url => admin_soundcloud_path do |f|
+    = f.label :email
+    = f.text_field :email
+    %br/
+    = f.label :password
+    = f.password_field :password
