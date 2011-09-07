@@ -1,22 +1,28 @@
-class Admin::SoundcloudController < ApplicationController
+class Admin::SoundcloudController < Admin::BaseController
 
   before_filter :get_client
+  permissions 'admin/soundcloud'
 
   def new
-    redirect_to @client.connection.authorize_url(:display => "popup")
+    redirect_to remote.authorize_url(:display => "popup")
   end
 
   def show
     # actually this is a redirect after connecting
     if params[:error].nil? && params[:code]
-      @client.connection.exchange_token(:code => params[:code])
+      remote.exchange_token(:code => params[:code])
     end
-    @me = @client.connection.get '/me'
+    @me = remote.get '/me'
   end
 
   protected
 
+  def remote
+    @remote ||= @client.remote(:redirect_uri => admin_soundcloud_url)
+  end
+
   def get_client
-    @client = SoundcloudClient.new(:redirect_uri  => admin_soundcloud_url)
+    @client ||= current_site.soundcloud_client ||
+      current_site.create_soundcloud_client
   end
 end
