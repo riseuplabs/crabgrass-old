@@ -17,9 +17,6 @@ class SoundcloudClientTest < ActiveSupport::TestCase
   def test_new_connects
     Site.expects(:current).at_least(2).returns(stub({:evil => @config}))
     client = SoundcloudClient.new
-    puts "New refresh token: "
-    puts client.connection.refresh_token
-    puts "Please update config file."
     assert_equal client.connection.access_token,
       @config['soundcloud'][:access_token]
     assert !client.connection.expired?
