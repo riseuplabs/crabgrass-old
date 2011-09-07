@@ -9,7 +9,7 @@
 --- 
 connectingclassrooms:
   id: 1
-  name: "connectingclassrooms"
+  name: "site1"
   title: "cc site1"
   default: true
   domain: localhost
