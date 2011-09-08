@@ -176,7 +176,7 @@ module ModalboxHelper
     # If cancel is pressed, then nothing happens.
     # If OK is pressed, then a form submit happens, using the action and method specified.
     #
-    def link_to_with_confirm(body, options = {}, html_options = nil)
+    def link_to_with_confirm(body, options = {}, html_options = nil, &block)
       if options.is_a?(Hash) and options[:confirm]
         # this seems like a bad form. the confirm should be in html_options.
         # is this really used anywhere?
@@ -203,7 +203,7 @@ module ModalboxHelper
               %[Modalbox.confirm("#{message}", {method:"#{method}", action:"#{action}", token:"#{token}", title:"#{title}", ok:"#{ok}", cancel:"#{cancel}"})],
               html_options)
       else
-        link_to_without_confirm(body, options, html_options)
+        link_to_without_confirm(body, options, html_options, &block)
       end
     end
     #alias_method_chain :link_to, :confirm

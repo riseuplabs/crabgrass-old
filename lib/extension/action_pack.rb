@@ -77,10 +77,33 @@ end
 # it replace '+' with some ugly '%2B' character.
 
 class ActionView::Base
-  def link_to_with_pretty_plus_signs(*args)
-    link_to_without_pretty_plus_signs(*args).sub('%2B','+')
+  def link_to_with_pretty_plus_signs(*args, &block)
+    link_to_without_pretty_plus_signs(*args, &block).sub('%2B','+')
   end
   alias_method_chain :link_to, :pretty_plus_signs
+end
+
+###
+### LINK_TO WITH BLOCK GIVEN
+###
+
+# This is the default behaviour in rails 2.2+ and i just love it.
+# It allows for:
+# = link_to url do
+#   %img ...
+
+class ActionView::Base
+  def link_to_with_block_given(*args, &block)
+    if block_given?
+      options = args.shift || {}
+      html_options = args.shift
+      cap = block_is_haml?(block) ? capture_haml(&block) : capture(&block)
+      link_to_without_block_given(cap, options, html_options)
+    else
+      link_to_without_block_given(*args)
+    end
+  end
+  alias_method_chain :link_to, :block_given
 end
 
 ###
