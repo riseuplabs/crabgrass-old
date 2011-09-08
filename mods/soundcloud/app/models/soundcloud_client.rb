@@ -33,11 +33,8 @@ class SoundcloudClient < ActiveRecord::Base
     @remote
   end
 
-<<<<<<< HEAD
   def connected?
     !remote.access_token.nil?
   end
 
-=======
->>>>>>> ab6ed9a6e69aa965563be01cd74db4ee28ba20a6
 end
