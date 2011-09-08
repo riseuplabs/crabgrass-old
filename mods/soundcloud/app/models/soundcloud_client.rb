@@ -17,6 +17,7 @@ class SoundcloudClient < ActiveRecord::Base
   end
 
   def remote(options = {})
+    return @remote if @remote and options.empty?
     options={
       :expires_at    => expires_at,
       :access_token  => access_token,
@@ -30,6 +31,10 @@ class SoundcloudClient < ActiveRecord::Base
       self.save
     end
     @remote
+  end
+
+  def connected?
+    !remote.access_token.nil?
   end
 
 end

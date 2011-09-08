@@ -1,10 +1,20 @@
 %h1 Soundcloud Status
 %div.stats_container
-  - if @me
-    %h2 Connection
-    %dl
-      %dt You are logged into soundcloud as
-      %dd= @me.username
+  - if @client.connected?
+    %h2 Connected
+    %ul
+      %li
+        You are connected to soundcloud as
+        %br/
+        %img{:src => @me.avatar_url, :width => '50px', :height => '50px'}
+        %br/
+        = link_to @me.username, @me.permalink_url
+      %li
+        You have #{@me.private_tracks_count} private tracks hosted on soundcloud.
+      %li
+        = link_to(admin_soundcloud_path, :method => :delete) do
+          %img{:src => "/images/mods/soundcloud/disconnect_from_soundcloud.png"}
   - else
     %h2 No Connection established
-    = link_to "Connect to soundcloud!", new_admin_soundcloud_path
+    = link_to(new_admin_soundcloud_path) do
+      %img{:src => "/images/mods/soundcloud/connect_with_soundcloud.png"}
