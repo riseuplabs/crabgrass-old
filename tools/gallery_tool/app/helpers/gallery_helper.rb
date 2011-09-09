@@ -106,7 +106,8 @@ module GalleryHelper
   end
 
   def gallery_audio_player
-    "http://player.soundcloud.com/player.swf?&url=#{@track.permalink_url}"
+    url = @track.secret_uri
+    "http://player.soundcloud.com/player.swf?&url=#{CGI::escape(url)}"
   end
 
   def js_style var, style
