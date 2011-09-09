@@ -1,5 +1,6 @@
 class GalleryAudioController < BasePageController
 
+  before_filter :get_client
   permissions 'gallery'
   helper 'gallery'
 
@@ -10,7 +11,12 @@ class GalleryAudioController < BasePageController
 
   def create
     @showing = @page.showings.find params['showing_id']
-    @track = @showing.create_track params['track'].try.slice('permalink_url')
+    @soundcloud_track = @client.remote.post '/tracks',
+      :track => {:title => params['track'][:title],
+        :sharing => 'private',
+        :asset_data => File.new(params['track'][:asset_data].path)}
+    track_params = Track.params_from_soundcloud(@soundcloud_track)
+    @track = @showing.create_track track_params
     @showing.save
   end
 
@@ -30,6 +36,11 @@ class GalleryAudioController < BasePageController
   end
 
   protected
+
+  def get_client
+    @client ||= current_site.soundcloud_client ||
+      current_site.create_soundcloud_client
+  end
 
   # we don't want any confusion with :create specific context from
   # BasePageController
