@@ -14,12 +14,10 @@ class SoundcloudClientTest < ActiveSupport::TestCase
     save_config(@config)
   end
 
-  def test_new_connects
-    Site.expects(:current).at_least(2).returns(stub({:evil => @config}))
+  def test_connecting
     client = SoundcloudClient.new
-    assert_equal client.connection.access_token,
-      @config['soundcloud'][:access_token]
-    assert !client.connection.expired?
+    client.remote(@config['soundcloud'])
+    assert client.connected?
   ensure
     save_config(@config)
   end
