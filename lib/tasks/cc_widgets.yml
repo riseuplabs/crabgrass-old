@@ -1,5 +1,15 @@
 -
   section: 1
+  position: 0
+  name: MapWidget
+  options: 
+    :map_center_latitude: 4.05028
+    :title: Participating Connecting Classrooms Schools
+    :map_center_longitude: 9.7
+    :zoomlevel: Continent
+    :kml: groups
+-
+  section: 1
   position: 1
   name: PageListWidget
   options:
@@ -12,39 +22,12 @@
     :display_title: 1
 -
   section: 2
-  position: 5
-  name: NetworkingWidget
-  options:
-    :title: Most Active Groups
-    :entities: Groups
-    :recent: 1
--
-  section: 1
   position: 0
-  name: MapWidget
+  name: ImageTitleWidget
   options: 
-    :map_center_latitude: 4.05028
-    :title: Participating Connecting Classrooms Schools
-    :map_center_longitude: 9.7
-    :zoomlevel: Continent
-    :kml: groups
--
-  section: 2
-  position: 6
-  name: TagCloudWidget
-  options: 
-    :title: Tag Cloud
-    :limit: 10
--
-  section: 4
-  position: 0
-  name: MenuWidget
-  options: 
-    :title: Welcome
--
-  section: 3
-  position: 0
-  name: WikiWidget
+    :title: "***All Schools Network/R\\xC3\\xA9seau Toutes Ecoles***"
+    :link: http://www.connectingclassrooms.net/networks/20102011
+    :image: http://www.connectingclassrooms.net/assets/1501/allschoolsnetwork_medium.jpg
 -
   section: 2
   position: 1
@@ -63,6 +46,14 @@
     :image: http://www.connectingclassrooms.net/avatars/1789/big.jpg?1311964009
 -
   section: 2
+  position: 3
+  name: ImageTitleWidget
+  options: 
+    :title: Climate Change/Changement Climatique
+    :link: http://www.connectingclassrooms.net/climatechange
+    :image: http://www.connectingclassrooms.net/avatars/920/big.jpg?1311964009
+-
+  section: 2
   position: 4
   name: ImageTitleWidget
   options: 
@@ -71,17 +62,26 @@
     :image: http://www.connectingclassrooms.net/avatars/6/big.jpg?1311964008
 -
   section: 2
-  position: 0
-  name: ImageTitleWidget
-  options: 
-    :title: "***All Schools Network/R\\xC3\\xA9seau Toutes Ecoles***"
-    :link: http://www.connectingclassrooms.net/networks/20102011
-    :image: http://www.connectingclassrooms.net/assets/1501/allschoolsnetwork_medium.jpg
+  position: 5
+  name: NetworkingWidget
+  options:
+    :title: Most Active Groups
+    :entities: Groups
+    :recent: 1
 -
   section: 2
-  position: 3
-  name: ImageTitleWidget
+  position: 6
+  name: TagCloudWidget
   options: 
-    :title: Climate Change/Changement Climatique
-    :link: http://www.connectingclassrooms.net/climatechange
-    :image: http://www.connectingclassrooms.net/avatars/920/big.jpg?1311964009
+    :title: Tag Cloud
+    :limit: 10
+-
+  section: 3
+  position: 0
+  name: WikiWidget
+-
+  section: 4
+  position: 0
+  name: MenuWidget
+  options: 
+    :title: Welcome
