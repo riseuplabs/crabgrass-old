@@ -25,7 +25,7 @@
   position: 0
   name: ImageTitleWidget
   options: 
-    :title: "***All Schools Network/R\\xC3\\xA9seau Toutes Ecoles***"
+    :title: "***All Schools Network/Réseau Toutes Ecoles***"
     :link: http://www.connectingclassrooms.net/networks/20102011
     :image: http://www.connectingclassrooms.net/assets/1501/allschoolsnetwork_medium.jpg
 -
@@ -41,7 +41,7 @@
   position: 2
   name: ImageTitleWidget
   options: 
-    :title: Health/Sant\\xC3\\xA9
+    :title: Health/Santé
     :link: http://www.connectingclassrooms.net/healthnetwork
     :image: http://www.connectingclassrooms.net/avatars/1789/big.jpg?1311964009
 -
