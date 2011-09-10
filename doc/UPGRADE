@@ -12,6 +12,12 @@ next
 0.5.4
 ------
 
+* Dependencies
+
+  1. Compass needs to be upgraded to 0.10.x
+
+  2. Compass Susy Plugin needs to be 0.8.x
+
 * To upgrade:
 
   1. Run migrations:
