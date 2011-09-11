@@ -299,6 +299,11 @@ module ApplicationHelper
     end
   end
 
+  def display_social_activity?
+    Conf.social_activity_dropdown? and
+    current_user.friends.any? || current_user.peers.any?
+  end
+
   def linked_activity_description(activity)
     description = activity.try.safe_description(self)
     expand_links(description)

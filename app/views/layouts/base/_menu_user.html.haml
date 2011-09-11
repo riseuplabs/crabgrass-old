@@ -1,6 +1,6 @@
 %div#user
   - if logged_in?
-    - if !current_user.friends.empty? or !current_user.peers.empty?
+    - if display_social_activity?
       = render :partial => '/layouts/base/social_activities'
     = link_to(I18n.t(:profile), '/'+current_user.login)
     = '&bull;'
