@@ -56,6 +56,7 @@ class Conf
   cattr_accessor :profile_fields
   cattr_accessor :all_profiles_visible
   cattr_accessor :limited
+  cattr_accessor :social_activity_dropdown
 
   # global instance options
   cattr_accessor :enabled_mods
@@ -91,6 +92,7 @@ class Conf
   def self.paranoid_emails?; self.paranoid_emails; end
   def self.tracking?; self.tracking; end
   def self.ensure_page_owner?; self.ensure_page_owner; end
+  def self.social_activity_dropdown?; self.social_activity_dropdown; end
 
   ##
   ## LOADING
@@ -117,14 +119,15 @@ class Conf
     self.dev_email         = ''
 
     # instance configuration
+    self.default_page_access = :admin
+    self.email         = nil
     self.enabled_mods  = []
     self.enabled_tools = []
     self.enabled_languages = []
-    self.email         = nil
-    self.sites         = []
-    self.secret        = nil
     self.ensure_page_owner = true
-    self.default_page_access = :admin
+    self.secret        = nil
+    self.sites         = []
+    self.social_activity_dropdown = false
     self.text_editor   = TEXT_EDITOR[:greencloth_only]
     self.use_full_geonames_data = false
     self.widgets           = {}
