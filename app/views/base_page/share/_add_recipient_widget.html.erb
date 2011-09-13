@@ -46,8 +46,8 @@
   </tr>
 -->
   <tr>
-    <td style='width:100%' id='autocomplete_container'>
-      <%= text_field_tag 'recipient_name', '', :style => 'width:100%', :onkeypress => key_pressed_function %>
+    <td id='autocomplete_container'>
+      <%= text_field_tag 'recipient_name', '', :onkeypress => key_pressed_function %>
       <%= autocomplete_tag %>
     </td>
     <td>&nbsp;</td>
