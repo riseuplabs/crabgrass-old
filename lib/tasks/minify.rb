@@ -79,9 +79,9 @@ task :minify do
     join_files(EXTRA_JS)
     join_files(WIKI_JS)
 
-    compressor('main.js', true)
-    compressor('extra.js', true)
-    compressor('wiki.js', true)
+    compressor('main.js', false)
+    compressor('extra.js', false)
+    compressor('wiki.js', false)
   end
 end
 
