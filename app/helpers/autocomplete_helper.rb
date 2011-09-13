@@ -29,7 +29,7 @@ module AutocompleteHelper
       new Autocomplete('#{field_id}', {
         #{serviceurl},
         minChars:2,
-        maxHeight:400,
+        maxHeight:#{options[:maxheight] || 150},
         width:340,
         onSelect: #{options[:onselect]},
         message: '#{escape_javascript(options[:message])}',
@@ -71,7 +71,7 @@ module AutocompleteHelper
   end
 
   def locations_autocomplete_afterupdate(options)
-    if options[:update_form_for] == 'profile' 
+    if options[:update_form_for] == 'profile'
       return js_for_edit_geo_location
     elsif options[:update_form_for] == 'widget'
       remote_url = {:controller => 'locations', :action => 'update_widget_lat_and_long'}
