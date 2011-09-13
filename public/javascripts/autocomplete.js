@@ -323,6 +323,8 @@ Autocomplete.prototype = {
     this.enabled = true;
     this.fixPosition();
     this.container.update(content.join(''));
+    if ($('MB_window'))
+      Modalbox.updatePosition();
     if (!this.ignoreUpdates)
       this.container.show();
   },
