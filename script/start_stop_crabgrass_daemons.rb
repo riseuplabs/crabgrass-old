@@ -127,7 +127,7 @@ def start_backgroundrb
   # this is echoed by the BackgrounDRb::StartStop
   # puts "Starting backgroundrb..."
   puts ""
-  system("#{$root}/script/backgroundrb start -e #{$environment}")
+  system("#{$root}/script/backgroundrb start -e #{$environment} RAILS_ENV=#{$environment}")
 
   if (pid = bgrb_pid).any?
     puts "Started backgroundrb successfuly (pid %s)." % pid
