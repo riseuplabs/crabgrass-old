@@ -13,6 +13,7 @@ ImageTitleWidget:
     - 2
   :settings:
     - :title
+    - :french
     - :image
     - :link
 IntroWidget:
