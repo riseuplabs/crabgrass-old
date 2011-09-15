@@ -24,13 +24,13 @@ enabled_languages:
   - ar
   - fr
 enabled_mods:
-  - super_admin
+  # - super_admin
   - student
   - connectingclassrooms
-  - moderation
+  # - moderation
   - no_private_messages
   - enhanced_stats
-  # - openlayers
+  - openlayers
   # - ui_tester
   # - design_tester
   # - translator
@@ -63,7 +63,7 @@ all_profiles_visible: 1
 ##
 
 sites:
-  - name: connectingclassrooms
+  - name: site1
     admin_group: rainbow
     moderation_group: rainbow
 
