@@ -15,6 +15,7 @@ ImageTitleWidget:
     - :title
     - :french
     - :image
+    - :next_line
     - :link
 IntroWidget:
   :columns:
