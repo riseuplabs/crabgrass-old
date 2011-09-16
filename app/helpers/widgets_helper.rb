@@ -158,9 +158,4 @@ module WidgetsHelper
     end
   end
 
-  def image_parameters(widget)
-    options = {:src => widget.image}
-    widget.next_line ? options : options.merge(:class => 'left')
-  end
-
 end

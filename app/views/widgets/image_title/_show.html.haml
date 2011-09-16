@@ -1,10 +1,10 @@
 .col1
   - if widget.link
     = link_to widget.link do
-      %img{image_parameters(widget)}/
+      %img{:src => widget.image}/
       %br/
       %h3.blue=h translated_title(widget)
   -else
-    %img.left{image_parameters(widget)}:src => widget.image}/
+    %img{:src => widget.image}/
     %br/
     %h3.blue=h translated_title(widget)
