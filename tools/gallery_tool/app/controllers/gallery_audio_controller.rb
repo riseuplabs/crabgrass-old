@@ -11,12 +11,7 @@ class GalleryAudioController < BasePageController
 
   def create
     @showing = @page.showings.find params['showing_id']
-    @soundcloud_track = @client.remote.post '/tracks',
-      :track => {:title => params['track'][:title],
-        :sharing => 'private',
-        :asset_data => File.new(params['track'][:asset_data].path)}
-    track_params = Track.params_from_soundcloud(@soundcloud_track)
-    @track = @showing.create_track track_params
+    @track = @showing.create_track params['track'].slice(:title, :asset_data)
     @showing.save
   end
 
