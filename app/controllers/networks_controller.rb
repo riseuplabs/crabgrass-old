@@ -70,7 +70,7 @@ class NetworksController < GroupsController
 
   def check_site_settings
     unless current_site.has_networks?
-      redirect_to (current_site.network ? '/' : '/me/dashboard')
+      redirect_to (current_site.network ? '/' : '/me')
     end
   end
 
