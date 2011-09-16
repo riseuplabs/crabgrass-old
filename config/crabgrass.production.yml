@@ -28,7 +28,7 @@ enabled_mods:
   - evil_mod
   - enhanced_stats
   - openlayers
-  - public_home
+#  - public_home
   - soundcloud
 enabled_tools:
   - asset_tool

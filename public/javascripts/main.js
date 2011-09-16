@@ -5234,11 +5234,11 @@ var DropSocial = Class.create({
 
 var LoadSocial = Class.create({
   initialize: function() {
+    if (!$('social-activities-dropdown')) return;
     this.doRequest();
     new PeriodicalExecuter(this.doRequest, 120);
   },
   doRequest: function() {
-    if (!$('social-activities-dropdown')) return;
     if ($('social-activities-dropdown').visible()) return;
     new Ajax.Request('/me/social-activities', {
       method: 'GET',
@@ -7990,8 +7990,11 @@ Autocomplete.prototype = {
       this.messageDisplayed=true;
     }
     this.instanceId = Autocomplete.instances.push(this) - 1;
-    /* I think we should trigger a preloading request from here */
-    //this.requestSuggestions("");
+    /* I think we should trigger a preloading request from here *
+     * However this seems to have caused issues with city name autocomplete
+     * if the city was present already */
+    if (this.currentValue === '')
+      this.requestSuggestions("");
   },
 
   fixPosition: function() {

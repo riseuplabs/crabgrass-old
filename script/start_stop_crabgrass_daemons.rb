@@ -127,7 +127,7 @@ def start_backgroundrb
   # this is echoed by the BackgrounDRb::StartStop
   # puts "Starting backgroundrb..."
   puts ""
-  system("#{$root}/script/backgroundrb start -e #{$environment}")
+  system("RAILS_ENV=production #{$root}/script/backgroundrb start -e #{$environment}")
 
   if (pid = bgrb_pid).any?
     puts "Started backgroundrb successfuly (pid %s)." % pid
@@ -148,7 +148,7 @@ def stop_backgroundrb
     return
   end
   puts "Stopping backgroundrb daemon..."
-  system("#{$root}/script/backgroundrb stop -e #{$environment}")
+  system("RAILS_ENV=production #{$root}/script/backgroundrb stop -e #{$environment}")
   system("pkill -f 'script/backgroundrb'") # make sure it is dead
   sleep 1
   if bgrb_pid.any?
@@ -160,7 +160,7 @@ end
 
 def ensure_stop_backgroundrb
   if bgrb_pid.any?
-    system("#{$root}/script/backgroundrb stop -e #{$environment}")
+    system("RAILS_ENV?=production #{$root}/script/backgroundrb stop -e #{$environment}")
     system("pkill -f 'script/backgroundrb'") # make sure it is dead
   end
 end

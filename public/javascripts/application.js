@@ -360,11 +360,11 @@ var DropSocial = Class.create({
 
 var LoadSocial = Class.create({
   initialize: function() {
-//    this.doRequest();
-//    new PeriodicalExecuter(this.doRequest, 120);
+    if (!$('social-activities-dropdown')) return;
+    this.doRequest();
+    new PeriodicalExecuter(this.doRequest, 120);
   },
   doRequest: function() {
-    if (!$('social-activities-dropdown')) return;
     if ($('social-activities-dropdown').visible()) return;
     new Ajax.Request('/me/social-activities', {
       method: 'GET',

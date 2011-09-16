@@ -149,4 +149,13 @@ module WidgetsHelper
     Conf.widgets[name][:available_icons]
   end
 
+  # image title helpers
+  def translated_title(widget)
+    if I18n.locale == :fr and !widget.french.blank?
+      widget.french
+    else
+      widget.title
+    end
+  end
+
 end

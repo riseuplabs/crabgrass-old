@@ -1,0 +1,87 @@
+-
+  section: 1
+  position: 0
+  name: MapWidget
+  options: 
+    :map_center_latitude: 4.05028
+    :title: Participating Connecting Classrooms Schools
+    :map_center_longitude: 9.7
+    :zoomlevel: Continent
+    :kml: groups
+-
+  section: 1
+  position: 1
+  name: PageListWidget
+  options:
+    :title: Pages to Visit
+    :recent_pages: 1
+    :most_viewed: 1
+    :most_active: 1
+    :most_stars: 1
+    :featured: 1
+    :display_title: 1
+-
+  section: 2
+  position: 0
+  name: ImageTitleWidget
+  options: 
+    :title: "***All Schools Network/Réseau Toutes Ecoles***"
+    :link: http://www.connectingclassrooms.net/networks/20102011
+    :image: http://www.connectingclassrooms.net/assets/1501/allschoolsnetwork_medium.jpg
+-
+  section: 2
+  position: 1
+  name: ImageTitleWidget
+  options: 
+    :title: Help and Support/Aide et Soutien 
+    :link: http://www.connectingclassrooms.net/support
+    :image: http://www.connectingclassrooms.net/assets/1500/helpandsupport_small.jpg
+-
+  section: 2
+  position: 2
+  name: ImageTitleWidget
+  options: 
+    :title: Health/Santé
+    :link: http://www.connectingclassrooms.net/healthnetwork
+    :image: http://www.connectingclassrooms.net/avatars/1789/big.jpg?1311964009
+-
+  section: 2
+  position: 3
+  name: ImageTitleWidget
+  options: 
+    :title: Climate Change/Changement Climatique
+    :link: http://www.connectingclassrooms.net/climatechange
+    :image: http://www.connectingclassrooms.net/avatars/920/big.jpg?1311964009
+-
+  section: 2
+  position: 4
+  name: ImageTitleWidget
+  options: 
+    :title: Food and Agriculture/Alimentation et Agriculture
+    :link: http://www.connectingclassrooms.net/foodandagriculture
+    :image: http://www.connectingclassrooms.net/avatars/6/big.jpg?1311964008
+-
+  section: 2
+  position: 5
+  name: NetworkingWidget
+  options:
+    :title: Most Active Groups
+    :entities: Groups
+    :recent: 1
+-
+  section: 2
+  position: 6
+  name: TagCloudWidget
+  options: 
+    :title: Tag Cloud
+    :limit: 10
+-
+  section: 3
+  position: 0
+  name: WikiWidget
+-
+  section: 4
+  position: 0
+  name: MenuWidget
+  options: 
+    :title: Welcome

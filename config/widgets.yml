@@ -7,13 +7,16 @@ TextBoxWidget:
     - :text
     - :link
   :width: 1
-#ImageTitleWidget:
-#  :columns:
-#    - 2
-#  :settings:
-#    - :title
-#    - :image
-#    - :link
+ImageTitleWidget:
+  :columns:
+    - 1
+    - 2
+  :settings:
+    - :title
+    - :french
+    - :image
+    - :next_line
+    - :link
 IntroWidget:
   :columns:
     - 2

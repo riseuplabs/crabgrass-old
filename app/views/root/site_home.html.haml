@@ -1,6 +1,8 @@
-- content_for :misc_header do
-  - for widget in @top_widgets
-    = render_widget widget
+-# compatibility with old menu bar
+- if @top_widgets.any?
+  - content_for :misc_header do
+    - for widget in @top_widgets
+      = render_widget widget
 
 .wrapper2-plus
   - for widget in @main_widgets

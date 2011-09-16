@@ -26,7 +26,7 @@ enabled_languages:
 enabled_mods:
 #  - super_admin
 #  - student
-#  - connectingclassrooms
+  - connectingclassrooms
 #  - moderation
   - no_private_messages
   - enhanced_stats
@@ -67,12 +67,6 @@ sites:
   - name: site1
     admin_group: rainbow
     moderation_group: rainbow
-    evil:
-       soundcloud:
-         client_id: eee3f3174759328707c73a0be2652fce
-         client_secret: bce994a5f79e241cbe94e4035e4a224b
-         refresh_token: 00d9758035332c1081b67419eee74632
-         enabled: true
 
 # bound to test.host
 #  - name: site2

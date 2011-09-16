@@ -1,4 +1,10 @@
-.col2
-  .opinion-bg
-    %h2.opinion
-      = widget.link ? link_to(h(widget.title), widget.link) : h(widget.title)
+.col1
+  - if widget.link
+    = link_to widget.link do
+      %img{:src => widget.image}/
+      %br/
+      %h3.blue=h translated_title(widget)
+  -else
+    %img{:src => widget.image}/
+    %br/
+    %h3.blue=h translated_title(widget)
