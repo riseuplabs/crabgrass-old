@@ -1,25 +1,18 @@
 class GalleryAudioController < BasePageController
 
-  before_filter :get_client
   permissions 'gallery'
   helper 'gallery'
 
-  # could we verify delete as the method on destry?
-  verify :method => :post, :only => [:create]
-  verify :method => [:post, :put], :only => [:update]
-  verify :method => [:post, :delete], :only => [:destroy]
-
   def create
     @showing = @page.showings.find params['showing_id']
-    @track = @showing.create_track params['track'].slice(:title, :asset_data)
+    @track = @showing.create_track params['track']
     @showing.save
   end
 
   def update
     @showing = @page.showings.find params['showing_id']
     @track = @showing.track
-    @track.permalink_url = params['track']['permalink_url']
-    if @track.save
+    if @track.update_attributes
       flash_message_now :title => I18n.t(:audio_updated),
                 :success => I18n.t(:audio_updated_successfully)
     else
@@ -28,14 +21,12 @@ class GalleryAudioController < BasePageController
   end
 
   def destroy
+    @showing = @page.showings.find params['showing_id']
+    @showing.track.destroy
+    @showing.save
   end
 
   protected
-
-  def get_client
-    @client ||= current_site.soundcloud_client ||
-      current_site.create_soundcloud_client
-  end
 
   # we don't want any confusion with :create specific context from
   # BasePageController
