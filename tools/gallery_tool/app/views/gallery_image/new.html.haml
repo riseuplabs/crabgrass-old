@@ -5,7 +5,7 @@
   = I18n.t :add_images_or_zips_explaination
 
 - form_tag page_url(@page, :action => 'image-create', 'X-Progress-ID' => @upload_id), :method => :post, :multipart => true do
-  = hidden_field_tag 'X-Progress-ID', @upload_id
+  = hidden_field_tag 'X-Progress-ID', @upload_id, :class => 'uuid'
   = render :partial => 'upload'
   = spinner('upload')
   .submit
