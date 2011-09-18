@@ -10,9 +10,9 @@ class GalleryAudioController < BasePageController
   end
 
   def update
-    @showing = @page.showings.find params['showing_id']
-    @track = @showing.track
-    if @track.update_attributes
+    @track = @page.tracks.find params['id']
+    @showing = @track.showing
+    if @track.update_attributes params['track']
       flash_message_now :title => I18n.t(:audio_updated),
                 :success => I18n.t(:audio_updated_successfully)
     else

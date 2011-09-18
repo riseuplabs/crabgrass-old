@@ -1,5 +1,9 @@
 class Track < ActiveRecord::Base
 
+  has_one :showing
+  has_one :gallery, :through => :showing
+  has_one :image, :through => :showing
+
   attr_accessible :title, :asset_data
 
   validates_presence_of :permalink_url
@@ -11,23 +15,19 @@ class Track < ActiveRecord::Base
     remote_track.slice(:permalink_url, :title, :uri, :secret_uri)
   end
 
-  before_validation :create_on_soundcloud
-  def create_on_soundcloud
-    soundcloud_track = client.remote.post '/tracks',
-      :track => {:title => self.title,
-        :sharing => 'private',
-        :asset_data => File.new(asset_data.path)}
+  before_validation :create_or_update_on_soundcloud
+  def create_or_update_on_soundcloud
+    if self.new_record?
+      soundcloud_track = client.remote.post '/tracks',
+        :track => self.track_hash
+    else
+      debugger
+      soundcloud_track = client.remote.put self.uri,
+        :track => self.track_hash
+    end
     self.permalink_url = soundcloud_track[:permalink_url]
     self.uri = soundcloud_track[:uri]
     self.secret_uri = soundcloud_track[:secret_uri]
-  end
-
-  before_update :update_on_soundcloud
-  def update_on_soundcloud
-    soundcloud_track = client.remote.put self.uri,
-      :track => {:title => self.title,
-        :sharing => 'private',
-        :asset_data => File.new(asset_data.path)}
   end
 
   before_destroy :destroy_on_soundcloud
@@ -41,4 +41,13 @@ class Track < ActiveRecord::Base
     Site.current.soundcloud_client ||
       Site.current.create_soundcloud_client
   end
+
+  def track_hash
+    hash = { :title => self.image.caption,
+      :sharing => 'private'}
+    asset_data.length == 0 ?
+      hash :
+      hash.merge(:asset_data => File.new(asset_data.path))
+  end
+
 end

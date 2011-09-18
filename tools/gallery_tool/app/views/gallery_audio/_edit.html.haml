@@ -1,14 +1,9 @@
-#audio-embed
+#update_message{:style => "color: red;"}
+#show-audio
   -if @track && !@track.new_record?
     = render :partial => 'gallery_audio/show'
   -else
-    Please upload an audio file!
-
-#connect-to-audio
-  - form_for(@track, :url => gallery_audio_form_url, :html => {:multipart => true}) do |f|
-    = hidden_field_tag 'showing_id', @showing.id
-    = f.file_field 'asset_data'
-    %br/
-    = f.label 'title'
-    = f.text_field 'title'
-    = f.submit
+    .info
+      Please upload an audio file!
+#upload-new-audio
+  = render_audio_form_with_progress
