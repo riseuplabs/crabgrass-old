@@ -101,6 +101,25 @@ module GalleryHelper
     return output
   end
 
+  def render_image_form_with_progress
+    render_form_with_progress_for :image,
+      :url => gallery_image_form_url,
+      :upload_id => @image_upload_id
+  end
+
+  def gallery_image_form_url
+    page_url @page,
+      :action => 'image-update',
+      'X-Progress-ID' => @image_upload_id,
+      :id => @image.id
+  end
+
+  def render_audio_form_with_progress
+    render_form_with_progress_for :track,
+      :url => gallery_audio_form_url,
+      :upload_id => @track_upload_id
+  end
+
   def gallery_audio_form_url
     page_url @page,
       :action => @track.new_record? ? 'audio-create' : 'audio-update',

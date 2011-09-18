@@ -1,7 +1,7 @@
 class GalleryImageController < BasePageController
 
   permissions 'gallery'
-  helper 'gallery'
+  helper 'gallery', 'progress_bar'
 
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create]
@@ -29,7 +29,8 @@ class GalleryImageController < BasePageController
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
     @track = @showing.track || Track.new
-    @upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
+    @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
+    @track_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
       render :layout => false
     end
