@@ -10,6 +10,8 @@ class Admin::SoundcloudController < Admin::BaseController
   def show
     # actually this is a redirect after connecting
     if params[:error].nil? && params[:code]
+      @client.destroy
+      get_client
       remote.exchange_token(:code => params[:code])
     end
     if @client.connected?
