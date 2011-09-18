@@ -27,7 +27,7 @@ class Admin::SoundcloudController < Admin::BaseController
   protected
 
   def remote
-    @remote ||= @client.remote(:redirect_uri => admin_soundcloud_url)
+    @client.remote(:redirect_uri => admin_soundcloud_url)
   end
 
   def get_client
