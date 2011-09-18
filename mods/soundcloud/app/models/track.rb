@@ -9,10 +9,7 @@ class Track < ActiveRecord::Base
   validates_presence_of :permalink_url
   validates_presence_of :title
 
-  # allow for using forms for multiple files
-  def asset_data
-    @asset_data || assets.first
-  end
+  attr_accessor :asset_data
 
   def self.params_from_soundcloud(remote_track)
     remote_track.slice(:permalink_url, :title, :uri, :secret_uri)
@@ -27,9 +24,10 @@ class Track < ActiveRecord::Base
       soundcloud_track = client.remote.post '/tracks',
         :track => self.track_hash
       client.remote.delete self.uri if soundcloud_track[:secret_uri]
-    else
-      soundcloud_track = client.remote.put self.uri,
-        :track => self.track_hash
+# we don't use other settings than asset data so far...
+#    else
+#      soundcloud_track = client.remote.put self.uri,
+#        :track => self.track_hash
     end
     self.permalink_url = soundcloud_track[:permalink_url]
     self.uri = soundcloud_track[:uri]
@@ -49,11 +47,11 @@ class Track < ActiveRecord::Base
   end
 
   def track_hash
-    hash = { :title => (self.image.caption || asset_data.original_filename),
+    hash = { :title => (self.image.caption || self.asset_data.original_filename),
       :sharing => 'private'}
-    asset_data.length == 0 ?
+    self.asset_data.length == 0 ?
       hash :
-      hash.merge(:asset_data => File.new(asset_data.path))
+      hash.merge(:asset_data => File.new(self.asset_data.path))
   end
 
 end
