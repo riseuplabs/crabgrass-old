@@ -10,8 +10,9 @@ class Admin::SoundcloudController < Admin::BaseController
   def show
     # actually this is a redirect after connecting
     if params[:error].nil? && params[:code]
-      @client.destroy unless @client.new_record?
-      @client = current_site.build_soundcloud_client
+      unless @client.new_record?
+        @client.destroy
+        get_client
       remote.exchange_token(:code => params[:code])
     end
     if @client.connected?
@@ -33,6 +34,6 @@ class Admin::SoundcloudController < Admin::BaseController
 
   def get_client
     @client = current_site.soundcloud_client ||
-      current_site.create_soundcloud_client
+      current_site.build_soundcloud_client
   end
 end
