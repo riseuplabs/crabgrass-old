@@ -33,8 +33,14 @@ class SoundcloudClient < ActiveRecord::Base
     @remote
   end
 
-  def connected?
-    !remote.access_token.nil?
+  def connect(params = {})
+    if params[:code] && params[:error].nil?
+      remote.exchange_token(:code => params[:code])
+    elsif remote.expired?
+      remote.exchange_token
+    else
+      !remote.access_token.nil?
+    end
   end
 
 end
