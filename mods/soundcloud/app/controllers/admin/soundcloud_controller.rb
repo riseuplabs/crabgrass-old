@@ -13,7 +13,7 @@ class Admin::SoundcloudController < Admin::BaseController
       remote.exchange_token(:code => params[:code])
     end
     if @client.connected?
-      @me = remote.get '/me'
+      @me = remote.get '/me' rescue nil
     end
   end
 
