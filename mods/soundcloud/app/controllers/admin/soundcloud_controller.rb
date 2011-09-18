@@ -31,7 +31,7 @@ class Admin::SoundcloudController < Admin::BaseController
   end
 
   def get_client
-    @client ||= current_site.soundcloud_client ||
+    @client = current_site.soundcloud_client ||
       current_site.create_soundcloud_client
   end
 end
