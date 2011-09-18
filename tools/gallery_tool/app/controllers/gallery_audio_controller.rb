@@ -4,7 +4,7 @@ class GalleryAudioController < BasePageController
   helper 'gallery'
 
   def create
-    @showing = @page.showings.find params['showing_id']
+    @showing = @page.showings.find params['track'].destroy('showing_id')
     @track = @showing.create_track params['track']
     @showing.save
     redirect_to page_url(@page, :action => :edit)
