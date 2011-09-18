@@ -1,6 +1,6 @@
 %h1 Soundcloud Status
 %div.stats_container
-  - if @me
+  - if @client.connected? && @me
     %h2 Connected
     %ul
       %li
