@@ -5,8 +5,7 @@ class GalleryAudioController < BasePageController
 
   def create
     @showing = @page.showings.find params['track']['showing_id']
-    @track = @showing.create_track
-    @track.asset_data = params['assets'].first
+    @track = @showing.create_track :asset_data => params['assets'].first
     @showing.save
     redirect_to page_url(@page, :action => :edit)
   end
