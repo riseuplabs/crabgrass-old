@@ -60,16 +60,21 @@ function classNameForFile(filename) {
 }
 
 function startProgressBar(button) {
-  $('progress').show();
-
+  var form = button.up('form')
+  var progress = form.down('.progress')
+  var bar = progress.down('.bar')
+  progress.show()
   //add iframe and set form target to this iframe
-  $$("body").first().insert({bottom: "<iframe name='progressFrame' style='display:none; width:0; height:0; position: absolute; top:30000px;'></iframe>"});    
-  button.up('form').writeAttribute("target", "progressFrame");
+  $$("body").first().insert({bottom: "<iframe name='progressFrame' style='display:none; width:0; height:0; position: absolute; top:30000px;'></iframe>"});
+  form.writeAttribute("target", "progressFrame");
 
-  button.up('form').submit();
+  form.submit();
+
+  // need to make this more flexible - but we have multiple 
+  // progress bars in image and audio galleries so fixed_id does not work
+  var uuid = form.down('.uuid').value;
 
   //update the progress bar
-  var uuid = $('X-Progress-ID').value;
   new PeriodicalExecuter(
     function(pe){
       if(Ajax.activeRequestCount == 0){
@@ -80,12 +85,16 @@ function startProgressBar(button) {
             var upload = xhr.responseText.evalJSON();
             if(upload.state == 'uploading'){
               upload.percent = Math.floor((upload.received / upload.size) * 100);
-              $('bar').setStyle({width: upload.percent + "%"});
-              $('bar').update(upload.percent + "%");
+							var processing = '';
+							if (upload.percent == 100) {
+							  processing = " - processing...";
+							}
+              bar.setStyle({width: upload.percent + "%"});
+              bar.update(upload.percent + "%" + processing);
             }
             if(upload.state == 'done'){
-              $('bar').setStyle({width: "100%"});
-              $('bar').update("100 % - done");
+              bar.setStyle({width: "100%"});
+              bar.update("100 % - done");
               pe.stop();
             }
           }
