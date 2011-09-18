@@ -13,6 +13,7 @@ class Admin::SoundcloudController < Admin::BaseController
       unless @client.new_record?
         @client.destroy
         get_client
+      end
       remote.exchange_token(:code => params[:code])
     end
     if @client.connected?
