@@ -19,15 +19,15 @@ class Track < ActiveRecord::Base
   def create_or_update_on_soundcloud
     if self.new_record?
       soundcloud_track = client.remote.post '/tracks',
-        :track => self.track_hash
+        :track => self.soundcloud_hash
     elsif self.asset_data && self.asset_data.length > 0
       soundcloud_track = client.remote.post '/tracks',
-        :track => self.track_hash
+        :track => self.soundcloud_hash
       client.remote.delete self.uri if soundcloud_track[:secret_uri]
 # we don't use other settings than asset data so far...
 #    else
 #      soundcloud_track = client.remote.put self.uri,
-#        :track => self.track_hash
+#        :track => self.soundcloud_hash
     end
     self.permalink_url = soundcloud_track[:permalink_url]
     self.uri = soundcloud_track[:uri]
@@ -46,8 +46,8 @@ class Track < ActiveRecord::Base
       Site.current.create_soundcloud_client
   end
 
-  def track_hash
-    hash = { :title => (self.image.caption || self.asset_data.original_filename),
+  def soundcloud_hash
+    hash = { :title => self.asset_data.original_filename,
       :sharing => 'private'}
     self.asset_data.length == 0 ?
       hash :
