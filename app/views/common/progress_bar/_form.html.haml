@@ -1,0 +1,15 @@
+-# options:
+-# object, options(url), upload_id
+
+= javascript_include_tag('as_needed/upload')
+
+- form_with_progress_for(object, options) do |f|
+  = f.hidden_field 'X-Progress-ID', :value => upload_id
+  .action
+    =render :partial => 'asset_page/file_field', :locals => {:size => 25}
+  = f.submit 'Upload', :onClick => "startProgressBar(this);"
+  = spinner 'upload'
+%iframe{upload_iframe_options(object)}
+= render :partial => 'common/upload_progress_bar'
+
+
