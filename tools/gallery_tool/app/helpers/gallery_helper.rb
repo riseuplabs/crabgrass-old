@@ -100,7 +100,7 @@ module GalleryHelper
   end
 
   def render_image_form_with_progress
-    render_form_with_progress_for :image,
+    render_form_with_progress_for @image,
       :url => gallery_image_form_url,
       :upload_id => @image_upload_id
   end
@@ -113,7 +113,7 @@ module GalleryHelper
   end
 
   def render_audio_form_with_progress
-    render_form_with_progress_for :track,
+    render_form_with_progress_for @track,
       :url => gallery_audio_form_url,
       :upload_id => @track_upload_id
   end

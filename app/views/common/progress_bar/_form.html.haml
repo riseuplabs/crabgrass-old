@@ -5,6 +5,8 @@
 
 - form_with_progress_for(object, options) do |f|
   = f.hidden_field 'X-Progress-ID', :value => upload_id, :class => 'uuid'
+  - if object.new_record?
+    = f.hidden_field('showing_id', :value => @showing.id)
   .action
     =render :partial => 'asset_page/file_field', :locals => {:size => 25}
   = f.submit 'Upload', :onClick => "startProgressBar(this);"

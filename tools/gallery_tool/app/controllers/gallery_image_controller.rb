@@ -28,7 +28,7 @@ class GalleryImageController < BasePageController
   def edit
     @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
     @image = @showing.asset
-    @track = @showing.track || Track.new
+    @track = @showing.track || @showing.build_track
     @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     @track_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
