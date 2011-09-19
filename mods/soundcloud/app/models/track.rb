@@ -33,6 +33,7 @@ class Track < ActiveRecord::Base
     self.permalink_url = soundcloud_track[:permalink_url]
     self.uri = soundcloud_track[:uri]
     self.secret_uri = soundcloud_track[:secret_uri]
+    self.title ||= soundcloud_track[:title]
   end
 
   before_destroy :destroy_on_soundcloud
