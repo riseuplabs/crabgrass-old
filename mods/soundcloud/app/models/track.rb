@@ -17,7 +17,6 @@ class Track < ActiveRecord::Base
 
   before_validation :create_or_update_on_soundcloud
   def create_or_update_on_soundcloud
-    debugger
     if self.new_record?
       soundcloud_track = client.remote.post '/tracks',
         :track => self.soundcloud_hash
