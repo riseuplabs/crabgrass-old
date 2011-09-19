@@ -303,7 +303,7 @@ class Asset < ActiveRecord::Base
   def update_media_flags() end
 
 
-  after_save :update_galleries
+  after_save :update_gallery
   # update galleries after an image was saved which has galleries.
   # the updated_at column of galleries needs to be up to date to allow the
   # download_gallery action to find out if it's cached zips are up to date.
@@ -312,10 +312,8 @@ class Asset < ActiveRecord::Base
   # being marked as updated in the recent pages feed, even when it has not been.
   # -elijah
   #
-  def update_galleries
-    if galleries.any?
-      galleries.each { |g| g.save }
-    end
+  def update_gallery
+    gallery.save if gallery
   end
 
   # returns either :landscape or :portrait, depending on the format of the
