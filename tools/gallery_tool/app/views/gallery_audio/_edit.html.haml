@@ -1,7 +1,7 @@
 #update_message{:style => "color: red;"}
 #show-audio
   -if @track && !@track.new_record?
-    = render :partial => 'gallery_audio/show'
+    = render :partial => 'gallery_audio/show', :locals => {:width => 474}
   -else
     .info
       Please upload an audio file!
