@@ -1,4 +1,4 @@
-class SoundcloudClient < ActiveRecord::Base
+module SoundcloudConfig
   #
   # please insert your Soundcloud Client Data here.
   #

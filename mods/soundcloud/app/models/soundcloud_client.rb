@@ -1,6 +1,8 @@
 require 'soundcloud'
 class SoundcloudClient < ActiveRecord::Base
 
+  include SoundcloudConfig
+
   attr_accessor :remote
   belongs_to :owner, :polymorphic => true
 
