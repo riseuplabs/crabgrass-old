@@ -433,8 +433,8 @@ en:
   ## ASSETS
   ##
 
-  media_audio: "Sound Recording"
-  media_audios: "Sound Recordings"
+  media_audio: "Audio"
+  media_audios: "Audio"
   media_video: "Video"
   media_videos: "Videos"
   media_image: "Image"
