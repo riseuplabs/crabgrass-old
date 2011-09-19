@@ -10,9 +10,9 @@
     %h2.big_icon.page_gallery_48.title
       = I18n.t :edit_image_header
 
-#image-tab.tab_content
+#image-tab.tab_content.tab_area
   = render :partial => 'gallery_image/edit'
-#audio-tab.tab_content{:style => 'display:none;'}
+#audio-tab.tab_content.tab_area{:style => 'display:none;'}
   = render :partial => 'gallery_audio/edit'
 
 = render :partial => 'close_and_reload_button'
