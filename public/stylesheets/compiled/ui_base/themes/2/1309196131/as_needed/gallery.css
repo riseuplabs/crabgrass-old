@@ -1,0 +1,93 @@
+/* line 227 */
+#MB_content hr { width: 140%; margin-left: -2em; }
+
+/* line 231 */
+#add_file_field { margin-top: -10px; }
+
+/* line 236 */
+#title span a { font-size: 11px; font-weight: normal; text-decoration: none; color: #5a98c8; margin-left: 15px; }
+/* line 242 */
+#title span a:hover { text-decoration: underline; }
+
+/* line 245 */
+.cover { margin-bottom: 1em; }
+/* line 247 */
+.cover .thumbnail { margin: 0 auto; }
+
+/* line 250 */
+h2.title { height: 48px; line-height: 2.6; }
+
+/* line 254 */
+.info-edit-gallery { font-style: italic; padding-bottom: 14px; padding-left: 54px; margin-top: -24px; }
+
+/* line 261 */
+#gallery-container .info { padding-top: 14px; padding-left: 0; margin: 0; }
+
+/* line 266 */
+.action { margin-bottom: 20px; margin-top: 20px; }
+
+/* line 270 */
+ul#sort_gallery, ul#show_gallery { width: 532px; }
+/* line 272 */
+ul#sort_gallery li.image_asset, ul#show_gallery li.image_asset { margin: 0 16px 10px 0; float: left; max-width: 90px; max-height: 111px; overflow: hidden; }
+/* line 278 */
+ul#sort_gallery li.image_asset div.control_image_asset, ul#show_gallery li.image_asset div.control_image_asset { height: 21px; }
+/* line 280 */
+ul#sort_gallery li.image_asset div.control_image_asset span.right, ul#show_gallery li.image_asset div.control_image_asset span.right { float: right; }
+/* line 282 */
+ul#sort_gallery li.image_asset div.control_image_asset span.right a, ul#show_gallery li.image_asset div.control_image_asset span.right a { text-decoration: none; }
+/* line 284 */
+ul#sort_gallery li.image_asset span, ul#show_gallery li.image_asset span { display: none; }
+/* line 286 */
+ul#sort_gallery li.png_asset, ul#show_gallery li.png_asset { margin: 0 16px 10px 0; float: left; max-width: 90px; max-height: 111px; overflow: hidden; }
+/* line 292 */
+ul#sort_gallery li.png_asset div.control_png_asset, ul#show_gallery li.png_asset div.control_png_asset { height: 21px; }
+/* line 294 */
+ul#sort_gallery li.png_asset div.control_png_asset span.right, ul#show_gallery li.png_asset div.control_png_asset span.right { float: right; }
+/* line 296 */
+ul#sort_gallery li.png_asset div.control_png_asset span.right a, ul#show_gallery li.png_asset div.control_png_asset span.right a { text-decoration: none; }
+/* line 298 */
+ul#sort_gallery li.png_asset span, ul#show_gallery li.png_asset span { display: none; }
+/* line 300 */
+ul#sort_gallery li.gif_asset, ul#show_gallery li.gif_asset { margin: 0 16px 10px 0; float: left; max-width: 90px; max-height: 111px; overflow: hidden; }
+/* line 306 */
+ul#sort_gallery li.gif_asset div.control_gif_asset, ul#show_gallery li.gif_asset div.control_gif_asset { height: 21px; }
+/* line 308 */
+ul#sort_gallery li.gif_asset div.control_gif_asset span.right, ul#show_gallery li.gif_asset div.control_gif_asset span.right { float: right; }
+/* line 310 */
+ul#sort_gallery li.gif_asset div.control_gif_asset span.right a, ul#show_gallery li.gif_asset div.control_gif_asset span.right a { text-decoration: none; }
+/* line 312 */
+ul#sort_gallery li.gif_asset span, ul#show_gallery li.gif_asset span { display: none; }
+/* line 318 */
+ul#sort_gallery li.image_asset:hover div.control_image_asset span, ul#show_gallery li.image_asset:hover div.control_image_asset span { display: block; }
+/* line 322 */
+ul#sort_gallery li.png_asset:hover div.control_png_asset span, ul#show_gallery li.png_asset:hover div.control_png_asset span { display: block; }
+/* line 326 */
+ul#sort_gallery li.gif_asset:hover div.control_gif_asset span, ul#show_gallery li.gif_asset:hover div.control_gif_asset span { display: block; }
+
+/* line 329 */
+#show-image { margin-bottom: 20px; }
+
+/* line 332 */
+#save_caption_buttons { display: block; }
+
+/* line 335 */
+#progress { border: 1px #cccccc solid; }
+/* line 337 */
+#progress #bar { background: #cccccc; text-align: center; width: 10%; }
+
+/* line 343 */
+#gallery-navigation ul { width: 70px; height: 28px; position: relative; }
+/* line 347 */
+#gallery-navigation ul li { width: 24px; height: 22px; position: absolute; }
+/* line 351 */
+#gallery-navigation ul li.right-arrow { right: 0; }
+/* line 353 */
+#gallery-navigation ul li.up-arrow { right: 24px; }
+/* line 355 */
+#gallery-navigation ul li.left-arrow { right: 48px; }
+
+/* line 358 */
+.pencil_16 { color: #534741; }
+/* line 359 */
+.pencil_16:hover { text-decoration: none; }

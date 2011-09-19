@@ -1,0 +1,9 @@
+/* line 227 */
+.left_layout { padding: 5px; width: 790px; }
+/* line 230 */
+.left_layout td.left_column { border-right: 1px solid black; }
+/* line 232 */
+.left_layout td#content { width: 580px; padding-left: 5px; }
+
+/* line 237 */
+#moderation_navigation .active { font-weight: bold; }

@@ -1,0 +1,2103 @@
+@charset "UTF-8";
+/* Welcome to Susy. Use this file to define screen styles. Import this file using the following HTML or equivalent: <link href="/stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" /> */
+/* @import */
+/* line 14, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+
+/* line 17, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body { line-height: 1; color: black; background: white; }
+
+/* line 19, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul { list-style: none; }
+
+/* line 21, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table { border-collapse: separate; border-spacing: 0; vertical-align: middle; }
+
+/* line 23, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td { text-align: left; font-weight: normal; vertical-align: middle; }
+
+/* line 25, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote { quotes: "" ""; }
+/* line 96, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after { content: ""; }
+
+/* line 27, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img { border: none; }
+
+/* @general */
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+a { text-decoration: none; color: #4978bc; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+a:hover { text-decoration: underline; }
+
+/* line 36, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+span.current { border: 1px solid #333333; color: #333333; padding: 1px 2px; }
+
+/* line 41, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.left { float: left; }
+
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.right { float: right; }
+
+/* line 47, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.nowrap { white-space: nowrap; }
+
+/* line 50, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.clear { clear: both; }
+
+/* line 53, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.blue-link { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.blue-link:hover { text-decoration: underline; }
+
+/* line 56, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.pencil_16 { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.pencil_16:hover { text-decoration: underline; }
+
+/* line 59, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.top { vertical-align: top; }
+
+/* line 62, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.notice { border: 1px solid #dddddd; padding: 4px 20px; margin: 10px 0 4px 72px; background: #ffffcc; }
+
+/* line 72, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small_icon { background-repeat: no-repeat; background-position: 0 50%; padding-left: 20px; min-height: 16px; line-height: 1.6; padding-top: 2px; padding-bottom: 2px; }
+/* line 80, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small_icon.twenty { padding-left: 22px; min-height: 24px; }
+/* line 83, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small_icon.right { background-position: 100% 4px; padding-left: 4px; padding-right: 20px; }
+/* line 87, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small_icon.bullet { background-position: 0 2px; margin: 0.5em 0; }
+
+/* line 91, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.none_16 { background-image: none; }
+
+/* line 95, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small_icon_button { height: 16px; width: 16px; display: block; padding: 0; }
+
+/* line 101, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.spinner_icon { background-image: url(/images/spinner.gif); }
+
+/* line 104, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.big_icon { background-repeat: no-repeat; background-position: 1px 50%; padding: 14px 0 14px 54px; }
+
+/* line 110, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.page_icon { height: 16px; width: 16px; background-repeat: no-repeat; background-position: 0 4px; }
+
+/* headers */
+/* line 117, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h1, h2, h3, h4, h5, h6 { font-family: arial, helvetica, sans-serif; font-weight: bold; line-height: 1; line-height: 1; font-weight: bold; }
+
+/* line 122, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h1 { font-size: 22px; color: #534741; }
+
+/* line 126, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h2 { font-size: 18px; color: #534741; }
+
+/* line 130, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h3 { font-size: 16px; color: #bd5743; }
+
+/* line 134, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h4 { font-size: 13px; color: #777777; }
+
+/* line 138, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h5 { font-size: 11px; }
+
+/* line 141, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h6 { font-size: 9px; }
+
+/* @end */
+/* custom appearance in admin */
+/* line 148, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#ca-instructions { list-style-type: decimal; padding-left: 30px; margin: 10px 0; }
+
+/* line 153, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#masthead_preview img { width: 500px; }
+
+/* @end */
+/* line 161, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.partial_width { width: 540px; font-style: italic; }
+
+/* line 165, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#title-box-full, #info-box-full { width: 764px; height: 16px; }
+/* line 168, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#title-box-full h3, #info-box-full h3 { font-size: 15px; font-weight: normal; color: #993333; }
+/* line 172, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#title-box-full form#search-my-work, #info-box-full form#search-my-work { position: relative; }
+/* line 174, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#title-box-full form#search-my-work input.text, #info-box-full form#search-my-work input.text { height: 14px; width: 200px; }
+/* line 177, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#title-box-full form#search-my-work input.search-submit, #info-box-full form#search-my-work input.search-submit { display: inline; vertical-align: middle; margin-top: -2px; }
+
+/* line 181, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box-full { margin-bottom: 15px; }
+/* line 183, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box-full span { color: #534741; }
+
+/* third-level nav */
+/* line 187, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; border-bottom: 1px solid #dbdbdb; background: white; height: 24px; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#third-level-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 192, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container nav#third-level { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; width: 764px; }
+/* line 197, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container nav#third-level ul li { list-style-type: none; font-size: 11px; font-weight: normal; line-height: 2.4; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#third-level-container nav#third-level ul li, #third-level-container nav#third-level ul li li { margin: 0px; padding: 0px; display: inline; }
+/* line 202, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container nav#third-level ul li a { text-decoration: none; color: #aaaaaa; height: 10px; padding: 0 10px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#third-level-container nav#third-level ul li a:hover { text-decoration: underline; }
+/* line 208, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container nav#third-level ul li.current a { color: #4978bc; font-weight: bold; }
+/* line 211, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#third-level-container nav#third-level.extended_sidebar { width: 540px; padding-left: 224px; }
+
+/* @end */
+/* groups page feed, me-section page feed, group landing/wiki section, site-home wiki section */
+/* line 219, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sitehome #wiki-area, #group-wiki #wiki-area { margin: 0 0 15px; }
+/* line 221, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sitehome #wiki-area .wiki, #group-wiki #wiki-area .wiki { clear: both; }
+
+/* line 224, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages, #group-wiki { display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; margin: 30px 0 15px; }
+
+/* line 228, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages { width: 500px; }
+/* line 230, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article { width: 500px; }
+/* line 232, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article .pages-info { width: 76%; }
+/* line 234, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article .pages-info h4 { min-width: 240px; }
+/* line 236, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article .pages-info h4.cover { width: 240px; }
+/* line 238, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article .pages-info p { width: 350px; }
+/* line 240, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-full .col2 #pages article .pages-info p.cover { width: 240px; }
+
+/* line 243, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h3#underlined { border-bottom: 1px solid #bbbbbb; padding: 0 0 8px; float: left; display: inline; width: 100%; margin-bottom: 16px; }
+/* line 251, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+h3#underlined span a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+h3#underlined span a:hover { text-decoration: underline; }
+
+/* line 254, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#group-wiki { margin-top: 0; }
+
+/* line 257, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages { margin: 0; }
+
+/* line 261, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article, #group-wiki article { display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; border-bottom: 1px solid #dddddd; margin: 0; padding: 10px 0; }
+/* line 266, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info, #group-wiki article .pages-info { display: inline; float: left; width: 71.812%; margin-right: 3.356%; margin: 0; }
+/* line 269, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info a.tooltip, #group-wiki article .pages-info a.tooltip { float: left; text-decoration: none; }
+/* line 272, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info img, #group-wiki article .pages-info img { float: left; display: inline; padding: 0 10px 20px 0; }
+/* line 276, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info h4, #group-wiki article .pages-info h4 { float: left; display: inline; font-size: 14px; margin-bottom: 2px; line-height: 1.3; min-width: 250px; color: #4978bc; font-weight: normal; }
+/* line 285, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info h4 a, #group-wiki article .pages-info h4 a { text-decoration: none; color: #4978bc; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages article .pages-info h4 a:hover, #group-wiki article .pages-info h4 a:hover { text-decoration: underline; }
+/* line 288, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info h4.unread, #group-wiki article .pages-info h4.unread { font-weight: bold; }
+/* line 290, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info h4.small_icon, #group-wiki article .pages-info h4.small_icon { padding-left: 30px; background-position: 0 4px; }
+/* line 293, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info p, #group-wiki article .pages-info p { float: left; display: inline; padding-left: 30px; width: 360px; }
+/* line 298, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info p a, #group-wiki article .pages-info p a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages article .pages-info p a:hover, #group-wiki article .pages-info p a:hover { text-decoration: underline; }
+/* line 300, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info p.cover, #pages article .pages-info h4.cover, #group-wiki article .pages-info p.cover, #group-wiki article .pages-info h4.cover { width: 250px; }
+/* line 302, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-info .checkbox, #group-wiki article .pages-info .checkbox { padding-right: 10px; }
+/* line 304, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-status, #group-wiki article .pages-status { display: inline; float: left; width: 17.037%; margin-right: 3.704%; display: inline; float: right; margin-right: 0; #margin-left: -20px; margin: 0; padding: 0; line-height: 1; border: 1px solid #dddddd; width: 110px; float: right; padding: 4px 2px 4px 0; background: #f5f5f5; }
+/* line 313, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-status li, #group-wiki article .pages-status li { clear: both; float: right; font-size: 9px; line-height: 1.2; padding: 0.1em; white-space: nowrap; }
+/* line 320, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages article .pages-status li a, #group-wiki article .pages-status li a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages article .pages-status li a:hover, #group-wiki article .pages-status li a:hover { text-decoration: underline; }
+
+/* line 323, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full { overflow: hidden; *zoom: 1; width: 764px; }
+/* line 326, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full h3 { border-bottom: 1px solid #bbbbbb; width: 764px; padding: 0 0 8px; float: left; display: inline; }
+/* line 332, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article { border-bottom: 1px dotted #dddddd; width: 764px; margin: 0; padding: 10px 0; }
+/* line 337, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info { display: inline; float: left; width: 85.34%; margin-right: 2.618%; margin: 0; width: 80%; }
+/* line 341, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info h4 { float: left; display: inline; font-size: 14px; margin-bottom: 2px; width: 500px; color: #4978bc; }
+/* line 348, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info h4 a { text-decoration: none; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages.full article .pages-info h4 a:hover { text-decoration: underline; }
+/* line 350, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info img { float: left; padding: 0 10px 20px 0; }
+/* line 353, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info p { float: left; display: inline; padding-left: 30px; width: 500px; }
+/* line 358, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info p a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages.full article .pages-info p a:hover { text-decoration: underline; }
+/* line 360, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info p .tags { overflow: hidden; *zoom: 1; }
+/* line 362, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info p .tags a { text-decoration: none; color: #4978bc; font-size: 10px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#pages.full article .pages-info p .tags a:hover { text-decoration: underline; }
+/* line 364, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info p.notice { width: 480px; }
+/* line 366, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-info .checkbox { padding: 0 10px 0 0; }
+/* line 368, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-status { display: inline; float: left; width: 12.042%; margin-right: 2.618%; display: inline; float: right; margin-right: 0; #margin-left: -20px; margin: 0; padding: 0; line-height: 1; border: 1px solid #dddddd; background: #f5f5f5; width: 135px; float: right; padding: 4px 2px 4px 0; }
+/* line 377, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#pages.full article .pages-status li { clear: both; float: right; font-size: 11px; line-height: 1; padding: 0.1em; }
+
+/* line 384, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+span.search-excerpt { font-weight: bold; font-style: normal; }
+
+/* @end */
+/* line 391, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#contributors ul li { list-style-type: none; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#contributors ul li, #contributors ul li li { margin: 0px; padding: 0px; display: inline; }
+
+/* line 394, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-name i { font-size: 13px; color: #998675; }
+
+/* line 398, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.space { height: 22px; }
+
+/* line 401, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.small-space { height: 10px; }
+
+/* line 404, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+td.reply { background-repeat: no-repeat; background-position: 0 50%; width: 24px; height: 24px; }
+
+/* line 410, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li { color: #333333; margin-bottom: 1em; padding-left: 24px; }
+/* line 414, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li span.commands { white-space: nowrap; }
+/* line 416, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li span.commands a { text-transform: lowercase; font-size: 80%; }
+/* line 419, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li .small_icon { background-position: 0 2px; }
+/* line 421, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li .label.date { font-style: italic; color: #999999; }
+/* line 424, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.activities li br { display: none; }
+
+/* line 427, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.name_icon_xsmall { float: left; background-repeat: no-repeat; background-position: 1px 50%; padding: 2px 0 4px 28px; min-height: 24px; }
+
+/* line 434, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#browse-content { overflow: hidden; *zoom: 1; width: 764px; }
+/* line 437, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#browse-content nav { overflow: hidden; *zoom: 1; width: 764px; }
+
+/* line 441, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+button.icon_16 { margin: 0; padding: 0; line-height: 1; vertical-align: text-top; background-repeat: no-repeat; border: none; background-color: transparent; height: 16px; width: 16px; }
+
+/* line 450, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-info { overflow: visible; width: 204px; float: left; margin: 0 20px 0 0; }
+
+/* line 456, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-image { display: inline; float: left; width: 100%; margin-right: 9.804%; border: #534741 solid #dddddd; background: white; width: 202px; height: 202px; float: left; margin: 0; border-width: 1px; }
+
+/* line 466, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#image-label { display: inline; float: left; width: 100%; margin-right: 9.804%; width: 204px; float: left; margin: 4px 0 0 0; line-height: 0.7; }
+/* line 472, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#image-label h3 { color: #534741; }
+/* line 475, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#image-label ul li { width: 204px; font-size: 11px; }
+
+/* line 479, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-meta { display: inline; float: left; width: 100%; margin-right: 9.804%; border: 1px solid #dddddd; margin: 20px 0 0 0; width: 182px; padding: 0 10px 10px; font-size: 11px; line-height: 1.5; }
+/* line 487, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-meta h4 { color: #bd5743; padding: 24px 0 8px; margin: 0 0 10px; border-bottom: 1px solid #bbbbbb; }
+/* line 492, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#identity-meta h4.first { padding-top: 20px; }
+
+/* line 495, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group, #people, #affiliations, #featured { overflow: hidden; *zoom: 1; width: 182px; }
+/* line 498, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group img, #people img, #affiliations img, #featured img { background-color: #ffcc00; }
+/* line 500, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group header, #people header, #affiliations header, #featured header { overflow: hidden; *zoom: 1; }
+/* line 502, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group header h3, #about-group header a, #people header h3, #people header a, #affiliations header h3, #affiliations header a, #featured header h3, #featured header a { display: inline; }
+/* line 504, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group header a, #people header a, #affiliations header a, #featured header a { text-decoration: none; color: #4978bc; font-size: 10px; font-weight: normal; padding-left: 8px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#about-group header a:hover, #people header a:hover, #affiliations header a:hover, #featured header a:hover { text-decoration: underline; }
+/* line 508, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group h4, #about-group h5, #people h4, #people h5, #affiliations h4, #affiliations h5, #featured h4, #featured h5 { width: 182px; overflow: hidden; *zoom: 1; }
+/* line 511, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group h5, #people h5, #affiliations h5, #featured h5 { font-weight: normal; font-size: 11px; }
+
+/* line 516, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#people ul, #affiliations ul { padding: 5px 0 7px; overflow: hidden; *zoom: 1; }
+/* line 519, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#people ul li, #affiliations ul li { list-style-type: none; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#people ul li, #people ul li li, #affiliations ul li, #affiliations ul li li { margin: 0px; padding: 0px; display: inline; }
+
+/* line 523, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group p { width: 184px; }
+/* line 525, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group p a { text-decoration: none; color: #4978bc; font-size: 10px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#about-group p a:hover { text-decoration: underline; }
+/* line 527, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group ul#details { overflow: hidden; *zoom: 1; width: 184px; }
+/* line 530, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group ul#details li { letter-spacing: 0.09em; border: none; width: 68px; margin: 10px 0 0 0; padding: 0 0 0 24px; min-height: 28px; font-size: 9px; line-height: 1; color: #707070; }
+/* line 540, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-group ul#details li span { letter-spacing: normal; font-size: 8px; }
+
+/* line 545, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li { padding: 12px 0 4px; margin: 12px 0 0; border-top: 1px solid #dddddd; }
+/* line 549, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li article { width: 184px; }
+/* line 551, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li article h5 { color: #4978bc; font-weight: bold; font-size: 13px; padding: 0 0 10px; }
+/* line 556, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li article p { padding-bottom: 6px; }
+/* line 559, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li article span.tags a { text-decoration: none; color: #4978bc; font-size: 10px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#featured li article span.tags a:hover { text-decoration: underline; }
+/* line 561, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#featured li.first { margin: 0; padding: 0; line-height: 1; border: none; }
+
+/* line 565, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile { font-size: 10px; line-height: 1.2; }
+/* line 568, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile ul#details { overflow: hidden; *zoom: 1; width: 184px; }
+/* line 571, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile ul#details li { width: 164px; padding-top: 4px; }
+
+/* line 575, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#last-login { font-size: 10px; }
+
+/* line 578, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content, #main-content-right { display: inline; float: left; width: 70.681%; margin-right: 2.618%; width: 540px; margin: 0; }
+/* line 582, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content h1, #main-content-right h1 { line-height: 1.4; }
+
+/* line 585, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-right { float: right; margin-top: 14px; }
+
+/* line 589, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content.full { width: 764px; }
+
+/* line 592, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#main-content-right.admin { margin: 0; }
+
+/* line 595, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full { width: 764px; height: 28px; }
+/* line 598, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul { overflow: hidden; *zoom: 1; }
+/* line 600, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul li { margin: 0; padding: 0; line-height: 1; border: #534741 solid #dddddd; letter-spacing: 0.09em; height: 28px; border-left: none; background: white; font-size: 11px; }
+/* line 608, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul li a { color: #998675; text-decoration: none; font-weight: bold; height: 28px; line-height: 1.3; padding: 8px 10px; }
+/* line 615, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul li.current { background: #534741; }
+/* line 617, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul li.current a { color: white; }
+/* line 619, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#nav-full ul li.first { border: #534741 solid #dddddd; }
+
+/* line 622, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.pagination.secondary { width: 100%; margin-top: 4em; margin-bottom: 2em; }
+
+/* line 627, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar { border: 1px solid #dddddd; background: #f5f5f5; width: 184px; padding: 10px; float: right; margin: 0; }
+/* line 634, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar ul { overflow: hidden; *zoom: 1; overflow: visible; }
+/* line 638, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar ul#nav4 li { border-bottom: 1px dotted #bbbbbb; }
+/* line 640, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar ul#nav4 li a { color: #4978bc; text-decoration: none; }
+/* line 644, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar ul#nav4 li.current a { font-weight: bold; }
+/* line 647, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar .tags h3 { display: inline; }
+/* line 649, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar .tags .see_all { margin-left: 4px; }
+/* line 651, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar .tags .see_all a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#sidebar .tags .see_all a:hover { text-decoration: underline; }
+
+/* line 654, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar.left { float: left; }
+/* line 656, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar.left h4 { color: #bd5743; padding: 24px 0 8px; margin: 0 0 10px; border-bottom: 1px solid #bbbbbb; }
+/* line 661, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar.left h4.first { padding-top: 20px; }
+/* line 663, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar.left a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; height: 20px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#sidebar.left a:hover { text-decoration: underline; }
+
+/* line 668, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #sidebar.left form#entry { width: 100%; }
+/* line 670, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #sidebar.left form#entry div a { display: inline; }
+
+/* line 674, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap .col1-plus form#entry { width: 326px; padding: 0 0 15px 10px; }
+/* line 677, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap .col1-plus form#entry div a { display: inline; }
+
+/* line 680, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#sidebar.no-border { border: none; }
+
+/* line 684, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#wiki-page article { overflow: hidden; *zoom: 1; display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; padding-top: 16px; }
+/* line 689, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#wiki-page ul li { list-style-type: none; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#wiki-page ul li, #wiki-page ul li li { margin: 0px; padding: 0px; display: inline; }
+
+/* line 692, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#comments { display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; padding-top: 30px; }
+/* line 696, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#comments tr td { padding: 8px 8px 8px 0; }
+
+/* line 700, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.shy_parent:hover .shy { opacity: 1; }
+
+/* line 703, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.shy { opacity: 0; }
+
+/* line 706, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.pagination { font-weight: normal; font-size: 11px; color: #707070; float: right; display: inline; padding-top: 4px; }
+/* line 713, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.pagination a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.pagination a:hover { text-decoration: underline; }
+
+/* line 716, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.letter_pagination { text-align: center; margin-bottom: 10px; }
+
+/* line 720, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+nav#tabs { overflow: hidden; *zoom: 1; display: block; }
+
+/* line 724, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#settings-form { overflow: hidden; *zoom: 1; }
+/* line 726, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#settings-form p { padding-bottom: 10px; }
+/* line 728, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#settings-form .textInput { margin-right: 10px; }
+/* line 730, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#settings-form div { display: block; }
+/* line 732, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#settings-form div #group_avatar_image_file { display: block; }
+
+/* line 735, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar { border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd; overflow: hidden; *zoom: 1; width: 764px; height: 21px; margin: 6px 0 15px; float: left; }
+/* line 742, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar h4 { color: #534741; font-size: 12px; font-weight: normal; line-height: 1.9; margin-right: 10px; }
+/* line 748, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar ul { display: inline; padding: 2px 0; margin-right: 20px; background: url(/images/action-bar/action-bar-bg.png) repeat-x bottom; }
+/* line 753, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar ul li { list-style-type: none; line-height: 1; font-size: 11px; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#action-bar ul li, #action-bar ul li li { margin: 0px; padding: 0px; display: inline; }
+/* line 757, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar ul li a { text-decoration: none; color: #4978bc; display: inline-block; padding: 1px 6px; border-right: 1px solid #dddddd; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#action-bar ul li a:hover { text-decoration: underline; }
+/* line 763, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar ul li a.first { border-left: 1px solid #dddddd; }
+/* line 765, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar div.right { margin-top: -2px; }
+/* line 767, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#action-bar div.right h4 { margin-top: 2px; }
+
+/* line 772, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+table tr td.date { font-size: 10px; }
+
+/* line 775, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#social-activities { width: 764px; }
+/* line 777, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#social-activities table { width: 100%; }
+/* line 780, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#social-activities table tr td { border-bottom: 1px solid #dddddd; padding: 6px; }
+/* line 783, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#social-activities table tr td.date { font-size: 10px; }
+/* line 786, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#social-activities .description a { text-decoration: none; color: #4978bc; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#social-activities .description a:hover { text-decoration: underline; }
+
+/* line 790, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages { width: 764px; }
+/* line 792, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table { width: 100%; }
+/* line 795, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td { border-bottom: 1px solid #dddddd; padding: 12px 6px; }
+/* line 798, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td a { text-decoration: none; color: #4978bc; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#messages table tr td a:hover { text-decoration: underline; }
+/* line 802, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr.unread td { font-weight: bold; }
+/* line 805, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.check { width: 36px; }
+/* line 807, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.reply { width: 30px; }
+/* line 809, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.avatar { width: 150px; }
+/* line 811, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.message { padding: 0; margin: 0; }
+/* line 814, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.message a { display: block; padding: 12px 6px; text-decoration: none; }
+/* line 818, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.message a:hover { background-color: #ffffcc; }
+/* line 820, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.message a .message-body { text-decoration: underline; }
+/* line 822, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages table tr td.date { font-size: 10px; width: 80px; }
+
+/* line 827, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages.thread table { margin: 12px 0; }
+/* line 830, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages.thread table tr td.avatar { width: 60px; }
+/* line 832, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages.thread table tr td.name { width: 160px; }
+/* line 834, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages.thread table tr td.name a.name_icon { padding-right: 10px; }
+/* line 836, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#messages.thread table tr td.date { font-size: 10px; width: 80px; }
+
+/* line 841, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#requests a.name_icon { text-decoration: none; color: #4978bc; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#requests a.name_icon:hover { text-decoration: underline; }
+
+/* line 845, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud { margin-bottom: 20px; padding-bottom: 20px; text-align: center; border-bottom: 1px dotted #cccccc; }
+/* line 850, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud li { display: inline-block; float: none; padding: 4px; }
+/* line 854, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud li a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#tag-cloud li a:hover { text-decoration: underline; }
+/* line 856, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag6 { font-size: 20px; }
+/* line 858, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag5 { font-size: 18px; }
+/* line 860, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag4 { font-size: 16px; }
+/* line 862, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag3 { font-size: 14px; }
+/* line 864, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag2 { font-size: 12px; }
+/* line 866, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#tag-cloud .tag1 { font-size: 10px; }
+
+/* line 871, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#wiki-content article h2 { display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; clear: both; padding-bottom: 8px; }
+
+/* footer */
+/* line 878, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.footer-container { border-top: 1px solid #dddddd; background: white; height: 65px; padding-top: 2em; *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.footer-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 884, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.footer-container .footer { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; }
+/* line 887, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.footer-container .footer .language-menu { float: right; }
+/* line 890, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.footer-container .footer div.debug ul { padding: 0.1em 0 0.1em 1em; list-style-position: inside; list-style-type: disc; }
+/* line 894, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.footer-container .footer div.debug ul li { display: list-item; padding: 0.1em 0 0.1em 1em; float: none; }
+
+/* @end */
+/* @group forms */
+/* line 903, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+input.checkbox { width: 12px; height: 12px; margin-right: 0; }
+
+/* line 908, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+input.text { border: 1px solid #dddddd; }
+
+/* line 911, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+form#search-browse { border: 1px solid #dddddd; }
+
+/* @end */
+/* @group inline tags */
+/* line 918, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+em { font-style: italic; }
+
+/* line 921, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+strong { font-weight: bold; }
+
+/* line 924, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ins { text-decoration: underline; }
+
+/* line 927, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+del { text-decoration: line-through; }
+
+/* @end */
+/* line 932, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements { display: inline; float: left; width: 100%; margin-right: 3.704%; margin: 24px 0 0; width: 540px; }
+/* line 936, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements h3 { border-bottom: 1px solid #bbbbbb; padding: 0 0 8px; }
+/* line 939, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements article { display: inline; float: left; width: 48.148%; margin-right: 3.704%; padding-top: 10px; }
+/* line 942, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements article.right { display: inline; float: left; width: 48.148%; margin-right: 3.704%; display: inline; float: right; margin-right: 0; #margin-left: -20px; }
+/* line 945, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements h4 { line-height: 1.4; }
+/* line 947, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#announcements a:hover { text-decoration: underline; }
+/* line 949, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#announcements footer { display: inline; float: left; width: 100%; margin-right: 3.704%; width: 540px; margin: 0; }
+
+/* line 954, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box { display: inline; float: left; width: 100%; margin-right: 3.704%; overflow: hidden; *zoom: 1; padding: 0 0 8px; width: 540px; }
+/* line 959, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #say-box { display: inline; float: left; width: 100%; margin-right: 3.704%; overflow: hidden; *zoom: 1; width: 540px; }
+/* line 963, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #say-box img { float: left; margin: 0 6px; }
+/* line 967, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #say-box #say input.textarea { display: inline; border: 1px solid #cccccc; width: 300px; height: 16px; }
+/* line 972, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities { display: inline; float: left; width: 100%; margin-right: 3.704%; overflow: hidden; *zoom: 1; width: 540px; margin: 20px 0 20px; }
+/* line 977, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities .left { display: inline; float: left; width: 48.148%; margin-right: 3.704%; overflow: hidden; *zoom: 1; }
+/* line 980, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities .right { display: inline; float: left; width: 48.148%; margin-right: 3.704%; display: inline; float: right; margin-right: 0; #margin-left: -20px; overflow: hidden; *zoom: 1; }
+/* line 985, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities ul a { text-decoration: none; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#info-box #activities ul a:hover { text-decoration: underline; }
+/* line 987, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities ul li { margin-bottom: 4px; line-height: 1.4; }
+/* line 990, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities ul li img { float: left; padding: 6px 6px 6px 0; }
+/* line 993, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#info-box #activities ul li label.date { font-size: 9px; color: #aaaaaa; }
+
+/* line 997, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links { display: inline; float: left; width: 100%; margin-right: 3.704%; overflow: hidden; *zoom: 1; border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd; margin: 15px 0 0; padding: 8px 0; width: 540px; }
+/* line 1004, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links h4, #helpful-links ul { display: inline; }
+/* line 1006, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links ul { overflow: hidden; *zoom: 1; }
+/* line 1008, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links h4 { float: left; line-height: 1.1; margin-right: 2px; }
+/* line 1012, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links li { margin: 0; padding: 0; line-height: 1; line-height: 1.3; margin-left: 6px; }
+/* line 1016, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links li a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; padding-left: 2px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#helpful-links li a:hover { text-decoration: underline; }
+/* line 1019, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#helpful-links li span { color: #dddddd; }
+
+/* line 1022, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile { font-size: 10px; line-height: 1.2; }
+/* line 1025, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile ul#details { overflow: hidden; *zoom: 1; width: 184px; }
+/* line 1028, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#about-profile ul#details li { width: 164px; padding-top: 4px; }
+
+/* line 1036, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#page_sidebar a:hover { text-decoration: underline; }
+/* line 1038, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar h3 { color: #666666; border: 1px solid; border-color: #eeeeee #bbbbbb #bbbbbb #eeeeee; background: #e0e0e0; text-transform: uppercase; font-size: 0.8em; padding: 0.5em 0.75em; margin: 2.5em 0 0.5em 0; }
+/* line 1047, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar h4 { padding-top: 1em; }
+/* line 1049, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar h5 { padding: 0.4em 0 0.5em; }
+/* line 1051, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar ul.rule { border-top: 1px dotted white; padding-top: 0.5em; margin-top: 0.5em; }
+/* line 1055, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar ul.names li:first-child { border-top: 0; }
+/* line 1057, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar ul.names li { padding: 3px 0; border-top: 1px dotted white; }
+/* line 1060, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar ul.names li span { background-position: 100% 0; background-repeat: no-repeat; padding-right: 20px; margin-right: -20px; }
+/* line 1065, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar input.check { float: left; margin: 7px 0 0 -18px; }
+
+/* line 1069, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar .tags { overflow: hidden; }
+
+/* line 1072, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar .tags a { width: 100%; overflow: hidden; background-color: #ddddee; padding: 0px 2px; line-height: 175%; white-space: nowrap; }
+
+/* line 1080, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#page_sidebar .tags a:hover { background-color: #eeeeff; }
+
+/* line 1083, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+.edit_tags p { width: 40%; margin: 0.25em; }
+
+/* line 1087, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ul.side_list { padding: 0; margin: 0; list-style: none; clear: both; }
+/* line 1092, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ul.side_list ul { list-style: none; padding-left: 16px; }
+/* line 1095, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ul.side_list a, ul.side_list .a { display: block; padding-top: 4px; padding-bottom: 4px; }
+/* line 1099, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ul.side_list.commands a { text-transform: capitalize; }
+/* line 1101, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+ul.side_list li.small_icon { padding-left: 19px; background-position: 0 50%; }
+
+/* line 1110, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content form table tr td, #admin-content form p { padding: 0 4px 10px 0; }
+/* line 1113, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content form #email-blasts td { padding: 10px; }
+/* line 1116, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content form.edit_site span.padtop14 { overflow: hidden; *zoom: 1; padding-top: 14px; }
+/* line 1119, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content form.edit_site span.padtop14 label { font-weight: bold; }
+/* line 1121, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content form i { font-size: 10px; color: #4978bc; }
+/* line 1124, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+#admin-content h1 { border-bottom: 1px solid #bbbbbb; padding-bottom: 4px; margin-bottom: 14px; }
+
+/* basic page layout */
+/* line 1131, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body { font-family: verdana, bitstream vera sans, helvetica, sans-serif; font-size: 75%; line-height: 1.75; color: #534741; background: #f3f4f4; }
+/* line 1137, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #page { margin-top: 15px; }
+/* line 1139, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #page header.page { overflow: hidden; *zoom: 1; overflow: visible; }
+/* line 1142, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content { *zoom: 1; color: #707070; overflow: visible; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body #content:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 1146, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; *zoom: 1; background-image: none; background-color: white; padding-bottom: 100px; overflow: visible; width: 764px; padding: 0 18px; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body #content #content-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body #content #content-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 1155, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; *zoom: 1; width: 764px; overflow: visible; margin: 20px 0 20px 0; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+body #content #content-container #content-wrap:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 1162, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap form#entry { float: left; margin-top: 18px; display: inline; float: left; width: 26.702%; margin-right: 2.618%; }
+/* line 1167, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap form#entry div label, body #content #content-container #content-wrap form#entry div a { display: block; }
+/* line 1169, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap form#entry div a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+body #content #content-container #content-wrap form#entry div a:hover { text-decoration: underline; }
+/* line 1171, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap div#welcome { display: inline; float: left; width: 70.681%; margin-right: 2.618%; display: inline; float: right; margin-right: 0; #margin-left: -20px; margin-top: 15px; }
+/* line 1175, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap div#welcome p { margin-top: 10px; }
+/* line 1177, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full { overflow: hidden; *zoom: 1; }
+/* line 1179, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full #identity { overflow: hidden; *zoom: 1; width: 764px; height: 67px; }
+/* line 1183, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full img { padding-right: 40px; }
+/* line 1185, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full a { text-decoration: none; font-size: 10px; float: left; clear: left; color: #7d7d7d; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+body #content #content-container #content-wrap header#header-full a:hover { text-decoration: underline; }
+/* line 1191, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full { width: 764px; height: 28px; }
+/* line 1194, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full ul { overflow: hidden; *zoom: 1; }
+/* line 1196, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full ul li { margin: 0; padding: 0; line-height: 1; border: #534741 solid #dddddd; letter-spacing: 0.09em; height: 28px; border-left: none; background: white; font-size: 11px; }
+/* line 1204, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full ul li a { color: #998675; text-decoration: none; font-weight: bold; height: 28px; line-height: 1.3; padding: 8px 10px; }
+/* line 1211, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full ul li.current { border: #534741 solid #dddddd; }
+/* line 1213, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap header#header-full nav#nav-full ul li.current a { color: #534741; }
+/* line 1215, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #main-content-full { width: 764px; }
+/* line 1217, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #xxlarge-avatar { width: 204px; float: left; position: relative; z-index: 1; margin: -140px 20px 0 0; }
+/* line 1223, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #xxlarge-avatar.no-third-level { margin-top: -116px; }
+/* line 1225, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #xxlarge-avatar #image-label { display: inline; float: left; width: 100%; margin-right: 9.804%; width: 204px; float: left; margin: 4px 0 0 0; line-height: 0.7; }
+/* line 1231, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #xxlarge-avatar #image-label h3 { color: #534741; }
+/* line 1234, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #xxlarge-avatar #image-label ul li { width: 204px; font-size: 11px; }
+/* line 1237, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #alpha10 { width: 540px; float: left; margin: 0; display: inline; }
+/* line 1242, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #omega10 { width: 540px; float: left; margin: 0; padding-top: 10px; display: inline; }
+/* line 1248, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_base.sass */
+body #content #content-container #content-wrap #omega10 #main-content { overflow: hidden; *zoom: 1; width: 540px; }
+
+/* line 5, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead { overflow: hidden; *zoom: 1; }
+/* line 7, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; border-bottom: 1px solid #e76f44; background: #e76f44; height: 80px; overflow: visible; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#masthead #masthead-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 13, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; width: 764px; position: relative; }
+/* line 18, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name h2 { color: white; font-weight: normal; font-size: 24px; float: left; display: inline; margin-top: 12px; }
+/* line 25, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search { margin-top: 12px; float: right; display: inline; text-align: right; color: #534741; position: relative; }
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search fieldset { border: 1px solid #a6c0cb; background: white; display: inline; width: 190px; height: 21px; }
+/* line 38, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search fieldset .text { float: left; display: inline; font-size: 12px; padding: 4px 0 0 2px; width: 164px; border: none; }
+/* line 45, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search fieldset .search-submit { border-left: 1px solid #b89882; display: inline; vertical-align: middle; position: relative; height: 21px; vertical-align: top; }
+/* line 51, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search div { display: inline; position: relative; line-height: 2; top: 1px; }
+/* line 56, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#masthead #masthead-container #masthead-name form#search div .light-small { font-size: 10px; color: white; margin-left: -5px; }
+
+/* line 65, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+nav.page { overflow: hidden; *zoom: 1; overflow: visible; }
+/* line 68, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+nav.page #global-nav-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; border-bottom: 1px solid #a6c0cb; border-top: 1px solid #a6c0cb; background: white; height: 29px; overflow: visible; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+nav.page #global-nav-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 75, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+nav.page #global-nav-container #global-nav { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; width: 764px; overflow: visible; }
+
+/* line 81, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user a#social-activities-container { width: 50px; margin-left: 0; float: left; }
+/* line 85, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user a#social-activities-container img#show-social { float: right; padding: 4px; }
+
+/* line 89, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social_activities_count { background: #cccccc; color: #333333; line-height: 1; }
+
+/* line 94, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social-activities-dropdown { background: white; border-color: #666666; border-width: 1px; border-style: solid; width: 220px; padding: 5px; z-index: 999; }
+
+/* line 103, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social-activities-dropdown td { vertical-align: top; border-bottom: 1px dotted #bbbbbb; padding-bottom: 4px; padding-top: 10px; }
+
+/* line 109, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social_activities_list { float: left; padding: 0 5px 5px 5px; }
+
+/* line 118, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social_activities_list img { padding-right: 8px; }
+
+/* line 121, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#social_activities_list a.name_icon { margin: 0; }
+
+/* line 128, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu li.menu { float: left; margin: 0; position: relative; }
+
+/* line 133, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu { overflow: hidden; *zoom: 1; float: left; overflow: visible; margin-top: 5px; }
+/* line 138, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu li { list-style-type: none; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#menu li, #menu li li { margin: 0px; padding: 0px; display: inline; }
+/* line 140, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu li a { text-decoration: none; color: #4978bc; font-size: 12px; margin: 0 26px 0 0; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#menu li a:hover { text-decoration: underline; }
+/* line 146, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu li.current a { color: #382526; font-weight: bold; }
+
+/* line 151, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu .menu_items li.small_icon { float: left; background-repeat: no-repeat; background-position: 0 50%; padding-left: 20px; min-height: 16px; }
+/* line 157, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu .menu_items li.small_icon a { color: #998675; font-weight: normal; }
+
+/* line 161, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#account-links { width: 280px; float: right; height: 30px; margin-right: -5px; }
+
+/* line 167, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user { float: right; margin: 5px 0 0 0; overflow: hidden; *zoom: 1; color: #aaaaaa; }
+/* line 172, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user li { list-style-type: none; font-size: 10px; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#user li, #user li li { margin: 0px; padding: 0px; display: inline; }
+/* line 175, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; margin-right: 5px; margin-left: 5px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#user a:hover { text-decoration: underline; }
+/* line 179, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#user a.active { font-weight: bold; }
+
+/* line 184, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items { position: absolute; top: 20px; left: 0; background: white; padding: 0.75em 0.5em 0.5em; border-width: 1px 2px 2px 1px; border-color: black; border-style: solid; z-index: 9999; }
+/* line 194, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items h3 { margin: 0 0 1px 4px; }
+/* line 196, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items h3 .see_all { font-size: smaller; font-weight: normal; }
+/* line 199, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items ul { border: 0 none transparent; width: auto; position: static; }
+/* line 203, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items li { float: none; }
+/* line 205, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items li a { overflow: hidden; }
+/* line 207, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items a { border: 0px none transparent; color: #998675; }
+/* line 214, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items a.name_icon { display: block; border: 1px solid white; background-position: 4px 50%; padding: 12px 5px 12px 45px; }
+/* line 219, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items a.name_icon.two { padding-top: 5px; padding-bottom: 5px; }
+/* line 222, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items a.name_icon:hover { background-color: #ffffcc; border: 1px solid #cccc99; }
+/* line 225, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items div.leftcol { width: 17em; float: left; }
+/* line 228, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu div.menu_items div.rightcol { width: 17em; margin-left: 18em; }
+
+/* line 232, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+.menu_items.twocols { width: 35em; }
+
+/* line 236, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu #menu_me div.leftcol { width: 12em; padding: 0em 1em; float: left; }
+/* line 240, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu #menu_me div.rightcol { width: 20em; margin-left: 13em; border-left: 1px dotted #cccccc; padding-left: 1em; }
+/* line 245, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu #menu_me ul.recent_pages li { margin-top: 0.5em; width: 19em; }
+/* line 248, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+#menu #menu_me h3 { margin: 0; }
+
+/* line 251, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+ul.menu_me_left { padding: 0; margin: 0; list-style: none; margin-bottom: 0.5em; float: left; }
+/* line 257, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+ul.menu_me_left a, ul.menu_me_left .a { text-decoration: none; display: block; padding-top: 4px; padding-bottom: 4px; }
+/* line 262, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+ul.menu_me_left li { width: 9em; }
+/* line 264, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_masthead_global-nav.sass */
+ul.menu_me_left li.small_icon { padding-left: 19px; background-position: 0 50%; }
+
+/* line 4, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#breadcrumb { overflow: hidden; *zoom: 1; border-top: 1px solid #a6c0cb; background: #eef5fc; height: 28px; }
+/* line 9, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#breadcrumb #breadcrumb-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#breadcrumb #breadcrumb-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 11, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#breadcrumb #breadcrumb-container div { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; margin-top: 4px; }
+/* line 15, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#breadcrumb #breadcrumb-container div a { text-decoration: none; font-size: 10px; margin: 0; padding: 0; line-height: 1; text-transform: uppercase; color: #534741; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#breadcrumb #breadcrumb-container div a:hover { text-decoration: underline; }
+
+/* line 23, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner.me #banner-container { background: #eef5fc; }
+
+/* line 27, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner.groups #banner-container { background: #fceeee; }
+
+/* line 31, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner.people #banner-container { background: #eefcee; }
+
+/* line 35, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner.home #banner-container { background: #fcf6ee; }
+
+/* line 39, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner.networks #banner-container { background: #fcfcee; }
+
+/* line 46, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; border-bottom: 1px solid #a6c0cb; background: #eef5fc; height: 114px; overflow: visible; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.banner #banner-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 52, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner-no-avatar { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; height: 64px; margin-top: 28px; width: 540px; padding-left: 224px; }
+/* line 59, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; height: 86px; margin-top: 28px; width: 764px; padding-left: 0; }
+/* line 66, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner div.left { padding-left: 17px; display: inline; }
+/* line 69, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner div.left h1 { float: left; }
+/* line 71, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner img { border: 1px solid #dddddd; background: white; padding: 2px; margin-right: 17px; }
+/* line 77, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner img #identity-name h1 { color: #464646; float: left; display: inline; line-height: 1.2; font-size: 26px; font-weight: normal; width: 500px; }
+/* line 85, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.banner #banner-container #banner img #identity-name a { text-decoration: none; font-size: 10px; float: left; clear: left; color: #7d7d7d; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.banner #banner-container #banner img #identity-name a:hover { text-decoration: underline; }
+
+/* line 92, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#group-action { float: left; clear: left; margin-top: 4px; }
+/* line 96, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#group-action a { text-decoration: none; font-size: 10px; color: #7d7d7d; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#group-action a:hover { text-decoration: underline; }
+/* line 100, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#group-action a.small_icon { margin-left: 10px; }
+
+/* line 103, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#contribute { float: right; background-color: #78be63; border: 1px solid #448c3b; }
+/* line 107, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#contribute a { text-decoration: none; color: white; font-size: 11px; font-weight: bold; padding: 6px; margin: 0 2px 0 0; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#contribute a:hover { text-decoration: underline; }
+
+/* line 118, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+#banner-container.no-avatar { *zoom: 1; height: 92px; overflow: visible; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#banner-container.no-avatar:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+
+/* line 127, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; *zoom: 1; background: white url(/images/background/nav2.png) repeat-x bottom left; border-bottom: 1px solid #dbdbdb; height: 30px; overflow: visible; width: 800px; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.nav2 #nav2-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.nav2 #nav2-container:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 135, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside, .nav2 #nav2-container nav#second-level { display: inline; float: left; width: 95.5%; margin-right: 2.5%; clear: both; margin-right: 2.25%; margin-left: 2.25%; width: 540px; padding-left: 224px; margin: 0 18px; }
+/* line 141, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside li, .nav2 #nav2-container nav#second-level li { list-style-type: none; display: inline-block; font-size: 12px; margin-right: 4px; float: left; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+.nav2 #nav2-container nav#second-level-aside li, .nav2 #nav2-container nav#second-level-aside li li, .nav2 #nav2-container nav#second-level li, .nav2 #nav2-container nav#second-level li li { margin: 0px; padding: 0px; display: inline; }
+/* line 147, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside li a, .nav2 #nav2-container nav#second-level li a { text-decoration: none; color: #aaaaaa; font-weight: bold; display: inline-block; height: 29px; line-height: 2.6; padding: 0 8px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.nav2 #nav2-container nav#second-level-aside li a:hover, .nav2 #nav2-container nav#second-level li a:hover { text-decoration: underline; }
+/* line 155, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside li.current, .nav2 #nav2-container nav#second-level li.current { border-top: 1px solid white; border-left: 1px solid #dbdbdb; border-right: 1px solid #dbdbdb; border-bottom: 1px solid white; border-bottom: 1px solid white; background: white; }
+/* line 159, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside li.current a, .nav2 #nav2-container nav#second-level li.current a { color: #4978bc; background: white; font-weight: bold; }
+/* line 163, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level-aside #last-login, .nav2 #nav2-container nav#second-level #last-login { font-size: 10px; }
+/* line 165, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container nav#second-level { width: 764px; padding-left: 0; }
+/* line 168, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_banner_nav2_breadcrumb.sass */
+.nav2 #nav2-container span.count { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; padding-right: 8px; margin-left: -3px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.nav2 #nav2-container span.count:hover { text-decoration: underline; }
+
+/* line 10, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_overlay { position: absolute; margin: auto; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: black !important; }
+
+/* line 20, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_overlay[id] { position: fixed; }
+
+/* line 23, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_window { position: absolute; top: 0; border: 0 solid; text-align: left; z-index: 10000; }
+
+/* line 40, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_window[id] { position: fixed !important; }
+
+/* line 43, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_frame { position: relative; background-color: #f3f2ee; margin-top: 40px; }
+
+/* line 51, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_header { margin: 0; min-height: 14px; padding: 5px 10px; background: #ec6e25 none repeat scroll 0 0; border-bottom: 1px solid #777777; }
+
+/* line 58, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_content { overflow: hidden; padding: 1em 1em 2em; border-top: 1px solid #cccccc; }
+/* line 62, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_content ul { display: inline; float: left; padding: 0 0 16px; }
+/* line 65, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_content ul li label { font-weight: bold; display: block; margin-top: 16px; }
+/* line 69, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_content ul li:first-child label { margin-top: 0; }
+
+/* line 72, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_caption { font: 85% "Lucida Grande", Arial, sans-serif; text-shadow: white 0 1px 0; text-align: left; font-size: 2.1em; color: white; }
+
+/* line 79, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_close { display: block; position: absolute; right: 5px; top: -2px; text-decoration: none; font-size: 15px; color: white; }
+
+/* line 88, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_close:hover { background: transparent; color: black; }
+
+/* line 95, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_loading { background: #f3f2ee url(/images/spinner-big.gif) 50% 50% no-repeat; color: #f3f2ee; height: 100px; }
+
+/* line 105, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+.MB_confirm form { text-align: right; }
+/* line 107, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+.MB_confirm form input { margin-left: 1em; }
+
+/* line 110, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_frame table.styled { border-collapse: collapse; }
+
+/* line 113, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_frame table.styled td { background: white; border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; padding: 0.5em; }
+
+/* line 119, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_frame .buttons { padding: 1em; margin: 1em -1em -1em -1em; text-align: right; background: #ebeae6; border-top: 1px solid white; }
+/* line 125, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_modalbox.sass */
+#MB_frame .buttons input { margin-left: 1em; }
+
+/* line 16, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+form.login_dialog label { font-weight: bold; display: block; }
+/* line 19, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+form.login_dialog input#login, form.login_dialog input#password { width: 99%; margin-bottom: 1em; }
+/* line 22, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+form.login_dialog input[type=submit] { font-size: 1.1em; float: right; }
+
+/* line 30, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.page_types td { vertical-align: top; }
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.page_types a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+table.page_types a:hover { text-decoration: underline; }
+
+/* line 39, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form { margin-left: 1em; border-collapse: collapse; }
+/* line 42, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form td { padding: 2px; }
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form tr.first td { border-top: 0; }
+/* line 46, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form > tbody > tr > td { vertical-align: top; border-top: 1px dotted #cccccc; }
+/* line 49, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form td.heading { padding: 0.5em 0; }
+/* line 51, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form td.heading h2 { color: #666666; font-size: 1.5em; margin: 0; }
+/* line 55, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form td.label { font-weight: bold; white-space: nowrap; text-align: right; padding: 1em; padding-right: 0; }
+/* line 61, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form td.input { padding: 1em; width: 35em; }
+/* line 68, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form .info { font-size: 0.9em; font-style: italic; color: #777777; }
+/* line 72, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.form input[type=text], table.form textarea { font-family: verdana, bitstream vera sans, helvetica, sans-serif; font-size: 1.2em; width: 100%; }
+
+/* line 77, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.form_buttons { padding-top: 1em; margin-top: 2em; margin-bottom: 0; text-align: right; border-top: 1px dotted #cccccc; }
+/* line 83, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.form_buttons input { font-size: 1.25em; padding: 0.1em 0.5em; margin-left: 0.5em; }
+
+/* line 96, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete-w1 { background: url(/images/ui/shadow.png) no-repeat bottom right; position: absolute; top: -10px; left: 44px; z-index: 400; }
+
+/* line 103, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete { width: 300px; border: 1px solid #999999; background-color: white; cursor: pointer; text-align: left; max-height: 350px; overflow: auto; margin: -6px 6px 6px -6px; overflow-x: hidden; }
+/* line 113, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete .selected { background: #eeeeee; }
+/* line 115, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete div { padding: 3px 6px; white-space: nowrap; }
+/* line 118, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete p { margin: 0; }
+/* line 120, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete ins { text-decoration: none; color: #3399ff; }
+/* line 123, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.autocomplete em { font-weight: bold; font-style: normal; }
+
+/* line 142, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon { background-repeat: no-repeat; background-position: 1px 50%; }
+/* line 145, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon.tiny { padding: 0px 0 0px 17px; }
+/* line 147, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon.xsmall { padding: 2px 0 4px 26px; }
+/* line 149, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon.small { padding: 7px 0 7px 40px; line-height: 14px; }
+/* line 152, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon.medium { padding: 15px 0 15px 60px; display: block; font-size: 1.3em; }
+/* line 156, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon b { display: none; }
+/* line 159, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon.two { padding-top: 0; padding-bottom: 0; }
+
+/* line 164, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon:hover b { display: block; position: absolute; background: transparent url(/images/ui/mini_popup_bg.gif) no-repeat bottom left; color: white; bottom: 25px; left: -5px; z-index: 300; padding: 3px 5px 9px 5px; }
+/* line 174, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.name_icon:hover b:hover { display: none; }
+
+/* line 177, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.page_list a.name_icon.xsmall { display: block; }
+
+/* line 184, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+#main-content section form p { font-size: 13px; line-height: 18px; margin-top: 13px; margin-bottom: 13px; }
+
+/* line 194, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.tab_area { background-color: white; padding-top: 1em; clear: left; }
+
+/* line 201, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+#MB_content .tab_area { padding: 1em; border: 1px solid #999999; border-top: 0; }
+
+/* line 206, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset { padding: 0; list-style: none; }
+/* line 209, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset li { display: inline; float: none; }
+
+/* line 214, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.top { margin: 0 0 0 -30px; padding-left: 18px; clear: left; float: left; width: 558px; height: 1%; background: url(/images/grey9.png) repeat-x bottom; }
+/* line 222, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.top a:hover { text-decoration: underline; }
+/* line 224, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.top a { display: block; float: left; text-align: center; text-decoration: none; position: relative; left: 1em; line-height: 1.3em; padding: 0.5em 1em; cursor: pointer; }
+/* line 235, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.top a.small_icon { padding-left: 28px; margin-left: 0.5em; background-position: 8px 50%; }
+/* line 239, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.top a.active { background-color: white; border: 1px solid #999999; border-bottom: 0; font-weight: bold; }
+
+/* line 245, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+#main-content-full .col2 ul.tabset.top { width: 500px; margin: 0; padding: 10px 0 0 0; }
+
+/* line 250, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.sub_tabs a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.sub_tabs a:hover { text-decoration: underline; }
+
+/* line 253, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+#main-content-right ul.tabset.top { margin: 0; width: 540px; padding-left: 0; }
+
+/* line 258, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.simple { margin-top: 0; margin-bottom: 13px; }
+/* line 261, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+ul.tabset.simple li.tab a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+ul.tabset.simple li.tab a:hover { text-decoration: underline; }
+
+/* line 268, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box { padding: 1em; border-bottom: 1px solid #d0e3f7; }
+/* line 271, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box table.columns { width: 100%; }
+/* line 273, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box td { vertical-align: top; }
+/* line 275, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box td.right { padding-left: 1em; width: 50%; }
+/* line 279, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box td.left { width: 50%; }
+/* line 281, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box .status h3 { margin: 0.5em 0; }
+/* line 283, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box.tabs { margin-left: -18px; padding: 0 0 0 30px; overflow: hidden; border-bottom: 0; background: #eef5fc; }
+/* line 289, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box.tabs li.tab a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.info_box.tabs li.tab a:hover { text-decoration: underline; }
+
+/* line 292, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.info_box .description, .inset_box .description { color: #697d8c; font-family: georgia, times; font-style: italic; font-size: 1.1em; line-height: 1.6em; letter-spacing: 1px; word-spacing: 2px; }
+
+/* line 307, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.handle { cursor: move; }
+
+/* line 310, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.not_handle { cursor: default; }
+
+/* line 316, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+.content_box { padding: 1em; background: white none repeat scroll 0 0; }
+
+/* line 324, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty { border-collapse: collapse; width: 100%; float: left; }
+/* line 329, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.even { background-color: #f2f2f2; }
+/* line 331, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.odd { background-color: white; }
+/* line 333, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.unread { font-weight: bold; }
+/* line 335, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr > td { padding: 0.5em; border-bottom: 1px solid #e6e6e6; }
+/* line 338, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr > td img { vertical-align: bottom; }
+/* line 340, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr > th { padding: 0.5em; text-align: left; background: #fff4e8; color: #f28367; text-transform: capitalize; font-weight: bold; border-bottom: 1px solid #cccccc; }
+/* line 349, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.heading > th img { vertical-align: bottom; }
+/* line 351, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.heading > th a { color: #333333; }
+/* line 353, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.heading > th.selected { background: #888888; }
+/* line 355, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty > tbody > tr.heading > th.selected a { color: white; }
+/* line 357, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty a { text-decoration: none; }
+/* line 359, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.pretty a:hover { text-decoration: underline; }
+
+/* line 362, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.plain { border-collapse: collapse; width: 100%; }
+/* line 365, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.plain td { padding: 0.5em; }
+/* line 367, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+table.plain td.label { text-align: right; font-weight: bold; }
+
+/* line 374, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+div.side_list { padding: 0; margin: 0; list-style: none; margin-bottom: 0.5em; clear: both; width: 100%; }
+/* line 381, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+div.side_list a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; display: block; padding-top: 4px; padding-bottom: 4px; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+div.side_list a:hover { text-decoration: underline; }
+/* line 386, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+div.side_list.commands a { text-transform: capitalize; }
+/* line 389, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+div.side_list span.small_icon { padding-left: 19px; background-position: 0 50%; }
+/* line 392, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+div.side_list li.current { font-weight: bold; font-size: 12px; }
+
+/* line 396, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_oldcss_to_be_updated.sass */
+td.left_column { background-color: #fafdf9; width: 19em; border-right: 0; padding: 1em; }
+
+/* line 2, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.page_search_form { text-align: center; line-height: 2.5em; margin-bottom: 1em; }
+
+/* line 7, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+.page_title { padding-left: 30px; }
+/* line 9, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+.page_title h3 { font-size: 20px; padding-top: 6px; color: #bd5743; }
+/* line 13, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+.page_title .summary { font-style: italic; padding: 3px 0px; }
+
+/* line 28, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts { background: white; margin-bottom: 15px; width: 540px; }
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts .post-author { width: 100px; font-size: 10px; text-align: right; padding: 10px; color: #6e6e6c; line-height: 1.3; }
+/* line 39, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts .post-author img { padding-left: 8px; }
+/* line 42, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts .post-body p { padding: 10px 10px 15px; }
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts h4 { border-bottom: 1px solid #dddddd; line-height: 1.6; }
+/* line 47, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts .shade-even { background-color: #eef5fc; }
+
+/* line 50, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#posts > h4 { color: #bd5743; }
+
+/* line 53, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts { width: 540px; }
+/* line 55, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts tr.post td { vertical-align: top; }
+/* line 57, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts tr.post-spacer-bottom td { line-height: 10px; border-bottom: 1px solid #cccccc; }
+/* line 60, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts tr.post-spacer-top td { line-height: 10px; }
+/* line 62, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts textarea { margin-bottom: 5px; width: 100%; }
+/* line 65, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts td.post-body { border-left: 1px solid #cccccc; padding: 0 10px; }
+/* line 69, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts td.post-body p:first-child { margin-top: 0; }
+/* line 71, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts td.post-body p:last-child { margin-bottom: 0; }
+/* line 73, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts td:hover .post_action_icon { display: block; }
+/* line 75, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+table.posts div.post_action_icon { position: absolute; right: 0; bottom: 0; display: none; }
+
+/* line 87, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h1 { line-height: 1em; margin: 0; padding: 0; }
+/* line 91, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h2 { line-height: 2em; margin: 0; padding: 1; }
+/* line 95, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h3 { line-height: 0.5em; margin: 0; padding: 1; }
+/* line 99, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h1 { font-size: 2em; font-weight: bold; line-height: 1.2em; }
+/* line 103, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h2 { font-size: 1.5em; font-weight: bold; line-height: 3em; padding: 0px 0px 0px 20px; }
+/* line 108, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h3 { font-size: 1.5em; font-weight: normal; line-height: 1.2em; }
+
+/* line 113, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.sub_menu { width: 200px; }
+
+/* line 120, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box { margin-left: -18px; padding-bottom: 5px; background: #eef5fc; }
+/* line 125, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h1 { line-height: 1em; margin: 0; padding: 0; }
+/* line 129, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h2 { line-height: 2em; margin: 0; padding: 1; }
+/* line 133, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box form .h3 { line-height: 0.5em; margin: 0; padding: 1; }
+/* line 137, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h1 { font-size: 2em; font-weight: bold; line-height: 1.2em; }
+/* line 141, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h2 { font-size: 1.5em; font-weight: bold; line-height: 3em; padding: 0px 0px 0px 20px; }
+/* line 146, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.title_box .h3 { font-size: 1.5em; font-weight: normal; line-height: 1.2em; }
+
+/* line 151, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+div.sub_menu { width: 200px; }
+
+/* line 159, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#asset_page .upload_file_info { padding: 15px 0; }
+/* line 161, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#asset_page table.pretty { float: none; }
+/* line 164, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#asset_page table.pretty a.thumbnail span { display: none; }
+/* line 166, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#asset_page a { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#asset_page a:hover { text-decoration: underline; }
+
+/* line 170, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_page.sass */
+#preview_area span { display: none; }
+
+/* line 5, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki pre, .post pre { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+/* line 11, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki pre code, .post pre code { display: block; background: #fff6dd; border: solid 1px; border-color: #ffe8a9; padding: 0.5em; }
+/* line 17, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki div.codetitle, .post div.codetitle { background: #ffe8a9; color: #614b2a; padding: 0.25em; font-weight: bold; }
+/* line 22, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki h1, .wiki h2, .post h1, .post h2 { padding-bottom: 6px; }
+/* line 24, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki h1, .wiki h2, .wiki h3, .wiki h4, .post h1, .post h2, .post h3, .post h4 { margin-bottom: 8px; margin-top: 12px; }
+/* line 27, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki h1, .post h1 { font-size: 20pt; line-height: 1.25em; color: #534741; border-bottom: 1px solid #bbbbbb; font-family: verdana, bitstream vera sans, helvetica, sans-serif; }
+/* line 34, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki h2, .post h2 { font-size: 14pt; color: #707070; line-height: 1.25em; border-bottom: 1px dotted #bbbbbb; }
+/* line 40, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki h3, .wiki h4, .post h3, .post h4 { font-size: 12pt; color: #7d7d7d; margin-top: 0.75em; margin-bottom: 10px; }
+/* line 45, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki span.caps, .post span.caps { font-size: 80%; }
+/* line 48, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki p.left, .post p.left { margin: 0; }
+/* line 50, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki p.left img, .post p.left img { margin-right: 1em; }
+/* line 52, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki p.right, .post p.right { margin: 0; }
+/* line 54, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki p.right img, .post p.right img { margin-left: 1em; }
+
+/* line 58, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki p { margin-top: 1em; margin-bottom: 1em; }
+/* line 61, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki div.table-wrap { overflow: auto; }
+/* line 63, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki table { border-collapse: collapse; clear: both; width: 100%; }
+/* line 67, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki td { padding: 4px; border: 1px solid #cccccc; height: 25px; }
+/* line 71, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki th { padding: 4px; border: 1px solid #cccccc; background: #dddddd; height: 25px; }
+/* line 77, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki tr.odd { background-color: #f2f2f2; }
+/* line 79, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki tr.even { background-color: white; }
+/* line 81, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki code { background-color: #fff6dd; }
+/* line 83, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki ul { list-style-type: disc; }
+/* line 85, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki ol { list-style-type: decimal; }
+/* line 87, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki ul, .wiki ol { padding-left: 1.5em; }
+/* line 89, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki .wiki_section { position: relative; }
+/* line 91, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.wiki .wiki_section .editsection { position: absolute; right: 0; top: 0; line-height: 18px; text-transform: none; text-decoration: none; font-size: 13px; font-variant: normal; font-weight: normal; font-style: normal; }
+
+/* line 106, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.post blockquote { border-left: 6px solid #dddddd; margin-left: 0; padding-left: 1.5em; font-style: italic; }
+
+/* line 117, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+div.diff p { margin: 0; }
+
+/* line 121, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+del.diffmod, del.diffins { color: #999999; background-color: #dddddd; }
+
+/* line 126, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+ins.diffmod, ins.diffins { background-color: #ccffcc; text-decoration: none; color: black; }
+
+/* line 135, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+div.formatting_reference { margin-top: 0.5em; float: right; }
+
+/* line 139, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+div.wiki_buttons { margin-top: 0.5em; }
+/* line 141, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+div.wiki_buttons input { font-size: 1.25em; padding: 0.1em 0.5em; margin-right: 0.5em; }
+
+/* line 146, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+a.edit { display: inline; margin-left: 6px; opacity: 0; background-repeat: no-repeat; background-position: 0 70%; padding-left: 16px; float: none; }
+
+/* line 158, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+a.edit:hover { opacity: 1 !important; }
+
+/* line 161, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+h1:hover a.edit, h2:hover a.edit, h3:hover a.edit { opacity: 0.6; }
+
+/* line 171, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.html_editor_wrapper { border: 1px solid #666666; }
+
+/* line 174, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea { border: 0 !important; }
+
+/* line 177, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea .toolbar { border-right: 0; border-bottom: 1px solid #999999; background: #eeeeee; }
+/* line 181, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea .toolbar .button { background: #eeeeee; border-color: #eeeeee; }
+/* line 184, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea .toolbar .button:hover { background: white; }
+
+/* line 187, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea iframe { width: 100% !important; border: 0 !important; border-top: 1px solid #dddddd !important; }
+/* line 191, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea iframe:focus { background-color: #ffffee; }
+
+/* line 194, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.htmlarea .statusBar { border-left: 0 !important; background: #eeeeee; }
+
+/* line 198, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+.statusBarWidgetContainer { display: none; }
+
+/* line 239, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+a.anchor { display: none; margin-left: 6px; text-decoration: none; }
+/* line 243, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+a.anchor:hover { color: #666666 !important; text-decoration: none; }
+
+/* line 247, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor { display: inline; color: #aaaaaa; background: white; }
+
+/* line 254, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+ul.toc { display: table; background-color: #f9f9f9; border: 1px solid #e6e6e6; padding: 1em; margin: 0; }
+/* line 260, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+ul.toc, ul.toc ul { list-style-type: none; list-style-image: none; padding-left: 1.8em; }
+/* line 266, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+ul.toc span { padding-right: 0.3em; }
+/* line 268, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_wiki.sass */
+ul.toc li { font-size: 0.95em; }
+
+/* line 1, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+.country_dropdown { width: 150px; }
+
+/* line 5, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#state_dropdown select { width: 150px; }
+
+/* line 8, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#city_text { position: relative; }
+/* line 10, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#city_text #city_results_box { position: absolute; top: 20px; left: 20px; padding: 1em; width: 25em; border: 1px solid #666666; background-color: #ffffaa; color: black; z-index: 100; }
+/* line 20, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#city_text #city_results_box ul { list-style: none; }
+
+/* line 23, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#filter_by_location { margin: 1em; }
+/* line 25, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_locations.sass */
+#filter_by_location div { display: block; }
+
+/* line 3, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .submit { vertical-align: top; margin-top: 2px; }
+/* line 6, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech { padding: 2px 2px 2px 0; overflow: visible; height: 42px; clear: left; }
+/* line 11, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech input.submit { vertical-align: top; margin-top: 4px; }
+/* line 14, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech span { white-space: none; padding-left: 2px; font-style: italic; }
+/* line 18, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech textarea { border: #b89882 solid #dddddd; overflow: visible; float: left; }
+/* line 22, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech .textinput { border: 1px solid #dddddd; height: 30px; width: 320px; padding: 2px; margin: 5px 5px 0 0; background: white; overflow: visible; }
+/* line 30, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .speech .textinput.tall { height: 5em; }
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say_box .triangle { position: absolute; top: 4px; margin-left: 3px; background: transparent url(/images/ui/say.gif) no-repeat 0 50%; height: 18px; width: 9px; }
+
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_say_boxes.sass */
+#say-box #say textarea#say_msg.tall { height: 5em; }
+
+/* line 7, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.login #flash_messages #flash-message #message-container { padding-top: 6px; }
+
+/* line 10, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+#flash_messages { *zoom: 1; overflow: visible; line-height: 0; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#flash_messages:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+
+/* line 15, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+#flash-message { *zoom: 1; margin-left: auto; margin-right: auto; width: 800px; max-width: 100%; clear: both; }
+/* line 22, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#flash-message:after { content: "\0020"; display: block; height: 0; clear: both; overflow: hidden; visibility: hidden; }
+/* line 18, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+#flash-message #message-container { width: 764px; padding: 0 18px; background-color: white; }
+
+/* line 23, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+#flash-status-message { width: 744px; margin: 0 auto; }
+
+/* line 27, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.small_notice { padding: 6px 10px; }
+/* line 29, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.small_notice .text { padding-left: 20px; line-height: 1.6; }
+/* line 32, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.small_notice p, .small_notice ul { margin: 0; clear: left; }
+/* line 35, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.small_notice ul { margin-left: 30px; }
+/* line 37, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.small_notice li { list-style-type: disc; }
+
+/* line 40, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.error { border: 1px solid red; background: #ffcccc; }
+
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.success { border: 1px solid green; background: #ccffcc; }
+
+/* line 48, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+.info { padding: 0 0 0 5px; }
+
+/* line 52, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_flash_messages.sass */
+#modal_message #flash-status-message { width: 440px; }
+
+/* @end */
+/* line 4, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome-container { border: 1px solid #dddddd; width: 764px; margin-bottom: 10px; background-color: #f6fbfe; }
+
+/* line 10, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome_box { width: 764px; }
+/* line 12, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome_box div.description, #welcome_box h2 { line-height: 1.3; padding: 10px 10px 0; }
+/* line 15, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome_box table { margin: 10px 10px 0; }
+
+/* line 18, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome-links { overflow: hidden; *zoom: 1; margin: 2px 10px; color: #aaaaaa; }
+/* line 22, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome-links li { list-style-type: none; }
+/* line 5, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_inline-list.scss */
+#welcome-links li, #welcome-links li li { margin: 0px; padding: 0px; display: inline; }
+/* line 24, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#welcome-links a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; margin: 0 10px 0 0; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#welcome-links a:hover { text-decoration: underline; }
+
+/* line 31, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.navbar { overflow: hidden; *zoom: 1; margin: 0 0 20px 0; }
+/* line 34, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.navbar li.navbar_menu { margin: 0 10px 0 0; }
+/* line 36, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.navbar li.navbar_menu span.navbar_item { padding-left: 10px; }
+/* line 38, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.navbar li.navbar_menu span.navbar_item a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+ul.navbar li.navbar_menu span.navbar_item a:hover { text-decoration: underline; }
+
+/* line 44, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.inset_box { border: #dddddd solid #dddddd; background: #eeeeee url(/images/background/fade-light.png) repeat-x top; width: 744px; margin: 0 10px 10px; }
+/* line 49, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.inset_box td { padding: 0 1em 1em 0; vertical-align: top; line-height: 1.4; }
+/* line 53, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.inset_box .small_icon { float: none; }
+/* line 55, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.inset_box a { text-decoration: none; color: #4978bc; font-size: 14px; font-weight: normal; line-height: 1.3; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+.inset_box a:hover { text-decoration: underline; }
+
+/* line 65, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes { margin: 0; padding: 0; line-height: 1; list-style: none; }
+/* line 68, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li { float: left; height: 32px; width: 32px; z-index: auto; margin: 5px 4px 0 0; }
+/* line 74, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li span { display: none; padding: 1em; background-color: black; color: white; font-weight: bold; z-index: 10; position: absolute; top: 4px; left: 0; }
+/* line 84, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li div { position: relative; }
+/* line 86, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li:hover span { display: inline; }
+/* line 88, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li a { display: block; }
+/* line 90, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.icon_boxes li.medium { height: 48px; width: 48px; }
+
+/* line 94, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.dash_box { float: left; margin: 0 0 1.5em 0; }
+/* line 97, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.dash_box div.link_line { line-height: 0.8em; }
+/* line 99, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.dash_box h5 { font-weight: normal; }
+
+/* line 109, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col1-plus { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 236px; margin-right: 28px; }
+
+/* line 113, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col1 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 236px; }
+
+/* line 116, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col2-plus { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 500px; margin-right: 28px; }
+
+/* line 120, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col2 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 500px; }
+
+/* line 123, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col3 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 764px; }
+
+/* line 126, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper1-plus { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 236px; margin-bottom: 0; padding-bottom: 0; margin-right: 28px; }
+
+/* line 131, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper1 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 236px; margin-bottom: 0; padding-bottom: 0; }
+
+/* line 135, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper2-plus { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 500px; margin-bottom: 0; padding-bottom: 0; margin-right: 28px; }
+
+/* line 140, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper2 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 500px; margin-bottom: 0; padding-bottom: 0; }
+
+/* line 144, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper3 { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 764px; margin-bottom: 0; padding-bottom: 0; }
+
+/* line 148, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.header-text { color: #333333; }
+
+/* line 151, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.blue { color: #4978bc; }
+
+/* line 154, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.blue20-bg { background: #f6fbfe; }
+
+/* line 157, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.map-blue-bg { background: #dbe4f2; }
+
+/* line 160, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.celadon { color: #bde0bf; }
+
+/* line 163, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.celadon-border-top { border-top: 2px solid #bde0bf; }
+
+/* line 166, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.celadon20-bg { background: #f3fff3; }
+
+/* line 169, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.orange { color: #ec6e25; }
+
+/* line 172, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.orange20-border-btm { border-bottom: 1px solid #fbe2d3; }
+
+/* line 175, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.orange20-bg { background: #fbe2d3; }
+
+/* line 178, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.orange05-bg { background: #fef8f4; }
+
+/* line 181, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.yellow { color: #f7ed36; }
+
+/* line 184, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.padding { padding: 6px 10px; width: 216px; }
+
+/* line 188, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h2.opening { color: #333333; font-size: 20px; font-weight: normal; line-height: 1.75; letter-spacing: 0.03em; }
+
+/* line 195, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h3.col-heading { color: #333333; padding: 6px 0; text-align: center; float: left; width: 100%; }
+
+/* line 202, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.opinion-bg { background: #fef8f4 url(/images/unido/orange20-2px.png) repeat-x; }
+
+/* line 205, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h2.opinion { color: #333333; font-size: 21px; height: 75px; padding: 14px 0 0 150px; background: url(/images/unido/text-bubble.png) no-repeat; }
+/* line 211, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h2.opinion a { color: #333333; }
+
+/* line 214, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h4.subheading { color: #333333; font-size: 14px; padding: 4px 0; line-height: 1.3; }
+/* line 219, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h4.subheading a { color: #333333; }
+
+/* line 222, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col-margin-top { margin-top: 18px; }
+
+/* line 225, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.grouping { padding: 10px; clear: both; }
+
+/* line 229, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+img.topleft { float: left; margin: 7px 12px 12px 0; }
+
+/* line 233, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.col1 p, .col2 p { font-size: 13.5px; margin-bottom: 6px; line-height: 1.6; }
+
+/* line 238, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.angle-quote { padding: 0 0 10px 0; }
+/* line 240, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.angle-quote a { color: #666666; }
+/* line 242, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+ul.angle-quote li { padding-left: 16px; background: url(/images/png/16/dbl_angle_quote_rt.png) no-repeat 0 3px; }
+
+/* line 246, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.networking { border-top: 2px solid #bde0bf; background: #f3fff3; }
+
+/* line 250, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.btn-widget { background: url(/images/unido/mru_button_236x32.png); width: 236px; height: 32px; float: left; margin: 0 0 12px 0; }
+/* line 256, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.btn-widget a { width: 236px; color: #333333; text-align: center; float: left; margin: 4px 0 0; font-size: 14px; text-decoration: none; background-position: 14px 4px; background-repeat: no-repeat; }
+
+/* line 267, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget { text-align: center; line-height: 1.2; }
+/* line 270, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget li { display: inline-block; float: none; padding: 4px; *display: inline; *zoom: 1; }
+/* line 276, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag6 { font-size: 20px; }
+/* line 278, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag5 { font-size: 18px; }
+/* line 280, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag4 { font-size: 16px; }
+/* line 282, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag3 { font-size: 14px; }
+/* line 284, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag2 { font-size: 12px; }
+/* line 286, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#tag-cloud-widget .tag1 { font-size: 10px; }
+
+/* line 293, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#map-container { overflow: hidden; position: relative; width: 500px; }
+
+/* line 299, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#popup_entities_list h3 { border-bottom: 1px dotted #dddddd; color: #333333; font-size: 14px; padding: 0 0 4px 30px; }
+
+/* line 305, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.pointer { cursor: pointer; }
+
+/* line 309, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv .single-group img, #featurePopup_contentDiv li img.avatar { display: inline; float: left; margin-right: 8px; }
+/* line 312, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv h3 { color: #333333; font-size: 14px; line-height: 1.2; min-height: 2em; padding: 0; background-position: 0 50%; }
+/* line 319, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv h3.small_icon { margin-left: 0; margin-top: 2px; padding-bottom: 2px; background-position: 0 40%; }
+/* line 324, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv ul#entities li { border-bottom: 1px dotted #dddddd; padding: 5px 0 4px 8px; height: 32px; }
+/* line 328, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv ul#entities li.arrow { background: url(/images/png/16/arrow-right-paleblue.png) no-repeat right 50%; }
+/* line 330, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv ul#entities li.spinner { background: url(/images/spinner.gif) no-repeat right; }
+/* line 332, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv ul#entities li a { display: inline; float: left; color: #333333; font-size: 13px; line-height: 1.1; width: 206px; height: 32px; padding-right: 12px; }
+/* line 340, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv p { line-height: 1.3; margin: 16px 0 16px 10px; }
+/* line 343, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv .small_icon { overflow: hidden; *zoom: 1; line-height: 2; min-height: 20px; padding-left: 26px; margin: 10px 0 0 12px; }
+/* line 349, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#featurePopup_contentDiv #map_summary_footer { border-top: 1px dotted #dddddd; overflow: hidden; *zoom: 1; bottom: 0; padding: 5px 0 0; position: absolute; width: 98%; }
+
+/* line 358, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .labelSpan { padding-left: 20px; width: 200px; float: left; margin-left: 5px; }
+/* line 363, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv input.checkbox { float: left; }
+/* line 365, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_1 { background: url(/images/png/map/16_marker-pink.png) no-repeat; }
+/* line 367, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_2 { background: url(/images/png/map/16_marker-yellow.png) no-repeat; }
+/* line 369, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_3 { background: url(/images/png/map/16_marker-orange.png) no-repeat; }
+/* line 371, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_4 { background: url(/images/png/map/16_marker-blue.png) no-repeat; }
+/* line 373, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_5 { background: url(/images/png/map/16_marker-green.png) no-repeat; }
+/* line 375, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_6 { background: url(/images/png/map/16_marker-dark-blue.png) no-repeat; }
+/* line 377, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_7 { background: url(/images/png/map/16_marker-red.png) no-repeat; }
+/* line 379, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_8 { background: url(/images/png/map/16_marker-light-blue.png) no-repeat; }
+/* line 381, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_9 { background: url(/images/png/map/16_marker-purple.png) no-repeat; }
+/* line 383, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+div.dataLayersDiv .layer_0 { background: url(/images/png/map/16_marker-dark-green.png) no-repeat; }
+
+/* line 390, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.hoverActive { border: 1px dashed black; }
+
+/* line 393, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.main-edit { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 284px; margin: 18px 0; padding: 0 0 0 18px; border-right: 1px solid #dddddd; }
+
+/* line 398, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.sidebar-edit { display: inline; float: left; margin-bottom: 20px; padding-bottom: 12px; width: 216px; margin: 18px 0; padding: 0 0 0 18px; }
+
+/* line 402, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper-edit { display: inline; float: left; width: 538px; border: 1px solid #dddddd; margin-bottom: 32px; }
+
+/* line 408, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+.wrapper-edit h4 { font-size: 14px; letter-spacing: 0.3px; }
+
+/* line 412, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+h3.edit { margin-bottom: 12px; }
+
+/* line 415, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget { display: inline; float: left; -moz-border-radius: 8px; -webkit-border-radius: 8px; -o-border-radius: 8px; -ms-border-radius: 8px; -khtml-border-radius: 8px; border-radius: 8px; background: #fef8f4 50%; border: 2px solid #fbe2d3; color: #ec6e25; width: 264px; height: 48px; margin-bottom: 18px; cursor: move; }
+/* line 425, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget a { color: #ec6e25; }
+/* line 427, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget .left { padding: 8px 0 6px 8px; height: 34px; width: 210px; border-right: 1px dotted #fbe2d3; }
+
+/* line 433, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget span { display: inline; float: right; margin-top: 13px; width: 30px; }
+/* line 437, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget span a:hover { text-decoration: none; }
+
+/* line 440, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget a.small_icon { position: relative; background-position: 0 50%; }
+
+/* line 444, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+li.widget a.small_icon:hover { opacity: 0.5; -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); }
+
+/* line 447, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main, #sort_list_sidebar, #sort_list_main_storage, #sort_list_sidebar_storage { overflow: hidden; *zoom: 1; position: relative; }
+
+/* line 451, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main, #sort_list_sidebar { margin-bottom: 10px; }
+
+/* line 455, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main_storage h3.edit, #sort_list_sidebar_storage h3.edit { color: #999999; padding-bottom: 10px; }
+/* line 458, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main_storage li.widget, #sort_list_sidebar_storage li.widget { background: #f5f5f5; border: 2px solid #dddddd; color: #999999; }
+/* line 462, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main_storage li.widget a, #sort_list_sidebar_storage li.widget a { color: #999999; }
+/* line 464, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main_storage li.widget .left, #sort_list_sidebar_storage li.widget .left { border-right: 1px dotted #dddddd; }
+
+/* line 467, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_sidebar li.widget, #sort_list_sidebar_storage li.widget { width: 196px; }
+/* line 469, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_sidebar li.widget .left, #sort_list_sidebar_storage li.widget .left { width: 142px; }
+
+/* line 473, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main li.small_widget, #sort_list_main_storage li.small_widget { width: 126px; margin-right: 8px; }
+/* line 476, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main li.small_widget .left, #sort_list_main_storage li.small_widget .left { width: 80px; }
+
+/* line 479, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sort_list_main_storage h4, #sort_list_sidebar_storage h4 { color: #999999; }
+
+/* line 482, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+a.right { display: inline; float: right; overflow: hidden; *zoom: 1; margin-top: -18px; }
+
+/* line 487, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+a.new { padding: 0 18px; background: url(/images/png/16/plus.png) no-repeat; }
+
+/* line 491, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+a.back { padding: 0 18px; background: url(/images/png/16/left.png) no-repeat; }
+
+/* line 499, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content { position: relative; }
+/* line 501, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content label { border-bottom: 1px #bbbbbb 1px; font-weight: bold; padding: 0 0 2px; }
+/* line 505, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content label span { font-weight: normal; }
+/* line 507, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul { overflow: hidden; *zoom: 1; float: none; padding-bottom: 16px; margin-bottom: 16px; }
+/* line 512, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul li { overflow: hidden; *zoom: 1; }
+/* line 514, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul li.image-title input { width: 300px; }
+/* line 517, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul li.checkbox-edit input { display: inline; float: left; }
+/* line 519, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul li.checkbox-edit label { display: inline; float: left; margin: 0 0 0 10px; }
+/* line 522, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul input, #MB_content ul select, #MB_content ul textarea { margin-left: 10px; }
+/* line 524, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul span.statement { display: block; white-space: none; }
+/* line 527, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content div.wrap { display: inline; float: left; width: 490px; }
+/* line 530, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content div.wrap div.wrap-inner { display: inline; float: left; width: 180px; }
+/* line 533, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content div.wrap div.wrap-inner select { margin: 4px 10px; }
+/* line 535, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #city_text { display: inline; float: left; height: 34px; margin-top: 30px; }
+/* line 539, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #city_text input { margin-left: 6px; }
+/* line 541, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content input#widget_map_center_latitude, #MB_content input#widget_map_center_longitude { display: inline; float: left; margin: 6px 260px 0 0; width: 90px; }
+/* line 545, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content span.label { display: inline; float: left; width: 70px; padding: 6px 0 0 10px; }
+/* line 549, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #mb-header { border-bottom: 1px solid #bbbbbb; padding-bottom: 6px; margin-bottom: 6px; }
+/* line 553, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #mb-footer { border-top: 1px solid #bbbbbb; margin-top: 20px; padding: 20px 0 23px 10px; }
+/* line 557, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #mb-footer input#widget_submit { display: inline; float: left; }
+/* line 559, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #mb-footer-absolute { border-top: 1px solid #bbbbbb; bottom: 0; height: 24px; padding: 20px 0 23px 10px; position: absolute; width: 486px; }
+/* line 566, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content a.destroy { display: inline; float: right; background: url(/images/png/16/trash.png) no-repeat 0 2px; bottom: 25px; padding-left: 20px; position: absolute; right: 20px; }
+/* line 573, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content li.left-col { display: inline; float: left; width: 240px; }
+/* line 577, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content li.left-col input, #MB_content li.right-col input { margin-left: 4px; }
+/* line 579, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content .footer-height { width: 100%; height: 46px; }
+/* line 582, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content .other { margin: 18px 0 14px; }
+/* line 584, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content h4.menu_entries { font-size: 14px; color: #333333; line-height: 2; }
+/* line 589, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #menu_items_form li.menu_item_drag_handle { width: 476px; background: white; padding: 6px 10px; margin: 4px 0; cursor: move; }
+/* line 595, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #menu_items_form li.menu_item_drag_handle .edit { display: inline; float: right; }
+/* line 597, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #menu_items_form li.menu_item_drag_handle span.description { font-weight: bold; }
+/* line 599, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #list_menu_item_new.add { padding: 18px 10px; }
+/* line 601, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #list_menu_item_new.add a { background: url(/images/png/16/plus.png) no-repeat; padding: 0 18px; }
+/* line 604, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #form_menu_item_new, #MB_content form.edit_menu_item, #MB_content #list_menu_item_new { overflow: hidden; *zoom: 1; background: white; padding: 6px 10px; margin: 4px 0; width: 476px !important; }
+/* line 610, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #form_menu_item_new .edit, #MB_content form.edit_menu_item .edit, #MB_content #list_menu_item_new .edit { display: inline; float: right; margin-top: 28px; }
+/* line 613, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #form_menu_item_new div.new-entry, #MB_content form.edit_menu_item div.new-entry, #MB_content #list_menu_item_new div.new-entry { overflow: hidden; *zoom: 1; margin-bottom: 6px; }
+/* line 616, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #form_menu_item_new div.new-entry .add-form-label, #MB_content form.edit_menu_item div.new-entry .add-form-label, #MB_content #list_menu_item_new div.new-entry .add-form-label { display: inline; float: left; font-weight: normal; width: 70px; }
+/* line 620, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content #form_menu_item_new div.new-entry .add-form-text-field, #MB_content form.edit_menu_item div.new-entry .add-form-text-field, #MB_content #list_menu_item_new div.new-entry .add-form-text-field { display: inline; float: left; }
+/* line 622, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content h4.text { font-size: 14px; font-weight: normal; line-height: 2; }
+/* line 626, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul.create_widget { width: 500px; }
+/* line 628, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul.create_widget li.widget-name-left, #MB_content ul.create_widget li.widget-name-right { display: inline; float: left; margin: 12px 0 0 0; }
+/* line 631, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul.create_widget li.widget-name-left a, #MB_content ul.create_widget li.widget-name-right a { display: block; padding: 0.5em; background: white; width: 220px; font-size: 14px; font-weight: bold; color: #666666; text-decoration: none; border: 1px solid white; }
+/* line 641, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul.create_widget li.widget-name-left a:hover, #MB_content ul.create_widget li.widget-name-right a:hover { color: #ec6e25; background: #fef8f4; border: 1px solid #fbe2d3; }
+/* line 645, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#MB_content ul.create_widget li.widget-name-right { display: inline; float: right; }
+
+/* line 648, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#main-entry-edit h3 { color: #333333; }
+
+/* line 650, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sub-entries { margin: 18px 0 70px; }
+/* line 652, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sub-entries #menu_items_form li.menu_item_drag_handle { font-weight: normal; }
+/* line 654, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_site-home.sass */
+#sub-entries #menu_items_form li.menu_item_drag_handle form.edit_menu_item { padding: 0; }
+
+/* line 2, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+#tasks a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+#tasks a:hover { text-decoration: underline; }
+/* line 5, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+#tasks li.task p { padding-top: 0.2em; margin-top: 0.8em; }
+/* line 8, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+#tasks li.task p a { font-size: 14px; }
+/* line 10, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+#tasks tr { border-top: red; }
+
+/* line 13, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+a#create_tasks_link { text-decoration: none; color: #4978bc; font-size: 11px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+a#create_tasks_link:hover { text-decoration: underline; }
+
+/* line 16, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+ul.task_list li { padding: 0; margin: 0; list-style: none; padding: 0.6em 0.6em 0.2em 0.6em; }
+/* line 21, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tasks.sass */
+ul.task_list li a { text-decoration: none; color: #4978bc; font-size: 12px; font-weight: normal; }
+/* line 4, /usr/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/links/_hover-link.scss */
+ul.task_list li a:hover { text-decoration: underline; }
+
+/* line 1, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tooltips.sass */
+.tooltip { position: relative; }
+/* line 3, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tooltips.sass */
+.tooltip span { display: none; padding: 1em; width: 25em; border: 1px solid #666666; background-color: #ffffaa; color: black; z-index: 100; }
+/* line 12, /Users/patveriepe/crabgrass/app/stylesheets/ui_base/_tooltips.sass */
+.tooltip:hover span { display: inline; position: absolute; top: 10px; left: 30px; }
+
+/* end */

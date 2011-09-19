@@ -1,0 +1,10 @@
+/* line 227 */
+div.create_page { margin: 0 auto; padding-top: 20px; }
+/* line 234 */
+div.create_page table.page_types td { width: 50%; padding: 0 1em; }
+/* line 242 */
+div.create_page div.hover { margin: 0.5em; }
+/* line 244 */
+div.create_page div.hover:hover { background: #ffffcc; outline: 1px solid #cccc99; }
+/* line 247 */
+div.create_page div.hover a { text-decoration: none; display: block; padding: 0.5em; }

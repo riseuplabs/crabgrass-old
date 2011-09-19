@@ -1,0 +1,24 @@
+/* line 226 */
+.pages_dropdown { font-weight: normal; font-size: 12px; color: #534741; }
+/* line 230 */
+.pages_dropdown select { margin-left: 8px; }
+
+/* line 233 */
+blockquote { padding: 10px; }
+
+/* line 236 */
+table.archive_calendar { color: #999999; border: 1px solid #cccccc; border-collapse: collapse; }
+/* line 240 */
+table.archive_calendar td { width: 20px; border: 1px solid #cccccc; text-align: center; }
+/* line 244 */
+table.archive_calendar td a { display: block; font-weight: bold; text-decoration: none; }
+
+/* line 249 */
+div.group_entry { border-bottom: 1px solid #cccccc; margin: 1em 0; }
+/* line 252 */
+div.group_entry a { font-weight: bold; }
+/* line 254 */
+div.group_entry img { vertical-align: top; float: left; padding: 0 1em 1em 0; }
+
+/* line 259 */
+#l-shape { height: 1em; width: 2em; display: block; float: left; border: 1px dotted white; border-width: 0 0 1px 1px; margin-left: 10px; margin-top: -4px; }

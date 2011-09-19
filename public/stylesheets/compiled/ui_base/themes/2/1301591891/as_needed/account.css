@@ -1,0 +1,13 @@
+/* line 227 */
+table.login td.login { padding: 2em; vertical-align: top; }
+
+/* line 231 */
+table.signup td { vertical-align: top; }
+/* line 233 */
+table.signup td.title { border: 1px solid #cccccc; padding: 1em; background: #eeeeed; }
+/* line 237 */
+table.signup td.right { padding: 1em 0 0 1em; text-align: center; }
+/* line 240 */
+table.signup td .agreement { height: 30em; overflow: scroll; text-align: left; border: 1px solid #cccccc; padding: 1em; }
+/* line 246 */
+table.signup td .agreement h1 { margin: 1em 0; color: #999999; }
