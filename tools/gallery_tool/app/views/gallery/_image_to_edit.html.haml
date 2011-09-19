@@ -1,0 +1,11 @@
+%li[image_to_edit]
+  %div[image_to_edit, :control]
+    %span.right
+      = gallery_edit_image image_to_edit
+      = gallery_delete_image image_to_edit, image_to_edit_counter
+    = # gallery_move_image_without_js image_to_edit
+  - if image_to_edit.track
+    %span.overlay
+      %img{:src => '/images/png/16/comment.png'}
+
+  = thumbnail_img_tag(image_to_edit, :medium, :crop => '90x90')
