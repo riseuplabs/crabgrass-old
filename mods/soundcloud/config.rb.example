@@ -1,0 +1,14 @@
+class SoundcloudClient < ActiveRecord::Base
+  #
+  # please insert your Soundcloud Client Data here.
+  #
+  if RAILS_ENV == 'production'
+    CLIENT_ID = ""
+    CLIENT_SECRET = ""
+  else
+    CLIENT_ID = ""
+    CLIENT_SECRET = ""
+  end
+
+end
+

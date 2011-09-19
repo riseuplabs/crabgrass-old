@@ -4,9 +4,6 @@ class SoundcloudClient < ActiveRecord::Base
   attr_accessor :remote
   belongs_to :owner, :polymorphic => true
 
-  CLIENT_ID = "eee3f3174759328707c73a0be2652fce"
-  CLIENT_SECRET = "bce994a5f79e241cbe94e4035e4a224b"
-
   def self.remote(options={})
     options = {
       :client_id     => CLIENT_ID,
