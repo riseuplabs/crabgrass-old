@@ -197,11 +197,20 @@ table.form
   clear: left
 
 // modalbox tabs
+
 #MB_content
   .tab_area
     padding: 1em
     border: 1px solid #999999
     border-top: 0
+  #details-popup
+    .tab_area
+      border: 1px solid #999999
+    table.form
+      margin-left: 0
+    table.pretty
+      float: none
+      
 
 ul.tabset
   padding: 0
@@ -227,7 +236,7 @@ ul.tabset.top
     text-align: center
     text-decoration: none
     position: relative
-    left: 1em
+    left: 0
     line-height: 1.3em
     padding: 0.5em 1em
     // i don't understand why this is needed:
@@ -241,6 +250,7 @@ ul.tabset.top
       border: 1px solid #999999
       border-bottom: 0
       font-weight: bold
+      margin-bottom: -1px
 
 #main-content-full .col2 ul.tabset.top
   width: 500px
