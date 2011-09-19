@@ -5,7 +5,7 @@
       = gallery_delete_image image_to_edit, image_to_edit_counter
     = # gallery_move_image_without_js image_to_edit
   - if image_to_edit.track
-    %span.overlay
-      %img{:src => '/images/png/16/comment.png'}
+    %span.absolute
+      %img{:src => '/images/png/22/audio_icon_square.png'}
 
   = thumbnail_img_tag(image_to_edit, :medium, :crop => '90x90')
