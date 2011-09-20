@@ -121,7 +121,7 @@ module GalleryHelper
   def gallery_audio_form_url
     page_url @page,
       :action => @track.new_record? ? 'audio-create' : 'audio-update',
-      'X-Progress-ID' => @audio_upload_id,
+      'X-Progress-ID' => @track_upload_id,
       :id => @track.id
   end
 
