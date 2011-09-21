@@ -4,7 +4,7 @@ class Admin::SoundcloudController < Admin::BaseController
   permissions 'admin/soundcloud'
 
   def new
-    redirect_to remote.authorize_url(:display => "popup")
+    redirect_to remote.authorize_url(:display => "popup", :scope => "non-expiring")
   end
 
   def show
