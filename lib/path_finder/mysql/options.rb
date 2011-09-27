@@ -12,8 +12,10 @@ module PathFinder::Mysql::Options
   end
 
   def self.options_for_mentor(path, options)
+    user_ids = options[:current_user].student_ids
+    user_ids += options[:user_ids] if options[:user_ids]
     options.merge({
-      :user_ids => options[:user_ids]+options[:current_user].student_ids
+      :user_ids => user_ids
     })
   end
 
