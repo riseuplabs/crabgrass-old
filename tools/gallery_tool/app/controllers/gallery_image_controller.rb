@@ -2,6 +2,7 @@ class GalleryImageController < BasePageController
 
   permissions 'gallery'
   helper 'gallery', 'progress_bar'
+  javascript 'soundcloud.player.api', 'soundcloud'
 
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create]

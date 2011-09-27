@@ -4,6 +4,7 @@ class GalleryController < BasePageController
   stylesheet 'upload', :only => :edit
   javascript :extra, 'page'
   javascript :upload, :only => :edit
+  javascript 'soundcloud.player.api', 'soundcloud', :only => [:edit, :show]
   permissions 'gallery'
 
   include GalleryHelper

@@ -91,8 +91,13 @@ module Groups::Search
     search_template('contributions')
   end
 
+  DISTINCT_WITH_PARTICIPATIONS = <<-EOSQL
+    DISTINCT pages.*, user_participations.user_id, user_participations.changed_at
+  EOSQL
+
   def options_for_contributions
-    options_for_me(:select => "DISTINCT pages.*, user_participations.user_id, user_participations.changed_at")
+    options_for_me :current_user => User.current,
+      :select => DISTINCT_WITH_PARTICIPATIONS
   end
 
   def pages
