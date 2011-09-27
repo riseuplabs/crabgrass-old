@@ -6,5 +6,6 @@
 .fieldset
   = text_area_tag 'wiki[body]', (h(@wiki.body) if load_content), :rows => 30, :cols => 64, :id => wiki_body_id(@wiki)
 
-= dom_loaded_javascript_tag(confirm_discarding_wiki_edit_text_area)
+- unless locked_for_me?
+  = dom_loaded_javascript_tag(confirm_discarding_wiki_edit_text_area)
 = formatting_reference_link
