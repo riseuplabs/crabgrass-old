@@ -3,11 +3,7 @@
 <%= Formy.tabs do |f|
   f.tab do |t|
     t.label I18n.t(:show)
-    if action?(:edit)
-      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-    else
-      t.url page_url(@page,:action=>'show')
-    end
+    alert_if_locked(t) or t.url page_url(@page,:action=>'show')
     t.selected action?(:show) && !controller?(:wiki_page_version)
     t.class 'page_url'
   end
@@ -15,11 +11,7 @@
     f.tab do |t|
       if !locked_for_me?
         t.label I18n.t(:edit)
-        if action?(:edit)
-          t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-        else
-          t.url page_url(@page,:action => 'edit')
-        end
+        alert_if_locked(t) or t.url page_url(@page,:action=>'edit')
       else
         t.label I18n.t(:break_lock)
         t.url page_url(@page,:action => 'edit', :break_lock => true)
@@ -31,33 +23,22 @@
   last_change_id = "#{@wiki.version.to_i-1}-#{@wiki.version}"
   f.tab do |t|
     t.label I18n.t(:versions)
-    if action?(:edit)
-      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-    else
-      t.url page_url(@page,:action=>'version-list')
-    end
+    alert_if_locked(t) or t.url page_url(@page, :action => 'version-list')
     t.selected controller?(:wiki_page_version) && !(action?(:diff) && params[:id] == last_change_id)
     t.class 'page_url'
   end
   if @wiki.version > 1
     f.tab do |t|
       t.label I18n.t(:last_change)
-      if action?(:edit)
-        t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-      else
+      alert_if_locked(t) or
         t.url page_url(@page, :action=>'version-diff', :id => last_change_id)
-      end
       t.selected controller?(:wiki_page_version) && action?(:diff) && params[:id] == last_change_id
       t.class 'page_url'
     end
   end
   f.tab do |t|
     t.label I18n.t(:print)
-    if action?(:edit)
-      t.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
-    else
-      t.url page_url(@page,:action=>'print')
-    end
+    alert_if_locked(t) or t.url page_url(@page,:action=>'print')
     t.class 'page_url'
   end
 end -%>

@@ -19,7 +19,9 @@
           {:name => 'ajax_cancel'} %>
 
       <%= spinner('save') %>
-      <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
+      <%- unless locked_for_me? %>
+        <%= javascript_tag(confirm_discarding_wiki_edit_text_area) %>
+      <%- end %>
     </div>
   </div>
 <% end %>

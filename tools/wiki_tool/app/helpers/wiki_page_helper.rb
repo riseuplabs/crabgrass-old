@@ -41,6 +41,17 @@ module WikiPageHelper
     end
   end
 
+  def locked_by_me?
+    action?(:edit) and !locked_for_me?
+  end
+
+  def alert_if_locked(tab)
+    if locked_by_me?
+      tab.function "alert('#{save_or_cancel_edit_lock_wiki_error_text}');"
+      true
+    end
+  end
+
   def wiki_body_html(wiki = @wiki)
     html = wiki.body_html
     return html unless logged_in? and current_user.may?(:edit, wiki.page)
