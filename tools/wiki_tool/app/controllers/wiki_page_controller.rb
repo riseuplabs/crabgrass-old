@@ -143,8 +143,9 @@ class WikiPageController < BasePageController
 
 
   # which images should be displayed in the image upload popup
+  # We discourage adding images from other pages
   def image_popup_visible_images
-    Asset.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
+    @page.assets.visible_to(current_user, @page.group).media_type(:image).most_recent.find(:all, :limit=>20)
   end
 
   # called during BasePage::create

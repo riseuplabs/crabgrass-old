@@ -18,9 +18,11 @@
     r.label 'Options'
     r.input check_box_tag('link_to_image', "true", false) + I18n.t(:include_full_checkbox)
   end
-  f.row do |r|
-    r.label 'Images'
-    r.input popup_image_list(wiki)
+  if @images.try.any?
+    f.row do |r|
+      r.label 'Images'
+      r.input popup_image_list(wiki)
+    end
   end
   f.row do |r|
     r.label 'New Image'
