@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110831182531) do
+ActiveRecord::Schema.define(:version => 20110928074511) do
 
   create_table "activities", :force => true do |t|
     t.integer  "subject_id",   :limit => 11
@@ -673,6 +673,16 @@ ActiveRecord::Schema.define(:version => 20110831182531) do
 
   add_index "sites", ["name"], :name => "index_sites_on_name", :unique => true
 
+  create_table "soundcloud_clients", :force => true do |t|
+    t.integer  "owner_id",      :limit => 11
+    t.string   "owner_type"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "survey_answers", :force => true do |t|
     t.integer  "question_id",       :limit => 11
     t.integer  "response_id",       :limit => 11
@@ -810,6 +820,9 @@ ActiveRecord::Schema.define(:version => 20110831182531) do
     t.integer  "duration",      :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "secret_uri"
+    t.string   "stream_url"
+    t.string   "secret_token"
   end
 
   create_table "user_participations", :force => true do |t|

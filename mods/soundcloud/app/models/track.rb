@@ -11,8 +11,19 @@ class Track < ActiveRecord::Base
 
   attr_accessor :asset_data
 
-  def self.params_from_soundcloud(remote_track)
-    remote_track.slice(:permalink_url, :title, :uri, :secret_uri)
+  # we might have old tracks were we did not save these
+  def stream_url
+    @stream_url ||= self.uri + '/stream'
+  end
+
+  def secret_token
+    @secret_token ||= self.secret_uri.split("secret_token=")[1]
+  end
+
+  def secret_stream_url
+    stream_url +
+      '?secret_token=' + secret_token +
+      '&client_id=' + SoundcloudClient::CLIENT_ID
   end
 
   before_validation :create_or_update_on_soundcloud
@@ -30,8 +41,10 @@ class Track < ActiveRecord::Base
 #        :track => self.soundcloud_hash
     end
     self.permalink_url = soundcloud_track[:permalink_url]
+    self.stream_url = soundcloud_track[:stream_url]
     self.uri = soundcloud_track[:uri]
     self.secret_uri = soundcloud_track[:secret_uri]
+    self.secret_token = soundcloud_track[:secret_token]
     self.title ||= soundcloud_track[:title]
   end
 
