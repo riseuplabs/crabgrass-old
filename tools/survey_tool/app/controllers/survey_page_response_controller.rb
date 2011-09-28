@@ -6,6 +6,7 @@ class SurveyPageResponseController < BasePageController
   stylesheet 'survey'
   javascript :extra
   javascript 'survey'
+  javascript :swfobject, :only => [:rate, :show]
   helper 'survey_page'
   permissions 'survey_page'
 

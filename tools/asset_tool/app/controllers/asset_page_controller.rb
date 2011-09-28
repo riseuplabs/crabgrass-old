@@ -3,6 +3,7 @@ class AssetPageController < BasePageController
 #  javascript :extra
   stylesheet 'asset'
   permissions 'asset_page'
+  javascript :swfobject, :only => [:show]
 
   include AssetPageHelper
 
