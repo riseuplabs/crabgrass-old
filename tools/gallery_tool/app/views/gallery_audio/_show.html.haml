@@ -1,6 +1,12 @@
-%div{:class => "spinner"}
-  - width = local_assigns[:width] || 500
-  %object{:height => "81", :width => width}
-    %param{:name => "movie", :value => gallery_audio_player}
-    %param{:name => "allowscriptaccess", :value => "always"}
-    %embed{:src => gallery_audio_player, :allowscriptaccess => "always", :height => "81", :type=> "application/x-shockwave-flash", :width => width, :id => 'soundcloud_player', :style => 'display:none'}
+- width = local_assigns[:width] || 500
+
+#player
+
+= javascript_tag do
+  var s1 = new SWFObject('/embed/player.swf','ply',#{width},'24','9','#ffffff');
+  s1.addParam('allowfullscreen','false');
+  s1.addParam('allowscriptaccess','always');
+  s1.addParam('wmode','opaque');
+  s1.addVariable('file', '#{CGI::escape(@track.secret_stream_url)}');
+  s1.addVariable('type','sound');
+  s1.write('player');
