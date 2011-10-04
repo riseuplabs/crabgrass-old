@@ -74,9 +74,12 @@ module GalleryHelper
     url = page_url @page,
       :action => 'image-edit',
       :id => image.id
-    link_to_modal('&nbsp;',
-      {:url => url, :title => I18n.t(:edit_image)},
-      :class => 'small_icon empty pencil_16')
+    link_to_modal '&nbsp;',
+      { :url => url,
+        :title => I18n.t(:edit_image)
+      },
+      :class => 'small_icon empty pencil_16',
+      :title => I18n.t(:edit_image)
   end
 
   def gallery_move_image_without_js(image)

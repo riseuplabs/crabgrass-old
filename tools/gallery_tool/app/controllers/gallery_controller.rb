@@ -5,6 +5,7 @@ class GalleryController < BasePageController
   javascript :extra, 'page'
   javascript :upload, :only => :edit
   javascript :swfobject, :only => [:edit, :show]
+  javascript :audio, :only => [:edit, :show]
   permissions 'gallery'
 
   include GalleryHelper
