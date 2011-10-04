@@ -543,6 +543,7 @@ en:
   audio_selected: 'Selected audio for the image'
   audio_updated_successfully: 'The audio for this image has been updated successfully.'
   audio_selected_successfully:  'You picked a new audio track to go with this image.'
+  audio_attached: 'This image has an audio caption below, loading might take some time.'
   
 
   ##

@@ -1,7 +1,4 @@
 - width = local_assigns[:width] || 500
-
-#player
-
 = javascript_tag do
   var s1 = new SWFObject('/embed/player.swf','ply',#{width},'24','9','#ffffff');
   s1.addParam('allowfullscreen','false');
@@ -10,3 +7,7 @@
   s1.addVariable('file', '#{CGI::escape(@track.secret_stream_url)}');
   s1.addVariable('type','sound');
   s1.write('player');
+#player_loading
+  = I18n.t :audio_attached
+#player
+
