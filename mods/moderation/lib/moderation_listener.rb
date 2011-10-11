@@ -4,6 +4,7 @@ class ModerationListener < Crabgrass::Hook::ViewListener
   def top_menu(context)
     if logged_in? && current_user.moderates? && !may_admin_site?
       render(:partial => '/admin/moderation_top_menu')
+    end
   end
 
   def admin_nav(context)
