@@ -85,9 +85,9 @@ module Groups::Search
 
     @pages = Page.find_by_path(@path, options_for_contributions).each do |page|
       page.updated_by_id = page.user_id # user_id is from user_participation.
-     page.updated_by_login = User.find(page.user_id).login
+      page.updated_by_login = User.find(page.user_id).login
       page.updated_at = page.changed_at # changed_at is from user_participation.
-   end
+    end
     search_template('contributions')
   end
 

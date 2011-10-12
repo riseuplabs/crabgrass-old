@@ -89,6 +89,38 @@ class Site < ActiveRecord::Base
   ## CONFIGURATION & DEFAULT VALUES
   ##
 
+  # we initialize the sites from the config so they can easily be turned
+  # on and off
+
+  def self.load_all_from_config(configs)
+    ids = configs.map do |site_config|
+      if site = Site.load_from_config(site_config)
+        site.id
+      else
+        self.print_loading_error(site_config)
+        nil
+      end
+    end
+    self.print_available_names if ids.include?(nil)
+    ids.compact
+  end
+
+  def self.load_from_config(site_config)
+    site = Site.find_by_name(site_config['name'])
+    site.load_config(site_config)
+  end
+
+  def self.print_loading_error(site_config)
+    puts "ERROR (%s): site name '%s' not found in database!" %
+    [Conf.configuration_filename, site_config['name']]
+  end
+
+  def self.print_available_names
+    puts "Available site names are:"
+    puts "  " + self.all.map(&:name).join(', ')
+    puts "To create a site, run:\n  rake cg:site:create NAME=<name> RAILS_ENV=<env>"
+  end
+
   # For the attributes, use the site's value first, if possible, and
   # fall back to Conf if the value is not set. We can also proxy attributes
   # which do not actually exist in the sites table but which do exist in the
@@ -106,6 +138,11 @@ class Site < ActiveRecord::Base
     :email_sender, :email_sender_name, :available_page_types, :tracking, :evil,
     :enforce_ssl, :show_exceptions, :require_user_email, :require_user_full_info, :domain, :profiles,
     :profile_fields, :all_profiles_visible, :chat?, :translation_group, :limited?, :signup_mode, :dev_email
+
+  # this is mostly defined in mods
+  # returns site if config is valid and nil or false otherwise
+  def load_config(site_config)
+  end
 
   def profile_field_enabled?(field)
     profile_fields.nil? or profile_fields.include?(field.to_s)
