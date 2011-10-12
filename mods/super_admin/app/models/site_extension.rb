@@ -13,10 +13,10 @@ module SiteExtension
 
     def set_admin_group(name)
       if admin_group = Group.find_by_name(name)
-        site.update_attribute :super_admin_group_id, admin_group.id
+        self.update_attribute :super_admin_group_id, admin_group.id
       else
         puts "ERROR (%s): super admin group '%s' not found! (skipping site)" %
-        [Conf.configuration_filename, site_conf['admin_group']]
+        [Conf.configuration_filename, name]
       end
     end
   end

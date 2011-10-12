@@ -142,6 +142,7 @@ class Site < ActiveRecord::Base
   # this is mostly defined in mods
   # returns site if config is valid and nil or false otherwise
   def load_config(site_config)
+    self
   end
 
   def profile_field_enabled?(field)
