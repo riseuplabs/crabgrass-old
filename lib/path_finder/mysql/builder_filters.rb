@@ -313,7 +313,7 @@ module PathFinder::Mysql::BuilderFilters
 
   def filter_contributed_group(group_id)
     @conditions << 'user_participations.user_id IN (?) AND user_participations.changed_at IS NOT NULL'
-    @values << Group.find(group_id).user_ids
+    @values << Group.find(group_id).user_ids_without_moderators
     @order = ["user_participations.changed_at DESC"]
   end
 
