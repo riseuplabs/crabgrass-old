@@ -21,7 +21,6 @@ module ModerationSiteExtension
   def self.add_to_class_definition
     lambda do
       belongs_to :moderation_group, :class_name => "Group"
-      proxy_to_conf :moderation_group_id
       alias_method_chain :load_config, :moderation
     end
   end

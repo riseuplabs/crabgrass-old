@@ -1,6 +1,4 @@
 %li[image]
   %div[image, :control]
-  - if image.track
-    %span.absolute
-      %img{:src => '/images/png/22/audio-icon-square.png'}
+  = call_hooks :gallery_image_thumbnail, :image => image
   = link_to_asset image, :medium, :crop => '90x90', :url => page_url(@page, :action => 'image-show', :id => image.id), :xhr => 1, :title => h(image.caption)

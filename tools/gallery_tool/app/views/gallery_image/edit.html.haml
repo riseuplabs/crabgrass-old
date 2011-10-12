@@ -1,18 +1,15 @@
+%h2.big_icon.page_gallery_48.title
+  = I18n.t :edit_image_header
+
 = Formy.tabs do |tabs|
   - tabs.tab do |tab|
     - tab.label I18n.t :media_image
     - tab.show_tab 'image-tab'
     - tab.selected true
-  - tabs.tab do |tab|
-    - tab.label I18n.t :media_audio
-    - tab.show_tab 'audio-tab'
-    - tab.selected false
-    %h2.big_icon.page_gallery_48.title
-      = I18n.t :edit_image_header
+  - call_hooks :edit_gallery_image_tabs, :tabs => tabs
 
 #image-tab.tab_content.tab_area
   = render :partial => 'gallery_image/edit'
-#audio-tab.tab_content.tab_area{:style => 'display:none;'}
-  = render :partial => 'gallery_audio/edit'
+= call_hooks :edit_gallery_image_content
 
 = render :partial => 'close_and_reload_button'

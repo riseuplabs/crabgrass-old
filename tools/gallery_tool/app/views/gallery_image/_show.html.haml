@@ -3,8 +3,6 @@
 %h2=h @showing.image.caption
 .gallery-item
   = render :partial => 'show_image'
-
-  - if @track
-    = render :partial => '/gallery_audio/show'
+  = call_hooks :show_gallery_image_content
 
 %span= gallery_display_image_position

@@ -2,18 +2,16 @@ class GalleryImageController < BasePageController
 
   permissions 'gallery'
   helper 'gallery', 'progress_bar'
-  javascript 'soundcloud.player.api', 'soundcloud'
 
   # could we verify delete as the method on destry?
   verify :method => :post, :only => [:create]
   verify :method => [:post, :put], :only => [:update]
   verify :method => [:post, :delete], :only => [:destroy]
 
+  before_filter :get_image, :only => [:show, :edit, :update]
+
   def show
     return unless request.xhr?
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
-    @image = @showing.asset
-    @track = @showing.track
     # position sometimes starts at 0 and sometimes at 1?
     @image_index = @page.images.index(@image).next
     @image_count = @page.showings.count
@@ -22,11 +20,7 @@ class GalleryImageController < BasePageController
   end
 
   def edit
-    @showing = @page.showings.find_by_asset_id(params[:id], :include => 'asset')
-    @image = @showing.asset
-    @track = @showing.track || @showing.build_track
     @image_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
-    @track_upload_id = (0..29).to_a.map {|x| rand(10)}.to_s
     if request.xhr?
       render :layout => false
     end
@@ -35,11 +29,11 @@ class GalleryImageController < BasePageController
   def update
     # whoever may edit the gallery, may edit the assets too.
     raise PermissionDenied unless current_user.may?(:edit, @page)
-    @image = @page.images.find(params[:id])
-    if params[:image] and params[:image][:upload_file] #and request.xhr?
-      @image.uploaded_data = params[:image][:upload_file]
-      if @image.save!
-        @image.reload
+    if params[:assets] #and request.xhr?
+      begin
+        @image.change_source_file(params[:assets].first)
+        # reload might not work if the class changed...
+        @image = Asset.find(@image.id)
         responds_to_parent do
           render :update do |page|
             page.replace_html 'show-image', :partial => 'show_image'
@@ -94,4 +88,8 @@ class GalleryImageController < BasePageController
     end
   end
 
+  def get_image
+    @showing ||= @page.showings.find_by_asset_id(params[:id], :include => 'asset')
+    @image ||= @showing.asset
+  end
 end
