@@ -23,6 +23,7 @@ module GroupModerationExtension
       ids = user_ids
       return ids unless site = Site.current
       ids -= site.moderation_group.try.user_ids
+      ids -= site.council.try.user_ids
       return ids unless site.respond_to? :super_admin_group
       ids -= Site.current.super_admin_group.try.user_ids
     end
