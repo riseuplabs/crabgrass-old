@@ -4,6 +4,6 @@
       = gallery_edit_image image_to_edit
       = gallery_delete_image image_to_edit, image_to_edit_counter
     = # gallery_move_image_without_js image_to_edit
-  = call_hooks :gallery_image_thumbnail, :image => image
+  = call_hooks :gallery_image_thumbnail, :image => image_to_edit
 
   = thumbnail_img_tag(image_to_edit, :medium, :crop => '90x90')
