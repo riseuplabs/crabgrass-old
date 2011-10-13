@@ -16,7 +16,7 @@ class GalleryControllerTest < ActionController::TestCase
     @asset.save!
   end
 
-  def test_show
+  def test_show_empty
     login_as :blue
     gallery = Gallery.create!( :user => users(:blue),
       :title => "Empty Gallery")
@@ -41,17 +41,32 @@ class GalleryControllerTest < ActionController::TestCase
     assert_equal assigns(:page).page_terms, assigns(:page).images.first.page_terms
   end
 
+  def test_create_from_zip
+    login_as :blue
+
+    assert_difference 'Gallery.count' do
+      post :create, :id => Gallery.param_id, :page => {:title => 'pictures 2'},
+           :assets => [upload_data('photo.jpg'), upload_data('subdir.zip')]
+    end
+
+    assert_not_nil assigns(:page)
+    assert_equal 2, assigns(:page).images.count
+  end
+
   def test_show
     login_as :blue
     get :show, :page_id => @gallery.id
     assert_response :success
-    assert_not_nil assigns(:images)
+    assert_not_nil images=assigns(:images)
+    assert !images.empty?
   end
 
   def test_edit
     login_as :blue
     get :edit, :page_id => @gallery.id
     assert_response :success
+    assert_not_nil images=assigns(:images)
+    assert !images.empty?
   end
 
   def test_update
