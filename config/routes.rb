@@ -162,13 +162,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'networks/:action/:id', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
   map.connect 'networks/:action/:id/*path', :controller => 'networks', :action => /search|archive|discussions|tags|trash/
 
-  ##
-  ## CHAT
-  ##
-  map.chat 'chat/:action/:id', :controller => 'chat'
-  map.chat_archive 'chat/archive/:id/date/:date', :controller => 'chat', :action => 'archive'
-#  map.connect 'chat/archive/:id/*path', :controller => 'chat', :action => 'archive'
-
   ## for maps
   map.resources :geo_locations
 
