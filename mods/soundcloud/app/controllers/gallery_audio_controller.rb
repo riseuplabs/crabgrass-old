@@ -16,7 +16,6 @@ class GalleryAudioController < BasePageController
 
   def update
     @track = @page.tracks.find params['id']
-    @showing = @track.showing
     @track.asset_data = params['assets'].first
     if @track.save
       flash_message_now :title => I18n.t(:audio_updated),
