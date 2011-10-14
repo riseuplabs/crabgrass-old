@@ -1,0 +1,8 @@
+Student
+=======
+
+Mod created for the connecting classrooms installation.
+Gives special permissions to teachers aka members of current_site.council:
+* only they may create groups and networks
+* they can see all contributions by their students (members of the groups they coordinate) 
+
