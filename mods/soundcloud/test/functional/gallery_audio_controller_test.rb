@@ -5,22 +5,19 @@ class GalleryAudioControllerTest < ActionController::TestCase
 
   def setup
     @user = User.make
-
-    # let's make some gallery
-    @gallery = Gallery.create! :title => 'gimme pictures', :user => @user
-    @gallery.stubs(:save).returns(true)
-    Page.expects(:find).with(@gallery.id.to_s).returns(@gallery)
+    @gallery = stub :participation_for_user => stub,
+      :new_record? => false,
+      :has_access! => true,
+      :discussion => stub
+    Page.stubs(:find).returns(@gallery)
   end
 
   def test_create
-    showing = mock
     asset_data = stub
-    track_stub = stub(:save => true)
-    showing.expects(:create_track).with(:asset_data => asset_data).returns(track_stub)
-    showing.expects(:save).returns(:true)
-    showings = mock
-    showings.expects(:find).with(1).returns(showing)
-    @gallery.stubs(:showings).returns(showings)
+    track_stub = stub(:new_record? => false)
+    params = { :asset_data => asset_data,
+      :showing_id => '1' }
+    Track.expects(:create_for_page).with(@gallery, params).returns(track_stub)
 
     login_as @user
     post :create, :page_id => @gallery.id,

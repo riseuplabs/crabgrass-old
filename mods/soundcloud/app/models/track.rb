@@ -4,12 +4,22 @@ class Track < ActiveRecord::Base
   has_one :gallery, :through => :showing
   has_one :image, :through => :showing, :source => :asset
 
-  attr_accessible :title, :asset_data, :assets
+  attr_accessible :title, :asset_data
 
   validates_presence_of :permalink_url
   validates_presence_of :title
 
   attr_accessor :asset_data
+
+  def self.create_for_page(page, params)
+    showing_id = params.delete! :showing_id
+    showing = page.showings.find(showing_id)
+    track = showing.build_track params
+    if track.save
+      showing.save
+    end
+    return track
+  end
 
   # we might have old tracks were we did not save these
   def stream_url

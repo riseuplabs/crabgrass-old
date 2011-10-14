@@ -4,11 +4,10 @@ class GalleryAudioController < BasePageController
   helper 'gallery'
 
   def create
-    @showing = @page.showings.find params['track']['showing_id']
-    @track = @showing.create_track :asset_data => params['assets'].first
-    if @track.save
-      @showing.save
-    else
+    @track = Track.create_for_page @page,
+      :showing_id => params['track']['showing_id'],
+      :asset_data => params['assets'].first
+    if @track.new_record?
       flash_message_now :object => @track
     end
     redirect_to page_url(@page, :action => :edit)
