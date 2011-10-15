@@ -1,7 +1,10 @@
-class GalleryAudioController < BasePageController
+class GalleryAudioController < ApplicationController
 
   permissions 'gallery'
   helper 'gallery'
+
+  # make sure we have @page in authorized?
+  prepend_before_filter :fetch_page
 
   def create
     @track = Track.create_for_page @page,
@@ -15,8 +18,7 @@ class GalleryAudioController < BasePageController
 
   def update
     @track = @page.tracks.find params['id']
-    @track.asset_data = params['assets'].first
-    if @track.save
+    if @track.update_attributes(:asset_data => params['assets'].first)
       flash_message_now :title => I18n.t(:audio_updated),
                 :success => I18n.t(:audio_updated_successfully)
     else
@@ -26,17 +28,14 @@ class GalleryAudioController < BasePageController
   end
 
   def destroy
-    @showing = @page.showings.find params['showing_id']
-    @showing.track.destroy
-    @showing.save
+    @track = @page.tracks.find params['id']
+    @track.destroy
     redirect_to page_url(@page, :action => :edit)
   end
 
   protected
 
-  # we don't want any confusion with :create specific context from
-  # BasePageController
-  def context
-    page_context
+  def fetch_page
+    @page = Page.find params['page_id']
   end
 end
