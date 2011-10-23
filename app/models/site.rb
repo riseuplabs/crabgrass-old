@@ -51,6 +51,9 @@ Example data for serialized fields:
 =end
 
 class Site < ActiveRecord::Base
+
+  attr_accessible :title, :default_language, :email_sender, :translation_group, :tracking, :chat, :show_exceptions, :enforce_ssl, :never_pester_users, :show_expanded_group_wikis, :available_page_types, :all_profiles_visible, :profiles, :profile_fields, :signup_mode, :require_user_email
+
   belongs_to :network
   belongs_to :custom_appearance, :dependent => :destroy
   belongs_to :council, :class_name => 'Group'
