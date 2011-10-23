@@ -25,7 +25,7 @@ class I18nTest < ActiveSupport::TestCase
                            :custom => {
                                :test_title => "{{what}} olleH motsuC"}})
 
-    @site = Site.new(:name => "thediggers")
+    @site = stub(:name => "thediggers")
   end
 
   def teardown
@@ -76,7 +76,7 @@ class I18nTest < ActiveSupport::TestCase
   end
 
   def test_custom_translations_without_site
-    Site.stubs(:current).returns(Site.new(:name => 'custom'))
+    Site.stubs(:current).returns(stub(:name => 'custom'))
     add_translation(:en, {
                            :custom => {
                                :test_title => "Custom Hello {{what}}",
