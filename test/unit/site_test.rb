@@ -17,10 +17,13 @@ class SiteTest < Test::Unit::TestCase
     blue = users(:blue)
     kangaroo = users(:kangaroo)
     site = Site.find_by_name("site1")
+    admins = Council.create! :name => 'admins'
+    site.network.add_committee!(admins, true)
+    admins.add_user! blue
     assert blue.may?(:admin, site), 'blue should have access to the first site.'
     assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
     # if no council is set no one may :admin
-    site.council=nil
+    site.network.remove_committee!(admins)
     site.save
     blue.clear_access_cache
     assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
