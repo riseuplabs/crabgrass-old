@@ -31,7 +31,9 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
   # first call to new should generate custom_appearance.
   # later calls should return the same custom appearance.
   def test_new
-    login_as :penguin
+    user = users(:penguin)
+    user.expects(:may?).with(:admin, Site.current).returns(true).at_least(1)
+    login_as user
     assert_nil @current_site.custom_appearance
     get :new
     @current_site.reload
@@ -47,7 +49,9 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
 
   def test_update
     init_custom_appearance
-    login_as :penguin
+    user = users(:penguin)
+    user.expects(:may?).with(:admin, Site.current).returns(true).at_least(1)
+    login_as user
     post :update, :id => @current_site.custom_appearance.id,
       :custom_appearance => {:parameters => {}}
     assert_not_nil appearance=assigns(:appearance)
@@ -63,7 +67,9 @@ class Admin::CustomAppearancesControllerTest < ActionController::TestCase
 
   def test_edit_and_available
     init_custom_appearance
-    login_as :penguin
+    user = users(:penguin)
+    user.expects(:may?).with(:admin, Site.current).returns(true).at_least(1)
+    login_as user
     get :edit, :id => @current_site.custom_appearance.id
     assert_response :success
     get :available, :id => @current_site.custom_appearance.id

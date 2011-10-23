@@ -5,6 +5,11 @@ module LoginTestHelper
       when User   then user
       else             nil
     end
+    # we set all three by hand so they also work for mocks.
+    # otherwise current_user would set them from load_user which loads
+    # from the database and thus breaks user mocks
+    @controller.stubs(:current_user).returns(user)
+    User.current=user
     @request.session[:user] = user
   end
 
