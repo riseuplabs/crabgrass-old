@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
-  permissions 'profile'
+
+  permissions 'profile', 'public_messages'
 
   before_filter :fetch_profile, :login_required
   stylesheet 'profile'
@@ -20,7 +21,7 @@ class ProfileController < ApplicationController
       end
     end
   end
- 
+
   def edit_location
     return unless request.xhr?
     @profile.update_location(params)
