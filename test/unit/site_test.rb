@@ -23,8 +23,8 @@ class SiteTest < Test::Unit::TestCase
     assert blue.may?(:admin, site), 'blue should have access to the first site.'
     assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
     # if no council is set no one may :admin
-    site.network.remove_committee!(admins)
-    site.save
+    site.network.council.destroy
+    site.network.reload
     blue.clear_access_cache
     assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
       blue.may!(:admin, site)
