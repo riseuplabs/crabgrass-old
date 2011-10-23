@@ -1,6 +1,9 @@
 module Admin::SitesPermission
+
+  # this uses may_admin so for new records (no site config)
+  # it returns false.
   def may_index_sites?
-    current_user.may?(:admin, current_site)
+    current_user.may_admin? current_site
   end
 
   alias_method :may_basic_sites?,   :may_index_sites?
