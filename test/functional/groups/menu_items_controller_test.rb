@@ -7,6 +7,8 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
 
   def setup
     enable_site_testing
+    @controller.expects(:may_admin_site?).returns(true)
+    login_as :blue
   end
 
   def teardown
@@ -14,14 +16,12 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_get_index
-    login_as :blue
     get :index, :group_id => 'fai'
     assert_response :success
     assert_not_nil assigns(:menu_items)
   end
 
   def test_create_menu_item
-    login_as :blue
     assert_difference('MenuItem.count') do
       post :create, :group_id => 'fai',
       :menu_item => {:link => "http://test.link", :title => "different title"}
@@ -29,7 +29,6 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_update_menu_item
-    login_as :blue
     put :update, :group_id => 'fai',
       :id => menu_items(:network).id,
       :menu_item => {:link => "http://test.link", :title => "different title"}
@@ -37,7 +36,6 @@ class Groups::MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_menu_item
-    login_as :blue
     assert_difference('MenuItem.count', -1) do
       delete :destroy, :group_id => 'fai', :id => menu_items(:tags).id
     end

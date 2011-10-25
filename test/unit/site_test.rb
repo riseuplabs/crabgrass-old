@@ -21,14 +21,15 @@ class SiteTest < Test::Unit::TestCase
     site.network.add_committee!(admins, true)
     admins.add_user! blue
     assert blue.may?(:admin, site), 'blue should have access to the first site.'
+  end
+
+  def test_no_site_admin_without_council_membership
+    kangaroo = users(:kangaroo)
+    site = Site.find_by_name("site1")
+    admins = Council.create! :name => 'admins'
+    site.network.add_committee!(admins, true)
+    site.network.add_user! kangaroo
     assert !kangaroo.may?(:admin, site), 'kangaroo should not have :admin access to the first site.'
-    # if no council is set no one may :admin
-    site.network.council.destroy
-    site.network.reload
-    blue.clear_access_cache
-    assert_raises(PermissionDenied, 'blue should not have :admin access to the first site anymore.') do
-      blue.may!(:admin, site)
-    end
   end
 
 end

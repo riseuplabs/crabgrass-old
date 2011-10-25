@@ -5,6 +5,8 @@ class MenuItemsControllerTest < ActionController::TestCase
 
   def setup
     enable_site_testing
+    @controller.expects(:may_admin_site?).returns(true)
+    login_as :blue
   end
 
   def teardown
@@ -12,7 +14,6 @@ class MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_create_without_parent
-    login_as :blue
     qf = widgets(:quickfinder_site2)
     assert_difference 'qf.menu_items.count' do
       post :create, :commit => "Create", :widget_id => qf.id, :menu_item => {
@@ -24,7 +25,6 @@ class MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_create_with_parent
-    login_as :blue
     qf = widgets(:quickfinder_site2)
     root = qf.menu_items.root
     assert_difference 'qf.menu_items.count' do
@@ -38,7 +38,6 @@ class MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_edit
-    login_as :blue
     qf = widgets(:quickfinder_site2)
     item = qf.menu_items.root
     get :edit, :widget_id => qf.id, :id => item.id
@@ -47,7 +46,6 @@ class MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_update
-    login_as :blue
     qf = widgets(:quickfinder_site2)
     put :update, :widget_id => qf.id,
       :id => menu_items(:quickfinder_root2).id,
@@ -56,7 +54,6 @@ class MenuItemsControllerTest < ActionController::TestCase
   end
 
   def test_destroy_with_children
-    login_as :blue
     qf = widgets(:quickfinder_site2)
     assert_difference('MenuItem.count', -3) do
       delete :destroy,

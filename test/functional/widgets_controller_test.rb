@@ -5,6 +5,8 @@ class WidgetsControllerTest < ActionController::TestCase
 
   def setup
     enable_site_testing
+    @controller.expects(:may_admin_site?).returns(true)
+    login_as :blue
   end
 
   def teardown
@@ -12,7 +14,6 @@ class WidgetsControllerTest < ActionController::TestCase
   end
 
   def test_menu_widget_editing
-    login_as :blue
     get :edit, :id => widgets(:quickfinder_site2).id
     assert_response :success
     profile = assigns(:profile)

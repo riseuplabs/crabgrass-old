@@ -17,7 +17,9 @@ class Admin::SitesControllerTest < ActionController::TestCase
   end
 
   def test_all_profiles_visible
-    login_as :blue
+    user = users(:penguin)
+    user.expects(:may?).with(:admin, sites(:unlimited)).returns(true).at_least(1)
+    login_as user
     @request.env["HTTP_REFERER"] = '/admin/sites/profile'
     post :update, :site => {:all_profiles_visible => '1'}
     assert_response :redirect
