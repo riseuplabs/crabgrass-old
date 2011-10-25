@@ -125,6 +125,70 @@ class UserTest < Test::Unit::TestCase
     assert(u.both_names == 'display name! (loginname)')
   end
 
+  def test_may_nil_returns_false
+    user = User.make
+    assert !user.may?(:test, nil)
+    assert !user.may!(:test, nil)
+  end
+
+  def test_may_new_record
+    user = User.make
+    target = mock
+    target.expects(:new_record?).returns(true).times(2)
+    assert user.may?(:test, target)
+    assert user.may!(:test, target)
+  end
+
+  def test_may?
+    user = User.make
+    target = mock
+    target.expects(:new_record?).returns(false)
+    target.expects(:has_access!).with(:permission, user).returns(true)
+    assert user.may?(:permission, target)
+  end
+
+  def test_may_not
+    user = User.make
+    target = mock
+    target.expects(:new_record?).returns(false)
+    target.expects(:has_access!).with(:permission, user).raises(PermissionDenied)
+    assert !user.may?(:permission, target)
+  end
+
+  def test_may!
+    user = User.make
+    target = mock
+    target.expects(:new_record?).returns(false)
+    target.expects(:has_access!).with(:permission, user).returns(true)
+    assert user.may!(:permission, target)
+  end
+
+  def test_may_raises
+    user = User.make
+    target = mock
+    target.expects(:new_record?).returns(false)
+    target.expects(:has_access!).with(:permission, user).raises(PermissionDenied)
+    assert_raises PermissionDenied do
+      user.may!(:permission, target)
+    end
+  end
+
+  def test_may_caches
+    user = User.make
+    target = mock
+    target.stubs(:new_record?).returns(false)
+    target.expects(:has_access!).with(:permission, user).returns(true)
+    # filling the cache
+    assert user.may!(:permission, target)
+    target.stubs(:has_access!).returns(false)
+    # using the cached version
+    assert user.may?(:permission, target)
+    # cache only affects key
+    assert !user.may?(:test, target)
+    user.clear_access_cache
+    assert !user.may?(:permission, target)
+  end
+
   protected
 
   def create_user(options = {})
@@ -133,7 +197,7 @@ class UserTest < Test::Unit::TestCase
 
   def make_status_post(body, u)
     StatusPost.create do |post|
-      post.body = body 
+      post.body = body
       post.body = post.body[0..140] if post.body
       post.discussion = u.wall_discussion
       post.user = u
