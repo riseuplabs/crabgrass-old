@@ -131,7 +131,7 @@ EOSQL
   # usually this will be visible_by
   named_scope :located_in, lambda { |params|
     if params.slice(:country_id, :state_id, :city_id).any?
-      { :joins => LOCATIONS_JOIN, 
+      { :joins => LOCATIONS_JOIN,
         :conditions => Group.conditions_for_location(params)
       }
     else
@@ -255,20 +255,20 @@ EOSQL
   # if user has +access+ to group, return true.
   # otherwise, raise PermissionDenied
   def has_access!(access, user)
-    if access == :admin
-      ok = user.member_of?(self.council)
-    elsif access == :edit
-      ok = user.member_of?(self) || user.member_of?(self.council)
-    elsif access == :view
-      ok = user.member_of?(self) || profiles.public.may_see?
-    end
-    ok or raise PermissionDenied.new
+    has_access?(access, user) or raise PermissionDenied.new
   end
 
   def has_access?(access, user)
-    return has_access!(access, user)
-  rescue PermissionDenied
-    return false
+    case access
+    when :admin
+      user.member_of?(self.council)
+    when :edit
+      user.member_of?(self) || user.member_of?(self.council)
+    when :view
+      user.member_of?(self) || profiles.public.may_see?
+    else
+      false
+    end
   end
 
   ##
@@ -342,7 +342,7 @@ EOSQL
 
 
   def self.conditions_for_location(params)
-    param_to_column_map = { 
+    param_to_column_map = {
       :country_id => 'geo_country_id',
       :state_id => 'geo_admin_code_id',
       :city_id => 'geo_place_id' }
