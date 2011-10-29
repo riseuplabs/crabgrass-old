@@ -241,15 +241,9 @@ class User < ActiveRecord::Base
     return true if protected_thing.new_record?
     key = "#{protected_thing.to_s}"
     if access[key][perm].nil?
-      access[key][perm] =
-        begin
-          protected_thing.has_access!(perm,self)
-        rescue PermissionDenied
-          false
-        end
-    else
-      access[key][perm]
+      access[key][perm] = protected_thing.has_access?(perm, self)
     end
+    access[key][perm]
   end
 
   def may!(perm, protected_thing)
@@ -281,11 +275,7 @@ class User < ActiveRecord::Base
   # know for sure that you can't use user.may?(:admin,thing).
   # Significantly, this does not return true for new records.
   def may_admin?(thing)
-    begin
-      thing.has_access!(:admin,self)
-    rescue PermissionDenied
-      false
-    end
+    thing.has_access?(:admin, self)
   end
 
   ##
