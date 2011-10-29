@@ -6,7 +6,7 @@ class GalleryAudioControllerTest < ActionController::TestCase
   def setup
     @user = User.make
     @gallery = stub :new_record? => false,
-      :has_access! => true,
+      :has_access? => true,
       :owner_name => 'page_owner',
       :name_url => 'page-title'
     Page.expects(:find).with('9').returns(@gallery)

@@ -156,7 +156,7 @@ class Asset < ActiveRecord::Base
   def type_as_parent; self.type; end
 
   versioned_class.class_eval do
-    delegate :page, :public?, :has_access!, :to => :asset
+    delegate :page, :public?, :has_access?, :to => :asset
 
     # all our paths will have version info inserted into them
     def version_path

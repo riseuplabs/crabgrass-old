@@ -233,13 +233,10 @@ class Site < ActiveRecord::Base
      end
   end
 
-  # if user has +access+ to site, return true.
-  # otherwise, raise PermissionDenied
-  def has_access!(access, user)
-    if access == :admin and self.council
-      ok = user.member_of?(self.council)
-    end
-    ok or raise PermissionDenied.new
+  # if user has +access+ to site, return true. Return false otherwise
+  # Please use user.may? to access this so the result can be cached.
+  def has_access?(access, user)
+    access == :admin and self.council and user.member_of?(self.council)
   end
 
   # TODO : find a place to define all the elements, a site's user can see

@@ -12,7 +12,7 @@ class SiteTest < Test::Unit::TestCase
     site.stubs(:council).returns(council)
     user = mock
     user.expects(:member_of?, council).returns(true)
-    assert site.has_access!(:admin, user)
+    assert site.has_access?(:admin, user)
   end
 
   def test_has_no_admin_access
@@ -21,9 +21,7 @@ class SiteTest < Test::Unit::TestCase
     site.stubs(:council).returns(council)
     user = mock
     user.expects(:member_of?, council).returns(false)
-    assert_raises PermissionDenied do
-      site.has_access!(:admin, user)
-    end
+    assert !site.has_access?(:admin, user)
   end
 
 end

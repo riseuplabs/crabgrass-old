@@ -250,7 +250,7 @@ class Page < ActiveRecord::Base
   # DEPRECATED BEHAVIOR:
   # :edit should return false for deleted pages.
   #
-  def has_access!(perm, user)
+  def has_access?(perm, user)
 
     ########################################################
     ## THESE ARE TEMPORARY HACKS...
@@ -260,14 +260,10 @@ class Page < ActiveRecord::Base
 
     asked_access_level = ACCESS[perm] || ACCESS[:view]
     participation = most_privileged_participation_for(user)
-    allowed = if participation.nil?
-      false
-    else
-      actual_access_level = participation.access || ACCESS[:view]
-      asked_access_level >= actual_access_level
-    end
+    return false if participation.nil?
 
-    allowed ? true : raise(PermissionDenied.new)
+    actual_access_level = participation.access || ACCESS[:view]
+    asked_access_level >= actual_access_level
   end
 
   # returns the participation object for entity with the highest access level.

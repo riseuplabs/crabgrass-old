@@ -453,12 +453,8 @@ module UserExtension::Pages
     # no changes to it should be saved!
     page = Page.find(page.id)
     page.send(method).delete_if {|part| part.id == participation.id}
-    begin
-      result = page.has_access!(:admin, self)
-    rescue PermissionDenied
-      result = false
-    end
-    result
+    # we use has_access? directly so we do not mess with the access cache
+    page.has_access?(:admin, self)
   end
 
 end

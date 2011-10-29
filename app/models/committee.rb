@@ -52,16 +52,18 @@ class Committee < Group
   public
 
   # if user has +access+ to group, return true.
-  # otherwise, raise PermissionDenied
-  def has_access!(access, user)
-    if access == :admin
-      ok = user.member_of?(self) || self.parent.has_access?(:admin, user)
-    elsif access == :edit
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
-    elsif access == :view
-      ok = user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
+  #
+  # Please use User.may? instead because it caches the result.
+  # Use User.may! if you want to raise PermissionDenied
+  def has_access?(access, user)
+    case access
+    when :admin
+      user.member_of?(self) || self.parent.has_access?(:admin, user)
+    when :edit
+      user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:edit, user)
+    when :view
+      user.member_of?(self) || user.member_of?(self.parent_id) || self.parent.has_access?(:admin, user) || profiles.visible_by(user).may_see?
     end
-    ok or raise PermissionDenied.new
   end
 
   def may_be_pestered_by!(user)
