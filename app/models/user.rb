@@ -237,28 +237,25 @@ class User < ActiveRecord::Base
   # we in-memory cache the result.
   #
   def may?(perm, protected_thing)
-    begin
-      may!(perm, protected_thing)
-    rescue PermissionDenied
-      false
+    return false if protected_thing.nil?
+    return true if protected_thing.new_record?
+    key = "#{protected_thing.to_s}"
+    if access[key][perm].nil?
+      access[key][perm] =
+        begin
+          protected_thing.has_access!(perm,self)
+        rescue PermissionDenied
+          false
+        end
+    else
+      access[key][perm]
     end
   end
 
   def may!(perm, protected_thing)
     return false if protected_thing.nil?
     return true if protected_thing.new_record?
-    key = "#{protected_thing.to_s}"
-    if @access and @access[key] and !@access[key][perm].nil?
-      result = @access[key][perm]
-    else
-      result = protected_thing.has_access!(perm,self) rescue false
-      # has_access! might call clear_access_cache, so we need to rebuild it
-      # after it has been called.
-      @access ||= {}
-      @access[key] ||= {}
-      @access[key][perm] = result
-    end
-    result or raise PermissionDenied.new
+    may?(perm, protected_thing) or raise PermissionDenied.new
   end
 
   # zeros out the in-memory page access cache. generally, this is called for
@@ -267,6 +264,18 @@ class User < ActiveRecord::Base
   def clear_access_cache
     @access = nil
   end
+
+  # internal stuff for hashing
+  protected
+
+  # Access stores the access permission hash. If it has not been stored we
+  # return a Hash so access[] always works. We even set the default for that
+  # Hash to be a Hash so access[][] always works.
+  def access
+    @access ||= Hash.new { |hash,key| hash[key] = {} }
+  end
+
+  public
 
   # as special call used in special places: This should only be called if you
   # know for sure that you can't use user.may?(:admin,thing).
