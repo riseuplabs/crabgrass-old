@@ -254,10 +254,15 @@ EOSQL
 
   # if user has +access+ to group, return true.
   # otherwise, raise PermissionDenied
+  #
+  # DEPRECATED!
+  # Please use User#may! instead as it caches the result
   def has_access!(access, user)
     has_access?(access, user) or raise PermissionDenied.new
   end
 
+  # DEPRECATED!
+  # Please use User#may? instead as it caches the result
   def has_access?(access, user)
     case access
     when :admin
