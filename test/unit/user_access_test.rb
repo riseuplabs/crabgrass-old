@@ -74,5 +74,22 @@ class UserAccessTest < Test::Unit::TestCase
     assert !@user.may?(:permission, other)
   end
 
+  class CacheClearingTarget
+    def has_access?(perm, user)
+      user.clear_access_cache
+      true
+    end
+  end
+
+  # pages clear the user access in some cases when accessing
+  # Page#has_access. Make sure this does not break our implementation.
+  def test_can_clear_cache_in_has_access
+    cache_clearer = CacheClearingTarget.new
+    cache_clearer.stubs(:new_record?).returns(false)
+    assert @user.may!(:permission, cache_clearer)
+    # using the cache
+    assert @user.may?(:permission, cache_clearer)
+  end
+
 end
 

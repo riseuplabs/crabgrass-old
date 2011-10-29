@@ -241,7 +241,10 @@ class User < ActiveRecord::Base
     return true if protected_thing.new_record?
     key = "#{protected_thing.to_s}"
     if access[key][perm].nil?
-      access[key][perm] = protected_thing.has_access?(perm, self)
+      # protected_thing.has_access? might call clear_access_cache
+      # so this needs to happen in two steps:
+      result = protected_thing.has_access?(perm, self)
+      access[key][perm] = result
     end
     access[key][perm]
   end
