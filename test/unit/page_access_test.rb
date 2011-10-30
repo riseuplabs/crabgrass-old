@@ -15,10 +15,10 @@ class PageAccessTest < Test::Unit::TestCase
 
     assert !user.may?(:view, page), 'user should NOT be able to view page'
     page.add(group)
+    user.clear_access_cache
     assert user.may?(:view, page), 'user should BE able to view page'
 
     page.remove(group)
-    page.reload
     user.clear_access_cache
     assert !user.may?(:view, page), 'user should NOT be able to view page'
   end

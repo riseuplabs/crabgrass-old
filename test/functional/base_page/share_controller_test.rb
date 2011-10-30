@@ -187,8 +187,7 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     assert @group_user.may?(:admin,@group_page), 'the user should still have :admin-acces'
   end
 
-  # wtf is this?
-  def test_something_else
+  def test_enhancing_access_rights
     login_as :red
 
     # 2. GroupParticipation with :edit access exist. UserParticipation with admin access is requested
@@ -219,11 +218,9 @@ class BasePage::ShareControllerTest < ActionController::TestCase
     assert !@group_user.may?(:admin,@group_page)
     # grant admin access to this individual user who is also a member of the group
     assert_share_with(@group_page,@group_user,:admin)
-    #raise @group_page.users.inspect
-    @group_user.reload
+    @group_user.clear_access_cache
     @group_page.reload
-    #raise @group_page.users.inspect
-    assert @group_user.may?(:admin,@group_page), 'the user should now have admin access to the group'
+    assert @group_user.may?(:admin,@group_page), 'the user should now have admin access to the page'
   end
 
   # test if sharing with and notifying a new user works
