@@ -63,7 +63,10 @@ class AccountController < ApplicationController
       raise PermissionDenied.new('new user registration is closed at this time')
     end
 
-    @user = User.new(params[:user] || {:email => session[:signup_email_address]})
+    user_params = (params[:user] || {:email => session[:signup_email_address]})
+    user_params.slice! :login, :email, :password, :password_confirmation,
+      :language, :display_name
+    @user = User.new(user_params)
 
     if request.post?
       if params[:usage_agreement_accepted] != "1"

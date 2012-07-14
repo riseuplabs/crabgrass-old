@@ -31,6 +31,14 @@ class AccountControllerTest < ActionController::TestCase
     end
   end
 
+  def test_signup_protects_caches
+    assert_difference 'User.count' do
+      post_signup_form(:user => {:all_group_id_cache => [1]})
+      assert_response :redirect
+      assert !User.last.member_of?(Group.find(1))
+    end
+  end
+
   repeat_with_sites(:local => {:signup_mode => Conf::SIGNUP_MODE[:closed]}) do
     def test_signup_disabled
       assert_no_difference 'User.count' do
