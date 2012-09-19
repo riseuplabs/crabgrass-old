@@ -16,9 +16,10 @@ namespace :cg do
   task :cleanup_spammy_users => :environment do
     $stdout.puts "Cleaning up spammy users."
     week_num = 0
+    oldest_user_created_at = User.find(1).created_at.to_i
     only_inactive = ENV['quit_when_no_inactive_users']
     users = get_users(week_num, only_inactive)
-    while users.count > 0
+    while do_loop(users, oldest_user_created_at, week_num, only_inactive) 
       $stdout.puts "Looking at week #{week_num.to_s}"
       june_2012_spammers = 0
       inactive_users = 0
@@ -27,7 +28,9 @@ namespace :cg do
         if inactive_user
           if (user.login =~ /^\w+\d+$/) && (user.email =~ /hotmail\.com$/)
             june_2012_spammers += 1
-          elsif user.last_seen_at.to_i > 30.days.ago.to_i
+            user.destroy
+            sleep 1
+          elsif user_has_not_logged_in(user) 
             inactive_users += 1
           end
         end
@@ -37,6 +40,11 @@ namespace :cg do
       week_num += 1
       users = get_users(week_num, only_inactive)
     end
+  end
+
+  def do_loop(users, oldest_user_created_at, week_num, only_inactive)
+    return (users.count > 0) if only_inactive
+    oldest_user_created_at < (week_num+1).weeks.ago.to_i
   end
 
   def get_users(week_num, only_inactive=nil)
@@ -51,5 +59,13 @@ namespace :cg do
     participations = user.try(:user_participations)
     (participations.nil? || participations.empty?) && user.groups.empty?
   end
+
+  def user_has_not_logged_in(user)
+    if (user.last_seen_at.nil? || user.last_seen_at == 0) && (user.created_at.to_i > 30.days.ago.to_i)
+      return false
+    end
+    user.last_seen_at.to_i < 30.days.ago.to_i
+  end
+
 end
  
