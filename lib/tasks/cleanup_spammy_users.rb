@@ -11,13 +11,16 @@
 #
 #  rake cg:cleanup_spammy_users quit_when_no_active_users=1
 #   => will stop iterating when it finds a week when there are no inactive users
+#
+#  rake cg:cleanup_spammy_users only_spammers=1
+#   => will stop iterating when it finds a week when there were no spammers created
 
 namespace :cg do
   task :cleanup_spammy_users => :environment do
     $stdout.puts "Cleaning up spammy users."
     week_num = 0
     oldest_user_created_at = User.find(1).created_at.to_i
-    only_inactive = ENV['quit_when_no_inactive_users']
+    only_inactive = ENV['quit_when_no_inactive_users'] || ENV['only_spammers']
     users = get_users(week_num, only_inactive)
     while do_loop(users, oldest_user_created_at, week_num, only_inactive) 
       $stdout.puts "Looking at week #{week_num.to_s}"
@@ -26,8 +29,9 @@ namespace :cg do
       users.each do |user|
         inactive_user = only_inactive ? true : user_is_inactive?(user)
         if inactive_user
-          if (user.login =~ /^\w+\d+$/) && (user.email =~ /hotmail\.com$/)
+          if user_is_spammer?(user) 
             june_2012_spammers += 1
+            $stdout.puts "Removing user #{user.login}, #{user.email}"
             user.destroy
             sleep 1
           elsif user_has_not_logged_in(user) 
@@ -50,9 +54,13 @@ namespace :cg do
   def get_users(week_num, only_inactive=nil)
     users = User.find(:all, :conditions => "created_at < '#{week_num.weeks.ago}' and created_at > '#{(week_num+1).weeks.ago}'")
     return users unless only_inactive
-    users.collect do |user|
-      user_is_inactive?(user)
+    users.select do |user|
+      user_is_inactive?(user) && (ENV['only_spammers'] ? user_is_spammer?(user) : true)
     end
+  end
+
+  def user_is_spammer?(user)
+    (user.login =~ /^\w+\d+$/) && (user.email =~ /hotmail\.com$/)
   end
 
   def user_is_inactive?(user)
