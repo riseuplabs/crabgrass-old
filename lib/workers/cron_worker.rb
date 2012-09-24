@@ -52,5 +52,10 @@ class CronWorker < BackgrounDRb::MetaWorker
   def clean_chat_channels_users
     ChatChannel.cleanup!
   end
+
+  # cleanup spammy users (found june 2012)
+  def cleanup_spammy_users
+    system('rake', '--rakefile', RAILS_ROOT+'/Rakefile', 'cg:cleanup_spammy_users', 'RAILS_ENV=production', 'only_spammers=1')
+  end
 end
 
