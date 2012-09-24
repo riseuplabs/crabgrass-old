@@ -3,7 +3,7 @@
 # an inactive user is defined as a user who has no user_participations and no groups
 # it will destroy users if:
 #   * they match the pattern of spammy users found in june 2012
-#   * a user is inactive and was last seen more than 30 days ago
+#   * a user is inactive and was last seen more than a year ago
 #
 # examples:
 #  rake cg:cleanup_spammy_users
@@ -70,10 +70,10 @@ namespace :cg do
   end
 
   def user_has_not_logged_in(user)
-    if (user.last_seen_at.nil? || user.last_seen_at == 0) && (user.created_at.to_i > 30.days.ago.to_i)
+    if (user.last_seen_at.nil? || user.last_seen_at == 0) && (user.created_at.to_i > 1.year.ago.to_i)
       return false
     end
-    user.last_seen_at.to_i < 30.days.ago.to_i
+    user.last_seen_at.to_i < 1.year.ago.to_i
   end
 
 end
