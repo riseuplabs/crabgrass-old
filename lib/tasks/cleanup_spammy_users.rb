@@ -26,12 +26,13 @@ namespace :cg do
       $stdout.puts "Looking at week #{week_num.to_s}"
       june_2012_spammers = 0
       inactive_users = 0
-      users.each do |user|
+      users_count = users.count
+      users.each_with_index do |user, i|
         inactive_user = only_inactive ? true : user_is_inactive?(user)
         if inactive_user
           if user_is_spammer?(user) 
             june_2012_spammers += 1
-            $stdout.puts "Removing user #{user.login}, #{user.email}"
+            $stdout.puts "[#{i.to_s}/#{users_count.to_s}] Removing user #{user.login}, #{user.email}"
             user.destroy
             sleep 1
           elsif user_has_not_logged_in(user) 
