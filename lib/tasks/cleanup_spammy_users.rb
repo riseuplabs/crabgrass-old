@@ -61,7 +61,12 @@ namespace :cg do
   end
 
   def user_is_spammer?(user)
-    (user.login =~ /^\w+\d+$/) && (user.email =~ /hotmail\.com$/)
+    if user.email =~ /hotmail.com$/
+      return user.login =~ /^\w*\d+\w*$/
+    elsif user.email =~ /^(.*)@yahoo.co.uk$/
+      return user.login == $1
+    end
+    false
   end
 
   def user_is_inactive?(user)
