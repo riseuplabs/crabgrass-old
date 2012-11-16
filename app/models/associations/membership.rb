@@ -17,6 +17,7 @@
 
 class Membership < ActiveRecord::Base
   attr_accessor :skip_destroy_notification
+  attr_accessor :destroyed_by
 
   belongs_to :user
   belongs_to :group

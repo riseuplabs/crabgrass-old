@@ -5,7 +5,7 @@ class Groups::MembershipsController < Groups::BaseController
 
   permissions 'groups/memberships', 'groups/requests'
   before_filter :fetch_group, :login_required
-  verify :method => :post, :only => [:join]
+  verify :method => :post, :only => [:join, :destroy]
 
   ###### PUBLIC ACTIONS #########################################################
 
@@ -65,7 +65,21 @@ class Groups::MembershipsController < Groups::BaseController
     redirect_to :action => 'edit', :id => @group
   end
 
+  def destroy
+    @group.remove_user!(@membership.user, current_user.login)
+    render :update do |page|
+      page.hide dom_id(@membership.user)
+    end
+  end
+
   protected
+
+  def fetch_group
+    super
+    if params[:user_id]
+      @membership = @group.memberships.find_by_user_id(params[:user_id])
+    end
+  end
 
   def context
     @group_navigation = :membership

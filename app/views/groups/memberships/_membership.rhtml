@@ -1,4 +1,4 @@
-<tr>
+<tr id=<%= dom_id(membership.user) %>>
   <td><%= link_to_user membership.user, :avatar => 'small' %></td>
   <td><%= friendly_date membership.created_at %></td>
   <% if current_site.tracking %>
@@ -6,6 +6,11 @@
   <td><%= membership.total_visits %></td>
   <% end %>
 <!--  <td><%= membership.join_method %></td> -->
-  <td><%= membership.user.may?(:admin,@group) ? 'coordinator'.t : '' %></td>
+  <td>
+    <%= membership.user.may?(:admin,@group) ? 'coordinator'.t : '' %>
+    <%- if may_destroy_memberships?(membership) %>
+      <%= link_to_remote 'remove'.t, :url => { :controller => "groups/memberships", :action => "destroy", :id => membership.group, :user_id => membership.user_id } %>
+    <%- end %>
+  </td>
 </tr>
 

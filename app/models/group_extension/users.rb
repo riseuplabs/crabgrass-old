@@ -75,11 +75,12 @@ module GroupExtension::Users
 
   # this is the ONLY way to remove users from a group.
   # all other methods will not work.
-  def remove_user!(user)
+  def remove_user!(user, removed_by = nil)
     membership = self.memberships.find_by_user_id(user.id)
     raise ErrorMessage.new('no such membership') unless membership
 
     user.clear_peer_cache_of_my_peers
+    membership.destroyed_by = removed_by
     membership.destroy
     user.update_membership_cache
 

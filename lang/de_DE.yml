@@ -97,6 +97,7 @@ Founded: "Gegr\xC3\xBCndet"
 all_page_types: alle Seitenarten
 you_are_not_member_of_any_group: Du bist bei keiner Gruppe Mitglied.
 activity_user_left_group: "{user} hat {group_type} {group} verlassen"
+activity_user_removed_from_group: "{admin} hat {user} aus {group_type} {group} entfernt"
 see_all_link: Alles sehen
 have_your_say: Sag auch was!
 medium: mittel

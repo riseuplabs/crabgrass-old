@@ -72,4 +72,36 @@ class Groups::MembershipsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_remove_user_as_admin
+    login_as :blue
+    council = Council.new :name => "committee", :parent => groups(:animals)
+    groups(:animals).add_committee!(council)
+
+    assert_difference "Membership.count", -1 do
+      post :destroy, :id => groups(:animals).name, :user_id => users(:penguin).id
+    end
+    assert_response :success
+  end
+
+  def test_may_not_remove_admin_as_admin
+    login_as :blue
+    User.current = users(:blue)
+    council = Council.new :name => "committee", :parent => groups(:animals)
+    groups(:animals).add_committee!(council)
+
+    council.add_user! users(:penguin)
+    assert_no_difference "Membership.count" do
+      post :destroy, :id => groups(:animals).name, :user_id => users(:penguin).id
+    end
+    assert_permission_denied
+  end
+
+  def test_may_not_remove_user_as_user
+    login_as :blue
+    assert_no_difference "Membership.count" do
+      post :destroy, :id => groups(:animals).name, :user_id => users(:penguin).id
+    end
+    assert_permission_denied
+  end
+
 end
